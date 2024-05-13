@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4379FC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09491C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QPC-0002mi-It; Mon, 13 May 2024 03:47:31 -0400
+	id 1s6QP6-0002iZ-NH; Mon, 13 May 2024 03:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QP8-0002k5-8N
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:27 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1s6QP4-0002hG-Hp
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:22 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QP4-0001Js-UM
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:25 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-34da35cd01cso3731035f8f.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:22 -0700 (PDT)
+ id 1s6QP2-0001JO-Oo
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:22 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-41fd5dc03easo24073315e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586441; x=1716191241; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DRvEbVFABG0rQ6mtoE7EPY1IsVsNamdAxtlX4BxsiVU=;
- b=ta4I31Tp79zrIyVXar2dtj8scpCYF3YIL5QHZef8T9S8EoC9L4bAQa5DW5Ykoy32c5
- G7MngUMSdpjBxIdtHn2FR5JAwUpzFRk4YvDp/h2pLXkqfvR2lqdUrYyHhhmBq2KA5HfV
- IoUTwh9hzammJg4mrSfL56OY5FqqEpx/iWstJeCQvwO+bUzQbnCzzvAEoZPa1ve5ALN2
- 8I38yd1b8pQPWGN064AdbxQla6rPI1JVoxcWtXT+cbR3PPLF8HYaM/0E2ZxPd7wQkeyk
- VZKdZEB79SVtshwNpvIXptaS3EuaCidyeHDWhROOyd6Uo5Osfg5U9EzHGV4hIR2G3QL3
- 4dMg==
+ d=linaro.org; s=google; t=1715586439; x=1716191239; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HnzePE6mX3Rhi62SecPeEdqHkyCsEzt2r4MnnIgljlQ=;
+ b=t6PX7uM6xxnNkb1n9AAqCGKDHgCCSHB4i9APwzZwhHQWLqjIjygWZJ4asZgXzptD9k
+ z+cKDp2CNUJHC6WVQHA7aVhSfCAeDXLGYen6Rjk2fj4J1lkwKYJhw/JQ6o/ARHf2CDWa
+ KHiDpyqw35OpOikvHTqinzpyd39c2KOnTaC7KRr8X0r4H9uiB00CKVb0G7kBqV7Ulqgk
+ PHZGoQSre5Doh5rzfgCtvX9WbNYmCDfhvjW78Hjpl29chDQ5FepMiIALYlaoav95X2Cl
+ yr0aZm2oq1qXH5uAD8hZLFkeIXf6DaxadeIMUmqsHffRs0SyOdeOxPmOgu3l61kp4/Nc
+ DE6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586441; x=1716191241;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DRvEbVFABG0rQ6mtoE7EPY1IsVsNamdAxtlX4BxsiVU=;
- b=JL/yp9LX41jqK4EN8iuOBtiK3jGDAVSkURn1w0C+pZpP7DOwTQVQm7iFAyl1xyqnuw
- QsrThJbCqNJFPVUOiTEX6v+mJxFqQC34qdmhQeGYHt2FzAtVTrc+u1Lq+noQxeZz17Cr
- BuByqb1PswktebKp4pktr0vMjalNzMQBmS9rdLzljCBhWdiHhRoD1RPKFZMeGJLiME/d
- QSa9qMFOm/G7lokpSw2NPxdz2USt/C6torq+MeJxGOEIn+2LUiZk3g04cfGC8URt0tu1
- bngLHuCdE9IqKpyJP8b7+J70FO/BoVfz4v/Aa+QjwDM+JiRrIMfjYkqvwew7buVKB0iz
- PRRQ==
-X-Gm-Message-State: AOJu0YzlSAtquiUfAGkDi+AGFJYaskqqHCmog2AveQt5Nf41AYYTsaH0
- qN8y3ir7aBFyh4O9HHpPuYXYwd0crI7wLxRJ1qMQCvPerxmlylLyeMzEPypMXncJiIs054qoH4P
- 7Aiw=
-X-Google-Smtp-Source: AGHT+IFT6dh/6W19yMvg3Xn0bdjsyExHe/qmts3FM+WfAe4DB40oTXA2uNbmupm+bBfrK2EblaQ+cw==
-X-Received: by 2002:a5d:5262:0:b0:34d:b634:9033 with SMTP id
- ffacd0b85a97d-3504a9691acmr7570268f8f.51.1715586441498; 
- Mon, 13 May 2024 00:47:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715586439; x=1716191239;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HnzePE6mX3Rhi62SecPeEdqHkyCsEzt2r4MnnIgljlQ=;
+ b=F3yjzTzBYnMsiawJtb1NrlRrkmJWMgTa/bX9iv4oJY7BpZHZgW6ew5uOymd9uJuc02
+ pdTQr7aoN4/BiCDiAbaK/UXmfgIygIEQI02l5u9FVzF/P11tD6x3EGSlBPCHjeJXgrxq
+ bzNE3utUHP8ePaAUtAvBNNdIYx/uRmLeYFH95owqy+55uL90d96oUjcMkosRb+aIpseH
+ 7TATjJm0JtEesnW4a1q1rF2UYoe0okB0SHY5zG4ebnPuOKygpFRjY06J1BgSSB0k4eKA
+ gF8eB54/FJaB3xCfZvuZumLfo43/2vHLtdmTQyT4Ry4Z64VIX7tgqc3FlxcWlEsOth/J
+ wKUQ==
+X-Gm-Message-State: AOJu0YyVDhT4O0RShxgUQMsZBP570L71bayAxRL1V5GSJFN8dLJYSBJe
+ 4dCv50nBZCzbK9sKFcuhe2i5NrILXNO/VgXh0p3Lm2vrYmWbgkBb+vjiyL4TXNedOM2YkQOMXJR
+ 4/sc=
+X-Google-Smtp-Source: AGHT+IGpPVPSw4LFlEFA0pi9PFgjwl9D0zPgM2GUL9shWyJjjzrVoehtjVgprdnwXweWmuzn+ZzzZA==
+X-Received: by 2002:a05:600c:3503:b0:41f:ef1e:7312 with SMTP id
+ 5b1f17b1804b1-41fef1e750amr64448525e9.14.1715586438905; 
+ Mon, 13 May 2024 00:47:18 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.21
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:21 -0700 (PDT)
+ Mon, 13 May 2024 00:47:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 03/45] target/hppa: Move constant destination check into
- use_goto_tb
-Date: Mon, 13 May 2024 09:46:35 +0200
-Message-Id: <20240513074717.130949-4-richard.henderson@linaro.org>
+Subject: [PATCH v2 00/45] target/hppa: Misc improvements
+Date: Mon, 13 May 2024 09:46:32 +0200
+Message-Id: <20240513074717.130949-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
-References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,63 +91,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Share this check between gen_goto_tb and hppa_tr_translate_insn.
+Most of the patches lead up to implementing CF_PCREL.
+Along the way there is a grab bag of code updates (TCG_COND_TST*),
+bug fixes (space changes during branch-in-branch-delay-slot),
+and implementation of features (PSW bits B, X, T, H, L).
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/translate.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Sven reported that PSW L tripped up HP/UX, so possibly there's
+something wrong there, but that's right at the end of the patch set.
+So I'd like some feedback on the rest leading up to that too.
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 6d45611888..398803981c 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -662,9 +662,10 @@ static bool gen_illegal(DisasContext *ctx)
-     } while (0)
- #endif
- 
--static bool use_goto_tb(DisasContext *ctx, uint64_t dest)
-+static bool use_goto_tb(DisasContext *ctx, uint64_t bofs, uint64_t nofs)
- {
--    return translator_use_goto_tb(&ctx->base, dest);
-+    return (bofs != -1 && nofs != -1 &&
-+            translator_use_goto_tb(&ctx->base, bofs));
- }
- 
- /* If the next insn is to be nullified, and it's on the same page,
-@@ -678,16 +679,16 @@ static bool use_nullify_skip(DisasContext *ctx)
- }
- 
- static void gen_goto_tb(DisasContext *ctx, int which,
--                        uint64_t f, uint64_t b)
-+                        uint64_t b, uint64_t n)
- {
--    if (f != -1 && b != -1 && use_goto_tb(ctx, f)) {
-+    if (use_goto_tb(ctx, b, n)) {
-         tcg_gen_goto_tb(which);
--        copy_iaoq_entry(ctx, cpu_iaoq_f, f, NULL);
--        copy_iaoq_entry(ctx, cpu_iaoq_b, b, NULL);
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, b, NULL);
-+        copy_iaoq_entry(ctx, cpu_iaoq_b, n, NULL);
-         tcg_gen_exit_tb(ctx->base.tb, which);
-     } else {
--        copy_iaoq_entry(ctx, cpu_iaoq_f, f, cpu_iaoq_b);
--        copy_iaoq_entry(ctx, cpu_iaoq_b, b, ctx->iaoq_n_var);
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, b, cpu_iaoq_b);
-+        copy_iaoq_entry(ctx, cpu_iaoq_b, n, ctx->iaoq_n_var);
-         tcg_gen_lookup_and_goto_ptr();
-     }
- }
-@@ -4744,8 +4745,7 @@ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     /* Advance the insn queue.  Note that this check also detects
-        a priority change within the instruction queue.  */
-     if (ret == DISAS_NEXT && ctx->iaoq_b != ctx->iaoq_f + 4) {
--        if (ctx->iaoq_b != -1 && ctx->iaoq_n != -1
--            && use_goto_tb(ctx, ctx->iaoq_b)
-+        if (use_goto_tb(ctx, ctx->iaoq_b, ctx->iaoq_n)
-             && (ctx->null_cond.c == TCG_COND_NEVER
-                 || ctx->null_cond.c == TCG_COND_ALWAYS)) {
-             nullify_set(ctx, ctx->null_cond.c == TCG_COND_ALWAYS);
+Changes for v2:
+  - Rebase and update for tcg_cflags_set.
+
+
+r~
+
+
+Richard Henderson (45):
+  target/hppa: Move cpu_get_tb_cpu_state out of line
+  target/hppa: Use hppa_form_gva_psw in hppa_cpu_get_pc
+  target/hppa: Move constant destination check into use_goto_tb
+  target/hppa: Pass displacement to do_dbranch
+  target/hppa: Allow prior nullification in do_ibranch
+  target/hppa: Use CF_BP_PAGE instead of cpu_breakpoint_test
+  target/hppa: Add install_iaq_entries
+  target/hppa: Add install_link
+  target/hppa: Delay computation of IAQ_Next
+  target/hppa: Skip nullified insns in unconditional dbranch path
+  target/hppa: Simplify TB end
+  target/hppa: Add IASQ entries to DisasContext
+  target/hppa: Add space arguments to install_iaq_entries
+  target/hppa: Add space argument to do_ibranch
+  target/hppa: Use umax in do_ibranch_priv
+  target/hppa: Always make a copy in do_ibranch_priv
+  target/hppa: Introduce and use DisasIAQE for branch management
+  target/hppa: Use displacements in DisasIAQE
+  target/hppa: Rename cond_make_* helpers
+  target/hppa: Use TCG_COND_TST* in do_cond
+  target/hppa: Use TCG_COND_TST* in do_log_cond
+  target/hppa: Use TCG_COND_TST* in do_unit_zero_cond
+  target/hppa: Use TCG_COND_TST* in do_unit_addsub
+  target/hppa: Use TCG_COND_TST* in trans_bb_imm
+  target/hppa: Use registerfields.h for FPSR
+  target/hppa: Use TCG_COND_TST* in trans_ftest
+  target/hppa: Remove cond_free
+  target/hppa: Introduce DisasDelayException
+  target/hppa: Use delay_excp for conditional traps
+  target/hppa: Use delay_excp for conditional trap on overflow
+  linux-user/hppa: Force all code addresses to PRIV_USER
+  target/hppa: Store full iaoq_f and page offset of iaoq_b in TB
+  target/hppa: Do not mask in copy_iaoq_entry
+  target/hppa: Improve hppa_cpu_dump_state
+  target/hppa: Split PSW X and B into their own field
+  target/hppa: Manage PSW_X and PSW_B in translator
+  target/hppa: Implement PSW_B
+  target/hppa: Implement PSW_X
+  target/hppa: Drop tlb_entry return from hppa_get_physical_address
+  target/hppa: Adjust priv for B,GATE at runtime
+  target/hppa: Implement CF_PCREL
+  target/hppa: Implement PSW_T
+  target/hppa: Implement PSW_H, PSW_L
+  target/hppa: Log cpu state at interrupt
+  target/hppa: Log cpu state on return-from-interrupt
+
+ linux-user/hppa/target_cpu.h |    4 +-
+ target/hppa/cpu.h            |   80 +--
+ target/hppa/helper.h         |    3 +-
+ linux-user/elfload.c         |    4 +-
+ linux-user/hppa/cpu_loop.c   |   14 +-
+ linux-user/hppa/signal.c     |    6 +-
+ target/hppa/cpu.c            |   92 ++-
+ target/hppa/fpu_helper.c     |   26 +-
+ target/hppa/gdbstub.c        |    6 +
+ target/hppa/helper.c         |   66 +-
+ target/hppa/int_helper.c     |   33 +-
+ target/hppa/mem_helper.c     |   99 +--
+ target/hppa/op_helper.c      |   17 +-
+ target/hppa/sys_helper.c     |   12 +
+ target/hppa/translate.c      | 1232 ++++++++++++++++++----------------
+ 15 files changed, 947 insertions(+), 747 deletions(-)
+
 -- 
 2.34.1
 
