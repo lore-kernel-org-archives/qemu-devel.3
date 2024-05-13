@@ -4,165 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36BBC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 13:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B15C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 13:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6VQK-0003Uv-Ec; Mon, 13 May 2024 09:09:00 -0400
+	id 1s6VVa-0005Vi-S9; Mon, 13 May 2024 09:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1s6VQA-0003UL-AH
- for qemu-devel@nongnu.org; Mon, 13 May 2024 09:08:52 -0400
-Received: from mail-bn1nam02on2083.outbound.protection.outlook.com
- ([40.107.212.83] helo=NAM02-BN1-obe.outbound.protection.outlook.com)
+ id 1s6VVY-0005VK-5d
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 09:14:24 -0400
+Received: from mail-dm3nam02on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::601]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1s6VQ5-0002Fh-PI
- for qemu-devel@nongnu.org; Mon, 13 May 2024 09:08:49 -0400
+ id 1s6VVW-00036w-0g
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 09:14:23 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QD0fiO1CS6GbQO01tt6K7rWIcdHk1Al9BLB1h8UFSDUej9ughV7zgEypjK3qBYuUqJX0haWoPegjqaOxiJpV30yZfO/3cutRbKKcKBO9PDeyIV0D9nZJ/nhobVLLbVNZ9hu5onwRkCvWdgQk9o/ZOOwhjQI/26FAxSW2eIlerksI+eA0rNrq4YAgxAWY1iGyzIBf+EXEhrpJigThY57PXpkJZ46M7OF4AlA3bZPBf84jHJ/aIaDFihJL6XvqRKWuOcefxrURhQaou/E4JYxv2HOmIsqBbOaS99gIlHQWGlPRu2ZgSv6kSy88V/dWDVWVVgw7lFNOprNIfNutTMhkPg==
+ b=neFmpxuSLOti9sh92YMXkzupNs3LNBsFLNAZYNSQ6Ffs00oX3wjYiC1JJikcPVZcLQTZVFKm3XfgIs4Y4SL4458wSfCFRhcuRZJOwCe3HMZzkeMtYUK5eAXqRYog3geMutAz6lUGrbTbOOR4TDEMZLNBTjQ94whZ6KNCJtuQ4ucn9hWJa7S3b2h38tB8ZcOJ0eSPDfZl6Y2uOx0FEMIXr53RKPns8fUN0i0amW0BuuCKUsKrOSVL9poLgp3A/vdLwNFRL37lPJnlYctrG9nPXZ37+1+JdSs8plY1jIQ/mqXVXB2HbMR9lxwOXnSEYMt3u+k5YJxL7t7KKdI0yCrGhg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HHw5QRwTZ1GFyKeHHwQvApR2KsiXQ6DgOnsil6gOKXo=;
- b=LftKN44QckuM+SW90m1uVwBY7sYvGnNXr7kq06HH8N51/2Waq/PZclTUBoupA2KtjBr+jdudxfRNdCb8H2CLPh5tQnHgjgN01gAB4r7GIn8pqDSAWj66NYKD+v1crcq2j1hQDCkB23AQ96UCY1qrWlELYrmrBB76xx9zuLXyTQZYHINkEctyUfZbsx9FMseAgJB0jWQ0nnnT+0DsYoDBSzQkfHwFZKJrnWL5IBLykQHhN2kuH0Namk2F+aZeEQtuYdQM3sm6LI6kw8lyRH8yQi4AhAxLuFMosHAzOd8YiRUxr89r+optUcE2/Bp9G7nTmmVKLhtrsATS5UpfL28O+w==
+ bh=tbvlgKivwUlPTzptQEoGcESSzKqTYYNhmHgAFK7pYpU=;
+ b=OB6slrUAs0KcqruHXDuDKggnTxfJsuuuwoWyD6lGizGur/Aps/JSmO3wyZLQXDNvew7PQsPsdTi4o53I2fEAG2afl5av5z9eJEEq2FWGeNCEfFiJo3g+aJ9qiAU+452A++dHvPAJ/AG5CXs7XA9DVLzk+GY38ZpeTs7UoKKP79W/I5cLCSa6o+8iPdFKrkOFgtsCaDUom8eLl5UwUP9BwWo5aFsdDyMuZxiaCj8D00rDAdVjvLny4zU3Nz7MMSkiZ1T5mHCkAwc0bsU9ojt0x748Q70O0QY4HdamRB6KNYUyG0pqGWUVERZMwJF5F20g5B5iXawlXa6dcfrj7B1Jig==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HHw5QRwTZ1GFyKeHHwQvApR2KsiXQ6DgOnsil6gOKXo=;
- b=ksQgDhKtmyoEpA85vey0pY3n9k7Ny6+bUAS6PextEj+/EQoEqCZfVXCuBn+80pCeDTn80GvkNLceJ2jtuLV+rzq4V7Bb/SHGWr7y1Tu1EmnBxT3dB15oe59P94L9ByMLqOplvqihaJnDb1e582pVuFwG7mfjuDSAkDDnyk9uypGHgcvPRy4sVRHkvFkKPtAqxDwtXhPZGWaiQcdB4nCciLvgYxgy5WOQ/R3fX8XYpM/qzntMLnyd4+GFyWVVhAFC9Hhc4e+GD5D1NUalcKw4GPJicwI7iv6F5ZsiSCoqGaNqhh9xk+I4LppC8u86wEq5409CkjIJ1Y19y1Mch2xe+Q==
+ bh=tbvlgKivwUlPTzptQEoGcESSzKqTYYNhmHgAFK7pYpU=;
+ b=aVLFFRmeRC9KTFtnJb5GKpMDQKHBLqkpho+oI10fQjGCgPTaWkkgO7kDIC5eePIW3Jqcp7FFlG5DnCiD0pjwgv0CcE95HJcFApDEYU0P7erMTTAe6NV/yQ5yTK459i2EumaotJ4eOX08kYqc71mahC2WpLpNofd420oI4YFo/pX14I7415wrWiKL/Sf8FJvqZzyMM6AAfy+PZB+kNrn77T7Nu/2gM80maVENMJwAK0BCHM/7QZtakIKof1axfiiQY3Buw2GXiMnGyo2vN/QbJXrZPlq0nhmKsVDCHXLfPUnkU3V5qSt1AsSTpTsh4SHqkh1b78Mh6u96quWlC3DZhQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by PH7PR12MB6491.namprd12.prod.outlook.com (2603:10b6:510:1f4::14) with
+ by MW4PR12MB5627.namprd12.prod.outlook.com (2603:10b6:303:16a::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Mon, 13 May
- 2024 13:03:37 +0000
+ 2024 13:14:13 +0000
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::d830:10ba:ec9e:7b80]) by DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::d830:10ba:ec9e:7b80%5]) with mapi id 15.20.7544.052; Mon, 13 May 2024
- 13:03:37 +0000
-Message-ID: <2e55e1ad-5c40-4ae5-a362-5f7fd610b0e9@nvidia.com>
-Date: Mon, 13 May 2024 16:03:32 +0300
+ 13:14:13 +0000
+Message-ID: <ddce202a-9d98-460d-acd8-e89aeaf61b6f@nvidia.com>
+Date: Mon, 13 May 2024 16:14:06 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/10] vfio: Add Error** argument to
- .set_dirty_page_tracking() handler
+Subject: Re: [PATCH v5 03/10] vfio: Extend migration_file_set_error() with
+ Error** argument
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
 References: <20240506092053.388578-1-clg@redhat.com>
- <20240506092053.388578-2-clg@redhat.com>
+ <20240506092053.388578-4-clg@redhat.com>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <20240506092053.388578-2-clg@redhat.com>
+In-Reply-To: <20240506092053.388578-4-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO4P123CA0319.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:197::18) To DM6PR12MB5549.namprd12.prod.outlook.com
+X-ClientProxiedBy: LNXP265CA0051.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:5d::15) To DM6PR12MB5549.namprd12.prod.outlook.com
  (2603:10b6:5:209::13)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|PH7PR12MB6491:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7e14fa46-db68-4624-1f49-08dc734d1a64
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|MW4PR12MB5627:EE_
+X-MS-Office365-Filtering-Correlation-Id: fca2be0c-bed5-440a-803a-08dc734e94f6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|366007|376005;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VGhVWjkxdlA2V1FZK0NKYUhXZ3p1OW5TSzZrTHV6VWlDVjl4RDExNWhWUjk3?=
- =?utf-8?B?NE5UWVIvVUpvWDExN3ZUTWhOcHpSNFVtRTBKYUtUZzJSanY3UjZkRDNjQ3hn?=
- =?utf-8?B?S1ppU1FYS29IQzZLTnVHNFprWlZsNUZMc04reE5uNHplUGFyVGt5QVZHTUp1?=
- =?utf-8?B?ZzRMeEF0RWZkU0F3Wm1neTZQVlY2UlA2SytoTHZ1SkRxK0lJYWJHY1ZzNmho?=
- =?utf-8?B?aTZOQmJzMEtyc1FuQTYyU21LSTN4RThrRkVsbVJ2S3RmVFk0UnoyUmlpc3ZH?=
- =?utf-8?B?SXpmRmNkRDNPemgrNi9sd3BHRGtCMnVCNlpkZ3g0ZTZIVzRrSEJCQURGYmdI?=
- =?utf-8?B?MHFIMnJ3d2dSRXdXR0JwWlAxQjYrWDZyQXBsZUdncC9JVVpjdWliaVVkTHdN?=
- =?utf-8?B?K2V5SHA0c3FTTFM5dGRhczJyYW8xK3pnYVFkYWd0emQ3bEZ0S1ZJZ3RYTXdL?=
- =?utf-8?B?Tnd3U0hocmp5b2xMbU9CWVgxdDI5eFhzUjc3TUhvazRtWmhjQ215dkV3TWpL?=
- =?utf-8?B?WTNyQ2FoSGdidEJuMnJ6bk1hVVZ2UGlmMmxiSEpLZFR0eVcyZ2NZSXRXRWxa?=
- =?utf-8?B?czFmUytLcW5STjFzKzdnb2Q4cEoxZXF2ZTk1ZmJES3FIcFAva3YvQ25LOGN5?=
- =?utf-8?B?NXpMS2ZyTVBlNDE5WktnMXdaT2lLWGtVRzVnTDBsZVUzbHRhVkM4eCtwWjFm?=
- =?utf-8?B?ZXJUZ3pIbjNHNDQ5ZVlHdEJQMkpjOUpYS3pKN2lRb3J4T0YwUTEvWGJad2t3?=
- =?utf-8?B?QnBaSWRDMHh1TThuT1lDd1VmR1pqZ3ZTRVRrbEVDTDM1S3FlWS9VMUgzbXcw?=
- =?utf-8?B?c2RVTElGVFN2emkxSFJVYXd6NFUwNytJc1QxRE11Z2N0WWRMd09RcU9Xa3hZ?=
- =?utf-8?B?dlpyTXp3MnM1MmtGQVI4T0xodFAvQUFpWjUxaUdPVjJwMmhrcXdkNDZxK0xK?=
- =?utf-8?B?SlF0ZTNzZjlQWjR2ZVRybnd4VUxxVHVxbGJFem5aUXoxOXl6SjNGRUg3d2lu?=
- =?utf-8?B?VWJFdDF2U2JpcStocis2M2VDTjM3cENUL0thZDdoZVFuNE9Oem94QStaTHhI?=
- =?utf-8?B?NitXVjBTZXB1WGgrTTVSNjQ2d0Jsazd4S05Qenp2TS9FZWVoakdzODdaaGk4?=
- =?utf-8?B?WUVyVHFCZU1TODRsWHkrUXlVSUtDSDg1ckZIZmZWdG1ZQ1FqRGtvcjQ5RTE3?=
- =?utf-8?B?bVhScndiMEc5NkZoZWNGVzdGVnh6TmxFTGlRb1VNb2dFM1hZTHc3Wlo4QnhM?=
- =?utf-8?B?SThlOUE3a21yVFZIbExhdk93VUVUVkIvTGgxY0VhbncvK2ZxVXZGSUdjQ1NZ?=
- =?utf-8?B?Ky93TDN4L29BNWF2TWZCd0lwbENGSU5MUHRNL3VQc1Nob2cvRlJDblFtdlNK?=
- =?utf-8?B?OWxjVGRKRmp4SXYxZzdlYW41ZHNKVG1mMEo3R3FPdVIxcjh3YWE0WExTWWQ4?=
- =?utf-8?B?Y01pQ05PUG5ML1pjRjdPdFY2eGI1NXJWb1lEY1o1TmVaelYyQVk1Q1N3My9o?=
- =?utf-8?B?NkZ6dlM1ZS9JN2Z3QUtIdnB3alVPVmVMMjhwY3V2eWRFeHNuTWNldkFSQmVr?=
- =?utf-8?B?dDF4cFF1UkxUbC9Yak5FSHZXWVV4UGZOTGdNNTFNMitKcnFxdzZoVHhVUlla?=
- =?utf-8?B?RXlCaS9ORW4vMDIrSU1qWGNKblZOdTBlN0tuZ2xIa3I5cXVSNGVCRXhYQmY1?=
- =?utf-8?B?dG5ub1Y4YkM4SUF2c1dLTVlTM1JjaTR3emQzZ0NmelBDc3RTSHVKV3VRPT0=?=
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|1800799015;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VDc2dUxpTzhOUHY5L2JVS0s3OEVhdGdTNHY2NjkwekMyVWttYU5scEhFNWlI?=
+ =?utf-8?B?SEwyT3llc0hON0srN0NGdWZaUDl2TXB1WDdFM1BydkRseng1SjZScWJEL2RO?=
+ =?utf-8?B?eWZXK3ZkWm1INWRBVnlvVitwNHNHY3Z1eXJWTDI0b3BxZXBQNkFpdU94YXgx?=
+ =?utf-8?B?OGtia3VYK05melNBWmV2S3VOTU5TeGxhcXJNZi9vZjU2dm52NHowT1BTRkI5?=
+ =?utf-8?B?UW1FTlJRclMyU1pFZVNFcVFvTXRDMUY5K3MxVHFVeGVBaXhTbWRQNmcwN2hN?=
+ =?utf-8?B?SUpWems4NEgrUXhTRWtkZHpMaW1yNWUxRGRudDlsOFlIZkZ4akd4ZHJlS2lG?=
+ =?utf-8?B?b1BUOSs1S2hHQ29QaHI2M2J6RXVPK2o3OWI5RXA3dlFHUWNaa2J2RXZQelBC?=
+ =?utf-8?B?Q0F0MXZ6Mmp2RjFNZGx4eTl3cUR6TjVQNm40UUZiSjRkV1k4d2poUXlxcWVS?=
+ =?utf-8?B?aXMvdlEwaUdzdjZxamJjTSs0VkpxN2t0N2s5enB6WXBVMThIb1lpZzIvZHpH?=
+ =?utf-8?B?R0ZTZ2owSHM1OUJQOVRUekJvNlVNblBHcURhYXQ5b3FrWW5NV29IeWdsRURl?=
+ =?utf-8?B?VFhicEJsSlVyMHMwamcyVWx6RmwxdGZ3N1B2dDFUY2dlZkR3Y20xUkxXdXU3?=
+ =?utf-8?B?Rkt4NmtpN1JLZzYzckcxMFlGS2NwRnAzN1N0dFJOUEdqMEJnMGc2UWxsMkFW?=
+ =?utf-8?B?WVoyZmkvTk9WRThIUG4vZjh1MTE1NHBZaHc0c0FLSmUybHRUcXhvOVgxUmtz?=
+ =?utf-8?B?OW1RMVh1bGpzc2tmSnQzcjZPbDlrTG5mNVU0di9XYlcxS1ZVd2wvSzVOSmJm?=
+ =?utf-8?B?VDhudzBtM1VjNk1BZXN3bFNEODdEQkFvNUVlQ0VYOGlyUUt2VEU1K2NvdE9N?=
+ =?utf-8?B?MUtXL0srdVJPNVo0Nk5JUlBhdmlPNUhIY0RIKys2dnFtejdaVDdoS2lRYzIz?=
+ =?utf-8?B?VnBPdTB5WmgrK3FHMm9aYlZlMDVUaGI4NklCaFplTWhERkJlK1A3RmhuOFl0?=
+ =?utf-8?B?ZVMrcU1vcVFyNW5TNTBOZUkxNGJkNmMwNFJMVXFzS2lTY0pmRWovWDhGWmNh?=
+ =?utf-8?B?bVhrdlkyRUEzRDZWTE13MGdScmJaRjg2WW4rdFNMYjJJREFoYTdNdStDVG8r?=
+ =?utf-8?B?NWdiT0lXbTdibSszOTlScFQ2WWxPOGJ1TkdoYlA1R1RyVUtIeVluN3JjVEJ5?=
+ =?utf-8?B?UVRIWmt6RGhCNkZWZWtwK0tyYnljMUpnbUJJb0pkRmk4RDh2c0N0MGF6Y1V2?=
+ =?utf-8?B?S25yN3hjUmVuNzQ2emhHTGd3TDl5eXF1VlY3SStVb25VeEhGMzdUT2lRZ0ZR?=
+ =?utf-8?B?ZWlIMEFqQVY5bGZkWEhXbnlITHlLdmJueVl1ZE9qZEk5UFpvOHZKdDNmSmVu?=
+ =?utf-8?B?MFl5SjdjWHNoQjFxN1pYZVE4TmpGa3pXMm5lc0tVL3laRmJvTTRNbFFSeGZ0?=
+ =?utf-8?B?YXNIZmxoNm1SZG1SMWdwTkJOU2tUZG5MbktreE81ekQxMy95R2dJLzA4TVdu?=
+ =?utf-8?B?U3JDZm1pZ2VjV1RwOW4wYnhKanNrQncyY0dSQ0pLZzlvdkJkWjk3cXFTT3JB?=
+ =?utf-8?B?VDdvSTRWV3hROFR0S2xWN0NzbEpGejRqRlhTc1VuWFZhQVRldi9WMTg1RjVX?=
+ =?utf-8?B?enBKRDRyTU5qakVmTnZlQXZNeS9abU8wemphMXc0ZCtkUkFDc2g2ZXEwaEZj?=
+ =?utf-8?B?enB1YUdxY2dJbi9nVnpNdThBQ3AwdFpubGQrMk5OUlV6RmRpWU1xTG5nPT0=?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(366007)(376005); DIR:OUT; SFP:1101; 
+ SFS:(13230031)(366007)(376005)(1800799015); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eDVsbmtqcUpLVGl5QUdzbVQ4TVdYaHpzOGVEQlFhbmVvZTdkOFI1WkJzOFI1?=
- =?utf-8?B?dis1MlNHMFcvZVBvakRtaFZKczhSa0tRMlI4dDVtaG5idEg4MktaTmR3ZDUw?=
- =?utf-8?B?eVMzc21MelpYQUM5OVZ6a0xjd0ZJQ1NrQWhMaExqbS9BV0pvZUxEM0d3dmQw?=
- =?utf-8?B?QVZyeXBaVzdYV2JZc3RES0RpNWJQWktRNFcvdVlwb0xQQVNOeEZkMWVWNGp4?=
- =?utf-8?B?ZmtrOUd1NlE0bkpHRmFIeGkrUWQ1VWlaUld5c2RvcWcrZkRpR20vY25PNzVL?=
- =?utf-8?B?TFlTN21pMFI2NG1iOVZKL21ZSjVvZVZYNERTc01PdUhwemNoZFFRdTVGSjVs?=
- =?utf-8?B?M3gvTmlPZTZoeWQ1V2xHUXN0bFQwaXFNSkluRGlNeXQramNtRzdlV1NkQ1RD?=
- =?utf-8?B?NWsvS2dva012ZCtOK2N0dE50WElSQmprZFJXQ1lBMG9aeWhPRSsyYTFjMUpj?=
- =?utf-8?B?VGJNekF4bHBJcklDemp5T2JkU29Ud2p6S2F4eXlUYVpaaUZ4M0JtNGIrRVMx?=
- =?utf-8?B?ZVVIdEc5c0twdzBPcVRKYTRSTFNtQnhVZHE2VVNkZHVJV0dxbm00Mi9pR2Nm?=
- =?utf-8?B?S3BpYnVkalRqZnFDczRISVRkY0pwRjJYVWlrQTM4YjhCOWx0VGViZTAwWjFB?=
- =?utf-8?B?TXU1RTdpdmRoNUtGV0lXYllpdWxrRHc2Wk8wNjBWQnkzRVZHbzl5RU9OckVv?=
- =?utf-8?B?bzIyYmNlWXBBc2FPY2ttK0VUbVZoaUVEWDEzc2lNVmxtSjNBN1Z5dDdVSmkz?=
- =?utf-8?B?ZVFPUnlZTTlhbVFIdGkzT1N6dStiak10Y0pBc3VhaUJjLzJ6dG5BWHpvNys3?=
- =?utf-8?B?L09RUEkyYXVtS2kyUzVIaUtwYjNmaFRDeEM5YmozTWVVU21BUXBOd3hRWFdZ?=
- =?utf-8?B?WDF6eXBCR1lyMVFhTE5SMUpJMFhlcEtOMHNHNDl6N1pkUG5WN1BMcE9lSUR4?=
- =?utf-8?B?TGZ2M0Y3T2UybU9jNEduN09xUU04M214ZUViLzFZV3lxM3pqWjdzYWpaOWZE?=
- =?utf-8?B?N0VpZXdRa0RiOU1EQWZjY2NmcklTQkhMM1VxMkV6T2lVVTdBMmRCZ0tSOVBQ?=
- =?utf-8?B?d0kwb21SU1ErUnlSTkNXckhLSnJMRCtmUXBKdjJ3bEdDeXZ1UmhiMkVxYjI5?=
- =?utf-8?B?UUxUQWNIZVk2bFBtSUV4dWhWNUFzYTVHSExWMkJkMGM4cDdibXJKc0hqckVU?=
- =?utf-8?B?ZGF2S3hibE9XcjFMTG5kSG12VWw5aURHYnlpTkNBcFFsNVVBVTVpK0IyRmR2?=
- =?utf-8?B?VytBTy9DN0RRYnU4dlNxT0RhNXZPSk5vMkhadHdCV29EQ2RyTjNlYTR2YW14?=
- =?utf-8?B?VTBBNGptZjhRTGZQR3Z0dmdoME9GbzFtWFM4aC9yOUVVd3V0WlpVb1pHbjZ3?=
- =?utf-8?B?bUFwRStJRmFDaVhWRFhTM3NteHYwUlY1R1Y3SFJDRW1ZOU4xbklxMkZYdU1Z?=
- =?utf-8?B?aHJMS3ByTUg0bUQzRElZS2l5ZkpLTHhyK052Q0pBMDBrSTIxTk81TGhEMjE2?=
- =?utf-8?B?OFRoYXJIZllpdjFnVE9kS0MxSkJaVGZKVEd4Qm52amFBdGJKTElYbjB3R09j?=
- =?utf-8?B?V3Q5UnY1clRGNWlVOS9NMm9uR2JXR2JrT3ZvOU5heC9yRkhuVTkxNFBQMkw1?=
- =?utf-8?B?UVVBZURkMU1ONklWdkgzWHZuZVdUWDZ6eWpWeUdtZjJ5bEQ2bDlqRHNMTTBw?=
- =?utf-8?B?SnVxNDB0a3B0eVJwcUVjYWlTR0dOMlBRbThra0gzcWZPcm80VXVyUlQ4V0RK?=
- =?utf-8?B?TDUxRThLMWcwNnMxcFNKWklacy9MT2ZHUGIycFNBbTErUEFYRkgzbk8xM3hv?=
- =?utf-8?B?VDNPSGJ4SkRTVXlJRmpqWHE5Y01FT0FGUGFNQVgvaFVvOU85bDF4dUVsS2xz?=
- =?utf-8?B?Mmk0VjJxVVpYRzV3NS90NEcrZjdVdExaakRTL0ZZMjJDNnk2bWpBYXdvRUdo?=
- =?utf-8?B?T3VaZlFoVUZUUE9qNHJkMzYyZmdHZjVsQVdRNTYzQXV5ZUhMVG9PK2syakNk?=
- =?utf-8?B?VWMxekhsZmZqeXlNSjdRZG42dUdnZzQ4Tmsvbm5Iak5RZ1VMSHhWc0RmNWJV?=
- =?utf-8?B?OGdMYjN5NG5zejJJUzdMelkzUzVpYkNJVGhxblJZdm5WQjl1ZVRvZlAvRzhx?=
- =?utf-8?Q?BDesYN0Q0bPXu2YD7AIeyTIa1?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cW42VjFtV0swNllnalNJVUQxTFV1QmZQUHpzeGlta2pIZVRNZmdJSlkxRWY0?=
+ =?utf-8?B?RDZVQ09Cb2tmOWo5M3RicGV3Zmtyc3kreVdmb25QNXllZ01FbEdudUJ6dEI4?=
+ =?utf-8?B?TlhoWUZHQm13N1dXSXZWZUFKYlpYeHR6ZFh1ZFc4MGhOc1ZBSDc4ek85a3pt?=
+ =?utf-8?B?TUo2TWhlOVIxelVQak1obzVSWXFaOGZ4REFSMWxrcDhoa3grSnhOOUVHck55?=
+ =?utf-8?B?U0h2cmkxQUdkdHBpNmVlSkEweGI2cUJzanpudTNTb0szWnJzcG1YbEJFbHpD?=
+ =?utf-8?B?K0RMRFptOHFhSk5jcS9nWkI2YUR1eHU2b1EzanRKL1M5YW1IMEVwMk1QZWpu?=
+ =?utf-8?B?WDI4dHBTMmpmUlYxQXRrZ1Z6WDFhQ2tueXJ0N0sxMXl3VDNpRnVoM3BvQnhT?=
+ =?utf-8?B?Um1QbDVSaWpDVWxoMTRvbzdpRVRHMnkzZ3RPbk11RXc1S0RhYWx4b1VqdDJZ?=
+ =?utf-8?B?MUJDbm9DY251d09jMTVMeW5SZi9RYWozN1d6NmtteCtmTmx0STVraFRYUGQ2?=
+ =?utf-8?B?a0c2Mlg2bTZWNHQrM2xvTEpwbFZQSmNjNzQ3VWMrM1JLWUJRUEliMGF5Z25m?=
+ =?utf-8?B?Q1NHZ2xiTXZWUGVBeXVvdzhkeHRLT3VYdGJZN0pwOGhSR0FvTWpZdGNhMktN?=
+ =?utf-8?B?eXlKYUVDd1hvMTk1d1h6Nzd6MWJ6Vit4ZXh2eW5uOFdjTmIzU3BXL3lGWkpj?=
+ =?utf-8?B?WTVjUHRTWEN2MjZiNDhBNUt2NkFyNzZjckRsZzNrZzF5UlFOaGNqdjkyRWZx?=
+ =?utf-8?B?ZDdGd2l5bVl2NGJmMDlIcStVbFFkQlNIekpUOWNSbG1sZXdNUGpSVGU2WGZV?=
+ =?utf-8?B?WnMrM001Rlp5UW5OckhtaDBxS0hNcVVTcldFa2Vud1p2N3NHS2ZPcDhCdnFw?=
+ =?utf-8?B?cVgxWjZ3NnNJeTdJYzdDaEtYaklaWDBBbnRMOUdNUmFSU2hVZ1VNL2JZMkxN?=
+ =?utf-8?B?KzgvNUxCMHBFbnhwdDFERkVQMTk3ZFR2WjAzMXZ3UCs2dUtQWGpZYzlwYlZS?=
+ =?utf-8?B?TEgrMlJOTjNiSlM2dmx4cG42bzFJbUppLzk2S25oUmg3b1k4KyszNEZ5ZHl1?=
+ =?utf-8?B?ZVFFeHNDb2QxMFZlV3M0V3RBZHU2UUt0dExWY3I3UCtseHdhemhGL1E1RXFX?=
+ =?utf-8?B?YnZRQm9DZisxSkphME5oWHArNzAxTEI3cW5pdnVyMGt2UmUvUzk2MDFyZ0hH?=
+ =?utf-8?B?QUlyUVdJa0lxL21QcmU4cFBpN0xrdWdIcTh2aXZpVEpyanhONjh1Uk5uMjBL?=
+ =?utf-8?B?R0xEOXk4V3VSTHU2RXpENmhQaENUeDFrRUUvRGJqR2ZOai9xdHdObUNqRklQ?=
+ =?utf-8?B?elB3cDZkTCtldGFIZzQvVzJkVm91clRnOEFVU3hZTHo3dTRVL1V0b3lXQzlQ?=
+ =?utf-8?B?ckp6OUpoRXEzSzg4a2N5NC9ZQTNySmNwa2Z3WEppcUNVeSt5RUliZEhBVmhB?=
+ =?utf-8?B?NFU1dzNDRFJGcUNLZlpTaG1vdGVQUlJuUnl4VlZPYVBLQW1IOHpOenA0bXZx?=
+ =?utf-8?B?SVRHc1FJVjFKYW1sb2ovNUo1NzJmUmNRSVFoQWJydGVrSFVQR1VQcml6cU9B?=
+ =?utf-8?B?UEhvZHdHNmxSZEx1ZFZoeE93RUxySnEzVVFKYXV6T09DdEJobWNpSFZ6eGNr?=
+ =?utf-8?B?TzFtMTVLV1FYSk9jN1hrVk5Jb0RGeEJ1VmU2TmxKc05kNXE4NVhJeC9FZmgv?=
+ =?utf-8?B?NVlnN1V1TGFBM0lEUHozVE9NYWQ3bXYrWG82MTZjUDc0Q3hlMldMSjhIUDdG?=
+ =?utf-8?B?MWNveHp4U0xOZ3FUcHYwbmNRM3dWQ1hWTHRHK1NFbVc5QXo5eGIvS2x1TU04?=
+ =?utf-8?B?MG1OWkFqZ2N6V0UwRkU0RU0ybHJNRFJ3YUJSVWE1aHE2SHlQOUY5UTAyTmhY?=
+ =?utf-8?B?ak9HdC9IbDZJcG1SSUtaSHdWQTN6NlJ4ZU0wUXhaUEN2ZENPckVUZFgwZXJw?=
+ =?utf-8?B?Q1ZtREtSU2o2WDllUEZESTZkQkpMUE43Ry9ZWTBDVHJXM0s2eWNHMkZDak0y?=
+ =?utf-8?B?di92Z2xIYkNaZk9tM01lLy9CTmViTTk0emFINzFMOGx0WmJtT0FhamhkTk9B?=
+ =?utf-8?B?LzJhSFJxbVFEdG1namZhd1c1R3VGd1ZkVndnbDQrcWp0OTZQT2ZqRFlKVEQr?=
+ =?utf-8?Q?3Og/PTSr/1ZNmPfGHuRWN8qYy?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7e14fa46-db68-4624-1f49-08dc734d1a64
+X-MS-Exchange-CrossTenant-Network-Message-Id: fca2be0c-bed5-440a-803a-08dc734e94f6
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2024 13:03:37.4261 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2024 13:14:13.0393 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CR2kGgGoC3TLWHvC8b/g8ry1oT2Tv0aYbylQG8ugdXo90hiJtfRCrYr5Xs2LtbHli7pa/vd3XbGZI09RisHUgA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6491
-Received-SPF: softfail client-ip=40.107.212.83;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4Tp98hnJMn34PiB6wdZem8M+2M2TdZpWflpTX5CJ3KMbB2rVE+DhogHpNrSjmeyZpGaiN2TBCpwz2keL3xRn1A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5627
+Received-SPF: softfail client-ip=2a01:111:f403:2405::601;
  envelope-from=avihaih@nvidia.com;
- helo=NAM02-BN1-obe.outbound.protection.outlook.com
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,152 +178,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
 
 On 06/05/2024 12:20, Cédric Le Goater wrote:
 > External email: Use caution opening links or attachments
->
->
-> We will use the Error object to improve error reporting in the
-> .log_global*() handlers of VFIO. Add documentation while at it.
 
-First of all, I think commit 3688fec8923 ("memory: Add Error** argument 
-to .log_global_start() handler") forgot to set errp in 
-vfio_listener_log_global_start() in case of error.
-This causes a null pointer de-reference if DPT start fails.
-Maybe add a fix for that in the beginning of this series, or as a 
-stand-alone fix?
+Change commit title:
 
-Back to this patch, personally, I found the split of patch #1 and #2 a 
-bit confusing.
-Maybe consider squashing patch #1 and #2 so container based and device 
-based DPT start/stop are changed in the same patch? Like you did in 
-patch #8?
-Whatever you think is better.
+vfio: Extend migration_file_set_error() with Error** argument
 
-In any case:
+to:
+
+migration: Extend migration_file_set_error() with Error* argument
+
+?
+
+Other than that,
 Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 
 >
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Use it to update the current error of the migration stream if
+> available and if not, simply print out the error. Next changes will
+> update with an error to report.
+>
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
+>   include/migration/misc.h | 2 +-
+>   hw/vfio/common.c         | 2 +-
+>   hw/vfio/migration.c      | 4 ++--
+>   migration/migration.c    | 6 ++++--
+>   4 files changed, 8 insertions(+), 6 deletions(-)
 >
->   Changes in v5:
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index c9e200f4eb8f8a8ab2c8b8d0e0dbf871817b94fc..8da2f6454d82046c449f034eb978e1247a9be682 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -103,7 +103,7 @@ void migration_add_notifier_mode(NotifierWithReturn *notify,
 >
->   - Fixed typo in set_dirty_page_tracking documentation
+>   void migration_remove_notifier(NotifierWithReturn *notify);
+>   bool migration_is_running(void);
+> -void migration_file_set_error(int err);
+> +void migration_file_set_error(int ret, Error *err);
 >
->   include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
->   hw/vfio/common.c                      |  4 ++--
->   hw/vfio/container-base.c              |  4 ++--
->   hw/vfio/container.c                   |  6 +++---
->   4 files changed, 23 insertions(+), 9 deletions(-)
->
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index 3582d5f97a37877b2adfc0d0b06996c82403f8b7..326ceea52a2030eec9dad289a9845866c4a8c090 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -82,7 +82,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
->   void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
->                                          MemoryRegionSection *section);
->   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-> -                                           bool start);
-> +                                           bool start, Error **errp);
->   int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                                         VFIOBitmap *vbmap,
->                                         hwaddr iova, hwaddr size);
-> @@ -121,9 +121,23 @@ struct VFIOIOMMUClass {
->       int (*attach_device)(const char *name, VFIODevice *vbasedev,
->                            AddressSpace *as, Error **errp);
->       void (*detach_device)(VFIODevice *vbasedev);
-> +
->       /* migration feature */
-> +
-> +    /**
-> +     * @set_dirty_page_tracking
-> +     *
-> +     * Start or stop dirty pages tracking on VFIO container
-> +     *
-> +     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
-> +     *              page tracking
-> +     * @start: indicates whether to start or stop dirty pages tracking
-> +     * @errp: pointer to Error*, to store an error if it happens.
-> +     *
-> +     * Returns zero to indicate success and negative for error
-> +     */
->       int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
-> -                                   bool start);
-> +                                   bool start, Error **errp);
->       int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
->                                 VFIOBitmap *vbmap,
->                                 hwaddr iova, hwaddr size);
+>   /* True if incoming migration entered POSTCOPY_INCOMING_DISCARD */
+>   bool migration_in_incoming_postcopy(void);
 > diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 8f9cbdc0264044ce587877a7d19d14b28527291b..485e53916491f1164d29e739fb7106c0c77df737 100644
+> index b5102f54a6474a50c6366e8fbce23812d55e384e..ed5ee6349ced78b3bde68d2ee506f78ba1a9dd9c 100644
 > --- a/hw/vfio/common.c
 > +++ b/hw/vfio/common.c
-> @@ -1076,7 +1076,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
->       if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
->           ret = vfio_devices_dma_logging_start(bcontainer);
->       } else {
-> -        ret = vfio_container_set_dirty_page_tracking(bcontainer, true);
-> +        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
+> @@ -150,7 +150,7 @@ bool vfio_viommu_preset(VFIODevice *vbasedev)
+>   static void vfio_set_migration_error(int err)
+>   {
+>       if (migration_is_setup_or_active()) {
+> -        migration_file_set_error(err);
+> +        migration_file_set_error(err, NULL);
 >       }
->
->       if (ret) {
-> @@ -1096,7 +1096,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
->       if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
->           vfio_devices_dma_logging_stop(bcontainer);
->       } else {
-> -        ret = vfio_container_set_dirty_page_tracking(bcontainer, false);
-> +        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
->       }
->
->       if (ret) {
-> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-> index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e368d7dff78a6d65aa 100644
-> --- a/hw/vfio/container-base.c
-> +++ b/hw/vfio/container-base.c
-> @@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
 >   }
 >
->   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-> -                                           bool start)
-> +                                           bool start, Error **errp)
->   {
->       if (!bcontainer->dirty_pages_supported) {
->           return 0;
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 06ae40969b6c19037e190008e14f28be646278cd..bf2fd0759ba6e4fb103cc5c1a43edb180a3d0de4 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -726,7 +726,7 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+>            * Migration should be aborted in this case, but vm_state_notify()
+>            * currently does not support reporting failures.
+>            */
+> -        migration_file_set_error(ret);
+> +        migration_file_set_error(ret, NULL);
 >       }
 >
->       g_assert(bcontainer->ops->set_dirty_page_tracking);
-> -    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
-> +    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
+>       trace_vfio_vmstate_change_prepare(vbasedev->name, running,
+> @@ -756,7 +756,7 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+>            * Migration should be aborted in this case, but vm_state_notify()
+>            * currently does not support reporting failures.
+>            */
+> -        migration_file_set_error(ret);
+> +        migration_file_set_error(ret, NULL);
+>       }
+>
+>       trace_vfio_vmstate_change(vbasedev->name, running, RunState_str(state),
+> diff --git a/migration/migration.c b/migration/migration.c
+> index b5af6b5105d58f358f6d4d31694e21debd8eb81d..9c648f5ba1c0104088e37baf90d9f94fbdc21570 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3033,13 +3033,15 @@ static MigThrError postcopy_pause(MigrationState *s)
+>       }
 >   }
 >
->   int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 77bdec276ec49cb9cd767c0de42ec801b4421572..c35221fbe7dc5453050f97cd186fc958e24f28f7 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -209,7 +209,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->
->   static int
->   vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
-> -                                    bool start)
-> +                                    bool start, Error **errp)
+> -void migration_file_set_error(int err)
+> +void migration_file_set_error(int ret, Error *err)
 >   {
->       const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
->                                                     bcontainer);
-> @@ -227,8 +227,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
->       ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
->       if (ret) {
->           ret = -errno;
-> -        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
-> -                     dirty.flags, errno);
-> +        error_setg_errno(errp, errno, "Failed to set dirty tracking flag 0x%x",
-> +                         dirty.flags);
->       }
+>       MigrationState *s = current_migration;
 >
->       return ret;
+>       WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+>           if (s->to_dst_file) {
+> -            qemu_file_set_error(s->to_dst_file, err);
+> +            qemu_file_set_error_obj(s->to_dst_file, ret, err);
+> +        } else if (err) {
+> +            error_report_err(err);
+>           }
+>       }
+>   }
 > --
 > 2.45.0
 >
