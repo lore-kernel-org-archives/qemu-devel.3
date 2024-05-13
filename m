@@ -4,76 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 783DCC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699A0C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6TlC-0007SS-Oh; Mon, 13 May 2024 07:22:26 -0400
+	id 1s6Tpg-0000Tr-Bd; Mon, 13 May 2024 07:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s6TlB-0007SH-JM
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:22:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s6Tl8-00071M-TG
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:22:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715599341;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ykJV2L5P6auBvKRf7YWFmKzOqvHyFSYlGc1LbiLhyk8=;
- b=hUQ8OQpi07+dhyliYA1u1PFkNn2/v60c04KAfs6XGFtn+1+cZ7wdqem6pixfpTte3OtD/q
- pFIE9xhvTg7XVI1WMqMh/3h7xsA3ep94fyr85afPPmaesGRJedbR1ee/UPxCcTjZiSm493
- 0uKcjClF9l8njbKnG5d/oRZGen3CTqA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655--2Kjd2KrMDy7cpvXqyY18w-1; Mon, 13 May 2024 07:22:17 -0400
-X-MC-Unique: -2Kjd2KrMDy7cpvXqyY18w-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 72A3180021D;
- Mon, 13 May 2024 11:22:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BBCFD40004B;
- Mon, 13 May 2024 11:22:14 +0000 (UTC)
-Date: Mon, 13 May 2024 12:22:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: Re: [PATCH 3/3] gitlab: use 'setarch -R' to workaround tsan bug
-Message-ID: <ZkH341rrPTNS9yqA@redhat.com>
-References: <20240513111551.488088-1-berrange@redhat.com>
- <20240513111551.488088-4-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Tpd-0000TO-3h
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:27:01 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Tpa-00008x-Vz
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:27:00 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-34e667905d2so2859679f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:26:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715599617; x=1716204417; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/G7MfgzCcN0jtEglp0t6kBbppY8sZFYe8E6d/jwHYcg=;
+ b=DfDgY65CkKaOX+Cpy8Eikx6rhzf/S9sY1ZJY9EuB+hmYAfGFX0wLckwm6y/aR6y6PW
+ 9O0sAZUfVyJkrYKrj7CDArEaBOT4UN9tik5wWS/3LLCpAEb+wJN2ucNIFQXrH9AaBUm+
+ HakPhTMvv3RX2qVB+RCSFVbt5qlQUqWXLZ/EfV9hUjyBgAowH5P11hZ70N8XnFB/RPEC
+ 5/L34AZ5N+Knl3OC7vSTbz+4QUfyOhVP/zBAm2lFUjFXwlwZVtQu6UzHl92ULiHGhCUX
+ eqU2PNe85tOusHPRTKq+8tnzLoTfuAEwhi+2aXLc6V6Y3BQbluO1cN5md/0jPJAD816w
+ /Tuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715599617; x=1716204417;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/G7MfgzCcN0jtEglp0t6kBbppY8sZFYe8E6d/jwHYcg=;
+ b=SeF7uyNX+8BSrHwA7zeMPoqPCaZDq36H3UME3XBa7V+Yb4InknuUXGq8Q1VioiXYy7
+ NfDtsKeCPmBis6Cr2JGwpQ8Lmv+I2rb/tGEot5iNYUVFDZjoOB9aR/VKgkT/Eg3Lm8PT
+ F29REwDqv0S30mjvUcQaQdJ9hsGHgM2aOc5iJmYhqhInPF09adXlpM3JtNkGCC6RATId
+ ZZlVF4oL0c9S5h7JoOqnJuL32HllPtxaqRvhbA0vP7CYZM/tpgHsVWFSQ7JIMQxQ/ZPW
+ Pbd8quexpPtHTVrCd8wcTMjZkh8JLrVumDTKKRWG1crqOEcmoLhocpAd5gtDD9Uz/YuO
+ cYzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeE5zWUrGDDRf6FKAQzpyN5c+YTFahPPgQT7WFqFuEmXy8WjbOO8DEiL0G5AD6AXYuSLhHn5osqLRhVcwmovMi/oNNGYY=
+X-Gm-Message-State: AOJu0YzA/7AlDFk+QFTNXKibjyVvzC6MVqvXS6S1dW3riL27hgAvYUdu
+ Czr5WbpT/J6mRr41LN72VOibqo+FGNaHAr++x/1H1jiog1GkynjwsYyBxUsqqMk=
+X-Google-Smtp-Source: AGHT+IHHKRugbe7S2sosZWTGK6SMaDiKH339rK6MCwqegI28M3lHkG/hP7jmXPxx25wWZ8lnz7TgUw==
+X-Received: by 2002:adf:fa4d:0:b0:34f:fd71:9af with SMTP id
+ ffacd0b85a97d-3504a73edbfmr6780716f8f.39.1715599617085; 
+ Mon, 13 May 2024 04:26:57 -0700 (PDT)
+Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-351b79e8e6bsm3274119f8f.65.2024.05.13.04.26.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 May 2024 04:26:56 -0700 (PDT)
+Message-ID: <93836d9f-56b7-464e-84a2-a101ca78e360@linaro.org>
+Date: Mon, 13 May 2024 13:26:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/rtc/ds1338: Trace send and receive operations
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev
+ <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-trivial@nongnu.org,
+ qemu-arm@nongnu.org
+References: <20240513101108.5237-1-shentey@gmail.com>
+ <20240513101108.5237-2-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240513101108.5237-2-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240513111551.488088-4-berrange@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,57 +95,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 13, 2024 at 12:15:51PM +0100, Daniel P. Berrangé wrote:
-> The TSAN job started failing when gitlab rolled out their latest
-> release. The root cause is a change in the Google COS version used
-> on shared runners. This brings a kernel running with
-> 
->  vm.mmap_rnd_bits = 31
-> 
-> which is incompatible with TSAN in LLVM < 18, which only supports
-> upto '28'. LLVM 18 can support upto '30', and failing that will
-> re-exec itself to turn off VA randomization.
-> 
-> Our LLVM is too old for now, but we can run with 'setarch -R make ..'
-> to turn off VA randomization ourselves.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On 13/5/24 12:11, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  .gitlab-ci.d/buildtest.yml | 3 +++
->  1 file changed, 3 insertions(+)
+>   hw/rtc/ds1338.c     | 6 ++++++
+>   hw/rtc/trace-events | 4 ++++
+>   2 files changed, 10 insertions(+)
 
-Example job showing this working:
 
-  https://gitlab.com/berrange/qemu/-/jobs/6824465594
+> @@ -134,6 +138,8 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
+>   {
+>       DS1338State *s = DS1338(i2c);
+>   
+> +    trace_ds1338_send(s->ptr, data);
 
- > 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index bab6194564..d864562628 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -575,6 +575,9 @@ tsan-build:
->      CONFIGURE_ARGS: --enable-tsan --cc=clang --cxx=clang++
->            --enable-trace-backends=ust --disable-slirp
->      TARGETS: x86_64-softmmu ppc64-softmmu riscv64-softmmu x86_64-linux-user
-> +    # Remove when we switch to a distro with clang >= 18
-> +    # https://github.com/google/sanitizers/issues/1716
-> +    MAKE: setarch -R make
->  
->  # gcov is a GCC features
->  gcov:
-> -- 
-> 2.43.0
-> 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> --- a/hw/rtc/trace-events
+> +++ b/hw/rtc/trace-events
+> @@ -22,6 +22,10 @@ pl031_set_alarm(uint32_t ticks) "alarm set for %u ticks"
+>   aspeed_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
+>   aspeed_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
+>   
+> +# ds1338.c
+> +ds1338_recv(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] -> 0x%02" PRIx8
+> +ds1338_send(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] <- 0x%02" PRIx8
+
+DS1338State::ptr is signed, although being an offset, odd. Using
+unsigned in traces seems better anyway,
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
