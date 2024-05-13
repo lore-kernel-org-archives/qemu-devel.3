@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510D3C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710DBC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6PyC-0000p1-OS; Mon, 13 May 2024 03:19:41 -0400
+	id 1s6Pyq-0001Ny-Jj; Mon, 13 May 2024 03:20:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyy@cyyself.name>)
- id 1s6Py0-0000ne-BA; Mon, 13 May 2024 03:19:25 -0400
-Received: from out162-62-58-211.mail.qq.com ([162.62.58.211])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s6PyQ-00015X-8S
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:19:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyy@cyyself.name>)
- id 1s6Pxw-0004Kg-Mx; Mon, 13 May 2024 03:19:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1715584747; bh=vSwRwYi9hyFCPmc9BLgEb7dYEu0fWGRRNdozl5bWeAA=;
- h=Subject:From:In-Reply-To:Date:Cc:References:To;
- b=pHsgVAOz7uj5sPLBsiHWo0qTwAT4KsGoO43P8Ya0lbMG3QwMnJ3l3Nnn7JCmAEFal
- v7S48wDe/pFc3PgYKO9TiF/MevFmP5l3kS2vCYrZwahKaQd44MpxkGnhDCkMta6P9s
- XNYB7S2GhjggklkKhR7nP9DZ/MFIgryClfBsE0s0=
-Received: from smtpclient.apple ([2408:8207:18a0:630f:e955:424f:3708:4c53])
- by newxmesmtplogicsvrsza29-0.qq.com (NewEsmtp) with SMTP
- id 4C3B489F; Mon, 13 May 2024 15:19:03 +0800
-X-QQ-mid: xmsmtpt1715584743th0ggrn96
-Message-ID: <tencent_8C6C872035C2F071090E689F3ADAE1E2C50A@qq.com>
-X-QQ-XMAILINFO: Od++Svt5p/Cha+L0C1WMxGJt5YQ1q2I5mbTnpBoCLeEm0IC2SOY3vlsg3Lnvdp
- vM4sz8XVl0sOox8IZEN1qE/AfsK57glw3FhhRGciH4Y8OFFYo8LRPjPqUoY0ObdSu4Cb6t9koKDJ
- 7ntdPl3wV6nkMo1VuVVMfOOOkOucvEbSVOBS3Ybio71Azn18SvByFjIThg6SdUacZvpF+6sFR9a4
- 2QHDVvds8CztpsbtGT5RzBx8ZXuLJV0VxvtAWxtPB2t01HI5/oRQ526hUfBNm8VGaqUGJoXzw39w
- 5huxXaYbfVlNUOShpKKy3c7bxvibjUMacnqxLh5lqbtCIKk9PrLvAKYJFBUZVCIDWXCv+bNKAFeq
- vsXp26NN78MN4O7sP16P8+/rK2VTRokPAFJPix5roAV9XHjWQZo6dhUzjM60zeI3KMwx5EdGWHGA
- qF5oaDwI2VHwQyqIxxa00vIQoviPt9S0KuLsJeYrnPMGzD72JfyMs7DG/aV2b6ZhzFYBvshOji14
- T7S7kaC9uiRZgHBGfKoGNkkbU5TW4xU8MgyQ+q3MfvwBZjxW3PskyVNkglGQTvuSn7p1B7FmfdaQ
- l41XepB/briC1CnKMtuw/4GmyVS6Cd0AdNt9yMCjqhgRTYEgoKx2ZEwrlCq1gGEiHgJh3ujtPW5/
- ezc5wcRKiQ8uF4+y066rDf6v8Dx5UXI2BvWEr8GMxAV8zdtOqGr0hB2Zr6LM5x0EtsgHfhC7mm/m
- ye8EJtmBQoLj6XYlvsTApFEOf9ujNucP5bWir0gR6kv5bLKyymBL3mxIRCy/dnYrDOwaMrRHDgqX
- MdOG2ZlmsPlJoijC8yAzep/Q19hhYrQoYt0JwyG36C1urlzPVKs+Mlzic6f6JKqhlF8PsssaE5qW
- dDd1hrBU49U/nSaKfgv+sqCaGL7A3ojv+5Iyg7mAwk5xFtmmhZ8RmyKdkE7/HslI53uwcD6B89N/
- Uusp/RdtTqONEGLWb0Zu3ipSXonWDqgeLjpEzCGL4Df61BJ0SbvuA8yKzBSO231VDcbYoAeaEXkO
- UV5kRhZCbFc/XqBJ16TqbVju575qE=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: [PATCH RESEND] target/riscv/cpu.c: fix Zvkb extension config
-From: Yangyu Chen <cyy@cyyself.name>
-In-Reply-To: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
-Date: Mon, 13 May 2024 15:18:53 +0800
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>,
- qemu-stable@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-X-OQ-MSGID: <2998C42A-B80C-4B11-86EC-27F6AE2466A9@cyyself.name>
-References: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
-To: qemu-riscv@nongnu.org
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-Received-SPF: none client-ip=162.62.58.211; envelope-from=cyy@cyyself.name;
- helo=out162-62-58-211.mail.qq.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s6PyO-0004P2-Os
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:19:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715584788;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eSe463ng3EiCj3u8loPXIUXTnqiY16n1zASZR5YvrIs=;
+ b=P9YanNDP0FQZIhPtJJ5oYKzvv29kiR06QxYjUs5ZEHjf7LU5vfgkzgK3TlWjNyL/GIfwrY
+ b3AoScBo6LDm+zVUhtYJsvjBaALgQKsW8Zw4+WPPmuFH/hLxu+HeM8TiK98SyHxqzMSvlb
+ LV7LLAsGwjiqDETVKfbeGhetyq6qjy4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-349-v1KWfXUTPXCf_x8LomXMZA-1; Mon, 13 May 2024 03:19:20 -0400
+X-MC-Unique: v1KWfXUTPXCf_x8LomXMZA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CDEED10193A5;
+ Mon, 13 May 2024 07:19:19 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.9])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 2AE6D499B83;
+ Mon, 13 May 2024 07:19:17 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v2 2/4] migration: fix a typo
+Date: Mon, 13 May 2024 11:19:03 +0400
+Message-ID: <20240513071905.499143-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20240513071905.499143-1-marcandre.lureau@redhat.com>
+References: <20240513071905.499143-1-marcandre.lureau@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,39 +88,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I think this patch also needs to back-port to stable-8.2.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-I added qemu-stable@nongnu.org to cc.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ migration/vmstate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On May 11, 2024, at 19:26, Yangyu Chen <cyy@cyyself.name> wrote:
->=20
-> This code has a typo that writes zvkb to zvkg, causing users can't
-> enable zvkb through the config. This patch gets this fixed.
->=20
-> Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-> Fixes: ea61ef7097d0 ("target/riscv: Move vector crypto extensions to =
-riscv_cpu_extensions")
-> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
-> target/riscv/cpu.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index eb1a2e7d6d..13cd34adbd 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1535,7 +1535,7 @@ const RISCVCPUMultiExtConfig =
-riscv_cpu_extensions[] =3D {
->     /* Vector cryptography extensions */
->     MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
->     MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
-> -    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkg, false),
-> +    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
->     MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
->     MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
->     MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
-> --=20
-> 2.43.0
->=20
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index b51212a75b..ff5d589a6d 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -479,7 +479,7 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+ 
+         len = qemu_peek_byte(f, 1);
+         if (len < strlen(vmsd->name) + 1) {
+-            /* subsection name has be be "section_name/a" */
++            /* subsection name has to be "section_name/a" */
+             trace_vmstate_subsection_load_bad(vmsd->name, "(short)", "");
+             return 0;
+         }
+-- 
+2.41.0.28.gd7d8841f67
 
 
