@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE81C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F026C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6TxM-0004xU-3J; Mon, 13 May 2024 07:35:00 -0400
+	id 1s6Txv-0005KD-4c; Mon, 13 May 2024 07:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6TxL-0004x0-9V
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:34:59 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s6Txh-0005AP-Ax
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:35:21 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6TxH-0001CP-Kf
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:34:59 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4200ee78f34so14723065e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:34:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s6Txe-0001QT-EP
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:35:21 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2df83058d48so55161941fa.1
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715600094; x=1716204894; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BOCXMR+sUnm584+BeT6hLb+0XVs7wIrrfxrIxNK5p8E=;
- b=T0Rn1ihtZBkru0HnKR2e3S1hMJ7zoVvpH6ItmHTzAf62nCfbWJtHuUOWTUzv6b+lq4
- GG8xZyx9gfItD3bi+bvGib1KZK6BtcfvpMYGnBTpk/5ZhthHjXecgQfgGTULuwQXM6BQ
- lXjH3yrp7Q9Z6BCIw5QbXtqc0XG8Ijc9kNPyuUvANaWWJo8F2eOPZK07RWas0TwXpKat
- 55NIva+gkY5axOw4AeUMyageNHmZuPsV4tFMzF7un/bU/NYJGrMmovq7Wh27N4Ty3Ja3
- XOnkTP1vZNbAhqLC3p0miIrhVMdyLVfW1RhJbukj5c5BjR134ucgaV5KZCPlO5N66Nk8
- agGA==
+ d=linaro.org; s=google; t=1715600115; x=1716204915; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+bpzsiTQ+FU6Gt5FKC4227ayMzpXN9CSi3lSLOCpI+I=;
+ b=BlQE/N0VyiXgchighd1VEj4pNlJCjPTxjzpEsifPRLEYEuV4CB7upwIIV5KIc/VSWp
+ Fd58T0HjiGuO2/GaZUYgpnxUDUUwIgiYKfWq5ouHXOMj1Q68+aaN0HRyRJ3WaJqwxC+1
+ U5osT1KrzOhb0W62tsqiL25nAi723P70PA0hE3amTbiz66T1uU2R5j7hhwvUGzeUmfd0
+ bu/DbWrfwcV8EbKky2rJrpYyD6nHImzDp5pCrEtvnWnMGFfW9TPGdD/k9FBW6Um9jmQb
+ deJlqKPR3bB7glb7Tj7L6sHI31DzFuY2rumUnclaORXtrYfwV7SmymLbnMnzUeGHNXQk
+ 7lWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715600094; x=1716204894;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BOCXMR+sUnm584+BeT6hLb+0XVs7wIrrfxrIxNK5p8E=;
- b=TLuitEXOu8G9Xnt07/mN7zHrJmQmWUMBZCfx6lNayr+Z7gj5T3f1cnnQxTTQQsuduG
- fdlYZxNPIfnhQ+dIjoTLXWSXjtk0fIuyvUpZM6JYE7cH5FvhlQMyr0yRVx7UiyDdfnW2
- c4Hwe5jubG+PpF0wgapMv2VZBUv+0retiyHrRba8zO2myxKjHXrmwPdJBH3EfdoI+Nfw
- WwwTyNDaJSrVSIrSHZkZc2P2XamlsfFcaNphUTPN5PbEzM2JeVhIe00joBe3GtT8wMqA
- S7FTR3Oy9aWgpBX0QmB+Ld1DpRg7tpk1JXqYAh/6rq/MLynOtR2uWgyrd54zA+kjyf7s
- kJbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJ8v5ZiW2lC8yeAmuXEzdRDxQ6FZ2sfW1JnQ1KXinbSkZ+i+Ve3xX9T/Xe+/k0ii4CjrZr8TSI3S3TllfdQ1kIJywE2PM=
-X-Gm-Message-State: AOJu0Yz4i3Sq3XDdHzOXTwYqGRhSwenqPdDPnGJbrgolAqUfantcZX/7
- GcC4TfTDusDLurQD2nzQk0vIl24jqVOGdDGyO5klK+GxOKaK3DKzA7+F64a2iSE=
-X-Google-Smtp-Source: AGHT+IGO3rt9cn5nAoLhskFs68xGslGfcmRGI0g7uakJhqfwwG4qvuviv9morgjNyFYpGO4QrHhIwQ==
-X-Received: by 2002:a05:600c:1d13:b0:41e:1bc1:36de with SMTP id
- 5b1f17b1804b1-41feac59cb4mr72622325e9.26.1715600093896; 
- Mon, 13 May 2024 04:34:53 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbe43sm10856350f8f.99.2024.05.13.04.34.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 04:34:53 -0700 (PDT)
-Message-ID: <55a9cc05-7f64-4ebe-b552-aae3c67e1f5d@linaro.org>
-Date: Mon, 13 May 2024 13:34:52 +0200
+ d=1e100.net; s=20230601; t=1715600115; x=1716204915;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+bpzsiTQ+FU6Gt5FKC4227ayMzpXN9CSi3lSLOCpI+I=;
+ b=gs/KvdWnNGPlr5rEbJm/ECQNomm/2JTQNZRt/i6/QnYt8Rawv7hBTudTvRPGItbWZb
+ nLZjlxrADcf1eflINQ2NuJwy8aL/XZzvAlt183GeoFCvlFWLtoJiQDyoXfNbkmhXOxWc
+ zuEEYTp0ADHdRi/ZQiNaqoqhKXSlCJUenTEVGz5aQTzrhFmnWbuYiSYZTaZFWcRcNC4u
+ eVc5+x4sZ5/1IVIrzCGZmQrVeHXU2UrP/NAM3Vtbkog2nS0A/o1+kkK3eHoMkcb00c00
+ XPIiZMYlOiEt3E71XvnMvW0sgfOeMd0X6OJ7HdmAfe0uIgUinQXCM5f9n+ZWzv6ywj4r
+ b4xw==
+X-Gm-Message-State: AOJu0YwHORrzsCzq1awK4Oq6UbIyZUkkMB4ZSusJwBxo8gchf5boRdQ3
+ ndMrdSOXSPZXO/TYGZSGWqts4nq4/EmEPmqsE6ZS1kwVmJZAWkQ3wVlyatBc9wY=
+X-Google-Smtp-Source: AGHT+IFdAn8dx0/lO56uhdqPRiNBNSVEH3OBExGim20uiVBDDj6n5I2PjMUyRDqLMBx6vt3NQkdc6Q==
+X-Received: by 2002:a2e:97d0:0:b0:2e3:6ef5:d567 with SMTP id
+ 38308e7fff4ca-2e51ff4d239mr57211281fa.30.1715600115329; 
+ Mon, 13 May 2024 04:35:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35045583669sm9317707f8f.106.2024.05.13.04.35.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 May 2024 04:35:14 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5DC5C5F8C8;
+ Mon, 13 May 2024 12:35:13 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [Semihosting Tests PATCH 1/3] .editorconfig: add code conventions for
+ tooling
+Date: Mon, 13 May 2024 12:35:11 +0100
+Message-Id: <20240513113513.640007-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240513113513.640007-1-alex.bennee@linaro.org>
+References: <20240513113513.640007-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/watchdog/wdt_imx2: Remove redundant assignment
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
- Guenter Roeck <linux@roeck-us.net>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev
- <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-trivial@nongnu.org,
- qemu-arm@nongnu.org
-References: <20240513101108.5237-1-shentey@gmail.com>
- <20240513101108.5237-4-shentey@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240513101108.5237-4-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,40 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/24 12:11, Bernhard Beschow wrote:
-> The same statement is executed unconditionally right before the if statement.
-> 
-> Cc: Guenter Roeck <linux@roeck-us.net>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> 
-> ---
-> 
-> The duplicate line may indicate a bug. I'm not familiar with the code, so this
-> patch may go into the wrong direction. Please check!
+It's a pain when you come back to a code base you haven't touched in a
+while and realise whatever indent settings you were using having
+carried over. Add an editorconfig and be done with it.
 
-The bug might be in imx2_wdt_write() where the WRSR register is
-overwritten, shouldn't we OR the SFTW bit, keeping other (such
-TOUT) set?
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .editorconfig | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+ create mode 100644 .editorconfig
 
-     if (!(value & IMX2_WDT_WCR_SRS)) {
-         s->wrsr = IMX2_WDT_WRSR_SFTW;
-     }
-
-> ---
->   hw/watchdog/wdt_imx2.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-> index 6452fc4721..f9a7ea287f 100644
-> --- a/hw/watchdog/wdt_imx2.c
-> +++ b/hw/watchdog/wdt_imx2.c
-> @@ -39,7 +39,6 @@ static void imx2_wdt_expired(void *opaque)
->   
->       /* Perform watchdog action if watchdog is enabled */
->       if (s->wcr & IMX2_WDT_WCR_WDE) {
-> -        s->wrsr = IMX2_WDT_WRSR_TOUT;
->           watchdog_perform_action();
->       }
->   }
+diff --git a/.editorconfig b/.editorconfig
+new file mode 100644
+index 0000000..e1540ae
+--- /dev/null
++++ b/.editorconfig
+@@ -0,0 +1,28 @@
++# EditorConfig is a file format and collection of text editor plugins
++# for maintaining consistent coding styles between different editors
++# and IDEs. Most popular editors support this either natively or via
++# plugin.
++#
++# Check https://editorconfig.org for details.
++#
++# Emacs: you need https://github.com/10sr/editorconfig-custom-majormode-el
++# to automatically enable the appropriate major-mode for your files
++# that aren't already caught by your existing config.
++#
++
++root = true
++
++[*]
++end_of_line = lf
++insert_final_newline = true
++charset = utf-8
++
++[Makefile*]
++indent_style = tab
++indent_size = 8
++emacs_mode = makefile
++
++[*.{c,h}]
++indent_style = space
++indent_size = 4
++emacs_mode = c
+-- 
+2.39.2
 
 
