@@ -4,50 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11584C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E91C25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 02:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Ibc-000125-7e; Sun, 12 May 2024 19:27:48 -0400
+	id 1s6LgJ-0005MO-TW; Sun, 12 May 2024 22:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Iba-00011C-V7; Sun, 12 May 2024 19:27:46 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s6LgD-0005M5-Lp; Sun, 12 May 2024 22:44:46 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6IbT-0000Dn-Of; Sun, 12 May 2024 19:27:46 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5B3704E65C4;
- Mon, 13 May 2024 01:27:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id o7Psv-Fm8xcf; Mon, 13 May 2024 01:27:36 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6EA474E65C6; Mon, 13 May 2024 01:27:36 +0200 (CEST)
-Message-Id: <20b23099bc0e51eedb7a97e1c34b582a95a38239.1715555763.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
-References: <cover.1715555763.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 04/61] target/ppc/mmu_common.c: Remove unneeded local
- variable
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s6LgA-0003dJ-Df; Sun, 12 May 2024 22:44:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1715568269; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=XQHmv1i0W/Q8+AmpTodW3ayY8bc7ZZVzesxk9TYCw9E=;
+ b=R8GMvrX9xtQRufrTcbWXVuexNWmW8Ih4bG7JTDD+DUakzW9TdN1IFdJ1iQoIAofmTgfMhLGQ1HlBdMtekA4MLcGwF48mvv2Ph4dZa9TXh72CkQ2OgyydCoAUttfE8Oc04JMYZhejRtijRsUNi1ZepUWJsaVdly8AVhjiKEGFUqg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067111;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W6Gydo0_1715568266; 
+Received: from 30.198.0.184(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W6Gydo0_1715568266) by smtp.aliyun-inc.com;
+ Mon, 13 May 2024 10:44:27 +0800
+Message-ID: <d5ce7f2e-f967-4fc6-baf5-59d0d149d151@linux.alibaba.com>
+Date: Mon, 13 May 2024 10:43:41 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:27:36 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] target/riscv: Reserve exception codes for sw-check
+ and hw-err
+To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Frank Chang <frank.chang@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20240510065856.2436870-1-fea.wang@sifive.com>
+ <20240510065856.2436870-6-fea.wang@sifive.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240510065856.2436870-6-fea.wang@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,104 +75,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mmubooke_check_tlb() and mmubooke206_check_tlb() we can assign the
-value of prot2 directly to the destination, no need to have a separate
-local variable for it.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/mmu_common.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+On 2024/5/10 14:58, Fea.Wang wrote:
+> Based on the priv-1.13.0, add the exception codes for Software-check and
+> Hardware-error.
+>
+> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> ---
+>   target/riscv/cpu_bits.h | 2 ++
+>   1 file changed, 2 insertions(+)
+>
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index f888025c59..f037f727d9 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -673,6 +673,8 @@ typedef enum RISCVException {
+>       RISCV_EXCP_INST_PAGE_FAULT = 0xc, /* since: priv-1.10.0 */
+>       RISCV_EXCP_LOAD_PAGE_FAULT = 0xd, /* since: priv-1.10.0 */
+>       RISCV_EXCP_STORE_PAGE_FAULT = 0xf, /* since: priv-1.10.0 */
+> +    RISCV_EXCP_SW_CHECK = 0x12, /* since: priv-1.13.0 */
+> +    RISCV_EXCP_HW_ERR = 0x13, /* since: priv-1.13.0 */
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index f79e390306..09cbeb0052 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -628,8 +628,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-                               hwaddr *raddr, int *prot, target_ulong address,
-                               MMUAccessType access_type, int i)
- {
--    int prot2;
--
-     if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__);
-         return -1;
-@@ -644,17 +642,16 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-     }
- 
-     if (FIELD_EX64(env->msr, MSR, PR)) {
--        prot2 = tlb->prot & 0xF;
-+        *prot = tlb->prot & 0xF;
-     } else {
--        prot2 = (tlb->prot >> 4) & 0xF;
-+        *prot = (tlb->prot >> 4) & 0xF;
-     }
--    *prot = prot2;
--    if (prot2 & prot_for_access_type(access_type)) {
-+    if (*prot & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
-@@ -795,7 +792,6 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
-                                  target_ulong address,
-                                  MMUAccessType access_type, int mmu_idx)
- {
--    int prot2 = 0;
-     uint32_t epid;
-     bool as, pr;
-     bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
-@@ -841,34 +837,34 @@ found_tlb:
-         return -1;
-     }
- 
-+    *prot = 0;
-     if (pr) {
-         if (tlb->mas7_3 & MAS3_UR) {
--            prot2 |= PAGE_READ;
-+            *prot |= PAGE_READ;
-         }
-         if (tlb->mas7_3 & MAS3_UW) {
--            prot2 |= PAGE_WRITE;
-+            *prot |= PAGE_WRITE;
-         }
-         if (tlb->mas7_3 & MAS3_UX) {
--            prot2 |= PAGE_EXEC;
-+            *prot |= PAGE_EXEC;
-         }
-     } else {
-         if (tlb->mas7_3 & MAS3_SR) {
--            prot2 |= PAGE_READ;
-+            *prot |= PAGE_READ;
-         }
-         if (tlb->mas7_3 & MAS3_SW) {
--            prot2 |= PAGE_WRITE;
-+            *prot |= PAGE_WRITE;
-         }
-         if (tlb->mas7_3 & MAS3_SX) {
--            prot2 |= PAGE_EXEC;
-+            *prot |= PAGE_EXEC;
-         }
-     }
--    *prot = prot2;
--    if (prot2 & prot_for_access_type(access_type)) {
-+    if (*prot & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
--- 
-2.30.9
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
+Zhiwei
+
+>       RISCV_EXCP_INST_GUEST_PAGE_FAULT = 0x14,
+>       RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT = 0x15,
+>       RISCV_EXCP_VIRT_INSTRUCTION_FAULT = 0x16,
 
