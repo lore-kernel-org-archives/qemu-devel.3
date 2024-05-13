@@ -4,99 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FBEC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8F0C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6TtD-0002Mi-Qx; Mon, 13 May 2024 07:30:43 -0400
+	id 1s6TvS-00046z-CO; Mon, 13 May 2024 07:33:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s6Tt4-0002Ew-Dn
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:30:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s6Tsz-0000Wu-Is
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:30:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715599826;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s1vbbD8eyh+YapZ1tbyTXmaKMwlt/B2MBUfyCaE+HSw=;
- b=hb8hJm3fHtnf1ASXRk8cyyfTOSCgE+Pya8ZbtJ6NGsKh/Xl8zE2NWvYakFUHahQmxyYQqQ
- y5XP816bqBc2Su/XJJjO/AGBAKaTcln5HjN6e9bBkIFdGZbj35OEmdY+UbX1WOFTfDiKNI
- pcMMwGQnlmbu67XkMmGMk8l23WdLFM4=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-kTyTmOu_NJ2uHWlhl7uvNA-1; Mon, 13 May 2024 07:30:24 -0400
-X-MC-Unique: kTyTmOu_NJ2uHWlhl7uvNA-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6a0c1aff9f5so52354346d6.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:30:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6TvQ-00046Q-Gh; Mon, 13 May 2024 07:33:00 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6TvO-00012U-Ui; Mon, 13 May 2024 07:33:00 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-4df8ea40b2bso1075823e0c.2; 
+ Mon, 13 May 2024 04:32:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715599977; x=1716204777; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3UCmsAklbjkrXrfaLN1GWoavHyDOe8fN2qEcy/vKB3s=;
+ b=aGW6m1Ffq+1+PM8s+URioi00Rv8Aa3Y6qBBNbjcQagXcfoadyYhqySVZE9NByR2oMG
+ zMfP2nOMWK+NVEiVJum71MNgnNGwB8Kf6giGRZLZzyoYKZ+DLKaA0Yk00WFL22nzPmwV
+ JRYVoz21qUFmVXl7DiFFyHl8D+16ZPj5gjSs3QvvX/+xvNMENTISMMMTWIV1fqcDzygY
+ MLLZ1Uxj/1rXrBl+wFfUrx6/YW1lyG07heYfOoZptX70RcMudeWWEjZ7LcB7ZKgzy7Vk
+ MZ5pVRZwPSnGzQb8pc8YtQQqHeuTVfdgpQOU2+HYMNDnP6KmPNfx/s48u2mc9pYJBnOx
+ 1WTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715599824; x=1716204624;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s1vbbD8eyh+YapZ1tbyTXmaKMwlt/B2MBUfyCaE+HSw=;
- b=ZuxQY3fK/BdPwB1BxTzSihJxUrmknCyT4tCHfIHJ+qkzjQ3ynlHEBMd8tHAOTAXArw
- 62cqzkjsDU8/eCKsDc93xtvI8zv31Qa201lwJABOtw3bLnbBE7ZHLfPRJT03xz2SJEz5
- OJofQQqis/mZUMQXueFojbq6zdVqNtSS78D1qqtbzkjcvJzWFZJUXETHKkgH+mYIMPxa
- H66Bc3udDm6JNJzbinVdIlUGtWVh9TPVDeKCPPtzAQqKtnB9layQVdvaZZmThYwZOfWx
- 79LkMjJT3chwR0nQL2M4CEeUduImxAtu0ASXQYV9qzkDPN5PF1GEZ4P2zwBheQ6dSdbW
- s15w==
+ d=1e100.net; s=20230601; t=1715599977; x=1716204777;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3UCmsAklbjkrXrfaLN1GWoavHyDOe8fN2qEcy/vKB3s=;
+ b=hwcsAvcqfRPjZ8IYbKfeaoJAs7x8l1CQlQKKa/fhb3lIMT3fjOmVnvhzKL6D3h8Hit
+ 5QOO25VPZkkS9+2MF3WE5EJNweftFZB998aG+zv2P663BppiuRpvJqlppnj6XNINEG+s
+ OlqxepkRztfEeCimQtGl2dAMmJQsVAQ+AsoTkdSMecfMNS+7+ck7yr3wzBGos8ybYHtg
+ pwtTwGHwuiYvhVR/7H8D4HbXEIhhafUpBgccstQFR07EJYi53Xdu9k+rilFEnWflFK4x
+ IJgXTeDfKFNRJ09epytqb7SQ2XSBN0rHmme1PuMSdnykw9kLlKlanraf+If+PZndYT31
+ D10g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAyKgvh5Zern1tXtsI9OGDrc0V1u8ZbSJiHqrp5ZZRrGTRuq+6VUdBmgmHzY2Fsk3gO6z5f3oDELQnd6GvDpZhmn6+7Kg=
-X-Gm-Message-State: AOJu0YyC05KOQASlJTdNq7z9JISpWtNaZAVmzPE4XLRzUGi6mAXEmmw6
- gPDEyo/b2FR5bkCJtrj21xxHEBOevm/zDer5g71EP7p968adT0dsIEZ38wi1zInK9QkSZElUS3a
- bqL/O1lfUcqmFSxRZn3Hsx6h2ohJlVtQEZ8QZzBWlVJ0I8Nc109gl
-X-Received: by 2002:a05:6214:3bc4:b0:69b:1f75:e700 with SMTP id
- 6a1803df08f44-6a168219c4cmr120015006d6.33.1715599824191; 
- Mon, 13 May 2024 04:30:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQ82wfEGl4Jm1rNxQ9CJyAt8e/rrBFCNv8loBl4XFqtxKeoo4OnSFLeAwTqVmZzFpXZH6YxQ==
-X-Received: by 2002:a05:6214:3bc4:b0:69b:1f75:e700 with SMTP id
- 6a1803df08f44-6a168219c4cmr120014846d6.33.1715599823867; 
- Mon, 13 May 2024 04:30:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f1d73d3sm42602996d6.114.2024.05.13.04.30.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 04:30:23 -0700 (PDT)
-Message-ID: <34258a31-5bfa-4005-ae04-6e56a2fab671@redhat.com>
-Date: Mon, 13 May 2024 13:30:19 +0200
+ AJvYcCVw2d8YvJIExmoWCFvngEAWJun4m41SjGEBCGEpj576BB3Sqm1lHZ35CFY+3zKs7ulqV4ik8WhtNQFY7AaK/vGVB95JwJY5jR+hmg3cB8JRwyZBcvuygNE3qhH/Dg==
+X-Gm-Message-State: AOJu0Yz7CKajj13Qcw+vJpfW4AqsqNKjcz6RHJrAfcEdyjW8lFnhmdSs
+ fpTdVuX89Tku8ZJHy25tCjL61kV6Q0yOBL0RjsTMBJNRGU8e37oYCaOvi7Rlw/Yf6NJBqVgFxwY
+ y2spBjFq58uKvRScSFYgF6TdA39U=
+X-Google-Smtp-Source: AGHT+IFtwaIOSuBCL5aHpB24FshUNDU5t9s9Wjjz4AOw3szmVFNrNTROzpuonsUnEMpSv8pSUQg8lBnjIEKn1ID8jws=
+X-Received: by 2002:a05:6122:1699:b0:4df:1a28:5e3c with SMTP id
+ 71dfb90a1353d-4df88138a64mr7796813e0c.0.1715599977400; Mon, 13 May 2024
+ 04:32:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 01/18] hw/arm/smmu-common: Add missing size check
- for stage-1
-Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-2-smostafa@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240429032403.74910-2-smostafa@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
+ <b732f7bd-53d2-4c66-9821-a5bd589f6c56@gmail.com>
+ <CAKmqyKM+2jhFdAL=3Z0De03hBFR6cn2xtVm3FrkPvn=U8tJLpg@mail.gmail.com>
+ <CAFukJ-CfsChuYbpdUP9EOPEEn0s=jdBmp9aV691U8By68HV6Aw@mail.gmail.com>
+ <CAKmqyKOQLTYm7F8NBeoSmL1B6icfPzuH-ZHPXhz+wJLrjJyd6w@mail.gmail.com>
+In-Reply-To: <CAKmqyKOQLTYm7F8NBeoSmL1B6icfPzuH-ZHPXhz+wJLrjJyd6w@mail.gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 13 May 2024 21:32:30 +1000
+Message-ID: <CAKmqyKMtJPGXs+rXFzfN7jqYTMbKBQ2SYVYoQ5kONT-FKkp=9g@mail.gmail.com>
+Subject: Re: [PATCH v9 0/6] Pointer Masking update for Zjpm v1.0
+To: Alexey Baturo <baturo.alexey@gmail.com>
+Cc: liwei <liwei1518@gmail.com>, richard.henderson@linaro.org, 
+ space.monkey.delivers@gmail.com, palmer@dabbelt.com, Alistair.Francis@wdc.com, 
+ sagark@eecs.berkeley.edu, kbastian@mail.uni-paderborn.de, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,50 +94,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+On Mon, May 13, 2024 at 9:14=E2=80=AFPM Alistair Francis <alistair23@gmail.=
+com> wrote:
+>
+> On Mon, May 13, 2024 at 9:05=E2=80=AFPM Alexey Baturo <baturo.alexey@gmai=
+l.com> wrote:
+> >
+> > Hi,
+> >
+> > > Hi, any change from v0.8 to v1.0?
+> > Not in the patches that were sent. I'd still suggest applying a step-by=
+-step approach with cleaning up old code and establishing the new mechanism=
+s first and then updating the code to match the spec 100%. Also I heard Mar=
+tin has some arch compliance tests for J-ext somewhere.
+>
+> The cover letter says that this implements version 1.0 of the spec,
+> this sounds like it doesn't.
+>
+> Also, it's better to make the changes on top of the current code.
+> Instead of constantly removing and re-adding the code. Which is then
+> hard to review. Especially as I'm guessing there isn't a huge
+> difference between v0.8 and v1.0.
+>
+> > @Alistair Francis @liwei does this approach sound reasonable to you?
+> >
+> > >Also, this needs another rebase
+> > Sure, no problem at all. I'll rebase and re-send them later today.
 
-On 4/29/24 05:23, Mostafa Saleh wrote:
-> According to the SMMU architecture specification (ARM IHI 0070 F.b),
-> in “3.4 Address sizes”
->     The address output from the translation causes a stage 1 Address Size
->     fault if it exceeds the range of the effective IPA size for the given CD.
->
-> However, this check was missing.
->
-> There is already a similar check for stage-2 against effective PA.
->
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Sorry, it did apply correctly! That was my mistake.
 
-Eric
-> ---
->  hw/arm/smmu-common.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 1ce706bf94..eb2356bc35 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -381,6 +381,16 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
->              goto error;
->          }
->  
-> +        /*
-> +         * The address output from the translation causes a stage 1 Address
-> +         * Size fault if it exceeds the range of the effective IPA size for
-> +         * the given CD.
-> +         */
-> +        if (gpa >= (1ULL << cfg->oas)) {
-> +            info->type = SMMU_PTW_ERR_ADDR_SIZE;
-> +            goto error;
-> +        }
-> +
->          tlbe->entry.translated_addr = gpa;
->          tlbe->entry.iova = iova & ~mask;
->          tlbe->entry.addr_mask = mask;
+But this series generates a warning. Do you mind fixing that and
+addressing the other comments/concerns
 
+Alistair
+
+>
+> Thanks. Can you be very clear which version of the spec you have
+> developed and tested against as well.
+>
+> Alistair
 
