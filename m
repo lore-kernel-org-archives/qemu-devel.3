@@ -4,54 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3A5C25B5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13E2C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6PEo-0007hS-5y; Mon, 13 May 2024 02:32:42 -0400
+	id 1s6PK8-0007uA-GY; Mon, 13 May 2024 02:38:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1s6PEO-00079o-Qr; Mon, 13 May 2024 02:32:16 -0400
-Received: from relay.virtuozzo.com ([130.117.225.111])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s6PK6-0007tk-Cv; Mon, 13 May 2024 02:38:10 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1s6PEI-0003wZ-Io; Mon, 13 May 2024 02:32:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=0Jf2jPALHceBe2IkfT271nf146NNRsQrOmP4HbZZosc=; b=H10hXW+1w7od
- zHJNvbwjlHzulgjSaOy8cxWq6n9dU0FHkQCjhGRQnhs1ruT/9fxPibHfgIftbwyUkhbNPr399fB+A
- eqJBRNRjds6PLZEpaS7HN1v1REzXK/LeiH7OmmdO105WQmn3hHOD4v9u82yHT0tvUkvZO/Tfe12/a
- TaI8g7D/2J/kiNQ0GY51qxuUq+SuLWsiaF4vv9vSRc/v7/nsrwgBxzfRpDNVDXL9D5EW7aj93u1/8
- /VCFr+e4g4X4m91dnv/GyjzMM3yzbUSryWso687XZXfXS2xNF/jnT/UjHVSbE9+2mMQzFaSEeOcOL
- fwIfHH549HYp4WWQk3mSmw==;
-Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1s6PAR-000qpR-2C;
- Mon, 13 May 2024 08:31:56 +0200
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- eblake@redhat.com, berto@igalia.com, jean-louis@dupond.be,
- andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v2 03/11] qcow2: put discard requests in the common queue when
- discard-no-unref enabled
-Date: Mon, 13 May 2024 09:31:55 +0300
-Message-Id: <20240513063203.113911-4-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
-References: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s6PK3-0005LC-Fg; Mon, 13 May 2024 02:38:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715582288; x=1747118288;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=zNTZwvBDmX+sT3qmwN7yy8aF9Vt4yfZqmuSijXDvB14=;
+ b=Pvqac4UeM+QG86uY9yOJ4VWyVb1yYh7noYKDjoDJjLHLsjE+Xs/+Vqju
+ IVh/alMg1Ksu5lBPFOuMdmuE+cdjdUAkcp2i8/0FOuKPugJPm1xpilERP
+ iw0t2+VF7G4ADw2cNHLBcGrEC9+jpRxv1z8mUI3Vci81PDDvnSFQgGleO
+ GzB9Yz0xyqNF3MSdmq3tJuP6o5iAzF5ZY2Qz1o8NoaNrs+aHUN8lBE0kv
+ Jt7xxsZvgDfPPqv8/cLwF9f6M+vx+4tF6WilCmz0/kBQuPqAK9iWgXnW0
+ aDJcLXG5fhSHuCZKDGCZTdNe4TeE35a46u0/0MWPCi73KCFpJ0aEn0fac w==;
+X-CSE-ConnectionGUID: fWk09ZRhQ1OwWTnjASbW5Q==
+X-CSE-MsgGUID: fFFAUQ54SQ25iWexnaZpIA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11071"; a="11625817"
+X-IronPort-AV: E=Sophos;i="6.08,157,1712646000"; d="scan'208";a="11625817"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2024 23:38:03 -0700
+X-CSE-ConnectionGUID: LHlwyNm/SG6aO/vBA/VsJA==
+X-CSE-MsgGUID: hNjwTF5uRYeX7W54AvK6cg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,157,1712646000"; d="scan'208";a="30269659"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 12 May 2024 23:37:59 -0700
+Date: Mon, 13 May 2024 14:52:14 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org,
+ Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>
+Subject: Re: [PATCH v9] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
+Message-ID: <ZkG4nlwRnvz9oUXX@intel.com>
+References: <20240409024940.180107-1-shahuang@redhat.com>
+ <Zh1j9b92UGPzr1-a@redhat.com> <Zjyb43JqMZA+bO4r@intel.com>
+ <ZjyZ1ZV7BGME_bY9@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=130.117.225.111;
- envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZjyZ1ZV7BGME_bY9@redhat.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,88 +86,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Normally discard requests are stored in the queue attached to BDRVQcow2State
-to be processed later at once.  Currently discard-no-unref option handling
-causes these requests to be processed straight away.  Let's fix that.
+Hi Daniel,
 
-Note that when doing regular discards qcow2_free_any_cluster() would check
-for the presence of external data files for us and redirect request to
-underlying data_file.  Here we want to do the same but avoid refcount updates,
-thus we perform the same checks.
+> Please describe it in terms of a QAPI definition, as that's what we're
+> striving for with all QEMU public interfaces. Once the QAPI design is
+> agreed, then the -object mapping is trivial, as -object's JSON format
+> supports arbitrary QAPI structures.
 
-Suggested-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- block/qcow2-cluster.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+Thank you for your guidance!
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index 5f057ba2fd..7dff0bd5a1 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1893,6 +1893,28 @@ again:
-     return 0;
- }
+I rethought and and modified my previous proposal:
+
+Let me show the command examples firstly:
+  * Add a single event:
+    (x86) -object kvm-pmu-event,id=e0,action=allow,format=x86-default,\
+                  select=0x3c,umask=0x00
+    (arm or general) -object kvm-pmu-event,id=e1,action=deny,\
+                             format=raw,code=0x01
  
-+/*
-+ * Helper for adding a discard request to the queue without any refcount
-+ * modifications.  If external data file is used redirects the request to
-+ * the corresponding BdrvChild.
-+ */
-+static inline void
-+discard_no_unref_any_file(BlockDriverState *bs, uint64_t offset,
-+                          uint64_t length, QCow2ClusterType ctype,
-+                          enum qcow2_discard_type dtype)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+
-+    if (s->discard_passthrough[dtype] &&
-+        (ctype == QCOW2_CLUSTER_NORMAL || ctype == QCOW2_CLUSTER_ZERO_ALLOC)) {
-+        if (has_data_file(bs)) {
-+            bdrv_pdiscard(s->data_file, offset, length);
-+        } else {
-+            qcow2_queue_discard(bs, offset, length);
-+        }
-+    }
-+}
-+
- /*
-  * This discards as many clusters of nb_clusters as possible at once (i.e.
-  * all clusters in the same L2 slice) and returns the number of discarded
-@@ -1974,12 +1996,10 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
-         if (!keep_reference) {
-             /* Then decrease the refcount */
-             qcow2_free_any_cluster(bs, old_l2_entry, type);
--        } else if (s->discard_passthrough[type] &&
--                   (cluster_type == QCOW2_CLUSTER_NORMAL ||
--                    cluster_type == QCOW2_CLUSTER_ZERO_ALLOC)) {
-+        } else {
-             /* If we keep the reference, pass on the discard still */
--            bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
--                          s->cluster_size);
-+            discard_no_unref_any_file(bs, old_l2_entry & L2E_OFFSET_MASK,
-+                                      s->cluster_size, cluster_type, type);
-         }
-     }
+  * Add a counter bitmap:
+    (x86) -object kvm-pmu-counter,id=cnt,action=allow,type=x86-fixed,\
+                  bitmap=0xffff0000
  
-@@ -2088,12 +2108,11 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
-             if (!keep_reference) {
-                 /* Then decrease the refcount */
-                 qcow2_free_any_cluster(bs, old_l2_entry, QCOW2_DISCARD_REQUEST);
--            } else if (s->discard_passthrough[QCOW2_DISCARD_REQUEST] &&
--                       (type == QCOW2_CLUSTER_NORMAL ||
--                        type == QCOW2_CLUSTER_ZERO_ALLOC)) {
-+            } else {
-                 /* If we keep the reference, pass on the discard still */
--                bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
--                            s->cluster_size);
-+                discard_no_unref_any_file(bs, old_l2_entry & L2E_OFFSET_MASK,
-+                                          s->cluster_size, type,
-+                                          QCOW2_DISCARD_REQUEST);
-             }
-         }
-     }
--- 
-2.39.3
+  * Add an event list (must use Json syntax format):
+   (x86) -object '{"qom-type":"kvm-pmu-event-list","id"="filter0","action"="allow","format"="x86-default","events=[{"select"=0x3c,"umask"=0x00},{"select"=0x2e,"umask"=0x4f}]'
+   (arm) -object '{"qom-type":"kvm-pmu-event-list","id"="filter1","action"="allow","format"="raw","events"=[{"code"=0x01},{"code"=0x02}]'
+
+
+The specific JSON definitions are as follows (IIUC, this is "in terms of
+a QAPI definition", right? ;-)): 
+* Define PMU event and counter bitmap with JSON format:
+  - basic filter action:
+
+  { 'enum': 'KVMPMUFilterAction',
+    'prefix': 'KVM_PMU_FILTER_ACTION',
+    'data': ['deny', 'allow' ] }
+
+  - PMU counter:
+
+  { 'enum': 'KVMPMUCounterType',
+    'prefix': 'KVM_PMU_COUNTER_TYPE',
+    'data': [ 'x86-fixed' ] }
+
+  { 'struct': 'KVMPMUX86FixedCounter',
+    'data': { 'bitmap': 'uint32' } }
+
+  - PMU events (total 3 formats):
+
+  # 3 encoding formats: "raw" is compatible with shaoqin's ARM format as
+  # well as the x86 raw format, and could support other architectures in
+  # the future.
+  { 'enum': 'KVMPMUEventEncodeFmt',
+    'prefix': 'KVM_PMU_EVENT_ENCODE_FMT',
+    'data': ['raw', 'x86-default', 'x86-masked-entry' ] }
+
+  # A general format.
+  { 'struct': 'KVMPMURawEvent',
+    'data': { 'code': 'uint64' } }
+
+  # x86-specific
+  { 'struct': 'KVMPMUX86DefalutEvent',
+    'data': { 'select': 'uint16',
+              'umask': 'uint16' } }
+
+  # another x86 specific
+  { 'struct': 'KVMPMUX86MaskedEntry',
+    'data': { 'select': 'uint16',
+              'match': 'uint8',
+              'mask': 'uint8',
+              'exclude': 'bool' } }
+
+  # And their list wrappers:
+  { 'struct': 'KVMPMURawEventList',
+    'data': { 'events': ['KVMPMURawEvent'] } }
+
+  { 'struct': 'KVMPMUX86DefalutEventList',
+    'data': { 'events': ['KVMPMUX86DefalutEvent'] } }
+
+  { 'struct': 'KVMPMUX86MaskedEntryList',
+    'data': { 'events': ['KVMPMUX86MaskedEntryList'] } }
+
+
+Based on the above basic structs, we could provide 3 new more qom-types:
+  - 'kvm-pmu-counter': 'KVMPMUFilterCounter'
+
+  # This is a single object option to configure PMU counter
+  # bitmap filter.
+  { 'union': 'KVMPMUFilterCounter',
+    'base': { 'action': 'KVMPMUFilterAction',
+              'type': 'KVMPMUCounterType' },
+    'discriminator': 'type',
+    'data': { 'x86-fixed': 'KVMPMUX86FixedCounter' } }
+
+
+  - 'kvm-pmu-counter': 'KVMPMUFilterCounter'
+
+  # This option is used to configure a single PMU event for
+  # PMU filter.
+  { 'union': 'KVMPMUFilterEvent',
+    'base': { 'action': 'KVMPMUFilterAction',
+              'format': 'KVMPMUEventEncodeFmt' },
+    'discriminator': 'format',
+    'data': { 'raw': 'KVMPMURawEvent',
+              'x86-default': 'KVMPMUX86DefalutEvent',
+              'x86-masked-entry': 'KVMPMUX86MaskedEntry' } }
+
+
+  - 'kvm-pmu-event-list': 'KVMPMUFilterEventList'
+
+  # Used to configure multiple events.
+  { 'union': 'KVMPMUFilterEventList',
+    'base': { 'action': 'KVMPMUFilterAction',
+              'format': 'KVMPMUEventEncodeFmt' },
+    'discriminator': 'format',
+    'data': { 'raw': 'KVMPMURawEventList',
+              'x86-default': 'KVMPMUX86DefalutEventList',
+              'x86-masked-entry': 'KVMPMUX86MaskedEntryList' } }
+
+
+Compared to Shaoqin's original format, kvm-pmu-event-list is not able to
+enumerate events continuously (similar to 0x00-0x30 before), and now
+user must enumerate events one by one individually.
+
+What do you think about the above 3 new commands?
+
+Thanks and Best Regards,
+Zhao
 
 
