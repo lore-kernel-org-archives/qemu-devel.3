@@ -4,54 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C63C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB0FEC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Uih-0002hA-0e; Mon, 13 May 2024 08:23:55 -0400
+	id 1s6Usw-0004ON-Lr; Mon, 13 May 2024 08:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=xtei=MQ=kaod.org=clg@ozlabs.org>)
- id 1s6Uib-0002ga-Jk; Mon, 13 May 2024 08:23:50 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s6Usn-0004ND-2W
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 08:34:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=xtei=MQ=kaod.org=clg@ozlabs.org>)
- id 1s6UiZ-0003GR-1A; Mon, 13 May 2024 08:23:49 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VdJYn6GvKz4wxt;
- Mon, 13 May 2024 22:23:41 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s6Usk-0004Vc-Tz
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 08:34:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715603657;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mZ785zT+qMcpYwxB8fMfufyghsbSHwxj2i1XQxD081o=;
+ b=h4tbAhAqYXjW8UbY5StFBGkSVIJ+qKqmRaWEkG7JeR9wF3FbEvHjuWW//tUkhhWTnAJ/bG
+ dgqtwtfGSMdS0vXVXtKSIoz4kthTnGJkWIvZziAtQhPTQ6ylc3mEG+jvwDMm05cUaCnSYL
+ t7fipbGhTWG5btfP1IRlIGAH+9r00wQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-115-k8ZYeKBjO5KdnJZGFwLxSg-1; Mon, 13 May 2024 08:34:04 -0400
+X-MC-Unique: k8ZYeKBjO5KdnJZGFwLxSg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VdJYk2lG3z4wyl;
- Mon, 13 May 2024 22:23:38 +1000 (AEST)
-Message-ID: <30e9ce3e-08d4-4ab4-b734-d7a7fb0639a9@kaod.org>
-Date: Mon, 13 May 2024 14:23:36 +0200
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7A3F7809F64;
+ Mon, 13 May 2024 12:34:03 +0000 (UTC)
+Received: from toolbox.default.com (unknown [10.42.28.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4EDEB7414;
+ Mon, 13 May 2024 12:34:02 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Krempa <pkrempa@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 2/2] tests: add testing of parameter=1 for SMP topology
+Date: Mon, 13 May 2024 13:33:58 +0100
+Message-ID: <20240513123358.612355-3-berrange@redhat.com>
+In-Reply-To: <20240513123358.612355-1-berrange@redhat.com>
+References: <20240513123358.612355-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: container: Fix missing allocation of
- VFIOSpaprContainer
-To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, harshpb@linux.ibm.com,
- npiggin@gmail.com
-Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
- alex.williamson@redhat.com, qemu-ppc@nongnu.org, zhenzhong.duan@intel.com,
- qemu-devel@nongnu.org
-References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=xtei=MQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,136 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Shivaprasad,
+Validate that it is possible to pass 'parameter=1' for any SMP topology
+parameter, since unsupported parameters are implicitly considered to
+always have a value of 1.
 
-On 5/9/24 21:14, Shivaprasad G Bhat wrote:
-> The commit 6ad359ec29 "(vfio/spapr: Move prereg_listener into
-> spapr container)" began to use the newly introduced VFIOSpaprContainer
-> structure.
-> 
-> After several refactors, today the container_of(container,
-> VFIOSpaprContainer, ABC) is used when VFIOSpaprContainer is actually
-> not allocated. On PPC64 systems, this dereference is leading to corruption
-> showing up as glibc malloc assertion during guest start when using vfio.
-> 
-> Patch adds the missing allocation while also making the structure movement
-> to vfio common header file.
-> 
-> Fixes: 6ad359ec29 "(vfio/spapr: Move prereg_listener into spapr container)"
-> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-> ---
->   hw/vfio/container.c           |    6 ++++--
->   hw/vfio/spapr.c               |    6 ------
->   include/hw/vfio/vfio-common.h |    6 ++++++
->   3 files changed, 10 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 77bdec276e..ecaf5786d9 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -539,6 +539,7 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
->   {
->       VFIOContainer *container;
->       VFIOContainerBase *bcontainer;
-> +    VFIOSpaprContainer *scontainer;
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/unit/test-smp-parse.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-We should do our best to avoid any direct use of ppc related attributes
-in the common VFIO code. This comment also applies to VFIO_SPAPR_TCE*
-which are still there because the clean up is not finished. So, this
-proposal will have to be reworked.
-
-The first step is to finish the QOMification of VFIOContainer, so
-that the VFIOContainer instance is created in vfio_connect_container()
-with :
-
-     container = qdev_new(iommu_type_name);
-
-This means reworking this part (and vfio_set_iommu()) :
-
-     ...
-     container = g_malloc0(sizeof(*container));
-     container->fd = fd;
-     bcontainer = &container->bcontainer;
-
-     if (!vfio_set_iommu(container, group->fd, space, errp)) {
-         goto free_container_exit;
-     }
-     ...
-
-VFIOSpaprContainer can then implement its own .init_instance() handler
-to allocate/initialize attributes required by the pseries machines.
-
-While doing this, please try to reduce the use of ->iommu_type which
-is a design shortcut. I would like to completely remove it at some
-point.
-
-Thanks,
-
-C.
-
-
-
-
-
-
-
->       int ret, fd;
->       VFIOAddressSpace *space;
-> 
-> @@ -611,7 +612,8 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
->           goto close_fd_exit;
->       }
-> 
-> -    container = g_malloc0(sizeof(*container));
-> +    scontainer = g_malloc0(sizeof(*scontainer));
-> +    container = &scontainer->container;
->       container->fd = fd;
->       bcontainer = &container->bcontainer;
-> 
-> @@ -675,7 +677,7 @@ unregister_container_exit:
->       vfio_cpr_unregister_container(bcontainer);
-> 
->   free_container_exit:
-> -    g_free(container);
-> +    g_free(scontainer);
-> 
->   close_fd_exit:
->       close(fd);
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index 0d949bb728..78d218b7e7 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -24,12 +24,6 @@
->   #include "qapi/error.h"
->   #include "trace.h"
-> 
-> -typedef struct VFIOSpaprContainer {
-> -    VFIOContainer container;
-> -    MemoryListener prereg_listener;
-> -    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
-> -} VFIOSpaprContainer;
-> -
->   static bool vfio_prereg_listener_skipped_section(MemoryRegionSection *section)
->   {
->       if (memory_region_is_iommu(section->mr)) {
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index b9da6c08ef..010fa68ac6 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -82,6 +82,12 @@ typedef struct VFIOContainer {
->       QLIST_HEAD(, VFIOGroup) group_list;
->   } VFIOContainer;
-> 
-> +typedef struct VFIOSpaprContainer {
-> +    VFIOContainer container;
-> +    MemoryListener prereg_listener;
-> +    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
-> +} VFIOSpaprContainer;
-> +
->   typedef struct VFIOHostDMAWindow {
->       hwaddr min_iova;
->       hwaddr max_iova;
-> 
-> 
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index 56165e6644..56ce5128f1 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -330,6 +330,14 @@ static const struct SMPTestData data_generic_valid[] = {
+         .config = SMP_CONFIG_GENERIC(T, 8, T, 2, T, 4, T, 2, T, 16),
+         .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
+         .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
++    }, {
++        /*
++         * Unsupported parameters are always allowed to be set to '1'
++         * config: -smp 8,books=1,drawers=1,sockets=2,modules=1,dies=1,cores=4,threads=2,maxcpus=8
++         * expect: cpus=8,sockets=2,cores=2,threads=2,maxcpus=8 */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 2, 2, 8),
++        .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
++        .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
+     },
+ };
+ 
+-- 
+2.43.0
 
 
