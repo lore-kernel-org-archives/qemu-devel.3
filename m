@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B18DC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B8FC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Ts4-0001Qh-3B; Mon, 13 May 2024 07:29:32 -0400
+	id 1s6Tsk-0001sl-44; Mon, 13 May 2024 07:30:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6Ts2-0001QR-26; Mon, 13 May 2024 07:29:30 -0400
-Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Tsg-0001pL-Tm
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:30:11 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6Ts0-0000Op-3B; Mon, 13 May 2024 07:29:29 -0400
-Received: by mail-vs1-xe36.google.com with SMTP id
- ada2fe7eead31-47f298cedcfso1322649137.1; 
- Mon, 13 May 2024 04:29:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Tse-0000U2-EI
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:30:10 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a599c55055dso1079855566b.0
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715599767; x=1716204567; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f4Dgtj+sRzu9i/CBiOXyf3zOO/a+FxLVTQv+xvnAbLc=;
- b=YHT6NceNhE0pYkMv9KsP1OECqcv8fPnuaQE3MiNsUf6HAFmCMJAGc9T4OT65UwVFDd
- ML/EbhYUnApY9ESb9zWAlFxhyngA13UzJuW7i8dahkhqgzt18oLiwPg3oEJ33m5n3yGR
- m/o0dz+2XwXY46s+8CfES6w57edBgAsm2cqooR432elpc1tz0hTc15Gf3KgWnaMIH63f
- F05rlbHa3mpuvYXHBSwnxqNenpW2INSKz6ynrwZQ/Z+e1YODmYa3P8WkgoZaYmHZNiC8
- GkeQI5qMS2uYd1DrN7h8DKIulawP/LPaPIVZoMsW0S5ZdpmaJeY12f3osnsQvKjLjbjN
- d0eQ==
+ d=linaro.org; s=google; t=1715599806; x=1716204606; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZmLvRXK0FCwWlt1B2QRZCqcVYxltvjjhpOY+E1LmgE4=;
+ b=Y/7rHvLsz2u0wttDDZXm7UuCKcdmOJevNsALDc8Do2tpA38KObEYn1LyVCVTUYlSll
+ z0IjUY/DDy29YtNGGQAadde80Cpxx9BmvvkyhoL9jx4jmAk4+hrfGEMOoEo8j26bLsVK
+ uEik9zymgHlLCV/ls7tdlPuy4/rLC9Kq1C5QE7sHkUPM2LTUIVFEkZtzJkPYWixOa8Xm
+ coU7KAQ2Gnt2OUjscwrmSPRsZwUfOfxgKH+R5iKZvWe+Olocx9VUN0AFLuzz4LTii4Oy
+ Q1WB7vBr/gZ5poD3vUldCWtMYqUUkB+N72fEbz/GodbU/pvMzWYH9YbGMIThW+9bkFI1
+ GTvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715599767; x=1716204567;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f4Dgtj+sRzu9i/CBiOXyf3zOO/a+FxLVTQv+xvnAbLc=;
- b=B84dmEcCkJcWe5lssxyPEei9xhbazpS0ZaIyzN2hwNeYvWxFMfB83lCFt8BZ7fJQHH
- eBIxNObHkwiVBd5Fol+Gc6yNACv9QSv1mYH3Svyd5N6+PpRiMGAEmhpwpjdqHPrRxHlN
- pG28REXuv9QA3C7HzQEFD8QZ++q6c2eqSQovWAJZDLmMnGOmpdRkK8whPWJnM314OEom
- 16UquTlBUVjLvsJukQpuqk7XK36WSMB4aoEHPBV+QTq+iUHMknVFXHsBu2MmssIOKChg
- SQYe7TlHCh/32xWK2MLDBkcILLVnEXvJsPihnFiWLyWjntvzMBtqNZ8g94B6YefhAm36
- Dc8A==
+ d=1e100.net; s=20230601; t=1715599806; x=1716204606;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZmLvRXK0FCwWlt1B2QRZCqcVYxltvjjhpOY+E1LmgE4=;
+ b=lwAPBy8mTS//segAGHDJ9NARROIz6E7e+PB+CApIKjjMPLaz5y2dxEzk1jHHRsrVje
+ SfjRGkJVm4KXMD3PTNEvKW146De5xmUvaLomu5gtDOO5M5GYmE4QA2K3TVIALNIp9zdq
+ XDMRiOYYn9AMyZM+1y6i3mmewBsBE2RmFg+htcq8JEDdM8DokpJjwOCljnRqSVxoC8g6
+ Xypl7CtIJgqxBL7TiRyVw1SqmTFQ4Uvl1TNSbPpsUBhfkM+1jXzS6miKYXbehNyLI0gA
+ tXrut6gZoluBbllO1TYChvMf94ZivtrMDeRsKeQ1v7LrH9yvBtXNAqA9MleO9Zc2bQj8
+ MOWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtPKM1y1+7I1EFcmOYfCiNB/cDLwps/qwbzZ8UIsgrPaA6XE0nYcSb8R931Rldaam9V+aSH52rhpqS+9JvN2UZhjnH2Lo20cq5JuWBvTyOgkGCi8qzgrwZI1wtFw==
-X-Gm-Message-State: AOJu0YyBKQfqCMB7A84Xd5lswMSNvpM5d3DyjebfhlmpwJaa+7zOBxzB
- GKyFlI28pbyHqbF+mG5NEyqe5H59vFInZWdLavMwV7VFVUwjXM3yIYEt8ABXJOhtuSjYib8vRtI
- JpAe8hD0CPJJeY7IatTc4k0YM48U=
-X-Google-Smtp-Source: AGHT+IES0bev5VIb3PvzjriWL3Rb8644Jj2C+6/i2rPVWHNtXpVCdyu3Xz5z6IWnY/sap8WvZZtIFOO5Xk3EAIHuwcE=
-X-Received: by 2002:a05:6102:5088:b0:47c:549c:d6a3 with SMTP id
- ada2fe7eead31-48077dcd792mr7359303137.2.1715599766728; Mon, 13 May 2024
- 04:29:26 -0700 (PDT)
+ AJvYcCW4fcn/yRVuSctwUImcAwl1IgyQlYupKHGrk2eekgP+w+8WrpbzK7RmpT06waqA1rmK6Y3I3r3mUao8UuzhFP0ESkcRf6E=
+X-Gm-Message-State: AOJu0YwEZi77ibIsnA+7qVe83khsfyGA+4pq9wvfTqB5B/Ya1LjsRHQd
+ 8HdWVjwFf+RUJP1G811BllS70rcN1482aSwFJztaMSKzP/GRG/SKH4uVX1OZEPA=
+X-Google-Smtp-Source: AGHT+IGBKXkFRFvZYQhxjkXXV9Y9/xze5o8Sa1h1x/4Ff4sbuAZej/N8MQDj+Oofch31SsIWxyFqmA==
+X-Received: by 2002:a50:9b4f:0:b0:572:3b15:a40 with SMTP id
+ 4fb4d7f45d1cf-5734d67eba3mr6906023a12.33.1715599806583; 
+ Mon, 13 May 2024 04:30:06 -0700 (PDT)
+Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5733c323887sm6195805a12.89.2024.05.13.04.30.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 May 2024 04:30:05 -0700 (PDT)
+Message-ID: <c77aba57-19cd-4724-83e2-6d5a289de4b7@linaro.org>
+Date: Mon, 13 May 2024 13:30:04 +0200
 MIME-Version: 1.0
-References: <20240511101053.1875596-1-me@deliversmonkey.space>
- <20240511101053.1875596-3-me@deliversmonkey.space>
-In-Reply-To: <20240511101053.1875596-3-me@deliversmonkey.space>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 13 May 2024 21:29:00 +1000
-Message-ID: <CAKmqyKOHdei-1r46=te7W01qwrOH3ShT4FGcWkMioRMAhLhU9w@mail.gmail.com>
-Subject: Re: [PATCH v9 2/6] target/riscv: Add new CSR fields for S{sn, mn,
- m}pm extensions as part of Zjpm v0.8
-To: Alexey Baturo <baturo.alexey@gmail.com>
-Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] hw/timer/imx_gpt: Convert DPRINTF to trace events
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev
+ <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-trivial@nongnu.org,
+ qemu-arm@nongnu.org
+References: <20240513101108.5237-1-shentey@gmail.com>
+ <20240513101108.5237-3-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240513101108.5237-3-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,37 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 11, 2024 at 8:12=E2=80=AFPM Alexey Baturo <baturo.alexey@gmail.=
-com> wrote:
->
-> From: Alexey Baturo <baturo.alexey@gmail.com>
->
-> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
->
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+On 13/5/24 12:11, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  target/riscv/cpu.h      |  8 ++++++++
->  target/riscv/cpu_bits.h |  3 +++
->  target/riscv/cpu_cfg.h  |  3 +++
->  target/riscv/csr.c      | 11 +++++++++++
->  target/riscv/machine.c  | 10 +++++++---
->  target/riscv/pmp.c      | 13 ++++++++++---
->  target/riscv/pmp.h      | 11 ++++++-----
->  7 files changed, 48 insertions(+), 11 deletions(-)
+>   hw/timer/imx_gpt.c    | 18 +++++-------------
+>   hw/timer/trace-events |  6 ++++++
+>   2 files changed, 11 insertions(+), 13 deletions(-)
 
-This patch generates warnings/errors
 
-include/qemu/compiler.h:70:35: error: invalid operands to binary -
-(have =E2=80=98uint32_t *=E2=80=99 {aka =E2=80=98unsigned int *=E2=80=99} a=
-nd =E2=80=98uint64_t *=E2=80=99 {aka =E2=80=98long
-unsigned int *=E2=80=99})
-   70 | #define type_check(t1,t2) ((t1*)0 - (t2*)0)
-      |                                   ^
-...
-../target/riscv/machine.c:167:9: note: in expansion of macro =E2=80=98VMSTA=
-TE_UINTTL=E2=80=99
-  167 |         VMSTATE_UINTTL(env.menvcfg, RISCVCPU),
-      |         ^~~~~~~~~~~~~~
+> @@ -317,7 +310,7 @@ static uint64_t imx_gpt_read(void *opaque, hwaddr offset, unsigned size)
+>           break;
+>       }
+>   
+> -    DPRINTF("(%s) = 0x%08x\n", imx_gpt_reg_name(offset >> 2), reg_value);
+> +    trace_imx_gpt_read(imx_gpt_reg_name(offset >> 2), reg_value);
+>   
+>       return reg_value;
+>   }
+> @@ -384,8 +377,7 @@ static void imx_gpt_write(void *opaque, hwaddr offset, uint64_t value,
+>       IMXGPTState *s = IMX_GPT(opaque);
+>       uint32_t oldreg;
+>   
+> -    DPRINTF("(%s, value = 0x%08x)\n", imx_gpt_reg_name(offset >> 2),
+> -            (uint32_t)value);
+> +    trace_imx_gpt_write(imx_gpt_reg_name(offset >> 2), (uint32_t)value);
 
-Alistair
+
+> @@ -49,6 +49,12 @@ cmsdk_apb_dualtimer_read(uint64_t offset, uint64_t data, unsigned size) "CMSDK A
+>   cmsdk_apb_dualtimer_write(uint64_t offset, uint64_t data, unsigned size) "CMSDK APB dualtimer write: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
+>   cmsdk_apb_dualtimer_reset(void) "CMSDK APB dualtimer: reset"
+>   
+> +# imx_gpt.c
+> +imx_gpt_set_freq(uint32_t clksrc, uint32_t freq) "Setting clksrc %d to %d Hz"
+
+'%d' is signed, for unsigned you want '%u'.
+
+> +imx_gpt_read(const char *name, uint32_t value) "%s -> 0x%08x"
+> +imx_gpt_write(const char *name, uint32_t value) "%s <- 0x%08x"
+
+I'd avoid the cast and use uint64_t/PRIx64 here to KISS, regardless:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +imx_gpt_timeout(void) ""
+> +
+
 
