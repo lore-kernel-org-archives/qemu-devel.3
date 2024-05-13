@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468ABC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 15:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6998C25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 16:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6XmU-00050X-MT; Mon, 13 May 2024 11:40:02 -0400
+	id 1s6Y7j-0000vd-CH; Mon, 13 May 2024 12:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3SjRCZgYKCvMnZVieXbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--seanjc.bounces.google.com>)
- id 1s6XmQ-00050I-It
- for qemu-devel@nongnu.org; Mon, 13 May 2024 11:39:58 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3SjRCZgYKCvMnZVieXbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--seanjc.bounces.google.com>)
- id 1s6XmO-00087n-Mo
- for qemu-devel@nongnu.org; Mon, 13 May 2024 11:39:58 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-dc647f65573so9881721276.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 08:39:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=856a464c5=jgowans@amazon.com>)
+ id 1s6Y7I-0000vC-20
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 12:01:32 -0400
+Received: from smtp-fw-52003.amazon.com ([52.119.213.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=856a464c5=jgowans@amazon.com>)
+ id 1s6Y7G-00031O-4F
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 12:01:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1715614794; x=1716219594; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=n3Z5PYvhEmOWZdAv2mF8wgraFReVMHPpsbJyP0PVGQk=;
- b=xEy2W4GIwXfik1ULIU0Cp5W4sIvXzT5QtFm0Dz/0Y4UQXpv3ZLuBEiPLoflpu1SdRk
- l5o4j4SgKi0J2jqjcMOOyKUKXtC0UCpYjGSlAaZBgxWH2GxO0Fo0HkpcE0YGeo3MdOtd
- GPVeAmlahR7byMWsbzaaHcha6ISF2GKy+4AiJKYj5sru692FCKBZfFNfXyBCv/CIIi+9
- K0lQq2A7hnWgDwHk27vBHgEGQv0zFNCOPTas1poeIeVs0FBrTcoUW/jr73CJRjokYQ75
- bYStZr6Gz/BmxyqzuC+UfK7E8G3Oq2KfCgW98P8+woPqc3H0UYw3eK3DKMGo6nveCNAq
- 21fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715614794; x=1716219594;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=n3Z5PYvhEmOWZdAv2mF8wgraFReVMHPpsbJyP0PVGQk=;
- b=s2k9xttrEk+0w0t9pS4xmzzkxpA3NRdGrGF8pGWdXzVV2dW/ZMCVbfW81lc0hfhuwY
- MNiWyrsagiHslpIS0HeiQVsJNePmMfCQeowFTDuIb1MkOWiHXNMcNtdXkiKFjip9YSlo
- zeJfu+leHmQepp30daPlNDYosUVH9BYZk+RZ8NhgqRHk/g7/IWhNDcDH6gWKW0En13ND
- oNYePAqQ1QdBCic5LoPwbElnvQ/2zajk8ZPjIWzeGk+KZZerPqi9GEWjVAknIeTlhAiD
- BMwnDjbIU4tOJJsABjD1/K4xOtC4IQn8eZPFbd/fZaNsaGmGrOusyNtipqY/gF0Km8Zo
- 3TXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6YxXQO39zBJrUQ9oOIPGLRYBhpCVUcAJ6KRA1aHSMPpJiBKsnG/+WMyFNoS9GCUslnhNsSFB2V6H7dK2sb2YcMYELSg4=
-X-Gm-Message-State: AOJu0YzeTHrVhfxEYX28os1Uzyc3DaPu0L98G01XzOBlJFCakYvDODc+
- yn0/m11rmH74QJUhz8w9/r11L8H6LV5DEHb/N1a0WnSsbIc7UkOopwygP+pLBF5mOxR7QGRWY3n
- YrQ==
-X-Google-Smtp-Source: AGHT+IHuwIc8fyCnlatjoe9Q2CYS4eVJOdzUScq69lTq3aH08Ut4sGUdSzstpLDLmLZVgoWu5DLZoOTvNRM=
-X-Received: from zagreus.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a25:fe0f:0:b0:de4:7be7:1c2d with SMTP id
- 3f1490d57ef6-dee4f31fb93mr2560099276.11.1715614794264; Mon, 13 May 2024
- 08:39:54 -0700 (PDT)
-Date: Mon, 13 May 2024 08:39:52 -0700
-In-Reply-To: <58f39f23-0314-4e34-a8c7-30c3a1ae4777@amazon.co.uk>
-Mime-Version: 1.0
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1715616090; x=1747152090;
+ h=from:to:cc:date:message-id:references:in-reply-to:
+ content-id:content-transfer-encoding:mime-version:subject;
+ bh=/ZQi9dOaRQSJ70JtHs5ktPMljCtexhvs6nJFR6ZIOr8=;
+ b=lpHD7g+6PA75MQ9zFcR217K7OXfb6k1ZvpxKqXHvK+0j4EIMcvZVvOeZ
+ Bzt3QkbRajp8mv648hnfg0unlpQokfqlc1XbEBUWOUCM0qCt5jzs9s1Le
+ MRz7Y1eH4vOqJ3Ejl52d9z6cn9hogxQ8lwZbTHEsjkuTTczabHLC0LMFc M=;
+X-IronPort-AV: E=Sophos;i="6.08,158,1712620800"; d="scan'208";a="658341340"
+Subject: Re: Unmapping KVM Guest Memory from Host Kernel
+Thread-Topic: Unmapping KVM Guest Memory from Host Kernel
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-52003.iad7.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2024 16:01:25 +0000
+Received: from EX19MTAEUC001.ant.amazon.com [10.0.17.79:5865]
+ by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.14.167:2525]
+ with esmtp (Farcaster)
+ id 1115728c-e447-424e-be56-7a79af17b930; Mon, 13 May 2024 16:01:23 +0000 (UTC)
+X-Farcaster-Flow-ID: 1115728c-e447-424e-be56-7a79af17b930
+Received: from EX19D022EUC004.ant.amazon.com (10.252.51.159) by
+ EX19MTAEUC001.ant.amazon.com (10.252.51.193) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Mon, 13 May 2024 16:01:23 +0000
+Received: from EX19D014EUC004.ant.amazon.com (10.252.51.182) by
+ EX19D022EUC004.ant.amazon.com (10.252.51.159) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Mon, 13 May 2024 16:01:23 +0000
+Received: from EX19D014EUC004.ant.amazon.com ([fe80::76dd:4020:4ff2:1e41]) by
+ EX19D014EUC004.ant.amazon.com ([fe80::76dd:4020:4ff2:1e41%3]) with
+ mapi id 15.02.1258.028; Mon, 13 May 2024 16:01:23 +0000
+From: "Gowans, James" <jgowans@amazon.com>
+To: "seanjc@google.com" <seanjc@google.com>, "Roy, Patrick"
+ <roypat@amazon.co.uk>
+CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "Kalyazin, Nikita"
+ <kalyazin@amazon.co.uk>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "rppt@kernel.org" <rppt@kernel.org>, "linux-coco@lists.linux.dev"
+ <linux-coco@lists.linux.dev>, "somlo@cmu.edu" <somlo@cmu.edu>,
+ "vbabka@suse.cz" <vbabka@suse.cz>, "akpm@linux-foundation.org"
+ <akpm@linux-foundation.org>, "Liam.Howlett@oracle.com"
+ <Liam.Howlett@oracle.com>, "kirill.shutemov@linux.intel.com"
+ <kirill.shutemov@linux.intel.com>, "Woodhouse, David" <dwmw@amazon.co.uk>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "linux-mm@kvack.org"
+ <linux-mm@kvack.org>, "Graf (AWS), Alexander" <graf@amazon.de>, "Manwaring,
+ Derek" <derekmn@amazon.com>, "chao.p.peng@linux.intel.com"
+ <chao.p.peng@linux.intel.com>, "lstoakes@gmail.com" <lstoakes@gmail.com>,
+ "mst@redhat.com" <mst@redhat.com>
+Thread-Index: AQHapSDFL4wJB6zUokKkOmjg3vQ4V7GVTVUAgAAFhYA=
+Date: Mon, 13 May 2024 16:01:22 +0000
+Message-ID: <aaf684b5eb3a3fe9cfbb6205c16f0973c6f8bb07.camel@amazon.com>
 References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
  <ZeudRmZz7M6fWPVM@google.com> <ZexEkGkNe_7UY7w6@kernel.org>
  <58f39f23-0314-4e34-a8c7-30c3a1ae4777@amazon.co.uk>
-Message-ID: <ZkI0SCMARCB9bAfc@google.com>
-Subject: Re: Unmapping KVM Guest Memory from Host Kernel
-From: Sean Christopherson <seanjc@google.com>
-To: Patrick Roy <roypat@amazon.co.uk>
-Cc: Mike Rapoport <rppt@kernel.org>, James Gowans <jgowans@amazon.com>, 
- "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
- "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
- Derek Manwaring <derekmn@amazon.com>, 
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- David Woodhouse <dwmw@amazon.co.uk>, 
- Nikita Kalyazin <kalyazin@amazon.co.uk>,
- "lstoakes@gmail.com" <lstoakes@gmail.com>, 
- "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
- "vbabka@suse.cz" <vbabka@suse.cz>, 
- "mst@redhat.com" <mst@redhat.com>, "somlo@cmu.edu" <somlo@cmu.edu>,
- Alexander Graf <graf@amazon.de>, 
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
- "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>
+ <ZkI0SCMARCB9bAfc@google.com>
+In-Reply-To: <ZkI0SCMARCB9bAfc@google.com>
+Accept-Language: en-ZA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.146.13.220]
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3SjRCZgYKCvMnZVieXbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--seanjc.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-ID: <12947CE165AA3241A48C00EB1398EF6F@amazon.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=52.119.213.152;
+ envelope-from=prvs=856a464c5=jgowans@amazon.com; helo=smtp-fw-52003.amazon.com
+X-Spam_score_int: -128
+X-Spam_score: -12.9
+X-Spam_bar: ------------
+X-Spam_report: (-12.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,43 +110,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 13, 2024, Patrick Roy wrote:
-
-> For non-CoCo VMs, where memory is not encrypted, and the threat model ass=
-umes a
-> trusted host userspace, we would like to avoid changing the VM model so
-> completely. If we adopt CoCo=E2=80=99s approaches where KVM / Userspace t=
-ouches guest
-> memory we would get all the complexity, yet none of the encryption.
-> Particularly the complexity on the MMIO path seems nasty, but x86 does no=
-t
-
-Uber nit, modern AMD CPUs do provide the byte stream, though there is at le=
-ast
-one related erratum.  Intel CPUs don't provide the byte stream or pre-decod=
-e in
-any way.
-
-> pre-decode instructions on MMIO exits (which are just EPT_VIOLATIONs) lik=
-e it
-> does for PIO exits, so I also don=E2=80=99t really see a way around it in=
- the
-> guest_memfd model.
-
-...
-
-> Sean, you mentioned that you envision guest_memfd also supporting non-CoC=
-o VMs.
-> Do you have some thoughts about how to make the above cases work in the
-> guest_memfd context?
-
-Yes.  The hand-wavy plan is to allow selectively mmap()ing guest_memfd().  =
-There
-is a long thread[*] discussing how exactly we want to do that.  The TL;DR i=
-s that
-the basic functionality is also straightforward; the bulk of the discussion=
- is
-around gup(), reclaim, page migration, etc.
-
-[*] https://lore.kernel.org/all/ZdfoR3nCEP3HTtm1@casper.infradead.org
+T24gTW9uLCAyMDI0LTA1LTEzIGF0IDA4OjM5IC0wNzAwLCBTZWFuIENocmlzdG9waGVyc29uIHdy
+b3RlOg0KPiA+IFNlYW4sIHlvdSBtZW50aW9uZWQgdGhhdCB5b3UgZW52aXNpb24gZ3Vlc3RfbWVt
+ZmQgYWxzbyBzdXBwb3J0aW5nIG5vbi1Db0NvIFZNcy4NCj4gPiBEbyB5b3UgaGF2ZSBzb21lIHRo
+b3VnaHRzIGFib3V0IGhvdyB0byBtYWtlIHRoZSBhYm92ZSBjYXNlcyB3b3JrIGluIHRoZQ0KPiA+
+IGd1ZXN0X21lbWZkIGNvbnRleHQ/DQo+IA0KPiBZZXMuwqAgVGhlIGhhbmQtd2F2eSBwbGFuIGlz
+IHRvIGFsbG93IHNlbGVjdGl2ZWx5IG1tYXAoKWluZyBndWVzdF9tZW1mZCgpLsKgIFRoZXJlDQo+
+IGlzIGEgbG9uZyB0aHJlYWRbKl0gZGlzY3Vzc2luZyBob3cgZXhhY3RseSB3ZSB3YW50IHRvIGRv
+IHRoYXQuwqAgVGhlIFRMO0RSIGlzIHRoYXQNCj4gdGhlIGJhc2ljIGZ1bmN0aW9uYWxpdHkgaXMg
+YWxzbyBzdHJhaWdodGZvcndhcmQ7IHRoZSBidWxrIG9mIHRoZSBkaXNjdXNzaW9uIGlzDQo+IGFy
+b3VuZCBndXAoKSwgcmVjbGFpbSwgcGFnZSBtaWdyYXRpb24sIGV0Yy4NCg0KSSBzdGlsbCBuZWVk
+IHRvIHJlYWQgdGhpcyBsb25nIHRocmVhZCwgYnV0IGp1c3QgYSB0aG91Z2h0IG9uIHRoZSB3b3Jk
+DQoicmVzdHJpY3RlZCIgaGVyZTogZm9yIE1NSU8gdGhlIGluc3RydWN0aW9uIGNhbiBiZSBhbnl3
+aGVyZSBhbmQNCnNpbWlsYXJseSB0aGUgbG9hZC9zdG9yZSBNTUlPIGRhdGEgY2FuIGJlIGFueXdo
+ZXJlLiBEb2VzIHRoaXMgbWVhbiB0aGF0DQpmb3IgcnVubmluZyB1bm1vZGlmaWVkIG5vbi1Db0Nv
+IFZNcyB3aXRoIGd1ZXN0X21lbWZkIGJhY2tlbmQgdGhhdCB3ZSdsbA0KYWx3YXlzIG5lZWQgdG8g
+aGF2ZSB0aGUgd2hvbGUgb2YgZ3Vlc3QgbWVtb3J5IG1tYXBwZWQ/DQoNCkkgZ3Vlc3MgdGhlIGlk
+ZWEgaXMgdGhhdCB0aGlzIHVzZSBjYXNlIHdpbGwgc3RpbGwgYmUgc3ViamVjdCB0byB0aGUNCm5v
+cm1hbCByZXN0cmljdGlvbiBydWxlcywgYnV0IGZvciBhIG5vbi1Db0NvIG5vbi1wS1ZNIFZNIHRo
+ZXJlIHdpbGwgYmUgDQpubyByZXN0cmljdGlvbiBpbiBwcmFjdGljZSwgYW5kIHVzZXJzcGFjZSB3
+aWxsIG5lZWQgdG8gbW1hcCBldmVyeXRoaW5nDQphbHdheXM/DQoNCkl0IHJlYWxseSBzZWVtcyB5
+dWNreSB0byBuZWVkIHRvIGhhdmUgYWxsIG9mIGd1ZXN0IFJBTSBtbWFwcGVkIGFsbCB0aGUNCnRp
+bWUganVzdCBmb3IgTU1JTyB0byB3b3JrLi4uIEJ1dCBJIHN1cHBvc2UgdGhlcmUgaXMgbm8gd2F5
+IGFyb3VuZCB0aGF0DQpmb3IgSW50ZWwgeDg2Lg0KDQpKRw0KDQo+IA0KPiBbKl0gaHR0cHM6Ly9s
+b3JlLmtlcm5lbC5vcmcvYWxsL1pkZm9SM25DRVAzSFR0bTFAY2FzcGVyLmluZnJhZGVhZC5vcmcN
+Cg0K
 
