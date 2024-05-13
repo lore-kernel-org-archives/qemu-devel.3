@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2433C25B7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A3AC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QSb-0005Lg-Bn; Mon, 13 May 2024 03:51:01 -0400
+	id 1s6QRA-0006CF-1p; Mon, 13 May 2024 03:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QSW-0005EQ-Sv
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:50:56 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1s6QPY-00031I-RE
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:54 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QST-0001yh-7L
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:50:56 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-420180b59b7so2975725e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:50:52 -0700 (PDT)
+ id 1s6QPW-0001SZ-K0
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:52 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41fd5dc04e2so23281425e9.3
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586651; x=1716191451; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586468; x=1716191268; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w3ESvr/sXOwA84Rcs+9ochyQsL6MRRZXhrIHKSJ7IWU=;
- b=eRnIUeTJRIXHINGtD3BQ3TLv+GcWjmMnzpjOg2hPuFk3eAZA3FmwieLEl1hk/RUZjT
- mMc1PdEhn+UAJwMM6jtvBfG7niYx2ldHusfCn2I4iLFiiuYwtlxCYDX94vHqKErYnF5q
- +pQz85GQvZraJzHIJwZQt7sEOp1pa/s2X7/ZLWURWTwouUv3WgYQTICt77C9/HHt/To8
- nDXVArQFR7pcL14BobjDOTGZqjc5Q9rJk08eNnxU81DsUgjc7wUyPlGMl8Xmn057g/Ly
- NegiU7RJSDzecSqkIkniVEtWOq8zwbtzWQKdzGMVGZ26Pm3fsGzypfQ9jHsD+6miur0d
- h5Dw==
+ bh=K+T+i0JeoH/+z/Q00QyoJ5KqjEw3NPpVieDyHAHvdI0=;
+ b=RJ5JCPR1LD1NKCet6+/HkbaJySVGbThdVXkHYhldLdGkpa72paRg3drQk/Ity0CxBX
+ zbCjvUlxgzXvVGRcGfpm1UmlQbkkIH/8WpOtnofFcvnGc2RGtoJl/UegHsWVzfq04D6Q
+ Yfh198rlroBR5eoIrtcaMRmnKDOTT1CHBvHuTn9qPG+vPKP3qYXcLZn2fgWne7RwRQOt
+ lHbr1B0MJKB7xQSCwVeZ8AdQysYK8I+7NLNbi079trNClYsznL1gxmROKNmQLghappOk
+ oa/G1GUXIlimp116JLfmUv6t4o/A6yGhNV6mdTco5Ri53X8FY0ri/7ipvxIBHVEDgKjv
+ shMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586651; x=1716191451;
+ d=1e100.net; s=20230601; t=1715586468; x=1716191268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w3ESvr/sXOwA84Rcs+9ochyQsL6MRRZXhrIHKSJ7IWU=;
- b=QrfSYmorcSEQDmdA27JUzkKJ2sW1DvckylO/UOYquXhDRFzsF/yxvz/EBTrG3KoXI2
- 2hbe9hojwSnBQDD38bYlNSJocsK2bxYornWkZhIz9Q+mXEDtH2gTwU3ln1aRu/+sPzdI
- 0CzOQe7yxyCqrT+ArIjEp8JBsAN/6bhdMyrKLqogpjKlyZ94H/KtY6XtM1CHX2a6sj4Y
- QWypd4SkN22fi9Y51pOz/hgL/91sqJoVgD2XWTLAayO0LqzI/SIzH2l4SeaWbE9BlMpY
- YvCjKJDiu/3UCRxnvqKLkiMKxgjprXqgD9D9JhkcQjpLRQYAxYsjpxdOL+Gb6evk2rTL
- Depw==
-X-Gm-Message-State: AOJu0YyfMoMzzKJLU6ShVqpXpkeXuqCDOIHLrzQoOgGUtUg4sRfF7f3y
- +fBMul/IA5jm0Vg15iTcS4Qu6vTXPPwObSekQ8ZTUleiGRbocKw0Ds5sgdQGl3rWtk4HrsYueEp
- MdJ0=
-X-Google-Smtp-Source: AGHT+IFNHR1Kq/yOU7MLs1NLfzGPwUPRDpxlgtRk76CKfac3Y4a9XXygLoMSqy/p9Vz6ATfSw2dvwA==
-X-Received: by 2002:a5d:4801:0:b0:34d:2343:b881 with SMTP id
- ffacd0b85a97d-3504a96a343mr6214968f8f.43.1715586650579; 
- Mon, 13 May 2024 00:50:50 -0700 (PDT)
+ bh=K+T+i0JeoH/+z/Q00QyoJ5KqjEw3NPpVieDyHAHvdI0=;
+ b=hdLjPAuyLjZEhYiBPzwCx3fI1ue1BZZxNhbzAbO/mOF/FC7ugcscKNDkyHoix3Kq0Y
+ zvruHjRj511cE9KRUufxuVED1mGdjrefyzeFweZSJsjnNCqQfBWMxBJVAPI627LCL3hp
+ rZVPDR9Dw90ZPRstNMsdW4IfnlEliy8U5zgSAmhp+qc+9v4qmxazd3MRF7SUxuQOtkfz
+ GqefMscCuoyK3LNsBum+Xbvc6A912RIQZnXNWcRUkE02Vx5r20Yxpyb58INc202Poiep
+ Y/9c20pVKYBETI3wJnNvTQ/HfgU3G6V1oSN2uxoOgaYyHe5txWxihzi+IG1e/he/8R7F
+ lW1g==
+X-Gm-Message-State: AOJu0YzIlxagkZLV7zdfDayBJPaUOd3H8KPg3pd7kLoq7neyM8KNz/HY
+ 2TBtB5EBrVOR24/tRa+X+j6xxcePKX7OlG611frBqegrYURK9I0ivi9oZupSClMS3ySXGAMsfrm
+ kE2k=
+X-Google-Smtp-Source: AGHT+IGjl9THWT+EE7rQ66JDEB7ft8LVAd3kP2LM3OZPZQfmTT4SiY9xTResQ/NFutrRc1FeFGhJGg==
+X-Received: by 2002:a05:600c:3caa:b0:41b:55b1:6cfc with SMTP id
+ 5b1f17b1804b1-41feaa2f3a3mr59783265e9.1.1715586468213; 
+ Mon, 13 May 2024 00:47:48 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a50sm10374262f8f.30.2024.05.13.00.50.50
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:50:50 -0700 (PDT)
+ Mon, 13 May 2024 00:47:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 41/45] target/hppa: Implement CF_PCREL
-Date: Mon, 13 May 2024 09:47:13 +0200
-Message-Id: <20240513074717.130949-42-richard.henderson@linaro.org>
+Subject: [PATCH v2 39/45] target/hppa: Drop tlb_entry return from
+ hppa_get_physical_address
+Date: Mon, 13 May 2024 09:47:11 +0200
+Message-Id: <20240513074717.130949-40-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,204 +95,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the groundwork has been laid, enabling CF_PCREL within the
-translator proper is a simple matter of updating copy_iaoq_entry
-and install_iaq_entries.
-
-We also need to modify the unwind info, since we no longer have
-absolute addresses to install.
-
-As expected, this reduces the runtime overhead of compilation when
-running a Linux kernel with address space randomization enabled.
+The return-by-reference is never used.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.c       | 19 ++++++------
- target/hppa/translate.c | 68 ++++++++++++++++++++++++++++-------------
- 2 files changed, 55 insertions(+), 32 deletions(-)
+ target/hppa/cpu.h        |  3 +--
+ target/hppa/int_helper.c |  2 +-
+ target/hppa/mem_helper.c | 19 ++++---------------
+ target/hppa/op_helper.c  |  3 +--
+ 4 files changed, 7 insertions(+), 20 deletions(-)
 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 5f0df0697a..f0507874ce 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -62,10 +62,6 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-     *pc = hppa_cpu_get_pc(env_cpu(env));
-     flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index f247ad56d7..78ab0adcd0 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -371,8 +371,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ void hppa_cpu_do_interrupt(CPUState *cpu);
+ bool hppa_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+-                              int type, hwaddr *pphys, int *pprot,
+-                              HPPATLBEntry **tlb_entry);
++                              int type, hwaddr *pphys, int *pprot);
+ void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+                                      vaddr addr, unsigned size,
+                                      MMUAccessType access_type,
+diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+index 97e5f0b9a7..b82f32fd12 100644
+--- a/target/hppa/int_helper.c
++++ b/target/hppa/int_helper.c
+@@ -167,7 +167,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
  
--    if (hppa_is_pa20(env)) {
--        cs_base = env->iaoq_f & MAKE_64BIT_MASK(32, 32);
+                     vaddr = hppa_form_gva_psw(old_psw, env->iasq_f, vaddr);
+                     t = hppa_get_physical_address(env, vaddr, MMU_KERNEL_IDX,
+-                                                  0, &paddr, &prot, NULL);
++                                                  0, &paddr, &prot);
+                     if (t >= 0) {
+                         /* We can't re-load the instruction.  */
+                         env->cr[CR_IIR] = 0;
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index ca7bbe0a7c..2929226874 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -197,18 +197,13 @@ static int match_prot_id64(CPUHPPAState *env, uint32_t access_id)
+ }
+ 
+ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+-                              int type, hwaddr *pphys, int *pprot,
+-                              HPPATLBEntry **tlb_entry)
++                              int type, hwaddr *pphys, int *pprot)
+ {
+     hwaddr phys;
+     int prot, r_prot, w_prot, x_prot, priv;
+     HPPATLBEntry *ent;
+     int ret = -1;
+ 
+-    if (tlb_entry) {
+-        *tlb_entry = NULL;
 -    }
 -
-     /*
-      * The only really interesting case is if IAQ_Back is on the same page
-      * as IAQ_Front, so that we can use goto_tb between the blocks.  In all
-@@ -113,19 +109,19 @@ static void hppa_restore_state_to_opc(CPUState *cs,
-                                       const TranslationBlock *tb,
-                                       const uint64_t *data)
- {
--    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = cpu_env(cs);
- 
--    cpu->env.iaoq_f = data[0];
--    if (data[1] != (target_ulong)-1) {
--        cpu->env.iaoq_b = data[1];
-+    env->iaoq_f = (env->iaoq_f & TARGET_PAGE_MASK) | data[0];
-+    if (data[1] != INT32_MIN) {
-+        env->iaoq_b = env->iaoq_f + data[1];
+     /* Virtual translation disabled.  Map absolute to physical.  */
+     if (MMU_IDX_MMU_DISABLED(mmu_idx)) {
+         switch (mmu_idx) {
+@@ -238,10 +233,6 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+         goto egress;
      }
--    cpu->env.unwind_breg = data[2];
-+    env->unwind_breg = data[2];
-     /*
-      * Since we were executing the instruction at IAOQ_F, and took some
-      * sort of action that provoked the cpu_restore_state, we can infer
-      * that the instruction was not nullified.
-      */
--    cpu->env.psw_n = 0;
-+    env->psw_n = 0;
- }
  
- static bool hppa_cpu_has_work(CPUState *cs)
-@@ -191,6 +187,9 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
-         hppa_ptlbe(&cpu->env);
-     }
- #endif
-+
-+    /* Use pc-relative instructions always to simplify the translator. */
-+    tcg_cflags_set(cs, CF_PCREL);
- }
- 
- static void hppa_cpu_initfn(Object *obj)
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index fa79116d5b..79e29d722f 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -47,7 +47,7 @@ typedef struct DisasIAQE {
-     TCGv_i64 space;
-     /* IAOQ base; may be null for relative address. */
-     TCGv_i64 base;
--    /* IAOQ addend; if base is null, relative to ctx->iaoq_first. */
-+    /* IAOQ addend; if base is null, relative to cpu_iaoq_f. */
-     int64_t disp;
- } DisasIAQE;
- 
-@@ -664,11 +664,7 @@ static DisasIAQE iaqe_next_absv(DisasContext *ctx, TCGv_i64 var)
- static void copy_iaoq_entry(DisasContext *ctx, TCGv_i64 dest,
-                             const DisasIAQE *src)
- {
--    if (src->base == NULL) {
--        tcg_gen_movi_i64(dest, ctx->iaoq_first + src->disp);
--    } else {
--        tcg_gen_addi_i64(dest, src->base, src->disp);
+-    if (tlb_entry) {
+-        *tlb_entry = ent;
 -    }
-+    tcg_gen_addi_i64(dest, src->base ? : cpu_iaoq_f, src->disp);
- }
+-
+     /* We now know the physical address.  */
+     phys = ent->pa + (addr - ent->itree.start);
  
- static void install_iaq_entries(DisasContext *ctx, const DisasIAQE *f,
-@@ -680,8 +676,28 @@ static void install_iaq_entries(DisasContext *ctx, const DisasIAQE *f,
-         b_next = iaqe_incr(f, 4);
-         b = &b_next;
-     }
--    copy_iaoq_entry(ctx, cpu_iaoq_f, f);
--    copy_iaoq_entry(ctx, cpu_iaoq_b, b);
-+
-+    /*
-+     * There is an edge case
-+     *    bv   r0(rN)
-+     *    b,l  disp,r0
-+     * for which F will use cpu_iaoq_b (from the indirect branch),
-+     * and B will use cpu_iaoq_f (from the direct branch).
-+     * In this case we need an extra temporary.
-+     */
-+    if (f->base != cpu_iaoq_b) {
-+        copy_iaoq_entry(ctx, cpu_iaoq_b, b);
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, f);
-+    } else if (f->base == b->base) {
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, f);
-+        tcg_gen_addi_i64(cpu_iaoq_b, cpu_iaoq_f, b->disp - f->disp);
-+    } else {
-+        TCGv_i64 tmp = tcg_temp_new_i64();
-+        copy_iaoq_entry(ctx, tmp, b);
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, f);
-+        tcg_gen_mov_i64(cpu_iaoq_b, tmp);
-+    }
-+
-     if (f->space) {
-         tcg_gen_mov_i64(cpu_iasq_f, f->space);
-     }
-@@ -3979,9 +3995,8 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
-         /* Adjust the dest offset for the privilege change from the PTE. */
-         TCGv_i64 off = tcg_temp_new_i64();
+@@ -350,7 +341,7 @@ hwaddr hppa_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+                cpu->env.psw & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
  
--        gen_helper_b_gate_priv(off, tcg_env,
--                               tcg_constant_i64(ctx->iaoq_first
--                                                + ctx->iaq_f.disp));
-+        copy_iaoq_entry(ctx, off, &ctx->iaq_f);
-+        gen_helper_b_gate_priv(off, tcg_env, off);
+     excp = hppa_get_physical_address(&cpu->env, addr, mmu_idx, 0,
+-                                     &phys, &prot, NULL);
++                                     &phys, &prot);
  
-         ctx->iaq_j.base = off;
-         ctx->iaq_j.disp = disp + 8;
-@@ -4602,7 +4617,7 @@ static bool trans_diag_unimp(DisasContext *ctx, arg_diag_unimp *a)
- static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     /* Since we're translating for debugging, the only error that is a
+        hard error is no translation at all.  Otherwise, while a real cpu
+@@ -432,7 +423,6 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
  {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
--    uint64_t cs_base, iaoq_f, iaoq_b;
-+    uint64_t cs_base;
-     int bound;
+     HPPACPU *cpu = HPPA_CPU(cs);
+     CPUHPPAState *env = &cpu->env;
+-    HPPATLBEntry *ent;
+     int prot, excp, a_prot;
+     hwaddr phys;
  
-     ctx->cs = cs;
-@@ -4621,12 +4636,8 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-                     : ctx->tb_flags & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
- #endif
- 
--    /* Recover the IAOQ values from the GVA + PRIV.  */
-     cs_base = ctx->base.tb->cs_base;
--    iaoq_f = cs_base & MAKE_64BIT_MASK(32, 32);
--    iaoq_f |= ctx->base.pc_first & MAKE_64BIT_MASK(2, 30);
--    iaoq_f |= ctx->privilege;
--    ctx->iaoq_first = iaoq_f;
-+    ctx->iaoq_first = ctx->base.pc_first + ctx->privilege;
- 
-     if (unlikely(cs_base & CS_BASE_DIFFSPACE)) {
-         ctx->iaq_b.space = cpu_iasq_b;
-@@ -4634,8 +4645,9 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     } else if (unlikely(cs_base & CS_BASE_DIFFPAGE)) {
-         ctx->iaq_b.base = cpu_iaoq_b;
-     } else {
--        iaoq_b = (iaoq_f & TARGET_PAGE_MASK) | (cs_base & ~TARGET_PAGE_MASK);
--        ctx->iaq_b.disp = iaoq_b - iaoq_f;
-+        uint64_t iaoq_f_pgofs = ctx->iaoq_first & ~TARGET_PAGE_MASK;
-+        uint64_t iaoq_b_pgofs = cs_base & ~TARGET_PAGE_MASK;
-+        ctx->iaq_b.disp = iaoq_b_pgofs - iaoq_f_pgofs;
+@@ -448,8 +438,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+         break;
      }
  
-     ctx->zero = tcg_constant_i64(0);
-@@ -4662,11 +4674,23 @@ static void hppa_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
- static void hppa_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-+    uint64_t iaoq_f, iaoq_b;
-+    int64_t diff;
+-    excp = hppa_get_physical_address(env, addr, mmu_idx,
+-                                     a_prot, &phys, &prot, &ent);
++    excp = hppa_get_physical_address(env, addr, mmu_idx, a_prot, &phys, &prot);
+     if (unlikely(excp >= 0)) {
+         if (probe) {
+             return false;
+@@ -690,7 +679,7 @@ target_ulong HELPER(lpa)(CPUHPPAState *env, target_ulong addr)
+     int prot, excp;
  
-     tcg_debug_assert(!iaqe_variable(&ctx->iaq_f));
--    tcg_gen_insn_start(ctx->iaoq_first + ctx->iaq_f.disp,
--                       (iaqe_variable(&ctx->iaq_b) ? -1 :
--                        ctx->iaoq_first + ctx->iaq_b.disp), 0);
-+
-+    iaoq_f = ctx->iaoq_first + ctx->iaq_f.disp;
-+    if (iaqe_variable(&ctx->iaq_b)) {
-+        diff = INT32_MIN;
-+    } else {
-+        iaoq_b = ctx->iaoq_first + ctx->iaq_b.disp;
-+        diff = iaoq_b - iaoq_f;
-+        /* Direct branches can only produce a 24-bit displacement. */
-+        tcg_debug_assert(diff == (int32_t)diff);
-+        tcg_debug_assert(diff != INT32_MIN);
-+    }
-+
-+    tcg_gen_insn_start(iaoq_f & ~TARGET_PAGE_MASK, diff, 0);
-     ctx->insn_start_updated = false;
- }
+     excp = hppa_get_physical_address(env, addr, MMU_KERNEL_IDX, 0,
+-                                     &phys, &prot, NULL);
++                                     &phys, &prot);
+     if (excp >= 0) {
+         if (excp == EXCP_DTLB_MISS) {
+             excp = EXCP_NA_DTLB_MISS;
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index 66cad78a57..7f79196fff 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -334,8 +334,7 @@ target_ulong HELPER(probe)(CPUHPPAState *env, target_ulong addr,
+     }
  
+     mmu_idx = PRIV_P_TO_MMU_IDX(level, env->psw & PSW_P);
+-    excp = hppa_get_physical_address(env, addr, mmu_idx, 0, &phys,
+-                                     &prot, NULL);
++    excp = hppa_get_physical_address(env, addr, mmu_idx, 0, &phys, &prot);
+     if (excp >= 0) {
+         cpu_restore_state(env_cpu(env), GETPC());
+         hppa_set_ior_and_isr(env, addr, MMU_IDX_MMU_DISABLED(mmu_idx));
 -- 
 2.34.1
 
