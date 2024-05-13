@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97633C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EDFC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6PAp-0004q7-Bx; Mon, 13 May 2024 02:28:35 -0400
+	id 1s6PCs-0005N0-6b; Mon, 13 May 2024 02:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s6PAn-0004ps-Ga
- for qemu-devel@nongnu.org; Mon, 13 May 2024 02:28:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s6PAl-0003Ru-5G
- for qemu-devel@nongnu.org; Mon, 13 May 2024 02:28:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715581709;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eW5FqkiVA0diQls1d+ZwaIgAr8PQu1ut6MVq6dQZdMU=;
- b=foQBxyMtBkROfDg2zzgqhiIh08ivRhvf8LSIOd0PCQqQiB/CfJW32qTt8PxdXMhrgFCTBn
- scpF3Y42OsvkExB6958yq9DrPoGRjIRSvD7LRB0qGv1sRjHqzVvqFs3P5fsd36X8lrrI3F
- bGWOD0mSRMSXWhNaLi/vaC1jfCboR/8=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-115-tOVAiXNbPuGxGHwZm3pDeA-1; Mon, 13 May 2024 02:28:04 -0400
-X-MC-Unique: tOVAiXNbPuGxGHwZm3pDeA-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-61b1200cc92so70296607b3.0
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 23:28:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1s6PCl-0005Ko-GB
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 02:30:35 -0400
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1s6PCe-0003YF-LH
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 02:30:34 -0400
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5aa1bf6cb40so2931508eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 23:30:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715581802; x=1716186602;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+lj5FHeMUi9+289d+EDAj+NxC/FVbTNg5TfQeHn1rEY=;
+ b=B84SOcdC3d0KlBe2jaRnai23sgcmTr9EYBqumdhCIdmEINp4NwLar/OwP42Xne+X4D
+ OkbNi4h4y1GjMIuISff31TMi/SZHm4f67UGJOoxAOpllnGwOuQKgF9GGfQbgeL78GTp/
+ rIj+/s26pCgl1s2oFsUoxgrxUW1kaTtUNGxV3E/9xl11QA1un0E5s5E8tzens/F9jNuc
+ Zi8PYvv3B89P4e4QbPL1jni0QDWpJs76feZuqnQdRY2MNtBeC9iUOFIBscVx8zCCoF2L
+ M0VFRYpCvlN6NmzX10jU75c9ErJ91Ten/2MKb286li18ecvvooEnbl9EKwSJZbzOUaxB
+ j6eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715581683; x=1716186483;
+ d=1e100.net; s=20230601; t=1715581802; x=1716186602;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eW5FqkiVA0diQls1d+ZwaIgAr8PQu1ut6MVq6dQZdMU=;
- b=I68UQz2VMagzEyy0UH4JsJmWIi04xXs2VlEroH9OI3VOfaJiuiFnUmM0z+8oh6DwBk
- RDIxAJ2gg5kDExrZuHAXB4JHim3XJGtqxLA/UTXbyXsfwvE/LlHnbbLlcF3w1I/lRh+5
- TQlpdPCbYAcBNWabsrwr0mwTSrpOuc+jKJJAGkG78hyICGXWke9HKmXKoJX5/Rw/1+3l
- ZfToARVGH4Hbo42YCn0i22a77OtoCXmI4fsKZLa8i8a+voGV0H1n15BuWOKTAkxg27u2
- EqUteAPlzC4yLijRI54GQvsuT4ZJU4CDZ+X3KccWp3A+mQLA5fCns3P3GqbKDlYKyxbc
- UPrw==
-X-Gm-Message-State: AOJu0YwQ4kkyhI+c21PcMrDIYA42k3UFk4wboyl4irO2j96YQLonFXcJ
- U44HW+tvggD6/shP4+BHUkNMxgSd8ufyi89xF67D2X6OCdyHIobuCzfNYc0IlqhiLGRAJMvQXTy
- D18+DKqprzMVgc3qvABcPHZUZiBhHiZUxR2fiRiYCw30UJ10iQiCMl5gVFRGUZhMeIPsArhJMRM
- x4YgIy3HFTHK1JdQhi2MExjVqH0zM=
-X-Received: by 2002:a05:690c:6a0e:b0:61b:33b4:b83c with SMTP id
- 00721157ae682-622aff9028bmr104080667b3.7.1715581682053; 
- Sun, 12 May 2024 23:28:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGI6kXVWVpBwuk/Pu4lBphswrcdyQgT08XXhLtdANbv5u2VhtqIvg0XlNGXeijoB4/GtAa4SjjF1mChF7aiJ8c=
-X-Received: by 2002:a05:690c:6a0e:b0:61b:33b4:b83c with SMTP id
- 00721157ae682-622aff9028bmr104080237b3.7.1715581680278; Sun, 12 May 2024
- 23:28:00 -0700 (PDT)
+ bh=+lj5FHeMUi9+289d+EDAj+NxC/FVbTNg5TfQeHn1rEY=;
+ b=VDFuVuMn1gOGMaAGiX6z+wg4AZmj0+K6GPj6YvDUm5S32W3tuVltrBvez27R7L0pxM
+ 8q7Nzu1F12Bow95gPEbUCcPgtHSczlnAcUmwxLRNbO3NZPlihSYuGoHymmwrqYtrCxiF
+ eA71tqiHbCgWKNiUMO2PbpRppsyL1vdoJHtXYJWYcpBSyH4hf5EpvbfTk4TD7W96/3yJ
+ l/y8DHjXRvdVnNUF/x8MfqxhmvyIHsh3utiJuVQ01B5EMUtqLzEidNFvf180QgOak2VN
+ /3MtdNFRPxsyglAx2iuRit6r1vrMa+tb6Wk0xi8lrTrNlYFizLoEVpX1TTr1dxy+3ga2
+ KjFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8ZFHtGaOPxnC+UUEq5xjQsiLiIiBgyzj8z0XAAvAJGDCGygL8V7J6gTOfVpOVqiOysRgJcf+NtyegpunUXUh0bjnVnnk=
+X-Gm-Message-State: AOJu0Yw8br5qCxzWI5zWjMSlXjt5NAkb2lQ6oKPVYu0rulSBNyn3L1dA
+ bbVYlxIXhvD0stVO0e88woyzX2G1IKwks707s4IXZTejBZPpaMU8vhza8uIjSDQ6aHNelqMpj+z
+ UoI5zpgi+AHTK7IERfDsznDws1Gg5kc56/sKbIg==
+X-Google-Smtp-Source: AGHT+IFqcWlc5xd20ET7ho1+ApiEmXgHnKbbuVUoxfcVlBum4XiDRZojXzGcQ7Db/91lzBSrmyzeOeLd60DI8qwFB5U=
+X-Received: by 2002:a05:6870:730d:b0:22e:b299:6512 with SMTP id
+ 586e51a60fabf-24172bab10bmr11865988fac.32.1715581801859; Sun, 12 May 2024
+ 23:30:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <CACGkMEuJc1ba67Hge+MfpV6npy9KJf84q=uMSP3VYDEA4FiZ=A@mail.gmail.com>
- <CAJaqyWemfoCTLr21ukNszqnqaaEbuB_h+s3R4j-eC_YvHJpEGg@mail.gmail.com>
- <CACGkMEtZEe=ONRcrmm5TNdcxkJx=p4m24VD0yx5w0u+Rn854hQ@mail.gmail.com>
- <CAJaqyWdoCYFEEQdwZiCxzaX6HuJE-0QWctJ4WBnOd97zDwbPnw@mail.gmail.com>
- <CACGkMEu328ksfMDtJheH+sdTdV4E=pJFEa5Zco2_ecskubCAGg@mail.gmail.com>
- <CAJaqyWdZFUw8H7_2Jw3j9JxLj9+3p53QZg=DF3o4OgWJYC-SaQ@mail.gmail.com>
- <CACGkMEvdBDFvwvqb_7YXqiPd-ax4Xw7e0BLBhCt_uD6-Uf+DgA@mail.gmail.com>
- <CAJaqyWdA_6Mx3mkcobmBjB5NDJt3tyqTJv2JijF0agnnBFxQxw@mail.gmail.com>
- <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
- <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
- <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
-In-Reply-To: <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 13 May 2024 08:27:24 +0200
-Message-ID: <CAJaqyWeKfVXYj61sgvFrUTpOgy0k-zsLoR4JePEo0Q8XuXYbmA@mail.gmail.com>
-Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Si-Wei Liu <si-wei.liu@oracle.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- Jonah Palmer <jonah.palmer@oracle.com>, Dragos Tatulea <dtatulea@nvidia.com>
+References: <20240507094210.300566-1-mnissler@rivosinc.com>
+ <20240507094210.300566-3-mnissler@rivosinc.com>
+ <447ddc5a-ae1e-4fd1-b03a-dd7e1faa46e9@linaro.org>
+ <CAGNS4Tb1FVFmzVLvSZD84n0q80bwDiAMaSr752jb4nDwkGHSjA@mail.gmail.com>
+ <b239ed9c-df6c-4785-91cc-fb7139997209@linaro.org>
+ <CAGNS4TbG2=mqzfRjNsSueQCNGbBvPP0DdXLVO7Pg8YfpTmpwTA@mail.gmail.com>
+In-Reply-To: <CAGNS4TbG2=mqzfRjNsSueQCNGbBvPP0DdXLVO7Pg8YfpTmpwTA@mail.gmail.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Mon, 13 May 2024 08:29:50 +0200
+Message-ID: <CAGNS4TZcN3y9dDR5p3eijf_u9VSM2CFVk=RBAuT0KOM3TC7vMQ@mail.gmail.com>
+Subject: Re: [PATCH v9 2/5] softmmu: Support concurrent bounce buffers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: stefanha@redhat.com, qemu-devel@nongnu.org, peterx@redhat.com, 
+ jag.raman@oracle.com, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, john.levon@nutanix.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=mnissler@rivosinc.com; helo=mail-oo1-xc36.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,245 +102,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 11, 2024 at 6:07=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
-ote:
+Phil,
+
+Did you accidentally miss this in your pull request [1] or did you
+leave it out intentionally?
+
+It's still missing the Reviewed bit after the atomic cmpxchg change
+prompted by the size_t switch, so that might be the reason - I'm just
+trying to figure out what the next step is for this patch.
+
+Thanks,
+Mattias
+
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg01712.html
+
+On Wed, May 8, 2024 at 8:33=E2=80=AFAM Mattias Nissler <mnissler@rivosinc.c=
+om> wrote:
 >
-> On Fri, May 10, 2024 at 3:16=E2=80=AFPM Eugenio Perez Martin
-> <eperezma@redhat.com> wrote:
+> On Tue, May 7, 2024 at 4:46=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philm=
+d@linaro.org> wrote:
 > >
-> > On Fri, May 10, 2024 at 6:29=E2=80=AFAM Jason Wang <jasowang@redhat.com=
-> wrote:
-> > >
-> > > On Thu, May 9, 2024 at 3:10=E2=80=AFPM Eugenio Perez Martin <eperezma=
-@redhat.com> wrote:
-> > > >
-> > > > On Thu, May 9, 2024 at 8:27=E2=80=AFAM Jason Wang <jasowang@redhat.=
-com> wrote:
-> > > > >
-> > > > > On Thu, May 9, 2024 at 1:16=E2=80=AFAM Eugenio Perez Martin <eper=
-ezma@redhat.com> wrote:
-> > > > > >
-> > > > > > On Wed, May 8, 2024 at 4:29=E2=80=AFAM Jason Wang <jasowang@red=
-hat.com> wrote:
-> > > > > > >
-> > > > > > > On Tue, May 7, 2024 at 6:57=E2=80=AFPM Eugenio Perez Martin <=
-eperezma@redhat.com> wrote:
-> > > > > > > >
-> > > > > > > > On Tue, May 7, 2024 at 9:29=E2=80=AFAM Jason Wang <jasowang=
-@redhat.com> wrote:
-> > > > > > > > >
-> > > > > > > > > On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Mar=
-tin
-> > > > > > > > > <eperezma@redhat.com> wrote:
-> > > > > > > > > >
-> > > > > > > > > > On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jas=
-owang@redhat.com> wrote:
-> > > > > > > > > > >
-> > > > > > > > > > > On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=
-=A9rez <eperezma@redhat.com> wrote:
-> > > > > > > > > > > >
-> > > > > > > > > > > > The guest may have overlapped memory regions, where=
- different GPA leads
-> > > > > > > > > > > > to the same HVA.  This causes a problem when overla=
-pped regions
-> > > > > > > > > > > > (different GPA but same translated HVA) exists in t=
-he tree, as looking
-> > > > > > > > > > > > them by HVA will return them twice.
-> > > > > > > > > > >
-> > > > > > > > > > > I think I don't understand if there's any side effect=
- for shadow virtqueue?
-> > > > > > > > > > >
-> > > > > > > > > >
-> > > > > > > > > > My bad, I totally forgot to put a reference to where th=
-is comes from.
-> > > > > > > > > >
-> > > > > > > > > > Si-Wei found that during initialization this sequences =
-of maps /
-> > > > > > > > > > unmaps happens [1]:
-> > > > > > > > > >
-> > > > > > > > > > HVA                    GPA                IOVA
-> > > > > > > > > > -------------------------------------------------------=
-------------------------------------------------------------------
-> > > > > > > > > > Map
-> > > > > > > > > > [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [=
-0x1000, 0x80000000)
-> > > > > > > > > > [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x208=
-0000000)
-> > > > > > > > > > [0x80001000, 0x2000001000)
-> > > > > > > > > > [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc=
-0000)
-> > > > > > > > > > [0x2000001000, 0x2000021000)
-> > > > > > > > > >
-> > > > > > > > > > Unmap
-> > > > > > > > > > [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc=
-0000) [0x1000,
-> > > > > > > > > > 0x20000) ???
-> > > > > > > > > >
-> > > > > > > > > > The third HVA range is contained in the first one, but =
-exposed under a
-> > > > > > > > > > different GVA (aliased). This is not "flattened" by QEM=
-U, as GPA does
-> > > > > > > > > > not overlap, only HVA.
-> > > > > > > > > >
-> > > > > > > > > > At the third chunk unmap, the current algorithm finds t=
-he first chunk,
-> > > > > > > > > > not the second one. This series is the way to tell the =
-difference at
-> > > > > > > > > > unmap time.
-> > > > > > > > > >
-> > > > > > > > > > [1] https://lists.nongnu.org/archive/html/qemu-devel/20=
-24-04/msg00079.html
-> > > > > > > > > >
-> > > > > > > > > > Thanks!
-> > > > > > > > >
-> > > > > > > > > Ok, I was wondering if we need to store GPA(GIOVA) to HVA=
- mappings in
-> > > > > > > > > the iova tree to solve this issue completely. Then there =
-won't be
-> > > > > > > > > aliasing issues.
-> > > > > > > > >
-> > > > > > > >
-> > > > > > > > I'm ok to explore that route but this has another problem. =
-Both SVQ
-> > > > > > > > vrings and CVQ buffers also need to be addressable by Vhost=
-IOVATree,
-> > > > > > > > and they do not have GPA.
-> > > > > > > >
-> > > > > > > > At this moment vhost_svq_translate_addr is able to handle t=
-his
-> > > > > > > > transparently as we translate vaddr to SVQ IOVA. How can we=
- store
-> > > > > > > > these new entries? Maybe a (hwaddr)-1 GPA to signal it has =
-no GPA and
-> > > > > > > > then a list to go through other entries (SVQ vaddr and CVQ =
-buffers).
-> > > > > > >
-> > > > > > > This seems to be tricky.
-> > > > > > >
-> > > > > > > As discussed, it could be another iova tree.
-> > > > > > >
-> > > > > >
-> > > > > > Yes but there are many ways to add another IOVATree. Let me exp=
-and & recap.
-> > > > > >
-> > > > > > Option 1 is to simply add another iova tree to VhostShadowVirtq=
-ueue.
-> > > > > > Let's call it gpa_iova_tree, as opposed to the current iova_tre=
-e that
-> > > > > > translates from vaddr to SVQ IOVA. To know which one to use is =
-easy at
-> > > > > > adding or removing, like in the memory listener, but how to kno=
-w at
-> > > > > > vhost_svq_translate_addr?
-> > > > >
-> > > > > Then we won't use virtqueue_pop() at all, we need a SVQ version o=
-f
-> > > > > virtqueue_pop() to translate GPA to SVQ IOVA directly?
-> > > > >
-> > > >
-> > > > The problem is not virtqueue_pop, that's out of the
-> > > > vhost_svq_translate_addr. The problem is the need of adding
-> > > > conditionals / complexity in all the callers of
-> > > >
-> > > > > >
-> > > > > > The easiest way for me is to rely on memory_region_from_host().=
- When
-> > > > > > vaddr is from the guest, it returns a valid MemoryRegion. When =
-it is
-> > > > > > not, it returns NULL. I'm not sure if this is a valid use case,=
- it
-> > > > > > just worked in my tests so far.
-> > > > > >
-> > > > > > Now we have the second problem: The GPA values of the regions o=
-f the
-> > > > > > two IOVA tree must be unique. We need to be able to find unallo=
-cated
-> > > > > > regions in SVQ IOVA. At this moment there is only one IOVATree,=
- so
-> > > > > > this is done easily by vhost_iova_tree_map_alloc. But it is ver=
-y
-> > > > > > complicated with two trees.
-> > > > >
-> > > > > Would it be simpler if we decouple the IOVA allocator? For exampl=
-e, we
-> > > > > can have a dedicated gtree to track the allocated IOVA ranges. It=
- is
-> > > > > shared by both
-> > > > >
-> > > > > 1) Guest memory (GPA)
-> > > > > 2) SVQ virtqueue and buffers
-> > > > >
-> > > > > And another gtree to track the GPA to IOVA.
-> > > > >
-> > > > > The SVQ code could use either
-> > > > >
-> > > > > 1) one linear mappings that contains both SVQ virtqueue and buffe=
-rs
-> > > > >
-> > > > > or
-> > > > >
-> > > > > 2) dynamic IOVA allocation/deallocation helpers
-> > > > >
-> > > > > So we don't actually need the third gtree for SVQ HVA -> SVQ IOVA=
-?
-> > > > >
-> > > >
-> > > > That's possible, but that scatters the IOVA handling code instead o=
-f
-> > > > keeping it self-contained in VhostIOVATree.
-> > >
-> > > To me, the IOVA range/allocation is orthogonal to how IOVA is used.
-> > >
-> > > An example is the iova allocator in the kernel.
-> > >
-> > > Note that there's an even simpler IOVA "allocator" in NVME passthroug=
-h
-> > > code, not sure it is useful here though (haven't had a deep look at
-> > > that).
-> > >
+> > On 7/5/24 16:04, Mattias Nissler wrote:
+> > > On Tue, May 7, 2024 at 2:57=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <p=
+hilmd@linaro.org> wrote:
+> > >>
+> > >> On 7/5/24 11:42, Mattias Nissler wrote:
+> > >>> When DMA memory can't be directly accessed, as is the case when
+> > >>> running the device model in a separate process without shareable DM=
+A
+> > >>> file descriptors, bounce buffering is used.
+> > >>>
+> > >>> It is not uncommon for device models to request mapping of several =
+DMA
+> > >>> regions at the same time. Examples include:
+> > >>>    * net devices, e.g. when transmitting a packet that is split acr=
+oss
+> > >>>      several TX descriptors (observed with igb)
+> > >>>    * USB host controllers, when handling a packet with multiple dat=
+a TRBs
+> > >>>      (observed with xhci)
+> > >>>
+> > >>> Previously, qemu only provided a single bounce buffer per AddressSp=
+ace
+> > >>> and would fail DMA map requests while the buffer was already in use=
+. In
+> > >>> turn, this would cause DMA failures that ultimately manifest as har=
+dware
+> > >>> errors from the guest perspective.
+> > >>>
+> > >>> This change allocates DMA bounce buffers dynamically instead of
+> > >>> supporting only a single buffer. Thus, multiple DMA mappings work
+> > >>> correctly also when RAM can't be mmap()-ed.
+> > >>>
+> > >>> The total bounce buffer allocation size is limited individually for=
+ each
+> > >>> AddressSpace. The default limit is 4096 bytes, matching the previou=
+s
+> > >>> maximum buffer size. A new x-max-bounce-buffer-size parameter is
+> > >>> provided to configure the limit for PCI devices.
+> > >>>
+> > >>> Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> > >>> ---
+> > >>>    hw/pci/pci.c                |  8 ++++
+> > >>>    include/exec/memory.h       | 14 +++----
+> > >>>    include/hw/pci/pci_device.h |  3 ++
+> > >>>    system/memory.c             |  5 ++-
+> > >>>    system/physmem.c            | 82 ++++++++++++++++++++++++++-----=
+------
+> > >>>    5 files changed, 76 insertions(+), 36 deletions(-)
 > >
-> > I don't know enough about them to have an opinion. I keep seeing the
-> > drawback of needing to synchronize both allocation & adding in all the
-> > places we want to modify the IOVATree. At this moment, these are the
-> > vhost-vdpa memory listener, the SVQ vring creation and removal, and
-> > net CVQ buffers. But it may be more in the future.
 > >
-> > What are the advantages of keeping these separated that justifies
-> > needing to synchronize in all these places, compared with keeping them
-> > synchronized in VhostIOVATree?
+> > >>>    /**
+> > >>>     * struct AddressSpace: describes a mapping of addresses to #Mem=
+oryRegion objects
+> > >>> @@ -1143,8 +1137,10 @@ struct AddressSpace {
+> > >>>        QTAILQ_HEAD(, MemoryListener) listeners;
+> > >>>        QTAILQ_ENTRY(AddressSpace) address_spaces_link;
+> > >>>
+> > >>> -    /* Bounce buffer to use for this address space. */
+> > >>> -    BounceBuffer bounce;
+> > >>> +    /* Maximum DMA bounce buffer size used for indirect memory map=
+ requests */
+> > >>> +    uint32_t max_bounce_buffer_size;
+> > >>
+> > >> Alternatively size_t.
+> > >
+> > > While switching things over, I was surprised to find that
+> > > DEFINE_PROP_SIZE wants a uint64_t field rather than a size_t field.
+> > > There is a DEFINE_PROP_SIZE32 variant for uint32_t though. Considerin=
+g
+> > > my options, assuming that we want to use size_t for everything other
+> > > than the property:
+> > >
+> > > (1) Make PCIDevice::max_bounce_buffer_size size_t and have the
+> > > preprocessor select DEFINE_PROP_SIZE/DEFINE_PROP_SIZE32. This makes
+> > > the qdev property type depend on the host. Ugh.
+> > >
+> > > (2) Make PCIDevice::max_bounce_buffer_size uint64_t and clamp if
+> > > needed when used. Weird to allow larger values that are then clamped,
+> > > although it probably doesn't matter in practice since address space i=
+s
+> > > limited to 4GB anyways.
+> > >
+> > > (3) Make PCIDevice::max_bounce_buffer_size uint32_t and accept the
+> > > limitation that the largest bounce buffer limit is 4GB even on 64-bit
+> > > hosts.
+> > >
+> > > #3 seemed most pragmatic, so I'll go with that.
+> >
+> > LGTM, thanks for updating.
 >
-> It doesn't need to be synchronized.
+> No problem, can I ask you to provide a formal R-B on the v10 #4 patch
+> [1] then, so the series will be ready to go in?
 >
-> Assuming guest and SVQ shares IOVA range. IOVA only needs to track
-> which part of the range has been used.
->
-
-Not sure if I follow, that is what I mean with "synchronized".
-
-> This simplifies things, we can store GPA->IOVA mappings and SVQ ->
-> IOVA mappings separately.
->
-
-Sorry, I still cannot see the whole picture :).
-
-Let's assume we have all the GPA mapped to specific IOVA regions, so
-we have the first IOVA tree (GPA -> IOVA) filled. Now we enable SVQ
-because of the migration. How can we know where we can place SVQ
-vrings without having them synchronized?
-
-At this moment we're using a tree. The tree nature of the current SVQ
-IOVA -> VA makes all nodes ordered so it is more or less easy to look
-for holes.
-
-Now your proposal uses the SVQ IOVA as tree values. Should we iterate
-over all of them, order them, of the two trees, and then look for
-holes there?
-
-> Thanks
+> [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg01382.htm=
+l
 >
 > >
-> > Thanks!
+> > >
+> > >
+> > >>
+> > >>> +    /* Total size of bounce buffers currently allocated, atomicall=
+y accessed */
+> > >>> +    uint32_t bounce_buffer_size;
+> > >>
+> > >> Ditto.
 > >
->
-
 
