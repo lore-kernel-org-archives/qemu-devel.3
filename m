@@ -4,64 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D714C25B5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 02:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E5CC25B5F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 02:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Lql-0001YB-Mf; Sun, 12 May 2024 22:55:39 -0400
+	id 1s6Lt9-0002LN-7M; Sun, 12 May 2024 22:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s6Lqb-0001XI-I7; Sun, 12 May 2024 22:55:29 -0400
-Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s6LqV-0006Tb-VW; Sun, 12 May 2024 22:55:29 -0400
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6Lt6-0002KP-RY; Sun, 12 May 2024 22:58:04 -0400
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6Lt5-0006zf-9h; Sun, 12 May 2024 22:58:04 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-4df36a7a6f3so1458993e0c.0; 
+ Sun, 12 May 2024 19:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1715568915; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=6jHcqDqK3d+EL5SEk+FiAz0m3A68fqOQ0NX0mgBSXS0=;
- b=YIgBUSPukF8XAGAozh9VXF1g7KWXMGZ3lwSE8q6y9z1iaESfGVaQ+JC+Gs51nkgqgHpDpxMxj0s3vP6UwaFj5su0MghDy8SlvjZY6Do5aAuUTB8DShZHuJXwxEk+neh+jvfeeMncxBAJTscXXilp23mr1tVzTLQuoiJUrOuHmNA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067109;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=12; SR=0;
- TI=SMTPD_---0W6H4bhX_1715568913; 
-Received: from 30.198.0.184(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W6H4bhX_1715568913) by smtp.aliyun-inc.com;
- Mon, 13 May 2024 10:55:14 +0800
-Message-ID: <fb91965c-6ff8-4dda-98cc-04668dbd2af4@linux.alibaba.com>
-Date: Mon, 13 May 2024 10:54:28 +0800
+ d=gmail.com; s=20230601; t=1715569081; x=1716173881; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LZ7ba1DGDxR5WoyIdaA7skRpAqKyJ2BY1my8U5HygUg=;
+ b=AOFPzrxFzjkppratTzQ3a6qI56Uz4zjT2atpajB5mqCROf75taaQivz9dceUFLX8YD
+ 48p/4njCLzx+wpRgSwcZSyfae4XaXMJRaOoOBW9DmZtr/i7sND6RbZ68JQmOlXvXiaEj
+ Sf9DVEWoqhnp6fFTAVqYJxMB3BZDyX6CbdgNWTps27VottIlnonus6xSX3NRfe8RtBjk
+ 9Mv4hAC5NA/P7g9AgpOvSqMFGjTIpftARpc42iGLY9Y8SucYs7XrQ7uL8qXxAKoNBLWP
+ UNmjcp8xhxkdVFuJ0hNjak9sxhW73PUpSTspyBPiAvgQlq6gsg0LAxshnVcbBCKEmKcy
+ wI/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715569081; x=1716173881;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LZ7ba1DGDxR5WoyIdaA7skRpAqKyJ2BY1my8U5HygUg=;
+ b=YWdEndiPrGOr6j6Pc+NABY4qcJc0Ft3Eo+8H6CJti2jIfD2dLNg+bdPb3EpUxWVXE4
+ r30LEeoMP0q8HApQoAAsLI5R9UKYF1aSZC4MkS8ChMIU/UymciJObfCN6CB6VLNDLXmn
+ ztavYBV68BH3od2aiCg74wtg4S5iEW2e2sgSCJN+VLbJZt9gTdEd5YcjwYZzhF/gYazN
+ KSY7AYFFJT5zJwAp+q5+lFfPEPlQvY9X/yDdjfrC+AZts1ur5k39w7sULWM8kes+CkU8
+ E6ZFBv3CAvz/ARL5LG6vUIbghmSpBKp4YYBIfZ+KRUVWUTLPaErOHTmKpSOj7XUciqkk
+ W1lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOJTCIyQNvK4W0WdqNTqPHozRkgo0GAwq3MVsipu+Mi8zY7j14yVtLXQ3vGF9LLkX/wtiulZn12qgcc23hy8FUx5h3MZI=
+X-Gm-Message-State: AOJu0YzzreKIw/xpnW41z1QnC/9bFutuB08JU+FWUCia/eeEEbFKkHPg
+ QjR+dIEMkxImh94CKj55CgpSKJj2kJ4Y6S6jNBPyHcdytcxftKxKWqET/fgfocGuYOV27QV2kSA
+ n5rOsIE98+pu6FW7aGw+8MjNOKgw=
+X-Google-Smtp-Source: AGHT+IGx3mOtFP2/aMkmcunHJ+XCgF3HUtuh3aE+csfyWlkQYEXiUCUds3w5FVwxuz5DAw0195Glh4w/l8nz0Avfy2E=
+X-Received: by 2002:a05:6122:4699:b0:4da:e199:4411 with SMTP id
+ 71dfb90a1353d-4df790f5f50mr10161460e0c.7.1715569081384; Sun, 12 May 2024
+ 19:58:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] target/riscv: Reuse the conversion function of
- priv_spec and string
-To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Jim Shu <jim.shu@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+References: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
+In-Reply-To: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 13 May 2024 12:57:35 +1000
+Message-ID: <CAKmqyKOYDQXXVRbSqMZbzS6+YVxQvaktw3eRVj_eJawqynzTqQ@mail.gmail.com>
+Subject: Re: [PATCH RESEND] target/riscv/cpu.c: fix Zvkb extension config
+To: Yangyu Chen <cyy@cyyself.name>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>, Max Chou <max.chou@sifive.com>
-References: <20240510065856.2436870-1-fea.wang@sifive.com>
- <20240510065856.2436870-2-fea.wang@sifive.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240510065856.2436870-2-fea.wang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.130;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,89 +95,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, May 11, 2024 at 9:28=E2=80=AFPM Yangyu Chen <cyy@cyyself.name> wrot=
+e:
+>
+> This code has a typo that writes zvkb to zvkg, causing users can't
+> enable zvkb through the config. This patch gets this fixed.
+>
+> Signed-off-by: Yangyu Chen <cyy@cyyself.name>
+> Fixes: ea61ef7097d0 ("target/riscv: Move vector crypto extensions to risc=
+v_cpu_extensions")
+> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-On 2024/5/10 14:58, Fea.Wang wrote:
-> From: Jim Shu <jim.shu@sifive.com>
->
-> Public the conversion function of priv_spec and string in cpu.h, so that
-> tcg-cpu.c could also use it.
->
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   target/riscv/cpu.c         |  4 ++--
->   target/riscv/cpu.h         |  3 +++
->   target/riscv/tcg/tcg-cpu.c | 13 +++++--------
->   3 files changed, 10 insertions(+), 10 deletions(-)
+>  target/riscv/cpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a74f0eb29c..b6b48e5620 100644
+> index eb1a2e7d6d..13cd34adbd 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -1769,7 +1769,7 @@ static const PropertyInfo prop_pmp = {
->       .set = prop_pmp_set,
->   };
->   
-> -static int priv_spec_from_str(const char *priv_spec_str)
-> +int priv_spec_from_str(const char *priv_spec_str)
->   {
->       int priv_version = -1;
->   
-> @@ -1784,7 +1784,7 @@ static int priv_spec_from_str(const char *priv_spec_str)
->       return priv_version;
->   }
->   
-> -static const char *priv_spec_to_str(int priv_version)
-> +const char *priv_spec_to_str(int priv_version)
->   {
->       switch (priv_version) {
->       case PRIV_VERSION_1_10_0:
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index e0dd1828b5..7696102697 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -829,4 +829,7 @@ target_ulong riscv_new_csr_seed(target_ulong new_value,
->   uint8_t satp_mode_max_from_map(uint32_t map);
->   const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
->   
-> +const char *priv_spec_to_str(int priv_version);
-> +int priv_spec_from_str(const char *priv_spec_str);
-> +
->   #endif /* RISCV_CPU_H */
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 4ebebebe09..faa8de9b83 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -76,16 +76,13 @@ static void riscv_cpu_write_misa_bit(RISCVCPU *cpu, uint32_t bit,
->   
->   static const char *cpu_priv_ver_to_str(int priv_ver)
->   {
-> -    switch (priv_ver) {
-> -    case PRIV_VERSION_1_10_0:
-> -        return "v1.10.0";
-> -    case PRIV_VERSION_1_11_0:
-> -        return "v1.11.0";
-> -    case PRIV_VERSION_1_12_0:
-> -        return "v1.12.0";
-> +    const char *priv_spec_str = priv_spec_to_str(priv_ver);
-> +
-> +    if (priv_spec_str == NULL) {
-> +        g_assert_not_reached();
->       }
-
-g_assert(priv_spec_str != NULL) or g_assert(priv_spec_str)
-
-Otherwise,
-
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-
-Zhiwei
-
->   
-> -    g_assert_not_reached();
-> +    return priv_spec_str;
->   }
->   
->   static void riscv_cpu_synchronize_from_tb(CPUState *cs,
+> @@ -1535,7 +1535,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
+>      /* Vector cryptography extensions */
+>      MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
+>      MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
+> -    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkg, false),
+> +    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
+>      MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
+>      MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
+>      MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
+> --
+> 2.43.0
+>
+>
 
