@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C3AC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AEEC25B5F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6PEn-0007eO-SA; Mon, 13 May 2024 02:32:41 -0400
+	id 1s6PEf-0007TL-TA; Mon, 13 May 2024 02:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1s6PEO-00079J-HG; Mon, 13 May 2024 02:32:16 -0400
+ id 1s6PEM-00077S-Lt; Mon, 13 May 2024 02:32:14 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1s6PEJ-0003wW-15; Mon, 13 May 2024 02:32:16 -0400
+ id 1s6PEI-0003we-MM; Mon, 13 May 2024 02:32:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=gdfSxwNzgYgkXJ/2oFsiwToopSDkXtcrJyFLx6fnw7Q=; b=oCb3ZlgtVVZ9
- WFg5xKlJLIaE/ss9f9VX2m29x802DZzPYK+XPL/TvROO1l2ExLh7c9DltZI0yCM4wYMGhVm/48yNH
- weVI1ClBN8KDzdeB+SRs/CKMrHokOjQ6f89TBftisSu+sMCFrcUFEEv7lPGZLY7bj5jJHawAnxjAB
- 6BQBA+tVDDb2rcS0mR2AhO7zWR4L2Sx3pIUfs5eLJ8qjnaCYpNTZq5113uy3xjniis/K+HdscoqoP
- 6E2iNOEm5uAErD+518kz9+763EEFjrUDnftSvQoZ+EXhIe+lp4UclvetM6BJhwqzYzowts58d0ESF
- gKqnDo845vWzHU4xRifczg==;
+ Content-Type; bh=jQdqmK1nf19RwtsWKWHuGRHEKfLo+KSie5FkgkRKt3s=; b=R/KyBnDTdZtT
+ Xh5gq01vgYK9HfSyhT38hUo0QY8TdUQMU5HxJ+JiJwD3LvPlGPYVNkf+HPwoKMK5DSVBc/FiLMWa2
+ 2qqp/ccQ45QNr2qEo82ECCIPZThDqDCEI/APEfHKOAa0Ssx2cqIMvoni1Hq8QgJoDPkyN0bHya13y
+ WTgB5nQ5atP0pKqMSbsslzt4WK09fIAxLtnqqtRHBs8JhhLgjqp5Kmuus3VBfHqEpzUo7UrWmHZtG
+ YW34jm2CF18HJxe+tsoU3+vkZOrtrsk9wVJNtrqK0uNGFeEEZuvALSYpKPXllBB0RPEwmSfTgbavd
+ PWzRzY3tYHLKT/JuKuSh0w==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1s6PAR-000qpR-2Q;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1s6PAR-000qpR-1q;
  Mon, 13 May 2024 08:31:56 +0200
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eblake@redhat.com, berto@igalia.com, jean-louis@dupond.be,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v2 05/11] iotests/common.rc: add disk_usage function
-Date: Mon, 13 May 2024 09:31:57 +0300
-Message-Id: <20240513063203.113911-6-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v2 01/11] qcow2: make function update_refcount_discard() global
+Date: Mon, 13 May 2024 09:31:53 +0300
+Message-Id: <20240513063203.113911-2-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
 References: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
@@ -67,49 +67,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the definition from iotests/250 to common.rc.  This is used to
-detect real disk usage of sparse files.  In particular, we want to use
-it for checking subclusters-based discards.
+We are going to need it for discarding separate subclusters.  The
+function itself doesn't do anything with the refcount tables, it simply
+adds a discard request to the queue, so rename it to qcow2_queue_discard().
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- tests/qemu-iotests/250       | 5 -----
- tests/qemu-iotests/common.rc | 6 ++++++
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ block/qcow2-refcount.c | 8 ++++----
+ block/qcow2.h          | 2 ++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/250 b/tests/qemu-iotests/250
-index af48f83aba..c0a0dbc0ff 100755
---- a/tests/qemu-iotests/250
-+++ b/tests/qemu-iotests/250
-@@ -52,11 +52,6 @@ _unsupported_imgopts data_file
- # bdrv_co_truncate(bs->file) call in qcow2_co_truncate(), which might succeed
- # anyway.
- 
--disk_usage()
--{
--    du --block-size=1 $1 | awk '{print $1}'
--}
--
- size=2100M
- 
- _make_test_img -o "cluster_size=1M,preallocation=metadata" $size
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 95c12577dd..237f746af8 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -140,6 +140,12 @@ _optstr_add()
-     fi
+diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+index 0266542cee..2026f5fa21 100644
+--- a/block/qcow2-refcount.c
++++ b/block/qcow2-refcount.c
+@@ -754,8 +754,8 @@ void qcow2_process_discards(BlockDriverState *bs, int ret)
+     }
  }
  
-+# report real disk usage for sparse files
-+disk_usage()
-+{
-+    du --block-size=1 "$1" | awk '{print $1}'
-+}
-+
- # Set the variables to the empty string to turn Valgrind off
- # for specific processes, e.g.
- # $ VALGRIND_QEMU_IO= ./check -qcow2 -valgrind 015
+-static void update_refcount_discard(BlockDriverState *bs,
+-                                    uint64_t offset, uint64_t length)
++void qcow2_queue_discard(BlockDriverState *bs, uint64_t offset,
++                         uint64_t length)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     Qcow2DiscardRegion *d, *p, *next;
+@@ -902,7 +902,7 @@ update_refcount(BlockDriverState *bs, int64_t offset, int64_t length,
+             }
+ 
+             if (s->discard_passthrough[type]) {
+-                update_refcount_discard(bs, cluster_offset, s->cluster_size);
++                qcow2_queue_discard(bs, cluster_offset, s->cluster_size);
+             }
+         }
+     }
+@@ -3619,7 +3619,7 @@ qcow2_discard_refcount_block(BlockDriverState *bs, uint64_t discard_block_offs)
+         /* discard refblock from the cache if refblock is cached */
+         qcow2_cache_discard(s->refcount_block_cache, refblock);
+     }
+-    update_refcount_discard(bs, discard_block_offs, s->cluster_size);
++    qcow2_queue_discard(bs, discard_block_offs, s->cluster_size);
+ 
+     return 0;
+ }
+diff --git a/block/qcow2.h b/block/qcow2.h
+index a9e3481c6e..197bdcdf53 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -891,6 +891,8 @@ int coroutine_fn qcow2_check_refcounts(BlockDriverState *bs, BdrvCheckResult *re
+                                        BdrvCheckMode fix);
+ 
+ void GRAPH_RDLOCK qcow2_process_discards(BlockDriverState *bs, int ret);
++void qcow2_queue_discard(BlockDriverState *bs, uint64_t offset,
++                         uint64_t length);
+ 
+ int GRAPH_RDLOCK
+ qcow2_check_metadata_overlap(BlockDriverState *bs, int ign, int64_t offset,
 -- 
 2.39.3
 
