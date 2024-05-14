@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9A9C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5B8C25B79
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6v1t-0000pP-F3; Tue, 14 May 2024 12:29:29 -0400
+	id 1s6v8T-0002R3-Is; Tue, 14 May 2024 12:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v1r-0000p1-BG
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:29:27 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v8N-0002Qg-JS
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:36:13 -0400
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v1o-0005YC-5p
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:29:27 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v8K-0007nT-Jk
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:36:11 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 292D8612D8;
- Tue, 14 May 2024 16:29:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574D7C2BD10;
- Tue, 14 May 2024 16:29:21 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 227BE61227;
+ Tue, 14 May 2024 16:36:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B949C2BD11;
+ Tue, 14 May 2024 16:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715704162;
- bh=SQUHsmp4KnShQLN7DNByE6XuVqjt+RCY/un63jjC/wQ=;
+ s=k20201202; t=1715704566;
+ bh=gyB40NyjtWgWdDbKqVbMBVo/7DogI8jaoIB9WKmTbYA=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=iojuUk/g7zPPK0/HfNAk50Bgcqpk8G2Xm0D6AuH4Rd0zoiCiANbjAa6t5JQkzJTS7
- vBuHJXBpnn69xtN+9mWphMY4kfi2Vb/FRPqxKFYUCnw0+IODifQBglPq0MCooF0/4n
- Ee83MODr9UnYG2doOIlJkOkygqFWIu8V0+hYhoPvjd1K9IqI/ttHNNsBsPld5ifW6X
- cmweihgssxgh8gUX9QPJa8BKw2yXR3HhRTDy4IV8reC9IidP48RiP0Ar3wLQzoHRMd
- An3v0mc03GY9yNwOThOE8aZpLNSdlAEEzJ+ssXO48G198x12uTNBBc1XAuHSICs6h4
- +VnUNrHt22oZg==
-Date: Tue, 14 May 2024 18:29:18 +0200
+ b=X7QYPl95MBBzemVivwoWqnA2vJSg58Gk+64tYkEBTS7/Lh4rtMSlsK+3NrpdtZvov
+ 8meckXL4/H0uLp/56JIrzh9JfeLxva21GZTHPTijCqNz9NqfggnyUyxDtD6oQ5z/nW
+ XdOW98Ouai6gLNRr+DGTSertx5atTX+gzRjW18KZ3Dqj8FYnNdhwMPbREpIASXP2/G
+ e0HsoW94sOn1HnSWJwukTLpZHm2nZ77zguPfh6ZQF6g5WamcJnFikyP47Q5nXxIzlg
+ hWXdyMwLVjiD3FXfxxoGH5z7ba3qaAKPfyyS3A2UGRj5WF0WIlle+NXnYYSc0Vcf61
+ WQPOAUHluVbpQ==
+Date: Tue, 14 May 2024 18:36:02 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 23/45] target/hppa: Use TCG_COND_TST* in do_unit_addsub
-Message-ID: <ZkORXsKOvrs0Ivmc@carbonx1>
+Subject: Re: [PATCH v2 24/45] target/hppa: Use TCG_COND_TST* in trans_bb_imm
+Message-ID: <ZkOS8pUKCOg5NmUQ@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-24-richard.henderson@linaro.org>
+ <20240513074717.130949-25-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-24-richard.henderson@linaro.org>
+In-Reply-To: <20240513074717.130949-25-richard.henderson@linaro.org>
 Received-SPF: pass client-ip=2604:1380:4641:c500::1;
  envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -53
@@ -73,4 +73,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Helge Deller <deller@gmx.de>
+
+> ---
+>  target/hppa/translate.c | 12 +++---------
+>  1 file changed, 3 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 47f4b23d1b..d8973a63df 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -3515,18 +3515,12 @@ static bool trans_bb_sar(DisasContext *ctx, arg_bb_sar *a)
+>  
+>  static bool trans_bb_imm(DisasContext *ctx, arg_bb_imm *a)
+>  {
+> -    TCGv_i64 tmp, tcg_r;
+>      DisasCond cond;
+> -    int p;
+> +    int p = a->p | (a->d ? 0 : 32);
+>  
+>      nullify_over(ctx);
+> -
+> -    tmp = tcg_temp_new_i64();
+> -    tcg_r = load_gpr(ctx, a->r);
+> -    p = a->p | (a->d ? 0 : 32);
+> -    tcg_gen_shli_i64(tmp, tcg_r, p);
+> -
+> -    cond = cond_make_ti(a->c ? TCG_COND_GE : TCG_COND_LT, tmp, 0);
+> +    cond = cond_make_vi(a->c ? TCG_COND_TSTEQ : TCG_COND_TSTNE,
+> +                        load_gpr(ctx, a->r), 1ull << (63 - p));
+
+I wonder if this actually fixes a bug...
+Before it tested against all values >= tmp (even for which the bit
+wasn't set), and now it correctly just checks the bit.
+
+
+>      return do_cbranch(ctx, a->disp, a->n, &cond);
+>  }
+>  
+> -- 
+> 2.34.1
+> 
 
