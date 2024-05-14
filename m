@@ -4,97 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF9A6C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E080C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6tFm-00016J-0n; Tue, 14 May 2024 10:35:42 -0400
+	id 1s6tHm-0002BJ-EF; Tue, 14 May 2024 10:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6tFk-00015v-JF
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:35:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6tHk-0002Af-Si
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:37:44 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6tFh-0003IX-Ga
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:35:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715697336;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8bULT45aZSr/KkQ2bLnKSVVpO03bkmZP3x1KKEQgVmY=;
- b=aN5BCK4RZJdaB4sPh64Z3pJuor9VBxXUDwNAFQVVaXJ5MBjawmQ3L1YRVsKa7QYxYvXyLJ
- c64odIxYooEpkNuUrxf66UDeXE9/gk4qzfNN51Z6lvPse4TUgjlBdyz9wLCL9T+cU0AhFO
- o3HO72i0FNISj2CeJ0F9JNhyNvgxP4g=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-T1kEfHs1MwevsKiStEdyfw-1; Tue, 14 May 2024 10:35:30 -0400
-X-MC-Unique: T1kEfHs1MwevsKiStEdyfw-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-43e1af4fbc4so24919401cf.3
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 07:35:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715697330; x=1716302130;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8bULT45aZSr/KkQ2bLnKSVVpO03bkmZP3x1KKEQgVmY=;
- b=kTmdh7QkNKyEkHp4Z2Jh8/wAldE3R0fcr9BugxnTeC0s02dMZt3xa3mEfgiDyF5SOu
- HWfeHMvuBw8u8kFk8Ap1XlLKt2aTREw60lm3iG8akFHiPHSPbXrJZOJh9BqfzOhGZwOP
- yWBSO8EL0jm/vth1sNRgJgU9T39ygZYXcHGYYAudwdk+ZfRA47likPwOVB42zEyR/nYu
- dQJfog+ifAwSCrjFR7YKemKDTF5V8+wX/guMA2BkycGvcs4E+IiHdKveb5JP2SfwmiVO
- 9occn59aUyf7mPV7/p76pH6Xrv3YZ53OU7TnnQaC07/+ChORUWgQ45l3mHvuZWr9ZNly
- 2N/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJjUQPgZTlLHXUCt0vxGlPT0UHUDxV10/vgnrhfXI5Kbzc4pGHRC4sL1LKs9OVOoe9lMCamWs7829At3bpIATz7iso8qM=
-X-Gm-Message-State: AOJu0YwhAJpUpi9K1WfHcgIpBYkx0Wklz9E/u9bicdKMhAq49dqsRzek
- PX9qEBsHcoclDV8uYfTQuANBjtpClNsT6D/7ZNYfxkkCCiIPi7Q4YL6IQbYG3KFKzaJO/s8Fc+t
- oM8V5nExrhEma+Lj1DekMWbhps2wz7t8JsfP7BtT6+7SNzQCsygyX
-X-Received: by 2002:ac8:5a49:0:b0:43a:d5b4:e169 with SMTP id
- d75a77b69052e-43dfdd0dc46mr152975981cf.61.1715697329724; 
- Tue, 14 May 2024 07:35:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2dt9DuY8qBKVDHuerjcKRrpMJNphfceh5HEXxFiBe6PD8KMNWZFGNci2ye0UDmW4qLo4j/g==
-X-Received: by 2002:ac8:5a49:0:b0:43a:d5b4:e169 with SMTP id
- d75a77b69052e-43dfdd0dc46mr152975791cf.61.1715697329382; 
- Tue, 14 May 2024 07:35:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43df54dda3dsm69148201cf.29.2024.05.14.07.35.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 07:35:28 -0700 (PDT)
-Message-ID: <28bc9d97-b937-469e-9b04-0487cf1ba1bf@redhat.com>
-Date: Tue, 14 May 2024 16:35:25 +0200
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6tHi-0004LM-Gm
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:37:44 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id A9D85CE1290;
+ Tue, 14 May 2024 14:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E27C2BD10;
+ Tue, 14 May 2024 14:37:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1715697457;
+ bh=c6zbKcY/u+6k3QMYIqGcmKD3nAqzK5fhpkExxkvu6Zg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BAvuGuVXoV84AnYc2LH2PoRkC2rxPijZ/of9QC11NbgBE/i9+6I1d44IBGihdqwhZ
+ nHuPKeBFDNMA9p0kUlZYgFSlmBhk44DaREmqhqaI3yfWRhQ4jQ7o4dXAbEQM8Zy9v5
+ Ze980wcqP5YcxehYY/emEL/nofD3fmrte7AN9Z5oW0QVWk8kcvP0nAQO+DJBF9vuol
+ fI1xKrulZdghmmVJbcXqmZke0e8gkDppdySIFIaGa6ddTB85ZDP0+uFPMG8Y5Ty23h
+ s0UHASklfjxz9Lrf/xeFm0/GRaENhKwpTO4i9DYYlcCIWX5/hEfq654HsuuRnwD9eu
+ XWiVG4TNc7zvQ==
+Date: Tue, 14 May 2024 16:37:32 +0200
+From: Helge Deller <deller@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, deller@gmx.de
+Subject: Re: [PATCH v2 08/45] target/hppa: Add install_link
+Message-ID: <ZkN3LM1pWLfzVowQ@carbonx1>
+References: <20240513074717.130949-1-richard.henderson@linaro.org>
+ <20240513074717.130949-9-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/10] vfio: Extend vfio_set_migration_error() with
- Error* argument
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20240506092053.388578-1-clg@redhat.com>
- <20240506092053.388578-11-clg@redhat.com>
- <c06e8de4-a3ad-4044-a4ca-f45d404314fb@nvidia.com>
- <d7122cae-8e84-4ea3-987b-107f44bee937@redhat.com>
-Content-Language: en-US, fr
-In-Reply-To: <d7122cae-8e84-4ea3-987b-107f44bee937@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240513074717.130949-9-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=deller@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,96 +69,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/24 13:20, Cédric Le Goater wrote:
-> On 5/13/24 16:26, Avihai Horon wrote:
->>
->> On 06/05/2024 12:20, Cédric Le Goater wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> vfio_set_migration_error() sets the 'return' error on the migration
->>> stream if a migration is in progress. To improve error reporting, add
->>> a new Error* argument to also set the Error object on the migration
->>> stream, if a migration is progress.
->>>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>
->>>   Changes in v5:
->>>
->>>   - Rebased on 20c64c8a51a4 ("migration: migration_file_set_error")
->>>
->>>   hw/vfio/common.c | 37 ++++++++++++++++++-------------------
->>>   1 file changed, 18 insertions(+), 19 deletions(-)
->>>
->>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>> index c3d82a9d6e434e33f361e4b96157bf912d5c3a2f..4cf3e13a8439bd1b9a032e9d4e75df676eba457b 100644
->>> --- a/hw/vfio/common.c
->>> +++ b/hw/vfio/common.c
->>> @@ -147,10 +147,10 @@ bool vfio_viommu_preset(VFIODevice *vbasedev)
->>>       return vbasedev->bcontainer->space->as != &address_space_memory;
->>>   }
->>>
->>> -static void vfio_set_migration_error(int err)
->>> +static void vfio_set_migration_error(int ret, Error *err)
->>>   {
->>>       if (migration_is_setup_or_active()) {
->>> -        migration_file_set_error(err, NULL);
->>> +        migration_file_set_error(ret, err);
->>>       }
->>>   }
->>>
->>> @@ -295,9 +295,10 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>>                                   iova, iova + iotlb->addr_mask);
->>>
->>>       if (iotlb->target_as != &address_space_memory) {
->>> -        error_report("Wrong target AS \"%s\", only system memory is allowed",
->>> -                     iotlb->target_as->name ? iotlb->target_as->name : "none");
->>> -        vfio_set_migration_error(-EINVAL);
->>> +        error_setg(&local_err,
->>> +                   "Wrong target AS \"%s\", only system memory is allowed",
->>> +                   iotlb->target_as->name ? iotlb->target_as->name : "none");
->>> +        vfio_set_migration_error(-EINVAL, local_err);
->>>           return;
->>>       }
->>>
->>> @@ -330,11 +331,12 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>>           ret = vfio_container_dma_unmap(bcontainer, iova,
->>>                                          iotlb->addr_mask + 1, iotlb);
->>>           if (ret) {
->>> -            error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
->>> -                         "0x%"HWADDR_PRIx") = %d (%s)",
->>> -                         bcontainer, iova,
->>> -                         iotlb->addr_mask + 1, ret, strerror(-ret));
->>> -            vfio_set_migration_error(ret);
->>> +            error_setg(&local_err,
->>> +                       "vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
->>> +                       "0x%"HWADDR_PRIx") = %d (%s)",
->>> +                       bcontainer, iova,
->>> +                       iotlb->addr_mask + 1, ret, strerror(-ret));
->>
->> Use error_setg_errno()?
+* Richard Henderson <richard.henderson@linaro.org>:
+> Add a common routine for writing the return address.
 > 
-> sure.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+Reviewed-by: Helge Deller <deller@gmx.de>
+
+> ---
+>  target/hppa/translate.c | 54 +++++++++++++++++++++++------------------
+>  1 file changed, 31 insertions(+), 23 deletions(-)
 > 
->>
->>> +            vfio_set_migration_error(ret, local_err);
->>
->> Now dma unmap errors (and also the error before it) are not reported if they happen not during migration.
->>
->> This makes me think, maybe vfio_set_migration_error() is redundant and can be replaced by migration_file_set_error()?
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 08d5e2a4bc..f816b337ee 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -634,6 +634,23 @@ static void install_iaq_entries(DisasContext *ctx, uint64_t bi, TCGv_i64 bv,
+>      }
+>  }
+>  
+> +static void install_link(DisasContext *ctx, unsigned link, bool with_sr0)
+> +{
+> +    tcg_debug_assert(ctx->null_cond.c == TCG_COND_NEVER);
+> +    if (link) {
+
+Just wondering:
+Doesn't it makes it easier to write here:
+	if (!link) {
+		return;
+	}
+and then don't indent the few following lines?
+
+> +        if (ctx->iaoq_b == -1) {
+> +            tcg_gen_addi_i64(cpu_gr[link], cpu_iaoq_b, 4);
+> +        } else {
+> +            tcg_gen_movi_i64(cpu_gr[link], ctx->iaoq_b + 4);
+> +        }
+> +#ifndef CONFIG_USER_ONLY
+> +        if (with_sr0) {
+> +            tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
+> +        }
+> +#endif
+> +    }
+> +}
+> +
+>  static inline uint64_t iaoq_dest(DisasContext *ctx, int64_t disp)
+>  {
+>      return ctx->iaoq_f + disp + 8;
+> @@ -1787,9 +1804,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
+>      uint64_t dest = iaoq_dest(ctx, disp);
+>  
+>      if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
+> -        if (link != 0) {
+> -            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+> -        }
+> +        install_link(ctx, link, false);
+>          ctx->iaoq_n = dest;
+>          if (is_n) {
+>              ctx->null_cond.c = TCG_COND_ALWAYS;
+> @@ -1797,10 +1812,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
+>      } else {
+>          nullify_over(ctx);
+>  
+> -        if (link != 0) {
+> -            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+> -        }
+> -
+> +        install_link(ctx, link, false);
+>          if (is_n && use_nullify_skip(ctx)) {
+>              nullify_set(ctx, 0);
+>              gen_goto_tb(ctx, 0, dest, dest + 4);
+> @@ -1892,9 +1904,7 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
+>          next = tcg_temp_new_i64();
+>          tcg_gen_mov_i64(next, dest);
+>  
+> -        if (link != 0) {
+> -            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+> -        }
+> +        install_link(ctx, link, false);
+>          if (is_n) {
+>              if (use_nullify_skip(ctx)) {
+>                  install_iaq_entries(ctx, -1, next, -1, NULL);
+> @@ -1911,16 +1921,17 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
+>  
+>      nullify_over(ctx);
+>  
+> +    next = tcg_temp_new_i64();
+> +    tcg_gen_mov_i64(next, dest);
+> +
+> +    install_link(ctx, link, false);
+>      if (is_n && use_nullify_skip(ctx)) {
+> -        install_iaq_entries(ctx, -1, dest, -1, NULL);
+> +        install_iaq_entries(ctx, -1, next, -1, NULL);
+>          nullify_set(ctx, 0);
+>      } else {
+> -        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
+> +        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, next);
+>          nullify_set(ctx, is_n);
+>      }
+> -    if (link != 0) {
+> -        copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+> -    }
+>  
+>      tcg_gen_lookup_and_goto_ptr();
+>      ctx->base.is_jmp = DISAS_NORETURN;
+> @@ -3899,10 +3910,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+>      nullify_over(ctx);
+>  
+>      load_spr(ctx, new_spc, a->sp);
+> -    if (a->l) {
+> -        copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
+> -        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
+> -    }
+> +    install_link(ctx, a->l, true);
+>      if (a->n && use_nullify_skip(ctx)) {
+>          install_iaq_entries(ctx, -1, tmp, -1, NULL);
+>          tcg_gen_mov_i64(cpu_iasq_f, new_spc);
+> @@ -4019,16 +4027,16 @@ static bool trans_bve(DisasContext *ctx, arg_bve *a)
+>      return do_ibranch(ctx, dest, a->l, a->n);
+>  #else
+>      nullify_over(ctx);
+> -    dest = do_ibranch_priv(ctx, load_gpr(ctx, a->b));
+> +    dest = tcg_temp_new_i64();
+> +    tcg_gen_mov_i64(dest, load_gpr(ctx, a->b));
+> +    dest = do_ibranch_priv(ctx, dest);
+>  
+> +    install_link(ctx, a->l, false);
+>      install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
+>      if (ctx->iaoq_b == -1) {
+>          tcg_gen_mov_i64(cpu_iasq_f, cpu_iasq_b);
+>      }
+>      tcg_gen_mov_i64(cpu_iasq_b, space_select(ctx, 0, dest));
+> -    if (a->l) {
+> -        copy_iaoq_entry(ctx, cpu_gr[a->l], ctx->iaoq_n, ctx->iaoq_n_var);
+> -    }
+>      nullify_set(ctx, a->n);
+>      tcg_gen_lookup_and_goto_ptr();
+>      ctx->base.is_jmp = DISAS_NORETURN;
+> -- 
+> 2.34.1
 > 
-> 
-> yes. Good suggestion. I would like to get rid of vfio_set_migration_error(),
-> so that's a good start.
-
-After taking a closer look, I will drop this patch from v6 because
-it needs further splitting and some rework.
-
-Thanks,
-
-C.
-
-
-
 
