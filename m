@@ -4,76 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B568CC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2787C04FFE
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 07:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6n2L-0001Kc-0A; Tue, 14 May 2024 03:57:25 -0400
+	id 1s6n2o-0001Nc-Vi; Tue, 14 May 2024 03:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s6n2H-0001KK-Ha
- for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:22 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6n2m-0001NG-B0
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s6n2D-0004IK-EA
- for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715673437; x=1747209437;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=AnNgs82Yp+UDJCKhp2Oxhp2G3wEze/cPzmmbluUe1fs=;
- b=USYWO/9sGTi5eu5eTTJmF5oYTAnqRKTJrQvBS1gZHPYvfP2FGSjTI5tr
- 58diIaELikGnY0CrqTJJ7lDY4wCCPFCmspSYOLlV5BIPsO67NpRveM9C7
- f5GVO53ieRqR83D8fP6YdV7mpl6tNAEsMkoxZQRv+8SGFd6HaKlCorqLa
- HwPKUeI4aC7HbNH82criCvIvGJDPKztsdyFOwnPaHjLc+WKW+5lvKEHsc
- ZRZ+hAf7WNWghRDeCBXLFNO+UBZYlh8Z7WTUOAD12qCV9KezBSaDyowsV
- BojVFAfIQgoRu5IKBYi8HgYmDzGu31+YXw8djPxlvc3sTwc9lL+Dm5QwV A==;
-X-CSE-ConnectionGUID: 5rQOg+emQ0qXMGRLgk2wDw==
-X-CSE-MsgGUID: akErDRMOSMW8C3utg5eHKg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11072"; a="11813091"
-X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; d="scan'208";a="11813091"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2024 00:57:05 -0700
-X-CSE-ConnectionGUID: tKjFoLKfTNK5pXwfMxdxPQ==
-X-CSE-MsgGUID: jMKWzqaeR0ifeUhEuFyLiA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; d="scan'208";a="35131349"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 14 May 2024 00:57:04 -0700
-Date: Tue, 14 May 2024 16:12:21 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, Mads Ynddal <mads@ynddal.dk>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH] scripts/simpletrace: Mark output with unstable timestamp
- as WARN
-Message-ID: <ZkMc5Y5DGhDlfB8J@intel.com>
-References: <20240508043229.3433128-1-zhao1.liu@intel.com>
- <CAJSP0QX0y_J1pu+hgUNhXn7bFJfoAMm9Ux9vq3u+k_UDjwK8Ww@mail.gmail.com>
- <ZjxKDkZjAitxCasH@intel.com>
- <20240509134712.GA515599@fedora.redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6n2j-0004M1-UF
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715673468;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=grt6KT2gP4jyGZKJ/7J0COWwFfblnMpvCnWIY/Rtyh4=;
+ b=ij6f3EvKt91HarV5Nb/3MoZhOZ257R6yWIEiLbtZ2xD21bBS/f94jAzs+WKJvKmREkvoqg
+ AOsFbmz9BN09yc3Kb0FoHw5iqjoE3iDdGuuubxDGTB+XGjFw7oA4FmB+iLdIV5ZSfxa8em
+ a9sQr8+wZ3PzFDo6kSFUIyetSGfYHZc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-607-PbnqVxE2NUqID5UdCSQtdw-1; Tue, 14 May 2024 03:57:47 -0400
+X-MC-Unique: PbnqVxE2NUqID5UdCSQtdw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6a0cf23b982so66000246d6.1
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 00:57:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715673467; x=1716278267;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=grt6KT2gP4jyGZKJ/7J0COWwFfblnMpvCnWIY/Rtyh4=;
+ b=ZiuZYWzN8iffNWDbEczjykC1juRHFTUPdLOvN4YK2EvVALqtZhQvjSMmCYQJE0gk29
+ KwyLcFgZheIQFRxXCkXVgbcOWgSAiey729Zulg4CjB0VDPNdqsZdiOv3tdSBSOyCuIWL
+ kU7JuBjDYxNVFWXBRqUoUA2f13afp7MnudU8RC67BYnlWT2osbLxeH+zh9e0lAgO1EZk
+ SjHk3C4tUm6CeTfetATuOJvI7yGZOajC8I+U4LDEohA3j28eLM5ylbaQfk8TjnRtjCIs
+ z+7jYGoxsF46Qoz3EUH1TCslBXd8yqUhrxiVRQGZ+YlGW9HIdfXwMopyy1WHVYWn27W2
+ XA0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4w28s6o9BtI9k9Zp9TEFfhGQCRdzUNin5Y5AWaXGJJgaPLAUynJZuw2+jZN4AM7G35o8zbU3gV9LPbeW9gtGclwD/vQ4=
+X-Gm-Message-State: AOJu0YzOVo9z7ldjVBn4HfZ7iJSFUz22O3OfhQn05KhBIbU0HCzw0rDf
+ 89p/chDItRZPzLKSHYi9UpGHcDVG8SqINzDyNi/peHKYI/L3+0Vu+tFIKPl/UHScarRQ2iNBUcx
+ Cskr5kuC44hqxcltjDIIDhaHZ8gwe5CAtMHjyPPTCYJ8qy2d/g/HF
+X-Received: by 2002:a05:6214:43c4:b0:6a0:caef:3be2 with SMTP id
+ 6a1803df08f44-6a1681f8115mr143336076d6.46.1715673466607; 
+ Tue, 14 May 2024 00:57:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHZL38f9UNJcsb2GHdx65vGiUxAd1F+Xgf5gRaMBPhk0G3NBhSghkqrttUTWzwS23YasMaeTw==
+X-Received: by 2002:a05:6214:43c4:b0:6a0:caef:3be2 with SMTP id
+ 6a1803df08f44-6a1681f8115mr143335816d6.46.1715673465896; 
+ Tue, 14 May 2024 00:57:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6a15f179cebsm51117936d6.3.2024.05.14.00.57.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 May 2024 00:57:45 -0700 (PDT)
+Message-ID: <db0aa26a-b76f-4cb8-a63b-8e2f8d37251b@redhat.com>
+Date: Tue, 14 May 2024 09:57:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/10] vfio: Use new Error** argument in
+ vfio_save_setup()
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20240506092053.388578-1-clg@redhat.com>
+ <20240506092053.388578-5-clg@redhat.com>
+ <ae441889-a640-4ed0-b455-10a13bc46047@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ae441889-a640-4ed0-b455-10a13bc46047@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240509134712.GA515599@fedora.redhat.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,82 +109,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan,
-
-> QEMU uses clock_gettime(CLOCK_MONOTONIC) on Linux hosts. The man page
-> says:
+On 5/13/24 15:21, Avihai Horon wrote:
 > 
->   All CLOCK_MONOTONIC variants guarantee that the time returned by
->   consecutive  calls  will  not go backwards, but successive calls
->   may—depending  on  the  architecture—return  identical  (not-in‐
->   creased) time values.
+> On 06/05/2024 12:20, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
 > 
-> trace_record_start() calls clock_gettime(CLOCK_MONOTONIC) so trace events
-> should have monotonically increasing timestamps.
+> Nit: change commit title prefix to vfio/migration (also in other patches that are closely related to vfio migration)
 > 
-> I don't see a scenario where trace record A's timestamp is greater than
-> trace record B's timestamp unless the clock is non-monotonic.
+> Plus, maybe change subject to "Add an Error** argument to vfio_migration_set_state() and adjust callers" as it's the main subject of the patch?
 > 
-> Which host CPU architecture and operating system are you running?
+>>
+>> Add an Error** argument to vfio_migration_set_state() and adjust
+>> callers, including vfio_save_setup(). The error will be propagated up
+>> to qemu_savevm_state_setup() where the save_setup() handler is
+>> executed.
+>>
+>> Modify vfio_vmstate_change_prepare() and vfio_vmstate_change() to
+>> store a reported error under the migration stream if a migration is in
+>> progress.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>
+>>   Changes in v5:
+>>
+>>   - Replaced error_setg() by error_setg_errno() in vfio_migration_set_state()
+>>   - Rebased on 20c64c8a51a4 ("migration: migration_file_set_error")
+>>
+>>   hw/vfio/migration.c | 76 +++++++++++++++++++++++++--------------------
+>>   1 file changed, 43 insertions(+), 33 deletions(-)
+>>
+>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>> index bf2fd0759ba6e4fb103cc5c1a43edb180a3d0de4..9b6375c949f7a8dca857ead2506855f63fa051e4 100644
+>> --- a/hw/vfio/migration.c
+>> +++ b/hw/vfio/migration.c
+>> @@ -82,7 +82,8 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
+>>
+>>   static int vfio_migration_set_state(VFIODevice *vbasedev,
+>>                                       enum vfio_device_mig_state new_state,
+>> -                                    enum vfio_device_mig_state recover_state)
+>> +                                    enum vfio_device_mig_state recover_state,
+>> +                                    Error **errp)
+>>   {
+>>       VFIOMigration *migration = vbasedev->migration;
+>>       uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
+>> @@ -102,25 +103,26 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+>>           ret = -errno;
+>>
+>>           if (recover_state == VFIO_DEVICE_STATE_ERROR) {
+>> -            error_report("%s: Failed setting device state to %s, err: %s. "
+>> -                         "Recover state is ERROR. Resetting device",
+>> -                         vbasedev->name, mig_state_to_str(new_state),
+>> -                         strerror(errno));
+>> +            error_setg_errno(errp, errno,
+>> +                             "%s: Failed setting device state to %s. "
+>> +                             "Recover state is ERROR. Resetting device",
+>> +                             vbasedev->name, mig_state_to_str(new_state));
+>>
+>>               goto reset_device;
+>>           }
+>>
+>> -        error_report(
+>> -            "%s: Failed setting device state to %s, err: %s. Setting device in recover state %s",
+>> -                     vbasedev->name, mig_state_to_str(new_state),
+>> -                     strerror(errno), mig_state_to_str(recover_state));
+>> +        error_setg_errno(errp, errno,
+>> +                         "%s: Failed setting device state to %s. "
+>> +                         "Setting device in recover state %s",
+>> +                         vbasedev->name, mig_state_to_str(new_state),
+>> +                         mig_state_to_str(recover_state));
+>>
+>>           mig_state->device_state = recover_state;
+>>           if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+>>               ret = -errno;
+>> -            error_report(
+>> -                "%s: Failed setting device in recover state, err: %s. Resetting device",
+>> -                         vbasedev->name, strerror(errno));
+>> +            error_setg_errno(errp, errno,
+>> +                             "%s: Failed setting device in recover state. "
+>> +                             "Resetting device", vbasedev->name);
+> 
+> Here we set errp again when it's already set.
 
-I tested on these 2 machines:
-* CML (intel 10th) with Ubuntu 22.04 + kernel v6.5.0-28
-* MTL (intel 14th) with Ubuntu 22.04.2 + kernel v6.9.0
+yes.
 
-> Please attach to the QEMU process with gdb and print out the value of
-> the use_rt_clock variable or add a printf in init_get_clock(). The value
-> should be 1.
+> Maybe in this case just:
+> 
+> error_report_err(*errp);
+> *errp = NULL;
+> error_setg_errno(errp, errno,
+>                   "%s: Failed setting device in recover state. "
+>                   "Resetting device", vbasedev->name);
+> ?
 
-Thanks, on both above machines, use_rt_clock is 1 and there're both
-timestamp reversal issues with the following debug print:
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index 9a366e551fb3..7657785c27dc 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -831,10 +831,17 @@ extern int use_rt_clock;
+I see two alternatives for the recover state error :
 
- static inline int64_t get_clock(void)
- {
-+    static int64_t clock = 0;
-     if (use_rt_clock) {
-         struct timespec ts;
-         clock_gettime(CLOCK_MONOTONIC, &ts);
--        return ts.tv_sec * 1000000000LL + ts.tv_nsec;
-+        int64_t tmp = ts.tv_sec * 1000000000LL + ts.tv_nsec;
-+        if (tmp <= clock) {
-+            printf("get_clock: strange, clock: %ld, tmp: %ld\n", clock, tmp);
-+        }
-+        assert(tmp > clock);
-+        clock = tmp;
-+        return clock;
-     } else {
-         /* XXX: using gettimeofday leads to problems if the date
-            changes, so it should be avoided. */
-diff --git a/util/qemu-timer-common.c b/util/qemu-timer-common.c
-index cc1326f72646..3bf06eb4a4ce 100644
---- a/util/qemu-timer-common.c
-+++ b/util/qemu-timer-common.c
-@@ -59,5 +59,6 @@ static void __attribute__((constructor)) init_get_clock(void)
-         use_rt_clock = 1;
-     }
-     clock_start = get_clock();
-+    printf("init_get_clock: use_rt_clock: %d\n", use_rt_clock);
- }
- #endif
+1. append to the existing one, but we lack an error_append() helper
+2. report as done today.
 
----
-The timestamp interval is very small, for example:
-get_clock: strange, clock: 3302130503505, tmp: 3302130503503
+I tend to prefer 2. and we cab come back to 1. later on.
 
-or
+> 
+>>
+>>               goto reset_device;
+>>           }
+>> @@ -137,7 +139,7 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+>>                * This can happen if the device is asynchronously reset and
+>>                * terminates a data transfer.
+>>                */
+>> -            error_report("%s: data_fd out of sync", vbasedev->name);
+>> +            error_setg(errp, "%s: data_fd out of sync", vbasedev->name);
+>>               close(mig_state->data_fd);
+>>
+>>               return -EBADF;
+>> @@ -168,10 +170,11 @@ reset_device:
+>>    */
+>>   static int
+>>   vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
+>> -                                  enum vfio_device_mig_state new_state)
+>> +                                  enum vfio_device_mig_state new_state,
+>> +                                  Error **errp)
+>>   {
+>>       return vfio_migration_set_state(vbasedev, new_state,
+>> -                                    VFIO_DEVICE_STATE_ERROR);
+>> +                                    VFIO_DEVICE_STATE_ERROR, errp);
+>>   }
+>>
+>>   static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
+>> @@ -399,10 +402,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>           switch (migration->device_state) {
+>>           case VFIO_DEVICE_STATE_RUNNING:
+>>               ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
+>> -                                           VFIO_DEVICE_STATE_RUNNING);
+>> +                                           VFIO_DEVICE_STATE_RUNNING, errp);
+>>               if (ret) {
+>> -                error_setg(errp, "%s: Failed to set new PRE_COPY state",
+>> -                           vbasedev->name);
+>>                   return ret;
+>>               }
+>>
+>> @@ -435,13 +436,20 @@ static void vfio_save_cleanup(void *opaque)
+>>   {
+>>       VFIODevice *vbasedev = opaque;
+>>       VFIOMigration *migration = vbasedev->migration;
+>> +    Error *local_err = NULL;
+>> +    int ret;
+>>
+>>       /*
+>>        * Changing device state from STOP_COPY to STOP can take time. Do it here,
+>>        * after migration has completed, so it won't increase downtime.
+>>        */
+>>       if (migration->device_state == VFIO_DEVICE_STATE_STOP_COPY) {
+>> -        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
+>> +        ret = vfio_migration_set_state_or_reset(vbasedev,
+>> +                                                VFIO_DEVICE_STATE_STOP,
+>> +                                                &local_err);
+>> +        if (ret) {
+>> +            error_report_err(local_err);
+>> +        }
+>>       }
+>>
+>>       g_free(migration->data_buffer);
+>> @@ -549,11 +557,13 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>>       VFIODevice *vbasedev = opaque;
+>>       ssize_t data_size;
+>>       int ret;
+>> +    Error *local_err = NULL;
+>>
+>>       /* We reach here with device state STOP or STOP_COPY only */
+>>       ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+>> -                                   VFIO_DEVICE_STATE_STOP);
+>> +                                   VFIO_DEVICE_STATE_STOP, &local_err);
+>>       if (ret) {
+>> +        error_report_err(local_err);
+>>           return ret;
+>>       }
+>>
+>> @@ -591,14 +601,9 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
+>>   static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       VFIODevice *vbasedev = opaque;
+>> -    int ret;
+>>
+>> -    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
+>> -                                   vbasedev->migration->device_state);
+>> -    if (ret) {
+>> -        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
+>> -    }
+>> -    return ret;
+>> +    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
+>> +                                    vbasedev->migration->device_state, errp);
+>>   }
+>>
+>>   static int vfio_load_cleanup(void *opaque)
+>> @@ -714,19 +719,20 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+>>       VFIODevice *vbasedev = opaque;
+>>       VFIOMigration *migration = vbasedev->migration;
+>>       enum vfio_device_mig_state new_state;
+>> +    Error *local_err = NULL;
+>>       int ret;
+>>
+>>       new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
+>>                       VFIO_DEVICE_STATE_PRE_COPY_P2P :
+>>                       VFIO_DEVICE_STATE_RUNNING_P2P;
+>>
+>> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
+>> +    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+>>       if (ret) {
+>>           /*
+>>            * Migration should be aborted in this case, but vm_state_notify()
+>>            * currently does not support reporting failures.
+>>            */
+>> -        migration_file_set_error(ret, NULL);
+>> +        migration_file_set_error(ret, local_err);
+>>       }
+>>
+>>       trace_vfio_vmstate_change_prepare(vbasedev->name, running,
+>> @@ -738,6 +744,7 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+>>   {
+>>       VFIODevice *vbasedev = opaque;
+>>       enum vfio_device_mig_state new_state;
+>> +    Error *local_err = NULL;
+>>       int ret;
+>>
+>>       if (running) {
+>> @@ -750,13 +757,13 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+>>                   VFIO_DEVICE_STATE_STOP;
+>>       }
+>>
+>> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
+>> +    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+>>       if (ret) {
+>>           /*
+>>            * Migration should be aborted in this case, but vm_state_notify()
+>>            * currently does not support reporting failures.
+>>            */
+>> -        migration_file_set_error(ret, NULL);
+>> +        migration_file_set_error(ret, local_err);
+>>       }
+>>
+>>       trace_vfio_vmstate_change(vbasedev->name, running, RunState_str(state),
+>> @@ -769,13 +776,16 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
+>>       VFIOMigration *migration = container_of(notifier, VFIOMigration,
+>>                                               migration_state);
+>>       VFIODevice *vbasedev = migration->vbasedev;
+>> +    int ret = 0;
+>>
+>>       trace_vfio_migration_state_notifier(vbasedev->name, e->type);
+>>
+>>       if (e->type == MIG_EVENT_PRECOPY_FAILED) {
+>> -        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
+>> +        ret = vfio_migration_set_state_or_reset(vbasedev,
+>> +                                                VFIO_DEVICE_STATE_RUNNING,
+>> +                                                errp);
+>>       }
+>> -    return 0;
+>> +    return ret;
+> 
+> In MigrationNotifyFunc declaration it's stated that:
+> 
+> /*
+>   * A MigrationNotifyFunc may return an error code and an Error object,
+>   * but only when @e->type is MIG_EVENT_PRECOPY_SETUP.  The code is an int
+>   * to allow for different failure modes and recovery actions.
+>   */
+> 
+> And indeed migration_call_notifiers() will assert if this notifier fails on MIG_EVENT_PRECOPY_FAILED.
 
-get_clock: strange, clock: 2761577819846455, tmp: 2761577819846395
+My series has been out of tree for too long :/
 
-I also tried to use CLOCK_MONOTONIC_RAW, but there's still the reversal
-issue.
+> So I guess we should simply report the error locally and return 0.
+
+yes. That said, I don't see why migrate_fd_cleanup() or postcopy_start()
+could not use a local_err and report the error themselves. For later.
+I will add a comment though.
 
 Thanks,
-Zhao
+
+C.
+
+
+> 
+> Thanks.
+> 
+>>   }
+>>
+>>   static void vfio_migration_free(VFIODevice *vbasedev)
+>> -- 
+>> 2.45.0
+>>
+> 
 
 
