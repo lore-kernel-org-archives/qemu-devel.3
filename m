@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28CEC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 11:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13971C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 11:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6pwI-00017N-1m; Tue, 14 May 2024 07:03:22 -0400
+	id 1s6pwi-0001EE-1N; Tue, 14 May 2024 07:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6pwD-00016i-1P
- for qemu-devel@nongnu.org; Tue, 14 May 2024 07:03:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6pwU-0001Ac-VY
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 07:03:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6pwB-0005a3-H8
- for qemu-devel@nongnu.org; Tue, 14 May 2024 07:03:16 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6pwS-0005an-R1
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 07:03:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715684594;
+ s=mimecast20190719; t=1715684611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s8E68g1Q3n+SeLb2wWFwLMxJYbHiz5QDeW6WfmIzWXs=;
- b=W8nG6Z8QL01RvlcgKY2HpceLWxdIlvI28wTpL3hOjfV5GS1tZFRFLFcXbBj72M7aFNBTEO
- YNyaHqqjrj5FT/XI6WUeGo9LmfwGWsTs9jPiUQf3v4g1SdwcqWr76qK1gP5xwBPufC2Q4T
- sKSlDehiJO+SIeC2cvS9/FKTqS7L0PU=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-We_BF_67MfS5-5UccmXmGg-1; Tue,
- 14 May 2024 07:03:01 -0400
-X-MC-Unique: We_BF_67MfS5-5UccmXmGg-1
+ bh=gFQqcYb8BsKTfVtisz2nIw4RxvKVSo+7+L5B20PxGEw=;
+ b=LWV/5sAj+g7jsjpIrWDuevfPh8OkG3RPoidanWYQ7ymaO/dFwnkyFpeX3QyaKrtI049BzF
+ 0+WN58YuhVA32KMYRvyapeK/FzrPsO8mlz9l2+RFWU4lmklQGzRN3BGkqbPLJ2gkkHyV9y
+ SHuy6stv8Tx4mrjrDxFLL6HIFB8Whc0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-151-fn2q5OojNke7PR47HE0UoA-1; Tue, 14 May 2024 06:58:30 -0400
+X-MC-Unique: fn2q5OojNke7PR47HE0UoA-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D5BBD3800082;
- Tue, 14 May 2024 11:03:00 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 575F0184862F;
+ Tue, 14 May 2024 10:58:30 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A4FD8200B4DB;
- Tue, 14 May 2024 11:03:00 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 14DFB200A08E;
+ Tue, 14 May 2024 10:58:30 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 972E921E5E6B; Tue, 14 May 2024 13:02:59 +0200 (CEST)
+ id 0A2AE21E5E73; Tue, 14 May 2024 12:58:29 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,  kkostiuk@redhat.com,  michael.roth@amd.com
-Subject: Re: [PATCH 2/3] qga: Shorten several error messages
-In-Reply-To: <20240514105829.729342-3-armbru@redhat.com> (Markus Armbruster's
- message of "Tue, 14 May 2024 12:58:27 +0200")
+Cc: philmd@linaro.org,
+	kkostiuk@redhat.com,
+	michael.roth@amd.com
+Subject: [PATCH 1/3] qga-win32: Improve guest-set-user-password,
+ guest-file-open errors
+Date: Tue, 14 May 2024 12:58:26 +0200
+Message-ID: <20240514105829.729342-2-armbru@redhat.com>
+In-Reply-To: <20240514105829.729342-1-armbru@redhat.com>
 References: <20240514105829.729342-1-armbru@redhat.com>
- <20240514105829.729342-3-armbru@redhat.com>
-Date: Tue, 14 May 2024 13:02:59 +0200
-Message-ID: <874jb03bbw.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -84,40 +84,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+When guest-set-user-password's argument @password can't be converted
+from UTF-8 to UTF-16, we report something like
 
-> Some, but not all error messages are of the form
->
->     Guest agent command failed, error was '<actual error message>'
->
-> For instance, command guest-exec can fail with an error message like
->
->     Guest agent command failed, error was 'Failed to execute child proces=
-s =E2=80=9C/bin/invalid-cmd42=E2=80=9D (No such file or directory)'
->
-> Shorten this to just just the actual error message.  The guest-exec
-> example becomes
->
->     Failed to execute child process =E2=80=9C/bin/invalid-cmd42=E2=80=9D =
-(No such file or directory)
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+    Guest agent command failed, error was 'Invalid sequence in conversion input'
 
-[...]
+Improve this to
 
-To be squashed into the patch:
+    can't convert 'password' to UTF-16: Invalid sequence in conversion input
 
-diff --git a/qga/commands.c b/qga/commands.c
-index 27b16313ea..5a5fad31f8 100644
---- a/qga/commands.c
-+++ b/qga/commands.c
-@@ -15,7 +15,6 @@
- #include "guest-agent-core.h"
- #include "qga-qapi-commands.h"
- #include "qapi/error.h"
--#include "qapi/qmp/qerror.h"
- #include "qemu/base64.h"
- #include "qemu/cutils.h"
- #include "commands-common.h"
+Likewise for argument @username, and guest-file-open argument @path,
+even though I'm not sure you can actually get invalid input past the
+QMP core there.
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ qga/commands-win32.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 6fee0e1e6f..ed31077457 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -217,6 +217,9 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
+ 
+     w_path = g_utf8_to_utf16(path, -1, NULL, NULL, &gerr);
+     if (!w_path) {
++        error_setg(errp, "can't convert 'path' to UTF-16: %s",
++                   gerr->message);
++        g_error_free(gerr);
+         goto done;
+     }
+ 
+@@ -244,10 +247,6 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
+     slog("guest-file-open, handle: % " PRId64, fd);
+ 
+ done:
+-    if (gerr) {
+-        error_setg(errp, QERR_QGA_COMMAND_FAILED, gerr->message);
+-        g_error_free(gerr);
+-    }
+     g_free(w_path);
+     return fd;
+ }
+@@ -1946,11 +1945,17 @@ void qmp_guest_set_user_password(const char *username,
+ 
+     user = g_utf8_to_utf16(username, -1, NULL, NULL, &gerr);
+     if (!user) {
++        error_setg(errp, "can't convert 'username' to UTF-16: %s",
++                   gerr->message);
++        g_error_free(gerr);
+         goto done;
+     }
+ 
+     wpass = g_utf8_to_utf16(rawpasswddata, -1, NULL, NULL, &gerr);
+     if (!wpass) {
++        error_setg(errp, "can't convert 'password' to UTF-16: %s",
++                   gerr->message);
++        g_error_free(gerr);
+         goto done;
+     }
+ 
+@@ -1966,10 +1971,6 @@ void qmp_guest_set_user_password(const char *username,
+     }
+ 
+ done:
+-    if (gerr) {
+-        error_setg(errp, QERR_QGA_COMMAND_FAILED, gerr->message);
+-        g_error_free(gerr);
+-    }
+     g_free(user);
+     g_free(wpass);
+     g_free(rawpasswddata);
+-- 
+2.45.0
 
 
