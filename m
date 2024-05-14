@@ -4,97 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FBAC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 08:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389E2C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 09:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6nys-0004d9-5U; Tue, 14 May 2024 04:57:55 -0400
+	id 1s6o19-0005VG-IA; Tue, 14 May 2024 05:00:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6nyX-0004br-RR
- for qemu-devel@nongnu.org; Tue, 14 May 2024 04:57:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6nyU-00088K-4L
- for qemu-devel@nongnu.org; Tue, 14 May 2024 04:57:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715677048;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PIIPyu82OG2zp3cmolu7CNKPHImQELLTOywKUH97cEU=;
- b=HUk6F0vVthGVQfKnycMtSsA2+SqPB6aDfpEtHGOYXxkg3iy7YnS2JUt11ViJqnk06OQ2Ma
- Z5W/nfh7Y93Ue20A/Aje6W4CvCQiTjF0rYYxfV6kfm0091vgqkjuU20JDE9LZJxKx1B+Rr
- 9WItkrFAo+cj8Dien+EFYSyFSODAHGc=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-301-DE6_No9GMo-apWmbeTrIGg-1; Tue, 14 May 2024 04:57:17 -0400
-X-MC-Unique: DE6_No9GMo-apWmbeTrIGg-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3c998fbbac5so5355103b6e.1
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 01:57:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s6o17-0005Ux-Qx
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 05:00:14 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s6o0w-0008Nc-Sf
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 05:00:13 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52327368e59so2425127e87.1
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 02:00:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715677200; x=1716282000; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iThEkEHLKSgcwO0cwAbjOyyavSBOD5qd3pu/1jMktfE=;
+ b=Es++kwkW9nW4NMrTGNcPylhqbg3IwM5xIES0EYUlBQn+XlyO462o61uOhDgUXFsakZ
+ WJ/VerhirRh3FzdM4zqH9txViUJFqCy0nXK8tb5K+CEIPaSsAyPjgo+AEpf1xjZHsWTB
+ KOTfmf7c3UKlvkYxFUtAvFWCU9p7rEG7CyrR6CgpDsHaF7rirbPDhXjjJtniabIiiFEw
+ aWrTC2EDgfJnTZDvE5ZJgWZAizQ69YW4Rgm1SEKo16MTRuzCzylTIU5hX0yOakbcI1kT
+ bWryhyw82RxfV3TnD1AiE/JwH4ckGGagJaX1W8uRWEKumuXuuAUj1v7ojeYTexm4Q65u
+ Yn0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715677036; x=1716281836;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PIIPyu82OG2zp3cmolu7CNKPHImQELLTOywKUH97cEU=;
- b=n7jJYisWD+P9BZo59aL9txMpdEZQIJ3W7vuDkkpLObBC552zUyrh10pWXZfc9EY70j
- MvAkpaDg8AGuyoAcBQhqmdxy82pYkdodxAtjElYONDIgI2xSnbAtjNVNAjEt0bnAAmgY
- 0DkyoQMIuKJRhKFV5AW9NCTyhAo8dfj6VaqEYS3Skb9EPWaJL+YLXSgCVrMo19U8ufkR
- oOc/XddnaeGH+qUb6X3Ser7uXwybCwGeQmVyTLlk7qSD/kbzVZ0ByUsYjZ9gMntkdgm0
- zkCxFRcjvTuNKT8jnzC01cmBSZwGVDOYUkl54DBPXQbUQc/5Gva5pxPcUZj2hMG3OIQL
- DVMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuxdL0rT4e1IymN9W2kRkad5jFLB1/2dB30ijvsDstmP5q5RODJOFIO/LJC70HaSqwojGsXU2BTVUZ4iPeyOCe5cxTdpw=
-X-Gm-Message-State: AOJu0YwbIObkpC+UUxsPd3uW6sdDiROXiLTqlxe1vQWiFJG2NYI0ViHb
- Wq5BIqJZOMfskEG8N6k+xwKvJHNNWR+U09AP/x38jFDmkrWIznkmdp5UwkIq8SLgigFjAKubtVA
- a1ZTq0zXEdlDqsjTrs3JKADE909QRt/n3bpB6LRYB8aZnl2wFq3/A
-X-Received: by 2002:a05:6808:1415:b0:3c9:92ba:fd0a with SMTP id
- 5614622812f47-3c9970ce727mr14954591b6e.38.1715677035743; 
- Tue, 14 May 2024 01:57:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjoeRiDATw+A27Sep6W+tK53v3+xQORzfAPE5YOrDkyWt2d0hZgxz8k6pGfs8GPq+ga+cuug==
-X-Received: by 2002:a05:6808:1415:b0:3c9:92ba:fd0a with SMTP id
- 5614622812f47-3c9970ce727mr14954567b6e.38.1715677034970; 
- Tue, 14 May 2024 01:57:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf2a3af8sm543252985a.63.2024.05.14.01.57.13
+ d=1e100.net; s=20230601; t=1715677200; x=1716282000;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iThEkEHLKSgcwO0cwAbjOyyavSBOD5qd3pu/1jMktfE=;
+ b=OP/jWAwpWIsLR8EzTOjiPsjNR6X41ik5TtlH8Ej59GNpfKjN13mf3IBmRj6M6q9IIV
+ 7B/zXqg00GBiYE6LXzbjWhGRA+04qT/iSJ+4jLhqVmPme9jnRb0P0F/oU3F9a4OHWZ5q
+ gOiD7DMJEYFrTFtA7VZYdnsslsvQhdPj09denoneMM0Iq7iHSYLdE99XnIH++w8oZkgH
+ N1qe9HLsfNmVjb71YwvhjHexGjR+wcaJ7ljGB9mMdDCABFfvHvcFd0g9fib5Rbig9fqK
+ 14M5KD7fwhkwLc5oQ2JyHsPVV6El1xgwzf2KxX8et7tVBMGm0MQiPGwdnwZMN/ifii6E
+ 9fGQ==
+X-Gm-Message-State: AOJu0Yy5/H1unSBgA80895o0dqAHuZ3PrfhmBefBrwl7ag0IJvoa3l+1
+ UPWC5w9wzhRSKj9UF0H1W4wtPm2XJp15upzKYyMcTabKY94bMNW+
+X-Google-Smtp-Source: AGHT+IElQbjNSumBOLO7whAToMdAncNkIEOzNH6HaqTxz81LPK17Ef7etEe+ulBV1bUMMY/G1JEjTw==
+X-Received: by 2002:a05:6512:308f:b0:51a:c21b:73fb with SMTP id
+ 2adb3069b0e04-5221007498fmr9165787e87.44.1715677200137; 
+ Tue, 14 May 2024 02:00:00 -0700 (PDT)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5733bea659dsm7234938a12.18.2024.05.14.01.59.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 01:57:14 -0700 (PDT)
-Message-ID: <57318f0e-2446-4843-9c99-cc6e74916165@redhat.com>
-Date: Tue, 14 May 2024 10:57:11 +0200
+ Tue, 14 May 2024 01:59:59 -0700 (PDT)
+Date: Tue, 14 May 2024 08:31:28 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Sergio Lopez <slp@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH v3 0/6] X86: Alias isa-bios area and clean up
+In-Reply-To: <bf76c488-c454-e893-89f5-94e78a8d0329@eik.bme.hu>
+References: <20240508175507.22270-1-shentey@gmail.com>
+ <bf76c488-c454-e893-89f5-94e78a8d0329@eik.bme.hu>
+Message-ID: <0F5CD4D8-4942-4E6C-A88D-EB715CAC2553@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/10] memory: Add Error** argument to
- memory_get_xlat_addr()
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-References: <20240506092053.388578-1-clg@redhat.com>
- <20240506092053.388578-8-clg@redhat.com>
- <608bf953-3a75-4edf-8b82-3fa53f7f2dbb@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <608bf953-3a75-4edf-8b82-3fa53f7f2dbb@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,193 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/24 15:44, Avihai Horon wrote:
-> 
-> On 06/05/2024 12:20, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> Let the callers do the reporting. This will be useful in
->> vfio_iommu_map_dirty_notify().
->>
->> Cc: "Michael S. Tsirkin" <mst@redhat.com>
->> Cc: Paolo Bonzini <pbonzini@redhat.com>
->> Cc: David Hildenbrand <david@redhat.com>
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   include/exec/memory.h  | 15 ++++++++++++++-
->>   hw/vfio/common.c       | 13 +++++++++----
->>   hw/virtio/vhost-vdpa.c |  5 ++++-
->>   system/memory.c        | 10 +++++-----
->>   4 files changed, 32 insertions(+), 11 deletions(-)
->>
->> diff --git a/include/exec/memory.h b/include/exec/memory.h
->> index dadb5cd65ab58b4868fcae06b4e301f0ecb0c1d2..2c45051b7b419c48b4e14c25f4d16a99ccd23996 100644
->> --- a/include/exec/memory.h
->> +++ b/include/exec/memory.h
->> @@ -774,9 +774,22 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
->>   void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
->>                                                RamDiscardListener *rdl);
->>
->> +/**
->> + * memory_get_xlat_addr: Extract addresses from a TLB entry
->> + *
->> + * @iotlb: pointer to an #IOMMUTLBEntry
->> + * @vaddr: virtual addressf
-> 
-> Nit: s/addressf/address
-
-Fixed.
 
 
-Thanks,
+Am 8=2E Mai 2024 20:39:28 UTC schrieb BALATON Zoltan <balaton@eik=2Ebme=2E=
+hu>:
+>On Wed, 8 May 2024, Bernhard Beschow wrote:
+>> This series changes the "isa-bios" MemoryRegion to be an alias rather t=
+han a
+>> copy in the pflash case=2E This fixes issuing pflash commands in the is=
+a-bios
+>> region which matches real hardware and which some real-world legacy bio=
+ses I'm
+>> running rely on=2E Furthermore, aliasing in the isa-bios area is alread=
+y the
+>
+>I wonder if this allows the guest to flash the bios now, replacing or bre=
+aking it which may be a new security issue=2E
 
-C.
+The bios can already be flashed, just from different addresses=2E This ser=
+ies just adds another alias region through which flashing will be possible=
+=2E AFAICS it doesn't impose new security issues=2E
 
+Ping=2E=2E=2E The last patch still needs an R-b, the other patches are alr=
+eady on master=2E
 
-> 
-> Thanks.
-> 
->> + * @ram_addr: RAM address
->> + * @read_only: indicates if writes are allowed
->> + * @mr_has_discard_manager: indicates memory is controlled by a
->> + *                          RamDiscardManager
->> + * @errp: pointer to Error*, to store an error if it happens.
->> + *
->> + * Return: true on success, else false setting @errp with error.
->> + */
->>   bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>                             ram_addr_t *ram_addr, bool *read_only,
->> -                          bool *mr_has_discard_manager);
->> +                          bool *mr_has_discard_manager, Error **errp);
->>
->>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
->>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
->> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index b929bb0b7ac60dcef34c0d5a098d5d91f75501dd..da748563eb33843e93631a5240759964f33162f2 100644
->> --- a/hw/vfio/common.c
->> +++ b/hw/vfio/common.c
->> @@ -253,12 +253,13 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
->>
->>   /* Called with rcu_read_lock held.  */
->>   static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->> -                               ram_addr_t *ram_addr, bool *read_only)
->> +                               ram_addr_t *ram_addr, bool *read_only,
->> +                               Error **errp)
->>   {
->>       bool ret, mr_has_discard_manager;
->>
->>       ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
->> -                               &mr_has_discard_manager);
->> +                               &mr_has_discard_manager, errp);
->>       if (ret && mr_has_discard_manager) {
->>           /*
->>            * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
->> @@ -288,6 +289,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
->>       void *vaddr;
->>       int ret;
->> +    Error *local_err = NULL;
->>
->>       trace_vfio_iommu_map_notify(iotlb->perm == IOMMU_NONE ? "UNMAP" : "MAP",
->>                                   iova, iova + iotlb->addr_mask);
->> @@ -304,7 +306,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
->>           bool read_only;
->>
->> -        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
->> +        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
->> +            error_report_err(local_err);
->>               goto out;
->>           }
->>           /*
->> @@ -1213,6 +1216,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       VFIOContainerBase *bcontainer = giommu->bcontainer;
->>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
->>       ram_addr_t translated_addr;
->> +    Error *local_err = NULL;
->>       int ret = -EINVAL;
->>
->>       trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
->> @@ -1224,7 +1228,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       }
->>
->>       rcu_read_lock();
->> -    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
->> +    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
->> +        error_report_err(local_err);
->>           goto out_lock;
->>       }
->>
->> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->> index e827b9175fc61f1ef419e48d90a440b00449312a..ed99ab87457d8f31b98ace960713f48d47b27102 100644
->> --- a/hw/virtio/vhost-vdpa.c
->> +++ b/hw/virtio/vhost-vdpa.c
->> @@ -208,6 +208,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       void *vaddr;
->>       int ret;
->>       Int128 llend;
->> +    Error *local_err = NULL;
->>
->>       if (iotlb->target_as != &address_space_memory) {
->>           error_report("Wrong target AS \"%s\", only system memory is allowed",
->> @@ -227,7 +228,9 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
->>           bool read_only;
->>
->> -        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL)) {
->> +        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
->> +                                  &local_err)) {
->> +            error_report_err(local_err);
->>               return;
->>           }
->>           ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
->> diff --git a/system/memory.c b/system/memory.c
->> index 49f1cb2c3835f78f5f948531cbbf13adc706f1ad..e2b9f0aa9ea7326a5bedde28b8c777cf86bc253e 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -2179,7 +2179,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
->>   /* Called with rcu_read_lock held.  */
->>   bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>                             ram_addr_t *ram_addr, bool *read_only,
->> -                          bool *mr_has_discard_manager)
->> +                          bool *mr_has_discard_manager, Error **errp)
->>   {
->>       MemoryRegion *mr;
->>       hwaddr xlat;
->> @@ -2197,7 +2197,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>       mr = address_space_translate(&address_space_memory, iotlb->translated_addr,
->>                                    &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
->>       if (!memory_region_is_ram(mr)) {
->> -        error_report("iommu map to non memory area %" HWADDR_PRIx "", xlat);
->> +        error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
->>           return false;
->>       } else if (memory_region_has_ram_discard_manager(mr)) {
->>           RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
->> @@ -2216,8 +2216,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>            * were already restored before IOMMUs are restored.
->>            */
->>           if (!ram_discard_manager_is_populated(rdm, &tmp)) {
->> -            error_report("iommu map to discarded memory (e.g., unplugged via"
->> -                         " virtio-mem): %" HWADDR_PRIx "",
->> +            error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
->> +                         " via virtio-mem): %" HWADDR_PRIx "",
->>                            iotlb->translated_addr);
->>               return false;
->>           }
->> @@ -2228,7 +2228,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>        * check that it did not truncate too much.
->>        */
->>       if (len & iotlb->addr_mask) {
->> -        error_report("iommu has granularity incompatible with target AS");
->> +        error_setg(errp, "iommu has granularity incompatible with target AS");
->>           return false;
->>       }
->>
->> -- 
->> 2.45.0
->>
-> 
+Best regards,
+Bernhard
 
+> If so this may need some machine property to enable it or is that not a =
+problem in practice?
+>
+>Regards,
+>BALATON Zoltan
+>
+>> current behavior in the bios (a=2Ek=2Ea=2E ROM) case, so this series co=
+nsolidates
+>> behavior=2E
+>>=20
+>> For migration compatibility the aliasing is only performed on new versi=
+ons of
+>> the q34 and pc machine types=2E
+>>=20
+>> v3:
+>> * Amend commit message with a diff of `info mtree` (Phil)
+>> * Add comments for bios memory regions (Phil)
+>>=20
+>> v2:
+>> * Don't leak bios memory regions (Phil)
+>> * Add compat machinery (Michael)
+>>=20
+>> Testing done:
+>> * `make check` with qemu-system-x86_64 (QEMU 8=2E2=2E2) installed=2E Al=
+l tests
+>>  including migration tests pass=2E
+>> * `make check-avocado`
+>>=20
+>> Best regards,
+>> Bernhard
+>>=20
+>> Bernhard Beschow (6):
+>>  hw/i386/x86: Eliminate two if statements in x86_bios_rom_init()
+>>  hw/i386: Have x86_bios_rom_init() take X86MachineState rather than
+>>    MachineState
+>>  hw/i386/x86: Don't leak "isa-bios" memory regions
+>>  hw/i386/x86: Don't leak "pc=2Ebios" memory region
+>>  hw/i386/x86: Extract x86_isa_bios_init() from x86_bios_rom_init()
+>>  hw/i386/pc_sysfw: Alias rather than copy isa-bios region
+>>=20
+>> include/hw/i386/pc=2Eh  |  1 +
+>> include/hw/i386/x86=2Eh | 17 +++++++++++++++-
+>> hw/i386/microvm=2Ec     |  2 +-
+>> hw/i386/pc=2Ec          |  1 +
+>> hw/i386/pc_piix=2Ec     |  3 +++
+>> hw/i386/pc_q35=2Ec      |  2 ++
+>> hw/i386/pc_sysfw=2Ec    | 17 ++++++++++------
+>> hw/i386/x86=2Ec         | 45 ++++++++++++++++++++++--------------------=
+-
+>> 8 files changed, 58 insertions(+), 30 deletions(-)
+>>=20
+>> --
+>> 2=2E45=2E0
+>>=20
+>>=20
+>>=20
 
