@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6620C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 11:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90910C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 11:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6q9v-00015Z-V1; Tue, 14 May 2024 07:17:27 -0400
+	id 1s6qBg-00028W-Jk; Tue, 14 May 2024 07:19:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
- id 1s6q9r-000145-Je; Tue, 14 May 2024 07:17:24 -0400
-Received: from mail-sh0chn02on20730.outbound.protection.partner.outlook.cn
- ([2406:e500:4420:2::730]
- helo=CHN02-SH0-obe.outbound.protection.partner.outlook.cn)
+ id 1s6qBR-0001y0-0t; Tue, 14 May 2024 07:19:04 -0400
+Received: from mail-bjschn02on20719.outbound.protection.partner.outlook.cn
+ ([2406:e500:4440:2::719]
+ helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
- id 1s6q9n-0000JF-SO; Tue, 14 May 2024 07:17:23 -0400
+ id 1s6qBO-0000VD-P8; Tue, 14 May 2024 07:19:00 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HK1dV2JYRHvGrx/whlize8+Si0mCAKRAiBv4N1toivp1rLiq209f744eJQpmAT56C+Nc4frm62zuvnIzd4FvxZjkbS+3mAVXUp3R4td7qEqdBzAn2OtM93A+nokXeg+cnKpJpE1zE4aw03F9kTgK2tA9FQZt9AB9h1o5YHmt3w6HWyHjAk2pmln92waMgvCL9I11V0+QjsV52Ze7h0KAkU/tQlqys1G+PhvqeqwX8taUv5RlfMs3PdM1CjLK3WHSU+bArjvl+N6q2NMIQT/VRFJMks+p7k9NAyjU3ZJ1WZr/z5TyitdsKDXr4GIJ8DocvmjeI37g8BQX20GcGb97qw==
+ b=GAvOeZJwBgcITYk5DV6UBXgIehnXNl22sBtb1WpyNtYJlU/WdGcJV44DCXDGWKRfkjela62xv5OYFkvSIYd6ivbZM5Ey+iHt2zMSvCRIbj4heTNYY51AtM83jbYbTQ69/AnDC/T4dhv58fShb240uyzCvRhf439zVBMjVnW5n/EX/sTWYrjvNMGN3sVWDu0AjP3swR5m3FPROLvXusGmT6Rhvi0o2F4Ux7S8JngIab3/g5v6F9eG10m+Wa82jj4qsbXJ1r/xReb+2E2bz9NYWXvfwMHEmkWAVnNtwtVjJbFzNwc1haOoY8JTF2q/8sRl4vnlkJP1TOCBdx4vSf91FQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PRWJI0Ty2t5CRIOpNvaMqqmsaQmv2cN9ltve5K6keMg=;
- b=X5+YTqC2ECcd7HBi9uUIfMaIcfszvcbGmCF8jp72Y/fIimFkaDgLN6HzXhqqJnjmsFF4zxjgoZ9/C6EPvMFLYnM274wj7F6Gq8kRglqSQWaXXvT+hPzz8IJd7shYc9siV9z6Wcc+UEhtnXpZ/rTK8+MgiwFqbKgql8s0saECDtVd9pz5PCe1fiw+9+X2prYz1U31SGCq0gj2LUtFuKDY9KSaV86CNQEqGxqiv8XQzK7d+tGJTJQq3tLkUJ2WOVeYf4K+QCjhIn98OMGN4xR80GZjlWGyCGNthDNyIDfA5HwbJoA18XP/bPuWJA0na4yUcSVpcljoNpGKb+fp+mt+5w==
+ bh=UxhEIjvL8ex1M2lzlfUIeMM9alDewMIfOIQfFxQgx1U=;
+ b=BhcdK4g62VdF8cBY+JWz4UnDyoKpUagcUlKMPPTq2LKsMyyIMGMtImuWZoVHIj+PgEEn4SfqHDgjI1y8hMwwtvRN6frOcsT6nB1zF9uUvyxlsv7rdZ9fiYlxhsMxS8MRZKhmDeYp6CqfcR0GyuSFEMVzJ/GMeEMDzycDKqpNB5VGZ9PE+7BDb/2Qs3UcIhzHPuNML8oyVRNtIvHQXZ+yRGu96GfN/w/hxqX1NqJDTT030Gf1Cb8WUwhV+LzN7xnlpyTpKuWjR+ljffsotdH0V1MV7NV9cjuarsztQPuxZgXfbocgNty8nbGzZLljPmmQfTqS/kW6WBgBNdYRH8IgGg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=starfivetech.com; dmarc=pass action=none
  header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
 Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c510:12::10) by NT0PR01MB0990.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c510:7::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.29; Tue, 14 May
- 2024 11:16:59 +0000
+ (2406:e500:c510:12::10) by NT0PR01MB1280.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:12::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Tue, 14 May
+ 2024 11:18:38 +0000
 Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
  ([fe80::e604:661e:e939:4c87]) by
  NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn ([fe80::e604:661e:e939:4c87%4])
- with mapi id 15.20.7472.044; Tue, 14 May 2024 11:16:59 +0000
+ with mapi id 15.20.7472.044; Tue, 14 May 2024 11:18:38 +0000
 From: JeeHeng Sia <jeeheng.sia@starfivetech.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
 CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>, "palmer@dabbelt.com"
+ "imammedo@redhat.com" <imammedo@redhat.com>, "anisinha@redhat.com"
+ <anisinha@redhat.com>, "peter.maydell@linaro.org" <peter.maydell@linaro.org>, 
+ "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "sunilvl@ventanamicro.com" <sunilvl@ventanamicro.com>, "palmer@dabbelt.com"
  <palmer@dabbelt.com>, "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
  "bin.meng@windriver.com" <bin.meng@windriver.com>, "liwei1518@gmail.com"
  <liwei1518@gmail.com>, "dbarboza@ventanamicro.com"
@@ -56,13 +56,13 @@ Subject: RE: [PATCH v2 2/3] hw/acpi: Upgrade ACPI SPCR table to support SPCR
  table version 4 format
 Thread-Topic: [PATCH v2 2/3] hw/acpi: Upgrade ACPI SPCR table to support SPCR
  table version 4 format
-Thread-Index: AQHaoD6TJusz/RVVrkmf1vrsO+W0+bGUqM+AgAH2FWA=
-Date: Tue, 14 May 2024 11:16:59 +0000
-Message-ID: <NT0PR01MB12782432813293E9D7B17D889CE32@NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn>
+Thread-Index: AQHaoD6TJusz/RVVrkmf1vrsO+W0+bGUvcGAgAHilDA=
+Date: Tue, 14 May 2024 11:18:38 +0000
+Message-ID: <NT0PR01MB1278A2D1A44A6616011F0A779CE32@NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn>
 References: <20240507052212.291137-1-jeeheng.sia@starfivetech.com>
  <20240507052212.291137-3-jeeheng.sia@starfivetech.com>
- <ZkGiE68wMiVwZi/E@sunil-laptop>
-In-Reply-To: <ZkGiE68wMiVwZi/E@sunil-laptop>
+ <20240513023035-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240513023035-mutt-send-email-mst@kernel.org>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -70,62 +70,62 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=starfivetech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: NT0PR01MB1278:EE_|NT0PR01MB0990:EE_
-x-ms-office365-filtering-correlation-id: 47c39810-264b-492c-aba9-08dc74075f7f
+x-ms-traffictypediagnostic: NT0PR01MB1278:EE_|NT0PR01MB1280:EE_
+x-ms-office365-filtering-correlation-id: b3fce442-d379-4596-0544-08dc74079a86
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: oFLzDaOVfA/Yw0eSF4dZEiN36vIYdv73RjuTlM/v1KEAIy3Tg656M/df1gFLL2GX27U14Zq9xxQrlsZPAToA1Lg0GWHz+EmDz1kLpCD/5ERus0Z5JH0gppJfB04Vu/1oFkb1ffhcXo473JlqR8DHKuT47V7oDrjFhq9snbNq9A8jJEB4CxQNLQuxuPOZlA6AdoiRB4gXVxtX+mjeyIu68armpbXNJm6K6GqbHNLr7mvMZM1DExefM76BaOIIKsXBtcBp544Ie8HtuZPfMxMBk3wDiVBzKh+LmOE8qjQFnIAqbZf/WxnMY7YcEAAqobbGr1XOlmRZV24Azqpq0aq8+qRN+AcNh095FI++yHRjsvoTNT8VXXpZFwwUt51C2/cuGGiRpkqdl70aPhWXwX7Ych/hdM/acKNueQ6Fv5m1GPn0lbjmvkGyvkuYRCSrOYLZKH00lCpBTgZNZTE1gJB+/fv8CoAs6Xfr1cA1g6/WJW0recbJoOX4M6GYHINQzFi02sn652ssGpXDKCKBaB608JIb7V3PyoyOg3w4MWrzaQDj/iFi/a9tQpO5dgySF5lWzQM6+rzeg/cJZ2xRPFOfsEFh7A4tGRrWnjuDkgvbeyWWUAxZwFudgmpdTKzRk9C0
+x-microsoft-antispam-message-info: yqLWJX/RK4OfYDEmcz5RqLBz6a0E6UXYLdZoeZFjpU415FPik/Pp32NRVhU1Ug0amfUa+oP7mW0F8UdZbkotADed2gFBPe577YeyLWDol2tiIdl2mqJO9HumEFqG85bGUKU4lXFN67jAvncIcJBREEh7QnqwNFlshurENf99nzvE7AuFkofeoO1e8zr45dsaEDS8EuH6w/J8sMSsTEjqNt3D58/WgeyDVft9Plj+6CtvTaMjE+eeW148uglPjjNin9xcL9vmC/lZAlliyp20smPzOUzRrSEuBpfenXeREIZyQzKkdhZVqXzdrdAGKToH1xazHPf65XssXREjI0Qr2e4uaVarxoCB4OzLRumdbMhx2dnEg77Vw7N4dG/GdFa9Jk7Ozj8a1a4alOjIfg8DrEtPcNhIbaBxKOttXqoSrwKFM9PJJax/MTgqEYHyqDOrVAmkRUjfcsurGerRboZMtRIkYQJsvPgjY2jsLUxdYUPgiP5M5B8gFROY64QuRtnZx+6GbAua2yKzXtyN2Ru9hO7Bvb58GAV8Ks4T9ic4S7LMaiH4eWOAYDUWFE7siY5G2j1Lg0Ms6VN6p9B0i1tia40hTujsn1EoVGXdZAA1kz5cAz3Cg63KFP7wjh0l4rps
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn; PTR:;
  CAT:NONE;
- SFS:(13230031)(366007)(41320700004)(7416005)(1800799015)(38070700009); DIR:OUT;
+ SFS:(13230031)(366007)(1800799015)(41320700004)(7416005)(38070700009); DIR:OUT;
  SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Ed06lyRgqwJSJ7EAwpCFKSChKJ2erZlJzHeOUXCRbmZPErkrVy4KtGzs4iTw?=
- =?us-ascii?Q?78AvtZk9mFPX5YKVLD2fCjniCXeF72nZuFzz1qN/5Kr3G02v5sCY8kU9J660?=
- =?us-ascii?Q?aA0a/2YZtcSOSQWMNc4oWs/9rWFgHCiBRshejR2+Uttf2nXgIcTWooAOnisQ?=
- =?us-ascii?Q?l/ikpFXOh136aDRykg9CJ+jZRIBbVgfrE3ef2Yw9EgVdwZzSOqiJXdGxzgKx?=
- =?us-ascii?Q?CuJ4lKJNAXGciTWsTkE2IUkAEIN4WarCHwV/oP0spadTFHCBlPh+7NjZgid1?=
- =?us-ascii?Q?BA0djxgonzQlSLs9t2h2NAQi2Vn7j8Yeg/CfHjHB81L3bkb8vqwG6qmWLKy8?=
- =?us-ascii?Q?UVbqvBmVn/1L54PGthBhL/+ZVUKqgTUYEwhHQw9SXsEIB3k+YzXQYDAHFfUe?=
- =?us-ascii?Q?gSYMVYitR0rjhPLRa24WYDjYW/1BRAWasTkUPnHEFUNF9klDcRxIIJAXDnQH?=
- =?us-ascii?Q?FX0/NqFsgkDzpg2x03PegdQEySU4lnuHew1wIaHLSfWmFeqv2JtGWbIZ/cKP?=
- =?us-ascii?Q?mjHAcnUDWfQUz0lazBrsRSc7tC18nogQZW2/bZsNABUZQRsQAj8ZeXbH4S3e?=
- =?us-ascii?Q?6pZZ9mmRuhesp8DOx4wPtAUhO7EuLm05sOEL6aAxvJZrj0tL0uw0AP7jj+uA?=
- =?us-ascii?Q?ePtBuviWf60OTggejKEBccP84PZ3XYeCjzPJ9W85Rg1p9KoIew/CZSXkbYFY?=
- =?us-ascii?Q?fiGO+5KqxCno03rr9pNRtEAT6ZrTp6/BU/eCMg8PeqiwFF0MzGsEgay3LSLd?=
- =?us-ascii?Q?nMfXQ96ahLmUrcfvZMmeHSuk/hNtmWoOSgPz/bs5GRgklhA5kKl5b6orcBIj?=
- =?us-ascii?Q?zZ8CjgheQniIiypoG0rO+tfc7ETaE4/ZYeQt/i3LfujxGVEm/sJjk/ztgfWa?=
- =?us-ascii?Q?n52cU19RNGaLK92TsFeLUOGkFRraeQNHWaUP4S1vf/PdM1fM/hov5NHBFhKC?=
- =?us-ascii?Q?wv0xTYDk0K0qbCnltQXST31JR8ULkG+CGTDkixm+n4hVVSk/V4RxRLacLNcU?=
- =?us-ascii?Q?XcDXya9G+PfPKt4dAOdyjAO7qGO+Rk6ZI8znwmQIEPLaorvvy288uTjp41xH?=
- =?us-ascii?Q?uvqzlf+jfZPsJuv/f0nykBG8ru2bUljHHjwDHDt7kJEV3A4HvD/wVDtkZjUi?=
- =?us-ascii?Q?8osQBP2fnb+HMPB111tbgg5onvIWJYiMXlHW9fDq1QjF0EeCgcfKByvDeDv8?=
- =?us-ascii?Q?3m/9lt5FY6bpB8Og8vaER1EHxHtGgg27ndhwaIIG+CS+b9LJvE4iunt0iT5Z?=
- =?us-ascii?Q?nlfVVMYgf80Q4wiyE5FUTxl3YnBaJzYeRuETEveFEaxQGnWFtlzD0hgl8cp6?=
- =?us-ascii?Q?UBGEegXKiuw2GZz69SdXgeqdWf4crSq7kkapHbMLFA4Mrfjs3HSGH/kSzDTA?=
- =?us-ascii?Q?Vejm4F68vhYNVARiTx7OcWX+FmYAz0Krv4It4YyaCQqOoxeXcoBE3nBOcT8B?=
- =?us-ascii?Q?XYkTnCsOc7zGlm6ZggaHLOvNVRU6favu8hr7Fytwqmg93YBKL2dNvOWtxWqM?=
- =?us-ascii?Q?uzEqvjb7ohiEMN0MrU+gR4zhee9zkVyPq2WhTi1Eo/oitM4nLHTSBU4Yo+EJ?=
- =?us-ascii?Q?j2sdiOCcROhZq1ZHGvYk8GbiRzsVevsAXRO2hzm0FjKXhbg13YzLagWkO8Vn?=
- =?us-ascii?Q?Ozh4i6O+saFJbdw7SghjLz8X7xLFPc/GXpy6kwYgeW3XQqcc/SwpHJn++bOX?=
- =?us-ascii?Q?9PHx7w=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?+Ba8V8+811NSWOwH6WIQFfIgQewU9WU32HtvFgaG7HFl8QnIU0msFZTWAHUE?=
+ =?us-ascii?Q?EnydZKdt1QO8Ue2mgYGWSbEXiD2NDwf8FRK0uSeBZdbOJlFc3E1UwwORtQAs?=
+ =?us-ascii?Q?jEvkH8RItx1Q4Pri+v7C0PCfEaVvrZSnVlWauosLY2h7yaX07rk01g/JmzMO?=
+ =?us-ascii?Q?7UqLg3l+8ZI4r90b5FsBAUbNw+gh1mQEytdPPgBp3JPTehAT/JHcO+L7Njyj?=
+ =?us-ascii?Q?kVgyt1VHFBmolqatbriB/s4EuEL8Gz0zhlgDa3pAvvfG6PLmepLo8dxImWKo?=
+ =?us-ascii?Q?K/wAXU6Mf3pFS+ZgUedqx4Qx7ezJbg5deSL+BMTXDIbTeJ6bHDYZ3SkoITKX?=
+ =?us-ascii?Q?7qQG5FqjPyz8XZH/0tnCxRL04FESYzwOfK+a4mpq/nLRvlsBrxVhcXMTWLk+?=
+ =?us-ascii?Q?HUK74E4kXeHVlyU7PBa3cxa1VHZumHWZ4bTs5cA25VWJFtGXc0Ksd5JgUEFY?=
+ =?us-ascii?Q?ojXekzVPD3EffsEXqnEWVNTANA23Qu5wXesfbS8PZZ5PhEhfIulUHtfEkiW2?=
+ =?us-ascii?Q?Smz0WE8y7Cr84RC2WPkiNGspOWshps9TS2SVO8JrjDVNQI8ALODz5jfntcqL?=
+ =?us-ascii?Q?GNEErRK69Jy/eb0U/0N2imiD5fEFTf+Qxq8yU1Ndp+TZgBu5TX8T/8blipqO?=
+ =?us-ascii?Q?7+tnRIt4ltT4oLLQiH6pZEQTOJrfD3I1gO3R+s/dEeQxbqzM6wrfVtYWBzlG?=
+ =?us-ascii?Q?QPJgB/wmLdKFpWcFX0wqDtAAtfVmB6xAlLwcBAdpDEGzEDWTQRQ9ry8zn1U1?=
+ =?us-ascii?Q?DHDO3tgu2zD85fJ6ylw3yRhVArPyQeE77Efc8o3I8l/IvPhPqNQ9i7BLzkTM?=
+ =?us-ascii?Q?1ag1ncmod7bAUhWaIbHRqUyUhL5a/ZW7Yb8TukaBYX0XuameQ5DDAUwmznPM?=
+ =?us-ascii?Q?+WzU81ji8NJT9DNVQU8hySdyRrKM733ljKgW6+BBKB/GN4CASg+ZZ+by1O9h?=
+ =?us-ascii?Q?2nzEWSazjPsf+kNoQHtXb5uUs5oNXzSsX+46IZa5ZBFtzfvSMo+9xiFiBevV?=
+ =?us-ascii?Q?irNidVPti/+BPiOFM7VGWDIvMaE9GD6+fZDVUuQ71slNWEqAfNEAficPOGUD?=
+ =?us-ascii?Q?aZz+dlz9kjSvUqXHQlXuM3AtOWqndIWc2FN/UBP8Aedm6lDl+MGautsCINRY?=
+ =?us-ascii?Q?gM2dMaMNtyNg2lPgliZQ3bsz185IEtTUg44mDOi7ACLqQP5rvh08ROm7Fv2P?=
+ =?us-ascii?Q?ASo9YSVKcaiV9BrQZ/VRFyNrmn2lV6E3NOe8UOTE8lRbXHPoFr6I/gtdLUBQ?=
+ =?us-ascii?Q?x7gYtN0WhPpiZPveQtX5uJ3iSH4cmI9fYr27YZSC1lbWsShAdSdy5rEmBSH6?=
+ =?us-ascii?Q?0SOvy08P++1TNLB9ug8yH8gu/p01tKfmYpLnM1o3A/G7KIGfAY6P05iM0lo0?=
+ =?us-ascii?Q?SIEerovoU/AS2/FYKB9uQZ0Sbx5tjqO64BpegntF50ipz+/t8TS1Thfmzuyo?=
+ =?us-ascii?Q?x8eAyFVy1rvQFJsVtT3YDvjNf9azqzU6Bd/ePRG6aTyAR558SXNEcFB5KGrT?=
+ =?us-ascii?Q?rZtCJd90YvBVfDQjL+fqeP8+xq31WJphWewPPvk1+8ALd8RMNPf0hQJKUeRa?=
+ =?us-ascii?Q?g+I2FO8T5ZulWUHZP39b8UoAwgZ+Lpxo16Em9+pusb98G/L0GI35KCKoeg9I?=
+ =?us-ascii?Q?ciTsgYnLU4E17RueycJmrMOEshPUh4ufWn59fNj/vNWnOGe/QDQDQJZ0f8x3?=
+ =?us-ascii?Q?u2yraQ=3D=3D?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: starfivetech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47c39810-264b-492c-aba9-08dc74075f7f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2024 11:16:59.5365 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3fce442-d379-4596-0544-08dc74079a86
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2024 11:18:38.5298 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hm3rmuAT0uhEX6RoYJFOGKMQk3HqP4xubUj4r0U0UlocjdOkUOE5xkKI0c/XXTKV4h5S9lDsdtt1H4VJ5Be1d8jnaqrMR0zu+gFZD0dDuCA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: NT0PR01MB0990
-Received-SPF: pass client-ip=2406:e500:4420:2::730;
+X-MS-Exchange-CrossTenant-userprincipalname: PNHM9hRa8iLZG2qup5gvVBSAeUz5Yhytu+ks2k3FvYJn5p4Mb8ZlmTX2kx40cNh2gmelByVv7cb1C0Rhc0peJcN01nuRYttR1x+UdL/3Ig4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: NT0PR01MB1280
+Received-SPF: pass client-ip=2406:e500:4440:2::719;
  envelope-from=jeeheng.sia@starfivetech.com;
- helo=CHN02-SH0-obe.outbound.protection.partner.outlook.cn
+ helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -149,19 +149,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 > -----Original Message-----
-> From: Sunil V L <sunilvl@ventanamicro.com>
-> Sent: Monday, May 13, 2024 1:16 PM
+> From: Michael S. Tsirkin <mst@redhat.com>
+> Sent: Monday, May 13, 2024 2:31 PM
 > To: JeeHeng Sia <jeeheng.sia@starfivetech.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org; qemu-riscv@nongnu.org; ms=
-t@redhat.com; imammedo@redhat.com;
-> anisinha@redhat.com; peter.maydell@linaro.org; shannon.zhaosl@gmail.com; =
-palmer@dabbelt.com; alistair.francis@wdc.com;
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org; qemu-riscv@nongnu.org; im=
+ammedo@redhat.com; anisinha@redhat.com;
+> peter.maydell@linaro.org; shannon.zhaosl@gmail.com; sunilvl@ventanamicro.=
+com; palmer@dabbelt.com; alistair.francis@wdc.com;
 > bin.meng@windriver.com; liwei1518@gmail.com; dbarboza@ventanamicro.com; z=
 hiwei_liu@linux.alibaba.com
 > Subject: Re: [PATCH v2 2/3] hw/acpi: Upgrade ACPI SPCR table to support S=
 PCR table version 4 format
->=20
-> Hi Sia Jee Heng,
 >=20
 > On Mon, May 06, 2024 at 10:22:11PM -0700, Sia Jee Heng wrote:
 > > Update the SPCR table to accommodate the SPCR Table version 4 [1].
@@ -172,6 +170,15 @@ s/serial-port-console-redirection-table
 > > [2]: https://github.com/acpica/acpica/pull/931
 > >
 > > Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+>=20
+> What does this achieve? We don't normally change unless it gets
+> us some useful feature.
+The changes in Table 4 primarily include the addition of RISC-V support
+and modifications to the Interrupt Type field. Additionally, new fields
+added are Precise Baud Rate, NamespaceStringLength, NamespaceStringOffset,
+and NamespaceString[].
+>=20
+>=20
 > > ---
 > >  hw/acpi/aml-build.c         | 14 +++++++++++---
 > >  hw/arm/virt-acpi-build.c    | 10 ++++++++--
@@ -216,15 +223,6 @@ linker,
 > > +    /* NamespaceString[] */
 > > +    g_array_append_vals(table_data, name, f->namespace_string_length);
 > >
-> Is it possible to check the revision here and add new fields only if the
-> revision supports it? ARM maintainers are better to comment but IMO, we
-> better keep ARM's SPCR in the same current version since I don't know
-> how consumers like linux (and other OSs) react to the change.
-Hi Sunil, there is only one prebuilt SPCR binary. By doing this, the qtest
-will fail. I think I will let ARM maintainer to comment.
->=20
-> Thanks!
-> Sunil
 > >      acpi_table_end(linker, &table);
 > >  }
 > > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
@@ -348,5 +346,5 @@ ar *name);
 > >  #endif
 > > --
 > > 2.34.1
-> >
+
 
