@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65486C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2114C25B7A
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6rd4-0005Aq-4a; Tue, 14 May 2024 08:51:38 -0400
+	id 1s6rd6-0005B4-4f; Tue, 14 May 2024 08:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcw-00059V-9D
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcx-00059n-On
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcu-0005DQ-ED
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcw-0005Di-4l
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691087;
+ s=mimecast20190719; t=1715691089;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ncJJ3xd2BNJLl+BzqIrKJkIzSdX95M3LGYLpcjA5q3I=;
- b=VWsmiPUxtY6PnqN0jvOCDspWf+ijz2NooZrNCJkMsYhwDT8c/YbYZ7eU95g0sxxYU/6H6n
- p1lzn7PA8TlXKANHQbiIA4e43/SnrD0AnYCliheGE8XD2Sw2IsyKFOpzGud1/ppDPpdzQb
- B01m666Svsn+MEI6IatCOPGVbyjrOyQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-VxPZLsLVMHOwQ6xyTiUKcA-1; Tue, 14 May 2024 08:51:23 -0400
-X-MC-Unique: VxPZLsLVMHOwQ6xyTiUKcA-1
+ bh=Oi/0Xlf++23SurP55CdDrUDRneAXLHwD2RVCw34AvJw=;
+ b=ZVkbUPZp4WT9Pwrm2se8A2DCjcLWfWH7fTU4CCjyyMmPEAmqe8cZpK9PKH92SmTy6TXhiV
+ 9gdEwUDNp4ufjWVZgp533omgZUgZ0MTTA8jAlth5QUYySDRow3tSwrlreJkCy1Bs0qok2p
+ WIM2YjVWGU1RjR00SKhMN3AauYD7nWg=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-7nZwqIh-PQu3gVpDaN_KBQ-1; Tue,
+ 14 May 2024 08:51:28 -0400
+X-MC-Unique: 7nZwqIh-PQu3gVpDaN_KBQ-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 24EA285A58C;
- Tue, 14 May 2024 12:51:23 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C44E129AA2CD;
+ Tue, 14 May 2024 12:51:27 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 1B037400057;
- Tue, 14 May 2024 12:51:21 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 367D1400059;
+ Tue, 14 May 2024 12:51:27 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/11] configure: Fix error message when C compiler is not
- working
-Date: Tue, 14 May 2024 14:51:09 +0200
-Message-ID: <20240514125119.284638-2-thuth@redhat.com>
+Subject: [PULL 05/11] Bump minimum glib version to v2.66
+Date: Tue, 14 May 2024 14:51:13 +0200
+Message-ID: <20240514125119.284638-6-thuth@redhat.com>
 In-Reply-To: <20240514125119.284638-1-thuth@redhat.com>
 References: <20240514125119.284638-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -80,60 +79,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If you try to run the configure script on a system without a working
-C compiler, you get a very misleading error message:
+Now that we dropped support for CentOS 8 and Ubuntu 20.04, we can
+look into bumping the glib version to a new minimum for further
+clean-ups. According to repology.org, available versions are:
 
- ERROR: Unrecognized host OS (uname -s reports 'Linux')
+ CentOS Stream 9:       2.66.7
+ Debian 11:             2.66.8
+ Fedora 38:             2.74.1
+ Freebsd:               2.78.4
+ Homebrew:              2.80.0
+ Openbsd:               2.78.4
+ OpenSuse leap 15.5:    2.70.5
+ pkgsrc_current:        2.78.4
+ Ubuntu 22.04:          2.72.1
 
-Some people already opened bug tickets because of this problem:
+Thus it should be safe to bump the minimum glib version to 2.66 now.
+Version 2.66 comes with new functions for URI parsing which will
+allow further clean-ups in the following patches.
 
- https://gitlab.com/qemu-project/qemu/-/issues/2057
- https://gitlab.com/qemu-project/qemu/-/issues/2288
-
-We should rather tell the user that we were not able to use the C
-compiler instead, otherwise they will have a hard time to figure
-out what was going wrong.
-
-While we're at it, let's also suppress the "unrecognized host CPU"
-message in this case since it is rather misleading than helpful.
-
-Fixes: 264b803721 ("configure: remove compiler sanity check")
-Message-ID: <20240513114010.51608-1-thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240418101056.302103-8-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- configure | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ meson.build              | 16 +---------------
+ include/glib-compat.h    | 27 ++-------------------------
+ qga/commands-posix-ssh.c |  4 ++--
+ 3 files changed, 5 insertions(+), 42 deletions(-)
 
-diff --git a/configure b/configure
-index 330664786d..38ee257701 100755
---- a/configure
-+++ b/configure
-@@ -411,7 +411,9 @@ else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-   cpu=$(uname -m)
--  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  if test "$host_os" != "bogus"; then
-+    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  fi
- fi
+diff --git a/meson.build b/meson.build
+index 9c14192514..a9de71d450 100644
+--- a/meson.build
++++ b/meson.build
+@@ -869,7 +869,7 @@ have_xen_pci_passthrough = get_option('xen_pci_passthrough') \
  
- # Normalise host CPU name to the values used by Meson cross files and in source
-@@ -894,6 +896,13 @@ EOF
- exit 0
- fi
+ # When bumping glib minimum version, please check also whether to increase
+ # the _WIN32_WINNT setting in osdep.h according to the value from glib
+-glib_req_ver = '>=2.56.0'
++glib_req_ver = '>=2.66.0'
+ glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
+                     method: 'pkg-config')
+ glib_cflags = []
+@@ -910,20 +910,6 @@ if not cc.compiles('''
+         to the right pkg-config files for your build target.''')
+ endif
  
-+# Now that we are sure that the user did not only want to print the --help
-+# information, we should double-check that the C compiler really works:
-+write_c_skeleton
-+if ! compile_object ; then
-+    error_exit "C compiler \"$cc\" either does not exist or does not work."
-+fi
-+
- # Remove old dependency files to make sure that they get properly regenerated
- rm -f ./*/config-devices.mak.d
+-# Silence clang warnings triggered by glib < 2.57.2
+-if not cc.compiles('''
+-  #include <glib.h>
+-  typedef struct Foo {
+-    int i;
+-  } Foo;
+-  static void foo_free(Foo *f)
+-  {
+-    g_free(f);
+-  }
+-  G_DEFINE_AUTOPTR_CLEANUP_FUNC(Foo, foo_free)
+-  int main(void) { return 0; }''', dependencies: glib_pc, args: ['-Wunused-function', '-Werror'])
+-  glib_cflags += cc.get_supported_arguments('-Wno-unused-function')
+-endif
+ glib = declare_dependency(dependencies: [glib_pc, gmodule],
+                           compile_args: glib_cflags,
+                           version: glib_pc.version())
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 43a562974d..86be439ba0 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -19,12 +19,12 @@
+ /* Ask for warnings for anything that was marked deprecated in
+  * the defined version, or before. It is a candidate for rewrite.
+  */
+-#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_56
++#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_66
  
+ /* Ask for warnings if code tries to use function that did not
+  * exist in the defined version. These risk breaking builds
+  */
+-#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_56
++#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_66
+ 
+ #pragma GCC diagnostic push
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+@@ -105,29 +105,6 @@ static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
+ }
+ #define g_memdup2(m, s) g_memdup2_qemu(m, s)
+ 
+-#if defined(G_OS_UNIX)
+-/*
+- * Note: The fallback implementation is not MT-safe, and it returns a copy of
+- * the libc passwd (must be g_free() after use) but not the content. Because of
+- * these important differences the caller must be aware of, it's not #define for
+- * GLib API substitution.
+- */
+-static inline struct passwd *
+-g_unix_get_passwd_entry_qemu(const gchar *user_name, GError **error)
+-{
+-#if GLIB_CHECK_VERSION(2, 64, 0)
+-    return g_unix_get_passwd_entry(user_name, error);
+-#else
+-    struct passwd *p = getpwnam(user_name);
+-    if (!p) {
+-        g_set_error_literal(error, G_UNIX_ERROR, 0, g_strerror(errno));
+-        return NULL;
+-    }
+-    return (struct passwd *)g_memdup(p, sizeof(*p));
+-#endif
+-}
+-#endif /* G_OS_UNIX */
+-
+ static inline bool
+ qemu_g_test_slow(void)
+ {
+diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
+index dd2ecb453a..866afe6741 100644
+--- a/qga/commands-posix-ssh.c
++++ b/qga/commands-posix-ssh.c
+@@ -36,7 +36,7 @@ test_get_passwd_entry(const gchar *user_name, GError **error)
+     return p;
+ }
+ 
+-#define g_unix_get_passwd_entry_qemu(username, err) \
++#define g_unix_get_passwd_entry(username, err) \
+    test_get_passwd_entry(username, err)
+ #endif
+ 
+@@ -46,7 +46,7 @@ get_passwd_entry(const char *username, Error **errp)
+     g_autoptr(GError) err = NULL;
+     struct passwd *p;
+ 
+-    p = g_unix_get_passwd_entry_qemu(username, &err);
++    p = g_unix_get_passwd_entry(username, &err);
+     if (p == NULL) {
+         error_setg(errp, "failed to lookup user '%s': %s",
+                    username, err->message);
 -- 
 2.45.0
 
