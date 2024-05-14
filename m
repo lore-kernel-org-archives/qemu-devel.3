@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F86C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 17:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A57C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 17:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6wBp-0004zh-T7; Tue, 14 May 2024 13:43:49 -0400
+	id 1s6wBp-0004zd-Ef; Tue, 14 May 2024 13:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s6wBb-0004sL-NU
- for qemu-devel@nongnu.org; Tue, 14 May 2024 13:43:39 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1s6wBP-0004pz-J2
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 13:43:32 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s6wBP-0004u2-7M
- for qemu-devel@nongnu.org; Tue, 14 May 2024 13:43:30 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-51f2ebbd8a7so6675277e87.2
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 10:43:01 -0700 (PDT)
+ id 1s6wB0-0004sy-2R
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 13:43:01 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a59a609dd3fso68255166b.0
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 10:42:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715708580; x=1716313380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715708575; x=1716313375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gtJemHI4dVOUtgdJBkMgGs/0X+EAiROwnScRw4g9+Yo=;
- b=imBUdW/z2/zowQcH6P1erkAOhZlOhMxNIZ+H5wVETS7MUD2WMaNQtnqY3qWkuoaFJ6
- xWsLomJYcK9ITdwiR5bhwh4Mr0Jzu31LwiZtDx+QpWuVVKn3hk0DWitc+/8kq+yz0rIp
- 1lYu7G95uK/SulsjWLTySPoAlM79odb/L9E14hjD3sNcNrS7sWrbEsLVi/RDzdJwct7j
- 53GTlo1bB/V+d0E1F+JG+qYgaQX56LQxTwQNkzGIxPyFToHyUbwS+Uzmv/Y9PWotVyBc
- 8CwAwR+8RLDL0AgO5KVWwKsmwOE1+md6OY6CZo1vKyc6omPnwqBnAIihnkYG5BqRxzTW
- crTQ==
+ bh=XPxY0E7yxbX5pVQ4/Szl3Q5MOqxhGDVnE0r/P4HexYI=;
+ b=pswhmI1uyauhZKJvJDi23y4NcHuYpU4yG1KpHHRrdEBjXh/gzzioBJPEMkNUJRpxNc
+ SbiWGKToGpgfmKY0bfdSXtLa5Rarp3IXF5XJQOPpStUdnu2kS1hJtyNxYc9NMV/0eLZi
+ VaBdmiCxrmZeUV+ExCyAReLMNn2Ts3dUKwAESZPtSiYZKvNg2da7a93uzgPQpnIWnCaF
+ rcmZKw/TPbNsm/W8Ck4NyXiGDzIfiGkVbiTtSxxmay5uLk3vVrq5ypnAIbjmlHj1buhl
+ 4indqUJEZlqBnTynUaTNoOvmeNqu8ZA6cGeS+NpkXVbmqSC7kooG+L4HK8sy/vuWdxQq
+ 6P6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715708580; x=1716313380;
+ d=1e100.net; s=20230601; t=1715708575; x=1716313375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gtJemHI4dVOUtgdJBkMgGs/0X+EAiROwnScRw4g9+Yo=;
- b=i8yO+XafZuATQ74ewtQU3YLfrzWApZlzHaqI2AKvrOFBhD045kh4guIprXFDA0zBRz
- Wy3R83WmkXjYKsWPb3uxHLjaP1OhnHTUvEwIlGt5sxRqUZKMcIIz9gRHZkZnNnxS3JMs
- 3R6HP/5P0b93zaeqHM5tL9WR/kQjtsvpcbYWA2qnxxZUskz6o0FXHmdNGP2gn7sTWuVG
- tiR91uoNDArNOKOIk6w6Druiu7pRC3Gw8yvV1afb0Afsle9ghUG0EArGqU9gZ8qso4Rq
- HvfnmXRh7o2I8CMILlpV34HjQPwDVNMaFI2Ir+QH5Z7AH3BCqs5fZQ3VKMY61OzsJPVA
- 9PAQ==
-X-Gm-Message-State: AOJu0Yw/7EPa6+a7uYsl0mQwjPsjJjppwRnZwakiSzIih+sWQqjdE0Ao
- bmz/b+6sWbEp8QTyNI7yg5/yaqhewYpVA+aPY0yJ9aDYn+rGx5gbSn6MiJu3Jtk=
-X-Google-Smtp-Source: AGHT+IGHo3j/YPQdccMlNKe/20lrTRcxh76cBT8vZCM85zhOzh3pr20zp11QJG0nR6eYoZARoEPNWg==
-X-Received: by 2002:a05:6512:3457:b0:51a:fac3:416d with SMTP id
- 2adb3069b0e04-5220ff72f59mr8753744e87.43.1715708579884; 
- Tue, 14 May 2024 10:42:59 -0700 (PDT)
+ bh=XPxY0E7yxbX5pVQ4/Szl3Q5MOqxhGDVnE0r/P4HexYI=;
+ b=csMy+DeYpDu5KZ7PdOzLFo9I0xFiYVZqvOe0W7/WGDAtnMH+jbM4LpHkMsdXmMK0jC
+ TcvwHKUW7htjHi3sGGjWGNumL2FWie/hAU9Dd5vW3cR84deDFxAJVsW5v1Qj2yBb2yQf
+ x2cIFBcqhiCGZ6V4qy7tPiQFjY/un6rsBawPpjmvUuIu082LGjsBiIzAAQeHsQjj+2B6
+ +27cJfcClt+YPIb+cL8k88gQyNqz8zSjlY+4Lbb7OWWgl0UDQJYYZD+FXW+hCFvdvrPe
+ 6/tjU4ZDfEn55hePIu4aBiGyASTUryR0nkAtXWWDhOZEqJLu6Ibz7c/LlMqtiChwCWzV
+ BbGg==
+X-Gm-Message-State: AOJu0YxyoxkQfqFnG5DnGHSnczUpBLuwRQ/nWrVHeh6fc2Mcml1svc4k
+ qZZh+1T/CbCNYRiz7sjxLC9PWBmSSdhHo6guZ2FnZCx+BfruhEdE/SwVG+CTt2M=
+X-Google-Smtp-Source: AGHT+IHW8/2pSHteaIrQI9CuSbOuoVQfbUULwX7TH0x1Tt0WTVyfGG8JhpH5vBhs0f5DIyGF/VqXdA==
+X-Received: by 2002:a17:906:3815:b0:a58:7172:1ab0 with SMTP id
+ a640c23a62f3a-a5a2d1b0fe2mr1268419166b.16.1715708574915; 
+ Tue, 14 May 2024 10:42:54 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-574ebdf46cesm520817a12.37.2024.05.14.10.42.56
+ a640c23a62f3a-a5a17b17865sm737840166b.204.2024.05.14.10.42.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 May 2024 10:42:58 -0700 (PDT)
+ Tue, 14 May 2024 10:42:54 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B1B565FA2A;
+ by draig.lan (Postfix) with ESMTP id 1E3A05FA19;
  Tue, 14 May 2024 18:42:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -71,24 +71,25 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH 08/11] tests/plugin/inline: add test for conditional callback
-Date: Tue, 14 May 2024 18:42:50 +0100
-Message-Id: <20240514174253.694591-9-alex.bennee@linaro.org>
+Subject: [PATCH 02/11] scripts/update-linux-header.sh: be more src tree
+ friendly
+Date: Tue, 14 May 2024 18:42:44 +0100
+Message-Id: <20240514174253.694591-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240514174253.694591-1-alex.bennee@linaro.org>
 References: <20240514174253.694591-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,194 +105,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Running "install_headers" in the Linux source tree is fairly
+unfriendly as out-of-tree builds will start complaining about the
+kernel source being non-pristine. As we have a temporary directory for
+the install we should also do the build step here. So now we have:
 
-Count number of tb and insn executed using a conditional callback. We
-ensure the callback has been called expected number of time (per vcpu).
+  $tmpdir/
+    $blddir/
+    $hdrdir/
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240502211522.346467-7-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240510111802.241284-1-alex.bennee@linaro.org>
 ---
- tests/plugin/inline.c | 89 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 86 insertions(+), 3 deletions(-)
+ scripts/update-linux-headers.sh | 80 +++++++++++++++++----------------
+ 1 file changed, 41 insertions(+), 39 deletions(-)
 
-diff --git a/tests/plugin/inline.c b/tests/plugin/inline.c
-index 103c3a22f6..cd63827b7d 100644
---- a/tests/plugin/inline.c
-+++ b/tests/plugin/inline.c
-@@ -20,8 +20,14 @@ typedef struct {
-     uint64_t count_insn_inline;
-     uint64_t count_mem;
-     uint64_t count_mem_inline;
-+    uint64_t tb_cond_num_trigger;
-+    uint64_t tb_cond_track_count;
-+    uint64_t insn_cond_num_trigger;
-+    uint64_t insn_cond_track_count;
- } CPUCount;
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 36f3e91fe4..8963c39189 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -27,6 +27,8 @@
+ #   types like "__u64".  This work is done in the cp_portable function.
  
-+static const uint64_t cond_trigger_limit = 100;
-+
- typedef struct {
-     uint64_t data_insn;
-     uint64_t data_tb;
-@@ -35,6 +41,10 @@ static qemu_plugin_u64 count_insn;
- static qemu_plugin_u64 count_insn_inline;
- static qemu_plugin_u64 count_mem;
- static qemu_plugin_u64 count_mem_inline;
-+static qemu_plugin_u64 tb_cond_num_trigger;
-+static qemu_plugin_u64 tb_cond_track_count;
-+static qemu_plugin_u64 insn_cond_num_trigger;
-+static qemu_plugin_u64 insn_cond_track_count;
- static struct qemu_plugin_scoreboard *data;
- static qemu_plugin_u64 data_insn;
- static qemu_plugin_u64 data_tb;
-@@ -56,12 +66,19 @@ static void stats_insn(void)
-     const uint64_t per_vcpu = qemu_plugin_u64_sum(count_insn);
-     const uint64_t inl_per_vcpu =
-         qemu_plugin_u64_sum(count_insn_inline);
-+    const uint64_t cond_num_trigger =
-+        qemu_plugin_u64_sum(insn_cond_num_trigger);
-+    const uint64_t cond_track_left = qemu_plugin_u64_sum(insn_cond_track_count);
-+    const uint64_t conditional =
-+        cond_num_trigger * cond_trigger_limit + cond_track_left;
-     printf("insn: %" PRIu64 "\n", expected);
-     printf("insn: %" PRIu64 " (per vcpu)\n", per_vcpu);
-     printf("insn: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
-+    printf("insn: %" PRIu64 " (cond cb)\n", conditional);
-     g_assert(expected > 0);
-     g_assert(per_vcpu == expected);
-     g_assert(inl_per_vcpu == expected);
-+    g_assert(conditional == expected);
- }
+ tmpdir=$(mktemp -d)
++hdrdir="$tmpdir/headers"
++blddir="$tmpdir/build"
+ linux="$1"
+ output="$2"
  
- static void stats_tb(void)
-@@ -70,12 +87,18 @@ static void stats_tb(void)
-     const uint64_t per_vcpu = qemu_plugin_u64_sum(count_tb);
-     const uint64_t inl_per_vcpu =
-         qemu_plugin_u64_sum(count_tb_inline);
-+    const uint64_t cond_num_trigger = qemu_plugin_u64_sum(tb_cond_num_trigger);
-+    const uint64_t cond_track_left = qemu_plugin_u64_sum(tb_cond_track_count);
-+    const uint64_t conditional =
-+        cond_num_trigger * cond_trigger_limit + cond_track_left;
-     printf("tb: %" PRIu64 "\n", expected);
-     printf("tb: %" PRIu64 " (per vcpu)\n", per_vcpu);
-     printf("tb: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
-+    printf("tb: %" PRIu64 " (conditional cb)\n", conditional);
-     g_assert(expected > 0);
-     g_assert(per_vcpu == expected);
-     g_assert(inl_per_vcpu == expected);
-+    g_assert(conditional == expected);
- }
+@@ -110,56 +112,56 @@ for arch in $ARCHLIST; do
+         arch_var=ARCH
+     fi
  
- static void stats_mem(void)
-@@ -104,14 +127,35 @@ static void plugin_exit(qemu_plugin_id_t id, void *udata)
-         const uint64_t insn_inline = qemu_plugin_u64_get(count_insn_inline, i);
-         const uint64_t mem = qemu_plugin_u64_get(count_mem, i);
-         const uint64_t mem_inline = qemu_plugin_u64_get(count_mem_inline, i);
--        printf("cpu %d: tb (%" PRIu64 ", %" PRIu64 ") | "
--               "insn (%" PRIu64 ", %" PRIu64 ") | "
-+        const uint64_t tb_cond_trigger =
-+            qemu_plugin_u64_get(tb_cond_num_trigger, i);
-+        const uint64_t tb_cond_left =
-+            qemu_plugin_u64_get(tb_cond_track_count, i);
-+        const uint64_t insn_cond_trigger =
-+            qemu_plugin_u64_get(insn_cond_num_trigger, i);
-+        const uint64_t insn_cond_left =
-+            qemu_plugin_u64_get(insn_cond_track_count, i);
-+        printf("cpu %d: tb (%" PRIu64 ", %" PRIu64
-+               ", %" PRIu64 " * %" PRIu64 " + %" PRIu64
-+               ") | "
-+               "insn (%" PRIu64 ", %" PRIu64
-+               ", %" PRIu64 " * %" PRIu64 " + %" PRIu64
-+               ") | "
-                "mem (%" PRIu64 ", %" PRIu64 ")"
-                "\n",
--               i, tb, tb_inline, insn, insn_inline, mem, mem_inline);
-+               i,
-+               tb, tb_inline,
-+               tb_cond_trigger, cond_trigger_limit, tb_cond_left,
-+               insn, insn_inline,
-+               insn_cond_trigger, cond_trigger_limit, insn_cond_left,
-+               mem, mem_inline);
-         g_assert(tb == tb_inline);
-         g_assert(insn == insn_inline);
-         g_assert(mem == mem_inline);
-+        g_assert(tb_cond_trigger == tb / cond_trigger_limit);
-+        g_assert(tb_cond_left == tb % cond_trigger_limit);
-+        g_assert(insn_cond_trigger == insn / cond_trigger_limit);
-+        g_assert(insn_cond_left == insn % cond_trigger_limit);
-     }
+-    make -C "$linux" INSTALL_HDR_PATH="$tmpdir" $arch_var=$arch headers_install
++    make -C "$linux" O="$blddir" INSTALL_HDR_PATH="$hdrdir" $arch_var=$arch headers_install
  
-     stats_tb();
-@@ -132,6 +176,24 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
-     g_mutex_unlock(&tb_lock);
- }
+     rm -rf "$output/linux-headers/asm-$arch"
+     mkdir -p "$output/linux-headers/asm-$arch"
+     for header in kvm.h unistd.h bitsperlong.h mman.h; do
+-        cp "$tmpdir/include/asm/$header" "$output/linux-headers/asm-$arch"
++        cp "$hdrdir/include/asm/$header" "$output/linux-headers/asm-$arch"
+     done
  
-+static void vcpu_tb_cond_exec(unsigned int cpu_index, void *udata)
-+{
-+    g_assert(qemu_plugin_u64_get(tb_cond_track_count, cpu_index) ==
-+             cond_trigger_limit);
-+    g_assert(qemu_plugin_u64_get(data_tb, cpu_index) == (uintptr_t) udata);
-+    qemu_plugin_u64_set(tb_cond_track_count, cpu_index, 0);
-+    qemu_plugin_u64_add(tb_cond_num_trigger, cpu_index, 1);
-+}
-+
-+static void vcpu_insn_cond_exec(unsigned int cpu_index, void *udata)
-+{
-+    g_assert(qemu_plugin_u64_get(insn_cond_track_count, cpu_index) ==
-+             cond_trigger_limit);
-+    g_assert(qemu_plugin_u64_get(data_insn, cpu_index) == (uintptr_t) udata);
-+    qemu_plugin_u64_set(insn_cond_track_count, cpu_index, 0);
-+    qemu_plugin_u64_add(insn_cond_num_trigger, cpu_index, 1);
-+}
-+
- static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
- {
-     qemu_plugin_u64_add(count_insn, cpu_index, 1);
-@@ -163,6 +225,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-         tb, QEMU_PLUGIN_INLINE_ADD_U64, count_tb_inline, 1);
+     if [ $arch = mips ]; then
+-        cp "$tmpdir/include/asm/sgidefs.h" "$output/linux-headers/asm-mips/"
+-        cp "$tmpdir/include/asm/unistd_o32.h" "$output/linux-headers/asm-mips/"
+-        cp "$tmpdir/include/asm/unistd_n32.h" "$output/linux-headers/asm-mips/"
+-        cp "$tmpdir/include/asm/unistd_n64.h" "$output/linux-headers/asm-mips/"
++        cp "$hdrdir/include/asm/sgidefs.h" "$output/linux-headers/asm-mips/"
++        cp "$hdrdir/include/asm/unistd_o32.h" "$output/linux-headers/asm-mips/"
++        cp "$hdrdir/include/asm/unistd_n32.h" "$output/linux-headers/asm-mips/"
++        cp "$hdrdir/include/asm/unistd_n64.h" "$output/linux-headers/asm-mips/"
+     fi
+     if [ $arch = powerpc ]; then
+-        cp "$tmpdir/include/asm/unistd_32.h" "$output/linux-headers/asm-powerpc/"
+-        cp "$tmpdir/include/asm/unistd_64.h" "$output/linux-headers/asm-powerpc/"
++        cp "$hdrdir/include/asm/unistd_32.h" "$output/linux-headers/asm-powerpc/"
++        cp "$hdrdir/include/asm/unistd_64.h" "$output/linux-headers/asm-powerpc/"
+     fi
  
-+    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+        tb, QEMU_PLUGIN_INLINE_ADD_U64, tb_cond_track_count, 1);
-+    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-+        tb, vcpu_tb_cond_exec, QEMU_PLUGIN_CB_NO_REGS,
-+        QEMU_PLUGIN_COND_EQ, tb_cond_track_count, cond_trigger_limit, tb_store);
-+
-     for (int idx = 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, idx);
-         void *insn_store = insn;
-@@ -176,6 +244,13 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-             insn, QEMU_PLUGIN_INLINE_ADD_U64, count_insn_inline, 1);
+     rm -rf "$output/include/standard-headers/asm-$arch"
+     mkdir -p "$output/include/standard-headers/asm-$arch"
+     if [ $arch = s390 ]; then
+-        cp_portable "$tmpdir/include/asm/virtio-ccw.h" "$output/include/standard-headers/asm-s390/"
+-        cp "$tmpdir/include/asm/unistd_32.h" "$output/linux-headers/asm-s390/"
+-        cp "$tmpdir/include/asm/unistd_64.h" "$output/linux-headers/asm-s390/"
++        cp_portable "$hdrdir/include/asm/virtio-ccw.h" "$output/include/standard-headers/asm-s390/"
++        cp "$hdrdir/include/asm/unistd_32.h" "$output/linux-headers/asm-s390/"
++        cp "$hdrdir/include/asm/unistd_64.h" "$output/linux-headers/asm-s390/"
+     fi
+     if [ $arch = arm ]; then
+-        cp "$tmpdir/include/asm/unistd-eabi.h" "$output/linux-headers/asm-arm/"
+-        cp "$tmpdir/include/asm/unistd-oabi.h" "$output/linux-headers/asm-arm/"
+-        cp "$tmpdir/include/asm/unistd-common.h" "$output/linux-headers/asm-arm/"
++        cp "$hdrdir/include/asm/unistd-eabi.h" "$output/linux-headers/asm-arm/"
++        cp "$hdrdir/include/asm/unistd-oabi.h" "$output/linux-headers/asm-arm/"
++        cp "$hdrdir/include/asm/unistd-common.h" "$output/linux-headers/asm-arm/"
+     fi
+     if [ $arch = arm64 ]; then
+-        cp "$tmpdir/include/asm/sve_context.h" "$output/linux-headers/asm-arm64/"
++        cp "$hdrdir/include/asm/sve_context.h" "$output/linux-headers/asm-arm64/"
+     fi
+     if [ $arch = x86 ]; then
+-        cp "$tmpdir/include/asm/unistd_32.h" "$output/linux-headers/asm-x86/"
+-        cp "$tmpdir/include/asm/unistd_x32.h" "$output/linux-headers/asm-x86/"
+-        cp "$tmpdir/include/asm/unistd_64.h" "$output/linux-headers/asm-x86/"
+-        cp_portable "$tmpdir/include/asm/kvm_para.h" "$output/include/standard-headers/asm-$arch"
++        cp "$hdrdir/include/asm/unistd_32.h" "$output/linux-headers/asm-x86/"
++        cp "$hdrdir/include/asm/unistd_x32.h" "$output/linux-headers/asm-x86/"
++        cp "$hdrdir/include/asm/unistd_64.h" "$output/linux-headers/asm-x86/"
++        cp_portable "$hdrdir/include/asm/kvm_para.h" "$output/include/standard-headers/asm-$arch"
+         # Remove everything except the macros from bootparam.h avoiding the
+         # unnecessary import of several video/ist/etc headers
+         sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
+-               "$tmpdir/include/asm/bootparam.h" > "$tmpdir/bootparam.h"
+-        cp_portable "$tmpdir/bootparam.h" \
++               "$hdrdir/include/asm/bootparam.h" > "$hdrdir/bootparam.h"
++        cp_portable "$hdrdir/bootparam.h" \
+                     "$output/include/standard-headers/asm-$arch"
+-        cp_portable "$tmpdir/include/asm/setup_data.h" \
++        cp_portable "$hdrdir/include/asm/setup_data.h" \
+                     "$output/standard-headers/asm-x86"
+     fi
+     if [ $arch = riscv ]; then
+-        cp "$tmpdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
++        cp "$hdrdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
+     fi
+ done
+ arch=
+@@ -169,13 +171,13 @@ mkdir -p "$output/linux-headers/linux"
+ for header in const.h stddef.h kvm.h vfio.h vfio_ccw.h vfio_zdev.h vhost.h \
+               psci.h psp-sev.h userfaultfd.h memfd.h mman.h nvme_ioctl.h \
+               vduse.h iommufd.h bits.h; do
+-    cp "$tmpdir/include/linux/$header" "$output/linux-headers/linux"
++    cp "$hdrdir/include/linux/$header" "$output/linux-headers/linux"
+ done
  
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+            insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_cond_track_count, 1);
-+        qemu_plugin_register_vcpu_insn_exec_cond_cb(
-+            insn, vcpu_insn_cond_exec, QEMU_PLUGIN_CB_NO_REGS,
-+            QEMU_PLUGIN_COND_EQ, insn_cond_track_count, cond_trigger_limit,
-+            insn_store);
-+
-         qemu_plugin_register_vcpu_mem_inline_per_vcpu(
-             insn, QEMU_PLUGIN_MEM_RW,
-             QEMU_PLUGIN_INLINE_STORE_U64,
-@@ -207,6 +282,14 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
-         counts, CPUCount, count_insn_inline);
-     count_mem_inline = qemu_plugin_scoreboard_u64_in_struct(
-         counts, CPUCount, count_mem_inline);
-+    tb_cond_num_trigger = qemu_plugin_scoreboard_u64_in_struct(
-+        counts, CPUCount, tb_cond_num_trigger);
-+    tb_cond_track_count = qemu_plugin_scoreboard_u64_in_struct(
-+        counts, CPUCount, tb_cond_track_count);
-+    insn_cond_num_trigger = qemu_plugin_scoreboard_u64_in_struct(
-+        counts, CPUCount, insn_cond_num_trigger);
-+    insn_cond_track_count = qemu_plugin_scoreboard_u64_in_struct(
-+        counts, CPUCount, insn_cond_track_count);
-     data = qemu_plugin_scoreboard_new(sizeof(CPUData));
-     data_insn = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_insn);
-     data_tb = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_tb);
+ rm -rf "$output/linux-headers/asm-generic"
+ mkdir -p "$output/linux-headers/asm-generic"
+ for header in unistd.h bitsperlong.h mman-common.h mman.h hugetlb_encode.h; do
+-    cp "$tmpdir/include/asm-generic/$header" "$output/linux-headers/asm-generic"
++    cp "$hdrdir/include/asm-generic/$header" "$output/linux-headers/asm-generic"
+ done
+ 
+ if [ -L "$linux/source" ]; then
+@@ -210,23 +212,23 @@ EOF
+ 
+ rm -rf "$output/include/standard-headers/linux"
+ mkdir -p "$output/include/standard-headers/linux"
+-for i in "$tmpdir"/include/linux/*virtio*.h \
+-         "$tmpdir/include/linux/qemu_fw_cfg.h" \
+-         "$tmpdir/include/linux/fuse.h" \
+-         "$tmpdir/include/linux/input.h" \
+-         "$tmpdir/include/linux/input-event-codes.h" \
+-         "$tmpdir/include/linux/udmabuf.h" \
+-         "$tmpdir/include/linux/pci_regs.h" \
+-         "$tmpdir/include/linux/ethtool.h" \
+-         "$tmpdir/include/linux/const.h" \
+-         "$tmpdir/include/linux/kernel.h" \
+-         "$tmpdir/include/linux/vhost_types.h" \
+-         "$tmpdir/include/linux/sysinfo.h" \
+-         "$tmpdir/include/misc/pvpanic.h"; do
++for i in "$hdrdir"/include/linux/*virtio*.h \
++         "$hdrdir/include/linux/qemu_fw_cfg.h" \
++         "$hdrdir/include/linux/fuse.h" \
++         "$hdrdir/include/linux/input.h" \
++         "$hdrdir/include/linux/input-event-codes.h" \
++         "$hdrdir/include/linux/udmabuf.h" \
++         "$hdrdir/include/linux/pci_regs.h" \
++         "$hdrdir/include/linux/ethtool.h" \
++         "$hdrdir/include/linux/const.h" \
++         "$hdrdir/include/linux/kernel.h" \
++         "$hdrdir/include/linux/vhost_types.h" \
++         "$hdrdir/include/linux/sysinfo.h" \
++         "$hdrdir/include/misc/pvpanic.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
+ done
+ mkdir -p "$output/include/standard-headers/drm"
+-cp_portable "$tmpdir/include/drm/drm_fourcc.h" \
++cp_portable "$hdrdir/include/drm/drm_fourcc.h" \
+             "$output/include/standard-headers/drm"
+ 
+ cat <<EOF >$output/include/standard-headers/linux/types.h
 -- 
 2.39.2
 
