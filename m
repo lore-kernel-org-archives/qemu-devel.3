@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA5AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 05:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FA5C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 05:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6kZz-0006YO-D2; Tue, 14 May 2024 01:19:59 -0400
+	id 1s6kdP-000887-G3; Tue, 14 May 2024 01:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6kZx-0006Xm-As
- for qemu-devel@nongnu.org; Tue, 14 May 2024 01:19:57 -0400
-Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ id 1s6kdI-00084H-NT; Tue, 14 May 2024 01:23:24 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6kZv-0007mI-0r
- for qemu-devel@nongnu.org; Tue, 14 May 2024 01:19:57 -0400
-Received: by mail-vs1-xe30.google.com with SMTP id
- ada2fe7eead31-481e9c27378so467540137.3
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 22:19:54 -0700 (PDT)
+ id 1s6kdD-0000LG-66; Tue, 14 May 2024 01:23:23 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-4df7cb5894fso1511721e0c.1; 
+ Mon, 13 May 2024 22:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715663993; x=1716268793; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715664196; x=1716268996; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rN9zOwcyJ7Yb+dNwXyQw2mX86BWv72oI7zOd5tO7+ro=;
- b=nVVVd5nH4yZWq3vvd2r7QVjuJ9f5GJEQePh2cueznRlUEh60dcBHUyHsYeJVr8LiU8
- 4PmfxlKjQcp+vjDQ1qmsaB+hMdbYZgceGpvcU7i1Gv9Ng4ZDmL/Kz4V5YXyGEvz0prWC
- XdZnCLxyXjtpqxduhKbPDc+KOnyqiStjAV+s+Uaal/taY69DvXWIxrOuf0jKkPSGP2aP
- zrR7xYHRG3M0cOitVm+IiwTmUml9XKamL+Dxx7MIZ7SlFj91+V8UJ8aYSSLIHSYwRwRh
- jONwK0VGTybrUWwjL4/OeYa/Q1Z2arfPj6xJ381VhWX+2WdNj0v6yS5ShZUfZlfQhiIk
- o1MA==
+ bh=pytnmWuo8tjsD0T3qfHSk0y766500IORgcnsDvGZT30=;
+ b=bLzbeobJS4XpITyFoMNX84mePyCuWBJ+Tx0WpWm7Qm+5IhhAI/LQV/ZyO0S91dsQl9
+ rRRST/DSzcPTZ+SAdXy8WgLRPXQjrzwwCsthpQTmavCiETyNTg/ypS7HaISqIFTY/WJh
+ jBHfnymCpYKSaCicllbuXPZ9dRAgjZK69NO5xHb/3RpLn8cdpHAZrP4f7yJvOl/znWwP
+ UBIfxqrTeJPNpnjwdwH9Yf03UoS5D4EIQIQyhQqjEPi5HBjOIdZYxqU7XpaK79XLrtho
+ B8BPQxLdjDQaHVeGV6qCMjWcaWESGAt2KJwftdAA6pyucx3JsXi0OUFwceGzdrilik3J
+ LhsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715663993; x=1716268793;
+ d=1e100.net; s=20230601; t=1715664196; x=1716268996;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rN9zOwcyJ7Yb+dNwXyQw2mX86BWv72oI7zOd5tO7+ro=;
- b=icki66pQxhFi/z0kF2DcbFV7G75CJ8OO6sSzpwRdLm/lMrQelOpJYzuHDF0F30CVTF
- Ljl+TM7c7RYEoI44WIXQkFNkhaWENX41/U6CynqeGv6pxL71X/7O5w4eXvksQvtN/aMU
- MbjnaQkh4nanb6E/rFCHKsEMflk/2ciSfFpeek9xS+Ja2xXZXWJZoZCmIUu4eplA4uQH
- I/wlDHUZ6Sa+XY2/cv/GzPVsxhQZxO+d3UcGqmFFQGS1FW/PZJHI1YXocKONNd24VJPo
- cYc+Q+FGNL3InmWhvkMLEGekVyxu3Po6VlUJ/LDp0aMMHSB55P/2qN1iRzd8IIiB0Xz9
- JS7A==
-X-Gm-Message-State: AOJu0YzEVgB8cuWcZlw2ZbaVF64WZ9AbFhv7/RZbFm0f+IJvkkW222t2
- LWoaNXg+iNd/6yyUgLIcmXWYHfZTMeDvwPqZhNXDOmjIk9B8i35g7TNxAl+bTFVsDSQsyApBzE0
- Kd3pUcLhrhfq6xW4zWlLkOKO8wQw=
-X-Google-Smtp-Source: AGHT+IHVnlZi4ikMaIgP0Twa8es6N0JFUavdOVJ+ouASNMTgcRPsaRYQ0N9Rwhc5ntPbDeyAY/+xOanwl4JSy96Zv3g=
-X-Received: by 2002:a05:6102:32cb:b0:47e:f5a5:7f79 with SMTP id
- ada2fe7eead31-48077dce359mr11767098137.2.1715663992589; Mon, 13 May 2024
- 22:19:52 -0700 (PDT)
+ bh=pytnmWuo8tjsD0T3qfHSk0y766500IORgcnsDvGZT30=;
+ b=CpIZh/rII9Af/hbGffamXQZHMFZAcOErF5hSdRanlokS3PQ944TKRLJjI3nZs3yESN
+ tw+W/0+vt8jhoZrcetHrApTGcpLHrHyHLzUMPzwrRq0DacgsFPt5Yp4a3+hDe60vVLvB
+ NOU4ldXLA+ptOrIw1xBbTW0oXvSZv36Hbpa8s7Jgwt7k6rxIkzzUSp7EmDZePeoCOCQn
+ 4TBEVfAGfw6Kni+3jptRSF2snSl0258i1JbB7npZd+L68RgOrAFhNK6SYRPluZhNo/71
+ sgxP2BAGsDUwUU9lvUZP95TOq6VJMj5jaJBX5fAf6AESDeE97dXKT0DIxNSP9lxE061M
+ eK0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgYMlkx8SBYtGv6IhbX05nToJT+EUXsEW2/Ff3ORdLuzC7PB/UWpyiy2DR2InXKswcomKIkCP+hvcibYjcHZzQgeJrWcA=
+X-Gm-Message-State: AOJu0YzSxj7Kc48s7I1PkFTnyYUEa5L6zENdxIXKB6YwanOB24HqH4EP
+ m1GOx6XDZlTiJlsJliV2LBjZGw63dzATGtUY9YmwiWq1OLHpWQiql8nWvB9hDBYA9zKG/TrUxMU
+ BFumuxfp12j9X9Ma1CpfzUuAEjjV1pIxAmvk=
+X-Google-Smtp-Source: AGHT+IF9L+IGzchxm10YKSnI7sF8yEwsj0owZNXWHBB7FSY9kALE5birjwS1T2dUN+bf7lHPy2FD/Wer02hUVBmAD5I=
+X-Received: by 2002:a05:6122:3c4f:b0:4d8:5e2f:c235 with SMTP id
+ 71dfb90a1353d-4df88131d48mr9011494e0c.0.1715664195719; Mon, 13 May 2024
+ 22:23:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <183897139.5301881.1712168206289.ref@mail.yahoo.com>
- <183897139.5301881.1712168206289@mail.yahoo.com>
-In-Reply-To: <183897139.5301881.1712168206289@mail.yahoo.com>
+References: <20240322092600.1198921-1-max.chou@sifive.com>
+In-Reply-To: <20240322092600.1198921-1-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 14 May 2024 15:19:26 +1000
-Message-ID: <CAKmqyKO_opF60yo-MVyyq8speR7A5Ugs5Y6iMxd5Ju2Jos7rxQ@mail.gmail.com>
-Subject: Re: riscv disassembler error with pmpcfg0
-To: Eric DeVolder <eric_devolder@yahoo.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Date: Tue, 14 May 2024 15:22:49 +1000
+Message-ID: <CAKmqyKPZPHC4qRaUfs4Wipzre4QHKKox51qf9Qru-Wp+eLs6wQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] Fix fp16 checking in vector fp widen/narrow
+ instructions
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -91,41 +91,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 4, 2024 at 5:02=E2=80=AFAM Eric DeVolder <eric_devolder@yahoo.c=
-om> wrote:
+On Fri, Mar 22, 2024 at 7:33=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
 >
-> I've been using QEMU8 to collect instruction information on U-Boot + Open=
-SBI.
+> When SEW is 16, we need to check whether the Zvfhmin is enabled for the
+> single width operator for vector floating point widen/narrow
+> instructions.
 >
-> I'm running QEMU in this fashion to collect the information:
+> The commits in this patchset fix the single width operator checking and
+> remove the redudant SEW checking for vector floating point widen/narrow
+> instructions.
 >
-> # qemu-system-riscv64 -plugin file=3Dqemu/build/contrib/plugins/libexeclo=
-g.so -singlestep -d plugin,nochain -D execlog.txt ...
+> v2:
+>   Group patchset and rebase to the riscv-to-apply.next branch(commit 385e=
+575)
 >
-> When examining the instruction trace in execlog, I've noticed that the di=
-sassembly for pmpcfg0 is erroneous, for example:
 >
-> 0, 0x5456, 0x3a002573, "csrrs                   a0,pmpcfg3,zero"
+> Thanks to those who have already reviewed:
 >
-> the CSR encoded in the instruction above is 0x3a0, which is pmpcfg0 (whic=
-h also matches the code I'm examining).
+>     Daniel Henrique Barboza dbarboza@ventanamicro.com
+>         [PATCH] target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v =
+and vfncvt.f.f.w instructions
+>         [PATCH] target/riscv: rvv: Check single width operator for vector=
+ fp widen instructions
+>         [PATCH] target/riscv: rvv: Check single width operator for vfncvt=
+.rod.f.f.w
+>         [PATCH] target/riscv: rvv: Remove redudant SEW checking for vecto=
+r fp narrow/widen instructions
 >
-> For the Uboot+OpenSBI code I'm examining, pmpcfg0/3 is the only one that =
-appears to have a problem.
 >
-> I also checked QEMU9 and it behaves as described above as well.
->
-> I'm willing to provide a fix if I can get some advice/pointers on how thi=
-s disassembly statement is generated...I did take a quick look but it didn'=
-t appear obvious how...
+> Max Chou (4):
+>   target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v and
+>     vfncvt.f.f.w instructions
+>   target/riscv: rvv: Check single width operator for vector fp widen
+>     instructions
+>   target/riscv: rvv: Check single width operator for vfncvt.rod.f.f.w
+>   target/riscv: rvv: Remove redudant SEW checking for vector fp
+>     narrow/widen instructions
 
-Thanks for pointing this out. This should fix the issue for you:
-https://patchew.org/QEMU/20240514051615.330979-1-alistair.francis@wdc.com/
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 >
-> Thanks,
-> eric
+>  target/riscv/insn_trans/trans_rvv.c.inc | 42 ++++++++++++++++---------
+>  1 file changed, 28 insertions(+), 14 deletions(-)
+>
+> --
+> 2.34.1
+>
 >
 
