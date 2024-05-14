@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 064CAC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63F8C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6r3P-0004KN-OM; Tue, 14 May 2024 08:14:47 -0400
+	id 1s6r51-0005iJ-8d; Tue, 14 May 2024 08:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1s6r3K-00045z-6B
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:14:44 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1s6r3H-0004IJ-Ao
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:14:41 -0400
-Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8AxK+qsVUNmhagMAA--.18545S3;
- Tue, 14 May 2024 20:14:36 +0800 (CST)
-Received: from [10.20.42.173] (unknown [10.20.42.173])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxXN6rVUNmxWseAA--.54264S3; 
- Tue, 14 May 2024 20:14:35 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch/kvm: fpu save the vreg registers high
- 192bit
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhaotianrui@loongson.cn,
- richard.henderson@linaro.org, philmd@linaro.org, peter.maydell@linaro.org
-References: <20240514110752.989572-1-gaosong@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <afdc3473-a447-6e10-0665-7c1c5faa9df5@loongson.cn>
-Date: Tue, 14 May 2024 20:14:35 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mic@digikod.net>) id 1s6r4f-0005ew-IS
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:16:07 -0400
+Received: from smtp-bc0c.mail.infomaniak.ch ([2001:1600:4:17::bc0c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mic@digikod.net>) id 1s6r4b-0004lC-6t
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:16:04 -0400
+Received: from smtp-4-0001.mail.infomaniak.ch (smtp-4-0001.mail.infomaniak.ch
+ [10.7.10.108])
+ by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4VdwLH3dTwzN03;
+ Tue, 14 May 2024 14:15:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+ s=20191114; t=1715688951;
+ bh=6cLb3jtwfOqoRKJtvZPYLahhceLlkxg39lBtYJITgWQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=KRT/ov4rWMykef9xMhIwSZhHfcSSN6GQwPRDurzMGPbliQsS0VO6zSHgJ9Wbadi3l
+ OGIHTWGzorzDqVpD81oSg4u9D970KQGA1j7nSMc8pi7COPs75RE7gvSRn175mFw02a
+ 0K4edTjsnRc2MHxsDF/mZpD6rApUOvuun3U3rT6U=
+Received: from unknown by smtp-4-0001.mail.infomaniak.ch (Postfix) with ESMTPA
+ id 4VdwLD3B6RzB4h; Tue, 14 May 2024 14:15:48 +0200 (CEST)
+Date: Tue, 14 May 2024 14:15:46 +0200
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: Sean Christopherson <seanjc@google.com>, 
+ Nicolas Saenz Julienne <nsaenz@amazon.com>
+Cc: Borislav Petkov <bp@alien8.de>, 
+ Dave Hansen <dave.hansen@linux.intel.com>, "H . Peter Anvin" <hpa@zytor.com>, 
+ Ingo Molnar <mingo@redhat.com>, Kees Cook <keescook@chromium.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Wanpeng Li <wanpengli@tencent.com>, 
+ Rick P Edgecombe <rick.p.edgecombe@intel.com>, Alexander Graf <graf@amazon.com>,
+ Angelina Vu <angelinavu@linux.microsoft.com>,
+ Anna Trikalinou <atrikalinou@microsoft.com>, 
+ Chao Peng <chao.p.peng@linux.intel.com>, Forrest Yuan Yu <yuanyu@google.com>, 
+ James Gowans <jgowans@amazon.com>, James Morris <jamorris@linux.microsoft.com>,
+ John Andersen <john.s.andersen@intel.com>,
+ "Madhavan T . Venkataraman" <madvenka@linux.microsoft.com>, 
+ Marian Rotariu <marian.c.rotariu@gmail.com>,
+ Mihai =?utf-8?B?RG9uyJt1?= <mdontu@bitdefender.com>, 
+ =?utf-8?B?TmljdciZb3IgQ8OuyJt1?= <nicu.citu@icloud.com>,
+ Thara Gopinath <tgopinath@microsoft.com>, 
+ Trilok Soni <quic_tsoni@quicinc.com>, Wei Liu <wei.liu@kernel.org>,
+ Will Deacon <will@kernel.org>, Yu Zhang <yu.c.zhang@linux.intel.com>,
+ =?utf-8?Q?=C8=98tefan_=C8=98icleru?= <ssicleru@bitdefender.com>, 
+ dev@lists.cloudhypervisor.org, kvm@vger.kernel.org,
+ linux-hardening@vger.kernel.org, 
+ linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-security-module@vger.kernel.org, qemu-devel@nongnu.org,
+ virtualization@lists.linux-foundation.org, 
+ x86@kernel.org, xen-devel@lists.xenproject.org
+Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
+ configuration and violation
+Message-ID: <20240514.OoPohLaejai6@digikod.net>
+References: <20240503131910.307630-1-mic@digikod.net>
+ <20240503131910.307630-4-mic@digikod.net>
+ <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
+ <ZjmFPZd5q_hEBdBz@google.com> <20240507.ieghomae0UoC@digikod.net>
+ <ZjpTxt-Bxia3bRwB@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20240514110752.989572-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxXN6rVUNmxWseAA--.54264S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tFyrJFy5KFyrtrWrJF1DJwc_yoW8JF4fp3
- yIvrn09FWrGFZrCFsxZa4DXrnFq3ZxGrn2ga1xKryxtr45tryayFykKws2qrnrCw4xKF10
- vF1rAF4Y9FnrAacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
- y3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.127,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <ZjpTxt-Bxia3bRwB@google.com>
+X-Infomaniak-Routing: alpha
+Received-SPF: pass client-ip=2001:1600:4:17::bc0c;
+ envelope-from=mic@digikod.net; helo=smtp-bc0c.mail.infomaniak.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,41 +98,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+On Tue, May 07, 2024 at 09:16:06AM -0700, Sean Christopherson wrote:
+> On Tue, May 07, 2024, Mickaël Salaün wrote:
+> > > Actually, potential bad/crazy idea.  Why does the _host_ need to define policy?
+> > > Linux already knows what assets it wants to (un)protect and when.  What's missing
+> > > is a way for the guest kernel to effectively deprivilege and re-authenticate
+> > > itself as needed.  We've been tossing around the idea of paired VMs+vCPUs to
+> > > support VTLs and SEV's VMPLs, what if we usurped/piggybacked those ideas, with a
+> > > bit of pKVM mixed in?
+> > > 
+> > > Borrowing VTL terminology, where VTL0 is the least privileged, userspace launches
+> > > the VM at VTL0.  At some point, the guest triggers the deprivileging sequence and
+> > > userspace creates VTL1.  Userpace also provides a way for VTL0 restrict access to
+> > > its memory, e.g. to effectively make the page tables for the kernel's direct map
+> > > writable only from VTL1, to make kernel text RO (or XO), etc.  And VTL0 could then
+> > > also completely remove its access to code that changes CR0/CR4.
+> > > 
+> > > It would obviously require a _lot_ more upfront work, e.g. to isolate the kernel
+> > > text that modifies CR0/CR4 so that it can be removed from VTL0, but that should
+> > > be doable with annotations, e.g. tag relevant functions with __magic or whatever,
+> > > throw them in a dedicated section, and then free/protect the section(s) at the
+> > > appropriate time.
+> > > 
+> > > KVM would likely need to provide the ability to switch VTLs (or whatever they get
+> > > called), and host userspace would need to provide a decent amount of the backend
+> > > mechanisms and "core" policies, e.g. to manage VTL0 memory, teardown (turn off?)
+> > > VTL1 on kexec(), etc.  But everything else could live in the guest kernel itself.
+> > > E.g. to have CR pinning play nice with kexec(), toss the relevant kexec() code into
+> > > VTL1.  That way VTL1 can verify the kexec() target and tear itself down before
+> > > jumping into the new kernel. 
+> > > 
+> > > This is very off the cuff and have-wavy, e.g. I don't have much of an idea what
+> > > it would take to harden kernel text patching, but keeping the policy in the guest
+> > > seems like it'd make everything more tractable than trying to define an ABI
+> > > between Linux and a VMM that is rich and flexible enough to support all the
+> > > fancy things Linux does (and will do in the future).
+> > 
+> > Yes, we agree that the guest needs to manage its own policy.  That's why
+> > we implemented Heki for KVM this way, but without VTLs because KVM
+> > doesn't support them.
+> > 
+> > To sum up, is the VTL approach the only one that would be acceptable for
+> > KVM?  
+> 
+> Heh, that's not a question you want to be asking.  You're effectively asking me
+> to make an authorative, "final" decision on a topic which I am only passingly
+> familiar with.
+> 
+> But since you asked it... :-)  Probably?
+> 
+> I see a lot of advantages to a VTL/VSM-like approach:
+> 
+>  1. Provides Linux-as-a guest the flexibility it needs to meaningfully advance
+>     its security, with the least amount of policy built into the guest/host ABI.
+> 
+>  2. Largely decouples guest policy from the host, i.e. should allow the guest to
+>     evolve/update it's policy without needing to coordinate changes with the host.
+> 
+>  3. The KVM implementation can be generic enough to be reusable for other features.
+> 
+>  4. Other groups are already working on VTL-like support in KVM, e.g. for VSM
+>     itself, and potentially for VMPL/SVSM support.
+> 
+> IMO, #2 is a *huge* selling point.  Not having to coordinate changes across
+> multiple code bases and/or organizations and/or maintainers is a big win for
+> velocity, long term maintenance, and probably the very viability of HEKI.
 
-On 2024/5/14 下午7:07, Song Gao wrote:
-> On kvm side, get_fpu/set_fpu save the vreg registers high 192bits,
-> but QEMU missing.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/kvm/kvm.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index a9f9020071..0b5dbb7ed8 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -436,6 +436,9 @@ static int kvm_loongarch_get_regs_fp(CPUState *cs)
->       env->fcsr0 = fpu.fcsr;
->       for (i = 0; i < 32; i++) {
->           env->fpr[i].vreg.UD[0] = fpu.fpr[i].val64[0];
-> +        env->fpr[i].vreg.UD[1] = fpu.fpr[i].val64[1];
-> +        env->fpr[i].vreg.UD[2] = fpu.fpr[i].val64[2];
-> +        env->fpr[i].vreg.UD[3] = fpu.fpr[i].val64[3];
->       }
->       for (i = 0; i < 8; i++) {
->           env->cf[i] = fpu.fcc & 0xFF;
-> @@ -455,6 +458,9 @@ static int kvm_loongarch_put_regs_fp(CPUState *cs)
->       fpu.fcc = 0;
->       for (i = 0; i < 32; i++) {
->           fpu.fpr[i].val64[0] = env->fpr[i].vreg.UD[0];
-> +        fpu.fpr[i].val64[1] = env->fpr[i].vreg.UD[1];
-> +        fpu.fpr[i].val64[2] = env->fpr[i].vreg.UD[2];
-> +        fpu.fpr[i].val64[3] = env->fpr[i].vreg.UD[3];
->       }
->   
->       for (i = 0; i < 8; i++) {
-> 
+Agree, this is our goal.
 
+> 
+> Providing the guest with the tools to define and implement its own policy means
+> end users don't have to way for some third party, e.g. CSPs, to deploy the
+> accompanying host-side changes, because there are no host-side changes.
+> 
+> And encapsulating everything in the guest drastically reduces the friction with
+> changes in the kernel that interact with hardening, both from a technical and a
+> social perspective.  I.e. giving the kernel (near) complete control over its
+> destiny minimizes the number of moving parts, and will be far, far easier to sell
+> to maintainers.  I would expect maintainers to react much more favorably to being
+> handed tools to harden the kernel, as opposed to being presented a set of APIs
+> that can be used to make the kernel compliant with _someone else's_ vision of
+> what kernel hardening should look like.
+> 
+> E.g. imagine a new feature comes along that requires overriding CR0/CR4 pinning
+> in a way that doesn't fit into existing policy.  If the VMM is involved in
+> defining/enforcing the CR pinning policy, then supporting said new feature would
+> require new guest/host ABI and an updated host VMM in order to make the new
+> feature compatible with HEKI.  Inevitably, even if everything goes smoothly from
+> an upstreaming perspective, that will result in guests that have to choose between
+> HEKI and new feature X, because there is zero chance that all hosts that run Linux
+> as a guest will be updated in advance of new feature X being deployed.
+
+Sure. We need to find a generic-enough KVM interface to be able to
+restrict a wide range of virtualization/hardware mechanisms (to not rely
+too much on KVM changes) and delegate most of enforcement/emulation to
+VTL1.  In short, policy definition owned by VTL0/guest, and policy
+enforcement shared between KVM (coarse grained) and VTL1 (fine grained).
+
+> 
+> And if/when things don't go smoothly, odds are very good that kernel maintainers
+> will eventually tire of having to coordinate and negotiate with QEMU and other
+> VMMs, and will become resistant to continuing to support/extend HEKI.
+
+Yes, that was our concern too and another reason why we choose to let
+the guest handle its own security policy.
+
+> 
+> > If yes, that would indeed require a *lot* of work for something we're not
+> > sure will be accepted later on.
+> 
+> Yes and no.  The AWS folks are pursuing VSM support in KVM+QEMU, and SVSM support
+> is trending toward the paired VM+vCPU model.  IMO, it's entirely feasible to
+> design KVM support such that much of the development load can be shared between
+> the projects.  And having 2+ use cases for a feature (set) makes it _much_ more
+> likely that the feature(s) will be accepted.
+> 
+> And similar to what Paolo said regarding HEKI not having a complete story, I
+> don't see a clear line of sight for landing host-defined policy enforcement, as
+> there are many open, non-trivial questions that need answers. I.e. upstreaming
+> HEKI in its current form is also far from a done deal, and isn't guaranteed to
+> be substantially less work when all is said and done.
+
+I'm not sure to understand why "Heki not having a complete story".  The
+goal is the same as the current kernel self-protection mechanisms.
 
