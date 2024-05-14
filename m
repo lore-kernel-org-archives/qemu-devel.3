@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC6FDC25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 166FCC04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6uai-0002v2-2a; Tue, 14 May 2024 12:01:24 -0400
+	id 1s6ucR-0004EC-Sb; Tue, 14 May 2024 12:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uaX-0002rS-8n
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:01:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6ucN-00048J-Cv
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:03:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uaT-0006xO-69
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:01:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uc8-0007GC-JO
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:03:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715702467;
+ s=mimecast20190719; t=1715702569;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J+j3RxdaLn8CxjKGp5XmUOlpwTxZX/qluY03kLQ53LY=;
- b=AXpj4mdlkX5nU3lShxiTIE9Zodrsvt4qfg3MHdUrAvNd/eaNebHbpu/HhMYNJFgCIiL9St
- QyNxcdqu9EFeqZOER3OwACmaxNZ7ebLJ5wsLHfBNRBoaAKLV9RRmB9v11PdsUEHzrwzLc0
- hLbbuQqFNOd3gVxMstpL5NaghXLjJLo=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=v8Lf4L53wdIqOc7SP69LdeCJR3eT9QHaWFkHgm0UhwE=;
+ b=AHAWecIJhd0dxBHvnuJaHJ2TkrMuX2t955K1LhJR6Fdc8AVheL5eFMM/y9VpL2O3z0eMjS
+ OneD2MjK65vMuE0WMcMkbIhMJwiVbqfnSGipCFPnlwQZwIigTlBF0Kwha57878XOgn6cgv
+ mRdQvFGr74zStizX6ZpymTMzeVlnWFg=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-o04qQxPEO36t_N45_Ufzuw-1; Tue, 14 May 2024 12:01:06 -0400
-X-MC-Unique: o04qQxPEO36t_N45_Ufzuw-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43de3681b58so63876251cf.2
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:01:06 -0700 (PDT)
+ us-mta-99-4hfq9q_cM5eqVhBemhbJeQ-1; Tue, 14 May 2024 12:02:48 -0400
+X-MC-Unique: 4hfq9q_cM5eqVhBemhbJeQ-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6a0b3599f2cso58863686d6.3
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:02:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715702465; x=1716307265;
+ d=1e100.net; s=20230601; t=1715702567; x=1716307367;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J+j3RxdaLn8CxjKGp5XmUOlpwTxZX/qluY03kLQ53LY=;
- b=PvOi5AkOWnil0/DhzfuIE925NjSxtgEQDqn2N8bjvpr94rfbv46l1MeQveCpO05dLn
- cTOHX8lGmI+3hL4KvtGA+nuvKewOawp/Ss+uph1q4TwkCeJfXFD5/XlIz9At4BXMNShC
- 0eN6t0u4wCua1MGny0q5suV6r9lLNlrLKwGZjWEKrnx6LSuAj2BrR9igRSJ+caExdQ8n
- FSI09m3PegmjNdVPK9/uSH5gFwbxFtCc1PBMuC5E60oBj/2YwuY3LBCHo2pqLgjCCLmo
- 48j67q51qmpJlZ8FBnpP21/yul+ZEXLI3+CerrlgN0OPW23K22AvH+MmPjmjHYjLePtJ
- TB2g==
+ bh=v8Lf4L53wdIqOc7SP69LdeCJR3eT9QHaWFkHgm0UhwE=;
+ b=kmjip72wD+mZVdH3Rzwa+b1NKoy02NxKeTWGg9JU1Dr+96n09MaFXRdaWoqAj9hMjL
+ s+ui0wIgyqQabFiS/qW7aTaW/jE25HlBFNUSnlpmtjw/KJY35VgsIp4X1i1dcunYKVAR
+ dQ8oPVImhC0lIlAFGYpnR6ZRJ5hd4RF/A/XK466TNJ846Sm40yjTtW2q/HSSKzxsRnuQ
+ u037g0wH5fjyOlRlmGOfn8UzhqxjsH2yJnVpgiW2dW+lxCQ0k9zaD8tLHaPKXwH9joX/
+ hkT+QHBSkzHwiPbh8P60RXcy4MGJgfXItLLTm2EgtGrj/8WsHoHDwLe3RPX/ND4Cm8A6
+ +H/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsSrHu3gwbVd736BzXeCzDNdsPzTd3jiV8L+jcee25Eskucinwj+RGObk6P3PCuuDNMnnN+dvJqkw+hb5+By/MQLI14pE=
-X-Gm-Message-State: AOJu0YzYrgfWtl2E7/+TyAldInoL9Hyal4XLTbaMMl0/XkFghZs5kju+
- AV+BGkx8pmBY7F4BNjTdqtUxFzErAgkxYgYYXc7xjPAsV6rE2u2Rb+ixys8bcNDTrxWaE1B0AZH
- lszgVOMnHwCOJDPo8Bsegp/JRJv5U6c229g9R139ZofWMm+LWvBY9r2FL1gAu
-X-Received: by 2002:a05:622a:3c9:b0:43e:2010:89b3 with SMTP id
- d75a77b69052e-43e20108a12mr49118191cf.63.1715702465187; 
- Tue, 14 May 2024 09:01:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvHLrs2X5MPfz3B97wq7JPjiSVTHNIs5HSzuMwys7TpvxpLiYDxpJO75COtbskN+0bR7qySw==
-X-Received: by 2002:a05:622a:3c9:b0:43e:2010:89b3 with SMTP id
- d75a77b69052e-43e20108a12mr49117851cf.63.1715702464714; 
- Tue, 14 May 2024 09:01:04 -0700 (PDT)
+ AJvYcCXnFKfWZ87rj2ebTQEa3Bbu5DinOVQxF1U2e0JgkMoZIt6wBUKhMvWiAXi1NHlZnz4GwTlg4VdkDi5v75zrmkg+geMyJUM=
+X-Gm-Message-State: AOJu0YzdDtZJQzAqeFFy4pWYwaCbg1YAfGRY1+pyAcFWo+L6ls8gH5Iq
+ m0HH2eigkzHl9cbbHJcTzyUfz2SVVKGhUSDynRFeke0hJzWaiqn3xsOP9El0SkFUOkltEJBvvr4
+ YWq9tgFuC5eEN5SgWhHEck+Va6YJ8aPZ8oyrjl2pRb/SgJqCJOC/h
+X-Received: by 2002:a05:6214:5d86:b0:69b:579b:6147 with SMTP id
+ 6a1803df08f44-6a1681502b3mr144969776d6.18.1715702567555; 
+ Tue, 14 May 2024 09:02:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiQAR0ds21TlvR91EvEI4ANRj402yreYQlEIOeXZg2U5IRdWpThmRSa2fVvcKGuFQimbeFbA==
+X-Received: by 2002:a05:6214:5d86:b0:69b:579b:6147 with SMTP id
+ 6a1803df08f44-6a1681502b3mr144969526d6.18.1715702567194; 
+ Tue, 14 May 2024 09:02:47 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43df54da2d3sm70009121cf.27.2024.05.14.09.01.03
+ 6a1803df08f44-6a15f1cd3b5sm54790506d6.82.2024.05.14.09.02.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 09:01:04 -0700 (PDT)
-Message-ID: <cd7229e4-5650-4048-9d88-45785cda4dd6@redhat.com>
-Date: Tue, 14 May 2024 18:01:02 +0200
+ Tue, 14 May 2024 09:02:46 -0700 (PDT)
+Message-ID: <822a5d82-6041-48ba-8e37-aabd25a9ffd2@redhat.com>
+Date: Tue, 14 May 2024 18:02:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/11] vfio/container: Make vfio_get_device() return
- bool
+Subject: Re: [PATCH v2 10/11] vfio/cpr: Make vfio_cpr_register_container()
+ return bool
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
 References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
- <20240507064252.457884-9-zhenzhong.duan@intel.com>
+ <20240507064252.457884-11-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240507064252.457884-9-zhenzhong.duan@intel.com>
+In-Reply-To: <20240507064252.457884-11-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,78 +118,73 @@ Thanks,
 
 C.
 
-	
+
 > ---
->   hw/vfio/container.c | 16 +++++++---------
->   1 file changed, 7 insertions(+), 9 deletions(-)
+>   include/hw/vfio/vfio-common.h | 2 +-
+>   hw/vfio/container.c           | 3 +--
+>   hw/vfio/cpr.c                 | 4 ++--
+>   hw/vfio/iommufd.c             | 3 +--
+>   4 files changed, 5 insertions(+), 7 deletions(-)
 > 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index a7b6fc8f46..e4c60374fa 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -205,7 +205,7 @@ void vfio_detach_device(VFIODevice *vbasedev);
+>   int vfio_kvm_device_add_fd(int fd, Error **errp);
+>   int vfio_kvm_device_del_fd(int fd, Error **errp);
+>   
+> -int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
+> +bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
+>   void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer);
+>   
+>   extern const MemoryRegionOps vfio_region_ops;
 > diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 5fb4bee082..b02583ea16 100644
+> index b02583ea16..86266f3b83 100644
 > --- a/hw/vfio/container.c
 > +++ b/hw/vfio/container.c
-> @@ -800,8 +800,8 @@ static void vfio_put_group(VFIOGroup *group)
->       g_free(group);
+> @@ -616,8 +616,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>           goto free_container_exit;
+>       }
+>   
+> -    ret = vfio_cpr_register_container(bcontainer, errp);
+> -    if (ret) {
+> +    if (!vfio_cpr_register_container(bcontainer, errp)) {
+>           goto free_container_exit;
+>       }
+>   
+> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+> index 392c2dd95d..87e51fcee1 100644
+> --- a/hw/vfio/cpr.c
+> +++ b/hw/vfio/cpr.c
+> @@ -25,12 +25,12 @@ static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+>       return 0;
 >   }
 >   
-> -static int vfio_get_device(VFIOGroup *group, const char *name,
-> -                           VFIODevice *vbasedev, Error **errp)
-> +static bool vfio_get_device(VFIOGroup *group, const char *name,
-> +                            VFIODevice *vbasedev, Error **errp)
+> -int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
+> +bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
 >   {
->       g_autofree struct vfio_device_info *info = NULL;
->       int fd;
-> @@ -813,14 +813,14 @@ static int vfio_get_device(VFIOGroup *group, const char *name,
->           error_append_hint(errp,
->                         "Verify all devices in group %d are bound to vfio-<bus> "
->                         "or pci-stub and not already in use\n", group->groupid);
-> -        return fd;
-> +        return false;
->       }
->   
->       info = vfio_get_device_info(fd);
->       if (!info) {
->           error_setg_errno(errp, errno, "error getting device info");
->           close(fd);
-> -        return -1;
-> +        return false;
->       }
->   
->       /*
-> @@ -835,7 +835,7 @@ static int vfio_get_device(VFIOGroup *group, const char *name,
->               error_setg(errp, "Inconsistent setting of support for discarding "
->                          "RAM (e.g., balloon) within group");
->               close(fd);
-> -            return -1;
-> +            return false;
->           }
->   
->           if (!group->ram_block_discard_allowed) {
-> @@ -856,7 +856,7 @@ static int vfio_get_device(VFIOGroup *group, const char *name,
->   
->       vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
->   
+>       migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+>                                   vfio_cpr_reboot_notifier,
+>                                   MIG_MODE_CPR_REBOOT);
 > -    return 0;
 > +    return true;
 >   }
 >   
->   static void vfio_put_base_device(VFIODevice *vbasedev)
-> @@ -909,7 +909,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
->       VFIODevice *vbasedev_iter;
->       VFIOGroup *group;
->       VFIOContainerBase *bcontainer;
-> -    int ret;
+>   void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 84c86b970e..6a446b16dc 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -396,8 +396,7 @@ found_container:
+>           goto err_listener_register;
+>       }
 >   
->       if (groupid < 0) {
->           return false;
-> @@ -929,8 +928,7 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
->               return false;
->           }
->       }
-> -    ret = vfio_get_device(group, name, vbasedev, errp);
+> -    ret = vfio_cpr_register_container(bcontainer, errp);
 > -    if (ret) {
-> +    if (!vfio_get_device(group, name, vbasedev, errp)) {
->           vfio_put_group(group);
->           return false;
+> +    if (!vfio_cpr_register_container(bcontainer, errp)) {
+>           goto err_listener_register;
 >       }
+>   
 
 
