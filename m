@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45314C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCADCC25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6smj-0003a3-O2; Tue, 14 May 2024 10:05:41 -0400
+	id 1s6snV-0004XC-Eo; Tue, 14 May 2024 10:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6smi-0003Zu-JQ
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:05:40 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6snT-0004Va-Ku
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:06:27 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6smW-0005W4-77
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:05:40 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6snQ-0005q2-VF
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:06:27 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 4968D61286;
- Tue, 14 May 2024 14:05:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D2EC4AF09;
- Tue, 14 May 2024 14:05:22 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 7BF2CCE1259;
+ Tue, 14 May 2024 14:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8194C2BD10;
+ Tue, 14 May 2024 14:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715695524;
- bh=5XOSmHbe75ciM3OBtjNAl6s2LeV79qvu7V5jR2L5pq4=;
+ s=k20201202; t=1715695576;
+ bh=750cEwjvMo1qnPoAy5ka+j3sUk0wzlI37XmFKm+rG7M=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=U6m0L1Sin6iqzj1hDsxLbOki5Q/yInhnWFyi2dwEa/PWeOU+flv5SGuYDEkMDpYuU
- E7B26JjeZLk79C++Ackownqrsraxawb7V+PNE6cgrX/F5ef93KqKHd+IyO+NdUjYSv
- /s7x5mOb31nVY7aliTR5aW3SoAWj2gnhscD4fds2r6FzqzswfDXkS3dHjciYhO1s5C
- EFFZ4JrE2eoLR0JwsJlBsDKdIx8t684thl0rbWRPeUdKuM+4OMVlvtM4WCpsB41/wk
- tF1Lt+gb//ez/PeQZ2cA3nK80CdyG+pOKmJTiGjGLd7xuFNJuct210jPma35IrrA9Z
- bgmJ7Gf3XbjxQ==
-Date: Tue, 14 May 2024 16:05:19 +0200
+ b=njmrbZmeQM5aoYjZ/vhch2HNETyxsfW28ys37nvDgH6UFHk2T1nwbNMilGxannxSU
+ mkpgIFVxsLmpoiqeBgyX3qe3Qz2Q5hID23rQaFxyA57Eh2K7mucRe5tv/UrcXz/+VW
+ MKITZCfxH5sdeltEb9eoJavVD0qzcuBTlm8CthzX5JkbQKwQwwf7JWr0/uqqv1RwkT
+ TOCDYfsqwLfhdTLbjChXIO7T2xh8NWADqerZBAaMcJqX0p20IQ5QIjj6sbt4WV0YW4
+ E4AXcqrDxxQR12YSfQgRuJ9du1PPKZQ0h1lIzv5h2VMwQCzM2YgnV4EhIr3d5+xS9b
+ +66FmgjpA1uIA==
+Date: Tue, 14 May 2024 16:06:12 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 02/45] target/hppa: Use hppa_form_gva_psw in
- hppa_cpu_get_pc
-Message-ID: <ZkNvn_Y1OfPKs1GW@carbonx1>
+Subject: Re: [PATCH v2 03/45] target/hppa: Move constant destination check
+ into use_goto_tb
+Message-ID: <ZkNv1LjoIu1tFCff@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-3-richard.henderson@linaro.org>
+ <20240513074717.130949-4-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-3-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+In-Reply-To: <20240513074717.130949-4-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
+ helo=sin.source.kernel.org
 X-Spam_score_int: -53
 X-Spam_score: -5.4
 X-Spam_bar: -----
@@ -71,46 +71,66 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Richard Henderson <richard.henderson@linaro.org>:
-> This function is for log_pc(), which needs to produce a
-> similar result to cpu_get_tb_cpu_state().
+> Share this check between gen_goto_tb and hppa_tr_translate_insn.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-
 Reviewed-by: Helge Deller <deller@gmx.de>
 
----
 > ---
->  target/hppa/cpu.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  target/hppa/translate.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 > 
-> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-> index 582036b31e..be8c558014 100644
-> --- a/target/hppa/cpu.c
-> +++ b/target/hppa/cpu.c
-> @@ -38,9 +38,10 @@ static void hppa_cpu_set_pc(CPUState *cs, vaddr value)
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 6d45611888..398803981c 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -662,9 +662,10 @@ static bool gen_illegal(DisasContext *ctx)
+>      } while (0)
+>  #endif
 >  
->  static vaddr hppa_cpu_get_pc(CPUState *cs)
+> -static bool use_goto_tb(DisasContext *ctx, uint64_t dest)
+> +static bool use_goto_tb(DisasContext *ctx, uint64_t bofs, uint64_t nofs)
 >  {
-> -    HPPACPU *cpu = HPPA_CPU(cs);
-> +    CPUHPPAState *env = cpu_env(cs);
->  
-> -    return cpu->env.iaoq_f;
-> +    return hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
-> +                             env->iaoq_f & -4);
+> -    return translator_use_goto_tb(&ctx->base, dest);
+> +    return (bofs != -1 && nofs != -1 &&
+> +            translator_use_goto_tb(&ctx->base, bofs));
 >  }
 >  
->  void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-> @@ -61,8 +62,7 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
->      flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
->      flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
+>  /* If the next insn is to be nullified, and it's on the same page,
+> @@ -678,16 +679,16 @@ static bool use_nullify_skip(DisasContext *ctx)
+>  }
 >  
-> -    *pc = hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
-> -                            env->iaoq_f & -4);
-> +    *pc = hppa_cpu_get_pc(env_cpu(env));
->      *cs_base = env->iasq_f;
->  
->      /* Insert a difference between IAOQ_B and IAOQ_F within the otherwise zero
+>  static void gen_goto_tb(DisasContext *ctx, int which,
+> -                        uint64_t f, uint64_t b)
+> +                        uint64_t b, uint64_t n)
+>  {
+> -    if (f != -1 && b != -1 && use_goto_tb(ctx, f)) {
+> +    if (use_goto_tb(ctx, b, n)) {
+>          tcg_gen_goto_tb(which);
+> -        copy_iaoq_entry(ctx, cpu_iaoq_f, f, NULL);
+> -        copy_iaoq_entry(ctx, cpu_iaoq_b, b, NULL);
+> +        copy_iaoq_entry(ctx, cpu_iaoq_f, b, NULL);
+> +        copy_iaoq_entry(ctx, cpu_iaoq_b, n, NULL);
+>          tcg_gen_exit_tb(ctx->base.tb, which);
+>      } else {
+> -        copy_iaoq_entry(ctx, cpu_iaoq_f, f, cpu_iaoq_b);
+> -        copy_iaoq_entry(ctx, cpu_iaoq_b, b, ctx->iaoq_n_var);
+> +        copy_iaoq_entry(ctx, cpu_iaoq_f, b, cpu_iaoq_b);
+> +        copy_iaoq_entry(ctx, cpu_iaoq_b, n, ctx->iaoq_n_var);
+>          tcg_gen_lookup_and_goto_ptr();
+>      }
+>  }
+> @@ -4744,8 +4745,7 @@ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+>      /* Advance the insn queue.  Note that this check also detects
+>         a priority change within the instruction queue.  */
+>      if (ret == DISAS_NEXT && ctx->iaoq_b != ctx->iaoq_f + 4) {
+> -        if (ctx->iaoq_b != -1 && ctx->iaoq_n != -1
+> -            && use_goto_tb(ctx, ctx->iaoq_b)
+> +        if (use_goto_tb(ctx, ctx->iaoq_b, ctx->iaoq_n)
+>              && (ctx->null_cond.c == TCG_COND_NEVER
+>                  || ctx->null_cond.c == TCG_COND_ALWAYS)) {
+>              nullify_set(ctx, ctx->null_cond.c == TCG_COND_ALWAYS);
 > -- 
 > 2.34.1
 > 
