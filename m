@@ -4,57 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6F7C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE2EC04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 13:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6rjN-0004gX-8e; Tue, 14 May 2024 08:58:09 -0400
+	id 1s6rrJ-0007X5-0t; Tue, 14 May 2024 09:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rjJ-0004bL-0P
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:58:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s6rrG-0007Wv-3e
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:06:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rjG-0006Fz-7h
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:58:04 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s6rrB-00086C-1g
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:06:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691481;
+ s=mimecast20190719; t=1715691971;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zmUvabFbM+5OwxI+dTdCm1VUwA2ZFPyObGsB+gBRnMw=;
- b=LMHeBu/bMI8AtcMAzl8vBhKBUSHN+8i2G7ESDeUQEgdabjYFmf+eGsbPjBLiyUp5GN558t
- Oqdw3htH/wGK6SiWxZkz2fnUWPjXlbamFR+1SKLQzUm5CdvKrfBJgQy/ce+1nnKv+w//TP
- 7SVD/guSd4noPDWtWbNALWg6+yvZNr8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u2gFxq6jfUi0Z1xgq+VIIno/a5p3dHs3M3FFoWVRp6o=;
+ b=FN5uISemcJIMsNP35A75JWJ2eaaHv/Hg31aVEBWIxGzZ8rTkFMSWRw4/NOsiKj5W3hqd+o
+ Nw6X+wHmyTLF6aOuYJkFUQFRxVREeJpcjshbAEoDm2jmPUcme5c5JPZ/9ufkQF8Vpxk9+J
+ e3QNNqieccdgUMgFGI6RvoC8FEdl1Z8=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-wd7kdXDCNkKkZPzTPRJK3Q-1; Tue, 14 May 2024 08:51:34 -0400
-X-MC-Unique: wd7kdXDCNkKkZPzTPRJK3Q-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 144A1800CA5;
- Tue, 14 May 2024 12:51:34 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5B020400057;
- Tue, 14 May 2024 12:51:33 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 10/11] block/ssh: Use URI parsing code from glib
-Date: Tue, 14 May 2024 14:51:18 +0200
-Message-ID: <20240514125119.284638-11-thuth@redhat.com>
-In-Reply-To: <20240514125119.284638-1-thuth@redhat.com>
-References: <20240514125119.284638-1-thuth@redhat.com>
+ us-mta-329-LwJW1CFkM--y1AKI3Dhskw-1; Tue, 14 May 2024 09:06:10 -0400
+X-MC-Unique: LwJW1CFkM--y1AKI3Dhskw-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6a103d524fdso10764916d6.0
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 06:06:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715691969; x=1716296769;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u2gFxq6jfUi0Z1xgq+VIIno/a5p3dHs3M3FFoWVRp6o=;
+ b=pmkaIpZdo9X7CGEdqwfLL/daHupb2lluZCX6Oxi+KbmI3BHT1DOIitapd0r5fNws+h
+ pRXLrKdDQyqmMBYoJXq769TXpE71kOl6pfdJL5i916WOhaHmFabE/GjclYulEQx/OrNV
+ yPdWlh6c90rUDDrHlvrRejrrIdaTpSRLa+E4iACLI1dt78wSog9w/8hBE83z3qtrIhqG
+ ZVT15gEi6z1OuPgWtu1MEKUKEwW1laIt/vQW9iGrn7jJ1MUmeaj0QtlXYhDkauvZaUFq
+ pxuI64Yg7QjKF1QMB5xykFWi7SiHqqB9roEw/KxGhnRHL29RSajg6UQ6Q23Lx5m4rPcx
+ 2puw==
+X-Gm-Message-State: AOJu0YyR2oOFmOV0eSe7l/bilnJMlgcXRo9+CpkNYKMAc20nf6wkaYcj
+ FHhh0k0IAQkMua/ENWRL30CaKQDJR7XLGVBEB5jrAZnPXGuxHOx+Tr2InKcKucreY38EROfHD1T
+ DjV3sKWSmCCnEkHlmEW6OjZfEH2o2euwhOBif8cG0hd04CuvtPsiE
+X-Received: by 2002:ad4:56e5:0:b0:699:2d88:744f with SMTP id
+ 6a1803df08f44-6a1683816camr122964186d6.4.1715691968620; 
+ Tue, 14 May 2024 06:06:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkUk4RIfo3g4evWbA7DjbM7myfdK7BQkkSK15I++GolGB5/vDFaMZGcXjndElRdITVn09NuQ==
+X-Received: by 2002:ad4:56e5:0:b0:699:2d88:744f with SMTP id
+ 6a1803df08f44-6a1683816camr122963766d6.4.1715691968004; 
+ Tue, 14 May 2024 06:06:08 -0700 (PDT)
+Received: from x1n ([67.214.252.166]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6a15f1ccd42sm53033696d6.91.2024.05.14.06.06.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 May 2024 06:06:07 -0700 (PDT)
+Date: Tue, 14 May 2024 07:06:02 -0600
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v2 3/4] virtio-gpu: add x-vmstate-version
+Message-ID: <ZkNhuvPcxTLalF69@x1n>
+References: <20240513071905.499143-1-marcandre.lureau@redhat.com>
+ <20240513071905.499143-4-marcandre.lureau@redhat.com>
+ <ZkLojVI4ZAKANIBr@x1n>
+ <CAMxuvayd5X04dOSRMHYQr-NbHrwNeZLTD6wvNb2bq6c+-qU-9w@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <CAMxuvayd5X04dOSRMHYQr-NbHrwNeZLTD6wvNb2bq6c+-qU-9w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -78,140 +106,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since version 2.66, glib has useful URI parsing functions, too.
-Use those instead of the QEMU-internal ones to be finally able
-to get rid of the latter.
+On Tue, May 14, 2024 at 11:25:26AM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Tue, May 14, 2024 at 8:35 AM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > Hey, Marc-Andre,
+> >
+> > On Mon, May 13, 2024 at 11:19:04AM +0400, marcandre.lureau@redhat.com wrote:
+> > > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> > > index ae831b6b3e..7f9fb5eacc 100644
+> > > --- a/hw/display/virtio-gpu.c
+> > > +++ b/hw/display/virtio-gpu.c
+> > > @@ -1234,7 +1234,8 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+> > >      }
+> > >      qemu_put_be32(f, 0); /* end of list */
+> > >
+> > > -    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL);
+> > > +    return vmstate_save_state_v(f, &vmstate_virtio_gpu_scanouts, g,
+> > > +                                NULL, g->vmstate_version, NULL);
+> > >  }
+> > >
+> > >  static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
+> > > @@ -1339,7 +1340,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+> > >      }
+> > >
+> > >      /* load & apply scanout state */
+> > > -    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
+> > > +    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, g->vmstate_version);
+> >
+> > [sorry for a late response; attending a conf, and will reply to the v1
+> >  thread later for the other discussions..]
+> >
+> > These two changes shouldn't be needed if we go with the .field_exists()
+> > approach, am I right?  IIUC in that case we can keep the version 1 here and
+> > don't boost anything, because we relied on the machine versions.
+> >
+> > IIUC this might be the reason why we found 9.0 mahines are broken on
+> > migration.  E.g, IIUC my original patch should work for 9.0<->9.0 too.
+> >
+> 
+> Indeed, but for consistency, shouldn't it use the x-vmstate-version
+> value for the top-level VMSD save/load ?
+> 
+> Otherwise, it feels a bit odd that this x-vmstate-version is only used
+> for the nested "virtio-gpu-one-scanout" version.
+> 
+> Or perhaps we should rename it to x-scanout-vmstate-version ? wdyt
 
-While we're at it, also emit a warning when encountering unknown
-parameters in the URI, so that the users have a chance to detect
-their typos or other mistakes.
+Makes sense to me.  In another place I used to have a field called
+preempt_pre_7_2.. which is pretty wierd but it would be more accurate I
+suppose if the field name reflects how that was defined, especially
+differenciate that v.s. VMSD versioning as they're confusing indeed when
+used together.
 
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-Message-ID: <20240418101056.302103-13-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 35 deletions(-)
+So if a rename I suppose we can even "vmstate-version".  I just wished VMSD
+versioning could work with bi-directional migration already then we save
+all the fuss... we used to have the chance before introducing
+field_exists() (I suppose this one came later), but we didn't care or
+notice at that time, sign.  We'll just need a handshake between src/dst so
+that when src sees dst uses VMSD v1 it sends v1-only fields even if it
+knows as far as v2.
 
-diff --git a/block/ssh.c b/block/ssh.c
-index 2748253d4a..a88171d4b5 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -37,7 +37,6 @@
- #include "qemu/ctype.h"
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
--#include "qemu/uri.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qapi/qapi-visit-block-core.h"
- #include "qapi/qmp/qdict.h"
-@@ -181,65 +180,71 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
- 
- static int parse_uri(const char *filename, QDict *options, Error **errp)
- {
--    URI *uri = NULL;
--    QueryParams *qp;
-+    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
-+    const char *uri_host, *uri_path, *uri_user, *uri_query;
-     char *port_str;
--    int i;
-+    int port;
-+    g_autoptr(GError) gerror = NULL;
-+    char *qp_name, *qp_value;
-+    GUriParamsIter qp;
- 
--    uri = uri_parse(filename);
-     if (!uri) {
-         return -EINVAL;
-     }
- 
--    if (g_strcmp0(uri->scheme, "ssh") != 0) {
-+    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
-         error_setg(errp, "URI scheme must be 'ssh'");
--        goto err;
-+        return -EINVAL;
-     }
- 
--    if (!uri->server || strcmp(uri->server, "") == 0) {
-+    uri_host = g_uri_get_host(uri);
-+    if (!uri_host || g_str_equal(uri_host, "")) {
-         error_setg(errp, "missing hostname in URI");
--        goto err;
-+        return -EINVAL;
-     }
- 
--    if (!uri->path || strcmp(uri->path, "") == 0) {
-+    uri_path = g_uri_get_path(uri);
-+    if (!uri_path || g_str_equal(uri_path, "")) {
-         error_setg(errp, "missing remote path in URI");
--        goto err;
--    }
--
--    qp = query_params_parse(uri->query);
--    if (!qp) {
--        error_setg(errp, "could not parse query parameters");
--        goto err;
-+        return -EINVAL;
-     }
- 
--    if(uri->user && strcmp(uri->user, "") != 0) {
--        qdict_put_str(options, "user", uri->user);
-+    uri_user = g_uri_get_user(uri);
-+    if (uri_user && !g_str_equal(uri_user, "")) {
-+        qdict_put_str(options, "user", uri_user);
-     }
- 
--    qdict_put_str(options, "server.host", uri->server);
-+    qdict_put_str(options, "server.host", uri_host);
- 
--    port_str = g_strdup_printf("%d", uri->port ?: 22);
-+    port = g_uri_get_port(uri);
-+    port_str = g_strdup_printf("%d", port > 0 ? port : 22);
-     qdict_put_str(options, "server.port", port_str);
-     g_free(port_str);
- 
--    qdict_put_str(options, "path", uri->path);
--
--    /* Pick out any query parameters that we understand, and ignore
--     * the rest.
--     */
--    for (i = 0; i < qp->n; ++i) {
--        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
--            qdict_put_str(options, "host_key_check", qp->p[i].value);
-+    qdict_put_str(options, "path", uri_path);
-+
-+    uri_query = g_uri_get_query(uri);
-+    if (uri_query) {
-+        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
-+        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
-+            if (!qp_name || !qp_value || gerror) {
-+                warn_report("Failed to parse SSH URI parameters '%s'",
-+                            uri_query);
-+                break;
-+            }
-+            /*
-+             * Pick out the query parameters that we understand, and ignore
-+             * (or rather warn about) the rest.
-+             */
-+            if (g_str_equal(qp_name, "host_key_check")) {
-+                qdict_put_str(options, "host_key_check", qp_value);
-+            } else {
-+                warn_report("Unsupported parameter '%s' in URI", qp_name);
-+            }
-         }
-     }
- 
--    query_params_free(qp);
--    uri_free(uri);
-     return 0;
--
-- err:
--    uri_free(uri);
--    return -EINVAL;
- }
- 
- static bool ssh_has_filename_options_conflict(QDict *options, Error **errp)
+For the long run we may be able to have some small helper so we fetch the
+machine type globally, then maybe we can in the future pass in the test
+function as:
+
+bool test_function (void *opaque)
+{
+  return MACHINE_TYPE_BEFORE(8, 2);
+}
+
+Then it'll also avoid even introducing a variable.  Maybe we can provide
+this test_function() directly too, one for each release.
+
+Thanks,
+
+> 
+> 
+> > Thanks,
+> >
+> > >
+> > >      return 0;
+> > >  }
+> > > @@ -1659,6 +1660,7 @@ static Property virtio_gpu_properties[] = {
+> > >      DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
+> > >                      VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
+> > >      DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
+> > > +    DEFINE_PROP_UINT8("x-vmstate-version", VirtIOGPU, vmstate_version, 1),
+> > >      DEFINE_PROP_END_OF_LIST(),
+> > >  };
+> > >
+> > > --
+> > > 2.41.0.28.gd7d8841f67
+> > >
+> >
+> > --
+> > Peter Xu
+> >
+> 
+
 -- 
-2.45.0
+Peter Xu
 
 
