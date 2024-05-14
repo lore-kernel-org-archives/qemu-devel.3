@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED62C04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D581AC41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6rdB-0005Cj-SJ; Tue, 14 May 2024 08:51:45 -0400
+	id 1s6rdB-0005Cb-2M; Tue, 14 May 2024 08:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rd7-0005C1-DN
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rd5-0005B9-Nz
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rd5-0005F1-Vk
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rd3-0005Ed-Un
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691099;
+ s=mimecast20190719; t=1715691096;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ee7Fi+mEF3maNlhA+rKnGHb7FzAkAvKF9dzv3XNijog=;
- b=eP3paY4ly7OU+4fH9q2mqGyHKBv0nwsUUwMX4eYRlXUuTnOyObt4cjNIJe1NrmF0dz9bEP
- kS/JwFq80vF97jAnKBATrFcsb5bi8s07aR8WxCnTnOB//LRJUBvlMyCgnNa6kU2HlhmQPW
- gbcdeieT8mpuId9X3xmPmRagVTbvyPc=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-SFuHlLvNMs2EgmbfLsWnoQ-1; Tue,
- 14 May 2024 08:51:26 -0400
-X-MC-Unique: SFuHlLvNMs2EgmbfLsWnoQ-1
+ bh=wncgA4v8L8vkEvBErE0b06OP0v4pfM0Il4czkDZATqU=;
+ b=Qjmg5M426BjGfWT4aOjZX/o0ADQ9MPblPlMb/szOWoVBtWO0/o6BtuMu/6WxCTKx9Xwg8F
+ h40guBAQIGOMy1Pl7GWOqHgFC4teqjnDEkpukcC/bkXBn5ieI2xG0o2MWWn01WvTjl34XF
+ gLqHiQk8gWuy4+VQMtrlaPDwpXh1PH4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-456-3r7aq70GOuWG6dgsH1AKuA-1; Tue, 14 May 2024 08:51:30 -0400
+X-MC-Unique: 3r7aq70GOuWG6dgsH1AKuA-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E98F2380009D;
- Tue, 14 May 2024 12:51:25 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 07538185A780;
+ Tue, 14 May 2024 12:51:30 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 129A3400057;
- Tue, 14 May 2024 12:51:24 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 42B03400EAC;
+ Tue, 14 May 2024 12:51:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 03/11] gitlab: use $MAKE instead of 'make'
-Date: Tue, 14 May 2024 14:51:11 +0200
-Message-ID: <20240514125119.284638-4-thuth@redhat.com>
+Subject: [PULL 07/11] block/gluster: Use URI parsing code from glib
+Date: Tue, 14 May 2024 14:51:15 +0200
+Message-ID: <20240514125119.284638-8-thuth@redhat.com>
 In-Reply-To: <20240514125119.284638-1-thuth@redhat.com>
 References: <20240514125119.284638-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -79,47 +79,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Since version 2.66, glib has useful URI parsing functions, too.
+Use those instead of the QEMU-internal ones to be finally able
+to get rid of the latter.
 
-The lcitool generated containers have '$MAKE' set to the path
-of the right 'make' binary. Using the env variable makes it
-possible to override the choice per job.
+Since g_uri_get_path() returns a const pointer, we also need to
+tweak the parameter of parse_volume_options() (where we use the
+result of g_uri_get_path() as input).
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240513111551.488088-3-berrange@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20240418101056.302103-10-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .gitlab-ci.d/buildtest-template.yml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ block/gluster.c | 69 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 34 insertions(+), 35 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 22045add80..278a5ea966 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -26,10 +26,10 @@
-       then
-         pyvenv/bin/meson configure . -Dbackend_max_links="$LD_JOBS" ;
-       fi || exit 1;
--    - make -j"$JOBS"
-+    - $MAKE -j"$JOBS"
-     - if test -n "$MAKE_CHECK_ARGS";
-       then
--        make -j"$JOBS" $MAKE_CHECK_ARGS ;
-+        $MAKE -j"$JOBS" $MAKE_CHECK_ARGS ;
-       fi
-     - ccache --show-stats
+diff --git a/block/gluster.c b/block/gluster.c
+index 4253c8db5e..d0999903df 100644
+--- a/block/gluster.c
++++ b/block/gluster.c
+@@ -17,7 +17,6 @@
+ #include "qapi/error.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qerror.h"
+-#include "qemu/uri.h"
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+@@ -289,9 +288,9 @@ static void glfs_clear_preopened(glfs_t *fs)
+     }
+ }
  
-@@ -60,7 +60,7 @@
-     - cd build
-     - find . -type f -exec touch {} +
-     # Avoid recompiling by hiding ninja with NINJA=":"
--    - make NINJA=":" $MAKE_CHECK_ARGS
-+    - $MAKE NINJA=":" $MAKE_CHECK_ARGS
+-static int parse_volume_options(BlockdevOptionsGluster *gconf, char *path)
++static int parse_volume_options(BlockdevOptionsGluster *gconf, const char *path)
+ {
+-    char *p, *q;
++    const char *p, *q;
  
- .native_test_job_template:
-   extends: .common_test_job_template
+     if (!path) {
+         return -EINVAL;
+@@ -349,13 +348,13 @@ static int parse_volume_options(BlockdevOptionsGluster *gconf, char *path)
+ static int qemu_gluster_parse_uri(BlockdevOptionsGluster *gconf,
+                                   const char *filename)
+ {
++    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
++    g_autoptr(GHashTable) qp = NULL;
+     SocketAddress *gsconf;
+-    URI *uri;
+-    QueryParams *qp = NULL;
+     bool is_unix = false;
+-    int ret = 0;
++    const char *uri_scheme, *uri_query, *uri_server;
++    int uri_port, ret;
+ 
+-    uri = uri_parse(filename);
+     if (!uri) {
+         return -EINVAL;
+     }
+@@ -364,54 +363,54 @@ static int qemu_gluster_parse_uri(BlockdevOptionsGluster *gconf,
+     QAPI_LIST_PREPEND(gconf->server, gsconf);
+ 
+     /* transport */
+-    if (!uri->scheme || !strcmp(uri->scheme, "gluster")) {
++    uri_scheme = g_uri_get_scheme(uri);
++    if (!uri_scheme || !strcmp(uri_scheme, "gluster")) {
+         gsconf->type = SOCKET_ADDRESS_TYPE_INET;
+-    } else if (!strcmp(uri->scheme, "gluster+tcp")) {
++    } else if (!strcmp(uri_scheme, "gluster+tcp")) {
+         gsconf->type = SOCKET_ADDRESS_TYPE_INET;
+-    } else if (!strcmp(uri->scheme, "gluster+unix")) {
++    } else if (!strcmp(uri_scheme, "gluster+unix")) {
+         gsconf->type = SOCKET_ADDRESS_TYPE_UNIX;
+         is_unix = true;
+     } else {
+-        ret = -EINVAL;
+-        goto out;
++        return -EINVAL;
+     }
+ 
+-    ret = parse_volume_options(gconf, uri->path);
++    ret = parse_volume_options(gconf, g_uri_get_path(uri));
+     if (ret < 0) {
+-        goto out;
++        return ret;
+     }
+ 
+-    qp = query_params_parse(uri->query);
+-    if (qp->n > 1 || (is_unix && !qp->n) || (!is_unix && qp->n)) {
+-        ret = -EINVAL;
+-        goto out;
++    uri_query = g_uri_get_query(uri);
++    if (uri_query) {
++        qp = g_uri_parse_params(uri_query, -1, "&", G_URI_PARAMS_NONE, NULL);
++        if (!qp) {
++            return -EINVAL;
++        }
++        ret = g_hash_table_size(qp);
++        if (ret > 1 || (is_unix && !ret) || (!is_unix && ret)) {
++            return -EINVAL;
++        }
+     }
+ 
++    uri_server = g_uri_get_host(uri);
++    uri_port = g_uri_get_port(uri);
++
+     if (is_unix) {
+-        if (uri->server || uri->port) {
+-            ret = -EINVAL;
+-            goto out;
+-        }
+-        if (strcmp(qp->p[0].name, "socket")) {
+-            ret = -EINVAL;
+-            goto out;
++        char *uri_socket = g_hash_table_lookup(qp, "socket");
++        if (uri_server || uri_port != -1 || !uri_socket) {
++            return -EINVAL;
+         }
+-        gsconf->u.q_unix.path = g_strdup(qp->p[0].value);
++        gsconf->u.q_unix.path = g_strdup(uri_socket);
+     } else {
+-        gsconf->u.inet.host = g_strdup(uri->server ? uri->server : "localhost");
+-        if (uri->port) {
+-            gsconf->u.inet.port = g_strdup_printf("%d", uri->port);
++        gsconf->u.inet.host = g_strdup(uri_server ? uri_server : "localhost");
++        if (uri_port > 0) {
++            gsconf->u.inet.port = g_strdup_printf("%d", uri_port);
+         } else {
+             gsconf->u.inet.port = g_strdup_printf("%d", GLUSTER_DEFAULT_PORT);
+         }
+     }
+ 
+-out:
+-    if (qp) {
+-        query_params_free(qp);
+-    }
+-    uri_free(uri);
+-    return ret;
++    return 0;
+ }
+ 
+ static struct glfs *qemu_gluster_glfs_init(BlockdevOptionsGluster *gconf,
 -- 
 2.45.0
 
