@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC94C25B7A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05845C04FFE
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 13:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6s37-0005m5-Cg; Tue, 14 May 2024 09:18:33 -0400
+	id 1s6s33-0005Dm-2a; Tue, 14 May 2024 09:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1s6s2y-00056h-N8
- for qemu-devel@nongnu.org; Tue, 14 May 2024 09:18:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1s6s2r-0004mG-R9
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:18:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1s6s2v-0002Ns-WD
- for qemu-devel@nongnu.org; Tue, 14 May 2024 09:18:24 -0400
+ id 1s6s2n-0002Mg-St
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:18:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715692700;
+ s=mimecast20190719; t=1715692693;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HLYSs2WpyTSi501CbyWQYRqmMlfLgx76s3MXUm3MEeU=;
- b=Q92K41lFPCCcIauF0a3zd+T32zBIP2OE6sdCTCYobk6v9SiTHB/DXCbLr60FNpcp8tF/hx
- j/AU3lCuGxLSBggIcB4MeSG+QsdgDdoVkUz9PAa2we3jLf6ffH2A0kkfrfzye4KW5jPvRX
- A+sGhWCVMNrnA/zXQvKQCkgWASH0E+c=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-494-zseJFXjxMmWi1GrkItR90Q-1; Tue, 14 May 2024 09:18:16 -0400
-X-MC-Unique: zseJFXjxMmWi1GrkItR90Q-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ bh=Ja/8CcGWzEA2LvmI/FXjMkaeuhb0Up64DQcr8MGG3Qo=;
+ b=bY1S3s1c6CJClgMpYvZnD7CaZzEovDWRJsujFfRkG/1AtMas3VSzEP/9Qv6/aiIcPwGKPw
+ oBz2cOuiMj9+kjPtUNE3ppf66lJ6u3ZKjoDMCchgmC3uHFWuzVF5ospcN154EfoUWieEoE
+ 4FzaftlvOZZc9JCYiyacUqPZuHoeneY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-BH5IEWSOPDSE8Ophjkrrwg-1; Tue,
+ 14 May 2024 09:17:57 -0400
+X-MC-Unique: BH5IEWSOPDSE8Ophjkrrwg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6D5A88030A6;
- Tue, 14 May 2024 13:18:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6550429AA2CD;
+ Tue, 14 May 2024 13:17:57 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.9])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 45BF0909;
- Tue, 14 May 2024 13:18:15 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E34A3103A3AA;
+ Tue, 14 May 2024 13:17:55 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, hikalium <hikalium@hikalium.com>,
+Cc: richard.henderson@linaro.org, Dongwon Kim <dongwon.kim@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 10/11] ui/gtk: Fix mouse/motion event scaling issue with GTK
- display backend
-Date: Tue, 14 May 2024 17:17:24 +0400
-Message-ID: <20240514131725.931234-11-marcandre.lureau@redhat.com>
+Subject: [PULL 06/11] ui/console: Use qemu_dmabuf_set_..() helpers instead
+Date: Tue, 14 May 2024 17:17:20 +0400
+Message-ID: <20240514131725.931234-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20240514131725.931234-1-marcandre.lureau@redhat.com>
 References: <20240514131725.931234-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -85,78 +87,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hikalium <hikalium@hikalium.com>
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Remove gtk_widget_get_scale_factor() usage from the calculation of
-the motion events in the GTK backend to make it work correctly on
-environments that have `gtk_widget_get_scale_factor() != 1`.
+This commit updates all occurrences where these fields were
+set directly have been updated to utilize helper functions.
 
-This scale factor usage had been introduced in the commit f14aab420c and
-at that time the window size was used for calculating the things and it
-was working correctly. However, in the commit 2f31663ed4 the logic
-switched to use the widget size instead of window size and because of
-the change the usage of scale factor becomes invalid (since widgets use
-`vc->gfx.scale_{x, y}` for scaling).
+v7: removed prefix, "dpy_gl_" from all helpers
 
-Tested on Crostini on ChromeOS (15823.51.0) with an external display.
+v8: Introduction of helpers was removed as those were already added
+    by the previous commit
 
-Fixes: 2f31663ed4 ("ui/gtk: use widget size for cursor motion event")
-Fixes: f14aab420c ("ui: fix incorrect pointer position on highdpi with
-gtk")
-
-Signed-off-by: hikalium <hikalium@hikalium.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240512111435.30121-3-hikalium@hikalium.com>
+Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Message-Id: <20240508175403.3399895-5-dongwon.kim@intel.com>
 ---
- ui/gtk.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ ui/egl-helpers.c | 16 +++++++++-------
+ ui/gtk-egl.c     |  4 ++--
+ ui/gtk-gl-area.c |  4 ++--
+ ui/gtk.c         |  6 +++---
+ 4 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 7ce73b0798..93b13b7a30 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -891,7 +891,7 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
-     int x, y;
-     int mx, my;
-     int fbh, fbw;
--    int ww, wh, ws;
-+    int ww, wh;
- 
-     if (!vc->gfx.ds) {
-         return TRUE;
-@@ -899,11 +899,15 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
- 
-     fbw = surface_width(vc->gfx.ds) * vc->gfx.scale_x;
-     fbh = surface_height(vc->gfx.ds) * vc->gfx.scale_y;
--
-     ww = gtk_widget_get_allocated_width(widget);
-     wh = gtk_widget_get_allocated_height(widget);
--    ws = gtk_widget_get_scale_factor(widget);
- 
-+    /*
-+     * `widget` may not have the same size with the frame buffer.
-+     * In such cases, some paddings are needed around the `vc`.
-+     * To achieve that, `vc` will be displayed at (mx, my)
-+     * so that it is displayed at the center of the widget.
-+     */
-     mx = my = 0;
-     if (ww > fbw) {
-         mx = (ww - fbw) / 2;
-@@ -912,8 +916,12 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
-         my = (wh - fbh) / 2;
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 3f96e63d25..99b2ebbe23 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -348,8 +348,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
+         return;
      }
  
--    x = (motion->x - mx) / vc->gfx.scale_x * ws;
--    y = (motion->y - my) / vc->gfx.scale_y * ws;
-+    /*
-+     * `motion` is reported in `widget` coordinates
-+     * so translating it to the coordinates in `vc`.
-+     */
-+    x = (motion->x - mx) / vc->gfx.scale_x;
-+    y = (motion->y - my) / vc->gfx.scale_y;
+-    glGenTextures(1, &dmabuf->texture);
+-    texture = qemu_dmabuf_get_texture(dmabuf);
++    glGenTextures(1, &texture);
++    qemu_dmabuf_set_texture(dmabuf, texture);
+     glBindTexture(GL_TEXTURE_2D, texture);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+@@ -368,7 +368,7 @@ void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
+     }
  
-     trace_gd_motion_event(ww, wh, gtk_widget_get_scale_factor(widget), x, y);
+     glDeleteTextures(1, &texture);
+-    dmabuf->texture = 0;
++    qemu_dmabuf_set_texture(dmabuf, 0);
+ }
  
+ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+@@ -382,7 +382,7 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+         sync = eglCreateSyncKHR(qemu_egl_display,
+                                 EGL_SYNC_NATIVE_FENCE_ANDROID, NULL);
+         if (sync != EGL_NO_SYNC_KHR) {
+-            dmabuf->sync = sync;
++            qemu_dmabuf_set_sync(dmabuf, sync);
+         }
+     }
+ }
+@@ -390,12 +390,14 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
+ {
+     void *sync = qemu_dmabuf_get_sync(dmabuf);
++    int fence_fd;
+ 
+     if (sync) {
+-        dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
+-                                                      sync);
++        fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
++                                              sync);
++        qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
+         eglDestroySyncKHR(qemu_egl_display, sync);
+-        dmabuf->sync = NULL;
++        qemu_dmabuf_set_sync(dmabuf, NULL);
+     }
+ }
+ 
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 5d7744ae4d..0473f689c9 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -87,7 +87,7 @@ void gd_egl_draw(VirtualConsole *vc)
+             if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
+                 return;
+             } else {
+-                dmabuf->draw_submitted = false;
++                qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
+         }
+ #endif
+@@ -382,7 +382,7 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+         graphic_hw_gl_block(vc->gfx.dcl.con, true);
+-        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
++        qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_egl_set_scanout_mode(vc, true);
+         gtk_widget_queue_draw_area(area, x, y, w, h);
+         return;
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 86360fe79b..b628b35451 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -63,7 +63,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+             if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
+                 return;
+             } else {
+-                dmabuf->draw_submitted = false;
++                qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
+         }
+ #endif
+@@ -292,7 +292,7 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+         graphic_hw_gl_block(vc->gfx.dcl.con, true);
+-        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
++        qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_gl_area_set_scanout_mode(vc, true);
+     }
+     gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 237c913b26..3a6832eb1b 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -598,11 +598,11 @@ void gd_hw_gl_flushed(void *vcon)
+     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+     int fence_fd;
+ 
+-    if (dmabuf->fence_fd >= 0) {
+-        fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
++    fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
++    if (fence_fd >= 0) {
+         qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
+         close(fence_fd);
+-        dmabuf->fence_fd = -1;
++        qemu_dmabuf_set_fence_fd(dmabuf, -1);
+         graphic_hw_gl_block(vc->gfx.dcl.con, false);
+     }
+ }
 -- 
 2.41.0.28.gd7d8841f67
 
