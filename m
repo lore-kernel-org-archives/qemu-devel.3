@@ -4,57 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA57C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 105B1C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6sr4-0006wJ-NG; Tue, 14 May 2024 10:10:10 -0400
+	id 1s6ssC-0007cX-Sk; Tue, 14 May 2024 10:11:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6sr2-0006vw-Tb
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:10:08 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6srw-0007aY-Tk
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:11:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6sr0-0006H3-Nq
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:10:08 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 6321BCE1259;
- Tue, 14 May 2024 14:10:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D60C32781;
- Tue, 14 May 2024 14:10:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715695801;
- bh=65zaQbh4dR1VfiNCHvFVtTEdgTZHlZVkK+sJMu5eeOw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=PZ094RnDZE9gn7MeDfalSXYEJjhUx/WonG38Z3c1ga4M0nH8IVDLJVgflFNi19TCq
- maezmpvAKtGoKwNVSs4d1in93XCuHCJ3e17JVQP5TF7sIjjLCwUecbTnKyNIAxbc7e
- /ZrRKpmaQvcFU+yHKcyV68/k7TN1iK85TB5iy3YuR06qXXwl0OCKcNgGT0MsNCQy2d
- ozBWacG+8Sux/Mg0GukgpyMCkhvUnh8jhnlHS2ZdKqGMal1xOJO7TA3xV02MUrUVqr
- 0tETBCOf3+NFFCF/kaCIDv72KLSQc+5Z3fpdcKKkqDdHefxMzZpLKMKEvgGWVrgRkl
- TzDnv7i59talQ==
-Date: Tue, 14 May 2024 16:09:57 +0200
-From: Helge Deller <deller@kernel.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 05/45] target/hppa: Allow prior nullification in
- do_ibranch
-Message-ID: <ZkNwtdPU9RgueW7q@carbonx1>
-References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-6-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6srt-0006pQ-9r
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:11:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715695859;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=47DoMr+g/obCtpIQcI+ds9vNVv9fcOxuUq0G+MZwn4w=;
+ b=TOeZBMTPnfFziq7K1OAg599mjuM5gCYx2bq12UNQhAyEQgnE2fxYl3RlXzj4TPkj2wTBJT
+ v9yWK+o8p64uVHzwtDJfshQYO1aLx0OaUZIsvaJKsRdG91ouOP4zhJkmjt7uNuKNID5uEG
+ bKGn7nKsPjiJZzGRpYnAleok3GAskqU=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-Ui8flEGjMA6KlAg0qYThwQ-1; Tue,
+ 14 May 2024 10:10:53 -0400
+X-MC-Unique: Ui8flEGjMA6KlAg0qYThwQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D26853827491;
+ Tue, 14 May 2024 14:10:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8E3414179E7F;
+ Tue, 14 May 2024 14:10:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9656321E5E6B; Tue, 14 May 2024 16:10:51 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,  qemu-devel@nongnu.org,
+ berrange@redhat.com,  armbru@redhat.com,  Claudio Fontana
+ <cfontana@suse.de>,  Jim Fehlig <jfehlig@suse.com>,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH 4/9] migration: Add direct-io parameter
+In-Reply-To: <ZjVUKCafjreLtLmm@x1n> (Peter Xu's message of "Fri, 3 May 2024
+ 17:16:24 -0400")
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-5-farosas@suse.de> <ZjUnghSvdy-wWtnN@x1n>
+ <871q6ioc2r.fsf@suse.de> <ZjVUKCafjreLtLmm@x1n>
+Date: Tue, 14 May 2024 16:10:51 +0200
+Message-ID: <87ttj0zdp0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-6-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=deller@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,122 +86,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Richard Henderson <richard.henderson@linaro.org>:
-> Simplify the function by not attempting a conditional move
-> on the branch destination -- just use nullify_over normally.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+> On Fri, May 03, 2024 at 05:49:32PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Fri, Apr 26, 2024 at 11:20:37AM -0300, Fabiano Rosas wrote:
+>> >> Add the direct-io migration parameter that tells the migration code to
+>> >> use O_DIRECT when opening the migration stream file whenever possible.
+>> >> 
+>> >> This is currently only used with the mapped-ram migration that has a
+>> >> clear window guaranteed to perform aligned writes.
+>> >> 
+>> >> Acked-by: Markus Armbruster <armbru@redhat.com>
+>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >> ---
+>> >>  include/qemu/osdep.h           |  2 ++
+>> >>  migration/migration-hmp-cmds.c | 11 +++++++++++
+>> >>  migration/options.c            | 30 ++++++++++++++++++++++++++++++
+>> >>  migration/options.h            |  1 +
+>> >>  qapi/migration.json            | 18 +++++++++++++++---
+>> >>  util/osdep.c                   |  9 +++++++++
+>> >>  6 files changed, 68 insertions(+), 3 deletions(-)
+>> >> 
+>> >> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>> >> index c7053cdc2b..645c14a65d 100644
+>> >> --- a/include/qemu/osdep.h
+>> >> +++ b/include/qemu/osdep.h
+>> >> @@ -612,6 +612,8 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+>> >>  bool qemu_has_ofd_lock(void);
+>> >>  #endif
+>> >>  
+>> >> +bool qemu_has_direct_io(void);
+>> >> +
+>> >>  #if defined(__HAIKU__) && defined(__i386__)
+>> >>  #define FMT_pid "%ld"
+>> >>  #elif defined(WIN64)
+>> >> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>> >> index 7e96ae6ffd..8496a2b34e 100644
+>> >> --- a/migration/migration-hmp-cmds.c
+>> >> +++ b/migration/migration-hmp-cmds.c
+>> >> @@ -397,6 +397,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>> >>          monitor_printf(mon, "%s: %s\n",
+>> >>              MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+>> >>              qapi_enum_lookup(&MigMode_lookup, params->mode));
+>> >> +
+>> >> +        if (params->has_direct_io) {
+>> >> +            monitor_printf(mon, "%s: %s\n",
+>> >> +                           MigrationParameter_str(
+>> >> +                               MIGRATION_PARAMETER_DIRECT_IO),
+>> >> +                           params->direct_io ? "on" : "off");
+>> >> +        }
+>> >
+>> > This will be the first parameter to optionally display here.  I think it's
+>> > a sign of misuse of has_direct_io field..
 
-> ---
->  target/hppa/translate.c | 73 +++++++++++------------------------------
->  1 file changed, 20 insertions(+), 53 deletions(-)
-> 
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 4c42b518c5..140dfb747a 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -1871,17 +1871,15 @@ static bool do_cbranch(DisasContext *ctx, int64_t disp, bool is_n,
->  static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
->                         unsigned link, bool is_n)
->  {
-> -    TCGv_i64 a0, a1, next, tmp;
-> -    TCGCond c;
-> +    TCGv_i64 next;
->  
-> -    assert(ctx->null_lab == NULL);
-> +    if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
-> +        next = tcg_temp_new_i64();
-> +        tcg_gen_mov_i64(next, dest);
->  
-> -    if (ctx->null_cond.c == TCG_COND_NEVER) {
->          if (link != 0) {
->              copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
->          }
-> -        next = tcg_temp_new_i64();
-> -        tcg_gen_mov_i64(next, dest);
->          if (is_n) {
->              if (use_nullify_skip(ctx)) {
->                  copy_iaoq_entry(ctx, cpu_iaoq_f, -1, next);
-> @@ -1895,60 +1893,29 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
->          }
->          ctx->iaoq_n = -1;
->          ctx->iaoq_n_var = next;
-> -    } else if (is_n && use_nullify_skip(ctx)) {
-> -        /* The (conditional) branch, B, nullifies the next insn, N,
-> -           and we're allowed to skip execution N (no single-step or
-> -           tracepoint in effect).  Since the goto_ptr that we must use
-> -           for the indirect branch consumes no special resources, we
-> -           can (conditionally) skip B and continue execution.  */
-> -        /* The use_nullify_skip test implies we have a known control path.  */
-> -        tcg_debug_assert(ctx->iaoq_b != -1);
-> -        tcg_debug_assert(ctx->iaoq_n != -1);
-> +        return true;
-> +    }
->  
-> -        /* We do have to handle the non-local temporary, DEST, before
-> -           branching.  Since IOAQ_F is not really live at this point, we
-> -           can simply store DEST optimistically.  Similarly with IAOQ_B.  */
-> +    nullify_over(ctx);
-> +
-> +    if (is_n && use_nullify_skip(ctx)) {
->          copy_iaoq_entry(ctx, cpu_iaoq_f, -1, dest);
->          next = tcg_temp_new_i64();
->          tcg_gen_addi_i64(next, dest, 4);
->          copy_iaoq_entry(ctx, cpu_iaoq_b, -1, next);
-> -
-> -        nullify_over(ctx);
-> -        if (link != 0) {
-> -            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
-> -        }
-> -        tcg_gen_lookup_and_goto_ptr();
-> -        return nullify_end(ctx);
-> +        nullify_set(ctx, 0);
->      } else {
-> -        c = ctx->null_cond.c;
-> -        a0 = ctx->null_cond.a0;
-> -        a1 = ctx->null_cond.a1;
-> -
-> -        tmp = tcg_temp_new_i64();
-> -        next = tcg_temp_new_i64();
-> -
-> -        copy_iaoq_entry(ctx, tmp, ctx->iaoq_n, ctx->iaoq_n_var);
-> -        tcg_gen_movcond_i64(c, next, a0, a1, tmp, dest);
-> -        ctx->iaoq_n = -1;
-> -        ctx->iaoq_n_var = next;
-> -
-> -        if (link != 0) {
-> -            tcg_gen_movcond_i64(c, cpu_gr[link], a0, a1, cpu_gr[link], tmp);
-> -        }
-> -
-> -        if (is_n) {
-> -            /* The branch nullifies the next insn, which means the state of N
-> -               after the branch is the inverse of the state of N that applied
-> -               to the branch.  */
-> -            tcg_gen_setcond_i64(tcg_invert_cond(c), cpu_psw_n, a0, a1);
-> -            cond_free(&ctx->null_cond);
-> -            ctx->null_cond = cond_make_n();
-> -            ctx->psw_n_nonzero = true;
-> -        } else {
-> -            cond_free(&ctx->null_cond);
-> -        }
-> +        copy_iaoq_entry(ctx, cpu_iaoq_f, ctx->iaoq_b, cpu_iaoq_b);
-> +        copy_iaoq_entry(ctx, cpu_iaoq_b, -1, dest);
-> +        nullify_set(ctx, is_n);
->      }
-> -    return true;
-> +    if (link != 0) {
-> +        copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
-> +    }
-> +
-> +    tcg_gen_lookup_and_goto_ptr();
-> +    ctx->base.is_jmp = DISAS_NORETURN;
-> +    return nullify_end(ctx);
->  }
->  
->  /* Implement
-> -- 
-> 2.34.1
-> 
+Yes.  For similar existing parameters, we do
+
+               assert(params->has_FOO);
+               monitor_printf(mon, "%s: '%s'\n",
+                              MigrationParameter_str(MIGRATION_PARAMETER_FOO),
+                              ... params->FOO as string ...)
+
+>> > IMHO has_direct_io should be best to be kept as "whether direct_io field is
+>> > valid" and that's all of it.  It hopefully shouldn't contain more
+>> > information than that, or otherwise it'll be another small challenge we
+>> > need to overcome when we can remove all these has_* fields, and can also be
+>> > easily overlooked.
+>> 
+>> I don't think I understand why we have those has_* fields. I thought my
+>> usage of 'params->has_direct_io = qemu_has_direct_io()' was the correct
+>> one, i.e. checking whether QEMU has any support for that parameter. Can
+>> you help me out here?
+>
+> Here params is the pointer to "struct MigrationParameters", which is
+> defined in qapi/migration.json.  And we have had "has_*" only because we
+> allow optional fields with asterisks:
+>
+>   { 'struct': 'MigrationParameters',
+>     'data': { '*announce-initial': 'size',
+>               ...
+>               } }
+>
+> So that's why it better only means "whether this field existed", because
+> it's how it is defined.
+>
+> IIRC we (or say, Markus) used to have some attempts deduplicates those
+> *MigrationParameter* things, and if success we have chance to drop has_*
+> fields (in which case we simply always have them; that "has_" makes more
+> sense only if in a QMP session to allow user only specify one or more
+> things if not all).
+
+qapi/migration.json:
+
+    ##
+    # @MigrationParameters:
+    #
+--> # The optional members aren't actually optional.
+    #
+
+In other words, the has_FOO generated for the members of
+MigrationParameters must all be true.
+
+These members became optional when we attempted to de-duplicate
+MigrationParameters and MigrateSetParameters, but failed (see commit
+de63ab61241 "migrate: Share common MigrationParameters struct" and
+commit 1bda8b3c695 "migration: Unshare MigrationParameters struct for
+now").
+
 
