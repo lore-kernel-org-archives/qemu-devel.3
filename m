@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1131C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 08:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF5E2C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 08:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6ntL-0001oy-Nu; Tue, 14 May 2024 04:52:12 -0400
+	id 1s6nwy-0003SD-Rp; Tue, 14 May 2024 04:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6ntC-0001my-6D
- for qemu-devel@nongnu.org; Tue, 14 May 2024 04:52:03 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6nt9-0007Ni-PD
- for qemu-devel@nongnu.org; Tue, 14 May 2024 04:52:01 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a5a2d0d8644so1126829366b.1
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 01:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715676717; x=1716281517; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=85d7B7c0luBfnGNwBgTvYISUTQTfRSZdLkMTn3PSzHA=;
- b=QMfucQTFd9uGGT11epVKRC5HRfZTdOXwwiDJ+E6Pto9miJTQO0gDH2Hd6mVQXIaFDW
- yZ3IZ9VYG0Hp7wRP1DgAs91Gb5xuPCpJVx/VXBKRQmaCHUMX2LYlzAa3fNhBYdfyMO5l
- HUImKGiSZ7a7q9XMmB0mEAE3KqwUCRKa8kMi7nXV/1ab35GjJihSxwSUScEhkTkt/78R
- epZCu4+zwS/sSUo/lszTqq1SFqZEkpr/HGuySjcS/6unwXAarpZFmSkMNrzsDN9pExDb
- a4ycAwayC2IBqVtW1cqsyEOnymnxeGt/RDwMwZhbOPrUxV5MUHLxDOuQtBrSJXkC0339
- D1Jw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6nwv-0003Rb-8k
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 04:55:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6nwt-0007f4-QK
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 04:55:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715676951;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9UnUaCPcuoCpmEy7bmqFp5ozHy3RwA2ZgfpPv08ESAM=;
+ b=YD5VYPoiU8NN3UlfCvvldq758YYq2B58c3NSV4dkaFeiBBnlBR5HADMHlHktuPTN37+d9d
+ 3yLIYLi1TcYtxtYSXGghg5TlXRmVChv/kJHnsaHOkRvaqhmXqLgxHmeby96ulJfmA3wL2U
+ e/BmJrNQm0vLGqrxQL2WyqOLlAIUTi8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-570-Y5gBCK6GMtK8q1ykHuXUyQ-1; Tue, 14 May 2024 04:55:49 -0400
+X-MC-Unique: Y5gBCK6GMtK8q1ykHuXUyQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-792ba069a97so771742285a.0
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 01:55:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715676717; x=1716281517;
+ d=1e100.net; s=20230601; t=1715676949; x=1716281749;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=85d7B7c0luBfnGNwBgTvYISUTQTfRSZdLkMTn3PSzHA=;
- b=nMQphNF49JyTJavD9U6WHhI0sfXAdz2x+rtY1SMWUPtNEjLFJ3CR9L0wm/IeYPVyfh
- v1X2HrEXBBBwdR77I+PKQhEGGFA4NBY5t0FEcgzyvn7Fzyqx6sDKZseofwbhDuv9Ij+5
- /ssc6QCwNdveAoaza/fFQOjy8Tva93hN0Rf/2uGELikyf1j5rnZ11r618ykuzwZ64Oxn
- hiRz53rPyUqx9DBGvAfhylAG7HR+J04OmdAEFqvAFRS6l8D0ktNmFGJ/i5xxgBmwMPiy
- M4sTTPPubrdF7BYsyiXrNGrseevhn2fuyPU/fvLSxdGy9PuDSI+/KDwztbEnr4AEK0Dm
- dZZQ==
-X-Gm-Message-State: AOJu0Yy/fIXhbnyVWFGxxG6p4lwjzqwET1BK7pRNRNye7M7wkLGx06W4
- qe0oIj4oFQl4GF5mtJ5d6ljbYQUjV4L9tl4ghtW5vERWmiw6AX79LJl7QHGXhJxPqM+79uzQ+Mk
- 1YCY=
-X-Google-Smtp-Source: AGHT+IF9w7FcaIr7pojzTHnSErPn2Q+4AKpncGqXuncnBUjHXmRRK58044rNkWU5NWq6k0PONcGCMw==
-X-Received: by 2002:a50:8711:0:b0:572:a06e:e3ff with SMTP id
- 4fb4d7f45d1cf-5734d6de9cdmr8546946a12.41.1715676717677; 
- Tue, 14 May 2024 01:51:57 -0700 (PDT)
-Received: from [10.1.1.126] ([149.14.240.163])
+ bh=9UnUaCPcuoCpmEy7bmqFp5ozHy3RwA2ZgfpPv08ESAM=;
+ b=pLsKZY/ZEZu082OusvzpQm5v+vGqawU+XvgggvE/jnKQswqBdYtGWlGdAnAaEU+9jA
+ 6RYTax7d68Ex/DWjQw0Hf72yyUczynL6f2xphC6puIM7HollR/74gB78csnu9RXUxXdA
+ 99TgkG1di6vhotYUxjHFF+Oo0M6BdddXvmHxFo4pZ3dmvsEgFLOYV6t8/lyL7asUQP8p
+ +RqwD0Nm8+Zrov5AK1sfZ5krD+5OZvw/ZQSHKZRFcZO7jgUe5zvwIXjAZ4dCa11/DJa0
+ Khtb9tnwjWX+fNaVM6gIEHTmMaT5xnn4J49M0ajvv7iwjVjrXBOfDbZ+3r3g7Te43Zsb
+ pxHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVms5blDEO+voDtP3i7bjST6VxNw6lO5JNgt86/LJwXHXYHTqfEXQYsrHi3dCRDb1VHMPMdEjD96KPe/jk8Wk1amLBsMv0=
+X-Gm-Message-State: AOJu0Ywf1b75UCx9qtv+c7U3f6Rhhhr49VFzCellb1PfHubryJpuHuWv
+ QgpK07mMsmzYktUWkPomvSOjnnF6LjHFNN/JPrqCEY3aXe5CaF9hLflJvix0zS3y6w+bry5jsUq
+ LdmKS8syXfzKvXTNCMOHADZ2CgaKTc9SS/zeywJg/SYlNlc+DLwCp
+X-Received: by 2002:a05:620a:4543:b0:792:9232:c93f with SMTP id
+ af79cd13be357-792c76036d3mr1599951285a.77.1715676948936; 
+ Tue, 14 May 2024 01:55:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECy3mNPm9T984aI5xx3qMm8dt45znAj6p6akPwxZVJB/8kNAI7wqspWTNTBHRbIhqwrYtV7A==
+X-Received: by 2002:a05:620a:4543:b0:792:9232:c93f with SMTP id
+ af79cd13be357-792c76036d3mr1599949585a.77.1715676948442; 
+ Tue, 14 May 2024 01:55:48 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733c322c3csm7283623a12.83.2024.05.14.01.51.57
- for <qemu-devel@nongnu.org>
+ af79cd13be357-792bf2a4b38sm545871385a.66.2024.05.14.01.55.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 01:51:57 -0700 (PDT)
-Message-ID: <ee6df079-d009-462c-9b58-dd2fa1b2c6c4@linaro.org>
-Date: Tue, 14 May 2024 10:51:55 +0200
+ Tue, 14 May 2024 01:55:48 -0700 (PDT)
+Message-ID: <9169d9fb-ef47-45e1-8394-25751f049078@redhat.com>
+Date: Tue, 14 May 2024 10:55:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/27] Build/arch cleanups, target/i386 fixes for 2024-05-10
-To: qemu-devel@nongnu.org
-References: <20240512104945.130198-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
+Subject: Re: [PATCH v5 06/10] vfio: Reverse test on vfio_get_dirty_bitmap()
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20240506092053.388578-1-clg@redhat.com>
+ <20240506092053.388578-7-clg@redhat.com>
+ <12989e97-362b-4ef9-9b3d-1f5550e393ac@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <12989e97-362b-4ef9-9b3d-1f5550e393ac@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,27 +108,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/24 12:49, Paolo Bonzini wrote:
-> The following changes since commit dafec285bdbfe415ac6823abdc510e0b92c3f094:
+On 5/13/24 15:42, Avihai Horon wrote:
 > 
->    Merge tag 'pull-request-2024-05-10' ofhttps://gitlab.com/thuth/qemu  into staging (2024-05-10 09:41:35 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
-> 
-> for you to fetch changes up to 9b089d254a5623baef01f7d0ec37331c1155f1ce:
-> 
->    configs: disable emulators that require it if libfdt is not found (2024-05-10 15:45:15 +0200)
-> 
-> ----------------------------------------------------------------
-> * target/i386: miscellaneous changes, mostly TCG-related
-> * fix --without-default-devices build
-> * fix --without-default-devices qtests on s390x and arm
+> On 06/05/2024 12:20, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
+>>
+> Title should be: Reverse test on vfio_get_xlat_addr()?
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+It could.
+
+> 
+>> It will simplify the changes coming after.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   hw/vfio/common.c | 22 +++++++++++++---------
+>>   1 file changed, 13 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>> index ed5ee6349ced78b3bde68d2ee506f78ba1a9dd9c..b929bb0b7ac60dcef34c0d5a098d5d91f75501dd 100644
+>> --- a/hw/vfio/common.c
+>> +++ b/hw/vfio/common.c
+>> @@ -1224,16 +1224,20 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       }
+>>
+>>       rcu_read_lock();
+>> -    if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
+>> -        ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+>> -                                    translated_addr);
+>> -        if (ret) {
+>> -            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+>> -                         "0x%"HWADDR_PRIx") = %d (%s)",
+>> -                         bcontainer, iova, iotlb->addr_mask + 1, ret,
+>> -                         strerror(-ret));
+>> -        }
+>> +    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
+>> +        goto out_lock;
+>>       }
+>> +
+>> +    ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+>> +                                translated_addr);
+>> +    if (ret) {
+>> +        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+>> +                     "0x%"HWADDR_PRIx") = %d (%s)",
+>> +                     bcontainer, iova, iotlb->addr_mask + 1, ret,
+>> +                     strerror(-ret));
+>> +    }
+>> +
+>> +out_lock:
+> 
+> s/out_lock/out_unlock?
+
+yes. better naming.
+
+> 
+> With the above,
+
+both done.
 
 
-r~
+Thanks,
+
+C.
+
+
+
+> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+> 
+>>       rcu_read_unlock();
+>>
+>>   out:
+>> -- 
+>> 2.45.0
+>>
+> 
 
 
