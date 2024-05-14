@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C61C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 21:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA071C25B79
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 21:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6zZB-0001iO-W3; Tue, 14 May 2024 17:20:10 -0400
+	id 1s6zbN-0002X8-CV; Tue, 14 May 2024 17:22:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zZ9-0001hu-Ll
- for qemu-devel@nongnu.org; Tue, 14 May 2024 17:20:07 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zbJ-0002Ws-IJ
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 17:22:21 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zZ7-0001D5-2V
- for qemu-devel@nongnu.org; Tue, 14 May 2024 17:20:07 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zbF-000261-QC
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 17:22:20 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 16B9BCE1331;
- Tue, 14 May 2024 21:20:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5F9C2BD10;
- Tue, 14 May 2024 21:19:58 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 1C918CE118C;
+ Tue, 14 May 2024 21:22:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E92C2BD10;
+ Tue, 14 May 2024 21:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715721600;
- bh=f8w3DqZWItf2dEa4nyxbN5tccxOxGTk3URlmif37NwY=;
+ s=k20201202; t=1715721733;
+ bh=UYqnnHRHGf0pNNFr0ABqSZk7vPywFRdcPobQyrmBDJI=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=DfBwqyYeO4eJCZiTNA4e9NETbgII9rhFzCRZizl2uFrTNNQzyuWWENeg3nYKf6aX3
- Rdeq2bFgyj9Q1PKZgJ6cFizaNHWEofevjz9hvLmZ9rp/jAHr8JlSaNxzNarcnb1nmC
- UN6BGZnEwEUfr9XMIQ90OIVj4OaSTw7B9gG8uLIvMgYWUsiUY2C5EY8yMUoBP3WvTe
- 3gb898k81WuloOi1iJQjMt1RA1bJ2MhfpedxH2hbDQdVPfulAnwNCHG15Es8ct6nwH
- eDOpejJzFTnYH7sxGvUIHrE62tSVyLEY/iOhUY5lTfRWbDqDGkm07b0sX9suwhJLcU
- dbKAbwG9sy3Ww==
-Date: Tue, 14 May 2024 23:19:56 +0200
+ b=vPuHJCnJD4nz2KiYsMDzQ6KxOLmKQU4GZ+VgFEp96ZtHnAjjTyNiYtMVOCkhjMiAR
+ 1So6xvXpjQRUN98I0/UTTJ58yBTIujPMvWDXI1s2QyaS+pQt9cGsHJPRSo2u7KYq18
+ oJtfaWRFPzd3VhKSBceL+Hi+Fw1uxqKTQYREl3kqeKpLQbeAMtfMc6HDpldEaTur3M
+ kUekxEjCxTetrFOGuDumJw+NrUok6rOp+m/8tFj8CpSL5C8VDelZWshhurujoIe1y2
+ +jSf5+IEbzrAoyEwp8Bai3cPmAC712fkIsC+KaQe77Hh+W7BTAS1jt/7YKjPrqeZCr
+ 8I3VHZ0aIXtlA==
+Date: Tue, 14 May 2024 23:22:09 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 37/45] target/hppa: Implement PSW_B
-Message-ID: <ZkPVfHmxbCpYkUm4@carbonx1>
+Subject: Re: [PATCH v2 38/45] target/hppa: Implement PSW_X
+Message-ID: <ZkPWAbM6_4cahLbh@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-38-richard.henderson@linaro.org>
+ <20240513074717.130949-39-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-38-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=deller@kernel.org; helo=sin.source.kernel.org
+In-Reply-To: <20240513074717.130949-39-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
+ helo=sin.source.kernel.org
 X-Spam_score_int: -53
 X-Spam_score: -5.4
 X-Spam_bar: -----
@@ -70,8 +70,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Richard Henderson <richard.henderson@linaro.org>:
-> PSW_B causes B,GATE to trap as an illegal instruction, removing
-> the sequential execution test that was merely an approximation.
+> Use PAGE_WRITE_INV to temporarily enable write permission
+> on for a given page, driven by PSW_X being set.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
