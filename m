@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D979C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 22:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F02C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 22:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s70AM-0005gx-8o; Tue, 14 May 2024 17:58:34 -0400
+	id 1s70AW-0005qn-TA; Tue, 14 May 2024 17:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s70AK-0005fZ-OD
- for qemu-devel@nongnu.org; Tue, 14 May 2024 17:58:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s70AV-0005nt-00
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 17:58:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s70AA-0008Ui-It
- for qemu-devel@nongnu.org; Tue, 14 May 2024 17:58:32 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s70AT-0000Aw-JT
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 17:58:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715723901;
+ s=mimecast20190719; t=1715723921;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fqqJCuCczPlWUnIN+2JOb1JkSlAyCnyJxKrh393CyRg=;
- b=fGu3kY/akOmlajrsYVFeA+hk/+YhiPa1tbaJbLRNgzu3/e8vsz6mGpT1Dwrb3ECo18Lcv/
- TPZqA1Sa7UOqiPi/Sx2sKmLGLHOE3jFzdF9mKgNEEMlqxEqH3vyrlb417tfAjtW5bybX4X
- dOsgN/EYWQf9SHuZ0h4bzAasfPXTSBs=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-Fj867c8AOvmf5zLIzvXzEA-1; Tue,
- 14 May 2024 17:58:17 -0400
-X-MC-Unique: Fj867c8AOvmf5zLIzvXzEA-1
+ bh=j3+82aPY5MN5L73YVE9yUVjV8BWu/aOCzfXUbGS1N4o=;
+ b=P9qiNAaPYW5ZyEtuByFUs0ZVcDFlaBBTQaq1hyUC0usUYwQjTyDmYtgA8GuzeUfc5WpX2V
+ g0c7Pm7wDeM+/3BULEjgEDyRqSDA//i0eEUsFuONDaXjF05eZilWhoY1L253R/EnOQp/Ip
+ +GGzyzoigZHOKIXtGJtlGolzW/WA7BE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-350-PaDRCbY_P8qO5yc1RkFzhw-1; Tue, 14 May 2024 17:58:36 -0400
+X-MC-Unique: PaDRCbY_P8qO5yc1RkFzhw-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
  [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 725673801EDA;
- Tue, 14 May 2024 21:58:00 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B5454801211;
+ Tue, 14 May 2024 21:58:35 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.17.156])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9FE646BC5;
- Tue, 14 May 2024 21:57:57 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id D83DD3C27;
+ Tue, 14 May 2024 21:58:32 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -66,15 +66,15 @@ Cc: Peter Xu <peterx@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>,
  Lukas Straub <lukasstraub2@web.de>, Yanan Wang <wangyanan55@huawei.com>,
  Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 05/20] qapi/parser: adjust info location for doc body section
-Date: Tue, 14 May 2024 17:57:24 -0400
-Message-ID: <20240514215740.940155-6-jsnow@redhat.com>
+Subject: [PATCH 16/20] qapi: rewrite StatsFilter comment
+Date: Tue, 14 May 2024 17:57:35 -0400
+Message-ID: <20240514215740.940155-17-jsnow@redhat.com>
 In-Reply-To: <20240514215740.940155-1-jsnow@redhat.com>
 References: <20240514215740.940155-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -82,7 +82,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,36 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of using the info object for the doc block as a whole, update
-the info pointer for each call to ensure_untagged_section when the
-existing section is otherwise empty. This way, Sphinx error information
-will match precisely to where the text actually starts.
+Rewrite the StatsFilter intro paragraph to be more meaningful to
+end-users when it is inlined in generated documentation.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/parser.py | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ qapi/stats.json | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 8cdd5334ec6..41b9319e5cb 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -662,8 +662,13 @@ def end(self) -> None:
- 
-     def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
-         if self.all_sections and not self.all_sections[-1].tag:
--            # extend current section
--            self.all_sections[-1].text += '\n'
-+            section = self.all_sections[-1]
-+            # Section is empty so far; update info to start *here*.
-+            if not section.text:
-+                section.info = info
-+            else:
-+                # extend current section
-+                self.all_sections[-1].text += '\n'
-             return
-         # start new section
-         section = self.Section(info)
+diff --git a/qapi/stats.json b/qapi/stats.json
+index 578b52c7ef7..c4a9f3ff70e 100644
+--- a/qapi/stats.json
++++ b/qapi/stats.json
+@@ -112,10 +112,6 @@
+ ##
+ # @StatsFilter:
+ #
+-# The arguments to the query-stats command; specifies a target for
+-# which to request statistics and optionally the required subset of
+-# information for that target.
+-#
+ # @target: the kind of objects to query.  Note that each possible
+ #          target may enable additional filtering options
+ #
+@@ -183,8 +179,8 @@
+ # Return runtime-collected statistics for objects such as the VM or
+ # its vCPUs.
+ #
+-# The arguments are a StatsFilter and specify the provider and objects
+-# to return statistics about.
++# The arguments specify a target for which to request statistics and
++# optionally the required subset of information for that target.
+ #
+ # Returns: a list of StatsResult, one for each provider and object
+ #     (e.g., for each vCPU).
 -- 
 2.44.0
 
