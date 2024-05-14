@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4EFC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 18:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C800FC04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 18:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6wgp-0006MC-G9; Tue, 14 May 2024 14:15:51 -0400
+	id 1s6xDP-0007L0-Td; Tue, 14 May 2024 14:49:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6wgk-0006KC-Jq
- for qemu-devel@nongnu.org; Tue, 14 May 2024 14:15:49 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6xDA-0007GE-OJ
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 14:49:18 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6wgi-0003bF-9I
- for qemu-devel@nongnu.org; Tue, 14 May 2024 14:15:45 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6xD3-00032z-12
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 14:49:13 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id BB4416123F;
- Tue, 14 May 2024 18:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D8AC2BD10;
- Tue, 14 May 2024 18:15:40 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 4BAD76130D;
+ Tue, 14 May 2024 18:49:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4BDC2BD10;
+ Tue, 14 May 2024 18:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715710541;
- bh=ajjjk9DiL5dXrD63BYg/M9wXJOIqWFMcjcdggc9UZak=;
+ s=k20201202; t=1715712546;
+ bh=g0d8dLiwwWiFkRKC7OcmQ2YeqFT9KCf5I9mJsmVUv1k=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AMrca+OGmnRFNCTw9c8z9r6VMCozNNKIcNNzTlHDv/HeTivw8N0Dtb/fGg3ISmKWP
- Y9LQHPXdW1MoE9Jogte/5lYP2NOG9W6kJULSpTvfujd2GtcsrUt9H4HyW2L3jeXBnl
- pBfP0/p0df9azPaH4GvsRc7jP4A49C6CQkEflYoIDJSH/y0d7K2gj2fMOQT+2Ik5Dr
- Z9HQ6WDzVSrM7W4dtOheYgB7MvSv2dVznbTP9Mft/5mdYFx8V1njwb4unmncbdZdMJ
- BE3P+MhFkSZADK1cTjIsCz/QXonJAQp/wu80RjA5xCwsT/nyWyiYxQbcQFhsdl+SIQ
- S7KDKTYw0bGfg==
-Date: Tue, 14 May 2024 20:15:37 +0200
+ b=dQYYoqxTT799XuAvHLXfo6Eyq06RuywegSw+ScrB/+1deKsJWPlfhnjfJPN4cqwfi
+ vZ2POiFRt6bHLFnhh6jRZ2Zod3KO6dCD4yDFp9H4JXXWrl/91IFSMJx515j7WB28L7
+ tFL1AiiErpi7o8e5R4P7qSW1Um3hKgQfmUpgJ/8QP9ZaLHyT/2C67XsZfdzsp56xVn
+ PAqauqwHUsx/k1qI3LYaUHAZOzeSHpSSE7/1Dy6/E3SSjsx9V+6wgMOFgi7ulVIVxh
+ kKcVV2vwcc7bhb+YtN6dvnEtxz0/nWfLOMlcNUa396rmc9MzQLRJE/xsYWrBVYKoyn
+ UV0gRvPr+eR7w==
+Date: Tue, 14 May 2024 20:49:01 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 27/45] target/hppa: Remove cond_free
-Message-ID: <ZkOqSfg9NYp0762t@carbonx1>
+Subject: Re: [PATCH v2 28/45] target/hppa: Introduce DisasDelayException
+Message-ID: <ZkOyHQPJvSiP_xNN@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-28-richard.henderson@linaro.org>
+ <20240513074717.130949-29-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-28-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -80
-X-Spam_score: -8.1
-X-Spam_bar: --------
-X-Spam_report: (-8.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+In-Reply-To: <20240513074717.130949-29-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,18 +70,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Richard Henderson <richard.henderson@linaro.org>:
-> Now that we do not need to free tcg temporaries, the only
-> thing cond_free does is reset the condition to never.
-> Instead, simply write a new condition over the old, which
-> may be simply cond_make_f() for the never condition.
-> 
-> The do_*_cond functions do the right thing with c or cf == 0,
-> so there's no need for a special case anymore.
+> Allow an exception to be emitted at the end of the TranslationBlock,
+> leaving only the conditional branch inline.  Use it for simple
+> exception instructions like break, which happen to be nullified.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/hppa/translate.c | 102 +++++++++++-----------------------------
->  1 file changed, 27 insertions(+), 75 deletions(-)
+>  target/hppa/translate.c | 60 +++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 55 insertions(+), 5 deletions(-)
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 
