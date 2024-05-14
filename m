@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E4FC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65486C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6rdL-0005Eu-FH; Tue, 14 May 2024 08:51:55 -0400
+	id 1s6rd4-0005Aq-4a; Tue, 14 May 2024 08:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rdJ-0005EJ-4P
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcw-00059V-9D
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rdG-0005Fv-Cd
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcu-0005DQ-ED
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691109;
+ s=mimecast20190719; t=1715691087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gCQfuj2vSD4sNRjVMsOcltspQz6+MjT5QyzED//iZkQ=;
- b=BsKb1kW67n7aDrv/YzHX2JWZ0TWwYq88Fmwk0m1cs8ixd1NsZ9xsAd/rqEwO8U/cxihA4J
- 00vZ8TGOoA+ZXej+5agJw2kl9pjUz6RqETRtHMRYjZt5caTzMgFYI/MBR8arq9NiXOanbH
- a4jftOsbKOem+yMeBU/cpS9HBYgJTuM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-0jt_2_sWPuCBquGBVY_KSQ-1; Tue,
- 14 May 2024 08:51:31 -0400
-X-MC-Unique: 0jt_2_sWPuCBquGBVY_KSQ-1
+ bh=ncJJ3xd2BNJLl+BzqIrKJkIzSdX95M3LGYLpcjA5q3I=;
+ b=VWsmiPUxtY6PnqN0jvOCDspWf+ijz2NooZrNCJkMsYhwDT8c/YbYZ7eU95g0sxxYU/6H6n
+ p1lzn7PA8TlXKANHQbiIA4e43/SnrD0AnYCliheGE8XD2Sw2IsyKFOpzGud1/ppDPpdzQb
+ B01m666Svsn+MEI6IatCOPGVbyjrOyQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-246-VxPZLsLVMHOwQ6xyTiUKcA-1; Tue, 14 May 2024 08:51:23 -0400
+X-MC-Unique: VxPZLsLVMHOwQ6xyTiUKcA-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5060929AA397;
- Tue, 14 May 2024 12:51:31 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 24EA285A58C;
+ Tue, 14 May 2024 12:51:23 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 69A45400EBE;
- Tue, 14 May 2024 12:51:30 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1B037400057;
+ Tue, 14 May 2024 12:51:21 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/11] block/nbd: Use URI parsing code from glib
-Date: Tue, 14 May 2024 14:51:16 +0200
-Message-ID: <20240514125119.284638-9-thuth@redhat.com>
+Subject: [PULL 01/11] configure: Fix error message when C compiler is not
+ working
+Date: Tue, 14 May 2024 14:51:09 +0200
+Message-ID: <20240514125119.284638-2-thuth@redhat.com>
 In-Reply-To: <20240514125119.284638-1-thuth@redhat.com>
 References: <20240514125119.284638-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -78,153 +80,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since version 2.66, glib has useful URI parsing functions, too.
-Use those instead of the QEMU-internal ones to be finally able
-to get rid of the latter. The g_uri_get_host() also takes care
-of removing the square brackets from IPv6 addresses, so we can
-drop that part of the QEMU code now, too.
+If you try to run the configure script on a system without a working
+C compiler, you get a very misleading error message:
 
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240418101056.302103-11-thuth@redhat.com>
+ ERROR: Unrecognized host OS (uname -s reports 'Linux')
+
+Some people already opened bug tickets because of this problem:
+
+ https://gitlab.com/qemu-project/qemu/-/issues/2057
+ https://gitlab.com/qemu-project/qemu/-/issues/2288
+
+We should rather tell the user that we were not able to use the C
+compiler instead, otherwise they will have a hard time to figure
+out what was going wrong.
+
+While we're at it, let's also suppress the "unrecognized host CPU"
+message in this case since it is rather misleading than helpful.
+
+Fixes: 264b803721 ("configure: remove compiler sanity check")
+Message-ID: <20240513114010.51608-1-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- block/nbd.c | 76 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 37 insertions(+), 39 deletions(-)
+ configure | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/block/nbd.c b/block/nbd.c
-index ef05f7cdfd..589d28af83 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -31,7 +31,6 @@
- #include "qemu/osdep.h"
+diff --git a/configure b/configure
+index 330664786d..38ee257701 100755
+--- a/configure
++++ b/configure
+@@ -411,7 +411,9 @@ else
+   # Using uname is really broken, but it is just a fallback for architectures
+   # that are going to use TCI anyway
+   cpu=$(uname -m)
+-  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  if test "$host_os" != "bogus"; then
++    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  fi
+ fi
  
- #include "trace.h"
--#include "qemu/uri.h"
- #include "qemu/option.h"
- #include "qemu/cutils.h"
- #include "qemu/main-loop.h"
-@@ -1514,30 +1513,31 @@ static void nbd_client_close(BlockDriverState *bs)
+ # Normalise host CPU name to the values used by Meson cross files and in source
+@@ -894,6 +896,13 @@ EOF
+ exit 0
+ fi
  
- static int nbd_parse_uri(const char *filename, QDict *options)
- {
--    URI *uri;
-+    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
-+    g_autoptr(GHashTable) qp = NULL;
-     const char *p;
--    QueryParams *qp = NULL;
--    int ret = 0;
-+    int qp_n;
-     bool is_unix;
-+    const char *uri_scheme, *uri_query, *uri_server;
-+    int uri_port;
- 
--    uri = uri_parse(filename);
-     if (!uri) {
-         return -EINVAL;
-     }
- 
-     /* transport */
--    if (!g_strcmp0(uri->scheme, "nbd")) {
-+    uri_scheme = g_uri_get_scheme(uri);
-+    if (!g_strcmp0(uri_scheme, "nbd")) {
-         is_unix = false;
--    } else if (!g_strcmp0(uri->scheme, "nbd+tcp")) {
-+    } else if (!g_strcmp0(uri_scheme, "nbd+tcp")) {
-         is_unix = false;
--    } else if (!g_strcmp0(uri->scheme, "nbd+unix")) {
-+    } else if (!g_strcmp0(uri_scheme, "nbd+unix")) {
-         is_unix = true;
-     } else {
--        ret = -EINVAL;
--        goto out;
-+        return -EINVAL;
-     }
- 
--    p = uri->path ? uri->path : "";
-+    p = g_uri_get_path(uri) ?: "";
-     if (p[0] == '/') {
-         p++;
-     }
-@@ -1545,52 +1545,50 @@ static int nbd_parse_uri(const char *filename, QDict *options)
-         qdict_put_str(options, "export", p);
-     }
- 
--    qp = query_params_parse(uri->query);
--    if (qp->n > 1 || (is_unix && !qp->n) || (!is_unix && qp->n)) {
--        ret = -EINVAL;
--        goto out;
-+    uri_query = g_uri_get_query(uri);
-+    if (uri_query) {
-+        qp = g_uri_parse_params(uri_query, -1, "&", G_URI_PARAMS_NONE, NULL);
-+        if (!qp) {
-+            return -EINVAL;
-+        }
-+        qp_n = g_hash_table_size(qp);
-+        if (qp_n > 1 || (is_unix && !qp_n) || (!is_unix && qp_n)) {
-+            return -EINVAL;
-+        }
-+     }
++# Now that we are sure that the user did not only want to print the --help
++# information, we should double-check that the C compiler really works:
++write_c_skeleton
++if ! compile_object ; then
++    error_exit "C compiler \"$cc\" either does not exist or does not work."
++fi
 +
-+    uri_server = g_uri_get_host(uri);
-+    if (uri_server && !uri_server[0]) {
-+        uri_server = NULL;
-     }
-+    uri_port = g_uri_get_port(uri);
+ # Remove old dependency files to make sure that they get properly regenerated
+ rm -f ./*/config-devices.mak.d
  
-     if (is_unix) {
-         /* nbd+unix:///export?socket=path */
--        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
--            ret = -EINVAL;
--            goto out;
-+        const char *uri_socket = g_hash_table_lookup(qp, "socket");
-+        if (uri_server || uri_port != -1 || !uri_socket) {
-+            return -EINVAL;
-         }
-         qdict_put_str(options, "server.type", "unix");
--        qdict_put_str(options, "server.path", qp->p[0].value);
-+        qdict_put_str(options, "server.path", uri_socket);
-     } else {
--        QString *host;
-         char *port_str;
- 
-         /* nbd[+tcp]://host[:port]/export */
--        if (!uri->server) {
--            ret = -EINVAL;
--            goto out;
--        }
--
--        /* strip braces from literal IPv6 address */
--        if (uri->server[0] == '[') {
--            host = qstring_from_substr(uri->server, 1,
--                                       strlen(uri->server) - 1);
--        } else {
--            host = qstring_from_str(uri->server);
-+        if (!uri_server) {
-+            return -EINVAL;
-         }
- 
-         qdict_put_str(options, "server.type", "inet");
--        qdict_put(options, "server.host", host);
-+        qdict_put_str(options, "server.host", uri_server);
- 
--        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
-+        port_str = g_strdup_printf("%d", uri_port > 0 ? uri_port
-+                                                      : NBD_DEFAULT_PORT);
-         qdict_put_str(options, "server.port", port_str);
-         g_free(port_str);
-     }
- 
--out:
--    if (qp) {
--        query_params_free(qp);
--    }
--    uri_free(uri);
--    return ret;
-+    return 0;
- }
- 
- static bool nbd_has_filename_options_conflict(QDict *options, Error **errp)
 -- 
 2.45.0
 
