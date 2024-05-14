@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE2EC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 13:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C33DC04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 13:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6rrJ-0007X5-0t; Tue, 14 May 2024 09:06:21 -0400
+	id 1s6s0y-00034P-Sw; Tue, 14 May 2024 09:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s6rrG-0007Wv-3e
- for qemu-devel@nongnu.org; Tue, 14 May 2024 09:06:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s6rrB-00086C-1g
- for qemu-devel@nongnu.org; Tue, 14 May 2024 09:06:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691971;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u2gFxq6jfUi0Z1xgq+VIIno/a5p3dHs3M3FFoWVRp6o=;
- b=FN5uISemcJIMsNP35A75JWJ2eaaHv/Hg31aVEBWIxGzZ8rTkFMSWRw4/NOsiKj5W3hqd+o
- Nw6X+wHmyTLF6aOuYJkFUQFRxVREeJpcjshbAEoDm2jmPUcme5c5JPZ/9ufkQF8Vpxk9+J
- e3QNNqieccdgUMgFGI6RvoC8FEdl1Z8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-LwJW1CFkM--y1AKI3Dhskw-1; Tue, 14 May 2024 09:06:10 -0400
-X-MC-Unique: LwJW1CFkM--y1AKI3Dhskw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6a103d524fdso10764916d6.0
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 06:06:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6s0r-00033R-KJ
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:16:16 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6s0o-0001rf-Pt
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:16:12 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34dc129accaso4164487f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 06:16:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715692566; x=1716297366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WeXEwRUjiS6plqhWQPVpjW5hZZRYujgYnfUDqCZ/zj4=;
+ b=SrLO2sF0Y182f7kpzoi9JBzycP61rBvVQ0rfTwkgz71hTZKbP4o+kLYwPfEDh9oLns
+ K2y906hvUiXt5/Iu1rjTAHcAqB2ed9iEF8OxznQdnaRtl4Ed6q33FMTIa6zCImc2jgGt
+ dkX6+aKE3DO4ZDOcaE6sQt64869aRtXPbdJ27XuAc6Oruh9MSbbOVd2toW0oZjj6OHUA
+ eyC8MjU57A2E1pK/DRy6Akqjsk0u1gcItWo/z2P93QUK78P3DsBzXSf8hsjedj3G1twF
+ iZpBwQXGq6WCaa9x1CSlpx+xckl5GgPNaPmAKzImr7vnVNH3DP4mHZyuJvkb0mpNbGrZ
+ w+1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715691969; x=1716296769;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1715692566; x=1716297366;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u2gFxq6jfUi0Z1xgq+VIIno/a5p3dHs3M3FFoWVRp6o=;
- b=pmkaIpZdo9X7CGEdqwfLL/daHupb2lluZCX6Oxi+KbmI3BHT1DOIitapd0r5fNws+h
- pRXLrKdDQyqmMBYoJXq769TXpE71kOl6pfdJL5i916WOhaHmFabE/GjclYulEQx/OrNV
- yPdWlh6c90rUDDrHlvrRejrrIdaTpSRLa+E4iACLI1dt78wSog9w/8hBE83z3qtrIhqG
- ZVT15gEi6z1OuPgWtu1MEKUKEwW1laIt/vQW9iGrn7jJ1MUmeaj0QtlXYhDkauvZaUFq
- pxuI64Yg7QjKF1QMB5xykFWi7SiHqqB9roEw/KxGhnRHL29RSajg6UQ6Q23Lx5m4rPcx
- 2puw==
-X-Gm-Message-State: AOJu0YyR2oOFmOV0eSe7l/bilnJMlgcXRo9+CpkNYKMAc20nf6wkaYcj
- FHhh0k0IAQkMua/ENWRL30CaKQDJR7XLGVBEB5jrAZnPXGuxHOx+Tr2InKcKucreY38EROfHD1T
- DjV3sKWSmCCnEkHlmEW6OjZfEH2o2euwhOBif8cG0hd04CuvtPsiE
-X-Received: by 2002:ad4:56e5:0:b0:699:2d88:744f with SMTP id
- 6a1803df08f44-6a1683816camr122964186d6.4.1715691968620; 
- Tue, 14 May 2024 06:06:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkUk4RIfo3g4evWbA7DjbM7myfdK7BQkkSK15I++GolGB5/vDFaMZGcXjndElRdITVn09NuQ==
-X-Received: by 2002:ad4:56e5:0:b0:699:2d88:744f with SMTP id
- 6a1803df08f44-6a1683816camr122963766d6.4.1715691968004; 
- Tue, 14 May 2024 06:06:08 -0700 (PDT)
-Received: from x1n ([67.214.252.166]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f1ccd42sm53033696d6.91.2024.05.14.06.06.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 May 2024 06:06:07 -0700 (PDT)
-Date: Tue, 14 May 2024 07:06:02 -0600
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 3/4] virtio-gpu: add x-vmstate-version
-Message-ID: <ZkNhuvPcxTLalF69@x1n>
-References: <20240513071905.499143-1-marcandre.lureau@redhat.com>
- <20240513071905.499143-4-marcandre.lureau@redhat.com>
- <ZkLojVI4ZAKANIBr@x1n>
- <CAMxuvayd5X04dOSRMHYQr-NbHrwNeZLTD6wvNb2bq6c+-qU-9w@mail.gmail.com>
+ bh=WeXEwRUjiS6plqhWQPVpjW5hZZRYujgYnfUDqCZ/zj4=;
+ b=PHmWOxwq+HqvP9C2sCktgbfRwlnKFkIC4mI3peNcfPKXIwJSRl7KHuuorMuWPPDQJS
+ AxTdnuNTJ8dY9I/curKQBx+MAEPTUhUjFnMRznOQRQ2PXVl44SXSoZ+M5AUle6nV/76v
+ jKMnBm1L/FKKiDiER23q92kTa5FI4x4ZNn9O+glMV5/PY0gFUnuKKwALVZ36dGt30hNQ
+ LqKPI/pc/ekuk6klNF4lQNLhZ/rP9uvp9jBg3pXQSUOcrymJm99+B0KUlIGtqlpvAgGF
+ w94gZMHFOJh9qEIaswtNwJzgPlxGUgFjC8rEHxw2hsShYXDEm3ejRp0qOrWGbB7HJjaz
+ jylg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgtZ5nkPD+HxvhYkpcrMCNIHSRLGLFNu0nQP0SSFSnNzjVIvAuvd7P/ZWlYzoHRvLoYSEg2wBGe5AFMgWI3X18gPATRxg=
+X-Gm-Message-State: AOJu0YzUKX2zd8U7Y8kfFXivnawkWzc80BhxMitiWP3oUQCeEuHqMG9G
+ hoxYE9Wzdtm0kFUsLaPmrVfyluIDopYI0g3Pqd7s6s4oX7s2Xy/qjQlUb0qW5tg=
+X-Google-Smtp-Source: AGHT+IHKoHygPOYIqV0/EAUFeg9C6390hm0Qx3phOQ1WML92gbqwRCpUQ5MKEmpHJUi2aF9sJQvfnA==
+X-Received: by 2002:a5d:526b:0:b0:34f:5d07:ebd1 with SMTP id
+ ffacd0b85a97d-3504a96a716mr8604968f8f.56.1715692566215; 
+ Tue, 14 May 2024 06:16:06 -0700 (PDT)
+Received: from [10.91.1.102] ([149.14.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502b8969fbsm13611472f8f.37.2024.05.14.06.16.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 May 2024 06:16:05 -0700 (PDT)
+Message-ID: <1bd87f96-6f92-4552-8be2-2a3a6f6e6a4c@linaro.org>
+Date: Tue, 14 May 2024 15:16:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] qga-win32: Improve guest-set-user-password,
+ guest-file-open errors
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: kkostiuk@redhat.com, michael.roth@amd.com
+References: <20240514105829.729342-1-armbru@redhat.com>
+ <20240514105829.729342-2-armbru@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240514105829.729342-2-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvayd5X04dOSRMHYQr-NbHrwNeZLTD6wvNb2bq6c+-qU-9w@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,107 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 14, 2024 at 11:25:26AM +0400, Marc-André Lureau wrote:
-> Hi
+On 14/5/24 12:58, Markus Armbruster wrote:
+> When guest-set-user-password's argument @password can't be converted
+> from UTF-8 to UTF-16, we report something like
 > 
-> On Tue, May 14, 2024 at 8:35 AM Peter Xu <peterx@redhat.com> wrote:
-> >
-> > Hey, Marc-Andre,
-> >
-> > On Mon, May 13, 2024 at 11:19:04AM +0400, marcandre.lureau@redhat.com wrote:
-> > > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > > index ae831b6b3e..7f9fb5eacc 100644
-> > > --- a/hw/display/virtio-gpu.c
-> > > +++ b/hw/display/virtio-gpu.c
-> > > @@ -1234,7 +1234,8 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-> > >      }
-> > >      qemu_put_be32(f, 0); /* end of list */
-> > >
-> > > -    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL);
-> > > +    return vmstate_save_state_v(f, &vmstate_virtio_gpu_scanouts, g,
-> > > +                                NULL, g->vmstate_version, NULL);
-> > >  }
-> > >
-> > >  static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-> > > @@ -1339,7 +1340,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-> > >      }
-> > >
-> > >      /* load & apply scanout state */
-> > > -    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
-> > > +    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, g->vmstate_version);
-> >
-> > [sorry for a late response; attending a conf, and will reply to the v1
-> >  thread later for the other discussions..]
-> >
-> > These two changes shouldn't be needed if we go with the .field_exists()
-> > approach, am I right?  IIUC in that case we can keep the version 1 here and
-> > don't boost anything, because we relied on the machine versions.
-> >
-> > IIUC this might be the reason why we found 9.0 mahines are broken on
-> > migration.  E.g, IIUC my original patch should work for 9.0<->9.0 too.
-> >
+>      Guest agent command failed, error was 'Invalid sequence in conversion input'
 > 
-> Indeed, but for consistency, shouldn't it use the x-vmstate-version
-> value for the top-level VMSD save/load ?
+> Improve this to
 > 
-> Otherwise, it feels a bit odd that this x-vmstate-version is only used
-> for the nested "virtio-gpu-one-scanout" version.
+>      can't convert 'password' to UTF-16: Invalid sequence in conversion input
 > 
-> Or perhaps we should rename it to x-scanout-vmstate-version ? wdyt
-
-Makes sense to me.  In another place I used to have a field called
-preempt_pre_7_2.. which is pretty wierd but it would be more accurate I
-suppose if the field name reflects how that was defined, especially
-differenciate that v.s. VMSD versioning as they're confusing indeed when
-used together.
-
-So if a rename I suppose we can even "vmstate-version".  I just wished VMSD
-versioning could work with bi-directional migration already then we save
-all the fuss... we used to have the chance before introducing
-field_exists() (I suppose this one came later), but we didn't care or
-notice at that time, sign.  We'll just need a handshake between src/dst so
-that when src sees dst uses VMSD v1 it sends v1-only fields even if it
-knows as far as v2.
-
-For the long run we may be able to have some small helper so we fetch the
-machine type globally, then maybe we can in the future pass in the test
-function as:
-
-bool test_function (void *opaque)
-{
-  return MACHINE_TYPE_BEFORE(8, 2);
-}
-
-Then it'll also avoid even introducing a variable.  Maybe we can provide
-this test_function() directly too, one for each release.
-
-Thanks,
-
+> Likewise for argument @username, and guest-file-open argument @path,
+> even though I'm not sure you can actually get invalid input past the
+> QMP core there.
 > 
-> 
-> > Thanks,
-> >
-> > >
-> > >      return 0;
-> > >  }
-> > > @@ -1659,6 +1660,7 @@ static Property virtio_gpu_properties[] = {
-> > >      DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
-> > >                      VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
-> > >      DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
-> > > +    DEFINE_PROP_UINT8("x-vmstate-version", VirtIOGPU, vmstate_version, 1),
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > >  };
-> > >
-> > > --
-> > > 2.41.0.28.gd7d8841f67
-> > >
-> >
-> > --
-> > Peter Xu
-> >
-> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   qga/commands-win32.c | 17 +++++++++--------
+>   1 file changed, 9 insertions(+), 8 deletions(-)
 
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
