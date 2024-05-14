@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F9DC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 21:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE800C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 21:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6zck-0003RG-Jv; Tue, 14 May 2024 17:23:51 -0400
+	id 1s6zfr-0004im-5m; Tue, 14 May 2024 17:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zci-0003Qz-KV
- for qemu-devel@nongnu.org; Tue, 14 May 2024 17:23:48 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zfl-0004dl-7B
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 17:26:58 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zcd-0002YI-78
- for qemu-devel@nongnu.org; Tue, 14 May 2024 17:23:46 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6zfi-0003mA-HC
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 17:26:56 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 821B1CE118C;
- Tue, 14 May 2024 21:23:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ADAC2BD10;
- Tue, 14 May 2024 21:23:37 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 4FBE4CE130A;
+ Tue, 14 May 2024 21:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7E3C2BD10;
+ Tue, 14 May 2024 21:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715721819;
- bh=dFk92RaWO2RCEnoHy9UlN1Dg27XRsO2Y/LbB0mxbB5w=;
+ s=k20201202; t=1715722010;
+ bh=gEM9zjywMYuNlwNSRMGSQ++BieAVZG2RhB1dCv3+xV8=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=a3pKinfJOLtdlUPtu2FvoB0JP/rsX6Ls2hd4UDv3fzLb9mZiDgePabyQg38s53t/5
- lcdqGZJBpS3F9etXuOkQ+8VC9cZC+55OEhb2c0N+rIrIw6+HsQaiM9+B3IIMtMAAwt
- T8JKv3u84501OnSjAPXub1UkJ2A131xZr1hPoHACE9zaPiDAhu3MQ5o18QBMD0VQwp
- Pv2SOrj91ao78Owmof7x32DJG6egw5OxBdu2EKfUKsYw5X+PI+jNXOGJzfwoLfDNBW
- n6OSI4tb2s+w+/ZqjCyipF+Wv+aPKFRv1LhvuWpqVkrZulAUctl1Sn30UeeA4Ih6Ov
- 5pPrkcNdsGRRg==
-Date: Tue, 14 May 2024 23:23:34 +0200
+ b=A4mGjkUSxPqmt7CX62q6D9qY+qa3ZNaxutov1LLT6o3kvNdsEIIRgmCvZu6Y1x3pk
+ 2ivY6qw6XGnwHO/0pEerD8smVR/90rXdPMmVPhmUHJwnWnqWjT2tMJJOTaXbugQjNr
+ ImhXycAyQMF1oLvfam4FdZaWiDzm/P4Nf0PkuwnV8qoC7D18aNFWWfW5BEjbBanjSn
+ 0S9I2VftLA9D7IaMKczIEalaqWqyVUsGVgeZJIXTzQnSAvZIRM3PzBfK51W0gdDGKs
+ gBo4otjws2lrn0ca4CqdcS0yq7VgeW6GDkXT6CTLK997S+XabFylhy2t1MPo6OwfM5
+ hbZ7q4SNFlIjg==
+Date: Tue, 14 May 2024 23:26:45 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 39/45] target/hppa: Drop tlb_entry return from
- hppa_get_physical_address
-Message-ID: <ZkPWVh1EwShLeZfj@carbonx1>
+Subject: Re: [PATCH v2 40/45] target/hppa: Adjust priv for B,GATE at runtime
+Message-ID: <ZkPXFbi47asrT30x@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-40-richard.henderson@linaro.org>
+ <20240513074717.130949-41-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-40-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=deller@kernel.org; helo=sin.source.kernel.org
+In-Reply-To: <20240513074717.130949-41-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
+ helo=sin.source.kernel.org
 X-Spam_score_int: -53
 X-Spam_score: -5.4
 X-Spam_bar: -----
@@ -71,7 +70,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Richard Henderson <richard.henderson@linaro.org>:
-> The return-by-reference is never used.
+> Do not compile in the priv change based on the first
+> translation; look up the PTE at execution time.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
