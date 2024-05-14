@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18CDFC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC4BC04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6ucO-000467-Vf; Tue, 14 May 2024 12:03:09 -0400
+	id 1s6udD-0004dT-Ei; Tue, 14 May 2024 12:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6ucF-00042u-P9
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:02:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6ucv-0004Ze-CS
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:03:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uc5-0007Fk-QA
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:02:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uch-0007O9-QB
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:03:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715702565;
+ s=mimecast20190719; t=1715702598;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7oVkPOsDD9WBol0EAOg1WOjwigz/6nzY+2y8iScW/Tc=;
- b=S6hNEQ7QqJQF2W/wF0ebR+VEurr2gc8nOvOrmh2VEG4K/esx5FFx4l52pOZhRczwghUdDj
- 0EvvwDp3vONaCeveqb1KUrrwAXGa+Iq6P/md8i5v5OaLlD0OJ29FFmviY/gVt1ZCTWAQi/
- lsQwmd595EOf4x6G7wy0+vnnZlri+Zw=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fwFR7NV6qLsnSeTRAy74jRuV54b6YaLd5jJZC826/as=;
+ b=GVxjUjBevZSf/Dtnjlq9SzSW2842xdLRsNnQV6Wrog6MaFtjQqAE2UNuxZQqB02LHfuEk1
+ /UKJ+DDqFgiHMu/sQ5N0dBOLk9yvLFYHv6grgVtg9royfC/3dcoU9wU35BjKflwrnfaD/b
+ W61Qoo4jmw0g3KhZTY5JTX9i9sk+R5k=
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
+ [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-135-Ph2-U44KNqaLjY6KSJo4jg-1; Tue, 14 May 2024 12:02:33 -0400
-X-MC-Unique: Ph2-U44KNqaLjY6KSJo4jg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-792c3d2b6beso746673085a.2
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:02:33 -0700 (PDT)
+ us-mta-465-iIYMGIIIOoiqvZrmF48GTg-1; Tue, 14 May 2024 12:03:16 -0400
+X-MC-Unique: iIYMGIIIOoiqvZrmF48GTg-1
+Received: by mail-vk1-f197.google.com with SMTP id
+ 71dfb90a1353d-4df94adb21fso2799224e0c.2
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:03:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715702553; x=1716307353;
+ d=1e100.net; s=20230601; t=1715702595; x=1716307395;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7oVkPOsDD9WBol0EAOg1WOjwigz/6nzY+2y8iScW/Tc=;
- b=P/TwE+4CZptOsmz6skCoq3VpA1a416gPvJg80nn1puHVSiGh/NomREAqXDTc4bt6nc
- a+niYxQiXuw5TllaVqG1spgXBJpHUKfIM1IswppJ2KtcoKNXbtQBjgfy+1G6lv7RqbQv
- Re5hCM0q9QDHxWQsoB3ZHYquqX6bUaoIIRLuePH7tqKWVB0zDX5mG3Ad5TJe0vJI5e2g
- IxMT64eym+eMV/njdVVYSviFH1yoMJ1v4/ouZRgOHGNUT/MlfVScEcKSMPg4FeZa908Z
- ZH6e4IP3EnGfU/JejIOm7kxBA4/HcT/YO8wUcYNzWYQop2XTBDT8GmqfUyH4LqUSW4TP
- hSuw==
+ bh=fwFR7NV6qLsnSeTRAy74jRuV54b6YaLd5jJZC826/as=;
+ b=q7QT7K70f/IIyUYDPA9v66+ot0sZiKwTffIV+KDFGUy1R29iml9c9hvWESVCP9x0gF
+ TW5EhVTgRqMcvNaAmr5Eg2mZhnNv6LHKByYtuTPUHuYuYdMHHKZ+AWzr8vZPnG3+yAue
+ QvAknY5x7o3HciuPg5h3c+TlJhHV/kKWUdGkM2QksJ+XltBIQNLcuLi+CqdwueyqN3e2
+ z+Xh82/yeysbJ5epxDLfh7Asb82QyNUxt+v0QobHBvmyr/b/ihuXCwoTcYgPEVGDHrs7
+ xjjryXa0+9OP0Gw/vsoVp/xP1ICZa1PpboC6jF3q5M2TV1zUS7M7M5lOC9Z1d5QAezO9
+ MrkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8MRZz1LnYVUUmQy9HhbRO1xQQq7DwDTzAxAUKZoOHAHfx1K47o2tDsg0qYVJqciO+4cHSnZ2LqjaNs5Uod2XzyH57SZk=
-X-Gm-Message-State: AOJu0YwIX7TRCoFRN6F1b1Ua8oloPZtTVjU4KZP7lB41UVMTV9DjAYzl
- mWlMo3RA3XEBgyylA3d99r+gFKoQP3ePv6W5lngEL6b6X5QBVOBtfs83uzcOyTn3ZgCz1XH3BKc
- /CKJyXlDpX5H/GuM4XGvXsFhiCJSkqmZ00NIJFyNLtpjI4nedM3RE
-X-Received: by 2002:a05:620a:5dd9:b0:792:bc86:2d21 with SMTP id
- af79cd13be357-792c75f0fbemr1503033285a.57.1715702553029; 
- Tue, 14 May 2024 09:02:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPyBGO2651MH+weno1tbZdE4zXQd+XyaK3IvgrAaVVmrUz8b8uDPekG/8MRcwrZD8iIFb3uA==
-X-Received: by 2002:a05:620a:5dd9:b0:792:bc86:2d21 with SMTP id
- af79cd13be357-792c75f0fbemr1503029585a.57.1715702552514; 
- Tue, 14 May 2024 09:02:32 -0700 (PDT)
+ AJvYcCU9qfFYqbhYeRigd7fwZsGL5eXU/Kwu25bqPcqUMGueQD/JFe+qN1sxlbSpZmBnl4DUzIfDO3Qzb+1McJArfhOV7Q42dlY=
+X-Gm-Message-State: AOJu0YxPaSZzI6++px9iwnzEb421S7WkCaf3Y1CHKaDxensKBrtAAb04
+ fvyoKqbP9mh9y/gqKTW48L+l5DHd2Oq+LAZVWWAbrP63LYCSlQKEaE4wU9p5nFmPq+VChkdCOwt
+ Yo04p5lAXGW3QpYl8nRiAGVlQwW14DlHnpg0f1KypooxTX8lRvSEs
+X-Received: by 2002:a05:6122:914:b0:4d3:3f2b:dc63 with SMTP id
+ 71dfb90a1353d-4df882a16cdmr10838436e0c.5.1715702595337; 
+ Tue, 14 May 2024 09:03:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4YDUmJens/PgK+4rVkPBGK/2gzBbnV+XjhZZ7YvV8ecJNz1o9hum57Im+kxmTrI1gDz53lQ==
+X-Received: by 2002:a05:6122:914:b0:4d3:3f2b:dc63 with SMTP id
+ 71dfb90a1353d-4df882a16cdmr10838401e0c.5.1715702594921; 
+ Tue, 14 May 2024 09:03:14 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf27f992sm578181385a.36.2024.05.14.09.02.31
+ 71dfb90a1353d-4df7bf44cf5sm1478719e0c.10.2024.05.14.09.03.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 09:02:31 -0700 (PDT)
-Message-ID: <265ebaf3-bc59-4907-b336-9ca1aa6aabca@redhat.com>
-Date: Tue, 14 May 2024 18:02:30 +0200
+ Tue, 14 May 2024 09:03:14 -0700 (PDT)
+Message-ID: <b9c1483b-7ac8-4e2e-8519-862154a632cb@redhat.com>
+Date: Tue, 14 May 2024 18:03:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] vfio/iommufd: Make iommufd_cdev_*() return bool
+Subject: Re: [PATCH v2 11/11] backends/iommufd: Make iommufd_backend_*()
+ return bool
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com, 
+ Yi Liu <yi.l.liu@intel.com>
 References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
- <20240507064252.457884-10-zhenzhong.duan@intel.com>
+ <20240507064252.457884-12-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240507064252.457884-10-zhenzhong.duan@intel.com>
+In-Reply-To: <20240507064252.457884-12-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,15 +112,12 @@ On 5/7/24 08:42, Zhenzhong Duan wrote:
 > 
 > The changed functions include:
 > 
-> iommufd_cdev_kvm_device_add
-> iommufd_cdev_connect_and_bind
-> iommufd_cdev_attach_ioas_hwpt
-> iommufd_cdev_detach_ioas_hwpt
-> iommufd_cdev_attach_container
-> iommufd_cdev_get_info_iova_range
+> iommufd_backend_connect
+> iommufd_backend_alloc_ioas
 > 
-> After the change, all functions in hw/vfio/iommufd.c follows the
-> standand.
+> By this chance, simplify the functions a bit by avoiding duplicate
+> recordings, e.g., log through either error interface or trace, not
+> both.
 > 
 > Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
@@ -132,245 +131,139 @@ C.
 
 
 > ---
->   hw/vfio/iommufd.c | 88 +++++++++++++++++++++--------------------------
->   1 file changed, 39 insertions(+), 49 deletions(-)
+>   include/sysemu/iommufd.h |  6 +++---
+>   backends/iommufd.c       | 29 +++++++++++++----------------
+>   hw/vfio/iommufd.c        |  5 ++---
+>   backends/trace-events    |  4 ++--
+>   4 files changed, 20 insertions(+), 24 deletions(-)
 > 
+> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+> index 9af27ebd6c..293bfbe967 100644
+> --- a/include/sysemu/iommufd.h
+> +++ b/include/sysemu/iommufd.h
+> @@ -23,11 +23,11 @@ struct IOMMUFDBackend {
+>       /*< public >*/
+>   };
+>   
+> -int iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
+> +bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
+>   void iommufd_backend_disconnect(IOMMUFDBackend *be);
+>   
+> -int iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
+> -                               Error **errp);
+> +bool iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
+> +                                Error **errp);
+>   void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id);
+>   int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
+>                               ram_addr_t size, void *vaddr, bool readonly);
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 76a0204852..c506afbdac 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -72,24 +72,22 @@ static void iommufd_backend_class_init(ObjectClass *oc, void *data)
+>       object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
+>   }
+>   
+> -int iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
+> +bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
+>   {
+> -    int fd, ret = 0;
+> +    int fd;
+>   
+>       if (be->owned && !be->users) {
+>           fd = qemu_open_old("/dev/iommu", O_RDWR);
+>           if (fd < 0) {
+>               error_setg_errno(errp, errno, "/dev/iommu opening failed");
+> -            ret = fd;
+> -            goto out;
+> +            return false;
+>           }
+>           be->fd = fd;
+>       }
+>       be->users++;
+> -out:
+> -    trace_iommufd_backend_connect(be->fd, be->owned,
+> -                                  be->users, ret);
+> -    return ret;
+> +
+> +    trace_iommufd_backend_connect(be->fd, be->owned, be->users);
+> +    return true;
+>   }
+>   
+>   void iommufd_backend_disconnect(IOMMUFDBackend *be)
+> @@ -106,25 +104,24 @@ out:
+>       trace_iommufd_backend_disconnect(be->fd, be->users);
+>   }
+>   
+> -int iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
+> -                               Error **errp)
+> +bool iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
+> +                                Error **errp)
+>   {
+> -    int ret, fd = be->fd;
+> +    int fd = be->fd;
+>       struct iommu_ioas_alloc alloc_data  = {
+>           .size = sizeof(alloc_data),
+>           .flags = 0,
+>       };
+>   
+> -    ret = ioctl(fd, IOMMU_IOAS_ALLOC, &alloc_data);
+> -    if (ret) {
+> +    if (ioctl(fd, IOMMU_IOAS_ALLOC, &alloc_data)) {
+>           error_setg_errno(errp, errno, "Failed to allocate ioas");
+> -        return ret;
+> +        return false;
+>       }
+>   
+>       *ioas_id = alloc_data.out_ioas_id;
+> -    trace_iommufd_backend_alloc_ioas(fd, *ioas_id, ret);
+> +    trace_iommufd_backend_alloc_ioas(fd, *ioas_id);
+>   
+> -    return ret;
+> +    return true;
+>   }
+>   
+>   void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id)
 > diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 4c6992fca1..84c86b970e 100644
+> index 6a446b16dc..554f9a6292 100644
 > --- a/hw/vfio/iommufd.c
 > +++ b/hw/vfio/iommufd.c
-> @@ -49,9 +49,9 @@ static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
->                                        container->ioas_id, iova, size);
->   }
->   
-> -static int iommufd_cdev_kvm_device_add(VFIODevice *vbasedev, Error **errp)
-> +static bool iommufd_cdev_kvm_device_add(VFIODevice *vbasedev, Error **errp)
->   {
-> -    return vfio_kvm_device_add_fd(vbasedev->fd, errp);
-> +    return !vfio_kvm_device_add_fd(vbasedev->fd, errp);
->   }
->   
->   static void iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
-> @@ -63,18 +63,16 @@ static void iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
->       }
->   }
->   
-> -static int iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
-> +static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
->   {
->       IOMMUFDBackend *iommufd = vbasedev->iommufd;
->       struct vfio_device_bind_iommufd bind = {
->           .argsz = sizeof(bind),
->           .flags = 0,
->       };
-> -    int ret;
->   
-> -    ret = iommufd_backend_connect(iommufd, errp);
-> -    if (ret) {
-> -        return ret;
-> +    if (iommufd_backend_connect(iommufd, errp)) {
-> +        return false;
->       }
->   
->       /*
-> @@ -82,15 +80,13 @@ static int iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
->        * in KVM. Especially for some emulated devices, it requires
->        * to have kvm information in the device open.
->        */
-> -    ret = iommufd_cdev_kvm_device_add(vbasedev, errp);
-> -    if (ret) {
-> +    if (!iommufd_cdev_kvm_device_add(vbasedev, errp)) {
->           goto err_kvm_device_add;
->       }
->   
->       /* Bind device to iommufd */
->       bind.iommufd = iommufd->fd;
-> -    ret = ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind);
-> -    if (ret) {
-> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
->           error_setg_errno(errp, errno, "error bind device fd=%d to iommufd=%d",
->                            vbasedev->fd, bind.iommufd);
->           goto err_bind;
-> @@ -99,12 +95,12 @@ static int iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
->       vbasedev->devid = bind.out_devid;
->       trace_iommufd_cdev_connect_and_bind(bind.iommufd, vbasedev->name,
->                                           vbasedev->fd, vbasedev->devid);
-> -    return ret;
-> +    return true;
->   err_bind:
->       iommufd_cdev_kvm_device_del(vbasedev);
->   err_kvm_device_add:
->       iommufd_backend_disconnect(iommufd);
-> -    return ret;
-> +    return false;
->   }
->   
->   static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
-> @@ -176,10 +172,10 @@ out:
->       return ret;
->   }
->   
-> -static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
-> +static bool iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
->                                            Error **errp)
->   {
-> -    int ret, iommufd = vbasedev->iommufd->fd;
-> +    int iommufd = vbasedev->iommufd->fd;
->       struct vfio_device_attach_iommufd_pt attach_data = {
->           .argsz = sizeof(attach_data),
->           .flags = 0,
-> @@ -187,38 +183,38 @@ static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
->       };
->   
->       /* Attach device to an IOAS or hwpt within iommufd */
-> -    ret = ioctl(vbasedev->fd, VFIO_DEVICE_ATTACH_IOMMUFD_PT, &attach_data);
-> -    if (ret) {
-> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_ATTACH_IOMMUFD_PT, &attach_data)) {
->           error_setg_errno(errp, errno,
->                            "[iommufd=%d] error attach %s (%d) to id=%d",
->                            iommufd, vbasedev->name, vbasedev->fd, id);
-> -    } else {
-> -        trace_iommufd_cdev_attach_ioas_hwpt(iommufd, vbasedev->name,
-> -                                            vbasedev->fd, id);
-> +        return false;
->       }
-> -    return ret;
-> +
-> +    trace_iommufd_cdev_attach_ioas_hwpt(iommufd, vbasedev->name,
-> +                                        vbasedev->fd, id);
-> +    return true;
->   }
->   
-> -static int iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
-> +static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
->   {
-> -    int ret, iommufd = vbasedev->iommufd->fd;
-> +    int iommufd = vbasedev->iommufd->fd;
->       struct vfio_device_detach_iommufd_pt detach_data = {
->           .argsz = sizeof(detach_data),
+> @@ -71,7 +71,7 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
 >           .flags = 0,
 >       };
 >   
-> -    ret = ioctl(vbasedev->fd, VFIO_DEVICE_DETACH_IOMMUFD_PT, &detach_data);
-> -    if (ret) {
-> +    if (ioctl(vbasedev->fd, VFIO_DEVICE_DETACH_IOMMUFD_PT, &detach_data)) {
->           error_setg_errno(errp, errno, "detach %s failed", vbasedev->name);
-> -    } else {
-> -        trace_iommufd_cdev_detach_ioas_hwpt(iommufd, vbasedev->name);
-> +        return false;
->       }
-> -    return ret;
-> +
-> +    trace_iommufd_cdev_detach_ioas_hwpt(iommufd, vbasedev->name);
-> +    return true;
->   }
->   
-> -static int iommufd_cdev_attach_container(VFIODevice *vbasedev,
-> -                                         VFIOIOMMUFDContainer *container,
-> -                                         Error **errp)
-> +static bool iommufd_cdev_attach_container(VFIODevice *vbasedev,
-> +                                          VFIOIOMMUFDContainer *container,
-> +                                          Error **errp)
->   {
->       return iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
->   }
-> @@ -228,7 +224,7 @@ static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
->   {
->       Error *err = NULL;
->   
-> -    if (iommufd_cdev_detach_ioas_hwpt(vbasedev, &err)) {
-> +    if (!iommufd_cdev_detach_ioas_hwpt(vbasedev, &err)) {
->           error_report_err(err);
->       }
->   }
-> @@ -254,20 +250,19 @@ static int iommufd_cdev_ram_block_discard_disable(bool state)
->       return ram_block_uncoordinated_discard_disable(state);
->   }
->   
-> -static int iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
-> -                                            uint32_t ioas_id, Error **errp)
-> +static bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
-> +                                             uint32_t ioas_id, Error **errp)
->   {
->       VFIOContainerBase *bcontainer = &container->bcontainer;
->       g_autofree struct iommu_ioas_iova_ranges *info = NULL;
->       struct iommu_iova_range *iova_ranges;
-> -    int ret, sz, fd = container->be->fd;
-> +    int sz, fd = container->be->fd;
->   
->       info = g_malloc0(sizeof(*info));
->       info->size = sizeof(*info);
->       info->ioas_id = ioas_id;
->   
-> -    ret = ioctl(fd, IOMMU_IOAS_IOVA_RANGES, info);
-> -    if (ret && errno != EMSGSIZE) {
-> +    if (ioctl(fd, IOMMU_IOAS_IOVA_RANGES, info) && errno != EMSGSIZE) {
->           goto error;
+> -    if (iommufd_backend_connect(iommufd, errp)) {
+> +    if (!iommufd_backend_connect(iommufd, errp)) {
+>           return false;
 >       }
 >   
-> @@ -275,8 +270,7 @@ static int iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
->       info = g_realloc(info, sizeof(*info) + sz);
->       info->allowed_iovas = (uintptr_t)(info + 1);
->   
-> -    ret = ioctl(fd, IOMMU_IOAS_IOVA_RANGES, info);
-> -    if (ret) {
-> +    if (ioctl(fd, IOMMU_IOAS_IOVA_RANGES, info)) {
->           goto error;
+> @@ -346,8 +346,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
 >       }
 >   
-> @@ -291,12 +285,11 @@ static int iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
->       }
->       bcontainer->pgsizes = info->out_iova_alignment;
->   
-> -    return 0;
-> +    return true;
->   
->   error:
-> -    ret = -errno;
->       error_setg_errno(errp, errno, "Cannot get IOVA ranges");
-> -    return ret;
-> +    return false;
->   }
->   
->   static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-> @@ -322,8 +315,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->           devfd = vbasedev->fd;
+>       /* Need to allocate a new dedicated container */
+> -    ret = iommufd_backend_alloc_ioas(vbasedev->iommufd, &ioas_id, errp);
+> -    if (ret < 0) {
+> +    if (!iommufd_backend_alloc_ioas(vbasedev->iommufd, &ioas_id, errp)) {
+>           goto err_alloc_ioas;
 >       }
 >   
-> -    ret = iommufd_cdev_connect_and_bind(vbasedev, errp);
-> -    if (ret) {
-> +    if (!iommufd_cdev_connect_and_bind(vbasedev, errp)) {
->           goto err_connect_bind;
->       }
+> diff --git a/backends/trace-events b/backends/trace-events
+> index d45c6e31a6..211e6f374a 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -7,11 +7,11 @@ dbus_vmstate_loading(const char *id) "id: %s"
+>   dbus_vmstate_saving(const char *id) "id: %s"
 >   
-> @@ -336,7 +328,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->               vbasedev->iommufd != container->be) {
->               continue;
->           }
-> -        if (iommufd_cdev_attach_container(vbasedev, container, &err)) {
-> +        if (!iommufd_cdev_attach_container(vbasedev, container, &err)) {
->               const char *msg = error_get_pretty(err);
->   
->               trace_iommufd_cdev_fail_attach_existing_container(msg);
-> @@ -369,8 +361,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->       vfio_container_init(bcontainer, space, iommufd_vioc);
->       QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
->   
-> -    ret = iommufd_cdev_attach_container(vbasedev, container, errp);
-> -    if (ret) {
-> +    if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
->           goto err_attach_container;
->       }
->   
-> @@ -379,8 +370,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->           goto err_discard_disable;
->       }
->   
-> -    ret = iommufd_cdev_get_info_iova_range(container, ioas_id, &err);
-> -    if (ret) {
-> +    if (!iommufd_cdev_get_info_iova_range(container, ioas_id, &err)) {
->           error_append_hint(&err,
->                      "Fallback to default 64bit IOVA range and 4K page size\n");
->           warn_report_err(err);
+>   # iommufd.c
+> -iommufd_backend_connect(int fd, bool owned, uint32_t users, int ret) "fd=%d owned=%d users=%d (%d)"
+> +iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d users=%d"
+>   iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
+>   iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+>   iommufd_backend_map_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, void *vaddr, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" addr=%p readonly=%d (%d)"
+>   iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+> -iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas, int ret) " iommufd=%d ioas=%d (%d)"
+> +iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+>   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
 
 
