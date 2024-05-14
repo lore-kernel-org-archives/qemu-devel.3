@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91473C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 20:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074A4C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 20:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6yZT-0008Fu-OC; Tue, 14 May 2024 16:16:23 -0400
+	id 1s6yfU-0002Av-OP; Tue, 14 May 2024 16:22:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6yZO-0008Dq-5V
- for qemu-devel@nongnu.org; Tue, 14 May 2024 16:16:19 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6yfS-0002Af-NA
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 16:22:34 -0400
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6yZM-0005TF-AN
- for qemu-devel@nongnu.org; Tue, 14 May 2024 16:16:17 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6yfQ-00078j-BE
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 16:22:34 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D2DE86134C;
- Tue, 14 May 2024 20:16:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1837CC32782;
- Tue, 14 May 2024 20:16:11 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id B4EB4612FD;
+ Tue, 14 May 2024 20:22:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DA8C2BD10;
+ Tue, 14 May 2024 20:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715717773;
- bh=0w9F375nwxfO72+RnVy8XSroSVtUptNeyDU9/semxHQ=;
+ s=k20201202; t=1715718150;
+ bh=k7WURb36pYiAODExNA/OmcTrmL47ZjDuKIOjjWpqATE=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=bnMz9i1y6xppsIJkMLJvNWYbI05OZ+o1J+4n+ZkSWXOWHAV8cIA1pi0W9BEWnxcsb
- x3ssRew5aArfP6Yr9GYN5XZXmRhlar62DcGxjTfC7XuBbNmv3205iQw8aGVwWyGOiJ
- Y4K1kwK4t2UGBc4CG7Wvp9H371WeeW039XLUH4ACEPXzC7w4TzOksHqbxS9QsA+HHX
- zYYTGG9fUDtvbjsbz/owbHZln2jyS2YNcgE8JgEFsPpzSgdA0LRXWISM4pFWhh2+dk
- Jdlhx0/88B5PmoSnuk0Q1ZhQAEsMJGKoVh3CoHkD9IkAS5SboEoNy+jlu4OqUNWV+U
- j15r+WO1A/VHQ==
-Date: Tue, 14 May 2024 22:16:09 +0200
+ b=AeUCktDcoe0WHKL5ztWlGlMffoYlAgqh437qBPgYJeEqClOGsFklveG0rj1vL0+9i
+ xIBO3rYQRRleYLsTIlpiKSAwpSSNt2dKhD9w8MmNcNUONH3wDVAMEyuKkW3qYHGmQ9
+ kQIGaDA2tuvh9EUN3JEnzSq8fTq4lL84e/LRDoNq/JOaMgE1WukIAXcWxkTnfzXx76
+ 2r4mM7R4eNREE6pe970vnERg9jsXmkL+nzMhKCf9TTTNPKojEiQX1LW/1yoB59sDfY
+ bM+ARl8xKRFr7I+pqW0D59+qEdpYB9uIw0BymfvCQZN8h9cxJ6fVmdPf0pg8hcQker
+ 1Q86Bo+3PsDYg==
+Date: Tue, 14 May 2024 22:22:26 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 34/45] target/hppa: Improve hppa_cpu_dump_state
-Message-ID: <ZkPGiQfiPBq5D3jE@carbonx1>
+Subject: Re: [PATCH v2 35/45] target/hppa: Split PSW X and B into their own
+ field
+Message-ID: <ZkPIAno5vS_ArhYQ@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-35-richard.henderson@linaro.org>
+ <20240513074717.130949-36-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-35-richard.henderson@linaro.org>
+In-Reply-To: <20240513074717.130949-36-richard.henderson@linaro.org>
 Received-SPF: pass client-ip=2604:1380:4641:c500::1;
  envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -53
@@ -70,9 +71,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Richard Henderson <richard.henderson@linaro.org>:
-> Print both raw IAQ_Front and IAQ_Back as well as the GVAs.
-> Print control registers in system mode.
-> Print floating point register if CPU_DUMP_FPU.
+> Generally, both of these bits are cleared at the end of each
+> instruction.  By separating these, we will be able to clear
+> both with a single insn, instead of 2 or 3.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
