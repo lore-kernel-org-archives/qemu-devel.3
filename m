@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0123C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 06:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D430C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 06:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6lT8-0007PY-0I; Tue, 14 May 2024 02:16:59 -0400
+	id 1s6lYc-0002RA-3H; Tue, 14 May 2024 02:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6lSo-0007Cl-3r; Tue, 14 May 2024 02:16:39 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1s6lYU-0002Q6-34; Tue, 14 May 2024 02:22:30 -0400
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6lSl-0002SF-DP; Tue, 14 May 2024 02:16:37 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4df1cb51866so1353709e0c.3; 
- Mon, 13 May 2024 23:16:34 -0700 (PDT)
+ id 1s6lYS-0003tF-5c; Tue, 14 May 2024 02:22:29 -0400
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-4df3da90b6cso2145218e0c.2; 
+ Mon, 13 May 2024 23:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715667394; x=1716272194; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715667746; x=1716272546; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X2SNVns/DbZGXiQ13OOIqVkxGTAHh1V3gyQ9FzsBB9w=;
- b=fnWUEh5z8liZ/ECUzxI1T8nsET41b1CGX6APOHeBjH5Z7l9dNgp9tBQ9bmBu16oKts
- L40iXou1MCBXcow6ZuxefQvK/y9NARmjjmADWgb+w9fOYm45OihAT6q0y1XqgVojKAhf
- /Ld6QWqddgMC2rPwuWBL3Uogus+ZAq18Vj6hcbmsm5CQ7acTnSXL5uPG+9J8aPZ41JLL
- gVGkVOzre1rKrfg4HI6rZzzEtx+nXFwF/uA8OMfZpRZGk/1o7xxeyjmYGOvAWbb/yObb
- bEZULRKFGh8WRY1TwdKm+0+JFzRRmn1XHi39YkXZQEBx4etbq/ViaRhobtUgs90BT8xq
- NtNA==
+ bh=V1iOd8ATpKURMFSV2O/vwJTp0YGgjsTvL5vV2zlK/AE=;
+ b=lo0lCO+i6Hq/c6szraoq0QrRBFjaawwobG5+z/VzdlYEIQBXLu3tR1OsVaKyj8EjBi
+ GY+6LhGKqS7kn5Kl0Funy6neI0zdSSty+P5bHw6sPCgd4ykVP0Ng3YOihDe1KbUmRom3
+ e6FU+lXstwmLMwB0QFdEDlPJuGjdvKv7GfbZO+vXGUUf9H1qObHBs2I50Z7WImj3nUL6
+ evDqg4e8xq17mYmert/YkWKbYIeXwUrILsB9oXpnP4df4Zst4XQBCR5W66Wun9XQLkuH
+ nwpqwdzrPJEeu8fHrvUJsPFwC5DGp643uBoqWoLN5UTcR9Vb09cmr6/07fy19mA5H3Dp
+ tYAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715667394; x=1716272194;
+ d=1e100.net; s=20230601; t=1715667746; x=1716272546;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X2SNVns/DbZGXiQ13OOIqVkxGTAHh1V3gyQ9FzsBB9w=;
- b=xR/WOepE9izhPAdXG1kjjIKh87aId+ILppbH0vb183oBGRHixRndynPvTnx/s2R2Aj
- icaniFTe3PpeoBgJ9DbrL6IMFsfV9qDbW8OKl5B+Hr0O9aecYKzfKqGSRSnhzQqcFivm
- 2YmZnBa6XCfXqRfQjLqYsQFD7dgAwLNEUWvVSVhDWOzSh82W4uMTquLuYWjbEB3z5wrR
- 8jJAEfZMY6QET1uXD8GXZWYkprb+jvEDiVfVNf7dOIpJniRMtbJWqYrPX3/foVJ3x77U
- anivVyuH+8YDZIWEpCWvObb0OM4wD+wtI0CVdtaGQRH1IgXjvXF0v/XI4LzeVXGvspVp
- cJPA==
+ bh=V1iOd8ATpKURMFSV2O/vwJTp0YGgjsTvL5vV2zlK/AE=;
+ b=oVtE3drghCJjRm8ramVwmvJpzXPl2OscIEontyoUcSQkBQdup0FdDGGcoqRv3gJXsJ
+ ZcXvF4xXC54phpsmH+lXUHBtMdvBi1N+xR4vm9AcAEVbaF9GR96YkO9i5h/j5+pC6WCR
+ Y4tpc9gR9DYVxeWrRgjzk9Q37jRSiQSjcBvd3/SdY6enTk/h7nvo/aSwYP42C1kZPe6J
+ /eoIZv7zncR0rJXXfThizOYilMqZmrzu2in/c4dKykZaHHQorLMPYxvS7eUcGnEbdUnx
+ afmtjFGvXIlRskVtLJwwZSySX59DKqjSvJaeVorftQdx04DtQSLqIBI+yoJtYPS3IFTC
+ mMuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeRYyZD4OqyZvl+8OvnyrBVhFndm5U+T+oX3zR73Qj/cmy8h9ELAcUdzA4Hq3jsLUDuiquVRLnhFwQG1ce/nEF+ChlHHhIDQF5tDUtb43vs8RkPnE1oEYW7wW2DQ==
-X-Gm-Message-State: AOJu0YxXvBfC8ABh/lCd/Ejyz8VuiCFfN2afQ77U0pZdTy6UC7NLNuDa
- iWIvJ8MjoWRZLcRqzEIDgRQkMRfiynpnrE9chXI4ix28BLY+xujQbiCbAD0W2OZXOouKEML1QIZ
- JR5seeYJhHIXRDMmn7jGy9twQcCc=
-X-Google-Smtp-Source: AGHT+IEYlP/IdeutQEHdWRaxEYw4R2zK/T1CLhzJ8U2xaiOICpuOgLPjeIVZUXZb+xXrj11qs/GT3+Cti43+aWmA+Co=
-X-Received: by 2002:a05:6122:369c:b0:4da:9d3e:a7df with SMTP id
- 71dfb90a1353d-4df882c0793mr10028468e0c.5.1715667393851; Mon, 13 May 2024
- 23:16:33 -0700 (PDT)
+ AJvYcCVQspa4fa5f/ZvR7mHiyNY9jKNvNQ+mY2ABY212h9CPNj21n4xVqSJ9Xrueh0cjdjVWJxiZKTId8GwBsRVVcMt1axVT4zI=
+X-Gm-Message-State: AOJu0YznPq/bkxNEFMeOYVVbJdluZV1UitHe5nttMTFIVnnhFwhbLwUH
+ W9DQ6x+wz+U/X5vIPz0HyMrh8iil4wfrDjmltKOTA8Tx8yaZJN33G5jsE07sz00+gGwr66uMMMu
+ X+zT2DVpPh5pMebFcy7Q7+GCb/4u8wWj9tkc=
+X-Google-Smtp-Source: AGHT+IF0615b3K9tgeNv7GOZE7WQY53vbmRSl2ExMMHsDH0GMJ6MTftGHsv0IR8c/uqT3Z9LiDkQ8j9K/equKYKGJyU=
+X-Received: by 2002:a05:6122:914:b0:4d3:3f2b:dc63 with SMTP id
+ 71dfb90a1353d-4df882a16cdmr9476847e0c.5.1715667746636; Mon, 13 May 2024
+ 23:22:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <ca275792-36c9-4ccd-b7b2-24d9fd837b24@ventanamicro.com>
- <20240503103052.6819-1-alexei.filippov@syntacore.com>
-In-Reply-To: <20240503103052.6819-1-alexei.filippov@syntacore.com>
+References: <20240429-countinhibit_fix-v1-0-802ec1e99133@rivosinc.com>
+ <20240429-countinhibit_fix-v1-1-802ec1e99133@rivosinc.com>
+In-Reply-To: <20240429-countinhibit_fix-v1-1-802ec1e99133@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 14 May 2024 16:16:07 +1000
-Message-ID: <CAKmqyKNgYPqtSaTdNkYcbErqv8+0LW9k5cyf9e46RosZ1W0Fhg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/riscv: do not set mtval2 for non guest-page
- faults
-To: Alexei Filippov <alexei.filippov@syntacore.com>
-Cc: dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, palmer@dabbelt.com, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Date: Tue, 14 May 2024 16:22:00 +1000
+Message-ID: <CAKmqyKMCpa_HihX9s6HNa0b+Dsw5E_pLUdOLhGrSR9vwGKEqHA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] target/riscv: Save counter values during countinhibit
+ update
+To: Atish Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,76 +94,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 3, 2024 at 8:32=E2=80=AFPM Alexei Filippov
-<alexei.filippov@syntacore.com> wrote:
+On Tue, Apr 30, 2024 at 5:29=E2=80=AFAM Atish Patra <atishp@rivosinc.com> w=
+rote:
 >
-> Previous patch fixed the PMP priority in raise_mmu_exception() but we're =
-still
-> setting mtval2 incorrectly. In riscv_cpu_tlb_fill(), after pmp check in 2=
- stage
-> translation part, mtval2 will be set in case of successes 2 stage transla=
-tion but
-> failed pmp check.
+> Currently, if a counter monitoring cycle/instret is stopped via
+> mcountinhibit we just update the state while the value is saved
+> during the next read. This is not accurate as the read may happen
+> many cycles after the counter is stopped. Ideally, the read should
+> return the value saved when the counter is stopped.
 >
-> In this case we gonna set mtval2 via env->guest_phys_fault_addr in contex=
-t of
-> riscv_cpu_tlb_fill(), as this was a guest-page-fault, but it didn't and m=
-tval2
-> should be zero, according to RISCV privileged spec sect. 9.4.4: When a gu=
-est
-> page-fault is taken into M-mode, mtval2 is written with either zero or gu=
-est
-> physical address that faulted, shifted by 2 bits. *For other traps, mtval=
-2
-> is set to zero...*
+> Thus, save the value of the counter during the inhibit update
+> operation and return that value during the read if corresponding bit
+> in mcountihibit is set.
 >
-> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
-> Changes since v1:
->                 -Added Reviewed-by tag.
->  target/riscv/cpu_helper.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>  target/riscv/cpu.h     |  1 -
+>  target/riscv/csr.c     | 32 ++++++++++++++++++++------------
+>  target/riscv/machine.c |  1 -
+>  3 files changed, 20 insertions(+), 14 deletions(-)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index e3a7797d00..484edad900 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1375,17 +1375,17 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr addre=
-ss, int size,
->                                __func__, pa, ret, prot_pmp, tlb_size);
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 3b1a02b9449a..09bbf7ce9880 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -153,7 +153,6 @@ typedef struct PMUCTRState {
+>      target_ulong mhpmcounter_prev;
+>      /* Snapshort value of a counter in RV32 */
+>      target_ulong mhpmcounterh_prev;
+> -    bool started;
+>      /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trig=
+ger */
+>      target_ulong irq_overflow_left;
+>  } PMUCTRState;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 726096444fae..68ca31aff47d 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -929,17 +929,11 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVSt=
+ate *env, target_ulong *val,
 >
->                  prot &=3D prot_pmp;
-> -            }
-> -
-> -            if (ret !=3D TRANSLATE_SUCCESS) {
-> +            } else {
->                  /*
->                   * Guest physical address translation failed, this is a =
-HS
->                   * level exception
->                   */
->                  first_stage_error =3D false;
-> -                env->guest_phys_fault_addr =3D (im_address |
-> -                                              (address &
-> -                                               (TARGET_PAGE_SIZE - 1))) =
->> 2;
-> +                if (ret !=3D TRANSLATE_PMP_FAIL) {
-> +                    env->guest_phys_fault_addr =3D (im_address |
-> +                                                  (address &
-> +                                                   (TARGET_PAGE_SIZE - 1=
-))) >> 2;
-> +                }
->              }
+>      if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
+>          /*
+> -         * Counter should not increment if inhibit bit is set. We can't =
+really
+> -         * stop the icount counting. Just return the counter value writt=
+en by
+> -         * the supervisor to indicate that counter was not incremented.
+> +         * Counter should not increment if inhibit bit is set. Just retu=
+rn the
+> +         * current counter value.
+>           */
+> -        if (!counter->started) {
+> -            *val =3D ctr_val;
+> -            return RISCV_EXCP_NONE;
+> -        } else {
+> -            /* Mark that the counter has been stopped */
+> -            counter->started =3D false;
+> -        }
+> +         *val =3D ctr_val;
+> +         return RISCV_EXCP_NONE;
+>      }
+>
+>      /*
+> @@ -1973,9 +1967,23 @@ static RISCVException write_mcountinhibit(CPURISCV=
+State *env, int csrno,
+>
+>      /* Check if any other counter is also monitoring cycles/instructions=
+ */
+>      for (cidx =3D 0; cidx < RV_MAX_MHPMCOUNTERS; cidx++) {
+> -        if (!get_field(env->mcountinhibit, BIT(cidx))) {
+>              counter =3D &env->pmu_ctrs[cidx];
+> -            counter->started =3D true;
+> +        if (get_field(env->mcountinhibit, BIT(cidx)) && (val & BIT(cidx)=
+)) {
+> +           /*
+> +             * Update the counter value for cycle/instret as we can't st=
+op the
+> +             * host ticks. But we should show the current value at this =
+moment.
+> +             */
+> +            if (riscv_pmu_ctr_monitor_cycles(env, cidx) ||
+> +                riscv_pmu_ctr_monitor_instructions(env, cidx)) {
+> +                counter->mhpmcounter_val =3D get_ticks(false) -
+> +                                           counter->mhpmcounter_prev +
+> +                                           counter->mhpmcounter_val;
+> +                if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> +                    counter->mhpmcounterh_val =3D get_ticks(false) -
+> +                                                counter->mhpmcounterh_pr=
+ev +
+> +                                                counter->mhpmcounterh_va=
+l;
+> +               }
+> +            }
 >          }
->      } else {
+>      }
+>
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 76f2150f78b5..3e0f2dd2ce2a 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -328,7 +328,6 @@ static const VMStateDescription vmstate_pmu_ctr_state=
+ =3D {
+>          VMSTATE_UINTTL(mhpmcounterh_val, PMUCTRState),
+>          VMSTATE_UINTTL(mhpmcounter_prev, PMUCTRState),
+>          VMSTATE_UINTTL(mhpmcounterh_prev, PMUCTRState),
+> -        VMSTATE_BOOL(started, PMUCTRState),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
+>
 > --
 > 2.34.1
 >
