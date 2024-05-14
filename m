@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 166FCC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02090C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6ucR-0004EC-Sb; Tue, 14 May 2024 12:03:11 -0400
+	id 1s6uhi-0000ic-4Z; Tue, 14 May 2024 12:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6ucN-00048J-Cv
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:03:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uc8-0007GC-JO
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:03:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715702569;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=v8Lf4L53wdIqOc7SP69LdeCJR3eT9QHaWFkHgm0UhwE=;
- b=AHAWecIJhd0dxBHvnuJaHJ2TkrMuX2t955K1LhJR6Fdc8AVheL5eFMM/y9VpL2O3z0eMjS
- OneD2MjK65vMuE0WMcMkbIhMJwiVbqfnSGipCFPnlwQZwIigTlBF0Kwha57878XOgn6cgv
- mRdQvFGr74zStizX6ZpymTMzeVlnWFg=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-4hfq9q_cM5eqVhBemhbJeQ-1; Tue, 14 May 2024 12:02:48 -0400
-X-MC-Unique: 4hfq9q_cM5eqVhBemhbJeQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6a0b3599f2cso58863686d6.3
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:02:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1s6uha-0000i2-Fz; Tue, 14 May 2024 12:08:30 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1s6uhY-0008IO-Hh; Tue, 14 May 2024 12:08:30 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1f3462caso413044a12.3; 
+ Tue, 14 May 2024 09:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715702905; x=1716307705; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5k+/i3+2q0m+c/EnilIbx/pYX31595rahMkFAgHWYBE=;
+ b=GAjzHQh5o1lC6wtPZ7U4UGRYMPd3euBoVrBlztNInlb3i6GGNDmzHOZMs9Gd51eZC9
+ RVSI5HTjaSY045EBn62lMtJ5BFbt3XvT1FRVdr7RhbtUfbgcyHpmMPbH4Nl6lV18Nnzo
+ gRNiuYPIpIiKKMd02p3NyuAGcm2p3yRvSzND6xfEgUHUtSxIvF1ll7JPydUbSEJUN3K3
+ UeWMCAHNuOiA8WW1B8vF65C63Q9vthchTSt76Mstg3cE12SPXV73TlRLBrBkb7tPHByX
+ Bl19S3ryiThXOyzmcSEFtOBpc6O4KjdkHQCPUvkUGQTn1tyF9ciMNq/TPgwbbPCH2X2f
+ A8pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715702567; x=1716307367;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v8Lf4L53wdIqOc7SP69LdeCJR3eT9QHaWFkHgm0UhwE=;
- b=kmjip72wD+mZVdH3Rzwa+b1NKoy02NxKeTWGg9JU1Dr+96n09MaFXRdaWoqAj9hMjL
- s+ui0wIgyqQabFiS/qW7aTaW/jE25HlBFNUSnlpmtjw/KJY35VgsIp4X1i1dcunYKVAR
- dQ8oPVImhC0lIlAFGYpnR6ZRJ5hd4RF/A/XK466TNJ846Sm40yjTtW2q/HSSKzxsRnuQ
- u037g0wH5fjyOlRlmGOfn8UzhqxjsH2yJnVpgiW2dW+lxCQ0k9zaD8tLHaPKXwH9joX/
- hkT+QHBSkzHwiPbh8P60RXcy4MGJgfXItLLTm2EgtGrj/8WsHoHDwLe3RPX/ND4Cm8A6
- +H/w==
+ d=1e100.net; s=20230601; t=1715702905; x=1716307705;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5k+/i3+2q0m+c/EnilIbx/pYX31595rahMkFAgHWYBE=;
+ b=FVhcvf/6M40xE/PIII6Jqgiu5qD8rMLq1UWsS81WehBBViyAEmt6c0k7Q1r3SU5Da6
+ MrkfNbKjNz3Xyxx3oPOzsWmuvoqhPKreIc+mz7SvC/HIjuAMqxSwa/+8/+db6PJ6tKFJ
+ PzPnqbSxWDNHDTC5vE5CT3uPZT71sWnV5xgN1FCoAl2OiWTng1Cqn7qP5Nw/FnK4ahPT
+ POhNWh2ycwfA9h8x8nj6EatB/4pWk2glGmJhNcJs7/CJH7/r0cTo9Us6wm5lqsUjj5qd
+ SZ+k+xQlCu2FMEEw8W8wVZrxuOwf5EhaayRZBaWnHr8yyeTjee5edFPN8YgZcJWPp2Ti
+ wodQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnFKfWZ87rj2ebTQEa3Bbu5DinOVQxF1U2e0JgkMoZIt6wBUKhMvWiAXi1NHlZnz4GwTlg4VdkDi5v75zrmkg+geMyJUM=
-X-Gm-Message-State: AOJu0YzdDtZJQzAqeFFy4pWYwaCbg1YAfGRY1+pyAcFWo+L6ls8gH5Iq
- m0HH2eigkzHl9cbbHJcTzyUfz2SVVKGhUSDynRFeke0hJzWaiqn3xsOP9El0SkFUOkltEJBvvr4
- YWq9tgFuC5eEN5SgWhHEck+Va6YJ8aPZ8oyrjl2pRb/SgJqCJOC/h
-X-Received: by 2002:a05:6214:5d86:b0:69b:579b:6147 with SMTP id
- 6a1803df08f44-6a1681502b3mr144969776d6.18.1715702567555; 
- Tue, 14 May 2024 09:02:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHiQAR0ds21TlvR91EvEI4ANRj402yreYQlEIOeXZg2U5IRdWpThmRSa2fVvcKGuFQimbeFbA==
-X-Received: by 2002:a05:6214:5d86:b0:69b:579b:6147 with SMTP id
- 6a1803df08f44-6a1681502b3mr144969526d6.18.1715702567194; 
- Tue, 14 May 2024 09:02:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f1cd3b5sm54790506d6.82.2024.05.14.09.02.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 09:02:46 -0700 (PDT)
-Message-ID: <822a5d82-6041-48ba-8e37-aabd25a9ffd2@redhat.com>
-Date: Tue, 14 May 2024 18:02:44 +0200
+ AJvYcCXo/EaUpTOOfwLmWKAx17Tm9e6bveLNH3nSZogdBc8lVCaoaR7uevc5/UZJ5GyWc5MgMVzfwUaEv4dSFrLwzcwkSaSJ1MvvmP+ECrqjNrhF2k1e4OISN8LnUp4C5w==
+X-Gm-Message-State: AOJu0YxYczoPJl8a5sP7f8+vwtUswZhNmElKZNmLA4bvFjD7CdNWXjKk
+ pC4OMUH8ENiOPmAV+r/YQQ+lQpqDiEWRaw0TEaxiEa5UrhPTcJEGzU/Twy12iVm2SAPtSlRaYrz
+ gULpnirnt2+88pQlcNZrHcREpCkA=
+X-Google-Smtp-Source: AGHT+IEE74u4yD+0sV+LoWW5oEkFMd6H3rYgOiMv3a259R6NgZWNG6OXFzJet9J8eLb3z/hoZoPRkOMLBzmxHPdaA4g=
+X-Received: by 2002:a50:9f8f:0:b0:572:a23d:7912 with SMTP id
+ 4fb4d7f45d1cf-5734d5c2584mr8753612a12.13.1715702904608; Tue, 14 May 2024
+ 09:08:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/11] vfio/cpr: Make vfio_cpr_register_container()
- return bool
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
-References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
- <20240507064252.457884-11-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240507064252.457884-11-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
+ <b732f7bd-53d2-4c66-9821-a5bd589f6c56@gmail.com>
+ <CAKmqyKM+2jhFdAL=3Z0De03hBFR6cn2xtVm3FrkPvn=U8tJLpg@mail.gmail.com>
+ <CAFukJ-CfsChuYbpdUP9EOPEEn0s=jdBmp9aV691U8By68HV6Aw@mail.gmail.com>
+ <CAKmqyKOQLTYm7F8NBeoSmL1B6icfPzuH-ZHPXhz+wJLrjJyd6w@mail.gmail.com>
+ <CAKmqyKMtJPGXs+rXFzfN7jqYTMbKBQ2SYVYoQ5kONT-FKkp=9g@mail.gmail.com>
+In-Reply-To: <CAKmqyKMtJPGXs+rXFzfN7jqYTMbKBQ2SYVYoQ5kONT-FKkp=9g@mail.gmail.com>
+From: Alexey Baturo <baturo.alexey@gmail.com>
+Date: Tue, 14 May 2024 19:08:13 +0300
+Message-ID: <CAFukJ-D9SMJUoSDOf5us5QXY2VM79Xbi=siy7obOo42B3fLxXg@mail.gmail.com>
+Subject: Re: [PATCH v9 0/6] Pointer Masking update for Zjpm v1.0
+To: Alistair Francis <alistair23@gmail.com>
+Cc: liwei <liwei1518@gmail.com>, richard.henderson@linaro.org, 
+ space.monkey.delivers@gmail.com, palmer@dabbelt.com, Alistair.Francis@wdc.com, 
+ sagark@eecs.berkeley.edu, kbastian@mail.uni-paderborn.de, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000002b5da006186c3637"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,87 +95,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/24 08:42, Zhenzhong Duan wrote:
-> This is to follow the coding standand to return bool if 'Error **'
-> is used to pass error.
-> 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+--0000000000002b5da006186c3637
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+>The cover letter says that this implements version 1.0 of the spec, this
+sounds like it doesn't.
+Yeah, sorry about the confusion. Yes, the patch is actually for v0.8 but as
+you've correctly mentioned v0.8 has not so much differences to v1.0.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Instead of constantly removing and re-adding the code
+I was talking about only one removing the existing code and replacing it
+with current patches and then making updates on top of them.
 
-Thanks,
+>Do you mind fixing that and addressing the other comments/concerns
+Sure
 
-C.
+=D0=BF=D0=BD, 13 =D0=BC=D0=B0=D1=8F 2024=E2=80=AF=D0=B3. =D0=B2 14:32, Alis=
+tair Francis <alistair23@gmail.com>:
 
+> On Mon, May 13, 2024 at 9:14=E2=80=AFPM Alistair Francis <alistair23@gmai=
+l.com>
+> wrote:
+> >
+> > On Mon, May 13, 2024 at 9:05=E2=80=AFPM Alexey Baturo <baturo.alexey@gm=
+ail.com>
+> wrote:
+> > >
+> > > Hi,
+> > >
+> > > > Hi, any change from v0.8 to v1.0?
+> > > Not in the patches that were sent. I'd still suggest applying a
+> step-by-step approach with cleaning up old code and establishing the new
+> mechanisms first and then updating the code to match the spec 100%. Also =
+I
+> heard Martin has some arch compliance tests for J-ext somewhere.
+> >
+> > The cover letter says that this implements version 1.0 of the spec,
+> > this sounds like it doesn't.
+> >
+> > Also, it's better to make the changes on top of the current code.
+> > Instead of constantly removing and re-adding the code. Which is then
+> > hard to review. Especially as I'm guessing there isn't a huge
+> > difference between v0.8 and v1.0.
+> >
+> > > @Alistair Francis @liwei does this approach sound reasonable to you?
+> > >
+> > > >Also, this needs another rebase
+> > > Sure, no problem at all. I'll rebase and re-send them later today.
+>
+> Sorry, it did apply correctly! That was my mistake.
+>
+> But this series generates a warning. Do you mind fixing that and
+> addressing the other comments/concerns
+>
+> Alistair
+>
+> >
+> > Thanks. Can you be very clear which version of the spec you have
+> > developed and tested against as well.
+> >
+> > Alistair
+>
 
-> ---
->   include/hw/vfio/vfio-common.h | 2 +-
->   hw/vfio/container.c           | 3 +--
->   hw/vfio/cpr.c                 | 4 ++--
->   hw/vfio/iommufd.c             | 3 +--
->   4 files changed, 5 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index a7b6fc8f46..e4c60374fa 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -205,7 +205,7 @@ void vfio_detach_device(VFIODevice *vbasedev);
->   int vfio_kvm_device_add_fd(int fd, Error **errp);
->   int vfio_kvm_device_del_fd(int fd, Error **errp);
->   
-> -int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
-> +bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
->   void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer);
->   
->   extern const MemoryRegionOps vfio_region_ops;
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index b02583ea16..86266f3b83 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -616,8 +616,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
->           goto free_container_exit;
->       }
->   
-> -    ret = vfio_cpr_register_container(bcontainer, errp);
-> -    if (ret) {
-> +    if (!vfio_cpr_register_container(bcontainer, errp)) {
->           goto free_container_exit;
->       }
->   
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index 392c2dd95d..87e51fcee1 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -25,12 +25,12 @@ static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
->       return 0;
->   }
->   
-> -int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
-> +bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
->   {
->       migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
->                                   vfio_cpr_reboot_notifier,
->                                   MIG_MODE_CPR_REBOOT);
-> -    return 0;
-> +    return true;
->   }
->   
->   void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 84c86b970e..6a446b16dc 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -396,8 +396,7 @@ found_container:
->           goto err_listener_register;
->       }
->   
-> -    ret = vfio_cpr_register_container(bcontainer, errp);
-> -    if (ret) {
-> +    if (!vfio_cpr_register_container(bcontainer, errp)) {
->           goto err_listener_register;
->       }
->   
+--0000000000002b5da006186c3637
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">&gt;The cover letter says that this implements version 1.0=
+ of the spec, this sounds like it doesn&#39;t.<div>Yeah, sorry about the co=
+nfusion. Yes, the patch is actually for v0.8 but as you&#39;ve correctly me=
+ntioned v0.8 has not so much differences to v1.0.</div><div><br></div>&gt; =
+Instead of constantly removing and re-adding the code<div>I was talking abo=
+ut only one removing=C2=A0the existing code and replacing it with current p=
+atches and then making updates on top of them.</div><div><br></div>&gt;Do y=
+ou mind fixing that and addressing the other comments/concerns<div>Sure<br>=
+<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=
+=D0=BD, 13 =D0=BC=D0=B0=D1=8F 2024=E2=80=AF=D0=B3. =D0=B2 14:32, Alistair F=
+rancis &lt;<a href=3D"mailto:alistair23@gmail.com" target=3D"_blank">alista=
+ir23@gmail.com</a>&gt;:<br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex">On Mon, May 13, 2024 at 9:14=E2=80=AFPM Alistair Francis &lt;<a hre=
+f=3D"mailto:alistair23@gmail.com" target=3D"_blank">alistair23@gmail.com</a=
+>&gt; wrote:<br>
+&gt;<br>
+&gt; On Mon, May 13, 2024 at 9:05=E2=80=AFPM Alexey Baturo &lt;<a href=3D"m=
+ailto:baturo.alexey@gmail.com" target=3D"_blank">baturo.alexey@gmail.com</a=
+>&gt; wrote:<br>
+&gt; &gt;<br>
+&gt; &gt; Hi,<br>
+&gt; &gt;<br>
+&gt; &gt; &gt; Hi, any change from v0.8 to v1.0?<br>
+&gt; &gt; Not in the patches that were sent. I&#39;d still suggest applying=
+ a step-by-step approach with cleaning up old code and establishing the new=
+ mechanisms first and then updating the code to match the spec 100%. Also I=
+ heard Martin has some arch compliance tests for J-ext somewhere.<br>
+&gt;<br>
+&gt; The cover letter says that this implements version 1.0 of the spec,<br=
+>
+&gt; this sounds like it doesn&#39;t.<br>
+&gt;<br>
+&gt; Also, it&#39;s better to make the changes on top of the current code.<=
+br>
+&gt; Instead of constantly removing and re-adding the code. Which is then<b=
+r>
+&gt; hard to review. Especially as I&#39;m guessing there isn&#39;t a huge<=
+br>
+&gt; difference between v0.8 and v1.0.<br>
+&gt;<br>
+&gt; &gt; @Alistair Francis @liwei does this approach sound reasonable to y=
+ou?<br>
+&gt; &gt;<br>
+&gt; &gt; &gt;Also, this needs another rebase<br>
+&gt; &gt; Sure, no problem at all. I&#39;ll rebase and re-send them later t=
+oday.<br>
+<br>
+Sorry, it did apply correctly! That was my mistake.<br>
+<br>
+But this series generates a warning. Do you mind fixing that and<br>
+addressing the other comments/concerns<br>
+<br>
+Alistair<br>
+<br>
+&gt;<br>
+&gt; Thanks. Can you be very clear which version of the spec you have<br>
+&gt; developed and tested against as well.<br>
+&gt;<br>
+&gt; Alistair<br>
+</blockquote></div></div></div>
+
+--0000000000002b5da006186c3637--
 
