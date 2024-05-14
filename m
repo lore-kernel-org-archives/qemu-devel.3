@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A28C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6F7C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6riw-0004Hf-9i; Tue, 14 May 2024 08:57:44 -0400
+	id 1s6rjN-0004gX-8e; Tue, 14 May 2024 08:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6riY-0003yD-2h
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:57:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rjJ-0004bL-0P
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:58:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rhu-00064f-K9
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:56:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rjG-0006Fz-7h
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:58:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691397;
+ s=mimecast20190719; t=1715691481;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sNmwDsALBheVCqjJ6O/+VPFPRWLoJbc0qD/jpQh6/DM=;
- b=hTd/y9MSzxdMP3mDnTxWaFfDnDw/qnMuZbU2ZS5Kj3708FANrP+NgALUA0ToiMHyQoWWn/
- nKUf7X0PFu9vAjG29YiVF7Pk30AhvxmsaN7oM11ptUxdZCzAyXBZHO5IE6TONPB1ZDokmU
- ADtlyKO1GsEkFLJyiVP4F05tog3+dSo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-510-MlIahdrbNe2nxyVfdTnhtw-1; Tue,
- 14 May 2024 08:51:36 -0400
-X-MC-Unique: MlIahdrbNe2nxyVfdTnhtw-1
+ bh=zmUvabFbM+5OwxI+dTdCm1VUwA2ZFPyObGsB+gBRnMw=;
+ b=LMHeBu/bMI8AtcMAzl8vBhKBUSHN+8i2G7ESDeUQEgdabjYFmf+eGsbPjBLiyUp5GN558t
+ Oqdw3htH/wGK6SiWxZkz2fnUWPjXlbamFR+1SKLQzUm5CdvKrfBJgQy/ce+1nnKv+w//TP
+ 7SVD/guSd4noPDWtWbNALWg6+yvZNr8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-wd7kdXDCNkKkZPzTPRJK3Q-1; Tue, 14 May 2024 08:51:34 -0400
+X-MC-Unique: wd7kdXDCNkKkZPzTPRJK3Q-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DA3643C00084;
- Tue, 14 May 2024 12:51:35 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 55ABD400EAC;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 144A1800CA5;
  Tue, 14 May 2024 12:51:34 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5B020400057;
+ Tue, 14 May 2024 12:51:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 11/11] util/uri: Remove the old URI parsing code
-Date: Tue, 14 May 2024 14:51:19 +0200
-Message-ID: <20240514125119.284638-12-thuth@redhat.com>
+Subject: [PULL 10/11] block/ssh: Use URI parsing code from glib
+Date: Tue, 14 May 2024 14:51:18 +0200
+Message-ID: <20240514125119.284638-11-thuth@redhat.com>
 In-Reply-To: <20240514125119.284638-1-thuth@redhat.com>
 References: <20240514125119.284638-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -56,13 +56,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,1611 +78,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we switched all consumers of the URI code to use the URI
-parsing functions from glib instead, we can remove our internal
-URI parsing code since it is not used anymore.
+Since version 2.66, glib has useful URI parsing functions, too.
+Use those instead of the QEMU-internal ones to be finally able
+to get rid of the latter.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240418101056.302103-14-thuth@redhat.com>
+While we're at it, also emit a warning when encountering unknown
+parameters in the URI, so that the users have a chance to detect
+their typos or other mistakes.
+
+Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
+Message-ID: <20240418101056.302103-13-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/qemu/uri.h |   99 ---
- util/uri.c         | 1466 --------------------------------------------
- util/meson.build   |    2 +-
- 3 files changed, 1 insertion(+), 1566 deletions(-)
- delete mode 100644 include/qemu/uri.h
- delete mode 100644 util/uri.c
+ block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 40 insertions(+), 35 deletions(-)
 
-diff --git a/include/qemu/uri.h b/include/qemu/uri.h
-deleted file mode 100644
-index 255e61f452..0000000000
---- a/include/qemu/uri.h
-+++ /dev/null
-@@ -1,99 +0,0 @@
--/**
-- * Summary: library of generic URI related routines
-- * Description: library of generic URI related routines
-- *              Implements RFC 2396
-- *
-- * Copyright (C) 1998-2003 Daniel Veillard.  All Rights Reserved.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-- * DANIEL VEILLARD BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-- *
-- * Except as contained in this notice, the name of Daniel Veillard shall not
-- * be used in advertising or otherwise to promote the sale, use or other
-- * dealings in this Software without prior written authorization from him.
-- *
-- * Author: Daniel Veillard
-- **
-- * Copyright (C) 2007 Red Hat, Inc.
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2.1 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library. If not, see <https://www.gnu.org/licenses/>.
-- *
-- * Authors:
-- *    Richard W.M. Jones <rjones@redhat.com>
-- *
-- * Utility functions to help parse and assemble query strings.
-- */
--
--#ifndef QEMU_URI_H
--#define QEMU_URI_H
--
--/**
-- * URI:
-- *
-- * A parsed URI reference. This is a struct containing the various fields
-- * as described in RFC 2396 but separated for further processing.
-- */
--typedef struct URI {
--    char *scheme;      /* the URI scheme */
--    char *opaque;      /* opaque part */
--    char *authority;   /* the authority part */
--    char *server;      /* the server part */
--    char *user;        /* the user part */
--    int port;          /* the port number */
--    char *path;        /* the path string */
--    char *fragment;    /* the fragment identifier */
--    int cleanup;       /* parsing potentially unclean URI */
--    char *query;       /* the query string (as it appears in the URI) */
--} URI;
--
--URI *uri_new(void);
--URI *uri_parse(const char *str);
--URI *uri_parse_raw(const char *str, int raw);
--int uri_parse_into(URI *uri, const char *str);
--char *uri_to_string(URI *uri);
--void uri_free(URI *uri);
--
--/* Single web service query parameter 'name=value'. */
--typedef struct QueryParam {
--  char *name;          /* Name (unescaped). */
--  char *value;         /* Value (unescaped). */
--  int ignore;          /* Ignore this field in qparam_get_query */
--} QueryParam;
--
--/* Set of parameters. */
--typedef struct QueryParams {
--  int n;               /* number of parameters used */
--  int alloc;           /* allocated space */
--  QueryParam *p;       /* array of parameters */
--} QueryParams;
--
--QueryParams *query_params_new(int init_alloc);
--QueryParams *query_params_parse(const char *query);
--void query_params_free(QueryParams *ps);
--
--#endif /* QEMU_URI_H */
-diff --git a/util/uri.c b/util/uri.c
-deleted file mode 100644
-index 573174bf47..0000000000
---- a/util/uri.c
-+++ /dev/null
-@@ -1,1466 +0,0 @@
--/**
-- * uri.c: set of generic URI related routines
-- *
-- * Reference: RFCs 3986, 2732 and 2373
-- *
-- * Copyright (C) 1998-2003 Daniel Veillard.  All Rights Reserved.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-- * DANIEL VEILLARD BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-- *
-- * Except as contained in this notice, the name of Daniel Veillard shall not
-- * be used in advertising or otherwise to promote the sale, use or other
-- * dealings in this Software without prior written authorization from him.
-- *
-- * daniel@veillard.com
-- *
-- **
-- *
-- * Copyright (C) 2007, 2009-2010 Red Hat, Inc.
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2.1 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library. If not, see <https://www.gnu.org/licenses/>.
-- *
-- * Authors:
-- *    Richard W.M. Jones <rjones@redhat.com>
-- *
-- */
--
--#include "qemu/osdep.h"
--#include "qemu/cutils.h"
--
+diff --git a/block/ssh.c b/block/ssh.c
+index 2748253d4a..a88171d4b5 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -37,7 +37,6 @@
+ #include "qemu/ctype.h"
+ #include "qemu/cutils.h"
+ #include "qemu/sockets.h"
 -#include "qemu/uri.h"
--
--static void uri_clean(URI *uri);
--
--/*
-- * Old rule from 2396 used in legacy handling code
-- * alpha    = lowalpha | upalpha
-- */
--#define IS_ALPHA(x) (IS_LOWALPHA(x) || IS_UPALPHA(x))
--
--/*
-- * lowalpha = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
-- *            "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" |
-- *            "u" | "v" | "w" | "x" | "y" | "z"
-- */
--
--#define IS_LOWALPHA(x) (((x) >= 'a') && ((x) <= 'z'))
--
--/*
-- * upalpha = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" |
-- *           "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" |
-- *           "U" | "V" | "W" | "X" | "Y" | "Z"
-- */
--#define IS_UPALPHA(x) (((x) >= 'A') && ((x) <= 'Z'))
--
--#ifdef IS_DIGIT
--#undef IS_DIGIT
--#endif
--/*
-- * digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-- */
--#define IS_DIGIT(x) (((x) >= '0') && ((x) <= '9'))
--
--/*
-- * alphanum = alpha | digit
-- */
--
--#define IS_ALPHANUM(x) (IS_ALPHA(x) || IS_DIGIT(x))
--
--/*
-- * mark = "-" | "_" | "." | "!" | "~" | "*" | "'" | "(" | ")"
-- */
--
--#define IS_MARK(x) (((x) == '-') || ((x) == '_') || ((x) == '.') ||            \
--    ((x) == '!') || ((x) == '~') || ((x) == '*') || ((x) == '\'') ||           \
--    ((x) == '(') || ((x) == ')'))
--
--/*
-- * unwise = "{" | "}" | "|" | "\" | "^" | "`"
-- */
--
--#define IS_UNWISE(p)                                                           \
--    (((*(p) == '{')) || ((*(p) == '}')) || ((*(p) == '|')) ||                  \
--     ((*(p) == '\\')) || ((*(p) == '^')) || ((*(p) == '[')) ||                 \
--     ((*(p) == ']')) || ((*(p) == '`')))
--/*
-- * reserved = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+" | "$" | "," |
-- *            "[" | "]"
-- */
--
--#define IS_RESERVED(x) (((x) == ';') || ((x) == '/') || ((x) == '?') ||        \
--    ((x) == ':') || ((x) == '@') || ((x) == '&') || ((x) == '=') ||            \
--    ((x) == '+') || ((x) == '$') || ((x) == ',') || ((x) == '[') ||            \
--    ((x) == ']'))
--
--/*
-- * unreserved = alphanum | mark
-- */
--
--#define IS_UNRESERVED(x) (IS_ALPHANUM(x) || IS_MARK(x))
--
--/*
-- * Skip to next pointer char, handle escaped sequences
-- */
--
--#define NEXT(p) ((*p == '%') ? p += 3 : p++)
--
--/*
-- * Productions from the spec.
-- *
-- *    authority     = server | reg_name
-- *    reg_name      = 1*( unreserved | escaped | "$" | "," |
-- *                        ";" | ":" | "@" | "&" | "=" | "+" )
-- *
-- * path          = [ abs_path | opaque_part ]
-- */
--
--/************************************************************************
-- *                                                                      *
-- *                         RFC 3986 parser                              *
-- *                                                                      *
-- ************************************************************************/
--
--#define ISA_DIGIT(p) ((*(p) >= '0') && (*(p) <= '9'))
--#define ISA_ALPHA(p) (((*(p) >= 'a') && (*(p) <= 'z')) ||                      \
--                      ((*(p) >= 'A') && (*(p) <= 'Z')))
--#define ISA_HEXDIG(p)                                                          \
--    (ISA_DIGIT(p) || ((*(p) >= 'a') && (*(p) <= 'f')) ||                       \
--     ((*(p) >= 'A') && (*(p) <= 'F')))
--
--/*
-- *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-- *                     / "*" / "+" / "," / ";" / "="
-- */
--#define ISA_SUB_DELIM(p)                                                       \
--    (((*(p) == '!')) || ((*(p) == '$')) || ((*(p) == '&')) ||                  \
--     ((*(p) == '(')) || ((*(p) == ')')) || ((*(p) == '*')) ||                  \
--     ((*(p) == '+')) || ((*(p) == ',')) || ((*(p) == ';')) ||                  \
--     ((*(p) == '=')) || ((*(p) == '\'')))
--
--/*
-- *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-- */
--#define ISA_UNRESERVED(p)                                                      \
--    ((ISA_ALPHA(p)) || (ISA_DIGIT(p)) || ((*(p) == '-')) ||                    \
--     ((*(p) == '.')) || ((*(p) == '_')) || ((*(p) == '~')))
--
--/*
-- *    pct-encoded   = "%" HEXDIG HEXDIG
-- */
--#define ISA_PCT_ENCODED(p)                                                     \
--    ((*(p) == '%') && (ISA_HEXDIG(p + 1)) && (ISA_HEXDIG(p + 2)))
--
--/*
-- *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-- */
--#define ISA_PCHAR(p)                                                           \
--    (ISA_UNRESERVED(p) || ISA_PCT_ENCODED(p) || ISA_SUB_DELIM(p) ||            \
--     ((*(p) == ':')) || ((*(p) == '@')))
--
--/**
-- * rfc3986_parse_scheme:
-- * @uri:  pointer to an URI structure
-- * @str:  pointer to the string to analyze
-- *
-- * Parse an URI scheme
-- *
-- * ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_scheme(URI *uri, const char **str)
--{
--    const char *cur;
--
--    if (str == NULL) {
--        return -1;
--    }
--
--    cur = *str;
--    if (!ISA_ALPHA(cur)) {
--        return 2;
--    }
--    cur++;
--    while (ISA_ALPHA(cur) || ISA_DIGIT(cur) || (*cur == '+') || (*cur == '-') ||
--           (*cur == '.')) {
--        cur++;
--    }
--    if (uri != NULL) {
--        g_free(uri->scheme);
--        uri->scheme = g_strndup(*str, cur - *str);
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_fragment:
-- * @uri:  pointer to an URI structure
-- * @str:  pointer to the string to analyze
-- *
-- * Parse the query part of an URI
-- *
-- * fragment      = *( pchar / "/" / "?" )
-- * NOTE: the strict syntax as defined by 3986 does not allow '[' and ']'
-- *       in the fragment identifier but this is used very broadly for
-- *       xpointer scheme selection, so we are allowing it here to not break
-- *       for example all the DocBook processing chains.
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_fragment(URI *uri, const char **str)
--{
--    const char *cur;
--
--    if (str == NULL) {
--        return -1;
--    }
--
--    cur = *str;
--
--    while ((ISA_PCHAR(cur)) || (*cur == '/') || (*cur == '?') ||
--           (*cur == '[') || (*cur == ']') ||
--           ((uri != NULL) && (uri->cleanup & 1) && (IS_UNWISE(cur)))) {
--        NEXT(cur);
--    }
--    if (uri != NULL) {
--        g_free(uri->fragment);
--        if (uri->cleanup & 2) {
--            uri->fragment = g_strndup(*str, cur - *str);
--        } else {
--            uri->fragment = g_uri_unescape_segment(*str, cur, NULL);
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_query:
-- * @uri:  pointer to an URI structure
-- * @str:  pointer to the string to analyze
-- *
-- * Parse the query part of an URI
-- *
-- * query = *uric
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_query(URI *uri, const char **str)
--{
--    const char *cur;
--
--    if (str == NULL) {
--        return -1;
--    }
--
--    cur = *str;
--
--    while ((ISA_PCHAR(cur)) || (*cur == '/') || (*cur == '?') ||
--           ((uri != NULL) && (uri->cleanup & 1) && (IS_UNWISE(cur)))) {
--        NEXT(cur);
--    }
--    if (uri != NULL) {
--        g_free(uri->query);
--        uri->query = g_strndup(*str, cur - *str);
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_port:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse a port  part and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * port          = *DIGIT
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_port(URI *uri, const char **str)
--{
--    const char *cur = *str;
--    int port = 0;
--
--    if (ISA_DIGIT(cur)) {
--        while (ISA_DIGIT(cur)) {
--            port = port * 10 + (*cur - '0');
--            if (port > 65535) {
--                return 1;
--            }
--            cur++;
--        }
--        if (uri) {
--            uri->port = port;
--        }
--        *str = cur;
--        return 0;
--    }
--    return 1;
--}
--
--/**
-- * rfc3986_parse_user_info:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse a user information part and fill in the appropriate fields
-- * of the @uri structure
-- *
-- * userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_user_info(URI *uri, const char **str)
--{
--    const char *cur;
--
--    cur = *str;
--    while (ISA_UNRESERVED(cur) || ISA_PCT_ENCODED(cur) || ISA_SUB_DELIM(cur) ||
--           (*cur == ':')) {
--        NEXT(cur);
--    }
--    if (*cur == '@') {
--        if (uri != NULL) {
--            g_free(uri->user);
--            if (uri->cleanup & 2) {
--                uri->user = g_strndup(*str, cur - *str);
--            } else {
--                uri->user = g_uri_unescape_segment(*str, cur, NULL);
--            }
--        }
--        *str = cur;
--        return 0;
--    }
--    return 1;
--}
--
--/**
-- * rfc3986_parse_dec_octet:
-- * @str:  the string to analyze
-- *
-- *    dec-octet     = DIGIT                 ; 0-9
-- *                  / %x31-39 DIGIT         ; 10-99
-- *                  / "1" 2DIGIT            ; 100-199
-- *                  / "2" %x30-34 DIGIT     ; 200-249
-- *                  / "25" %x30-35          ; 250-255
-- *
-- * Skip a dec-octet.
-- *
-- * Returns 0 if found and skipped, 1 otherwise
-- */
--static int rfc3986_parse_dec_octet(const char **str)
--{
--    const char *cur = *str;
--
--    if (!(ISA_DIGIT(cur))) {
--        return 1;
--    }
--    if (!ISA_DIGIT(cur + 1)) {
--        cur++;
--    } else if ((*cur != '0') && (ISA_DIGIT(cur + 1)) && (!ISA_DIGIT(cur + 2))) {
--        cur += 2;
--    } else if ((*cur == '1') && (ISA_DIGIT(cur + 1)) && (ISA_DIGIT(cur + 2))) {
--        cur += 3;
--    } else if ((*cur == '2') && (*(cur + 1) >= '0') && (*(cur + 1) <= '4') &&
--             (ISA_DIGIT(cur + 2))) {
--        cur += 3;
--    } else if ((*cur == '2') && (*(cur + 1) == '5') && (*(cur + 2) >= '0') &&
--             (*(cur + 1) <= '5')) {
--        cur += 3;
--    } else {
--        return 1;
--    }
--    *str = cur;
--    return 0;
--}
--/**
-- * rfc3986_parse_host:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an host part and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * host          = IP-literal / IPv4address / reg-name
-- * IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
-- * IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
-- * reg-name      = *( unreserved / pct-encoded / sub-delims )
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_host(URI *uri, const char **str)
--{
--    const char *cur = *str;
--    const char *host;
--
--    host = cur;
--    /*
--     * IPv6 and future addressing scheme are enclosed between brackets
--     */
--    if (*cur == '[') {
--        cur++;
--        while ((*cur != ']') && (*cur != 0)) {
--            cur++;
--        }
--        if (*cur != ']') {
--            return 1;
--        }
--        cur++;
--        goto found;
--    }
--    /*
--     * try to parse an IPv4
--     */
--    if (ISA_DIGIT(cur)) {
--        if (rfc3986_parse_dec_octet(&cur) != 0) {
--            goto not_ipv4;
--        }
--        if (*cur != '.') {
--            goto not_ipv4;
--        }
--        cur++;
--        if (rfc3986_parse_dec_octet(&cur) != 0) {
--            goto not_ipv4;
--        }
--        if (*cur != '.') {
--            goto not_ipv4;
--        }
--        if (rfc3986_parse_dec_octet(&cur) != 0) {
--            goto not_ipv4;
--        }
--        if (*cur != '.') {
--            goto not_ipv4;
--        }
--        if (rfc3986_parse_dec_octet(&cur) != 0) {
--            goto not_ipv4;
--        }
--        goto found;
--    not_ipv4:
--        cur = *str;
--    }
--    /*
--     * then this should be a hostname which can be empty
--     */
--    while (ISA_UNRESERVED(cur) || ISA_PCT_ENCODED(cur) || ISA_SUB_DELIM(cur)) {
--        NEXT(cur);
--    }
--found:
--    if (uri != NULL) {
--        g_free(uri->authority);
--        uri->authority = NULL;
--        g_free(uri->server);
--        if (cur != host) {
--            if (uri->cleanup & 2) {
--                uri->server = g_strndup(host, cur - host);
--            } else {
--                uri->server = g_uri_unescape_segment(host, cur, NULL);
--            }
--        } else {
--            uri->server = NULL;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_authority:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an authority part and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * authority     = [ userinfo "@" ] host [ ":" port ]
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_authority(URI *uri, const char **str)
--{
--    const char *cur;
--    int ret;
--
--    cur = *str;
--    /*
--     * try to parse a userinfo and check for the trailing @
--     */
--    ret = rfc3986_parse_user_info(uri, &cur);
--    if ((ret != 0) || (*cur != '@')) {
--        cur = *str;
--    } else {
--        cur++;
--    }
--    ret = rfc3986_parse_host(uri, &cur);
--    if (ret != 0) {
--        return ret;
--    }
--    if (*cur == ':') {
--        cur++;
--        ret = rfc3986_parse_port(uri, &cur);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_segment:
-- * @str:  the string to analyze
-- * @forbid: an optional forbidden character
-- * @empty: allow an empty segment
-- *
-- * Parse a segment and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * segment       = *pchar
-- * segment-nz    = 1*pchar
-- * segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
-- *               ; non-zero-length segment without any colon ":"
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_segment(const char **str, char forbid, int empty)
--{
--    const char *cur;
--
--    cur = *str;
--    if (!ISA_PCHAR(cur)) {
--        if (empty) {
--            return 0;
--        }
--        return 1;
--    }
--    while (ISA_PCHAR(cur) && (*cur != forbid)) {
--        NEXT(cur);
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_path_ab_empty:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an path absolute or empty and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * path-abempty  = *( "/" segment )
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_path_ab_empty(URI *uri, const char **str)
--{
--    const char *cur;
--    int ret;
--
--    cur = *str;
--
--    while (*cur == '/') {
--        cur++;
--        ret = rfc3986_parse_segment(&cur, 0, 1);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (uri != NULL) {
--        g_free(uri->path);
--        if (*str != cur) {
--            if (uri->cleanup & 2) {
--                uri->path = g_strndup(*str, cur - *str);
--            } else {
--                uri->path = g_uri_unescape_segment(*str, cur, NULL);
--            }
--        } else {
--            uri->path = NULL;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_path_absolute:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an path absolute and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * path-absolute = "/" [ segment-nz *( "/" segment ) ]
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_path_absolute(URI *uri, const char **str)
--{
--    const char *cur;
--    int ret;
--
--    cur = *str;
--
--    if (*cur != '/') {
--        return 1;
--    }
--    cur++;
--    ret = rfc3986_parse_segment(&cur, 0, 0);
--    if (ret == 0) {
--        while (*cur == '/') {
--            cur++;
--            ret = rfc3986_parse_segment(&cur, 0, 1);
--            if (ret != 0) {
--                return ret;
--            }
--        }
--    }
--    if (uri != NULL) {
--        g_free(uri->path);
--        if (cur != *str) {
--            if (uri->cleanup & 2) {
--                uri->path = g_strndup(*str, cur - *str);
--            } else {
--                uri->path = g_uri_unescape_segment(*str, cur, NULL);
--            }
--        } else {
--            uri->path = NULL;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_path_rootless:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an path without root and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * path-rootless = segment-nz *( "/" segment )
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_path_rootless(URI *uri, const char **str)
--{
--    const char *cur;
--    int ret;
--
--    cur = *str;
--
--    ret = rfc3986_parse_segment(&cur, 0, 0);
--    if (ret != 0) {
--        return ret;
--    }
--    while (*cur == '/') {
--        cur++;
--        ret = rfc3986_parse_segment(&cur, 0, 1);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (uri != NULL) {
--        g_free(uri->path);
--        if (cur != *str) {
--            if (uri->cleanup & 2) {
--                uri->path = g_strndup(*str, cur - *str);
--            } else {
--                uri->path = g_uri_unescape_segment(*str, cur, NULL);
--            }
--        } else {
--            uri->path = NULL;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_path_no_scheme:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an path which is not a scheme and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * path-noscheme = segment-nz-nc *( "/" segment )
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_path_no_scheme(URI *uri, const char **str)
--{
--    const char *cur;
--    int ret;
--
--    cur = *str;
--
--    ret = rfc3986_parse_segment(&cur, ':', 0);
--    if (ret != 0) {
--        return ret;
--    }
--    while (*cur == '/') {
--        cur++;
--        ret = rfc3986_parse_segment(&cur, 0, 1);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (uri != NULL) {
--        g_free(uri->path);
--        if (cur != *str) {
--            if (uri->cleanup & 2) {
--                uri->path = g_strndup(*str, cur - *str);
--            } else {
--                uri->path = g_uri_unescape_segment(*str, cur, NULL);
--            }
--        } else {
--            uri->path = NULL;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_hier_part:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an hierarchical part and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * hier-part     = "//" authority path-abempty
-- *                / path-absolute
-- *                / path-rootless
-- *                / path-empty
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_hier_part(URI *uri, const char **str)
--{
--    const char *cur;
--    int ret;
--
--    cur = *str;
--
--    if ((*cur == '/') && (*(cur + 1) == '/')) {
--        cur += 2;
--        ret = rfc3986_parse_authority(uri, &cur);
--        if (ret != 0) {
--            return ret;
--        }
--        ret = rfc3986_parse_path_ab_empty(uri, &cur);
--        if (ret != 0) {
--            return ret;
--        }
--        *str = cur;
--        return 0;
--    } else if (*cur == '/') {
--        ret = rfc3986_parse_path_absolute(uri, &cur);
--        if (ret != 0) {
--            return ret;
--        }
--    } else if (ISA_PCHAR(cur)) {
--        ret = rfc3986_parse_path_rootless(uri, &cur);
--        if (ret != 0) {
--            return ret;
--        }
--    } else {
--        /* path-empty is effectively empty */
--        if (uri != NULL) {
--            g_free(uri->path);
--            uri->path = NULL;
--        }
--    }
--    *str = cur;
--    return 0;
--}
--
--/**
-- * rfc3986_parse_relative_ref:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an URI string and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
-- * relative-part = "//" authority path-abempty
-- *               / path-absolute
-- *               / path-noscheme
-- *               / path-empty
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_relative_ref(URI *uri, const char *str)
--{
--    int ret;
--
--    if ((*str == '/') && (*(str + 1) == '/')) {
--        str += 2;
--        ret = rfc3986_parse_authority(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--        ret = rfc3986_parse_path_ab_empty(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    } else if (*str == '/') {
--        ret = rfc3986_parse_path_absolute(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    } else if (ISA_PCHAR(str)) {
--        ret = rfc3986_parse_path_no_scheme(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    } else {
--        /* path-empty is effectively empty */
--        if (uri != NULL) {
--            g_free(uri->path);
--            uri->path = NULL;
--        }
--    }
--
--    if (*str == '?') {
--        str++;
--        ret = rfc3986_parse_query(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (*str == '#') {
--        str++;
--        ret = rfc3986_parse_fragment(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (*str != 0) {
--        uri_clean(uri);
--        return 1;
--    }
--    return 0;
--}
--
--/**
-- * rfc3986_parse:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an URI string and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * scheme ":" hier-part [ "?" query ] [ "#" fragment ]
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse(URI *uri, const char *str)
--{
--    int ret;
--
--    ret = rfc3986_parse_scheme(uri, &str);
--    if (ret != 0) {
--        return ret;
--    }
--    if (*str != ':') {
--        return 1;
--    }
--    str++;
--    ret = rfc3986_parse_hier_part(uri, &str);
--    if (ret != 0) {
--        return ret;
--    }
--    if (*str == '?') {
--        str++;
--        ret = rfc3986_parse_query(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (*str == '#') {
--        str++;
--        ret = rfc3986_parse_fragment(uri, &str);
--        if (ret != 0) {
--            return ret;
--        }
--    }
--    if (*str != 0) {
--        uri_clean(uri);
--        return 1;
--    }
--    return 0;
--}
--
--/**
-- * rfc3986_parse_uri_reference:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an URI reference string and fills in the appropriate fields
-- * of the @uri structure
-- *
-- * URI-reference = URI / relative-ref
-- *
-- * Returns 0 or the error code
-- */
--static int rfc3986_parse_uri_reference(URI *uri, const char *str)
--{
--    int ret;
--
--    if (str == NULL) {
--        return -1;
--    }
--    uri_clean(uri);
--
--    /*
--     * Try first to parse absolute refs, then fallback to relative if
--     * it fails.
--     */
--    ret = rfc3986_parse(uri, str);
--    if (ret != 0) {
--        uri_clean(uri);
--        ret = rfc3986_parse_relative_ref(uri, str);
--        if (ret != 0) {
--            uri_clean(uri);
--            return ret;
--        }
--    }
--    return 0;
--}
--
--/**
-- * uri_parse:
-- * @str:  the URI string to analyze
-- *
-- * Parse an URI based on RFC 3986
-- *
-- * URI-reference = [ absoluteURI | relativeURI ] [ "#" fragment ]
-- *
-- * Returns a newly built URI or NULL in case of error
-- */
--URI *uri_parse(const char *str)
--{
--    URI *uri;
--    int ret;
--
--    if (str == NULL) {
--        return NULL;
--    }
--    uri = uri_new();
--    ret = rfc3986_parse_uri_reference(uri, str);
--    if (ret) {
--        uri_free(uri);
--        return NULL;
--    }
--    return uri;
--}
--
--/**
-- * uri_parse_into:
-- * @uri:  pointer to an URI structure
-- * @str:  the string to analyze
-- *
-- * Parse an URI reference string based on RFC 3986 and fills in the
-- * appropriate fields of the @uri structure
-- *
-- * URI-reference = URI / relative-ref
-- *
-- * Returns 0 or the error code
-- */
--int uri_parse_into(URI *uri, const char *str)
--{
--    return rfc3986_parse_uri_reference(uri, str);
--}
--
--/**
-- * uri_parse_raw:
-- * @str:  the URI string to analyze
-- * @raw:  if 1 unescaping of URI pieces are disabled
-- *
-- * Parse an URI but allows to keep intact the original fragments.
-- *
-- * URI-reference = URI / relative-ref
-- *
-- * Returns a newly built URI or NULL in case of error
-- */
--URI *uri_parse_raw(const char *str, int raw)
--{
--    URI *uri;
--    int ret;
--
--    if (str == NULL) {
--        return NULL;
--    }
--    uri = uri_new();
--    if (raw) {
--        uri->cleanup |= 2;
--    }
--    ret = uri_parse_into(uri, str);
--    if (ret) {
--        uri_free(uri);
--        return NULL;
--    }
--    return uri;
--}
--
--/************************************************************************
-- *                                                                      *
-- *                    Generic URI structure functions                   *
-- *                                                                      *
-- ************************************************************************/
--
--/**
-- * uri_new:
-- *
-- * Simply creates an empty URI
-- *
-- * Returns the new structure or NULL in case of error
-- */
--URI *uri_new(void)
--{
--    return g_new0(URI, 1);
--}
--
--/**
-- * realloc2n:
-- *
-- * Function to handle properly a reallocation when saving an URI
-- * Also imposes some limit on the length of an URI string output
-- */
--static char *realloc2n(char *ret, int *max)
--{
--    char *temp;
--    int tmp;
--
--    tmp = *max * 2;
--    temp = g_realloc(ret, (tmp + 1));
--    *max = tmp;
--    return temp;
--}
--
--/**
-- * uri_to_string:
-- * @uri:  pointer to an URI
-- *
-- * Save the URI as an escaped string
-- *
-- * Returns a new string (to be deallocated by caller)
-- */
--char *uri_to_string(URI *uri)
--{
--    char *ret = NULL;
--    char *temp;
--    const char *p;
--    int len;
--    int max;
--
--    if (uri == NULL) {
--        return NULL;
--    }
--
--    max = 80;
--    ret = g_malloc(max + 1);
--    len = 0;
--
--    if (uri->scheme != NULL) {
--        p = uri->scheme;
--        while (*p != 0) {
--            if (len >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            ret[len++] = *p++;
--        }
--        if (len >= max) {
--            temp = realloc2n(ret, &max);
--            ret = temp;
--        }
--        ret[len++] = ':';
--    }
--    if (uri->opaque != NULL) {
--        p = uri->opaque;
--        while (*p != 0) {
--            if (len + 3 >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            if (IS_RESERVED(*(p)) || IS_UNRESERVED(*(p))) {
--                ret[len++] = *p++;
--            } else {
--                int val = *(unsigned char *)p++;
--                int hi = val / 0x10, lo = val % 0x10;
--                ret[len++] = '%';
--                ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
--                ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
--            }
--        }
--    } else {
--        if (uri->server != NULL) {
--            if (len + 3 >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            ret[len++] = '/';
--            ret[len++] = '/';
--            if (uri->user != NULL) {
--                p = uri->user;
--                while (*p != 0) {
--                    if (len + 3 >= max) {
--                        temp = realloc2n(ret, &max);
--                        ret = temp;
--                    }
--                    if ((IS_UNRESERVED(*(p))) || ((*(p) == ';')) ||
--                        ((*(p) == ':')) || ((*(p) == '&')) || ((*(p) == '=')) ||
--                        ((*(p) == '+')) || ((*(p) == '$')) || ((*(p) == ','))) {
--                        ret[len++] = *p++;
--                    } else {
--                        int val = *(unsigned char *)p++;
--                        int hi = val / 0x10, lo = val % 0x10;
--                        ret[len++] = '%';
--                        ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
--                        ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
--                    }
--                }
--                if (len + 3 >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                ret[len++] = '@';
--            }
--            p = uri->server;
--            while (*p != 0) {
--                if (len >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                ret[len++] = *p++;
--            }
--            if (uri->port > 0) {
--                if (len + 10 >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                len += snprintf(&ret[len], max - len, ":%d", uri->port);
--            }
--        } else if (uri->authority != NULL) {
--            if (len + 3 >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            ret[len++] = '/';
--            ret[len++] = '/';
--            p = uri->authority;
--            while (*p != 0) {
--                if (len + 3 >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                if ((IS_UNRESERVED(*(p))) || ((*(p) == '$')) ||
--                    ((*(p) == ',')) || ((*(p) == ';')) || ((*(p) == ':')) ||
--                    ((*(p) == '@')) || ((*(p) == '&')) || ((*(p) == '=')) ||
--                    ((*(p) == '+'))) {
--                    ret[len++] = *p++;
--                } else {
--                    int val = *(unsigned char *)p++;
--                    int hi = val / 0x10, lo = val % 0x10;
--                    ret[len++] = '%';
--                    ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
--                    ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
--                }
--            }
--        } else if (uri->scheme != NULL) {
--            if (len + 3 >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            ret[len++] = '/';
--            ret[len++] = '/';
--        }
--        if (uri->path != NULL) {
--            p = uri->path;
--            /*
--             * the colon in file:///d: should not be escaped or
--             * Windows accesses fail later.
--             */
--            if ((uri->scheme != NULL) && (p[0] == '/') &&
--                (((p[1] >= 'a') && (p[1] <= 'z')) ||
--                 ((p[1] >= 'A') && (p[1] <= 'Z'))) &&
--                (p[2] == ':') && (!strcmp(uri->scheme, "file"))) {
--                if (len + 3 >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                ret[len++] = *p++;
--                ret[len++] = *p++;
--                ret[len++] = *p++;
--            }
--            while (*p != 0) {
--                if (len + 3 >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                if ((IS_UNRESERVED(*(p))) || ((*(p) == '/')) ||
--                    ((*(p) == ';')) || ((*(p) == '@')) || ((*(p) == '&')) ||
--                    ((*(p) == '=')) || ((*(p) == '+')) || ((*(p) == '$')) ||
--                    ((*(p) == ','))) {
--                    ret[len++] = *p++;
--                } else {
--                    int val = *(unsigned char *)p++;
--                    int hi = val / 0x10, lo = val % 0x10;
--                    ret[len++] = '%';
--                    ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
--                    ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
--                }
--            }
--        }
--        if (uri->query != NULL) {
--            if (len + 1 >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            ret[len++] = '?';
--            p = uri->query;
--            while (*p != 0) {
--                if (len + 1 >= max) {
--                    temp = realloc2n(ret, &max);
--                    ret = temp;
--                }
--                ret[len++] = *p++;
--            }
--        }
--    }
--    if (uri->fragment != NULL) {
--        if (len + 3 >= max) {
--            temp = realloc2n(ret, &max);
--            ret = temp;
--        }
--        ret[len++] = '#';
--        p = uri->fragment;
--        while (*p != 0) {
--            if (len + 3 >= max) {
--                temp = realloc2n(ret, &max);
--                ret = temp;
--            }
--            if ((IS_UNRESERVED(*(p))) || (IS_RESERVED(*(p)))) {
--                ret[len++] = *p++;
--            } else {
--                int val = *(unsigned char *)p++;
--                int hi = val / 0x10, lo = val % 0x10;
--                ret[len++] = '%';
--                ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
--                ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
--            }
--        }
--    }
--    if (len >= max) {
--        temp = realloc2n(ret, &max);
--        ret = temp;
--    }
--    ret[len] = 0;
--    return ret;
--}
--
--/**
-- * uri_clean:
-- * @uri:  pointer to an URI
-- *
-- * Make sure the URI struct is free of content
-- */
--static void uri_clean(URI *uri)
--{
--    if (uri == NULL) {
--        return;
--    }
--
--    g_free(uri->scheme);
--    uri->scheme = NULL;
--    g_free(uri->server);
--    uri->server = NULL;
--    g_free(uri->user);
--    uri->user = NULL;
--    g_free(uri->path);
--    uri->path = NULL;
--    g_free(uri->fragment);
--    uri->fragment = NULL;
--    g_free(uri->opaque);
--    uri->opaque = NULL;
--    g_free(uri->authority);
--    uri->authority = NULL;
--    g_free(uri->query);
--    uri->query = NULL;
--}
--
--/**
-- * uri_free:
-- * @uri:  pointer to an URI, NULL is ignored
-- *
-- * Free up the URI struct
-- */
--void uri_free(URI *uri)
--{
--    uri_clean(uri);
--    g_free(uri);
--}
--
--/************************************************************************
-- *                                                                      *
-- *                           Public functions                           *
-- *                                                                      *
-- ************************************************************************/
--
--/*
-- * Utility functions to help parse and assemble query strings.
-- */
--
--struct QueryParams *query_params_new(int init_alloc)
--{
--    struct QueryParams *ps;
--
--    if (init_alloc <= 0) {
--        init_alloc = 1;
--    }
--
--    ps = g_new(QueryParams, 1);
--    ps->n = 0;
--    ps->alloc = init_alloc;
--    ps->p = g_new(QueryParam, ps->alloc);
--
--    return ps;
--}
--
--/* Ensure there is space to store at least one more parameter
-- * at the end of the set.
-- */
--static int query_params_append(struct QueryParams *ps, const char *name,
--                               const char *value)
--{
--    if (ps->n >= ps->alloc) {
--        ps->p = g_renew(QueryParam, ps->p, ps->alloc * 2);
--        ps->alloc *= 2;
--    }
--
--    ps->p[ps->n].name = g_strdup(name);
--    ps->p[ps->n].value = g_strdup(value);
--    ps->p[ps->n].ignore = 0;
--    ps->n++;
--
--    return 0;
--}
--
--void query_params_free(struct QueryParams *ps)
--{
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qapi/qmp/qdict.h"
+@@ -181,65 +180,71 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
+ 
+ static int parse_uri(const char *filename, QDict *options, Error **errp)
+ {
+-    URI *uri = NULL;
+-    QueryParams *qp;
++    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
++    const char *uri_host, *uri_path, *uri_user, *uri_query;
+     char *port_str;
 -    int i;
--
--    for (i = 0; i < ps->n; ++i) {
--        g_free(ps->p[i].name);
--        g_free(ps->p[i].value);
--    }
--    g_free(ps->p);
--    g_free(ps);
--}
--
--struct QueryParams *query_params_parse(const char *query)
--{
--    struct QueryParams *ps;
--    const char *end, *eq;
--
--    ps = query_params_new(0);
--    if (!query || query[0] == '\0') {
--        return ps;
--    }
--
--    while (*query) {
--        char *name = NULL, *value = NULL;
--
--        /* Find the next separator, or end of the string. */
--        end = strchr(query, '&');
--        if (!end) {
--            end = qemu_strchrnul(query, ';');
--        }
--
--        /* Find the first '=' character between here and end. */
--        eq = strchr(query, '=');
--        if (eq && eq >= end) {
--            eq = NULL;
--        }
--
--        /* Empty section (eg. "&&"). */
--        if (end == query) {
--            goto next;
--        }
--
--        /* If there is no '=' character, then we have just "name"
--         * and consistent with CGI.pm we assume value is "".
--         */
--        else if (!eq) {
--            name = g_uri_unescape_segment(query, end, NULL);
--            value = NULL;
--        }
--        /* Or if we have "name=" here (works around annoying
--         * problem when calling uri_string_unescape with len = 0).
--         */
--        else if (eq + 1 == end) {
--            name = g_uri_unescape_segment(query, eq, NULL);
--            value = g_new0(char, 1);
--        }
--        /* If the '=' character is at the beginning then we have
--         * "=value" and consistent with CGI.pm we _ignore_ this.
--         */
--        else if (query == eq) {
--            goto next;
--        }
--
--        /* Otherwise it's "name=value". */
--        else {
--            name = g_uri_unescape_segment(query, eq, NULL);
--            value = g_uri_unescape_segment(eq + 1, end, NULL);
--        }
--
--        /* Append to the parameter set. */
--        query_params_append(ps, name, value);
--        g_free(name);
--        g_free(value);
--
--    next:
--        query = end;
--        if (*query) {
--            query++; /* skip '&' separator */
--        }
++    int port;
++    g_autoptr(GError) gerror = NULL;
++    char *qp_name, *qp_value;
++    GUriParamsIter qp;
+ 
+-    uri = uri_parse(filename);
+     if (!uri) {
+         return -EINVAL;
+     }
+ 
+-    if (g_strcmp0(uri->scheme, "ssh") != 0) {
++    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
+         error_setg(errp, "URI scheme must be 'ssh'");
+-        goto err;
++        return -EINVAL;
+     }
+ 
+-    if (!uri->server || strcmp(uri->server, "") == 0) {
++    uri_host = g_uri_get_host(uri);
++    if (!uri_host || g_str_equal(uri_host, "")) {
+         error_setg(errp, "missing hostname in URI");
+-        goto err;
++        return -EINVAL;
+     }
+ 
+-    if (!uri->path || strcmp(uri->path, "") == 0) {
++    uri_path = g_uri_get_path(uri);
++    if (!uri_path || g_str_equal(uri_path, "")) {
+         error_setg(errp, "missing remote path in URI");
+-        goto err;
 -    }
 -
--    return ps;
--}
-diff --git a/util/meson.build b/util/meson.build
-index 2ad57b10ba..72b505df11 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -93,7 +93,7 @@ if have_block
-   util_ss.add(files('hbitmap.c'))
-   util_ss.add(files('hexdump.c'))
-   util_ss.add(files('iova-tree.c'))
--  util_ss.add(files('iov.c', 'uri.c'))
-+  util_ss.add(files('iov.c'))
-   util_ss.add(files('nvdimm-utils.c'))
-   util_ss.add(files('block-helpers.c'))
-   util_ss.add(files('qemu-coroutine-sleep.c'))
+-    qp = query_params_parse(uri->query);
+-    if (!qp) {
+-        error_setg(errp, "could not parse query parameters");
+-        goto err;
++        return -EINVAL;
+     }
+ 
+-    if(uri->user && strcmp(uri->user, "") != 0) {
+-        qdict_put_str(options, "user", uri->user);
++    uri_user = g_uri_get_user(uri);
++    if (uri_user && !g_str_equal(uri_user, "")) {
++        qdict_put_str(options, "user", uri_user);
+     }
+ 
+-    qdict_put_str(options, "server.host", uri->server);
++    qdict_put_str(options, "server.host", uri_host);
+ 
+-    port_str = g_strdup_printf("%d", uri->port ?: 22);
++    port = g_uri_get_port(uri);
++    port_str = g_strdup_printf("%d", port > 0 ? port : 22);
+     qdict_put_str(options, "server.port", port_str);
+     g_free(port_str);
+ 
+-    qdict_put_str(options, "path", uri->path);
+-
+-    /* Pick out any query parameters that we understand, and ignore
+-     * the rest.
+-     */
+-    for (i = 0; i < qp->n; ++i) {
+-        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
+-            qdict_put_str(options, "host_key_check", qp->p[i].value);
++    qdict_put_str(options, "path", uri_path);
++
++    uri_query = g_uri_get_query(uri);
++    if (uri_query) {
++        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
++        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
++            if (!qp_name || !qp_value || gerror) {
++                warn_report("Failed to parse SSH URI parameters '%s'",
++                            uri_query);
++                break;
++            }
++            /*
++             * Pick out the query parameters that we understand, and ignore
++             * (or rather warn about) the rest.
++             */
++            if (g_str_equal(qp_name, "host_key_check")) {
++                qdict_put_str(options, "host_key_check", qp_value);
++            } else {
++                warn_report("Unsupported parameter '%s' in URI", qp_name);
++            }
+         }
+     }
+ 
+-    query_params_free(qp);
+-    uri_free(uri);
+     return 0;
+-
+- err:
+-    uri_free(uri);
+-    return -EINVAL;
+ }
+ 
+ static bool ssh_has_filename_options_conflict(QDict *options, Error **errp)
 -- 
 2.45.0
 
