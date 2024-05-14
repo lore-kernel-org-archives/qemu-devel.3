@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68856C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AF9C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6uah-0002ur-PM; Tue, 14 May 2024 12:01:23 -0400
+	id 1s6uag-0002sI-1Y; Tue, 14 May 2024 12:01:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uaX-0002rT-DK
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:01:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uZq-0002l4-Bd
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:00:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uaV-0006xJ-5h
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:01:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6uZn-0006eS-Na
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:00:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715702467;
+ s=mimecast20190719; t=1715702426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5F3yiEyJRh3qJpykRKP5al80E8wz8v/b8nlZtrslKlM=;
- b=KKOA8msNcavGuqKW+FHhmMvp7JhDG6+lhDhB0Y9AzQcK3lL3X7k8z/t2dG139V9alLGNDY
- h0Y3xpg4MJKtWxF9zpH4lQcVGNtCLrG4V7ajp7PQkTI+Zmj2PzlWPRGwaU/QWQbnIq9m1l
- upvN18b3bxPsfb6X31lrAdzvuAG+XWQ=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y2ufjfmx19dFOliH7NoIvH5uXJNN1B4VZvBUauSfcQc=;
+ b=hjnJmnVuQWP4JEF956B/k+0jhSkFQNql5xHYuFfmxMryUyh1AqF1R/n395KeDNdlUzjiln
+ 1ZxJ1vZOmrq5X2PxQPbXoYfLkHQqrfgmVJskXl1IQe+HdonqYG8AIqVTDvpzxVn/8UN+H8
+ nyDuQ1R8VzF9duqNHBytRPHSXZKKiuU=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-322-cInP5rtjMWGh8kKIdL4Ecg-1; Tue, 14 May 2024 12:00:54 -0400
-X-MC-Unique: cInP5rtjMWGh8kKIdL4Ecg-1
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-7fc2273536bso915868241.2
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:00:54 -0700 (PDT)
+ us-mta-586-_1eIAglBMn23cLZYeR3cEw-1; Tue, 14 May 2024 12:00:22 -0400
+X-MC-Unique: _1eIAglBMn23cLZYeR3cEw-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-43e168e8443so27336461cf.1
+ for <qemu-devel@nongnu.org>; Tue, 14 May 2024 09:00:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715702454; x=1716307254;
+ d=1e100.net; s=20230601; t=1715702422; x=1716307222;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5F3yiEyJRh3qJpykRKP5al80E8wz8v/b8nlZtrslKlM=;
- b=k8jePzjTnR3F3Ydtgy4UwM8PN/IbytsIUyZ3ssB+ta1OS/DoUyrXLUoQC0RliRIttJ
- N+I739fPQrX3Sp0ZyEAbxi5PnvoNb04jA4X1vyQ243HotYf1bMRJ2MguPFm6vie6AANH
- eG+oPp9Ex6Kcebrhsp6AoI1gJyi/v9gr97WR6WgkvYnnuX9NtzjJko4OgPr6o1fJSyIN
- iUv941MGyf443DesrIbQp+jcAzp6rn487gYwUGTvuVbQsjUWdswY5XXz2c5AT9PhbF70
- pf/rDsU0Mt5s3t2UD+NC+wqqe4rF5UMi45QM9SEol8MrVY5v5NUkhJfqQ+Mu15Fupt+r
- 0TeQ==
+ bh=y2ufjfmx19dFOliH7NoIvH5uXJNN1B4VZvBUauSfcQc=;
+ b=q2pIFGU07G8CPXSsOsB8Fi0GIVcHwkkY3+az9KaTaCTEN57DjZML51w6LN3/jcXIeC
+ qN0q7FvkYIcGr9eIUXGDtbRqbyK6obznjLWbJd0cAqlb8BLmOBmJhAYtxZC/5EnzSmeL
+ DyDHIfgQbgHP4BDjz+39+peqsUNdvUW+QVcD/bpscIgcqErT7Dw0m8pqE644WzVdg6wX
+ wIpAWt5Wiz6Er68jhHKQGQxWtIIfDOPHsfDgzbyMmysMWDVHTinv0j2CrUVsFMWHX/wt
+ fi9No6PbQLYRvDxWMM1HtBfeVUKWvBO8LxlMeMwDmLrI/ZhUxQKryFue5JlHwfVpxWBB
+ y20w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5QAU2thBClP5lu2MzvlwVJSBD/hczsjgk/6xXgyHCBrHlhV2lx1harkATv+0PE8tTKMN2vkI2eY/JkZ2XdFCmAMWLVf0=
-X-Gm-Message-State: AOJu0YyJT2iu9hemZUo04wf/F5FXVGpbYIOAtEb6pxlIBoOOcDL0wUFK
- u80fKGjc4JpnveGnn9HmFxfSo6bItGfXNRL9N7oEZCds0eXpXX9RoFVo5sz3YP6mPBhmn+432Dm
- AbQowqE0cAjRFlVYDkP09vYShpvYjyKnYmR72+4mqRkEJAELy6bCu
-X-Received: by 2002:a05:6102:38c8:b0:47e:effb:f740 with SMTP id
- ada2fe7eead31-48077dccadamr14409982137.7.1715702453660; 
- Tue, 14 May 2024 09:00:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4J3k1v19cTUc5Gye4U0suYlOdCZtb1YZMvzGYOEHXjPIqLtOmtcojKP3TWGH4p7PvkD5BaQ==
-X-Received: by 2002:a05:6102:38c8:b0:47e:effb:f740 with SMTP id
- ada2fe7eead31-48077dccadamr14409780137.7.1715702452724; 
- Tue, 14 May 2024 09:00:52 -0700 (PDT)
+ AJvYcCX6jDHa3ga6wrQ5EAA6uQ7Ig52R+r/eLf+T3SklY0+gUfoEYZ58WykaH8GMAYlsHkUy7rtufE+t4E2D4qnONTTALpO4hM0=
+X-Gm-Message-State: AOJu0Yz3F3ylzNtmT6X0mLJy8DBNopZBfEOVaB9e6yj07v7JokFLaZw7
+ 47eUrGD+PRlLQc0fnWpiFPwbOWn4NEqWSJk6+2bmVG/OoeLkNQFcJf+5d4FnzwsJhrqgAl20yXQ
+ h204PqBPyiqUOH6D1c3cLFrbIJz1HwwiGNPcbPDDTfh6NKDQUf79e
+X-Received: by 2002:ac8:7f51:0:b0:43a:9717:3056 with SMTP id
+ d75a77b69052e-43dfdcd726dmr179156561cf.43.1715702422004; 
+ Tue, 14 May 2024 09:00:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDosmg6Mr4JKgvZGmafE/t0/U5HHRaQXw02O/ak7cZ+zMRTEqyx3wQ5bVsSVll9xwOSs4QVw==
+X-Received: by 2002:ac8:7f51:0:b0:43a:9717:3056 with SMTP id
+ d75a77b69052e-43dfdcd726dmr179156061cf.43.1715702421257; 
+ Tue, 14 May 2024 09:00:21 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-4806cb008d2sm1720382137.2.2024.05.14.09.00.51
+ d75a77b69052e-43df56ddd77sm69433291cf.92.2024.05.14.09.00.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 09:00:52 -0700 (PDT)
-Message-ID: <3128057f-3a2f-44ce-b66d-d05c4f0abbac@redhat.com>
-Date: Tue, 14 May 2024 18:00:49 +0200
+ Tue, 14 May 2024 09:00:20 -0700 (PDT)
+Message-ID: <d164d7b5-e7ac-4173-b2ef-0e49465ffa11@redhat.com>
+Date: Tue, 14 May 2024 18:00:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] vfio/container: Make vfio_set_iommu() return bool
+Subject: Re: [PATCH v2 06/11] vfio/container: Make vfio_connect_container()
+ return bool
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
 References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
- <20240507064252.457884-8-zhenzhong.duan@intel.com>
+ <20240507064252.457884-7-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240507064252.457884-8-zhenzhong.duan@intel.com>
+In-Reply-To: <20240507064252.457884-7-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,6 +113,7 @@ On 5/7/24 08:42, Zhenzhong Duan wrote:
 > Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
+
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
@@ -119,73 +122,96 @@ C.
 
 
 > ---
->   hw/vfio/container.c | 22 ++++++++++------------
->   1 file changed, 10 insertions(+), 12 deletions(-)
+>   hw/vfio/container.c | 18 +++++++-----------
+>   1 file changed, 7 insertions(+), 11 deletions(-)
 > 
 > diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 0a7edfcc43..5fb4bee082 100644
+> index 85a8a369dc..0a7edfcc43 100644
 > --- a/hw/vfio/container.c
 > +++ b/hw/vfio/container.c
-> @@ -391,21 +391,20 @@ static const VFIOIOMMUClass *vfio_get_iommu_class(int iommu_type, Error **errp)
->       return VFIO_IOMMU_CLASS(klass);
+> @@ -534,8 +534,8 @@ static bool vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
+>       return true;
 >   }
 >   
-> -static int vfio_set_iommu(VFIOContainer *container, int group_fd,
-> -                          VFIOAddressSpace *space, Error **errp)
-> +static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
-> +                           VFIOAddressSpace *space, Error **errp)
+> -static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+> -                                  Error **errp)
+> +static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+> +                                   Error **errp)
 >   {
-> -    int iommu_type, ret;
-> +    int iommu_type;
->       const VFIOIOMMUClass *vioc;
->   
->       iommu_type = vfio_get_iommu_type(container, errp);
->       if (iommu_type < 0) {
-> -        return iommu_type;
-> +        return false;
->       }
->   
-> -    ret = ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container->fd);
-> -    if (ret) {
-> +    if (ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
->           error_setg_errno(errp, errno, "Failed to set group container");
-> -        return -errno;
-> +        return false;
->       }
->   
->       while (ioctl(container->fd, VFIO_SET_IOMMU, iommu_type)) {
-> @@ -420,7 +419,7 @@ static int vfio_set_iommu(VFIOContainer *container, int group_fd,
->               continue;
+>       VFIOContainer *container;
+>       VFIOContainerBase *bcontainer;
+> @@ -587,19 +587,18 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>                       error_report("vfio: error disconnecting group %d from"
+>                                    " container", group->groupid);
+>                   }
+> -                return ret;
+> +                return false;
+>               }
+>               group->container = container;
+>               QLIST_INSERT_HEAD(&container->group_list, group, container_next);
+>               vfio_kvm_device_add_group(group);
+> -            return 0;
+> +            return true;
 >           }
->           error_setg_errno(errp, errno, "Failed to set iommu for container");
-> -        return -errno;
-> +        return false;
 >       }
 >   
->       container->iommu_type = iommu_type;
-> @@ -428,11 +427,11 @@ static int vfio_set_iommu(VFIOContainer *container, int group_fd,
->       vioc = vfio_get_iommu_class(iommu_type, errp);
->       if (!vioc) {
->           error_setg(errp, "No available IOMMU models");
-> -        return -EINVAL;
-> +        return false;
+>       fd = qemu_open_old("/dev/vfio/vfio", O_RDWR);
+>       if (fd < 0) {
+>           error_setg_errno(errp, errno, "failed to open /dev/vfio/vfio");
+> -        ret = -errno;
+>           goto put_space_exit;
 >       }
 >   
->       vfio_container_init(&container->bcontainer, space, vioc);
+> @@ -607,7 +606,6 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>       if (ret != VFIO_API_VERSION) {
+>           error_setg(errp, "supported vfio version: %d, "
+>                      "reported version: %d", VFIO_API_VERSION, ret);
+> -        ret = -EINVAL;
+>           goto close_fd_exit;
+>       }
+>   
+> @@ -634,7 +632,6 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>       assert(bcontainer->ops->setup);
+>   
+>       if (!bcontainer->ops->setup(bcontainer, errp)) {
+> -        ret = -EINVAL;
+>           goto enable_discards_exit;
+>       }
+>   
+> @@ -650,7 +647,6 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>       memory_listener_register(&bcontainer->listener, bcontainer->space->as);
+>   
+>       if (bcontainer->error) {
+> -        ret = -1;
+>           error_propagate_prepend(errp, bcontainer->error,
+>               "memory listener initialization failed: ");
+>           goto listener_release_exit;
+> @@ -658,7 +654,7 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>   
+>       bcontainer->initialized = true;
+>   
 > -    return 0;
 > +    return true;
+>   listener_release_exit:
+>       QLIST_REMOVE(group, container_next);
+>       QLIST_REMOVE(bcontainer, next);
+> @@ -683,7 +679,7 @@ close_fd_exit:
+>   put_space_exit:
+>       vfio_put_address_space(space);
+>   
+> -    return ret;
+> +    return false;
 >   }
 >   
->   static int vfio_get_iommu_info(VFIOContainer *container,
-> @@ -613,8 +612,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
->       container->fd = fd;
->       bcontainer = &container->bcontainer;
+>   static void vfio_disconnect_container(VFIOGroup *group)
+> @@ -770,7 +766,7 @@ static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
+>       group->groupid = groupid;
+>       QLIST_INIT(&group->device_list);
 >   
-> -    ret = vfio_set_iommu(container, group->fd, space, errp);
-> -    if (ret) {
-> +    if (!vfio_set_iommu(container, group->fd, space, errp)) {
->           goto free_container_exit;
->       }
->   
+> -    if (vfio_connect_container(group, as, errp)) {
+> +    if (!vfio_connect_container(group, as, errp)) {
+>           error_prepend(errp, "failed to setup container for group %d: ",
+>                         groupid);
+>           goto close_fd_exit;
 
 
