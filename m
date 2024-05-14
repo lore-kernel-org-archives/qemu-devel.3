@@ -4,104 +4,189 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D5DC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 01:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F72C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 02:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6glk-00040G-IY; Mon, 13 May 2024 21:15:52 -0400
+	id 1s6hj6-0005fb-I4; Mon, 13 May 2024 22:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s6glL-0003uu-Om
- for qemu-devel@nongnu.org; Mon, 13 May 2024 21:15:28 -0400
-Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1s6hj5-0005fR-4K
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 22:17:11 -0400
+Received: from esa13.fujitsucc.c3s2.iphmx.com ([68.232.156.96])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s6glJ-0004Dr-8g
- for qemu-devel@nongnu.org; Mon, 13 May 2024 21:15:27 -0400
-Received: from pps.filterd (m0122330.ppops.net [127.0.0.1])
- by mx0b-00190b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DJTJrJ010746;
- Tue, 14 May 2024 02:15:21 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=
- jan2016.eng; bh=+ITBOHQAQH0L8Y1PdnAde6ZemZd6yREmVM8kqA3Wc1M=; b=
- UzpjFJtR2P9kcKhRys17qyUnzPhxPq/PS3KYGrUNNx+IEdbrJw5Ph6j4PhID5pxJ
- 6iMbkWjN4i04P4NRoQndVwe6WGAsvREDXoY20dZsfTHA/tKZESFefCrboQ06Bpfw
- 7liwHSHa5anhQUJ/y3UTwu5p8S61I4MOC551naPL6z6jlaY511Du4e5bFqLlpDhm
- R4JQ+YQQnNAaohh3HRa9u4+037+Zjchsu5zTudIXlTtRPv4zKlw1WXT3c9vSBqp0
- USp2CV6Sb9qhFoN04CX9mco5rDzjTP7pZfgop/Xnrr/V84faFvkZ3wQS5citz5g2
- KLaJw60ZvXU2jE249KMl2A==
-Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18]
- (may be forged))
- by mx0b-00190b01.pphosted.com (PPS) with ESMTPS id 3y20b45344-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 May 2024 02:15:21 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
- by prod-mail-ppoint1.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44DJkT6C026042; Mon, 13 May 2024 21:15:20 -0400
-Received: from prod-mail-relay10.akamai.com ([172.27.118.251])
- by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 3y240xy370-1;
- Mon, 13 May 2024 21:15:20 -0400
-Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
- [172.27.97.51])
- by prod-mail-relay10.akamai.com (Postfix) with ESMTP id 7AEC264EF1;
- Tue, 14 May 2024 01:15:18 +0000 (GMT)
-Message-ID: <d6176480-d87c-492b-8a0c-04bf81a4f59a@akamai.com>
-Date: Mon, 13 May 2024 20:15:17 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: CPR/liveupdate: test results using prior bug fix
-To: Steven Sistare <steven.sistare@oracle.com>, peterx@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- "Hunt, Joshua" <johunt@akamai.com>
-References: <20240228051315.400759-1-peterx@redhat.com>
- <20240228051315.400759-21-peterx@redhat.com>
- <f855963e-b7dd-4ce8-89dc-dfaa87e896c4@akamai.com>
- <82c69792-061d-460f-9db6-88fc8f9df5af@oracle.com>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1s6hj2-0007EP-Cv
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 22:17:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1715653028; x=1747189028;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=Wc+P7vbXEIYX+UiPLISCjC6d9oRgQkV0oUiy12rlRY4=;
+ b=Wn4MyqvIfVm6+qQrwQO/dZ3syfsJyPNNxkLVuxU6H2yldi46y+aJfX2K
+ w4r3iSfaIb+uqgwepZNXK485rz9rjPPFCVzdoM2WpewUB1+C+7LocEg8U
+ 4vDNiYjkggB8//MN5U4vWg8jIZ+Mt15FGecVS359wrBbRRqkHn7f80jNt
+ PlIj41DEpw2uYvOycNEBmS/uxdUZu/lenscDyw4XgTgk0fHybQ8tPrDLu
+ P6JDoqhltkO44Y8rcz3gVERxIxa6U2924oxftBmYVEbUYlo+SYap0VZa0
+ Flk39brmC5Op4Erc+tDNtI1KVt7M1rbeAV9qrnb4hEh33Lt7vjoqq3Ec0 Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11072"; a="118821642"
+X-IronPort-AV: E=Sophos;i="6.08,159,1712588400"; d="scan'208";a="118821642"
+Received: from mail-os0jpn01lp2105.outbound.protection.outlook.com (HELO
+ JPN01-OS0-obe.outbound.protection.outlook.com) ([104.47.23.105])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 May 2024 11:16:57 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=d0ZzR3G1Gd0Yi0SrkeGJ2yV8vhxIjk7olkoApS8kLG8acEq1t54/UUgi5sr9BSo4FGd26kLBfP/K0+CVBTB8FJNIS/Rm1XISenH2YkLLxc3y2j6wPUK0QnKAPXaByh9RCCqvNU1hOH0eETzjzvbXOISt2LgiPaEZ7NFGACbMPFANnJ9cjxbGxJpGd+Uq8tSjsZp28Vhbi3+biweZTUP5TnCqafv6kpU5+kU0LaCfkzRfMmPz19jII2+NPf2uvH9hsvuXZ51mhK1d64WM30LES40UlaklgwJHbmGujJd6ApvtLT5XQkr12INLKTJ1rE1WAljOFuV/FkBHstpjbom4MA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Wc+P7vbXEIYX+UiPLISCjC6d9oRgQkV0oUiy12rlRY4=;
+ b=Oy9LLY0XRbVkFQLsRnDGNfoM3KIL7/kWaU6KPciATu9A5uzd+F+1O0ibCDFEqi5k+mqeydgWoT2ZuQitftiRxyDPBrI7f9O1CPK4SMhvvUzZNh0k5nJgGQ1AXF5/dMTlReZN0CS/ukO1htYbIELcPTLvDUH6WOaACKAu+BjgUa/ecXZlBdU5yecyPH8SB1SrTuM/nqQqdE81zLL/sEQ7hkiKRHHIHhY+Vxr36Tqn6p5rlAXCqEVVA6xPL83BJG57ZKlDiVRy8gWqrwC2lu2+9HIjY723QtyUIKFcyDsEM2G70CQjJsWBgZKCCpDVxTKSday4kR2WqJale6ZOlXRyEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
+ by OSZPR01MB6247.jpnprd01.prod.outlook.com (2603:1096:604:ed::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Tue, 14 May
+ 2024 02:16:52 +0000
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377%6]) with mapi id 15.20.7544.052; Tue, 14 May 2024
+ 02:16:52 +0000
+To: "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "gregory.price@memverge.com" <gregory.price@memverge.com>,
+ "ira.weiny@intel.com" <ira.weiny@intel.com>, "dan.j.williams@intel.com"
+ <dan.j.williams@intel.com>, "a.manzanares@samsung.com"
+ <a.manzanares@samsung.com>, "dave@stgolabs.net" <dave@stgolabs.net>,
+ "nmtadam.samsung@gmail.com" <nmtadam.samsung@gmail.com>,
+ "jim.harris@samsung.com" <jim.harris@samsung.com>, "Jorgen.Hansen@wdc.com"
+ <Jorgen.Hansen@wdc.com>, "wj28.lee@gmail.com" <wj28.lee@gmail.com>,
+ "fan.ni@samsung.com" <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
+Thread-Topic: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
+Thread-Index: AQHakehZMARvSfGob0S2rMrdkXXk1bGWJb4A
+Date: Tue, 14 May 2024 02:16:51 +0000
+Message-ID: <d708f7c8-2598-4a17-9cbb-935c6ae2a2be@fujitsu.com>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+In-Reply-To: <20240418232902.583744-1-fan.ni@samsung.com>
+Accept-Language: en-US, zh-CN
 Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <82c69792-061d-460f-9db6-88fc8f9df5af@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-13_17,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999
- phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405140006
-X-Proofpoint-ORIG-GUID: EDaZFLUPYnKhkxsOgna4oiWaJ5pOnGZq
-X-Proofpoint-GUID: EDaZFLUPYnKhkxsOgna4oiWaJ5pOnGZq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-13_17,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- priorityscore=1501
- lowpriorityscore=0 mlxscore=0 impostorscore=0 malwarescore=0 clxscore=1015
- bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405140007
-Received-SPF: pass client-ip=2620:100:9005:57f::1;
- envelope-from=mgalaxy@akamai.com; helo=mx0b-00190b01.pphosted.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|OSZPR01MB6247:EE_
+x-ms-office365-filtering-correlation-id: e40c0672-0192-497d-d86f-08dc73bbeb22
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230031|366007|7416005|376005|1800799015|1580799018|38070700009; 
+x-microsoft-antispam-message-info: =?utf-8?B?TGRaT2NNL1Z5ZW8waTdNQ0R2L1MrWFFiTXIzeEErZmk3OHRjUlFnZTFubyt2?=
+ =?utf-8?B?aUs1enVtVEkrYlg1NFZZZlBBVUpIajljOFRDZVNEYmVrV2d0NmVBTEh3L3M2?=
+ =?utf-8?B?YjRTTWFKUHNGd1VTNWtacThKWFFsNmhQTXQ0a1lJQ0FzYXY5QXpXVDZMa0F1?=
+ =?utf-8?B?RXlPRXgwaE1YbFlwckNUU1U5TTBscnlTQ01YYVRRanBlWFBjMDhjVE5KMU5W?=
+ =?utf-8?B?ellMNHFiUTMwdW1jMlNQQmp4d0U3OWx3N2pyUlRHNnAvbllqc0FmbWJBeXJy?=
+ =?utf-8?B?cHhqVDI0akNpZ05MR2UwaCszS1c4OTFCT1Y1WU9LNXhJZ0QrKzlyMnowdzNk?=
+ =?utf-8?B?T3Y1U1VkbUp1aWQ5a01OY2xqL1ZpaDBZbzdISHI3ZmhTWVBHMmpVNE1lTEpr?=
+ =?utf-8?B?WTI1SVdXajE2ZVRVdTJGdkVqYWJ5NVpNc0hXQ0tQV0tRWDBEUDNXK3dWamJN?=
+ =?utf-8?B?K25CdDRoaTJJRm9LcHllQkIzbmcyMWtzRWJwc1JzRktRSGwzdTVocXJ2cSt0?=
+ =?utf-8?B?d0gvMG1neG9wbkRmUk00VjdFZmRmOFhvZnBsZTN4QmpNclZ2NGdFUXZMVlk5?=
+ =?utf-8?B?bFRRSEh6UVlVTjZTZ3BPRGZGeEFweS9BWDdicTRmUkZDMmR2SmtiaHkyYng4?=
+ =?utf-8?B?eG9JRm0vRnAxMG5DQ0tncU1aL0hRSGt0bFFHWUc3Y0lNVVJMQWRBMjFNRkZP?=
+ =?utf-8?B?TkRnQ2dmdmFCdStDS04vRm1XaFpnOWtYamhoNlVCRTgrZ3BMdHI5VmtXOXJu?=
+ =?utf-8?B?cGt1NnkrUTFqVjhoN2dWQTlyc3VxTENPT3JoeFVTWlpwWEtDTXB3QjhuRkRo?=
+ =?utf-8?B?eC9VY21kZDJOOER4cVM5MTJGMzNTanF2UVpNMmFMWThKR1VKMkQ0MG5tZEVw?=
+ =?utf-8?B?Vkd3QUNER0pEM1F4aDMxbUVqRmtFaDl2VTdvVytQZjUxT0oyWFMySDlVRUp3?=
+ =?utf-8?B?R0ZqQTAxSDNzak5zd01NK2tzTExqbGk5cGdOYUhXZE9FSUdXNW5icmQ2bnFt?=
+ =?utf-8?B?Sk9yWW5nK0JoVW9JbjJHM1NET085cUxyY3N2SlI5bFRvZUtiNjY2UmFoSEFu?=
+ =?utf-8?B?Q2pvMVpIOUR2Y2tEUUZVczN1SzZyalRuYkppa0FyL0R5M05CRTg3SUczR0o0?=
+ =?utf-8?B?dFF4c3lIZ0NCcmF1OENoa1dHd2Y5WTZ4SGtEOUtRaXpVdGxpRUx5SEk1clU5?=
+ =?utf-8?B?c0dUY24zV25Nd0ZDdWlWTUxHdmh2RDFJckdzZUVNaDRpYnEzY1lCL1ZxN1o3?=
+ =?utf-8?B?MzNGeSt0MDBYdHVGbU5SL0tJRW42NHNYTmI4bTZQeTcwU21Hc3J5RXVIK1p6?=
+ =?utf-8?B?ZjBUamhmVE5sbkhtdVNSamxXWm9HMFRRZDhGc1A1WUJSN1F6bEFET0I2RkJQ?=
+ =?utf-8?B?Wmpib24zUFU1TVdMdHlUdDVFZElkbXRtOURoZllsYVdzMjFkVC9xVkxFTEg1?=
+ =?utf-8?B?T2cvS29ZYThGOGtacWw1Ly90dmtjRzFIdWo2QitiQklDTzhwQjBxSmROaGh6?=
+ =?utf-8?B?Rnk2bmNVSFRCMDdKZXMrWlE5VS96RldXMnYwNVhOOWtpMG9KaTJDY0hUNnBY?=
+ =?utf-8?B?UUp4M3dwdnFmTmpHdzJMWldMY0VLZDQ4czRkVmc3NDFvbmd3SDJ1WFJCV1BZ?=
+ =?utf-8?B?SW9qa3l1U0s4YUVvSVp2UWd4SXZDN1ZjUU5JNXdHdkQwdytjbHlESWpxV3VU?=
+ =?utf-8?B?QXZXNzAzMkVsTmpXWUNmOEkzeTNreWJqeWhENGdISlNPK0htRG1XWENsTDNi?=
+ =?utf-8?Q?Lxvat40GVcVvzKQxS2IipAbC4/C3LOcKzLgMIl9?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(7416005)(376005)(1800799015)(1580799018)(38070700009);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eGtqOUpCY2g2ekp2RzVDUzc2aVg5QTdvZE9PU3V0R3FyTUlid3kyRXVaQytp?=
+ =?utf-8?B?YncwOGVjQzJiODBlQ0pVSE1LYnJzdHJmZVVwQlBaV1ZTR1c5NkJ0d00vK0ly?=
+ =?utf-8?B?Qm00Y3JUUVhDYTRlYko1aUdBTG40MGhMMVhHaGdVVlFhOTBzeWd1RGlyOWpy?=
+ =?utf-8?B?ak12Z3NUQ0p6ZmY3VE9uTlVNelFFdmFxN1k3SHptZHR4bUorWXBtQ0JoWEtX?=
+ =?utf-8?B?aGVJN1BkRGVqMjkzekxLb2l6TW1vWDBwTmQwdWRBbVltTFdwRzJZVUhSVFJr?=
+ =?utf-8?B?UEEzbytTanhRK3l4NWdOVkozSWhiRGJEN01GNHE5Ymd0MkZ6NlJibm95cDdG?=
+ =?utf-8?B?TnNjdkVUSmlHMzBTK1FoOVdaSUh0U3FVN0Q3ZmUvUUhXSEc5MnlEcWdLNlFU?=
+ =?utf-8?B?UWtxaUVsblRGVENaTVVvZi9DSXQzYUVVS1JDMUFYOFl4RkF6Y3RqOTdTMjlW?=
+ =?utf-8?B?SjZCbHFjUmxHUUtINWo4Z1RibE4wK1ptMlhSTEg1S2x4OE5Pc3N6d2g1eWtl?=
+ =?utf-8?B?aGxQSjJJT3BNd1BQN1FQVm00T3hpOWEzU2VjQlpxckZUb0p6SHZMQWhrWGtC?=
+ =?utf-8?B?a1Erc1g4RkNqR1dEemZZbWU3ZzJPZ0svRmRGSHFxN2V4eml2dnN6Q1lUSS9S?=
+ =?utf-8?B?Vnl0ZDl6dXZnY3N3UEJyQVJxVTlYV1UrTzJuNGMxSG80Q2ppOTY4b21uMERB?=
+ =?utf-8?B?TnpMWFdFNGJ3d2pvN201REJnekc5Zm1BdkU0SStqVzl6NmpSMm5qdHFYRHYz?=
+ =?utf-8?B?dy8wSlV3QjFzdXI3ekt5NHZCaFdCcXhLaTZ3VWZzTDR3dkNNb3prS1JyR2Nu?=
+ =?utf-8?B?d0RWbUVrVzY2VDZJVnhiWno1WGJIRHRqQlJXZ2NrTUR2TWJsUTBsc1J6QTNX?=
+ =?utf-8?B?YUpBZlhQT0xUR0tUNkhGdUpyelhYSmJWWW9Yazdib2Qvb2QzQ0hEblhCb1I1?=
+ =?utf-8?B?dU1BRklQallBWWwyYi8ydUNOR2lIcm1xRDQrbStwVnZjK3FjMVJIOTBZdWM0?=
+ =?utf-8?B?aFJXTWJNZE5Rek1FcnBxWTN4cWtZOHhsbGpxRXBMcjlYWUw2bDQ2dnMxSUJt?=
+ =?utf-8?B?VEUvS3VTQlVKdnl2c3ZTKzlNMFhrMncwSCtMbGJOMjE0UTh5WFFSZVNpd2ZQ?=
+ =?utf-8?B?UG5qbXh2MFZCNlBNblJNN3RpakRjNHYxOHN5L0tWdEJhMG45S245QzVVN3dk?=
+ =?utf-8?B?U2IrWnFkbXdBakF4YkhXUHNMSGI1cjFsMFlVNWZ2TUhhWWEwV1ltMWtGU2Yv?=
+ =?utf-8?B?bUc0QjZqRUVZQ0hFOEZ3VEpRbXBoVGNmVDJKVE81TXI5ZmEvczY2ZTBPdE5F?=
+ =?utf-8?B?Vkk0UklVaVpyN3lsblQyVmFyOWV2bFpGa203ZTNsQVBMK1FoR0ZUbEJwaFZH?=
+ =?utf-8?B?VGk1UzF0Smcrd2RnNXNiT1lxbWdZaEdCdGEzT0xIVlJhSHhveGx1Ty9mUHds?=
+ =?utf-8?B?bjQwbFdlQWFUbzBLMUdKYncva1haR1BVekhQaHkyNWYvSzBzMzR5OFF4V202?=
+ =?utf-8?B?L1ZDbFhtN3JiMnZ5T2VnZ1QyODIvZ0kvNHc3TWpkMjgxMDdSSnlpNWl5Z0lN?=
+ =?utf-8?B?eWtIOWZwdXFVV1loM3lFUDFsYTF6K3c2b3FFTVpGVzlUSU5jdWQ4UXdQQXpn?=
+ =?utf-8?B?eERUZlpBZVNHQXQvNjZuNG15bkV6Z0I1QlFxem40bnVMNU9HblJ0TDRpcTNp?=
+ =?utf-8?B?MFhmc0ZDS1R5ZXN6cG51aGQyaEZ4UXZPMitwalJublBBRFdtSk9qTUxoYy9p?=
+ =?utf-8?B?MEpSOU5YTGJNS1grQWFXa3dISjlUK3c0bVVlYnF1Z3BSUG05Y0grdHlYbkQy?=
+ =?utf-8?B?VU93N0FpbjRsaUNYbExqb0U4Q2c5OG9xMkxVSktZYnFFM1NZdjhGOExZRkVL?=
+ =?utf-8?B?T2ZpTXhZRTBZb2FDTkNPWThteHZRT1grQVgyUjZHLzdiTkFBeWNRWE9sNzVI?=
+ =?utf-8?B?eDRjekJmcTh0dFEwMXVDWWVST3cvbzJMZW8vODEvUWxjdnpUWERId2xUV3lZ?=
+ =?utf-8?B?NmNrZ1NRbGVHcmdXdmxKazk4QUJrL042UXk1VS9EekllMmpwUE03cDNNSVhX?=
+ =?utf-8?B?bkRJdlNhMGJ4RkJoVFN0Z2Vsd2JJWTNnaHhWRXo2OE80NUpLc2FlWlJsMU5q?=
+ =?utf-8?B?MWZlcVdFQnR5eDAwWEhldGF5MldsZ25ZMXQvODFBQWM3TDdWd0pQeTVFeFE0?=
+ =?utf-8?B?OWc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <2A0F2B0354CF33458A5A5ED107694C54@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: wCFctOQoatpeyFBw0fiXxKi12BmsLMo2ciGlYRugnfxwp92SOfEtODCFMfN3wY+eXbUdS4K5f0MbPd18ZXHdcKBOTDdc4Qo2DiSW2ZdRXoZA1F4f5bT2oMVqTH7WPQ/G5gX7ulxixlJ8REGEfg8C3bpqUa7uXBbGEQq69ilBC6v9tSl+TeEK+i9sAlYeRZVgQ3x2qhne9BqxZh88w3Hvn0iQiqO8XRc1a82hqdXNa/iz1qM+IaYrQG1RSngucxxwxav2bWf5uUkUyfzoFdbOmwAg8G8kvPuBmo63zWLMPeCNt+4PUL5RBKsiJCaBEx15o8sdrN0dppIXO/86PjGyqhgv7teAzyU65/SOp1/gz1qfa2Knp6ZlHnwDx0LKXh3u9+FrD/xpxH+RToemSTih2fGGwHb1k3uYCJMx3qoFhFoSM+PYtn78nJI3DXkThzLDi3CavG73Dvi5N4Hgl/xy5kA4L+2ky2h4E2jMKyi/LJ/EW380CBR90bq7ZMdp59bHJWtR/5djajYPZN49NGQtGuA3EZHXNw1OfMql4/52JiZE+dji4Tr2XCZ+c+GkPqICO1UykapGPAiMEOC1div3awgFIjk59Zr0NfRk1g1ZxVQ3D9o5r5hgl2nem5Wmbxj0
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e40c0672-0192-497d-d86f-08dc73bbeb22
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2024 02:16:52.0602 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +9GJQRHdcZievvX2D7H8qtWoaqE8CR1ueEGpoOVE8Iy+jVsD4yD4fRBXHJ2O5mliYuobKWxVQueRxer89cVSFQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSZPR01MB6247
+Received-SPF: pass client-ip=68.232.156.96; envelope-from=lizhijian@fujitsu.com;
+ helo=esa13.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,227 +199,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Steve,
-
-Thanks for the response.
-
-It looks like literally *just today* 8.2.4 was released. I'll go check 
-it out.
-
-- Michael
-
-On 5/13/24 15:10, Steven Sistare wrote:
-> Hi Michael,
->   No surprise here, I did see some of the same failure messages and they
-> prompted me to submit the fix.  They are all symptoms of "the 
-> possibility of
-> ram and device state being out of sync" as mentioned in the commit.
->
-> I am not familiar with the process for maintaining old releases for qemu.
-> Perhaps someone on this list can comment on 8.2.3.
->
-> - Steve
->
-> On 5/13/2024 2:22 PM, Michael Galaxy wrote:
->> Hi Steve,
->>
->> We found that this specific change in particular ("migration: stop vm 
->> for cpr") fixes a bug that we've identified in testing back-to-back 
->> live updates in a lab environment.
->>
->> More specifically, *without* this change (which is not available in 
->> 8.2.2, but *is* available in 9.0.0) causes the metadata save file to 
->> be corrupted when doing live updates one after another. Typically we 
->> see a corrupted save file somewhere in between 20 and 30 live updates 
->> and while doing a git bisect, we found that this change makes the 
->> problem go away.
->>
->> Were you aware? Is there any plan in place to cherry pick this for 
->> 8.2.3, perhaps or a plan to release 8.2.3 at some point?
->>
->> Here are some examples of how the bug manifests in different 
->> locations of the QEMU metadata save file:
->>
->> 2024-04-26T13:28:53Z qemu-system-x86_64: Failed to load mtrr_var:base
->> 2024-04-26T13:28:53Z qemu-system-x86_64: Failed to load cpu:env.mtrr_var
->> 2024-04-26T13:28:53Z qemu-system-x86_64: error while loading state 
->> for instance 0x1b of device 'cpu'
->> 2024-04-26T13:28:53Z qemu-system-x86_64: load of migration failed: 
->> Input/output error
->>
->> And another:
->>
->> 2024-04-17T16:09:47Z qemu-system-x86_64: check_section_footer: Read 
->> section footer failed: -5
->> 2024-04-17T16:09:47Z qemu-system-x86_64: load of migration failed: 
->> Invalid argument
->>
->> And another:
->>
->> 2024-04-30T21:53:29Z qemu-system-x86_64: Unable to read ID string for 
->> section 163
->> 2024-04-30T21:53:29Z qemu-system-x86_64: load of migration failed: 
->> Invalid argument
->>
->> And another:
->>
->> 2024-05-01T16:01:44Z qemu-system-x86_64: Unable to read ID string for 
->> section 164
->> 2024-05-01T16:01:44Z qemu-system-x86_64: load of migration failed: 
->> Invalid argument
->>
->> As you can see, they occur quite randomly, but generally it takes at 
->> least 20-30+ live updates before the problem occurs.
->>
->> - Michael
->>
->> On 2/27/24 23:13, peterx@redhat.com wrote:
->>> From: Steve Sistare<steven.sistare@oracle.com>
->>>
->>> When migration for cpr is initiated, stop the vm and set state
->>> RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
->>> possibility of ram and device state being out of sync, and guarantees
->>> that a guest in the suspended state remains suspended, because qmp_cont
->>> rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
->>>
->>> Signed-off-by: Steve Sistare<steven.sistare@oracle.com>
->>> Reviewed-by: Peter Xu<peterx@redhat.com>
->>> Link:https://urldefense.com/v3/__https://lore.kernel.org/r/1708622920-68779-11-git-send-email-steven.sistare@oracle.com__;!!GjvTz_vk!QLsFOCX-x2U9bzAo98SdidKlomHrmf_t0UmQKtgudoIcaDVoAJOPm39ZqaNP_nT5I8QqVfSgwhDZmg$ 
->>> Signed-off-by: Peter Xu<peterx@redhat.com>
->>> ---
->>>   include/migration/misc.h |  1 +
->>>   migration/migration.h    |  2 --
->>>   migration/migration.c    | 51 
->>> ++++++++++++++++++++++++----------------
->>>   3 files changed, 32 insertions(+), 22 deletions(-)
->>>
->>> diff --git a/include/migration/misc.h b/include/migration/misc.h
->>> index e4933b815b..5d1aa593ed 100644
->>> --- a/include/migration/misc.h
->>> +++ b/include/migration/misc.h
->>> @@ -60,6 +60,7 @@ void migration_object_init(void);
->>>   void migration_shutdown(void);
->>>   bool migration_is_idle(void);
->>>   bool migration_is_active(MigrationState *);
->>> +bool migrate_mode_is_cpr(MigrationState *);
->>>     typedef enum MigrationEventType {
->>>       MIG_EVENT_PRECOPY_SETUP,
->>> diff --git a/migration/migration.h b/migration/migration.h
->>> index aef8afbe1f..65c0b61cbd 100644
->>> --- a/migration/migration.h
->>> +++ b/migration/migration.h
->>> @@ -541,6 +541,4 @@ int migration_rp_wait(MigrationState *s);
->>>    */
->>>   void migration_rp_kick(MigrationState *s);
->>>   -int migration_stop_vm(RunState state);
->>> -
->>>   #endif
->>> diff --git a/migration/migration.c b/migration/migration.c
->>> index 37c836b0b0..90a90947fb 100644
->>> --- a/migration/migration.c
->>> +++ b/migration/migration.c
->>> @@ -167,11 +167,19 @@ static gint 
->>> page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
->>>       return (a > b) - (a < b);
->>>   }
->>>   -int migration_stop_vm(RunState state)
->>> +static int migration_stop_vm(MigrationState *s, RunState state)
->>>   {
->>> -    int ret = vm_stop_force_state(state);
->>> +    int ret;
->>> +
->>> +    migration_downtime_start(s);
->>> +
->>> +    s->vm_old_state = runstate_get();
->>> +    global_state_store();
->>> +
->>> +    ret = vm_stop_force_state(state);
->>>         trace_vmstate_downtime_checkpoint("src-vm-stopped");
->>> +    trace_migration_completion_vm_stop(ret);
->>>         return ret;
->>>   }
->>> @@ -1602,6 +1610,11 @@ bool migration_is_active(MigrationState *s)
->>>               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
->>>   }
->>>   +bool migrate_mode_is_cpr(MigrationState *s)
->>> +{
->>> +    return s->parameters.mode == MIG_MODE_CPR_REBOOT;
->>> +}
->>> +
->>>   int migrate_init(MigrationState *s, Error **errp)
->>>   {
->>>       int ret;
->>> @@ -2454,10 +2467,7 @@ static int postcopy_start(MigrationState *ms, 
->>> Error **errp)
->>>       bql_lock();
->>>       trace_postcopy_start_set_run();
->>>   -    migration_downtime_start(ms);
->>> -
->>> -    global_state_store();
->>> -    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
->>> +    ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
->>>       if (ret < 0) {
->>>           goto fail;
->>>       }
->>> @@ -2652,15 +2662,12 @@ static int 
->>> migration_completion_precopy(MigrationState *s,
->>>       int ret;
->>>         bql_lock();
->>> -    migration_downtime_start(s);
->>> -
->>> -    s->vm_old_state = runstate_get();
->>> -    global_state_store();
->>>   -    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
->>> -    trace_migration_completion_vm_stop(ret);
->>> -    if (ret < 0) {
->>> -        goto out_unlock;
->>> +    if (!migrate_mode_is_cpr(s)) {
->>> +        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
->>> +        if (ret < 0) {
->>> +            goto out_unlock;
->>> +        }
->>>       }
->>>         ret = migration_maybe_pause(s, current_active_state,
->>> @@ -3500,15 +3507,10 @@ static void *bg_migration_thread(void *opaque)
->>>       s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
->>>         trace_migration_thread_setup_complete();
->>> -    migration_downtime_start(s);
->>>         bql_lock();
->>>   -    s->vm_old_state = runstate_get();
->>> -
->>> -    global_state_store();
->>> -    /* Forcibly stop VM before saving state of vCPUs and devices */
->>> -    if (migration_stop_vm(RUN_STATE_PAUSED)) {
->>> +    if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
->>>           goto fail;
->>>       }
->>>       /*
->>> @@ -3584,6 +3586,7 @@ void migrate_fd_connect(MigrationState *s, 
->>> Error *error_in)
->>>       Error *local_err = NULL;
->>>       uint64_t rate_limit;
->>>       bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
->>> +    int ret;
->>>         /*
->>>        * If there's a previous error, free it and prepare for 
->>> another one.
->>> @@ -3655,6 +3658,14 @@ void migrate_fd_connect(MigrationState *s, 
->>> Error *error_in)
->>>           return;
->>>       }
->>>   +    if (migrate_mode_is_cpr(s)) {
->>> +        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
->>> +        if (ret < 0) {
->>> +            error_setg(&local_err, "migration_stop_vm failed, error 
->>> %d", -ret);
->>> +            goto fail;
->>> +        }
->>> +    }
->>> +
->>>       if (migrate_background_snapshot()) {
->>>           qemu_thread_create(&s->thread, "bg_snapshot",
->>>                   bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+SGkgRmFuDQoNCg0KRG8geW91IGhhdmUgYSBuZXdlciBpbnN0cnVjdGlvbiB0byBwbGF5IHdpdGgg
+dGhlIERDRC4gSXQgc2VlbXMgdGhhdA0KdGhlIGluc3RydWN0aW9uIGluIFJGQ1swXSBkb2Vzbid0
+IHdvcmsgZm9yIGN1cnJlbnQgY29kZS4NCg0KWzBdIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2Fs
+bC8yMDIzMDUxMTE3NTYwOS4yMDkxMTM2LTEtZmFuLm5pQHNhbXN1bmcuY29tLw0KDQoNCg0KT24g
+MTkvMDQvMjAyNCAwNzoxMCwgbmlmYW4uY3hsQGdtYWlsLmNvbSB3cm90ZToNCj4gQSBnaXQgdHJl
+ZSBvZiB0aGlzIHNlcmllcyBjYW4gYmUgZm91bmQgaGVyZSAod2l0aCBvbmUgZXh0cmEgY29tbWl0
+IG9uIHRvcA0KPiBmb3IgcHJpbnRpbmcgb3V0IGFjY2VwdGVkL3BlbmRpbmcgZXh0ZW50IGxpc3Qp
+Og0KPiBodHRwczovL2dpdGh1Yi5jb20vbW9raW5nL3FlbXUvdHJlZS9kY2QtdjcNCj4gDQo+IHY2
+LT52NzoNCj4gDQo+IDEuIEZpeGVkIHRoZSBkdnNlYyByYW5nZSByZWdpc3RlciBpc3N1ZSBtZW50
+aW9uZWQgaW4gdGhlIHRoZSBjb3ZlciBsZXR0ZXIgaW4gdjYuDQo+ICAgICBPbmx5IHJlbGV2YW50
+IGJpdHMgYXJlIHNldCB0byBtYXJrIHRoZSBkZXZpY2UgcmVhZHkgKFBhdGNoIDYpLiAoSm9uYXRo
+YW4pDQo+IDIuIE1vdmVkIHRoZSBpZiBzdGF0ZW1lbnQgaW4gY3hsX3NldHVwX21lbW9yeSBmcm9t
+IFBhdGNoIDYgdG8gUGF0Y2ggNC4gKEpvbmF0aGFuKQ0KPiAzLiBVc2VkIE1JTiBpbnN0ZWFkIG9m
+IGlmIHN0YXRlbWVudCB0byBnZXQgcmVjb3JkX2NvdW50IGluIFBhdGNoIDcuIChKb25hdGhhbikN
+Cj4gNC4gQWRkZWQgIlJldmlld2VkLWJ5IiB0YWcgdG8gUGF0Y2ggNy4NCj4gNS4gTW9kaWZpZWQg
+Y3hsX2RjX2V4dGVudF9yZWxlYXNlX2RyeV9ydW4gc28gdGhlIHVwZGF0ZWQgZXh0ZW50IGxpc3Qg
+Y2FuIGJlDQo+ICAgICByZXVzZWQgaW4gY21kX2RjZF9yZWxlYXNlX2R5bl9jYXAgdG8gc2ltcGxp
+ZnkgdGhlIHByb2Nlc3MgaW4gUGF0Y2ggOC4gKErDuHJnZW4pDQo+IDYuIEFkZGVkIGNvbW1lbnRz
+IHRvIGluZGljYXRlIGZ1cnRoZXIgIlRPRE8iIGl0ZW1zIGluIGNtZF9kY2RfYWRkX2R5bl9jYXBf
+cnNwLg0KPiAgICAgIChKb25hdGhhbikNCj4gNy4gQXZvaWRlZCBpcnJlbGV2YW50IGNvZGUgcmVm
+b3JtYXQgaW4gUGF0Y2ggOC4gKEpvbmF0aGFuKQ0KPiA4LiBNb2RpZmllZCBRTVAgaW50ZXJmYWNl
+cyBmb3IgYWRkaW5nL3JlbGVhc2luZyBEQyBleHRlbnRzIHRvIGFsbG93IHBhc3NpbmcNCj4gICAg
+IHRhZ3MsIHNlbGVjdGlvbiBwb2xpY3ksIGZsYWdzIGluIHRoZSBpbnRlcmZhY2UuIChKb25hdGhh
+biwgR3JlZ29yeSkNCj4gOS4gUmVkZXNpZ25lZCB0aGUgcGVuZGluZyBsaXN0IHNvIGV4dGVudHMg
+aW4gdGhlIHNhbWUgcmVxdWVzdHMgYXJlIGdyb3VwZWQNCj4gICAgICB0b2dldGhlci4gQSBuZXcg
+ZGF0YSBzdHJ1Y3R1cmUgaXMgaW50cm9kdWNlZCB0byByZXByZXNlbnQgImV4dGVudCBncm91cCIN
+Cj4gICAgICBpbiBwZW5kaW5nIGxpc3QuICAoSm9uYXRoYW4pDQo+IDEwLiBBZGRlZCBzdXBwb3J0
+IGluIFFNUCBpbnRlcmZhY2UgZm9yICJNb3JlIiBmbGFnLg0KPiAxMS4gQ2hlY2sgIkZvcmNlZCBy
+ZW1vdmFsIiBmbGFnIGZvciByZWxlYXNlIHJlcXVlc3QgYW5kIG5vdCBsZXQgaXQgcGFzcyB0aHJv
+dWdoLg0KPiAxMi4gUmVtb3ZlZCB0aGUgZHluYW1pYyBjYXBhY2l0eSBsb2cgdHlwZSBmcm9tIEN4
+bEV2ZW50TG9nIGRlZmluaXRpb24gaW4gY3hsLmpzb24NCj4gICAgIHRvIGF2b2lkIHRoZSBzaWRl
+IGVmZmVjdCBpdCBtYXkgaW50cm9kdWNlIHRvIGluamVjdCBlcnJvciB0byBEQyBldmVudCBsb2cu
+DQo+ICAgICAoSm9uYXRoYW4pDQo+IDEzLiBIYXJkIGNvZGVkIHRoZSBldmVudCBsb2cgdHlwZSB0
+byBkeW5hbWljIGNhcGFjaXR5IGV2ZW50IGxvZyBpbiBRTVANCj4gICAgICBpbnRlcmZhY2VzLiAo
+Sm9uYXRoYW4pDQo+IDE0LiBBZGRpbmcgc3BhY2UgaW4gYmV0d2VlbiAiLTFdIi4gKEpvbmF0aGFu
+KQ0KPiAxNS4gU29tZSBtaW5vciBjb21tZW50IGZpeGVzLg0KPiANCj4gVGhlIGNvZGUgaXMgdGVz
+dGVkIHdpdGggc2ltaWxhciBzZXR1cCBhbmQgaGFzIHBhc3NlZCBzaW1pbGFyIHRlc3RzIGFzIGxp
+c3RlZA0KPiBpbiB0aGUgY292ZXIgbGV0dGVyIG9mIHY1WzFdIGFuZCB2NlsyXS4NCj4gQWxzbywg
+dGhlIGNvZGUgaXMgdGVzdGVkIHdpdGggdGhlIGxhdGVzdCBEQ0Qga2VybmVsIHBhdGNoc2V0WzNd
+Lg0KPiANCj4gWzFdIFFlbXUgRENEIHBhdGNoc2V0IHY1OiBodHRwczovL2xvcmUua2VybmVsLm9y
+Zy9saW51eC1jeGwvMjAyNDAzMDQxOTQzMzEuMTU4NjE5MS0xLW5pZmFuLmN4bEBnbWFpbC5jb20v
+VC8jdA0KPiBbMl0gUWVtdSBEQ0QgcGF0Y2hzZXQgdjY6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3Jn
+L2xpbnV4LWN4bC8yMDI0MDMyNTE5MDMzOS42OTY2ODYtMS1uaWZhbi5jeGxAZ21haWwuY29tL1Qv
+I3QNCj4gWzNdIERDRCBrZXJuZWwgcGF0Y2hlczogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGlu
+dXgtY3hsLzIwMjQwMzI0LWRjZC10eXBlMi11cHN0cmVhbS12MS0wLWI3YjAwZDYyMzYyNUBpbnRl
+bC5jb20vVC8jbTExYzU3MWUyMWM0ZmUxN2M3ZDA0ZWM1YzJjN2JjN2NiZjJjZDA3ZTMNCj4gDQo+
+IA0KPiBGYW4gTmkgKDEyKToNCj4gICAgaHcvY3hsL2N4bC1tYWlsYm94LXV0aWxzOiBBZGQgZGNf
+ZXZlbnRfbG9nX3NpemUgZmllbGQgdG8gb3V0cHV0DQo+ICAgICAgcGF5bG9hZCBvZiBpZGVudGlm
+eSBtZW1vcnkgZGV2aWNlIGNvbW1hbmQNCj4gICAgaHcvY3hsL2N4bC1tYWlsYm94LXV0aWxzOiBB
+ZGQgZHluYW1pYyBjYXBhY2l0eSByZWdpb24gcmVwcmVzZW50YXRpdmUNCj4gICAgICBhbmQgbWFp
+bGJveCBjb21tYW5kIHN1cHBvcnQNCj4gICAgaW5jbHVkZS9ody9jeGwvY3hsX2RldmljZTogUmVu
+YW1lIG1lbV9zaXplIGFzIHN0YXRpY19tZW1fc2l6ZSBmb3INCj4gICAgICB0eXBlMyBtZW1vcnkg
+ZGV2aWNlcw0KPiAgICBody9tZW0vY3hsX3R5cGUzOiBBZGQgc3VwcG9ydCB0byBjcmVhdGUgREMg
+cmVnaW9ucyB0byB0eXBlMyBtZW1vcnkNCj4gICAgICBkZXZpY2VzDQo+ICAgIGh3L21lbS9jeGwt
+dHlwZTM6IFJlZmFjdG9yIGN0M19idWlsZF9jZGF0X2VudHJpZXNfZm9yX21yIHRvIHRha2UgbXIN
+Cj4gICAgICBzaXplIGluc3RlYWQgb2YgbXIgYXMgYXJndW1lbnQNCj4gICAgaHcvbWVtL2N4bF90
+eXBlMzogQWRkIGhvc3QgYmFja2VuZCBhbmQgYWRkcmVzcyBzcGFjZSBoYW5kbGluZyBmb3IgREMN
+Cj4gICAgICByZWdpb25zDQo+ICAgIGh3L21lbS9jeGxfdHlwZTM6IEFkZCBEQyBleHRlbnQgbGlz
+dCByZXByZXNlbnRhdGl2ZSBhbmQgZ2V0IERDIGV4dGVudA0KPiAgICAgIGxpc3QgbWFpbGJveCBz
+dXBwb3J0DQo+ICAgIGh3L2N4bC9jeGwtbWFpbGJveC11dGlsczogQWRkIG1haWxib3ggY29tbWFu
+ZHMgdG8gc3VwcG9ydCBhZGQvcmVsZWFzZQ0KPiAgICAgIGR5bmFtaWMgY2FwYWNpdHkgcmVzcG9u
+c2UNCj4gICAgaHcvY3hsL2V2ZW50czogQWRkIHFtcCBpbnRlcmZhY2VzIHRvIGFkZC9yZWxlYXNl
+IGR5bmFtaWMgY2FwYWNpdHkNCj4gICAgICBleHRlbnRzDQo+ICAgIGh3L21lbS9jeGxfdHlwZTM6
+IEFkZCBEUEEgcmFuZ2UgdmFsaWRhdGlvbiBmb3IgYWNjZXNzZXMgdG8gREMgcmVnaW9ucw0KPiAg
+ICBody9jeGwvY3hsLW1haWxib3gtdXRpbHM6IEFkZCBzdXBlcnNldCBleHRlbnQgcmVsZWFzZSBt
+YWlsYm94IHN1cHBvcnQNCj4gICAgaHcvbWVtL2N4bF90eXBlMzogQWxsb3cgdG8gcmVsZWFzZSBl
+eHRlbnQgc3VwZXJzZXQgaW4gUU1QIGludGVyZmFjZQ0KPiANCj4gICBody9jeGwvY3hsLW1haWxi
+b3gtdXRpbHMuYyAgfCA2MjAgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0NCj4g
+ICBody9tZW0vY3hsX3R5cGUzLmMgICAgICAgICAgfCA2MzMgKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrLS0tDQo+ICAgaHcvbWVtL2N4bF90eXBlM19zdHVicy5jICAgIHwgIDIwICsr
+DQo+ICAgaW5jbHVkZS9ody9jeGwvY3hsX2RldmljZS5oIHwgIDgxICsrKystDQo+ICAgaW5jbHVk
+ZS9ody9jeGwvY3hsX2V2ZW50cy5oIHwgIDE4ICsNCj4gICBxYXBpL2N4bC5qc29uICAgICAgICAg
+ICAgICAgfCAgNjkgKysrKw0KPiAgIDYgZmlsZXMgY2hhbmdlZCwgMTM5NiBpbnNlcnRpb25zKCsp
+LCA0NSBkZWxldGlvbnMoLSkNCj4g
 
