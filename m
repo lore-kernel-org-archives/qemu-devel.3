@@ -4,84 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E626C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 13:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD546C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 13:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6s2H-0003gp-Ih; Tue, 14 May 2024 09:17:41 -0400
+	id 1s6s2Q-00040q-J3; Tue, 14 May 2024 09:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6s2E-0003av-W7
- for qemu-devel@nongnu.org; Tue, 14 May 2024 09:17:39 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6s2C-0002Gb-Ai
- for qemu-devel@nongnu.org; Tue, 14 May 2024 09:17:38 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-420160f8f52so14417275e9.0
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 06:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715692654; x=1716297454; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=e9DIDPZwUVzKEY+m7KYOpCRl6fAIUqwRQbi2OZO9XGM=;
- b=hz5hDezj1pUZ6o2+aFHBfIMFTM3xGvTbU2M2+WDHHX9OgNU2NczPEJuM0+bXnI8RPB
- /9HpfOEPL9nEWwhs29vG9CkAyRQVM/Vzk3jdxg6QVJILh+SCKjZ0PYchs7sRjJralsrR
- hepwbdmqkMG0uTLuWAhl0DINMIz5WuSw6DXc3uOaXMX218lpLhohbRVuSsCAZRF53RLj
- Bcuuvh2BMngYKCgxVyZqOd1B1qwyhAljd8uY1bgINmhePEQPuRu5fxFujCX2MCBNfRnX
- +Y2/4mPZv6rck19AUJTjk7cAOYJddKP0UWHGsg/FQylf7o+OI5K5Al0vFtuo2v5Q/QSX
- r5Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715692654; x=1716297454;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e9DIDPZwUVzKEY+m7KYOpCRl6fAIUqwRQbi2OZO9XGM=;
- b=gh0dVJGaqjiuW83T39XlWGM0+7Kd3bll5peirVrVwC9D96ch0qJ9czEjdK9eDcNClN
- 0tDLS457GYPoSvKRXVkqhz0Ma6Yw40nseOKFQs75a5bxmi55gczt0PKKvP9+jv9QMRj6
- vuCuMJSS7kQSyvI5/SUbgew6r5ff5MOtImoFXxPzoQ3r8T1ssB39xHypjqsE1CNHXPQr
- Mnf1tFkcAJjsEdSM6HIBt0y9eb1pHhh5RpBIoH/GqUnkL+zz3LYvksWDuYwTIEcU9vQv
- 1l2oFVbJiRLQ01xoHDdHP/d/JF3AyRf3E64QkI+WIQnhHYSIDOg92U9eZFEf0yEo4Hlv
- oONQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlCNJUGm8RQKiPMF6xopUWox6qOHTNeLgYKeCK69IwOt4ton3SgjVIVm3GF2wpWE0zQmU+PL7wDnZYJBMwtqp6blre2Lw=
-X-Gm-Message-State: AOJu0YyTYPm+2yQJXGhjwQtrpOaTOhlk5lugvpbJX9KUwUWc7SyuANA3
- YfuwoTn/DG1zHp8JgFauTpN7M/0EPnfjznSg0pmkR0kv6UFG5HzgHyPmyjijF9k=
-X-Google-Smtp-Source: AGHT+IERdeMMg3lKrAcQHA1RGUYfk5ltXg+OSZLjr+P8dOunoxbbHrVTUMmPLUJvVVqs+ki43/O1eg==
-X-Received: by 2002:a05:600c:3d06:b0:420:11c1:b240 with SMTP id
- 5b1f17b1804b1-42011c1b30amr57720575e9.24.1715692654539; 
- Tue, 14 May 2024 06:17:34 -0700 (PDT)
-Received: from [10.91.1.102] ([149.14.240.163])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41f87c235b4sm228411405e9.11.2024.05.14.06.17.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 06:17:34 -0700 (PDT)
-Message-ID: <b29bdac0-894d-4281-b26d-b4ced6df1d57@linaro.org>
-Date: Tue, 14 May 2024 15:17:33 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s6s2M-0003xT-VK
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:17:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s6s2I-0002HL-9x
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 09:17:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715692660;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=R8xIyUPJCOieyxDi6e+X59ZLz85p098EYkYUJDdnScc=;
+ b=UvItQg+h6AnaTxDkt5PAdOPUbGYq41XywTeRDUWCG0qEQR3ME2MSVnlmIxZBuNf7334H8C
+ OAY3dCm4fklLuoJnEPn3and29FR4ZMbIeHEEKCVX1yWVnIXGRk26Vwm9W0gLa/c3Ev7qts
+ aO6A4pKAuBxWO7hDVM6d4WaaRFhT44U=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-509-g0w31oNMMNe_6aMdtXqJxA-1; Tue, 14 May 2024 09:17:38 -0400
+X-MC-Unique: g0w31oNMMNe_6aMdtXqJxA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EBC548001F7;
+ Tue, 14 May 2024 13:17:37 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.9])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7A262C15BC3;
+ Tue, 14 May 2024 13:17:36 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, Dongwon Kim <dongwon.kim@intel.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 02/11] ui/gtk: Draw guest frame at refresh cycle
+Date: Tue, 14 May 2024 17:17:16 +0400
+Message-ID: <20240514131725.931234-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20240514131725.931234-1-marcandre.lureau@redhat.com>
+References: <20240514131725.931234-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] qerror: QERR_QGA_COMMAND_FAILED is no longer used,
- drop
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, michael.roth@amd.com
-References: <20240514105829.729342-1-armbru@redhat.com>
- <20240514105829.729342-4-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240514105829.729342-4-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,13 +85,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/5/24 12:58, Markus Armbruster wrote:
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   include/qapi/qmp/qerror.h | 3 ---
->   1 file changed, 3 deletions(-)
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Draw routine needs to be manually invoked in the next refresh
+if there is a scanout blob from the guest. This is to prevent
+a situation where there is a scheduled draw event but it won't
+happen bacause the window is currently in inactive state
+(minimized or tabified). If draw is not done for a long time,
+gl_block timeout and/or fence timeout (on the guest) will happen
+eventually.
 
+v2: Use gd_gl_area_draw(vc) in gtk-gl-area.c
+
+Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20240426225059.3871283-1-dongwon.kim@intel.com>
+---
+ ui/gtk-egl.c     | 1 +
+ ui/gtk-gl-area.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 3af5ac5bcf..75f6b9011a 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -150,6 +150,7 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+             vc, vc->window ? vc->window : vc->gfx.drawing_area);
+ 
+     if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
++        gd_egl_draw(vc);
+         return;
+     }
+ 
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 52dcac161e..4fff957c3f 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -126,6 +126,7 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
+ 
+     if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
++        gd_gl_area_draw(vc);
+         return;
+     }
+ 
+-- 
+2.41.0.28.gd7d8841f67
 
 
