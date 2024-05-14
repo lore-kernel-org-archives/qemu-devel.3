@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F076AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 07:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B568CC41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 07:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6ms7-0007Uw-GE; Tue, 14 May 2024 03:46:51 -0400
+	id 1s6n2L-0001Kc-0A; Tue, 14 May 2024 03:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1s6ms5-0007Ud-7M
- for qemu-devel@nongnu.org; Tue, 14 May 2024 03:46:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s6n2H-0001KK-Ha
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:22 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1s6ms3-0002HW-Fi
- for qemu-devel@nongnu.org; Tue, 14 May 2024 03:46:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715672805;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y+YE8u8G1oyYQZ+CgE8cW5NHWOb2fWMOZm+PPxv0so0=;
- b=UAqpzBQv6oyKY9k6XQfB1SmmeudKo33+ZzGbA0PoIlJ/dfVUpFlYBTdT0u60/88OMAFYsr
- TnR1RrgR3FbF7zeMcvEjQtKwCGmTuOgskHCA1j31XQEjxDs242ghFovhr5XDwHarjW7bJp
- gwm8tVROjIcNpQRTbKmu+qhaga5TLH4=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-jkS1fihHNX2erbIn21hnKA-1; Tue, 14 May 2024 03:25:39 -0400
-X-MC-Unique: jkS1fihHNX2erbIn21hnKA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5725f45da8eso326550a12.0
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 00:25:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715671538; x=1716276338;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y+YE8u8G1oyYQZ+CgE8cW5NHWOb2fWMOZm+PPxv0so0=;
- b=Yz4UdYwCzIAtY1XQOW9s4E501A02ChVp8ta66/OYBv5Kb3HX/HIwdSNk9BhGMvCs57
- ZDBYXXelEvYXYsmn/eguGq+e0Djqy7Xt6Dn8THfo2Kk0RC6tIg2DMO/TTxQzSNQgz5Zf
- 2RO7z53GDH3vN/xdrqiaRzbALEaudOOcac542yBiaRTgvNqqwC2wBIa/k+XoRJwEQCxx
- yWwwFG4kY+AUD6jkzbtJtEraZokhIKpVfeUp97ALZ5NcwTOcJ40yroWmzNMaWcnHtrel
- 9KrQWxOu0CBJOJ1QD4hWG7B7nSUaZo4bZDT6Er52NsqZk3Vdf61G/QfoRggoR0/p/MiB
- wgqw==
-X-Gm-Message-State: AOJu0YyW03NaGigz1tr15yvM235oygWvwcgRERTt+MH8BWRnsNu7bh8h
- MtNU6kYJ9T+rU0vvhOJweeae6qX6E3W6t7I6MbBJCwHidyYg4eL9bKy4wmw+Jb+Oer44SGhh0j+
- WRpLNL5I9FgdNCwowDWYTRRuH81C2E9DD2UNHE+j0pVsphVVyhzx55lLnTHc+Ge517OAPZHSh1N
- XlgvSRTEZuqg39QY/TlYPgyzpATrg=
-X-Received: by 2002:a50:d793:0:b0:572:3fe4:18b5 with SMTP id
- 4fb4d7f45d1cf-5734d67aa8fmr7295492a12.32.1715671538692; 
- Tue, 14 May 2024 00:25:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVpYfaGylMsxilQQuu96KhUsJ6Ngxt8tclDlSa21gh1frfyuPe0Zx8CHPQpXXB1EWJwe2IcpQfq/mpvC7bl10=
-X-Received: by 2002:a50:d793:0:b0:572:3fe4:18b5 with SMTP id
- 4fb4d7f45d1cf-5734d67aa8fmr7295474a12.32.1715671538251; Tue, 14 May 2024
- 00:25:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s6n2D-0004IK-EA
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715673437; x=1747209437;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=AnNgs82Yp+UDJCKhp2Oxhp2G3wEze/cPzmmbluUe1fs=;
+ b=USYWO/9sGTi5eu5eTTJmF5oYTAnqRKTJrQvBS1gZHPYvfP2FGSjTI5tr
+ 58diIaELikGnY0CrqTJJ7lDY4wCCPFCmspSYOLlV5BIPsO67NpRveM9C7
+ f5GVO53ieRqR83D8fP6YdV7mpl6tNAEsMkoxZQRv+8SGFd6HaKlCorqLa
+ HwPKUeI4aC7HbNH82criCvIvGJDPKztsdyFOwnPaHjLc+WKW+5lvKEHsc
+ ZRZ+hAf7WNWghRDeCBXLFNO+UBZYlh8Z7WTUOAD12qCV9KezBSaDyowsV
+ BojVFAfIQgoRu5IKBYi8HgYmDzGu31+YXw8djPxlvc3sTwc9lL+Dm5QwV A==;
+X-CSE-ConnectionGUID: 5rQOg+emQ0qXMGRLgk2wDw==
+X-CSE-MsgGUID: akErDRMOSMW8C3utg5eHKg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11072"; a="11813091"
+X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; d="scan'208";a="11813091"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 May 2024 00:57:05 -0700
+X-CSE-ConnectionGUID: tKjFoLKfTNK5pXwfMxdxPQ==
+X-CSE-MsgGUID: jMKWzqaeR0ifeUhEuFyLiA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; d="scan'208";a="35131349"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 14 May 2024 00:57:04 -0700
+Date: Tue, 14 May 2024 16:12:21 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, Mads Ynddal <mads@ynddal.dk>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH] scripts/simpletrace: Mark output with unstable timestamp
+ as WARN
+Message-ID: <ZkMc5Y5DGhDlfB8J@intel.com>
+References: <20240508043229.3433128-1-zhao1.liu@intel.com>
+ <CAJSP0QX0y_J1pu+hgUNhXn7bFJfoAMm9Ux9vq3u+k_UDjwK8Ww@mail.gmail.com>
+ <ZjxKDkZjAitxCasH@intel.com>
+ <20240509134712.GA515599@fedora.redhat.com>
 MIME-Version: 1.0
-References: <20240513071905.499143-1-marcandre.lureau@redhat.com>
- <20240513071905.499143-4-marcandre.lureau@redhat.com> <ZkLojVI4ZAKANIBr@x1n>
-In-Reply-To: <ZkLojVI4ZAKANIBr@x1n>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 14 May 2024 11:25:26 +0400
-Message-ID: <CAMxuvayd5X04dOSRMHYQr-NbHrwNeZLTD6wvNb2bq6c+-qU-9w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] virtio-gpu: add x-vmstate-version
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240509134712.GA515599@fedora.redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,81 +89,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi Stefan,
 
-On Tue, May 14, 2024 at 8:35=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
->
-> Hey, Marc-Andre,
->
-> On Mon, May 13, 2024 at 11:19:04AM +0400, marcandre.lureau@redhat.com wro=
-te:
-> > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > index ae831b6b3e..7f9fb5eacc 100644
-> > --- a/hw/display/virtio-gpu.c
-> > +++ b/hw/display/virtio-gpu.c
-> > @@ -1234,7 +1234,8 @@ static int virtio_gpu_save(QEMUFile *f, void *opa=
-que, size_t size,
-> >      }
-> >      qemu_put_be32(f, 0); /* end of list */
-> >
-> > -    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL=
-);
-> > +    return vmstate_save_state_v(f, &vmstate_virtio_gpu_scanouts, g,
-> > +                                NULL, g->vmstate_version, NULL);
-> >  }
-> >
-> >  static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-> > @@ -1339,7 +1340,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opa=
-que, size_t size,
-> >      }
-> >
-> >      /* load & apply scanout state */
-> > -    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
-> > +    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, g->vmstate_=
-version);
->
-> [sorry for a late response; attending a conf, and will reply to the v1
->  thread later for the other discussions..]
->
-> These two changes shouldn't be needed if we go with the .field_exists()
-> approach, am I right?  IIUC in that case we can keep the version 1 here a=
-nd
-> don't boost anything, because we relied on the machine versions.
->
-> IIUC this might be the reason why we found 9.0 mahines are broken on
-> migration.  E.g, IIUC my original patch should work for 9.0<->9.0 too.
->
+> QEMU uses clock_gettime(CLOCK_MONOTONIC) on Linux hosts. The man page
+> says:
+> 
+>   All CLOCK_MONOTONIC variants guarantee that the time returned by
+>   consecutive  calls  will  not go backwards, but successive calls
+>   may—depending  on  the  architecture—return  identical  (not-in‐
+>   creased) time values.
+> 
+> trace_record_start() calls clock_gettime(CLOCK_MONOTONIC) so trace events
+> should have monotonically increasing timestamps.
+> 
+> I don't see a scenario where trace record A's timestamp is greater than
+> trace record B's timestamp unless the clock is non-monotonic.
+> 
+> Which host CPU architecture and operating system are you running?
 
-Indeed, but for consistency, shouldn't it use the x-vmstate-version
-value for the top-level VMSD save/load ?
+I tested on these 2 machines:
+* CML (intel 10th) with Ubuntu 22.04 + kernel v6.5.0-28
+* MTL (intel 14th) with Ubuntu 22.04.2 + kernel v6.9.0
 
-Otherwise, it feels a bit odd that this x-vmstate-version is only used
-for the nested "virtio-gpu-one-scanout" version.
+> Please attach to the QEMU process with gdb and print out the value of
+> the use_rt_clock variable or add a printf in init_get_clock(). The value
+> should be 1.
 
-Or perhaps we should rename it to x-scanout-vmstate-version ? wdyt
+Thanks, on both above machines, use_rt_clock is 1 and there're both
+timestamp reversal issues with the following debug print:
 
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index 9a366e551fb3..7657785c27dc 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -831,10 +831,17 @@ extern int use_rt_clock;
 
-> Thanks,
->
-> >
-> >      return 0;
-> >  }
-> > @@ -1659,6 +1660,7 @@ static Property virtio_gpu_properties[] =3D {
-> >      DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
-> >                      VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
-> >      DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0)=
-,
-> > +    DEFINE_PROP_UINT8("x-vmstate-version", VirtIOGPU, vmstate_version,=
- 1),
-> >      DEFINE_PROP_END_OF_LIST(),
-> >  };
-> >
-> > --
-> > 2.41.0.28.gd7d8841f67
-> >
->
-> --
-> Peter Xu
->
+ static inline int64_t get_clock(void)
+ {
++    static int64_t clock = 0;
+     if (use_rt_clock) {
+         struct timespec ts;
+         clock_gettime(CLOCK_MONOTONIC, &ts);
+-        return ts.tv_sec * 1000000000LL + ts.tv_nsec;
++        int64_t tmp = ts.tv_sec * 1000000000LL + ts.tv_nsec;
++        if (tmp <= clock) {
++            printf("get_clock: strange, clock: %ld, tmp: %ld\n", clock, tmp);
++        }
++        assert(tmp > clock);
++        clock = tmp;
++        return clock;
+     } else {
+         /* XXX: using gettimeofday leads to problems if the date
+            changes, so it should be avoided. */
+diff --git a/util/qemu-timer-common.c b/util/qemu-timer-common.c
+index cc1326f72646..3bf06eb4a4ce 100644
+--- a/util/qemu-timer-common.c
++++ b/util/qemu-timer-common.c
+@@ -59,5 +59,6 @@ static void __attribute__((constructor)) init_get_clock(void)
+         use_rt_clock = 1;
+     }
+     clock_start = get_clock();
++    printf("init_get_clock: use_rt_clock: %d\n", use_rt_clock);
+ }
+ #endif
+
+---
+The timestamp interval is very small, for example:
+get_clock: strange, clock: 3302130503505, tmp: 3302130503503
+
+or
+
+get_clock: strange, clock: 2761577819846455, tmp: 2761577819846395
+
+I also tried to use CLOCK_MONOTONIC_RAW, but there's still the reversal
+issue.
+
+Thanks,
+Zhao
 
 
