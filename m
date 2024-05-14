@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46373C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 17:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83646C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 17:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6wJj-00085n-Ub; Tue, 14 May 2024 13:52:00 -0400
+	id 1s6wPO-0001dh-8s; Tue, 14 May 2024 13:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s6wJI-0007p9-Az
- for qemu-devel@nongnu.org; Tue, 14 May 2024 13:51:45 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s6wP6-0001ZG-3C
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 13:57:37 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s6wJG-00075P-0Y
- for qemu-devel@nongnu.org; Tue, 14 May 2024 13:51:31 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1ee38966529so45936905ad.1
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 10:51:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715709088; x=1716313888; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GUNZQydaCMc7ehsM2Ah15kPNClAvUppTK0yXtiOybD0=;
- b=zZDuS8w1SNkfWnSm05rvq1C0f+FXQSMafdg/dV6qsLJV7AoMvJPHPLdNe3XRsjHyQb
- Dbnx2jLE/we2ueHecLZWkpImlhBZGdMxcgWLDBeVOzijscEMdetF02cEdOVsolkXt4Dw
- K3WXYLCXsRJIR2diJ5gL1lH4nTg6dJCnXvH6ZGdPm74938R4gH/GJCTHMohg2wEK/kww
- HPsdHwipmWPpMs3/SXnhcndBlxfPiIuu6NjcppZrQZqOfB+xcBcu3AyrObkyDitRAR52
- H1HSaWGMuHwYDOTP7l1eB2A2R2CVeO5pJuTf4jdN+8eqbXGbW09HllW/0R30yrHQPu6g
- 9Abg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715709088; x=1716313888;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GUNZQydaCMc7ehsM2Ah15kPNClAvUppTK0yXtiOybD0=;
- b=Izb+yV18JmaU2YqWIWzzNtVA2nEqGXlr3TRdmF9/1WBs1BTzvAgM2kKT114kNpBJJC
- foC8O0vSiMkjm/n3miXHWWl+0H6v5FRHADzsN2QYqDAzecBUmgBQsLZsMX9P6TRXfSBT
- mvwZsn8SiEySIQpJZEvJd3IA1KiFjxDX75RLHCAPlDB+a05gTZod1m7CmP8uSqpUVrSa
- HI/fOkbZW7GoiJ4vHuBeiyDi00koVsfzdfNsOCr6gTqRGHgoQEWSlcX0o3UAzwlrFyKp
- vkc1MY1lSfbOxKvmZKapu05R00WH8vJ45VUwvIM0oIlsF5us/K3fB0DqZG39Vlu7UdU/
- 3bZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQM2Wi9VJfXCCxCSi/Cq/Q4rwb3l9tPUwY01woLZdu3BuCHpc5YH7q7TwIWxFMFQTeJaHr87QGgayLPRmhbSo1spPpmY4=
-X-Gm-Message-State: AOJu0YzyxnLXAg1nimj9M2udT/ofpemTIj8BP/nylB0LyEAhncyhgn3x
- 0AHwlpBUTRZup+RzGnTQ5ehLz8Ahh2ch0Rwn5gYt728sfrDBbTRG8g1q0yXpXD8=
-X-Google-Smtp-Source: AGHT+IHo/QytIaUGxkgqOwvmQqfCAwp4emz69enl2ic1ro7VbGS3LxE+8lanBSXGTedO0tVdc24scQ==
-X-Received: by 2002:a17:902:e542:b0:1ea:482f:f41e with SMTP id
- d9443c01a7336-1eefa13a014mr275350845ad.15.1715709088181; 
- Tue, 14 May 2024 10:51:28 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0c256a4esm100797625ad.309.2024.05.14.10.51.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 10:51:27 -0700 (PDT)
-Message-ID: <106154d2-730f-4b33-bffc-6e8460abeab9@linaro.org>
-Date: Tue, 14 May 2024 10:51:26 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s6wOz-0008EC-SX
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 13:57:28 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 07CBF1FDBE;
+ Tue, 14 May 2024 17:57:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715709441; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0yYTY9Wgz/LMRk7fmGG4kjxZdUNDUlgbzs/gM2N+WZo=;
+ b=HNkowWZoRGY46zfyHDzlJu1sgsesKb88YQrXSgwda3ORtH/V62rsXqr6tzKxpS26WBzxet
+ vPMo9aQAlYfOmPhzEGl1YGJw50kjMVdaoLqgA3bX041sBHCgKCoB1E3YvLEyg7RqY8Zx++
+ 2zcVOgm9ig2+0PvtLUrUjkJtmgfhSho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715709441;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0yYTY9Wgz/LMRk7fmGG4kjxZdUNDUlgbzs/gM2N+WZo=;
+ b=VXq1T0UhT3ltC10aXXOSILXYoa3m59CJ/fKCA7kD13fLr48FmkW5JOQHQcP77QWoVoo78v
+ s/A/HQFX3fcDRYBw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715709441; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0yYTY9Wgz/LMRk7fmGG4kjxZdUNDUlgbzs/gM2N+WZo=;
+ b=HNkowWZoRGY46zfyHDzlJu1sgsesKb88YQrXSgwda3ORtH/V62rsXqr6tzKxpS26WBzxet
+ vPMo9aQAlYfOmPhzEGl1YGJw50kjMVdaoLqgA3bX041sBHCgKCoB1E3YvLEyg7RqY8Zx++
+ 2zcVOgm9ig2+0PvtLUrUjkJtmgfhSho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715709441;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0yYTY9Wgz/LMRk7fmGG4kjxZdUNDUlgbzs/gM2N+WZo=;
+ b=VXq1T0UhT3ltC10aXXOSILXYoa3m59CJ/fKCA7kD13fLr48FmkW5JOQHQcP77QWoVoo78v
+ s/A/HQFX3fcDRYBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 82FA6137C3;
+ Tue, 14 May 2024 17:57:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Bs+TEgCmQ2azeAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 14 May 2024 17:57:20 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
+ Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>, Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH 4/9] migration: Add direct-io parameter
+In-Reply-To: <87ttj0zdp0.fsf@pond.sub.org>
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-5-farosas@suse.de> <ZjUnghSvdy-wWtnN@x1n>
+ <871q6ioc2r.fsf@suse.de> <ZjVUKCafjreLtLmm@x1n>
+ <87ttj0zdp0.fsf@pond.sub.org>
+Date: Tue, 14 May 2024 14:57:18 -0300
+Message-ID: <87r0e4e0ox.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] scripts/update-linux-header.sh: be more src tree
- friendly
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20240514174253.694591-1-alex.bennee@linaro.org>
- <20240514174253.694591-3-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240514174253.694591-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.994]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,165 +118,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNS8xNC8yNCAxMDo0MiwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBSdW5uaW5nICJpbnN0
-YWxsX2hlYWRlcnMiIGluIHRoZSBMaW51eCBzb3VyY2UgdHJlZSBpcyBmYWlybHkNCj4gdW5m
-cmllbmRseSBhcyBvdXQtb2YtdHJlZSBidWlsZHMgd2lsbCBzdGFydCBjb21wbGFpbmluZyBh
-Ym91dCB0aGUNCj4ga2VybmVsIHNvdXJjZSBiZWluZyBub24tcHJpc3RpbmUuIEFzIHdlIGhh
-dmUgYSB0ZW1wb3JhcnkgZGlyZWN0b3J5IGZvcg0KPiB0aGUgaW5zdGFsbCB3ZSBzaG91bGQg
-YWxzbyBkbyB0aGUgYnVpbGQgc3RlcCBoZXJlLiBTbyBub3cgd2UgaGF2ZToNCj4gDQo+ICAg
-ICR0bXBkaXIvDQo+ICAgICAgJGJsZGRpci8NCj4gICAgICAkaGRyZGlyLw0KPiANCj4gU2ln
-bmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPg0KPiBN
-ZXNzYWdlLUlkOiA8MjAyNDA1MTAxMTE4MDIuMjQxMjg0LTEtYWxleC5iZW5uZWVAbGluYXJv
-Lm9yZz4NCj4gLS0tDQo+ICAgc2NyaXB0cy91cGRhdGUtbGludXgtaGVhZGVycy5zaCB8IDgw
-ICsrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLQ0KPiAgIDEgZmlsZSBjaGFuZ2Vk
-LCA0MSBpbnNlcnRpb25zKCspLCAzOSBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQg
-YS9zY3JpcHRzL3VwZGF0ZS1saW51eC1oZWFkZXJzLnNoIGIvc2NyaXB0cy91cGRhdGUtbGlu
-dXgtaGVhZGVycy5zaA0KPiBpbmRleCAzNmYzZTkxZmU0Li44OTYzYzM5MTg5IDEwMDc1NQ0K
-PiAtLS0gYS9zY3JpcHRzL3VwZGF0ZS1saW51eC1oZWFkZXJzLnNoDQo+ICsrKyBiL3Njcmlw
-dHMvdXBkYXRlLWxpbnV4LWhlYWRlcnMuc2gNCj4gQEAgLTI3LDYgKzI3LDggQEANCj4gICAj
-ICAgdHlwZXMgbGlrZSAiX191NjQiLiAgVGhpcyB3b3JrIGlzIGRvbmUgaW4gdGhlIGNwX3Bv
-cnRhYmxlIGZ1bmN0aW9uLg0KPiAgIA0KPiAgIHRtcGRpcj0kKG1rdGVtcCAtZCkNCj4gK2hk
-cmRpcj0iJHRtcGRpci9oZWFkZXJzIg0KPiArYmxkZGlyPSIkdG1wZGlyL2J1aWxkIg0KPiAg
-IGxpbnV4PSIkMSINCj4gICBvdXRwdXQ9IiQyIg0KPiAgIA0KPiBAQCAtMTEwLDU2ICsxMTIs
-NTYgQEAgZm9yIGFyY2ggaW4gJEFSQ0hMSVNUOyBkbw0KPiAgICAgICAgICAgYXJjaF92YXI9
-QVJDSA0KPiAgICAgICBmaQ0KPiAgIA0KPiAtICAgIG1ha2UgLUMgIiRsaW51eCIgSU5TVEFM
-TF9IRFJfUEFUSD0iJHRtcGRpciIgJGFyY2hfdmFyPSRhcmNoIGhlYWRlcnNfaW5zdGFsbA0K
-PiArICAgIG1ha2UgLUMgIiRsaW51eCIgTz0iJGJsZGRpciIgSU5TVEFMTF9IRFJfUEFUSD0i
-JGhkcmRpciIgJGFyY2hfdmFyPSRhcmNoIGhlYWRlcnNfaW5zdGFsbA0KPiAgIA0KPiAgICAg
-ICBybSAtcmYgIiRvdXRwdXQvbGludXgtaGVhZGVycy9hc20tJGFyY2giDQo+ICAgICAgIG1r
-ZGlyIC1wICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLSRhcmNoIg0KPiAgICAgICBmb3Ig
-aGVhZGVyIGluIGt2bS5oIHVuaXN0ZC5oIGJpdHNwZXJsb25nLmggbW1hbi5oOyBkbw0KPiAt
-ICAgICAgICBjcCAiJHRtcGRpci9pbmNsdWRlL2FzbS8kaGVhZGVyIiAiJG91dHB1dC9saW51
-eC1oZWFkZXJzL2FzbS0kYXJjaCINCj4gKyAgICAgICAgY3AgIiRoZHJkaXIvaW5jbHVkZS9h
-c20vJGhlYWRlciIgIiRvdXRwdXQvbGludXgtaGVhZGVycy9hc20tJGFyY2giDQo+ICAgICAg
-IGRvbmUNCj4gICANCj4gICAgICAgaWYgWyAkYXJjaCA9IG1pcHMgXTsgdGhlbg0KPiAtICAg
-ICAgICBjcCAiJHRtcGRpci9pbmNsdWRlL2FzbS9zZ2lkZWZzLmgiICIkb3V0cHV0L2xpbnV4
-LWhlYWRlcnMvYXNtLW1pcHMvIg0KPiAtICAgICAgICBjcCAiJHRtcGRpci9pbmNsdWRlL2Fz
-bS91bmlzdGRfbzMyLmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLW1pcHMvIg0KPiAt
-ICAgICAgICBjcCAiJHRtcGRpci9pbmNsdWRlL2FzbS91bmlzdGRfbjMyLmgiICIkb3V0cHV0
-L2xpbnV4LWhlYWRlcnMvYXNtLW1pcHMvIg0KPiAtICAgICAgICBjcCAiJHRtcGRpci9pbmNs
-dWRlL2FzbS91bmlzdGRfbjY0LmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLW1pcHMv
-Ig0KPiArICAgICAgICBjcCAiJGhkcmRpci9pbmNsdWRlL2FzbS9zZ2lkZWZzLmgiICIkb3V0
-cHV0L2xpbnV4LWhlYWRlcnMvYXNtLW1pcHMvIg0KPiArICAgICAgICBjcCAiJGhkcmRpci9p
-bmNsdWRlL2FzbS91bmlzdGRfbzMyLmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLW1p
-cHMvIg0KPiArICAgICAgICBjcCAiJGhkcmRpci9pbmNsdWRlL2FzbS91bmlzdGRfbjMyLmgi
-ICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLW1pcHMvIg0KPiArICAgICAgICBjcCAiJGhk
-cmRpci9pbmNsdWRlL2FzbS91bmlzdGRfbjY0LmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMv
-YXNtLW1pcHMvIg0KPiAgICAgICBmaQ0KPiAgICAgICBpZiBbICRhcmNoID0gcG93ZXJwYyBd
-OyB0aGVuDQo+IC0gICAgICAgIGNwICIkdG1wZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZF8zMi5o
-IiAiJG91dHB1dC9saW51eC1oZWFkZXJzL2FzbS1wb3dlcnBjLyINCj4gLSAgICAgICAgY3Ag
-IiR0bXBkaXIvaW5jbHVkZS9hc20vdW5pc3RkXzY0LmgiICIkb3V0cHV0L2xpbnV4LWhlYWRl
-cnMvYXNtLXBvd2VycGMvIg0KPiArICAgICAgICBjcCAiJGhkcmRpci9pbmNsdWRlL2FzbS91
-bmlzdGRfMzIuaCIgIiRvdXRwdXQvbGludXgtaGVhZGVycy9hc20tcG93ZXJwYy8iDQo+ICsg
-ICAgICAgIGNwICIkaGRyZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZF82NC5oIiAiJG91dHB1dC9s
-aW51eC1oZWFkZXJzL2FzbS1wb3dlcnBjLyINCj4gICAgICAgZmkNCj4gICANCj4gICAgICAg
-cm0gLXJmICIkb3V0cHV0L2luY2x1ZGUvc3RhbmRhcmQtaGVhZGVycy9hc20tJGFyY2giDQo+
-ICAgICAgIG1rZGlyIC1wICIkb3V0cHV0L2luY2x1ZGUvc3RhbmRhcmQtaGVhZGVycy9hc20t
-JGFyY2giDQo+ICAgICAgIGlmIFsgJGFyY2ggPSBzMzkwIF07IHRoZW4NCj4gLSAgICAgICAg
-Y3BfcG9ydGFibGUgIiR0bXBkaXIvaW5jbHVkZS9hc20vdmlydGlvLWNjdy5oIiAiJG91dHB1
-dC9pbmNsdWRlL3N0YW5kYXJkLWhlYWRlcnMvYXNtLXMzOTAvIg0KPiAtICAgICAgICBjcCAi
-JHRtcGRpci9pbmNsdWRlL2FzbS91bmlzdGRfMzIuaCIgIiRvdXRwdXQvbGludXgtaGVhZGVy
-cy9hc20tczM5MC8iDQo+IC0gICAgICAgIGNwICIkdG1wZGlyL2luY2x1ZGUvYXNtL3VuaXN0
-ZF82NC5oIiAiJG91dHB1dC9saW51eC1oZWFkZXJzL2FzbS1zMzkwLyINCj4gKyAgICAgICAg
-Y3BfcG9ydGFibGUgIiRoZHJkaXIvaW5jbHVkZS9hc20vdmlydGlvLWNjdy5oIiAiJG91dHB1
-dC9pbmNsdWRlL3N0YW5kYXJkLWhlYWRlcnMvYXNtLXMzOTAvIg0KPiArICAgICAgICBjcCAi
-JGhkcmRpci9pbmNsdWRlL2FzbS91bmlzdGRfMzIuaCIgIiRvdXRwdXQvbGludXgtaGVhZGVy
-cy9hc20tczM5MC8iDQo+ICsgICAgICAgIGNwICIkaGRyZGlyL2luY2x1ZGUvYXNtL3VuaXN0
-ZF82NC5oIiAiJG91dHB1dC9saW51eC1oZWFkZXJzL2FzbS1zMzkwLyINCj4gICAgICAgZmkN
-Cj4gICAgICAgaWYgWyAkYXJjaCA9IGFybSBdOyB0aGVuDQo+IC0gICAgICAgIGNwICIkdG1w
-ZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZC1lYWJpLmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMv
-YXNtLWFybS8iDQo+IC0gICAgICAgIGNwICIkdG1wZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZC1v
-YWJpLmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLWFybS8iDQo+IC0gICAgICAgIGNw
-ICIkdG1wZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZC1jb21tb24uaCIgIiRvdXRwdXQvbGludXgt
-aGVhZGVycy9hc20tYXJtLyINCj4gKyAgICAgICAgY3AgIiRoZHJkaXIvaW5jbHVkZS9hc20v
-dW5pc3RkLWVhYmkuaCIgIiRvdXRwdXQvbGludXgtaGVhZGVycy9hc20tYXJtLyINCj4gKyAg
-ICAgICAgY3AgIiRoZHJkaXIvaW5jbHVkZS9hc20vdW5pc3RkLW9hYmkuaCIgIiRvdXRwdXQv
-bGludXgtaGVhZGVycy9hc20tYXJtLyINCj4gKyAgICAgICAgY3AgIiRoZHJkaXIvaW5jbHVk
-ZS9hc20vdW5pc3RkLWNvbW1vbi5oIiAiJG91dHB1dC9saW51eC1oZWFkZXJzL2FzbS1hcm0v
-Ig0KPiAgICAgICBmaQ0KPiAgICAgICBpZiBbICRhcmNoID0gYXJtNjQgXTsgdGhlbg0KPiAt
-ICAgICAgICBjcCAiJHRtcGRpci9pbmNsdWRlL2FzbS9zdmVfY29udGV4dC5oIiAiJG91dHB1
-dC9saW51eC1oZWFkZXJzL2FzbS1hcm02NC8iDQo+ICsgICAgICAgIGNwICIkaGRyZGlyL2lu
-Y2x1ZGUvYXNtL3N2ZV9jb250ZXh0LmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLWFy
-bTY0LyINCj4gICAgICAgZmkNCj4gICAgICAgaWYgWyAkYXJjaCA9IHg4NiBdOyB0aGVuDQo+
-IC0gICAgICAgIGNwICIkdG1wZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZF8zMi5oIiAiJG91dHB1
-dC9saW51eC1oZWFkZXJzL2FzbS14ODYvIg0KPiAtICAgICAgICBjcCAiJHRtcGRpci9pbmNs
-dWRlL2FzbS91bmlzdGRfeDMyLmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLXg4Ni8i
-DQo+IC0gICAgICAgIGNwICIkdG1wZGlyL2luY2x1ZGUvYXNtL3VuaXN0ZF82NC5oIiAiJG91
-dHB1dC9saW51eC1oZWFkZXJzL2FzbS14ODYvIg0KPiAtICAgICAgICBjcF9wb3J0YWJsZSAi
-JHRtcGRpci9pbmNsdWRlL2FzbS9rdm1fcGFyYS5oIiAiJG91dHB1dC9pbmNsdWRlL3N0YW5k
-YXJkLWhlYWRlcnMvYXNtLSRhcmNoIg0KPiArICAgICAgICBjcCAiJGhkcmRpci9pbmNsdWRl
-L2FzbS91bmlzdGRfMzIuaCIgIiRvdXRwdXQvbGludXgtaGVhZGVycy9hc20teDg2LyINCj4g
-KyAgICAgICAgY3AgIiRoZHJkaXIvaW5jbHVkZS9hc20vdW5pc3RkX3gzMi5oIiAiJG91dHB1
-dC9saW51eC1oZWFkZXJzL2FzbS14ODYvIg0KPiArICAgICAgICBjcCAiJGhkcmRpci9pbmNs
-dWRlL2FzbS91bmlzdGRfNjQuaCIgIiRvdXRwdXQvbGludXgtaGVhZGVycy9hc20teDg2LyIN
-Cj4gKyAgICAgICAgY3BfcG9ydGFibGUgIiRoZHJkaXIvaW5jbHVkZS9hc20va3ZtX3BhcmEu
-aCIgIiRvdXRwdXQvaW5jbHVkZS9zdGFuZGFyZC1oZWFkZXJzL2FzbS0kYXJjaCINCj4gICAg
-ICAgICAgICMgUmVtb3ZlIGV2ZXJ5dGhpbmcgZXhjZXB0IHRoZSBtYWNyb3MgZnJvbSBib290
-cGFyYW0uaCBhdm9pZGluZyB0aGUNCj4gICAgICAgICAgICMgdW5uZWNlc3NhcnkgaW1wb3J0
-IG9mIHNldmVyYWwgdmlkZW8vaXN0L2V0YyBoZWFkZXJzDQo+ICAgICAgICAgICBzZWQgLWUg
-Jy9fX0FTU0VNQkxZX18vLC9fX0FTU0VNQkxZX18vZCcgXA0KPiAtICAgICAgICAgICAgICAg
-IiR0bXBkaXIvaW5jbHVkZS9hc20vYm9vdHBhcmFtLmgiID4gIiR0bXBkaXIvYm9vdHBhcmFt
-LmgiDQo+IC0gICAgICAgIGNwX3BvcnRhYmxlICIkdG1wZGlyL2Jvb3RwYXJhbS5oIiBcDQo+
-ICsgICAgICAgICAgICAgICAiJGhkcmRpci9pbmNsdWRlL2FzbS9ib290cGFyYW0uaCIgPiAi
-JGhkcmRpci9ib290cGFyYW0uaCINCj4gKyAgICAgICAgY3BfcG9ydGFibGUgIiRoZHJkaXIv
-Ym9vdHBhcmFtLmgiIFwNCj4gICAgICAgICAgICAgICAgICAgICAgICIkb3V0cHV0L2luY2x1
-ZGUvc3RhbmRhcmQtaGVhZGVycy9hc20tJGFyY2giDQo+IC0gICAgICAgIGNwX3BvcnRhYmxl
-ICIkdG1wZGlyL2luY2x1ZGUvYXNtL3NldHVwX2RhdGEuaCIgXA0KPiArICAgICAgICBjcF9w
-b3J0YWJsZSAiJGhkcmRpci9pbmNsdWRlL2FzbS9zZXR1cF9kYXRhLmgiIFwNCj4gICAgICAg
-ICAgICAgICAgICAgICAgICIkb3V0cHV0L3N0YW5kYXJkLWhlYWRlcnMvYXNtLXg4NiINCj4g
-ICAgICAgZmkNCj4gICAgICAgaWYgWyAkYXJjaCA9IHJpc2N2IF07IHRoZW4NCj4gLSAgICAg
-ICAgY3AgIiR0bXBkaXIvaW5jbHVkZS9hc20vcHRyYWNlLmgiICIkb3V0cHV0L2xpbnV4LWhl
-YWRlcnMvYXNtLXJpc2N2LyINCj4gKyAgICAgICAgY3AgIiRoZHJkaXIvaW5jbHVkZS9hc20v
-cHRyYWNlLmgiICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvYXNtLXJpc2N2LyINCj4gICAgICAg
-ZmkNCj4gICBkb25lDQo+ICAgYXJjaD0NCj4gQEAgLTE2OSwxMyArMTcxLDEzIEBAIG1rZGly
-IC1wICIkb3V0cHV0L2xpbnV4LWhlYWRlcnMvbGludXgiDQo+ICAgZm9yIGhlYWRlciBpbiBj
-b25zdC5oIHN0ZGRlZi5oIGt2bS5oIHZmaW8uaCB2ZmlvX2Njdy5oIHZmaW9femRldi5oIHZo
-b3N0LmggXA0KPiAgICAgICAgICAgICAgICAgcHNjaS5oIHBzcC1zZXYuaCB1c2VyZmF1bHRm
-ZC5oIG1lbWZkLmggbW1hbi5oIG52bWVfaW9jdGwuaCBcDQo+ICAgICAgICAgICAgICAgICB2
-ZHVzZS5oIGlvbW11ZmQuaCBiaXRzLmg7IGRvDQo+IC0gICAgY3AgIiR0bXBkaXIvaW5jbHVk
-ZS9saW51eC8kaGVhZGVyIiAiJG91dHB1dC9saW51eC1oZWFkZXJzL2xpbnV4Ig0KPiArICAg
-IGNwICIkaGRyZGlyL2luY2x1ZGUvbGludXgvJGhlYWRlciIgIiRvdXRwdXQvbGludXgtaGVh
-ZGVycy9saW51eCINCj4gICBkb25lDQo+ICAgDQo+ICAgcm0gLXJmICIkb3V0cHV0L2xpbnV4
-LWhlYWRlcnMvYXNtLWdlbmVyaWMiDQo+ICAgbWtkaXIgLXAgIiRvdXRwdXQvbGludXgtaGVh
-ZGVycy9hc20tZ2VuZXJpYyINCj4gICBmb3IgaGVhZGVyIGluIHVuaXN0ZC5oIGJpdHNwZXJs
-b25nLmggbW1hbi1jb21tb24uaCBtbWFuLmggaHVnZXRsYl9lbmNvZGUuaDsgZG8NCj4gLSAg
-ICBjcCAiJHRtcGRpci9pbmNsdWRlL2FzbS1nZW5lcmljLyRoZWFkZXIiICIkb3V0cHV0L2xp
-bnV4LWhlYWRlcnMvYXNtLWdlbmVyaWMiDQo+ICsgICAgY3AgIiRoZHJkaXIvaW5jbHVkZS9h
-c20tZ2VuZXJpYy8kaGVhZGVyIiAiJG91dHB1dC9saW51eC1oZWFkZXJzL2FzbS1nZW5lcmlj
-Ig0KPiAgIGRvbmUNCj4gICANCj4gICBpZiBbIC1MICIkbGludXgvc291cmNlIiBdOyB0aGVu
-DQo+IEBAIC0yMTAsMjMgKzIxMiwyMyBAQCBFT0YNCj4gICANCj4gICBybSAtcmYgIiRvdXRw
-dXQvaW5jbHVkZS9zdGFuZGFyZC1oZWFkZXJzL2xpbnV4Ig0KPiAgIG1rZGlyIC1wICIkb3V0
-cHV0L2luY2x1ZGUvc3RhbmRhcmQtaGVhZGVycy9saW51eCINCj4gLWZvciBpIGluICIkdG1w
-ZGlyIi9pbmNsdWRlL2xpbnV4Lyp2aXJ0aW8qLmggXA0KPiAtICAgICAgICAgIiR0bXBkaXIv
-aW5jbHVkZS9saW51eC9xZW11X2Z3X2NmZy5oIiBcDQo+IC0gICAgICAgICAiJHRtcGRpci9p
-bmNsdWRlL2xpbnV4L2Z1c2UuaCIgXA0KPiAtICAgICAgICAgIiR0bXBkaXIvaW5jbHVkZS9s
-aW51eC9pbnB1dC5oIiBcDQo+IC0gICAgICAgICAiJHRtcGRpci9pbmNsdWRlL2xpbnV4L2lu
-cHV0LWV2ZW50LWNvZGVzLmgiIFwNCj4gLSAgICAgICAgICIkdG1wZGlyL2luY2x1ZGUvbGlu
-dXgvdWRtYWJ1Zi5oIiBcDQo+IC0gICAgICAgICAiJHRtcGRpci9pbmNsdWRlL2xpbnV4L3Bj
-aV9yZWdzLmgiIFwNCj4gLSAgICAgICAgICIkdG1wZGlyL2luY2x1ZGUvbGludXgvZXRodG9v
-bC5oIiBcDQo+IC0gICAgICAgICAiJHRtcGRpci9pbmNsdWRlL2xpbnV4L2NvbnN0LmgiIFwN
-Cj4gLSAgICAgICAgICIkdG1wZGlyL2luY2x1ZGUvbGludXgva2VybmVsLmgiIFwNCj4gLSAg
-ICAgICAgICIkdG1wZGlyL2luY2x1ZGUvbGludXgvdmhvc3RfdHlwZXMuaCIgXA0KPiAtICAg
-ICAgICAgIiR0bXBkaXIvaW5jbHVkZS9saW51eC9zeXNpbmZvLmgiIFwNCj4gLSAgICAgICAg
-ICIkdG1wZGlyL2luY2x1ZGUvbWlzYy9wdnBhbmljLmgiOyBkbw0KPiArZm9yIGkgaW4gIiRo
-ZHJkaXIiL2luY2x1ZGUvbGludXgvKnZpcnRpbyouaCBcDQo+ICsgICAgICAgICAiJGhkcmRp
-ci9pbmNsdWRlL2xpbnV4L3FlbXVfZndfY2ZnLmgiIFwNCj4gKyAgICAgICAgICIkaGRyZGly
-L2luY2x1ZGUvbGludXgvZnVzZS5oIiBcDQo+ICsgICAgICAgICAiJGhkcmRpci9pbmNsdWRl
-L2xpbnV4L2lucHV0LmgiIFwNCj4gKyAgICAgICAgICIkaGRyZGlyL2luY2x1ZGUvbGludXgv
-aW5wdXQtZXZlbnQtY29kZXMuaCIgXA0KPiArICAgICAgICAgIiRoZHJkaXIvaW5jbHVkZS9s
-aW51eC91ZG1hYnVmLmgiIFwNCj4gKyAgICAgICAgICIkaGRyZGlyL2luY2x1ZGUvbGludXgv
-cGNpX3JlZ3MuaCIgXA0KPiArICAgICAgICAgIiRoZHJkaXIvaW5jbHVkZS9saW51eC9ldGh0
-b29sLmgiIFwNCj4gKyAgICAgICAgICIkaGRyZGlyL2luY2x1ZGUvbGludXgvY29uc3QuaCIg
-XA0KPiArICAgICAgICAgIiRoZHJkaXIvaW5jbHVkZS9saW51eC9rZXJuZWwuaCIgXA0KPiAr
-ICAgICAgICAgIiRoZHJkaXIvaW5jbHVkZS9saW51eC92aG9zdF90eXBlcy5oIiBcDQo+ICsg
-ICAgICAgICAiJGhkcmRpci9pbmNsdWRlL2xpbnV4L3N5c2luZm8uaCIgXA0KPiArICAgICAg
-ICAgIiRoZHJkaXIvaW5jbHVkZS9taXNjL3B2cGFuaWMuaCI7IGRvDQo+ICAgICAgIGNwX3Bv
-cnRhYmxlICIkaSIgIiRvdXRwdXQvaW5jbHVkZS9zdGFuZGFyZC1oZWFkZXJzL2xpbnV4Ig0K
-PiAgIGRvbmUNCj4gICBta2RpciAtcCAiJG91dHB1dC9pbmNsdWRlL3N0YW5kYXJkLWhlYWRl
-cnMvZHJtIg0KPiAtY3BfcG9ydGFibGUgIiR0bXBkaXIvaW5jbHVkZS9kcm0vZHJtX2ZvdXJj
-Yy5oIiBcDQo+ICtjcF9wb3J0YWJsZSAiJGhkcmRpci9pbmNsdWRlL2RybS9kcm1fZm91cmNj
-LmgiIFwNCj4gICAgICAgICAgICAgICAiJG91dHB1dC9pbmNsdWRlL3N0YW5kYXJkLWhlYWRl
-cnMvZHJtIg0KPiAgIA0KPiAgIGNhdCA8PEVPRiA+JG91dHB1dC9pbmNsdWRlL3N0YW5kYXJk
-LWhlYWRlcnMvbGludXgvdHlwZXMuaA0KDQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmll
-ciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0K
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Peter Xu <peterx@redhat.com> writes:
+>
+>> On Fri, May 03, 2024 at 05:49:32PM -0300, Fabiano Rosas wrote:
+>>> Peter Xu <peterx@redhat.com> writes:
+>>> 
+>>> > On Fri, Apr 26, 2024 at 11:20:37AM -0300, Fabiano Rosas wrote:
+>>> >> Add the direct-io migration parameter that tells the migration code to
+>>> >> use O_DIRECT when opening the migration stream file whenever possible.
+>>> >> 
+>>> >> This is currently only used with the mapped-ram migration that has a
+>>> >> clear window guaranteed to perform aligned writes.
+>>> >> 
+>>> >> Acked-by: Markus Armbruster <armbru@redhat.com>
+>>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> >> ---
+>>> >>  include/qemu/osdep.h           |  2 ++
+>>> >>  migration/migration-hmp-cmds.c | 11 +++++++++++
+>>> >>  migration/options.c            | 30 ++++++++++++++++++++++++++++++
+>>> >>  migration/options.h            |  1 +
+>>> >>  qapi/migration.json            | 18 +++++++++++++++---
+>>> >>  util/osdep.c                   |  9 +++++++++
+>>> >>  6 files changed, 68 insertions(+), 3 deletions(-)
+>>> >> 
+>>> >> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>>> >> index c7053cdc2b..645c14a65d 100644
+>>> >> --- a/include/qemu/osdep.h
+>>> >> +++ b/include/qemu/osdep.h
+>>> >> @@ -612,6 +612,8 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+>>> >>  bool qemu_has_ofd_lock(void);
+>>> >>  #endif
+>>> >>  
+>>> >> +bool qemu_has_direct_io(void);
+>>> >> +
+>>> >>  #if defined(__HAIKU__) && defined(__i386__)
+>>> >>  #define FMT_pid "%ld"
+>>> >>  #elif defined(WIN64)
+>>> >> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>>> >> index 7e96ae6ffd..8496a2b34e 100644
+>>> >> --- a/migration/migration-hmp-cmds.c
+>>> >> +++ b/migration/migration-hmp-cmds.c
+>>> >> @@ -397,6 +397,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>>> >>          monitor_printf(mon, "%s: %s\n",
+>>> >>              MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+>>> >>              qapi_enum_lookup(&MigMode_lookup, params->mode));
+>>> >> +
+>>> >> +        if (params->has_direct_io) {
+>>> >> +            monitor_printf(mon, "%s: %s\n",
+>>> >> +                           MigrationParameter_str(
+>>> >> +                               MIGRATION_PARAMETER_DIRECT_IO),
+>>> >> +                           params->direct_io ? "on" : "off");
+>>> >> +        }
+>>> >
+>>> > This will be the first parameter to optionally display here.  I think it's
+>>> > a sign of misuse of has_direct_io field..
+>
+> Yes.  For similar existing parameters, we do
+>
+>                assert(params->has_FOO);
+>                monitor_printf(mon, "%s: '%s'\n",
+>                               MigrationParameter_str(MIGRATION_PARAMETER_FOO),
+>                               ... params->FOO as string ...)
+>
+>>> > IMHO has_direct_io should be best to be kept as "whether direct_io field is
+>>> > valid" and that's all of it.  It hopefully shouldn't contain more
+>>> > information than that, or otherwise it'll be another small challenge we
+>>> > need to overcome when we can remove all these has_* fields, and can also be
+>>> > easily overlooked.
+>>> 
+>>> I don't think I understand why we have those has_* fields. I thought my
+>>> usage of 'params->has_direct_io = qemu_has_direct_io()' was the correct
+>>> one, i.e. checking whether QEMU has any support for that parameter. Can
+>>> you help me out here?
+>>
+>> Here params is the pointer to "struct MigrationParameters", which is
+>> defined in qapi/migration.json.  And we have had "has_*" only because we
+>> allow optional fields with asterisks:
+>>
+>>   { 'struct': 'MigrationParameters',
+>>     'data': { '*announce-initial': 'size',
+>>               ...
+>>               } }
+>>
+>> So that's why it better only means "whether this field existed", because
+>> it's how it is defined.
+>>
+>> IIRC we (or say, Markus) used to have some attempts deduplicates those
+>> *MigrationParameter* things, and if success we have chance to drop has_*
+>> fields (in which case we simply always have them; that "has_" makes more
+>> sense only if in a QMP session to allow user only specify one or more
+>> things if not all).
+>
+> qapi/migration.json:
+>
+>     ##
+>     # @MigrationParameters:
+>     #
+> --> # The optional members aren't actually optional.
+>     #
+>
+> In other words, the has_FOO generated for the members of
+> MigrationParameters must all be true.
+>
+> These members became optional when we attempted to de-duplicate
+> MigrationParameters and MigrateSetParameters, but failed (see commit
+> de63ab61241 "migrate: Share common MigrationParameters struct" and
+> commit 1bda8b3c695 "migration: Unshare MigrationParameters struct for
+> now").
+
+So what's the blocker for merging MigrationSetParameters and
+MigrationParameters? Just the tls_* options?
 
