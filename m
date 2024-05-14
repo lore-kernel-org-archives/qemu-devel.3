@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2114C25B7A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA80C25B7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 12:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6rd6-0005B4-4f; Tue, 14 May 2024 08:51:40 -0400
+	id 1s6rdD-0005DG-JX; Tue, 14 May 2024 08:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcx-00059n-On
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rd3-0005AX-8Q
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rcw-0005Di-4l
- for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6rd0-0005EO-GS
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 08:51:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715691089;
+ s=mimecast20190719; t=1715691093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Oi/0Xlf++23SurP55CdDrUDRneAXLHwD2RVCw34AvJw=;
- b=ZVkbUPZp4WT9Pwrm2se8A2DCjcLWfWH7fTU4CCjyyMmPEAmqe8cZpK9PKH92SmTy6TXhiV
- 9gdEwUDNp4ufjWVZgp533omgZUgZ0MTTA8jAlth5QUYySDRow3tSwrlreJkCy1Bs0qok2p
- WIM2YjVWGU1RjR00SKhMN3AauYD7nWg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-7nZwqIh-PQu3gVpDaN_KBQ-1; Tue,
- 14 May 2024 08:51:28 -0400
-X-MC-Unique: 7nZwqIh-PQu3gVpDaN_KBQ-1
+ bh=J/WhLX/kEh+IzBqgpufTuWT7PY5qdV7NJzxrD19lyZY=;
+ b=JcI3W9O5cL5d/S8kGJNRj+8wMP9BTpabfkh/SJhcue0++xenAvav8UMqBNxogXaVgbWTZ7
+ XwlJ9EjPXk1JfHohpE+EoueP/KNTVYvk354oK6uSE1e+TMZ9HeiNINKjZPUTVG1miOQfeJ
+ ggahdlNgjN04blyCojIcE0wesMZNHWo=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-518-REOM8Z3QMK-ip7RjJOwJeQ-1; Tue, 14 May 2024 08:51:24 -0400
+X-MC-Unique: REOM8Z3QMK-ip7RjJOwJeQ-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C44E129AA2CD;
- Tue, 14 May 2024 12:51:27 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A59908025FC;
+ Tue, 14 May 2024 12:51:24 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 367D1400059;
- Tue, 14 May 2024 12:51:27 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9D0DF400057;
+ Tue, 14 May 2024 12:51:23 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/11] Bump minimum glib version to v2.66
-Date: Tue, 14 May 2024 14:51:13 +0200
-Message-ID: <20240514125119.284638-6-thuth@redhat.com>
+Subject: [PULL 02/11] dockerfiles: add 'MAKE' env variable to remaining
+ containers
+Date: Tue, 14 May 2024 14:51:10 +0200
+Message-ID: <20240514125119.284638-3-thuth@redhat.com>
 In-Reply-To: <20240514125119.284638-1-thuth@redhat.com>
 References: <20240514125119.284638-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -79,138 +80,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we dropped support for CentOS 8 and Ubuntu 20.04, we can
-look into bumping the glib version to a new minimum for further
-clean-ups. According to repology.org, available versions are:
+From: Daniel P. Berrangé <berrange@redhat.com>
 
- CentOS Stream 9:       2.66.7
- Debian 11:             2.66.8
- Fedora 38:             2.74.1
- Freebsd:               2.78.4
- Homebrew:              2.80.0
- Openbsd:               2.78.4
- OpenSuse leap 15.5:    2.70.5
- pkgsrc_current:        2.78.4
- Ubuntu 22.04:          2.72.1
+All the lcitool generated containers define a "MAKE" env. It will be
+convenient for later patches if all containers do this.
 
-Thus it should be safe to bump the minimum glib version to 2.66 now.
-Version 2.66 comes with new functions for URI parsing which will
-allow further clean-ups in the following patches.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240418101056.302103-8-thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240513111551.488088-2-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- meson.build              | 16 +---------------
- include/glib-compat.h    | 27 ++-------------------------
- qga/commands-posix-ssh.c |  4 ++--
- 3 files changed, 5 insertions(+), 42 deletions(-)
+ tests/docker/dockerfiles/debian-all-test-cross.docker    | 1 +
+ tests/docker/dockerfiles/debian-hexagon-cross.docker     | 1 +
+ tests/docker/dockerfiles/debian-legacy-test-cross.docker | 1 +
+ tests/docker/dockerfiles/debian-loongarch-cross.docker   | 1 +
+ tests/docker/dockerfiles/debian-tricore-cross.docker     | 1 +
+ tests/docker/dockerfiles/debian-xtensa-cross.docker      | 1 +
+ tests/docker/dockerfiles/fedora-cris-cross.docker        | 1 +
+ 7 files changed, 7 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 9c14192514..a9de71d450 100644
---- a/meson.build
-+++ b/meson.build
-@@ -869,7 +869,7 @@ have_xen_pci_passthrough = get_option('xen_pci_passthrough') \
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index 2cc7a24d4d..6cc38a3633 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -68,6 +68,7 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+ ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+ ENV DEF_TARGET_LIST aarch64-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sparc64-linux-user
+ # As a final step configure the user (if env is defined)
++ENV MAKE /usr/bin/make
+ ARG USER
+ ARG UID
+ RUN if [ "${USER}" ]; then \
+diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+index 60bd8faa20..f2d40f2dee 100644
+--- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
++++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+@@ -45,6 +45,7 @@ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
  
- # When bumping glib minimum version, please check also whether to increase
- # the _WIN32_WINNT setting in osdep.h according to the value from glib
--glib_req_ver = '>=2.56.0'
-+glib_req_ver = '>=2.66.0'
- glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
-                     method: 'pkg-config')
- glib_cflags = []
-@@ -910,20 +910,6 @@ if not cc.compiles('''
-         to the right pkg-config files for your build target.''')
- endif
+ RUN curl -#SL "$TOOLCHAIN_URL" | tar -xJC "$TOOLCHAIN_INSTALL"
+ ENV PATH $PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
++ENV MAKE /usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/debian-legacy-test-cross.docker b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+index 8cc68bc912..d75e0b85e2 100644
+--- a/tests/docker/dockerfiles/debian-legacy-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+@@ -42,6 +42,7 @@ RUN /usr/bin/pip3 install tomli
  
--# Silence clang warnings triggered by glib < 2.57.2
--if not cc.compiles('''
--  #include <glib.h>
--  typedef struct Foo {
--    int i;
--  } Foo;
--  static void foo_free(Foo *f)
--  {
--    g_free(f);
--  }
--  G_DEFINE_AUTOPTR_CLEANUP_FUNC(Foo, foo_free)
--  int main(void) { return 0; }''', dependencies: glib_pc, args: ['-Wunused-function', '-Werror'])
--  glib_cflags += cc.get_supported_arguments('-Wno-unused-function')
--endif
- glib = declare_dependency(dependencies: [glib_pc, gmodule],
-                           compile_args: glib_cflags,
-                           version: glib_pc.version())
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 43a562974d..86be439ba0 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -19,12 +19,12 @@
- /* Ask for warnings for anything that was marked deprecated in
-  * the defined version, or before. It is a candidate for rewrite.
-  */
--#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_56
-+#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_66
+ ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+ ENV DEF_TARGET_LIST alpha-linux-user,sh4-linux-user
++ENV MAKE /usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index b25e779a2c..6a9197528b 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -44,6 +44,7 @@ ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-li
  
- /* Ask for warnings if code tries to use function that did not
-  * exist in the defined version. These risk breaking builds
-  */
--#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_56
-+#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_66
+ ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+ ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
++ENV MAKE /usr/bin/make
  
- #pragma GCC diagnostic push
- #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-@@ -105,29 +105,6 @@ static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
- }
- #define g_memdup2(m, s) g_memdup2_qemu(m, s)
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
+index c597f8e16b..16276aa21d 100644
+--- a/tests/docker/dockerfiles/debian-tricore-cross.docker
++++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
+@@ -44,6 +44,7 @@ RUN curl -#SL https://github.com/bkoppelmann/package_940/releases/download/trico
+ # This image can only build a very minimal QEMU as well as the tests
+ ENV DEF_TARGET_LIST tricore-softmmu
+ ENV QEMU_CONFIGURE_OPTS --disable-user --disable-tools --disable-fdt
++ENV MAKE /usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+index 72c25d63d9..413881899b 100644
+--- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
++++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+@@ -27,6 +27,7 @@ RUN for cpu in $CPU_LIST; do \
+     done
  
--#if defined(G_OS_UNIX)
--/*
-- * Note: The fallback implementation is not MT-safe, and it returns a copy of
-- * the libc passwd (must be g_free() after use) but not the content. Because of
-- * these important differences the caller must be aware of, it's not #define for
-- * GLib API substitution.
-- */
--static inline struct passwd *
--g_unix_get_passwd_entry_qemu(const gchar *user_name, GError **error)
--{
--#if GLIB_CHECK_VERSION(2, 64, 0)
--    return g_unix_get_passwd_entry(user_name, error);
--#else
--    struct passwd *p = getpwnam(user_name);
--    if (!p) {
--        g_set_error_literal(error, G_UNIX_ERROR, 0, g_strerror(errno));
--        return NULL;
--    }
--    return (struct passwd *)g_memdup(p, sizeof(*p));
--#endif
--}
--#endif /* G_OS_UNIX */
--
- static inline bool
- qemu_g_test_slow(void)
- {
-diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
-index dd2ecb453a..866afe6741 100644
---- a/qga/commands-posix-ssh.c
-+++ b/qga/commands-posix-ssh.c
-@@ -36,7 +36,7 @@ test_get_passwd_entry(const gchar *user_name, GError **error)
-     return p;
- }
+ ENV PATH $PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin
++ENV MAKE /usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/docker/dockerfiles/fedora-cris-cross.docker b/tests/docker/dockerfiles/fedora-cris-cross.docker
+index f2899af410..97c9d37ede 100644
+--- a/tests/docker/dockerfiles/fedora-cris-cross.docker
++++ b/tests/docker/dockerfiles/fedora-cris-cross.docker
+@@ -4,6 +4,7 @@
  
--#define g_unix_get_passwd_entry_qemu(username, err) \
-+#define g_unix_get_passwd_entry(username, err) \
-    test_get_passwd_entry(username, err)
- #endif
- 
-@@ -46,7 +46,7 @@ get_passwd_entry(const char *username, Error **errp)
-     g_autoptr(GError) err = NULL;
-     struct passwd *p;
- 
--    p = g_unix_get_passwd_entry_qemu(username, &err);
-+    p = g_unix_get_passwd_entry(username, &err);
-     if (p == NULL) {
-         error_setg(errp, "failed to lookup user '%s': %s",
-                    username, err->message);
+ FROM registry.fedoraproject.org/fedora:33
+ ENV PACKAGES gcc-cris-linux-gnu
++ENV MAKE /usr/bin/make
+ RUN dnf install -y $PACKAGES
+ RUN rpm -q $PACKAGES | sort > /packages.txt
+ # As a final step configure the user (if env is defined)
 -- 
 2.45.0
 
