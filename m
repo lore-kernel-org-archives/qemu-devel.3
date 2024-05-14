@@ -4,49 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BAD7C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 09:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A00A3C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 10:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6okA-0003l2-Bs; Tue, 14 May 2024 05:46:46 -0400
+	id 1s6pF3-0005Ce-H2; Tue, 14 May 2024 06:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s6ok7-0003he-2h
- for qemu-devel@nongnu.org; Tue, 14 May 2024 05:46:44 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s6ok3-00037B-L7
- for qemu-devel@nongnu.org; Tue, 14 May 2024 05:46:42 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxiOn4MkNmgqAMAA--.18262S3;
- Tue, 14 May 2024 17:46:32 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxXN73MkNmT0geAA--.54064S2; 
- Tue, 14 May 2024 17:46:31 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org,
- peter.maydell@linaro.org, philmd@linaro.org
-Subject: [RFC PATCH] target/loongarch/kvm: Add pmu support
-Date: Tue, 14 May 2024 17:46:30 +0800
-Message-Id: <20240514094630.988617-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6pF1-0005Bb-2u; Tue, 14 May 2024 06:18:39 -0400
+Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6pEz-0004bW-KP; Tue, 14 May 2024 06:18:38 -0400
+Received: by mail-vs1-xe35.google.com with SMTP id
+ ada2fe7eead31-47f0a45375aso1387425137.1; 
+ Tue, 14 May 2024 03:18:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715681916; x=1716286716; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jfBxzd6n34jFahXpLZ/5c2Tc/xp13VYkDa1DK+MLurM=;
+ b=nPS2ethadwT6J+W8t0hMvoCzkB9v5e3lpong9vgivNd8a83DwBL8VaY9sSurL06o43
+ G8KMOkH33sxE1e1zlS+OaLITAK6+b2x/Q+Stt5Mk0zrhyIb7+Tqx5SUaG8i8C32KKeA7
+ IsB7/cYtyiNeHUc0hICmypdv+xpqLpK/e+sGvfWPZfU9FGKEbV2uNjzwDIQ/hG7+/xPl
+ iyVbOSfa697v11U9IOPNVkOXYIFDxsbpUZ8kWBusi4DMcYNm0YUoEqceVwyt9Z0hvREo
+ k+a7x6aSloppA2jdlA6BjSNFvFC4zegAqYEW+qpA1htxZxPDhudfXmYVZ+8obteqUmwb
+ X9Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715681916; x=1716286716;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jfBxzd6n34jFahXpLZ/5c2Tc/xp13VYkDa1DK+MLurM=;
+ b=TSLknZSUDmrdCtPjQBZHLbGomUmSe9Z+NC+ds3VANHBmme2z9eK1C4DC3hYNw7MW8m
+ 7iwiBF3nqrz+AQ7lZ5GZMQlV6XASJz4WrXZNIx/oxv7xtq8OZYQMY9MllUME9eGI27W4
+ 6treamx7SGR1sgT1ySjmLKhxqn0PC7jGjtJxRivG+MqxsmzEFDPbShV5Qohyb1UUTR4c
+ YnASTnexLdJqcyKKBdF8wNmIDRh4IVvjvcrnvEbiE1kLSj1nc+I14kXtPggkvZRUOkzc
+ 4LNHEx/qh42k8AkIKMbNqieNA6E5fLqrbg5QEPZPthaiVzysw3FIipZySIVizVEYttVg
+ 4cUA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEA1UGmCxSq4eFITCYPe59oIg/nddCbmFxck+/LId17fP8JjDKaTN+tJ/AY3LnvzBIU6ntoWQnJlxT4lSZ8fcWjo6wCM4=
+X-Gm-Message-State: AOJu0Yx9NdPlHX/7pr0qGXqIVNd7qqiFCUaNLiFgYR5anjeVFek0SwPv
+ L0ERQdVLBeoH7BgdeqDI5orlSyhyhNsWAOeg9TvlVKKYTV3xo2tBFIQ3w3LlGPlPGqmXeuaF04Z
+ qVFpIMUhI6MTxJSLqS+221Xy72AE=
+X-Google-Smtp-Source: AGHT+IG+YGP0J00iLGdfgfIcGND+YqvN0valNNyjrabOgIcEC8Hk4INB7n+cMqUYsB28SBwBlaeFyb6YZtdOBu6F808=
+X-Received: by 2002:a05:6102:38c7:b0:47c:33fc:4619 with SMTP id
+ ada2fe7eead31-48077de578dmr10376041137.9.1715681916234; Tue, 14 May 2024
+ 03:18:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxXN73MkNmT0geAA--.54064S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20240429-countinhibit_fix-v1-0-802ec1e99133@rivosinc.com>
+ <CAKmqyKN9W+xY-gBZD=6T-iOzrX0MAMcTE4Zd74hmgTtP8hnObQ@mail.gmail.com>
+ <CAHBxVyED-ji_pr=XfeDjxUht=9qvcizK3RniijpzX6xC26oshg@mail.gmail.com>
+In-Reply-To: <CAHBxVyED-ji_pr=XfeDjxUht=9qvcizK3RniijpzX6xC26oshg@mail.gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 14 May 2024 20:18:09 +1000
+Message-ID: <CAKmqyKMWgMGSsbgMctFaUnPDgDitJdK31xcg4h+HohiD4_Me6g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Assorted fixes for PMU
+To: Atish Kumar Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Rajnesh Kanwal <rkanwal@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,232 +95,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds PMU support, We just sets some cpucfg6 default value
-to PMU config on kvm mode, and then check the PMU config with kvm ioctl
-KVM_GET_DEVICE_ATTR.
-  e.g
-    '...  -cpu max,pmu=on,pmnum=[1-16]';
-    '...  -cpu max,pmu=on' (default pmnum = 4);
-    '...  -cpu max,pmu=off' (disable PMU)
+On Tue, May 14, 2024 at 5:15=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc.=
+com> wrote:
+>
+> On Mon, May 13, 2024 at 11:29=E2=80=AFPM Alistair Francis <alistair23@gma=
+il.com> wrote:
+> >
+> > On Tue, Apr 30, 2024 at 5:29=E2=80=AFAM Atish Patra <atishp@rivosinc.co=
+m> wrote:
+> > >
+> > > This series contains few miscallenous fixes related to hpmcounters
+> > > and related code. The first patch fixes an issue with cycle/instret
+> > > counters overcouting while the remaining two are more for specificati=
+on
+> > > compliance.
+> > >
+> > > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> > > ---
+> > > Atish Patra (3):
+> > >       target/riscv: Save counter values during countinhibit update
+> > >       target/riscv: Enforce WARL behavior for scounteren/hcounteren
+> > >       target/riscv: Fix the predicate functions for mhpmeventhX CSRs
+> >
+> > Thanks!
+> >
+> > Applied to riscv-to-apply.next
+> >
+>
+> Hi Alistair,
+> Thanks for your review. But the patch 1 had some comments about
+> vmstate which needs updating.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
+Ah, I did read the comments but forgot that you were going to bump the vers=
+ion.
 
-This patch adds the 'RFC' heading because it requires
-the kernel to merge into patch[1] first
+> We also found a few more fixes that I was planning to include in v2.
 
-[1]: https://lore.kernel.org/all/20240507120140.3119714-1-gaosong@loongson.cn/
+I found that patch `target/riscv: Save counter values during
+countinhibit update` gives me this error as well
+
+../target/riscv/csr.c: In function =E2=80=98write_mcountinhibit=E2=80=99:
+../target/riscv/csr.c:1981:44: error: too few arguments to function =E2=80=
+=98get_ticks=E2=80=99
+1981 |                 counter->mhpmcounter_val =3D get_ticks(false) -
+     |                                            ^~~~~~~~~
+../target/riscv/csr.c:765:21: note: declared here
+ 765 | static target_ulong get_ticks(bool shift, bool instructions)
+     |                     ^~~~~~~~~
+../target/riscv/csr.c:1985:49: error: too few arguments to function =E2=80=
+=98get_ticks=E2=80=99
+1985 |                     counter->mhpmcounterh_val =3D get_ticks(false) -
+     |                                                 ^~~~~~~~~
+../target/riscv/csr.c:765:21: note: declared here
+ 765 | static target_ulong get_ticks(bool shift, bool instructions)
+     |                     ^~~~~~~~~
 
 
- target/loongarch/cpu.h                |  2 +
- target/loongarch/cpu.c                | 64 +++++++++++++++++++++++++++
- target/loongarch/kvm/kvm.c            | 55 ++++++++++++++++++++++-
- target/loongarch/loongarch-qmp-cmds.c |  2 +-
- 4 files changed, 121 insertions(+), 2 deletions(-)
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 6c41fafb70..d834649106 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -184,6 +184,8 @@ FIELD(CPUCFG6, PMNUM, 4, 4)
- FIELD(CPUCFG6, PMBITS, 8, 6)
- FIELD(CPUCFG6, UPM, 14, 1)
- 
-+#define PMNUM_MAX 16
-+
- /* cpucfg[16] bits */
- FIELD(CPUCFG16, L1_IUPRE, 0, 1)
- FIELD(CPUCFG16, L1_IUUNIFY, 1, 1)
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index a0cad53676..c78ee3f0b1 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -8,6 +8,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qemu/qemu-print.h"
-+#include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
- #include "sysemu/qtest.h"
-@@ -19,6 +20,7 @@
- #include "internals.h"
- #include "fpu/softfloat-helpers.h"
- #include "cpu-csr.h"
-+#include "qapi/visitor.h"
- #ifndef CONFIG_USER_ONLY
- #include "sysemu/reset.h"
- #endif
-@@ -421,6 +423,14 @@ static void loongarch_la464_initfn(Object *obj)
-     data = FIELD_DP32(data, CPUCFG5, CC_DIV, 1);
-     env->cpucfg[5] = data;
- 
-+    if (kvm_enabled()) {
-+        data = 0;
-+        data = FIELD_DP32(data, CPUCFG6, PMP, 1);
-+        data = FIELD_DP32(data, CPUCFG6, PMNUM, 3);
-+        data = FIELD_DP32(data, CPUCFG6, PMBITS, 63);
-+        env->cpucfg[6] = data;
-+    }
-+
-     data = 0;
-     data = FIELD_DP32(data, CPUCFG16, L1_IUPRE, 1);
-     data = FIELD_DP32(data, CPUCFG16, L1_DPRE, 1);
-@@ -643,6 +653,48 @@ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
-     }
- }
- 
-+static bool loongarch_get_pmu(Object *obj, Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    return  !!(FIELD_EX32(cpu->env.cpucfg[6], CPUCFG6, PMP));
-+}
-+
-+static void loongarch_set_pmu(Object *obj, bool value,  Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    cpu->env.cpucfg[6] = FIELD_DP32(cpu->env.cpucfg[6], CPUCFG6, PMP, value);
-+}
-+
-+static void loongarch_get_pmnum(Object *obj, Visitor *v,
-+                                const char *name, void *opaque,
-+                                Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+    uint32_t value = FIELD_EX32(cpu->env.cpucfg[6], CPUCFG6, PMNUM);
-+
-+    visit_type_uint32(v, name, &value, errp);
-+}
-+
-+static void loongarch_set_pmnum(Object *obj, Visitor *v,
-+                                const char *name, void *opaque,
-+                                Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+    uint32_t *value= opaque;
-+
-+    if (!visit_type_uint32(v, name, value, errp)) {
-+        return;
-+    }
-+    if ((*value <= PMNUM_MAX) && (*value > 0)) {
-+        cpu->env.cpucfg[6] = FIELD_DP32(cpu->env.cpucfg[6], CPUCFG6, PMNUM, *value -1);
-+    } else {
-+        error_report("Performance counter number need be in [1- %d]\n", PMNUM_MAX);
-+        exit(EXIT_FAILURE);
-+    }
-+}
-+
- void loongarch_cpu_post_init(Object *obj)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-@@ -655,6 +707,18 @@ void loongarch_cpu_post_init(Object *obj)
-         object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-                                  loongarch_set_lasx);
-     }
-+
-+    if (kvm_enabled()) {
-+        object_property_add_bool(obj, "pmu", loongarch_get_pmu,
-+                                 loongarch_set_pmu);
-+        if (FIELD_EX32(cpu->env.cpucfg[6], CPUCFG6, PMP)) {
-+            uint32_t value = 4;
-+            object_property_add(obj, "pmnum", "uint32",
-+                                loongarch_get_pmnum,
-+                                loongarch_set_pmnum, NULL,
-+                                (void *)&value);
-+        }
-+    }
- }
- 
- static void loongarch_cpu_init(Object *obj)
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index bc75552d0f..a9f9020071 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -556,6 +556,53 @@ static int kvm_check_cpucfg2(CPUState *cs)
-     return ret;
- }
- 
-+static int kvm_check_cpucfg6(CPUState *cs)
-+{
-+    int ret;
-+    uint64_t val;
-+    struct kvm_device_attr attr = {
-+        .group = KVM_LOONGARCH_VCPU_CPUCFG,
-+        .attr = 6,
-+        .addr = (uint64_t)&val,
-+    };
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    CPULoongArchState *env = &cpu->env;
-+
-+    ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-+    if (!ret) {
-+        kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-+
-+        if (FIELD_EX32(env->cpucfg[6], CPUCFG6, PMP)) {
-+             /* Check PMP */
-+             if (!FIELD_EX32(val, CPUCFG6, PMP)) {
-+                 error_report("'pmu' feature not supported by KVM on this host"
-+                              " Please disable 'pmu' with "
-+                              "'... -cpu XXX,pmu=off ...'\n");
-+                 exit(EXIT_FAILURE);
-+             }
-+             /* Check PMNUM */
-+             int guest_pmnum = FIELD_EX32(env->cpucfg[6], CPUCFG6, PMNUM);
-+             int host_pmnum = FIELD_EX32(val, CPUCFG6, PMNUM);
-+             if (guest_pmnum > host_pmnum){
-+                 warn_report("The guest pmnum %d larger than KVM support %d\n",
-+                              guest_pmnum, host_pmnum);
-+                 env->cpucfg[6] = FIELD_DP32(env->cpucfg[6], CPUCFG6,
-+                                             PMNUM, host_pmnum);
-+             }
-+             /* Check PMBITS */
-+             int guest_pmbits = FIELD_EX32(env->cpucfg[6], CPUCFG6, PMBITS);
-+             int host_pmbits = FIELD_EX32(val, CPUCFG6, PMBITS);
-+             if (guest_pmbits != host_pmbits) {
-+                 warn_report("The host not support PMBITS %d\n", guest_pmbits);
-+                 env->cpucfg[6] = FIELD_DP32(env->cpucfg[6], CPUCFG6,
-+                                             PMBITS, host_pmbits);
-+             }
-+        }
-+    }
-+
-+    return ret;
-+}
-+
- static int kvm_loongarch_put_cpucfg(CPUState *cs)
- {
-     int i, ret = 0;
-@@ -568,7 +615,13 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
-             if (ret) {
-                 return ret;
-             }
--	}
-+        }
-+        if (i == 6) {
-+            ret = kvm_check_cpucfg6(cs);
-+            if (ret) {
-+                return ret;
-+            }
-+        }
-         val = env->cpucfg[i];
-         ret = kvm_set_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
-         if (ret < 0) {
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index 8721a5eb13..d7f2af363b 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -40,7 +40,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- }
- 
- static const char *cpu_model_advertised_features[] = {
--    "lsx", "lasx", NULL
-+    "lsx", "lasx", "pmu", "pmnum", NULL
- };
- 
- CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
--- 
-2.25.1
+>
+> I can send a separate fixes series on top riscv-to-apply.next or this
+> series can be dropped for the time being.
 
+I'm going to drop it due to the build error above
+
+Alistair
+
+> You can queue it v2 later. Let me know what you prefer.
+>
+>
+> > Alistair
+> >
+> > >
+> > >  target/riscv/cpu.h     |   1 -
+> > >  target/riscv/csr.c     | 111 ++++++++++++++++++++++++++++++---------=
+----------
+> > >  target/riscv/machine.c |   1 -
+> > >  3 files changed, 68 insertions(+), 45 deletions(-)
+> > > ---
+> > > base-commit: 1642f979a71a5667a05070be2df82f48bd43ad7a
+> > > change-id: 20240428-countinhibit_fix-c6a1c11f4375
+> > > --
+> > > Regards,
+> > > Atish patra
+> > >
+> > >
 
