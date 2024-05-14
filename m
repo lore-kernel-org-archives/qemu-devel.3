@@ -4,96 +4,200 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2787C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 07:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195D4C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 08:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6n2o-0001Nc-Vi; Tue, 14 May 2024 03:57:55 -0400
+	id 1s6nBz-0004U7-AH; Tue, 14 May 2024 04:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6n2m-0001NG-B0
- for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s6nBx-0004Tp-Vh
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 04:07:21 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6n2j-0004M1-UF
- for qemu-devel@nongnu.org; Tue, 14 May 2024 03:57:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715673468;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=grt6KT2gP4jyGZKJ/7J0COWwFfblnMpvCnWIY/Rtyh4=;
- b=ij6f3EvKt91HarV5Nb/3MoZhOZ257R6yWIEiLbtZ2xD21bBS/f94jAzs+WKJvKmREkvoqg
- AOsFbmz9BN09yc3Kb0FoHw5iqjoE3iDdGuuubxDGTB+XGjFw7oA4FmB+iLdIV5ZSfxa8em
- a9sQr8+wZ3PzFDo6kSFUIyetSGfYHZc=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-PbnqVxE2NUqID5UdCSQtdw-1; Tue, 14 May 2024 03:57:47 -0400
-X-MC-Unique: PbnqVxE2NUqID5UdCSQtdw-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6a0cf23b982so66000246d6.1
- for <qemu-devel@nongnu.org>; Tue, 14 May 2024 00:57:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715673467; x=1716278267;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=grt6KT2gP4jyGZKJ/7J0COWwFfblnMpvCnWIY/Rtyh4=;
- b=ZiuZYWzN8iffNWDbEczjykC1juRHFTUPdLOvN4YK2EvVALqtZhQvjSMmCYQJE0gk29
- KwyLcFgZheIQFRxXCkXVgbcOWgSAiey729Zulg4CjB0VDPNdqsZdiOv3tdSBSOyCuIWL
- kU7JuBjDYxNVFWXBRqUoUA2f13afp7MnudU8RC67BYnlWT2osbLxeH+zh9e0lAgO1EZk
- SjHk3C4tUm6CeTfetATuOJvI7yGZOajC8I+U4LDEohA3j28eLM5ylbaQfk8TjnRtjCIs
- z+7jYGoxsF46Qoz3EUH1TCslBXd8yqUhrxiVRQGZ+YlGW9HIdfXwMopyy1WHVYWn27W2
- XA0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4w28s6o9BtI9k9Zp9TEFfhGQCRdzUNin5Y5AWaXGJJgaPLAUynJZuw2+jZN4AM7G35o8zbU3gV9LPbeW9gtGclwD/vQ4=
-X-Gm-Message-State: AOJu0YzOVo9z7ldjVBn4HfZ7iJSFUz22O3OfhQn05KhBIbU0HCzw0rDf
- 89p/chDItRZPzLKSHYi9UpGHcDVG8SqINzDyNi/peHKYI/L3+0Vu+tFIKPl/UHScarRQ2iNBUcx
- Cskr5kuC44hqxcltjDIIDhaHZ8gwe5CAtMHjyPPTCYJ8qy2d/g/HF
-X-Received: by 2002:a05:6214:43c4:b0:6a0:caef:3be2 with SMTP id
- 6a1803df08f44-6a1681f8115mr143336076d6.46.1715673466607; 
- Tue, 14 May 2024 00:57:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZL38f9UNJcsb2GHdx65vGiUxAd1F+Xgf5gRaMBPhk0G3NBhSghkqrttUTWzwS23YasMaeTw==
-X-Received: by 2002:a05:6214:43c4:b0:6a0:caef:3be2 with SMTP id
- 6a1803df08f44-6a1681f8115mr143335816d6.46.1715673465896; 
- Tue, 14 May 2024 00:57:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f179cebsm51117936d6.3.2024.05.14.00.57.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 May 2024 00:57:45 -0700 (PDT)
-Message-ID: <db0aa26a-b76f-4cb8-a63b-8e2f8d37251b@redhat.com>
-Date: Tue, 14 May 2024 09:57:42 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s6nBv-0006Y1-ES
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 04:07:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715674040; x=1747210040;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=2vJvKsoEMtC168GCpICDtJ8euZc88lUsVqqrKTdOR8o=;
+ b=N9aojTGdAc6G7p1LNL+ct4iZwmxZaHhPmGLb3qaK9PhXkKNsi1W6qG5Y
+ QHPap3a+CD3LoNxjpM2kffgAiMdHilrKlH2NIZoBXPgEU95xGxvIGKRjF
+ OWuKLTQPqjaI+ZPtO6IH9OR62DRLVh9fcF//ds9CBsiXq1Oz4n5BmgliH
+ 4HXCxad26dA12nx+J63T7wVfuVVo66XLwsOlnfzLFWK0I0HwgNOGDxFFW
+ ynOI4A4MbS/yKDEw5G4YJtvEiKJpFKHfArWR3hsA7ujHpY8+gbEpFG32p
+ iZn6SOdM6Cim8ssAIs1CysCI65WgpCW6nN2N4QPs/n5NqwTHn0GRC2S/v Q==;
+X-CSE-ConnectionGUID: 4vp9QL+TQmune/3ir4dQ2g==
+X-CSE-MsgGUID: QkCGoaerSiCox1VrSi4MsA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11072"; a="11773319"
+X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; d="scan'208";a="11773319"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 May 2024 01:07:16 -0700
+X-CSE-ConnectionGUID: XMGHjRdlTfyYXBgoPrA8Hw==
+X-CSE-MsgGUID: 8OsgiitHRC+W8CeNtJ7TMA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; d="scan'208";a="30649411"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+ by fmviesa006.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 14 May 2024 01:07:15 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 14 May 2024 01:07:15 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Tue, 14 May 2024 01:07:15 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 14 May 2024 01:07:15 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cKsBT7zQ3+t5Jc8rMr49GFZLG6aE6gow3AL66ogU2KKYiC09zhSZlKhBeHP2BXRga25DtB8Oq5gTMJ9KPzj7bZlqk5lfLdAZA/dhcf/22PWQ1DJuS8tmIH0bMr19YCkqw6Ze375x3nugWn8UnisFIGqua74p6PI4pzUz4yq9TOn1AAVmS4Z793hqpJ//m/TkyZWImp2R7o3tfqnynHYupQdWbbmg4/mVIOzW69TmSJrkV3MW/Xzewy+g3lLCz5AG2P7uojrpUrQC7w8rzh2AwcKrgr6qZFk3d0Q2RUBaXUVewSNpgOPtSmIPAgvyFhiGIbWOI0gHnooCZJ2QAWuAJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2vJvKsoEMtC168GCpICDtJ8euZc88lUsVqqrKTdOR8o=;
+ b=cHIvBO+8G+vW+HExtKsdXGJV3Bc1GzyMdErWg1qK2CfSXAvMfvCcTtGC1G1GCrrzHz1hsTIo0PLFUrTbeTUzjQYtwE1gdpvKv82LcgnI2kePyk6r080OK8Oe7tTZBgI4t8ekrR7NB5letgzfChp08VoRhEIulvJZ/TqbsWi5omRyB7CnULnYbxvSd6CPfuqRYas6DdJHFhQKX9OMkjoqLFeBVV0Ptq/15bH9hwmeMQIfszPdIezmY6yk9fent0OnZ7X/AKwGafU2rq3boNoVn7JZu3u5r8JPaetivBXdydehSkpeiShDq4FLm6N+VW1oNLObf1grh1oX2k665Mxwjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by SA1PR11MB6918.namprd11.prod.outlook.com (2603:10b6:806:2bf::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.41; Tue, 14 May
+ 2024 08:07:13 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7544.052; Tue, 14 May 2024
+ 08:07:13 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "Tian, Kevin"
+ <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "peterx@redhat.com"
+ <peterx@redhat.com>
+Subject: RE: [PATCH ats_vtd v1 06/24] intel_iommu: do not consider wait_desc
+ as an invalid descriptor
+Thread-Topic: [PATCH ats_vtd v1 06/24] intel_iommu: do not consider wait_desc
+ as an invalid descriptor
+Thread-Index: AQHanKV/hE21IWhVrEugDPFECrFAVLGWcefA
+Date: Tue, 14 May 2024 08:07:13 +0000
+Message-ID: <SJ0PR11MB674447FE9F78865920BF2A3D92E32@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240502152810.187492-1-clement.mathieu--drif@eviden.com>
+ <20240502152810.187492-7-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20240502152810.187492-7-clement.mathieu--drif@eviden.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SA1PR11MB6918:EE_
+x-ms-office365-filtering-correlation-id: 1fbd4f18-3bc6-4380-d2f4-08dc73ecdcb2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230031|376005|1800799015|366007|38070700009;
+x-microsoft-antispam-message-info: =?utf-8?B?bWtkc0ZmeGUyZlhKM0YxZVV5Tjk2Q1RvQnh3MzFXWCtNcHExdTVQa0FkUEJ2?=
+ =?utf-8?B?MUJma1dVdXk5USsrMVpSQTNrUjltS0FFckF0NnFsSnRZWjk1TFdUUitDOVNZ?=
+ =?utf-8?B?LzV5Q1AvZ25pUDdxMHh1TiszRnNucFI5TzdkWlNYVTRlVUU3MW84UmhoSUF5?=
+ =?utf-8?B?V0VUejhwWTlXSEZ1N3M1SHdYSnBJMWE0aGZKWWJWTzRnSkg2c2t6SzVPVFJk?=
+ =?utf-8?B?dHVYR2xzcWFCbzZBUkIyMW1aK3hjNkdFOG5qc29TU01aY1d2dFhVKzVEQ3dW?=
+ =?utf-8?B?VTRaRE9SL1c1SmNuM0tVVS9RaklVRHNqVjVPeXN1RXlnakp1NEpoVUIreS9E?=
+ =?utf-8?B?YnVZR1ZVL1c4dUpPSm9wdFRrSTBMZnc1SHBSMUpXTmFFU1RqSDRQdmdaS2cv?=
+ =?utf-8?B?REU0V0ZnbzZNRktrb21PbTR0NTkrU3VMenprZ0VZS0NUYklDL0VlZENvYXNJ?=
+ =?utf-8?B?OFkwa3lybzZWblJHeG9Cb053ZE83TmJCZEROQ3NMSlB5aldQS0FwSjJBNmsy?=
+ =?utf-8?B?dERXeEtldU56SSsrN3FDZERLVFpxQlpNd01XV3RTV0dRTWMyczFsYkdGV3Va?=
+ =?utf-8?B?alpTRDgvcW13c1ZGb1dBQ0VrM2Y4b1pHMlJLeUdZTldPQ1M3TnpSd2xJTVZX?=
+ =?utf-8?B?SWxDUVBnMis3aS96ZWwwZitwZndCY2UzR3h0RnBFL2hYeHgrYk5GZnNCZ2Jh?=
+ =?utf-8?B?bWZYcXZ2ck54Ti9ra1crUEZrb0l2dW8zNkIxVHVrWXAzV3dQNlQwWjVUSnBP?=
+ =?utf-8?B?cUNreWJac0M0bXFKdGlXTXhpb0YxNVNtZlVDRUR1MHhTb2FjRXlTK2RubFpU?=
+ =?utf-8?B?NVFyN1JHUWVIb01PMzlhMGlqU2FIOUlqbVhHNXdYYUNpQ3RuMDdmNHZoU1BL?=
+ =?utf-8?B?cTlyTDQ5R0JlNkJwOExhUUFrR3NmT3JUdlNrRXNhRnpxVXk2V2Zsd2EwZHQw?=
+ =?utf-8?B?TS92emx5UldmTlVzSFM1YXRpdU1VMUxrRnhEZEVodTROMnVpNVJ2a3NIaGZQ?=
+ =?utf-8?B?dVcreUV2SjQ2UlBnRWxKQXB0OU1Zb1M4WHByUk9wanNoZ0pFVWM1Mmp0ZzU2?=
+ =?utf-8?B?dm5ENmF6Y0xqU3pNd1UxRE01SXhVTjBya1g5Zmhmb0NZR0NIYnVOZVlOdFZl?=
+ =?utf-8?B?UFhpTWVXTy9ERFludW1VRmRKMlV1d2VHTmo1aUJuUDZzNk5EMTV5REVYSnJ0?=
+ =?utf-8?B?Unh5N2dpbW1kMHF0R1VxR0ZwTzVjWDdDbkMwSGs1Z25lV2JxU2xZZGRFbnVn?=
+ =?utf-8?B?cjNQQkk5Z2RzOUZ5WFgrZ01EWFNOcTl3QnYvWllzY3A2WW9Kbk5xblM5dHVO?=
+ =?utf-8?B?VUFhT0ZpQ29lWTFuMUdUYmFjRHp5QVp6NXpaeXBacGRVY213UmFLOTc0SUVE?=
+ =?utf-8?B?Q1JrczFRSjRPeUh4cXFQVEo5bUJJNlBjRXd5REZUTHJHbksrQzJOL3ZsWThX?=
+ =?utf-8?B?YndaMlhZOC9RNEdLZXU2dTFRNWl0R2h6eDhuUklzQ0ExY09VK1dmSzhjMHRO?=
+ =?utf-8?B?aVh1Y2JPTThvcE5wY2pmZWVtczE5Vi9pcVZMRHlSTUErTVlKQm9kcGdCdndX?=
+ =?utf-8?B?MlVCRXp6ZzVqOGdnNUVSZWtoZkNYbkp0ajRKTjNUbDBtZkIxQUd4YWxmZmQ1?=
+ =?utf-8?B?SkdxelNVczBqSUpYdUpkRlJEenkzRjRNa2lmNzlZQ25MdnZvNjFocVdXTzl3?=
+ =?utf-8?B?akUyNlRPOUVFSytnN1d4WjBCU2pHZ3VUc2hoVEFYTE1lOElpN2ZBcVI4Vkgw?=
+ =?utf-8?Q?kRpcZlzKG4SeLkGJ3bxPf8pXZ0BPWNQ6JIeRVlA?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(366007)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?STFFMzJxcE4reEtGbFV4YzJyaS9oVWx4QSttNlZIY2hpWFA0Q3NLaDRiMUl4?=
+ =?utf-8?B?L0xQYVBvdllTSlJqdG9KRXNZcnoyQzBiL1VKcSs2QzNQMngybStlWFlHTTZO?=
+ =?utf-8?B?V0NWZ1J5UWZRMDl5V0N1d2JNTkorc1NsOVZSSU5BOU5jLzhPdzJmS0owbVdV?=
+ =?utf-8?B?VldWaWFyMCtna0svYkxMTUZlME92N1lSaDhDajhxMkNOS295UG4wd1pDRFRT?=
+ =?utf-8?B?UFpFQU1SNzhNb2p0RUFzOFl4NjFpK05BQ3NCMlNOdW1sNkNiTCtGS3BWWmZh?=
+ =?utf-8?B?N3ZEOXltUk56ZUtEa3BMK0dPRGVMUlNCRWdFK202Rlh2dFRSVmg3c2lxRlZV?=
+ =?utf-8?B?Q1UzQTR4Q01Kc3J0bFFnbXNEUUo2M3NmK0YrZWxnaUpPUENTMXcrcG80clFa?=
+ =?utf-8?B?c0syVjBxdG9mb2lOdEdXVFlVd1daM0Vic3JvQU9VbWNuTHJsMldRVlRPaVY3?=
+ =?utf-8?B?Zk5SUkNCZXJaRlZ5eHJSSWViTkk5RnljWlMxUjExWnloQzVkK3pDRlByTHo4?=
+ =?utf-8?B?YjN3dGY1dzN5QnFiWFRiNjJSaWJySVdSM2dlMEw2Sy9qa3ZqUERZOW85Z2tt?=
+ =?utf-8?B?dDZXSDN1NEhUQ2lNWlhEUUlLbVk0eU1qQkN2Mm5CZHArWWI4MjBUbHArdTVx?=
+ =?utf-8?B?amFoSEovaGxiZVprTElSczJiZ1pSQ2swK0VDNCtGamhxbEF1ODQxbjZ4OFRP?=
+ =?utf-8?B?SUk2UUpXcUhkQ2RsRlFrRzR2Z2VFbFBWb1Vnd01SRUdJQ3VOSncvcDVYcXFN?=
+ =?utf-8?B?UkYwQmNnSm5OQmVQQnZlMEpSdnUvdWI3cnBpWWlkNUZaSERuVUEyV2R4dFF6?=
+ =?utf-8?B?SzN6VSt5Q2RtZU1pOEV5bEZ6OVJuMEdlamMrZkRXSjhGV0xkUEVvYXRhVVZN?=
+ =?utf-8?B?UFNHUDlTRWpVWDl4bUNyS0k0anh6RHRnNlBRMzQ4UmYyWUZkZVVqbGJwczNj?=
+ =?utf-8?B?cHh5L0tJNWhGQXR1aHRjcEt2YzdXajJKZ1hmRHNWaDlhQU1wMGZlWG9SeUVp?=
+ =?utf-8?B?czI5ZWNRR2F4a2tnK0wrVWZ4Yy9Nazl2NS8wd0JXaW9PRWVHbXdLQUNKeGpr?=
+ =?utf-8?B?ZS9UakdQOHVycUxWcjZYazA2TFYxUWF6Ym5GOFBiai9uZ3cwaFpkOGdEdFlt?=
+ =?utf-8?B?dHovaDJNTWpyZ1htWUgwdGIvekE5ODNOYUV5UXRQS0J2L2ZyeitoMkljTnRl?=
+ =?utf-8?B?SldESVpTZ3ZtV2R2cm9rNkFpUXhEcXd4b0ZSK1dBdjZNT2pQYUNpN3drQXhY?=
+ =?utf-8?B?VUZRRGYzQk1lc2hlaHVMQ1UxeWludnhlYnViNHVqUWdXcHZFWUxOZG51MWMy?=
+ =?utf-8?B?Zy82Tk9DbmJ2V1pYMVBSczdib1B4b1o3eG9yMWRwZzlmZXdGSUEvTVhTdzR4?=
+ =?utf-8?B?ZHhHTU5QV3FqWDhyakZ3NVRXa1VHQWhrWUdWcHI0Vzk1WTVBbXVHcHV6MytY?=
+ =?utf-8?B?bHJwTld4aXUvd2k1dEZvK0t3dFIyUnhsZmQ3cHVXaTFneHhabVBMeVZCRnBL?=
+ =?utf-8?B?em1MSWtCTmdrRVdyckN2bHJKeVNreWtlbStaSFcwMFRmRnBGSGlrWDRsc1hD?=
+ =?utf-8?B?V251b01JM09aZFFJcmo2RnRUQWphV2oyRDNZYk1RTFBzSU5NUWJneGw5cnND?=
+ =?utf-8?B?bXdJMFZ3WkkvNG54MTdzNUIvenlmZXBZQXhYbXJJMFp4OFduZEY1QUozeXl6?=
+ =?utf-8?B?RW9JazV5T2ZmMm15TzMzSUE3bHlYcUxMaUVrczd2bWxkZW4xTitrWEtsKzgz?=
+ =?utf-8?B?L3ZmbUhJZnd6VEpQeFlOLzFRSkkxM1RpMjk2ODJKeDVjSVZXaU5BU0syeVht?=
+ =?utf-8?B?ZUJCR1FQR0pWWW9YdWUvakU2ZEpVcWJBeERIa0szS25ieFdPb1F5Yldwc3lL?=
+ =?utf-8?B?VUludU5KeWRMdkgyWHFXU2F5QWgvdHpsZGZDVU5QT3RmWlU4TnVvYjhGTVlt?=
+ =?utf-8?B?aWl1T2EwTk5rQ2xrc0RPdDlOaHpCUGZyUk5XWDhDTXBHTE5uVU5KaHdWVHl6?=
+ =?utf-8?B?a3ZzMDJHcUIyQ0drR1RGVzh4SzVUOGJ1RHpRb3B3S0JLaS9wK3drSWYzOTBo?=
+ =?utf-8?B?SDg0eTY1Y2FnemhRZ3N3bnp6QWdySzV4RDBtVm1xZjZHM3NtcmF5TFhuOGJr?=
+ =?utf-8?Q?HEvt+1tHVpPepvW8xjoTu2B4q?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/10] vfio: Use new Error** argument in
- vfio_save_setup()
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20240506092053.388578-1-clg@redhat.com>
- <20240506092053.388578-5-clg@redhat.com>
- <ae441889-a640-4ed0-b455-10a13bc46047@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ae441889-a640-4ed0-b455-10a13bc46047@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1fbd4f18-3bc6-4380-d2f4-08dc73ecdcb2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2024 08:07:13.1573 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: uE/1MPCFJT7R+A8xLq/QkorFT21X6eseU21gmiJSHsV8HLPo0ipo6cLeXxTorkMf9Jjanj2OzWbE7HVKH3e55xc37q8mAJBqztQ2ah2CmQg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB6918
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.17;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,296 +213,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/24 15:21, Avihai Horon wrote:
-> 
-> On 06/05/2024 12:20, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
-> 
-> Nit: change commit title prefix to vfio/migration (also in other patches that are closely related to vfio migration)
-> 
-> Plus, maybe change subject to "Add an Error** argument to vfio_migration_set_state() and adjust callers" as it's the main subject of the patch?
-> 
->>
->> Add an Error** argument to vfio_migration_set_state() and adjust
->> callers, including vfio_save_setup(). The error will be propagated up
->> to qemu_savevm_state_setup() where the save_setup() handler is
->> executed.
->>
->> Modify vfio_vmstate_change_prepare() and vfio_vmstate_change() to
->> store a reported error under the migration stream if a migration is in
->> progress.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>
->>   Changes in v5:
->>
->>   - Replaced error_setg() by error_setg_errno() in vfio_migration_set_state()
->>   - Rebased on 20c64c8a51a4 ("migration: migration_file_set_error")
->>
->>   hw/vfio/migration.c | 76 +++++++++++++++++++++++++--------------------
->>   1 file changed, 43 insertions(+), 33 deletions(-)
->>
->> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index bf2fd0759ba6e4fb103cc5c1a43edb180a3d0de4..9b6375c949f7a8dca857ead2506855f63fa051e4 100644
->> --- a/hw/vfio/migration.c
->> +++ b/hw/vfio/migration.c
->> @@ -82,7 +82,8 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
->>
->>   static int vfio_migration_set_state(VFIODevice *vbasedev,
->>                                       enum vfio_device_mig_state new_state,
->> -                                    enum vfio_device_mig_state recover_state)
->> +                                    enum vfio_device_mig_state recover_state,
->> +                                    Error **errp)
->>   {
->>       VFIOMigration *migration = vbasedev->migration;
->>       uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
->> @@ -102,25 +103,26 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->>           ret = -errno;
->>
->>           if (recover_state == VFIO_DEVICE_STATE_ERROR) {
->> -            error_report("%s: Failed setting device state to %s, err: %s. "
->> -                         "Recover state is ERROR. Resetting device",
->> -                         vbasedev->name, mig_state_to_str(new_state),
->> -                         strerror(errno));
->> +            error_setg_errno(errp, errno,
->> +                             "%s: Failed setting device state to %s. "
->> +                             "Recover state is ERROR. Resetting device",
->> +                             vbasedev->name, mig_state_to_str(new_state));
->>
->>               goto reset_device;
->>           }
->>
->> -        error_report(
->> -            "%s: Failed setting device state to %s, err: %s. Setting device in recover state %s",
->> -                     vbasedev->name, mig_state_to_str(new_state),
->> -                     strerror(errno), mig_state_to_str(recover_state));
->> +        error_setg_errno(errp, errno,
->> +                         "%s: Failed setting device state to %s. "
->> +                         "Setting device in recover state %s",
->> +                         vbasedev->name, mig_state_to_str(new_state),
->> +                         mig_state_to_str(recover_state));
->>
->>           mig_state->device_state = recover_state;
->>           if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
->>               ret = -errno;
->> -            error_report(
->> -                "%s: Failed setting device in recover state, err: %s. Resetting device",
->> -                         vbasedev->name, strerror(errno));
->> +            error_setg_errno(errp, errno,
->> +                             "%s: Failed setting device in recover state. "
->> +                             "Resetting device", vbasedev->name);
-> 
-> Here we set errp again when it's already set.
-
-yes.
-
-> Maybe in this case just:
-> 
-> error_report_err(*errp);
-> *errp = NULL;
-> error_setg_errno(errp, errno,
->                   "%s: Failed setting device in recover state. "
->                   "Resetting device", vbasedev->name);
-> ?
-
-
-I see two alternatives for the recover state error :
-
-1. append to the existing one, but we lack an error_append() helper
-2. report as done today.
-
-I tend to prefer 2. and we cab come back to 1. later on.
-
-> 
->>
->>               goto reset_device;
->>           }
->> @@ -137,7 +139,7 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->>                * This can happen if the device is asynchronously reset and
->>                * terminates a data transfer.
->>                */
->> -            error_report("%s: data_fd out of sync", vbasedev->name);
->> +            error_setg(errp, "%s: data_fd out of sync", vbasedev->name);
->>               close(mig_state->data_fd);
->>
->>               return -EBADF;
->> @@ -168,10 +170,11 @@ reset_device:
->>    */
->>   static int
->>   vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
->> -                                  enum vfio_device_mig_state new_state)
->> +                                  enum vfio_device_mig_state new_state,
->> +                                  Error **errp)
->>   {
->>       return vfio_migration_set_state(vbasedev, new_state,
->> -                                    VFIO_DEVICE_STATE_ERROR);
->> +                                    VFIO_DEVICE_STATE_ERROR, errp);
->>   }
->>
->>   static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
->> @@ -399,10 +402,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>           switch (migration->device_state) {
->>           case VFIO_DEVICE_STATE_RUNNING:
->>               ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
->> -                                           VFIO_DEVICE_STATE_RUNNING);
->> +                                           VFIO_DEVICE_STATE_RUNNING, errp);
->>               if (ret) {
->> -                error_setg(errp, "%s: Failed to set new PRE_COPY state",
->> -                           vbasedev->name);
->>                   return ret;
->>               }
->>
->> @@ -435,13 +436,20 @@ static void vfio_save_cleanup(void *opaque)
->>   {
->>       VFIODevice *vbasedev = opaque;
->>       VFIOMigration *migration = vbasedev->migration;
->> +    Error *local_err = NULL;
->> +    int ret;
->>
->>       /*
->>        * Changing device state from STOP_COPY to STOP can take time. Do it here,
->>        * after migration has completed, so it won't increase downtime.
->>        */
->>       if (migration->device_state == VFIO_DEVICE_STATE_STOP_COPY) {
->> -        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
->> +        ret = vfio_migration_set_state_or_reset(vbasedev,
->> +                                                VFIO_DEVICE_STATE_STOP,
->> +                                                &local_err);
->> +        if (ret) {
->> +            error_report_err(local_err);
->> +        }
->>       }
->>
->>       g_free(migration->data_buffer);
->> @@ -549,11 +557,13 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
->>       VFIODevice *vbasedev = opaque;
->>       ssize_t data_size;
->>       int ret;
->> +    Error *local_err = NULL;
->>
->>       /* We reach here with device state STOP or STOP_COPY only */
->>       ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
->> -                                   VFIO_DEVICE_STATE_STOP);
->> +                                   VFIO_DEVICE_STATE_STOP, &local_err);
->>       if (ret) {
->> +        error_report_err(local_err);
->>           return ret;
->>       }
->>
->> @@ -591,14 +601,9 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->>   static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
->>   {
->>       VFIODevice *vbasedev = opaque;
->> -    int ret;
->>
->> -    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->> -                                   vbasedev->migration->device_state);
->> -    if (ret) {
->> -        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
->> -    }
->> -    return ret;
->> +    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->> +                                    vbasedev->migration->device_state, errp);
->>   }
->>
->>   static int vfio_load_cleanup(void *opaque)
->> @@ -714,19 +719,20 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
->>       VFIODevice *vbasedev = opaque;
->>       VFIOMigration *migration = vbasedev->migration;
->>       enum vfio_device_mig_state new_state;
->> +    Error *local_err = NULL;
->>       int ret;
->>
->>       new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
->>                       VFIO_DEVICE_STATE_PRE_COPY_P2P :
->>                       VFIO_DEVICE_STATE_RUNNING_P2P;
->>
->> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
->> +    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
->>       if (ret) {
->>           /*
->>            * Migration should be aborted in this case, but vm_state_notify()
->>            * currently does not support reporting failures.
->>            */
->> -        migration_file_set_error(ret, NULL);
->> +        migration_file_set_error(ret, local_err);
->>       }
->>
->>       trace_vfio_vmstate_change_prepare(vbasedev->name, running,
->> @@ -738,6 +744,7 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
->>   {
->>       VFIODevice *vbasedev = opaque;
->>       enum vfio_device_mig_state new_state;
->> +    Error *local_err = NULL;
->>       int ret;
->>
->>       if (running) {
->> @@ -750,13 +757,13 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
->>                   VFIO_DEVICE_STATE_STOP;
->>       }
->>
->> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
->> +    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
->>       if (ret) {
->>           /*
->>            * Migration should be aborted in this case, but vm_state_notify()
->>            * currently does not support reporting failures.
->>            */
->> -        migration_file_set_error(ret, NULL);
->> +        migration_file_set_error(ret, local_err);
->>       }
->>
->>       trace_vfio_vmstate_change(vbasedev->name, running, RunState_str(state),
->> @@ -769,13 +776,16 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
->>       VFIOMigration *migration = container_of(notifier, VFIOMigration,
->>                                               migration_state);
->>       VFIODevice *vbasedev = migration->vbasedev;
->> +    int ret = 0;
->>
->>       trace_vfio_migration_state_notifier(vbasedev->name, e->type);
->>
->>       if (e->type == MIG_EVENT_PRECOPY_FAILED) {
->> -        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
->> +        ret = vfio_migration_set_state_or_reset(vbasedev,
->> +                                                VFIO_DEVICE_STATE_RUNNING,
->> +                                                errp);
->>       }
->> -    return 0;
->> +    return ret;
-> 
-> In MigrationNotifyFunc declaration it's stated that:
-> 
-> /*
->   * A MigrationNotifyFunc may return an error code and an Error object,
->   * but only when @e->type is MIG_EVENT_PRECOPY_SETUP.  The code is an int
->   * to allow for different failure modes and recovery actions.
->   */
-> 
-> And indeed migration_call_notifiers() will assert if this notifier fails on MIG_EVENT_PRECOPY_FAILED.
-
-My series has been out of tree for too long :/
-
-> So I guess we should simply report the error locally and return 0.
-
-yes. That said, I don't see why migrate_fd_cleanup() or postcopy_start()
-could not use a local_err and report the error themselves. For later.
-I will add a comment though.
-
-Thanks,
-
-C.
-
-
-> 
-> Thanks.
-> 
->>   }
->>
->>   static void vfio_migration_free(VFIODevice *vbasedev)
->> -- 
->> 2.45.0
->>
-> 
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IENMRU1FTlQgTUFUSElFVS0t
+RFJJRiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRlbi5jb20+DQo+U3ViamVjdDogW1BBVENI
+IGF0c192dGQgdjEgMDYvMjRdIGludGVsX2lvbW11OiBkbyBub3QgY29uc2lkZXIgd2FpdF9kZXNj
+DQo+YXMgYW4gaW52YWxpZCBkZXNjcmlwdG9yDQo+DQo+U2lnbmVkLW9mZi1ieTogQ2zDqW1lbnQg
+TWF0aGlldS0tRHJpZiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRlbi5jb20+DQo+LS0tDQo+
+IGh3L2kzODYvaW50ZWxfaW9tbXUuYyB8IDUgKysrKysNCj4gMSBmaWxlIGNoYW5nZWQsIDUgaW5z
+ZXJ0aW9ucygrKQ0KPg0KPmRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9ody9p
+Mzg2L2ludGVsX2lvbW11LmMNCj5pbmRleCA4NWE3ZWJhYzY3Li5jNDc1YTM1NGEwIDEwMDY0NA0K
+Pi0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0KPisrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXUu
+Yw0KPkBAIC0zMzY1LDYgKzMzNjUsMTEgQEAgc3RhdGljIGJvb2wNCj52dGRfcHJvY2Vzc193YWl0
+X2Rlc2MoSW50ZWxJT01NVVN0YXRlICpzLCBWVERJbnZEZXNjICppbnZfZGVzYykNCj4gICAgIH0g
+ZWxzZSBpZiAoaW52X2Rlc2MtPmxvICYgVlREX0lOVl9ERVNDX1dBSVRfSUYpIHsNCj4gICAgICAg
+ICAvKiBJbnRlcnJ1cHQgZmxhZyAqLw0KPiAgICAgICAgIHZ0ZF9nZW5lcmF0ZV9jb21wbGV0aW9u
+X2V2ZW50KHMpOw0KPisgICAgfSBlbHNlIGlmIChpbnZfZGVzYy0+bG8gJiBWVERfSU5WX0RFU0Nf
+V0FJVF9GTikgew0KPisgICAgICAgIC8qDQo+KyAgICAgICAgICogU1cgPSAwLCBJRiA9IDAsIEZO
+ID0gMQ0KPisgICAgICAgICAqIE5vdGhpbmcgdG8gZG8gYXMgd2UgcHJvY2VzcyB0aGUgZXZlbnRz
+IHNlcXVlbnRpYWxseQ0KPisgICAgICAgICAqLw0KPiAgICAgfSBlbHNlIHsNCj4gICAgICAgICBl
+cnJvcl9yZXBvcnRfb25jZSgiJXM6IGludmFsaWQgd2FpdCBkZXNjOiBoaT0lIlBSSXg2NCIsIGxv
+PSUiUFJJeDY0DQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIiAodW5rbm93biB0eXBlKSIs
+IF9fZnVuY19fLCBpbnZfZGVzYy0+aGksDQoNCkxHVE0uDQoNClRoYW5rcw0KWmhlbnpob25nIA0K
 
