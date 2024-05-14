@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B36C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DFE3C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 14:40:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6tJI-00036t-Pc; Tue, 14 May 2024 10:39:20 -0400
+	id 1s6tKG-0003jc-91; Tue, 14 May 2024 10:40:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6tJE-000354-Ii
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:39:16 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6tKF-0003ht-BJ
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:40:19 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6tJD-0004TL-0w
- for qemu-devel@nongnu.org; Tue, 14 May 2024 10:39:16 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6tKD-0004nG-Nk
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 10:40:19 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 9EE2161278;
- Tue, 14 May 2024 14:39:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21936C2BD10;
- Tue, 14 May 2024 14:39:11 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 559ADCE1290;
+ Tue, 14 May 2024 14:40:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6A0C2BD10;
+ Tue, 14 May 2024 14:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715697553;
- bh=TOy3jYJwidX0j6VkODIClSLAp8oHdtyeRaFbo+Ed6Tk=;
+ s=k20201202; t=1715697612;
+ bh=UdRXETdLZBOXYJq1qO0i4UoDuCLL+FQJQQtp61Qifrg=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=sGS4IoMBelESU0YbJbx8uCkXv4Av56B7CeAdcWHXDIptorq+09LmhiwF6C2XwizJJ
- 7Iv13Z6l7FXfKcquFmkLOj7yuYTY6cdhMt1riZd4AFTNYFKtsoYX+mvHVIFYHtz38J
- dK0VMNkRfguORArLbEPRgBIq9Vs/+DJoPKH4P0Pz7Kz2ChcpHg/megff3qf/kVRPgB
- y61pG1V0OU9O1mIQLwkC1T6Tt4NSy4ca6eEWt/r8vfe/EdcVUIZ0ljEl99F/d4RiQk
- 2lLa8DTIcgOrvDTrSgbkPob1uSMS6pigBaU/Qz0FLkZeA4DoOFReIGXHRfG7+RTg8U
- yjbMV7DHcTffw==
-Date: Tue, 14 May 2024 16:39:09 +0200
+ b=PXSJLBEpxeMa46Up7TAYbVEykrlOTO+Rv9tTB1MQdBcfnYri7RGy1UaHQ4qTE63ob
+ VbYuwLsppFWCl5RHM6ybHDwQTLqKBaSiE4TEBFDlfJHvz0cylN5ijOq+X/Nlj9CWcA
+ Xv+coNCGowFjyWYow830EMHtTpcMXJVT4JZ5iWn5TRkvxCfe8gg8Hakqn6E7N43xLR
+ lPDriM3sbm7hwKGslnQTkISBrlRkPYrljcx7WHS2UIKek06lJriz5LX/Gt63wH3K94
+ DzYkwepR41OqeaLF/zIzZl/xxXaXmHp+maC1lO+GhOBNMGpn1H4JhWhePiH9fVXkg8
+ Iu+TvZQce2Thg==
+Date: Tue, 14 May 2024 16:40:08 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 09/45] target/hppa: Delay computation of IAQ_Next
-Message-ID: <ZkN3jdnA2WCa-Z9N@carbonx1>
+Subject: Re: [PATCH v2 10/45] target/hppa: Skip nullified insns in
+ unconditional dbranch path
+Message-ID: <ZkN3yGMFNhRHcn6u@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-10-richard.henderson@linaro.org>
+ <20240513074717.130949-11-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-10-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -80
-X-Spam_score: -8.1
-X-Spam_bar: --------
-X-Spam_report: (-8.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+In-Reply-To: <20240513074717.130949-11-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=deller@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,81 +71,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Richard Henderson <richard.henderson@linaro.org>:
-> We no longer have to allocate a temp and perform an
-> addition before translation of the rest of the insn.
-> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 
 > ---
->  target/hppa/translate.c | 26 ++++++++++----------------
->  1 file changed, 10 insertions(+), 16 deletions(-)
+>  target/hppa/translate.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index f816b337ee..a9196050dc 100644
+> index a9196050dc..ca979f4137 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -1806,6 +1806,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
+> @@ -1805,11 +1805,17 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
+>  
 >      if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
 >          install_link(ctx, link, false);
->          ctx->iaoq_n = dest;
-> +        ctx->iaoq_n_var = NULL;
+> -        ctx->iaoq_n = dest;
+> -        ctx->iaoq_n_var = NULL;
 >          if (is_n) {
+> +            if (use_nullify_skip(ctx)) {
+> +                nullify_set(ctx, 0);
+> +                gen_goto_tb(ctx, 0, dest, dest + 4);
+> +                ctx->base.is_jmp = DISAS_NORETURN;
+> +                return true;
+> +            }
 >              ctx->null_cond.c = TCG_COND_ALWAYS;
 >          }
-> @@ -1862,11 +1863,6 @@ static bool do_cbranch(DisasContext *ctx, int64_t disp, bool is_n,
->              ctx->null_lab = NULL;
->          }
->          nullify_set(ctx, n);
-> -        if (ctx->iaoq_n == -1) {
-> -            /* The temporary iaoq_n_var died at the branch above.
-> -               Regenerate it here instead of saving it.  */
-> -            tcg_gen_addi_i64(ctx->iaoq_n_var, cpu_iaoq_b, 4);
-> -        }
->          gen_goto_tb(ctx, 0, ctx->iaoq_b, ctx->iaoq_n);
->      }
->  
-> @@ -4630,8 +4626,6 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
->      ctx->iaoq_f = (ctx->base.pc_first & ~iasq_f) + ctx->privilege;
->      ctx->iaoq_b = (diff ? ctx->iaoq_f + diff : -1);
->  #endif
-> -    ctx->iaoq_n = -1;
-> -    ctx->iaoq_n_var = NULL;
->  
->      ctx->zero = tcg_constant_i64(0);
->  
-> @@ -4683,14 +4677,8 @@ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
->  
->          /* Set up the IA queue for the next insn.
->             This will be overwritten by a branch.  */
-> -        if (ctx->iaoq_b == -1) {
-> -            ctx->iaoq_n = -1;
-> -            ctx->iaoq_n_var = tcg_temp_new_i64();
-> -            tcg_gen_addi_i64(ctx->iaoq_n_var, cpu_iaoq_b, 4);
-> -        } else {
-> -            ctx->iaoq_n = ctx->iaoq_b + 4;
-> -            ctx->iaoq_n_var = NULL;
-> -        }
+> +        ctx->iaoq_n = dest;
 > +        ctx->iaoq_n_var = NULL;
-> +        ctx->iaoq_n = ctx->iaoq_b == -1 ? -1 : ctx->iaoq_b + 4;
->  
->          if (unlikely(ctx->null_cond.c == TCG_COND_ALWAYS)) {
->              ctx->null_cond.c = TCG_COND_NEVER;
-> @@ -4741,7 +4729,13 @@ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
->                                  ? DISAS_EXIT
->                                  : DISAS_IAQ_N_UPDATED);
->          } else if (ctx->iaoq_b == -1) {
-> -            copy_iaoq_entry(ctx, cpu_iaoq_b, -1, ctx->iaoq_n_var);
-> +            if (ctx->iaoq_n_var) {
-> +                copy_iaoq_entry(ctx, cpu_iaoq_b, -1, ctx->iaoq_n_var);
-> +            } else {
-> +                tcg_gen_addi_i64(cpu_iaoq_b, cpu_iaoq_b, 4);
-> +                tcg_gen_andi_i64(cpu_iaoq_b, cpu_iaoq_b,
-> +                                 gva_offset_mask(ctx->tb_flags));
-> +            }
->          }
->          break;
+>      } else {
+>          nullify_over(ctx);
 >  
 > -- 
 > 2.34.1
