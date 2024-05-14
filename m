@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E7EC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9A9C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 16:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6v12-00007D-La; Tue, 14 May 2024 12:28:36 -0400
+	id 1s6v1t-0000pP-F3; Tue, 14 May 2024 12:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v11-00006b-6W
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:28:35 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v1r-0000p1-BG
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:29:27 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v0z-0005L4-IZ
- for qemu-devel@nongnu.org; Tue, 14 May 2024 12:28:34 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1s6v1o-0005YC-5p
+ for qemu-devel@nongnu.org; Tue, 14 May 2024 12:29:27 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 9C915CE1259;
- Tue, 14 May 2024 16:28:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACDAC2BD10;
- Tue, 14 May 2024 16:28:27 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 292D8612D8;
+ Tue, 14 May 2024 16:29:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574D7C2BD10;
+ Tue, 14 May 2024 16:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1715704109;
+ s=k20201202; t=1715704162;
  bh=SQUHsmp4KnShQLN7DNByE6XuVqjt+RCY/un63jjC/wQ=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Lx5+9IEEcTEyiyXaFTvsdnzSDGDNwTr9dzjhIO9p5xk1rQACb9Xfvq0WhqC9KNmE4
- 7asu1XFxTK0GJCxEuV5vuhd72PlA+kORimbqUJx/mAxAo0bhdgdZByaPbkmAi4mlRI
- 9TxMEqpDzjUl5cixW5DaMizA8pY5T1aKxZ3twf+BMKiShrF75oJvT4Y33Xt0Vd3W/S
- oRqugWCCd6AHHBZ7U8i/m/pniy2+8cx/PmpR4V9WTS2OpZzUNlgMkc2JnpjDvROY7/
- ARWW+lFBUPCG7abpgHC+CvhlgLpCeYutKzz8NOT6psDMCZAcuRm5ZaSzNaLSo9mBF6
- r9bYGKeI4/hhQ==
-Date: Tue, 14 May 2024 18:28:24 +0200
+ b=iojuUk/g7zPPK0/HfNAk50Bgcqpk8G2Xm0D6AuH4Rd0zoiCiANbjAa6t5JQkzJTS7
+ vBuHJXBpnn69xtN+9mWphMY4kfi2Vb/FRPqxKFYUCnw0+IODifQBglPq0MCooF0/4n
+ Ee83MODr9UnYG2doOIlJkOkygqFWIu8V0+hYhoPvjd1K9IqI/ttHNNsBsPld5ifW6X
+ cmweihgssxgh8gUX9QPJa8BKw2yXR3HhRTDy4IV8reC9IidP48RiP0Ar3wLQzoHRMd
+ An3v0mc03GY9yNwOThOE8aZpLNSdlAEEzJ+ssXO48G198x12uTNBBc1XAuHSICs6h4
+ +VnUNrHt22oZg==
+Date: Tue, 14 May 2024 18:29:18 +0200
 From: Helge Deller <deller@kernel.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH v2 22/45] target/hppa: Use TCG_COND_TST* in
- do_unit_zero_cond
-Message-ID: <ZkORKExIby0kplrg@carbonx1>
+Subject: Re: [PATCH v2 23/45] target/hppa: Use TCG_COND_TST* in do_unit_addsub
+Message-ID: <ZkORXsKOvrs0Ivmc@carbonx1>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-23-richard.henderson@linaro.org>
+ <20240513074717.130949-24-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240513074717.130949-23-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
+In-Reply-To: <20240513074717.130949-24-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -53
 X-Spam_score: -5.4
 X-Spam_bar: -----
