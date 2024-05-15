@@ -4,106 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C6CFC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 22:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509FAC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 22:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7NK2-0008Iv-98; Wed, 15 May 2024 18:42:06 -0400
+	id 1s7NZ4-0006NA-8y; Wed, 15 May 2024 18:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1s7NK0-0008Ig-4u
- for qemu-devel@nongnu.org; Wed, 15 May 2024 18:42:04 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1s7NZ2-0006Mm-N9
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 18:57:36 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1s7NJx-0003c6-Vq
- for qemu-devel@nongnu.org; Wed, 15 May 2024 18:42:03 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44FM7dE5006047
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 22:41:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
- subject : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=pp1;
- bh=7SpyXkvcTg9Nzaj48QcNjPnlWEJclxKbZosI40ajHTU=;
- b=plICRF2d8zZBk9laSLeOq22djm0hsRZGdL02f9htBltV1cU5ApB2nUAAVLzO79w40wLZ
- cB17JDbzIG7Pro8a4VoWaBMrClQH7dS0c6YVlwsF3oeHNLWXI+MjPq+wBzdSi+P1KcAi
- qc+8mcGi5FTlEViqP+TmCYVFMrGkPIDemliuy4/9yQbN7NO54URDF6lR4iWnR7fj0Pv5
- PtB0zW2CRq3NVH0Hee1awF5/hozfX9chGWSdJ29Zi0cRCQ4kziwPr1Fb2YbeMZbLA79V
- 6zKzot+tJe0UfzojUDzvaJMjgEVEpMcM2HSk7e5XO9vX+yO2XYUhAz5BNcXK0PIzuZuq /Q== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y55jeg1rh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 22:41:58 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44FMfvl5019025
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 22:41:57 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y55jeg1rg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 May 2024 22:41:57 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44FLb4rt005998; Wed, 15 May 2024 22:41:56 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2mgmp88k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 May 2024 22:41:56 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44FMfohR55836986
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 May 2024 22:41:52 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AD7A20043;
- Wed, 15 May 2024 22:41:50 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 13ED220040;
- Wed, 15 May 2024 22:41:50 +0000 (GMT)
-Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.171.23.67])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
- Wed, 15 May 2024 22:41:49 +0000 (GMT)
-Date: Thu, 16 May 2024 00:41:48 +0200
-From: Halil Pasic <pasic@linux.ibm.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Marc Hartmayer <mhartmay@linux.ibm.com>, Jason Wang <jasowang@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Boris Fiuczynski <fiuczy@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH 1/1] vhost-vsock: add VIRTIO_F_RING_PACKED to feaure_bits
-Message-ID: <20240516004148.0071e9d1.pasic@linux.ibm.com>
-In-Reply-To: <20240507212630.42c00883.pasic@linux.ibm.com>
-References: <20240429113334.2454197-1-pasic@linux.ibm.com>
- <20240507212630.42c00883.pasic@linux.ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1s7NZ1-00005d-4v
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 18:57:36 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 52AEB611A6;
+ Wed, 15 May 2024 22:57:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C792FC116B1;
+ Wed, 15 May 2024 22:57:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1715813845;
+ bh=q6H/1FcXoCDc0CF9c++iC7IKrb5/UCOhAQ+K55pVPr4=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=bMnHNH3r+3s2cl2Jx/b+YpdnHy59iOdDFS6FdkFj2nRt6VIcgK+FqhLiVFv2GtL6D
+ fqe1goIHSYBggv0J8+1J9M5pijAIfMmEyz0HLpAfDkzyu9KlQsH6V4q4j4kwk4wju3
+ KiWhJ1TJtntJefz35u4ZSTlCsHzX5HXo4TECsAAZGWWCpOzF9qTLs5JMk5Wq3pph/s
+ L9gOajbEIuHUco0x++/cxvVBEX5b/vL3ian2i1i0IAO9uLNSkAORwKTPTWSMRVMsoy
+ uBrBoNkk3t8wLbIMbr+kbcvfme3LX4psg12rVaUzOKhkOOQQLRKYid2qFp7nOgQkFT
+ yTp8BqiznEhkQ==
+Date: Wed, 15 May 2024 15:57:22 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v5 4/8] softmmu: xen: Always pass offset + addr to
+ xen_map_cache
+In-Reply-To: <20240503014449.1046238-5-edgar.iglesias@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2405151557140.2544314@ubuntu-linux-20-04-desktop>
+References: <20240503014449.1046238-1-edgar.iglesias@gmail.com>
+ <20240503014449.1046238-5-edgar.iglesias@gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ajCvcgS1rGC34XdMjKnVtuaZs5ZGbG66
-X-Proofpoint-GUID: vPohcRD_bgo8k8JqJzX7zTskFHRJik34
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-15_14,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0
- mlxlogscore=886 priorityscore=1501 phishscore=0 impostorscore=0 mlxscore=0
- malwarescore=0 adultscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405150161
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=pasic@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -79
+X-Spam_score: -8.0
+X-Spam_bar: --------
+X-Spam_report: (-8.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,15 +77,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 May 2024 21:26:30 +0200
-Halil Pasic <pasic@linux.ibm.com> wrote:
-
-> > Not having VIRTIO_F_RING_PACKED in feature_bits[] is a problem when the
-> > vhost-vsock device does not offer the feature bit VIRTIO_F_RING_PACKED
-> > but the in QEMU device is configured to try to use the packed layout
-> > (the virtio property "packed" is on).  
+On Fri, 3 May 2024, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> polite ping
+> Always pass address with offset to xen_map_cache().
+> This is in preparation for support for grant mappings.
+> 
+> Since this is within a block that checks for offset == 0,
+> this has no functional changes.
+> 
+> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-ping
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+
+
+> ---
+>  system/physmem.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 342b7a8fd4..5e6257ef65 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2230,7 +2230,8 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
+>           * In that case just map the requested area.
+>           */
+>          if (block->offset == 0) {
+> -            return xen_map_cache(block->mr, addr, len, lock, lock,
+> +            return xen_map_cache(block->mr, block->offset + addr,
+> +                                 len, lock, lock,
+>                                   is_write);
+>          }
+>  
+> -- 
+> 2.40.1
+> 
 
