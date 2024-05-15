@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83BAC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37EFC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79vk-00027P-4L; Wed, 15 May 2024 04:24:08 -0400
+	id 1s79vU-00025H-Os; Wed, 15 May 2024 04:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s79vb-00026P-Ld; Wed, 15 May 2024 04:23:59 -0400
+ id 1s79vQ-00022h-Gl
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:23:48 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s79vZ-00076W-Kn; Wed, 15 May 2024 04:23:59 -0400
+ id 1s79vO-00074o-Gt
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:23:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715761437; x=1747297437;
+ t=1715761426; x=1747297426;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Lntkgw5PKO06tI9Qq8U0Gkr91xV1qgI/qTGyCh5HD30=;
- b=Om5BBTBTET6OwwcjxI7/txH7KiLXfcFYrcSWP+gI7d/MhIIgQxRjlOs2
- 2kAmxu/loaGh4F/LZ2K8C4+lizVHel6qFv9eARpGMHhXNl3GxBKjSAx5O
- ziZGSrvaluW7tYH4X6UR0nfkPYEEMavjRj0sgQhV+9iTISje7CTY6E/zG
- vIHtptyZu1O2hgPIcbxi1IIw+jrkOxS9RXKp9bcSp0dpgtFxGeg9PJxkY
- h+PFWRWOR2SElbuRLyi2/NAkZIri7x1O4VVTxKThBHpA4FjzQ3baYkh7L
- chD/pxU9N0Q27U5Ajv7sPD7C4ezGfv8uA8wkcIV7oCKvxC77gXO9oX4Ly w==;
-X-CSE-ConnectionGUID: S3/7PRLMR6KDBSx6JJUkvw==
-X-CSE-MsgGUID: t25HXJIQTLGe9UjFR8oOSw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11961541"
-X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="11961541"
+ bh=JOzScZJ2jsxihaHCSeW8J3dqNSmB6ca86sov/7puN0I=;
+ b=SSsoQeGsUFahbveYGtyvAEqbJaix9DxwDx1wlvlpAoXqCWaE4xU4ctm0
+ ZoJdKFxmO5ZyJHJHafjrE3JG8QI5OV8UHRUqWAl+D9xWMrtHlJtlZawVg
+ xl+CktI6iIHM/xhFBKxBdqWLwGpp/+Ed5193IAYSPGHfZ0J76mJgPU4iM
+ FXbky+uJ+XyDxl9SQNzP2/5yeYlM7PQaotLsUHGQOOQfOH0B8UbumXgoK
+ n1PCCS3LP3zNE4g17DKbG+k/MKpX56CHle+Nioxy/BNUQ4yNu/q4VA46h
+ zGI1Tdu8ZeF83sRe7uE+/Hza8Iqhrnq7mGiCuMyO0CJ8uQGWOiPDVcLrz A==;
+X-CSE-ConnectionGUID: MVAgABJGRDGVTWh5BAao2Q==
+X-CSE-MsgGUID: Gku6g596SvOyAzLlOR1nKA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11961514"
+X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="11961514"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2024 01:23:56 -0700
-X-CSE-ConnectionGUID: XaIfAKVJSsWywiMZP16a9g==
-X-CSE-MsgGUID: KN9xB6OJTkWUYGetvuMpxg==
+ 15 May 2024 01:23:45 -0700
+X-CSE-ConnectionGUID: V5bVsuC6SnGjI7R2cvku0Q==
+X-CSE-MsgGUID: 4svTlRkWQoW0cmuYjeUhzA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="31396286"
+X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="31396243"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2024 01:23:52 -0700
+ 15 May 2024 01:23:43 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Thomas Huth <thuth@redhat.com>, Tony Krowiak <akrowiak@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:S390 general arch...)
-Subject: [PATCH 05/16] vfio/helpers: Make vfio_device_get_name() return bool
-Date: Wed, 15 May 2024 16:20:30 +0800
-Message-Id: <20240515082041.556571-6-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH 02/16] vfio/display: Make vfio_display_*() return bool
+Date: Wed, 15 May 2024 16:20:27 +0800
+Message-Id: <20240515082041.556571-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515082041.556571-1-zhenzhong.duan@intel.com>
 References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
@@ -92,122 +89,115 @@ for bool-valued functions.
 Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/vfio/vfio-common.h | 2 +-
- hw/vfio/ap.c                  | 2 +-
- hw/vfio/ccw.c                 | 2 +-
- hw/vfio/helpers.c             | 8 ++++----
- hw/vfio/pci.c                 | 2 +-
- hw/vfio/platform.c            | 5 ++---
- 6 files changed, 10 insertions(+), 11 deletions(-)
+ hw/vfio/pci.h     |  2 +-
+ hw/vfio/display.c | 20 ++++++++++----------
+ hw/vfio/pci.c     |  3 +--
+ 3 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index fdce13f0f2..d9891c796f 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -280,7 +280,7 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-                           uint64_t size, ram_addr_t ram_addr, Error **errp);
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 92cd62d115..a5ac9efd4b 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -232,7 +232,7 @@ int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+                                Error **errp);
  
- /* Returns 0 on success, or a negative errno. */
--int vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-+bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
- void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
-                       DeviceState *dev, bool ram_discard);
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index d8a9615fee..c12531a788 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -158,7 +158,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
-     VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
-     VFIODevice *vbasedev = &vapdev->vdev;
+ void vfio_display_reset(VFIOPCIDevice *vdev);
+-int vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
++bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
+ void vfio_display_finalize(VFIOPCIDevice *vdev);
  
--    if (vfio_device_get_name(vbasedev, errp) < 0) {
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
-     }
+ extern const VMStateDescription vfio_display_vmstate;
+diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+index 57c5ae0b2a..b562f4be74 100644
+--- a/hw/vfio/display.c
++++ b/hw/vfio/display.c
+@@ -346,11 +346,11 @@ static const GraphicHwOps vfio_display_dmabuf_ops = {
+     .ui_info    = vfio_display_edid_ui_info,
+ };
  
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 1f578a3c75..8850ca17c8 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -588,7 +588,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         }
-     }
- 
--    if (vfio_device_get_name(vbasedev, errp) < 0) {
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
-     }
- 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 93e6fef6de..a69b4411e5 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -605,7 +605,7 @@ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
-     return ret;
- }
- 
--int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-+bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
+-static int vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
  {
-     ERRP_GUARD();
-     struct stat st;
-@@ -614,7 +614,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-         if (stat(vbasedev->sysfsdev, &st) < 0) {
-             error_setg_errno(errp, errno, "no such host device");
-             error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->sysfsdev);
--            return -errno;
-+            return false;
-         }
-         /* User may specify a name, e.g: VFIO platform device */
-         if (!vbasedev->name) {
-@@ -623,7 +623,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-     } else {
-         if (!vbasedev->iommufd) {
-             error_setg(errp, "Use FD passing only with iommufd backend");
+     if (!display_opengl) {
+         error_setg(errp, "vfio-display-dmabuf: opengl not available");
+-        return -1;
++        return false;
+     }
+ 
+     vdev->dpy = g_new0(VFIODisplay, 1);
+@@ -360,11 +360,11 @@ static int vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
+     if (vdev->enable_ramfb) {
+         vdev->dpy->ramfb = ramfb_setup(errp);
+         if (!vdev->dpy->ramfb) {
 -            return -EINVAL;
 +            return false;
          }
-         /*
-          * Give a name with fd so any function printing out vbasedev->name
-@@ -634,7 +634,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-         }
      }
- 
+     vfio_display_edid_init(vdev);
 -    return 0;
 +    return true;
  }
  
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
+ static void vfio_display_dmabuf_exit(VFIODisplay *dpy)
+@@ -481,7 +481,7 @@ static const GraphicHwOps vfio_display_region_ops = {
+     .gfx_update = vfio_display_region_update,
+ };
+ 
+-static int vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
+ {
+     vdev->dpy = g_new0(VFIODisplay, 1);
+     vdev->dpy->con = graphic_console_init(DEVICE(vdev), 0,
+@@ -490,10 +490,10 @@ static int vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
+     if (vdev->enable_ramfb) {
+         vdev->dpy->ramfb = ramfb_setup(errp);
+         if (!vdev->dpy->ramfb) {
+-            return -EINVAL;
++            return false;
+         }
+     }
+-    return 0;
++    return true;
+ }
+ 
+ static void vfio_display_region_exit(VFIODisplay *dpy)
+@@ -508,7 +508,7 @@ static void vfio_display_region_exit(VFIODisplay *dpy)
+ 
+ /* ---------------------------------------------------------------------- */
+ 
+-int vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
++bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
+ {
+     struct vfio_device_gfx_plane_info probe;
+     int ret;
+@@ -531,11 +531,11 @@ int vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
+ 
+     if (vdev->display == ON_OFF_AUTO_AUTO) {
+         /* not an error in automatic mode */
+-        return 0;
++        return true;
+     }
+ 
+     error_setg(errp, "vfio: device doesn't support any (known) display method");
+-    return -1;
++    return false;
+ }
+ 
+ void vfio_display_finalize(VFIOPCIDevice *vdev)
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 358da4497b..aad012c348 100644
+index c1adef5cf8..a447013a1d 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -2999,7 +2999,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-                             vdev->host.slot, vdev->host.function);
+@@ -3200,8 +3200,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
      }
  
--    if (vfio_device_get_name(vbasedev, errp) < 0) {
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
+     if (vdev->display != ON_OFF_AUTO_OFF) {
+-        ret = vfio_display_probe(vdev, errp);
+-        if (ret) {
++        if (!vfio_display_probe(vdev, errp)) {
+             goto out_deregister;
+         }
      }
- 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index 3233ca8691..e1a32863d9 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -545,9 +545,8 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-                                              vbasedev->name);
-     }
- 
--    ret = vfio_device_get_name(vbasedev, errp);
--    if (ret) {
--        return ret;
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-+        return -EINVAL;
-     }
- 
-     if (!vfio_attach_device(vbasedev->name, vbasedev,
 -- 
 2.34.1
 
