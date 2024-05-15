@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC447C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9D4C25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79WD-0003sl-JH; Wed, 15 May 2024 03:57:47 -0400
+	id 1s79ZI-0003Ed-5w; Wed, 15 May 2024 04:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s79W1-0003PM-9B
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:57:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s79Vy-0004ll-TO
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:57:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715759849;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KJ60EhLSwaQyzcfeTGtD1Tj7k8Uo36YCURMWdDb65f4=;
- b=DNJOshsOHjOUP670323z8Fa3IMe8XZWZCvZ4H9WT6aAp4zIBBnZSsDh+cJn1MKclhS7MXO
- cDHSuVltBSpQ1zNm3fIJCIwgGdFjGoh/qDFqbPNZZf4NXENfXkW19N8a/i/AZMrl42O3bt
- FtSzelehKSUY5DUTZdyYBo67cEMKe44=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-X_gz7i69OrGYDF7rZDyxwQ-1; Wed, 15 May 2024 03:57:28 -0400
-X-MC-Unique: X_gz7i69OrGYDF7rZDyxwQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-34e0836d91eso4037679f8f.2
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:57:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1s79ZE-0002mZ-Ll
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:00:53 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1s79ZC-0006XU-MJ
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:00:52 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-5c6bd3100fcso3993460a12.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 01:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1715760049; x=1716364849; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QBqdliMEnz302NXVukyGkGL9Vj4A6ULArkG/4ozIHhk=;
+ b=jw6J5V1gy7qFGr8680o6OTxCTB4+woXmwgBtwQT3v8OnjvXyXQ9lUSOq/UxOTzJbc8
+ TxHyNP2GFJFEW/716sMBemzrPWjdEfRXv0FvkU0KKgZPQlDvZ3J/xY5yYXCR4aJO8MKB
+ M+XGpKgxzrfbbUukcE15BM6NtVtMAzeAn5zAYOqwcxYOCODy7uA0CFAVRFHqr/HvF+/m
+ iwx5PgxVeu4LaULuAKi5gDtyALgiVQmdO96+kI/pK2TDrQNcsJhWS76dHyjQ/98JJRGo
+ Z/4tTxka+i3NQbhQeB4lLwOw4mIaC4+KRpwovj0c+5PDiftXVv7u8nDbJbPU3SueArxg
+ 2uXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715759846; x=1716364646;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KJ60EhLSwaQyzcfeTGtD1Tj7k8Uo36YCURMWdDb65f4=;
- b=Oh73RmpfWKKTHKyj34XcKPtlHeZBbzSL5rLymSgphrEW5zL8YQqLu2GhUl8gDYi2+k
- kpiy/n/s1mO8qWdXxNQ7nwWxvF49K55peDTlE6RKCydFNdqlVs6S/rAHE8QEO4I891Nu
- JubkxvLlGUI26vOsu4TeEgg2td3qa2cNbEGycOUJc+7dLYC++CiTFelD6A9znnxUUNWT
- A/inYRisiW+6EiUV8TBqugZIeNllC2BXXp91/SSiMcmFn3/knkaebX0NwHHNKC5z+xpo
- Ngak7986FDsMMOXQ7+RSxAeeEA2ZcTNV1TijR9mJ/GvhPnu6zK8Uz1p+LoH3V/kDo23h
- xgng==
-X-Gm-Message-State: AOJu0YxAlsKjy71wA0DrvBW/jZn4rh0YxS5Dynk7Qwn3M4TbcSmh+df6
- Z8Y2Z9DzWU1jncUQYtBxqf9S94tAMpwsCsfPxpd54Iqv4s20wnj2F5bkTvhXhv+EB6MjwdQBg9G
- +KjmDRDUTdnrxXs4FQ+CdXiFtijBiGLwXiBgwp/d3/mZ4R3224Sy67H+PQ8M3
-X-Received: by 2002:a05:6000:150:b0:34a:a754:eb48 with SMTP id
- ffacd0b85a97d-3504a969261mr10747585f8f.48.1715759846385; 
- Wed, 15 May 2024 00:57:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/OfQLAdvWz1e0HWE7uyBfZ+1t6ImDBoKXBvCWWHHPuR4RIeOdQkVf0y7uNuFslQHG2A54pQ==
-X-Received: by 2002:a05:6000:150:b0:34a:a754:eb48 with SMTP id
- ffacd0b85a97d-3504a969261mr10747567f8f.48.1715759845861; 
- Wed, 15 May 2024 00:57:25 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:175:c01e:6df5:7e14:ad03:85bd])
+ d=1e100.net; s=20230601; t=1715760049; x=1716364849;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QBqdliMEnz302NXVukyGkGL9Vj4A6ULArkG/4ozIHhk=;
+ b=mH7iWG4vUSQ52HEI09GLEkXga07kb3pITaIY9Wpcj89qeJoour0Hww3Qxi5Q5S9QB1
+ CsPv4L4e6aImgVLKAhBdEviySU56NxOEr/Zf6PLiy+3d17D7DJzGB5AFB4AZb0AOh2FM
+ dHisfSRLK6JgglUh/ylro6O/oi7qTPnQVO5Jvk5V1z7GrEDMqFQp4VXT5dOdIF9gybRv
+ vvVMMF8ayiF1hi0oj4PSiiyU87qTkG8OGW70fHALYyqskmm0rLeRTcW+ugIeg/by3bYV
+ OnFonCUwucm4K1YWL2EM3Kt8pNTfCOS3J0HqH91aozMur3ODUVmYaMWq6TjfFerRwyRj
+ u+0g==
+X-Gm-Message-State: AOJu0YzKUerY4jJ6FUZtGqduV6GOLyvlhG/n4CIqwFtW7jrPqhJueSk5
+ SM5Bg84rXjJFY0fOgRZ6+wJ9Gs1phqae5N/hfA63kp+fuYwJrWQywIE0Qluxj1ZqLwBkuD1WSCn
+ yw5id8mpIp7OYKyvP6qC09EVOYiqE9RX0w9YpwWImktWZkt48B5+fw7CIZ3hsVj+1tcyXG/UvsP
+ 2OW59j4A5xY2cRR+7IR5uTPtHvoA+MNHSu5Bg=
+X-Google-Smtp-Source: AGHT+IF0ZVMrPHTHmsmfiZo0bK58t5IXJIUZ/nNUSrps4Pcnm4rZU2iZhbq8D8pzuia1e9uCqsD/Wg==
+X-Received: by 2002:a17:90b:1c0d:b0:2b5:46b3:2e8a with SMTP id
+ 98e67ed59e1d1-2b6ccd76db3mr11925158a91.39.1715760048295; 
+ Wed, 15 May 2024 01:00:48 -0700 (PDT)
+Received: from hsinchu36-syssw02.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502baacf47sm15687506f8f.78.2024.05.15.00.57.23
+ d9443c01a7336-1ef0b9d1642sm111418795ad.31.2024.05.15.01.00.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 00:57:25 -0700 (PDT)
-Date: Wed, 15 May 2024 03:57:21 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: Re: [PATCH 00/11] maintainer updates (plugins, testing) pre-PR
-Message-ID: <20240515035713-mutt-send-email-mst@kernel.org>
-References: <20240514174253.694591-1-alex.bennee@linaro.org>
+ Wed, 15 May 2024 01:00:47 -0700 (PDT)
+From: "Fea.Wang" <fea.wang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: "Fea.Wang" <fea.wang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+ Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [RESEND PATCH v2 3/5] target/riscv: Add 'P1P13' bit in SMSTATEEN0
+Date: Wed, 15 May 2024 16:06:00 +0800
+Message-Id: <20240515080605.2675399-4-fea.wang@sifive.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240515080605.2675399-1-fea.wang@sifive.com>
+References: <20240515080605.2675399-1-fea.wang@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240514174253.694591-1-alex.bennee@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=fea.wang@sifive.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 14, 2024 at 06:42:42PM +0100, Alex Bennée wrote:
-> This is mostly plugin related stuff which is all ready to go however
-> I have a few miscellaneous testing updates which would appreciate the
-> review.
+Based on privilege 1.13 spec, there should be a bit56 for 'P1P13' in
+SMSTATEEN0 that controls access to the hedeleg.
 
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
+---
+ target/riscv/cpu_bits.h | 1 +
+ target/riscv/csr.c      | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-> Thanks.
-> 
-> Alex Bennée (2):
->   tests/tcg: don't append QEMU_OPTS for armv6m-undef test
->   scripts/update-linux-header.sh: be more src tree friendly
-> 
-> Pierrick Bouvier (9):
->   plugins: prepare introduction of new inline ops
->   plugins: extract generate ptr for qemu_plugin_u64
->   plugins: add new inline op STORE_U64
->   tests/plugin/inline: add test for STORE_U64 inline op
->   plugins: conditional callbacks
->   tests/plugin/inline: add test for conditional callback
->   plugins: distinct types for callbacks
->   plugins: extract cpu_index generate
->   plugins: remove op from qemu_plugin_inline_cb
-> 
->  include/qemu/plugin.h                 |  42 +++++---
->  include/qemu/qemu-plugin.h            |  80 ++++++++++++++-
->  plugins/plugin.h                      |  12 ++-
->  accel/tcg/plugin-gen.c                | 136 ++++++++++++++++++++------
->  plugins/api.c                         |  39 ++++++++
->  plugins/core.c                        | 109 +++++++++++++++------
->  tests/plugin/inline.c                 | 130 ++++++++++++++++++++++--
->  plugins/qemu-plugins.symbols          |   2 +
->  scripts/update-linux-headers.sh       |  80 +++++++--------
->  tests/tcg/arm/Makefile.softmmu-target |   2 +-
->  10 files changed, 508 insertions(+), 124 deletions(-)
-> 
-> -- 
-> 2.39.2
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 74318a925c..28bd3fb0b4 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -315,6 +315,7 @@
+ #define SMSTATEEN0_CS       (1ULL << 0)
+ #define SMSTATEEN0_FCSR     (1ULL << 1)
+ #define SMSTATEEN0_JVT      (1ULL << 2)
++#define SMSTATEEN0_P1P13    (1ULL << 56)
+ #define SMSTATEEN0_HSCONTXT (1ULL << 57)
+ #define SMSTATEEN0_IMSIC    (1ULL << 58)
+ #define SMSTATEEN0_AIA      (1ULL << 59)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 6b460ee0e8..bdbc8de0e2 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2248,6 +2248,10 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
+ 
++    if (env->priv_ver >= PRIV_VERSION_1_13_0) {
++        wr_mask |= SMSTATEEN0_P1P13;
++    }
++
+     return write_mstateen(env, csrno, wr_mask, new_val);
+ }
+ 
+@@ -2283,6 +2287,10 @@ static RISCVException write_mstateen0h(CPURISCVState *env, int csrno,
+ {
+     uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
+ 
++    if (env->priv_ver >= PRIV_VERSION_1_13_0) {
++        wr_mask |= SMSTATEEN0_P1P13;
++    }
++
+     return write_mstateenh(env, csrno, wr_mask, new_val);
+ }
+ 
+-- 
+2.34.1
 
 
