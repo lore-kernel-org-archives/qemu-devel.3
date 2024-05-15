@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C974AC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D5AC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7B8O-0006vy-8b; Wed, 15 May 2024 05:41:16 -0400
+	id 1s7BBQ-0001Gk-HK; Wed, 15 May 2024 05:44:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B87-0005pX-Hp
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:03 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1s7BBN-0000vi-6S
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:44:21 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B85-0001eF-TZ
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:40:59 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-34e040ed031so5113912f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:40:57 -0700 (PDT)
+ id 1s7BBL-0002W0-3R
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:44:20 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5210684cee6so7748627e87.0
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715766056; x=1716370856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715766257; x=1716371057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z4GBMu+2JbKHMzkDTMBgGA9NT+eMucGJRk+rUVBr+sY=;
- b=Iu5/i9PKG5KPVfJLnTdE/7FZifky9dJc2vVxvxPqr/kWRzr3Xy1RCvLxMeqfTwCPs+
- UDOf3eYnpjomY2Ht2rb1qdDtQrCBWp9T6ScMshTVAM0RdyHbZw1NmaJaHfW7QQpPhg+j
- yz7Og3oYTVIvxyKlyUZb8gZmuQtuRTYsK3/pUiMELyUUid8IK3ViT4lhcGs7RLfujBL9
- gAXaPcsaOxZaMuHxi//hufOJu3L/o6yhFJi9gd5ZDVwZOgGPtV4BXkSBbXjy2Dw+REJD
- hxfsyqVd9TaL/u9PiV6FKXk/tq1kWPym4BgeWw75Xewhnlvd2XVhfP8cw4bVSdrhmzn/
- Tsow==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=IL2hAokqpmQr3sSx0rCsqvvhI5ki9eqOu02SaoXaEMQ=;
+ b=WtiV8xHQPSrHAjxzzNI1ARs/tHqyEorPwAROEtYxzdkryV54HQgjEcJF6Oax7T2qsO
+ gapB0DSN9DM4wV7ns0QHPu2GISpmHd5DkI7xXJO/041abYJfc/O97Dy6ZT4vH7oFd9NB
+ QXmYA3JkqHrrsQNLff1Abx2JHvUqcUmSIcUzEEuYCfFkFJjxB2BJeZy2R11yI+gpFDGe
+ 2zmbUPTVQCDfo40OKACisQLL/8RngcFgVKSh4FO4Yr2A2CxI0ssU4d+lZcM2ddSBHAIN
+ N60dKu3EgUnKLJsDz1LtknXQ20ZtnWQyHqfRnALK/GptlQDVBNVzQDL+LwYRJ23ahMcl
+ 5Rlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715766056; x=1716370856;
+ d=1e100.net; s=20230601; t=1715766257; x=1716371057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z4GBMu+2JbKHMzkDTMBgGA9NT+eMucGJRk+rUVBr+sY=;
- b=Fv6EIqGCbybGZjnCF+LB4lA/inv2llTD8xm1/tQNrZB245PIBKVPUKCFe1DweRh0Jj
- IrrpMYE885BWtDmX0oA/SUXNQYSvEV1I2SLJGcV/usmawrRoBSmwy9q9RrwGRcA7zPFU
- dNUa1+dCIC1mjIePdSSa3HXXEQ1JBbBBZdmuDZd5j1YohLXCwo0JHxajWZMW3i1rlvKy
- 8Y3mqgQwoT+rl+Yf20whajrwhIuqsKS1qBRM0v6z0PrVaLkOxgQ5cNgSPIuZM+yG42te
- WaT4ZRGcObvF0zNQy13Llf344Uq6nA3CBTl+JAu8Bi7cshby2S+ugOqHoP9Y3u/XabCO
- wtqg==
-X-Gm-Message-State: AOJu0YwQvW33McGY3Fr8O2CN+jkkqM2kzdtOs7MzrgN79mUT9boFFPEh
- gIOkAnMjTR8MpLnIvQgr3DKchQk7+YW5vEs6ysbGoVT3/uWj3aw9BwbugTStGc7gJqgYVnkKXJD
- j1+E=
-X-Google-Smtp-Source: AGHT+IHOkeKVOnU5X8TjxmqoJ4TeEQYDqHUaTBjaa6A/OgNU4BC+mbSCnEuMw9aJbgBLnE34ZXNTDQ==
-X-Received: by 2002:a5d:43cd:0:b0:343:4727:d11e with SMTP id
- ffacd0b85a97d-3504a96a310mr10718092f8f.47.1715766056314; 
- Wed, 15 May 2024 02:40:56 -0700 (PDT)
+ bh=IL2hAokqpmQr3sSx0rCsqvvhI5ki9eqOu02SaoXaEMQ=;
+ b=gbRPqBDDciWdnxU81/iM6CRyJ4hmZK7K8GblK+4YvmLXaN+4/8W2mF+N6ndzbZlwZO
+ v/qdBYjT63mgbmd9zr+rkSsUL7Q2G4ZPTGOpJjR1nA/u75Aq1qoBabHul1IRFFk4rjbr
+ RaRatfpxHnWgOzZ85LeJS6HIQzxKXfnchsgFdMK/Yqi0AzyzGGucTowix2o522sGfdxV
+ HkXLSWP4QGXBrZDlzYxm/TQIybRPK/gzo31a5Aok5ZfI4L3lxr053R+gaevGiO7rQzRE
+ NCRYF/gt5Gf8X4/zUAA4dR/UoJLlMqSSJHHJOrmkQaQGzmo91Db4IJ5ROu2OiN01u7+J
+ eHTw==
+X-Gm-Message-State: AOJu0YzIGTVpYHV6y/SPZdWwej2t5neyjaWQSo77NtGQapNUDLJdGrk8
+ AvFRsIks+OtGUc/ALj+JzTJe0AePWG4umcGxljWhy/vuiI1mjJdFvRnVRueJAAX+d5NJSWD74pV
+ Ihvk=
+X-Google-Smtp-Source: AGHT+IHimFPxr7Bkua+qHxR+pjYGoB6BMafEwq2LuO0Ds9UxBKomq7HRoFiaYNqi8L3uC5de+ez0jw==
+X-Received: by 2002:a19:770b:0:b0:51e:f8ae:db35 with SMTP id
+ 2adb3069b0e04-5220fe798b9mr9813528e87.43.1715766255434; 
+ Wed, 15 May 2024 02:44:15 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.40.55
+ ffacd0b85a97d-3502bbbc334sm15926239f8f.103.2024.05.15.02.44.15
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 02:40:56 -0700 (PDT)
+ Wed, 15 May 2024 02:44:15 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 15/43] target/hppa: Use umax in do_ibranch_priv
-Date: Wed, 15 May 2024 11:40:15 +0200
-Message-Id: <20240515094043.82850-16-richard.henderson@linaro.org>
+Subject: [PULL 43/43] target/hppa: Log cpu state on return-from-interrupt
+Date: Wed, 15 May 2024 11:40:43 +0200
+Message-Id: <20240515094043.82850-44-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515094043.82850-1-richard.henderson@linaro.org>
 References: <20240515094043.82850-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,27 +92,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using umax is clearer than the same operation using movcond.
+Inverse of the logging on taking an interrupt.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/hppa/sys_helper.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 1758c6e1d4..e9ba792065 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -1982,7 +1982,7 @@ static TCGv_i64 do_ibranch_priv(DisasContext *ctx, TCGv_i64 offset)
-         dest = tcg_temp_new_i64();
-         tcg_gen_andi_i64(dest, offset, -4);
-         tcg_gen_ori_i64(dest, dest, ctx->privilege);
--        tcg_gen_movcond_i64(TCG_COND_GTU, dest, dest, offset, dest, offset);
-+        tcg_gen_umax_i64(dest, dest, offset);
-         break;
-     }
-     return dest;
+diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
+index 22d6c89964..9b43b556fd 100644
+--- a/target/hppa/sys_helper.c
++++ b/target/hppa/sys_helper.c
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
+ #include "exec/helper-proto.h"
+@@ -93,6 +94,17 @@ void HELPER(rfi)(CPUHPPAState *env)
+     env->iaoq_b = env->cr_back[1];
+     env->iasq_f = (env->cr[CR_IIASQ] << 32) & ~(env->iaoq_f & mask);
+     env->iasq_b = (env->cr_back[0] << 32) & ~(env->iaoq_b & mask);
++
++    if (qemu_loglevel_mask(CPU_LOG_INT)) {
++        FILE *logfile = qemu_log_trylock();
++        if (logfile) {
++            CPUState *cs = env_cpu(env);
++
++            fprintf(logfile, "RFI: cpu %d\n", cs->cpu_index);
++            hppa_cpu_dump_state(cs, logfile, 0);
++            qemu_log_unlock(logfile);
++        }
++    }
+ }
+ 
+ static void getshadowregs(CPUHPPAState *env)
 -- 
 2.34.1
 
