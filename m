@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0493EC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0AFDC25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7GFe-0003y7-5X; Wed, 15 May 2024 11:09:06 -0400
+	id 1s7GaA-0002Gn-6L; Wed, 15 May 2024 11:30:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7GFb-0003wD-QE
- for qemu-devel@nongnu.org; Wed, 15 May 2024 11:09:04 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1s7Ga9-0002GN-4m
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 11:30:17 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7GFN-0002qw-SI
- for qemu-devel@nongnu.org; Wed, 15 May 2024 11:09:02 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-41ffad2426eso53208795e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 08:08:49 -0700 (PDT)
+ id 1s7Ga7-0001Tf-8w
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 11:30:16 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2e1fa824504so91397931fa.0
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 08:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715785728; x=1716390528; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=C6S9A0jxcxnkPHJaqWqoqo+edkANvVkLpXEGqNBGzxw=;
- b=k2yITbFI/7OwAtb68bTKRPHLiL7JWqxO1U3JbAxEwpeoj2cMARUmsiy9Iixv2weu+C
- dyXyQd3lbx9OUbF8JaaVcY1ay/AMY6lO5djZiQbhjWkn6LS4LObiR6QUIRwT5kW5u051
- x1wSvIzk2I43VIK9QHT/O9U/0wdcQJd18gqv1aGIUdq7OQTJ3lwPka2RyCL0LlVZwb+X
- YTlPGIKJ0+YEX69eNhL683fT8ZaQEgL7lm2H2fxXnROa9iD0cqDStDn+qM/ekWtslG7I
- O7QikZflh9mYY7aq/aca2m0tT/GtfSFtZjP/c5+egoiPiUP9SsMUXIyQNFp1k4KWTRN6
- bJmw==
+ d=linaro.org; s=google; t=1715787013; x=1716391813; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=XeRyaC35rN+aSApFftub8hTUeY0GoC5FABRRnw9bRXk=;
+ b=BjDXekpSbsnGjH1w5zmxfyn6KxQOJ/kHBkCUkqxSEBPwWzPrrh+SjYpkSLxIz9CqND
+ b2FDQWBI97xUSCdLQxUNW2w3lx62maRyxCGhCnN4Ah4fkU4+MrSx6FQeAyBjK8US8eH0
+ kNU3QdT3u9BwrbqcKepSZo1e+pFE9NqQNljhbHZp5yoYL6uyJCYROLdbIDQ/OKYFpP66
+ ouyRPjB8ZyJroQIjbHmJlES2A3NsEBznNWgkX7yig12Ad9Y8BHCvu+4gNSq1YBKlr5zx
+ GPMTHSeop5TxCiM2EBWSNwRdSZIfatsaLoIqUCR47Po2DufBVL1izojCPHpBosnpkwVN
+ G+LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715785728; x=1716390528;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=C6S9A0jxcxnkPHJaqWqoqo+edkANvVkLpXEGqNBGzxw=;
- b=ZHAvUZicJRL7MC0dZR98THO2mWuNGEgh2A15BCkeA8HjtXpmBQsrKuFq+ULjuhwy4Y
- 4rpvBY3FkZJQ+Gjx706/RBwSrnzYRKyy2M4j+FeCmPGblD20cKOUrZQ/xWi7DtWNu6JN
- rJxTQT1CcwjR2D9VBVcJY3de2H9yWYMsZchZWAFXgf2pEHv7DsGxNWTJ9aiMjby/yHaL
- 6vWNgNTm4OOFo1wAvLwHUG8cWDlz3r0lOF9D9MOJgvDJm2CClN5RrMFZ4Df9vTTyVIL4
- OYJx0DSrREobG2XZb4i5+cStahk7s1Lp+lg/Ize5XPfDwX4tB9doW/L8Zw2GdJZCmPWO
- CKDw==
-X-Gm-Message-State: AOJu0YxLEvrvOrGarqmHw/0HyBTHF0nRUKYpJDJMRIvL7HPIt3DfXabx
- a2e89wCFAG1m8U0Ry/QsLGJSg1QjYNzUwye9OaimrwbQOWZJ08wVKKnYdKzskz6rcnrzY0h+aXb
- s+2o=
-X-Google-Smtp-Source: AGHT+IGBq1xr6u8sWyjD48+VKzXlefPCthXcEzG7qhD17gpkRTsCAkh5VmKwovzUYZC5ie4azTnPwg==
-X-Received: by 2002:a05:600c:26cc:b0:418:4aac:a576 with SMTP id
- 5b1f17b1804b1-41fead64fdemr151824865e9.39.1715785728563; 
- Wed, 15 May 2024 08:08:48 -0700 (PDT)
-Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42013c5fa61sm132080825e9.40.2024.05.15.08.08.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 08:08:48 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	laurent@vivier.eu
-Subject: [PATCH v3 11/28] target/i386: Convert do_xrstor_* to X86Access
-Date: Wed, 15 May 2024 17:08:20 +0200
-Message-Id: <20240515150837.259747-12-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515150837.259747-1-richard.henderson@linaro.org>
-References: <20240515150837.259747-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1715787013; x=1716391813;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XeRyaC35rN+aSApFftub8hTUeY0GoC5FABRRnw9bRXk=;
+ b=c1d5j3LSL4gwFccVIyQ8mTziYUbcHKv7wGBX8OVGzaPP11c/n1aTOnNOy5EYRkrdo2
+ PZHLroJsTddOgONAZZtHtgxf85HVPd4RnoXOUQOi4gfUoceT6S8a6GYUMaR1sPDTPyGo
+ Z7W99pP285lp8KLtGJo5u3yXbQ5r9TIusyLXslNOJh309KDEUAmzaGowd/83Ug37nB/i
+ FCsseetkydl1xuX9YJVhSiAuiOuMffJHCWR0r/KobY2rMoZZz/nPS9ecqbZoh9KOu/c7
+ c7Bm+3dcn62pTX+hS7tZUTUHNr6nvKK3ojvHhG81Z2CzUEL9lwE3SaHhvD26SRrdXJ4h
+ ROYQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXu6813IAZzxuWeKoxeCNkPpN+HYnWB4RlhMLQ/S/mdLkH1r91dgX1uIGCNLlij8Vi6/E7i54q0odz4xgIy9Gaqx9a6mC8=
+X-Gm-Message-State: AOJu0YxyoLDx0CYOb1JKoaLtsFFINTRV4WtsBHn2oF6OvNHlJOVYHFWM
+ zjnLDrtGOhySmlRfJMF3E+kdb4Awwyj7sV2KXx5z14zt9z9veCrZWkaChSdJQcM=
+X-Google-Smtp-Source: AGHT+IFjRzBDlUOaICTee6IwcoCjMwWmwxTGBxBHl4Sy5pRLmkxIJwJfPcJDiPRalXyWhhaDw3pn7g==
+X-Received: by 2002:a2e:9e48:0:b0:2e5:67bc:6f2 with SMTP id
+ 38308e7fff4ca-2e567bc07c3mr74236711fa.44.1715787013108; 
+ Wed, 15 May 2024 08:30:13 -0700 (PDT)
+Received: from [10.91.1.91] ([149.14.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41f9bc3b12fsm139098245e9.0.2024.05.15.08.30.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 May 2024 08:30:12 -0700 (PDT)
+Message-ID: <3048a39d-9d14-46f3-9672-317a034fa5b5@linaro.org>
+Date: Wed, 15 May 2024 17:30:10 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/41] target/sparc: Implement VIS4
+From: Richard Henderson <richard.henderson@linaro.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+Cc: atar4qemu@gmail.com
+References: <20240302051601.53649-1-richard.henderson@linaro.org>
+ <7b5e744c-7fc5-4bf2-9602-1d2cc97913be@ilande.co.uk>
+ <f38d59f4-3cf9-470e-962a-c888970b5a21@linaro.org>
+Content-Language: en-US
+In-Reply-To: <f38d59f4-3cf9-470e-962a-c888970b5a21@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,159 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The body of do_xrstor is now fully converted.
+On 4/29/24 23:02, Richard Henderson wrote:
+> On 4/29/24 13:52, Mark Cave-Ayland wrote:
+>> No objections here about the remainder of the series, other than that I don't have an 
+>> easy/obvious way to test the new instructions...
+> 
+> I was thinking about adding support to RISU, but the gcc compile farm sparc machines have 
+> been down for ages, so no way to generate the reference traces.
 
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/i386/tcg/fpu_helper.c | 51 ++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 20 deletions(-)
+Update: I have successfully ported RISU to Sparc64, Solaris and Linux.  There is a 
+limitation in that I cannot find how to extract %gsr from the signal frame, which is 
+unfortunate, but I can work around that for now.
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 356397a4ab..7796688514 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -2800,8 +2800,9 @@ static void do_clear_sse(CPUX86State *env)
-     }
- }
- 
--static void do_xrstor_ymmh(CPUX86State *env, target_ulong ptr, uintptr_t ra)
-+static void do_xrstor_ymmh(X86Access *ac, target_ulong ptr)
- {
-+    CPUX86State *env = ac->env;
-     int i, nb_xmm_regs;
- 
-     if (env->hflags & HF_CS64_MASK) {
-@@ -2811,8 +2812,8 @@ static void do_xrstor_ymmh(CPUX86State *env, target_ulong ptr, uintptr_t ra)
-     }
- 
-     for (i = 0; i < nb_xmm_regs; i++, ptr += 16) {
--        env->xmm_regs[i].ZMM_Q(2) = cpu_ldq_data_ra(env, ptr, ra);
--        env->xmm_regs[i].ZMM_Q(3) = cpu_ldq_data_ra(env, ptr + 8, ra);
-+        env->xmm_regs[i].ZMM_Q(2) = access_ldq(ac, ptr);
-+        env->xmm_regs[i].ZMM_Q(3) = access_ldq(ac, ptr + 8);
-     }
- }
- 
-@@ -2832,29 +2833,32 @@ static void do_clear_ymmh(CPUX86State *env)
-     }
- }
- 
--static void do_xrstor_bndregs(CPUX86State *env, target_ulong ptr, uintptr_t ra)
-+static void do_xrstor_bndregs(X86Access *ac, target_ulong ptr)
- {
-+    CPUX86State *env = ac->env;
-     target_ulong addr = ptr + offsetof(XSaveBNDREG, bnd_regs);
-     int i;
- 
-     for (i = 0; i < 4; i++, addr += 16) {
--        env->bnd_regs[i].lb = cpu_ldq_data_ra(env, addr, ra);
--        env->bnd_regs[i].ub = cpu_ldq_data_ra(env, addr + 8, ra);
-+        env->bnd_regs[i].lb = access_ldq(ac, addr);
-+        env->bnd_regs[i].ub = access_ldq(ac, addr + 8);
-     }
- }
- 
--static void do_xrstor_bndcsr(CPUX86State *env, target_ulong ptr, uintptr_t ra)
-+static void do_xrstor_bndcsr(X86Access *ac, target_ulong ptr)
- {
-+    CPUX86State *env = ac->env;
-+
-     /* FIXME: Extend highest implemented bit of linear address.  */
-     env->bndcs_regs.cfgu
--        = cpu_ldq_data_ra(env, ptr + offsetof(XSaveBNDCSR, bndcsr.cfgu), ra);
-+        = access_ldq(ac, ptr + offsetof(XSaveBNDCSR, bndcsr.cfgu));
-     env->bndcs_regs.sts
--        = cpu_ldq_data_ra(env, ptr + offsetof(XSaveBNDCSR, bndcsr.sts), ra);
-+        = access_ldq(ac, ptr + offsetof(XSaveBNDCSR, bndcsr.sts));
- }
- 
--static void do_xrstor_pkru(CPUX86State *env, target_ulong ptr, uintptr_t ra)
-+static void do_xrstor_pkru(X86Access *ac, target_ulong ptr)
- {
--    env->pkru = cpu_ldq_data_ra(env, ptr, ra);
-+    ac->env->pkru = access_ldq(ac, ptr);
- }
- 
- static void do_fxrstor(X86Access *ac, target_ulong ptr)
-@@ -2892,6 +2896,7 @@ static void do_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm, uintptr
- {
-     uint64_t xstate_bv, xcomp_bv, reserve0;
-     X86Access ac;
-+    unsigned size, size_ext;
- 
-     rfbm &= env->xcr0;
- 
-@@ -2905,7 +2910,10 @@ static void do_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm, uintptr
-         raise_exception_ra(env, EXCP0D_GPF, ra);
-     }
- 
--    xstate_bv = cpu_ldq_data_ra(env, ptr + XO(header.xstate_bv), ra);
-+    size = sizeof(X86LegacyXSaveArea) + sizeof(X86XSaveHeader);
-+    access_prepare(&ac, env, ptr, size, MMU_DATA_LOAD, ra);
-+
-+    xstate_bv = access_ldq(&ac, ptr + XO(header.xstate_bv));
- 
-     if ((int64_t)xstate_bv < 0) {
-         /* FIXME: Compact form.  */
-@@ -2924,14 +2932,17 @@ static void do_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm, uintptr
-        describes only XCOMP_BV, but the description of the standard form
-        of XRSTOR (Vol 1, Sec 13.8.1) checks bytes 23:8 for zero, which
-        includes the next 64-bit field.  */
--    xcomp_bv = cpu_ldq_data_ra(env, ptr + XO(header.xcomp_bv), ra);
--    reserve0 = cpu_ldq_data_ra(env, ptr + XO(header.reserve0), ra);
-+    xcomp_bv = access_ldq(&ac, ptr + XO(header.xcomp_bv));
-+    reserve0 = access_ldq(&ac, ptr + XO(header.reserve0));
-     if (xcomp_bv || reserve0) {
-         raise_exception_ra(env, EXCP0D_GPF, ra);
-     }
- 
--    access_prepare(&ac, env, ptr, sizeof(X86LegacyXSaveArea),
--                   MMU_DATA_LOAD, ra);
-+    size_ext = xsave_area_size(rfbm & xstate_bv, false);
-+    if (size < size_ext) {
-+        /* TODO: See if existing page probe has covered extra size. */
-+        access_prepare(&ac, env, ptr, size_ext, MMU_DATA_LOAD, ra);
-+    }
- 
-     if (rfbm & XSTATE_FP_MASK) {
-         if (xstate_bv & XSTATE_FP_MASK) {
-@@ -2953,14 +2964,14 @@ static void do_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm, uintptr
-     }
-     if (rfbm & XSTATE_YMM_MASK) {
-         if (xstate_bv & XSTATE_YMM_MASK) {
--            do_xrstor_ymmh(env, ptr + XO(avx_state), ra);
-+            do_xrstor_ymmh(&ac, ptr + XO(avx_state));
-         } else {
-             do_clear_ymmh(env);
-         }
-     }
-     if (rfbm & XSTATE_BNDREGS_MASK) {
-         if (xstate_bv & XSTATE_BNDREGS_MASK) {
--            do_xrstor_bndregs(env, ptr + XO(bndreg_state), ra);
-+            do_xrstor_bndregs(&ac, ptr + XO(bndreg_state));
-             env->hflags |= HF_MPX_IU_MASK;
-         } else {
-             memset(env->bnd_regs, 0, sizeof(env->bnd_regs));
-@@ -2969,7 +2980,7 @@ static void do_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm, uintptr
-     }
-     if (rfbm & XSTATE_BNDCSR_MASK) {
-         if (xstate_bv & XSTATE_BNDCSR_MASK) {
--            do_xrstor_bndcsr(env, ptr + XO(bndcsr_state), ra);
-+            do_xrstor_bndcsr(&ac, ptr + XO(bndcsr_state));
-         } else {
-             memset(&env->bndcs_regs, 0, sizeof(env->bndcs_regs));
-         }
-@@ -2978,7 +2989,7 @@ static void do_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm, uintptr
-     if (rfbm & XSTATE_PKRU_MASK) {
-         uint64_t old_pkru = env->pkru;
-         if (xstate_bv & XSTATE_PKRU_MASK) {
--            do_xrstor_pkru(env, ptr + XO(pkru_state), ra);
-+            do_xrstor_pkru(&ac, ptr + XO(pkru_state));
-         } else {
-             env->pkru = 0;
-         }
--- 
-2.34.1
+I have added descriptions of VIS1 instructions to RISU, and it turns out we have failures 
+relative to a Sparc M8.  I have not yet analyzed these failures, but it proves the effort 
+was not wasted.  :-)
 
+I'll clean up these patches and post them here when I next get some downtime.
+
+
+r~
 
