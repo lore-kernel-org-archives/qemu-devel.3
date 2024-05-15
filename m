@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C916C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315C4C25B79
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7GFg-0003yw-5V; Wed, 15 May 2024 11:09:08 -0400
+	id 1s7GFN-0003qm-Q1; Wed, 15 May 2024 11:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7GFb-0003wA-LP
- for qemu-devel@nongnu.org; Wed, 15 May 2024 11:09:04 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1s7GFK-0003py-Ow
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 11:08:46 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7GFU-00037z-NV
- for qemu-devel@nongnu.org; Wed, 15 May 2024 11:09:02 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-420180b5922so31881795e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 08:08:56 -0700 (PDT)
+ id 1s7GFE-0002kt-RX
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 11:08:46 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-41fe54cb0e3so43431095e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 08:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715785735; x=1716390535; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A/3mRVbjkwDF9eBMMUHlCcFHLaNSo0keoR5CYS7AGJ4=;
- b=QlGP/HPL5kzNKbKAzEVzkeoA6QFr1XmDAvK0Zr47kZdqkCkipVdY84UMPJ2OT918tM
- 2mlCPBmWTK1wRpW5iP14BUB219uya7STLPLmynLQFASHzW0NkgIvfYu/TZwWcbnItOxX
- nvg/lll7XAo3LShWZboHR4PfvtOoYgodyGtZn0NsGrPU5Op8Q0IcrOjjAaj6CbOiZjE+
- zfFGX4q4YgR0liHWYTee64B+JzPzgLQSv1IWnvnrZ11pqjHMiscaojFMDDbXqNfEf6a/
- v0AAX6JZT/Tl0D0Ye8Z3Fllm6P/cAc8C7XF1hydqI2gG52ZSDhVnWM1OffJfQmA8c5lr
- uxkw==
+ d=linaro.org; s=google; t=1715785719; x=1716390519; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ecNMDS62/JucAdTPnqF6LAEtH+KjC/HjVVwhzvAufKs=;
+ b=m0CFrOc8Dd2cHjnQC94R3S6TUBw/oYObUL04Z8LN7BnYFpvIDbWxW+cVaCOfLFbAR1
+ ZFL1ZaAOTDTFqTKBOZSGujjYm+dSwKIgmb5lVV3BREpO605c4JNLu+9j/jv51niqkU9/
+ HsBpy/1TXnIEvBCwDMM2aXvxcZssigXI/2DNv9QSi0DL+SGAbVzU4znlXsJpiuSJByCp
+ 65HUctUhVHpCxmLVjbIycwFa6WbK87AVz1NC+6ensE1BOIWGV6nMVh7PHY+VvicyzXYF
+ fWdOWDZcOlujdped2gh4Qt2wtXRZjxoA+YBj1vViBLZlswB1ngiaj7/DS9oZ8zDRSHVh
+ nB0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715785735; x=1716390535;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A/3mRVbjkwDF9eBMMUHlCcFHLaNSo0keoR5CYS7AGJ4=;
- b=ncZRcJ1biLu9ht3Q2scn0gJv2/aaUqPNShokyNQoFkm5Nau75xe5g8u/Z+K8oK5yJr
- Rj5xDiul8gkYSYJ1OC5TnNLnsjt0m48RTyAJq3nHSi0AAuL7FOxwOOMNbsoFuMQ5OTbP
- 8E3qVlOpaEmHgEu4kTllq01Xu5qOPgFu9HUvqa25fG8L9JWpMbzXtQMDG50N+rEvgc1o
- GJKVkIr64myr0KyHvemY1zyUDk9LBCpRggD0gm7NOpLVpk62NATDVf4bfL2tmKREBBOE
- Lps2jYahmxl+aPk49j4YIGogTSxcyNbxoUEiuQDNX7T1AeybHLfPW9if8Z5yncVY6b28
- wJ3A==
-X-Gm-Message-State: AOJu0YyItTrjJfVXSjKG487Ihmf6j+odHgpxeH7dwXBLpkiDY282Zb0V
- PbygipkjgG9jelO0UUWix0+CP8mEGHRlOBPTykfFZR7rIcW4/ztzE72gZyj1sS/eaLZQDS7+u20
- U0h0=
-X-Google-Smtp-Source: AGHT+IEu1Hivu18OxW0GDDnrfntMhx9klbZ0JtLUZUDikoHOwSRWdJTzn+YiJWPElT//QXQqZVljGg==
-X-Received: by 2002:a05:600c:35cb:b0:420:32f:3ddc with SMTP id
- 5b1f17b1804b1-420032f3f33mr135801965e9.24.1715785735441; 
- Wed, 15 May 2024 08:08:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715785719; x=1716390519;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ecNMDS62/JucAdTPnqF6LAEtH+KjC/HjVVwhzvAufKs=;
+ b=iaeG+yqAEpFMAEYG5kzkExHEiNJy7uhM2TJIIsj/k0ESxyHYeaTdEycJF26oloZ0/T
+ QDRZijDFnrnz33bKHgj1JdaNVLWl51qYc82UM1QTQoCetHoRD9N+USRUMewRZjIMaV47
+ BbHnyvAGM4MNZreYKdeEqTJjtCwynz3znJh8lRwi4cwDixQT9T1JHzpR8oRF1/4/oU/+
+ lBwgYxCGIrKJG9xBJWEaU+arE6ABjg8vPXEaO49qB1W+wmYyZsqdrf2TPb0vJ+JxCPN9
+ lCsp+36CiQ/1pHn4VfDDkSIujOMkcOcvPXZPV7SqnJ3/9M6XU+6UKo8orjPRxIZafo+j
+ bnWQ==
+X-Gm-Message-State: AOJu0YzYNZUEOwiPGwS/Qrqwap6Bs5l2yRderSCj63O0BnC/YQ0C2fmV
+ aDSw9Vp35pCihMfMam6UMKKCHe4t2Guh4hBpP+T/e7mbLRj0a0X22rkziVTi3v0sfChFMM8mk80
+ D/qo=
+X-Google-Smtp-Source: AGHT+IHiQZZD+dGKx7mqd5lu/UKmJSYVMu9NeOLzhMjcv/S6rqI/SK2mZBb8YqLRzpLsopS7/vP8LQ==
+X-Received: by 2002:a05:600c:4f93:b0:41c:97e:2100 with SMTP id
+ 5b1f17b1804b1-41fea93a251mr108190675e9.3.1715785718738; 
+ Wed, 15 May 2024 08:08:38 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42013c5fa61sm132080825e9.40.2024.05.15.08.08.54
+ 5b1f17b1804b1-42013c5fa61sm132080825e9.40.2024.05.15.08.08.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 08:08:55 -0700 (PDT)
+ Wed, 15 May 2024 08:08:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com,
 	laurent@vivier.eu
-Subject: [PATCH v3 20/28] linux-user/i386: Return boolean success from
- restore_sigcontext
-Date: Wed, 15 May 2024 17:08:29 +0200
-Message-Id: <20240515150837.259747-21-richard.henderson@linaro.org>
+Subject: [PATCH v3 00/28] linux-user/i386: Properly align signal frame
+Date: Wed, 15 May 2024 17:08:09 +0200
+Message-Id: <20240515150837.259747-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515150837.259747-1-richard.henderson@linaro.org>
-References: <20240515150837.259747-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,103 +91,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invert the sense of the return value and use bool.
+v2: https://lore.kernel.org/qemu-devel/20240409050302.1523277-1-richard.henderson@linaro.org/
 
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/i386/signal.c | 51 ++++++++++++++++++++--------------------
- 1 file changed, 25 insertions(+), 26 deletions(-)
+Disconnect fpstate from sigframe, just like the kernel does.
+Return the separate portions of the frame from get_sigframe.
+Alter all of the target fpu routines to access memory that
+has already been translated and sized.
 
-diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 6763b4bda8..9e6d883ea1 100644
---- a/linux-user/i386/signal.c
-+++ b/linux-user/i386/signal.c
-@@ -564,12 +564,12 @@ static int xrstor_sigcontext(CPUX86State *env, X86LegacyXSaveArea *fxsave,
-     return 0;
- }
- 
--static int
--restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
-+static bool restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
- {
--    int err = 1;
-     abi_ulong fpstate_addr;
-     unsigned int tmpflags;
-+    struct target_fpstate *fpstate;
-+    bool ok;
- 
- #ifndef TARGET_X86_64
-     cpu_x86_load_seg(env, R_GS, tswap16(sc->gs));
-@@ -617,29 +617,27 @@ restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
-     //          regs->orig_eax = -1;            /* disable syscall checks */
- 
-     fpstate_addr = tswapl(sc->fpstate);
--    if (fpstate_addr != 0) {
--        struct target_fpstate *fpstate;
--        if (!lock_user_struct(VERIFY_READ, fpstate, fpstate_addr,
--                              sizeof(struct target_fpstate))) {
--            return err;
--        }
--#ifndef TARGET_X86_64
--        if (!(env->features[FEAT_1_EDX] & CPUID_FXSR)) {
--            cpu_x86_frstor(env, fpstate_addr, 1);
--            err = 0;
--        } else {
--            err = xrstor_sigcontext(env, &fpstate->fxstate,
--                                    fpstate_addr + TARGET_FPSTATE_FXSAVE_OFFSET);
--        }
--#else
--        err = xrstor_sigcontext(env, fpstate, fpstate_addr);
--#endif
--        unlock_user_struct(fpstate, fpstate_addr, 0);
--    } else {
--        err = 0;
-+    if (fpstate_addr == 0) {
-+        return true;
-     }
-+    if (!lock_user_struct(VERIFY_READ, fpstate, fpstate_addr,
-+                          sizeof(struct target_fpstate))) {
-+        return false;
-+    }
-+#ifndef TARGET_X86_64
-+    if (!(env->features[FEAT_1_EDX] & CPUID_FXSR)) {
-+        cpu_x86_frstor(env, fpstate_addr, 1);
-+        ok = true;
-+    } else {
-+        ok = !xrstor_sigcontext(env, &fpstate->fxstate,
-+                                fpstate_addr + TARGET_FPSTATE_FXSAVE_OFFSET);
-+    }
-+#else
-+    ok = !xrstor_sigcontext(env, fpstate, fpstate_addr);
-+#endif
-+    unlock_user_struct(fpstate, fpstate_addr, 0);
- 
--    return err;
-+    return ok;
- }
- 
- /* Note: there is no sigreturn on x86_64, there is only rt_sigreturn */
-@@ -665,8 +663,9 @@ long do_sigreturn(CPUX86State *env)
-     set_sigmask(&set);
- 
-     /* restore registers */
--    if (restore_sigcontext(env, &frame->sc))
-+    if (!restore_sigcontext(env, &frame->sc)) {
-         goto badframe;
-+    }
-     unlock_user_struct(frame, frame_addr, 0);
-     return -QEMU_ESIGRETURN;
- 
-@@ -690,7 +689,7 @@ long do_rt_sigreturn(CPUX86State *env)
-     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
-     set_sigmask(&set);
- 
--    if (restore_sigcontext(env, &frame->uc.tuc_mcontext)) {
-+    if (!restore_sigcontext(env, &frame->uc.tuc_mcontext)) {
-         goto badframe;
-     }
- 
+Changes for v3:
+  - Address review issues (bonzini).
+  - Rebase.
+
+Patches needing review:
+  02-target-i386-Convert-do_fldt-do_fstt-to-X86Access.patch
+  19-linux-user-i386-Fix-mregparm-3-for-signal-deliver.patch
+  23-target-i386-Honor-xfeatures-in-xrstor_sigcontext.patch
+
+
+r~
+
+
+Richard Henderson (28):
+  target/i386: Add tcg/access.[ch]
+  target/i386: Convert do_fldt, do_fstt to X86Access
+  target/i386: Convert helper_{fbld,fbst}_ST0 to X86Access
+  target/i386: Convert do_fldenv to X86Access
+  target/i386: Convert do_fstenv to X86Access
+  target/i386: Convert do_fsave, do_frstor to X86Access
+  target/i386: Convert do_xsave_{fpu,mxcr,sse} to X86Access
+  target/i386: Convert do_xrstor_{fpu,mxcr,sse} to X86Access
+  tagret/i386: Convert do_fxsave, do_fxrstor to X86Access
+  target/i386: Convert do_xsave_* to X86Access
+  target/i386: Convert do_xrstor_* to X86Access
+  target/i386: Split out do_xsave_chk
+  target/i386: Add rbfm argument to cpu_x86_{xsave,xrstor}
+  target/i386: Add {hw,sw}_reserved to X86LegacyXSaveArea
+  linux-user/i386: Drop xfeatures_size from sigcontext arithmetic
+  linux-user/i386: Remove xfeatures from target_fpstate_fxsave
+  linux-user/i386: Replace target_fpstate_fxsave with X86LegacyXSaveArea
+  linux-user/i386: Split out struct target_fregs_state
+  linux-user/i386: Fix -mregparm=3 for signal delivery
+  linux-user/i386: Return boolean success from restore_sigcontext
+  linux-user/i386: Return boolean success from xrstor_sigcontext
+  linux-user/i386: Fix allocation and alignment of fp state
+  target/i386: Honor xfeatures in xrstor_sigcontext
+  target/i386: Convert do_xsave to X86Access
+  target/i386: Convert do_xrstor to X86Access
+  target/i386: Pass host pointer and size to cpu_x86_{fsave,frstor}
+  target/i386: Pass host pointer and size to cpu_x86_{fxsave,fxrstor}
+  target/i386: Pass host pointer and size to cpu_x86_{xsave,xrstor}
+
+ target/i386/cpu.h                |  57 ++-
+ target/i386/tcg/access.h         |  40 ++
+ linux-user/i386/signal.c         | 671 ++++++++++++++++++-------------
+ target/i386/tcg/access.c         | 169 ++++++++
+ target/i386/tcg/fpu_helper.c     | 561 ++++++++++++++++----------
+ tests/tcg/x86_64/test-1648.c     |  33 ++
+ target/i386/tcg/meson.build      |   1 +
+ tests/tcg/x86_64/Makefile.target |   1 +
+ 8 files changed, 1024 insertions(+), 509 deletions(-)
+ create mode 100644 target/i386/tcg/access.h
+ create mode 100644 target/i386/tcg/access.c
+ create mode 100644 tests/tcg/x86_64/test-1648.c
+
 -- 
 2.34.1
 
