@@ -4,97 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA8A8C41513
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6733CC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7HXr-00014i-GO; Wed, 15 May 2024 12:31:59 -0400
+	id 1s7HfR-0002d9-As; Wed, 15 May 2024 12:39:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s7HXp-000145-U7
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:31:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1s7HfQ-0002d0-42
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:39:48 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s7HXo-00033j-3n
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:31:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715790713;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tKz9jTX0SjVIbKmKK2PGDRuQtBFnZep0+IXsw1Ugmh0=;
- b=Q9sbc7Og+FGuG1QAFoIw4t+TBAj45Y3rLjIksyb53BBpxVG3GH9T6EiE9JFwzOVjDTf2tF
- 1tSBNXy5CIySOABouPr8sc15Pc8kzbOVtlv7XHA3AugxfPcx1fD11WXKlnD86iZhHL0SXV
- gXeZ8hH5D5PbtuIGkdGdgVZ9Oh71bfc=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-JcU6LAPqPc2jg-EL8ItLDg-1; Wed, 15 May 2024 12:31:46 -0400
-X-MC-Unique: JcU6LAPqPc2jg-EL8ItLDg-1
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-6f05561060aso51655b3a.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 09:31:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715790705; x=1716395505;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tKz9jTX0SjVIbKmKK2PGDRuQtBFnZep0+IXsw1Ugmh0=;
- b=UETedvCAYPRbe/FhqExfF5R35rGbKV3YY9CvvKDlV0cGFlgUSnAeBhqSBO+oz09s5T
- QJCJ3tl0YFX+FWCAwbKelxuVMlO9j0MIbX5GZvKmXc+RXSb/SxYMKW5j9Ta2H6j3XTxV
- FXpmIhO7lMU3ReDAaO05tb7mf3MwN2naK7EeqZ+sX0u3zH2VForS1/niHqb2pEifJVHw
- SSiUqr+1p2HLPetF6FB206P4hqwNBLmUHK+pRpq/fPDz3tdTNbaI//EGfZ+r0pK5BCMK
- NNRyVX1HzUQ8hPrb/g9rqlXKfrMxQqv6cemcdt0Yc6q8h5lbeTLXzg3QPAQCWI5iOsb2
- Y5Pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnNjmDsLYzGiqVnOkQys7QK9cCW2C9MHjlXt6qeok8CE0l54ScmCp3EL4yDMQ+NajzghpiFj48afl7F82U4hD/+eJ8zKI=
-X-Gm-Message-State: AOJu0Ywoop9l8BBVe3UehrWSomsLbQ2mk3LfiHZLbN03xvY9NGSYD45X
- zMN/D+WoSFGegFXYE1XWs5jOJFv1lbbr/eWDaGUg9u0DyRwnUNLQrKD1tlEg/9zR4uvaAccIy2M
- VNBr56TxsOkioMQMWhK3XiAln6ZZmW/ItmzVD5UWadxe35h1Siwwa
-X-Received: by 2002:a05:6a21:7896:b0:1ae:42c8:4f69 with SMTP id
- adf61e73a8af0-1afddf12a2cmr19760298637.0.1715790705341; 
- Wed, 15 May 2024 09:31:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpem665WIAOK1nlnF2FnlB+RV5Df0guTpPsAIBllq7YwEzxDXFmIN4xdU0dTy01pXa/p5qtw==
-X-Received: by 2002:a05:6a21:7896:b0:1ae:42c8:4f69 with SMTP id
- adf61e73a8af0-1afddf12a2cmr19760255637.0.1715790704735; 
- Wed, 15 May 2024 09:31:44 -0700 (PDT)
-Received: from x1n ([50.204.89.32]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f679902e57sm824350b3a.110.2024.05.15.09.31.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 09:31:44 -0700 (PDT)
-Date: Wed, 15 May 2024 10:31:32 -0600
-From: Peter Xu <peterx@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 5/5] virtio-gpu: fix v2 migration
-Message-ID: <ZkTjZCTwIbkZIVZd@x1n>
-References: <20240515141557.1277999-1-marcandre.lureau@redhat.com>
- <20240515141557.1277999-6-marcandre.lureau@redhat.com>
- <20240515120104-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1s7HfO-0006f9-H6
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:39:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1715791183;
+ bh=iiGUOJjac+kuWa1nw+40HQi+OcpGus3azbgSQQy0Jt8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=2Dm5jNGUmtiHBmUPS8zLFZPv6RFvpYr1ZoNjJAyGLgGiod8msi1y9RCehJ9TCln02
+ iQpvj2ZJvlI4UOhYmL9RM4TVTWZHAnnDbSxS3VYIU8qvj6uwYhFdkuQaYqgziFSjrU
+ YZEA64pdG1xD3lqvbA3muhMCSevhLwit6a0lO8qQ8ASaieYTmLjUvFuN0lv1cyQ+xx
+ Ud68fWiwWmPd4nfhwhGDlT6SvnRrLkxP+VkmwOYGU2vWrU0NxL/xbvLpYkGfFtTwB8
+ DRhTl/W038NaCu+LOVwKY5bTsIJEYWnT1NYdYyWl2jbujEjTh9HFHMGgNjPmS6XK8Z
+ t4OrBdQrTiaiw==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 836F03782157;
+ Wed, 15 May 2024 16:39:40 +0000 (UTC)
+Message-ID: <4b30a810-211a-4ef6-ac28-c144615b402c@collabora.com>
+Date: Wed, 15 May 2024 19:39:37 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 08/10] virtio-gpu: Handle resource blob commands
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240511182251.1442078-1-dmitry.osipenko@collabora.com>
+ <20240511182251.1442078-9-dmitry.osipenko@collabora.com>
+ <727b125a-530e-4881-bde0-2215f62e155d@daynix.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <727b125a-530e-4881-bde0-2215f62e155d@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240515120104-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.235.227.194;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,42 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 15, 2024 at 12:02:49PM -0400, Michael S. Tsirkin wrote:
-> On Wed, May 15, 2024 at 06:15:56PM +0400, marcandre.lureau@redhat.com wrote:
-> > From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > 
-> > Commit dfcf74fa ("virtio-gpu: fix scanout migration post-load") broke
-> > forward/backward version migration. Versioning of nested VMSD structures
-> > is not straightforward, as the wire format doesn't have nested
-> > structures versions.
-> > 
-> > Use the previously introduced check_machine_version() function as a
-> > field test to ensure proper saving/loading based on the machine version.
-> > The VMSD.version is irrelevant now.
-> > 
-> > Fixes: dfcf74fa ("virtio-gpu: fix scanout migration post-load")
-> > Suggested-by: Peter Xu <peterx@redhat.com>
-> > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 5/13/24 12:18, Akihiko Odaki wrote:
+>>     static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>> -                                     struct virtio_gpu_ctrl_command
+>> *cmd)
+>> +                                     struct virtio_gpu_ctrl_command
+>> *cmd,
+>> +                                     bool *cmd_suspended)
 > 
-> I don't get it. Our standard way to do it is:
-> - add a property (begin name with x- so we don't commit to an API)
-> - set from compat machinery
-> - test property value in VMSTATE macros
+> This parameter is not used as it returns an error if the resource is
+> still mapped.
+
+Missed to remove it by accident
+
+> It may be better to actually implement unmapping instead of returning an
+> error for consistency with the iov operation. Apparently crosvm also
+> unmaps blobs with VIRTIO_GPU_CMD_RESOURCE_UNREF.
+
+Then I'll add back `async_unmap_in_progress` because resource can be
+both mapped/unmapped on unref, and we'll need flag to know whether async
+unmapping has been finished to do the final unmapping of the resource.
+
+...
+>> +    QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+>> +
+>> +    virgl_args.res_handle = cblob.resource_id;
+>> +    virgl_args.ctx_id = cblob.hdr.ctx_id;
+>> +    virgl_args.blob_mem = cblob.blob_mem;
+>> +    virgl_args.blob_id = cblob.blob_id;
+>> +    virgl_args.blob_flags = cblob.blob_flags;
+>> +    virgl_args.size = cblob.size;
+>> +    virgl_args.iovecs = res->base.iov;
+>> +    virgl_args.num_iovs = res->base.iov_cnt;
+>> +
+>> +    ret = virgl_renderer_resource_create_blob(&virgl_args);
+>> +    if (ret) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: virgl blob create error:
+>> %s\n",
+>> +                      __func__, strerror(-ret));
+>> +        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
 > 
-> Big advantage is, it works well with any downstreams
-> which pick any properties they like.
-> Why is this not a good fit here?
+> reslist keeps the stale res even if an error happens.
 
-I think it'll simplify upstream to avoid introducing one new field + one
-new property for each of such protocol change, which fundamentally are the
-same thing.  But it's indeed a good point that such helper can slightly
-complicate the backport a bit.. I assume a global replacement of versions
-over the helper will be needed after downstream settles on how to map
-downstream MCs to upstream's.
-
-Thanks,
+Good catch
 
 -- 
-Peter Xu
+Best regards,
+Dmitry
 
 
