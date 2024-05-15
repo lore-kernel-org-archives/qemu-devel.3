@@ -4,66 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71EEBC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D866C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7AEw-0002YU-Qh; Wed, 15 May 2024 04:43:58 -0400
+	id 1s7AJj-0007aS-83; Wed, 15 May 2024 04:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7AEu-0002W3-SJ
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:43:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s7AJg-0007Lq-8A
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:48:52 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7AEt-0008N5-Iq
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:43:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715762634;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=IjqnWmenMOLb3dPc7wIwK4gerQb9xAsnPfKn9SQoq0o=;
- b=QVFMiaxc5Tret03ECIGy1zEdCnUG6YeWR9/ZyVrOaKylG4CIrhGrV9gMUbx5hM9am3hqcW
- bgmBGQGgygg4YLzDjTN4NAxBiXXHc1/NBKLJaQCClUJqZL7EeOUSD75WGiscVFWayYKXTi
- Ke8nfYdwDL0/ZSl8cGSWI7KCiYVSHBg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-jhI2UF0QOp-XVe0P0Hy8mw-1; Wed,
- 15 May 2024 04:43:42 -0400
-X-MC-Unique: jhI2UF0QOp-XVe0P0Hy8mw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D70293C0008E;
- Wed, 15 May 2024 08:43:41 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.119])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7AE6540C6EB7;
- Wed, 15 May 2024 08:43:41 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7F19E18009BA; Wed, 15 May 2024 10:43:40 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s7AJd-0003uo-AA
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:48:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715762929; x=1747298929;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=KDxv+dBO3SG077TMC+Biinv0oixhCPXOyWdnTVtAwRs=;
+ b=HxZne39YlW5DzyL/OaOHqE4UzfmWRkfMiVznI3Yab/a4jfsVWiUB0JUW
+ kUqgtOVaKsN4pkeP70RPMP5wI0LP5f0pZaXnev5L/6KVwRAHs6/wVs78V
+ AjFgJCYVEY7dZsmGPsAPPU+Ci3YXuS/VMDCOWj9RrnodDiQOSEsEa6ppE
+ JtWSiLFHTIWwTn1uEqecWWYi6KMEoTeBkkzruVoFKxQkgMe+r/lGfGJvQ
+ Jcl3tNX1PQYyM2Gu+vpzX//txwoIncsINV9d4fk6sy3UJ1zyJrqHrbZWz
+ V4/ajwPlgVNA6aNnPKI877MUfIWYx09kIwuf4JqFzy1Xcr5ZJ2TD0Fq4a A==;
+X-CSE-ConnectionGUID: n41abcoDQoaZVdtzGulr/A==
+X-CSE-MsgGUID: vxcF9B78TVi6O248jx0gPg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11535096"
+X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="11535096"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 May 2024 01:48:47 -0700
+X-CSE-ConnectionGUID: xQ2x0Bs9QHy1lz1CUxKVPQ==
+X-CSE-MsgGUID: V2WVeeGtSOuLe7J9APbI2g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="31012952"
+Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 May 2024 01:48:44 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v3] hw/pflash: fix block write start
-Date: Wed, 15 May 2024 10:43:40 +0200
-Message-ID: <20240515084340.113670-1-kraxel@redhat.com>
+Cc: yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH] intel_iommu: Make pasid entry type check accurate
+Date: Wed, 15 May 2024 16:46:20 +0800
+Message-Id: <20240515084620.636016-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+Received-SPF: pass client-ip=192.198.163.16;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,54 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the pflash_blk_write_start() call.  We need the offset of the
-first data write, not the offset for the setup (number-of-bytes)
-write.  Without this fix u-boot can do block writes to the first
-flash block only.
+When guest configures Nested Translation(011b) or First-stage Translation only
+(001b), type check passed unaccurately.
 
-While being at it drop a leftover FIXME.
+Fails the type check in those cases as their simulation isn't supported yet.
 
-Resolves: #2343
-Fixes: fcc79f2e0955 ("hw/pflash: implement update buffer for block writes")
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Fixes: fb43cf739e1 ("intel_iommu: scalable mode emulation")
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/block/pflash_cfi01.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ hw/i386/intel_iommu.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 1bda8424b907..c8f1cf5a8722 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -518,10 +518,6 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-             break;
-         case 0xe8: /* Write to buffer */
-             trace_pflash_write(pfl->name, "write to buffer");
--            /* FIXME should save @offset, @width for case 1+ */
--            qemu_log_mask(LOG_UNIMP,
--                          "%s: Write to buffer emulation is flawed\n",
--                          __func__);
-             pfl->status |= 0x80; /* Ready! */
-             break;
-         case 0xf0: /* Probe for AMD flash */
-@@ -574,7 +570,6 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-             }
-             pfl->counter = value;
-             pfl->wcycle++;
--            pflash_blk_write_start(pfl, offset);
-             break;
-         case 0x60:
-             if (cmd == 0xd0) {
-@@ -605,6 +600,9 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-         switch (pfl->cmd) {
-         case 0xe8: /* Block write */
-             /* FIXME check @offset, @width */
-+            if (pfl->blk_offset == -1 && pfl->counter) {
-+                pflash_blk_write_start(pfl, offset);
-+            }
-             if (!pfl->ro && (pfl->blk_offset != -1)) {
-                 pflash_data_write(pfl, offset, value, width, be);
-             } else {
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index cc8e59674e..990cfa87f2 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -734,20 +734,16 @@ static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
+                                      VTDPASIDEntry *pe)
+ {
+     switch (VTD_PE_GET_TYPE(pe)) {
+-    case VTD_SM_PASID_ENTRY_FLT:
+     case VTD_SM_PASID_ENTRY_SLT:
+-    case VTD_SM_PASID_ENTRY_NESTED:
+-        break;
++        return true;
+     case VTD_SM_PASID_ENTRY_PT:
+-        if (!x86_iommu->pt_supported) {
+-            return false;
+-        }
+-        break;
++        return x86_iommu->pt_supported;
++    case VTD_SM_PASID_ENTRY_FLT:
++    case VTD_SM_PASID_ENTRY_NESTED:
+     default:
+         /* Unknown type */
+         return false;
+     }
+-    return true;
+ }
+ 
+ static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
 -- 
-2.45.0
+2.34.1
 
 
