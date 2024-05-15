@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE6BC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA8A8C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7HUJ-0007fY-50; Wed, 15 May 2024 12:28:19 -0400
+	id 1s7HXr-00014i-GO; Wed, 15 May 2024 12:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7HUG-0007fB-J7
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:28:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s7HXp-000145-U7
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:31:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7HUE-0002Af-Pc
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:28:16 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s7HXo-00033j-3n
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:31:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715790493;
+ s=mimecast20190719; t=1715790713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lNPAp2jQ4Hox/+G1WaD0mBQq2fbmFwBTpixtfoNPcd4=;
- b=BHfseDBmo6GQkbbGWoLC/pACUabKZ85kLVMMvtdtl6YVpApS3tNePXFki843ndNPIggZ9I
- Bg2ywRIG+jmt969iNIucce2FuNOFjBnnylguY+jc/9aXnWE5IQvIYbP2czP2oBu9D3z7sG
- n8MhVNUslVEvtTgAoQhf3DEwKrJ7mAw=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tKz9jTX0SjVIbKmKK2PGDRuQtBFnZep0+IXsw1Ugmh0=;
+ b=Q9sbc7Og+FGuG1QAFoIw4t+TBAj45Y3rLjIksyb53BBpxVG3GH9T6EiE9JFwzOVjDTf2tF
+ 1tSBNXy5CIySOABouPr8sc15Pc8kzbOVtlv7XHA3AugxfPcx1fD11WXKlnD86iZhHL0SXV
+ gXeZ8hH5D5PbtuIGkdGdgVZ9Oh71bfc=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-7M1UgawhO4ekgIhiGy8pXQ-1; Wed, 15 May 2024 12:28:11 -0400
-X-MC-Unique: 7M1UgawhO4ekgIhiGy8pXQ-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-792e7b1d6a7so349819785a.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 09:28:11 -0700 (PDT)
+ us-mta-9-JcU6LAPqPc2jg-EL8ItLDg-1; Wed, 15 May 2024 12:31:46 -0400
+X-MC-Unique: JcU6LAPqPc2jg-EL8ItLDg-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-6f05561060aso51655b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 09:31:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715790491; x=1716395291;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1715790705; x=1716395505;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lNPAp2jQ4Hox/+G1WaD0mBQq2fbmFwBTpixtfoNPcd4=;
- b=TxQzOV2nK5oBQM5UuLhsNacEeP5wCLpiieHpi/8dUu9/hN9L5mqetM8AV6F90ykW4C
- bl5iNUTgJPsGTGpFqH2cP7hp9WeE/QM1EGeTdH1N03oI5aeeW84kHz0nqgODpnmM6UkB
- hh1DkQbpdX9724ZvYui6ckgMEg7wQHD7i6+xdrIP3tt2NcJKSi3oOGqKORq/lpcjD8KI
- 8rvreAVZDznkPKeup17n0Q/lfuP0Xrnw5z3ltnk7Xpe0Xwrjo4C1b2HVAF0vfLT6eVYz
- EoNB7LYxp3bskExiYTFGwMfV+wZquOT3MNpgnl3Mb2uhuxVaAOQAaooLVA+ckdMMPj+M
- rzcA==
+ bh=tKz9jTX0SjVIbKmKK2PGDRuQtBFnZep0+IXsw1Ugmh0=;
+ b=UETedvCAYPRbe/FhqExfF5R35rGbKV3YY9CvvKDlV0cGFlgUSnAeBhqSBO+oz09s5T
+ QJCJ3tl0YFX+FWCAwbKelxuVMlO9j0MIbX5GZvKmXc+RXSb/SxYMKW5j9Ta2H6j3XTxV
+ FXpmIhO7lMU3ReDAaO05tb7mf3MwN2naK7EeqZ+sX0u3zH2VForS1/niHqb2pEifJVHw
+ SSiUqr+1p2HLPetF6FB206P4hqwNBLmUHK+pRpq/fPDz3tdTNbaI//EGfZ+r0pK5BCMK
+ NNRyVX1HzUQ8hPrb/g9rqlXKfrMxQqv6cemcdt0Yc6q8h5lbeTLXzg3QPAQCWI5iOsb2
+ Y5Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG1zBYAIv+1WsbUIX2BRjTy3yjAiOkJtjQBXDY9+aVdmFDJdtTCeutb9LpEbMRD8bXXFcIyexlVLhzOP7nptmmkxfxamo=
-X-Gm-Message-State: AOJu0Yy2R6kArBUh+pC3NC4rvGD92tXuGRG7hVLlseigm1IA8BWe8Hms
- 11bEnut2ubjoS+Y9qb8G3MEF0CNFTjlcit4S8ZZhCJ79c67weL5ulbopfkFTZescrj9HyRjDnYP
- WUTwdBUJ7YNvf04MHm9pqeu5vyEziOGoNlIx23EP8R6uXlGBEBlqw
-X-Received: by 2002:a05:620a:2693:b0:792:bd20:422b with SMTP id
- af79cd13be357-792c759ae06mr2101164685a.26.1715790490686; 
- Wed, 15 May 2024 09:28:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGi1R9h4HGbDHeldrj4UgknDGJKSoyhxpWlwvXARfMaB18PCBYDURorBDpTATJUxJo7K0OzOw==
-X-Received: by 2002:a05:620a:2693:b0:792:bd20:422b with SMTP id
- af79cd13be357-792c759ae06mr2101162285a.26.1715790490336; 
- Wed, 15 May 2024 09:28:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43e19256258sm42068441cf.49.2024.05.15.09.28.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 09:28:09 -0700 (PDT)
-Message-ID: <d2f7fa18-a27d-454a-955f-f512be6e0d86@redhat.com>
-Date: Wed, 15 May 2024 18:28:06 +0200
+ AJvYcCWnNjmDsLYzGiqVnOkQys7QK9cCW2C9MHjlXt6qeok8CE0l54ScmCp3EL4yDMQ+NajzghpiFj48afl7F82U4hD/+eJ8zKI=
+X-Gm-Message-State: AOJu0Ywoop9l8BBVe3UehrWSomsLbQ2mk3LfiHZLbN03xvY9NGSYD45X
+ zMN/D+WoSFGegFXYE1XWs5jOJFv1lbbr/eWDaGUg9u0DyRwnUNLQrKD1tlEg/9zR4uvaAccIy2M
+ VNBr56TxsOkioMQMWhK3XiAln6ZZmW/ItmzVD5UWadxe35h1Siwwa
+X-Received: by 2002:a05:6a21:7896:b0:1ae:42c8:4f69 with SMTP id
+ adf61e73a8af0-1afddf12a2cmr19760298637.0.1715790705341; 
+ Wed, 15 May 2024 09:31:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGpem665WIAOK1nlnF2FnlB+RV5Df0guTpPsAIBllq7YwEzxDXFmIN4xdU0dTy01pXa/p5qtw==
+X-Received: by 2002:a05:6a21:7896:b0:1ae:42c8:4f69 with SMTP id
+ adf61e73a8af0-1afddf12a2cmr19760255637.0.1715790704735; 
+ Wed, 15 May 2024 09:31:44 -0700 (PDT)
+Received: from x1n ([50.204.89.32]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f679902e57sm824350b3a.110.2024.05.15.09.31.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 May 2024 09:31:44 -0700 (PDT)
+Date: Wed, 15 May 2024 10:31:32 -0600
+From: Peter Xu <peterx@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 5/5] virtio-gpu: fix v2 migration
+Message-ID: <ZkTjZCTwIbkZIVZd@x1n>
+References: <20240515141557.1277999-1-marcandre.lureau@redhat.com>
+ <20240515141557.1277999-6-marcandre.lureau@redhat.com>
+ <20240515120104-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/11] vfio: Make VFIOIOMMUClass::attach_device() and
- its wrapper return bool
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Tony Krowiak
- <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- "open list:vfio-ap" <qemu-s390x@nongnu.org>
-References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
- <20240507064252.457884-4-zhenzhong.duan@intel.com>
- <a41fe2df-62dd-4d65-ba00-45ca888dedbf@redhat.com>
- <SJ0PR11MB67441AFCCDC343645A408B3192E42@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SJ0PR11MB67441AFCCDC343645A408B3192E42@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+In-Reply-To: <20240515120104-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -114,150 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/24 09:34, Duan, Zhenzhong wrote:
+On Wed, May 15, 2024 at 12:02:49PM -0400, Michael S. Tsirkin wrote:
+> On Wed, May 15, 2024 at 06:15:56PM +0400, marcandre.lureau@redhat.com wrote:
+> > From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > 
+> > Commit dfcf74fa ("virtio-gpu: fix scanout migration post-load") broke
+> > forward/backward version migration. Versioning of nested VMSD structures
+> > is not straightforward, as the wire format doesn't have nested
+> > structures versions.
+> > 
+> > Use the previously introduced check_machine_version() function as a
+> > field test to ensure proper saving/loading based on the machine version.
+> > The VMSD.version is irrelevant now.
+> > 
+> > Fixes: dfcf74fa ("virtio-gpu: fix scanout migration post-load")
+> > Suggested-by: Peter Xu <peterx@redhat.com>
+> > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
+> I don't get it. Our standard way to do it is:
+> - add a property (begin name with x- so we don't commit to an API)
+> - set from compat machinery
+> - test property value in VMSTATE macros
 > 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH v2 03/11] vfio: Make VFIOIOMMUClass::attach_device()
->> and its wrapper return bool
->>
->> On 5/7/24 08:42, Zhenzhong Duan wrote:
->>> Make VFIOIOMMUClass::attach_device() and its wrapper function
->>> vfio_attach_device() return bool.
->>>
->>> This is to follow the coding standand to return bool if 'Error **'
->>> is used to pass error.
->>>
->>> Suggested-by: Cédric Le Goater <clg@redhat.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>    include/hw/vfio/vfio-common.h         |  4 ++--
->>>    include/hw/vfio/vfio-container-base.h |  4 ++--
->>>    hw/vfio/ap.c                          |  6 ++----
->>>    hw/vfio/ccw.c                         |  6 ++----
->>>    hw/vfio/common.c                      |  4 ++--
->>>    hw/vfio/container.c                   | 14 +++++++-------
->>>    hw/vfio/iommufd.c                     | 11 +++++------
->>>    hw/vfio/pci.c                         |  5 ++---
->>>    hw/vfio/platform.c                    |  7 +++----
->>>    9 files changed, 27 insertions(+), 34 deletions(-)
->>>
->>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-
->> common.h
->>> index b9da6c08ef..a7b6fc8f46 100644
->>> --- a/include/hw/vfio/vfio-common.h
->>> +++ b/include/hw/vfio/vfio-common.h
->>> @@ -198,8 +198,8 @@ void vfio_region_exit(VFIORegion *region);
->>>    void vfio_region_finalize(VFIORegion *region);
->>>    void vfio_reset_handler(void *opaque);
->>>    struct vfio_device_info *vfio_get_device_info(int fd);
->>> -int vfio_attach_device(char *name, VFIODevice *vbasedev,
->>> -                       AddressSpace *as, Error **errp);
->>> +bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->>> +                        AddressSpace *as, Error **errp);
->>>    void vfio_detach_device(VFIODevice *vbasedev);
->>>
->>>    int vfio_kvm_device_add_fd(int fd, Error **errp);
->>> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-
->> container-base.h
->>> index 3582d5f97a..c839cfd9cb 100644
->>> --- a/include/hw/vfio/vfio-container-base.h
->>> +++ b/include/hw/vfio/vfio-container-base.h
->>> @@ -118,8 +118,8 @@ struct VFIOIOMMUClass {
->>>        int (*dma_unmap)(const VFIOContainerBase *bcontainer,
->>>                         hwaddr iova, ram_addr_t size,
->>>                         IOMMUTLBEntry *iotlb);
->>> -    int (*attach_device)(const char *name, VFIODevice *vbasedev,
->>> -                         AddressSpace *as, Error **errp);
->>> +    bool (*attach_device)(const char *name, VFIODevice *vbasedev,
->>> +                          AddressSpace *as, Error **errp);
->>>        void (*detach_device)(VFIODevice *vbasedev);
->>>        /* migration feature */
->>>        int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
->>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->>> index 7c4caa5938..d50600b702 100644
->>> --- a/hw/vfio/ap.c
->>> +++ b/hw/vfio/ap.c
->>> @@ -156,7 +156,6 @@ static void
->> vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
->>>    static void vfio_ap_realize(DeviceState *dev, Error **errp)
->>>    {
->>>        ERRP_GUARD();
->>> -    int ret;
->>>        Error *err = NULL;
->>>        VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->>>        VFIODevice *vbasedev = &vapdev->vdev;
->>> @@ -165,9 +164,8 @@ static void vfio_ap_realize(DeviceState *dev, Error
->> **errp)
->>>            return;
->>>        }
->>>
->>> -    ret = vfio_attach_device(vbasedev->name, vbasedev,
->>> -                             &address_space_memory, errp);
->>> -    if (ret) {
->>> +    if (!vfio_attach_device(vbasedev->name, vbasedev,
->>> +                            &address_space_memory, errp)) {
->>>            goto error;
->>>        }
->>>
->>> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
->>> index 90e4a53437..782bd4bed7 100644
->>> --- a/hw/vfio/ccw.c
->>> +++ b/hw/vfio/ccw.c
->>> @@ -580,7 +580,6 @@ static void vfio_ccw_realize(DeviceState *dev,
->> Error **errp)
->>>        S390CCWDeviceClass *cdc = S390_CCW_DEVICE_GET_CLASS(cdev);
->>>        VFIODevice *vbasedev = &vcdev->vdev;
->>>        Error *err = NULL;
->>> -    int ret;
->>>
->>>        /* Call the class init function for subchannel. */
->>>        if (cdc->realize) {
->>> @@ -594,9 +593,8 @@ static void vfio_ccw_realize(DeviceState *dev,
->> Error **errp)
->>>            return;
->>>        }
->>>
->>> -    ret = vfio_attach_device(cdev->mdevid, vbasedev,
->>> -                             &address_space_memory, errp);
->>> -    if (ret) {
->>> +    if (!vfio_attach_device(cdev->mdevid, vbasedev,
->>> +                            &address_space_memory, errp)) {
->>>            goto out_attach_dev_err;
->>>        }
->>>
->>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>> index 8f9cbdc026..890d30910e 100644
->>> --- a/hw/vfio/common.c
->>> +++ b/hw/vfio/common.c
->>> @@ -1492,8 +1492,8 @@ retry:
->>>        return info;
->>>    }
->>>
->>> -int vfio_attach_device(char *name, VFIODevice *vbasedev,
->>> -                       AddressSpace *as, Error **errp)
->>> +bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->>> +                        AddressSpace *as, Error **errp)
->>>    {
->>>        const VFIOIOMMUClass *ops =
->>>
->> VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
->>
->> This is still broken. No need to resend. I will update the code.
-> 
-> I put this series before preq v4, so you don't see that change.
-> See https://github.com/yiliu1765/qemu/commits/zhenzhong/iommufd_nesting_rfcv2_preq_v4_has_vfio_cleanup/
-> 
-> That change is in https://github.com/yiliu1765/qemu/commit/0bec499456a9aa5a079ed2335ce1581d79e2850d
+> Big advantage is, it works well with any downstreams
+> which pick any properties they like.
+> Why is this not a good fit here?
 
-OK looks good.
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I think it'll simplify upstream to avoid introducing one new field + one
+new property for each of such protocol change, which fundamentally are the
+same thing.  But it's indeed a good point that such helper can slightly
+complicate the backport a bit.. I assume a global replacement of versions
+over the helper will be needed after downstream settles on how to map
+downstream MCs to upstream's.
 
 Thanks,
 
-C.
+-- 
+Peter Xu
 
 
