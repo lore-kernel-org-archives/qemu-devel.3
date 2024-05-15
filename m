@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D306BC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3976C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79vw-0002Da-1e; Wed, 15 May 2024 04:24:20 -0400
+	id 1s79vv-0002D4-3S; Wed, 15 May 2024 04:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s79vo-00028n-P9
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:24:13 -0400
+ id 1s79vm-00027x-3K
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:24:11 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s79vn-00078x-1h
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:24:12 -0400
+ id 1s79vk-00077f-BQ
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:24:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715761451; x=1747297451;
+ t=1715761448; x=1747297448;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BUGi0U9N5ZD36HyQ6NXb96H8zb9zwlvSMAPDhI+SDCg=;
- b=Dj3k9H+BkuwGwBvLoUYnFtdGxq/GZzGaz7PgQPUebwU2imfXe5DnfAjM
- OVzATAJefBMcdcFi05YbcEUyzvPkqqIzCrFjktaHvmaQPACYyrypSXFkS
- 2J2N+zbhGwXZejKBXtJnpUin2VQPQMoQSMdcBL6V+TqR/QDIfVF45yYCL
- moETIQKC58K+Yxw8i+TV2XnCxBwBaSBMSV/oRX80ljXBalJMNbmon9QLZ
- +67v8NKIosCxXwxxFF+h8Q68Lllnr90DvLRyPmWs2L6NY6NNcWGmqUNw4
- MgkB59LQ78QdIfqgqKnfTJ79OGrqYSe9Otl2/sUPDlAQ9CTuyAbeTNzHd A==;
-X-CSE-ConnectionGUID: KtluAC4pQjCiMUgzsDlhcg==
-X-CSE-MsgGUID: CxbYKvU4RDGZ/KsEyZb6lg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11961561"
-X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="11961561"
+ bh=RbeV441iM22XR842XrI5xKUNjvxFueaKXj0QFB2gaYg=;
+ b=CmunakbtPibqwtBvlubYyq2zjlMJgIzAdZCaGOQ0E9aGIYNFeV5PovUq
+ hI+i2eKBvCJDqnfhj+QXPR1tiIWVObfBVWjzLLMKxmlI5STFtnM6Z0jWP
+ Tm9t/YaOaMZTrxnXKtthTpU/PPZn+IFe+SI5cp81y+9pWpBnu+Y2CPttZ
+ G2CcFszC6WM97lRRGHM+BBTsfMaaz2RVIpIkWXFdiw/EJA/UFDwE79oZ6
+ /VBb7F1eWOsPhkyuvbV87odeUGc2G4UMw163/gO+ux8pKzZBzwjkGCDSx
+ JoD3LOCkHRqevgDIhgD3xwdYkfI4PNqL5a/fK+g/HtVqd5pDJHJ/0GiJN w==;
+X-CSE-ConnectionGUID: PtSqgykVTdqdgIwt48rnxw==
+X-CSE-MsgGUID: Wu2mAkK1ToaPiQHL0lohHA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11961557"
+X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="11961557"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2024 01:24:09 -0700
-X-CSE-ConnectionGUID: RaSaG/jxTsKNhli0dVN48Q==
-X-CSE-MsgGUID: lwECR40SQ+muPHhO3QG5sA==
+ 15 May 2024 01:24:07 -0700
+X-CSE-ConnectionGUID: v8vu6oSETlmQABlObGkGLA==
+X-CSE-MsgGUID: 2YDYzfceS8W2YCaACdlurg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="31396358"
+X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="31396347"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2024 01:24:08 -0700
+ 15 May 2024 01:24:06 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 11/16] vfio/pci: Make vfio_intx_enable() return bool
-Date: Wed, 15 May 2024 16:20:36 +0800
-Message-Id: <20240515082041.556571-12-zhenzhong.duan@intel.com>
+Subject: [PATCH 10/16] vfio/pci: Make vfio_populate_device() return a bool
+Date: Wed, 15 May 2024 16:20:35 +0800
+Message-Id: <20240515082041.556571-11-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515082041.556571-1-zhenzhong.duan@intel.com>
 References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.18;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -83,93 +82,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+Since vfio_populate_device() takes an 'Error **' argument,
+best practices suggest to return a bool. See the qapi/error.h
+Rules section.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/pci.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ hw/vfio/pci.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c091d21adf..e2ca4507f8 100644
+index 379cbad757..c091d21adf 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -261,7 +261,7 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
-     vfio_intx_update(vdev, &vdev->intx.route);
+@@ -2740,7 +2740,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+     return 0;
  }
  
--static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-+static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+-static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
  {
-     uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-     Error *err = NULL;
-@@ -270,7 +270,7 @@ static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
- 
- 
-     if (!pin) {
--        return 0;
-+        return true;
+     VFIODevice *vbasedev = &vdev->vbasedev;
+     struct vfio_region_info *reg_info;
+@@ -2750,18 +2750,18 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+     /* Sanity check device */
+     if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PCI)) {
+         error_setg(errp, "this isn't a PCI device");
+-        return;
++        return false;
      }
  
-     vfio_disable_interrupts(vdev);
-@@ -292,7 +292,7 @@ static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     ret = event_notifier_init(&vdev->intx.interrupt, 0);
+     if (vbasedev->num_regions < VFIO_PCI_CONFIG_REGION_INDEX + 1) {
+         error_setg(errp, "unexpected number of io regions %u",
+                    vbasedev->num_regions);
+-        return;
++        return false;
+     }
+ 
+     if (vbasedev->num_irqs < VFIO_PCI_MSIX_IRQ_INDEX + 1) {
+         error_setg(errp, "unexpected number of irqs %u", vbasedev->num_irqs);
+-        return;
++        return false;
+     }
+ 
+     for (i = VFIO_PCI_BAR0_REGION_INDEX; i < VFIO_PCI_ROM_REGION_INDEX; i++) {
+@@ -2773,7 +2773,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+ 
+         if (ret) {
+             error_setg_errno(errp, -ret, "failed to get region %d info", i);
+-            return;
++            return false;
+         }
+ 
+         QLIST_INIT(&vdev->bars[i].quirks);
+@@ -2783,7 +2783,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+                                VFIO_PCI_CONFIG_REGION_INDEX, &reg_info);
      if (ret) {
-         error_setg_errno(errp, -ret, "event_notifier_init failed");
--        return ret;
-+        return false;
-     }
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-     qemu_set_fd_handler(fd, vfio_intx_interrupt, NULL, vdev);
-@@ -301,7 +301,7 @@ static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-                                 VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
-         qemu_set_fd_handler(fd, NULL, NULL, vdev);
-         event_notifier_cleanup(&vdev->intx.interrupt);
--        return -errno;
+         error_setg_errno(errp, -ret, "failed to get config info");
+-        return;
 +        return false;
      }
  
-     if (!vfio_intx_enable_kvm(vdev, &err)) {
-@@ -311,7 +311,7 @@ static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     vdev->interrupt = VFIO_INT_INTx;
+     trace_vfio_populate_device_config(vdev->vbasedev.name,
+@@ -2804,7 +2804,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+         if (ret) {
+             error_append_hint(errp, "device does not support "
+                               "requested feature x-vga\n");
+-            return;
++            return false;
+         }
+     }
  
-     trace_vfio_intx_enable(vdev->vbasedev.name);
--    return 0;
+@@ -2821,6 +2821,8 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+                     "Could not enable error recovery for the device",
+                     vbasedev->name);
+     }
++
 +    return true;
  }
  
- static void vfio_intx_disable(VFIOPCIDevice *vdev)
-@@ -836,8 +836,7 @@ static void vfio_msix_disable(VFIOPCIDevice *vdev)
-     vfio_disable_irqindex(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
- 
-     vfio_msi_disable_common(vdev);
--    vfio_intx_enable(vdev, &err);
--    if (err) {
-+    if (!vfio_intx_enable(vdev, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+ static void vfio_pci_put_device(VFIOPCIDevice *vdev)
+@@ -3036,8 +3038,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+         goto error;
      }
  
-@@ -2450,8 +2449,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
-     Error *err = NULL;
-     int nr;
- 
--    vfio_intx_enable(vdev, &err);
+-    vfio_populate_device(vdev, &err);
 -    if (err) {
-+    if (!vfio_intx_enable(vdev, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
- 
-@@ -3197,8 +3195,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-                                              vfio_intx_routing_notifier);
-         vdev->irqchip_change_notifier.notify = vfio_irqchip_change;
-         kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
--        ret = vfio_intx_enable(vdev, errp);
--        if (ret) {
-+        if (!vfio_intx_enable(vdev, errp)) {
-             goto out_deregister;
-         }
++    if (!vfio_populate_device(vdev, &err)) {
+         error_propagate(errp, err);
+         goto error;
      }
 -- 
 2.34.1
