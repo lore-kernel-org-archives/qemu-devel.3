@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A033C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE41C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:36:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s793h-00088a-IH; Wed, 15 May 2024 03:28:17 -0400
+	id 1s79AQ-0001Tt-HH; Wed, 15 May 2024 03:35:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s793f-00088J-GR
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:28:15 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ id 1s79AP-0001Tk-GA
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:35:13 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s793d-0006bZ-LZ
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:28:15 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2e09138a2b1so92630521fa.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:28:12 -0700 (PDT)
+ id 1s79AN-0000ix-Jy
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:35:13 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-350513d2c6aso3663149f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715758091; x=1716362891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715758509; x=1716363309; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S5oxJez4KQme3DlY+euUCTfRuzdmNh0OWVHCeCR1uBY=;
- b=v/xZ0nyMfsTC1gky02dUIktkKFHW3DU7HAQXz9J1YcLlOG5JaZuiQar70i//cOHZl/
- +/xDZSGcvt6V7K0OxhKPITr6mMa6KIgT6OURIa91xsLzJl00fqnktMmEVo1wZp92rinM
- zb9ozHiVsD93iT79lo8yf45iiL9xCVM/zfYvuRClFG0+tqRVNaWuDeJEaPQ2Jz7UJSHQ
- 0ze2EEr9FJF9o/lgYJFH9K590/ixDkF178W/ARFPMlaeBugkwaJ0yvho7rzvu1tHVZDD
- jW3EvMPnW/qnazOi7F0JIwr2rGJinaHh6bAEvxZWsW2iZTcoWUi0gBgtmTVOeoGPq991
- J0SA==
+ bh=6mSEDb3rx0HZDWpSEnJ/vQZewC/zq/hEOJ73qIE1ey0=;
+ b=dQFbZQTq78bIWoro8n5QeIq0N2h8mNHCzokPoj9Bx6G4UwUCLGiCPN3lT0Yr/nQazX
+ hVGfWibM1TZhTL1w4LDl6yGF/mgkTDSwLgaFe6dNFGF0+YkckvrwQIjPRkgNM6zNaQLb
+ sxazzY6O3pLHoU49SH/uuVGEFEQfxIo7JP8VSNm8e46OFawYM79cVoqBbPJCx941K7cX
+ ay4Tzr4J+U0CEkgfUkilkgDeNEtj0qeT4DMG8Pems7q0cATh4l/7PyvNYqLsmLdn0AcX
+ Xe9PYNYZm2nnh6/bOy2SAK/aZQXKhJvomTCjYa86p4JclSiQwcNhESSavdBQlV6+rNwt
+ VYhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715758091; x=1716362891;
+ d=1e100.net; s=20230601; t=1715758509; x=1716363309;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S5oxJez4KQme3DlY+euUCTfRuzdmNh0OWVHCeCR1uBY=;
- b=EwLjWzVJB3TTzNFax0SkDTDgr+W1cW7SKbTBnIQcKtMTC4uYTyT21NEUZolFUpRgB5
- cd6umkYpq+X7x3rDe0akGJfAZM8/ELLl8Yxdnjas3OIdNiEcPPtAioECm0rrytpCZ+Na
- LYF9v3Weif9JaP2NZ4GRZrAA62/sdOLBaKjKAfEBg+1wbbePR01C1ufgVHcwKelQmG/D
- KP9VCtDW3V06WMrexS3eIeSD7kPt+pghKlygBCoxAdLvCs3fHr+h6ic4taRWlJdMeOpK
- sQ9Ji2j5fiubYc0xYjcSrh5YFtZ14eAiOh/izTg1ib1ZjHdv/FkgJy+BOSrHt+8BIm1k
- WQtA==
-X-Gm-Message-State: AOJu0YwT2SvIowiO2HiiOQ7OC0SstRvNmxWZlNbXtXe9e21NIwHyrFd/
- GQk3mCrmjeBY+tGzFtZUf3cMTPXXSOAeCFL2rJRF7bjwSB2c3k3m0+q1CqTV0OY=
-X-Google-Smtp-Source: AGHT+IEPt4itALpRBhDQoL7J53MYWOuFZoy1LptxmLDecM6eWOjkifyqGjp6+U6RCWhgpSyXHqjQVg==
-X-Received: by 2002:a2e:b889:0:b0:2db:381a:bf6e with SMTP id
- 38308e7fff4ca-2e51ff5d117mr108678081fa.16.1715758088990; 
- Wed, 15 May 2024 00:28:08 -0700 (PDT)
+ bh=6mSEDb3rx0HZDWpSEnJ/vQZewC/zq/hEOJ73qIE1ey0=;
+ b=kBbU50z6A3Q8Ymi07bj7MZr6RRZOr95YZuY0faBNCQUiaONgteE961OPrIcByCW0yM
+ fjGdZZS/pciZK2dsY8vTbt+hSqRtsY8Gzkm8lbOGySjh1N8RxpCyvjk+VTmBA5iYVsdE
+ sIELWnCTbFMuCS7ihj6BQS6Qqh2UzfbAO4woQQx0WHOIrrtJ42ynDrLusAuEFLpiVhhN
+ qcDAl/4s8JSgBuvUbDwCB1wpHZ6ZAJRLziiMxIWMB++G8R91MhYg+R0rowbeLq2NQN7g
+ DupEqPW4ypGBbP/+jq9O7CAnnYDCXOHJjGuP+UyNjZ14M/T9v1LPGcnF2Tx8Bi75oX7L
+ mLgA==
+X-Gm-Message-State: AOJu0YwofBAA9I8zJAF5hGX45Ca9tjZSYHBYT3KlQSujp86Pj6V/tGAs
+ kUULzEltK6vKHgP2xXhE2vMpofDgPm3HEiDL5/UltryOcwO9+34hrFvYiEP/Ljg=
+X-Google-Smtp-Source: AGHT+IHkMsSXC4WNFQiLWQA4nGYUE0DLbHBYuD6nO/0vKLM/bpTgSQxOC7ozzEzZxxPw8553mFEPHw==
+X-Received: by 2002:a5d:46c7:0:b0:34c:d9f5:a8e with SMTP id
+ ffacd0b85a97d-3504a61c6demr12003338f8f.7.1715758508980; 
+ Wed, 15 May 2024 00:35:08 -0700 (PDT)
 Received: from [10.91.1.91] ([149.14.240.163])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42010ca475asm142052925e9.16.2024.05.15.00.28.08
+ ffacd0b85a97d-3502baad1f0sm15811414f8f.89.2024.05.15.00.35.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 00:28:08 -0700 (PDT)
-Message-ID: <c22b33d3-ce61-466d-b19d-41cd0a08cd17@linaro.org>
-Date: Wed, 15 May 2024 09:28:06 +0200
+ Wed, 15 May 2024 00:35:08 -0700 (PDT)
+Message-ID: <e54b5ddc-b2f3-4799-93f2-8b46d2684c5a@linaro.org>
+Date: Wed, 15 May 2024 09:35:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/45] target/hppa: Use TCG_COND_TST* in trans_bb_imm
+Subject: Re: [PATCH v2 32/45] target/hppa: Store full iaoq_f and page offset
+ of iaoq_b in TB
 To: Helge Deller <deller@kernel.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
- <20240513074717.130949-25-richard.henderson@linaro.org>
- <ZkOS8pUKCOg5NmUQ@carbonx1>
+ <20240513074717.130949-33-richard.henderson@linaro.org>
+ <ZkPFj4AUfzL5t0wZ@carbonx1>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ZkOS8pUKCOg5NmUQ@carbonx1>
+In-Reply-To: <ZkPFj4AUfzL5t0wZ@carbonx1>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,20 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/24 18:36, Helge Deller wrote:
->> -    tcg_gen_shli_i64(tmp, tcg_r, p);
->> -
->> -    cond = cond_make_ti(a->c ? TCG_COND_GE : TCG_COND_LT, tmp, 0);
->> +    cond = cond_make_vi(a->c ? TCG_COND_TSTEQ : TCG_COND_TSTNE,
->> +                        load_gpr(ctx, a->r), 1ull << (63 - p));
+On 5/14/24 22:11, Helge Deller wrote:
+> * Richard Henderson <richard.henderson@linaro.org>:
+>> In preparation for CF_PCREL. store the iaoq_f in 3 parts: high
+>> bits in cs_base, middle bits in pc, and low bits in priv.
+>> For iaoq_b, set a bit for either of space or page differing,
+>> else the page offset.
+>>
+>> Install iaq entries before goto_tb. The change to not record
+>> the full direct branch difference in TB means that we have to
+>> store at least iaoq_b before goto_tb.  But we since we'll need
+>> both updated before goto_tb for CF_PCREL, do that now.
 > 
-> I wonder if this actually fixes a bug...
-> Before it tested against all values >= tmp (even for which the bit
-> wasn't set), and now it correctly just checks the bit.
+> Does this sentence make sense? ^^
+> For me as non-native english speaker it sounds wrong, or missing commas,
+> but maybe I'm just wrong...?
+> Other than that...:
 
-No, the shli moved the bit under test up to the sign bit.
-The comparison was always against 0.
+I reworded:
+
+But since a later change
+to enable CF_PCREL will require both iaoq_f and iaoq_b to be
+updated before goto_tb, go ahead and update both fields now.
 
 
 r~
+
 
