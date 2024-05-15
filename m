@@ -4,100 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2196C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 13:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8ECC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 14:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7F5i-0006Ic-3D; Wed, 15 May 2024 09:54:46 -0400
+	id 1s7FQy-0004Ox-FJ; Wed, 15 May 2024 10:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s7F5h-0006IM-2K
- for qemu-devel@nongnu.org; Wed, 15 May 2024 09:54:45 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s7FQb-00047d-8w
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 10:16:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s7F5f-0004V0-G8
- for qemu-devel@nongnu.org; Wed, 15 May 2024 09:54:44 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s7FQT-0005es-JW
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 10:16:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715781282;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1715782572;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=djiCVZW/OI+w3LX691XOABCJJ+t0FACKYRstfpa06hM=;
- b=V6uiXtkBfq4hmIp6cCJiMEXxw8j5WoHCwyM0sUdh4u0P0rlpju4ISALZWVTNeWb2NGdoVP
- ihGLoRfr8suNhxGDMc6mT7VrWZjzS2/XqbZDkAl/YuyV3859/8XXA6UawCFdRAoestmgHf
- XM/ZOglpnPZmod/sjSSG1xKuToPfLUI=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=p3/MmczGxyTXcugQUY7v5Ea0HYsjt7KFh3KUmk21BK4=;
+ b=KfUUfT4LxHNKwF7mgzu/5VQywm9w95CmiEOPb5zBqmS5z8DzZrohFP78vh2nvR/osXbJLQ
+ VFnmtQ4/ywGg7Q6dzbZTM0oh3gln7RhUGXMahciudjlKJfyzVfyL09z3gKTpdmFuaBApVf
+ Yr8KXCwuNMWQlUsyN7Xymnjn63sd/50=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-QA-so38aMcKrdoWbKZOd9A-1; Wed, 15 May 2024 09:54:41 -0400
-X-MC-Unique: QA-so38aMcKrdoWbKZOd9A-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43df8c36a06so76285831cf.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 06:54:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715781280; x=1716386080;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=djiCVZW/OI+w3LX691XOABCJJ+t0FACKYRstfpa06hM=;
- b=gQSIk78Hvb9+6EXBx5Ruf1S15dlzOeGoiyY33y4fq6jVZQLC5+aJWwX5Jxm2qD5rub
- Nf/1fZJVmlL/gp8cwge0L+sK+RUPuIVsrplfmyP1dkqFKTUd7HIwCdelxr4/vHggPA+o
- BKKzTPE9DHxJ1dQrW4hfJJQ5LHaCD5fI3i+UNq51UcvmVjGQpC+cy5ugn/HJcXsCweWT
- DMDSrRfS9cmYdcMRYCg7dI1vnL7DT1lYsL3lJnUOjUc4ljsRnnDMIqx09kUf8XEy8Vu4
- +pqEMcMzcaPeh3jksmDI+kx1OdSFNDCgm0d3PbQpYgUZ8z+7f6X6Xg8gFOen02JHLvO1
- E3QA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDhmkIhpl2dfkY1bWUsk0EeH1g9VMaYILulGMlhOf46N+D++u02bbCu6oX4Ib+Jx6J2W4AhXluwO7WiFNlTmUOQR62NO8=
-X-Gm-Message-State: AOJu0YwMk0ChMBqWV9cZmHrpr8cDe/LLoO0mHSEoivro28UUz5BI/Ymu
- H3f3dfM8iRheySreoDo57idnKRfWG6vHt9vJj0nR1m9M1ORoFygHM7ZUksGWYo4DFAncVJ3cwrY
- JrQA5P17Elja2OK4hYkMg1RcvOBOrfACL8kNwbtZR1fSlVTWRnS6v
-X-Received: by 2002:ac8:5d4f:0:b0:43a:deee:a5ea with SMTP id
- d75a77b69052e-43dfdb20ed1mr178892551cf.13.1715781280539; 
- Wed, 15 May 2024 06:54:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEuT4h4BOIe7vYdV1exwG62GfuppjWbsMrJnlBtwa52CgiBCuBDoLRJY9oI5gzMRHf1qfSFTA==
-X-Received: by 2002:ac8:5d4f:0:b0:43a:deee:a5ea with SMTP id
- d75a77b69052e-43dfdb20ed1mr178892331cf.13.1715781280171; 
- Wed, 15 May 2024 06:54:40 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43e3a57b396sm389351cf.24.2024.05.15.06.54.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 06:54:39 -0700 (PDT)
-Message-ID: <6afc41f6-7127-46f2-833f-6eb4abb2730d@redhat.com>
-Date: Wed, 15 May 2024 15:54:36 +0200
+ us-mta-355-VtPGEIuRNuOrXSMsEzwVwg-1; Wed, 15 May 2024 10:16:08 -0400
+X-MC-Unique: VtPGEIuRNuOrXSMsEzwVwg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C8FFC803AC3;
+ Wed, 15 May 2024 14:16:06 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.9])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 21F80400EAC;
+ Wed, 15 May 2024 14:16:04 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Gerd Hoffmann <kraxel@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v3 1/5] migration: add "exists" info to load-state-field trace
+Date: Wed, 15 May 2024 18:15:52 +0400
+Message-ID: <20240515141557.1277999-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20240515141557.1277999-1-marcandre.lureau@redhat.com>
+References: <20240515141557.1277999-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 09/18] hw/arm/smmu-common: Rework TLB lookup for
- nesting
-Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-10-smostafa@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240429032403.74910-10-smostafa@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,77 +89,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+---
+ migration/vmstate.c    | 5 +++--
+ migration/trace-events | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-On 4/29/24 05:23, Mostafa Saleh wrote:
-> In the previous patch, comine_tlb() was added which combines 2 TLB
-combine
-> entries into one, which chooses the granule and level from the
-> smallest entry.
->
-> This means that a nested translation, an entry can be cached with the
-that with nested translation
-> granule of stage-2 and not stage-1.
->
-> However, the lookup for an IOVA in nested configuration is done with
-> stage-1 granule, this patch reworks lookup in that case, so it falls
-> back to stage-2 granule if no entry is found using stage-1 granule.
-I should have read that before commenting previous patch ;-)
-Anyway this shows that something is missing in previous patch, at least
-the above explanation ;-)
-
-Eric
->
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> ---
->  hw/arm/smmu-common.c | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 0d6945fa54..c67af3bc6d 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -66,8 +66,10 @@ SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
->      return key;
->  }
->  
-> -SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-> -                                SMMUTransTableInfo *tt, hwaddr iova)
-> +static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
-> +                                                  SMMUTransCfg *cfg,
-> +                                                  SMMUTransTableInfo *tt,
-> +                                                  hwaddr iova)
->  {
->      uint8_t tg = (tt->granule_sz - 10) / 2;
->      uint8_t inputsize = 64 - tt->tsz;
-> @@ -88,6 +90,24 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
->          }
->          level++;
->      }
-> +    return entry;
-> +}
-> +
-> +SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-> +                                SMMUTransTableInfo *tt, hwaddr iova)
-> +{
-> +    SMMUTLBEntry *entry = NULL;
-> +
-> +    entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
-> +    /*
-> +     * For nested translation also try the s2 granule, as the TLB will insert
-> +     * it if the size of s2 tlb entry was smaller.
-> +     */
-> +    if (!entry && (cfg->stage == SMMU_NESTED) &&
-> +        (cfg->s2cfg.granule_sz != tt->granule_sz)) {
-> +        tt->granule_sz = cfg->s2cfg.granule_sz;
-> +        entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
-> +    }
->  
->      if (entry) {
->          cfg->iotlb_hits++;
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index ef26f26ccd..b51212a75b 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -128,8 +128,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         }
+     }
+     while (field->name) {
+-        trace_vmstate_load_state_field(vmsd->name, field->name);
+-        if (vmstate_field_exists(vmsd, field, opaque, version_id)) {
++        bool exists = vmstate_field_exists(vmsd, field, opaque, version_id);
++        trace_vmstate_load_state_field(vmsd->name, field->name, exists);
++        if (exists) {
+             void *first_elem = opaque + field->offset;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
+diff --git a/migration/trace-events b/migration/trace-events
+index d0c44c3853..0b7c3324fb 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -58,7 +58,7 @@ postcopy_page_req_sync(void *host_addr) "sync page req %p"
+ vmstate_load_field_error(const char *field, int ret) "field \"%s\" load failed, ret = %d"
+ vmstate_load_state(const char *name, int version_id) "%s v%d"
+ vmstate_load_state_end(const char *name, const char *reason, int val) "%s %s/%d"
+-vmstate_load_state_field(const char *name, const char *field) "%s:%s"
++vmstate_load_state_field(const char *name, const char *field, bool exists) "%s:%s exists=%d"
+ vmstate_n_elems(const char *name, int n_elems) "%s: %d"
+ vmstate_subsection_load(const char *parent) "%s"
+ vmstate_subsection_load_bad(const char *parent,  const char *sub, const char *sub2) "%s: %s/%s"
+-- 
+2.41.0.28.gd7d8841f67
 
 
