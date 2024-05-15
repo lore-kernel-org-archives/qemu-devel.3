@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B38C25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 14:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9576C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Fi4-0005zO-Bl; Wed, 15 May 2024 10:34:24 -0400
+	id 1s7G6F-0005H0-2w; Wed, 15 May 2024 10:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s7Fi2-0005x4-5a
- for qemu-devel@nongnu.org; Wed, 15 May 2024 10:34:22 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s7G68-0005EH-KH
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 10:59:17 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s7Fhx-0003xb-2F
- for qemu-devel@nongnu.org; Wed, 15 May 2024 10:34:21 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51f0f6b613dso8787658e87.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 07:34:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s7G5x-00079t-Iq
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 10:59:16 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-420180b58c3so23928165e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 07:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715783655; x=1716388455; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=2KdtZ1u+WQ4YTJUTFSc8fW+OHiQwxQk4DxsVoRWF2GY=;
- b=EnWexb6HwWJ5SHzwp7FsY9aFQMRD4GqdKzhnKSQR1JHdo3V0JuUGg8wRySS4d7choq
- rqhdPW8wxKbpaQjqCffaKnL6RzfRKonIDAhXKB2m7Ho8qnKBZ+k8rz66WKJXglicGCEF
- 05MjJv6Tj5qzQG8J00Kgm3xI5FVxZKzpB/ilPtQ050zePHI++SoxLlXJaBx2UQIM6ctJ
- pwpQyyiocszSrUQNCcRYyzUlfCR8amwUvHUI+cR3TMhiyIS+HtzavmgVkMJfBXq0E4YH
- iP5PGld2mQt5vQd2d6HlVmfmZGIdGKMS6UgcyiYmVzwoHnEd1EhqRh/LOO2XbzwXxlVa
- hW7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715783655; x=1716388455;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1715785144; x=1716389944; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2KdtZ1u+WQ4YTJUTFSc8fW+OHiQwxQk4DxsVoRWF2GY=;
- b=oz6q1xE4JGUml50iY9TW4XdzL6fFkysvRm+9I1chbnNVZUyP6yI2fchK0534GLRUhU
- 1K8UHci3pxgwagEgGCCOlbAcxyqu1Es96grfB/XgT5S8QqkLg/FdzGbbbWRm2AOA4bzY
- NTklqVrEaS7lRVKDH5wNAyryAHEGi4lWwhtqjd9ggfzPwGrB9oyNn0ppwHs4gMCSXiTd
- Rx4v/gnUdM+iDtbXnHDagE2sEQ478sn7WiL55193MBIGzMxMSs2pdcuqs4QJxyt2QDXK
- CP5YZSj2kgGJdupLfTiP3ij7pfbGjjFnAqgdEGfyV7ONxc18IWAW5bWZQfI7PHuorBVH
- 5l1g==
-X-Gm-Message-State: AOJu0YzVcFGUsCBpQxrFMs2aFBhfh0WXRptAy0ZUu+IbvnW8kKzBz0Mu
- DXugUsYu4xzlKr2rwVyUNWUZZuSRBlnBaaXy7NUmqxyO//mXaJhU40VWzg/l3ew=
-X-Google-Smtp-Source: AGHT+IFPadRYhM/E3bwZqDqB3Dx5YOzzJeTA1TKJRuQqo2WA7PSnwdlDG7VkNnQXlgv/ND82GnjA+g==
-X-Received: by 2002:ac2:4c8c:0:b0:51d:a87e:27ec with SMTP id
- 2adb3069b0e04-5220fc735f1mr10383753e87.9.1715783654919; 
- Wed, 15 May 2024 07:34:14 -0700 (PDT)
-Received: from localhost (cst2-173-78.cust.vodafone.cz. [31.30.173.78])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b895731sm16763633f8f.42.2024.05.15.07.34.14
+ bh=WpiThysDuX7JPl+AhNyZ7t+FQuyygOMAjCR+jn6zrYU=;
+ b=VAj7sfll52bIq08uflTWutQGWAiqZlQkktxno/BnZ8fC1s7YkFZdxhFFn1JtEnvMJj
+ EMxcARCwNI0cWeRFm9HBLHAMaJJp6M4vxuaBTvB3RhybZ83WdyJJ9vGATafXryutSf2W
+ vSDTGeRQMtlmbtiFPKlloCzvSI6vd+9VqE+qCodl5DLnBdvLsnYATl4cjOO0xbEVLwda
+ wdZQ1ofUSVOFDVL6jQEDtlinYc3mefsmg4BT9pwXYAEs3fQ1znG5KRkHSf1f+VtiL+Q6
+ v3XMNzL25XAgot88huNi6L2SljvBcgapf6qRhAfOxhnP4kL3YfN5hrixjGJvZx6sxE4g
+ B1jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715785144; x=1716389944;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WpiThysDuX7JPl+AhNyZ7t+FQuyygOMAjCR+jn6zrYU=;
+ b=ecOxnlQJgaLklF1C896yzADJEYfivOrayR5fMl/XtK7BmFg98DFTcH8c1TgP6BAi3Y
+ vrE6jMtVAuRXVKySdlcrckYM/xurYNTNV3XZf5e1dl9GHQDHxYQj4TBhfCKfJYkdtSVh
+ yNOYZIoB7lO8U3u/8YqU9WAo7Eibtk0iecM8iKYA7pgZeqbSngv113gT4lLDeYSmsV0j
+ usMt91OZQFC3fgzz6bXTkRO+CEC9JvFC0BTgV2nmtU+KskqaQrwV4nayizv4njWgN0oO
+ iuvb1y8pFXXRcSBJY6ePiQ9+v0HvQ3rU9ORf2UooVsSIDqcbDTvoZROXmGN0N4Wei/Wa
+ kb4g==
+X-Gm-Message-State: AOJu0Yy5TMg+TJ5UYQM2VpYbrF9bQ0YYNsx/CJ5opUaZD4mYg+hkTz1x
+ IwKnVDiKr2qHqfoMm/zKRFz8vqgY92oUyzSrgJXVfufScII5NaXcRxa7rZDL1lR/XZSufq9DcBX
+ VGM0=
+X-Google-Smtp-Source: AGHT+IGqvmUqit2qg62rJGEPd1ZMWeFQqcenH6/C5+cB/ac3SfnVAkbzaf19auUuuujpwwdWzHA6Yg==
+X-Received: by 2002:a05:600c:3544:b0:41a:b54a:9ad8 with SMTP id
+ 5b1f17b1804b1-41fea52e620mr118768115e9.0.1715785143901; 
+ Wed, 15 May 2024 07:59:03 -0700 (PDT)
+Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41f88111033sm272134645e9.34.2024.05.15.07.59.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 07:34:14 -0700 (PDT)
-Date: Wed, 15 May 2024 16:34:13 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 1/1] target/riscv/kvm.c: Fix the hart bit setting of AIA
-Message-ID: <20240515-aad670c0d802abedcd4a240d@orel>
-References: <20240515091129.28116-1-yongxuan.wang@sifive.com>
+ Wed, 15 May 2024 07:59:03 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 4/5] tcg/arm: Support TCG_TARGET_HAS_tst_vec
+Date: Wed, 15 May 2024 16:58:59 +0200
+Message-Id: <20240515145900.252870-5-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240515145900.252870-1-richard.henderson@linaro.org>
+References: <20240515145900.252870-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240515091129.28116-1-yongxuan.wang@sifive.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=ajones@ventanamicro.com; helo=mail-lf1-x133.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,56 +93,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 15, 2024 at 05:11:28PM GMT, Yong-Xuan Wang wrote:
-> In AIA spec, each hart (or each hart within a group) has a unique hart
-> number to locate the memory pages of interrupt files in the address
-> space. The number of bits required to represent any hart number is equal
-> to ceil(log2(hmax + 1)), where hmax is the largest hart number among
-> groups.
-> 
-> However, if the largest hart number among groups is a power of 2, QEMU
-> will pass an inaccurate hart-index-bit setting to Linux. For example, when
-> the guest OS has 4 harts, only ceil(log2(3 + 1)) = 2 bits are sufficient
-> to represent 4 harts, but we passes 3 to Linux. The code needs to be
-> updated to ensure accurate hart-index-bit settings.
-> 
-> Additionally, a Linux patch[1] is necessary to correctly recover the hart
-> index when the guest OS has only 1 hart, where the hart-index-bit is 0.
-> 
-> [1] https://lore.kernel.org/lkml/20240415064905.25184-1-yongxuan.wang@sifive.com/t/
-> 
-> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> ---
-> Changelog
-> v2:
-> - update commit message
-> ---
->  target/riscv/kvm/kvm-cpu.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 473416649fda..235e2cdaca1a 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1777,7 +1777,14 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
->          }
->      }
->  
-> -    hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
-> +
-> +    if (max_hart_per_socket > 1) {
-> +        max_hart_per_socket--;
-> +        hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
-> +    } else {
-> +        hart_bits = 0;
-> +    }
-> +
->      ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
->                              KVM_DEV_RISCV_AIA_CONFIG_HART_BITS,
->                              &hart_bits, true, NULL);
-> -- 
-> 2.17.1
->
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/arm/tcg-target.h     |  2 +-
+ tcg/arm/tcg-target.c.inc | 23 ++++++++++++++++++++---
+ 2 files changed, 21 insertions(+), 4 deletions(-)
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+diff --git a/tcg/arm/tcg-target.h b/tcg/arm/tcg-target.h
+index 434a892e07..fb7261499b 100644
+--- a/tcg/arm/tcg-target.h
++++ b/tcg/arm/tcg-target.h
+@@ -150,7 +150,7 @@ extern bool use_neon_instructions;
+ #define TCG_TARGET_HAS_minmax_vec       1
+ #define TCG_TARGET_HAS_bitsel_vec       1
+ #define TCG_TARGET_HAS_cmpsel_vec       0
+-#define TCG_TARGET_HAS_tst_vec          0
++#define TCG_TARGET_HAS_tst_vec          1
+ 
+ #define TCG_TARGET_DEFAULT_MO (0)
+ #define TCG_TARGET_NEED_LDST_LABELS
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 6a04c73c76..3de5f50b62 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -2740,17 +2740,33 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+     case INDEX_op_cmp_vec:
+         {
+             TCGCond cond = args[3];
++            ARMInsn insn;
+ 
+-            if (cond == TCG_COND_NE) {
++            switch (cond) {
++            case TCG_COND_NE:
+                 if (const_args[2]) {
+                     tcg_out_vreg3(s, INSN_VTST, q, vece, a0, a1, a1);
+                 } else {
+                     tcg_out_vreg3(s, INSN_VCEQ, q, vece, a0, a1, a2);
+                     tcg_out_vreg2(s, INSN_VMVN, q, 0, a0, a0);
+                 }
+-            } else {
+-                ARMInsn insn;
++                break;
+ 
++            case TCG_COND_TSTNE:
++            case TCG_COND_TSTEQ:
++                if (const_args[2]) {
++                    /* (x & 0) == 0 */
++                    tcg_out_dupi_vec(s, type, MO_8, a0,
++                                     -(cond == TCG_COND_TSTEQ));
++                    break;
++                }
++                tcg_out_vreg3(s, INSN_VTST, q, vece, a0, a1, a2);
++                if (cond == TCG_COND_TSTEQ) {
++                    tcg_out_vreg2(s, INSN_VMVN, q, 0, a0, a0);
++                }
++                break;
++
++            default:
+                 if (const_args[2]) {
+                     insn = vec_cmp0_insn[cond];
+                     if (insn) {
+@@ -2769,6 +2785,7 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+                     tcg_debug_assert(insn != 0);
+                 }
+                 tcg_out_vreg3(s, insn, q, vece, a0, a1, a2);
++                break;
+             }
+         }
+         return;
+-- 
+2.34.1
+
 
