@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D48F6C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF85EC25B78
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 17:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7IED-0002Z8-2o; Wed, 15 May 2024 13:15:45 -0400
+	id 1s7IEj-0003Dp-UK; Wed, 15 May 2024 13:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s7IE9-0002Vx-KV
- for qemu-devel@nongnu.org; Wed, 15 May 2024 13:15:41 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s7IEa-00033s-FE
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 13:16:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s7IDw-0004Ir-3i
- for qemu-devel@nongnu.org; Wed, 15 May 2024 13:15:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1715793326;
- bh=3Aa95QguIKyPB/ffY8QK2/FAnKp1Khv8+aj6d0aF0Jg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=Zpx8Raqxqp+LdWf9kjifl5/CvInN1hCFgMehLvVjJqBKf2gVRkMvoYxvUGh4h2E86
- BQz2fC0r3ViUBu0ePcnwft90XvP5SCsR3m1YadTdwosJJ32rBsWHjSwGV0oSiGrrO7
- BsoFJPhWxuL9B2POF1D3HQL8ls5Y6sVEt/84anref3aaaaieQTsFEGIgiC9yxyk3aw
- hkwmk/Pk8fs9lRCJghqQXpWi4lFc0rGllgOXYCEXKt0Qib34OysNbHkUL+F3loGbHh
- gSsLWtwOii9oHgpXqNnFAvcyvGN77TRqghvxk2ytFtCEmVo83BLmjgCx9wF6tF03EW
- ZL1/fEITd7e5w==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s7IEY-0004Yi-KO
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 13:16:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715793365;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ylikw8ccb4mPv+LeyJnZKvuPdfRqWuZV3CXPrn9Nvx0=;
+ b=FBuM7VC9cS+HZ/flSeLj8YjzrH6v6jL6oDkrdqtaNmiG6awAqu1twTSeIWZswh+9BdeMkA
+ Wy6qPzpmeOlIwfb1bQ4pi1zm165qu44wIoGtgL6Vqq/KQRgiLZL2n8Gud3i9eyz0gUi75d
+ 58cpddOgYB01iEzVd1QAPaaOXso3XNA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-K__IdceSMHyvBdS5wPCoRA-1; Wed,
+ 15 May 2024 13:15:54 -0400
+X-MC-Unique: K__IdceSMHyvBdS5wPCoRA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 0EB5B3782157;
- Wed, 15 May 2024 17:15:23 +0000 (UTC)
-Message-ID: <8b26ac10-40b3-4654-8123-ce07e9dff9d9@collabora.com>
-Date: Wed, 15 May 2024 20:15:21 +0300
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B35C929ABA13;
+ Wed, 15 May 2024 17:15:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A8F01103A3AF;
+ Wed, 15 May 2024 17:15:50 +0000 (UTC)
+Date: Wed, 15 May 2024 18:15:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 5/5] virtio-gpu: fix v2 migration
+Message-ID: <ZkTtxLcgoZlzWH8A@redhat.com>
+References: <20240515141557.1277999-1-marcandre.lureau@redhat.com>
+ <20240515141557.1277999-6-marcandre.lureau@redhat.com>
+ <ZkTc4Ott5M15k55R@redhat.com> <ZkTq3xBP-0UiLV2X@x1n>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/10] virtio-gpu: Handle resource blob commands
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240511182251.1442078-1-dmitry.osipenko@collabora.com>
- <20240511182251.1442078-9-dmitry.osipenko@collabora.com>
- <727b125a-530e-4881-bde0-2215f62e155d@daynix.com>
- <4b30a810-211a-4ef6-ac28-c144615b402c@collabora.com>
- <58dfa1ce-320c-468e-9aed-fe1b092b92f8@daynix.com>
- <9c9e174d-079c-4186-8b01-95549167852c@collabora.com>
- <5b20d3dd-1749-45ba-baa7-a8c21d79f839@daynix.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <5b20d3dd-1749-45ba-baa7-a8c21d79f839@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZkTq3xBP-0UiLV2X@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,30 +92,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/24 20:04, Akihiko Odaki wrote:
->>
+On Wed, May 15, 2024 at 11:03:27AM -0600, Peter Xu wrote:
+> On Wed, May 15, 2024 at 05:03:44PM +0100, Daniel P. Berrangé wrote:
+> > Above all, I'm failing to see why there's a compelling reason
+> > for virtio_gpu to diverge from our long standing practice of
+> > adding a named property flag "virtio_scanout_vmstate_fix"
+> > on the machine class, and then setting it in machine types
+> > which need it.
 > 
-> VIRTIO_GPU_CMD_RESOURCE_UNREF should also call
-> virtio_gpu_virgl_async_unmap_resource_blob(). I guess that's the
-> original intention of having a function for this instead of inlining the
-> content of this function to virgl_cmd_resource_unmap_blob().
+> The reason to introduce that is definitely avoid introducing fields /
+> properties in similar cases in which case all the fields may represent the
+> same thing ("return true if MC is older than xxx version").  Especially
+> when such change is not bound to a new feature so in which case it won't
+> make sense to allow user to even control that propoerty, even if we
+> exported this "x-virtio-scanout-fix" property, but now we must export it
+> because compat fields require it.
+> 
+> However I think agree that having upstream specific MC versions in VMSD
+> checks is kind of unwanted.  I think the major problem is we don't have
+> that extra machine type abstract where we can have simply a number showing
+> the release of QEMU, then we can map that number to whatever
+> upstream/downstream machine types.  E.g.:
+> 
+>   Release No.         Upstream version       Downstream version
+>   50                  9.0                    Y.0
+>   51                  9.1
+>   52                  9.2                    Y.1
+>   ...
 
-Correct, previous patchset versions unmapped resource on unref.
+Downstream versions do not map cleanly to individual upstream versions
+across the whole code base. If we have two distinct features in upstream
+version X, each of them may map to a different downstream release. 
 
-In v11 I dropped unmapping from unref to avoid adding additional
-`async_unmap_in_progress` flag because normally map/unmap will be
-balanced by guest anyways.
+This can happen when downstream skips one or more upstream releases.
+One feature from the skipped release might be backported to an earlier
+downstream release, while other feature might not arrive downstream
+until they later rebase. Version based checks are an inherantly
+undesirable idea for a situation where there is any backporting taking
+place, whether its machine type versions or something else. Named feature
+/ flag based checks are always the way to go.
 
-The virtio-gpu spec doesn't tell that resource have to be implicitly
-unmapped on unref. In a case of Linux guest, it actually will be a bug
-to unref a mapped resource because guest will continue to map and use
-the destroyed resource.
 
+With regards,
+Daniel
 -- 
-Best regards,
-Dmitry
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
