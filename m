@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C846C25B7B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0A1C25B7C
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:47:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7BBO-0001BK-OL; Wed, 15 May 2024 05:44:22 -0400
+	id 1s7B8o-0001Lx-DF; Wed, 15 May 2024 05:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7BBL-0000ef-Gs
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:44:19 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1s7B8T-0007aj-Mo
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:21 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7BBI-0002Ts-Ex
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:44:19 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5210684cee6so7748568e87.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:44:15 -0700 (PDT)
+ id 1s7B8H-0001hq-2D
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:21 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-34eb52bfca3so5715596f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715766254; x=1716371054; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715766067; x=1716370867; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tIf9vb+srFpF4Auvo196IYfUQVZPeWtc01rvGTSnx/Y=;
- b=s4iMg1S/MLDjSVsrVsAnUrxVnenflwmV8XP69J53sm5CCigs9LJt/yZpWUI1Q8dCIB
- U5l2+RNUJ5g9CRoN0m7MJFYIV2bGDaoUS+q82S830kNkTF6kw3dnfg7OpaF50+LRRnyT
- AXCRH+V20l16PIefiXWR4x8tb/pDErVlVzXvFsXIRdgjGsKdcrhnaMT7xbX/yh2q3qgH
- 8Bg4Xxm99GkjnqeOkvAM4Bt100OKIUFHlwIvDZ5lxVNBnL0nQOgQTdV0AjRFh6CAe8CK
- X7oWdxtgVcxyFp/fC6933My2V94EsUbWJDtyjdvIeY8JWtLIu4Xlc5JVsg5Xzb+adYjP
- OHPA==
+ bh=ptESGmuN49Tl7V6u83AkDBF4NQdy5veoa/gvk2M2qX0=;
+ b=uxhyoAgScpAYhgS36jZb5kTESPXlyENGmC0YRqCYK7kmjXLBySjgdarBv6FAncJQXW
+ gtzFtgjVqfRnmNECOF7xeLSaJKT3A5HIOxYhJJE1Q0Er7nocDVrlgUVJAEQGOlR+ukT0
+ QL6cC2AGmuQuI88dccbKtafUQx0m0FuRb2s/gAZl5w0f4LT+6+mVJ4rKUVDmM2H6A6XX
+ OffzmCb8yhd6PyoGB+ViZngZKoGfxan9HSw4UNyTKCJQT0Uuf1liRaSsjLZYgUY8vxQk
+ FlErZd53AhIxMSId66UH6DyWWBGfgin7/pViSWrry6khfnV6hzcGO4sX4MNByGepxo8t
+ 94lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715766254; x=1716371054;
+ d=1e100.net; s=20230601; t=1715766067; x=1716370867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tIf9vb+srFpF4Auvo196IYfUQVZPeWtc01rvGTSnx/Y=;
- b=wvj0FqCQA3dfEh9ffm4EzCAZiYrhxNLVa/NvJe4EpW4jgRI66TNH68WJS6NZONOCZi
- NWRGIj9DQNMeN3hDpo8iCfD2aAD6lWGhZHeMOdxjU+3SlTmn8MuQ/i9gX72CxpIbRco3
- 7Er8XqpsARhb5o+YkNktjJ0KtdSydwt+0aBr8Lc4iN7Ixu6uKTuNJzSMQboQOTOx/Q8d
- xJZ1fhfdG4CBXIbXYjBYuBnXRVn2BDRdYBDp+PAozzzBSMeaCS9khFc80qBGJhkITk/2
- mPpETll7gMyi4C/+njoUDVQqDz3nBMNUOGLnI/36mKfXnnLj0Qt9SXBSWP3Zy0cRiThw
- Ac/w==
-X-Gm-Message-State: AOJu0YwN7ZygM0jDNVutf6vmIz+3d9tWDcq6CMC+NBsolTc79rn0JJtR
- utC1mOovIJRMQjx8M9DzOtA/a7hcO48Uujf+ypDC7BMvaeE1Zx7f4JCVXjkUOG5hm1MFthdmbbX
- PJck=
-X-Google-Smtp-Source: AGHT+IFTYziioYbyoPJ7w0+xIB4HGJuLhE4nhVVocqlMUXKp/ROYD6rVN6SEbgfyITCIS4hUTuhvAg==
-X-Received: by 2002:a05:6512:2201:b0:51f:2908:df48 with SMTP id
- 2adb3069b0e04-5220fb6afaemr12460471e87.18.1715766254156; 
- Wed, 15 May 2024 02:44:14 -0700 (PDT)
+ bh=ptESGmuN49Tl7V6u83AkDBF4NQdy5veoa/gvk2M2qX0=;
+ b=uX2Zeo/xlFXRA7clMiFPF21mjwIK7Tn7XH9N1kem5QUtAHGvjY0qbK+XrppJkrS/L8
+ WJArkvjBgieGhy3IVRE7ndYf//YbsOYSvGO5decQgbfNCa4myaRJWtY4qui7kaETheH8
+ RWNVVPbjCtN3PqpMOLhLWLM6IRtsgzSgIgGgwJAg+2Avab9EAx3+B6+AwkaL5IFUFTGr
+ urwStHMsk4D8f74G7vHi7ybpnOHOlSxQe6yTF0RY0pGtuIxp6l8SBwbcJu0m3dcULTRP
+ 1ObMn6JKjcuCMrycg0qBgNy/yG3UlMiscmPLTERaNBbkQ4R+4/6dThxPnGytK7CJW0TA
+ eQVQ==
+X-Gm-Message-State: AOJu0Yzc1WuzihpwnDjQ0adBEjt6sMvEoYbZvJwmjYYTLHQJN5gS3msY
+ 2jSkQaNRcfbYXc7W01HdNcRc2rE1Fezx9CBGIJwAw78duCnA3slUT1NPR2e/YpmqnP8AEkJtAkV
+ DNhc=
+X-Google-Smtp-Source: AGHT+IETcsOEHKF/wwOx2GXvqJ576ANlKY0gUX7Pt6ynU6QanTSgptSjM23jrxaJdezIGMrmDJB4TQ==
+X-Received: by 2002:a5d:52d1:0:b0:34e:af06:a096 with SMTP id
+ ffacd0b85a97d-3504a73deafmr11833030f8f.31.1715766067466; 
+ Wed, 15 May 2024 02:41:07 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbc334sm15926239f8f.103.2024.05.15.02.44.13
+ ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.41.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 02:44:13 -0700 (PDT)
+ Wed, 15 May 2024 02:41:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PULL 41/43] target/hppa: Implement CF_PCREL
-Date: Wed, 15 May 2024 11:40:41 +0200
-Message-Id: <20240515094043.82850-42-richard.henderson@linaro.org>
+Subject: [PULL 31/43] linux-user/hppa: Force all code addresses to PRIV_USER
+Date: Wed, 15 May 2024 11:40:31 +0200
+Message-Id: <20240515094043.82850-32-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515094043.82850-1-richard.henderson@linaro.org>
 References: <20240515094043.82850-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,205 +92,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the groundwork has been laid, enabling CF_PCREL within the
-translator proper is a simple matter of updating copy_iaoq_entry
-and install_iaq_entries.
-
-We also need to modify the unwind info, since we no longer have
-absolute addresses to install.
-
-As expected, this reduces the runtime overhead of compilation when
-running a Linux kernel with address space randomization enabled.
+The kernel does this along the return path to user mode.
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.c       | 19 ++++++------
- target/hppa/translate.c | 68 ++++++++++++++++++++++++++++-------------
- 2 files changed, 55 insertions(+), 32 deletions(-)
+ linux-user/hppa/target_cpu.h |  4 ++--
+ target/hppa/cpu.h            |  3 +++
+ linux-user/elfload.c         |  4 ++--
+ linux-user/hppa/cpu_loop.c   | 14 +++++++-------
+ linux-user/hppa/signal.c     |  6 ++++--
+ target/hppa/cpu.c            |  7 +++++--
+ target/hppa/gdbstub.c        |  6 ++++++
+ target/hppa/translate.c      |  4 ++--
+ 8 files changed, 31 insertions(+), 17 deletions(-)
 
+diff --git a/linux-user/hppa/target_cpu.h b/linux-user/hppa/target_cpu.h
+index aacf3e9e02..4b84422a90 100644
+--- a/linux-user/hppa/target_cpu.h
++++ b/linux-user/hppa/target_cpu.h
+@@ -28,8 +28,8 @@ static inline void cpu_clone_regs_child(CPUHPPAState *env, target_ulong newsp,
+     /* Indicate child in return value.  */
+     env->gr[28] = 0;
+     /* Return from the syscall.  */
+-    env->iaoq_f = env->gr[31];
+-    env->iaoq_b = env->gr[31] + 4;
++    env->iaoq_f = env->gr[31] | PRIV_USER;
++    env->iaoq_b = env->iaoq_f + 4;
+ }
+ 
+ static inline void cpu_clone_regs_parent(CPUHPPAState *env, unsigned flags)
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index c37b4e12fb..5a1e720bb6 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -42,6 +42,9 @@
+ #define MMU_IDX_TO_P(MIDX)          (((MIDX) - MMU_KERNEL_IDX) & 1)
+ #define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P) + MMU_KERNEL_IDX)
+ 
++#define PRIV_KERNEL       0
++#define PRIV_USER         3
++
+ #define TARGET_INSN_START_EXTRA_WORDS 2
+ 
+ /* No need to flush MMU_ABS*_IDX  */
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index b473cda6b4..c1e1511ff2 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -1887,8 +1887,8 @@ static inline void init_thread(struct target_pt_regs *regs,
+ static inline void init_thread(struct target_pt_regs *regs,
+                                struct image_info *infop)
+ {
+-    regs->iaoq[0] = infop->entry;
+-    regs->iaoq[1] = infop->entry + 4;
++    regs->iaoq[0] = infop->entry | PRIV_USER;
++    regs->iaoq[1] = regs->iaoq[0] + 4;
+     regs->gr[23] = 0;
+     regs->gr[24] = infop->argv;
+     regs->gr[25] = infop->argc;
+diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
+index d5232f37fe..bc093b8fe8 100644
+--- a/linux-user/hppa/cpu_loop.c
++++ b/linux-user/hppa/cpu_loop.c
+@@ -129,8 +129,8 @@ void cpu_loop(CPUHPPAState *env)
+             default:
+                 env->gr[28] = ret;
+                 /* We arrived here by faking the gateway page.  Return.  */
+-                env->iaoq_f = env->gr[31];
+-                env->iaoq_b = env->gr[31] + 4;
++                env->iaoq_f = env->gr[31] | PRIV_USER;
++                env->iaoq_b = env->iaoq_f + 4;
+                 break;
+             case -QEMU_ERESTARTSYS:
+             case -QEMU_ESIGRETURN:
+@@ -140,8 +140,8 @@ void cpu_loop(CPUHPPAState *env)
+         case EXCP_SYSCALL_LWS:
+             env->gr[21] = hppa_lws(env);
+             /* We arrived here by faking the gateway page.  Return.  */
+-            env->iaoq_f = env->gr[31];
+-            env->iaoq_b = env->gr[31] + 4;
++            env->iaoq_f = env->gr[31] | PRIV_USER;
++            env->iaoq_b = env->iaoq_f + 4;
+             break;
+         case EXCP_IMP:
+             force_sig_fault(TARGET_SIGSEGV, TARGET_SEGV_MAPERR, env->iaoq_f);
+@@ -152,9 +152,9 @@ void cpu_loop(CPUHPPAState *env)
+         case EXCP_PRIV_OPR:
+             /* check for glibc ABORT_INSTRUCTION "iitlbp %r0,(%sr0, %r0)" */
+             if (env->cr[CR_IIR] == 0x04000000) {
+-		    force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC, env->iaoq_f);
++                force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC, env->iaoq_f);
+             } else {
+-		    force_sig_fault(TARGET_SIGILL, TARGET_ILL_PRVOPC, env->iaoq_f);
++                force_sig_fault(TARGET_SIGILL, TARGET_ILL_PRVOPC, env->iaoq_f);
+             }
+             break;
+         case EXCP_PRIV_REG:
+@@ -170,7 +170,7 @@ void cpu_loop(CPUHPPAState *env)
+             force_sig_fault(TARGET_SIGFPE, 0, env->iaoq_f);
+             break;
+         case EXCP_BREAK:
+-            force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->iaoq_f & ~3);
++            force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->iaoq_f);
+             break;
+         case EXCP_DEBUG:
+             force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->iaoq_f);
+diff --git a/linux-user/hppa/signal.c b/linux-user/hppa/signal.c
+index 682ba25922..f6f094c960 100644
+--- a/linux-user/hppa/signal.c
++++ b/linux-user/hppa/signal.c
+@@ -101,7 +101,9 @@ static void restore_sigcontext(CPUArchState *env, struct target_sigcontext *sc)
+     cpu_hppa_loaded_fr0(env);
+ 
+     __get_user(env->iaoq_f, &sc->sc_iaoq[0]);
++    env->iaoq_f |= PRIV_USER;
+     __get_user(env->iaoq_b, &sc->sc_iaoq[1]);
++    env->iaoq_b |= PRIV_USER;
+     __get_user(env->cr[CR_SAR], &sc->sc_sar);
+ }
+ 
+@@ -162,8 +164,8 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+         unlock_user(fdesc, haddr, 0);
+         haddr = dest;
+     }
+-    env->iaoq_f = haddr;
+-    env->iaoq_b = haddr + 4;
++    env->iaoq_f = haddr | PRIV_USER;
++    env->iaoq_b = env->iaoq_f + 4;
+     env->psw_n = 0;
+     return;
+ 
 diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 5f0df0697a..f0507874ce 100644
+index be8c558014..a007de5521 100644
 --- a/target/hppa/cpu.c
 +++ b/target/hppa/cpu.c
-@@ -62,10 +62,6 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-     *pc = hppa_cpu_get_pc(env_cpu(env));
-     flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
- 
--    if (hppa_is_pa20(env)) {
--        cs_base = env->iaoq_f & MAKE_64BIT_MASK(32, 32);
--    }
--
-     /*
-      * The only really interesting case is if IAQ_Back is on the same page
-      * as IAQ_Front, so that we can use goto_tb between the blocks.  In all
-@@ -113,19 +109,19 @@ static void hppa_restore_state_to_opc(CPUState *cs,
-                                       const TranslationBlock *tb,
-                                       const uint64_t *data)
+@@ -32,6 +32,9 @@ static void hppa_cpu_set_pc(CPUState *cs, vaddr value)
  {
--    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = cpu_env(cs);
+     HPPACPU *cpu = HPPA_CPU(cs);
  
--    cpu->env.iaoq_f = data[0];
--    if (data[1] != (target_ulong)-1) {
--        cpu->env.iaoq_b = data[1];
-+    env->iaoq_f = (env->iaoq_f & TARGET_PAGE_MASK) | data[0];
-+    if (data[1] != INT32_MIN) {
-+        env->iaoq_b = env->iaoq_f + data[1];
-     }
--    cpu->env.unwind_breg = data[2];
-+    env->unwind_breg = data[2];
-     /*
-      * Since we were executing the instruction at IAOQ_F, and took some
-      * sort of action that provoked the cpu_restore_state, we can infer
-      * that the instruction was not nullified.
-      */
--    cpu->env.psw_n = 0;
-+    env->psw_n = 0;
++#ifdef CONFIG_USER_ONLY
++    value |= PRIV_USER;
++#endif
+     cpu->env.iaoq_f = value;
+     cpu->env.iaoq_b = value + 4;
  }
+@@ -93,8 +96,8 @@ static void hppa_cpu_synchronize_from_tb(CPUState *cs,
+     tcg_debug_assert(!tcg_cflags_has(cs, CF_PCREL));
  
- static bool hppa_cpu_has_work(CPUState *cs)
-@@ -191,6 +187,9 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
-         hppa_ptlbe(&cpu->env);
-     }
- #endif
-+
-+    /* Use pc-relative instructions always to simplify the translator. */
-+    tcg_cflags_set(cs, CF_PCREL);
- }
- 
- static void hppa_cpu_initfn(Object *obj)
+ #ifdef CONFIG_USER_ONLY
+-    cpu->env.iaoq_f = tb->pc;
+-    cpu->env.iaoq_b = tb->cs_base;
++    cpu->env.iaoq_f = tb->pc | PRIV_USER;
++    cpu->env.iaoq_b = tb->cs_base | PRIV_USER;
+ #else
+     /* Recover the IAOQ values from the GVA + PRIV.  */
+     uint32_t priv = (tb->flags >> TB_FLAG_PRIV_SHIFT) & 3;
+diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+index 4a965b38d7..0daa52f7af 100644
+--- a/target/hppa/gdbstub.c
++++ b/target/hppa/gdbstub.c
+@@ -163,12 +163,18 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         env->cr[CR_SAR] = val & (hppa_is_pa20(env) ? 63 : 31);
+         break;
+     case 33:
++#ifdef CONFIG_USER_ONLY
++        val |= PRIV_USER;
++#endif
+         env->iaoq_f = val;
+         break;
+     case 34:
+         env->iasq_f = (uint64_t)val << 32;
+         break;
+     case 35:
++#ifdef CONFIG_USER_ONLY
++        val |= PRIV_USER;
++#endif
+         env->iaoq_b = val;
+         break;
+     case 36:
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index c2cee89a6a..c0920a3c29 100644
+index 16b25a9ede..12359bafb6 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -47,7 +47,7 @@ typedef struct DisasIAQE {
-     TCGv_i64 space;
-     /* IAOQ base; may be null for relative address. */
-     TCGv_i64 base;
--    /* IAOQ addend; if base is null, relative to ctx->iaoq_first. */
-+    /* IAOQ addend; if base is null, relative to cpu_iaoq_f. */
-     int64_t disp;
- } DisasIAQE;
+@@ -2054,7 +2054,7 @@ static void do_page_zero(DisasContext *ctx)
  
-@@ -664,11 +664,7 @@ static DisasIAQE iaqe_next_absv(DisasContext *ctx, TCGv_i64 var)
- static void copy_iaoq_entry(DisasContext *ctx, TCGv_i64 dest,
-                             const DisasIAQE *src)
- {
--    if (src->base == NULL) {
--        tcg_gen_movi_i64(dest, ctx->iaoq_first + src->disp);
--    } else {
--        tcg_gen_addi_i64(dest, src->base, src->disp);
--    }
-+    tcg_gen_addi_i64(dest, src->base ? : cpu_iaoq_f, src->disp);
- }
+             tcg_gen_st_i64(cpu_gr[26], tcg_env,
+                            offsetof(CPUHPPAState, cr[27]));
+-            tcg_gen_ori_i64(next.base, cpu_gr[31], 3);
++            tcg_gen_ori_i64(next.base, cpu_gr[31], PRIV_USER);
+             install_iaq_entries(ctx, &next, NULL);
+             ctx->base.is_jmp = DISAS_IAQ_N_UPDATED;
+         }
+@@ -4583,7 +4583,7 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->is_pa20 = hppa_is_pa20(cpu_env(cs));
  
- static void install_iaq_entries(DisasContext *ctx, const DisasIAQE *f,
-@@ -680,8 +676,28 @@ static void install_iaq_entries(DisasContext *ctx, const DisasIAQE *f,
-         b_next = iaqe_incr(f, 4);
-         b = &b_next;
-     }
--    copy_iaoq_entry(ctx, cpu_iaoq_f, f);
--    copy_iaoq_entry(ctx, cpu_iaoq_b, b);
-+
-+    /*
-+     * There is an edge case
-+     *    bv   r0(rN)
-+     *    b,l  disp,r0
-+     * for which F will use cpu_iaoq_b (from the indirect branch),
-+     * and B will use cpu_iaoq_f (from the direct branch).
-+     * In this case we need an extra temporary.
-+     */
-+    if (f->base != cpu_iaoq_b) {
-+        copy_iaoq_entry(ctx, cpu_iaoq_b, b);
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, f);
-+    } else if (f->base == b->base) {
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, f);
-+        tcg_gen_addi_i64(cpu_iaoq_b, cpu_iaoq_f, b->disp - f->disp);
-+    } else {
-+        TCGv_i64 tmp = tcg_temp_new_i64();
-+        copy_iaoq_entry(ctx, tmp, b);
-+        copy_iaoq_entry(ctx, cpu_iaoq_f, f);
-+        tcg_gen_mov_i64(cpu_iaoq_b, tmp);
-+    }
-+
-     if (f->space) {
-         tcg_gen_mov_i64(cpu_iasq_f, f->space);
-     }
-@@ -3980,9 +3996,8 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
-         /* Adjust the dest offset for the privilege change from the PTE. */
-         TCGv_i64 off = tcg_temp_new_i64();
- 
--        gen_helper_b_gate_priv(off, tcg_env,
--                               tcg_constant_i64(ctx->iaoq_first
--                                                + ctx->iaq_f.disp));
-+        copy_iaoq_entry(ctx, off, &ctx->iaq_f);
-+        gen_helper_b_gate_priv(off, tcg_env, off);
- 
-         ctx->iaq_j.base = off;
-         ctx->iaq_j.disp = disp + 8;
-@@ -4603,7 +4618,7 @@ static bool trans_diag_unimp(DisasContext *ctx, arg_diag_unimp *a)
- static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
--    uint64_t cs_base, iaoq_f, iaoq_b;
-+    uint64_t cs_base;
-     int bound;
- 
-     ctx->cs = cs;
-@@ -4622,12 +4637,8 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-                     : ctx->tb_flags & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
- #endif
- 
--    /* Recover the IAOQ values from the GVA + PRIV.  */
-     cs_base = ctx->base.tb->cs_base;
--    iaoq_f = cs_base & MAKE_64BIT_MASK(32, 32);
--    iaoq_f |= ctx->base.pc_first & MAKE_64BIT_MASK(2, 30);
--    iaoq_f |= ctx->privilege;
--    ctx->iaoq_first = iaoq_f;
-+    ctx->iaoq_first = ctx->base.pc_first + ctx->privilege;
- 
-     if (unlikely(cs_base & CS_BASE_DIFFSPACE)) {
-         ctx->iaq_b.space = cpu_iasq_b;
-@@ -4635,8 +4646,9 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     } else if (unlikely(cs_base & CS_BASE_DIFFPAGE)) {
-         ctx->iaq_b.base = cpu_iaoq_b;
-     } else {
--        iaoq_b = (iaoq_f & TARGET_PAGE_MASK) | (cs_base & ~TARGET_PAGE_MASK);
--        ctx->iaq_b.disp = iaoq_b - iaoq_f;
-+        uint64_t iaoq_f_pgofs = ctx->iaoq_first & ~TARGET_PAGE_MASK;
-+        uint64_t iaoq_b_pgofs = cs_base & ~TARGET_PAGE_MASK;
-+        ctx->iaq_b.disp = iaoq_b_pgofs - iaoq_f_pgofs;
-     }
- 
-     ctx->zero = tcg_constant_i64(0);
-@@ -4663,11 +4675,23 @@ static void hppa_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
- static void hppa_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-+    uint64_t iaoq_f, iaoq_b;
-+    int64_t diff;
- 
-     tcg_debug_assert(!iaqe_variable(&ctx->iaq_f));
--    tcg_gen_insn_start(ctx->iaoq_first + ctx->iaq_f.disp,
--                       (iaqe_variable(&ctx->iaq_b) ? -1 :
--                        ctx->iaoq_first + ctx->iaq_b.disp), 0);
-+
-+    iaoq_f = ctx->iaoq_first + ctx->iaq_f.disp;
-+    if (iaqe_variable(&ctx->iaq_b)) {
-+        diff = INT32_MIN;
-+    } else {
-+        iaoq_b = ctx->iaoq_first + ctx->iaq_b.disp;
-+        diff = iaoq_b - iaoq_f;
-+        /* Direct branches can only produce a 24-bit displacement. */
-+        tcg_debug_assert(diff == (int32_t)diff);
-+        tcg_debug_assert(diff != INT32_MIN);
-+    }
-+
-+    tcg_gen_insn_start(iaoq_f & ~TARGET_PAGE_MASK, diff, 0);
-     ctx->insn_start_updated = false;
- }
- 
+ #ifdef CONFIG_USER_ONLY
+-    ctx->privilege = MMU_IDX_TO_PRIV(MMU_USER_IDX);
++    ctx->privilege = PRIV_USER;
+     ctx->mmu_idx = MMU_USER_IDX;
+     ctx->iaoq_first = ctx->base.pc_first | ctx->privilege;
+     ctx->iaq_b.disp = ctx->base.tb->cs_base - ctx->base.pc_first;
 -- 
 2.34.1
 
