@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9D4C25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F00C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:02:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79ZI-0003Ed-5w; Wed, 15 May 2024 04:00:56 -0400
+	id 1s79Rh-00048H-IQ; Wed, 15 May 2024 03:53:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1s79ZE-0002mZ-Ll
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:00:53 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s79Rc-00045A-9X
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:00 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1s79ZC-0006XU-MJ
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:00:52 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5c6bd3100fcso3993460a12.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 01:00:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s79RZ-0001ZK-60
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:52:59 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-420180b5898so18897865e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1715760049; x=1716364849; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715759576; x=1716364376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QBqdliMEnz302NXVukyGkGL9Vj4A6ULArkG/4ozIHhk=;
- b=jw6J5V1gy7qFGr8680o6OTxCTB4+woXmwgBtwQT3v8OnjvXyXQ9lUSOq/UxOTzJbc8
- TxHyNP2GFJFEW/716sMBemzrPWjdEfRXv0FvkU0KKgZPQlDvZ3J/xY5yYXCR4aJO8MKB
- M+XGpKgxzrfbbUukcE15BM6NtVtMAzeAn5zAYOqwcxYOCODy7uA0CFAVRFHqr/HvF+/m
- iwx5PgxVeu4LaULuAKi5gDtyALgiVQmdO96+kI/pK2TDrQNcsJhWS76dHyjQ/98JJRGo
- Z/4tTxka+i3NQbhQeB4lLwOw4mIaC4+KRpwovj0c+5PDiftXVv7u8nDbJbPU3SueArxg
- 2uXA==
+ bh=CtQK7Z5/e08tg2ZG57AjvcglO+yjRFx9a1dcx4y70SE=;
+ b=IERvbZaenhzUbRe8lCagMk4x/mlhJswv8u1YyHQUqaYWnuZtz1CZEBmaVq+jn1FJKj
+ FAiHgIwazbwQ256YUvVCyLXRryo8VGmc6vXdnlJw+gg998f6+YPArYIop+dOXZF9Dtk3
+ TUOdcCVZ16fq3UtTt1f5QtyZTm79uVhQK6IANpFeFwAJHrku6Er1D8ccktf+J/a3kobb
+ m3zUzpbtAks2InYhJvh1jbcA6njtyPuQ7HS+pX6dC5szo/C45Rhe+luU6hRWSseinwmx
+ jUFlhxfeOMFKshtnz823BTjrN9ksahns0x2PTfx4w6oaR3Cpz2umjJpaJaDF9vm1Su54
+ SpNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715760049; x=1716364849;
+ d=1e100.net; s=20230601; t=1715759576; x=1716364376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QBqdliMEnz302NXVukyGkGL9Vj4A6ULArkG/4ozIHhk=;
- b=mH7iWG4vUSQ52HEI09GLEkXga07kb3pITaIY9Wpcj89qeJoour0Hww3Qxi5Q5S9QB1
- CsPv4L4e6aImgVLKAhBdEviySU56NxOEr/Zf6PLiy+3d17D7DJzGB5AFB4AZb0AOh2FM
- dHisfSRLK6JgglUh/ylro6O/oi7qTPnQVO5Jvk5V1z7GrEDMqFQp4VXT5dOdIF9gybRv
- vvVMMF8ayiF1hi0oj4PSiiyU87qTkG8OGW70fHALYyqskmm0rLeRTcW+ugIeg/by3bYV
- OnFonCUwucm4K1YWL2EM3Kt8pNTfCOS3J0HqH91aozMur3ODUVmYaMWq6TjfFerRwyRj
- u+0g==
-X-Gm-Message-State: AOJu0YzKUerY4jJ6FUZtGqduV6GOLyvlhG/n4CIqwFtW7jrPqhJueSk5
- SM5Bg84rXjJFY0fOgRZ6+wJ9Gs1phqae5N/hfA63kp+fuYwJrWQywIE0Qluxj1ZqLwBkuD1WSCn
- yw5id8mpIp7OYKyvP6qC09EVOYiqE9RX0w9YpwWImktWZkt48B5+fw7CIZ3hsVj+1tcyXG/UvsP
- 2OW59j4A5xY2cRR+7IR5uTPtHvoA+MNHSu5Bg=
-X-Google-Smtp-Source: AGHT+IF0ZVMrPHTHmsmfiZo0bK58t5IXJIUZ/nNUSrps4Pcnm4rZU2iZhbq8D8pzuia1e9uCqsD/Wg==
-X-Received: by 2002:a17:90b:1c0d:b0:2b5:46b3:2e8a with SMTP id
- 98e67ed59e1d1-2b6ccd76db3mr11925158a91.39.1715760048295; 
- Wed, 15 May 2024 01:00:48 -0700 (PDT)
-Received: from hsinchu36-syssw02.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0b9d1642sm111418795ad.31.2024.05.15.01.00.46
+ bh=CtQK7Z5/e08tg2ZG57AjvcglO+yjRFx9a1dcx4y70SE=;
+ b=p7O8k5szPdUrj1rZsCda4QjKVZkNEYViS57vxxLGklKMpl0JQEuv1fjSDtVJtm/mQ1
+ 2x4PuOfDhbEVQIMatZ9EhF6LfMiLevKm8RMGtY6H2/PMKeWBnsp5kY21joDE7nOKT8zT
+ 4yKbeEKbLEjvLBmJx0Y2myg7SCICbkRsOmSBrLE24s9G5ou7KpI8hhocQym8G1/0iyKI
+ kEdbcm2+mATufg9DnyIG+EWD2AMA7v5zl7bdoY6oVKI7EUm+q7UFN5synh3EJsumL8ni
+ wKNG6eEUofr9MDwq57vcFCzaTEAymR2AaYi9tN3wQPXRcPnWAMq0QUi9RhLJPfRwAscU
+ 4gHA==
+X-Gm-Message-State: AOJu0YyLZc1m7bcU1UXlxM6yKckIH5RndaTW87U6oimFw686CMmUGXGd
+ zYaWSJ8lJrp1H4Z40vd4CYcurnNruD1Q6CZQvdRqjEIh6NJNE9ohBHvrtMogT71pjmR9YHj3VbL
+ rSh4=
+X-Google-Smtp-Source: AGHT+IFZDTUoIfvdFaFjiR6wL3uvvuLEhv8DXG7nZiF3Wztz8Ypwh38hbExnnJ2xXbZvX85OgadJJQ==
+X-Received: by 2002:a05:600c:3108:b0:419:678e:64ce with SMTP id
+ 5b1f17b1804b1-41fead6ae05mr118953635e9.36.1715759575849; 
+ Wed, 15 May 2024 00:52:55 -0700 (PDT)
+Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fccee9292sm222611855e9.37.2024.05.15.00.52.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 01:00:47 -0700 (PDT)
-From: "Fea.Wang" <fea.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: "Fea.Wang" <fea.wang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
- Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [RESEND PATCH v2 3/5] target/riscv: Add 'P1P13' bit in SMSTATEEN0
-Date: Wed, 15 May 2024 16:06:00 +0800
-Message-Id: <20240515080605.2675399-4-fea.wang@sifive.com>
+ Wed, 15 May 2024 00:52:55 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/34] plugins: Copy memory in qemu_plugin_insn_data
+Date: Wed, 15 May 2024 09:52:22 +0200
+Message-Id: <20240515075247.68024-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515080605.2675399-1-fea.wang@sifive.com>
-References: <20240515080605.2675399-1-fea.wang@sifive.com>
+In-Reply-To: <20240515075247.68024-1-richard.henderson@linaro.org>
+References: <20240515075247.68024-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=fea.wang@sifive.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +94,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based on privilege 1.13 spec, there should be a bit56 for 'P1P13' in
-SMSTATEEN0 that controls access to the hedeleg.
+Instead of returning a host pointer, copy the data into
+storage provided by the caller.
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu_bits.h | 1 +
- target/riscv/csr.c      | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ include/qemu/qemu-plugin.h | 15 +++++++--------
+ contrib/plugins/execlog.c  |  5 +++--
+ contrib/plugins/howvec.c   |  4 ++--
+ plugins/api.c              |  7 +++++--
+ 4 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 74318a925c..28bd3fb0b4 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -315,6 +315,7 @@
- #define SMSTATEEN0_CS       (1ULL << 0)
- #define SMSTATEEN0_FCSR     (1ULL << 1)
- #define SMSTATEEN0_JVT      (1ULL << 2)
-+#define SMSTATEEN0_P1P13    (1ULL << 56)
- #define SMSTATEEN0_HSCONTXT (1ULL << 57)
- #define SMSTATEEN0_IMSIC    (1ULL << 58)
- #define SMSTATEEN0_AIA      (1ULL << 59)
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 6b460ee0e8..bdbc8de0e2 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2248,6 +2248,10 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
-         wr_mask |= SMSTATEEN0_FCSR;
-     }
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 4fc6c3739b..5f36c2d1ac 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -61,7 +61,7 @@ typedef uint64_t qemu_plugin_id_t;
  
-+    if (env->priv_ver >= PRIV_VERSION_1_13_0) {
-+        wr_mask |= SMSTATEEN0_P1P13;
-+    }
+ extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
+ 
+-#define QEMU_PLUGIN_VERSION 2
++#define QEMU_PLUGIN_VERSION 3
+ 
+ /**
+  * struct qemu_info_t - system information for plugins
+@@ -394,17 +394,16 @@ struct qemu_plugin_insn *
+ qemu_plugin_tb_get_insn(const struct qemu_plugin_tb *tb, size_t idx);
+ 
+ /**
+- * qemu_plugin_insn_data() - return ptr to instruction data
++ * qemu_plugin_insn_data() - copy instruction data
+  * @insn: opaque instruction handle from qemu_plugin_tb_get_insn()
++ * @dest: destination into which data is copied
++ * @len: length of dest
+  *
+- * Note: data is only valid for duration of callback. See
+- * qemu_plugin_insn_size() to calculate size of stream.
+- *
+- * Returns: pointer to a stream of bytes containing the value of this
+- * instructions opcode.
++ * Returns the number of bytes copied, minimum of @len and insn size.
+  */
+ QEMU_PLUGIN_API
+-const void *qemu_plugin_insn_data(const struct qemu_plugin_insn *insn);
++size_t qemu_plugin_insn_data(const struct qemu_plugin_insn *insn,
++                             void *dest, size_t len);
+ 
+ /**
+  * qemu_plugin_insn_size() - return size of instruction
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index fab18113d4..371db97eb1 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -258,8 +258,9 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+                                                        NULL);
+             }
+         } else {
+-            uint32_t insn_opcode;
+-            insn_opcode = *((uint32_t *)qemu_plugin_insn_data(insn));
++            uint32_t insn_opcode = 0;
++            qemu_plugin_insn_data(insn, &insn_opcode, sizeof(insn_opcode));
 +
-     return write_mstateen(env, csrno, wr_mask, new_val);
- }
+             char *output = g_strdup_printf("0x%"PRIx64", 0x%"PRIx32", \"%s\"",
+                                            insn_vaddr, insn_opcode, insn_disas);
  
-@@ -2283,6 +2287,10 @@ static RISCVException write_mstateen0h(CPURISCVState *env, int csrno,
+diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
+index 94bbc53820..9be67f7453 100644
+--- a/contrib/plugins/howvec.c
++++ b/contrib/plugins/howvec.c
+@@ -252,7 +252,7 @@ static struct qemu_plugin_scoreboard *find_counter(
  {
-     uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
+     int i;
+     uint64_t *cnt = NULL;
+-    uint32_t opcode;
++    uint32_t opcode = 0;
+     InsnClassExecCount *class = NULL;
  
-+    if (env->priv_ver >= PRIV_VERSION_1_13_0) {
-+        wr_mask |= SMSTATEEN0_P1P13;
-+    }
-+
-     return write_mstateenh(env, csrno, wr_mask, new_val);
+     /*
+@@ -261,7 +261,7 @@ static struct qemu_plugin_scoreboard *find_counter(
+      * They would probably benefit from a more tailored plugin.
+      * However we can fall back to individual instruction counting.
+      */
+-    opcode = *((uint32_t *)qemu_plugin_insn_data(insn));
++    qemu_plugin_insn_data(insn, &opcode, sizeof(opcode));
+ 
+     for (i = 0; !cnt && i < class_table_sz; i++) {
+         class = &class_table[i];
+diff --git a/plugins/api.c b/plugins/api.c
+index 2144da1fe8..5ff4e9d325 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -216,9 +216,12 @@ qemu_plugin_tb_get_insn(const struct qemu_plugin_tb *tb, size_t idx)
+  * instruction being translated.
+  */
+ 
+-const void *qemu_plugin_insn_data(const struct qemu_plugin_insn *insn)
++size_t qemu_plugin_insn_data(const struct qemu_plugin_insn *insn,
++                             void *dest, size_t len)
+ {
+-    return insn->data->data;
++    len = MIN(len, insn->data->len);
++    memcpy(dest, insn->data->data, len);
++    return len;
  }
  
+ size_t qemu_plugin_insn_size(const struct qemu_plugin_insn *insn)
 -- 
 2.34.1
 
