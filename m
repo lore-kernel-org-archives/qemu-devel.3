@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48ED7C41513
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A412C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7B8c-0008PW-Dg; Wed, 15 May 2024 05:41:30 -0400
+	id 1s7B8Q-00074x-Ia; Wed, 15 May 2024 05:41:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8G-0006K4-N5
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:08 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1s7B8O-0006vz-23
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:16 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8E-0001hM-QI
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:08 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-34d7d04808bso5054090f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:06 -0700 (PDT)
+ id 1s7B8L-0001it-B3
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:15 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-41ffad2426eso49840455e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715766065; x=1716370865; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715766072; x=1716370872; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XtI0L2FbvT0+cE+JqntZXXoDx+OIT8JGAxtjntkSnko=;
- b=MbEIwlkUfdugcFc7ETvedqtp0N/GphYjoD9Wx4dC04736yOlGUii8BnQoIZRWuBGKS
- OTBI1RpAzzfXJaVdUcSdwcnXRQXiLt3gdMyis6jmzT7sGkDoGsnIMQXf0AnrVm1L4jyu
- QQsOhJGkKCNsRdvcwyt2N6NnG9nt+Ws7HczVmWOKjevd8elhLs+a7f7eVEqjGVrJWIgu
- qN+GajlSpWHcfTt3koPqMGlxdlsNmJgyuLPAzSc4oTIorW9Pa/7D8F1OiQmkg7Tm8QVH
- dY6RbhlpLpgMROuk5e31YuIWaB+KXoo3pV6f5vbnK9gDuJSWjEYot/s/2iIMYFBCecLm
- zYuQ==
+ bh=8eoH9KfOs+hCN0P8TyHxNIpq+Yw+C+KsTM42MvAgaJI=;
+ b=sy7w0d4el29HGKs63RRAzzvX7YCVekXy6Klz0Fr2BR7f8aFnNb3OA2wRBEpchcpiTG
+ emCqhutPCs1paDIXxWoT8i/d+t5WMQAsmAVI2z0kpcSzRQKiyS/9ZVT3Azfe3rBSzYYO
+ XoZffeddls59ABfy+njkjEXaiPe+k38ryTKOWIv92Z3ImuEL7j/9Nclj7MRYvvVke9tH
+ clkxMs2qlFwL5QIrXi22474NX5aq/F8DCt233id6VCqUpJ/qJSOkwLJReS2gSJC4kyA3
+ AOdzzWha9dEqCNpqsXxqqdwZFbJz56MIwuB5e5y/nFapr0DvNDMt5n+WDOypZVJNk4oU
+ i1BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715766065; x=1716370865;
+ d=1e100.net; s=20230601; t=1715766072; x=1716370872;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XtI0L2FbvT0+cE+JqntZXXoDx+OIT8JGAxtjntkSnko=;
- b=UMxjofwkD2vXdk7wMkKhDCg1s3XcGSaIWdSHFxXi8erhZJrPjhKXQDVXwUtfaBsypA
- gqQUJnXKCH72jjmOiu71gKHA8rcIB5JP4tUrjYvCzh5WV2xY+z7nV+yGOc7EEh0lG14A
- Ps3ADyE0ETJ0nEW5tJ1ZFwodMKg1Ka8w2OeR73eAYk1iN6IK6+nDOf98jO/9PxwoDO/e
- w2Pl3GZxng09gA6J/P0CI/4+mQLxDRAD8ve/9TDIjrlyar62kCxyoOiBn77i/ojnxS74
- QvR8GjOtU7MamOYrfilPUOHnGMrdvgV0sYNi+QdoYSLccZS/OQwsJ4w0NNomD+E1DDqm
- NSWw==
-X-Gm-Message-State: AOJu0Yy1dst1401nld82b1SopoTvO0m3I3vEXKzqdiF3TJ9fu+CPHp3L
- XLLO+l1NNn7kWYI8y2JBvfEu7HMVq91iBoVBMzr0jDr+yVyClpIk4IRughXzrrnNRBdACdainOy
- cQZw=
-X-Google-Smtp-Source: AGHT+IGNT7J0qzv4KPH4c5dMBSKbUDkuKSviwlhqYw1sC2Hx4RKoeUQEzq8a7pw4yEQhKaGGgTxh2w==
-X-Received: by 2002:a05:6000:4d1:b0:346:59e9:65b6 with SMTP id
- ffacd0b85a97d-351c87e79c6mr5501622f8f.6.1715766065409; 
- Wed, 15 May 2024 02:41:05 -0700 (PDT)
+ bh=8eoH9KfOs+hCN0P8TyHxNIpq+Yw+C+KsTM42MvAgaJI=;
+ b=SDTY48IhS0k9rR9MYwTWgQQQZpFb/aTvwVUwHGieCTs82IJ4Z5R1gqym2aJnNr9t32
+ Z32Zy6N4SJyxkBRUXUUkQummt1p0j6wYkwf4HulBVrAtk5j5sSJ2uE7O1J8CvIAkc2Ow
+ XY+6TtS1U9WBeJ+Wc5yiDRikvDiIKl2LJKDMh8UYjs5sr/u2wyXB+xCwIw8C2zkgvMKk
+ eLhCXXI78oUEDYn6J2klvYg1BjqvkYNo8x1j2ShVkjMJ7mXOSQNQZy/reQboZoGjNnqw
+ gMm/Aw6WDYUHW5WHMkeVsu4t2CA2Owz2IiHS7/vaKtDZKY9GPlpo6PYxdUL0YfK59YQ0
+ HPYg==
+X-Gm-Message-State: AOJu0Yz3QyR58LIxppYLYpEYPL8YCkm5F6doTk4NTAP2K2eCVwgZPdh4
+ mjvfeU80LZ7Bir1sbkTX3/Rs/MqdSwu6dUXxhkmFlEiEM1jbYogPhlTjWvqSFXV+0Hd5j8a9PPf
+ gr5E=
+X-Google-Smtp-Source: AGHT+IE+adxq4Vtk4edhMl4inGokot4L54yFTZ0++JAuZlG1VMQsQIUczn2YYXS5PIIrWip+Xm42Kg==
+X-Received: by 2002:a05:600c:5116:b0:41b:fa34:9e48 with SMTP id
+ 5b1f17b1804b1-41feac55e26mr141475575e9.30.1715766071841; 
+ Wed, 15 May 2024 02:41:11 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.41.05
+ ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.41.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 02:41:05 -0700 (PDT)
+ Wed, 15 May 2024 02:41:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PULL 28/43] target/hppa: Introduce DisasDelayException
-Date: Wed, 15 May 2024 11:40:28 +0200
-Message-Id: <20240515094043.82850-29-richard.henderson@linaro.org>
+Subject: [PULL 38/43] target/hppa: Implement PSW_X
+Date: Wed, 15 May 2024 11:40:38 +0200
+Message-Id: <20240515094043.82850-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515094043.82850-1-richard.henderson@linaro.org>
 References: <20240515094043.82850-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,110 +93,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow an exception to be emitted at the end of the TranslationBlock,
-leaving only the conditional branch inline.  Use it for simple
-exception instructions like break, which happen to be nullified.
+Use PAGE_WRITE_INV to temporarily enable write permission
+on for a given page, driven by PSW_X being set.
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 60 +++++++++++++++++++++++++++++++++++++----
- 1 file changed, 55 insertions(+), 5 deletions(-)
+ target/hppa/mem_helper.c | 46 +++++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 81a75ddf95..706537ea59 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -51,6 +51,17 @@ typedef struct DisasIAQE {
-     int64_t disp;
- } DisasIAQE;
- 
-+typedef struct DisasDelayException {
-+    struct DisasDelayException *next;
-+    TCGLabel *lab;
-+    uint32_t insn;
-+    bool set_iir;
-+    int8_t set_n;
-+    uint8_t excp;
-+    /* Saved state at parent insn. */
-+    DisasIAQE iaq_f, iaq_b;
-+} DisasDelayException;
-+
- typedef struct DisasContext {
-     DisasContextBase base;
-     CPUState *cs;
-@@ -66,6 +77,7 @@ typedef struct DisasContext {
-     DisasCond null_cond;
-     TCGLabel *null_lab;
- 
-+    DisasDelayException *delay_excp_list;
-     TCGv_i64 zero;
- 
-     uint32_t insn;
-@@ -684,13 +696,38 @@ static void gen_excp(DisasContext *ctx, int exception)
-     ctx->base.is_jmp = DISAS_NORETURN;
- }
- 
-+static DisasDelayException *delay_excp(DisasContext *ctx, uint8_t excp)
-+{
-+    DisasDelayException *e = tcg_malloc(sizeof(DisasDelayException));
-+
-+    memset(e, 0, sizeof(*e));
-+    e->next = ctx->delay_excp_list;
-+    ctx->delay_excp_list = e;
-+
-+    e->lab = gen_new_label();
-+    e->insn = ctx->insn;
-+    e->set_iir = true;
-+    e->set_n = ctx->psw_n_nonzero ? 0 : -1;
-+    e->excp = excp;
-+    e->iaq_f = ctx->iaq_f;
-+    e->iaq_b = ctx->iaq_b;
-+
-+    return e;
-+}
-+
- static bool gen_excp_iir(DisasContext *ctx, int exc)
- {
--    nullify_over(ctx);
--    tcg_gen_st_i64(tcg_constant_i64(ctx->insn),
--                   tcg_env, offsetof(CPUHPPAState, cr[CR_IIR]));
--    gen_excp(ctx, exc);
--    return nullify_end(ctx);
-+    if (ctx->null_cond.c == TCG_COND_NEVER) {
-+        tcg_gen_st_i64(tcg_constant_i64(ctx->insn),
-+                       tcg_env, offsetof(CPUHPPAState, cr[CR_IIR]));
-+        gen_excp(ctx, exc);
-+    } else {
-+        DisasDelayException *e = delay_excp(ctx, exc);
-+        tcg_gen_brcond_i64(tcg_invert_cond(ctx->null_cond.c),
-+                           ctx->null_cond.a0, ctx->null_cond.a1, e->lab);
-+        ctx->null_cond = cond_make_f();
-+    }
-+    return true;
- }
- 
- static bool gen_illegal(DisasContext *ctx)
-@@ -4697,6 +4734,19 @@ static void hppa_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
-     default:
-         g_assert_not_reached();
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index d09877afd7..ca7bbe0a7c 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -296,30 +296,38 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+         goto egress;
      }
-+
-+    for (DisasDelayException *e = ctx->delay_excp_list; e ; e = e->next) {
-+        gen_set_label(e->lab);
-+        if (e->set_n >= 0) {
-+            tcg_gen_movi_i64(cpu_psw_n, e->set_n);
-+        }
-+        if (e->set_iir) {
-+            tcg_gen_st_i64(tcg_constant_i64(e->insn), tcg_env,
-+                           offsetof(CPUHPPAState, cr[CR_IIR]));
-+        }
-+        install_iaq_entries(ctx, &e->iaq_f, &e->iaq_b);
-+        gen_excp_1(e->excp);
-+    }
- }
  
- static void hppa_tr_disas_log(const DisasContextBase *dcbase,
+-    /* In reverse priority order, check for conditions which raise faults.
+-       As we go, remove PROT bits that cover the condition we want to check.
+-       In this way, the resulting PROT will force a re-check of the
+-       architectural TLB entry for the next access.  */
+-    if (unlikely(!ent->d)) {
+-        if (type & PAGE_WRITE) {
+-            /* The D bit is not set -- TLB Dirty Bit Fault.  */
+-            ret = EXCP_TLB_DIRTY;
+-        }
+-        prot &= PAGE_READ | PAGE_EXEC;
+-    }
+-    if (unlikely(ent->b)) {
+-        if (type & PAGE_WRITE) {
+-            /* The B bit is set -- Data Memory Break Fault.  */
+-            ret = EXCP_DMB;
+-        }
+-        prot &= PAGE_READ | PAGE_EXEC;
+-    }
++    /*
++     * In priority order, check for conditions which raise faults.
++     * Remove PROT bits that cover the condition we want to check,
++     * so that the resulting PROT will force a re-check of the
++     * architectural TLB entry for the next access.
++     */
+     if (unlikely(ent->t)) {
++        prot &= PAGE_EXEC;
+         if (!(type & PAGE_EXEC)) {
+             /* The T bit is set -- Page Reference Fault.  */
+             ret = EXCP_PAGE_REF;
+         }
+-        prot &= PAGE_EXEC;
++    } else if (!ent->d) {
++        prot &= PAGE_READ | PAGE_EXEC;
++        if (type & PAGE_WRITE) {
++            /* The D bit is not set -- TLB Dirty Bit Fault.  */
++            ret = EXCP_TLB_DIRTY;
++        }
++    } else if (unlikely(ent->b)) {
++        prot &= PAGE_READ | PAGE_EXEC;
++        if (type & PAGE_WRITE) {
++            /*
++             * The B bit is set -- Data Memory Break Fault.
++             * Except when PSW_X is set, allow this single access to succeed.
++             * The write bit will be invalidated for subsequent accesses.
++             */
++            if (env->psw_xb & PSW_X) {
++                prot |= PAGE_WRITE_INV;
++            } else {
++                ret = EXCP_DMB;
++            }
++        }
+     }
+ 
+  egress:
 -- 
 2.34.1
 
