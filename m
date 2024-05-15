@@ -4,87 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63DFDC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559B8C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s78tC-0003fw-1J; Wed, 15 May 2024 03:17:26 -0400
+	id 1s78tP-0005bW-JE; Wed, 15 May 2024 03:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s78sq-0003Ko-Is
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:17:12 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s78sk-0001UD-88
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:17:04 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-34d7a32bdd3so3821466f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715757416; x=1716362216; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JEO5nS1Ltc6s0RRTMWU9z75YB32XaWbC0d2I6gbMByY=;
- b=FpcDilu9NzG+9Igtqllzm/TaNyOLWzwuIzBPUzJfipZGx9psytK8Obhdfohvbq0bPv
- s2H3f1Np7zHwC3hJ2r6RBaXHLShMYU1wlrTpKQ+U1vULtXX+BLIrH3NHST4/2EMMu33I
- zf9Wr6mG0ETAccINfsH8osNcj1RlQU2inZaxunhSqNKeP1CvkqF8gTtuAElrBu7ljZ5X
- vMeTCUSySjoAcezIAA1hVyRL4/zHmkJjx3HhT1uu+/AbKZABqCNKxnXYFJebW7b3k0GE
- v8sSdI7Zd7c5HW+vKLKRV5oW2ocCHfOZ7pWdbS83EtVlufVxnVTLUKoV0sEdjQ1tO7EF
- zKbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715757416; x=1716362216;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JEO5nS1Ltc6s0RRTMWU9z75YB32XaWbC0d2I6gbMByY=;
- b=vfPrt9IDIh+RVKc7NEBDL+ULiOMSUObMCsN6yMDdCq06pv1+RaPcYXPQyNMhUGVmHW
- D/1Fuo1e6tYhO4SUjDxTz510arIJDAYmQkVMyadN1OmTVWVuZKNteieFVwPar9tV/307
- 9pk7UUch7Pc0UBVT4Ri+uhxaG1J/AwP6HOTuMmRdAYGjGCtnD7LtZDL2TGBa9JbH76mp
- +FjGygvRcZBCAw5UYQ1ygxnP76LJaxaq8hbd8TYwAWYSFf2kncuvCoTm1t/iZwcMGfbm
- njdHjBgK6nkyfh0M+JQCpUOQ0SZ5DYUO+LNQyb+39CkdlGPedVMeIed3S2933jcUEUIq
- SB5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxwOZ9pyCBceDUpYfxC7F/wvBIyYfYzRiGlbKsVXck+dk5jJt5wX9wJ+5NZr8pHrTjPK8ahYXVHkRO2/nXx+Y8eP6hrdI=
-X-Gm-Message-State: AOJu0YzcPz/RZe4fQrAwXRqBe2FqWdXMMH8Q49UUWMubILZfRbGwxEIx
- zdjKTRXH5EnEvcSxRRmtxxBSDSCtkw/UbMKIbLm/Tvmm6Nh2M62iQmD9HnNEJuc=
-X-Google-Smtp-Source: AGHT+IHYHKI7oeogFK/Jyic4l2do0NwKmr34srMLA6NEg+9yCsYLDFuMq/Ju3jStsCSj9i/gmRcuzw==
-X-Received: by 2002:a5d:4577:0:b0:34d:bbcf:1ef with SMTP id
- ffacd0b85a97d-3504a96d3a8mr10905267f8f.61.1715757416224; 
- Wed, 15 May 2024 00:16:56 -0700 (PDT)
-Received: from localhost (cst2-173-78.cust.vodafone.cz. [31.30.173.78])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502baacf89sm15683615f8f.83.2024.05.15.00.16.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 00:16:55 -0700 (PDT)
-Date: Wed, 15 May 2024 09:16:54 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Eric Cheng <eric.cheng.linux@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, tjeznach@rivosinc.com
-Subject: Re: [PATCH v2 06/15] hw/riscv/virt.c: support for RISC-V IOMMU
- PCIDevice hotplug
-Message-ID: <20240515-e56bce8b02b918c106961996@orel>
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-7-dbarboza@ventanamicro.com>
- <41835d3f-d9e2-4ace-8add-f5bb6c525c5f@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s78tL-0005Si-TS
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:17:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s78tJ-0001Yu-Iu
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:17:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715757452;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rja/s2o4BCOM59xN3wUhacTssKrQuC4NwxTq8DdyXU8=;
+ b=FRvSjoPkFoQczfXtWIgmBljRzmMF17fQAF1RASEM1odldsCVmnaCu6Aryrcjp+oPC64Hb8
+ qvSN3alpxd/FfI24gJ8m3xBCEIWtHAYL8v66sWZV4dAeVhkeVEawB3dTihgbBddff7u7JF
+ 46HJS4yfOHsOhkUpFyCQJj7ndree7Fo=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-331-WkVnw3FVNLSP1x0KhliSeQ-1; Wed, 15 May 2024 03:17:23 -0400
+X-MC-Unique: WkVnw3FVNLSP1x0KhliSeQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 84C69101A525;
+ Wed, 15 May 2024 07:17:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2AB2C200A08E;
+ Wed, 15 May 2024 07:17:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3304221E66E5; Wed, 15 May 2024 09:17:22 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,  qemu-devel@nongnu.org,
+ berrange@redhat.com,  Claudio Fontana <cfontana@suse.de>,  Jim Fehlig
+ <jfehlig@suse.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 4/9] migration: Add direct-io parameter
+In-Reply-To: <87r0e4e0ox.fsf@suse.de> (Fabiano Rosas's message of "Tue, 14 May
+ 2024 14:57:18 -0300")
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-5-farosas@suse.de> <ZjUnghSvdy-wWtnN@x1n>
+ <871q6ioc2r.fsf@suse.de> <ZjVUKCafjreLtLmm@x1n>
+ <87ttj0zdp0.fsf@pond.sub.org> <87r0e4e0ox.fsf@suse.de>
+Date: Wed, 15 May 2024 09:17:22 +0200
+Message-ID: <87v83fwnlp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <41835d3f-d9e2-4ace-8add-f5bb6c525c5f@gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,66 +86,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 15, 2024 at 02:25:31PM GMT, Eric Cheng wrote:
-> On 3/8/2024 12:03 AM, Daniel Henrique Barboza wrote:
-> > From: Tomasz Jeznach <tjeznach@rivosinc.com>
-> > 
-> > Generate device tree entry for riscv-iommu PCI device, along with
-> > mapping all PCI device identifiers to the single IOMMU device instance.
-> > 
-> > Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-> > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > ---
-> >   hw/riscv/virt.c | 33 ++++++++++++++++++++++++++++++++-
-> >   1 file changed, 32 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> > index a094af97c3..67a8267747 100644
-> > --- a/hw/riscv/virt.c
-> > +++ b/hw/riscv/virt.c
-> > @@ -32,6 +32,7 @@
-> >   #include "hw/core/sysbus-fdt.h"
-> >   #include "target/riscv/pmu.h"
-> >   #include "hw/riscv/riscv_hart.h"
-> > +#include "hw/riscv/iommu.h"
-> >   #include "hw/riscv/virt.h"
-> >   #include "hw/riscv/boot.h"
-> >   #include "hw/riscv/numa.h"
-> > @@ -1004,6 +1005,30 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
-> >                              bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
-> >   }
-> > +static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
-> > +{
-> > +    const char comp[] = "riscv,pci-iommu";
-> > +    void *fdt = MACHINE(s)->fdt;
-> > +    uint32_t iommu_phandle;
-> > +    g_autofree char *iommu_node = NULL;
-> > +    g_autofree char *pci_node = NULL;
-> > +
-> > +    pci_node = g_strdup_printf("/soc/pci@%lx",
-> > +                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
-> > +    iommu_node = g_strdup_printf("%s/iommu@%x", pci_node, bdf);
-> > +    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
-> > +    qemu_fdt_add_subnode(fdt, iommu_node);
-> > +
-> > +    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
-> > +    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
-> > +    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
-> > +    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
-> > +                           bdf << 8, 0, 0, 0, 0);
-> > +    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
-> > +                           0, iommu_phandle, 0, bdf,
-> > +                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
-> > +}
-> 
-> Is it really necessary to add this iommu-pci device in riscv virt machine,
-> rather than other 'physical' machine type? virt machine already has its
-> virtio-iommu.
+Fabiano Rosas <farosas@suse.de> writes:
+
+> Markus Armbruster <armbru@redhat.com> writes:
 >
+>> Peter Xu <peterx@redhat.com> writes:
+>>
+>>> On Fri, May 03, 2024 at 05:49:32PM -0300, Fabiano Rosas wrote:
+>>>> Peter Xu <peterx@redhat.com> writes:
+>>>> 
+>>>> > On Fri, Apr 26, 2024 at 11:20:37AM -0300, Fabiano Rosas wrote:
+>>>> >> Add the direct-io migration parameter that tells the migration code to
+>>>> >> use O_DIRECT when opening the migration stream file whenever possible.
+>>>> >> 
+>>>> >> This is currently only used with the mapped-ram migration that has a
+>>>> >> clear window guaranteed to perform aligned writes.
+>>>> >> 
+>>>> >> Acked-by: Markus Armbruster <armbru@redhat.com>
+>>>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>>> >> ---
+>>>> >>  include/qemu/osdep.h           |  2 ++
+>>>> >>  migration/migration-hmp-cmds.c | 11 +++++++++++
+>>>> >>  migration/options.c            | 30 ++++++++++++++++++++++++++++++
+>>>> >>  migration/options.h            |  1 +
+>>>> >>  qapi/migration.json            | 18 +++++++++++++++---
+>>>> >>  util/osdep.c                   |  9 +++++++++
+>>>> >>  6 files changed, 68 insertions(+), 3 deletions(-)
+>>>> >> 
+>>>> >> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>>>> >> index c7053cdc2b..645c14a65d 100644
+>>>> >> --- a/include/qemu/osdep.h
+>>>> >> +++ b/include/qemu/osdep.h
+>>>> >> @@ -612,6 +612,8 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+>>>> >>  bool qemu_has_ofd_lock(void);
+>>>> >>  #endif
+>>>> >>  
+>>>> >> +bool qemu_has_direct_io(void);
+>>>> >> +
+>>>> >>  #if defined(__HAIKU__) && defined(__i386__)
+>>>> >>  #define FMT_pid "%ld"
+>>>> >>  #elif defined(WIN64)
+>>>> >> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>>>> >> index 7e96ae6ffd..8496a2b34e 100644
+>>>> >> --- a/migration/migration-hmp-cmds.c
+>>>> >> +++ b/migration/migration-hmp-cmds.c
+>>>> >> @@ -397,6 +397,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>>>> >>          monitor_printf(mon, "%s: %s\n",
+>>>> >>              MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+>>>> >>              qapi_enum_lookup(&MigMode_lookup, params->mode));
+>>>> >> +
+>>>> >> +        if (params->has_direct_io) {
+>>>> >> +            monitor_printf(mon, "%s: %s\n",
+>>>> >> +                           MigrationParameter_str(
+>>>> >> +                               MIGRATION_PARAMETER_DIRECT_IO),
+>>>> >> +                           params->direct_io ? "on" : "off");
+>>>> >> +        }
+>>>> >
+>>>> > This will be the first parameter to optionally display here.  I think it's
+>>>> > a sign of misuse of has_direct_io field..
+>>
+>> Yes.  For similar existing parameters, we do
+>>
+>>                assert(params->has_FOO);
+>>                monitor_printf(mon, "%s: '%s'\n",
+>>                               MigrationParameter_str(MIGRATION_PARAMETER_FOO),
+>>                               ... params->FOO as string ...)
+>>
+>>>> > IMHO has_direct_io should be best to be kept as "whether direct_io field is
+>>>> > valid" and that's all of it.  It hopefully shouldn't contain more
+>>>> > information than that, or otherwise it'll be another small challenge we
+>>>> > need to overcome when we can remove all these has_* fields, and can also be
+>>>> > easily overlooked.
+>>>> 
+>>>> I don't think I understand why we have those has_* fields. I thought my
+>>>> usage of 'params->has_direct_io = qemu_has_direct_io()' was the correct
+>>>> one, i.e. checking whether QEMU has any support for that parameter. Can
+>>>> you help me out here?
+>>>
+>>> Here params is the pointer to "struct MigrationParameters", which is
+>>> defined in qapi/migration.json.  And we have had "has_*" only because we
+>>> allow optional fields with asterisks:
+>>>
+>>>   { 'struct': 'MigrationParameters',
+>>>     'data': { '*announce-initial': 'size',
+>>>               ...
+>>>               } }
+>>>
+>>> So that's why it better only means "whether this field existed", because
+>>> it's how it is defined.
+>>>
+>>> IIRC we (or say, Markus) used to have some attempts deduplicates those
+>>> *MigrationParameter* things, and if success we have chance to drop has_*
+>>> fields (in which case we simply always have them; that "has_" makes more
+>>> sense only if in a QMP session to allow user only specify one or more
+>>> things if not all).
+>>
+>> qapi/migration.json:
+>>
+>>     ##
+>>     # @MigrationParameters:
+>>     #
+>> --> # The optional members aren't actually optional.
+>>     #
+>>
+>> In other words, the has_FOO generated for the members of
+>> MigrationParameters must all be true.
+>>
+>> These members became optional when we attempted to de-duplicate
+>> MigrationParameters and MigrateSetParameters, but failed (see commit
+>> de63ab61241 "migrate: Share common MigrationParameters struct" and
+>> commit 1bda8b3c695 "migration: Unshare MigrationParameters struct for
+>> now").
+>
+> So what's the blocker for merging MigrationSetParameters and
+> MigrationParameters? Just the tls_* options?
 
-We need both, just as the Arm virt machine has both. virtio-iommu is for
-guests, but the Arm and RISCV virt machines are both also used as hosts.
+I believe the latest attempt was Peter's "[PATCH v3 0/4] qapi/migration:
+Dedup migration parameter objects and fix tls-authz crash" last
+September.
 
-Thanks,
-drew
+I can't recall offhand what exactly blocked its merge.  Suggest you read
+the review thread[*], and if that leads to questions, ask them either in
+replies to the old thread, or right here.
+
+One additional issue hasn't been discussed much so far, I think: merging
+the two copies of the doc comments.  They are big and quite similar
+(that's why we want to deduplicate), but they're not identical.  In
+particular, MigrationSetParameters' doc comment talks more about
+defaults.  That's because talking about defaults makes no sense
+whatsoever for MigrationParameters (we do it anyway, of course, just
+less).  Merging the two will require some careful word-smithing, and
+perhaps some compromises on doc quality.
+
+
+
+[*] https://lore.kernel.org/qemu-devel/20230905162335.235619-1-peterx@redhat.com/
+
 
