@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19652C25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7ED6C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79NN-0008Lm-Dq; Wed, 15 May 2024 03:48:38 -0400
+	id 1s79Rl-0004BG-Q5; Wed, 15 May 2024 03:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1s79NL-0008G6-2i
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:48:35 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s79Rf-00047c-2B
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:03 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1s79NJ-0000Mg-EE
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:48:34 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6f4ed9dc7beso2710899b3a.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:48:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s79Rc-0001aT-OS
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:02 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-41fc53252ceso45478685e9.0
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1715759310; x=1716364110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715759579; x=1716364379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=puBYhI34uigvIMwKdPxu7OXATwqoJShcDnpckyqDkpk=;
- b=PxbDRFCGsqCTb7064Xn1x2Misu84yrPKKqC9bjv9jXxx48IJzwdgnW9KeF34hCnBV5
- 74TYzjIzucD6OTKcupD2dH+32z6O0lkX7OehqQJr+11V+BoGOydexC+mCyZrjFHS5uoT
- o0z0iE0AXsrVuqXE8nzgbwzUgzLfqtEy8PM4ASb/rK7N4+9DA4Uhh2TRl4lzcIOl5v01
- 1SY3Hmp8/8KiKgQhxNKUAoYwOCI6Z2bvN93lxLnkInuxGJafkmV6qihDXZd01Ju6Fh35
- AJvOmyqBxt0HpQupiwJLkr2NYBZGo9pyclIFHRUtG1Vsu4Kd8mbq5Dgf7IAljTnlon8n
- rmTw==
+ bh=+l6G3m8cadQ7WYYi4wJCHAd6krJgJAZNy2Yqel8DyXU=;
+ b=F0cFWyU5ns3IO7WNAir0D79+zuBBm4SmC8z7APXwfAcMqFILVO68TSuL6IClGYPUUA
+ 2l7b8241YefEkmLhvjQYz/+Ol4QJVeO9zJH87EwVYf47rpDGNE8fM1OytMnrkFTU33zA
+ dwAoOdvFFN7LwWb1rY5t/Kz/B7N3cuUGQ6Rk/mqkc8aiHQX/gdvgGbc8eAgNk06FbqzG
+ flzlQ6wZpDIDSaYmOqw116LV0+N6x3BWidQd/GorbtN5/HryKRvT2PskM7pz2ZlXMU+B
+ E/ofZXbwBky3LB+34zK6GChsoukJ0c4/fIU6VAAdGdRPtET3Hm6hyYqhXTNFdZ+fAEVH
+ BzNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715759310; x=1716364110;
+ d=1e100.net; s=20230601; t=1715759579; x=1716364379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=puBYhI34uigvIMwKdPxu7OXATwqoJShcDnpckyqDkpk=;
- b=XLv2eEGJHTdgW3MEki6ssMwE2YMkKJ+ZJjvEt7rGM3gAmJUwEG9di5RDMf4/cfLpU0
- PDlaL4GIZEkmmB4ioZg0Io8urpJTxsuCR5cd+SuePkuf3uIS4EJxOCrS0bIga/kF3yrD
- VYwh3OKE6b7vfNA9PzSo3GkM7+5BE9tSHS98jrg4ifKANjVraLVRVonVIUPpjkxAnrLl
- SUwNSJbsRizoPMzg6kUlYUMhrWRtw3GrXPdIgYOG038P0TdzD+TH73SBgCgf+dXKrb10
- I2YnGLH/rXtc8RboYdHXzRrF9J4pHWlhlAayMWtN6oG/6EcI3Isd2h31M30Kd237o+iG
- A7rg==
-X-Gm-Message-State: AOJu0YxLeTvBKaVr/HuLXfCkTjUWDWq18icyFeoFiMndq4+6oO30nx+J
- IjRPuZ0E/K1W3t2QfBkWiEHe+RVXjGF2sB6pDATYSxyUTseauspGSg6Zj4TeCoKBPIVHYsF7tL5
- 5KOmoUV3izKhp5U6m2L6UzUbNCrgXVlhCVVAAUL6pEyYSf8ke2aKxcRnyXsi4sbgrCiBEhICpkz
- VKPOkgC8obMX3re4Ca8ztPqBw1FLmN3sQwvF4=
-X-Google-Smtp-Source: AGHT+IEAke5BLdsYSlbnHg+sx6yNTpK5RUV1Z0Qtu6pfRwYRjeeuQyo/dCuuB7wXEnDKlIoE1giFCw==
-X-Received: by 2002:a05:6a00:3d49:b0:6f3:e9bc:cc3d with SMTP id
- d2e1a72fcca58-6f4c90905a1mr27161537b3a.3.1715759310189; 
- Wed, 15 May 2024 00:48:30 -0700 (PDT)
-Received: from hsinchu36-syssw02.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2af2bafsm10389060b3a.162.2024.05.15.00.48.28
+ bh=+l6G3m8cadQ7WYYi4wJCHAd6krJgJAZNy2Yqel8DyXU=;
+ b=IVKxy2hr/V9BYk811jpzZf0xVjxLaJDAFRQlDJAV3ngFOXPec3n4ZJRtYK6W9TmAzp
+ kd24P7RE4tgiZWIVXYRGk2M639mmcTpEvP3YC20UpgZo9TVgVR3Tx3ThN4QxdQM81LEw
+ JlQrlvCuIu3Pa8xFGuDVhW7jYYhLa1U2UHH7ssgk8M9fXpaomrFLGdr7M3NdDNMRhRP8
+ ClWn6mrP1IyubDL54PM2fKcOledhmcSWfiUjGwb6c2uAN+vU1alkGQkB2zfaiLCQH1Ws
+ ZkEuR38rMbzCrl/nS1aaYa47eUQK4NPJ4Ofufn1mRCtvDLUqT7guQg0pcTqbAQup1dUg
+ hNeA==
+X-Gm-Message-State: AOJu0YwCgNMH6v0Smua9FuH/24ftzdoAqHyyk1PxEep8+kz1fGTAYcY/
+ jSjoXO2mWplhZYe9NOC0uIdpsWmlOL5qljKN+0VuG/v6Uk9svjAoPFIfBqKiG/4kJoLo8iZUvGk
+ 1t4o=
+X-Google-Smtp-Source: AGHT+IG3/qUZoGRC/O0keLBWwyrTKOPzY6M6kMYhKO0VuoSqQmlTAYaxSMWHmDqVfpzBGSif8jElXQ==
+X-Received: by 2002:a05:600c:a46:b0:41f:f144:5623 with SMTP id
+ 5b1f17b1804b1-41ff1445732mr117845125e9.14.1715759579343; 
+ Wed, 15 May 2024 00:52:59 -0700 (PDT)
+Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fccee9292sm222611855e9.37.2024.05.15.00.52.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 00:48:29 -0700 (PDT)
-From: "Fea.Wang" <fea.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: "Fea.Wang" <fea.wang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 5/5] target/riscv: Reserve exception codes for sw-check and
- hw-err
-Date: Wed, 15 May 2024 15:53:36 +0800
-Message-Id: <20240515075340.2675136-6-fea.wang@sifive.com>
+ Wed, 15 May 2024 00:52:59 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 15/34] plugins: Merge alloc_tcg_plugin_context into
+ plugin_gen_tb_start
+Date: Wed, 15 May 2024 09:52:28 +0200
+Message-Id: <20240515075247.68024-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515075340.2675136-1-fea.wang@sifive.com>
-References: <20240515075340.2675136-1-fea.wang@sifive.com>
+In-Reply-To: <20240515075247.68024-1-richard.henderson@linaro.org>
+References: <20240515075247.68024-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=fea.wang@sifive.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +95,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based on the priv-1.13.0, add the exception codes for Software-check and
-Hardware-error.
+We don't need to allocate plugin context at startup,
+we can wait until we actually use it.
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu_bits.h | 2 ++
- 1 file changed, 2 insertions(+)
+ accel/tcg/plugin-gen.c | 36 ++++++++++++++++++++----------------
+ tcg/tcg.c              | 11 -----------
+ 2 files changed, 20 insertions(+), 27 deletions(-)
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index f888025c59..f037f727d9 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -673,6 +673,8 @@ typedef enum RISCVException {
-     RISCV_EXCP_INST_PAGE_FAULT = 0xc, /* since: priv-1.10.0 */
-     RISCV_EXCP_LOAD_PAGE_FAULT = 0xd, /* since: priv-1.10.0 */
-     RISCV_EXCP_STORE_PAGE_FAULT = 0xf, /* since: priv-1.10.0 */
-+    RISCV_EXCP_SW_CHECK = 0x12, /* since: priv-1.13.0 */
-+    RISCV_EXCP_HW_ERR = 0x13, /* since: priv-1.13.0 */
-     RISCV_EXCP_INST_GUEST_PAGE_FAULT = 0x14,
-     RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT = 0x15,
-     RISCV_EXCP_VIRT_INSTRUCTION_FAULT = 0x16,
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index b54494712a..54b08ffc9e 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -305,28 +305,32 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+ 
+ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db)
+ {
+-    bool ret = false;
++    struct qemu_plugin_tb *ptb;
+ 
+-    if (test_bit(QEMU_PLUGIN_EV_VCPU_TB_TRANS, cpu->plugin_state->event_mask)) {
+-        struct qemu_plugin_tb *ptb = tcg_ctx->plugin_tb;
+-
+-        /* reset callbacks */
+-        if (ptb->cbs) {
+-            g_array_set_size(ptb->cbs, 0);
+-        }
+-        ptb->n = 0;
+-
+-        ret = true;
+-
+-        ptb->mem_helper = false;
+-
+-        tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
++    if (!test_bit(QEMU_PLUGIN_EV_VCPU_TB_TRANS,
++                  cpu->plugin_state->event_mask)) {
++        return false;
+     }
+ 
+     tcg_ctx->plugin_db = db;
+     tcg_ctx->plugin_insn = NULL;
++    ptb = tcg_ctx->plugin_tb;
+ 
+-    return ret;
++    if (ptb) {
++        /* Reset callbacks */
++        if (ptb->cbs) {
++            g_array_set_size(ptb->cbs, 0);
++        }
++        ptb->n = 0;
++        ptb->mem_helper = false;
++    } else {
++        ptb = g_new0(struct qemu_plugin_tb, 1);
++        tcg_ctx->plugin_tb = ptb;
++        ptb->insns = g_ptr_array_new();
++    }
++
++    tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
++    return true;
+ }
+ 
+ void plugin_gen_insn_start(CPUState *cpu, const DisasContextBase *db)
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 71daa5d268..34e3056380 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -761,14 +761,6 @@ QEMU_BUILD_BUG_ON((int)(offsetof(CPUNegativeOffsetState, tlb.f[0]) -
+                   < MIN_TLB_MASK_TABLE_OFS);
+ #endif
+ 
+-static void alloc_tcg_plugin_context(TCGContext *s)
+-{
+-#ifdef CONFIG_PLUGIN
+-    s->plugin_tb = g_new0(struct qemu_plugin_tb, 1);
+-    s->plugin_tb->insns = g_ptr_array_new();
+-#endif
+-}
+-
+ /*
+  * All TCG threads except the parent (i.e. the one that called tcg_context_init
+  * and registered the target's TCG globals) must register with this function
+@@ -813,7 +805,6 @@ void tcg_register_thread(void)
+     qatomic_set(&tcg_ctxs[n], s);
+ 
+     if (n > 0) {
+-        alloc_tcg_plugin_context(s);
+         tcg_region_initial_alloc(s);
+     }
+ 
+@@ -1360,8 +1351,6 @@ static void tcg_context_init(unsigned max_cpus)
+         indirect_reg_alloc_order[i] = tcg_target_reg_alloc_order[i];
+     }
+ 
+-    alloc_tcg_plugin_context(s);
+-
+     tcg_ctx = s;
+     /*
+      * In user-mode we simply share the init context among threads, since we
 -- 
 2.34.1
 
