@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 789CFC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E7EC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7E5B-0005lT-25; Wed, 15 May 2024 08:50:09 -0400
+	id 1s7E6j-0008En-Lj; Wed, 15 May 2024 08:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.cheng.linux@gmail.com>)
- id 1s7BTO-0002ac-RJ; Wed, 15 May 2024 06:02:58 -0400
-Received: from mail-il1-x143.google.com ([2607:f8b0:4864:20::143])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s7E6d-0008C5-Gn
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:51:40 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <eric.cheng.linux@gmail.com>)
- id 1s7BTN-0000gL-3n; Wed, 15 May 2024 06:02:58 -0400
-Received: by mail-il1-x143.google.com with SMTP id
- e9e14a558f8ab-36cc8dbe09aso22902505ab.2; 
- Wed, 15 May 2024 03:02:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715767375; x=1716372175; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cmh48SqCH9MqJ9uPIpx+IaN+RkLYVxlVbRRVtQTgRLg=;
- b=BvQ05JVi+lvYZcxXKRyGSQRAgxe9VGrIg+MNzTfeWFK9e3q4SFY1ARtwaT2sexEwO+
- zJvfYcOJLrDqD0QTxO3b/DhAnBoGn8hqbBi8ttN5Pn9ZOq5pcCj1JrmwPhgzHgUEeFxw
- YHqV4FBEFetqNAwvEnxkt/6bXY6cFARH8zgZ+oYCH9D1KXxSk0n46xeaO7GVCO9g5mqe
- eU+KTrq8+KpI3Cs7d5lcy8+LSUhMtbXgQUNuMOvuSRZuA4KN+Ay2PjNZQyPMiicUdtpP
- qniKY83lX3E9oIZ3zE3m5DwkF6dXPwXbQ5ea+k20QWs1XijfhNMf34JcARcV3CdCDs5S
- Um5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715767375; x=1716372175;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cmh48SqCH9MqJ9uPIpx+IaN+RkLYVxlVbRRVtQTgRLg=;
- b=WwFUbEGpesL2nbBdjiX+Q4s0dZCsOmHNlHy7WfmEw/Qtm3SE8FqDHfZR3F07l3bRqM
- EeZr05c5ZQKjt/1NsOrH2pwaNVaBUwDSx5J0Hz/NKn62IMxG1TME6PljwgNgJTClkEyU
- fFboRtzG+tPvKhQWY1Rd8w8ZKO3P4m2DtPiYs4Ju3f/HkeVjwQikZdl44bDHMs5EVaGG
- 9adm57jyAooYxfIPq6z8Tp4Vgcdom9RewjlG5W8xWbzAaPSG9sPjdvxWePLfaz5qL5nr
- 76yLbdZ/A2t+UBhtNFOjHoPR1QPadJPH5UJRIiujIxkKU51OvovpxY8u3ogEYgbj1ymq
- jM6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5w2+SlheoxkZKJOJLw/qmXQKPjcu1GpY1tB67bZMp/U6DvUfN0VjyMfX93qBl/DbYJqxAMJfiVKNd7kYc7jGZpuDssHs=
-X-Gm-Message-State: AOJu0YwFJdMr3naxHONUBM3ubJiUERYKFMk/fD6s91Kh9dlq5hRldhvO
- YQJJ7NGJfaVIHCl0ZE3FFQP81408te4oNPeOckEkE5exZYNrN97MXaVttSvE
-X-Google-Smtp-Source: AGHT+IGVxrHXoTy+jU+560T7j9aKcCFwfNcrb8Bx05U2UnNz4kSUtCIgTKiVh+9W4e5aYM7EaM49TQ==
-X-Received: by 2002:a92:ca0f:0:b0:36c:c5ca:9f9b with SMTP id
- e9e14a558f8ab-36cc5caa0d8mr186104035ab.14.1715767375324; 
- Wed, 15 May 2024 03:02:55 -0700 (PDT)
-Received: from [172.27.234.193]
- (ec2-16-163-40-128.ap-east-1.compute.amazonaws.com. [16.163.40.128])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6340c99b915sm11026683a12.41.2024.05.15.03.02.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 03:02:54 -0700 (PDT)
-Message-ID: <637ee935-6753-468e-b003-e0f544d468fc@gmail.com>
-Date: Wed, 15 May 2024 18:02:48 +0800
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s7E6a-0000P2-NM
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:51:39 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 46A3F33B66;
+ Wed, 15 May 2024 12:51:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715777495; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TRH6Sy3SrzzmsahQIZ9irQOyDIkKnhQ4q45eVCgcnAw=;
+ b=svJzNdxSjjHnoVsP0sbIguyGz3oNtF+mNR8d1rT+JSptFpLzkW7qndw0bhsiNDLhjo/WHF
+ mZNPkV97tZBq0Ke5H2liUAuL+Qu93WCCmEXAis/FWDa2KT6HqhOpydFflBi/coHMsSKiaw
+ l2e/2/MBTix5OFCUEhfr0OHXCmRBaY0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715777495;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TRH6Sy3SrzzmsahQIZ9irQOyDIkKnhQ4q45eVCgcnAw=;
+ b=fI6Q/frPEVXPR2TfP95WHRl1aKRTyAY0gz6BvOJJNGcgMxb1Ueu4frXn4+8vjycaSkbenE
+ J90VdrMpxcv6c8AQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715777495; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TRH6Sy3SrzzmsahQIZ9irQOyDIkKnhQ4q45eVCgcnAw=;
+ b=svJzNdxSjjHnoVsP0sbIguyGz3oNtF+mNR8d1rT+JSptFpLzkW7qndw0bhsiNDLhjo/WHF
+ mZNPkV97tZBq0Ke5H2liUAuL+Qu93WCCmEXAis/FWDa2KT6HqhOpydFflBi/coHMsSKiaw
+ l2e/2/MBTix5OFCUEhfr0OHXCmRBaY0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715777495;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TRH6Sy3SrzzmsahQIZ9irQOyDIkKnhQ4q45eVCgcnAw=;
+ b=fI6Q/frPEVXPR2TfP95WHRl1aKRTyAY0gz6BvOJJNGcgMxb1Ueu4frXn4+8vjycaSkbenE
+ J90VdrMpxcv6c8AQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C4666136A8;
+ Wed, 15 May 2024 12:51:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id pPCwItavRGYWeQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 15 May 2024 12:51:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Claudio Fontana <cfontana@suse.de>, Jim Fehlig
+ <jfehlig@suse.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 4/9] migration: Add direct-io parameter
+In-Reply-To: <87v83fwnlp.fsf@pond.sub.org>
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-5-farosas@suse.de> <ZjUnghSvdy-wWtnN@x1n>
+ <871q6ioc2r.fsf@suse.de> <ZjVUKCafjreLtLmm@x1n>
+ <87ttj0zdp0.fsf@pond.sub.org> <87r0e4e0ox.fsf@suse.de>
+ <87v83fwnlp.fsf@pond.sub.org>
+Date: Wed, 15 May 2024 09:51:32 -0300
+Message-ID: <87o797dyqz.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] hw/riscv: add riscv-iommu-bits.h
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, tjeznach@rivosinc.com
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-3-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Eric Cheng <eric.cheng.linux@gmail.com>
-In-Reply-To: <20240307160319.675044-3-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::143;
- envelope-from=eric.cheng.linux@gmail.com; helo=mail-il1-x143.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 15 May 2024 08:50:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,46 +119,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/2024 12:03 AM, Daniel Henrique Barboza wrote:
-> From: Tomasz Jeznach <tjeznach@rivosinc.com>
-> 
-> This header will be used by the RISC-V IOMMU emulation to be added
-> in the next patch. Due to its size it's being sent in separate for
-> an easier review.
-> 
-> One thing to notice is that this header can be replaced by the future
-> Linux RISC-V IOMMU driver header, which would become a linux-header we
-> would import instead of keeping our own. The Linux implementation isn't
-> upstream yet so for now we'll have to manage riscv-iommu-bits.h.
-> 
-> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   hw/riscv/riscv-iommu-bits.h | 335 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 335 insertions(+)
->   create mode 100644 hw/riscv/riscv-iommu-bits.h
-> 
-> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> new file mode 100644
-> index 0000000000..8e80b1e52a
-> --- /dev/null
-> +++ b/hw/riscv/riscv-iommu-bits.h
-> @@ -0,0 +1,335 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright © 2022-2023 Rivos Inc.
-> + * Copyright © 2023 FORTH-ICS/CARV
-> + * Copyright © 2023 RISC-V IOMMU Task Group
-> + *
-> + * RISC-V Ziommu - Register Layout and Data Structures.
+Markus Armbruster <armbru@redhat.com> writes:
 
-Is there still the term Ziommu today? cannot be googled. May be just a transient 
-term during spec development? it puzzles new comers.
-> + *
-> + * Based on the IOMMU spec version 1.0, 3/2023
-> + * https://github.com/riscv-non-isa/riscv-iommu
-> + */
-> +
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+>> Markus Armbruster <armbru@redhat.com> writes:
+>>
+>>> Peter Xu <peterx@redhat.com> writes:
+>>>
+>>>> On Fri, May 03, 2024 at 05:49:32PM -0300, Fabiano Rosas wrote:
+>>>>> Peter Xu <peterx@redhat.com> writes:
+>>>>> 
+>>>>> > On Fri, Apr 26, 2024 at 11:20:37AM -0300, Fabiano Rosas wrote:
+>>>>> >> Add the direct-io migration parameter that tells the migration code to
+>>>>> >> use O_DIRECT when opening the migration stream file whenever possible.
+>>>>> >> 
+>>>>> >> This is currently only used with the mapped-ram migration that has a
+>>>>> >> clear window guaranteed to perform aligned writes.
+>>>>> >> 
+>>>>> >> Acked-by: Markus Armbruster <armbru@redhat.com>
+>>>>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>>>> >> ---
+>>>>> >>  include/qemu/osdep.h           |  2 ++
+>>>>> >>  migration/migration-hmp-cmds.c | 11 +++++++++++
+>>>>> >>  migration/options.c            | 30 ++++++++++++++++++++++++++++++
+>>>>> >>  migration/options.h            |  1 +
+>>>>> >>  qapi/migration.json            | 18 +++++++++++++++---
+>>>>> >>  util/osdep.c                   |  9 +++++++++
+>>>>> >>  6 files changed, 68 insertions(+), 3 deletions(-)
+>>>>> >> 
+>>>>> >> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>>>>> >> index c7053cdc2b..645c14a65d 100644
+>>>>> >> --- a/include/qemu/osdep.h
+>>>>> >> +++ b/include/qemu/osdep.h
+>>>>> >> @@ -612,6 +612,8 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+>>>>> >>  bool qemu_has_ofd_lock(void);
+>>>>> >>  #endif
+>>>>> >>  
+>>>>> >> +bool qemu_has_direct_io(void);
+>>>>> >> +
+>>>>> >>  #if defined(__HAIKU__) && defined(__i386__)
+>>>>> >>  #define FMT_pid "%ld"
+>>>>> >>  #elif defined(WIN64)
+>>>>> >> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>>>>> >> index 7e96ae6ffd..8496a2b34e 100644
+>>>>> >> --- a/migration/migration-hmp-cmds.c
+>>>>> >> +++ b/migration/migration-hmp-cmds.c
+>>>>> >> @@ -397,6 +397,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>>>>> >>          monitor_printf(mon, "%s: %s\n",
+>>>>> >>              MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+>>>>> >>              qapi_enum_lookup(&MigMode_lookup, params->mode));
+>>>>> >> +
+>>>>> >> +        if (params->has_direct_io) {
+>>>>> >> +            monitor_printf(mon, "%s: %s\n",
+>>>>> >> +                           MigrationParameter_str(
+>>>>> >> +                               MIGRATION_PARAMETER_DIRECT_IO),
+>>>>> >> +                           params->direct_io ? "on" : "off");
+>>>>> >> +        }
+>>>>> >
+>>>>> > This will be the first parameter to optionally display here.  I think it's
+>>>>> > a sign of misuse of has_direct_io field..
+>>>
+>>> Yes.  For similar existing parameters, we do
+>>>
+>>>                assert(params->has_FOO);
+>>>                monitor_printf(mon, "%s: '%s'\n",
+>>>                               MigrationParameter_str(MIGRATION_PARAMETER_FOO),
+>>>                               ... params->FOO as string ...)
+>>>
+>>>>> > IMHO has_direct_io should be best to be kept as "whether direct_io field is
+>>>>> > valid" and that's all of it.  It hopefully shouldn't contain more
+>>>>> > information than that, or otherwise it'll be another small challenge we
+>>>>> > need to overcome when we can remove all these has_* fields, and can also be
+>>>>> > easily overlooked.
+>>>>> 
+>>>>> I don't think I understand why we have those has_* fields. I thought my
+>>>>> usage of 'params->has_direct_io = qemu_has_direct_io()' was the correct
+>>>>> one, i.e. checking whether QEMU has any support for that parameter. Can
+>>>>> you help me out here?
+>>>>
+>>>> Here params is the pointer to "struct MigrationParameters", which is
+>>>> defined in qapi/migration.json.  And we have had "has_*" only because we
+>>>> allow optional fields with asterisks:
+>>>>
+>>>>   { 'struct': 'MigrationParameters',
+>>>>     'data': { '*announce-initial': 'size',
+>>>>               ...
+>>>>               } }
+>>>>
+>>>> So that's why it better only means "whether this field existed", because
+>>>> it's how it is defined.
+>>>>
+>>>> IIRC we (or say, Markus) used to have some attempts deduplicates those
+>>>> *MigrationParameter* things, and if success we have chance to drop has_*
+>>>> fields (in which case we simply always have them; that "has_" makes more
+>>>> sense only if in a QMP session to allow user only specify one or more
+>>>> things if not all).
+>>>
+>>> qapi/migration.json:
+>>>
+>>>     ##
+>>>     # @MigrationParameters:
+>>>     #
+>>> --> # The optional members aren't actually optional.
+>>>     #
+>>>
+>>> In other words, the has_FOO generated for the members of
+>>> MigrationParameters must all be true.
+>>>
+>>> These members became optional when we attempted to de-duplicate
+>>> MigrationParameters and MigrateSetParameters, but failed (see commit
+>>> de63ab61241 "migrate: Share common MigrationParameters struct" and
+>>> commit 1bda8b3c695 "migration: Unshare MigrationParameters struct for
+>>> now").
+>>
+>> So what's the blocker for merging MigrationSetParameters and
+>> MigrationParameters? Just the tls_* options?
+>
+> I believe the latest attempt was Peter's "[PATCH v3 0/4] qapi/migration:
+> Dedup migration parameter objects and fix tls-authz crash" last
+> September.
 
+I had a vague memory of this, thanks for bringing it up. I'll go over
+that series and see what can be done.
 
+>
+> I can't recall offhand what exactly blocked its merge.  Suggest you read
+> the review thread[*], and if that leads to questions, ask them either in
+> replies to the old thread, or right here.
+>
+> One additional issue hasn't been discussed much so far, I think: merging
+> the two copies of the doc comments.  They are big and quite similar
+> (that's why we want to deduplicate), but they're not identical.  In
+> particular, MigrationSetParameters' doc comment talks more about
+> defaults.  That's because talking about defaults makes no sense
+> whatsoever for MigrationParameters (we do it anyway, of course, just
+> less).  Merging the two will require some careful word-smithing, and
+> perhaps some compromises on doc quality.
+>
+
+I was playing with this yesterday and it occurred to me as well that the
+docs are not quite the same. Maybe we can have a general description
+common for both use-cases and a few extra words for what happens
+differently when writing vs. reading.
+
+>
+>
+> [*] https://lore.kernel.org/qemu-devel/20230905162335.235619-1-peterx@redhat.com/
 
