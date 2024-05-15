@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD771C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8259C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7B8S-0007M4-1t; Wed, 15 May 2024 05:41:20 -0400
+	id 1s7B8Y-00081R-Qw; Wed, 15 May 2024 05:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8I-0006QV-HA
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:10 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1s7B8C-0005wP-Pr
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:04 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8F-0001hW-E5
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:10 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-34e0d8b737eso4457048f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:06 -0700 (PDT)
+ id 1s7B89-0001fT-EF
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:04 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-420180b5838so20498605e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715766066; x=1716370866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715766059; x=1716370859; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xIMB9DvpLVvL8O/ArHYL+McDtTeWMTKUufERzC06JL4=;
- b=HP58Fpspw7D/1dbIgRU7RJnkX+UxyhFGj6OWRB9zFtlfrPlbGILWaVe0EYfb42Vih6
- MOr0psid/Z0DKe7ASmROdzZ4YELmysb5hAEKCEkp0/Y3MUmiiLCZkoYI7lbwsuqf4/C+
- fIyEjzq2ZrHzO/qwcVL3gc3SzylppXJHW/w/O5IyWAZdfrqJQ4974Wbj8pijjOAra9Mz
- eBmWKlH+KYJAXEBYhLB9tyQAi3yVyC9tKR4lZv8cCmuNPf4J4BoIKYWmWNgoocv6Zvsp
- Bsh3INNVBZZqn/OaWXWLXapMwPcAJ3gaY7LXD16m2Q4CK59zuIsLlhpwSJfJF6oULmm2
- GySw==
+ bh=l70NVTnTNxZE1g+5+378o7Svk1vAno2NTsB+Y4jn2m0=;
+ b=rSMw25bDeGuFoGRCquHMpMdk8uy/LJbK78NNRRuYGWCSzvamxHtLD3Q6bHwy70ASsA
+ QMCfsCTj9xw1TNL6gw7N5KE8cQLxgfS4ral122vtJfFl9+vTZXeyQH2jef6YC7WLX6xo
+ o7N51Ydqo6WqZTMtZ4qEs44Nx99lnYHNh12dsgTlz2AhnTJr0jHCMf6B3CS6z+T1GHLm
+ L0o1LwSxVkI7PzmOfTxzGFuG2e0TIxcaJcK6IpgbvcB5Gyskw/Ae3O5AxBMWAyrf1HH0
+ nu5mOREvO4dF0TtGf560/lmTML7x4QvVbTRHGcSS8RqqbwebCGwz0TXXpb2SdaPEnUZc
+ 43KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715766066; x=1716370866;
+ d=1e100.net; s=20230601; t=1715766059; x=1716370859;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xIMB9DvpLVvL8O/ArHYL+McDtTeWMTKUufERzC06JL4=;
- b=lCN0o9d5aixC2vDEAgSbIrDDg0RMHfu12nCxL3P/xbKinM+PuFLBr96K5zS5gDj4ZR
- IwI9i7N8U78ke2ExA5fO1eD5eD7OUIx/zmIOXeE4DDhREmwlnK7V3oryfewSEW3/pxjg
- nEQHwJh8ODpb5B/2y7v8NDu7pdTe6pGeqbtEU/mjeoHfz7O6zDes8DfuZ9ROD3JKU12n
- LAXs3J7dUUvlORiuzHZr/WmemPCM1351JkpM5025AvvlVZBc18J46Tm69vIzN9R/D4iO
- 8e+lIcdafy0rf0j8aqC2aH93aZiB5/HW6Eyrppsr5j0oUJE+XH7/Q5ryQSrTggN7I+mm
- 0VTw==
-X-Gm-Message-State: AOJu0YyNDGl2rsrGSDvzD6fkzERdDcOVdLGHu6YtILj6yN7Qnp1OC3B5
- rMTHhNg7xj//3MYMHc6MsiWtQTW0oXMKLwHlOOBgBquv3zDUBPbHhUMPGYMyU/BvU4SV/HecLhe
- Ah0U=
-X-Google-Smtp-Source: AGHT+IGUVwDWq1hYSerosRez+R6sTIUNVNCuKLBQLbhGZsQQ4qngKDPfFVzAyyHoinmDkUxG8uH6Tw==
-X-Received: by 2002:adf:f0c1:0:b0:34d:10a9:3a22 with SMTP id
- ffacd0b85a97d-35049bbf691mr11948821f8f.32.1715766066023; 
- Wed, 15 May 2024 02:41:06 -0700 (PDT)
+ bh=l70NVTnTNxZE1g+5+378o7Svk1vAno2NTsB+Y4jn2m0=;
+ b=i3vigatOys2Lu4L+f+w7C/AHMDQqNfWhJ7sl4jgM4CqNNAtjaaTDqQ18j4gjmriizm
+ Y+0+uX9Jw/hmjSjuhk/sU6JYXc796C92t/cP+WgmrhxuFs6/71z9Ng6wlZW11gBuh9jM
+ GSx5KqTjJl0BWk0kZD62HsDdvAKl/K/FJkT87pB8mIv0U9Fu74Xp6Qc//6FuRK6hJ/ej
+ 5G0hOwg9KYpWCxRsFn4ZoNlYevRNyqCsOIRLdZVzQmJLE87ELWN+iZtZ4R3dcUe2N2gL
+ Pxav8zqMboAv6OEMNWfCvLqxKt9nV/5LAhqfy3zPE+fX80J8RNArJH4LYyuPzuNS+cRj
+ A/Qg==
+X-Gm-Message-State: AOJu0YxYPlYTchWp2kXHhKhuDqtoBZJ2l75eGniUlW0k8R+//H+RRyl3
+ 1Fge63qXH6BPzzrSdBrNvK08nMmaILxsZ2ey6JFAy9jMaXr8y+UTWsyJYiRVgvG4nV6ysTX1Tbg
+ 7r2U=
+X-Google-Smtp-Source: AGHT+IH3rws0etYB40miAasglYFV/2thiFdCz02yKZ9pZMiR+vBM2zKq06XWhz3NFI2284bfMvSx1A==
+X-Received: by 2002:a05:6000:1d9b:b0:351:b7c8:3efe with SMTP id
+ ffacd0b85a97d-351b7c83f88mr13829365f8f.3.1715766059438; 
+ Wed, 15 May 2024 02:40:59 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.41.05
+ ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.40.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 02:41:05 -0700 (PDT)
+ Wed, 15 May 2024 02:40:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PULL 29/43] target/hppa: Use delay_excp for conditional traps
-Date: Wed, 15 May 2024 11:40:29 +0200
-Message-Id: <20240515094043.82850-30-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 19/43] target/hppa: Rename cond_make_* helpers
+Date: Wed, 15 May 2024 11:40:19 +0200
+Message-Id: <20240515094043.82850-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515094043.82850-1-richard.henderson@linaro.org>
 References: <20240515094043.82850-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,157 +95,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use 'v' for a variable that needs copying, 't' for a temp that
+doesn't need copying, and 'i' for an immediate, and use this
+naming for both arguments of the comparison.  So:
+
+   cond_make_tmp -> cond_make_tt
+   cond_make_0_tmp -> cond_make_ti
+   cond_make_0 -> cond_make_vi
+   cond_make -> cond_make_vv
+
+Pass 0 explictly, rather than implicitly in the function name.
+
 Reviewed-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/helper.h     |  1 -
- target/hppa/int_helper.c |  2 +-
- target/hppa/op_helper.c  |  7 -------
- target/hppa/translate.c  | 41 ++++++++++++++++++++++++++++++----------
- 4 files changed, 32 insertions(+), 19 deletions(-)
+ target/hppa/translate.c | 52 ++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/target/hppa/helper.h b/target/hppa/helper.h
-index 5900fd70bc..3d0d143aed 100644
---- a/target/hppa/helper.h
-+++ b/target/hppa/helper.h
-@@ -1,6 +1,5 @@
- DEF_HELPER_2(excp, noreturn, env, int)
- DEF_HELPER_FLAGS_2(tsv, TCG_CALL_NO_WG, void, env, tl)
--DEF_HELPER_FLAGS_2(tcond, TCG_CALL_NO_WG, void, env, tl)
- 
- DEF_HELPER_FLAGS_3(stby_b, TCG_CALL_NO_WG, void, env, tl, tl)
- DEF_HELPER_FLAGS_3(stby_b_parallel, TCG_CALL_NO_WG, void, env, tl, tl)
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index a667ee380d..1aa3e88ef1 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -134,13 +134,13 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-         switch (i) {
-         case EXCP_ILL:
-         case EXCP_BREAK:
-+        case EXCP_COND:
-         case EXCP_PRIV_REG:
-         case EXCP_PRIV_OPR:
-             /* IIR set via translate.c.  */
-             break;
- 
-         case EXCP_OVERFLOW:
--        case EXCP_COND:
-         case EXCP_ASSIST:
-         case EXCP_DTLB_MISS:
-         case EXCP_NA_ITLB_MISS:
-diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-index 6cf49f33b7..a8b69fd481 100644
---- a/target/hppa/op_helper.c
-+++ b/target/hppa/op_helper.c
-@@ -49,13 +49,6 @@ void HELPER(tsv)(CPUHPPAState *env, target_ulong cond)
-     }
- }
- 
--void HELPER(tcond)(CPUHPPAState *env, target_ulong cond)
--{
--    if (unlikely(cond)) {
--        hppa_dynamic_excp(env, EXCP_COND, GETPC());
--    }
--}
--
- static void atomic_store_mask32(CPUHPPAState *env, target_ulong addr,
-                                 uint32_t val, uint32_t mask, uintptr_t ra)
- {
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 706537ea59..ae291124f2 100644
+index de077e7a57..07ba35001b 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -1117,6 +1117,25 @@ static TCGv_i64 do_sub_sv(DisasContext *ctx, TCGv_i64 res,
-     return sv;
+@@ -345,32 +345,32 @@ static DisasCond cond_make_n(void)
+     };
  }
  
-+static void gen_tc(DisasContext *ctx, DisasCond *cond)
-+{
-+    DisasDelayException *e;
-+
-+    switch (cond->c) {
-+    case TCG_COND_NEVER:
-+        break;
-+    case TCG_COND_ALWAYS:
-+        gen_excp_iir(ctx, EXCP_COND);
-+        break;
-+    default:
-+        e = delay_excp(ctx, EXCP_COND);
-+        tcg_gen_brcond_i64(cond->c, cond->a0, cond->a1, e->lab);
-+        /* In the non-trap path, the condition is known false. */
-+        *cond = cond_make_f();
-+        break;
-+    }
-+}
-+
- static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 orig_in1,
-                    TCGv_i64 in2, unsigned shift, bool is_l,
-                    bool is_tsv, bool is_tc, bool is_c, unsigned cf, bool d)
-@@ -1175,9 +1194,7 @@ static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 orig_in1,
-     /* Emit any conditional trap before any writeback.  */
-     cond = do_cond(ctx, cf, d, dest, uv, sv);
-     if (is_tc) {
--        tmp = tcg_temp_new_i64();
--        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
--        gen_helper_tcond(tcg_env, tmp);
-+        gen_tc(ctx, &cond);
-     }
- 
-     /* Write back the result.  */
-@@ -1196,6 +1213,10 @@ static bool do_add_reg(DisasContext *ctx, arg_rrr_cf_d_sh *a,
+-static DisasCond cond_make_tmp(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
++static DisasCond cond_make_tt(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
  {
-     TCGv_i64 tcg_r1, tcg_r2;
+     assert (c != TCG_COND_NEVER && c != TCG_COND_ALWAYS);
+     return (DisasCond){ .c = c, .a0 = a0, .a1 = a1 };
+ }
  
-+    if (unlikely(is_tc && a->cf == 1)) {
-+        /* Unconditional trap on condition. */
-+        return gen_excp_iir(ctx, EXCP_COND);
-+    }
-     if (a->cf) {
-         nullify_over(ctx);
-     }
-@@ -1211,6 +1232,10 @@ static bool do_add_imm(DisasContext *ctx, arg_rri_cf *a,
+-static DisasCond cond_make_0_tmp(TCGCond c, TCGv_i64 a0)
++static DisasCond cond_make_ti(TCGCond c, TCGv_i64 a0, uint64_t imm)
  {
-     TCGv_i64 tcg_im, tcg_r2;
+-    return cond_make_tmp(c, a0, tcg_constant_i64(0));
++    return cond_make_tt(c, a0, tcg_constant_i64(imm));
+ }
  
-+    if (unlikely(is_tc && a->cf == 1)) {
-+        /* Unconditional trap on condition. */
-+        return gen_excp_iir(ctx, EXCP_COND);
-+    }
-     if (a->cf) {
-         nullify_over(ctx);
-     }
-@@ -1225,7 +1250,7 @@ static void do_sub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-                    TCGv_i64 in2, bool is_tsv, bool is_b,
-                    bool is_tc, unsigned cf, bool d)
+-static DisasCond cond_make_0(TCGCond c, TCGv_i64 a0)
++static DisasCond cond_make_vi(TCGCond c, TCGv_i64 a0, uint64_t imm)
  {
--    TCGv_i64 dest, sv, cb, cb_msb, tmp;
-+    TCGv_i64 dest, sv, cb, cb_msb;
-     unsigned c = cf >> 1;
-     DisasCond cond;
+     TCGv_i64 tmp = tcg_temp_new_i64();
+     tcg_gen_mov_i64(tmp, a0);
+-    return cond_make_0_tmp(c, tmp);
++    return cond_make_ti(c, tmp, imm);
+ }
  
-@@ -1273,9 +1298,7 @@ static void do_sub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+-static DisasCond cond_make(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
++static DisasCond cond_make_vv(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
+ {
+     TCGv_i64 t0 = tcg_temp_new_i64();
+     TCGv_i64 t1 = tcg_temp_new_i64();
  
-     /* Emit any conditional trap before any writeback.  */
+     tcg_gen_mov_i64(t0, a0);
+     tcg_gen_mov_i64(t1, a1);
+-    return cond_make_tmp(c, t0, t1);
++    return cond_make_tt(c, t0, t1);
+ }
+ 
+ static void cond_free(DisasCond *cond)
+@@ -789,7 +789,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+             tcg_gen_ext32u_i64(tmp, res);
+             res = tmp;
+         }
+-        cond = cond_make_0(TCG_COND_EQ, res);
++        cond = cond_make_vi(TCG_COND_EQ, res, 0);
+         break;
+     case 2: /* < / >=        (N ^ V / !(N ^ V) */
+         tmp = tcg_temp_new_i64();
+@@ -797,7 +797,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+         if (!d) {
+             tcg_gen_ext32s_i64(tmp, tmp);
+         }
+-        cond = cond_make_0_tmp(TCG_COND_LT, tmp);
++        cond = cond_make_ti(TCG_COND_LT, tmp, 0);
+         break;
+     case 3: /* <= / >        (N ^ V) | Z / !((N ^ V) | Z) */
+         /*
+@@ -819,10 +819,10 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+             tcg_gen_sari_i64(tmp, tmp, 63);
+             tcg_gen_and_i64(tmp, tmp, res);
+         }
+-        cond = cond_make_0_tmp(TCG_COND_EQ, tmp);
++        cond = cond_make_ti(TCG_COND_EQ, tmp, 0);
+         break;
+     case 4: /* NUV / UV      (!UV / UV) */
+-        cond = cond_make_0(TCG_COND_EQ, uv);
++        cond = cond_make_vi(TCG_COND_EQ, uv, 0);
+         break;
+     case 5: /* ZNV / VNZ     (!UV | Z / UV & !Z) */
+         tmp = tcg_temp_new_i64();
+@@ -830,7 +830,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+         if (!d) {
+             tcg_gen_ext32u_i64(tmp, tmp);
+         }
+-        cond = cond_make_0_tmp(TCG_COND_EQ, tmp);
++        cond = cond_make_ti(TCG_COND_EQ, tmp, 0);
+         break;
+     case 6: /* SV / NSV      (V / !V) */
+         if (!d) {
+@@ -838,12 +838,12 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+             tcg_gen_ext32s_i64(tmp, sv);
+             sv = tmp;
+         }
+-        cond = cond_make_0(TCG_COND_LT, sv);
++        cond = cond_make_ti(TCG_COND_LT, sv, 0);
+         break;
+     case 7: /* OD / EV */
+         tmp = tcg_temp_new_i64();
+         tcg_gen_andi_i64(tmp, res, 1);
+-        cond = cond_make_0_tmp(TCG_COND_NE, tmp);
++        cond = cond_make_ti(TCG_COND_NE, tmp, 0);
+         break;
+     default:
+         g_assert_not_reached();
+@@ -905,9 +905,9 @@ static DisasCond do_sub_cond(DisasContext *ctx, unsigned cf, bool d,
+             tcg_gen_ext32s_i64(t1, in1);
+             tcg_gen_ext32s_i64(t2, in2);
+         }
+-        return cond_make_tmp(tc, t1, t2);
++        return cond_make_tt(tc, t1, t2);
+     }
+-    return cond_make(tc, in1, in2);
++    return cond_make_vv(tc, in1, in2);
+ }
+ 
+ /*
+@@ -979,9 +979,9 @@ static DisasCond do_log_cond(DisasContext *ctx, unsigned cf, bool d,
+         } else {
+             tcg_gen_ext32s_i64(tmp, res);
+         }
+-        return cond_make_0_tmp(tc, tmp);
++        return cond_make_ti(tc, tmp, 0);
+     }
+-    return cond_make_0(tc, res);
++    return cond_make_vi(tc, res, 0);
+ }
+ 
+ /* Similar, but for shift/extract/deposit conditions.  */
+@@ -1040,7 +1040,7 @@ static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
+     tcg_gen_andc_i64(tmp, tmp, res);
+     tcg_gen_andi_i64(tmp, tmp, sgns);
+ 
+-    return cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp);
++    return cond_make_ti(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp, 0);
+ }
+ 
+ static TCGv_i64 get_carry(DisasContext *ctx, bool d,
+@@ -1454,7 +1454,7 @@ static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+         }
+ 
+         tcg_gen_andi_i64(cb, cb, test_cb);
+-        cond = cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb);
++        cond = cond_make_ti(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb, 0);
+     }
+ 
      if (is_tc) {
--        tmp = tcg_temp_new_i64();
--        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
--        gen_helper_tcond(tcg_env, tmp);
-+        gen_tc(ctx, &cond);
+@@ -3543,7 +3543,7 @@ static bool trans_bb_sar(DisasContext *ctx, arg_bb_sar *a)
+         tcg_gen_shl_i64(tmp, tcg_r, tmp);
      }
  
-     /* Write back the result.  */
-@@ -1441,9 +1464,7 @@ static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+-    cond = cond_make_0_tmp(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
++    cond = cond_make_ti(a->c ? TCG_COND_GE : TCG_COND_LT, tmp, 0);
+     return do_cbranch(ctx, a->disp, a->n, &cond);
+ }
+ 
+@@ -3560,7 +3560,7 @@ static bool trans_bb_imm(DisasContext *ctx, arg_bb_imm *a)
+     p = a->p | (a->d ? 0 : 32);
+     tcg_gen_shli_i64(tmp, tcg_r, p);
+ 
+-    cond = cond_make_0(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
++    cond = cond_make_ti(a->c ? TCG_COND_GE : TCG_COND_LT, tmp, 0);
+     return do_cbranch(ctx, a->disp, a->n, &cond);
+ }
+ 
+@@ -4364,7 +4364,7 @@ static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
+         switch (a->c) {
+         case 0: /* simple */
+             tcg_gen_andi_i64(t, t, 0x4000000);
+-            ctx->null_cond = cond_make_0(TCG_COND_NE, t);
++            ctx->null_cond = cond_make_ti(TCG_COND_NE, t, 0);
+             goto done;
+         case 2: /* rej */
+             inv = true;
+@@ -4394,16 +4394,16 @@ static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
+         if (inv) {
+             TCGv_i64 c = tcg_constant_i64(mask);
+             tcg_gen_or_i64(t, t, c);
+-            ctx->null_cond = cond_make(TCG_COND_EQ, t, c);
++            ctx->null_cond = cond_make_tt(TCG_COND_EQ, t, c);
+         } else {
+             tcg_gen_andi_i64(t, t, mask);
+-            ctx->null_cond = cond_make_0(TCG_COND_EQ, t);
++            ctx->null_cond = cond_make_ti(TCG_COND_EQ, t, 0);
+         }
+     } else {
+         unsigned cbit = (a->y ^ 1) - 1;
+ 
+         tcg_gen_extract_i64(t, t, 21 - cbit, 1);
+-        ctx->null_cond = cond_make_0(TCG_COND_NE, t);
++        ctx->null_cond = cond_make_ti(TCG_COND_NE, t, 0);
      }
  
-     if (is_tc) {
--        TCGv_i64 tmp = tcg_temp_new_i64();
--        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
--        gen_helper_tcond(tcg_env, tmp);
-+        gen_tc(ctx, &cond);
-     }
-     save_gpr(ctx, rt, dest);
- 
+  done:
 -- 
 2.34.1
 
