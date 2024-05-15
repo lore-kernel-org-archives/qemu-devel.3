@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB0EC25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B70C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7GFg-0003z2-Gx; Wed, 15 May 2024 11:09:08 -0400
+	id 1s7GFW-0003vT-Ek; Wed, 15 May 2024 11:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7GFe-0003yK-Dc
- for qemu-devel@nongnu.org; Wed, 15 May 2024 11:09:06 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1s7GFU-0003uu-Qy
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 11:08:56 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7GFb-0003FQ-J3
- for qemu-devel@nongnu.org; Wed, 15 May 2024 11:09:06 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2e3b1b6e9d1so84606281fa.2
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 08:09:02 -0700 (PDT)
+ id 1s7GFQ-0002x3-Ug
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 11:08:56 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-420180b58c3so24013275e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 08:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715785741; x=1716390541; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715785731; x=1716390531; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3+CU/PYG3Ilvn330jaFlX5AWHx4UTtAJ5ukJPjIH0Y8=;
- b=pkTPHOLfKLB4MxKAivC5zdAlJOkgKjoaBKWrArp3kPEhSX/tgyq86+y51etz+oj+AW
- GbeHDWNef9f1Kbxvk+yOlPqXRIpfjM6VR6GLEcKQ856Z27LQ1+aI39B41uZTTY+RsGs+
- +7XGEYdtY+yCBel0TiyEBjJsljvODzEamO8mwYQ7+EpKJ9oShtdK/H1RJI4WqpzQZyle
- GncAeInWwluTR86ADcr8YkceE7nDCZH83NalJ36uB03Vk47ZW1z3gdTUO5NftE0lJIOJ
- TZSYci/wMwsn+qJCE5pWs71yfdHX7Gkfm+cNEtTI3FJjnsI/Sy5P6PJXIVU4AcyyvEvL
- 8GYQ==
+ bh=8E9ppc4CUToY/h7916Bi0wG7cWa/ImlZUPMW1khZFpk=;
+ b=jPRg41Ye0GTS8oRQNmoA9gjxBKVITCjyOIFnUejiK2Ll/k1PUchiPo7rqC8j5zj4/i
+ 6pBgIb8Bnyl8Qe3pa/VMRA4N85RuCI/x2blFDbKKoZNbb5NM7a4Z9b2TiA3iuN5n7xK4
+ IJYM7/32a1Btk9jQkQbohyIHFASp5BupNlCUOzHzcw9tAtsBjUef53qqWHy9t21HpAMl
+ fb5twZmxgeSJ+jw1mQAD1HhJIdRBHGXBbhmDBOb084ik6I6wWQbQfmL3Rxz9uKFK8b3G
+ FkjpiZAYa31JELBwFZK8STvH/JGhftoVWSILMFxTOeoRUSP2N1lJCwO/gy8SUL7ddae7
+ eC1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715785741; x=1716390541;
+ d=1e100.net; s=20230601; t=1715785731; x=1716390531;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3+CU/PYG3Ilvn330jaFlX5AWHx4UTtAJ5ukJPjIH0Y8=;
- b=ABWOlIjPPWqM1/FIH/Rzh8jqB0nzZOYP4h2/XTTxAJCa7uFWgTvGq/hTxJI55RnaJW
- ZvEvvnarzlhYWma9u4LNPASCjDh6hheWUu0LllC0VxSx7dG1L2tot2kXeW1BbhgAbCrO
- 47as9f6hh2MyFygVSz3lMpjTsNgM1nTjKQAnmFmLeexd+mplrkv8Dal8PSfpahfZaaMD
- YAbQCyvOxErnp16qZ9olwnOvLaBamEWwTQ4nSPkpz98W6cTF4Yo/u5hkG5igotM4tHXe
- 8FqIX5zdbtuIsoUWlrU8mO0P79+/VPa1JHQzHvyi+oWtY6ge/tcXhQfhWY4nCWL7GUza
- SYVA==
-X-Gm-Message-State: AOJu0Yy0O6HG2E/seSjIJpBcsmHF1v+C7OphdY0UqGrXPT8RNgUBtm87
- eOxi79uArkZaxZkg2CWfoyHvLTueo3U5Y3C9qOJvTtASga5hgNzZK3tRKa23uBX8Rb901a4TzUV
- BCgY=
-X-Google-Smtp-Source: AGHT+IGBUWB3HzXgxlaYj6vWRMMQ9GCDYt3DCmqjPEX61VarJn9vpJMSqngrZy6+HhpwjBaleJ24AQ==
-X-Received: by 2002:a2e:602:0:b0:2e5:3ea9:8d26 with SMTP id
- 38308e7fff4ca-2e53ea98d95mr83114021fa.45.1715785741552; 
- Wed, 15 May 2024 08:09:01 -0700 (PDT)
+ bh=8E9ppc4CUToY/h7916Bi0wG7cWa/ImlZUPMW1khZFpk=;
+ b=F1drADk93vIv2Ix/qNbrpTe4bgOKIM8YccXSRCnKY3He0UezVl0SQmsMcM3IlZSniT
+ iirc6bn+Sh0g7IrtkmzLADPtCnzKLalHTlnAQBnsYFLPhrIh9oAzVMgfRgxGo6UbFp0Y
+ xSxIFPX//if5YZTe5u+4USzSTX5EZi5vZvGn72Gyr1gKwI8ABv4ALkkdagz4Ot91DthS
+ P5q8MFTIc/FMc1bDuLSDX0gkoKhU/MP97IcvZM4UPZMY5Dag4GvF89CI9ks2AfaSB0zh
+ 7UQr4tyVI7vt3N+hlqmpsHvxRYS/Eyh8i/pAwQ5moOiNzWzKfS9Aq3h/XpOs65VmsUGX
+ hwzQ==
+X-Gm-Message-State: AOJu0YweHjeH3xZzcJoe7x9mc3KyDq7pR+rtnHkK/42g3XGEuqemvz3g
+ smjn8eYBoUT8jBeXyD6isAel+0kH8uRPq9a1y75XiWXCSWv50uxc1ck3rJvNH94R3oFA/jX5JdU
+ YkOs=
+X-Google-Smtp-Source: AGHT+IGD9eih2imN3ghIC5d4YPyESSWR1V85KAODBDmqb98vnKksL/uNJC4gB0gKDY5rFxk0fhJ9pw==
+X-Received: by 2002:a05:600c:4f42:b0:419:f241:632f with SMTP id
+ 5b1f17b1804b1-41feac49273mr132397645e9.31.1715785731570; 
+ Wed, 15 May 2024 08:08:51 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42013c5fa61sm132080825e9.40.2024.05.15.08.09.00
+ 5b1f17b1804b1-42013c5fa61sm132080825e9.40.2024.05.15.08.08.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 08:09:01 -0700 (PDT)
+ Wed, 15 May 2024 08:08:51 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com,
 	laurent@vivier.eu
-Subject: [PATCH v3 28/28] target/i386: Pass host pointer and size to
- cpu_x86_{xsave, xrstor}
-Date: Wed, 15 May 2024 17:08:37 +0200
-Message-Id: <20240515150837.259747-29-richard.henderson@linaro.org>
+Subject: [PATCH v3 15/28] linux-user/i386: Drop xfeatures_size from sigcontext
+ arithmetic
+Date: Wed, 15 May 2024 17:08:24 +0200
+Message-Id: <20240515150837.259747-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515150837.259747-1-richard.henderson@linaro.org>
 References: <20240515150837.259747-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,159 +95,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have already validated the memory region in the course of
-validating the signal frame.  No need to do it again within
-the helper function.
-
-In addition, return failure when the header contains invalid
-xstate_bv.  The kernel handles this via exception handling
-within XSTATE_OP within xrstor_from_user_sigframe.
+This is subtracting sizeof(target_fpstate_fxsave) in
+TARGET_FXSAVE_SIZE, then adding it again via &fxsave->xfeatures.
+Perform the same computation using xstate_size alone.
 
 Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/cpu.h            |  4 ++--
- linux-user/i386/signal.c     | 20 ++++++++++++--------
- target/i386/tcg/fpu_helper.c | 36 +++++++++++++++++++-----------------
- 3 files changed, 33 insertions(+), 27 deletions(-)
+ linux-user/i386/signal.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index dbd91c064d..df75f4c2b1 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2245,8 +2245,8 @@ void cpu_x86_fsave(CPUX86State *s, void *host, size_t len);
- void cpu_x86_frstor(CPUX86State *s, void *host, size_t len);
- void cpu_x86_fxsave(CPUX86State *s, void *host, size_t len);
- void cpu_x86_fxrstor(CPUX86State *s, void *host, size_t len);
--void cpu_x86_xsave(CPUX86State *s, target_ulong ptr, uint64_t rbfm);
--void cpu_x86_xrstor(CPUX86State *s, target_ulong ptr, uint64_t rbfm);
-+void cpu_x86_xsave(CPUX86State *s, void *host, size_t len, uint64_t rbfm);
-+bool cpu_x86_xrstor(CPUX86State *s, void *host, size_t len, uint64_t rbfm);
- 
- /* cpu.c */
- void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
 diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 1f5a3e9a0b..16f6d17345 100644
+index 824375d42a..89048ed069 100644
 --- a/linux-user/i386/signal.c
 +++ b/linux-user/i386/signal.c
-@@ -326,7 +326,7 @@ static void xsave_sigcontext(CPUX86State *env,
+@@ -253,7 +253,6 @@ static void xsave_sigcontext(CPUX86State *env, struct target_fpstate_fxsave *fxs
+         __put_user(0, &fxsave->sw_reserved.magic1);
+     } else {
+         uint32_t xstate_size = xsave_area_size(env->xcr0, false);
+-        uint32_t xfeatures_size = xstate_size - TARGET_FXSAVE_SIZE;
  
-     /* Zero the header, XSAVE *adds* features to an existing save state.  */
-     memset(fxstate + 1, 0, sizeof(X86XSaveHeader));
--    cpu_x86_xsave(env, xstate_addr, env->xcr0);
-+    cpu_x86_xsave(env, fxstate, fpend_addr - xstate_addr, env->xcr0);
- 
-     __put_user(TARGET_FP_XSTATE_MAGIC1, &sw->magic1);
-     __put_user(extended_size, &sw->extended_size);
-@@ -611,6 +611,8 @@ static bool xrstor_sigcontext(CPUX86State *env, FPStateKind fpkind,
-     uint32_t magic1, magic2;
-     uint32_t extended_size, xstate_size, min_size, max_size;
-     uint64_t xfeatures;
-+    void *xstate;
-+    bool ok;
- 
-     switch (fpkind) {
-     case FPSTATE_XSAVE:
-@@ -641,8 +643,10 @@ static bool xrstor_sigcontext(CPUX86State *env, FPStateKind fpkind,
-             return false;
-         }
- 
--        if (!access_ok(env_cpu(env), VERIFY_READ, fxstate_addr,
--                       xstate_size + TARGET_FP_XSTATE_MAGIC2_SIZE)) {
-+        /* Re-lock the entire xstate area, with the extensions and magic. */
-+        xstate = lock_user(VERIFY_READ, fxstate_addr,
-+                           xstate_size + TARGET_FP_XSTATE_MAGIC2_SIZE, 1);
-+        if (!xstate) {
-             return false;
-         }
- 
-@@ -652,15 +656,15 @@ static bool xrstor_sigcontext(CPUX86State *env, FPStateKind fpkind,
-          * fpstate layout with out copying the extended state information
-          * in the memory layout.
-          */
--        if (get_user_u32(magic2, fxstate_addr + xstate_size)) {
--            return false;
--        }
-+        magic2 = tswap32(*(uint32_t *)(xstate + xstate_size));
-         if (magic2 != FP_XSTATE_MAGIC2) {
-+            unlock_user(xstate, fxstate_addr, 0);
-             break;
-         }
- 
--        cpu_x86_xrstor(env, fxstate_addr, xfeatures);
--        return true;
-+        ok = cpu_x86_xrstor(env, xstate, xstate_size, xfeatures);
-+        unlock_user(xstate, fxstate_addr, 0);
-+        return ok;
- 
-     default:
-         break;
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 0e5368951f..c17eaaa22b 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -3065,42 +3065,44 @@ void cpu_x86_fxrstor(CPUX86State *env, void *host, size_t len)
-     do_fxrstor(&ac, 0);
- }
- 
--void cpu_x86_xsave(CPUX86State *env, target_ulong ptr, uint64_t rfbm)
-+void cpu_x86_xsave(CPUX86State *env, void *host, size_t len, uint64_t rfbm)
- {
--    X86Access ac;
--    unsigned size;
-+    X86Access ac = {
-+        .haddr1 = host,
-+        .env = env,
-+    };
- 
-     /*
-      * Since this is only called from user-level signal handling,
-      * we should have done the job correctly there.
-      */
-     assert((rfbm & ~env->xcr0) == 0);
--    size = xsave_area_size(rfbm, false);
--
--    access_prepare(&ac, env, ptr, size, MMU_DATA_STORE, 0);
--    do_xsave_access(&ac, ptr, rfbm, get_xinuse(env), rfbm);
-+    ac.size = xsave_area_size(rfbm, false);
-+    assert(ac.size <= len);
-+    do_xsave_access(&ac, 0, rfbm, get_xinuse(env), rfbm);
- }
- 
--void cpu_x86_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm)
-+bool cpu_x86_xrstor(CPUX86State *env, void *host, size_t len, uint64_t rfbm)
- {
--    X86Access ac;
-+    X86Access ac = {
-+        .haddr1 = host,
-+        .env = env,
-+    };
-     uint64_t xstate_bv;
--    unsigned size;
- 
-     /*
-      * Since this is only called from user-level signal handling,
-      * we should have done the job correctly there.
-      */
-     assert((rfbm & ~env->xcr0) == 0);
--    size = xsave_area_size(rfbm, false);
--    access_prepare(&ac, env, ptr, size, MMU_DATA_LOAD, 0);
-+    ac.size = xsave_area_size(rfbm, false);
-+    assert(ac.size <= len);
- 
--    if (!valid_xrstor_header(&ac, &xstate_bv, ptr)) {
--        /* TODO: Report failure to caller. */
--        xstate_bv &= env->xcr0;
-+    if (!valid_xrstor_header(&ac, &xstate_bv, 0)) {
-+        return false;
+         /*
+          * extended_size is the offset from fpstate_addr to right after the end
+@@ -273,7 +272,8 @@ static void xsave_sigcontext(CPUX86State *env, struct target_fpstate_fxsave *fxs
+         __put_user(extended_size, &fxsave->sw_reserved.extended_size);
+         __put_user(env->xcr0, &fxsave->sw_reserved.xfeatures);
+         __put_user(xstate_size, &fxsave->sw_reserved.xstate_size);
+-        __put_user(TARGET_FP_XSTATE_MAGIC2, (uint32_t *) &fxsave->xfeatures[xfeatures_size]);
++        __put_user(TARGET_FP_XSTATE_MAGIC2,
++                   (uint32_t *)((void *)fxsave + xstate_size));
      }
--
--    do_xrstor(&ac, ptr, rfbm, xstate_bv);
-+    do_xrstor(&ac, 0, rfbm, xstate_bv);
-+    return true;
  }
- #endif
  
+@@ -559,7 +559,6 @@ static int xrstor_sigcontext(CPUX86State *env, struct target_fpstate_fxsave *fxs
+     if (env->features[FEAT_1_ECX] & CPUID_EXT_XSAVE) {
+         uint32_t extended_size = tswapl(fxsave->sw_reserved.extended_size);
+         uint32_t xstate_size = tswapl(fxsave->sw_reserved.xstate_size);
+-        uint32_t xfeatures_size = xstate_size - TARGET_FXSAVE_SIZE;
+ 
+         /* Linux checks MAGIC2 using xstate_size, not extended_size.  */
+         if (tswapl(fxsave->sw_reserved.magic1) == TARGET_FP_XSTATE_MAGIC1 &&
+@@ -568,7 +567,7 @@ static int xrstor_sigcontext(CPUX86State *env, struct target_fpstate_fxsave *fxs
+                            extended_size - TARGET_FPSTATE_FXSAVE_OFFSET)) {
+                 return 1;
+             }
+-            if (tswapl(*(uint32_t *) &fxsave->xfeatures[xfeatures_size]) == TARGET_FP_XSTATE_MAGIC2) {
++            if (tswapl(*(uint32_t *)((void *)fxsave + xstate_size)) == TARGET_FP_XSTATE_MAGIC2) {
+                 cpu_x86_xrstor(env, fxsave_addr, -1);
+                 return 0;
+             }
 -- 
 2.34.1
 
