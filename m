@@ -4,67 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E18C25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 11:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E33D3C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 11:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7ClL-0006Kj-GO; Wed, 15 May 2024 07:25:36 -0400
+	id 1s7D9k-0005vm-0V; Wed, 15 May 2024 07:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1s7ClA-0006JU-Nb
- for qemu-devel@nongnu.org; Wed, 15 May 2024 07:25:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anushree.mathur@linux.vnet.ibm.com>)
+ id 1s7D9O-0005qd-V2
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 07:50:31 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1s7Cl5-0005Np-Qb
- for qemu-devel@nongnu.org; Wed, 15 May 2024 07:25:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715772318;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5I8jw8ZwQFcVE3TCt7mfhOF34xGJqPPGqmUyT0I+3DA=;
- b=Ma9fDKofPjc0HVJECQv21NrZOwaAqdp6bpd4En/AsYZrSCWhPpkjE7S5RuDHfYQ8mHgapj
- Cobzz6N8TMUIF1VeS9FC+3MEyhlqeMwFbL9usFeoZaRyleYBEuydTs/SzgjiBtYY9XRZ/u
- VBCwPWV0ivH/t3iotm4Fms6cDSLVUcs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-9gwbVcbZPm2Y96eETvfFzg-1; Wed, 15 May 2024 07:25:17 -0400
-X-MC-Unique: 9gwbVcbZPm2Y96eETvfFzg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C8DF580118E
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 11:25:16 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.9])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B0318400057;
- Wed, 15 May 2024 11:25:15 +0000 (UTC)
-From: marcandre.lureau@redhat.com
+ (Exim 4.90_1) (envelope-from <anushree.mathur@linux.vnet.ibm.com>)
+ id 1s7D9M-0008B0-TW
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 07:50:26 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44FBkNEE018954
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 11:50:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=ZjtsGKrHlpvY5GDQRIfldl9fuRL7iEFmkNMtkX4gWuE=;
+ b=L6FjBg3RpLhVVpnH0NNckWNlSxz7LCnrY/zyc/uxGV3+B9fWnQ6yrtXNtEg0wJWYnh1w
+ Igfii1uY8O/2mDAXtZbgeFuyDDEUkz3eBKa1Z79o9eY1BlaQmwalaVBLvDQsK4nMbpAY
+ 1XIUi8KAubjGcJ1Tn+etrCTJC9m0tr1rjEjLHL4VII780CMNQk7ZEh9tpiAzP6c6ZY1m
+ Yg6p34DoGInpxP5jgbWilBWaYaffC56ffg84wRXrvGSTHQD3jmAS66Rru4GqdWgWYifB
+ huoz1CrG4RR8byLouXLW3ZDSOhCVM6p5XZR3R+MfSqwcVSH+4n7LfO6gzMwDbKxLsgTX Sw== 
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y4tv6g856-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 11:50:20 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44F8nspk006769
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 11:50:19 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2mgmka5d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 11:50:19 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44FBoFSZ52035914
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 May 2024 11:50:17 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C46EC2004B;
+ Wed, 15 May 2024 11:50:15 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 31A6B20043;
+ Wed, 15 May 2024 11:50:15 +0000 (GMT)
+Received: from ltcrain8ad-lp4.aus.stglabs.ibm.com (unknown [9.40.192.221])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 15 May 2024 11:50:15 +0000 (GMT)
+From: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] vl: fix "type is NULL" in -vga help
-Date: Wed, 15 May 2024 15:25:12 +0400
-Message-ID: <20240515112512.1100498-1-marcandre.lureau@redhat.com>
+Cc: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+Subject: [PATCH] ui/gtk-egl.c: fix build break
+Date: Wed, 15 May 2024 06:50:05 -0500
+Message-ID: <20240515115005.3553790-1-anushree.mathur@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 3ZLSjaYRy97hhJfC3CPGAXS74hCg0xW1
+X-Proofpoint-GUID: 3ZLSjaYRy97hhJfC3CPGAXS74hCg0xW1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-15_06,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011
+ priorityscore=1501 suspectscore=0 malwarescore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=640 lowpriorityscore=0 adultscore=0 spamscore=0
+ impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2405010000 definitions=main-2405150081
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=anushree.mathur@linux.vnet.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,42 +107,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Qemu build is failing due to an unused variable.
+Removing it to fix the build break.
 
-A VGA interface is available if it has no class_names, or we can look up
-any of the names - we shouldn't call module_object_class_by_name(NULL),
-as happening for ex with TCX or CG3 on x86.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
 ---
- system/vl.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ ui/gtk-egl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index a3eede5fa5..398f88b0f0 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -999,9 +999,16 @@ static bool vga_interface_available(VGAInterfaceType t)
-     const VGAInterfaceInfo *ti = &vga_interfaces[t];
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 0473f689c9..3177992b91 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -70,7 +70,6 @@ void gd_egl_draw(VirtualConsole *vc)
+     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+ #endif
+     int ww, wh, ws;
+-    int fence_fd;
  
-     assert(t < VGA_TYPE_MAX);
--    return !ti->class_names[0] ||
--           module_object_class_by_name(ti->class_names[0]) ||
--           module_object_class_by_name(ti->class_names[1]);
-+
-+    if (!ti->class_names[0] || module_object_class_by_name(ti->class_names[0])) {
-+        return true;
-+    }
-+
-+    if (ti->class_names[1] && module_object_class_by_name(ti->class_names[1])) {
-+        return true;
-+    }
-+
-+    return false;
- }
- 
- static const char *
+     if (!vc->gfx.gls) {
+         return;
 -- 
-2.41.0.28.gd7d8841f67
+2.45.0
 
 
