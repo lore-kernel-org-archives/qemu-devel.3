@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B4FC25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB40C25B79
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 15:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7G69-0005EE-KJ; Wed, 15 May 2024 10:59:17 -0400
+	id 1s7G63-0005Cg-SK; Wed, 15 May 2024 10:59:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7G64-0005DU-Oi
- for qemu-devel@nongnu.org; Wed, 15 May 2024 10:59:13 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ id 1s7G61-0005CJ-Lg
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 10:59:09 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7G5x-000799-Ve
- for qemu-devel@nongnu.org; Wed, 15 May 2024 10:59:12 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2e4939c5323so84872751fa.2
+ id 1s7G5x-00077Q-IX
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 10:59:09 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41ffad242c8so37712175e9.3
  for <qemu-devel@nongnu.org>; Wed, 15 May 2024 07:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715785143; x=1716389943; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715785142; x=1716389942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+UEAzmz2yf/FXZrHjq+7bspL7xDnH65PbwwSYmcMRBs=;
- b=XgfbktcLWc1hDT51tXfzByvy9mfXUHz0MNUc3oP/4M83EDwmGJhRDPHyB7lDnVYPtU
- RmCCRvpG1h0jKUsVb/VL5eSP7v0K6Ma80gcyRn9vGSdJbErEXOqe+cLs4Cjg1m2KFf5C
- Pw7J/NU467lMh8pEfU8I6QXJCHrsqaXgtL7rs9XDWGlDfRxVZO8rjKpacK675SL6tPnh
- b2FXIaYeO0TpBYc4VVCUTv8Ya2t6m4yqXu55sNVTw7yd08TqzXluPRwmYqJjy8kG5W47
- Aw8qkzC3Ju850fhB5Q6p/lJZxadilbUPnBMTvRxZS/p2TETwQrE13tFGx1sCbO/zEE5f
- jSrg==
+ bh=zWr5b7ogG/rKIVgZ3ajQkJPbaaMpVh+KqxIFrCgh+w4=;
+ b=x1wtNjVbvhSf3e2YDLi0sAwqIHh57VwN5E8bJbAfwJgt8rapDxMKbN52PXT9wSNpVR
+ THIcP706bp0kXr0o+UlM1/kIxjH5f17IDZGvcaOC9AWJzjVe6K4BeZbuR8D1dJ8fR1aI
+ gbP4uVRO2lWc1b+jzAeOd2y1hjXRv0QX6iuHWFy4TOe0478VEgzsa6baX56gfugFvfqj
+ Zp7nc4dyeJqQ0aT6P2EiguzRcsNaKXKoWD5AMGOTnU8emwUQL/iHLJ3AOyguQ1ZVO53L
+ z6w7YqxQ1stl4riFIRyWB/KBx+M9UpzDYEOGd1ifTlUalTaDNBffOSY/IwSgaPdhQ5BH
+ WYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715785143; x=1716389943;
+ d=1e100.net; s=20230601; t=1715785142; x=1716389942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+UEAzmz2yf/FXZrHjq+7bspL7xDnH65PbwwSYmcMRBs=;
- b=aU1/4uWKP26IsgoPto6wqMsCzIIZBCrLMui82cDOAYmFlXbDYGarJzEZdigtbErjne
- VL17ZNmvieicDMDDdFJJo7yJEHxSkP0aWlBkLxXza14mf4nynVMdFpdF4309GEHilz53
- LdIxSf3t53v9WITQB/BtgvIRjM1/DA9N0s7aVx4S8heOHuu9UmVNOy0zestNeOMtp4ZJ
- nqF3sTkNo2ITjdjCuoOorUNTLK7LeIw2hSFWx2aSg31sJ0HZsM0OLJdL8/Oicd0qghy9
- eq8psUT3ijcP4vAIEcnP5407WnQAGEX/cxeu6seGvcjNHMozr0CXslkAcST/EIpYczbZ
- CXyA==
-X-Gm-Message-State: AOJu0Ywn3YIoqUcKeenPwBzsG4QHHGtu0kjt73oZn40Ub/EzxWE5WKc4
- amzU55kSgq1Wd9WKk4gKn86opWQkoEyXsi6DjhYof02b2gtoeo8p9bP4kX5inxrA5wDbZsBe+wK
- b9go=
-X-Google-Smtp-Source: AGHT+IHBAqmShW7+x0erZY7qrVPYmX9/Sj/x3k0Czp3fcp+nLRsdz0z8vY6o+cHpBJxSWC5aaRGvYw==
-X-Received: by 2002:a05:6512:3294:b0:51b:6366:3459 with SMTP id
- 2adb3069b0e04-5221027800cmr13784999e87.67.1715785143330; 
- Wed, 15 May 2024 07:59:03 -0700 (PDT)
+ bh=zWr5b7ogG/rKIVgZ3ajQkJPbaaMpVh+KqxIFrCgh+w4=;
+ b=B8R2pkX4Yt3bprCc9H7IgOK3Zp8RpvACMqWpwFb5Fbu8Ltn/WGPRoweLAk4N857EQJ
+ tX4lBJ90r9ZMEOnaYTEqjST7OmVAxrWw0LndsGWZEO1tdjsp75d4r1IvUjd5lBLWYC6s
+ yBNheNMwoAJLGNuYvvAsTgx2n7WTTjHIzGAh90lxwlNeecvAe2DShK0jddssoaIjWb1K
+ v6oElq4jUClFrQpIzzmEYm1SOsjfKllKnAHbl2Qx3a2Gu45LQZmiDEw6fll6aYvLT4pg
+ 0wrnqJMoBdSflrLwpccY+ti5NFD7iTpB3uOPM0/nemcLAljVzSUOicTH5JMshXAc1MTN
+ Z0jA==
+X-Gm-Message-State: AOJu0Yw3991rr8sSiSQsNFPszhpNmclAYRDUIq8ECNMCqpFNp4YY8eK/
+ HBqJCc5y12blcNaPNNps1GE6t39eKKWFGd5jEzCTnjVxeQj5AlsXIjJuMOWceqHZ/d28DWUcy4H
+ FRsE=
+X-Google-Smtp-Source: AGHT+IF+c0RFw1sUJE7Mm90fZuPHnJon0rnVhi5eeoqGjVABDpkFx13xmyVfn8DhgqYZSq88zY6KLw==
+X-Received: by 2002:a05:600c:4f0c:b0:420:1f0f:fe19 with SMTP id
+ 5b1f17b1804b1-4201f0fff56mr61846545e9.13.1715785142301; 
+ Wed, 15 May 2024 07:59:02 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41f88111033sm272134645e9.34.2024.05.15.07.59.02
+ 5b1f17b1804b1-41f88111033sm272134645e9.34.2024.05.15.07.59.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 07:59:03 -0700 (PDT)
+ Wed, 15 May 2024 07:59:02 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 3/5] tcg/aarch64: Support TCG_TARGET_HAS_tst_vec
-Date: Wed, 15 May 2024 16:58:58 +0200
-Message-Id: <20240515145900.252870-4-richard.henderson@linaro.org>
+Subject: [PATCH 1/5] tcg: Introduce TCG_TARGET_HAS_tst_vec
+Date: Wed, 15 May 2024 16:58:56 +0200
+Message-Id: <20240515145900.252870-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515145900.252870-1-richard.henderson@linaro.org>
 References: <20240515145900.252870-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,76 +93,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Prelude to supporting TCG_COND_TST* in vector comparisons.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/aarch64/tcg-target.h     |  2 +-
- tcg/aarch64/tcg-target.c.inc | 26 ++++++++++++++++++++++++--
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ include/tcg/tcg.h            | 1 +
+ tcg/aarch64/tcg-target.h     | 1 +
+ tcg/arm/tcg-target.h         | 1 +
+ tcg/i386/tcg-target.h        | 1 +
+ tcg/loongarch64/tcg-target.h | 1 +
+ tcg/ppc/tcg-target.h         | 1 +
+ tcg/s390x/tcg-target.h       | 1 +
+ 7 files changed, 7 insertions(+)
 
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index 2a1c080bab..21d5884741 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -155,6 +155,7 @@ typedef uint64_t TCGRegSet;
+ #define TCG_TARGET_HAS_minmax_vec       0
+ #define TCG_TARGET_HAS_bitsel_vec       0
+ #define TCG_TARGET_HAS_cmpsel_vec       0
++#define TCG_TARGET_HAS_tst_vec          0
+ #else
+ #define TCG_TARGET_MAYBE_vec            1
+ #endif
 diff --git a/tcg/aarch64/tcg-target.h b/tcg/aarch64/tcg-target.h
-index 138bafb9da..8bd9e6a5eb 100644
+index 85d5746e47..138bafb9da 100644
 --- a/tcg/aarch64/tcg-target.h
 +++ b/tcg/aarch64/tcg-target.h
-@@ -167,7 +167,7 @@ typedef enum {
+@@ -167,6 +167,7 @@ typedef enum {
  #define TCG_TARGET_HAS_minmax_vec       1
  #define TCG_TARGET_HAS_bitsel_vec       1
  #define TCG_TARGET_HAS_cmpsel_vec       0
--#define TCG_TARGET_HAS_tst_vec          0
-+#define TCG_TARGET_HAS_tst_vec          1
++#define TCG_TARGET_HAS_tst_vec          0
  
  #define TCG_TARGET_DEFAULT_MO (0)
  #define TCG_TARGET_NEED_LDST_LABELS
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 56fc9cb9e0..ffa8a3e519 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -2737,7 +2737,8 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-             TCGCond cond = args[3];
-             AArch64Insn insn;
+diff --git a/tcg/arm/tcg-target.h b/tcg/arm/tcg-target.h
+index a43875cb09..434a892e07 100644
+--- a/tcg/arm/tcg-target.h
++++ b/tcg/arm/tcg-target.h
+@@ -150,6 +150,7 @@ extern bool use_neon_instructions;
+ #define TCG_TARGET_HAS_minmax_vec       1
+ #define TCG_TARGET_HAS_bitsel_vec       1
+ #define TCG_TARGET_HAS_cmpsel_vec       0
++#define TCG_TARGET_HAS_tst_vec          0
  
--            if (cond == TCG_COND_NE) {
-+            switch (cond) {
-+            case TCG_COND_NE:
-                 if (const_args[2]) {
-                     if (is_scalar) {
-                         tcg_out_insn(s, 3611, CMTST, vece, a0, a1, a1);
-@@ -2752,7 +2753,27 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                     }
-                     tcg_out_insn(s, 3617, NOT, is_q, 0, a0, a0);
-                 }
--            } else {
-+                break;
-+
-+            case TCG_COND_TSTNE:
-+            case TCG_COND_TSTEQ:
-+                if (const_args[2]) {
-+                    /* (x & 0) == 0 */
-+                    tcg_out_dupi_vec(s, type, MO_8, a0,
-+                                     -(cond == TCG_COND_TSTEQ));
-+                    break;
-+                }
-+                if (is_scalar) {
-+                    tcg_out_insn(s, 3611, CMTST, vece, a0, a1, a2);
-+                } else {
-+                    tcg_out_insn(s, 3616, CMTST, is_q, vece, a0, a1, a2);
-+                }
-+                if (cond == TCG_COND_TSTEQ) {
-+                    tcg_out_insn(s, 3617, NOT, is_q, 0, a0, a0);
-+                }
-+                break;
-+
-+            default:
-                 if (const_args[2]) {
-                     if (is_scalar) {
-                         insn = cmp0_scalar_insn[cond];
-@@ -2791,6 +2812,7 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                     }
-                     tcg_out_insn_3616(s, insn, is_q, vece, a0, a1, a2);
-                 }
-+                break;
-             }
-         }
-         break;
+ #define TCG_TARGET_DEFAULT_MO (0)
+ #define TCG_TARGET_NEED_LDST_LABELS
+diff --git a/tcg/i386/tcg-target.h b/tcg/i386/tcg-target.h
+index a10d4e1fce..2f67a97e05 100644
+--- a/tcg/i386/tcg-target.h
++++ b/tcg/i386/tcg-target.h
+@@ -224,6 +224,7 @@ typedef enum {
+ #define TCG_TARGET_HAS_minmax_vec       1
+ #define TCG_TARGET_HAS_bitsel_vec       have_avx512vl
+ #define TCG_TARGET_HAS_cmpsel_vec       -1
++#define TCG_TARGET_HAS_tst_vec          0
+ 
+ #define TCG_TARGET_deposit_i32_valid(ofs, len) \
+     (((ofs) == 0 && ((len) == 8 || (len) == 16)) || \
+diff --git a/tcg/loongarch64/tcg-target.h b/tcg/loongarch64/tcg-target.h
+index fede627bf7..29e4860d20 100644
+--- a/tcg/loongarch64/tcg-target.h
++++ b/tcg/loongarch64/tcg-target.h
+@@ -194,6 +194,7 @@ typedef enum {
+ #define TCG_TARGET_HAS_minmax_vec       1
+ #define TCG_TARGET_HAS_bitsel_vec       1
+ #define TCG_TARGET_HAS_cmpsel_vec       0
++#define TCG_TARGET_HAS_tst_vec          0
+ 
+ #define TCG_TARGET_DEFAULT_MO (0)
+ 
+diff --git a/tcg/ppc/tcg-target.h b/tcg/ppc/tcg-target.h
+index 04a7aba4d3..e154fb14df 100644
+--- a/tcg/ppc/tcg-target.h
++++ b/tcg/ppc/tcg-target.h
+@@ -173,6 +173,7 @@ typedef enum {
+ #define TCG_TARGET_HAS_minmax_vec       1
+ #define TCG_TARGET_HAS_bitsel_vec       have_vsx
+ #define TCG_TARGET_HAS_cmpsel_vec       0
++#define TCG_TARGET_HAS_tst_vec          0
+ 
+ #define TCG_TARGET_DEFAULT_MO (0)
+ #define TCG_TARGET_NEED_LDST_LABELS
+diff --git a/tcg/s390x/tcg-target.h b/tcg/s390x/tcg-target.h
+index ae448c3a3a..62ce9d792a 100644
+--- a/tcg/s390x/tcg-target.h
++++ b/tcg/s390x/tcg-target.h
+@@ -163,6 +163,7 @@ extern uint64_t s390_facilities[3];
+ #define TCG_TARGET_HAS_minmax_vec     1
+ #define TCG_TARGET_HAS_bitsel_vec     1
+ #define TCG_TARGET_HAS_cmpsel_vec     0
++#define TCG_TARGET_HAS_tst_vec        0
+ 
+ /* used for function call generation */
+ #define TCG_TARGET_STACK_ALIGN		8
 -- 
 2.34.1
 
