@@ -4,86 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C225C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:53:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EF9C25B79
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7E80-0001dj-CJ; Wed, 15 May 2024 08:53:04 -0400
+	id 1s7E82-0001dx-Ri; Wed, 15 May 2024 08:53:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7E7y-0001dF-1P
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:02 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E81-0001dl-BT
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:05 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7E7w-0000dV-58
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:01 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-34de61b7ca4so4744885f8f.2
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:52:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E7z-0000dj-NB
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:05 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2e0a34b2899so102203771fa.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715777578; x=1716382378; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715777580; x=1716382380; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=V0hj5FxGAHV6Zge8LY7D4KbAAoxrxcOWRjzC6Koc43Q=;
- b=ODoLB567sw3No6u6TPncFQPcSLZeqnIteL9zUx/PvOM4/k5BXppJWVXKhoO20+Gkk+
- P7QpGfHpDjYD5ZCoM6Wb8tl4iuAkbbAwh3sNaL5C3KRPmDKOR9IMtYVL+XvOc7rteowB
- 5Ct1AMlLiTpZD+l985p4sYPdJwN/DHdE4ocxy5h2PSUaXusQiOavAbdxpz9tCPEcuYSE
- c9ExgBkZ2q08CbxIXn19AS4u1jBDFYBl6QtUWzLM5j4/0Et6hQ1CU2GhDtsCN/9Loyg/
- Gntnpu8TMy6IY+V6ov+CVqfxXbj2QX+A8dQ4CQIE6x02HVn8uxN5dzv7v0LCVNC0zAAx
- sWng==
+ bh=xqbX3+t9p0LZsldOKhZGRDiCCka3lbUHUI1hHdPQxR4=;
+ b=MnNHRDlVyV/QCqhBUN7sWzc44HXvNMuMd08shsYXckikG8wud3gSVoKdUHTzQ1O/a3
+ JDnyBvqN6SwzQ/uZnuWhJyZBTnae4+jDDF3Qo/CzvkZH3kIANPF3KzUpP1JmjYC2Oop8
+ S73UD63uvSKk0ne8OttBFM0N1wdSpT2yRufoVXJRoDtwhXCS4BgHQDZ1jJxy4iEYHpQg
+ 4Ec/8CW9F4kG6VEbROMT3oy7RSyTmfFAEGkNKbH/ecxpSAsNM7mT/RtBMs0bJEsYcHPe
+ kQUFDeP3Dk657UoqkHFrAgUtrOz3Se6XWY42HNUwT+ZmqjNOvly6otQQUd7ekMRUNHac
+ fSSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715777578; x=1716382378;
+ d=1e100.net; s=20230601; t=1715777580; x=1716382380;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V0hj5FxGAHV6Zge8LY7D4KbAAoxrxcOWRjzC6Koc43Q=;
- b=ebGdNWT1Un59JG0qxxEGqS7GRdjVNdJFrLObT2hPljsK/32UcK3D0xMOdtZw5aGt05
- aMBUCStomORAHw1SCdHGdR5cyIyeRCZUh/ICYZXHtGxA7Od6XzIwQkxImVQnWOSEKhvR
- 3hFZsChs/YYw8NyswViEuR/qtGbhanEUwX/wqNeJLOHqZIwqNKUII7hzZWXhZs9q1tqO
- GWwveRRcXsxOYXmEAn4DMXtm8NQMajhLgpzXSGcnhMw4VUR9psY8foT6Pt1inyj80KyM
- 8b2kZYc4xzAAf55aHQbSufZV6q9kLCVraNLbjIJ+9kUX3mruQRk+H9J8mPCiPfEJoRc9
- uQyA==
+ bh=xqbX3+t9p0LZsldOKhZGRDiCCka3lbUHUI1hHdPQxR4=;
+ b=esdcWhFEuBeQeKRB4Xl0F+5MapnwZsdHXi9N2sUH7bQ7EbUfcNNwwcdiF9GNOzbf+z
+ tVyS3q2VsU7fzPx3l2DHMw5bnnmAqyEGN5xtz/nKH6Xv56gijn3tXkza6S1r8yFOKsOH
+ oR7UDFtXe8oEBa6LmCR6hcaiVnQGMcMdeVzxpcnSjx/DH2oj5f4sOhYxNz0UzWWUXQkc
+ qJkHD+cZj9wASzfM6KQE0KtZVFQTzb/8+VfVnjN4haOQtEBM1Fk2vX4VHQSIARzIXJ4n
+ uHJ9htCAw5ZiZkeB8mhwn+ZQl0GVfncPlVE9d+m8K8g0Zc+5jI+QbIuazdKZXrbCXzda
+ 7S5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWp2nIfZkl0FlBtf68TsQOw07Tp3NDW4tQv2L7wk9y7fHe+K0GYXGmmN5JnUEU1PWSdsddraQ4Ez3yh7ZBIXsEYteNgHDU=
-X-Gm-Message-State: AOJu0YwZ629WZKjoRRC2YerVlXm3ND1FqWuXbR1MiboNTJdMjRABFF6+
- dZGMw9YlB2/0e6K8TQ49TKi94rg+/gBYgfEp/4CEcup17s1LHFvfw39Z5wBN4D8=
-X-Google-Smtp-Source: AGHT+IF5g6HIgntFpHcA3IU9dceErXUSDP/bOrEVm2RH5QT4+1z5STDdW6wAlrB3w6SWdoX+kCF/9w==
-X-Received: by 2002:adf:e80b:0:b0:34c:5e02:7875 with SMTP id
- ffacd0b85a97d-3504a61c7b4mr17906941f8f.7.1715777578558; 
- Wed, 15 May 2024 05:52:58 -0700 (PDT)
-Received: from [10.91.1.91] ([149.14.240.163])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbefdsm16369145f8f.94.2024.05.15.05.52.57
+ AJvYcCU1xV7jgntOKdLYMMNJZ2mEji/CAUSSX6/dJq1CVfo2qtkwsdc8wEjv/Jh7I8EnlgL0zvqKqPwMc6o1zUFP3yXvxmPI6kc=
+X-Gm-Message-State: AOJu0YwRBOwcPfle7v7HJmkO1+YEvFOyfItd38A9j5kttTExh9LW0fB3
+ QP9rwl0Ivq3xvoV1J/3EsjEhfnu2kjRljlfH4tKUwjDFGPrRGE3lpvB385Bge6o=
+X-Google-Smtp-Source: AGHT+IEfZmGoZdEJW4RahfsRXOeZTh459Zjf/25BhrGUeZfnJP7yQzZPX1QZbJhagAWrZFAJ4/1u+g==
+X-Received: by 2002:a2e:3515:0:b0:2da:a3ff:5254 with SMTP id
+ 38308e7fff4ca-2e51fd3feccmr132888131fa.1.1715777580514; 
+ Wed, 15 May 2024 05:53:00 -0700 (PDT)
+Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fd97e842csm223481355e9.24.2024.05.15.05.52.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 05:52:58 -0700 (PDT)
-Message-ID: <18cddb9e-9509-4032-a157-5c1e05dc7a80@linaro.org>
-Date: Wed, 15 May 2024 14:52:56 +0200
+ Wed, 15 May 2024 05:53:00 -0700 (PDT)
+Message-ID: <0f00bd89-6bf9-49cb-9328-32ef66cdf1ce@linaro.org>
+Date: Wed, 15 May 2024 14:52:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 05/11] ui/console: Use qemu_dmabuf_get_..() helpers instead
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Dongwon Kim <dongwon.kim@intel.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20240514131725.931234-1-marcandre.lureau@redhat.com>
- <20240514131725.931234-6-marcandre.lureau@redhat.com>
- <0a86ac2c-3635-4bb8-b86e-5fbf93676751@linaro.org>
- <678f0a75-fc4a-4553-8e6f-4dd970db89e8@redhat.com>
+Subject: Re: [PATCH 05/17] Remove return value from reginfo_dump
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240511115400.7587-1-richard.henderson@linaro.org>
+ <20240511115400.7587-6-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <678f0a75-fc4a-4553-8e6f-4dd970db89e8@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240511115400.7587-6-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,63 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/24 14:42, Cédric Le Goater wrote:
-> On 5/15/24 14:38, Richard Henderson wrote:
->> On 5/14/24 15:17, marcandre.lureau@redhat.com wrote:
->>> --- a/ui/gtk-egl.c
->>> +++ b/ui/gtk-egl.c
->>> @@ -70,6 +70,7 @@ void gd_egl_draw(VirtualConsole *vc)
->>>       QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
->>>   #endif
->>>       int ww, wh, ws;
->>> +    int fence_fd;
->>>       if (!vc->gfx.gls) {
->>>           return;
->>> @@ -83,7 +84,7 @@ void gd_egl_draw(VirtualConsole *vc)
->>>       if (vc->gfx.scanout_mode) {
->>>   #ifdef CONFIG_GBM
->>>           if (dmabuf) {
->>> -            if (!dmabuf->draw_submitted) {
->>> +            if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
->>>                   return;
->>>               } else {
->>>                   dmabuf->draw_submitted = false;
->>> @@ -99,8 +100,9 @@ void gd_egl_draw(VirtualConsole *vc)
->>>   #ifdef CONFIG_GBM
->>>           if (dmabuf) {
->>>               egl_dmabuf_create_fence(dmabuf);
->>> -            if (dmabuf->fence_fd >= 0) {
->>> -                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
->>> +            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
->>> +            if (fence_fd >= 0) {
->>> +                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
->>>                   return;
->>>               }
->>>               graphic_hw_gl_block(vc->gfx.dcl.con, false);
->>
->> If !CONFIG_GBM, this causes
->>
->> ../src/ui/gtk-egl.c: In function ‘gd_egl_draw’:
->> ../src/ui/gtk-egl.c:73:9: error: unused variable ‘fence_fd’ [-Werror=unused-variable]
->>     73 |     int fence_fd;
->>        |         ^~~~~~~~
->> cc1: all warnings being treated as errors
+On 11/5/24 13:53, Richard Henderson wrote:
+> No uses actually checked the error indication.  Even if we wanted
+> to check ferror on the stream, we should do that generically rather
+> than per arch.
 > 
-> I sent :
-> 
-> https://lore.kernel.org/qemu-devel/20240515100520.574383-1-clg@redhat.com/
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   risu.h                     | 4 ++--
+>   risu_reginfo_aarch64.c     | 8 +++-----
+>   risu_reginfo_arm.c         | 6 ++----
+>   risu_reginfo_i386.c        | 6 ++----
+>   risu_reginfo_loongarch64.c | 6 ++----
+>   risu_reginfo_m68k.c        | 6 ++----
+>   risu_reginfo_ppc64.c       | 6 ++----
+>   risu_reginfo_s390x.c       | 6 ++----
+>   8 files changed, 17 insertions(+), 31 deletions(-)
 
-Ah, missed that.  Thanks.
-
->> There is no reason to have the declaration at the top, rather than here in this block.
-> 
-> It could be done that way too but since we need dmabuf, it might
-> as well be declared at the top.
-
-Surely it is clearly better to limit a variable's scope to it's use, even if there is a 
-convenient ifdef nearby at the top of the function...
-
-
-r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
