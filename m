@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4F0C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AEAC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 07:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79Rf-00047b-2n; Wed, 15 May 2024 03:53:03 -0400
+	id 1s79Ry-0004c2-32; Wed, 15 May 2024 03:53:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s79Rc-000459-9F
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:00 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1s79Rv-0004V7-RD
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:19 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s79RZ-0001Yx-Vs
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:52:59 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-41fc53252ceso45478335e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:52:56 -0700 (PDT)
+ id 1s79Rq-0001dn-5B
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:18 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2e0a34b2899so97515561fa.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715759575; x=1716364375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715759588; x=1716364388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1Iqnca+HhnCCBvOshaH/DqsUrANLuNbYvwccCz1eMgU=;
- b=ZMbpsqZ/JpCVkNuwB18S4EZkjyaFzI3hd/m0OMxvVKoj+4zwITahTAZwG7e5Q+toEU
- K6UdNgMnX+cqVRFmMTL1tzDF2odygnkFvb2Rm+wh8EpupJWgZ/sybQ9pjrydJyap2h3S
- Twsh5bYVlAhtVqZLj/XaQWPfTbyKP5XBR6RDEWHyyRT/TAGUWnSEGQId9kGI24emWZmH
- 7xtaDWBELcRrjhuwMqEpLLVi7OJZ5a6L29i4mgOwIoJYjavHzz/ARKmhPMACtA4nfN8J
- f5keGQ/hGlz8dW7Ai+6iPPRbNNFZHkX50GA8nysrHQFkCJcmruiCM2CUU83ThyV/9Fwi
- v3Hw==
+ bh=abuDTzJtuHQkleQ2JIJcQY+Wz/0ibhtmXe6lLhOCiLw=;
+ b=i8fhWAB7/rX0k49UD5yYoZIPvYo+6JF1n74FzxcGOverPqNbrpsSe0ovChgDY93s4l
+ FilXeHi/20SKR2F2qBKrXLGGpfGCncqYOv2H8L3vBxBismPpkz/9UCKaMJY1LeK5uP75
+ R6byzLwpCFSTJFDjwsjiZ8zoaU24TGL3BFVFQ8K69GLf8bQ8wUCjIAsR8V5sGa52onrk
+ FDyquwuKizSCsv64AYAHg1SiqkGVvLzzPPRnUL12jcamoKnEesczytnV4Qrwuidt0n0w
+ 1nF1YbZorfMcV4dxT4y7nh6/8gydseQq/kkKbA80kqgfZBORttC/drG60yhxFqx9I6TD
+ OXjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715759575; x=1716364375;
+ d=1e100.net; s=20230601; t=1715759588; x=1716364388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1Iqnca+HhnCCBvOshaH/DqsUrANLuNbYvwccCz1eMgU=;
- b=UWvDpvetA7YFGmDUt5pTMkayqpSUqF7Sfg25odD1ElBel+meRnRh5S+CWOY4aXfmsT
- hNpRuHOiygTVvjwdpoeYjYZn4hDGheGTOU/DzPYmEtI9PBCrtPoN+POuQkhJagItlbe4
- TcqQhiCMhmGtqezafoga3Wo+txTujwCJwfmrxj+/CWcFfOJyTf+EGmdqeih7H3anP6qO
- kg9BS9vPbQyf/ccFqIPZArKW5JNDcsPJOd5PYKue3ryUl48TPj48UcAK6+GeVTX0Edbv
- cHUYlwPEdUQkfSAO6BcJzuivBx94zTYGf9iCGnk3+WHxQhwH8Pp6hr3c29SEXtPfiOCW
- ouPA==
-X-Gm-Message-State: AOJu0Yx5Usq5Du2gsUzn6CYZ/HolaRVApop2vwe9wub3qoO+ZtVAbpGv
- HxM11z1EPDi6KB1Dj5R8OIw3sl0BDteifQV6mflgLj6oua3UQ29Csmbi+M39rmBjQDjb1xR/H/k
- eHw0=
-X-Google-Smtp-Source: AGHT+IErZClWZ8+m1NNDBmn5mCdS0GibT0sHIu7HWZ2qkQUE6YE95stVMs2AWHBjZrqxaCoWi6rMqg==
-X-Received: by 2002:a05:600c:3c83:b0:418:ed13:302d with SMTP id
- 5b1f17b1804b1-41feac55135mr125046055e9.26.1715759575266; 
- Wed, 15 May 2024 00:52:55 -0700 (PDT)
+ bh=abuDTzJtuHQkleQ2JIJcQY+Wz/0ibhtmXe6lLhOCiLw=;
+ b=mx9lf2a3/oOKfrke6FCouFgKzbLF4RnpVL6EsaI3SlkWrrCRfR5PrnkYLlOLd1YW4z
+ l3gMx4ppLZ+kUJZmmH2/gUgkNOp6++EH1dFEmY91nyH+03ByouLs9Jlur34ZlsAbvOBU
+ XSqFxGscAiAV7xBVdEVHcuyu/I9AXVbAEZRsFdZN8ydoB8XKZBPqs2FX0Sf0iPpGUajz
+ 66dN45cXvjK+763PfSEwm1DovoSi3rm68x3bBtaGj9mRaCRva1IDFlpl7dLxFWwK//1e
+ 5IOAwI5a6ENPcUjUk5dBc6AgGcqEBBbeohC9vF5D9x5ziW9+BgyLGPqDpJoHuIpDBB0h
+ e4jQ==
+X-Gm-Message-State: AOJu0Yy95NDpALtwdq7mcn+6mI4rq1XZPR8PTftzaYIGA3cBp9K7ysBk
+ ur5GLDox/EKZG+/H/S47oR0SmpHEYngLXJHJ0Vs96r5dX77auA3f+trFc6M7LEMeqaV08Fx/Rv5
+ aM/c=
+X-Google-Smtp-Source: AGHT+IECnMss/1y9Z+0guqvKFeu/hxn8gS4VK1E99y8JSPGaKlkazWaT14GhgFvN9hMw+P33CV5e3A==
+X-Received: by 2002:a2e:9e19:0:b0:2e6:f7f7:772b with SMTP id
+ 38308e7fff4ca-2e6f7f779d3mr10487091fa.37.1715759588492; 
+ Wed, 15 May 2024 00:53:08 -0700 (PDT)
 Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9292sm222611855e9.37.2024.05.15.00.52.54
+ 5b1f17b1804b1-41fccee9292sm222611855e9.37.2024.05.15.00.53.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 00:52:55 -0700 (PDT)
+ Wed, 15 May 2024 00:53:08 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/34] accel/tcg: Record DisasContextBase in tcg_ctx for plugins
-Date: Wed, 15 May 2024 09:52:21 +0200
-Message-Id: <20240515075247.68024-9-richard.henderson@linaro.org>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 30/34] target/rx: Use translator_ld*
+Date: Wed, 15 May 2024 09:52:43 +0200
+Message-Id: <20240515075247.68024-31-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240515075247.68024-1-richard.henderson@linaro.org>
 References: <20240515075247.68024-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,37 +95,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg.h      | 1 +
- accel/tcg/plugin-gen.c | 1 +
- 2 files changed, 2 insertions(+)
+ target/rx/translate.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 135e36d729..2a1c080bab 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -537,6 +537,7 @@ struct TCGContext {
-      * space for instructions (for variable-instruction-length ISAs).
-      */
-     struct qemu_plugin_tb *plugin_tb;
-+    const struct DisasContextBase *plugin_db;
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 92fb2b43ad..9b81cf20b3 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -22,7 +22,6 @@
+ #include "cpu.h"
+ #include "exec/exec-all.h"
+ #include "tcg/tcg-op.h"
+-#include "exec/cpu_ldst.h"
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
+ #include "exec/translator.h"
+@@ -75,10 +74,10 @@ static TCGv_i64 cpu_acc;
  
-     /* descriptor of the instruction being translated */
-     struct qemu_plugin_insn *plugin_insn;
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 49f5d1c2e4..842da97204 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -329,6 +329,7 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
-         tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
+ /* decoder helper */
+ static uint32_t decode_load_bytes(DisasContext *ctx, uint32_t insn,
+-                           int i, int n)
++                                  int i, int n)
+ {
+     while (++i <= n) {
+-        uint8_t b = cpu_ldub_code(ctx->env, ctx->base.pc_next++);
++        uint8_t b = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next++);
+         insn |= b << (32 - i * 8);
      }
+     return insn;
+@@ -90,22 +89,24 @@ static uint32_t li(DisasContext *ctx, int sz)
+     CPURXState *env = ctx->env;
+     addr = ctx->base.pc_next;
  
-+    tcg_ctx->plugin_db = db;
-     tcg_ctx->plugin_insn = NULL;
+-    tcg_debug_assert(sz < 4);
+     switch (sz) {
+     case 1:
+         ctx->base.pc_next += 1;
+-        return cpu_ldsb_code(env, addr);
++        return (int8_t)translator_ldub(env, &ctx->base, addr);
+     case 2:
+         ctx->base.pc_next += 2;
+-        return cpu_ldsw_code(env, addr);
++        return (int16_t)translator_lduw(env, &ctx->base, addr);
+     case 3:
+         ctx->base.pc_next += 3;
+-        tmp = cpu_ldsb_code(env, addr + 2) << 16;
+-        tmp |= cpu_lduw_code(env, addr) & 0xffff;
++        tmp = (int8_t)translator_ldub(env, &ctx->base, addr + 2);
++        tmp <<= 16;
++        tmp |= translator_lduw(env, &ctx->base, addr);
+         return tmp;
+     case 0:
+         ctx->base.pc_next += 4;
+-        return cpu_ldl_code(env, addr);
++        return translator_ldl(env, &ctx->base, addr);
++    default:
++        g_assert_not_reached();
+     }
+     return 0;
+ }
+@@ -190,22 +191,22 @@ static inline TCGv rx_index_addr(DisasContext *ctx, TCGv mem,
+ {
+     uint32_t dsp;
  
-     return ret;
+-    tcg_debug_assert(ld < 3);
+     switch (ld) {
+     case 0:
+         return cpu_regs[reg];
+     case 1:
+-        dsp = cpu_ldub_code(ctx->env, ctx->base.pc_next) << size;
++        dsp = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next) << size;
+         tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
+         ctx->base.pc_next += 1;
+         return mem;
+     case 2:
+-        dsp = cpu_lduw_code(ctx->env, ctx->base.pc_next) << size;
++        dsp = translator_lduw(ctx->env, &ctx->base, ctx->base.pc_next) << size;
+         tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
+         ctx->base.pc_next += 2;
+         return mem;
++    default:
++        g_assert_not_reached();
+     }
+-    return NULL;
+ }
+ 
+ static inline MemOp mi_to_mop(unsigned mi)
 -- 
 2.34.1
 
