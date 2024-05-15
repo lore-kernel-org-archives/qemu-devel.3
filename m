@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D50A3C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A3BC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Hn2-0005gS-C2; Wed, 15 May 2024 12:47:40 -0400
+	id 1s7HnI-0005kr-1E; Wed, 15 May 2024 12:47:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s7Hmu-0005dU-6T
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:47:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1s7HnF-0005ic-II
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:47:53 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s7Hmp-0001NM-4u
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:47:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715791644;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=gWEijKm6k78Xl/7UjceGkv/fNBkvskjud+VapspJi6Y=;
- b=hIX+aAK3EO9Uri/iW/9pYpvXa/Mdh5pNWOd/ZhiEOwl+krN/EpsI0Lr4J0tZw9ZvyM7x0n
- PIqo4/z091DIwnvYk19eZifRc0camTHvXTsB1rjIb9I5m3EkDUWmSPw9B8M0ucQAdLMCxG
- BlxIHZNbTuu1n2yLsxnEWSZSlpDjA4E=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-4ga3eMuROa67FEAPzX01rg-1; Wed, 15 May 2024 12:47:21 -0400
-X-MC-Unique: 4ga3eMuROa67FEAPzX01rg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1s7HnB-0001Ou-Jt
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:47:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1715791664;
+ bh=0NZBK9Xr1TMymybrg+ZO5mJAmzqe851lDX0m2oqbrf0=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=1HdTlhTATcV1QCOJKzXje/VJYpnBNNQuPevunm4l9YhKW4Fs3g6zAORpqnILIQHW0
+ cJYI4wOR1evFIxz66VSbVhSQl2PWyOUrJdWe+oZtCBjFZsZA7CoUKdT61+38v1Dm6m
+ iZZ7cCv0X4YFIV+HhG7KCux8uNivrPjIQjZTLN/A0f5gJyKCYfgm9jnh4Rvm1jT3Zu
+ 4+bnbr4Hfou4MB3hWgx/SF+XVUs+7Z+lt7FGOsd/gJlhu/t5f7WIJS2YWcKjUc7F4i
+ EGQGIvs+SmL7t8XtZoWmK4g+RKeuEKpLOqmhXMv19H+QR0IyLyRKTwGu/DTfbu2eEV
+ CyqdDKxFwSJCQ==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 771FD185A783;
- Wed, 15 May 2024 16:47:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id DCFAF200B4D6;
- Wed, 15 May 2024 16:47:18 +0000 (UTC)
-Date: Wed, 15 May 2024 17:47:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org,
- Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@intel.com>
-Subject: Re: [PATCH v9] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
-Message-ID: <ZkTnFBNsGosNYuOj@redhat.com>
-References: <20240409024940.180107-1-shahuang@redhat.com>
- <Zh1j9b92UGPzr1-a@redhat.com> <Zjyb43JqMZA+bO4r@intel.com>
- <ZjyZ1ZV7BGME_bY9@redhat.com> <ZkG4nlwRnvz9oUXX@intel.com>
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 846093782157;
+ Wed, 15 May 2024 16:47:42 +0000 (UTC)
+Message-ID: <d63ae799-0f4b-4a8b-b1da-a70e06be978a@collabora.com>
+Date: Wed, 15 May 2024 19:47:39 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZkG4nlwRnvz9oUXX@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 01/10] virtio-gpu: Unrealize GL device
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240511182251.1442078-1-dmitry.osipenko@collabora.com>
+ <20240511182251.1442078-2-dmitry.osipenko@collabora.com>
+ <f8d3f2d8-6759-4a74-8792-1091a47e1e43@daynix.com>
+ <ec463ed4-de2b-434d-a1ee-e8b5d4a843b6@collabora.com>
+ <dd81b552-8f81-4bdd-9c9d-45fec6b6a526@daynix.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <dd81b552-8f81-4bdd-9c9d-45fec6b6a526@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,145 +93,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 13, 2024 at 02:52:14PM +0800, Zhao Liu wrote:
-> Hi Daniel,
+On 5/15/24 19:22, Akihiko Odaki wrote:
+> On 2024/05/16 1:18, Dmitry Osipenko wrote:
+>> On 5/13/24 11:44, Akihiko Odaki wrote:
+>>> On 2024/05/12 3:22, Dmitry Osipenko wrote:
+>>>> Even though GL GPU doesn't support hotplugging today, free virgl
+>>>> resources when GL device is unrealized. For consistency.
+>>>>
+>>>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>>> ---
+>>>>    hw/display/virtio-gpu-gl.c     | 11 +++++++++++
+>>>>    hw/display/virtio-gpu-virgl.c  |  9 +++++++++
+>>>>    include/hw/virtio/virtio-gpu.h |  1 +
+>>>>    3 files changed, 21 insertions(+)
+>>>>
+>>>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+>>>> index e06be60dfbfc..0c0a8d136954 100644
+>>>> --- a/hw/display/virtio-gpu-gl.c
+>>>> +++ b/hw/display/virtio-gpu-gl.c
+>>>> @@ -136,6 +136,16 @@ static Property virtio_gpu_gl_properties[] = {
+>>>>        DEFINE_PROP_END_OF_LIST(),
+>>>>    };
+>>>>    +static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>>>> +{
+>>>> +    VirtIOGPU *g = VIRTIO_GPU(qdev);
+>>>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
+>>>> +
+>>>> +    if (gl->renderer_inited) {
+>>>> +        virtio_gpu_virgl_deinit(g);
+>>>> +    }
+>>>> +}
+>>>> +
+>>>>    static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
+>>>>    {
+>>>>        DeviceClass *dc = DEVICE_CLASS(klass);
+>>>> @@ -149,6 +159,7 @@ static void virtio_gpu_gl_class_init(ObjectClass
+>>>> *klass, void *data)
+>>>>        vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+>>>>          vdc->realize = virtio_gpu_gl_device_realize;
+>>>> +    vdc->unrealize = virtio_gpu_gl_device_unrealize;
+>>>>        vdc->reset = virtio_gpu_gl_reset;
+>>>>        device_class_set_props(dc, virtio_gpu_gl_properties);
+>>>>    }
+>>>> diff --git a/hw/display/virtio-gpu-virgl.c
+>>>> b/hw/display/virtio-gpu-virgl.c
+>>>> index 9f34d0e6619c..b0500eccf8e0 100644
+>>>> --- a/hw/display/virtio-gpu-virgl.c
+>>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>>> @@ -665,3 +665,12 @@ int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
+>>>>          return capset2_max_ver ? 2 : 1;
+>>>>    }
+>>>> +
+>>>> +void virtio_gpu_virgl_deinit(VirtIOGPU *g)
+>>>> +{
+>>>> +    if (g->fence_poll) {
+>>>
+>>> Isn't g->fence_poll always non-NULL when this function is called?
+>>
+>> virtio_gpu_virgl_init() is invoked when first cmd is executed, please
+>> see virtio_gpu_gl_handle_ctrl() that invokes it. Hence g->fence_poll can
+>> be NULL.
+>>
 > 
-> > Please describe it in terms of a QAPI definition, as that's what we're
-> > striving for with all QEMU public interfaces. Once the QAPI design is
-> > agreed, then the -object mapping is trivial, as -object's JSON format
-> > supports arbitrary QAPI structures.
-> 
-> Thank you for your guidance!
-> 
-> I rethought and and modified my previous proposal:
-> 
-> Let me show the command examples firstly:
->   * Add a single event:
->     (x86) -object kvm-pmu-event,id=e0,action=allow,format=x86-default,\
->                   select=0x3c,umask=0x00
->     (arm or general) -object kvm-pmu-event,id=e1,action=deny,\
->                              format=raw,code=0x01
->  
->   * Add a counter bitmap:
->     (x86) -object kvm-pmu-counter,id=cnt,action=allow,type=x86-fixed,\
->                   bitmap=0xffff0000
->  
->   * Add an event list (must use Json syntax format):
->    (x86) -object '{"qom-type":"kvm-pmu-event-list","id"="filter0","action"="allow","format"="x86-default","events=[{"select"=0x3c,"umask"=0x00},{"select"=0x2e,"umask"=0x4f}]'
->    (arm) -object '{"qom-type":"kvm-pmu-event-list","id"="filter1","action"="allow","format"="raw","events"=[{"code"=0x01},{"code"=0x02}]'
-> 
-> 
-> The specific JSON definitions are as follows (IIUC, this is "in terms of
-> a QAPI definition", right? ;-)): 
-> * Define PMU event and counter bitmap with JSON format:
->   - basic filter action:
-> 
->   { 'enum': 'KVMPMUFilterAction',
->     'prefix': 'KVM_PMU_FILTER_ACTION',
->     'data': ['deny', 'allow' ] }
-> 
->   - PMU counter:
-> 
->   { 'enum': 'KVMPMUCounterType',
->     'prefix': 'KVM_PMU_COUNTER_TYPE',
->     'data': [ 'x86-fixed' ] }
-> 
->   { 'struct': 'KVMPMUX86FixedCounter',
->     'data': { 'bitmap': 'uint32' } }
-> 
->   - PMU events (total 3 formats):
-> 
->   # 3 encoding formats: "raw" is compatible with shaoqin's ARM format as
->   # well as the x86 raw format, and could support other architectures in
->   # the future.
->   { 'enum': 'KVMPMUEventEncodeFmt',
->     'prefix': 'KVM_PMU_EVENT_ENCODE_FMT',
->     'data': ['raw', 'x86-default', 'x86-masked-entry' ] }
-> 
->   # A general format.
->   { 'struct': 'KVMPMURawEvent',
->     'data': { 'code': 'uint64' } }
-> 
->   # x86-specific
->   { 'struct': 'KVMPMUX86DefalutEvent',
->     'data': { 'select': 'uint16',
->               'umask': 'uint16' } }
-> 
->   # another x86 specific
->   { 'struct': 'KVMPMUX86MaskedEntry',
->     'data': { 'select': 'uint16',
->               'match': 'uint8',
->               'mask': 'uint8',
->               'exclude': 'bool' } }
-> 
->   # And their list wrappers:
->   { 'struct': 'KVMPMURawEventList',
->     'data': { 'events': ['KVMPMURawEvent'] } }
-> 
->   { 'struct': 'KVMPMUX86DefalutEventList',
->     'data': { 'events': ['KVMPMUX86DefalutEvent'] } }
-> 
->   { 'struct': 'KVMPMUX86MaskedEntryList',
->     'data': { 'events': ['KVMPMUX86MaskedEntryList'] } }
-> 
-> 
-> Based on the above basic structs, we could provide 3 new more qom-types:
->   - 'kvm-pmu-counter': 'KVMPMUFilterCounter'
-> 
->   # This is a single object option to configure PMU counter
->   # bitmap filter.
->   { 'union': 'KVMPMUFilterCounter',
->     'base': { 'action': 'KVMPMUFilterAction',
->               'type': 'KVMPMUCounterType' },
->     'discriminator': 'type',
->     'data': { 'x86-fixed': 'KVMPMUX86FixedCounter' } }
-> 
-> 
->   - 'kvm-pmu-counter': 'KVMPMUFilterCounter'
-> 
->   # This option is used to configure a single PMU event for
->   # PMU filter.
->   { 'union': 'KVMPMUFilterEvent',
->     'base': { 'action': 'KVMPMUFilterAction',
->               'format': 'KVMPMUEventEncodeFmt' },
->     'discriminator': 'format',
->     'data': { 'raw': 'KVMPMURawEvent',
->               'x86-default': 'KVMPMUX86DefalutEvent',
->               'x86-masked-entry': 'KVMPMUX86MaskedEntry' } }
-> 
-> 
->   - 'kvm-pmu-event-list': 'KVMPMUFilterEventList'
-> 
->   # Used to configure multiple events.
->   { 'union': 'KVMPMUFilterEventList',
->     'base': { 'action': 'KVMPMUFilterAction',
->               'format': 'KVMPMUEventEncodeFmt' },
->     'discriminator': 'format',
->     'data': { 'raw': 'KVMPMURawEventList',
->               'x86-default': 'KVMPMUX86DefalutEventList',
->               'x86-masked-entry': 'KVMPMUX86MaskedEntryList' } }
-> 
-> 
-> Compared to Shaoqin's original format, kvm-pmu-event-list is not able to
-> enumerate events continuously (similar to 0x00-0x30 before), and now
-> user must enumerate events one by one individually.
-> 
-> What do you think about the above 3 new commands?
+> But it already checks renderer_inited, doesn't it? And I think it's
+> better to utilize one single flag to represent that virgl is enabled
+> instead of checking several variables (fence_poll and cmdq_resume_bh in
+> the future).
 
-I don't know enough about KVM PMU to give feedback on the specific
-choices, but in terms of how to do QAPI design, this looks like a
-good start.
+The virtio_gpu_virgl_init() will have to be changed to do that because
+virgl_renderer_init() can fail before fence_poll/cmdq_resume_bh are inited.
 
+Though, the error returned by virtio_gpu_virgl_init() isn't checked by
+virtio_gpu_gl_handle_ctrl(), which leads to a further Qemu crash due to
+fence_poll=NULL. I'll try to improve it all in v12, thanks.
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Best regards,
+Dmitry
 
 
