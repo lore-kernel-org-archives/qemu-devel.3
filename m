@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A8DC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AABC7C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Aeh-0005jI-7U; Wed, 15 May 2024 05:10:35 -0400
+	id 1s7Afn-0006U6-Ek; Wed, 15 May 2024 05:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s7Aed-0005ir-Eb
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:10:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s7AeU-0003eD-4Z
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:10:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715764220;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jd4Mb52owwe4Efapxh3xUUL3yVm8OGwRegn93nh4z9U=;
- b=RYatq5xZ+2yRxQywXpY0uyg8W5iZ54M75Yj3UHnFx2Ra8m0cIM/ORR+eQInd0WSlI/BMIu
- DMv0F1lqf+B9rNRu16ixGocnwxAyo58lRgboNINf0+8gUpJMZP3fbKbOVH/7zk36c4c1rs
- nkU22arQOJYjrGxTgASdBRgvJ0ihA6g=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-NsridVfWOMmKC9EEO0YrKQ-1; Wed,
- 15 May 2024 05:10:16 -0400
-X-MC-Unique: NsridVfWOMmKC9EEO0YrKQ-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 703363806714;
- Wed, 15 May 2024 09:10:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id CF9623C27;
- Wed, 15 May 2024 09:10:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D570C21E668B; Wed, 15 May 2024 11:10:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
- Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
- <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 02/20] qapi: linter fixups
-In-Reply-To: <20240514215740.940155-3-jsnow@redhat.com> (John Snow's message
- of "Tue, 14 May 2024 17:57:21 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-3-jsnow@redhat.com>
-Date: Wed, 15 May 2024 11:10:12 +0200
-Message-ID: <87msorwidn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1s7Afl-0006Ti-Vc
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:11:41 -0400
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1s7Afk-00043g-8v
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:11:41 -0400
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-23e78ef3de7so3399071fac.1
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:11:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1715764297; x=1716369097; darn=nongnu.org;
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8kRSr0FPNBS06uaJY90nbU69nqRvDiNbITCiGOUP42c=;
+ b=JG4ineVhOdsegYlhF7k5qmJmKYolzDbsqi/Yzkb4jB1t6vv3T3yBsXljY2dfIHCqzy
+ i+KaHZQXNLM9G+0nitfWnHX+5basMN4YrLjel7oitIzRnh2y9SMZXcSXYyOboOv0FSnj
+ fiw9ul21np9FNk5QQ7Xw4fW0gM5QJN0PT9pfl4azXeEFraPuJPq9ORL4OIJ8sbq3N1EJ
+ iuou/lQBe77JRxIE5StNZy4SAHsF0zNvj7xrU0OvtwEUJkmzN+sO3/EW516/2TzVdpnR
+ ebILCIqcB1CFi06VeTbwkjb78jrgXyhHSxzFEFxE/Dci616gs4unodOE94dkDSC+up6G
+ xuOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715764297; x=1716369097;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8kRSr0FPNBS06uaJY90nbU69nqRvDiNbITCiGOUP42c=;
+ b=OLZ8lxtB9Lj1bHm1XAJpz83egiTQXZEmTiI5itAVWaqllckJN5Shn0DiAveyXmnXDT
+ SaahSvILtDVMxT5+P+w9NKze9m3xPqw4m5rWfJY+1Rh0IJ+IzT8HMASHVMz4HuSOf88w
+ A8rArduWMVJxFgNNyF5/9SuismQAzeNpsCrd/a60oQqFpRGlbtmjPuFolpysxbX/7OxG
+ vMmdW7mfh9xgtA3G4fmJv5qEIqVj4tOoATKXVUIvjaHLhwgvMHzI0ADqUt7bI4UCGDYx
+ 1o1NGqQgiztWk2XkSOXZAoKxK1uH5WYd4tipNi5nSesxjWYRIm56i07eBd6m7W0tCJFb
+ G1Sw==
+X-Gm-Message-State: AOJu0YwZI0FCZ+Ic0OwqW6q16I9P8ni4/YTejOcYsO8KInZTnuQqlZjy
+ YpK7Rjv2vm/bazoAWibaZgKw9nrhW/hPooY+DHOwOGjPgquYZ3vqOHv8PPCAofTlDLhnbOtKRMb
+ YxMtDeV43VbWymgRPQzpnGqoevHVwM0F5fw+Q5FqA+f9oVjnn5Gs5R1VBGiNwxXUcKf0byrqelT
+ NEhFwwA7cr5bDyzxXGNCvDohyGhHXX6Jv9V0ykTL+r/g==
+X-Google-Smtp-Source: AGHT+IF1k45tw7ROKqxjDefYgXyXuBA6qAPuDaO6Vz4Afc10xIA3hxKVD1P7wsZsoD3U45GQGSVzcA==
+X-Received: by 2002:a05:6870:7246:b0:241:98e4:5590 with SMTP id
+ 586e51a60fabf-24198e4a118mr18307142fac.5.1715764297001; 
+ Wed, 15 May 2024 02:11:37 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-654f2660b37sm785026a12.28.2024.05.15.02.11.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 May 2024 02:11:35 -0700 (PDT)
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
+ jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/1] target/riscv/kvm.c: Fix the hart bit setting of AIA
+Date: Wed, 15 May 2024 17:11:28 +0800
+Message-Id: <20240515091129.28116-1-yongxuan.wang@sifive.com>
+X-Mailer: git-send-email 2.17.1
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-oa1-x2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,109 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+In AIA spec, each hart (or each hart within a group) has a unique hart
+number to locate the memory pages of interrupt files in the address
+space. The number of bits required to represent any hart number is equal
+to ceil(log2(hmax + 1)), where hmax is the largest hart number among
+groups.
 
-> Fix minor irritants to pylint/flake8 et al.
->
-> (Yes, these need to be guarded by the Python tests. That's a work in
-> progress, a series that's quite likely to follow once I finish this
-> Sphinx project. Please pardon the temporary irritation.)
+However, if the largest hart number among groups is a power of 2, QEMU
+will pass an inaccurate hart-index-bit setting to Linux. For example, when
+the guest OS has 4 harts, only ceil(log2(3 + 1)) = 2 bits are sufficient
+to represent 4 harts, but we passes 3 to Linux. The code needs to be
+updated to ensure accurate hart-index-bit settings.
 
-No worries; one step at a time.
+Additionally, a Linux patch[1] is necessary to correctly recover the hart
+index when the guest OS has only 1 hart, where the hart-index-bit is 0.
 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  scripts/qapi/introspect.py | 8 ++++----
->  scripts/qapi/schema.py     | 6 +++---
->  scripts/qapi/visit.py      | 5 +++--
->  3 files changed, 10 insertions(+), 9 deletions(-)
->
-> diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-> index 86c075a6ad2..ac14b20f308 100644
-> --- a/scripts/qapi/introspect.py
-> +++ b/scripts/qapi/introspect.py
-> @@ -27,8 +27,8 @@
->  from .schema import (
->      QAPISchema,
->      QAPISchemaAlternatives,
-> -    QAPISchemaBranches,
->      QAPISchemaArrayType,
-> +    QAPISchemaBranches,
->      QAPISchemaBuiltinType,
->      QAPISchemaEntity,
->      QAPISchemaEnumMember,
-> @@ -233,9 +233,9 @@ def _use_type(self, typ: QAPISchemaType) -> str:
->              typ = type_int
->          elif (isinstance(typ, QAPISchemaArrayType) and
->                typ.element_type.json_type() == 'int'):
-> -            type_intList = self._schema.lookup_type('intList')
-> -            assert type_intList
-> -            typ = type_intList
-> +            type_intlist = self._schema.lookup_type('intList')
-> +            assert type_intlist
-> +            typ = type_intlist
+[1] https://lore.kernel.org/lkml/20240415064905.25184-1-yongxuan.wang@sifive.com/t/
 
-I named the variable after the type.  Suppressing the linter complaint
-just to keep that name isn't worthwhile.  I might have picked
-type_int_list instead.  No need to change it now.
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+---
+Changelog
+v2:
+- update commit message
+---
+ target/riscv/kvm/kvm-cpu.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
->          # Add type to work queue if new
->          if typ not in self._used_types:
->              self._used_types.append(typ)
-> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-> index 721c470d2b8..d65c35f6ee6 100644
-> --- a/scripts/qapi/schema.py
-> +++ b/scripts/qapi/schema.py
-> @@ -730,6 +730,7 @@ def set_defined_in(self, name: str) -> None:
->          for v in self.variants:
->              v.set_defined_in(name)
->  
-> +    # pylint: disable=unused-argument
->      def check(
->              self, schema: QAPISchema, seen: Dict[str, QAPISchemaMember]
->      ) -> None:
-> @@ -1166,7 +1167,7 @@ def _def_definition(self, defn: QAPISchemaDefinition) -> None:
->                  defn.info, "%s is already defined" % other_defn.describe())
->          self._entity_dict[defn.name] = defn
->  
-> -    def lookup_entity(self,name: str) -> Optional[QAPISchemaEntity]:
-> +    def lookup_entity(self, name: str) -> Optional[QAPISchemaEntity]:
->          return self._entity_dict.get(name)
->  
->      def lookup_type(self, name: str) -> Optional[QAPISchemaType]:
-> @@ -1302,11 +1303,10 @@ def _make_implicit_object_type(
->          name = 'q_obj_%s-%s' % (name, role)
->          typ = self.lookup_entity(name)
->          if typ:
-> -            assert(isinstance(typ, QAPISchemaObjectType))
-> +            assert isinstance(typ, QAPISchemaObjectType)
->              # The implicit object type has multiple users.  This can
->              # only be a duplicate definition, which will be flagged
->              # later.
-> -            pass
->          else:
->              self._def_definition(QAPISchemaObjectType(
->                  name, info, None, ifcond, None, None, members, None))
-> diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
-> index e766acaac92..12f92e429f6 100644
-> --- a/scripts/qapi/visit.py
-> +++ b/scripts/qapi/visit.py
-> @@ -280,8 +280,9 @@ def gen_visit_alternate(name: str,
->          abort();
->      default:
->          assert(visit_is_input(v));
-> -        error_setg(errp, "Invalid parameter type for '%%s', expected: %(name)s",
-> -                         name ? name : "null");
-> +        error_setg(errp,
-> +                   "Invalid parameter type for '%%s', expected: %(name)s",
-> +                   name ? name : "null");
->          /* Avoid passing invalid *obj to qapi_free_%(c_name)s() */
->          g_free(*obj);
->          *obj = NULL;
-
-This is mostly lint I neglected to pick off in my recent work.  Thanks
-for taking care of it!
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 473416649fda..235e2cdaca1a 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1777,7 +1777,14 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         }
+     }
+ 
+-    hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
++
++    if (max_hart_per_socket > 1) {
++        max_hart_per_socket--;
++        hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
++    } else {
++        hart_bits = 0;
++    }
++
+     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                             KVM_DEV_RISCV_AIA_CONFIG_HART_BITS,
+                             &hart_bits, true, NULL);
+-- 
+2.17.1
 
 
