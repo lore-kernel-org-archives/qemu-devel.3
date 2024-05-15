@@ -4,71 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947D9C25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A668C25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79vq-00028e-7p; Wed, 15 May 2024 04:24:14 -0400
+	id 1s7A00-0003lK-U7; Wed, 15 May 2024 04:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s79vd-00026Z-11
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:24:01 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s79va-00074Z-MZ
- for qemu-devel@nongnu.org; Wed, 15 May 2024 04:24:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715761438; x=1747297438;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=RS2o5MSumh7P4PM1sc4bKQuA+A9psNU/xRJ8H8A86Q0=;
- b=nWcCbMVxo7yC4inr1PFjEzQuYjb4hugbQv5fFl20xkWdOO9qrhoWpOtf
- QlQboHCoh0dgnuQbs1tQjH8n6pdHIxoKVIWoNA0DRIHUghlQfJqYWmVFj
- XXcwVAj+LBusEevjYXcwipKFBEizQEgfM5hbdcpHrkaj3iX+tWVswIfEZ
- /r6BtybuDVyHhOpapmvpNHm19Dp8VGmT9p31ATUvJts7IqSAwRB42zHNI
- e0Q0yHsqS7wjY0gypYgijGer7iveVFeTVQsRMFczOgbr1JkLSnuFAC0NU
- rSNp0xeEhEiFRXO5i4lAPWA6BrM8U3sKrTyV2rmd3BWcAbd+ycxgZx+dq w==;
-X-CSE-ConnectionGUID: pUQzI9S5QVaIl6RSkmDFYw==
-X-CSE-MsgGUID: lVjarqjbTfWJyuKbYYauRA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11961546"
-X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="11961546"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2024 01:23:58 -0700
-X-CSE-ConnectionGUID: s0TqyAyBQWGrcOb0d05lNg==
-X-CSE-MsgGUID: js/AocQdSbuxZwzFgP1q3A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,161,1712646000"; d="scan'208";a="31396295"
-Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2024 01:23:56 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 06/16] vfio/platform: Make vfio_populate_device() and
- vfio_base_device_init() return bool
-Date: Wed, 15 May 2024 16:20:31 +0800
-Message-Id: <20240515082041.556571-7-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515082041.556571-1-zhenzhong.duan@intel.com>
-References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1s79zy-0003kw-7N
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:28:30 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1s79zu-0000d0-VG
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 04:28:30 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxN+kLckRmUf4MAA--.19317S3;
+ Wed, 15 May 2024 16:27:56 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id AQAAf8DxsFUIckRmREMgAA--.8S3; 
+ Wed, 15 May 2024 16:27:54 +0800 (CST)
+Subject: Re: [PATCH v2 0/6] hw/loongarch: Refine numa memory map
+To: Bibo Mao <maobibo@loongson.cn>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240507034904.2391129-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <5b38ce4d-7eed-d4e3-80f6-98e5ca2c41e0@loongson.cn>
+Date: Wed, 15 May 2024 16:27:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20240507034904.2391129-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8DxsFUIckRmREMgAA--.8S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZrWUWFWxXr1fCr4UXrWkuFX_yoW8Xr45p3
+ ySvF15Kr48tF9xAr1fA3s7WF13tr1xK3ZrXFy2vFykCr43Ary8ur1IqF90yF97J34rJr10
+ 9F18KwnrWa1UJ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
+ 05UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.127,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,144 +81,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+在 2024/5/7 上午11:48, Bibo Mao 写道:
+> One LoongArch virt machine platform, there is limitation for memory
+> map information. The minimum memory size is 256M and minimum memory
+> size for numa node0 is 256M also. With qemu numa qtest, it is possible
+> that memory size of numa node0 is 128M.
+>
+> Limitations for minimum memory size for both total memory and numa
+> node0 is removed here, including acpi srat table, fadt memory map table
+> and fw_cfg memory map table.
+>
+> Also remove numa node about memory region, there is only low memory
+> region and how memory region.
+>
+Hi,  This series need rebase.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/vfio/platform.c | 40 +++++++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 23 deletions(-)
+And  for this series.
 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index e1a32863d9..a85c199c76 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -441,7 +441,7 @@ static int vfio_platform_hot_reset_multi(VFIODevice *vbasedev)
-  * @errp: error object
-  *
-  */
--static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
-+static bool vfio_populate_device(VFIODevice *vbasedev, Error **errp)
- {
-     VFIOINTp *intp, *tmp;
-     int i, ret = -1;
-@@ -450,7 +450,7 @@ static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
- 
-     if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PLATFORM)) {
-         error_setg(errp, "this isn't a platform device");
--        return ret;
-+        return false;
-     }
- 
-     vdev->regions = g_new0(VFIORegion *, vbasedev->num_regions);
-@@ -487,12 +487,11 @@ static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
-                                                     irq.flags);
-             intp = vfio_init_intp(vbasedev, irq, errp);
-             if (!intp) {
--                ret = -1;
-                 goto irq_err;
-             }
-         }
-     }
--    return 0;
-+    return true;
- irq_err:
-     timer_del(vdev->mmap_timer);
-     QLIST_FOREACH_SAFE(intp, &vdev->intp_list, next, tmp) {
-@@ -507,7 +506,7 @@ reg_error:
-         g_free(vdev->regions[i]);
-     }
-     g_free(vdev->regions);
--    return ret;
-+    return false;
- }
- 
- /* specialized functions for VFIO Platform devices */
-@@ -527,10 +526,8 @@ static VFIODeviceOps vfio_platform_ops = {
-  * fd retrieval, resource query.
-  * Precondition: the device name must be initialized
-  */
--static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-+static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
- {
--    int ret;
--
-     /* @fd takes precedence over @sysfsdev which takes precedence over @host */
-     if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
-         g_free(vbasedev->name);
-@@ -538,7 +535,7 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-     } else if (vbasedev->fd < 0) {
-         if (!vbasedev->name || strchr(vbasedev->name, '/')) {
-             error_setg(errp, "wrong host device name");
--            return -EINVAL;
-+            return false;
-         }
- 
-         vbasedev->sysfsdev = g_strdup_printf("/sys/bus/platform/devices/%s",
-@@ -546,20 +543,20 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-     }
- 
-     if (!vfio_device_get_name(vbasedev, errp)) {
--        return -EINVAL;
-+        return false;
-     }
- 
-     if (!vfio_attach_device(vbasedev->name, vbasedev,
-                             &address_space_memory, errp)) {
--        return -EINVAL;
-+        return false;
-     }
- 
--    ret = vfio_populate_device(vbasedev, errp);
--    if (ret) {
--        vfio_detach_device(vbasedev);
-+    if (vfio_populate_device(vbasedev, errp)) {
-+        return true;
-     }
- 
--    return ret;
-+    vfio_detach_device(vbasedev);
-+    return false;
- }
- 
- /**
-@@ -576,7 +573,7 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-     VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
-     SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    int i, ret;
-+    int i;
- 
-     qemu_mutex_init(&vdev->intp_mutex);
- 
-@@ -584,9 +581,8 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-                                 vbasedev->sysfsdev : vbasedev->name,
-                                 vdev->compat);
- 
--    ret = vfio_base_device_init(vbasedev, errp);
--    if (ret) {
--        goto out;
-+    if (!vfio_base_device_init(vbasedev, errp)) {
-+        goto init_err;
-     }
- 
-     if (!vdev->compat) {
-@@ -618,11 +614,9 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-         }
-         sysbus_init_mmio(sbdev, vdev->regions[i]->mem);
-     }
--out:
--    if (!ret) {
--        return;
--    }
-+    return;
- 
-+init_err:
-     if (vdev->vbasedev.name) {
-         error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     } else {
--- 
-2.34.1
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+Thanks.
+Song Gao
+> ---
+> v1 ... v2:
+>    1. Refresh the patch based on the latest qemu version, solve the
+> confliction issue.
+>    2. Add numa test case for loongarch system.
+> ---
+> Bibo Mao (6):
+>    hw/loongarch: Refine acpi srat table for numa memory
+>    hw/loongarch: Refine fadt memory table for numa memory
+>    hw/loongarch: Refine fwcfg memory map
+>    hw/loongarch: Refine system dram memory region
+>    hw/loongarch: Remove minimum and default memory size
+>    tests/qtest: Add numa test for loongarch system
+>
+>   hw/loongarch/acpi-build.c |  58 +++++++------
+>   hw/loongarch/virt.c       | 167 +++++++++++++++++++++++++++-----------
+>   tests/qtest/meson.build   |   2 +
+>   3 files changed, 154 insertions(+), 73 deletions(-)
+>
+>
+> base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
 
 
