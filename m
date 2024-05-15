@@ -4,87 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C86AAC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA231C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7H5s-00017D-O8; Wed, 15 May 2024 12:03:04 -0400
+	id 1s7H6u-0002cF-GE; Wed, 15 May 2024 12:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7H5o-00012t-Vj
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:03:01 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s7H6j-0002DD-4q
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:03:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7H5m-0000Qj-OK
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:03:00 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s7H6g-0000Wi-Va
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:03:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715788977;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1715789033;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oBPMHWk/3X9EOsFM9ZyHhxSqY4SAOc/HnPCkNSCS9iE=;
- b=aJ/fMCKfhXvl2AKn7/w2KIztEo960T/ReqyyYpb0PLLFANNAgHfO0zxVs8tyu6TNX1rs88
- MPCUZEJRt35QsDBmkqZLBH19wj4PSpImp8yZkM6K5KpYKpajZ05zYBNjGTwL0JYbvPoNRC
- pEPhT8urU+PtpsMInsr2j6hzMIhARCw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-ZX_WUVaGP-mq34nRyTH7Eg-1; Wed, 15 May 2024 12:02:55 -0400
-X-MC-Unique: ZX_WUVaGP-mq34nRyTH7Eg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-351bd229b88so2283279f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 09:02:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715788974; x=1716393774;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oBPMHWk/3X9EOsFM9ZyHhxSqY4SAOc/HnPCkNSCS9iE=;
- b=vgFLWtl1szOg/Q6r8TxNMyR87XzsUn2M3tLDiedF5ebo4q7a4Qy9PpPgk3MSRm2vOb
- 6ztCLWajst/fXennUkQNgZEcHtQjZjPAbCl/b3ZSRJ4vSM2lP1DvJhwFY/nUainNz2pR
- a6Uyb+r8TA1yiqyGeC1flrk/Btzc+TWIKi1qjTk0fWx9lv0w1nWBaJJlPc9iTbles86f
- ZZ70zRvW3JGe11w+7+9x+cC32M3FkkUCNcMw+ggvoHUVnpg1jb4jiPnyYoHuZqqk05pm
- bJQRBWX76QG8Jb4qgAInKdmOhooMLEdAiXyydVZLr6APMZsO/nUKbLOA97gRZOFrBvhe
- /Ogg==
-X-Gm-Message-State: AOJu0YzX88j8RGz7glsum5vDJOA/IW3MC+kVNfiaokfTmJ+H4JrMcQwJ
- OMlYLcJonDfOGyLeRFgVfXbz+KXYJ4/ctzjEiqwO2KJB4dbM7LvZUIHltVXHMQ0wxUQJkA1XYXt
- Nm/5ejENshHr9tVIYU2nrYjFBk2o+npO6yOSYb9bdX/Lk0RA+fFw8
-X-Received: by 2002:adf:ff92:0:b0:34c:9b4d:a7ee with SMTP id
- ffacd0b85a97d-3504aa66822mr13132979f8f.67.1715788974434; 
- Wed, 15 May 2024 09:02:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8ennYiDKAMn5JdA3oEK2QfGf07K4zUKt0aZ/yTdRDkg5qECqAW5j7SvixrHBkcDVZ5DuUbA==
-X-Received: by 2002:adf:ff92:0:b0:34c:9b4d:a7ee with SMTP id
- ffacd0b85a97d-3504aa66822mr13132944f8f.67.1715788973742; 
- Wed, 15 May 2024 09:02:53 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:175:c01e:6df5:7e14:ad03:85bd])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-351cb0fb6b4sm3632961f8f.24.2024.05.15.09.02.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 09:02:53 -0700 (PDT)
-Date: Wed, 15 May 2024 12:02:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ bh=yul14Iba9gQ06KAp3BAHzUcXKv21bZcrm8jPtqpFSvE=;
+ b=Ij63PwpMgBEEKG4hP/Wx6G6/a7caV+9WuRgHFzImzXx01vIW57IA7a7KzjEMr80LXyvVgP
+ Do/hQ08KLwt6VBUTS47+5mQC5NXVH3CE1MenW+wjRYZQM1Rg/Oy+cZJwufWOSJfbZBSqci
+ kfL/to3w37nwFzh8tLuLC1+my1a/l9A=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-rY8yE26YPZ2OePFvyWsgeA-1; Wed,
+ 15 May 2024 12:03:50 -0400
+X-MC-Unique: rY8yE26YPZ2OePFvyWsgeA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 97AB53C00096;
+ Wed, 15 May 2024 16:03:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9960B2026D68;
+ Wed, 15 May 2024 16:03:46 +0000 (UTC)
+Date: Wed, 15 May 2024 17:03:44 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Xu <peterx@redhat.com>
 Subject: Re: [PATCH v3 5/5] virtio-gpu: fix v2 migration
-Message-ID: <20240515120104-mutt-send-email-mst@kernel.org>
+Message-ID: <ZkTc4Ott5M15k55R@redhat.com>
 References: <20240515141557.1277999-1-marcandre.lureau@redhat.com>
  <20240515141557.1277999-6-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <20240515141557.1277999-6-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -105,11 +91,12 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, May 15, 2024 at 06:15:56PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> From: Marc-AndrÃ© Lureau <marcandre.lureau@redhat.com>
 > 
 > Commit dfcf74fa ("virtio-gpu: fix scanout migration post-load") broke
 > forward/backward version migration. Versioning of nested VMSD structures
@@ -122,18 +109,7 @@ On Wed, May 15, 2024 at 06:15:56PM +0400, marcandre.lureau@redhat.com wrote:
 > 
 > Fixes: dfcf74fa ("virtio-gpu: fix scanout migration post-load")
 > Suggested-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-I don't get it. Our standard way to do it is:
-- add a property (begin name with x- so we don't commit to an API)
-- set from compat machinery
-- test property value in VMSTATE macros
-
-Big advantage is, it works well with any downstreams
-which pick any properties they like.
-Why is this not a good fit here?
-
-
+> Signed-off-by: Marc-AndrÃ© Lureau <marcandre.lureau@redhat.com>
 > ---
 >  hw/display/virtio-gpu.c | 21 +++++++++++++--------
 >  1 file changed, 13 insertions(+), 8 deletions(-)
@@ -158,6 +134,40 @@ Why is this not a good fit here?
 > +{
 > +    return machine_check_version(9, 0);
 > +}
+
+I think applying version number checks to decide machine type
+compatibility is a highly undesirable direction for QEMU to
+take.
+
+Machine type compatibility is a difficult problem, but one of
+the good aspects about our current solution is that it is
+clear what the differences are for each version. We can see
+all the compatibility properties/flags/values being set in
+one place, in the declaration of each machine's class.
+
+Sprinkling version number checks around the codebase in
+arbitrary files will harm visibility of what ABI is expressd
+by each machine, and thus is liable to increase the liklihood
+of mistakes.
+
+This will negatively impact downstream vendors cherry-picking
+patches to their stable branches, as the version number logic
+may have incorrect semantics. 
+
+It will also create trouble for downstream vendors who define
+their own machines with distinct versioning from upstream, as
+there will be confusion over whether a version check is for
+the base QEMU version, or the downstream version, and such
+code added to the tree is less visible than the machine type
+definitions.
+
+Above all, I'm failing to see why there's a compelling reason
+for virtio_gpu to diverge from our long standing practice of
+adding a named property flag "virtio_scanout_vmstate_fix"
+on the machine class, and then setting it in machine types
+which need it.
+
+
 > +
 >  static const VMStateDescription vmstate_virtio_gpu_scanout = {
 >      .name = "virtio-gpu-one-scanout",
@@ -188,5 +198,14 @@ Why is this not a good fit here?
 >  };
 > -- 
 > 2.41.0.28.gd7d8841f67
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
