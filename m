@@ -4,75 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF5A5C25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C225C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7E71-0008UM-L4; Wed, 15 May 2024 08:52:04 -0400
+	id 1s7E80-0001dj-CJ; Wed, 15 May 2024 08:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E6o-0008Ow-70
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:51:50 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s7E7y-0001dF-1P
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:02 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E6m-0000QO-LL
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:51:49 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2e3e18c24c1so73456261fa.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:51:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s7E7w-0000dV-58
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:01 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-34de61b7ca4so4744885f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:52:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715777506; x=1716382306; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715777578; x=1716382378; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jqM54zAj05kMI4eCrx7iyBzziAkzz4CYe1PDJFMFx/I=;
- b=lPiMK2vY+LbXwNrSpPOL3FEyxgCvXs7tFL5Yk1NY6xZ4YR4J0ky/27j2zMrfmMV7+m
- k9PjA9pS1TqB8zXlQN4L5SGCpbrXJQat0s2jvtBdnP1oTL9sZWgqPIqPitXm9EWNv7KZ
- 16G87tEWHqjp/EJXIvpTjHRjfc88djK4Bvp8XHJzOI+YxFrhNR62027bWLM1F1LIWHrR
- VCi15a/lvBifEl9FQ+oezOrPfaKibajBMvB5uS53AjNrgOtmaVIa6mnpQiMBuTxnRZ4b
- XNfknkWGf7ykACuO5ZN/pZuf7fVXaJu/dHVCFQdV6QduPal16xb7iP876Q+mwgFRTd/o
- ckTg==
+ bh=V0hj5FxGAHV6Zge8LY7D4KbAAoxrxcOWRjzC6Koc43Q=;
+ b=ODoLB567sw3No6u6TPncFQPcSLZeqnIteL9zUx/PvOM4/k5BXppJWVXKhoO20+Gkk+
+ P7QpGfHpDjYD5ZCoM6Wb8tl4iuAkbbAwh3sNaL5C3KRPmDKOR9IMtYVL+XvOc7rteowB
+ 5Ct1AMlLiTpZD+l985p4sYPdJwN/DHdE4ocxy5h2PSUaXusQiOavAbdxpz9tCPEcuYSE
+ c9ExgBkZ2q08CbxIXn19AS4u1jBDFYBl6QtUWzLM5j4/0Et6hQ1CU2GhDtsCN/9Loyg/
+ Gntnpu8TMy6IY+V6ov+CVqfxXbj2QX+A8dQ4CQIE6x02HVn8uxN5dzv7v0LCVNC0zAAx
+ sWng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715777506; x=1716382306;
+ d=1e100.net; s=20230601; t=1715777578; x=1716382378;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jqM54zAj05kMI4eCrx7iyBzziAkzz4CYe1PDJFMFx/I=;
- b=DFDhsdHP3jWyhVUip2eW+b4lUFyYLVSecvJwtGKIZmu+Eb2xeOF6P+vS1LaEfV/nxb
- p+khY7AzRI54e/q/c8373YftLqtRkgkT5RjtNJz11FeN0Pcu7y7ngNbfyKpp69hsrYdi
- bmit5fWEs2O2Fu8wTRPL0/8R9rZCiUVhAWIrTZLZFRFCiiFMuexyBPCkF701vbuLM+JD
- EaGawCHRhDK7iV0ejY40yZ01jGgC33RkK4lJ1tQx2ThyfRXyRpiCUEM71xu/w05voXah
- vvECSA7yEIm0ZHGQH2LfD4SeLqUYT1TFZdFzHYD6fb720G2H6OmIjd4V5eysbNzO6Fcl
- tQiA==
+ bh=V0hj5FxGAHV6Zge8LY7D4KbAAoxrxcOWRjzC6Koc43Q=;
+ b=ebGdNWT1Un59JG0qxxEGqS7GRdjVNdJFrLObT2hPljsK/32UcK3D0xMOdtZw5aGt05
+ aMBUCStomORAHw1SCdHGdR5cyIyeRCZUh/ICYZXHtGxA7Od6XzIwQkxImVQnWOSEKhvR
+ 3hFZsChs/YYw8NyswViEuR/qtGbhanEUwX/wqNeJLOHqZIwqNKUII7hzZWXhZs9q1tqO
+ GWwveRRcXsxOYXmEAn4DMXtm8NQMajhLgpzXSGcnhMw4VUR9psY8foT6Pt1inyj80KyM
+ 8b2kZYc4xzAAf55aHQbSufZV6q9kLCVraNLbjIJ+9kUX3mruQRk+H9J8mPCiPfEJoRc9
+ uQyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+G/QSE6LAs9xfKmfcGDYkx3Qrk3XOJkjoR44P9gHQt13/yM14LH7lO2a0XO5DZrn/Zp4MFYeKATstoPOlYA4ifPAFJto=
-X-Gm-Message-State: AOJu0YxbbfdYpwIFmLnOoicC0LmcpCWPLZLVfY9cPyC3q/d+8wmcRnhk
- q/qhIFxMjQLwwxI19wh/XvMCwsd0ySquCuZKPQnfnXAmspVVPthSOjlqUjcaPJs=
-X-Google-Smtp-Source: AGHT+IEeDMsBv0mOY9XQWvJtnxvS3sSWOw/POp4OliRR1L8UiRvI7ojrvzbsHe1JCEfPOqIghfiAyg==
-X-Received: by 2002:a2e:9355:0:b0:2df:e0c4:8429 with SMTP id
- 38308e7fff4ca-2e51fd4afb7mr102409291fa.18.1715777505937; 
- Wed, 15 May 2024 05:51:45 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccce9431sm226953745e9.28.2024.05.15.05.51.45
+ AJvYcCWp2nIfZkl0FlBtf68TsQOw07Tp3NDW4tQv2L7wk9y7fHe+K0GYXGmmN5JnUEU1PWSdsddraQ4Ez3yh7ZBIXsEYteNgHDU=
+X-Gm-Message-State: AOJu0YwZ629WZKjoRRC2YerVlXm3ND1FqWuXbR1MiboNTJdMjRABFF6+
+ dZGMw9YlB2/0e6K8TQ49TKi94rg+/gBYgfEp/4CEcup17s1LHFvfw39Z5wBN4D8=
+X-Google-Smtp-Source: AGHT+IF5g6HIgntFpHcA3IU9dceErXUSDP/bOrEVm2RH5QT4+1z5STDdW6wAlrB3w6SWdoX+kCF/9w==
+X-Received: by 2002:adf:e80b:0:b0:34c:5e02:7875 with SMTP id
+ ffacd0b85a97d-3504a61c7b4mr17906941f8f.7.1715777578558; 
+ Wed, 15 May 2024 05:52:58 -0700 (PDT)
+Received: from [10.91.1.91] ([149.14.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502bbbbefdsm16369145f8f.94.2024.05.15.05.52.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 05:51:45 -0700 (PDT)
-Message-ID: <67fb79a0-aa9a-442b-b6e7-df78be9f464f@linaro.org>
-Date: Wed, 15 May 2024 14:51:44 +0200
+ Wed, 15 May 2024 05:52:58 -0700 (PDT)
+Message-ID: <18cddb9e-9509-4032-a157-5c1e05dc7a80@linaro.org>
+Date: Wed, 15 May 2024 14:52:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/17] Fix load_image error check for mmap
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20240511115400.7587-1-richard.henderson@linaro.org>
- <20240511115400.7587-3-richard.henderson@linaro.org>
+Subject: Re: [PULL 05/11] ui/console: Use qemu_dmabuf_get_..() helpers instead
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Dongwon Kim <dongwon.kim@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20240514131725.931234-1-marcandre.lureau@redhat.com>
+ <20240514131725.931234-6-marcandre.lureau@redhat.com>
+ <0a86ac2c-3635-4bb8-b86e-5fbf93676751@linaro.org>
+ <678f0a75-fc4a-4553-8e6f-4dd970db89e8@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240511115400.7587-3-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <678f0a75-fc4a-4553-8e6f-4dd970db89e8@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,15 +106,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 13:53, Richard Henderson wrote:
-> mmap does not return null on failure, but MAP_FAILED.
+On 5/15/24 14:42, Cédric Le Goater wrote:
+> On 5/15/24 14:38, Richard Henderson wrote:
+>> On 5/14/24 15:17, marcandre.lureau@redhat.com wrote:
+>>> --- a/ui/gtk-egl.c
+>>> +++ b/ui/gtk-egl.c
+>>> @@ -70,6 +70,7 @@ void gd_egl_draw(VirtualConsole *vc)
+>>>       QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+>>>   #endif
+>>>       int ww, wh, ws;
+>>> +    int fence_fd;
+>>>       if (!vc->gfx.gls) {
+>>>           return;
+>>> @@ -83,7 +84,7 @@ void gd_egl_draw(VirtualConsole *vc)
+>>>       if (vc->gfx.scanout_mode) {
+>>>   #ifdef CONFIG_GBM
+>>>           if (dmabuf) {
+>>> -            if (!dmabuf->draw_submitted) {
+>>> +            if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
+>>>                   return;
+>>>               } else {
+>>>                   dmabuf->draw_submitted = false;
+>>> @@ -99,8 +100,9 @@ void gd_egl_draw(VirtualConsole *vc)
+>>>   #ifdef CONFIG_GBM
+>>>           if (dmabuf) {
+>>>               egl_dmabuf_create_fence(dmabuf);
+>>> -            if (dmabuf->fence_fd >= 0) {
+>>> -                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
+>>> +            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
+>>> +            if (fence_fd >= 0) {
+>>> +                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
+>>>                   return;
+>>>               }
+>>>               graphic_hw_gl_block(vc->gfx.dcl.con, false);
+>>
+>> If !CONFIG_GBM, this causes
+>>
+>> ../src/ui/gtk-egl.c: In function ‘gd_egl_draw’:
+>> ../src/ui/gtk-egl.c:73:9: error: unused variable ‘fence_fd’ [-Werror=unused-variable]
+>>     73 |     int fence_fd;
+>>        |         ^~~~~~~~
+>> cc1: all warnings being treated as errors
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   risu.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
+> I sent :
+> 
+> https://lore.kernel.org/qemu-devel/20240515100520.574383-1-clg@redhat.com/
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Ah, missed that.  Thanks.
 
+>> There is no reason to have the declaration at the top, rather than here in this block.
+> 
+> It could be done that way too but since we need dmabuf, it might
+> as well be declared at the top.
+
+Surely it is clearly better to limit a variable's scope to it's use, even if there is a 
+convenient ifdef nearby at the top of the function...
+
+
+r~
 
 
