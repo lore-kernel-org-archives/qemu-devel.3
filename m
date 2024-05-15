@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E21C5C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463E5C25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7E4y-0005f1-Cm; Wed, 15 May 2024 08:49:56 -0400
+	id 1s7E5A-0005kk-Bb; Wed, 15 May 2024 08:50:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E4t-0005e3-Fc
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:49:51 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <eric.cheng.linux@gmail.com>)
+ id 1s7858-0002Ji-9e; Wed, 15 May 2024 02:25:42 -0400
+Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E4r-0008G5-Ma
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:49:51 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4201986d60aso19733965e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:49:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.cheng.linux@gmail.com>)
+ id 1s7856-0003eE-EY; Wed, 15 May 2024 02:25:42 -0400
+Received: by mail-pg1-x544.google.com with SMTP id
+ 41be03b00d2f7-6001399f22bso4411213a12.0; 
+ Tue, 14 May 2024 23:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715777386; x=1716382186; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715754338; x=1716359138; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bxkJWXn4UifvuoUJNGrrUHorxs2wb6wm5taOuXtthuc=;
- b=CkugSKsAG8gI6nwXE7oFXUC9Zm5j3CeQKvwtq8R2cX8UlpKsRpGQdIlo3H0EfmSaup
- ErUTm8npSQGgsFRPtgQi08YalsfTe7Ig3H4aqakzSR5zr1/BLCOClgDnQQ466ZF98Abo
- Mn7U8fD4JeWAbBJ016rvLEHtnrgpStJp5nBiZZEfIq1vKGNct9YHwO60N6NnDWzFNAKT
- UkVmYwt6KZJkTeJRVZxKziF8/v41Y/8cl991HO1kWeRr6YOUF2GLCStrDuAvSwO8UjhE
- Og6yGz59P49V+oRHL8QHGLxzwmr66gmlOyr2VRnNxTZXrdIpNMCLEqO023nvM66RBT6o
- gssQ==
+ bh=VL3eWkqSKi0DqUXx6X9gpbwc7M71wrmWxptUiwzGgmA=;
+ b=czNytM2hkK7GaWoS6YaSVrz2o2hKrlg7Hi6DJgE0N0e80ZzNlY93ghEehBHEQzCzwg
+ ZT/9ga5zH6OOWjYk5cUcokOL3NEPlr5OoQgt+sTnmLdy025Kg1n6lGv3euuqdHCHpk0H
+ dWh6w55y+lQozTw147xbjCkhM67fn9RVzbfwLHKOAPJZmWroglLMfbZrlLJPAGsN2zMI
+ dMDo85nZy0CaXRGSsn2UmdeANh6bd95IGysq6+lrINR/vFgrRbM1QTPxBKzvaS2+VA7D
+ 0ifHxwteePQBMv4yUxa6CwHYPTPbzYksinOxcIRohPDEZkGBFQqV7mIzMxrresQS/UE9
+ STEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715777386; x=1716382186;
+ d=1e100.net; s=20230601; t=1715754338; x=1716359138;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bxkJWXn4UifvuoUJNGrrUHorxs2wb6wm5taOuXtthuc=;
- b=FZ8OKrHMag6HTkykDgdEFBjPt+ITlOqnv9PML3rrJXnNZUKEJwkw+6JWyCFs8xtLiC
- +zf5mD7zzEgkTTSemwDbWY2x200h7OLMtjsA6rDkOpqoIEibS1kJWxEF3gMx8ktMkDj5
- V19ptS6hVce60woqHSFbbg+mXTNVyV5dcDz2N5QFGjWcUZGZ+qDVkmHwp4WTbAwWLiEC
- 6rRsjXZQFMLqyeX5VsxrCEoEDfADXghBtt77Q4L02uu34yRg+m5710ZVea2EH8z6nbZ0
- 7djDjWSBgJDh+7ySFd938I6EA+q0bQSpIcjIIL2EIUeZuBXiJW4p7oNacXOlCVsfWw6v
- CcRg==
+ bh=VL3eWkqSKi0DqUXx6X9gpbwc7M71wrmWxptUiwzGgmA=;
+ b=dQ0lTn1SwGLOl6kwAQyu77MmwyYCdy0nWMstxBaM3vxY8yLrEXx5OGhkqwznTzeT9C
+ jlmkLEbWTrkPJwlepnA3qZXPbgTYRd7Yt9H9H6GhW5Z/ZmreDmV75QSvrNxFZDOELoUr
+ v2G/zNDhqlNyIzuVtvky84QX4j3uH0yXo/pZvCtJakwUpMhIOwbSV0dgARx2lvWXnqvk
+ +269OZD7Oepm/9EsMUpANhip9ISp1ecyiuVIq9S3j1H0CtSrgf5cHijSnAPQDd5dVG2B
+ hqSP8Rmwa5webMzrbDiuy7haHj1aBKHnaNjQUffUI2V23cRc8lZZJ97Yf4MDWE7d4n00
+ /Hiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXx7evQR8uh33JuXlXKOK5k/H+/L5IllCOqtFASXMUooNHKTjl6MR/wQXrcwfKSQERjiTuEuQSOaqqOAC25N4qrmy9VEY=
-X-Gm-Message-State: AOJu0YzDlksm1IxR1ttNc42+ka9//ytsJ8gTFwP9Ny62eJzbSGvM6775
- RNWlaNGysRwt4nm4luja97bWUSvuwZGxlpUcO9cxOAGckQifjmh74KyZMliLi2k=
-X-Google-Smtp-Source: AGHT+IFZUoB1vJbBw1ksuXhHminYzEplzFhyS8CQB1/camkRP9URUNwYBxfJZA3Ig/avZz/n9/HU9w==
-X-Received: by 2002:a05:600c:45c5:b0:41b:a301:f2f9 with SMTP id
- 5b1f17b1804b1-41fead6d069mr112009335e9.39.1715777386194; 
- Wed, 15 May 2024 05:49:46 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbf08sm16397191f8f.96.2024.05.15.05.49.45
+ AJvYcCUiHa1CLLaJ+4ZAcSgo3k/UXth0/HFG1jTT3zI8haTfF9mhRfKtyKUyrwJXhEHIQGXVBcB4Y1Ts0q5MCW0PfefpZ0wx+DU=
+X-Gm-Message-State: AOJu0YxcOiGZzi+hDR/F4GWHWGuaPIo3pH3oOrXmFN93c3vBmMpMFCUu
+ Z93zTKOfec7ch2S/kowYWEZ78oEkALqo6w1WoX5bRBt0b+KYqksY
+X-Google-Smtp-Source: AGHT+IEtBLz0p61NdoN9T5a1ukaH7Cb4jvNohnNRtSNsyRVsSu5/fQK5VpbsqWGMor5sgyNuINO1uQ==
+X-Received: by 2002:a17:90a:4a15:b0:2b9:e3:3561 with SMTP id
+ 98e67ed59e1d1-2b900e336b2mr6478984a91.43.1715754337592; 
+ Tue, 14 May 2024 23:25:37 -0700 (PDT)
+Received: from [172.27.234.192]
+ (ec2-16-163-40-128.ap-east-1.compute.amazonaws.com. [16.163.40.128])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2b62886d069sm12685522a91.25.2024.05.14.23.25.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 05:49:45 -0700 (PDT)
-Message-ID: <42e47d17-1d49-43e8-abd6-76abdcb159dc@linaro.org>
-Date: Wed, 15 May 2024 14:49:44 +0200
+ Tue, 14 May 2024 23:25:37 -0700 (PDT)
+Message-ID: <41835d3f-d9e2-4ace-8add-f5bb6c525c5f@gmail.com>
+Date: Wed, 15 May 2024 14:25:31 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] physmem: allow debug writes to MMIO regions
-To: Perry Hung <perry@mosi.io>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
- Andreas Rasmusson <andreas.rasmusson@gmail.com>
-References: <20240513233305.2975295-1-perry@mosi.io>
+Subject: Re: [PATCH v2 06/15] hw/riscv/virt.c: support for RISC-V IOMMU
+ PCIDevice hotplug
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com, tjeznach@rivosinc.com
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ <20240307160319.675044-7-dbarboza@ventanamicro.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240513233305.2975295-1-perry@mosi.io>
+From: Eric Cheng <eric.cheng.linux@gmail.com>
+In-Reply-To: <20240307160319.675044-7-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
+ envelope-from=eric.cheng.linux@gmail.com; helo=mail-pg1-x544.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 15 May 2024 08:50:03 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,55 +101,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Perry,
-
-On 14/5/24 01:33, Perry Hung wrote:
-> Writes from GDB to memory-mapped IO regions are currently silently
-> dropped. cpu_memory_rw_debug() calls address_space_write_rom(), which
-> calls address_space_write_rom_internal(), which ignores all non-ram/rom
-> regions.
+On 3/8/2024 12:03 AM, Daniel Henrique Barboza wrote:
+> From: Tomasz Jeznach <tjeznach@rivosinc.com>
 > 
-> Add a check for MMIO regions and direct those to address_space_rw()
-> instead.
+> Generate device tree entry for riscv-iommu PCI device, along with
+> mapping all PCI device identifiers to the single IOMMU device instance.
 > 
-
-Reported-by: Andreas Rasmusson <andreas.rasmusson@gmail.com>
-BugLink: https://bugs.launchpad.net/qemu/+bug/1625216
-
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
-> Signed-off-by: Perry Hung <perry@mosi.io>
+> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->   system/physmem.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   hw/riscv/virt.c | 33 ++++++++++++++++++++++++++++++++-
+>   1 file changed, 32 insertions(+), 1 deletion(-)
 > 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 342b7a8fd4..013cdd2ab1 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3508,7 +3508,10 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
->           if (l > len)
->               l = len;
->           phys_addr += (addr & ~TARGET_PAGE_MASK);
-> -        if (is_write) {
-> +        if (cpu_physical_memory_is_io(phys_addr)) {
-> +            res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs,
-> +                                   buf, l, is_write);
-> +        } else if (is_write) {
->               res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
->                                             attrs, buf, l);
->           } else {
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index a094af97c3..67a8267747 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -32,6 +32,7 @@
+>   #include "hw/core/sysbus-fdt.h"
+>   #include "target/riscv/pmu.h"
+>   #include "hw/riscv/riscv_hart.h"
+> +#include "hw/riscv/iommu.h"
+>   #include "hw/riscv/virt.h"
+>   #include "hw/riscv/boot.h"
+>   #include "hw/riscv/numa.h"
+> @@ -1004,6 +1005,30 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+>                              bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
+>   }
+>   
+> +static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+> +{
+> +    const char comp[] = "riscv,pci-iommu";
+> +    void *fdt = MACHINE(s)->fdt;
+> +    uint32_t iommu_phandle;
+> +    g_autofree char *iommu_node = NULL;
+> +    g_autofree char *pci_node = NULL;
+> +
+> +    pci_node = g_strdup_printf("/soc/pci@%lx",
+> +                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
+> +    iommu_node = g_strdup_printf("%s/iommu@%x", pci_node, bdf);
+> +    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
+> +    qemu_fdt_add_subnode(fdt, iommu_node);
+> +
+> +    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
+> +    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
+> +    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
+> +    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
+> +                           bdf << 8, 0, 0, 0, 0);
+> +    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
+> +                           0, iommu_phandle, 0, bdf,
+> +                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
+> +}
 
-I wonder if we shouldn't be safer with a preliminary patch
-adding a 'can_do_io' boolean argument to cpu_memory_rw_debug()
-(updating the call sites), then this patch would become:
+Is it really necessary to add this iommu-pci device in riscv virt machine, 
+rather than other 'physical' machine type? virt machine already has its 
+virtio-iommu.
 
-     if (can_do_io && cpu_physical_memory_is_io(phys_addr)) {
+> +
+>   static void finalize_fdt(RISCVVirtState *s)
+>   {
+>       uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+> @@ -1712,9 +1737,11 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
+>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>   
+>       if (device_is_dynamic_sysbus(mc, dev) ||
+> -        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+> +        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+> +        object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
+>           return HOTPLUG_HANDLER(machine);
+>       }
+> +
+>       return NULL;
+>   }
+>   
+> @@ -1735,6 +1762,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>       if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+>           create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
+>       }
+> +
+> +    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
+> +        create_fdt_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
+> +    }
+>   }
+>   
+>   static void virt_machine_class_init(ObjectClass *oc, void *data)
 
-One of my worries for example is if someone accidently insert
-a breakpoint at a I/O address, the device might change its
-state and return MEMTX_OK which is confusing.
-
-Regards,
-
-Phil.
 
