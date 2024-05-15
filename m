@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54A3C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 13:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7998C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 13:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7EN7-0002Ij-AZ; Wed, 15 May 2024 09:08:41 -0400
+	id 1s7EPU-0003vb-RP; Wed, 15 May 2024 09:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7EN5-0002IP-O0
- for qemu-devel@nongnu.org; Wed, 15 May 2024 09:08:39 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7EPT-0003vQ-3z
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 09:11:07 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7EN3-0002tE-6v
- for qemu-devel@nongnu.org; Wed, 15 May 2024 09:08:39 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-41fd5dc04e2so42111635e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 06:08:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7EPP-0004IO-N2
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 09:11:06 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-351d309bbcfso6349f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 06:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715778516; x=1716383316; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715778661; x=1716383461; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zEgomMiEuD0tsBeq5sUxgpW7X/3HPpVsfBFhDZjym+U=;
- b=BaRs2L+x74YF6yiWF1jfWbbDUEfVgdwqy3b+rR4kku15Vpt8M/cMd/XvCAxa+yHIbW
- SZiCsouj2JdOulFSmCkX/GltZeWlKW/nfbOnzRYUnJobSrkpMMOV4EL14AaXIl2lgzco
- Xob4Z+AYcXMq0D4f4vuJ0ks9D3iQVaZyGsSZB/JzX5A9ua+6SS6Wc3yvIBKSromxxyEz
- Jk9lPV2NC+N4DqgioP7jNsCMeaLP0wlDqIhR28YnlIatcqKLP/Ji8DokDCTeU8jX8pi/
- movSz/3pR7Y1mz50UNgYGI5N/fEwXKZdpDS5QZ8bORBCYcqD0g9BqRsdhaYwU6VuBY+W
- 7/Ng==
+ bh=hprVYPKSryl4br0vLlVetJH0M/s8NVjlZ+TLSYmktCI=;
+ b=K96HYmuITiqqI1OWD9cW1gS2+gKcp092QiaDkPYYizfcF5E55Qh94/7uuMdtDaFajw
+ /2bZgepxCYlndcyyjKpY0SOWZuI3+zY3Nq6uHinjV7A171SEG/W68faYiGe8LRVHDzAE
+ Fp94S54VzaJwnZH1xTW/qFuXqVMsvUFCK/N+GMFo1Dh2MfIYkdSkR+YKpyx2DQc+ypup
+ MpLYkGi0dBxDTqK8XOyrNeXFxCBYKIXiOLV7u+DGDIfTYVUwJsCu+21d1LEOpp6m0TGt
+ cxAT//wvKseBUj+hcH1t3juQN1wFyrnH2vXiNXzZehQJTW4FBhwfuTplx2txm7lIIBLf
+ 6z9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715778516; x=1716383316;
+ d=1e100.net; s=20230601; t=1715778661; x=1716383461;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zEgomMiEuD0tsBeq5sUxgpW7X/3HPpVsfBFhDZjym+U=;
- b=xOMaJ7x5rplQMhoHRxBKcW+zQRKMuylV8O2nAxlq1KAcxU56IPG4x/7pcSfopaMzJI
- cMQ5rGpDGnpdQw+0/MYYEHga08OVhZl5CHD+eFkfe7NFrB//4WWdTcQSU36TTz99XNzy
- 5uOKmQWKH2Y5nBMjwXzH/1qRQhYx7FQecvlAFjU6G2flq6O9ES8Fkbd1uIiM8VEOAcT6
- wDDKiiVxXJ6GMOK01bdQ/Lc9dyotTRylsO7ICBMwXrwH6pDsGRWmVY9lep6YVynh7M1e
- KSLxyrTEhT3KlI3j3iprpWEu246Zvx7/o79hssofamnAebnMbBZ8h2o0ZLVz4Pki6ua+
- DtMg==
+ bh=hprVYPKSryl4br0vLlVetJH0M/s8NVjlZ+TLSYmktCI=;
+ b=kvTuTFQBU3eBy0Om+yy2vmS2wyEWQ7VkFcNzNfA6xYJuNEF0m1powbSdUvnQ0lPZ+P
+ g7sUdnhEPzWf/+StSSbDKpq/QgAvRGMpjPtjfTCWMRt80mHBtdeyr7OQL5DOB/OSaEyX
+ tpZ8w5rLv9z9e2eVhu5uWkFM+znwPNbzgD1ZVUcIDRoV3gk1DrZgSZvWyDhlGjiane7V
+ hqb+r7vIcv+TzOJ603o/wblLsXvbvPCrVPuZ4ASicW2Rz9s+70aU+U7c8V4f9+46MYjj
+ 4kEMktP1+ly5yWnKcRThlPZB4Nm42Ap04P1JdUTkMRakmgW3JzZQSD/AGUGRjHMihMY9
+ IhhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtVGSaLoc+637MbqA+XoZxEjHucEncr24x32jkEJWoUstGmakaLuM1K9UyJAsozGAOyQaGifTNRl0+bJ44ufJXSVhE8bU=
-X-Gm-Message-State: AOJu0YxiEGet3+ojVbRy82IEzo4xDMRhECIs9hgSOgeegOu4B3r73Axr
- SYVx3QVLX0oo7TYcg/avOzSmF/mhnwEeNXklJfFkiLoCxgocobeGQFFPgzovge4=
-X-Google-Smtp-Source: AGHT+IEiUo6WHNmUfiYE37xguYcn0zD2hEZ/nK26Ocq9rWOpz63vo0Tiqdx1PeS8t0+GkUlg+qrNRw==
-X-Received: by 2002:a05:600c:3b97:b0:418:5ed2:5aa6 with SMTP id
- 5b1f17b1804b1-41feac63341mr133755575e9.31.1715778515758; 
- Wed, 15 May 2024 06:08:35 -0700 (PDT)
+ AJvYcCWUv3Eaj1aLxoit3dPU8aa6h9+kmNDeSXWOXvgEO7p5Zdyg9cvnkGRCmW11FekRvyUthZhQ4Fe/3Eg19yfAaQsXDJTs+2Y=
+X-Gm-Message-State: AOJu0YxLg2umedOJEXMD5/H0MjGFmcUzDzhiIuwSBU3Hr4PJLx3dTCoy
+ X7lEOtNs9GD8Z3rr6bYFscLZpVM+zraAxHy+4JtTqhrLv59HGYRCEcN3U61gRZA=
+X-Google-Smtp-Source: AGHT+IHFS72dIu312xqFehrMUh9Mt3NFM9Q39M//fO8NSBMVc61UEOdAv00puVJsxHl9zxtR/QpglA==
+X-Received: by 2002:adf:c7cf:0:b0:34d:b03c:9a99 with SMTP id
+ ffacd0b85a97d-351c87e7862mr4652504f8f.2.1715778661484; 
+ Wed, 15 May 2024 06:11:01 -0700 (PDT)
 Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42016a511a7sm106381875e9.0.2024.05.15.06.08.35
+ ffacd0b85a97d-3502baad02csm16320379f8f.67.2024.05.15.06.11.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 06:08:35 -0700 (PDT)
-Message-ID: <17177912-fee1-49d4-a2be-3e25a4deae6d@linaro.org>
-Date: Wed, 15 May 2024 15:08:34 +0200
+ Wed, 15 May 2024 06:11:01 -0700 (PDT)
+Message-ID: <e24b2563-b2cf-407e-a4b3-e0c5ef847ef4@linaro.org>
+Date: Wed, 15 May 2024 15:11:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/17] Build elf test cases instead of raw binaries
+Subject: Re: [PATCH 01/17] ppc64: Fix <sys/user.h> include order
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20240511115400.7587-1-richard.henderson@linaro.org>
- <20240511115400.7587-18-richard.henderson@linaro.org>
+ <20240511115400.7587-2-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240511115400.7587-18-richard.henderson@linaro.org>
+In-Reply-To: <20240511115400.7587-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,20 +95,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 13:54, Richard Henderson wrote:
+Hi Richard,
+
+On 11/5/24 13:53, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   Makefile       | 19 ++++++++++---------
->   test.ld        | 12 ++++++++++++
->   test_aarch64.s |  4 ++--
->   test_arm.s     | 16 +++++++++++-----
->   test_i386.S    |  4 +++-
+>   risu_ppc64.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/risu_ppc64.c b/risu_ppc64.c
+> index 9df8d58..62cf6aa 100644
+> --- a/risu_ppc64.c
+> +++ b/risu_ppc64.c
+> @@ -11,9 +11,8 @@
+>    *     based on Peter Maydell's risu_arm.c
+>    *****************************************************************************/
+>   
+> -#include <sys/user.h>
+> -
+>   #include "risu.h"
+> +#include <sys/user.h>
 
-Maybe briefly mention why the .S changes.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->   5 files changed, 38 insertions(+), 17 deletions(-)
->   create mode 100644 test.ld
-
+What is fixed exactly?
 
