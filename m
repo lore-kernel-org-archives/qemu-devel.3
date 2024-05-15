@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6C0C25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3B8C25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7B8d-00005Q-Hs; Wed, 15 May 2024 05:41:31 -0400
+	id 1s7BFf-00047f-1t; Wed, 15 May 2024 05:48:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8H-0006Mi-7w
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:09 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7BFa-0003l8-30
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:48:42 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8F-0001gg-A6
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:08 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-34da04e44a2so5201469f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7BFY-0003ad-Fd
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:48:41 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-34ddc9fe497so4138106f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715766064; x=1716370864; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ksMOhWi1ebKYWPT6NIQhKVjBPhPkqbNasmSW3ehCB8s=;
- b=YyCKh2Q/gVK6WelkKnqpWw11eEc5ncE9633JWKON0TnuwSjzuEL/E0EOa5vYgk/ZXn
- C6j53Mlsq04iw+Uqebclpoks44s/TlYy9u91hUe1vq0OoOsgS+nMX1bvWDT/PwtXBvZU
- DVhQLXaI1y0G6QqiD3sYMfEmXG5fCenrGaUVtejnom525nGEKE5w7G6e0+/UBEPyb5mS
- TUe9f0IRM5iqiJKqhZV8O7KVK/0k7bzKRdchLRka5a4D+QMWSSTKO7Gx961jtkU9f63Q
- HgBS4qHsvtgK8KOk4NkWwxGilagYHxItxshc5/7/UhEjf3eMN0nSkYojH8RgA8msAcoX
- BHeA==
+ d=linaro.org; s=google; t=1715766519; x=1716371319; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bwDmf06pcSMv31kgM5n8pjeZgLxFisSiDJ6rGX6CzQo=;
+ b=qnQb58ylWe9OsTizUFOLZOmdmNWtY8ZlAN1DTiP3WJ/mmfj1oTI5jZsOem7JXGNJYs
+ UVahguyYnyvXnMIefsWVP0KzTZmR4g5KAJSQ7Fhp7ly1qrJbsgx+tHg8XhvTkGFEEctc
+ E/zgEZYmepQvhmqtt5Y8CUgb1lY4LPRD0tFWAtX/K0oqEMwqKIIpsYrzI6iAll5WV4MJ
+ gVN9MUM37FblAY98JJbiOqWW0nYm/HCnHkbf4Uee8DnmIcOWgkN+WZJ60BE+x8j19/Kk
+ XONKy7FRK34gjXYyD56OW4ApkfYPNa3XpGs7yaLSGFC5s4J2JtvpCeeyR73RS6SBbi46
+ sefw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715766064; x=1716370864;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ksMOhWi1ebKYWPT6NIQhKVjBPhPkqbNasmSW3ehCB8s=;
- b=V+acVExaECY9OceNjzH5ddQbgCPu/wheSnLx4oy8umJB/0usbLTO4auoA4XBE1dj3B
- HBHdUKPWzH+7r4fZgP5qYKK/DwClbfUk/SNtSBvzj4haKLdhpuNEfDKFamqy7tNHmV1T
- DZ50Gi/IdhGUrXZeDh7imMJPzmoqhY/g4fNk+YB5hP7GV8X4NJ6Yt731ghQPy+UORwoM
- iLVv+uVeWLNZ8sU9l/+FYkO0VQnABaO9oTGnKg5+X1TLZtn+O/ANNle72zrrZwlXsOQp
- oxWipHMot0jobylFzMCU86c92igZeiiWOCnbojjy52SrtzenHyb4JJpvMXPHkUqPiMIz
- 1Qxw==
-X-Gm-Message-State: AOJu0YyAmSDBQhYFx1m7ydzGAO+fAVdlWtFCobWv4eU4MOMAfMQXdeW8
- JjELZ0Ayq4VWX0+UIenBJRekQCuTu2ed05winJogtwvr6LHbooHJUGT/NIpKs2PdfKjRopX9YOO
- BKxU=
-X-Google-Smtp-Source: AGHT+IEkcS7D4qGF9HaqadN2Kgxh9K4f/si18LJo7uJKeiPd1kOXzv2ebTRNaeSo2zbHAehmSLCakw==
-X-Received: by 2002:a5d:628c:0:b0:34c:9e4a:e72c with SMTP id
- ffacd0b85a97d-3504a62271fmr11079986f8f.11.1715766063996; 
- Wed, 15 May 2024 02:41:03 -0700 (PDT)
-Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.41.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 02:41:03 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/43] target/hppa: Use TCG_COND_TST* in trans_ftest
-Date: Wed, 15 May 2024 11:40:26 +0200
-Message-Id: <20240515094043.82850-27-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515094043.82850-1-richard.henderson@linaro.org>
-References: <20240515094043.82850-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1715766519; x=1716371319;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bwDmf06pcSMv31kgM5n8pjeZgLxFisSiDJ6rGX6CzQo=;
+ b=LrNqA9Qe6RpRaga7dS0e3U37+JgcglT7iVcqiEP+4Dav4J/MP8oUPhyzGgjNzJjS4e
+ wzcAF7Q4xUpK6Nct+ZPbUyjXXDlbBMxBWVD8e9cDSq+ohzkxkbXtpzZAcOtjfBNm1CBM
+ srDEP1l8i6MBY1GtcYZ2kninZxOM4A1UxVW47PBG6ql+SUozlGTPP+S2HKA8PWj4Z+jZ
+ ViSY5fZoO9QL+EazttTOEIcj/CF2C1LIPNlpqhsZd5jJZNTVkHQZwRdA5taHTV9flth0
+ vZi/oX+uv3Yx+n83ScLFK5wAYpL+rGSEnDDpXf7yk9mRczK7BXzLqGoD2+JlT+6YQxXS
+ xQDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZvC8ZMS6JMvWoRtCPNvHPjVVUzTNwE9xQMANx/ZzQcmkuP2gD0KPt81rWmQ4GE13PHNxTszaO1klf08Pu1JOZnX0WOss=
+X-Gm-Message-State: AOJu0Yzu9j3/bsClgeFI06wcAkRXeBF0X2XSzBbkGqoc3OKLmEQGiRzW
+ 3yZKmfvsdqAWM0I01YNp5zXVZ+Ll2lDpxCOFMIvMdDtRGna5e3B+1ccRRKWq28E=
+X-Google-Smtp-Source: AGHT+IHUFiRL2zN9WIajlZRibYWfE+iDbmrGCNyaJ8tAJxvMeXjlh6cpqSxFreT20ELYQG+1tMHy+A==
+X-Received: by 2002:a5d:6952:0:b0:34d:b40e:e65d with SMTP id
+ ffacd0b85a97d-3504a739495mr14907190f8f.42.1715766519081; 
+ Wed, 15 May 2024 02:48:39 -0700 (PDT)
+Received: from [10.91.1.102] ([149.14.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502bbbbff7sm15966916f8f.101.2024.05.15.02.48.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 May 2024 02:48:38 -0700 (PDT)
+Message-ID: <e7b9ebdd-cdc4-4d5f-b7f7-2c6e6073e0ff@linaro.org>
+Date: Wed, 15 May 2024 11:48:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/11] plugins: add new inline op STORE_U64
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240514174253.694591-1-alex.bennee@linaro.org>
+ <20240514174253.694591-6-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240514174253.694591-6-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,75 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/translate.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+On 14/5/24 19:42, Alex Bennée wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> This new operation can store an immediate u64 value to a given
+> scoreboard.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Message-Id: <20240502211522.346467-4-pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   include/qemu/plugin.h      |  1 +
+>   include/qemu/qemu-plugin.h |  4 ++--
+>   accel/tcg/plugin-gen.c     | 13 +++++++++++++
+>   plugins/core.c             |  6 ++++++
+>   4 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index efd4398437..11d74bb2aa 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -4311,6 +4311,8 @@ static bool trans_fcmp_d(DisasContext *ctx, arg_fclass2 *a)
- 
- static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
- {
-+    TCGCond tc = TCG_COND_TSTNE;
-+    uint32_t mask;
-     TCGv_i64 t;
- 
-     nullify_over(ctx);
-@@ -4319,21 +4321,18 @@ static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
-     tcg_gen_ld32u_i64(t, tcg_env, offsetof(CPUHPPAState, fr0_shadow));
- 
-     if (a->y == 1) {
--        int mask;
--        bool inv = false;
--
-         switch (a->c) {
-         case 0: /* simple */
-             mask = R_FPSR_C_MASK;
-             break;
-         case 2: /* rej */
--            inv = true;
-+            tc = TCG_COND_TSTEQ;
-             /* fallthru */
-         case 1: /* acc */
-             mask = R_FPSR_C_MASK | R_FPSR_CQ_MASK;
-             break;
-         case 6: /* rej8 */
--            inv = true;
-+            tc = TCG_COND_TSTEQ;
-             /* fallthru */
-         case 5: /* acc8 */
-             mask = R_FPSR_C_MASK | R_FPSR_CQ0_6_MASK;
-@@ -4351,21 +4350,12 @@ static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
-             gen_illegal(ctx);
-             return true;
-         }
--        if (inv) {
--            TCGv_i64 c = tcg_constant_i64(mask);
--            tcg_gen_or_i64(t, t, c);
--            ctx->null_cond = cond_make_tt(TCG_COND_EQ, t, c);
--        } else {
--            tcg_gen_andi_i64(t, t, mask);
--            ctx->null_cond = cond_make_ti(TCG_COND_EQ, t, 0);
--        }
-     } else {
-         unsigned cbit = (a->y ^ 1) - 1;
--
--        tcg_gen_extract_i64(t, t, R_FPSR_CA0_SHIFT - cbit, 1);
--        ctx->null_cond = cond_make_ti(TCG_COND_NE, t, 0);
-+        mask = R_FPSR_CA0_MASK >> cbit;
-     }
- 
-+    ctx->null_cond = cond_make_ti(tc, t, mask);
-     return nullify_end(ctx);
- }
- 
--- 
-2.34.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
