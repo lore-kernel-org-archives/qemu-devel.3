@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C46C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78661C25B79
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 13:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7EaK-0001JG-RS; Wed, 15 May 2024 09:22:20 -0400
+	id 1s7EaS-0001KT-4w; Wed, 15 May 2024 09:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1s7EaH-0001Ij-VL
- for qemu-devel@nongnu.org; Wed, 15 May 2024 09:22:18 -0400
-Received: from mail-dm6nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2415::600]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1s7EaP-0001KA-2B
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 09:22:26 -0400
+Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::600]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1s7Ea8-0007FI-Ay
- for qemu-devel@nongnu.org; Wed, 15 May 2024 09:22:17 -0400
+ id 1s7EaJ-0007Gf-HB
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 09:22:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=K4Q3thHFGN9cPgMtJtky74RITzbdZte0Bo7IRdOCbWDGY//vRHK3NK72Im0R+hEo5Bu8NhEwOFG01TF/zbTrXhQ6CPgzqSZ2jSyAJqTM5qX1zqYewJu1XX8RFSrMXjSQGIjfW57DUX7yKjgRR5owy2U4bpUXdC9UhRzO+brbagHyF0zQ8ZevSEBwW3uYeUY1ppUwODc1lV1hIRzoDiVFnYiL/Pi4DmUha6ci2Sbfqdh4VzV88+Ph94ebdj9irz/e1IOZ19T33fo08BfXOJ4+aGUo/UmadEZ5ZuvzfuWOIZv+YDJtP+rjtjQKyCotShNkL6j5pXEPPHVxtNqKWNN8SA==
+ b=MgvBCfs3Re7EbQ6ie+YlXs1oje4xofncRYNGfGSRv30cKzflEpeCiRzRYOXRrEI07RV9k2Nlsft8lO28Ra9FiPMZaybnlsadFVNzUWHEsiVXdPYTOvg6x9MGFg+bo5uAPkgsM5glNB0kv8vLxF5d379/ojL49RhlRkI/sHPJxA784/3Bs8pScsJHDTRlhQev4rLZlwtx+aUB8dzU1uE/MxmDEwpcRBAEspzZkU0Dx78XedrHEd3BqC7Q77MuUHvgJ0EbQWDDiEbpvWMrAwK5FKJi+O8HHCnyvnHO/F5Wm/Yn/zqWi2LL1sYDDjlVBNFHdTUZkmWMmgUShiuUIKtOmQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vGSveI8gWjWqlXHzIK8RnyyI8vYTqlSU2h79zeFC/wo=;
- b=lpdeSwqNqRbvPmqYZRKbUmXyEZWTay2YPzfd8k6QKhmzIN3v53enh4QvLgsieuP2Sy5kRMXfDRMBEtsOmmhSZycWrCyK9OED8Ky6DH6n/d0FnZ/XY1OIrhp/csIbijBLPNAKocQdKIYuZSXWzr7hY0zG2n6hWkRpWvhmL5hzJHYaT1qE+53y0ukyEGhuq1lNteyEJatAW029Gn14numzA8maq066UGmnhbwqoBkKJgyTk0ONUMR8A9Bmz6nlyL4oAQRH2NL1HNIKjzZEGIP/GT6uJPeWJjlYMwqRFhduMerpugJvyJf/QkibK3thrrkAEwW70HIq0IOxk27V5qh5ZA==
+ bh=SmWO0AxSzPSaSe9bmaQhyDXGyhc+LqakSOpDXCeOnD8=;
+ b=NpMPH3CttKPpE4zlsiQKLGRL5pLr8pXTq9dS8rxGW/Jwz9DVP7fuh+yXb+43lWF4ufICFGK/iSoRMESTGSmwnn6AWx+AZC5U5dlaL6Df/LumTfdM7YGK0bDcDysR0c0yzof2u2TgtrsoNEQ6ppXD/TxAmQtmWsG5v6Smw/fjxRYskQiIe0oGKXNqwERWpBIzBQLGlQLns/QoI2NfxVOgpH57TCR4PhSLM2rK1kxqvxh1p3+LYFY5/mRdFvDEmL0I+IIzk8hB3TAwEweAyWADq/E9Dxg2/Y0q++EJOTXHoqS8HM8bRnYvaoqdhVuunRNdMG7NEEcEtZuvKevagAGvXw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.118.232) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vGSveI8gWjWqlXHzIK8RnyyI8vYTqlSU2h79zeFC/wo=;
- b=rTvGIsAKlY316XfB9uuubehI9gpVb3FtCw5CYFZRiWWbwaQDVYSbSwV8rSBdUV0bQors8wOG/ku8lC0fZOhXbnalbRGNXbMpX+tor+CRAzrHzn5UczgprBWk2QtPDnPHghEarPqbMKvH7DwqqRyA10SLTGjpItZsUdI0yADmdOCPQW41AMlYQ03nwoNc3MkxV4xvpiaTp+RkNxN4My5mhG1fXDKMrvSXPNuPpfw3g6rkTDjjgrJ4nz4bqkvinl436FQFEWam9bzsuZniGQfMnLfnlfLsJkUzajf/OiQZ+Djf3nXha2IH0TMzcGgBX0WW6Z8JtahQK8S8TqEhWqoFHQ==
-Received: from CH5PR03CA0002.namprd03.prod.outlook.com (2603:10b6:610:1f1::14)
- by IA0PR12MB7626.namprd12.prod.outlook.com (2603:10b6:208:438::16)
+ bh=SmWO0AxSzPSaSe9bmaQhyDXGyhc+LqakSOpDXCeOnD8=;
+ b=l17m4B6VnNs83rse4fwXp+ExAWt0SFNooZ6vbRcPSndMWIYmiGnOry55i35tSgQheqSDP2EmtN2i2WwzLIww0oUcRhiulxQLL2BJ349V/Svnm2PWjKyiSYZvrOCv04C3dSncO9cWgeyHAaTJ+IySn2ejy4f7c9hb3l+6j8YYYIG4h2M27pF9Ze3J7/cGfBRaIGvD8riG1++7UInEJ/UoQ6CzKDkBAPVA/9LcB1IhvceOQRiT1Ewf00TXv7YN1ZJDbcSsXyqNHyUZAPz4sgo59WSTtDc13XqWbLXXRQ77MO5X/0d7jydSZkbKvPqVzWDr2Bzd0GqrlhmokInW8PhwNw==
+Received: from BL0PR02CA0074.namprd02.prod.outlook.com (2603:10b6:208:51::15)
+ by SN7PR12MB7787.namprd12.prod.outlook.com (2603:10b6:806:347::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Wed, 15 May
- 2024 13:22:00 +0000
-Received: from CH1PEPF0000A349.namprd04.prod.outlook.com
- (2603:10b6:610:1f1:cafe::af) by CH5PR03CA0002.outlook.office365.com
- (2603:10b6:610:1f1::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.28 via Frontend
- Transport; Wed, 15 May 2024 13:22:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ 2024 13:22:14 +0000
+Received: from MN1PEPF0000F0E5.namprd04.prod.outlook.com
+ (2603:10b6:208:51:cafe::95) by BL0PR02CA0074.outlook.office365.com
+ (2603:10b6:208:51::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55 via Frontend
+ Transport; Wed, 15 May 2024 13:22:14 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- CH1PEPF0000A349.mail.protection.outlook.com (10.167.244.9) with Microsoft
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ MN1PEPF0000F0E5.mail.protection.outlook.com (10.167.242.43) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7587.21 via Frontend Transport; Wed, 15 May 2024 13:22:00 +0000
+ 15.20.7587.21 via Frontend Transport; Wed, 15 May 2024 13:22:14 +0000
 Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 15 May
- 2024 06:21:48 -0700
+ 2024 06:21:45 -0700
 Received: from drhqmail202.nvidia.com (10.126.190.181) by
  drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 15 May 2024 06:21:48 -0700
+ 15.2.1544.4; Wed, 15 May 2024 06:21:44 -0700
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.126.190.181)
  with Microsoft SMTP Server id 15.2.1544.4 via Frontend Transport;
- Wed, 15 May 2024 06:21:45 -0700
+ Wed, 15 May 2024 06:21:42 -0700
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Alex Williamson <alex.williamson@redhat.com>,
@@ -78,65 +78,73 @@ CC: Alex Williamson <alex.williamson@redhat.com>,
  <eblake@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
  <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>, Maor Gottlieb
  <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: [PATCH v3 2/4] vfio/migration: Emit VFIO migration QAPI event
-Date: Wed, 15 May 2024 16:21:36 +0300
-Message-ID: <20240515132138.4560-3-avihaih@nvidia.com>
+Subject: [PATCH v3 1/4] qapi/vfio: Add VFIO migration QAPI event
+Date: Wed, 15 May 2024 16:21:35 +0300
+Message-ID: <20240515132138.4560-2-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20240515132138.4560-1-avihaih@nvidia.com>
 References: <20240515132138.4560-1-avihaih@nvidia.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000A349:EE_|IA0PR12MB7626:EE_
-X-MS-Office365-Filtering-Correlation-Id: a83355ab-396a-447c-6cc2-08dc74e200ed
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E5:EE_|SN7PR12MB7787:EE_
+X-MS-Office365-Filtering-Correlation-Id: 47a930e1-ec12-4ce1-e717-08dc74e2090e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230031|376005|1800799015|36860700004|82310400017; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?g2Cc0Jh7hDLxV3cg4yRnfdG6afj0wCq5UMf3dugfwyvvIDAiebVQTmVW8PK2?=
- =?us-ascii?Q?i6ak7lVB4jN6KC/+hVpphdbw7WYiVZHPX1rFd+V60sANXWxGWunuudA4nWv0?=
- =?us-ascii?Q?Kai/AsEMSdaUO8eAbPEmVbTTmDpHzg+6ZIN8MdfRzj9X2/W5npnhzg0KJUdI?=
- =?us-ascii?Q?jMYdgFLMoDDhP7djOuu26W16bWBIbjC13EslZ94p19WzpdKQodPyVQE4D/Ys?=
- =?us-ascii?Q?Ad5WMdycVpAoMpDqT8hslo5E6QnxLh2eLaUl1pFKIEyCG8cDWF535JuR4wRm?=
- =?us-ascii?Q?mkj+MmLVKNiJ4+5a5/CSmltLjRpri1+nDYK2kZHZipADtmONt+j0G5VxKGf0?=
- =?us-ascii?Q?mJOReNIdIdE88+UznsbANWpy97SG6Zy4Q8velz8MGeNADNEy9tfNijQCUhXy?=
- =?us-ascii?Q?z9m4JS6re6sL0uza7t0Wf/qdDPoRaN7G4LeXnAjvrtLnJ6VxYfhVRfUbAe8s?=
- =?us-ascii?Q?MEHJQwckOFORAnIjVucyZW3L5LmggCVgQQKC8DL/Fpwq61+1iW1U5rLRrnYx?=
- =?us-ascii?Q?LmFMq4RGaB6kpQGc41/THnCLgQLZbFX8hlXImTpYAFwvFiTglV0xKWYjLQlu?=
- =?us-ascii?Q?srgxQR1v2901NzUJz8mMF6pT8LG6yGA/SVUcuqHE1VhEUv8wWhQdaAv3EisT?=
- =?us-ascii?Q?oVbf4PptUSpH4rJR/HbAMgloEKD+Gtn/PoA9ULp3jqL76HelKU0HB+kKpNdq?=
- =?us-ascii?Q?zW3ntsK4rfsQolvtc2yZ6Z9FeMBLJZSF7T5jPuE1jOOzvWDtXBUgTlPHRNlQ?=
- =?us-ascii?Q?FVSOD26Y0lgWxXlLGIrtLA0HSo/lnrc5+OLwI3z2hsN/crelcOLN2wMd2Z4Q?=
- =?us-ascii?Q?kbOyrv5Mzjhpy0GVe/K0N2/7/DMkjYVxV+g63tigMMXBMBKgG+zCLsYV6tzy?=
- =?us-ascii?Q?suBitRqZhQMa7PKBI2mosZCrlJ9gc3Qv2tRqQSj2nXADYXtX3JJ/4otFo1OJ?=
- =?us-ascii?Q?tKlf4BQ//AJa1OHD3s5LJU3SkXjOR3W34L9VQqqTGiuyfRlMe3BSSyiqwZHU?=
- =?us-ascii?Q?1Lgj0yWbs15B3Tl6CZ8FxrUikEjsAimcbqEHYuU1QMxlbZ+mTzezLLf2lPzd?=
- =?us-ascii?Q?1ZkjomdAKyCDE7YpzuxxddUgGijXAgT7hcOc2/ZGeGRmtIIbVJv1xHCfy8UP?=
- =?us-ascii?Q?SExom7PUHREAfYCOSoaZJwvTGaWRdjkpLgZM4OEkM0bTAptieArRGI+j2zIG?=
- =?us-ascii?Q?Ix6RBFtuJP0amW92XsovDdeE5BWD0oPoC7UOsixdfdOCjjjzlhmUwvphQwWt?=
- =?us-ascii?Q?qHz/1p8WcSkvdYrSx9RvSxD3XTODIUMrJdpTM/+/UN9Vx3RmKRL2pxlN/RNp?=
- =?us-ascii?Q?+xOoqzqeuXeYD//yRyJIQyzQ8MZrmro+UOaasdJxmRB7g/xyQOMDjV0810w8?=
- =?us-ascii?Q?FSAJ/dzUSAP3ONtArwDLmbEeVb4B?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(36860700004)(82310400017); DIR:OUT;
+ ARA:13230031|36860700004|376005|82310400017|1800799015; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZjREczI0cUlyWEloLzFRd2w2MFRrSmxuZkxzS0FJeTh2d3NUNG9tQUFUSzQz?=
+ =?utf-8?B?UjRkMUl6VkwwVTJYRDdWQlNTbUZDV1hGZi9QVHdXcG95NUxHbjAwcFFrWDJq?=
+ =?utf-8?B?ZWRwTVN1Tktnb1QwdTR3NitySkFLWGNiMmJXL1BkRzJKVi8zMmh1STd5S083?=
+ =?utf-8?B?ek5UMFRLeXJWZG4xc3phdTYyNk14OVBDWWJEKzNYSHZNeFZta25GRENIZ1hn?=
+ =?utf-8?B?RW5Jc1p0d0NRYThZekxUVzNKRWxCK1BaWVB6M2t6Qy9RTkNYV2NZQVVBVjg5?=
+ =?utf-8?B?VGc5KzNjbldEcVZvbkJUbTdYdXlXRzd4b2xnRHJBc3g1NFRlZFJXQTBOei9G?=
+ =?utf-8?B?Wi9rTEYwSkR6UHpCc0QvU05rdEtHZVFzakNCZTNOMWJnSTR4VjZQSXZ1a2hh?=
+ =?utf-8?B?dytraklZOWNxLzExTTlFRnBZWVhickNYblk2Y2hCWmI3SEY1Wkpic28wOVln?=
+ =?utf-8?B?ZzBHZUZSUjU5ZVE1cU1KdE5jWXU3Wm9xeFYwRzI2R1RTSlovZjJNZTJ6MzRQ?=
+ =?utf-8?B?ZFFIcE5UclI3RkVMdjM3UWNrZnJtTzliUlJVREJ0TU1mVXJmSU0zZWJpaGhm?=
+ =?utf-8?B?RFdha1hPWFJsUEFRMEt4MHBkbnBsZDV0NHRidW9rVzFVT1hmSGxMb3hxeXUw?=
+ =?utf-8?B?Ylg0aHVxeTQxQzZoYXYzeTNQYmFKTCtpU2VySEtRTWRHMnF6dUNqK2NDYU95?=
+ =?utf-8?B?QWk4alNHVFhER2V0Mm9SSkRPVDFQMVdnQURrTURNZ3h5SGUvbUJ1TXhyb0Nj?=
+ =?utf-8?B?UUN2SHVWaW0ySzlTSkVPVHBHZHpnTjdCVG84aXIyaFY0aVNBSlRaOHdib2xy?=
+ =?utf-8?B?SnhsWnZiSWgwaWZtY0taNENqWVNWOXdoK1pTdUN3TkczS0V6c0QvTGI1OGpl?=
+ =?utf-8?B?UHBWVHhmSmtiQmVCVENBTU9pMWFYK1UzNVZqaHF2N0lVRHdSRzJZRzZTQnM2?=
+ =?utf-8?B?NFM2LzZVSzdxc1JxWldZVlp6Nlh6QXRENENMODRualRhSWdIODB1VTBwMTAw?=
+ =?utf-8?B?VlZJSTZnR3pOTmpOKzFaNkFiMm9hb2xsVG1XYmt3c24zQVJ0T2NYN3cwUVVi?=
+ =?utf-8?B?RzVadlFnTTEvSThHbWtCQmQ2ZElRZC9ybTFYRWZVS0RzTkZ3dTlXVHhuQ0F6?=
+ =?utf-8?B?bVhzWFordTVwakFtUmdsU2hQRWpqMnRlNG83ZGtHNU9RcFArd3M0UWpjRHBK?=
+ =?utf-8?B?OEdtbEhHd09RKzVjbnpnelJxeTZrYWI3cGJObitBYUNZK1JxbGtmQWhzN3E0?=
+ =?utf-8?B?UjFQL1FqdXpGQUQ0bHFiWFhURFNoM0JhYzQ3VzdBYUt3T09wZjRQYmQremFW?=
+ =?utf-8?B?M0ZKb3RHaGZtM2piRFBRMkpTTFRVaWtEMTBEbERBdzk1dlp6N2FVUXRGdDdZ?=
+ =?utf-8?B?V0tOMFkwRnJCNWR6WURGTVpxR3kyUFJkalhXbzkyR0JBUDFhQ1YxcWJ4eVlH?=
+ =?utf-8?B?ZDNNckhtWTdxQlZZMXVoK1Z1QklGamRvT04yb2dGVkdSRUZCeEdqUG1sOVNV?=
+ =?utf-8?B?d2lNempxU2hPUis1T1pveUgrRDVIdW5aR2lGMC8rbUJVa2ZDVGlUbzZjM2pO?=
+ =?utf-8?B?dDZEaEplVjI2Z21IelBkQ3JkMWJmSE5YcXh6MlExSm5WWGF4dU56WS9mNGhJ?=
+ =?utf-8?B?bHU3OTR4TGYrTjFQbHNZZzNKSUgzQUZXL240K3Q1MVkwZXlBekRjR2JqdHFt?=
+ =?utf-8?B?eFJMTUVCa3ZBaENkRVU2anR1ejUwemdRK3FPNmFJQzZCVHRVM2F3RHVhWEM4?=
+ =?utf-8?B?OHQzb25MeVozSWhWbEhpRU5wa2pka0dtY3MxNFliZ3NieTEzTktsbUpSWVB0?=
+ =?utf-8?B?aVZ4dXd6WWNOYkgwSFpZWDBkSERFS0hkUnkvcmowayt4VDdnTCtFVElJdllY?=
+ =?utf-8?Q?IXoLBh4wPf1bW?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230031)(36860700004)(376005)(82310400017)(1800799015); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2024 13:22:00.5352 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a83355ab-396a-447c-6cc2-08dc74e200ed
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2024 13:22:14.1295 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 47a930e1-ec12-4ce1-e717-08dc74e2090e
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000A349.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E5.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7626
-Received-SPF: softfail client-ip=2a01:111:f403:2415::600;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7787
+Received-SPF: softfail client-ip=2a01:111:f403:2418::600;
  envelope-from=avihaih@nvidia.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
 X-Spam_bar: ---
@@ -158,140 +166,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emit VFIO migration QAPI event when a VFIO device changes its migration
-state. This can be used by management applications to get updates on the
+Add a new QAPI event for VFIO migration. This event will be emitted when
+a VFIO device changes its migration state, for example, during migration
+or when stopping/starting the guest.
+
+This event can be used by management applications to get updates on the
 current state of the VFIO device for their own purposes.
 
-A new per VFIO device capability, "migration-events", is added so events
-can be enabled only for the required devices. It is disabled by default.
+Note that this new event is introduced since VFIO devices have a unique
+set of migration states which cannot be described as accurately by other
+existing events such as run state or migration status.
 
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h |  1 +
- hw/vfio/migration.c           | 59 +++++++++++++++++++++++++++++++++--
- hw/vfio/pci.c                 |  2 ++
- 3 files changed, 59 insertions(+), 3 deletions(-)
+ MAINTAINERS           |  1 +
+ qapi/qapi-schema.json |  1 +
+ qapi/vfio.json        | 67 +++++++++++++++++++++++++++++++++++++++++++
+ qapi/meson.build      |  1 +
+ 4 files changed, 70 insertions(+)
+ create mode 100644 qapi/vfio.json
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b9da6c08ef..3ec5f2425e 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -115,6 +115,7 @@ typedef struct VFIODevice {
-     bool no_mmap;
-     bool ram_block_discard_allowed;
-     OnOffAuto enable_migration;
-+    bool migration_events;
-     VFIODeviceOps *ops;
-     unsigned int num_irqs;
-     unsigned int num_regions;
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 06ae40969b..2e1a8f6031 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -24,6 +24,7 @@
- #include "migration/register.h"
- #include "migration/blocker.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-events-vfio.h"
- #include "exec/ramlist.h"
- #include "exec/ram_addr.h"
- #include "pci.h"
-@@ -80,6 +81,58 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
-     }
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1b79767d61..448dc951c5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2164,6 +2164,7 @@ F: hw/vfio/*
+ F: include/hw/vfio/
+ F: docs/igd-assign.txt
+ F: docs/devel/migration/vfio.rst
++F: qapi/vfio.json
  
-+static VfioMigrationState
-+mig_state_to_qapi_state(enum vfio_device_mig_state state)
-+{
-+    switch (state) {
-+    case VFIO_DEVICE_STATE_STOP:
-+        return QAPI_VFIO_MIGRATION_STATE_STOP;
-+    case VFIO_DEVICE_STATE_RUNNING:
-+        return QAPI_VFIO_MIGRATION_STATE_RUNNING;
-+    case VFIO_DEVICE_STATE_STOP_COPY:
-+        return QAPI_VFIO_MIGRATION_STATE_STOP_COPY;
-+    case VFIO_DEVICE_STATE_RESUMING:
-+        return QAPI_VFIO_MIGRATION_STATE_RESUMING;
-+    case VFIO_DEVICE_STATE_RUNNING_P2P:
-+        return QAPI_VFIO_MIGRATION_STATE_RUNNING_P2P;
-+    case VFIO_DEVICE_STATE_PRE_COPY:
-+        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY;
-+    case VFIO_DEVICE_STATE_PRE_COPY_P2P:
-+        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
+ vfio-ccw
+ M: Eric Farman <farman@linux.ibm.com>
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index 5e33da7228..b1581988e4 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -78,5 +78,6 @@
+ { 'include': 'pci.json' }
+ { 'include': 'stats.json' }
+ { 'include': 'virtio.json' }
++{ 'include': 'vfio.json' }
+ { 'include': 'cryptodev.json' }
+ { 'include': 'cxl.json' }
+diff --git a/qapi/vfio.json b/qapi/vfio.json
+new file mode 100644
+index 0000000000..a0e5013188
+--- /dev/null
++++ b/qapi/vfio.json
+@@ -0,0 +1,67 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++#
 +
-+static void vfio_migration_send_event(VFIODevice *vbasedev)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+    DeviceState *dev = vbasedev->dev;
-+    g_autofree char *qom_path = NULL;
-+    Object *obj;
++##
++# = VFIO devices
++##
 +
-+    if (!vbasedev->migration_events) {
-+        return;
-+    }
++##
++# @VfioMigrationState:
++#
++# An enumeration of the VFIO device migration states.
++#
++# @stop: The device is stopped.
++#
++# @running: The device is running.
++#
++# @stop-copy: The device is stopped and its internal state is available
++#     for reading.
++#
++# @resuming: The device is stopped and its internal state is available
++#     for writing.
++#
++# @running-p2p: The device is running in the P2P quiescent state.
++#
++# @pre-copy: The device is running, tracking its internal state and its
++#     internal state is available for reading.
++#
++# @pre-copy-p2p: The device is running in the P2P quiescent state,
++#     tracking its internal state and its internal state is available
++#     for reading.
++#
++# Since: 9.1
++##
++{ 'enum': 'VfioMigrationState',
++  'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
++            'pre-copy', 'pre-copy-p2p' ],
++  'prefix': 'QAPI_VFIO_MIGRATION_STATE' }
 +
-+    g_assert(vbasedev->ops->vfio_get_object);
-+    obj = vbasedev->ops->vfio_get_object(vbasedev);
-+    g_assert(obj);
-+    qom_path = object_get_canonical_path(obj);
-+
-+    qapi_event_send_vfio_migration(
-+        dev->id, qom_path, mig_state_to_qapi_state(migration->device_state));
-+}
-+
-+static void vfio_migration_set_device_state(VFIODevice *vbasedev,
-+                                            enum vfio_device_mig_state state)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+
-+    migration->device_state = state;
-+    vfio_migration_send_event(vbasedev);
-+}
-+
- static int vfio_migration_set_state(VFIODevice *vbasedev,
-                                     enum vfio_device_mig_state new_state,
-                                     enum vfio_device_mig_state recover_state)
-@@ -125,12 +178,12 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
-             goto reset_device;
-         }
- 
--        migration->device_state = recover_state;
-+        vfio_migration_set_device_state(vbasedev, recover_state);
- 
-         return ret;
-     }
- 
--    migration->device_state = new_state;
-+    vfio_migration_set_device_state(vbasedev, new_state);
-     if (mig_state->data_fd != -1) {
-         if (migration->data_fd != -1) {
-             /*
-@@ -156,7 +209,7 @@ reset_device:
-                  strerror(errno));
-     }
- 
--    migration->device_state = VFIO_DEVICE_STATE_RUNNING;
-+    vfio_migration_set_device_state(vbasedev, VFIO_DEVICE_STATE_RUNNING);
- 
-     return ret;
- }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 64780d1b79..8840602c50 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3362,6 +3362,8 @@ static Property vfio_pci_dev_properties[] = {
-                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
-                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-+                     vbasedev.migration_events, false),
-     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-     DEFINE_PROP_BOOL("x-balloon-allowed", VFIOPCIDevice,
-                      vbasedev.ram_block_discard_allowed, false),
++##
++# @VFIO_MIGRATION:
++#
++# This event is emitted when a VFIO device migration state is changed.
++#
++# @device-id: The device's id, if it has one.
++#
++# @qom-path: The device's QOM path.
++#
++# @device-state: The new changed device migration state.
++#
++# Since: 9.1
++#
++# Example:
++#
++#     <- { "timestamp": { "seconds": 1713771323, "microseconds": 212268 },
++#          "event": "VFIO_MIGRATION",
++#          "data": {
++#              "device-id": "vfio_dev1",
++#              "qom-path": "/machine/peripheral/vfio_dev1",
++#              "device-state": "stop" } }
++##
++{ 'event': 'VFIO_MIGRATION',
++  'data': {
++      'device-id': 'str',
++      'qom-path': 'str',
++      'device-state': 'VfioMigrationState'
++  } }
+diff --git a/qapi/meson.build b/qapi/meson.build
+index c92af6e063..e7bc54e5d0 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -52,6 +52,7 @@ qapi_all_modules = [
+   'stats',
+   'trace',
+   'transaction',
++  'vfio',
+   'virtio',
+   'yank',
+ ]
 -- 
 2.26.3
 
