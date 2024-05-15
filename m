@@ -4,81 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669D2C25B7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 17:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F33C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 17:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7IUX-0005Fk-Tz; Wed, 15 May 2024 13:32:37 -0400
+	id 1s7Idw-0000zy-Cj; Wed, 15 May 2024 13:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1s7IUU-0005Ex-41
- for qemu-devel@nongnu.org; Wed, 15 May 2024 13:32:34 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1s7IUR-0002Qi-VG
- for qemu-devel@nongnu.org; Wed, 15 May 2024 13:32:33 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6f44d2b3130so5953626b3a.2
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 10:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715794350; x=1716399150; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yk+ySqx2GWVrBg6FqHG2e9b1M5JzmHbk4G1MUS+6KS8=;
- b=QzqEA9WaJ0mM4XUjLXERKJ42QKuJ9SMuNZMzkmOu6GLw+qJCX5Hlgukj1LHuI7pId+
- d03/lCX/yCZVHEDUG9O/ScmSj6aCCQggatAta6LA47nhz/YQKVJgUwLlT1EeDa67dbcd
- C1D4/biVjMEvpt7evAtziGVb4nZXv374PtE5TnFEk1SRHHzTEXnoKcz5a0jHX/xpesjl
- x3jWLqkIClus4norGC/NlGbEmAFdAgMRQvtSJL1mjMLKLbfT6kRR+KruBF9KI3/z1G5w
- 4s+3Du2w7Ey65Iun3ALv1TiHKKmkl8gXhXfhNTIxzw4hr+xl9G2m8sVwlRVxuMjUV6HA
- ryng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715794350; x=1716399150;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yk+ySqx2GWVrBg6FqHG2e9b1M5JzmHbk4G1MUS+6KS8=;
- b=fVZsiYzht3FLucG1JvwsVhQKLhEzg3fYnmWFpK+oCTSrWwvCBO/G81ZlgACgxB4fy/
- Zre8nuDAA3RUJ9/3WCmpZCADHXWkEvZ+E1f1QL3wx3djxafl1AL7wi6lDPU6GeCr3Iu8
- 9rLPXBo6wGdAMuKrrUNEExH/v2Ua4b0k5QvVFNGhdnRg38ANtYm3WanK+/Af9e7rmmIT
- riyqpPqT7g14AsvmqEWp2bPZeY5xJfQYAwh1o/ER2e6D8cF/aFT+nUzkJwK5MIpzrYX9
- nG2oPFwGXSjAQ7AGMrljNpjdITM3tpOLmbAZs11Pq7Qk1qgdItQ8RIIOwMWsXtY3bjlX
- aehg==
-X-Gm-Message-State: AOJu0YxfGBmbQm4j8jmYSMDP3OZKECSPUT6JMb8wm1UgiWAXbeI8bDwU
- SnrpsgAWEZoVmsiT4RwcYZzoM199MF+5WNxNDA2rBBpY0AnyiVIo3cpSoAaA2ELO0EBhWsM86gn
- pnVQ=
-X-Google-Smtp-Source: AGHT+IE5KBa0NAt9ILd9epLkCMpE25x6hBD9IWfzhSIiA0gh/toURLx0YkCa/0TCFBDVIOQm7nVWEg==
-X-Received: by 2002:a05:6a00:3994:b0:6f4:3b76:ebf7 with SMTP id
- d2e1a72fcca58-6f4e02db452mr16724323b3a.20.1715794349751; 
- Wed, 15 May 2024 10:32:29 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b401:224b:3e7c:3fff:fe7a:e83b])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2a66c6asm11365133b3a.6.2024.05.15.10.32.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 10:32:29 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, philmd@linaro.org, peter.maydell@linaro.org,
- alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: gustavo.romero@linaro.org
-Subject: [PATCH 4/4] tests/tcg/aarch64: Add MTE gdbstub tests
-Date: Wed, 15 May 2024 17:31:32 +0000
-Message-Id: <20240515173132.2462201-5-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515173132.2462201-1-gustavo.romero@linaro.org>
-References: <20240515173132.2462201-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1s7Idt-0000zQ-KF; Wed, 15 May 2024 13:42:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1s7Idr-0006Tz-I0; Wed, 15 May 2024 13:42:17 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44FHbEkt025135; Wed, 15 May 2024 17:42:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=tITW5+dZoE+AgFBjFuhExr0kqZoQaFlCLtDdWHK+bsA=;
+ b=HQJOg2EeZOYbMb8B7Dw8OOiCSY9MnoE2hRULSqoW2cDkC20LD8DPfciHXPptXLMX2ZYV
+ YKYwMJiBp91CYuJ+4VLaDG+CMbFLG04zmS1p5mCeCYinzoG2YOxz6eEP3qXmOY8y56L2
+ 4LyNtmd6mx1GKCMyZoAcrnbryTxlhGUAxEBevFWLJ9sqf/9IwTyFnF5/sOSThslZmRxo
+ SUFf4v9he2wyqkzZ5qJ6NMj+u9ds2jti+kmSSmYxKdke2BYecl6+rciFB1lV0ZL8Pus7
+ o6crHReD5rkJVNGad8qCeGZjoGSTFc+2bxkCCpBbRdjbRN8XW5C6xyVzPjzhv7oOgCfW rg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y51kug09e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 May 2024 17:42:04 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44FHg390032233;
+ Wed, 15 May 2024 17:42:03 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y51kug09d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 May 2024 17:42:03 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44FFgTX9005986; Wed, 15 May 2024 17:42:02 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2mgmmvxj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 May 2024 17:42:02 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44FHfukW55837082
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 May 2024 17:41:58 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1DAE42004E;
+ Wed, 15 May 2024 17:41:56 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3579C2004B;
+ Wed, 15 May 2024 17:41:54 +0000 (GMT)
+Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 15 May 2024 17:41:54 +0000 (GMT)
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
+ chalapathi.v@linux.ibm.com, saif.abrar@linux.vnet.ibm.com,
+ dantan@us.ibm.com, milesg@linux.vnet.ibm.com
+Subject: [PATCH v3 0/5] hw/ppc: SPI model
+Date: Wed, 15 May 2024 12:41:44 -0500
+Message-Id: <20240515174149.17713-1-chalapathi.v@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: R0_3ZdE4xqD5b4J8EKXKQQF8KlarRXdw
+X-Proofpoint-ORIG-GUID: arI6inhMMH7fNuOhKL6Yo7it7uh5s4de
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-15_10,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=618 malwarescore=0
+ clxscore=1011 impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405150125
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,247 +112,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add tests to exercise the MTE stubs.
+Hello,
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- tests/tcg/aarch64/Makefile.target     |  11 ++-
- tests/tcg/aarch64/gdbstub/test-mte.py |  86 ++++++++++++++++++++++
- tests/tcg/aarch64/mte-8.c             | 102 ++++++++++++++++++++++++++
- 3 files changed, 197 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/aarch64/gdbstub/test-mte.py
- create mode 100644 tests/tcg/aarch64/mte-8.c
+Thank You so much for reviewing patch v2.
+In patch v3, most of Cedric's comments are addressed.
+- PnvSPIBus model is removed and added SSIBus to PnvSpiController.
+- Added trace-events and removed SPI_DEBUG macro.
+- Added Microchip's 25csm04 device on top of m25p80 and create seeprom
+  device from a command line.
+- Use qdev_connect_gpio_out_named instead of sysbus_connect_irq to
+  connect cs.
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 70d728ae9a..d2e3f251eb 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -62,7 +62,7 @@ AARCH64_TESTS += bti-2
- 
- # MTE Tests
- ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
--AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7
-+AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7 mte-8
- mte-%: CFLAGS += -march=armv8.5-a+memtag
- endif
- 
-@@ -127,7 +127,14 @@ run-gdbstub-sve-ioctls: sve-ioctls
- 		--bin $< --test $(AARCH64_SRC)/gdbstub/test-sve-ioctl.py, \
- 	basic gdbstub SVE ZLEN support)
- 
--EXTRA_RUNS += run-gdbstub-sysregs run-gdbstub-sve-ioctls
-+run-gdbstub-mte: mte-8
-+	$(call run-test, $@, $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin "$< -s" --test $(AARCH64_SRC)/gdbstub/test-mte.py, \
-+	gdbstub MTE support)
-+
-+EXTRA_RUNS += run-gdbstub-sysregs run-gdbstub-sve-ioctls run-gdbstub-mte
- endif
- endif
- 
-diff --git a/tests/tcg/aarch64/gdbstub/test-mte.py b/tests/tcg/aarch64/gdbstub/test-mte.py
-new file mode 100644
-index 0000000000..6530f33ad8
---- /dev/null
-+++ b/tests/tcg/aarch64/gdbstub/test-mte.py
-@@ -0,0 +1,86 @@
-+from __future__ import print_function
-+#
-+# Test GDB memory-tag commands that exercise the stubs for the qIsAddressTagged,
-+# qMemTag, and QMemTag packets. Logical tag-only commands rely on local
-+# operations, hence don't exercise any stub.
-+#
-+# The test consists in breaking just after a atag() call (which sets the
-+# allocation tag -- see mte-8.c for details) and setting/getting tags in
-+# different memory locations and ranges starting at the address of the array
-+# 'a'.
-+#
-+# This is launched via tests/guest-debug/run-test.py
-+#
-+
-+
-+import gdb
-+import re
-+from test_gdbstub import main, report
-+
-+
-+PATTERN_0 = "Memory tags for address 0x[0-9a-f]+ match \(0x[0-9a-f]+\)."
-+PATTERN_1 = ".*(0x[0-9a-f]+)"
-+
-+
-+def run_test():
-+    gdb.execute("break 94", False, True)
-+    gdb.execute("continue", False, True)
-+    try:
-+        # Test if we can check correctly that the allocation tag for
-+        # array 'a' matches the logical tag after atag() is called.
-+        co = gdb.execute("memory-tag check a", False, True)
-+        tags_match = re.findall(PATTERN_0, co, re.MULTILINE)
-+        if tags_match:
-+            report(True, "Logical and allocation tags match.")
-+        else:
-+            report(False, "Logical and allocation tags don't match!")
-+
-+        # Test allocation tag 'set and print' commands. Commands on logical
-+        # tags rely on local operation and so don't exercise any stub.
-+
-+        # Set the allocation tag for the first granule (16 bytes) of
-+        # address starting at 'a' address to a known value, i.e. 0x04.
-+        gdb.execute("memory-tag set-allocation-tag a 1 04", False, True)
-+
-+        # Then set the allocation tag for the second granule to a known
-+        # value, i.e. 0x06. This tests that contiguous tag granules are
-+        # set correct and don't run over each other.
-+        gdb.execute("memory-tag set-allocation-tag a+16 1 06", False, True)
-+
-+        # Read the known values back and check if they remain the same.
-+
-+        co = gdb.execute("memory-tag print-allocation-tag a", False, True)
-+        first_tag = re.match(PATTERN_1, co)[1]
-+
-+        co = gdb.execute("memory-tag print-allocation-tag a+16", False, True)
-+        second_tag = re.match(PATTERN_1, co)[1]
-+
-+        if first_tag == "0x4" and second_tag == "0x6":
-+            report(True, "Allocation tags are correctly set/printed.")
-+        else:
-+            report(False, "Can't set/print allocation tags!")
-+
-+        # Now test fill pattern by setting a whole page with a pattern.
-+        gdb.execute("memory-tag set-allocation-tag a 4096 0a0b", False, True)
-+
-+        # And read back the tags of the last two granules in page so
-+        # we also test if the pattern is set correctly up to the end of
-+        # the page.
-+        co = gdb.execute("memory-tag print-allocation-tag a+4096-32", False, True)
-+        tag = re.match(PATTERN_1, co)[1]
-+
-+        co = gdb.execute("memory-tag print-allocation-tag a+4096-16", False, True)
-+        last_tag = re.match(PATTERN_1, co)[1]
-+
-+        if tag == "0xa" and last_tag == "0xb":
-+            report(True, "Fill pattern is ok.")
-+        else:
-+            report(False, "Fill pattern failed!")
-+
-+    except gdb.error:
-+        # This usually happens because a GDB version that does not
-+        # support memory tagging was used to run the test.
-+        report(False, "'memory-tag' command failed!")
-+
-+
-+main(run_test, expected_arch="aarch64")
-diff --git a/tests/tcg/aarch64/mte-8.c b/tests/tcg/aarch64/mte-8.c
-new file mode 100644
-index 0000000000..367768e6b6
---- /dev/null
-+++ b/tests/tcg/aarch64/mte-8.c
-@@ -0,0 +1,102 @@
-+/*
-+ * To be compiled with -march=armv8.5-a+memtag
-+ *
-+ * This test is adapted from a Linux test. Please see:
-+ *
-+ * https://www.kernel.org/doc/html/next/arch/arm64/memory-tagging-extension.html#example-of-correct-usage
-+ */
-+#include <errno.h>
-+#include <stdint.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+#include <sys/auxv.h>
-+#include <sys/mman.h>
-+#include <sys/prctl.h>
-+#include <string.h>
-+/*
-+ * From arch/arm64/include/uapi/asm/hwcap.h
-+ */
-+#define HWCAP2_MTE              (1 << 18)
-+
-+/*
-+ * From arch/arm64/include/uapi/asm/mman.h
-+ */
-+#define PROT_MTE                 0x20
-+
-+/*
-+ * Insert a random logical tag into the given pointer.
-+ */
-+#define insert_random_tag(ptr) ({                   \
-+    uint64_t __val;                                 \
-+    asm("irg %0, %1" : "=r" (__val) : "r" (ptr));   \
-+    __val;                                          \
-+})
-+
-+/*
-+ * Set the allocation tag on the destination address.
-+ */
-+#define set_tag(tagged_addr) do {                                      \
-+        asm volatile("stg %0, [%0]" : : "r" (tagged_addr) : "memory"); \
-+} while (0)
-+
-+
-+int main(int argc, char *argv[])
-+{
-+    unsigned char *a;
-+    unsigned long page_sz = sysconf(_SC_PAGESIZE);
-+    unsigned long hwcap2 = getauxval(AT_HWCAP2);
-+
-+    if (!(argc == 2 && strcmp(argv[1], "-s") == 0)) {
-+        return 0;
-+    }
-+
-+    /* check if MTE is present */
-+    if (!(hwcap2 & HWCAP2_MTE))
-+            return EXIT_FAILURE;
-+
-+    /*
-+     * Enable the tagged address ABI, synchronous or asynchronous MTE
-+     * tag check faults (based on per-CPU preference) and allow all
-+     * non-zero tags in the randomly generated set.
-+     */
-+    if (prctl(PR_SET_TAGGED_ADDR_CTRL,
-+              PR_TAGGED_ADDR_ENABLE | PR_MTE_TCF_SYNC | PR_MTE_TCF_ASYNC |
-+              (0xfffe << PR_MTE_TAG_SHIFT),
-+              0, 0, 0)) {
-+        perror("prctl() failed");
-+        return EXIT_FAILURE;
-+    }
-+
-+    a = mmap(0, page_sz, PROT_READ | PROT_WRITE,
-+             MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    if (a == MAP_FAILED) {
-+        perror("mmap() failed");
-+        return EXIT_FAILURE;
-+    }
-+
-+    printf("a[] address is %p\n", a);
-+
-+    /*
-+     * Enable MTE on the above anonymous mmap. The flag could be passed
-+     * directly to mmap() and skip this step.
-+     */
-+    if (mprotect(a, page_sz, PROT_READ | PROT_WRITE | PROT_MTE)) {
-+        perror("mprotect() failed");
-+        return EXIT_FAILURE;
-+    }
-+
-+    /* access with the default tag (0) */
-+    a[0] = 1;
-+    a[1] = 2;
-+
-+    printf("a[0] = %hhu a[1] = %hhu\n", a[0], a[1]);
-+
-+    /* set the logical and allocation tags */
-+    a = (unsigned char *)insert_random_tag(a);
-+    set_tag(a);
-+
-+    printf("%p\n", a);
-+
-+    return 0;
-+}
+The new qom-tree looks like below.
+(qemu) info qom-tree 
+/machine (powernv10-machine)
+  /chip[0] (power10_v2.0-pnv-chip)
+    /pib_spic[0] (pnv-spi-controller)
+      /pnv-spi-bus.0 (SSI)
+      /xscom-spi-controller-regs[0] (memory-region)
+    /pib_spic[1] (pnv-spi-controller)
+      /pnv-spi-bus.1 (SSI)
+      /xscom-spi-controller-regs[0] (memory-region)
+    /pib_spic[2] (pnv-spi-controller)
+      /pnv-spi-bus.2 (SSI)
+      /xscom-spi-controller-regs[0] (memory-region)
+    /pib_spic[3] (pnv-spi-controller)
+      /pnv-spi-bus.3 (SSI)
+      /xscom-spi-controller-regs[0] (memory-region)
+    /pib_spic[4] (pnv-spi-controller)
+      /pnv-spi-bus.4 (SSI)
+      /xscom-spi-controller-regs[0] (memory-region)
+    /pib_spic[5] (pnv-spi-controller)
+      /pnv-spi-bus.5 (SSI)
+      /xscom-spi-controller-regs[0] (memory-region)
+
+(qemu) info qom-tree 
+/machine (powernv10-machine)
+  /peripheral-anon (container)
+    /device[0] (25csm04)
+      /WP#[0] (irq)
+      /ssi-gpio-cs[0] (irq)
+
+Patches overview in v3.
+PATCH1: Create a SPI controller model and implement configuration unit
+        to model SCOM registers. Move header files to include/hw/ssi/
+PATCH2: SPI controller model: implement sequencer FSM and shift engine.
+PATCH3: Add Microchip's SEEPROM 25csm04 model on top of m25p80.
+PATCH4: Connect SPI controllers to p10 chip and connect cs lines.
+PATCH5: Write a qtest pnv-spi-seeprom-test to check the SPI transactions
+        between spi controller and seeprom device.
+
+Test covered:
+Ran make check.
+
+Thank You,
+Chalapathi
+
+Chalapathi V (5):
+  ppc/pnv: Add SPI controller model
+  ppc/pnv: Extend SPI model
+  hw/block: Add Microchip's 25CSM04 to m25p80
+  hw/ppc: SPI controller wiring to P10 chip
+  tests/qtest: Add pnv-spi-seeprom qtest
+
+ include/hw/ppc/pnv_chip.h          |    3 +
+ include/hw/ppc/pnv_xscom.h         |    3 +
+ include/hw/ssi/pnv_spi.h           |   72 ++
+ include/hw/ssi/pnv_spi_regs.h      |  114 +++
+ hw/block/m25p80.c                  |    3 +
+ hw/ppc/pnv.c                       |   21 +-
+ hw/ppc/pnv_spi_controller.c        | 1310 ++++++++++++++++++++++++++++
+ tests/qtest/pnv-spi-seeprom-test.c |  129 +++
+ hw/ppc/Kconfig                     |    2 +
+ hw/ppc/meson.build                 |    1 +
+ hw/ppc/trace-events                |   21 +
+ tests/qtest/meson.build            |    1 +
+ 12 files changed, 1679 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/ssi/pnv_spi.h
+ create mode 100644 include/hw/ssi/pnv_spi_regs.h
+ create mode 100644 hw/ppc/pnv_spi_controller.c
+ create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
+
 -- 
-2.34.1
+2.39.3
 
 
