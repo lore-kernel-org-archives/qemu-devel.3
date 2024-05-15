@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50ABC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14020C25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 09:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7B8i-0000xb-Po; Wed, 15 May 2024 05:41:37 -0400
+	id 1s7BAF-0005wR-JW; Wed, 15 May 2024 05:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8O-0006xL-Fp
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:16 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7BAD-0005tL-9E
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:43:09 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7B8L-0001io-Om
- for qemu-devel@nongnu.org; Wed, 15 May 2024 05:41:16 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41fd5dc0439so44821495e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:41:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7BAB-00026m-Is
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 05:43:08 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-420180b5838so20511835e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 02:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715766071; x=1716370871; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=p3G2DK0EX9Noz2yBNpV4zSuKlrdMpRgaC2kALcGrAt4=;
- b=s0CatD/m+z6uHwAnQxRbf+OwuALGScW/HRa0PJskf8twufLmjaLiGeJHwNiKJUZw0n
- KE/uKXvMfwOIvb1Ir+GM3qO9KxHkUnEMNy8wA+B+eNMeiVqGcuaY10HIXEybL+MRze8l
- vJwy0uYO3tBBW7G7/9cl3IuB7zFXvjCy0sVSZNNZgu33mQZudhUzJqb6fw66+0FGG2Gm
- wcOXRV4e7Apy5YaFc/pwgDRXPsRQcxgyKlKSoWw3IYXnXjGyJ62AvicwrPEDOavtIbw7
- bBoRYBpCLxKX+A4YUKEfi0qZxDgRWB1QLIk8uHKhSTv6zK66AlsyO0d7FzF/2J3aZPug
- BnDA==
+ d=linaro.org; s=google; t=1715766185; x=1716370985; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eYfCiVrp48YDjgh5bVg6h9xc6LBwA01N6tvBCTmiDF0=;
+ b=zRmSQPH+cKW6VbmWku1TekVl+GvAIY3YKqpYIR8Bz/RaoV5qIehnWWjwauevQIkAPt
+ i4awcke3WlGqITgIN+bEmEoAPxNAWmiXYSrTo39YGZa4RQKnDzei8lJ5Uztv83ZjnWnC
+ Le0m1pDtRT5Y1GLqwDhRYNTPKSIqP4c72uw/uGwiNXQ+Wb5TPWZKabDjFVkZ4bw1Qxq8
+ rxlS6DmlpQkGPmsPSGISN68hg6a2tYWDBTJRTruugs6nIdlstoICE+5ITE8arAJn1r9r
+ ZXsGAEjjVpaSqePmopIO+p1ccssz8NvLt2jcoo5KhHHXlmAz1CMlQ2RPXnJFte99EuYp
+ NfPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715766071; x=1716370871;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=p3G2DK0EX9Noz2yBNpV4zSuKlrdMpRgaC2kALcGrAt4=;
- b=gDFjbjB7FEnmYHiES09DnvPYqoTPTITbTWimx6EFpdgw/f9DesKtMUoRgABrea0VFQ
- klNf4oS8OSjSnqf2zumTJNI7TrgDpiPslyVe7QWDqTf+fY6GIaW4dFOkIVesIMSpVrfU
- UP94jIoSN+ju77UbwR5yWdHdvm9LqPXsb8cUo55arE3x+t5G8jCZxnpkoG6Lo7FbjeO5
- eUarVhhohH70UU7diQwOFFYMIeA5/gR1dSt44r9qCLnRDrRptvYAbIq68rdrEHq6ZJCz
- 08KntDq4mZx29T8X28ig7STd0ujw5aarQiTC7xKLzuwLqLn+0sWTMSwhqrE4Zl28PkA7
- COUw==
-X-Gm-Message-State: AOJu0Yz5fOkBosdQvyU3EET08IoWaNXPJOtZUCL/VqkFTWgAB9dZTb0p
- 6VIvygXPBtvajEWkTflV5qUndftglDqOc+l0lIFyI7LOInTjpx8e1RFTX5Myb9LMzU71aXgGEV2
- ImLM=
-X-Google-Smtp-Source: AGHT+IEBcoZG+T7ZClnIEYdCFNtuiMsUmsnINtVdrs+YiNagjvhnMfgRrJyX+/6KRMh48cCHW2uWLQ==
-X-Received: by 2002:a05:6000:150:b0:34a:a754:eb48 with SMTP id
- ffacd0b85a97d-3504a969261mr10962225f8f.48.1715766071268; 
- Wed, 15 May 2024 02:41:11 -0700 (PDT)
-Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbefdsm15897058f8f.94.2024.05.15.02.41.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 02:41:11 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PULL 37/43] target/hppa: Implement PSW_B
-Date: Wed, 15 May 2024 11:40:37 +0200
-Message-Id: <20240515094043.82850-38-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515094043.82850-1-richard.henderson@linaro.org>
-References: <20240515094043.82850-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1715766185; x=1716370985;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eYfCiVrp48YDjgh5bVg6h9xc6LBwA01N6tvBCTmiDF0=;
+ b=Z8Lacttb0CzqbvH83DJ0aioIZjyLEdDl2tv2pt3TtZZskZCZKG0CfHHqtoaE3NmWug
+ i0Oxp6r+yaDL6+Ixwpro1kMR5jirz6q/q5KFeLE4kyMJDgRIuV8EeTUDr1CUp5Rha21R
+ x2+jpYMcPlYJbHo0L1kwpR8cX55/3NSUz6Yn5ZhJspstYlMdoxxEzKiXGqJO7KDGZXcj
+ gLX70QIKskVy88DDunjh6bBO+suTWwwI+A3xhe0ydgytrXEmQrjNusHSb1DePK6McCw5
+ rX9CSlFnLuMrkzWcI3g9kpIofgFTy31volI5PnW+cUT0d1G5vnFD4AIyv5ngQv6JO0wl
+ KMOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXusaiMX1yttA7bycUXx4F0buVWXYuIlCbNwEj2NNmd3o8T1ETZLOmcQvpd6q1tGqnt4B08axRlUyqje+4C4/+T3FC+6es=
+X-Gm-Message-State: AOJu0YxbHAyzp1wr+JoVqeK14aErm2LdgztZIR+5+W0QT3rDRWx9OAHf
+ ls7s7FLh4cQ4jbbltxAaRXfoQQIHiCrSSFMtwmGKix1GwZ8HtoDYdbaHvQUckv8=
+X-Google-Smtp-Source: AGHT+IHkHHT6zVGscfFwesuBFVorANB7I4pbneSPJ5HRN5dM5iQa2eZCzTHHpnHdmxdqya6Z7aBjcA==
+X-Received: by 2002:a05:600c:4690:b0:41a:c82c:1999 with SMTP id
+ 5b1f17b1804b1-41feaa30816mr172125065e9.9.1715766185044; 
+ Wed, 15 May 2024 02:43:05 -0700 (PDT)
+Received: from [10.91.1.102] ([149.14.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fccce24efsm225207445e9.19.2024.05.15.02.43.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 May 2024 02:43:04 -0700 (PDT)
+Message-ID: <121a3f09-8f3d-4222-912a-661f90bf07c5@linaro.org>
+Date: Wed, 15 May 2024 11:43:03 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/11] plugins: extract generate ptr for qemu_plugin_u64
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240514174253.694591-1-alex.bennee@linaro.org>
+ <20240514174253.694591-5-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240514174253.694591-5-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,62 +103,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PSW_B causes B,GATE to trap as an illegal instruction, removing our
-previous sequential execution test that was merely an approximation.
+On 14/5/24 19:42, Alex Bennée wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Plugin operations can access a scoreboard. This function factorizes code
+> generation for accessing entry associated to a given vcpu.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Message-Id: <20240502211522.346467-3-pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   accel/tcg/plugin-gen.c | 27 ++++++++++++++++++---------
+>   1 file changed, 18 insertions(+), 9 deletions(-)
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/translate.c | 25 ++++++-------------------
- 1 file changed, 6 insertions(+), 19 deletions(-)
-
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index f7d54f4009..f40ac92e98 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2062,11 +2062,8 @@ static void do_page_zero(DisasContext *ctx)
-         g_assert_not_reached();
-     }
- 
--    /* Check that we didn't arrive here via some means that allowed
--       non-sequential instruction execution.  Normally the PSW[B] bit
--       detects this by disallowing the B,GATE instruction to execute
--       under such conditions.  */
--    if (iaqe_variable(&ctx->iaq_b) || ctx->iaq_b.disp != 4) {
-+    /* If PSW[B] is set, the B,GATE insn would trap. */
-+    if (ctx->psw_xb & PSW_B) {
-         goto do_sigill;
-     }
- 
-@@ -3965,23 +3962,13 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
- {
-     int64_t disp = a->disp;
- 
--    nullify_over(ctx);
--
--    /* Make sure the caller hasn't done something weird with the queue.
--     * ??? This is not quite the same as the PSW[B] bit, which would be
--     * expensive to track.  Real hardware will trap for
--     *    b  gateway
--     *    b  gateway+4  (in delay slot of first branch)
--     * However, checking for a non-sequential instruction queue *will*
--     * diagnose the security hole
--     *    b  gateway
--     *    b  evil
--     * in which instructions at evil would run with increased privs.
--     */
--    if (iaqe_variable(&ctx->iaq_b) || ctx->iaq_b.disp != ctx->iaq_f.disp + 4) {
-+    /* Trap if PSW[B] is set. */
-+    if (ctx->psw_xb & PSW_B) {
-         return gen_illegal(ctx);
-     }
- 
-+    nullify_over(ctx);
-+
- #ifndef CONFIG_USER_ONLY
-     if (ctx->tb_flags & PSW_C) {
-         int type = hppa_artype_for_page(cpu_env(ctx->cs), ctx->base.pc_next);
--- 
-2.34.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
