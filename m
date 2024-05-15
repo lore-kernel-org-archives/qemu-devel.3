@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 232CAC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65A8C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 16:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7HMI-0001Fv-FM; Wed, 15 May 2024 12:20:02 -0400
+	id 1s7HNL-0002vP-3V; Wed, 15 May 2024 12:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7HMG-0001FO-0g
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:20:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7HNG-0002tC-Oy
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:21:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7HME-0006Ns-GD
- for qemu-devel@nongnu.org; Wed, 15 May 2024 12:19:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7HN7-0007VN-JR
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 12:21:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715789997;
+ s=mimecast20190719; t=1715790052;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UEvsCdxZLNJgu7YJhGydowaMOz1iOrp1VfG8SwkDxSs=;
- b=RU+3V/k7CoaxIA6sTI139/FioUA2lbpZ+Wzx6XfsmuyhN4/QLtYgQmOE2Sf19oeIHQ1Oes
- FU/goe0twBU8fRgKshmxRrxd1gGwIvMJmhrPVgvwu0gVCgwA8YjUZ7mofTS5tg+KS8S9dM
- hLUwgNhAgdpHO0PLb+s95ToCKYYGb8A=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=utEvZD8gjs+RSQCypVFDaq914F4vrRPtst+HSMepIh8=;
+ b=BjdYk4CtuCMDyWetxsfzRZXXd82oeoyDDfg9mowSc4grycTNVuVAk9Yr5xGUDcIqXRk3JB
+ Sr/E6/h3rOEg51SBFeLsyVTtcIsqtjtRBDgq+ozuaUUdP6k657HgxOpLrN44+XTS6j9JMk
+ itYkAhiIMb1gixc8yPDPtEAQP2a5txM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-ITtVgwjTMGuLGmlfyp4ntQ-1; Wed, 15 May 2024 12:19:42 -0400
-X-MC-Unique: ITtVgwjTMGuLGmlfyp4ntQ-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-69649f1894dso121239586d6.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 09:19:42 -0700 (PDT)
+ us-mta-269-77d_R9G_N2msOR-RHJWrUg-1; Wed, 15 May 2024 12:20:51 -0400
+X-MC-Unique: 77d_R9G_N2msOR-RHJWrUg-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-792c10a363bso968889885a.3
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 09:20:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715789982; x=1716394782;
+ d=1e100.net; s=20230601; t=1715790051; x=1716394851;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UEvsCdxZLNJgu7YJhGydowaMOz1iOrp1VfG8SwkDxSs=;
- b=umbu6pgNYTtKgsPXVjjXyiTvWmWoGbDHnfZIpXMA7cqzJ1zaqWcvYiL+6/W3KWOQbe
- 4Nr9QFEakHFHQC54RvO0dz1C3481YP6R83zqTSolXydBf0YIgrf3MjxYCT4BplpAtY0G
- i+Uw8HTY/d5RllntJskMcGfL5/JNwYxfqaS4FbMRI+4g8/OmkITdiGXfkv6pif2JEQbK
- kDElmFG606QbbFz+J1OzOUijqcMWziqSmTIsVAXg7hZH+ciY9QOqdY+eHNL+lsRKZxl+
- VlrvZj7vK6qqIeqgElHhRXUdLyMpnHjodPZiZRSGD7eBZbgHcBMVZ4pYkVyz47yc0h8F
- xMew==
+ bh=utEvZD8gjs+RSQCypVFDaq914F4vrRPtst+HSMepIh8=;
+ b=Ch/gKWrnO2Wo1L2qSODBVa5SJDFiMGuuTENo404RiayMHWwQIqwvA3Jo3jHg1GmTW+
+ 1ElslHqwXDMLv11RKjMqgHP9rAC0qlzpVZXV2UY6VlqL/3bn6CZrD4RBhWE8XSNujp2t
+ IWzZebkkeNmudzR2OdFVDWM2QGaQD02+rDPb/kVGUOpIc+byUHvVY0P1Q+x0qRrwmOhF
+ MXgih5q3surM9PIEXYvOl/1Rtoqjf7Tzd7WwuTBC+GyX2UFUe/dupgK4ha3eImtAgebv
+ 1k/Eao0rh7aPigxrI+i0WEyLkaJFhb1fsRed8BBV0aSgayp8YOWGLQN0p/6/OEQ8o7mc
+ SWGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdqhS5FKkVSXbDi+ILwkkktjsaNgySeKa91lKjUfCjnNzMlyztKYgDnw1jd5GsmoEzeuiTTHvj8q4dm0Kv76QjzWqtKhY=
-X-Gm-Message-State: AOJu0Yxf2nTlf+pY7u7zPco9l0BqPXVFMltz4g9B32oKQCkCuZgbNCIh
- Q/vsy0a5M7bEU0oedRr3HhekbTv/GmzDn1mTK3FzzYHrZYwyy6ek1fSbVPFecqQ5NYrklt/LSf7
- 1ESyWXq4T3z7PXqbgMe/8bRZ0oEH3D9HR3LYYF01+OtvLBUkBMSG+
-X-Received: by 2002:a05:6214:3a09:b0:69b:8053:2c88 with SMTP id
- 6a1803df08f44-6a168226a64mr223738506d6.49.1715789981949; 
- Wed, 15 May 2024 09:19:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjpMFWbSZ5brgnvO3FiSQ/qU06oMjOLBGcVuznZ7cVLXF6HXLJC/phljC9du35s07zKe7Wwg==
-X-Received: by 2002:a05:6214:3a09:b0:69b:8053:2c88 with SMTP id
- 6a1803df08f44-6a168226a64mr223738126d6.49.1715789981464; 
- Wed, 15 May 2024 09:19:41 -0700 (PDT)
+ AJvYcCUURujNgK2kKEtNi15fc2a2uIOaigkQNrlK0B0Ze6obk8h4DvOhWg3TMA/xGt/1tRD9f3S9ji99buS+AcuD9KRJez4W+cE=
+X-Gm-Message-State: AOJu0YwlgrgNWFysTiUJS0jlisj6YKBx7WdE3FVHLqj6gT/f0X1uBMSB
+ H9l5zwolIaeKQxUreksYzC9xoJOWz7pSpzHVqcdpRxtE4i1mrXl4WeyQJVDzz86lJhi53svXF+S
+ z5oDqo1wekLBCtU82IXwN2YtLZ2OJ5XVBLglBchGUdIif9PaE49jt
+X-Received: by 2002:ae9:ea07:0:b0:792:8a3f:1fd with SMTP id
+ af79cd13be357-792c75ac0e3mr1656070485a.43.1715790050724; 
+ Wed, 15 May 2024 09:20:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwqQxk5/c+3shJYd45S9q2y3sYEobA3eoSipjuwoNqCYGDAOkNXrjAYlJ0h5g4I0S3lPIr4A==
+X-Received: by 2002:ae9:ea07:0:b0:792:8a3f:1fd with SMTP id
+ af79cd13be357-792c75ac0e3mr1656067985a.43.1715790050402; 
+ Wed, 15 May 2024 09:20:50 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f1ccc6esm65110056d6.103.2024.05.15.09.19.39
+ d75a77b69052e-43dfd760ca8sm74394631cf.14.2024.05.15.09.20.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 09:19:40 -0700 (PDT)
-Message-ID: <3ce1d9af-b226-44ab-b77d-9d77954be7c2@redhat.com>
-Date: Wed, 15 May 2024 18:19:37 +0200
+ Wed, 15 May 2024 09:20:49 -0700 (PDT)
+Message-ID: <f8b5017b-a2fa-470a-b97c-41612b737a5d@redhat.com>
+Date: Wed, 15 May 2024 18:20:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] vfio/migration: Enhance VFIO migration state
- tracing
+Subject: Re: [PATCH v3 2/4] vfio/migration: Emit VFIO migration QAPI event
 To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
@@ -79,10 +78,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
  Maor Gottlieb <maorg@nvidia.com>
 References: <20240515132138.4560-1-avihaih@nvidia.com>
- <20240515132138.4560-5-avihaih@nvidia.com>
+ <20240515132138.4560-3-avihaih@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240515132138.4560-5-avihaih@nvidia.com>
+In-Reply-To: <20240515132138.4560-3-avihaih@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -93,7 +92,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,80 +109,148 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/15/24 15:21, Avihai Horon wrote:
-> Move trace_vfio_migration_set_state() to the top of the function, add
-> recover_state to it, and add a new trace event to
-> vfio_migration_set_device_state().
+> Emit VFIO migration QAPI event when a VFIO device changes its migration
+> state. This can be used by management applications to get updates on the
+> current state of the VFIO device for their own purposes.
 > 
-> This improves tracing of device state changes as state changes are now
-> also logged when vfio_migration_set_state() fails (covering recover
-> state and device reset transitions) and in no-op state transitions to
-> the same state.
+> A new per VFIO device capability, "migration-events", is added so events
+> can be enabled only for the required devices. It is disabled by default.
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-
-
-Thanks for doing so,
-
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
+Thanks,
 
 C.
 
 
 > ---
->   hw/vfio/migration.c  | 8 ++++++--
->   hw/vfio/trace-events | 3 ++-
->   2 files changed, 8 insertions(+), 3 deletions(-)
+>   include/hw/vfio/vfio-common.h |  1 +
+>   hw/vfio/migration.c           | 59 +++++++++++++++++++++++++++++++++--
+>   hw/vfio/pci.c                 |  2 ++
+>   3 files changed, 59 insertions(+), 3 deletions(-)
 > 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index b9da6c08ef..3ec5f2425e 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -115,6 +115,7 @@ typedef struct VFIODevice {
+>       bool no_mmap;
+>       bool ram_block_discard_allowed;
+>       OnOffAuto enable_migration;
+> +    bool migration_events;
+>       VFIODeviceOps *ops;
+>       unsigned int num_irqs;
+>       unsigned int num_regions;
 > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index f2b7a3067b..7f0d76ab50 100644
+> index 06ae40969b..2e1a8f6031 100644
 > --- a/hw/vfio/migration.c
 > +++ b/hw/vfio/migration.c
-> @@ -129,6 +129,9 @@ static void vfio_migration_set_device_state(VFIODevice *vbasedev,
->   {
->       VFIOMigration *migration = vbasedev->migration;
->   
-> +    trace_vfio_migration_set_device_state(vbasedev->name,
-> +                                          mig_state_to_str(state));
-> +
->       migration->device_state = state;
->       vfio_migration_send_event(vbasedev);
+> @@ -24,6 +24,7 @@
+>   #include "migration/register.h"
+>   #include "migration/blocker.h"
+>   #include "qapi/error.h"
+> +#include "qapi/qapi-events-vfio.h"
+>   #include "exec/ramlist.h"
+>   #include "exec/ram_addr.h"
+>   #include "pci.h"
+> @@ -80,6 +81,58 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
+>       }
 >   }
-> @@ -146,6 +149,9 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->           (struct vfio_device_feature_mig_state *)feature->data;
->       int ret;
 >   
-> +    trace_vfio_migration_set_state(vbasedev->name, mig_state_to_str(new_state),
-> +                                   mig_state_to_str(recover_state));
+> +static VfioMigrationState
+> +mig_state_to_qapi_state(enum vfio_device_mig_state state)
+> +{
+> +    switch (state) {
+> +    case VFIO_DEVICE_STATE_STOP:
+> +        return QAPI_VFIO_MIGRATION_STATE_STOP;
+> +    case VFIO_DEVICE_STATE_RUNNING:
+> +        return QAPI_VFIO_MIGRATION_STATE_RUNNING;
+> +    case VFIO_DEVICE_STATE_STOP_COPY:
+> +        return QAPI_VFIO_MIGRATION_STATE_STOP_COPY;
+> +    case VFIO_DEVICE_STATE_RESUMING:
+> +        return QAPI_VFIO_MIGRATION_STATE_RESUMING;
+> +    case VFIO_DEVICE_STATE_RUNNING_P2P:
+> +        return QAPI_VFIO_MIGRATION_STATE_RUNNING_P2P;
+> +    case VFIO_DEVICE_STATE_PRE_COPY:
+> +        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY;
+> +    case VFIO_DEVICE_STATE_PRE_COPY_P2P:
+> +        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
 > +
->       if (new_state == migration->device_state) {
->           return 0;
->       }
-> @@ -203,8 +209,6 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->           migration->data_fd = mig_state->data_fd;
+> +static void vfio_migration_send_event(VFIODevice *vbasedev)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +    DeviceState *dev = vbasedev->dev;
+> +    g_autofree char *qom_path = NULL;
+> +    Object *obj;
+> +
+> +    if (!vbasedev->migration_events) {
+> +        return;
+> +    }
+> +
+> +    g_assert(vbasedev->ops->vfio_get_object);
+> +    obj = vbasedev->ops->vfio_get_object(vbasedev);
+> +    g_assert(obj);
+> +    qom_path = object_get_canonical_path(obj);
+> +
+> +    qapi_event_send_vfio_migration(
+> +        dev->id, qom_path, mig_state_to_qapi_state(migration->device_state));
+> +}
+> +
+> +static void vfio_migration_set_device_state(VFIODevice *vbasedev,
+> +                                            enum vfio_device_mig_state state)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +
+> +    migration->device_state = state;
+> +    vfio_migration_send_event(vbasedev);
+> +}
+> +
+>   static int vfio_migration_set_state(VFIODevice *vbasedev,
+>                                       enum vfio_device_mig_state new_state,
+>                                       enum vfio_device_mig_state recover_state)
+> @@ -125,12 +178,12 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+>               goto reset_device;
+>           }
+>   
+> -        migration->device_state = recover_state;
+> +        vfio_migration_set_device_state(vbasedev, recover_state);
+>   
+>           return ret;
 >       }
 >   
-> -    trace_vfio_migration_set_state(vbasedev->name, mig_state_to_str(new_state));
-> -
->       return 0;
+> -    migration->device_state = new_state;
+> +    vfio_migration_set_device_state(vbasedev, new_state);
+>       if (mig_state->data_fd != -1) {
+>           if (migration->data_fd != -1) {
+>               /*
+> @@ -156,7 +209,7 @@ reset_device:
+>                    strerror(errno));
+>       }
 >   
->   reset_device:
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index f0474b244b..64161bf6f4 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -152,7 +152,8 @@ vfio_load_device_config_state(const char *name) " (%s)"
->   vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
->   vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size 0x%"PRIx64" ret %d"
->   vfio_migration_realize(const char *name) " (%s)"
-> -vfio_migration_set_state(const char *name, const char *state) " (%s) state %s"
-> +vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
-> +vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
->   vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
->   vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
->   vfio_save_cleanup(const char *name) " (%s)"
+> -    migration->device_state = VFIO_DEVICE_STATE_RUNNING;
+> +    vfio_migration_set_device_state(vbasedev, VFIO_DEVICE_STATE_RUNNING);
+>   
+>       return ret;
+>   }
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 64780d1b79..8840602c50 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3362,6 +3362,8 @@ static Property vfio_pci_dev_properties[] = {
+>                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
+>       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+>                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+> +                     vbasedev.migration_events, false),
+>       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+>       DEFINE_PROP_BOOL("x-balloon-allowed", VFIOPCIDevice,
+>                        vbasedev.ram_block_discard_allowed, false),
 
 
