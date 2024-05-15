@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EF9C25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8ACC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 12:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7E82-0001dx-Ri; Wed, 15 May 2024 08:53:06 -0400
+	id 1s7E9H-0003Wy-Bq; Wed, 15 May 2024 08:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E81-0001dl-BT
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:05 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E9D-0003WZ-OS
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:54:21 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E7z-0000dj-NB
- for qemu-devel@nongnu.org; Wed, 15 May 2024 08:53:05 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2e0a34b2899so102203771fa.3
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:53:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7E9C-0000nn-7u
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 08:54:19 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-420180b58c3so22744575e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 05:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715777580; x=1716382380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715777656; x=1716382456; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xqbX3+t9p0LZsldOKhZGRDiCCka3lbUHUI1hHdPQxR4=;
- b=MnNHRDlVyV/QCqhBUN7sWzc44HXvNMuMd08shsYXckikG8wud3gSVoKdUHTzQ1O/a3
- JDnyBvqN6SwzQ/uZnuWhJyZBTnae4+jDDF3Qo/CzvkZH3kIANPF3KzUpP1JmjYC2Oop8
- S73UD63uvSKk0ne8OttBFM0N1wdSpT2yRufoVXJRoDtwhXCS4BgHQDZ1jJxy4iEYHpQg
- 4Ec/8CW9F4kG6VEbROMT3oy7RSyTmfFAEGkNKbH/ecxpSAsNM7mT/RtBMs0bJEsYcHPe
- kQUFDeP3Dk657UoqkHFrAgUtrOz3Se6XWY42HNUwT+ZmqjNOvly6otQQUd7ekMRUNHac
- fSSA==
+ bh=/+377RyfzSiY4pArYCYtBJvnk6YyLxdbJVypWY7Z+Aw=;
+ b=m95K0s3Ga/U77ZnG8wIktjQNCLTtfXbAUz53Ru/QmMtn6KtBSsGQqWON0m7gsELe+l
+ nWkTjIUMfawtLp+vXAw7/XBDbMfuQlXmuRclIk+p+B5WuvI4gDnLJIF2iZabTdVsqFOH
+ BwwqaUdT8y5oAE6cqywEM+36DXG8dF2/cl6SQeaYlkv1JVinnq4urqWycUw+ZH3nX/fh
+ tEWBCyFr9jGYNn7zc94VDEafuAOoyqwSqxaUC9byF3d7oaJ/S8jn++MUPo5JPQUBcTzR
+ QNXn/TIOeARaGWsz93W8egcyjjL5MfujCp5s5jJCakjMY+X+DDVIrRudQmVIgFg5par/
+ sOsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715777580; x=1716382380;
+ d=1e100.net; s=20230601; t=1715777656; x=1716382456;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xqbX3+t9p0LZsldOKhZGRDiCCka3lbUHUI1hHdPQxR4=;
- b=esdcWhFEuBeQeKRB4Xl0F+5MapnwZsdHXi9N2sUH7bQ7EbUfcNNwwcdiF9GNOzbf+z
- tVyS3q2VsU7fzPx3l2DHMw5bnnmAqyEGN5xtz/nKH6Xv56gijn3tXkza6S1r8yFOKsOH
- oR7UDFtXe8oEBa6LmCR6hcaiVnQGMcMdeVzxpcnSjx/DH2oj5f4sOhYxNz0UzWWUXQkc
- qJkHD+cZj9wASzfM6KQE0KtZVFQTzb/8+VfVnjN4haOQtEBM1Fk2vX4VHQSIARzIXJ4n
- uHJ9htCAw5ZiZkeB8mhwn+ZQl0GVfncPlVE9d+m8K8g0Zc+5jI+QbIuazdKZXrbCXzda
- 7S5g==
+ bh=/+377RyfzSiY4pArYCYtBJvnk6YyLxdbJVypWY7Z+Aw=;
+ b=jyqDhRcFfrEeJw2nmrC90XrHuulHnqbWHMqtBMW43/0daMO2OQCAFUAnpmKfR06aln
+ TrEIW2z8bSZVUwXZ1zPC8HbZ86IaUDxwP2Qazy2W8H/85p/clMdgxXsPYy8ExW3M26uF
+ meiDgzMvMj44bHp4qpZgK5cKkRn51X2gDwZyZN7dOSnslaZFLIWcNzCTP+FM+At1BtsT
+ DqsX7dbuiloub2esbgk0IZwl8WbRpc7Z/Nnnp0iwZHrfIo1X15ye4VFCB/uhedzEl5l2
+ mtnHSq2vqKUQdNSi5useES16dIVPokN4NMd1ggfSE51/6QDMgyi5q1AE3ZZmtW19UQLK
+ hkNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1xV7jgntOKdLYMMNJZ2mEji/CAUSSX6/dJq1CVfo2qtkwsdc8wEjv/Jh7I8EnlgL0zvqKqPwMc6o1zUFP3yXvxmPI6kc=
-X-Gm-Message-State: AOJu0YwRBOwcPfle7v7HJmkO1+YEvFOyfItd38A9j5kttTExh9LW0fB3
- QP9rwl0Ivq3xvoV1J/3EsjEhfnu2kjRljlfH4tKUwjDFGPrRGE3lpvB385Bge6o=
-X-Google-Smtp-Source: AGHT+IEfZmGoZdEJW4RahfsRXOeZTh459Zjf/25BhrGUeZfnJP7yQzZPX1QZbJhagAWrZFAJ4/1u+g==
-X-Received: by 2002:a2e:3515:0:b0:2da:a3ff:5254 with SMTP id
- 38308e7fff4ca-2e51fd3feccmr132888131fa.1.1715777580514; 
- Wed, 15 May 2024 05:53:00 -0700 (PDT)
+ AJvYcCV3ymABTg2s6/ztM/TDSAt4zJ6cLbnEzZMg7D+yraVRurxDRjnhxvtw+P51acqyasN6UR1/LcWlgQpGh6wEJTSu2LQudEU=
+X-Gm-Message-State: AOJu0Yw6PrD0rqxIsVmkfCLBEjQeNmqjnGiKmmIxYi51a/WHoLAvLa4u
+ bNwPYVpo9l+885DwW4gI5rI9V1jBASUnp5rT24LHkE7m7VnBAbQ4hBwLPP9llICbtmSBXUIVscT
+ M
+X-Google-Smtp-Source: AGHT+IFOty28Qvox3vGfQhMIpJJSEQJs0pm/rodDJ0Uh8NMPNjEMO0E81vil/GHIurP9NtO4C4HjaQ==
+X-Received: by 2002:a05:600c:198a:b0:41b:fc3a:f1ef with SMTP id
+ 5b1f17b1804b1-41feac5a3damr105642185e9.33.1715777656591; 
+ Wed, 15 May 2024 05:54:16 -0700 (PDT)
 Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fd97e842csm223481355e9.24.2024.05.15.05.52.59
+ 5b1f17b1804b1-41fccce25d5sm233724725e9.14.2024.05.15.05.54.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 05:53:00 -0700 (PDT)
-Message-ID: <0f00bd89-6bf9-49cb-9328-32ef66cdf1ce@linaro.org>
-Date: Wed, 15 May 2024 14:52:59 +0200
+ Wed, 15 May 2024 05:54:16 -0700 (PDT)
+Message-ID: <0a3678ae-7676-4b05-b3b9-c67824735c82@linaro.org>
+Date: Wed, 15 May 2024 14:54:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/17] Remove return value from reginfo_dump
+Subject: Re: [PATCH 07/17] ppc64: Compare all bits of CCR
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20240511115400.7587-1-richard.henderson@linaro.org>
- <20240511115400.7587-6-richard.henderson@linaro.org>
+ <20240511115400.7587-8-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240511115400.7587-6-richard.henderson@linaro.org>
+In-Reply-To: <20240511115400.7587-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,23 +97,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/5/24 13:53, Richard Henderson wrote:
-> No uses actually checked the error indication.  Even if we wanted
-> to check ferror on the stream, we should do that generically rather
-> than per arch.
+> There are 32 bits in this register, and they are all valid
+> comparision destinations.
 > 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   risu.h                     | 4 ++--
->   risu_reginfo_aarch64.c     | 8 +++-----
->   risu_reginfo_arm.c         | 6 ++----
->   risu_reginfo_i386.c        | 6 ++----
->   risu_reginfo_loongarch64.c | 6 ++----
->   risu_reginfo_m68k.c        | 6 ++----
->   risu_reginfo_ppc64.c       | 6 ++----
->   risu_reginfo_s390x.c       | 6 ++----
->   8 files changed, 17 insertions(+), 31 deletions(-)
+>   risu_reginfo_ppc64.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
 
