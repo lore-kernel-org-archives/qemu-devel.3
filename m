@@ -4,81 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4F8C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CB4C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 May 2024 08:00:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s79Rw-0004Vy-0W; Wed, 15 May 2024 03:53:20 -0400
+	id 1s79Vj-0002ug-TP; Wed, 15 May 2024 03:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s79Rq-0004Gj-FA
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:14 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1s79VA-0002D2-6y
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:56:43 -0400
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s79Rk-0001d8-Jl
- for qemu-devel@nongnu.org; Wed, 15 May 2024 03:53:11 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-42011507a4eso25417035e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:53:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1s79V8-0003OV-DK
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 03:56:39 -0400
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-4df7ba13412so4902066e0c.1
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 00:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715759586; x=1716364386; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ku4i14FBhF0AsxG1wJUIaWCeb9p5uUrtgrDPrlUkN+c=;
- b=zPnvyqIzRU+0khccIslBlZteWGSRtXlbDfusDw7cBW+AWJn33DAdlGBmcIM9cAD2hP
- rjnQNfY6qMeqShcbYCMa2qiA2kMgahCWmt2tfkLNcET/oJqU+rusBs6LvBGGs/Xy0XhM
- ig46lqb1omcgfxII39ZkLa9sk47H73AR3mLQ6QSxO4HkXU+S9GCPsBM9b5H5nVVeMhxS
- PgBNTgvuhX335eXlh+sa6jZWiMkZ3AnzZoUjNJOzqEJXgp0GjlKwuaKoszbkjfWvRe37
- GooNAkJScv2D0lZygkEY+QOJ/mJlCCp38z4vhSzCxdJXDZcaOMlf8SYRjdztlPXLbRk8
- 3geA==
+ d=sifive.com; s=google; t=1715759797; x=1716364597; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lbH8/dOJ5y301ZXpd3v1qvIMj+WH+2byIFwiJYYUSck=;
+ b=NVwjIZN87bY4c2lfl6qetRgiGzBICIBQUKteDjTlRxnttXnKOaAWRJcm8q9jkqqPnR
+ HQP998r0lKqyV9ZQJVpxUK66+XTNk7/q91/4FB6BKdztEGDJFEi0gfnbPHVWGx9itW0X
+ lh8LkUHfvypH3wrrUAXe7QWzpGHtEvmFn2cKlWEWsOxZWRk327v8JzrSu0sQ1mbJsgCJ
+ XmWae5G4a3Yu2qaRHq3KV1J3EjnUj2EzxcW3/ylpRwDiZYL47EqWjsszuCaX6gomqzKz
+ /lgVvD9cjp/DyxX5fj7rhLcSXmBWkDwJOUuf/W7KkwgQSf+NWhRU8t6p7NCTjmbPXFZs
+ 3qlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715759586; x=1716364386;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ku4i14FBhF0AsxG1wJUIaWCeb9p5uUrtgrDPrlUkN+c=;
- b=qBBqy14AS4wC/5fp5TsZqt2yffnmVIzUbChEp77xEQbX1te6BeikcQa4nQ+gekeMja
- NDnjCZEfASni6drlNYx9qksmRej/fyaP3C6ohQbW1rwPq4gITzDUVBMmEZKtPFf6H6iK
- t+G3bC2mxazr9fIVSC7jAi+EucSEK2KHNh+JlbBSjl2qFIjG3JXlKbrS1lh8Ag49VNa7
- FZbRf+RfCoFdbA51R6lwucFTt3QxRoiiSZTCjAHvILc1VLCsOAnp9bJPmYmWCBWfYpbo
- 9Wx1ii1AJuEpidnoRjiikIl8idpLnR4Pk/G2OqcIHLCtfH6ravnJOJrGx29qnFgBTjHc
- Uh/A==
-X-Gm-Message-State: AOJu0YyrSjU7dEM2GqdONST+PFw5FOeMrabldTywjO+qWwPAKE1D+1WD
- l4c2CbdkgsDmaSGC8f7tzY1doFQ8A1TfmNsLgO5Ie5Xni7kRxvZPuPh/8Pc34oEHAwFZ3hXTQYH
- aldk=
-X-Google-Smtp-Source: AGHT+IE7Bb3zterA9QR8RBkRFovf3Cx3hT8E5GYmlAKrxCjMWHadLQV/V0ovDwt+gavKcmmOZEHilA==
-X-Received: by 2002:a05:600c:3baa:b0:418:6138:6777 with SMTP id
- 5b1f17b1804b1-41feac5a42emr122834705e9.31.1715759586025; 
- Wed, 15 May 2024 00:53:06 -0700 (PDT)
-Received: from stoup.. ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9292sm222611855e9.37.2024.05.15.00.53.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 00:53:05 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/34] target/avr: Use translator_lduw
-Date: Wed, 15 May 2024 09:52:39 +0200
-Message-Id: <20240515075247.68024-27-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240515075247.68024-1-richard.henderson@linaro.org>
-References: <20240515075247.68024-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1715759797; x=1716364597;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lbH8/dOJ5y301ZXpd3v1qvIMj+WH+2byIFwiJYYUSck=;
+ b=UD+DiF6+8oDpQ1OLINb1THmK5jpNLVZajg1lB2KXXBVwL4FGoBELPeYLUo5vpSl7aa
+ qU11WM3Rt0chlpLHWwg77l0EmpwTUKDtbt/F4KD603e0OZexmDB9rWAGcXXAoIKR8zHW
+ igyVDXnFC3eBJ9xE2h+GXl50+WofeczbgUfgM3+g2cJZT62td32J2sXZHrp7xtBre39y
+ c7xSwf8PGkD3HSknCK7BEoul+ruA0Vt3I1TnpJFkLNyM1UsEi7Bb2P1PtxM8odR7xOch
+ jcSswqlbQchEnf7L+uFrrTPB1Y4baEHYUb2Kuql5lLy7V+7U7qT5Vdma85Ruc4kBSMxt
+ ujzQ==
+X-Gm-Message-State: AOJu0Ywd3cJXIk9p7WLc6Nfe6aB1+I0w5omzQDwe9H+wbk1SW3M8Z0fO
+ LsP0krUuSYKTk4Erg5t/YG9ZNtJzrrnBFS3cI6+3zpuuZOdAE+GMf2ScjKIVs/B09+9NuQkXdaz
+ 1Wz12G5ojMhWntKOcAtZxV5zo5HWUZuTXdEudChyHpWe/KKR0
+X-Google-Smtp-Source: AGHT+IEyI42oQZF13xkANaE/H0dTJFYwPyHXGI0WO1/f+K4RCRQA/UKm/68rQ190fhsIp/m6p//4A07hq39KZx1OBHU=
+X-Received: by 2002:a05:6122:178f:b0:4d4:4ff8:c367 with SMTP id
+ 71dfb90a1353d-4df883697f1mr11977813e0c.6.1715759795979; Wed, 15 May 2024
+ 00:56:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x329.google.com
+References: <20240515075340.2675136-1-fea.wang@sifive.com>
+In-Reply-To: <20240515075340.2675136-1-fea.wang@sifive.com>
+From: Fea Wang <fea.wang@sifive.com>
+Date: Wed, 15 May 2024 15:56:24 +0800
+Message-ID: <CAKhCfseSAZmg++fW6TbZfFXP80HXs5A-XY7OS2HTTSUzt-7woA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] target/riscv: Support RISC-V privilege 1.13 spec
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000028dc5706187975f8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=fea.wang@sifive.com; helo=mail-vk1-xa2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,34 +85,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/avr/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+--00000000000028dc5706187975f8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/target/avr/translate.c b/target/avr/translate.c
-index 6df93d4c77..2d51892115 100644
---- a/target/avr/translate.c
-+++ b/target/avr/translate.c
-@@ -24,7 +24,6 @@
- #include "cpu.h"
- #include "exec/exec-all.h"
- #include "tcg/tcg-op.h"
--#include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
- #include "exec/helper-gen.h"
- #include "exec/log.h"
-@@ -173,7 +172,7 @@ static int to_regs_00_30_by_two(DisasContext *ctx, int indx)
- 
- static uint16_t next_word(DisasContext *ctx)
- {
--    return cpu_lduw_code(ctx->env, ctx->npc++ * 2);
-+    return translator_lduw(ctx->env, &ctx->base, ctx->npc++ * 2);
- }
- 
- static int append_16(DisasContext *ctx, int x)
--- 
-2.34.1
+Sorry that I only put the patch version on the cover letter.
+I will resend the patches.
 
+Sincerely,
+Fea
+
+Fea.Wang <fea.wang@sifive.com> =E6=96=BC 2024=E5=B9=B45=E6=9C=8815=E6=97=A5=
+ =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=883:48=E5=AF=AB=E9=81=93=EF=BC=9A
+
+> Based on the change log for the RISC-V privilege 1.13 spec, add the
+> support for ss1p13.
+>
+> Ref:
+> https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/priv-preface.a=
+doc?plain=3D1#L40-L72
+>
+> Lists what to do without clarification or document format.
+> * Redefined misa.MXL to be read-only, making MXLEN a constant.(Skip,
+> implementation ignored)
+> * Added the constraint that SXLEN=E2=89=A5UXLEN.(Skip, implementation ign=
+ored)
+> * Defined the misa.V field to reflect that the V extension has been
+> implemented.(Skip, existed)
+> * Defined the RV32-only medelegh and hedelegh CSRs.(Done in these patches=
+)
+> * Defined the misaligned atomicity granule PMA, superseding the proposed
+> Zam extension..(Skip, implementation ignored)
+> * Allocated interrupt 13 for Sscofpmf LCOFI interrupt.(Skip, existed)
+> * Defined hardware error and software check exception codes.(Done in thes=
+e
+> patches)
+> * Specified synchronization requirements when changing the PBMTE fields i=
+n
+> menvcfg and henvcfg.(Skip, implementation ignored)
+> * Incorporated Svade and Svadu extension specifications.(Skip, existed)
+>
+>
+> Fea.Wang (4):
+>   target/riscv: Support the version for ss1p13
+>   target/riscv: Add 'P1P13' bit in SMSTATEEN0
+>   target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32
+>   target/riscv: Reserve exception codes for sw-check and hw-err
+>
+> Jim Shu (1):
+>   target/riscv: Reuse the conversion function of priv_spec
+>
+>  target/riscv/cpu.c         |  8 ++++++--
+>  target/riscv/cpu.h         |  5 ++++-
+>  target/riscv/cpu_bits.h    |  5 +++++
+>  target/riscv/cpu_cfg.h     |  1 +
+>  target/riscv/csr.c         | 39 ++++++++++++++++++++++++++++++++++++++
+>  target/riscv/tcg/tcg-cpu.c | 17 ++++++++---------
+>  6 files changed, 63 insertions(+), 12 deletions(-)
+>
+> --
+> 2.34.1
+>
+>
+
+--00000000000028dc5706187975f8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Sorry that I only put the patch version on the cover lette=
+r.<br>I will resend the patches.<div><br></div><div>Sincerely,</div><div>Fe=
+a</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
+_attr">Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com">fea.wang@sifive.=
+com</a>&gt; =E6=96=BC 2024=E5=B9=B45=E6=9C=8815=E6=97=A5 =E9=80=B1=E4=B8=89=
+ =E4=B8=8B=E5=8D=883:48=E5=AF=AB=E9=81=93=EF=BC=9A<br></div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">Based on the change log for the RISC-V p=
+rivilege 1.13 spec, add the<br>
+support for ss1p13.<br>
+<br>
+Ref:<a href=3D"https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/p=
+riv-preface.adoc?plain=3D1#L40-L72" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/priv-preface.adoc?=
+plain=3D1#L40-L72</a><br>
+<br>
+Lists what to do without clarification or document format.<br>
+* Redefined misa.MXL to be read-only, making MXLEN a constant.(Skip, implem=
+entation ignored)<br>
+* Added the constraint that SXLEN=E2=89=A5UXLEN.(Skip, implementation ignor=
+ed)<br>
+* Defined the misa.V field to reflect that the V extension has been impleme=
+nted.(Skip, existed) <br>
+* Defined the RV32-only medelegh and hedelegh CSRs.(Done in these patches)<=
+br>
+* Defined the misaligned atomicity granule PMA, superseding the proposed Za=
+m extension..(Skip, implementation ignored)<br>
+* Allocated interrupt 13 for Sscofpmf LCOFI interrupt.(Skip, existed) <br>
+* Defined hardware error and software check exception codes.(Done in these =
+patches)<br>
+* Specified synchronization requirements when changing the PBMTE fields in =
+menvcfg and henvcfg.(Skip, implementation ignored)<br>
+* Incorporated Svade and Svadu extension specifications.(Skip, existed) <br=
+>
+<br>
+<br>
+Fea.Wang (4):<br>
+=C2=A0 target/riscv: Support the version for ss1p13<br>
+=C2=A0 target/riscv: Add &#39;P1P13&#39; bit in SMSTATEEN0<br>
+=C2=A0 target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32<br>
+=C2=A0 target/riscv: Reserve exception codes for sw-check and hw-err<br>
+<br>
+Jim Shu (1):<br>
+=C2=A0 target/riscv: Reuse the conversion function of priv_spec<br>
+<br>
+=C2=A0target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 8 ++++++-=
+-<br>
+=C2=A0target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5 ++++-<b=
+r>
+=C2=A0target/riscv/cpu_bits.h=C2=A0 =C2=A0 |=C2=A0 5 +++++<br>
+=C2=A0target/riscv/cpu_cfg.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
+=C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 39 ++++++++++++=
+++++++++++++++++++++++++++<br>
+=C2=A0target/riscv/tcg/tcg-cpu.c | 17 ++++++++---------<br>
+=C2=A06 files changed, 63 insertions(+), 12 deletions(-)<br>
+<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div>
+
+--00000000000028dc5706187975f8--
 
