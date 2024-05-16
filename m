@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966C9C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718C0C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Wed-0002Rq-3c; Thu, 16 May 2024 04:39:59 -0400
+	id 1s7WeD-0002Og-B5; Thu, 16 May 2024 04:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1s7Web-0002Rd-3r
- for qemu-devel@nongnu.org; Thu, 16 May 2024 04:39:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s7WeB-0002OG-FW
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:39:31 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1s7WeZ-0003Qc-6f
- for qemu-devel@nongnu.org; Thu, 16 May 2024 04:39:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715848793;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SMTHGr/euSTgO5iAJxhkflTxXrFCHDUczHZ7F4Fcy3Y=;
- b=VgBqw6My9/maZiRnGAa3HD3nVfGKogfW5btj3kwhvTBiWSuyuNsFMnJsj+zYHIOohnQqsA
- dtXwCj9LNdx5KAchRid+ACBf9saQ6MEfnbbtHV3T7iOv3tgtZ6TPxzucaxo5YuimqvFK/J
- DB9K3G98BbHnnMFKD1qeib5u5ILA7N4=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-oICw74qPO9as1GOKCrcvlQ-1; Thu, 16 May 2024 04:39:52 -0400
-X-MC-Unique: oICw74qPO9as1GOKCrcvlQ-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-5236c5cec7dso2719222e87.2
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 01:39:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715848789; x=1716453589;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SMTHGr/euSTgO5iAJxhkflTxXrFCHDUczHZ7F4Fcy3Y=;
- b=KUnHVvAv/VdicX1Jwymt8PB8OKyhaqAKFtZsCLX2ZYNT7ctygZJkUhfLPRq4rfe3j/
- HKme6hqFWc6XE3F8r2K9XKB/elbpxfu8A6Faz+p1i7yZuUO1AkcVYNqraPbe5DcPPLCm
- XmIpumYRb1dyIHbFXiQEnSSpopQK7LDIcwDoi/IKBY7dCsxABDeHZZYy+d6v54tdibz/
- rJdo6YJ1P4/eIKCZWYMcfOBAd7wETAYvIOxp8PR9UPsIzeDCddzXhgkI2QjnEHfbmRiB
- N44OUp/IdxO4HisTM0idmzLW40VWlr1Yew9aWKHahvP0M5Z22N+k0+Dtlg0VAr+HWwof
- DySw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHeQvEI3UkZQP6NyDfKpWR/AfF1Z1+M9MjBBAhevDY/2IgavJGe9zz7xQnFXByhH9WTj8mezXqq9EaETFA/ZpCv87l0E8=
-X-Gm-Message-State: AOJu0Yy8fB1qIRZFpBuMXLFY0X1L4/KX9WP3pZyTtKniBZqk5Q/M30Kd
- q5e9VZWlZxqjDPUS3Xxz0JuVsuc+vUL8Z8H/ZwastKasF/V/WB2BY6sGvZw8trYw/mIvrzPIQbh
- xxq+Szdw2PUT4VGFNGREYl49QjZIu4DXHmn+Al6n3r8sCqmfRQqdf
-X-Received: by 2002:a05:6512:1321:b0:523:93e8:1cf3 with SMTP id
- 2adb3069b0e04-52393e820a7mr5068753e87.51.1715848789455; 
- Thu, 16 May 2024 01:39:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfEx0RHxifTwVNr4ZkIs/fNfoNN8Dy5gCNSgTbekrn221TCIvvvUKtKDj+UMqiAUp+JGl+6A==
-X-Received: by 2002:a05:6512:1321:b0:523:93e8:1cf3 with SMTP id
- 2adb3069b0e04-52393e820a7mr5068658e87.51.1715848786996; 
- Thu, 16 May 2024 01:39:46 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-12-25-77.business.telecomitalia.it.
- [87.12.25.77]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-574ea5d755bsm3179016a12.51.2024.05.16.01.39.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 May 2024 01:39:46 -0700 (PDT)
-Date: Thu, 16 May 2024 10:39:42 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Halil Pasic <pasic@linux.ibm.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Marc Hartmayer <mhartmay@linux.ibm.com>, Jason Wang <jasowang@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Boris Fiuczynski <fiuczy@linux.ibm.com>
-Subject: Re: [PATCH 1/1] vhost-vsock: add VIRTIO_F_RING_PACKED to feaure_bits
-Message-ID: <ps5dukcjk6yh3an3hlkynr227r7kcln7b5dxgwope62avz5ceo@decy6vkuu56j>
-References: <20240429113334.2454197-1-pasic@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s7We9-0003Nj-7U
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:39:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715848769; x=1747384769;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=03XT5JQio/eh9g4gJ4rzt/gMN7AOyjNu4+d2a4FCEKA=;
+ b=Eh4aERFrgZKHKVGTDlBsi9qcWWAkBACy/aAHlJ+GKDUvYe/VdKwGP07G
+ zCEUZGBnzUfkDmsfUiiEUfNYMWUh64O4/BF4G3pzcxp75y7JwIpS6K4c0
+ SHvGWxhGp6i3dPljHg7tEvBP4lGeLnlK0jG6/miYKe6q020dlhxIe9p3X
+ +Bgygpv36ucFHDtmlajedkBJULgziwygyVvo/175HmddYiJVhtbjKncSE
+ RB6nYyD9UUSqfHAJsnGVEgzvouTvBdhHjxB4BIsKRh5ws0bZBUVigsORa
+ Lrw1BboEDE1GQMTZcmvpLttT9y+VylL5/lETjOBI1sDup81hRYmN/84QB Q==;
+X-CSE-ConnectionGUID: DuDFGw6RQr+8xDExejz8ng==
+X-CSE-MsgGUID: ZyK/J0lASF+drRoZ5mYpEQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="11754281"
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; d="scan'208";a="11754281"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2024 01:39:26 -0700
+X-CSE-ConnectionGUID: n+/azNr/SQydQsnOc4BoYw==
+X-CSE-MsgGUID: 7LFRak9CReS/clwG4W/34A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; d="scan'208";a="35869054"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 16 May 2024 01:39:23 -0700
+Date: Thu, 16 May 2024 16:54:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Krempa <pkrempa@redhat.com>, Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [PATCH 1/2] hw/core: allow parameter=1 for SMP topology on any
+ machine
+Message-ID: <ZkXJ0r9tomQBWBqB@intel.com>
+References: <20240513123358.612355-1-berrange@redhat.com>
+ <20240513123358.612355-2-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240429113334.2454197-1-pasic@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240513123358.612355-2-berrange@redhat.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,149 +89,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 01:33:34PM GMT, Halil Pasic wrote:
->Not having VIRTIO_F_RING_PACKED in feature_bits[] is a problem when the
->vhost-vsock device does not offer the feature bit VIRTIO_F_RING_PACKED
->but the in QEMU device is configured to try to use the packed layout
->(the virtio property "packed" is on).
->
->As of today, the  Linux kernel vhost-vsock device does not support the
->packed queue layout (as vhost does not support packed), and does not
->offer VIRTIO_F_RING_PACKED. Thus when for example a vhost-vsock-ccw is
->used with packed=on, VIRTIO_F_RING_PACKED ends up being negotiated,
->despite the fact that the device does not actually support it, and
->one gets to keep the pieces.
->
->Fixes: 74b3e46630 ("virtio: add property to enable packed virtqueue")
->Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
->Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
->---
->
->This is a minimal fix, that follows the current patterns in the
->codebase, and not necessarily the best one.
+On Mon, May 13, 2024 at 01:33:57PM +0100, Daniel P. Berrangé wrote:
+> Date: Mon, 13 May 2024 13:33:57 +0100
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: [PATCH 1/2] hw/core: allow parameter=1 for SMP topology on any
+>  machine
+> 
+> This effectively reverts
+> 
+>   commit 54c4ea8f3ae614054079395842128a856a73dbf9
+>   Author: Zhao Liu <zhao1.liu@intel.com>
+>   Date:   Sat Mar 9 00:01:37 2024 +0800
+> 
+>     hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP configurations
+> 
+> but is not done as a 'git revert' since the part of the changes to the
+> file hw/core/machine-smp.c which add 'has_XXX' checks remain desirable.
+> Furthermore, we have to tweak the subsequently added unit test to
+> account for differing warning message.
+> 
+> The rationale for the original deprecation was:
+> 
+>   "Currently, it was allowed for users to specify the unsupported
+>    topology parameter as "1". For example, x86 PC machine doesn't
+>    support drawer/book/cluster topology levels, but user could specify
+>    "-smp drawers=1,books=1,clusters=1".
+> 
+>    This is meaningless and confusing, so that the support for this kind
+>    of configurations is marked deprecated since 9.0."
+> 
+> There are varying POVs on the topic of 'unsupported' topology levels.
+> 
+> It is common to say that on a system without hyperthreading, that there
+> is always 1 thread. Likewise when new CPUs introduced a concept of
+> multiple "dies', it was reasonable to say that all historical CPUs
+> before that implicitly had 1 'die'. Likewise for the more recently
+> introduced 'modules' and 'clusters' parameter'. From this POV, it is
+> valid to set 'parameter=1' on the -smp command line for any machine,
+> only a value > 1 is strictly an error condition.
+> 
+> It doesn't cause any functional difficulty for QEMU, because internally
+> the QEMU code is itself assuming that all "unsupported" parameters
+> implicitly have a value of '1'.
+> 
+> At the libvirt level, we've allowed applications to set 'parameter=1'
+> when configuring a guest, and pass that through to QEMU.
+> 
+> Deprecating this creates extra difficulty for because there's no info
+> exposed from QEMU about which machine types "support" which parameters.
+> Thus, libvirt can't know whether it is valid to pass 'parameter=1' for
+> a given machine type, or whether it will trigger deprecation messages.
+> 
+> Since there's no apparent functional benefit to deleting this deprecated
+> behaviour from QEMU, and it creates problems for consumers of QEMU,
+> remove this deprecation.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  docs/about/deprecated.rst   | 14 -------
+>  hw/core/machine-smp.c       | 82 ++++++++++++-------------------------
+>  tests/unit/test-smp-parse.c |  8 ++--
+>  3 files changed, 30 insertions(+), 74 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index e22acb17f2..5b551b12a6 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -47,20 +47,6 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
+>  However, short-form booleans are deprecated and full explicit ``arg_name=on``
+>  form is preferred.
+>  
+> -``-smp`` (Unsupported "parameter=1" SMP configurations) (since 9.0)
+> -'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> -
+> -Specified CPU topology parameters must be supported by the machine.
+> -
+> -In the SMP configuration, users should provide the CPU topology parameters that
+> -are supported by the target machine.
+> -
+> -However, historically it was allowed for users to specify the unsupported
+> -topology parameter as "1", which is meaningless. So support for this kind of
+> -configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
+> -marked deprecated since 9.0, users have to ensure that all the topology members
+> -described with -smp are supported by the target machine.
+> -
+>  User-mode emulator command line arguments
+>  -----------------------------------------
+>  
+> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+> index 2b93fa99c9..eb43caca9b 100644
+> --- a/hw/core/machine-smp.c
+> +++ b/hw/core/machine-smp.c
+> @@ -119,75 +119,45 @@ void machine_parse_smp_config(MachineState *ms,
+>  
+>      /*
+>       * If not supported by the machine, a topology parameter must be
 
-Yeah, I did something similar with commit 562a7d23bf ("vhost: mask 
-VIRTIO_F_RING_RESET for vhost and vhost-user devices") so I think for 
-now is the right approach.
+Also need to change this line as:
 
-I suggest to check also other devices like we did in that commit (e.g.  
-hw/scsi/vhost-scsi.c, hw/scsi/vhost-user-scsi.c, etc. )
+s/must be/must/
 
->
->I don't quite understand why vhost_get_features() works the way
->it works. Fortunately it is documented, so let me quote the
->documentation.
->
->"""
->/**
-> * vhost_get_features() - return a sanitised set of feature bits
-> * @hdev: common vhost_dev structure
-> * @feature_bits: pointer to terminated table of feature bits
-> * @features: original feature set
-> *
-> * This returns a set of features bits that is an intersection of what
-> * is supported by the vhost backend (hdev->features), the supported
-> * feature_bits and the requested feature set.
-> */
->uint64_t vhost_get_features(struct vhost_dev *hdev, const int *feature_bits,
->                            uint64_t features);
->"""
->
->Based on this I would expect the following statement to be true: if a
->feature bit is not in feature_bits then the corresponding bit in the
->return value is guaranteed to be not set (regardless of the values of
->the 3rd arguments and hdev->features).
->
->The implementation however does the following: if the feature bit is not
->listed in feature_bits (2nd argument) then the corresponding bit in the
->return value is set iff the corresponding bit in the 3rd argument
->(features) is set (i.e. it does not matter what hdev->features and thus
->the vhost backend says).
->
->The documentation however does kind of state, that feature_bits is
->supposed to contain the supported features. And under the assumption
->that feature bit not in feature_bits implies that the corresponding bit
->must not be set in the 3rd argument (features), then even with the
->current implementation we do end up with the intersection of the three
->as stated. And then vsock would be at fault for violating that
->assumption, and my fix would be the best thing to do -- I guess.
->
->Is the implementation the way it is for a good reason, I can't judge
->that with certainty for myself.
+> -     * omitted.
+> +     * not be set to a value greater than 1.
+>       */
 
-Yes, I think we should fix the documentation, and after a few years of 
-not looking at it I'm confused again about what it does.
+Only the above nit,
 
-But re-reading my commit for VIRTIO_F_RING_RESET, it seems that I had 
-interpreted `feature_bits` (2nd argument) as a list of features that 
-QEMU doesn't know how to emulate and therefore are required by the 
-backend (vhost/vhost-user/vdpa). Because the problem is that `features` 
-(3rd argument) is a set of features required by the driver that can be 
-provided by both QEMU and the backend.
-
->
->But I'm pretty convinced that the current approach is fragile,
->especially for the feature bits form the range 24 to 40, as those are
->not specific to a device.
->
->BTW vsock also lacks VIRTIO_F_ACCESS_PLATFORM, and VIRTIO_F_RING_RESET
->as well while vhost-net has both.
-
-VIRTIO_F_RING_RESET is just above the line added by this patch.
-
->
->If our design is indeed to make the individual devices responsible for
->having a complete list of possible features in feature_bits, then at
->least having a common macro for the non-device specific features would
->make sense to me.
-
-Yeah, I agree on this!
-
->
->On the other hand, I'm also very happy to send a patch which changes the
->behavior of vhost_get_features(), should the community decide that the
->current behavior does not make all that much sense -- I lean towards:
->probably it does not make much sense, but things like
->VIRTIO_F_ACCESS_PLATFORM, which are mandatory feature bits, need careful
->consideration, because there vhost can't do so we just won't offer it
->and proceed on our merry way is not the right behavior.
->
->Please comment!
-
-Maybe we should discuss it in another thread, but I agree that we should 
-fix it in someway. Thank you for raising this discussion!
-
->
->Regards,
->Halil
->---
-> hw/virtio/vhost-vsock-common.c | 1 +
-> 1 file changed, 1 insertion(+)
-
-This patch LGTM, but as I mention we should fix other devices as well,
-but maybe we can do with the common macro you suggested in another 
-patch.
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
->
->diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
->index 12ea87d7a7..fd88df2560 100644
->--- a/hw/virtio/vhost-vsock-common.c
->+++ b/hw/virtio/vhost-vsock-common.c
->@@ -22,6 +22,7 @@
-> const int feature_bits[] = {
->     VIRTIO_VSOCK_F_SEQPACKET,
->     VIRTIO_F_RING_RESET,
->+    VIRTIO_F_RING_PACKED,
->     VHOST_INVALID_FEATURE_BIT
-> };
->
->
->base-commit: fd87be1dada5672f877e03c2ca8504458292c479
->-- 
->2.40.1
->
->
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
