@@ -4,110 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 081B5C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 04:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2BBC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 05:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7TB7-0000Hr-NW; Thu, 16 May 2024 00:57:17 -0400
+	id 1s7TNz-0003vh-73; Thu, 16 May 2024 01:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s7TB4-0000HG-Oi
- for qemu-devel@nongnu.org; Thu, 16 May 2024 00:57:15 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s7TNr-0003uz-NQ; Thu, 16 May 2024 01:10:28 -0400
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s7TB3-0001RN-12
- for qemu-devel@nongnu.org; Thu, 16 May 2024 00:57:14 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2a2d82537efso5695072a91.2
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 21:57:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s7TNp-0006AK-DW; Thu, 16 May 2024 01:10:27 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-4e1513b8829so369544e0c.3; 
+ Wed, 15 May 2024 22:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1715835430; x=1716440230;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5uLWPEV2IQz01J7RrmpN2F9RySoifu2n8RUPk6jWRps=;
- b=yB9U+7xTdcYYtkmgtSMqYDVgCx01HHi613g4lhvFnRTqGlHd2cQGRYpEHjwkrk0IBK
- zrKDAbdsn/3/6hjycCEX1jDnIfGJH5dj8IyDGuMSRE+GpeC7KQx0jtlSp3f+hlneez+u
- B7vhleY7bX5ceOUFs8ve/9VFxA7TpBs7JJrcY/jUYazv+q0w0feBF3R1jEzeV2r9EHz2
- gMiqk9IFs0C9L/gj1n6p09AKk5XyipYZ/omGlxvMeazWLXUYOZmQBVQiSfZ3jKlSrDwC
- 9/MpKhOxv1xqNw966JPikre0u31jPJP6CO6TBMloyrOjK6a3Lf/zDrggsOi0OxQhJ5Sb
- i1+g==
+ d=gmail.com; s=20230601; t=1715836224; x=1716441024; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mWiglJg0pVMLpd6q+xzywXY5WHRF0H5vl6FEj4Kvizc=;
+ b=AY/4X1kiozXDM91+NC0AEZfL9nzydvW5xUKCUZ/3WdAtTY0lsFcAJ2HOBiDkhSTq9y
+ 0toCh2eBFcuCOI5T90DRNGUTymJ2qaKIdgGJ1CKlWkgPhe9gtyfKnwAzUvlz41yteBgk
+ x8UUG3qFmfMPEMob6vTiXwd+iGM2Nym9gnW5MYy5cJ2IA9JIBfZAtgITq6ApzPq1dPVt
+ Zw3QH3A3kceWZV+3E5uQszNDfihdyHetSrFS4sWv2g1G+5uI0vONDldmqST1rq6Thd99
+ vV6OqLXEhUplOQmpjL8oTQYHHLKu0AJXUVBi1ixrMBJDqW0TJMVgQZ0rYGzaTriYAlkY
+ 1fGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715835430; x=1716440230;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5uLWPEV2IQz01J7RrmpN2F9RySoifu2n8RUPk6jWRps=;
- b=U0jRouo/m0r28LrbXT48UW79ksEhwx/GnbZUCz8lLJwe2/6opTJgNM+N8PsMfCEf7b
- ctLAJ711TK36XDakno7kQdARd40gtHdinfFv/aMtSVoReoGkThLShToJcN+3gmj21D8o
- Z6BcoA93ErI0UC+ONRIj7I3/OwBa7gtOMktJm55E9NfETcFGrrlNswGEcfGFl4cxfn0e
- f8hBgVcOPVX/sEOARs48c9oiYA4oE5PBOz8sKPWzJNpo53wFMOlQGVDVu9pmPqQ2ID4d
- 70vU/EgrjFnbTdBZ8QVWI5yKPH6G9M4R4cqe2o2UdA4Kfj8pk3r97/fkF30Xrmq9TJGQ
- x9SA==
-X-Gm-Message-State: AOJu0YwBZdiKucq7NSjNdpsg3v1REUCMhin33A5NEElQDjgS52RcV6SC
- XBTg2Pkea0VwO5n5iSTAXz2WfXg4WByAcuMN4BIhZ9QQmwy2mVDLM0RZje652rw=
-X-Google-Smtp-Source: AGHT+IGsqGDNQsLH4qGrK+nTvAWbkt+AA4FILAJhcyVAh8z7ZyJFkliVfAl4sFtQeWO/SAAOmJB9BA==
-X-Received: by 2002:a17:90a:658a:b0:2a5:e087:768a with SMTP id
- 98e67ed59e1d1-2b6cc87ab65mr19022528a91.29.1715835430516; 
- Wed, 15 May 2024 21:57:10 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
- ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b628ea6a83sm14595368a91.56.2024.05.15.21.57.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 May 2024 21:57:10 -0700 (PDT)
-Message-ID: <b97c44ce-5f4d-4ff4-b981-e0a67e522b2e@daynix.com>
-Date: Thu, 16 May 2024 13:57:03 +0900
+ d=1e100.net; s=20230601; t=1715836224; x=1716441024;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mWiglJg0pVMLpd6q+xzywXY5WHRF0H5vl6FEj4Kvizc=;
+ b=TZLHT0vZBX6C7ZZcz4OX575Tbu4+r6ebg5fgcMUbvs6OiTmEcMtcFH0Niu1+A/Wm0b
+ RsKPl9IeYOR9rxsUM3SqSeUTLUfDzah8hec7oCO/sGaFQgKZCNIyLvTsN7O0993il5o2
+ f0sR2zhQ3n8oDUYpVGZm4iAdxUKcZpKCTpWbF7YzjzHQrz3Egg8vOXRKFaul+RL9/xxt
+ sB8DMb2IbE4kalAMYcoKs60Dy1cBq+9Ysf36UO66GQUQTKRfmYzBpF5Hml3bzaSl3KFb
+ SGOFTYw0jgXXqTa+yet4u8BEQCZxk63BWyadjz4e0RK6k9ohEZMTjBAb+YaU8QF9LPr2
+ 6hHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXE13KFNRUdcg7fMbxr+zcrdfg17S83eoQ1c2mcFLE1xW+dsh8wBhE0sOdPdvH9Zkfm45qCzXcuI0WXDSh3TVzS1fKWLrk=
+X-Gm-Message-State: AOJu0Yww7mDBX1nzWV4OmXxtcAr1E298bK+Ir8rckfk2pryHiXf5hTca
+ jZ8ySQrI3yF735fzAdXhnuFJB0CmjU7ZS9hwHOrO3cDyzQ4ZYHcN5qzR1QighGyEp7NGjLPhg+K
+ 7fF/rkrjDnufq8cQ5kUZnFRyjx2A=
+X-Google-Smtp-Source: AGHT+IFMAWzRprTfVJoZWJFJrJQpRTRy2OHM1ehKdpGdzXImib9kJ3yH5Q2eV7Ox6WYEroEXitmn1xWiKwIy+TT4vNE=
+X-Received: by 2002:a05:6122:2018:b0:4d3:3846:73bb with SMTP id
+ 71dfb90a1353d-4df882c5cd8mr16886290e0c.7.1715836223738; Wed, 15 May 2024
+ 22:10:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/10] virtio-gpu: Handle resource blob commands
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240511182251.1442078-1-dmitry.osipenko@collabora.com>
- <20240511182251.1442078-9-dmitry.osipenko@collabora.com>
- <727b125a-530e-4881-bde0-2215f62e155d@daynix.com>
- <4b30a810-211a-4ef6-ac28-c144615b402c@collabora.com>
- <58dfa1ce-320c-468e-9aed-fe1b092b92f8@daynix.com>
- <9c9e174d-079c-4186-8b01-95549167852c@collabora.com>
- <5b20d3dd-1749-45ba-baa7-a8c21d79f839@daynix.com>
- <8b26ac10-40b3-4654-8123-ce07e9dff9d9@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <8b26ac10-40b3-4654-8123-ce07e9dff9d9@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::1036;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20240514023910.301766-1-alistair.francis@wdc.com>
+ <14e88990-963c-45ef-bf51-662d54857c6e@ventanamicro.com>
+In-Reply-To: <14e88990-963c-45ef-bf51-662d54857c6e@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 16 May 2024 15:09:57 +1000
+Message-ID: <CAKmqyKP5dwLnvuXDbJkDV=CCGAsoVuyES7m+NB=7KceFEHoKzQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: rvzicbo: Fixup CBO extension register
+ calculation
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@dabbelt.com, bin.meng@windriver.com, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>, fabian.thomas@cispa.de, 
+ Bin Meng <bmeng.cn@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,45 +97,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/05/16 2:15, Dmitry Osipenko wrote:
-> On 5/15/24 20:04, Akihiko Odaki wrote:
->>>
->>
->> VIRTIO_GPU_CMD_RESOURCE_UNREF should also call
->> virtio_gpu_virgl_async_unmap_resource_blob(). I guess that's the
->> original intention of having a function for this instead of inlining the
->> content of this function to virgl_cmd_resource_unmap_blob().
-> 
-> Correct, previous patchset versions unmapped resource on unref.
-> 
-> In v11 I dropped unmapping from unref to avoid adding additional
-> `async_unmap_in_progress` flag because normally map/unmap will be
-> balanced by guest anyways.
-> 
-> The virtio-gpu spec doesn't tell that resource have to be implicitly
-> unmapped on unref. In a case of Linux guest, it actually will be a bug
-> to unref a mapped resource because guest will continue to map and use
-> the destroyed resource.
-> 
+On Tue, May 14, 2024 at 7:11=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+>
+>
+> On 5/13/24 23:39, Alistair Francis wrote:
+> > When running the instruction
+> >
+> > ```
+> >      cbo.flush 0(x0)
+> > ```
+> >
+> > QEMU would segfault.
+> >
+> > The issue was in cpu_gpr[a->rs1] as QEMU does not have cpu_gpr[0]
+> > allocated.
+> >
+> > In order to fix this let's use the existing get_address()
+> > helper. This also has the benefit of performing pointer mask
+> > calculations on the address specified in rs1.
+> >
+> > The pointer masking specificiation specifically states:
+> >
+> > """
+> > Cache Management Operations: All instructions in Zicbom, Zicbop and Zic=
+boz
+> > """
+> >
+> > So this is the correct behaviour and we previously have been incorrectl=
+y
+> > not masking the address.
+> >
+> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> > Reported-by: Fabian Thomas <fabian.thomas@cispa.de>
+> > Fixes: e05da09b7cfd ("target/riscv: implement Zicbom extension")
+> > ---
+>
+> LGTM but I wonder if this is the same fix as this one sent by Phil a mont=
+h
+> ago or so:
+>
+> https://lore.kernel.org/qemu-riscv/20240419110514.69697-1-philmd@linaro.o=
+rg/
+> ("[PATCH] target/riscv: Use get_address() to get address with Zicbom exte=
+nsions")
 
-Additional `async_unmap_in_progress` flag should not be necessary as 
-explained earlier.
+It is the same fix!
 
-It is a valid design not to issue UNMAP_BLOB before UNREF if the 
-automatically performs the unmapping operation. A guest needs to ensure 
-the blob is not mapped in a guest userspace virtual address space, but 
-it does not require issuing UNMAP_BLOB, which is to unmap the blob from 
-the guest physical address space.
+I somehow missed that patch at the time. Sorry Philippe!
 
-In case of Linux, virtio_gpu_vram_free() calls virtio_gpu_cmd_unmap() to 
-issue UNMAP_BLOB before UNREF, which is actually not necessary. Linux 
-still needs to ensure that the blob is not mapped in a guest userspace 
-virtual address space, but that is done before virtio_gpu_vram_free() 
-gets called, and virtio_gpu_cmd_unmap() has nothing to do with that.
+I'm going to merge this one as it includes the details about pointer
+masking, which I think is useful as that's why we are using
+get_address() instead of get_gpr()
 
-It is still a good practice for a guest to issue UNMAP_BLOB in such a 
-case because the spec does not say the VMM will automatically unmap the 
-blob for UNREF, and that's what Linux does. From the VMM perspective, 
-it's better to perform the unmapping operation for UNREF because the 
-spec does not say the guest always issue UNMAP_BLOB before UNREF.
+Alistair
+
+>
+>
+> Thanks,
+>
+> Daniel
+>
+> >   target/riscv/insn_trans/trans_rvzicbo.c.inc | 16 ++++++++++++----
+> >   1 file changed, 12 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv=
+/insn_trans/trans_rvzicbo.c.inc
+> > index d5d7095903..15711c3140 100644
+> > --- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
+> > +++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+> > @@ -31,27 +31,35 @@
+> >   static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+> >   {
+> >       REQUIRE_ZICBOM(ctx);
+> > -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
+> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
+> > +
+> > +    gen_helper_cbo_clean_flush(tcg_env, src);
+> >       return true;
+> >   }
+> >
+> >   static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
+> >   {
+> >       REQUIRE_ZICBOM(ctx);
+> > -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
+> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
+> > +
+> > +    gen_helper_cbo_clean_flush(tcg_env, src);
+> >       return true;
+> >   }
+> >
+> >   static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
+> >   {
+> >       REQUIRE_ZICBOM(ctx);
+> > -    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
+> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
+> > +
+> > +    gen_helper_cbo_inval(tcg_env, src);
+> >       return true;
+> >   }
+> >
+> >   static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
+> >   {
+> >       REQUIRE_ZICBOZ(ctx);
+> > -    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
+> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
+> > +
+> > +    gen_helper_cbo_zero(tcg_env, src);
+> >       return true;
+> >   }
 
