@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A5A4C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37931C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7cAy-0003OS-O7; Thu, 16 May 2024 10:33:44 -0400
+	id 1s7cBZ-0003wk-HZ; Thu, 16 May 2024 10:34:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_svaddagi@quicinc.com>)
- id 1s7cAv-0003KD-S7; Thu, 16 May 2024 10:33:42 -0400
+ id 1s7cBU-0003ox-1p; Thu, 16 May 2024 10:34:16 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_svaddagi@quicinc.com>)
- id 1s7cAt-0007z4-FQ; Thu, 16 May 2024 10:33:41 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G8X64V027367;
- Thu, 16 May 2024 14:33:34 GMT
+ id 1s7cBS-0008IP-1k; Thu, 16 May 2024 10:34:15 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G8ZXWQ026425;
+ Thu, 16 May 2024 14:34:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding:content-type; s=qcppdkim1; bh=Vg+TqVv
- k0ka4+3POtqGbOxcGCLEO0Hf+do5UQ+dZcFc=; b=Fcwue2qDzLapcMXbfxLW2ft
- 0/wJnZc06CvXXQw0t3cWf1CO2EGtwBiwNBVlCrcFykgZ+lJ3iUn33rM2yzDCk/Tt
- K0Syr/XyGMJdWFGu/wbm9EypfW1ICyYXyp9P8xIsi+PqZ6fRkKOT0zeFPboV89Uc
- +buEkNQn4V6eN2/gVruGwXpur8B8r8XGePVcuccXv8rVt6v1e46sSF0C87daEy3n
- 2JDuDoyM3Ld6wgVRR9jU/zXmtJXrzusnBuxTc869YQDmqmfHQ3IJGmpNdiAaCUHe
- b4QD1Z76Trl7y9qC7K5gF2Yfd5iWXUDN9uMiDVR4IsHUDAvKysaZtpGn0XtYbEg=
+ :content-transfer-encoding:content-type; s=qcppdkim1; bh=xrppgKg
+ 1WyBfVrYxSVQmhhj+14n1XeG1Y3GaJ7bORPs=; b=aJd4u98ZPac4S2HWtD/IHTo
+ XEqkHsNVqgoNRU3Rrm1kzSacCTZIsGobWWGnwdABokXxZCCf9cR27OPX5/TymcOP
+ m1eHtPH3AEIZ4ieY7AVWJU829Heoddp+hgfQ0F2u0XiZl2RyFuc6baVu4lg57Ouo
+ HG5NkRJRhFv/D9vKUSv712QpO10eJ1/eEwt1VAeIgr6FSvuK7Owu9XdFZ9gT5KJS
+ 5lRWhHI0fCdYGyp9Ly5tqzv2kl06QMHQ5haxVK2bt2CX3BpHbQOPZFUuKowvOkN1
+ dfuKG+9m4q6TUP7czVeoRgQfgnJfz3wMSYz33fuXuI4Ns4nXig6HaQkp51Nfk3w=
  =
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y42kvxgp6-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y47egduh2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 14:33:34 +0000 (GMT)
+ Thu, 16 May 2024 14:34:09 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
  [10.47.209.197])
- by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEXWgQ006308
+ by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEY8sZ007922
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 14:33:32 GMT
+ Thu, 16 May 2024 14:34:08 GMT
 Received: from blr-ubuntu-31.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 16 May 2024 07:33:28 -0700
+ 15.2.1544.9; Thu, 16 May 2024 07:34:04 -0700
 From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 To: <peter.maydell@linaro.org>, <philmd@linaro.org>, <alex.bennee@linaro.org>, 
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
@@ -53,8 +53,8 @@ CC: <quic_svaddagi@quicinc.com>, <quic_tsoni@quicinc.com>,
  <quic_yvasi@quicinc.com>, <quic_cvanscha@quicinc.com>,
  <quic_mnalajal@quicinc.com>
 Subject: [RFC/PATCH v2 00/12] Gunyah hypervisor support
-Date: Thu, 16 May 2024 14:33:08 +0000
-Message-ID: <20240516143320.1739118-1-quic_svaddagi@quicinc.com>
+Date: Thu, 16 May 2024 14:33:44 +0000
+Message-ID: <20240516143356.1739402-1-quic_svaddagi@quicinc.com>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -65,16 +65,16 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-GUID: I16LP_QJSrxPgInVWPf7kEX8CSBqLnHw
-X-Proofpoint-ORIG-GUID: I16LP_QJSrxPgInVWPf7kEX8CSBqLnHw
+X-Proofpoint-GUID: m8HfPufXChH08GXQIiKmCipFU3HSmGhw
+X-Proofpoint-ORIG-GUID: m8HfPufXChH08GXQIiKmCipFU3HSmGhw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- mlxlogscore=999 phishscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxscore=0 adultscore=0
+ malwarescore=0 phishscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405010000 definitions=main-2405160102
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=quic_svaddagi@quicinc.com; helo=mx0b-0031df01.pphosted.com
@@ -98,12 +98,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-
-
-Appreciate any quick comments you have. This is v2 that I intend to publish on
-qemu lists. Main changes since v1 is adding support for protected VM. 
-
-===
 
 
 Gunyah is an open-source Type-1 hypervisor, that is currently supported on ARM64
