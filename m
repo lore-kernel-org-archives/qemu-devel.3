@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3235BC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 001E9C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7cBq-0004LR-7A; Thu, 16 May 2024 10:34:38 -0400
+	id 1s7cBs-0004Os-Vr; Thu, 16 May 2024 10:34:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_svaddagi@quicinc.com>)
- id 1s7cBo-0004Hm-H9; Thu, 16 May 2024 10:34:36 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1s7cBp-0004Kp-Hb; Thu, 16 May 2024 10:34:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_svaddagi@quicinc.com>)
- id 1s7cBm-0008Lg-6V; Thu, 16 May 2024 10:34:36 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G90TmO021394;
- Thu, 16 May 2024 14:34:32 GMT
+ id 1s7cBm-0008Li-PO; Thu, 16 May 2024 10:34:37 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44GBLF5S008886;
+ Thu, 16 May 2024 14:34:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding:content-type; s=
- qcppdkim1; bh=uviPvqv+rWB/nK74mpoQ0WrfHmUlUXN1Ahud51wS5LM=; b=hg
- erd8PUY4HaIiydQXb0lxiS1fOGzr39CSRGNYdiQNUEd4/8a8L9u94CMjZIKBF1LA
- z7HLcp2MXT6EXWDu8PuViNeAAJF/v3DxWqEIuenGj5XszwDQfk8Fn/VQd3o6os2c
- RcEjlTBLPRLK7R40ytkHIKIBPqY93J3glscRVREIuVgZL6ACIC47JJKc1IywnHlD
- fiINS8wa1dHkA1IhJikk6jgl5F8Dt+BXRhnJlrRGqMLnPl0N7o2OKebrdxQj3IdW
- 8q39zjb6B4ZYLeYFhzSt9YOewqg9npIPutoXogiEXmRCP2nUxpl0IPRBJDuCDmaL
- 7dvg9h1G5pr4Q0T0QHrw==
+ qcppdkim1; bh=SnPAwMXXVZYe7Q+nI/EdBVzc4Z9dngQFeu9fGBE3f4Q=; b=Ji
+ I9qA6CrckW0FsOPvEAz+0XgqT7owu8VBNjiecXI4fuhNleQARGGfBR23D0FEoxtN
+ o7ghWeQnGHrZqPs4vdlQiNEluoInNa3i3ue6+eBIU7FAGaL/CCEK+jla6TXXZu9G
+ 55IkwTngzz4RIKX1zg6tUnMgyZ2SbX89JpuF35n+yJBch2KsVK2KdT3hZhKwRafI
+ eKTPRQreQxPuH3iF7txCOe75ySGWHVSumsryp/eAs7GE563hvlzoBRkS9er1zEfq
+ pBgTarabQWXe+Kjy7mCPSelUpGLqFMKYcVQjPyzurLm6f4ocHecamwhv7TJ90gOo
+ kd931JgbXC36YcW+95tQ==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y45vbe0m7-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y3x51pwwj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 16 May 2024 14:34:31 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
  [10.47.209.197])
- by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEYUOu009410
+ by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEYDAU009227
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 14:34:30 GMT
+ Thu, 16 May 2024 14:34:13 GMT
 Received: from blr-ubuntu-31.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 16 May 2024 07:34:26 -0700
+ 15.2.1544.9; Thu, 16 May 2024 07:34:08 -0700
 From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 To: <peter.maydell@linaro.org>, <philmd@linaro.org>, <alex.bennee@linaro.org>, 
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
@@ -52,9 +52,9 @@ CC: <quic_svaddagi@quicinc.com>, <quic_tsoni@quicinc.com>,
  <quic_pheragu@quicinc.com>, <quic_eberman@quicinc.com>,
  <quic_yvasi@quicinc.com>, <quic_cvanscha@quicinc.com>,
  <quic_mnalajal@quicinc.com>
-Subject: [RFC/PATCH v2 05/12] gunyah: Support memory assignment
-Date: Thu, 16 May 2024 14:33:49 +0000
-Message-ID: <20240516143356.1739402-6-quic_svaddagi@quicinc.com>
+Subject: [RFC/PATCH v2 01/12] gunyah: UAPI header (NOT FOR MERGE)
+Date: Thu, 16 May 2024 14:33:45 +0000
+Message-ID: <20240516143356.1739402-2-quic_svaddagi@quicinc.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240516143356.1739402-1-quic_svaddagi@quicinc.com>
 References: <20240516143356.1739402-1-quic_svaddagi@quicinc.com>
@@ -67,19 +67,19 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-GUID: ajEhrCXIBNJsATtWQxdTRaBftMk6MxaV
-X-Proofpoint-ORIG-GUID: ajEhrCXIBNJsATtWQxdTRaBftMk6MxaV
+X-Proofpoint-GUID: d6aqF8afrE9RVLSG9NZbh0xMyi-iaP5K
+X-Proofpoint-ORIG-GUID: d6aqF8afrE9RVLSG9NZbh0xMyi-iaP5K
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- clxscore=1015 mlxscore=0 suspectscore=0 spamscore=0 malwarescore=0
- adultscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405160101
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_svaddagi@quicinc.com; helo=mx0b-0031df01.pphosted.com
+ priorityscore=1501
+ suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ mlxscore=0 impostorscore=0 adultscore=0 clxscore=1015 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405160103
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_svaddagi@quicinc.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,422 +101,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gunyah hypervisor supports several APIs for a host VM to assign some of
-its memory to the VM being created.
+Gunyah UAPI header file is provided for ease of use, until Gunyah kernel
+driver is merged upstream. scripts/update-linux-headers.sh will be
+updated via a separate patch after that for Qemu to pick up gunyah.h
+UAPI header from Linux kernel sources.
 
-    Lend - assigned memory is made private to VM (host loses access)
-    Share - assigned memory is shared between host and guest VM
+This header file is based on the Gunyah driver present in Android-14.
 
-No APIs exist however, at this time, for a confidential VM to share some of
-its (private) memory with host at runtime.
-
-Since, in practice, even a confidential VM may need some shared memory to
-exchange information with its host, we split VM's memory into two
-portions - one that is kept private (via Lend API) and other that is
-shared with host (via Share API).
-
-Note: Gunyah kernel driver from Android common kernel repository exposes
-two separate ioctls for lend and share operations [1]. A subsequent
-version of kernel driver that will be merged in Linux kernel repository
-will combine the two ioctls into one, when this patch will be updated.
-
-1. Refer GH_VM_ANDROID_LEND_USER_MEM and GH_VM_SET_USER_MEM_REGION in
-https://android.googlesource.com/kernel/common/+/refs/heads/android14-6.1/drivers/virt/gunyah/vm_mgr.c
+https://android.googlesource.com/kernel/common
+Branch: android14-6.1
 
 Signed-off-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 ---
- include/sysemu/gunyah.h     |   2 +
- include/sysemu/gunyah_int.h |  26 ++++
- accel/gunyah/gunyah-all.c   | 261 ++++++++++++++++++++++++++++++++++++
- accel/stubs/gunyah-stub.c   |   5 +
- hw/arm/virt.c               |   4 +
- 5 files changed, 298 insertions(+)
+ linux-headers/linux/gunyah.h | 311 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 311 insertions(+)
+ create mode 100644 linux-headers/linux/gunyah.h
 
-diff --git a/include/sysemu/gunyah.h b/include/sysemu/gunyah.h
-index 4f26938521..78cb80f01e 100644
---- a/include/sysemu/gunyah.h
-+++ b/include/sysemu/gunyah.h
-@@ -20,6 +20,8 @@
- 
- extern bool gunyah_allowed;
- 
-+void gunyah_set_swiotlb_size(uint64_t size);
+diff --git a/linux-headers/linux/gunyah.h b/linux-headers/linux/gunyah.h
+new file mode 100644
+index 0000000000..c8d250a834
+--- /dev/null
++++ b/linux-headers/linux/gunyah.h
+@@ -0,0 +1,311 @@
++/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
++/*
++ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
 +
- #define gunyah_enabled() (gunyah_allowed)
- 
- #define TYPE_GUNYAH_ACCEL ACCEL_CLASS_NAME("gunyah")
-diff --git a/include/sysemu/gunyah_int.h b/include/sysemu/gunyah_int.h
-index 37de628b37..0967b2d7d7 100644
---- a/include/sysemu/gunyah_int.h
-+++ b/include/sysemu/gunyah_int.h
-@@ -13,15 +13,41 @@
- 
- #include "qemu/accel.h"
- #include "qemu/typedefs.h"
-+#include "qemu/thread.h"
-+
-+typedef struct gunyah_slot {
-+    uint64_t start;
-+    uint64_t size;
-+    uint8_t *mem;
-+    uint32_t id;
-+    uint32_t flags;
-+
-+    /*
-+     * @lend indicates if memory was lent.
-+     *
-+     * This flag is temporarily used until the upstream Gunyah kernel driver
-+     * patches are updated to support indication of lend vs share via flags
-+     * field of GH_SET_USER_MEM_API interface.
-+     */
-+    bool lend;
-+} gunyah_slot;
-+
-+#define GUNYAH_MAX_MEM_SLOTS    32
- 
- struct GUNYAHState {
-     AccelState parent_obj;
- 
-+    QemuMutex slots_lock;
-+    gunyah_slot slots[GUNYAH_MAX_MEM_SLOTS];
-+    uint32_t nr_slots;
-     int fd;
-     int vmfd;
-+    uint64_t swiotlb_size;
-+    bool preshmem_reserved;
- };
- 
- int gunyah_create_vm(void);
-+int gunyah_vm_ioctl(int type, ...);
- void *gunyah_cpu_thread_fn(void *arg);
- 
- #endif    /* GUNYAH_INT_H */
-diff --git a/accel/gunyah/gunyah-all.c b/accel/gunyah/gunyah-all.c
-index 370add75f9..19f96225a0 100644
---- a/accel/gunyah/gunyah-all.c
-+++ b/accel/gunyah/gunyah-all.c
-@@ -14,12 +14,21 @@
- #include <sys/ioctl.h>
- #include "qemu/osdep.h"
- #include "qemu/typedefs.h"
-+#include "qemu/units.h"
- #include "hw/core/cpu.h"
- #include "sysemu/cpus.h"
- #include "sysemu/gunyah.h"
- #include "sysemu/gunyah_int.h"
- #include "linux-headers/linux/gunyah.h"
-+#include "exec/memory.h"
- #include "qemu/error-report.h"
-+#include "exec/address-spaces.h"
-+#include "hw/boards.h"
-+
-+static void gunyah_region_add(MemoryListener *listener,
-+                           MemoryRegionSection *section);
-+static void gunyah_region_del(MemoryListener *listener,
-+                           MemoryRegionSection *section);
- 
- static int gunyah_ioctl(int type, ...)
- {
-@@ -36,9 +45,32 @@ static int gunyah_ioctl(int type, ...)
-     return ioctl(s->fd, type, arg);
- }
- 
-+int gunyah_vm_ioctl(int type, ...)
-+{
-+    void *arg;
-+    va_list ap;
-+    GUNYAHState *s = GUNYAH_STATE(current_accel());
-+
-+    assert(s->vmfd);
-+
-+    va_start(ap, type);
-+    arg = va_arg(ap, void *);
-+    va_end(ap);
-+
-+    return ioctl(s->vmfd, type, arg);
-+}
-+
-+static MemoryListener gunyah_memory_listener = {
-+    .name = "gunyah",
-+    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-+    .region_add = gunyah_region_add,
-+    .region_del = gunyah_region_del,
-+};
-+
- int gunyah_create_vm(void)
- {
-     GUNYAHState *s;
-+    int i;
- 
-     s = GUNYAH_STATE(current_accel());
- 
-@@ -55,9 +87,238 @@ int gunyah_create_vm(void)
-         exit(1);
-     }
- 
-+    qemu_mutex_init(&s->slots_lock);
-+    s->nr_slots = GUNYAH_MAX_MEM_SLOTS;
-+    for (i = 0; i < s->nr_slots; ++i) {
-+        s->slots[i].start = 0;
-+        s->slots[i].size = 0;
-+        s->slots[i].id = i;
-+    }
-+
-+    memory_listener_register(&gunyah_memory_listener, &address_space_memory);
-     return 0;
- }
- 
-+#define gunyah_slots_lock(s)    qemu_mutex_lock(&s->slots_lock)
-+#define gunyah_slots_unlock(s)  qemu_mutex_unlock(&s->slots_lock)
-+
-+static gunyah_slot *gunyah_find_overlap_slot(GUNYAHState *s,
-+                uint64_t start, uint64_t size)
-+{
-+    gunyah_slot *slot;
-+    int i;
-+
-+    for (i = 0; i < s->nr_slots; ++i) {
-+        slot = &s->slots[i];
-+        if (slot->size && start < (slot->start + slot->size) &&
-+            (start + size) > slot->start) {
-+            return slot;
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
-+/* Called with s->slots_lock held */
-+static gunyah_slot *gunyah_get_free_slot(GUNYAHState *s)
-+{
-+    int i;
-+
-+    for (i = 0; i < s->nr_slots; i++) {
-+        if (s->slots[i].size == 0) {
-+            return &s->slots[i];
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
-+static void gunyah_add_mem(GUNYAHState *s, MemoryRegionSection *section,
-+        bool lend, enum gh_mem_flags flags)
-+{
-+    gunyah_slot *slot;
-+    MemoryRegion *area = section->mr;
-+    struct gh_userspace_memory_region gumr;
-+    int ret;
-+
-+    slot = gunyah_get_free_slot(s);
-+    if (!slot) {
-+        error_report("No free slots to add memory!");
-+        exit(1);
-+    }
-+
-+    slot->size = int128_get64(section->size);
-+    slot->mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
-+    slot->start = section->offset_within_address_space;
-+    slot->lend = lend;
-+
-+    gumr.label = slot->id;
-+    gumr.flags = flags;
-+    gumr.guest_phys_addr = slot->start;
-+    gumr.memory_size = slot->size;
-+    gumr.userspace_addr = (__u64) slot->mem;
-+
-+    /*
-+     * GH_VM_ANDROID_LEND_USER_MEM is temporary, until
-+     * GH_VM_SET_USER_MEM_REGION is enhanced to support lend option also.
-+     */
-+    if (lend) {
-+        ret = gunyah_vm_ioctl(GH_VM_ANDROID_LEND_USER_MEM, &gumr);
-+    } else {
-+        ret = gunyah_vm_ioctl(GH_VM_SET_USER_MEM_REGION, &gumr);
-+    }
-+
-+    if (ret) {
-+        error_report("failed to add mem (%s)", strerror(errno));
-+        exit(1);
-+    }
-+}
-+
-+static bool is_confidential_guest(void)
-+{
-+    return current_machine->cgs != NULL;
-+}
++#ifndef _LINUX_GUNYAH_H
++#define _LINUX_GUNYAH_H
 +
 +/*
-+ * Check if memory of a confidential VM needs to be split into two portions -
-+ * one private to it and other shared with host.
++ * Userspace interface for /dev/gunyah - gunyah based virtual machine
 + */
-+static bool split_mem(GUNYAHState *s,
-+        MemoryRegion *area, MemoryRegionSection *section)
-+{
-+    bool writeable = !area->readonly && !area->rom_device;
 +
-+    if (!is_confidential_guest()) {
-+        return false;
-+    }
++#include <linux/types.h>
++#include <linux/ioctl.h>
 +
-+    if (!s->swiotlb_size || section->size <= s->swiotlb_size) {
-+        return false;
-+    }
++#define GH_IOCTL_TYPE			'G'
 +
-+    /* Split only memory that can be written to by guest */
-+    if (!memory_region_is_ram(area) || !writeable) {
-+        return false;
-+    }
++/*
++ * ioctls for /dev/gunyah fds:
++ */
++#define GH_CREATE_VM			_IO(GH_IOCTL_TYPE, 0x0) /* Returns a Gunyah VM fd */
 +
-+    /* Have we reserved already? */
-+    if (qatomic_read(&s->preshmem_reserved)) {
-+        return false;
-+    }
++/*
++ * ioctls for VM fds
++ */
 +
-+    /* Do we have enough available memory? */
-+    if (section->size <= s->swiotlb_size) {
-+        return false;
-+    }
++/**
++ * enum gh_mem_flags - Possible flags on &struct gh_userspace_memory_region
++ * @GH_MEM_ALLOW_READ: Allow guest to read the memory
++ * @GH_MEM_ALLOW_WRITE: Allow guest to write to the memory
++ * @GH_MEM_ALLOW_EXEC: Allow guest to execute instructions in the memory
++ */
++enum gh_mem_flags {
++	GH_MEM_ALLOW_READ	= 1UL << 0,
++	GH_MEM_ALLOW_WRITE	= 1UL << 1,
++	GH_MEM_ALLOW_EXEC	= 1UL << 2,
++};
 +
-+    return true;
-+}
++/**
++ * struct gh_userspace_memory_region - Userspace memory descripion for GH_VM_SET_USER_MEM_REGION
++ * @label: Identifer to the region which is unique to the VM.
++ * @flags: Flags for memory parcel behavior. See &enum gh_mem_flags.
++ * @guest_phys_addr: Location of the memory region in guest's memory space (page-aligned)
++ * @memory_size: Size of the region (page-aligned)
++ * @userspace_addr: Location of the memory region in caller (userspace)'s memory
++ *
++ * See Documentation/virt/gunyah/vm-manager.rst for further details.
++ */
++struct gh_userspace_memory_region {
++	__u32 label;
++	__u32 flags;
++	__u64 guest_phys_addr;
++	__u64 memory_size;
++	__u64 userspace_addr;
++};
 +
-+static void gunyah_set_phys_mem(GUNYAHState *s,
-+        MemoryRegionSection *section, bool add)
-+{
-+    MemoryRegion *area = section->mr;
-+    bool writable = !area->readonly && !area->rom_device;
-+    enum gh_mem_flags flags = 0;
-+    uint64_t page_size = qemu_real_host_page_size();
-+    MemoryRegionSection mrs = *section;
-+    bool lend = is_confidential_guest(), split = false;
-+    struct gunyah_slot *slot;
++#define GH_VM_SET_USER_MEM_REGION	_IOW(GH_IOCTL_TYPE, 0x1, \
++						struct gh_userspace_memory_region)
 +
-+    /*
-+     * Gunyah hypervisor, at this time, does not support mapping memory
-+     * at low address (< 1GiB). Below code will be updated once
-+     * that limitation is addressed.
-+     */
-+    if (section->offset_within_address_space < GiB) {
-+        return;
-+    }
++/**
++ * struct gh_vm_dtb_config - Set the location of the VM's devicetree blob
++ * @guest_phys_addr: Address of the VM's devicetree in guest memory.
++ * @size: Maximum size of the devicetree including space for overlays.
++ *        Resource manager applies an overlay to the DTB and dtb_size should
++ *        include room for the overlay. A page of memory is typicaly plenty.
++ */
++struct gh_vm_dtb_config {
++	__u64 guest_phys_addr;
++	__u64 size;
++};
++#define GH_VM_SET_DTB_CONFIG	_IOW(GH_IOCTL_TYPE, 0x2, struct gh_vm_dtb_config)
 +
-+    if (!memory_region_is_ram(area)) {
-+        if (writable) {
-+            return;
-+        } else if (!memory_region_is_romd(area)) {
-+            /*
-+             * If the memory device is not in romd_mode, then we actually want
-+             * to remove the gunyah memory slot so all accesses will trap.
-+             */
-+             add = false;
-+        }
-+    }
++#define GH_VM_START		_IO(GH_IOCTL_TYPE, 0x3)
 +
-+    if (!QEMU_IS_ALIGNED(int128_get64(section->size), page_size) ||
-+        !QEMU_IS_ALIGNED(section->offset_within_address_space, page_size)) {
-+        error_report("Not page aligned");
-+        add = false;
-+    }
++/**
++ * enum gh_fn_type - Valid types of Gunyah VM functions
++ * @GH_FN_VCPU: create a vCPU instance to control a vCPU
++ *              &struct gh_fn_desc.arg is a pointer to &struct gh_fn_vcpu_arg
++ *              Return: file descriptor to manipulate the vcpu.
++ * @GH_FN_IRQFD: register eventfd to assert a Gunyah doorbell
++ *               &struct gh_fn_desc.arg is a pointer to &struct gh_fn_irqfd_arg
++ * @GH_FN_IOEVENTFD: register ioeventfd to trigger when VM faults on parameter
++ *                   &struct gh_fn_desc.arg is a pointer to &struct gh_fn_ioeventfd_arg
++ */
++enum gh_fn_type {
++	GH_FN_VCPU = 1,
++	GH_FN_IRQFD,
++	GH_FN_IOEVENTFD,
++};
 +
-+    gunyah_slots_lock(s);
++#define GH_FN_MAX_ARG_SIZE		256
 +
-+    slot = gunyah_find_overlap_slot(s,
-+            section->offset_within_address_space,
-+            int128_get64(section->size));
++/**
++ * struct gh_fn_vcpu_arg - Arguments to create a vCPU.
++ * @id: vcpu id
++ *
++ * Create this function with &GH_VM_ADD_FUNCTION using type &GH_FN_VCPU.
++ *
++ * The vcpu type will register with the VM Manager to expect to control
++ * vCPU number `vcpu_id`. It returns a file descriptor allowing interaction with
++ * the vCPU. See the Gunyah vCPU API description sections for interacting with
++ * the Gunyah vCPU file descriptors.
++ */
++struct gh_fn_vcpu_arg {
++	__u32 id;
++};
 +
-+    if (!add) {
-+        if (slot) {
-+            error_report("Memory slot removal not yet supported!");
-+            exit(1);
-+        }
-+        /* Nothing to be done as address range was not previously registered */
-+        goto done;
-+    } else {
-+        if (slot) {
-+            error_report("Overlapping slot registration not supported!");
-+            exit(1);
-+        }
-+    }
++/**
++ * enum gh_irqfd_flags - flags for use in gh_fn_irqfd_arg
++ * @GH_IRQFD_FLAGS_LEVEL: make the interrupt operate like a level triggered
++ *                        interrupt on guest side. Triggering IRQFD before
++ *                        guest handles the interrupt causes interrupt to
++ *                        stay asserted.
++ */
++enum gh_irqfd_flags {
++	GH_IRQFD_FLAGS_LEVEL		= 1UL << 0,
++};
 +
-+    if (area->readonly ||
-+        (!memory_region_is_ram(area) && memory_region_is_romd(area))) {
-+        flags = GH_MEM_ALLOW_READ | GH_MEM_ALLOW_EXEC;
-+    } else {
-+        flags = GH_MEM_ALLOW_READ | GH_MEM_ALLOW_WRITE | GH_MEM_ALLOW_EXEC;
-+    }
++/**
++ * struct gh_fn_irqfd_arg - Arguments to create an irqfd function.
++ *
++ * Create this function with &GH_VM_ADD_FUNCTION using type &GH_FN_IRQFD.
++ *
++ * Allows setting an eventfd to directly trigger a guest interrupt.
++ * irqfd.fd specifies the file descriptor to use as the eventfd.
++ * irqfd.label corresponds to the doorbell label used in the guest VM's devicetree.
++ *
++ * @fd: an eventfd which when written to will raise a doorbell
++ * @label: Label of the doorbell created on the guest VM
++ * @flags: see &enum gh_irqfd_flags
++ * @padding: padding bytes
++ */
++struct gh_fn_irqfd_arg {
++	__u32 fd;
++	__u32 label;
++	__u32 flags;
++	__u32 padding;
++};
 +
-+    split = split_mem(s, area, &mrs);
-+    if (split) {
-+        mrs.size -= s->swiotlb_size;
-+        gunyah_add_mem(s, &mrs, true, flags);
-+        lend = false;
-+        mrs.offset_within_region += mrs.size;
-+        mrs.offset_within_address_space += mrs.size;
-+        mrs.size = s->swiotlb_size;
-+        qatomic_set(&s->preshmem_reserved, true);
-+    }
++/**
++ * enum gh_ioeventfd_flags - flags for use in gh_fn_ioeventfd_arg
++ * @GH_IOEVENTFD_FLAGS_DATAMATCH: the event will be signaled only if the
++ *                                written value to the registered address is
++ *                                equal to &struct gh_fn_ioeventfd_arg.datamatch
++ */
++enum gh_ioeventfd_flags {
++	GH_IOEVENTFD_FLAGS_DATAMATCH	= 1UL << 0,
++};
 +
-+    gunyah_add_mem(s, &mrs, lend, flags);
++/**
++ * struct gh_fn_ioeventfd_arg - Arguments to create an ioeventfd function
++ * @datamatch: data used when GH_IOEVENTFD_DATAMATCH is set
++ * @addr: Address in guest memory
++ * @len: Length of access
++ * @fd: When ioeventfd is matched, this eventfd is written
++ * @flags: See &enum gh_ioeventfd_flags
++ * @padding: padding bytes
++ *
++ * Create this function with &GH_VM_ADD_FUNCTION using type &GH_FN_IOEVENTFD.
++ *
++ * Attaches an ioeventfd to a legal mmio address within the guest. A guest write
++ * in the registered address will signal the provided event instead of triggering
++ * an exit on the GH_VCPU_RUN ioctl.
++ */
++struct gh_fn_ioeventfd_arg {
++	__u64 datamatch;
++	__u64 addr;        /* legal mmio address */
++	__u32 len;         /* 1, 2, 4, or 8 bytes; or 0 to ignore length */
++	__s32 fd;
++	__u32 flags;
++	__u32 padding;
++};
 +
-+done:
-+    gunyah_slots_unlock(s);
-+}
++/**
++ * struct gh_fn_desc - Arguments to create a VM function
++ * @type: Type of the function. See &enum gh_fn_type.
++ * @arg_size: Size of argument to pass to the function. arg_size <= GH_FN_MAX_ARG_SIZE
++ * @arg: Pointer to argument given to the function. See &enum gh_fn_type for expected
++ *       arguments for a function type.
++ */
++struct gh_fn_desc {
++	__u32 type;
++	__u32 arg_size;
++	__u64 arg;
++};
 +
-+static void gunyah_region_add(MemoryListener *listener,
-+                           MemoryRegionSection *section)
-+{
-+    GUNYAHState *s = GUNYAH_STATE(current_accel());
++#define GH_VM_ADD_FUNCTION	_IOW(GH_IOCTL_TYPE, 0x4, struct gh_fn_desc)
++#define GH_VM_REMOVE_FUNCTION	_IOW(GH_IOCTL_TYPE, 0x7, struct gh_fn_desc)
 +
-+    gunyah_set_phys_mem(s, section, true);
-+}
++/*
++ * ioctls for vCPU fds
++ */
 +
-+static void gunyah_region_del(MemoryListener *listener,
-+                           MemoryRegionSection *section)
-+{
-+    GUNYAHState *s = GUNYAH_STATE(current_accel());
++/**
++ * enum gh_vm_status - Stores status reason why VM is not runnable (exited).
++ * @GH_VM_STATUS_LOAD_FAILED: VM didn't start because it couldn't be loaded.
++ * @GH_VM_STATUS_EXITED: VM requested shutdown/reboot.
++ *                       Use &struct gh_vm_exit_info.reason for further details.
++ * @GH_VM_STATUS_CRASHED: VM state is unknown and has crashed.
++ */
++enum gh_vm_status {
++	GH_VM_STATUS_LOAD_FAILED	= 1,
++	GH_VM_STATUS_EXITED		= 2,
++	GH_VM_STATUS_CRASHED		= 3,
++};
 +
-+    gunyah_set_phys_mem(s, section, false);
-+}
++/*
++ * Gunyah presently sends max 4 bytes of exit_reason.
++ * If that changes, this macro can be safely increased without breaking
++ * userspace so long as struct gh_vcpu_run < PAGE_SIZE.
++ */
++#define GH_VM_MAX_EXIT_REASON_SIZE	8u
 +
-+void gunyah_set_swiotlb_size(uint64_t size)
-+{
-+    GUNYAHState *s = GUNYAH_STATE(current_accel());
++/**
++ * struct gh_vm_exit_info - Reason for VM exit as reported by Gunyah
++ * See Gunyah documentation for values.
++ * @type: Describes how VM exited
++ * @padding: padding bytes
++ * @reason_size: Number of bytes valid for `reason`
++ * @reason: See Gunyah documentation for interpretation. Note: these values are
++ *          not interpreted by Linux and need to be converted from little-endian
++ *          as applicable.
++ */
++struct gh_vm_exit_info {
++	__u16 type;
++	__u16 padding;
++	__u32 reason_size;
++	__u8 reason[GH_VM_MAX_EXIT_REASON_SIZE];
++};
 +
-+    s->swiotlb_size = size;
-+}
++/**
++ * enum gh_vcpu_exit - Stores reason why &GH_VCPU_RUN ioctl recently exited with status 0
++ * @GH_VCPU_EXIT_UNKNOWN: Not used, status != 0
++ * @GH_VCPU_EXIT_MMIO: vCPU performed a read or write that could not be handled
++ *                     by hypervisor or Linux. Use @struct gh_vcpu_run.mmio for
++ *                     details of the read/write.
++ * @GH_VCPU_EXIT_STATUS: vCPU not able to run because the VM has exited.
++ *                       Use @struct gh_vcpu_run.status for why VM has exited.
++ */
++enum gh_vcpu_exit {
++	GH_VCPU_EXIT_UNKNOWN,
++	GH_VCPU_EXIT_MMIO,
++	GH_VCPU_EXIT_STATUS,
++};
 +
- void *gunyah_cpu_thread_fn(void *arg)
- {
-     CPUState *cpu = arg;
-diff --git a/accel/stubs/gunyah-stub.c b/accel/stubs/gunyah-stub.c
-index 1edbe1433e..2028fa04c7 100644
---- a/accel/stubs/gunyah-stub.c
-+++ b/accel/stubs/gunyah-stub.c
-@@ -11,3 +11,8 @@
- #include "sysemu/gunyah.h"
- 
- bool gunyah_allowed;
++/**
++ * struct gh_vcpu_run - Application code obtains a pointer to the gh_vcpu_run
++ *                      structure by mmap()ing a vcpu fd.
++ * @immediate_exit: polled when scheduling the vcpu. If set, immediately returns -EINTR.
++ * @padding: padding bytes
++ * @exit_reason: Set when GH_VCPU_RUN returns successfully and gives reason why
++ *               GH_VCPU_RUN has stopped running the vCPU. See &enum gh_vcpu_exit.
++ * @mmio: Used when exit_reason == GH_VCPU_EXIT_MMIO
++ *        The guest has faulted on an memory-mapped I/O instruction that
++ *        couldn't be satisfied by gunyah.
++ * @mmio.phys_addr: Address guest tried to access
++ * @mmio.data: the value that was written if `is_write == 1`. Filled by
++ *        user for reads (`is_write == 0`).
++ * @mmio.len: Length of write. Only the first `len` bytes of `data`
++ *       are considered by Gunyah.
++ * @mmio.is_write: 1 if VM tried to perform a write, 0 for a read
++ * @status: Used when exit_reason == GH_VCPU_EXIT_STATUS.
++ *          The guest VM is no longer runnable. This struct informs why.
++ * @status.status: See &enum gh_vm_status for possible values
++ * @status.exit_info: Used when status == GH_VM_STATUS_EXITED
++ */
++struct gh_vcpu_run {
++	/* in */
++	__u8 immediate_exit;
++	__u8 padding[7];
 +
-+void gunyah_set_swiotlb_size(uint64_t size)
-+{
-+    return;
-+}
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index fee1e5dab5..3b0fcf812f 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2136,6 +2136,10 @@ static int confidential_guest_init(MachineState *ms)
-         return -1;
-     }
- 
-+    if (gunyah_enabled()) {
-+        gunyah_set_swiotlb_size(obj->swiotlb_size);
-+    }
++	/* out */
++	__u32 exit_reason;
 +
-     acg = obj;
-     cgs->ready = true;
- 
++	union {
++		struct {
++			__u64 phys_addr;
++			__u8  data[8];
++			__u32 len;
++			__u8  is_write;
++		} mmio;
++
++		struct {
++			enum gh_vm_status status;
++			struct gh_vm_exit_info exit_info;
++		} status;
++	};
++};
++
++#define GH_VCPU_RUN		_IO(GH_IOCTL_TYPE, 0x5)
++#define GH_VCPU_MMAP_SIZE	_IO(GH_IOCTL_TYPE, 0x6)
++
++/**
++ * ANDROID: android14-6.1 unfortunately contains UAPI that won't be carried
++ * in kernel.org. Expose orthogonal ioctls that will never conflict with
++ * kernel.org for these UAPIs. See b/268234781.
++ */
++#define GH_ANDROID_IOCTL_TYPE		'A'
++
++#define GH_VM_ANDROID_LEND_USER_MEM	_IOW(GH_ANDROID_IOCTL_TYPE, 0x11, \
++						struct gh_userspace_memory_region)
++
++struct gh_vm_firmware_config {
++	__u64 guest_phys_addr;
++	__u64 size;
++};
++
++#define GH_VM_ANDROID_SET_FW_CONFIG	_IOW(GH_ANDROID_IOCTL_TYPE, 0x12, \
++						struct gh_vm_firmware_config)
++
++#endif
 -- 
 2.25.1
 
