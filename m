@@ -4,93 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A498C25B77
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 16:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37723C25B77
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 16:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7dsa-0006ls-Js; Thu, 16 May 2024 12:22:52 -0400
+	id 1s7dts-0008Rt-0N; Thu, 16 May 2024 12:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7dsY-0006jn-AU
- for qemu-devel@nongnu.org; Thu, 16 May 2024 12:22:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1s7dtW-0008J3-5I; Thu, 16 May 2024 12:23:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7dsW-0003T8-Bc
- for qemu-devel@nongnu.org; Thu, 16 May 2024 12:22:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715876567;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+mCAZ8OaVc+WJ3tJ2YIXz/UNCD9ySRcbIg/PJUqv7JI=;
- b=JknGX8Zd/+YjOdVQkyF+P7+myTSw11rmlvq398oyJXKhgGfBqsH/8zaM3tkSVLOl6K/g1f
- uFzpzpFssAuPzjl4Qz0HMR9HQv5B52JJXe4Li5+uefksR0JSeUv4CQtJIr7TXghOwSjFyr
- m/iTMFCwlLVAOB7xk9Mq7VZwkZPjs3s=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-DgD0ADqbPVeRk_Y8RK61sg-1; Thu, 16 May 2024 12:22:45 -0400
-X-MC-Unique: DgD0ADqbPVeRk_Y8RK61sg-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-622ccd54631so93677817b3.0
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 09:22:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715876564; x=1716481364;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+mCAZ8OaVc+WJ3tJ2YIXz/UNCD9ySRcbIg/PJUqv7JI=;
- b=ptbfFf+j1Vnd+WOCXDIGtVrRrjVHXbt3aEAJdzNTs6kttwK6IWGhX/KVTjW4MvlGfm
- hq0MKzrNkphAnF39b5R9UITs8Mgmp8yOwtFKi9YTX0HMYNF7QT+mAHxJL4dmIMyedLbf
- BBlsQphvn6YE8wvDHMpsMeRNqp6+e7YiaC00oP5UzxnMV8ick2Pg4K1Z2hxpVUCc7H0G
- TPixC+VJ1C3I/n7Z1TbS5fFsor8EJuf0bkfEqYLnYZ/dU6CbPjx39SwZRrC1SNzVGEwU
- Anjac1iSjxaJ+3Ii5mTnLQ9ujJpWEf625fg3zuzKzsUH/vxYImL4NFSqVQpUSBVCr7TR
- shuw==
-X-Gm-Message-State: AOJu0YycZ8SkY/eBHEoYSpTtOl9WeiQ0ts9guFZMqFbRe8zwjJd8HuXa
- JBrVFoiTHJvxeisB28sbHAPkbUcVRQFucPz82gl5JCyBtZz04gS5KnBsUcZSQdOPYSBabb7DpWj
- XtrZVTJp5adnb9Gju4kJ2lrXqaBBIeR37LdvHKYJrkfOAqw6Y7R1gmlZzKBGx8ej5oVZeqei/LU
- cthci+Yw+HK6JnCRAHmtSAQ2JYMzTk7A==
-X-Received: by 2002:a05:690c:7092:b0:617:cfb8:4e50 with SMTP id
- 00721157ae682-622aff5b3d8mr233428267b3.17.1715876563965; 
- Thu, 16 May 2024 09:22:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGSi1qgny8O0ZlE18ahEtGLdOFmgcIPadtexttqWEFL9TNKKPFaZ38ioGQRUJahFE1aA9vAw==
-X-Received: by 2002:a05:690c:7092:b0:617:cfb8:4e50 with SMTP id
- 00721157ae682-622aff5b3d8mr233427887b3.17.1715876563482; 
- Thu, 16 May 2024 09:22:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43df54f216esm100098461cf.31.2024.05.16.09.22.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 09:22:42 -0700 (PDT)
-Message-ID: <9b81c30f-badb-49ea-a18f-e248ed0bfbda@redhat.com>
-Date: Thu, 16 May 2024 18:22:39 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1s7dtT-0003Yv-NC; Thu, 16 May 2024 12:23:49 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44GGH5ZY012517; Thu, 16 May 2024 16:23:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=QblUrjQl1JpgpqL/7InVY6qt6PjyamvFNRy0ynRgfHQ=;
+ b=m8EVNgon40CcUddEMWPDq6T7falTMSeYcJjI+XMJO7HRCYfeZ7gsT8z5YllY6cWuIoTo
+ CiDBN79BY9Aeyolj3NvJ/jTJ9lhTaYkg1z9Bz1xgxzclPHSNjQzMZ5jcr8/4kB5g71E3
+ ZLgbwuWNK6vaBbG2KO7OdmBYGe9tWitcPkLcqahM7zOMYcBjK/MWyI+E/PSzuzGS9XM3
+ bdzFFmmPYnYC10fzcdhMQcBdsKQ6oNcGJiIgkU3hv7RPu571oJFoVd1wtcDI3b84N5Go
+ RpsBIA8hiKCS4JJ1kpCOr7FgMAqK7hWSD68A5vAWfJT6TmIlq7aeudLwP0WSXAhq9ZAr gQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5kpu0ay8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 16:23:42 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44GGNfsA022813;
+ Thu, 16 May 2024 16:23:41 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5kpu0ay6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 16:23:41 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44GDVRjR020368; Thu, 16 May 2024 16:23:40 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2kd0b311-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 16:23:40 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44GGNYED57409942
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 May 2024 16:23:36 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA5BD2004B;
+ Thu, 16 May 2024 16:23:33 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CF19F2004D;
+ Thu, 16 May 2024 16:23:31 +0000 (GMT)
+Received: from [9.171.75.240] (unknown [9.171.75.240])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 May 2024 16:23:31 +0000 (GMT)
+Message-ID: <3fb57ce4-e3a5-4053-9847-7654ebd2413b@linux.vnet.ibm.com>
+Date: Thu, 16 May 2024 21:53:30 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/9] vfio: Improve error reporting (part 2)
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20240516124658.850504-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240516124658.850504-1-clg@redhat.com>
+Subject: Re: [PATCH 1/1] target/ppc: Move VMX integer add/sub saturate insns
+ to decodetree.
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com, lucas.araujo@eldorado.org.br
+References: <20240512093847.18099-1-rathc@linux.ibm.com>
+ <20240512093847.18099-2-rathc@linux.ibm.com>
+ <c5eeb863-93af-4a03-a392-4eaf999d6643@linaro.org>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <c5eeb863-93af-4a03-a392-4eaf999d6643@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 3brQoSnH_J7MP2sk-8AdGsL7iFbRMzlT
+X-Proofpoint-GUID: 41J9rJ0MCQtsuwaMQL09JUMapnRCMDxa
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ mlxlogscore=904 clxscore=1015 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405160116
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,113 +120,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/16/24 14:46, Cédric Le Goater wrote:
-> Hello,
-> 
-> The motivation behind these changes is to improve error reporting to
-> the upper management layer (libvirt) with a more detailed error, this
-> to let it decide, depending on the reported error, whether to try
-> migration again later. It would be useful in cases where migration
-> fails due to lack of HW resources on the host. For instance, some
-> adapters can only initiate a limited number of simultaneous dirty
-> tracking requests and this imposes a limit on the the number of VMs
-> that can be migrated simultaneously.
-> 
-> We are not quite ready for such a mechanism but what we can do first is
-> to cleanup the error reporting in the early save_setup sequence. This
-> is what the following changes propose, by adding an Error** argument to
-> various handlers and propagating it to the core migration subsystem.
-> 
-> The first part [1] of this series modifying the core migration
-> subsystem is now merged. This is the second part changing VFIO which
-> was already proposed in March. See [2].
-> 
-> Thanks,
-> 
-> C.
-> 
-> [1] [PATCH for-9.1 v5 00/14] migration: Improve error reporting
->      https://lore.kernel.org/qemu-devel/20240320064911.545001-1-clg@redhat.com/
-> 
-> [2] [PATCH v4 00/25] migration: Improve error reporting
->      https://lore.kernel.org/qemu-devel/20240306133441.2351700-1-clg@redhat.com/
-> 
-> Changes in v7:
-> 
->   - Commit log improvements (Eric)
->   - vfio_set_migration_error() : err -> ret rename (Eric)
->   - vfio_migration_set_state() :
->     Introduced an error prefix to remove redundancy in error messages (Eric)
->     Commented error_report when setting the device in recover state fails (Eric)
->   - vfio_migration_state_notifier() :
->     Remove useless assignment of local ret variable (Avihai)
->     Rephrased comment regarding MigrationNotifyFunc API (Avihai)
->   - Fixed even more line wrapping of *dirty_bitmap() routines (Avihai)
->   - vfio_sync_dirty_bitmap()
->     Fixed return when vfio_sync_ram_discard_listener_dirty_bitmap() is called (Avihai)
+Hi Richard,
 
-I fixed this last issue as commented in patch 8. Let's address other
-issues, if minor, with followup patches.
-
-Applied to vfio-next.
-
-Thanks,
-
-C.
-
-
-> 
-> Changes in v6:
-> 
->   - Commit log improvements (Avihai)
->   - Modified some titles (Avihai)
->   - vfio_migration_set_state() : Dropped the error_setg_errno()
->     change when setting device in recover state fails  (Avihai)
->   - vfio_migration_state_notifier() : report local error (Avihai)
->   - vfio_save_device_config_state() : Set errp if the migration
->     stream is in error (Avihai)
->   - vfio_save_state() : Changed error prefix  (Avihai)
->   - vfio_iommu_map_dirty_notify() : Modified goto label  (Avihai)
->   - Fixed memory_get_xlat_addr documentation (Avihai)
->   - Fixed line wrapping (Avihai)
->   - Fixed query_dirty_bitmap documentation (Avihai)
->   - Dropped last patch from v5 :
->     vfio: Extend vfio_set_migration_error() with Error* argument
-> 
-> Changes in v5:
-> 
->   - Rebased on 20c64c8a51a4 ("migration: migration_file_set_error")
->   - Fixed typo in set_dirty_page_tracking documentation
->   - Used error_setg_errno() in vfio_devices_dma_logging_start()
->   - Replaced error_setg() by error_setg_errno() in vfio_migration_set_state()
->   - Replaced error_setg() by error_setg_errno() in
->     vfio_devices_query_dirty_bitmap() and vfio_legacy_query_dirty_bitmap()
->   - ':' -> '-' in vfio_iommu_map_dirty_notify()
-> 
-> Cédric Le Goater (9):
->    vfio: Add Error** argument to .set_dirty_page_tracking() handler
->    vfio: Add Error** argument to vfio_devices_dma_logging_start()
->    migration: Extend migration_file_set_error() with Error* argument
->    vfio/migration: Add an Error** argument to vfio_migration_set_state()
->    vfio/migration: Add Error** argument to .vfio_save_config() handler
->    vfio: Reverse test on vfio_get_xlat_addr()
->    memory: Add Error** argument to memory_get_xlat_addr()
->    vfio: Add Error** argument to .get_dirty_bitmap() handler
->    vfio: Also trace event failures in vfio_save_complete_precopy()
-> 
->   include/exec/memory.h                 |  15 +++-
->   include/hw/vfio/vfio-common.h         |  30 ++++++-
->   include/hw/vfio/vfio-container-base.h |  37 +++++++--
->   include/migration/misc.h              |   2 +-
->   hw/vfio/common.c                      | 113 ++++++++++++++++----------
->   hw/vfio/container-base.c              |  10 +--
->   hw/vfio/container.c                   |  20 +++--
->   hw/vfio/migration.c                   | 109 ++++++++++++++++---------
->   hw/vfio/pci.c                         |   5 +-
->   hw/virtio/vhost-vdpa.c                |   5 +-
->   migration/migration.c                 |   6 +-
->   system/memory.c                       |  10 +--
->   12 files changed, 246 insertions(+), 116 deletions(-)
-> 
-
+On 5/12/24 17:08, Richard Henderson wrote:
+> On 5/12/24 11:38, Chinmay Rath wrote:
+>> @@ -2934,6 +2870,184 @@ static bool do_vx_vaddsubcuw(DisasContext 
+>> *ctx, arg_VX *a, int add)
+>>       return true;
+>>   }
+>>   +static inline void do_vadd_vsub_sat
+>> +(
+>> +    unsigned vece, TCGv_vec t, TCGv_vec sat, TCGv_vec a, TCGv_vec b,
+>> +    void (*norm_op)(unsigned, TCGv_vec, TCGv_vec, TCGv_vec),
+>> +    void (*sat_op)(unsigned, TCGv_vec, TCGv_vec, TCGv_vec))
+>> +{
+>> +    TCGv_vec x = tcg_temp_new_vec_matching(t);
+>> +    norm_op(vece, x, a, b);
+>> +    sat_op(vece, t, a, b);
+>> +    tcg_gen_cmp_vec(TCG_COND_NE, vece, x, x, t);
+>> +    tcg_gen_or_vec(vece, sat, sat, x);
+>> +}
+>
+> As a separate change, before or after, the cmp_vec may be simplified 
+> to xor_vec.  Which means that INDEX_op_cmp_vec need not be probed in 
+> the vecop_lists.  See
+>
+> https://lore.kernel.org/qemu-devel/20240506010403.6204-31-richard.henderson@linaro.org/ 
+>
+>
+> which is performing the same operation on AArch64.
+>
+Noted ! Will do.
+>
+>> +static bool do_vx_vadd_vsub_sat(DisasContext *ctx, arg_VX *a,
+>> +                                int sign, int vece, int add)
+>> +{
+>> +    static const TCGOpcode vecop_list_sub_u[] = {
+>> +        INDEX_op_sub_vec, INDEX_op_ussub_vec, INDEX_op_cmp_vec, 0
+>> +    };
+>> +    static const TCGOpcode vecop_list_sub_s[] = {
+>> +        INDEX_op_sub_vec, INDEX_op_sssub_vec, INDEX_op_cmp_vec, 0
+>> +    };
+>> +    static const TCGOpcode vecop_list_add_u[] = {
+>> +        INDEX_op_add_vec, INDEX_op_usadd_vec, INDEX_op_cmp_vec, 0
+>> +    };
+>> +    static const TCGOpcode vecop_list_add_s[] = {
+>> +        INDEX_op_add_vec, INDEX_op_ssadd_vec, INDEX_op_cmp_vec, 0
+>> +    };
+>> +
+>> +    static const GVecGen4 op[2][3][2] = {
+>> +        {
+>> +            {
+>> +                {
+>> +                    .fniv = gen_vsub_sat_u,
+>> +                    .fno = gen_helper_VSUBUBS,
+>> +                    .opt_opc = vecop_list_sub_u,
+>> +                    .write_aofs = true,
+>> +                    .vece = MO_8
+>> +                },
+.
+.
+.
+>> +                {
+>> +                    .fniv = gen_vadd_sat_s,
+>> +                    .fno = gen_helper_VADDSWS,
+>> +                    .opt_opc = vecop_list_add_s,
+>> +                    .write_aofs = true,
+>> +                    .vece = MO_32
+>> +                },
+>> +            },
+>> +        },
+>> +    };
+>
+> While this table is not wrong, I think it is clearer to have separate 
+> tables, one per operation, which are then passed in to a common expander.
+>
+>> +
+>> +    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
+>> +    REQUIRE_VECTOR(ctx);
+>> +
+>> +    tcg_gen_gvec_4(avr_full_offset(a->vrt), offsetof(CPUPPCState, 
+>> vscr_sat),
+>> +                   avr_full_offset(a->vra), avr_full_offset(a->vrb), 
+>> 16, 16,
+>> +                   &op[sign][vece][add]);
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +TRANS(VSUBUBS, do_vx_vadd_vsub_sat, 0, MO_8, 0)
+>
+> I think it is clearer to use TRANS_FLAGS than to sink the ISA check 
+> into the helper.  In general I seem to find the helper later gets 
+> reused for something else with a different ISA check.
+>
+> Thus
+>
+> static const TCGOpcode vecop_list_vsub_sat_u[] = {
+>     INDEX_op_sub_vec, INDEX_op_ussub_vec, 0
+> };
+> static const GVecGen4 op_vsububs = {
+>     .fno = gen_helper_VSUBUBS,
+>     .fniv = gen_vsub_sat_u,
+>     .opt_opc = vecop_list_vsub_sat_u,
+>     .write_aofs = true,
+>     .vece = MO_8
+> };
+> TRANS_FLAGS(VSUBUBS, do_vx_vadd_vsub_sat, &op_vsububs)
+>
+> static const GVecGen4 op_vsubuhs = {
+>     .fno = gen_helper_VSUBUHS,
+>     .fniv = gen_vsub_sat_u,
+>     .opt_opc = vecop_list_vsub_sat_u,
+>     .write_aofs = true,
+>     .vece = MO_16
+> };
+> TRANS_FLAGS(VSUBUHS, do_vx_vadd_vsub_sat, &op_vsubuhs)
+>
+> etc.
+>
+Will add those changes in v2.
+>> -GEN_VXFORM_DUAL(vaddubs, vmul10uq, 0, 8, PPC_ALTIVEC, PPC_NONE),
+>
+> You are correct in your cover letter that this is not right.
+> We should have been testing ISA300 for vmul10uq here.
+>
+Thank you very much for the clarification !
+>> +GEN_VXFORM(vmul10euq, 0, 9),
+>
+> And thus need GEN_VXFORM_300 here.
+>
+>> +GEN_VXFORM(vmul10euq, 0, 9),
+>> +GEN_VXFORM(bcdcpsgn, 0, 13),
+>> +GEN_VXFORM(bcdadd, 0, 24),
+>> +GEN_VXFORM(bcdsub, 0, 25),
+> ...
+>> +GEN_VXFORM(xpnd04_2, 0, 30),
+>
+> None of these are in the base ISA, so all need a flag check.
+>
+>
+>
+> r~
+>
+Thanks & Regards,
+Chinmay
 
