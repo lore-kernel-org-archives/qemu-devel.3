@@ -4,83 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2BBC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 05:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C16C25B77
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 05:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7TNz-0003vh-73; Thu, 16 May 2024 01:10:35 -0400
+	id 1s7TjZ-00033D-NK; Thu, 16 May 2024 01:32:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s7TNr-0003uz-NQ; Thu, 16 May 2024 01:10:28 -0400
-Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s7TNp-0006AK-DW; Thu, 16 May 2024 01:10:27 -0400
-Received: by mail-vk1-xa35.google.com with SMTP id
- 71dfb90a1353d-4e1513b8829so369544e0c.3; 
- Wed, 15 May 2024 22:10:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715836224; x=1716441024; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mWiglJg0pVMLpd6q+xzywXY5WHRF0H5vl6FEj4Kvizc=;
- b=AY/4X1kiozXDM91+NC0AEZfL9nzydvW5xUKCUZ/3WdAtTY0lsFcAJ2HOBiDkhSTq9y
- 0toCh2eBFcuCOI5T90DRNGUTymJ2qaKIdgGJ1CKlWkgPhe9gtyfKnwAzUvlz41yteBgk
- x8UUG3qFmfMPEMob6vTiXwd+iGM2Nym9gnW5MYy5cJ2IA9JIBfZAtgITq6ApzPq1dPVt
- Zw3QH3A3kceWZV+3E5uQszNDfihdyHetSrFS4sWv2g1G+5uI0vONDldmqST1rq6Thd99
- vV6OqLXEhUplOQmpjL8oTQYHHLKu0AJXUVBi1ixrMBJDqW0TJMVgQZ0rYGzaTriYAlkY
- 1fGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715836224; x=1716441024;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mWiglJg0pVMLpd6q+xzywXY5WHRF0H5vl6FEj4Kvizc=;
- b=TZLHT0vZBX6C7ZZcz4OX575Tbu4+r6ebg5fgcMUbvs6OiTmEcMtcFH0Niu1+A/Wm0b
- RsKPl9IeYOR9rxsUM3SqSeUTLUfDzah8hec7oCO/sGaFQgKZCNIyLvTsN7O0993il5o2
- f0sR2zhQ3n8oDUYpVGZm4iAdxUKcZpKCTpWbF7YzjzHQrz3Egg8vOXRKFaul+RL9/xxt
- sB8DMb2IbE4kalAMYcoKs60Dy1cBq+9Ysf36UO66GQUQTKRfmYzBpF5Hml3bzaSl3KFb
- SGOFTYw0jgXXqTa+yet4u8BEQCZxk63BWyadjz4e0RK6k9ohEZMTjBAb+YaU8QF9LPr2
- 6hHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXE13KFNRUdcg7fMbxr+zcrdfg17S83eoQ1c2mcFLE1xW+dsh8wBhE0sOdPdvH9Zkfm45qCzXcuI0WXDSh3TVzS1fKWLrk=
-X-Gm-Message-State: AOJu0Yww7mDBX1nzWV4OmXxtcAr1E298bK+Ir8rckfk2pryHiXf5hTca
- jZ8ySQrI3yF735fzAdXhnuFJB0CmjU7ZS9hwHOrO3cDyzQ4ZYHcN5qzR1QighGyEp7NGjLPhg+K
- 7fF/rkrjDnufq8cQ5kUZnFRyjx2A=
-X-Google-Smtp-Source: AGHT+IFMAWzRprTfVJoZWJFJrJQpRTRy2OHM1ehKdpGdzXImib9kJ3yH5Q2eV7Ox6WYEroEXitmn1xWiKwIy+TT4vNE=
-X-Received: by 2002:a05:6122:2018:b0:4d3:3846:73bb with SMTP id
- 71dfb90a1353d-4df882c5cd8mr16886290e0c.7.1715836223738; Wed, 15 May 2024
- 22:10:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s7TjQ-00032e-MH; Thu, 16 May 2024 01:32:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s7TjP-0005da-3s; Thu, 16 May 2024 01:32:44 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44G4xCAw014355; Thu, 16 May 2024 05:32:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=u5nUcOOzm7QvDOlxuhR8wow1ilAy/PMO5KzzFNCX8P8=;
+ b=N4Y+N4cHlEyaWR2QGJejQTu+NNMsrGvAd2m6YbUJ4uF8D4brdwKFwSVnGNB9H1m8xQED
+ NeH/6LOxSykPVHk3hHLd7XDF0v1kKpDHZ4gmVmVQut60WHnhXLP4huqLtXs9MhU4Kwup
+ oE2ucLP32/EU5LBo9wrwjeqcdfzMYR4vCLxRaGl2xf0UWqa8tW0A7C0YaucyI07kV4Co
+ mdIsiQPMZpeqVy/EqoH8tKhVQJCd/TAwdVCau1BI/lltACO2bjIOrBy7aYwXsfdLmuZR
+ 1mya71gVBzJoRF/Bk2gfZCO4yYY5pIMuiwUj8pgbSHPS8KQMVPfEXUxYd3YgQvFr4GmK Ig== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5bbk04b9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 05:32:34 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44G5WYnx007107;
+ Thu, 16 May 2024 05:32:34 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5bbk04b6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 05:32:34 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44G3KLQI020349; Thu, 16 May 2024 05:32:33 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2kd08asc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 05:32:32 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44G5WRdS45678988
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 May 2024 05:32:29 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2FB332004B;
+ Thu, 16 May 2024 05:32:27 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1EB0F20040;
+ Thu, 16 May 2024 05:32:25 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com (unknown
+ [9.79.188.146]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 May 2024 05:32:24 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: npiggin@gmail.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: danielhb413@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com,
+ salil.mehta@huawei.com
+Subject: [PATCH v2 3/4] cpu-common.c: export cpu_get_free_index to be reused
+ later
+Date: Thu, 16 May 2024 11:02:10 +0530
+Message-Id: <20240516053211.145504-4-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240516053211.145504-1-harshpb@linux.ibm.com>
+References: <20240516053211.145504-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240514023910.301766-1-alistair.francis@wdc.com>
- <14e88990-963c-45ef-bf51-662d54857c6e@ventanamicro.com>
-In-Reply-To: <14e88990-963c-45ef-bf51-662d54857c6e@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 May 2024 15:09:57 +1000
-Message-ID: <CAKmqyKP5dwLnvuXDbJkDV=CCGAsoVuyES7m+NB=7KceFEHoKzQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: rvzicbo: Fixup CBO extension register
- calculation
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@dabbelt.com, bin.meng@windriver.com, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, fabian.thomas@cispa.de, 
- Bin Meng <bmeng.cn@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xLxbcWmgAvnUQPq9d70bWpzuBBMzaVQZ
+X-Proofpoint-GUID: 9x8epw0AlueFhm6WaeVtemyiaVdxQR9V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-16_02,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=868 impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405160037
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,114 +114,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 14, 2024 at 7:11=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
->
->
-> On 5/13/24 23:39, Alistair Francis wrote:
-> > When running the instruction
-> >
-> > ```
-> >      cbo.flush 0(x0)
-> > ```
-> >
-> > QEMU would segfault.
-> >
-> > The issue was in cpu_gpr[a->rs1] as QEMU does not have cpu_gpr[0]
-> > allocated.
-> >
-> > In order to fix this let's use the existing get_address()
-> > helper. This also has the benefit of performing pointer mask
-> > calculations on the address specified in rs1.
-> >
-> > The pointer masking specificiation specifically states:
-> >
-> > """
-> > Cache Management Operations: All instructions in Zicbom, Zicbop and Zic=
-boz
-> > """
-> >
-> > So this is the correct behaviour and we previously have been incorrectl=
-y
-> > not masking the address.
-> >
-> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> > Reported-by: Fabian Thomas <fabian.thomas@cispa.de>
-> > Fixes: e05da09b7cfd ("target/riscv: implement Zicbom extension")
-> > ---
->
-> LGTM but I wonder if this is the same fix as this one sent by Phil a mont=
-h
-> ago or so:
->
-> https://lore.kernel.org/qemu-riscv/20240419110514.69697-1-philmd@linaro.o=
-rg/
-> ("[PATCH] target/riscv: Use get_address() to get address with Zicbom exte=
-nsions")
+This helper provides an easy way to identify the next available free cpu
+index which can be used for vcpu creation. Until now, this is being
+called at a very later stage and there is a need to be able to call it
+earlier (for now, with ppc64) hence the need to export.
 
-It is the same fix!
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ include/exec/cpu-common.h | 2 ++
+ cpu-common.c              | 7 ++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-I somehow missed that patch at the time. Sorry Philippe!
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 6d5318895a..0386f1ab29 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -29,6 +29,8 @@ void cpu_list_lock(void);
+ void cpu_list_unlock(void);
+ unsigned int cpu_list_generation_id_get(void);
+ 
++int cpu_get_free_index(void);
++
+ void tcg_iommu_init_notifier_list(CPUState *cpu);
+ void tcg_iommu_free_notifier_list(CPUState *cpu);
+ 
+diff --git a/cpu-common.c b/cpu-common.c
+index ce78273af5..82bd1b432d 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -57,14 +57,12 @@ void cpu_list_unlock(void)
+     qemu_mutex_unlock(&qemu_cpu_list_lock);
+ }
+ 
+-static bool cpu_index_auto_assigned;
+ 
+-static int cpu_get_free_index(void)
++int cpu_get_free_index(void)
+ {
+     CPUState *some_cpu;
+     int max_cpu_index = 0;
+ 
+-    cpu_index_auto_assigned = true;
+     CPU_FOREACH(some_cpu) {
+         if (some_cpu->cpu_index >= max_cpu_index) {
+             max_cpu_index = some_cpu->cpu_index + 1;
+@@ -83,8 +81,11 @@ unsigned int cpu_list_generation_id_get(void)
+ 
+ void cpu_list_add(CPUState *cpu)
+ {
++    static bool cpu_index_auto_assigned;
++
+     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+     if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
++        cpu_index_auto_assigned = true;
+         cpu->cpu_index = cpu_get_free_index();
+         assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+     } else {
+-- 
+2.39.3
 
-I'm going to merge this one as it includes the details about pointer
-masking, which I think is useful as that's why we are using
-get_address() instead of get_gpr()
-
-Alistair
-
->
->
-> Thanks,
->
-> Daniel
->
-> >   target/riscv/insn_trans/trans_rvzicbo.c.inc | 16 ++++++++++++----
-> >   1 file changed, 12 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv=
-/insn_trans/trans_rvzicbo.c.inc
-> > index d5d7095903..15711c3140 100644
-> > --- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
-> > +++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-> > @@ -31,27 +31,35 @@
-> >   static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
-> >   {
-> >       REQUIRE_ZICBOM(ctx);
-> > -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
-> > +
-> > +    gen_helper_cbo_clean_flush(tcg_env, src);
-> >       return true;
-> >   }
-> >
-> >   static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
-> >   {
-> >       REQUIRE_ZICBOM(ctx);
-> > -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
-> > +
-> > +    gen_helper_cbo_clean_flush(tcg_env, src);
-> >       return true;
-> >   }
-> >
-> >   static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
-> >   {
-> >       REQUIRE_ZICBOM(ctx);
-> > -    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
-> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
-> > +
-> > +    gen_helper_cbo_inval(tcg_env, src);
-> >       return true;
-> >   }
-> >
-> >   static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
-> >   {
-> >       REQUIRE_ZICBOZ(ctx);
-> > -    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
-> > +    TCGv src =3D get_address(ctx, a->rs1, 0);
-> > +
-> > +    gen_helper_cbo_zero(tcg_env, src);
-> >       return true;
-> >   }
 
