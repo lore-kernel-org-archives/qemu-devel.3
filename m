@@ -4,143 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A053BC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 19:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EE2C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 20:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7hEN-0001E0-QU; Thu, 16 May 2024 15:57:35 -0400
+	id 1s7hqG-0005Bk-Kv; Thu, 16 May 2024 16:36:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s7hEE-0001C6-2l
- for qemu-devel@nongnu.org; Thu, 16 May 2024 15:57:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1s7hqC-0005AJ-Sc
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 16:36:41 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s7hEB-0004DT-8T
- for qemu-devel@nongnu.org; Thu, 16 May 2024 15:57:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715889442;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XZrAGdL2yy7itxdPxNw4dGHuJWRBIMxVNdHPyNKpVMw=;
- b=OK62MsEEuMcdg/1ChhuAlm2b7QuVi49oahiSZzvpdW0hLByYtLux5VkLrxnGrHxjdkAytw
- d/W4IcybQhG0TpvC0VGnVvwrseM7U7SHPND+lPOdZeqERHG5AmWk30o1XpdRmbpM5Zrz2+
- e5Ez9a1e9D1yL/oQyBQrsTWxSUurQrs=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-mH7Ss9AZNWy-E3GhpIeubA-1; Thu, 16 May 2024 15:57:19 -0400
-X-MC-Unique: mH7Ss9AZNWy-E3GhpIeubA-1
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-7e1e409d1f4so535993039f.0
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:57:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715889438; x=1716494238;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XZrAGdL2yy7itxdPxNw4dGHuJWRBIMxVNdHPyNKpVMw=;
- b=PWkOWhtyVtJTW7vMuH6XAiOzXXR562JcRIW1WYlFYDuLUfW6ytdR1eieTNn2aNHY5S
- jtIBHiZM2prH5jB4WO3/lReSZbyzmzd81pYV4etJlNQAjfTRQ3WZ7E3eOfmd9yBGJL/w
- iTrYrBVTycnDWU/VecVUttSHsqzCZFQFQczFBGdC3kO4O+N1gJNGnU/X7ES3fncO6FEI
- UcQ+5usNlsNUwbFRf83ecZPfIVummwPIoKM+hmxnaAimWGG5+sM2lHe5fX4JHgrJ0ECk
- TSUMoPa6RGk15iDVFomgV+Jc8T6/5nF32/MmvGn4rx/f7X0f0cga1oNFHR4Y4pHkUzuN
- VYKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUIksxwQO/RLAsQ65o+gSgBwoy9ehNd/+/KHM3pmsvIl8OecSpAHIP42ls2Cm5OD/cZHhRTbrAIKsQIDKIuE4fF8VB++0=
-X-Gm-Message-State: AOJu0YxlTCQoY4UJDHOL+1fDcFP5wiVI5bDJFsxM3K40Fr/IRIvDIa38
- bvpY6UvnTx4tBbfAZ+ItVz3cPmq52u2+evXicqyHz8SVPonDRDP9xS/oMa2JBNoFukAUeQB4QgV
- JPWfKKAh4jUOk4mxZ5WXxalNfksQtdJM81vVZlGRzZuJEo5FgabT9V3Tk5oQ7
-X-Received: by 2002:a6b:720c:0:b0:7e1:5ea0:269a with SMTP id
- ca18e2360f4ac-7e1b522278bmr2137214239f.21.1715889438269; 
- Thu, 16 May 2024 12:57:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJrPIdPGoj1UhOKTY5HiktV41Se6NkBKqGIK6yxnAXtLBYoBJZyNlXXQ6aYtqDwujgAO+xcQ==
-X-Received: by 2002:a6b:720c:0:b0:7e1:5ea0:269a with SMTP id
- ca18e2360f4ac-7e1b522278bmr2137213039f.21.1715889437992; 
- Thu, 16 May 2024 12:57:17 -0700 (PDT)
-Received: from [10.21.161.194] ([65.132.165.41])
- by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4893700e294sm4197464173.36.2024.05.16.12.57.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 12:57:17 -0700 (PDT)
-Message-ID: <94297019-3940-450d-94ef-2d862ab55f66@redhat.com>
-Date: Thu, 16 May 2024 21:57:16 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1s7hqA-0005Dg-Th
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 16:36:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=ukQvhjy+lfoRas69TGGEOFuTc9MnHaqr2DUutMNupLU=; b=h5hKlFtlil6OSFgActWTIhmAYE
+ xKukx1djRRPJekmgX3KbCZ+yikwJUlWA98eFc8h0JTjU4U1apH/oKG8Gg4/LATinH3MQTGeFbnC9t
+ 7OTPhYebpohfDIp4peTW38pnSX3JoT2YtanbPuOXobUnqqEzj7LlcYquNpWT9m9WGAGkYJFQJTRYC
+ wZKw8gbDzv6oRJ3mnw+mZpUtBuNP7BJ8xYNCZWIW7WwcHj+vmfjpPwbvDF1h5Ad5Vep9x0/jIdyYb
+ uoHtruS7B6BIFd0TPLtJqMv/B1KdX8SBSEF6Mj1X0X5Sve0/0UGByFBD3aTu2gZaL61jKOtM+78XT
+ UqjsvY7woNzhQLIedPOTPDMaFqVIdjubIzXeBqZV+XT5t7G1VRSMw4P76RYd0BFUYi67LQtc4z8Z3
+ 7Dk60oLAEYwvRbcDigxuqdaYbtgz0GDSCej9jg7J+ouU8jpH9VfY174igED44yzZDkobmjqq3zx6H
+ rG/Z2E4QWIo6UkjVV81wfDH7l+6eLG7CAkUIb9q7AQkA0ak5A3t+dV5f2cezHBg1J+TBDhhtcAGqR
+ YYTnE4Vj1TTB25qJDu53yUrT2xKsFoUMBJULDLsv4l/wNSc3w74ZztKK/oAYUHhu/SMPZno3/iBXg
+ XlaxXIzYowL/z+bPqUJWBL8uRfXA9D2WI06dRDKiY=;
+Received: from [2a00:23c4:8bb4:4000:b9f5:bb19:df0e:ea5c]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1s7hoy-0003Y0-2K; Thu, 16 May 2024 21:35:24 +0100
+Message-ID: <a929e15f-f558-44a3-ae43-4c5b5bd2c1f5@ilande.co.uk>
+Date: Thu, 16 May 2024 21:36:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 6/8] xen: mapcache: Pass the ram_addr offset to
- xen_map_cache()
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- xen-devel@lists.xenproject.org
-References: <20240516154804.1114245-1-edgar.iglesias@gmail.com>
- <20240516154804.1114245-7-edgar.iglesias@gmail.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: atar4qemu@gmail.com
+References: <20240302051601.53649-1-richard.henderson@linaro.org>
+ <7b5e744c-7fc5-4bf2-9602-1d2cc97913be@ilande.co.uk>
+ <f38d59f4-3cf9-470e-962a-c888970b5a21@linaro.org>
+ <3048a39d-9d14-46f3-9672-317a034fa5b5@linaro.org>
 Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240516154804.1114245-7-edgar.iglesias@gmail.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <3048a39d-9d14-46f3-9672-317a034fa5b5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b9f5:bb19:df0e:ea5c
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 00/41] target/sparc: Implement VIS4
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,23 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.05.24 17:48, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Pass the ram_addr offset to xen_map_cache.
-> This is in preparation for adding grant mappings that need
-> to compute the address within the RAMBlock.
-> 
-> No functional changes.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
+On 15/05/2024 16:30, Richard Henderson wrote:
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+> On 4/29/24 23:02, Richard Henderson wrote:
+>> On 4/29/24 13:52, Mark Cave-Ayland wrote:
+>>> No objections here about the remainder of the series, other than that I don't have 
+>>> an easy/obvious way to test the new instructions...
+>>
+>> I was thinking about adding support to RISU, but the gcc compile farm sparc 
+>> machines have been down for ages, so no way to generate the reference traces.
+> 
+> Update: I have successfully ported RISU to Sparc64, Solaris and Linux.  There is a 
+> limitation in that I cannot find how to extract %gsr from the signal frame, which is 
+> unfortunate, but I can work around that for now.
+> 
+> I have added descriptions of VIS1 instructions to RISU, and it turns out we have 
+> failures relative to a Sparc M8.  I have not yet analyzed these failures, but it 
+> proves the effort was not wasted.  :-)
+> 
+> I'll clean up these patches and post them here when I next get some downtime.
+>  
+> r~
 
--- 
-Cheers,
+That's great news, thanks for the update. I've had confirmation that there is work 
+underway to repair the SPARC hardware hosting Linux for the gcc buildfarm, so 
+hopefully it will be back in service soon.
 
-David / dhildenb
+
+ATB,
+
+Mark.
 
 
