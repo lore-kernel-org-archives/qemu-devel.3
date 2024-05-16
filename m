@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C550CC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 15:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C366AC25B77
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 15:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7d3l-0008UK-0z; Thu, 16 May 2024 11:30:21 -0400
+	id 1s7dLQ-0008CY-Rl; Thu, 16 May 2024 11:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1s7d3f-0008SO-7E
- for qemu-devel@nongnu.org; Thu, 16 May 2024 11:30:19 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1s7dLL-000882-Mo
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 11:48:32 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1s7d3Z-000677-02
- for qemu-devel@nongnu.org; Thu, 16 May 2024 11:30:14 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42012c85e61so392915e9.0
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 08:30:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1s7dL6-0002uH-FZ
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 11:48:30 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2e538a264e0so12460501fa.1
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 08:48:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1715873406; x=1716478206; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=jinLSx1Bi957v0doVAhmp1h/kFD3OvDhTl6ISPr3gNU=;
- b=YRVvo/9o13CpFo314jX3S73dnGK4iE1wpamurgJsqS45/b77m3LWS7PQo0yISA3W5J
- MAKzpF5u4TrW9qW5nO2RXp7jUOdv74p90lQKGgby7w7lmwNOTXCze+UqqXomqt/IC25H
- UFx3sg7g8gw8HW49xQlZ7ubeFQ4vlSNr2+yJmrLnRho46Fw5KeO2dvfzyszitST4L8iX
- kJXRQY72SBH15OLy5Ko1uaMfMFAHAUtz74V9xSN2sMcAREpU1OdvU4vn+WZCAX7GtKnc
- /ZA/MtSm8KbvKcDMmbe7UiWqRk4wz/8m51izjvV/LcF9xu47QxevKTIBY9i7cJJRxK+P
- FG8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715873406; x=1716478206;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1715874494; x=1716479294; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jinLSx1Bi957v0doVAhmp1h/kFD3OvDhTl6ISPr3gNU=;
- b=KLUyZqonldS/RvSNyrjMKDHKkhWGEMXB/BzgnuzpW1CmSFXqdU5VxuqTouT/k5YDU4
- pr1rbo3MnH5JFBvjOCetxOlSmWA8G704iw4j01M31x6Z0LvvuVa+y/YwG+LqpaYmJ3o3
- tp8JU7Tf+dcGxPd0dc+oRWP36QqrNno/ApqiOMs3rKQrzsrxHVOjekq3PJN5XHWXxFKk
- ErsfMSfO7OEz475xs3QkkfX9YyUnwhrV89q71aLjsaknfQg6jQM0iwwj54SVwYZVBGLN
- rEceqIEGdu+iJVWzqtnkfNoDqr60tndPA8xy9MxLzfffkeWoI9MRtVq19/xoxAiNANtv
- IgjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGSon5bHImKphbIj41szi1CKFBhaXLM9RKQHdmLvcrv6vKeqM3uWgpBHbZoWQwiHzfvffew6UvrnVnmb3JF075NV0M1ng=
-X-Gm-Message-State: AOJu0YxaSNvpLwb0eqmjeRtfWCSGs3LAB4CEMf+IZeFEDP14dqDhw6mm
- QbDggqz01YKRS3yif1Nv6+tT3NF3TOgvuez+IG3TTvggsiaEEuGg44hAGPVaAg==
-X-Google-Smtp-Source: AGHT+IEQn1WPGq1X/VJV81JrV7ibIaep5s4Zt2ExJV4yXQect/QS33902BWt98J9Hmu6k510FE2fiA==
-X-Received: by 2002:a05:600c:1e12:b0:419:b16:9c14 with SMTP id
- 5b1f17b1804b1-4200f8697eemr11861635e9.1.1715873405853; 
- Thu, 16 May 2024 08:30:05 -0700 (PDT)
-Received: from google.com (180.232.140.34.bc.googleusercontent.com.
- [34.140.232.180]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41ff063d8cesm239609605e9.46.2024.05.16.08.30.05
+ bh=YP28Iks2aCd2MOvUAbQc4yYuz/leCz2VtuKFu0fMfns=;
+ b=gJqWS2ZFjgmXD3ZgYKzCSNmw4fE2OX77q+aesy8oP5hI4GFL1+7Vgw+Y/ZLfFZmGZj
+ sZx63PL2DFH284wyO0MPZ//A0vIWesOYD93wPhQKsyXjBDe6LdpisBW3Fi0/aAzOnyBV
+ tAKCSt3l36lWJ4CQurSaKjSG+dVml6sF0vQunB+8/KTGO0ZIB8lRVIarggjtU313wLJm
+ hdYgEY1YfWP9c1JAFBG+mzBIOwazms3iLur6s9m6i6yO1Leac5IoeCxEvWGZD0WhEplT
+ AoJButML/zc2/GaGXzk89e8JIHntVnqeqWN1F2HDBIvQuRiZp4k576idzcQDCxsDgbdP
+ nSPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715874494; x=1716479294;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YP28Iks2aCd2MOvUAbQc4yYuz/leCz2VtuKFu0fMfns=;
+ b=qnJOwDGCr2lIm8bFaZyf1CyKu1b7WUVCr9E7MaS949X9X/l/ZhMQrBKCK+3qrj1AR8
+ RwNZJxCOI0dHm42nZundC6HrWCtxfRrVNtMR29h3T+r8JwequRSJPRRn0VIzwMORNihq
+ 5WVscLeaas3F3WOHI0m1yYqV29aERN69tmfpeXkZQBJmBppj/6O+RW0+xB1kigVO8JDi
+ JOuuQtBst5UiI1Z6lQftGwaJnV6qQX4fhEdU6yTkFVZ96WhjD+wE0TmF6Lx0VrrwuJbf
+ ltVY52ZIrObxnNf4wIQiGYOLShF0wJ77SnE4Y2bWo/fij9SJDWGjYVPOhSzelJpSgOS4
+ SzBA==
+X-Gm-Message-State: AOJu0YwS7gqAdLl6D4mwGQV/nWsiDQ4y6L9jrhFJQVwxsMdIJ46z8Sr6
+ pgpRTikScUZaVKiEx8V/09Yl6WBea5Ou+FYh59S3BNnxLtbS7N9PaIyAjxRo6hw=
+X-Google-Smtp-Source: AGHT+IEaN/+VHmkJjv/znpWgW3h0+GqXzWUJj0uCRLf2DykoyCNb/asHTon7nVels7WBBHQIR1MU9A==
+X-Received: by 2002:a2e:be9f:0:b0:2e3:ba0e:de12 with SMTP id
+ 38308e7fff4ca-2e51ff5cf48mr209958761fa.22.1715874494287; 
+ Thu, 16 May 2024 08:48:14 -0700 (PDT)
+Received: from gmail.com ([213.0.35.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42016b88f99sm146828625e9.10.2024.05.16.08.48.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 May 2024 08:30:05 -0700 (PDT)
-Date: Thu, 16 May 2024 15:30:01 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [RFC PATCH v3 09/18] hw/arm/smmu-common: Rework TLB lookup for
- nesting
-Message-ID: <ZkYmedM5uHf3DM2O@google.com>
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-10-smostafa@google.com>
- <6afc41f6-7127-46f2-833f-6eb4abb2730d@redhat.com>
+ Thu, 16 May 2024 08:48:13 -0700 (PDT)
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ David Hildenbrand <david@redhat.com>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ xen-devel@lists.xenproject.org
+Subject: [PATCH v6 3/8] xen: Add xen_mr_is_memory()
+Date: Thu, 16 May 2024 17:47:59 +0200
+Message-Id: <20240516154804.1114245-4-edgar.iglesias@gmail.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240516154804.1114245-1-edgar.iglesias@gmail.com>
+References: <20240516154804.1114245-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6afc41f6-7127-46f2-833f-6eb4abb2730d@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=smostafa@google.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,87 +95,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-On Wed, May 15, 2024 at 03:54:36PM +0200, Eric Auger wrote:
-> 
-> 
-> On 4/29/24 05:23, Mostafa Saleh wrote:
-> > In the previous patch, comine_tlb() was added which combines 2 TLB
-> combine
-Will do.
+Add xen_mr_is_memory() to abstract away tests for the
+xen_memory MR.
 
-> > entries into one, which chooses the granule and level from the
-> > smallest entry.
-> >
-> > This means that a nested translation, an entry can be cached with the
-> that with nested translation
-Will do.
+No functional changes.
 
-> > granule of stage-2 and not stage-1.
-> >
-> > However, the lookup for an IOVA in nested configuration is done with
-> > stage-1 granule, this patch reworks lookup in that case, so it falls
-> > back to stage-2 granule if no entry is found using stage-1 granule.
-> I should have read that before commenting previous patch ;-)
-> Anyway this shows that something is missing in previous patch, at least
-> the above explanation ;-)
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Acked-by: David Hildenbrand <david@redhat.com>
+---
+ hw/xen/xen-hvm-common.c | 10 ++++++++--
+ include/sysemu/xen.h    |  8 ++++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-Yup, I can add a comment in the previous patch or reorder them, let me
-know what you prefer.
+diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+index 2d1b032121..a0a0252da0 100644
+--- a/hw/xen/xen-hvm-common.c
++++ b/hw/xen/xen-hvm-common.c
+@@ -12,6 +12,12 @@
+ 
+ MemoryRegion xen_memory;
+ 
++/* Check for xen memory.  */
++bool xen_mr_is_memory(MemoryRegion *mr)
++{
++    return mr == &xen_memory;
++}
++
+ void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
+                    Error **errp)
+ {
+@@ -28,7 +34,7 @@ void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
+         return;
+     }
+ 
+-    if (mr == &xen_memory) {
++    if (xen_mr_is_memory(mr)) {
+         return;
+     }
+ 
+@@ -55,7 +61,7 @@ static void xen_set_memory(struct MemoryListener *listener,
+ {
+     XenIOState *state = container_of(listener, XenIOState, memory_listener);
+ 
+-    if (section->mr == &xen_memory) {
++    if (xen_mr_is_memory(section->mr)) {
+         return;
+     } else {
+         if (add) {
+diff --git a/include/sysemu/xen.h b/include/sysemu/xen.h
+index 754ec2e6cb..dc72f83bcb 100644
+--- a/include/sysemu/xen.h
++++ b/include/sysemu/xen.h
+@@ -34,6 +34,8 @@ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length);
+ void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
+                    struct MemoryRegion *mr, Error **errp);
+ 
++bool xen_mr_is_memory(MemoryRegion *mr);
++
+ #else /* !CONFIG_XEN_IS_POSSIBLE */
+ 
+ #define xen_enabled() 0
+@@ -47,6 +49,12 @@ static inline void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
+     g_assert_not_reached();
+ }
+ 
++static inline bool xen_mr_is_memory(MemoryRegion *mr)
++{
++    g_assert_not_reached();
++    return false;
++}
++
+ #endif /* CONFIG_XEN_IS_POSSIBLE */
+ 
+ #endif
+-- 
+2.40.1
 
-Thanks,
-Mostafa
-
-> 
-> Eric
-> >
-> > Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> > ---
-> >  hw/arm/smmu-common.c | 24 ++++++++++++++++++++++--
-> >  1 file changed, 22 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> > index 0d6945fa54..c67af3bc6d 100644
-> > --- a/hw/arm/smmu-common.c
-> > +++ b/hw/arm/smmu-common.c
-> > @@ -66,8 +66,10 @@ SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
-> >      return key;
-> >  }
-> >  
-> > -SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-> > -                                SMMUTransTableInfo *tt, hwaddr iova)
-> > +static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
-> > +                                                  SMMUTransCfg *cfg,
-> > +                                                  SMMUTransTableInfo *tt,
-> > +                                                  hwaddr iova)
-> >  {
-> >      uint8_t tg = (tt->granule_sz - 10) / 2;
-> >      uint8_t inputsize = 64 - tt->tsz;
-> > @@ -88,6 +90,24 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-> >          }
-> >          level++;
-> >      }
-> > +    return entry;
-> > +}
-> > +
-> > +SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-> > +                                SMMUTransTableInfo *tt, hwaddr iova)
-> > +{
-> > +    SMMUTLBEntry *entry = NULL;
-> > +
-> > +    entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
-> > +    /*
-> > +     * For nested translation also try the s2 granule, as the TLB will insert
-> > +     * it if the size of s2 tlb entry was smaller.
-> > +     */
-> > +    if (!entry && (cfg->stage == SMMU_NESTED) &&
-> > +        (cfg->s2cfg.granule_sz != tt->granule_sz)) {
-> > +        tt->granule_sz = cfg->s2cfg.granule_sz;
-> > +        entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
-> > +    }
-> >  
-> >      if (entry) {
-> >          cfg->iotlb_hits++;
-> 
 
