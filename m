@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8EDC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1329C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7cBz-0004Xg-G2; Thu, 16 May 2024 10:34:47 -0400
+	id 1s7cBi-00046q-Jv; Thu, 16 May 2024 10:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_svaddagi@quicinc.com>)
- id 1s7cBy-0004XJ-JG; Thu, 16 May 2024 10:34:46 -0400
+ id 1s7cBf-00046G-C6; Thu, 16 May 2024 10:34:27 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_svaddagi@quicinc.com>)
- id 1s7cBv-0008Mk-Fj; Thu, 16 May 2024 10:34:46 -0400
+ id 1s7cBd-0008Kq-Cc; Thu, 16 May 2024 10:34:27 -0400
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G8nDhJ007619;
- Thu, 16 May 2024 14:34:40 GMT
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G84bEm007625;
+ Thu, 16 May 2024 14:34:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding:content-type; s=
- qcppdkim1; bh=diQuupx2W0jCOTed6YvSYWkH5/u7Zh3h3915f87NRrQ=; b=fN
- NOHznO5eH+SB4BvqSetNXuIaB6LLWRbeLdxQsc+iE0sJJAsF2tGN6yCXiSio1q1L
- uDpP0oYpxxKrh0Sxu/RgVUEQPT12sMxsPsNB4Qw52Dhgob35eeLpqSLt/PUsYG3k
- f58Qq+eLQ0P8iOetwuPlj0sOXJa1LWERe0m/9M3yf3hrYH1gG31Aljb4RhA7WZSd
- ze7hwoLs0DRkfQrwJxZDFNMzXW1aGfN6M+fHTRp5iydd2gJPwOkP2i991A+EwUdr
- DOQb7+lzFJNHYoLebBiZZURpz/pGvi2oU/2i9BU3rZXBhFwrUkFK3JGQPx13VcK/
- 1KVaMACOu6uh/R3wvlNw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ qcppdkim1; bh=xb+o7aiox7Eqi6vPUz31+ukR7Od9u/hMYAcNGZohteg=; b=Ok
+ 7EHQOj8j5FqhBJbEgvWrsnidtaKipD/M6Ya3Ovhs8oO3mgU2yLsMtOBBbUgiF3/J
+ Qw1kiX7ZA1MppX/O6g9P0yNXoqsL85NpKJN+DA4n/qkbbrsXi+4/Z8E2DC6h9VOX
+ macKFxcXcf4pDW7IYBMkoluzRmDhQPPiov4elBbbVEg4xtG7/tDhereyeZBXdXA0
+ hdoFxTkLMZAUW5f+ZGCMoLxvlhx5tV9EXwCHwxK/rhDrgMrqqXQiX2KkzjNqIMXw
+ a6BVXMsxMNle/pgcTmbhY/OKbpims+lHmE6Gg3pdwRbU7qog6p+lmjRuojCoeVQp
+ IT1vj465x0J5VPf36FhA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y47f45uad-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y47f45u9g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 14:34:40 +0000 (GMT)
+ Thu, 16 May 2024 14:34:22 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
  [10.47.209.197])
- by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEYcb7007332
+ by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEYLtt008043
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 14:34:38 GMT
+ Thu, 16 May 2024 14:34:21 GMT
 Received: from blr-ubuntu-31.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 16 May 2024 07:34:34 -0700
+ 15.2.1544.9; Thu, 16 May 2024 07:34:17 -0700
 From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 To: <peter.maydell@linaro.org>, <philmd@linaro.org>, <alex.bennee@linaro.org>, 
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
@@ -52,9 +52,9 @@ CC: <quic_svaddagi@quicinc.com>, <quic_tsoni@quicinc.com>,
  <quic_pheragu@quicinc.com>, <quic_eberman@quicinc.com>,
  <quic_yvasi@quicinc.com>, <quic_cvanscha@quicinc.com>,
  <quic_mnalajal@quicinc.com>
-Subject: [RFC/PATCH v2 07/12] gunyah: Add gicv3 interrupt controller
-Date: Thu, 16 May 2024 14:33:51 +0000
-Message-ID: <20240516143356.1739402-8-quic_svaddagi@quicinc.com>
+Subject: [RFC/PATCH v2 03/12] hw/arm/virt: confidential guest support
+Date: Thu, 16 May 2024 14:33:47 +0000
+Message-ID: <20240516143356.1739402-4-quic_svaddagi@quicinc.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240516143356.1739402-1-quic_svaddagi@quicinc.com>
 References: <20240516143356.1739402-1-quic_svaddagi@quicinc.com>
@@ -67,8 +67,8 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-GUID: o982Ok0GBCzhUX00EOCF1kr-sWFcYy6J
-X-Proofpoint-ORIG-GUID: o982Ok0GBCzhUX00EOCF1kr-sWFcYy6J
+X-Proofpoint-GUID: cJnmS3qYMEZihHKBwliraVmQE7G3-p65
+X-Proofpoint-ORIG-GUID: cJnmS3qYMEZihHKBwliraVmQE7G3-p65
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
@@ -101,267 +101,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gunyah hypervisor supports emulation of a GICv3 compatible interrupt
-controller. Emulation is handled by hypervisor itself, with Qemu being
-allowed to specify some of the properties such as IO address at which
-GICv3 should be mapped in guest address space. These properties are
-conveyed to hypervisor via the device-tree, which is parsed by
-hypervisor (or more specifically Resource Manager VM, which is the
-trusted agent of hypervisor), before VM begins execution.
+This adds support to launch hypervisor-assisted confidential guests,
+where guest's memory is protected from a potentially untrusted host.
+Hypervisor can setup host's page-tables so that it loses access to guest
+memory.
 
-Injection of interrupts inside guest is supported by doorbell API of
-Gunyah hypervisor. Each doorbell is associated with a specific
-interrupt. An eventfd is created and associated with each doorbell/irq.
-Injection of a specific irq is accomplished by writing to the eventfd
-associated with that irq.
+Since some guest drivers may need to communicate data with their host
+counterparts via shared memory, optionally allow setting aside some part
+of the confidential guest's memory as "shared". The size of this shared
+memory is specified via the optional "swiotlb-size" parameter.
+
+-machine virt,confidential-guest-support=prot0 \
+	-object arm-confidential-guest,id=prot0,swiotlb-size=16777216
+
+The size of this shared memory is indicated to the guest in size/reg
+property of device-tree node "/reserved-memory/restricted_dma_reserved".
+A memory-region property is added to device-tree node representing
+virtio-pcie hub, so that all DMA allocations requested by guest's virtio-pcie
+device drivers are satisfied from the shared swiotlb region.
 
 Signed-off-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 ---
- MAINTAINERS                    |   2 +
- include/sysemu/gunyah_int.h    |   3 +
- accel/gunyah/gunyah-all.c      |   5 ++
- hw/arm/virt.c                  |   5 ++
- hw/intc/arm_gicv3_common.c     |   3 +
- hw/intc/arm_gicv3_gunyah.c     | 106 +++++++++++++++++++++++++++++++++
- hw/intc/arm_gicv3_its_common.c |   3 +
- hw/intc/meson.build            |   1 +
- 8 files changed, 128 insertions(+)
- create mode 100644 hw/intc/arm_gicv3_gunyah.c
+ qapi/qom.json         |  14 +++++
+ include/hw/arm/virt.h |   1 +
+ hw/arm/virt.c         | 141 +++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 155 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d8d63b1c3a..d0289ded2f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -529,6 +529,8 @@ S: Maintained
- F: accel/gunyah
- F: include/sysemu/gunyah.h
- F: include/sysemu/gunyah_int.h
-+F: target/arm/arm_gicv3_gunyah.c
-+F: hw/intc/arm_gicv3_gunyah.c
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 38dde6d785..9b3cd7ce22 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -874,6 +874,18 @@
+   'base': 'RngProperties',
+   'data': { '*filename': 'str' } }
  
- WHPX CPUs
- M: Sunil Muthuswamy <sunilmut@microsoft.com>
-diff --git a/include/sysemu/gunyah_int.h b/include/sysemu/gunyah_int.h
-index 8c0b479f62..e19872dae2 100644
---- a/include/sysemu/gunyah_int.h
-+++ b/include/sysemu/gunyah_int.h
-@@ -44,11 +44,14 @@ struct GUNYAHState {
-     int vmfd;
-     uint64_t swiotlb_size;
-     bool preshmem_reserved;
-+    uint32_t preshmem_size;
-+    uint32_t nr_irqs;
- };
++##
++# @ArmConfidentialGuestProperties:
++#
++# Properties for arm-confidential-guest objects.
++#
++# @swiotlb-size: swiotlb size
++#
++# Since: 2.12
++##
++{ 'struct': 'ArmConfidentialGuestProperties',
++  'data': { 'swiotlb-size' : 'uint64' } }
++
+ ##
+ # @SevGuestProperties:
+ #
+@@ -997,6 +1009,7 @@
+     { 'name': 'secret_keyring',
+       'if': 'CONFIG_SECRET_KEYRING' },
+     'sev-guest',
++    'arm-confidential-guest',
+     'thread-context',
+     's390-pv-guest',
+     'throttle-group',
+@@ -1067,6 +1080,7 @@
+       'secret_keyring':             { 'type': 'SecretKeyringProperties',
+                                       'if': 'CONFIG_SECRET_KEYRING' },
+       'sev-guest':                  'SevGuestProperties',
++      'arm-confidential-guest':     'ArmConfidentialGuestProperties',
+       'thread-context':             'ThreadContextProperties',
+       'throttle-group':             'ThrottleGroupProperties',
+       'tls-creds-anon':             'TlsCredsAnonProperties',
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index bb486d36b1..1e23f20972 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -165,6 +165,7 @@ struct VirtMachineState {
+     uint32_t clock_phandle;
+     uint32_t gic_phandle;
+     uint32_t msi_phandle;
++    uint32_t restricted_dma_phandle;
+     uint32_t iommu_phandle;
+     int psci_conduit;
+     hwaddr highest_gpa;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3c93c0c0a6..2a3eb4075d 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -84,6 +84,9 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/char/pl011.h"
+ #include "qemu/guest-random.h"
++#include "sysemu/cpus.h"
++#include "exec/confidential-guest-support.h"
++#include "qom/object_interfaces.h"
  
- int gunyah_create_vm(void);
- int gunyah_vm_ioctl(int type, ...);
- void *gunyah_cpu_thread_fn(void *arg);
- int gunyah_add_irqfd(int irqfd, int label, Error **errp);
-+GUNYAHState *get_gunyah_state(void);
+ static GlobalProperty arm_virt_compat[] = {
+     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+@@ -1545,6 +1548,11 @@ static void create_pcie(VirtMachineState *vms)
+                            nr_pcie_buses - 1);
+     qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
  
- #endif    /* GUNYAH_INT_H */
-diff --git a/accel/gunyah/gunyah-all.c b/accel/gunyah/gunyah-all.c
-index 948ccfbeee..d8c3758c59 100644
---- a/accel/gunyah/gunyah-all.c
-+++ b/accel/gunyah/gunyah-all.c
-@@ -413,6 +413,11 @@ static void gunyah_mem_ioeventfd_del(MemoryListener *listener,
++    if (vms->restricted_dma_phandle) {
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "memory-region",
++                                vms->restricted_dma_phandle);
++    }
++
+     if (vms->msi_phandle) {
+         qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
+                                0, vms->msi_phandle, 0, 0x10000);
+@@ -2065,6 +2073,129 @@ static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
      }
  }
  
-+GUNYAHState *get_gunyah_state(void)
-+{
-+    return GUNYAH_STATE(current_accel());
-+}
++#define TYPE_ARM_CONFIDENTIAL_GUEST "arm-confidential-guest"
++OBJECT_DECLARE_SIMPLE_TYPE(ArmConfidentialGuestState, ARM_CONFIDENTIAL_GUEST)
 +
- void *gunyah_cpu_thread_fn(void *arg)
- {
-     CPUState *cpu = arg;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3b0fcf812f..bfb7f3d92e 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -694,6 +694,9 @@ static void create_its(VirtMachineState *vms)
-         if (!vms->tcg_its) {
-             itsclass = NULL;
-         }
-+    } else if (!strcmp(itsclass, "arm-its-gunyah")) {
-+        /* ITS is not yet supported */
-+        itsclass = NULL;
-     }
- 
-     if (!itsclass) {
-@@ -1996,6 +1999,8 @@ static void finalize_gic_version(VirtMachineState *vms)
-                 gics_supported |= VIRT_GIC_VERSION_4_MASK;
-             }
-         }
-+    } else if (gunyah_enabled()) {
-+        gics_supported |= VIRT_GIC_VERSION_3_MASK;
-     } else {
-         error_report("Unsupported accelerator, can not determine GIC support");
-         exit(1);
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index bd50a1b079..ec05d31e1b 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -32,6 +32,7 @@
- #include "gicv3_internal.h"
- #include "hw/arm/linux-boot-if.h"
- #include "sysemu/kvm.h"
-+#include "sysemu/gunyah.h"
- 
- 
- static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
-@@ -662,6 +663,8 @@ const char *gicv3_class_name(void)
- {
-     if (kvm_irqchip_in_kernel()) {
-         return "kvm-arm-gicv3";
-+    } else if (gunyah_enabled()) {
-+        return "gunyah-arm-gicv3";
-     } else {
-         if (kvm_enabled()) {
-             error_report("Userspace GICv3 is not supported with KVM");
-diff --git a/hw/intc/arm_gicv3_gunyah.c b/hw/intc/arm_gicv3_gunyah.c
-new file mode 100644
-index 0000000000..f52e82bf9a
---- /dev/null
-+++ b/hw/intc/arm_gicv3_gunyah.c
-@@ -0,0 +1,106 @@
-+/*
-+ * QEMU Gunyah hypervisor support
-+ *
-+ * Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++struct ArmConfidentialGuestState {
++    ConfidentialGuestSupport parent_obj;
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "cpu.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "qemu/error-report.h"
-+#include "qemu/module.h"
-+#include "sysemu/gunyah.h"
-+#include "sysemu/gunyah_int.h"
-+#include "sysemu/runstate.h"
-+#include "gicv3_internal.h"
-+#include "vgic_common.h"
-+#include "migration/blocker.h"
-+#include "qom/object.h"
-+#include "target/arm/cpregs.h"
-+#include "qemu/event_notifier.h"
-+
-+struct GUNYAHARMGICv3Class {
-+    ARMGICv3CommonClass parent_class;
-+    DeviceRealize parent_realize;
-+    ResettablePhases parent_phases;
++    hwaddr swiotlb_size;
 +};
 +
-+#define TYPE_GUNYAH_ARM_GICV3 "gunyah-arm-gicv3"
-+typedef struct GUNYAHARMGICv3Class GUNYAHARMGICv3Class;
++static ArmConfidentialGuestState *acg;
 +
-+/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
-+DECLARE_OBJ_CHECKERS(GICv3State, GUNYAHARMGICv3Class,
-+                     GUNYAH_ARM_GICV3, TYPE_GUNYAH_ARM_GICV3)
-+
-+static EventNotifier *irq_notify;
-+
-+static void gunyah_arm_gicv3_set_irq(void *opaque, int irq, int level)
++static void
++arm_confidential_guest_instance_init(Object *obj)
 +{
-+    GICv3State *s = (GICv3State *)opaque;
++    ArmConfidentialGuestState *acg = ARM_CONFIDENTIAL_GUEST(obj);
 +
-+    if (irq < s->num_irq - GIC_INTERNAL) {
-+        event_notifier_set(&irq_notify[irq]);
-+    }
++    object_property_add_uint64_ptr(obj, "swiotlb-size", &acg->swiotlb_size,
++                                   OBJ_PROP_FLAG_READWRITE);
 +}
 +
-+static void gunyah_arm_gicv3_realize(DeviceState *dev, Error **errp)
-+{
-+    GICv3State *s = GUNYAH_ARM_GICV3(dev);
-+    GUNYAHARMGICv3Class *ggc = GUNYAH_ARM_GICV3_GET_CLASS(s);
-+    Error *local_err = NULL;
-+    int i;
-+    GUNYAHState *state = get_gunyah_state();
++static const TypeInfo confidential_guest_info = {
++    .parent = TYPE_CONFIDENTIAL_GUEST_SUPPORT,
++    .name = TYPE_ARM_CONFIDENTIAL_GUEST,
++    .instance_size = sizeof(ArmConfidentialGuestState),
++    .instance_init = arm_confidential_guest_instance_init,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_USER_CREATABLE },
++        { }
++    }
++};
 +
-+    ggc->parent_realize(dev, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
++static void
++confidential_guest_register_types(void)
++{
++    type_register_static(&confidential_guest_info);
++}
++type_init(confidential_guest_register_types);
++
++static int confidential_guest_init(MachineState *ms)
++{
++    ConfidentialGuestSupport *cgs = ms->cgs;
++    ArmConfidentialGuestState *obj = (ArmConfidentialGuestState *)
++        object_dynamic_cast(OBJECT(cgs), TYPE_ARM_CONFIDENTIAL_GUEST);
++    const AccelOpsClass *ops = cpus_get_accel();
++
++    if (!obj) {
++        return 0;
++    }
++
++    if (!ops->check_capability ||
++            !ops->check_capability(CONFIDENTIAL_GUEST_SUPPORTED)) {
++        error_report("confidential guests are not supported");
++        return -1;
++    }
++
++    if (obj->swiotlb_size > ms->ram_size) {
++        error_report("swiotlb_size exceeds RAM size");
++        return -1;
++    }
++
++    acg = obj;
++    cgs->ready = true;
++
++    return 0;
++}
++
++static void fdt_add_reserved_memory(VirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    hwaddr membase = vms->memmap[VIRT_MEM].base;
++    hwaddr memsize = ms->ram_size;
++    hwaddr resv_start;
++    const char compat[] = "restricted-dma-pool";
++    const AccelOpsClass *ops = cpus_get_accel();
++    char *nodename;
++
++    if (!acg || !acg->swiotlb_size) {
 +        return;
 +    }
 +
-+    if (s->revision != 3) {
-+        error_setg(errp, "unsupported GIC revision %d for in-kernel GIC",
-+                   s->revision);
-+        return;
++    nodename = g_strdup_printf("/reserved-memory");
++
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#address-cells", 2);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#size-cells", 2);
++    qemu_fdt_setprop(ms->fdt, nodename, "ranges", NULL, 0);
++    g_free(nodename);
++
++    resv_start = membase + memsize - acg->swiotlb_size;
++    if (ops->check_capability &&
++            ops->check_capability(CONFIDENTIAL_GUEST_CAN_SHARE_MEM_WITH_HOST)) {
++        /*
++         * Indicate only the size of swiotlb buffer needed. Guest will
++         * determine where in its private memory the buffer will be placed and
++         * will use appropriate (hypervisor) APIs to share that with host.
++         */
++        nodename = g_strdup_printf("/reserved-memory/restricted_dma_reserved");
++        qemu_fdt_add_subnode(ms->fdt, nodename);
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "size", acg->swiotlb_size);
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "alignment", 4096);
++    } else {
++        /*
++         * On hypervisors that don't support APIs for guest to share
++         * its (private) memory with host, indicate to the guest where in its
++         * address space shared memory can be found. Host should make arrangents
++         * with hypervisor to assign some memory to guest at the indicated range
++         * and mark it as shared.
++         */
++        nodename = g_strdup_printf("/reserved-memory/restricted_dma_reserved@%"
++                PRIx64, resv_start);
++        qemu_fdt_add_subnode(ms->fdt, nodename);
++        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
++                                         2, resv_start,
++                                         2, acg->swiotlb_size);
 +    }
 +
-+    gicv3_init_irqs_and_mmio(s, gunyah_arm_gicv3_set_irq, NULL);
-+
-+    irq_notify = g_malloc_n(s->num_irq - GIC_INTERNAL, sizeof(EventNotifier));
-+
-+    for (i = 0; i < s->num_irq - GIC_INTERNAL; ++i) {
-+        event_notifier_init(&irq_notify[i], 0);
-+        gunyah_add_irqfd(irq_notify[i].wfd, i, errp);
-+    }
-+
-+    state->nr_irqs = s->num_irq - GIC_INTERNAL;
++    vms->restricted_dma_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle",
++            vms->restricted_dma_phandle);
++    qemu_fdt_setprop(ms->fdt, nodename, "compatible", compat, sizeof(compat));
++    g_free(nodename);
 +}
 +
-+static void gunyah_arm_gicv3_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    GUNYAHARMGICv3Class *ggc = GUNYAH_ARM_GICV3_CLASS(klass);
-+
-+    device_class_set_parent_realize(dc, gunyah_arm_gicv3_realize,
-+                                    &ggc->parent_realize);
-+    resettable_class_set_parent_phases(rc, NULL, NULL, NULL,
-+                                       &ggc->parent_phases);
-+}
-+
-+static const TypeInfo gunyah_arm_gicv3_info = {
-+    .name = TYPE_GUNYAH_ARM_GICV3,
-+    .parent = TYPE_ARM_GICV3_COMMON,
-+    .instance_size = sizeof(GICv3State),
-+    .class_init = gunyah_arm_gicv3_class_init,
-+    .class_size = sizeof(GUNYAHARMGICv3Class),
-+};
-+
-+static void gunyah_arm_gicv3_register_types(void)
-+{
-+    type_register_static(&gunyah_arm_gicv3_info);
-+}
-+
-+type_init(gunyah_arm_gicv3_register_types)
-diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_common.c
-index 0b97362cd2..5c424c345b 100644
---- a/hw/intc/arm_gicv3_its_common.c
-+++ b/hw/intc/arm_gicv3_its_common.c
-@@ -25,6 +25,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "sysemu/kvm.h"
-+#include "sysemu/gunyah.h"
+ static void machvirt_init(MachineState *machine)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(machine);
+@@ -2075,7 +2206,7 @@ static void machvirt_init(MachineState *machine)
+     MemoryRegion *secure_sysmem = NULL;
+     MemoryRegion *tag_sysmem = NULL;
+     MemoryRegion *secure_tag_sysmem = NULL;
+-    int n, virt_max_cpus;
++    int n, virt_max_cpus, ret;
+     bool firmware_loaded;
+     bool aarch64 = true;
+     bool has_ged = !vmc->no_ged;
+@@ -2084,6 +2215,12 @@ static void machvirt_init(MachineState *machine)
  
- static int gicv3_its_pre_save(void *opaque)
- {
-@@ -164,6 +165,8 @@ const char *its_class_name(void)
- {
-     if (kvm_irqchip_in_kernel()) {
-         return "arm-its-kvm";
-+    } else if (gunyah_enabled()) {
-+        return "arm-its-gunyah";
-     } else {
-         /* Software emulation based model */
-         return "arm-gicv3-its";
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 58140da5f2..39a05af178 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -72,3 +72,4 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
-+specific_ss.add(when: ['CONFIG_ARM_GIC', 'CONFIG_GUNYAH', 'TARGET_AARCH64'], if_true: files('arm_gicv3_gunyah.c'))
+     possible_cpus = mc->possible_cpu_arch_ids(machine);
+ 
++    ret = confidential_guest_init(machine);
++    if (ret != 0) {
++        error_report("Failed to initialize confidential guest");
++        exit(1);
++    }
++
+     /*
+      * In accelerated mode, the memory map is computed earlier in kvm_type()
+      * to create a VM with the right number of IPA bits.
+@@ -2195,6 +2332,8 @@ static void machvirt_init(MachineState *machine)
+ 
+     create_fdt(vms);
+ 
++    fdt_add_reserved_memory(vms);
++
+     assert(possible_cpus->len == max_cpus);
+     for (n = 0; n < possible_cpus->len; n++) {
+         Object *cpuobj;
 -- 
 2.25.1
 
