@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3176BC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 12:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2247EC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 12:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7aWG-0002xq-JV; Thu, 16 May 2024 08:47:36 -0400
+	id 1s7aWG-0002vT-F3; Thu, 16 May 2024 08:47:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7aW0-0002ts-Pb
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7aW1-0002tw-Px
  for qemu-devel@nongnu.org; Thu, 16 May 2024 08:47:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7aVy-0001B2-FN
- for qemu-devel@nongnu.org; Thu, 16 May 2024 08:47:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7aVz-0001AZ-BR
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 08:47:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715863637;
+ s=mimecast20190719; t=1715863632;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PeASChGSSb0eRZptzkBSV5qpyEVJThv7BUKELIJ9ECA=;
- b=dFEBK7V6Pax7leX+fQlBleMuZzk771fX0+BHNzIF65GS94Qed7rrmS9KGtrfz8rX3WcG5n
- 8MyxMIYBYE8fjcQBnEUp8M0C/4BlHNLHUCdBn9PjV/LxXXappFYqD7Jtd3xbFS4nil52i7
- LKMdhAObRwc1Gpm1dTIbIdR5osSPcfI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-NIqrviK_OFmL7OoPcvjETg-1; Thu, 16 May 2024 08:47:13 -0400
-X-MC-Unique: NIqrviK_OFmL7OoPcvjETg-1
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Iy9yyF5CHHvps35MK2IGz16PYQ0zVNsfgy1cehYJkjA=;
+ b=cuFZgkftSH2d/4Z+xWP07v759lW4XlKIsBDlwGl+3dAOXNHWnZdf1OaIbjXrJ8loZD3YMH
+ NX2ITpQWYN9sF0gDOkW78Yky+Xy87+JGj1XjHazPLVjy+V/xE03n6LU98CnnnHBZMmil0C
+ YiB99YFBOlXrAf5cd3j/X7YC+vqwhpk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-W64XuRFjMd-dZaJVHH8GSg-1; Thu,
+ 16 May 2024 08:47:08 -0400
+X-MC-Unique: W64XuRFjMd-dZaJVHH8GSg-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E8DE58016FF;
- Thu, 16 May 2024 12:47:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 30B9929ABA02;
+ Thu, 16 May 2024 12:47:08 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id C1007200B3A1;
- Thu, 16 May 2024 12:47:10 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id F1858200A0B4;
+ Thu, 16 May 2024 12:47:05 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -51,17 +50,14 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v7 2/9] vfio: Add Error** argument to
- vfio_devices_dma_logging_start()
-Date: Thu, 16 May 2024 14:46:51 +0200
-Message-ID: <20240516124658.850504-3-clg@redhat.com>
-In-Reply-To: <20240516124658.850504-1-clg@redhat.com>
-References: <20240516124658.850504-1-clg@redhat.com>
+Subject: [PATCH v7 0/9] vfio: Improve error reporting (part 2)
+Date: Thu, 16 May 2024 14:46:49 +0200
+Message-ID: <20240516124658.850504-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -85,110 +81,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows to update the Error argument of the VFIO log_global_start()
-handler. Errors for container based logging will also be propagated to
-qemu_savevm_state_setup() when the ram save_setup() handler is executed.
-Also, errors from vfio_container_set_dirty_page_tracking() are now
-collected and reported.
+Hello,
 
-The vfio_set_migration_error() call becomes redundant in
-vfio_listener_log_global_start(). Remove it.
+The motivation behind these changes is to improve error reporting to
+the upper management layer (libvirt) with a more detailed error, this
+to let it decide, depending on the reported error, whether to try
+migration again later. It would be useful in cases where migration
+fails due to lack of HW resources on the host. For instance, some
+adapters can only initiate a limited number of simultaneous dirty
+tracking requests and this imposes a limit on the the number of VMs
+that can be migrated simultaneously.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
+We are not quite ready for such a mechanism but what we can do first is
+to cleanup the error reporting in the early save_setup sequence. This
+is what the following changes propose, by adding an Error** argument to
+various handlers and propagating it to the core migration subsystem.
 
- Changes in v7:
+The first part [1] of this series modifying the core migration
+subsystem is now merged. This is the second part changing VFIO which
+was already proposed in March. See [2].
+
+Thanks,
+
+C.
+
+[1] [PATCH for-9.1 v5 00/14] migration: Improve error reporting
+    https://lore.kernel.org/qemu-devel/20240320064911.545001-1-clg@redhat.com/
+
+[2] [PATCH v4 00/25] migration: Improve error reporting
+    https://lore.kernel.org/qemu-devel/20240306133441.2351700-1-clg@redhat.com/
+
+Changes in v7:
 
  - Commit log improvements (Eric)
- 
- hw/vfio/common.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ - vfio_set_migration_error() : err -> ret rename (Eric)
+ - vfio_migration_set_state() :
+   Introduced an error prefix to remove redundancy in error messages (Eric)
+   Commented error_report when setting the device in recover state fails (Eric)
+ - vfio_migration_state_notifier() :
+   Remove useless assignment of local ret variable (Avihai) 
+   Rephrased comment regarding MigrationNotifyFunc API (Avihai)
+ - Fixed even more line wrapping of *dirty_bitmap() routines (Avihai)
+ - vfio_sync_dirty_bitmap()
+   Fixed return when vfio_sync_ram_discard_listener_dirty_bitmap() is called (Avihai)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 485e53916491f1164d29e739fb7106c0c77df737..b5102f54a6474a50c6366e8fbce23812d55e384e 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1027,7 +1027,8 @@ static void vfio_device_feature_dma_logging_start_destroy(
-     g_free(feature);
- }
- 
--static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer)
-+static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
-+                                          Error **errp)
- {
-     struct vfio_device_feature *feature;
-     VFIODirtyRanges ranges;
-@@ -1038,6 +1039,7 @@ static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer)
-     feature = vfio_device_feature_dma_logging_start_create(bcontainer,
-                                                            &ranges);
-     if (!feature) {
-+        error_setg_errno(errp, errno, "Failed to prepare DMA logging");
-         return -errno;
-     }
- 
-@@ -1049,8 +1051,8 @@ static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer)
-         ret = ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
-         if (ret) {
-             ret = -errno;
--            error_report("%s: Failed to start DMA logging, err %d (%s)",
--                         vbasedev->name, ret, strerror(errno));
-+            error_setg_errno(errp, errno, "%s: Failed to start DMA logging",
-+                             vbasedev->name);
-             goto out;
-         }
-         vbasedev->dirty_tracking = true;
-@@ -1069,20 +1071,19 @@ out:
- static bool vfio_listener_log_global_start(MemoryListener *listener,
-                                            Error **errp)
- {
-+    ERRP_GUARD();
-     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
-                                                  listener);
-     int ret;
- 
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
--        ret = vfio_devices_dma_logging_start(bcontainer);
-+        ret = vfio_devices_dma_logging_start(bcontainer, errp);
-     } else {
--        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
-+        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, errp);
-     }
- 
-     if (ret) {
--        error_report("vfio: Could not start dirty page tracking, err: %d (%s)",
--                     ret, strerror(-ret));
--        vfio_set_migration_error(ret);
-+        error_prepend(errp, "vfio: Could not start dirty page tracking - ");
-     }
-     return !ret;
- }
-@@ -1091,17 +1092,20 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
- {
-     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
-                                                  listener);
-+    Error *local_err = NULL;
-     int ret = 0;
- 
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-         vfio_devices_dma_logging_stop(bcontainer);
-     } else {
--        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
-+        ret = vfio_container_set_dirty_page_tracking(bcontainer, false,
-+                                                     &local_err);
-     }
- 
-     if (ret) {
--        error_report("vfio: Could not stop dirty page tracking, err: %d (%s)",
--                     ret, strerror(-ret));
-+        error_prepend(&local_err,
-+                      "vfio: Could not stop dirty page tracking - ");
-+        error_report_err(local_err);
-         vfio_set_migration_error(ret);
-     }
- }
+Changes in v6:
+
+ - Commit log improvements (Avihai)
+ - Modified some titles (Avihai)
+ - vfio_migration_set_state() : Dropped the error_setg_errno()
+   change when setting device in recover state fails  (Avihai)    
+ - vfio_migration_state_notifier() : report local error (Avihai) 
+ - vfio_save_device_config_state() : Set errp if the migration
+   stream is in error (Avihai)
+ - vfio_save_state() : Changed error prefix  (Avihai)
+ - vfio_iommu_map_dirty_notify() : Modified goto label  (Avihai)
+ - Fixed memory_get_xlat_addr documentation (Avihai)
+ - Fixed line wrapping (Avihai)
+ - Fixed query_dirty_bitmap documentation (Avihai)
+ - Dropped last patch from v5 :   
+   vfio: Extend vfio_set_migration_error() with Error* argument
+
+Changes in v5:
+
+ - Rebased on 20c64c8a51a4 ("migration: migration_file_set_error")
+ - Fixed typo in set_dirty_page_tracking documentation
+ - Used error_setg_errno() in vfio_devices_dma_logging_start()
+ - Replaced error_setg() by error_setg_errno() in vfio_migration_set_state()
+ - Replaced error_setg() by error_setg_errno() in
+   vfio_devices_query_dirty_bitmap() and vfio_legacy_query_dirty_bitmap()
+ - ':' -> '-' in vfio_iommu_map_dirty_notify()
+
+Cédric Le Goater (9):
+  vfio: Add Error** argument to .set_dirty_page_tracking() handler
+  vfio: Add Error** argument to vfio_devices_dma_logging_start()
+  migration: Extend migration_file_set_error() with Error* argument
+  vfio/migration: Add an Error** argument to vfio_migration_set_state()
+  vfio/migration: Add Error** argument to .vfio_save_config() handler
+  vfio: Reverse test on vfio_get_xlat_addr()
+  memory: Add Error** argument to memory_get_xlat_addr()
+  vfio: Add Error** argument to .get_dirty_bitmap() handler
+  vfio: Also trace event failures in vfio_save_complete_precopy()
+
+ include/exec/memory.h                 |  15 +++-
+ include/hw/vfio/vfio-common.h         |  30 ++++++-
+ include/hw/vfio/vfio-container-base.h |  37 +++++++--
+ include/migration/misc.h              |   2 +-
+ hw/vfio/common.c                      | 113 ++++++++++++++++----------
+ hw/vfio/container-base.c              |  10 +--
+ hw/vfio/container.c                   |  20 +++--
+ hw/vfio/migration.c                   | 109 ++++++++++++++++---------
+ hw/vfio/pci.c                         |   5 +-
+ hw/virtio/vhost-vdpa.c                |   5 +-
+ migration/migration.c                 |   6 +-
+ system/memory.c                       |  10 +--
+ 12 files changed, 246 insertions(+), 116 deletions(-)
+
 -- 
 2.45.0
 
