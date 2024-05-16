@@ -4,107 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37723C25B77
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 16:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7225AC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 16:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7dts-0008Rt-0N; Thu, 16 May 2024 12:24:13 -0400
+	id 1s7dxz-0003c8-J0; Thu, 16 May 2024 12:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1s7dtW-0008J3-5I; Thu, 16 May 2024 12:23:50 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7dxw-0003bS-A7
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 12:28:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1s7dtT-0003Yv-NC; Thu, 16 May 2024 12:23:49 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44GGH5ZY012517; Thu, 16 May 2024 16:23:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=QblUrjQl1JpgpqL/7InVY6qt6PjyamvFNRy0ynRgfHQ=;
- b=m8EVNgon40CcUddEMWPDq6T7falTMSeYcJjI+XMJO7HRCYfeZ7gsT8z5YllY6cWuIoTo
- CiDBN79BY9Aeyolj3NvJ/jTJ9lhTaYkg1z9Bz1xgxzclPHSNjQzMZ5jcr8/4kB5g71E3
- ZLgbwuWNK6vaBbG2KO7OdmBYGe9tWitcPkLcqahM7zOMYcBjK/MWyI+E/PSzuzGS9XM3
- bdzFFmmPYnYC10fzcdhMQcBdsKQ6oNcGJiIgkU3hv7RPu571oJFoVd1wtcDI3b84N5Go
- RpsBIA8hiKCS4JJ1kpCOr7FgMAqK7hWSD68A5vAWfJT6TmIlq7aeudLwP0WSXAhq9ZAr gQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5kpu0ay8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 16:23:42 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44GGNfsA022813;
- Thu, 16 May 2024 16:23:41 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5kpu0ay6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 16:23:41 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44GDVRjR020368; Thu, 16 May 2024 16:23:40 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2kd0b311-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 16:23:40 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44GGNYED57409942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 May 2024 16:23:36 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA5BD2004B;
- Thu, 16 May 2024 16:23:33 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF19F2004D;
- Thu, 16 May 2024 16:23:31 +0000 (GMT)
-Received: from [9.171.75.240] (unknown [9.171.75.240])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 May 2024 16:23:31 +0000 (GMT)
-Message-ID: <3fb57ce4-e3a5-4053-9847-7654ebd2413b@linux.vnet.ibm.com>
-Date: Thu, 16 May 2024 21:53:30 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] target/ppc: Move VMX integer add/sub saturate insns
- to decodetree.
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com, lucas.araujo@eldorado.org.br
-References: <20240512093847.18099-1-rathc@linux.ibm.com>
- <20240512093847.18099-2-rathc@linux.ibm.com>
- <c5eeb863-93af-4a03-a392-4eaf999d6643@linaro.org>
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <c5eeb863-93af-4a03-a392-4eaf999d6643@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 3brQoSnH_J7MP2sk-8AdGsL7iFbRMzlT
-X-Proofpoint-GUID: 41J9rJ0MCQtsuwaMQL09JUMapnRCMDxa
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s7dxu-0004NT-T1
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 12:28:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715876901;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0y61LM5HoJXOxwFhaIOTdmT0PTZGmCU261TrC8Qy2rk=;
+ b=bSlQFg2/OEASHgWlgBN3H7VNqTXMNB8qebqNn6qnUBXYwhldzIMEi/6BRxJeJh4YZ2GyYf
+ ouoonbNzosLaiONpmRB9paoBAq2yxLqdrTazFHEKH5grFG8oawYh3RXnIjZocPOE4E1u6V
+ BS3pTw9rfqOwMWuB4e6+RhpDC219O9M=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-22-rTfO_lkrMgqeVtzW5H9Z-Q-1; Thu, 16 May 2024 12:28:19 -0400
+X-MC-Unique: rTfO_lkrMgqeVtzW5H9Z-Q-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6a0dc98dc24so78361226d6.2
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 09:28:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715876899; x=1716481699;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0y61LM5HoJXOxwFhaIOTdmT0PTZGmCU261TrC8Qy2rk=;
+ b=r8iWj2UnEvf3AoOaYb298GNB4KaF7agvaGK5770sK3+cIbLaT/gJZPQn4jnj+CQl59
+ 88+0FV7r32lGcGljNQCZEFlkyYL4pLPC5aDWtP9EXTdbxYN7EtRuSM51Rwu2r9Ondzis
+ +jq7pfL6JySX9nc4o7au9k3GzcXYLnH9qV3KuQ/+bIl9JhYTuZW9JzFSqkZL6227Cvwi
+ backzq7gwUdb+6Bw3CvUt8Rl/QmGc5CDKprRInvSSOxa20vq3VuEoCv8H7vR4IQW8MtM
+ +jegUOQpOlgCXuu16kmmMoiBb6uyxNzLMPWJpxtssdeLuOVgklrBrXFga4ciWVe79iWu
+ jetA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfbRSryBCksiNMHWCRTlPCJM+vhq4gO46gdNhWQX1fRdaEW4VQcI1B7yO0mPQ8CtRpHyO0Y/nuR/FO3TT0l1IuVTZsUQ8=
+X-Gm-Message-State: AOJu0Yw7ycCkpcGql5vBT7qKd/pt9JbLmsW8zYT5M4ilPOFxnCHZJgkv
+ D/S1T6O9k98v8+L3h5ShXenRzVxTcxbx25ULV+LJvhI6r+aeonLQgLi/aONiejbHiMEFJXEHNHy
+ KbeySrQo7m7KFqUvLFEb894eHTVemziJiijA074k5e/FSZTh0Tt97
+X-Received: by 2002:a05:6214:4a89:b0:6a0:c95d:909b with SMTP id
+ 6a1803df08f44-6a16821eb03mr270264346d6.44.1715876898913; 
+ Thu, 16 May 2024 09:28:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5ZFJbOFIjj2oRrCevhqTd1FOS6OpmygGhRTnAyX3+E+pOSc6kk7kkAcfyuRU3ySa/HsEBtg==
+X-Received: by 2002:a05:6214:4a89:b0:6a0:c95d:909b with SMTP id
+ 6a1803df08f44-6a16821eb03mr270264076d6.44.1715876898541; 
+ Thu, 16 May 2024 09:28:18 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6a15f185141sm76924266d6.30.2024.05.16.09.28.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 May 2024 09:28:18 -0700 (PDT)
+Message-ID: <3b6b5831-6357-4226-b2a0-e9ab97f1fc73@redhat.com>
+Date: Thu, 16 May 2024 18:28:15 +0200
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 spamscore=0
- mlxlogscore=904 clxscore=1015 suspectscore=0 lowpriorityscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405160116
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] vfio/ap: Use g_autofree variable in
+ vfio_ap_register_irq_notifier()
+To: Thomas Huth <thuth@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240425090214.400194-1-clg@redhat.com>
+ <20240425090214.400194-2-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240425090214.400194-2-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,149 +110,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
 
-On 5/12/24 17:08, Richard Henderson wrote:
-> On 5/12/24 11:38, Chinmay Rath wrote:
->> @@ -2934,6 +2870,184 @@ static bool do_vx_vaddsubcuw(DisasContext 
->> *ctx, arg_VX *a, int add)
->>       return true;
->>   }
->>   +static inline void do_vadd_vsub_sat
->> +(
->> +    unsigned vece, TCGv_vec t, TCGv_vec sat, TCGv_vec a, TCGv_vec b,
->> +    void (*norm_op)(unsigned, TCGv_vec, TCGv_vec, TCGv_vec),
->> +    void (*sat_op)(unsigned, TCGv_vec, TCGv_vec, TCGv_vec))
->> +{
->> +    TCGv_vec x = tcg_temp_new_vec_matching(t);
->> +    norm_op(vece, x, a, b);
->> +    sat_op(vece, t, a, b);
->> +    tcg_gen_cmp_vec(TCG_COND_NE, vece, x, x, t);
->> +    tcg_gen_or_vec(vece, sat, sat, x);
->> +}
->
-> As a separate change, before or after, the cmp_vec may be simplified 
-> to xor_vec.  Which means that INDEX_op_cmp_vec need not be probed in 
-> the vecop_lists.  See
->
-> https://lore.kernel.org/qemu-devel/20240506010403.6204-31-richard.henderson@linaro.org/ 
->
->
-> which is performing the same operation on AArch64.
->
-Noted ! Will do.
->
->> +static bool do_vx_vadd_vsub_sat(DisasContext *ctx, arg_VX *a,
->> +                                int sign, int vece, int add)
->> +{
->> +    static const TCGOpcode vecop_list_sub_u[] = {
->> +        INDEX_op_sub_vec, INDEX_op_ussub_vec, INDEX_op_cmp_vec, 0
->> +    };
->> +    static const TCGOpcode vecop_list_sub_s[] = {
->> +        INDEX_op_sub_vec, INDEX_op_sssub_vec, INDEX_op_cmp_vec, 0
->> +    };
->> +    static const TCGOpcode vecop_list_add_u[] = {
->> +        INDEX_op_add_vec, INDEX_op_usadd_vec, INDEX_op_cmp_vec, 0
->> +    };
->> +    static const TCGOpcode vecop_list_add_s[] = {
->> +        INDEX_op_add_vec, INDEX_op_ssadd_vec, INDEX_op_cmp_vec, 0
->> +    };
->> +
->> +    static const GVecGen4 op[2][3][2] = {
->> +        {
->> +            {
->> +                {
->> +                    .fniv = gen_vsub_sat_u,
->> +                    .fno = gen_helper_VSUBUBS,
->> +                    .opt_opc = vecop_list_sub_u,
->> +                    .write_aofs = true,
->> +                    .vece = MO_8
->> +                },
-.
-.
-.
->> +                {
->> +                    .fniv = gen_vadd_sat_s,
->> +                    .fno = gen_helper_VADDSWS,
->> +                    .opt_opc = vecop_list_add_s,
->> +                    .write_aofs = true,
->> +                    .vece = MO_32
->> +                },
->> +            },
->> +        },
->> +    };
->
-> While this table is not wrong, I think it is clearer to have separate 
-> tables, one per operation, which are then passed in to a common expander.
->
->> +
->> +    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
->> +    REQUIRE_VECTOR(ctx);
->> +
->> +    tcg_gen_gvec_4(avr_full_offset(a->vrt), offsetof(CPUPPCState, 
->> vscr_sat),
->> +                   avr_full_offset(a->vra), avr_full_offset(a->vrb), 
->> 16, 16,
->> +                   &op[sign][vece][add]);
->> +
->> +    return true;
->> +}
->> +
->> +TRANS(VSUBUBS, do_vx_vadd_vsub_sat, 0, MO_8, 0)
->
-> I think it is clearer to use TRANS_FLAGS than to sink the ISA check 
-> into the helper.  In general I seem to find the helper later gets 
-> reused for something else with a different ISA check.
->
-> Thus
->
-> static const TCGOpcode vecop_list_vsub_sat_u[] = {
->     INDEX_op_sub_vec, INDEX_op_ussub_vec, 0
-> };
-> static const GVecGen4 op_vsububs = {
->     .fno = gen_helper_VSUBUBS,
->     .fniv = gen_vsub_sat_u,
->     .opt_opc = vecop_list_vsub_sat_u,
->     .write_aofs = true,
->     .vece = MO_8
-> };
-> TRANS_FLAGS(VSUBUBS, do_vx_vadd_vsub_sat, &op_vsububs)
->
-> static const GVecGen4 op_vsubuhs = {
->     .fno = gen_helper_VSUBUHS,
->     .fniv = gen_vsub_sat_u,
->     .opt_opc = vecop_list_vsub_sat_u,
->     .write_aofs = true,
->     .vece = MO_16
-> };
-> TRANS_FLAGS(VSUBUHS, do_vx_vadd_vsub_sat, &op_vsubuhs)
->
-> etc.
->
-Will add those changes in v2.
->> -GEN_VXFORM_DUAL(vaddubs, vmul10uq, 0, 8, PPC_ALTIVEC, PPC_NONE),
->
-> You are correct in your cover letter that this is not right.
-> We should have been testing ISA300 for vmul10uq here.
->
-Thank you very much for the clarification !
->> +GEN_VXFORM(vmul10euq, 0, 9),
->
-> And thus need GEN_VXFORM_300 here.
->
->> +GEN_VXFORM(vmul10euq, 0, 9),
->> +GEN_VXFORM(bcdcpsgn, 0, 13),
->> +GEN_VXFORM(bcdadd, 0, 24),
->> +GEN_VXFORM(bcdsub, 0, 25),
-> ...
->> +GEN_VXFORM(xpnd04_2, 0, 30),
->
-> None of these are in the base ISA, so all need a flag check.
->
->
->
-> r~
->
-Thanks & Regards,
-Chinmay
+Applied series to vfio-next.
+
+Thanks,
+
+C.
+
+On 4/25/24 11:02, Cédric Le Goater wrote:
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/ap.c | 10 +++-------
+>   1 file changed, 3 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 7c4caa5938636937680fec87e999249ac84a4498..03f8ffaa5e2bf13cf8daa2f44aa4cf17809abd94 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -77,7 +77,7 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>       size_t argsz;
+>       IOHandler *fd_read;
+>       EventNotifier *notifier;
+> -    struct vfio_irq_info *irq_info;
+> +    g_autofree struct vfio_irq_info *irq_info = NULL;
+>       VFIODevice *vdev = &vapdev->vdev;
+>   
+>       switch (irq) {
+> @@ -104,14 +104,14 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>       if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
+>                 irq_info) < 0 || irq_info->count < 1) {
+>           error_setg_errno(errp, errno, "vfio: Error getting irq info");
+> -        goto out_free_info;
+> +        return;
+>       }
+>   
+>       if (event_notifier_init(notifier, 0)) {
+>           error_setg_errno(errp, errno,
+>                            "vfio: Unable to init event notifier for irq (%d)",
+>                            irq);
+> -        goto out_free_info;
+> +        return;
+>       }
+>   
+>       fd = event_notifier_get_fd(notifier);
+> @@ -122,10 +122,6 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>           qemu_set_fd_handler(fd, NULL, NULL, vapdev);
+>           event_notifier_cleanup(notifier);
+>       }
+> -
+> -out_free_info:
+> -    g_free(irq_info);
+> -
+>   }
+>   
+>   static void vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
+
 
