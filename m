@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9751C25B78
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 19:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5FBC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 19:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7hCa-0008CM-Gs; Thu, 16 May 2024 15:55:44 -0400
+	id 1s7hDA-00004v-Fn; Thu, 16 May 2024 15:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s7hCT-0008C5-B6
- for qemu-devel@nongnu.org; Thu, 16 May 2024 15:55:38 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s7hD7-0008Uf-Jw
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 15:56:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s7hCR-0003dZ-RM
- for qemu-devel@nongnu.org; Thu, 16 May 2024 15:55:37 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s7hD5-0003tu-62
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 15:56:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715889334;
+ s=mimecast20190719; t=1715889374;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RzN8kqW+DJ0KWBlqo3Mpe4Hn7EmBt84xL6uMy1iOTDk=;
- b=dztXWMEE++tR4d/FqWLaiygbljScDp6X/aMjLuByUv775lm/Xs+zd1n2zt+jhSMYBuqV04
- H4VjPJXWZ17/O2dvcIzXIJFsr8nBiJ08BSQLDYBL/lQFBJ9vvc9HxdEHWLMiuFG0FQCxeO
- a6zXrsvxBvVl15bfMpMaeFdzxssjBAY=
+ bh=4ThHCZM3V/mD44biwzcR/XXW1TZG9NUSzoKCBvQZl1M=;
+ b=AF9DKjhi5V0ZFrXjaGdS+eff3SQmv6C1tklVhZsV/pP806bzkIht/u+ErpD2fdINwvU2Sh
+ HZkKV9eeqd3VFR24n+4l5kn84HX1BB8CUqpKh20YDD4N48I7AONixvhP1T6QAiVXH5po9l
+ 7+DgqxLIi4WRcYqo8ohKYiFLCkhA2tg=
 Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
  [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-LT-WpsavMSCqSQ1Xcqy58w-1; Thu, 16 May 2024 15:55:32 -0400
-X-MC-Unique: LT-WpsavMSCqSQ1Xcqy58w-1
+ us-mta-314-rNeN3WGRNrmzxDmJ15B09w-1; Thu, 16 May 2024 15:56:12 -0400
+X-MC-Unique: rNeN3WGRNrmzxDmJ15B09w-1
 Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-7e1eb98f144so460867139f.0
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:55:32 -0700 (PDT)
+ ca18e2360f4ac-7e1bbace584so808053939f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:56:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715889332; x=1716494132;
+ d=1e100.net; s=20230601; t=1715889372; x=1716494172;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RzN8kqW+DJ0KWBlqo3Mpe4Hn7EmBt84xL6uMy1iOTDk=;
- b=Wk9ZWVH5EvWx70o7KtiEYPdU3GXgUX6vOTatsIylEErFcK0zUfgX9S7dqQxIXb055N
- J6ZLaD7JUF8JBeVz48gImj1whyaYV40T0nAmQeWiZlSLCeqeEAKDCvnjXZ29VT2QRBpD
- lA1YEgSPdlyqNnMomudKUrAbF886pRVeRjXoiwMWwuGccUTV/yyxSLfZbKe4/CvRQCA7
- WMBij6JYzUnfxQlaDwUUl1ZzSFa1CMfvX7s6kSx8JCa+iNXhB8v7o1w9XbU8nqb2ehk9
- SACSRUK+2LYje0xirAZ39bVWJ/pIrcOH6QYw4pwiMVqTPVu//tYG3iH3GMRLDbA/Hdyc
- X8+Q==
+ bh=4ThHCZM3V/mD44biwzcR/XXW1TZG9NUSzoKCBvQZl1M=;
+ b=ckQIm4VnjshwOyttKvymPQlnZA/w6w59Y4QCKEDPq2ljSPWByH96miDv8cx37VJ4ir
+ xyURMK4ja5jw5B1ERQj7KKqyZ2RyYY6E61ZvP0qBPVGcjD7i6H3WE7J/yb6YqcBNrVWG
+ z4ZmlmoTJ7CfgZUYkw5MKl/fbNFji5KWallAUVje8OhtqVNo96jp47vKwBvIMj/JIagG
+ 8JURyqyhXUwVDuX1wqv2EQjgdeITh7JggQa2CkobCdTa07XvRiT3W+YCA0mP5upLJhwV
+ Swx5ApG8r6xVAlh+XqhcuBlrThfvTVtY/gZoZOALDcxJv6aFDvhoAwMmLshmo+ziMd2x
+ my1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+oTanpHcAlkmfH8BjKydToV/RGnqWBrmUxrMO+aO3WkixnKJ5oYLvTNSfbkZG1zT6zsuYJtN8QLTR7xgBRG+aNZndYlg=
-X-Gm-Message-State: AOJu0YwKvLbMgGll1aF+IxuuivgJ7cl6yyKcIHuPj6qh78QMo/u752eA
- oRjv1ectkGuPckffc1IIFPCsmm2WHDxzGHCEBRNOPJUr5KQYubWtpr62s85LwktfW5pR5qfjHl8
- SOeWFcWtYJ3qiDA99VbeMGAdVtbMWeFxTZvCThNxZd2JD6zw6X6OP
-X-Received: by 2002:a5d:8489:0:b0:7db:f651:2681 with SMTP id
- ca18e2360f4ac-7e1b51c8287mr2317224139f.11.1715889332103; 
- Thu, 16 May 2024 12:55:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2e9Xx7otmF/E3GtUSEbATPHtlo2jeB2cs+5uVE6ssZPiL+ynnJpWB3QDuwf80VK0KQjKK6Q==
-X-Received: by 2002:a5d:8489:0:b0:7db:f651:2681 with SMTP id
- ca18e2360f4ac-7e1b51c8287mr2317222239f.11.1715889331717; 
- Thu, 16 May 2024 12:55:31 -0700 (PDT)
+ AJvYcCX/cLQlkXcZq2N15sBocctncvyqexCtFeXbyuD9cGFCge15Y9dWSkMhi8PUWIEAcUtziYjA9NvMdol+oTWk2GtaKsX5cwI=
+X-Gm-Message-State: AOJu0YxlyXouwiEM7JPLRPzKR7Es8FfpQ60W/SseKLZJlG7IiygVALkV
+ 2z5W+qlP6HZuCutahKq+zdCzIuID1oKmdVcu7xBt1bpPaOGDY2mT0DRlHgxQA8MnCWhcAfDacQS
+ 0au+otvXw5Y3fSDJeec5tIxVyY2sPPYFk8W4Tnou8nlBfM84zrYPV
+X-Received: by 2002:a5d:8c86:0:b0:7e1:8247:d9da with SMTP id
+ ca18e2360f4ac-7e1b51ba940mr2274696439f.2.1715889371777; 
+ Thu, 16 May 2024 12:56:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLtBJjVgTpMXip6qa2l+J5HZ6demQ3cJG+2e43/FGAb86P6BSZ00ACbLyrCQL457Oz1ZbO3w==
+X-Received: by 2002:a5d:8c86:0:b0:7e1:8247:d9da with SMTP id
+ ca18e2360f4ac-7e1b51ba940mr2274694839f.2.1715889371471; 
+ Thu, 16 May 2024 12:56:11 -0700 (PDT)
 Received: from [10.21.161.194] ([65.132.165.41])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4893715057csm4327071173.80.2024.05.16.12.55.30
+ 8926c6da1cb9f-489376de0cdsm4383777173.144.2024.05.16.12.56.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 12:55:30 -0700 (PDT)
-Message-ID: <74e1bab4-b659-4864-a8e9-5c1a9c4296bf@redhat.com>
-Date: Thu, 16 May 2024 21:55:30 +0200
+ Thu, 16 May 2024 12:56:10 -0700 (PDT)
+Message-ID: <7dbad6e2-4637-4073-b122-52f57d0dbbb0@redhat.com>
+Date: Thu, 16 May 2024 21:56:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/8] softmmu: xen: Always pass offset + addr to
- xen_map_cache
+Subject: Re: [PATCH v6 5/8] softmmu: Replace check for RAMBlock offset 0 with
+ xen_mr_is_memory
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, jgross@suse.com,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20240516154804.1114245-1-edgar.iglesias@gmail.com>
- <20240516154804.1114245-5-edgar.iglesias@gmail.com>
+ <20240516154804.1114245-6-edgar.iglesias@gmail.com>
 Content-Language: en-US
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
@@ -126,7 +126,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240516154804.1114245-5-edgar.iglesias@gmail.com>
+In-Reply-To: <20240516154804.1114245-6-edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -157,11 +157,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 16.05.24 17:48, Edgar E. Iglesias wrote:
 > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> Always pass address with offset to xen_map_cache().
-> This is in preparation for support for grant mappings.
+> For xen, when checking for the first RAM (xen_memory), use
+> xen_mr_is_memory() rather than checking for a RAMBlock with
+> offset 0.
 > 
-> Since this is within a block that checks for offset == 0,
-> this has no functional changes.
+> All Xen machines create xen_memory first so this has no
+> functional change for existing machines.
 > 
 > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 > Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
