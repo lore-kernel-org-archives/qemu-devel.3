@@ -4,86 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B258DC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 21:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99599C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 21:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7ivA-0007sH-Dw; Thu, 16 May 2024 17:45:52 -0400
+	id 1s7iyI-0000NV-OJ; Thu, 16 May 2024 17:49:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s7iv8-0007qs-GU
- for qemu-devel@nongnu.org; Thu, 16 May 2024 17:45:50 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s7iyG-0000NG-HE
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 17:49:04 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s7iv6-0003dT-A8
- for qemu-devel@nongnu.org; Thu, 16 May 2024 17:45:50 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1ee12baa01cso154275ad.0
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 14:45:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715895946; x=1716500746; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sw193o8Giu5b5jHKjDP64wHh/6z2KFxRHk+32nQYCBg=;
- b=LEBJmAjTFf8iN0SYDp20ULAXd/Vqp2adsd2IU2VOXuaVqIIl9hXp96TGgF4gB4MFjr
- +ZN1WmqkluLjjwvHpDKm0aMhPMWlmK/9P+TPC67ZLOhd8PxIpYzoFjfKa36g1OpwExAG
- QDOoNzfTqW2nZahKyCtODB9Xaf0nTeQCOqD2BDpPoV2rA4PykweX3ap/kJX6d7/2ZTch
- mTPWBPjwHDhlWj4F+Vg85E8Qf9YC09EfgX1DYRKeWqpMUFiRi0p+Kj3gZO2ylszW9/wx
- t6q2ooKq5G4sxx4x01srIAeDmCMdNg8VqSOURkwnrRnvQF72TKDy7aORxC/Jd0dft71O
- x13w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715895946; x=1716500746;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sw193o8Giu5b5jHKjDP64wHh/6z2KFxRHk+32nQYCBg=;
- b=aM+m23+bBicw6rcEmDV0SjMQUcSe1MdV6wKjP6+kGK8fP8hHTQfqHxXtsBn7ov9RNO
- qyb+Mn/rm0feOsAaOB4/67VYU5UAJmW6LcC5+JCnmNWqA24GfUynTpjVwKDV+YSX2bXd
- 1+N/WEWAls72Nxgt8mLLedsIdMH91ZxH2STRUM8hdalEbS+74MRaArQkkfAkaHa6r07d
- /9A8s61cTbkr5siUSq3oFiQmuEpOFm79kYIOqiHpfqKwWMhyum/lYlJktst5dLkhVP0X
- 3Aly+iS5vtchkDztM+hFh8/GcKisRHOt7+KYJq60/AJwM8RRsttD0UrV/MxMMIZzakoC
- gwJw==
-X-Gm-Message-State: AOJu0YwbfXX9Ic89/yVbNpG8YbZu2+SE0TLvRA3iNOKaxX4wwaBJ4aw6
- kSVGcYeLBCoJ2tX9UBsWNajSx9UbpC/6osRD5dGbGkNY2zvqv3NODpEXxlVZx38=
-X-Google-Smtp-Source: AGHT+IF5QCJMzPuU+bOPNyFBPvUO9neoJZVpeNcflIMfhu8QChIgbNA6YPhOWhNJSA0dsxtNATd27w==
-X-Received: by 2002:a17:902:b495:b0:1e9:470:87e6 with SMTP id
- d9443c01a7336-1ef43d1853emr207865015ad.23.1715895946602; 
- Thu, 16 May 2024 14:45:46 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.57])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0c0355fasm143108355ad.186.2024.05.16.14.45.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 14:45:46 -0700 (PDT)
-Message-ID: <78d179f3-fe8d-45dc-b779-3310e47cea2c@ventanamicro.com>
-Date: Thu, 16 May 2024 18:45:41 -0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s7iyD-0003yG-MQ
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 17:49:04 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D757035011;
+ Thu, 16 May 2024 21:48:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715896139; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EzYNMucPnhmxmAtp5346YnovFmLDtVrAhBXmG9D8MZE=;
+ b=A6daOQV/X7t+gzoOPjubNql6PAenb8ykcaOKFjPUM5IBC4YqVFcgEW8yYiN9mTEhgITlZW
+ MsSvtmSK1em92OV9okaQwPZ9kpOA9AmokShwZLoJoufoA2H6GTJUXw9B+Eky/+UkKk0H0U
+ NDnK59SxA97y5Xie7X4WK0i/JDFVrGI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715896139;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EzYNMucPnhmxmAtp5346YnovFmLDtVrAhBXmG9D8MZE=;
+ b=i93K/TZ8REco5qL4OK+uQYvN2fcgmuCHjaxcV01EpeWmcy90qcAIKpa3oeFDi7ZVJwf6qO
+ 4L9A6dwpu3aAzkAg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nyFZ27PK;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=AOM2VygF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715896138; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EzYNMucPnhmxmAtp5346YnovFmLDtVrAhBXmG9D8MZE=;
+ b=nyFZ27PKlDi49RDAmSvDqAGYtuC0LlX2tYQXxLMKPQwgAKNkoOj4Hkkei/XjmXW2DbaTXm
+ 2PtQ80UJlMBaX2NFRUXDMA5ufoR1slHIAXOOULkTN3SF3wokevme0/yn4RZvbwvUj0HScX
+ kWJkXoOahVqFi2DmmNj/sRGkyHuYTLk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715896138;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EzYNMucPnhmxmAtp5346YnovFmLDtVrAhBXmG9D8MZE=;
+ b=AOM2VygFMwzFa+gnz3bCUXMnnTexPoLf4J2YUvN/mJSFkGKWUcbN2TaKpb5RdBSuDgwf7i
+ ++oGb81iCGQkCYBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 55620137C3;
+ Thu, 16 May 2024 21:48:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id udNBBkp/RmY5KAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 16 May 2024 21:48:58 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
+ Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>, Corey Bryant
+ <coreyb@linux.vnet.ibm.com>, Eric Blake <eblake@redhat.com>, Kevin Wolf
+ <kwolf@redhat.com>
+Subject: Re: [PATCH 1/9] monitor: Honor QMP request for fd removal immediately
+In-Reply-To: <ZjUKk3cNVzAH6IPQ@x1n>
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-2-farosas@suse.de> <ZjUKk3cNVzAH6IPQ@x1n>
+Date: Thu, 16 May 2024 18:46:41 -0300
+Message-ID: <87h6exe8fy.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/15] hw/riscv/riscv-iommu: add Address Translation
- Cache (IOATC)
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-9-dbarboza@ventanamicro.com>
- <CANzO1D1hKidUTKeLrWoNsr4oCy_D6m0UEWAPYemFo5MzmJGuLQ@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CANzO1D1hKidUTKeLrWoNsr4oCy_D6m0UEWAPYemFo5MzmJGuLQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
+ MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: D757035011
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,325 +124,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi all, sorry to have been away from this thread for a while, I was
+trying to catch up on my reviews queue.
 
+Peter Xu <peterx@redhat.com> writes:
 
-On 5/8/24 04:26, Frank Chang wrote:
-> Hi Daniel,
-> 
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:05寫道：
->>
->> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->>
->> The RISC-V IOMMU spec predicts that the IOMMU can use translation caches
->> to hold entries from the DDT. This includes implementation for all cache
->> commands that are marked as 'not implemented'.
->>
->> There are some artifacts included in the cache that predicts s-stage and
->> g-stage elements, although we don't support it yet. We'll introduce them
->> next.
->>
->> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   hw/riscv/riscv-iommu.c | 190 ++++++++++++++++++++++++++++++++++++++++-
->>   hw/riscv/riscv-iommu.h |   2 +
->>   2 files changed, 188 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
->> index df534b99b0..0b93146327 100644
->> --- a/hw/riscv/riscv-iommu.c
->> +++ b/hw/riscv/riscv-iommu.c
->> @@ -63,6 +63,16 @@ struct RISCVIOMMUContext {
->>       uint64_t msiptp;            /* MSI redirection page table pointer */
->>   };
->>
->> +/* Address translation cache entry */
->> +struct RISCVIOMMUEntry {
->> +    uint64_t iova:44;           /* IOVA Page Number */
->> +    uint64_t pscid:20;          /* Process Soft-Context identifier */
->> +    uint64_t phys:44;           /* Physical Page Number */
->> +    uint64_t gscid:16;          /* Guest Soft-Context identifier */
->> +    uint64_t perm:2;            /* IOMMU_RW flags */
->> +    uint64_t __rfu:2;
->> +};
->> +
->>   /* IOMMU index for transactions without PASID specified. */
->>   #define RISCV_IOMMU_NOPASID 0
->>
->> @@ -629,14 +639,127 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
->>       return &as->iova_as;
->>   }
->>
->> +/* Translation Object cache support */
->> +static gboolean __iot_equal(gconstpointer v1, gconstpointer v2)
->> +{
->> +    RISCVIOMMUEntry *t1 = (RISCVIOMMUEntry *) v1;
->> +    RISCVIOMMUEntry *t2 = (RISCVIOMMUEntry *) v2;
->> +    return t1->gscid == t2->gscid && t1->pscid == t2->pscid &&
->> +           t1->iova == t2->iova;
->> +}
->> +
->> +static guint __iot_hash(gconstpointer v)
->> +{
->> +    RISCVIOMMUEntry *t = (RISCVIOMMUEntry *) v;
->> +    return (guint)t->iova;
->> +}
->> +
->> +/* GV: 1 PSCV: 1 AV: 1 */
->> +static void __iot_inval_pscid_iova(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid &&
->> +        iot->pscid == arg->pscid &&
->> +        iot->iova == arg->iova) {
->> +        iot->perm = 0;
-> 
-> Maybe using IOMMU_NONE would be clearer?
+> On Fri, Apr 26, 2024 at 11:20:34AM -0300, Fabiano Rosas wrote:
+>> We're enabling using the fdset interface to pass file descriptors for
+>> use in the migration code. Since migrations can happen more than once
+>> during the VMs lifetime, we need a way to remove an fd from the fdset
+>> at the end of migration.
+>> 
+>> The current code only removes an fd from the fdset if the VM is
+>> running. This causes a QMP call to "remove-fd" to not actually remove
+>> the fd if the VM happens to be stopped.
+>> 
+>> While the fd would eventually be removed when monitor_fdset_cleanup()
+>> is called again, the user request should be honored and the fd
+>> actually removed. Calling remove-fd + query-fdset shows a recently
+>> removed fd still present.
+>> 
+>> The runstate_is_running() check was introduced by commit ebe52b592d
+>> ("monitor: Prevent removing fd from set during init"), which by the
+>> shortlog indicates that they were trying to avoid removing an
+>> yet-unduplicated fd too early.
+>> 
+>> I don't see why an fd explicitly removed with qmp_remove_fd() should
+>> be under runstate_is_running(). I'm assuming this was a mistake when
+>> adding the parenthesis around the expression.
+>> 
+>> Move the runstate_is_running() check to apply only to the
+>> QLIST_EMPTY(dup_fds) side of the expression and ignore it when
+>> mon_fdset_fd->removed has been explicitly set.
+>
+> I am confused on why the fdset removal is as complicated.  I'm also
+> wondering here whether it's dropped because we checked against
+> "mon_refcount == 0", and maybe monitor_fdset_cleanup() is simply called
+> _before_ a monitor is created?  Why do we need such check on the first
+> place?
+>
 
-Agree. I changed all relevant "iot->perm = 0" instances to "iot->perm = IOMMU_NONE".
+It seems the intention was to reuse monitor_fdset_cleanup() to do
+cleanup when all monitors connections are closed:
 
+efb87c1697 ("monitor: Clean up fd sets on monitor disconnect")
+Author: Corey Bryant <coreyb@linux.vnet.ibm.com>
+Date:   Tue Aug 14 16:43:48 2012 -0400
 
-Thanks,
+    monitor: Clean up fd sets on monitor disconnect
+    
+    Fd sets are shared by all monitor connections.  Fd sets are considered
+    to be in use while at least one monitor is connected.  When the last
+    monitor disconnects, all fds that are members of an fd set with no
+    outstanding dup references are closed.  This prevents any fd leakage
+    associated with a client disconnect prior to using a passed fd.
+    
+    Signed-off-by: Corey Bryant <coreyb@linux.vnet.ibm.com>
+    Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
+This could have been done differently at monitor_qmp_event():
 
-Daniel
+    case CHR_EVENT_CLOSED:
+        ...
+        mon_refcount--;
+        if (mon_refcount == 0) {
+            monitor_fdsets_cleanup();
+        }
 
-> 
-> Otherwise,
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> 
->> +    }
->> +}
->> +
->> +/* GV: 1 PSCV: 1 AV: 0 */
->> +static void __iot_inval_pscid(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid &&
->> +        iot->pscid == arg->pscid) {
->> +        iot->perm = 0;
->> +    }
->> +}
->> +
->> +/* GV: 1 GVMA: 1 */
->> +static void __iot_inval_gscid_gpa(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid) {
->> +        /* simplified cache, no GPA matching */
->> +        iot->perm = 0;
->> +    }
->> +}
->> +
->> +/* GV: 1 GVMA: 0 */
->> +static void __iot_inval_gscid(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid) {
->> +        iot->perm = 0;
->> +    }
->> +}
->> +
->> +/* GV: 0 */
->> +static void __iot_inval_all(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    iot->perm = 0;
->> +}
->> +
->> +/* caller should keep ref-count for iot_cache object */
->> +static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
->> +    GHashTable *iot_cache, hwaddr iova)
->> +{
->> +    RISCVIOMMUEntry key = {
->> +        .pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
->> +        .iova  = PPN_DOWN(iova),
->> +    };
->> +    return g_hash_table_lookup(iot_cache, &key);
->> +}
->> +
->> +/* caller should keep ref-count for iot_cache object */
->> +static void riscv_iommu_iot_update(RISCVIOMMUState *s,
->> +    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
->> +{
->> +    if (!s->iot_limit) {
->> +        return;
->> +    }
->> +
->> +    if (g_hash_table_size(s->iot_cache) >= s->iot_limit) {
->> +        iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
->> +                                          g_free, NULL);
->> +        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
->> +    }
->> +    g_hash_table_add(iot_cache, iot);
->> +}
->> +
->> +static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
->> +    uint32_t gscid, uint32_t pscid, hwaddr iova)
->> +{
->> +    GHashTable *iot_cache;
->> +    RISCVIOMMUEntry key = {
->> +        .gscid = gscid,
->> +        .pscid = pscid,
->> +        .iova  = PPN_DOWN(iova),
->> +    };
->> +
->> +    iot_cache = g_hash_table_ref(s->iot_cache);
->> +    g_hash_table_foreach(iot_cache, func, &key);
->> +    g_hash_table_unref(iot_cache);
->> +}
->> +
->>   static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->> -    IOMMUTLBEntry *iotlb)
->> +    IOMMUTLBEntry *iotlb, bool enable_cache)
->>   {
->> +    RISCVIOMMUEntry *iot;
->> +    IOMMUAccessFlags perm;
->>       bool enable_faults;
->>       bool enable_pasid;
->>       bool enable_pri;
->> +    GHashTable *iot_cache;
->>       int fault;
->>
->> +    iot_cache = g_hash_table_ref(s->iot_cache);
->> +
->>       enable_faults = !(ctx->tc & RISCV_IOMMU_DC_TC_DTF);
->>       /*
->>        * TC[32] is reserved for custom extensions, used here to temporarily
->> @@ -645,9 +768,36 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->>       enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
->>       enable_pasid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
->>
->> +    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
->> +    perm = iot ? iot->perm : IOMMU_NONE;
->> +    if (perm != IOMMU_NONE) {
->> +        iotlb->translated_addr = PPN_PHYS(iot->phys);
->> +        iotlb->addr_mask = ~TARGET_PAGE_MASK;
->> +        iotlb->perm = perm;
->> +        fault = 0;
->> +        goto done;
->> +    }
->> +
->>       /* Translate using device directory / page table information. */
->>       fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
->>
->> +    if (!fault && iotlb->target_as == &s->trap_as) {
->> +        /* Do not cache trapped MSI translations */
->> +        goto done;
->> +    }
->> +
->> +    if (!fault && iotlb->translated_addr != iotlb->iova && enable_cache) {
->> +        iot = g_new0(RISCVIOMMUEntry, 1);
->> +        iot->iova = PPN_DOWN(iotlb->iova);
->> +        iot->phys = PPN_DOWN(iotlb->translated_addr);
->> +        iot->pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
->> +        iot->perm = iotlb->perm;
->> +        riscv_iommu_iot_update(s, iot_cache, iot);
->> +    }
->> +
->> +done:
->> +    g_hash_table_unref(iot_cache);
->> +
->>       if (enable_pri && fault) {
->>           struct riscv_iommu_pq_record pr = {0};
->>           if (enable_pasid) {
->> @@ -794,13 +944,40 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
->>               if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
->>                   /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
->>                   goto cmd_ill;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
->> +                /* invalidate all cache mappings */
->> +                func = __iot_inval_all;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
->> +                /* invalidate cache matching GSCID */
->> +                func = __iot_inval_gscid;
->> +            } else {
->> +                /* invalidate cache matching GSCID and ADDR (GPA) */
->> +                func = __iot_inval_gscid_gpa;
->>               }
->> -            /* translation cache not implemented yet */
->> +            riscv_iommu_iot_inval(s, func,
->> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0,
->> +                cmd.dword1 & TARGET_PAGE_MASK);
->>               break;
->>
->>           case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
->>                                RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
->> -            /* translation cache not implemented yet */
->> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
->> +                /* invalidate all cache mappings, simplified model */
->> +                func = __iot_inval_all;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
->> +                /* invalidate cache matching GSCID, simplified model */
->> +                func = __iot_inval_gscid;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
->> +                /* invalidate cache matching GSCID and PSCID */
->> +                func = __iot_inval_pscid;
->> +            } else {
->> +                /* invalidate cache matching GSCID and PSCID and ADDR (IOVA) */
->> +                func = __iot_inval_pscid_iova;
->> +            }
->> +            riscv_iommu_iot_inval(s, func,
->> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
->> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
->> +                cmd.dword1 & TARGET_PAGE_MASK);
->>               break;
->>
->>           case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
->> @@ -1290,6 +1467,8 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->>       /* Device translation context cache */
->>       s->ctx_cache = g_hash_table_new_full(__ctx_hash, __ctx_equal,
->>                                            g_free, NULL);
->> +    s->iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
->> +                                         g_free, NULL);
->>
->>       s->iommus.le_next = NULL;
->>       s->iommus.le_prev = NULL;
->> @@ -1313,6 +1492,7 @@ static void riscv_iommu_unrealize(DeviceState *dev)
->>       qemu_thread_join(&s->core_proc);
->>       qemu_cond_destroy(&s->core_cond);
->>       qemu_mutex_destroy(&s->core_lock);
->> +    g_hash_table_unref(s->iot_cache);
->>       g_hash_table_unref(s->ctx_cache);
->>   }
->>
->> @@ -1320,6 +1500,8 @@ static Property riscv_iommu_properties[] = {
->>       DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
->>           RISCV_IOMMU_SPEC_DOT_VER),
->>       DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
->> +    DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
->> +        LIMIT_CACHE_IOT),
->>       DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
->>       DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
->>       DEFINE_PROP_LINK("downstream-mr", RISCVIOMMUState, target_mr,
->> @@ -1372,7 +1554,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
->>           /* Translation disabled or invalid. */
->>           iotlb.addr_mask = 0;
->>           iotlb.perm = IOMMU_NONE;
->> -    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
->> +    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
->>           /* Translation disabled or fault reported. */
->>           iotlb.addr_mask = 0;
->>           iotlb.perm = IOMMU_NONE;
->> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
->> index 6f740de690..eea2123686 100644
->> --- a/hw/riscv/riscv-iommu.h
->> +++ b/hw/riscv/riscv-iommu.h
->> @@ -68,6 +68,8 @@ struct RISCVIOMMUState {
->>       MemoryRegion trap_mr;
->>
->>       GHashTable *ctx_cache;          /* Device translation Context Cache */
->> +    GHashTable *iot_cache;          /* IO Translated Address Cache */
->> +    unsigned iot_limit;             /* IO Translation Cache size limit */
->>
->>       /* MMIO Hardware Interface */
->>       MemoryRegion regs_mr;
->> --
->> 2.43.2
->>
->>
+But maybe there was a concern about making sure the empty fdsets (last
+block in monitor_fdset_cleanup) were removed at every refcount decrement
+and not only when mon_refcount == 0 for some reason.
+
+> I'm thinking one case where the only QMP monitor got (for some reason)
+> disconnected, and reconnected again during VM running.  Won't current code
+> already lead to unwanted removal of mostly all fds due to mon_refcount==0?
+
+I think that's the case that the patch in question was trying to
+avoid. If the last monitor connects and disconnects while fds have not
+been dup'ed yet, the mon_fdset->dup_fds list will be empty and what you
+say will happen. There seems to be an assumption that after the guest
+starts running all fds that need to be dup'ed will already have been
+dup'ed.
+
+So I think we cannot simply revert the patch as Daniel suggested,
+because that might regress the original block layer use-case if a
+monitor open->close causes the removal of all the yet undup'ed fds[1].
+
+For the migration use-case, the dup() only happens after the migrate
+command has been issued, so the runstate_is_running() check doesn't help
+us. But it also doesn't hurt. However, we're still exposed to a monitor
+disconnection removing the undup'ed fds. So AFAICS, we either stop
+calling monitor_fdset_cleanup() at monitor close or declare that this
+issue is unlikely to occur (because it is) and leave a comment in the
+code.
+
+===========
+1- I ran a quick test:
+
+connect()         // monitor opened: refcnt: 1
+
+{"execute": "add-fd", "arguments": {"fdset-id": 1}}
+{"return": {"fd": 9, "fdset-id": 1}}
+
+{"execute": "add-fd", "arguments": {"fdset-id": 1}}
+{"return": {"fd": 21, "fdset-id": 1}}
+
+close()           // monitor closed: refcnt: 0
+
+connect()         // monitor opened: refcnt: 1
+
+{"execute": "migrate", "arguments": {"uri": "file:/dev/fdset/1,offset=4096"}}
+{
+    "error": {
+        "class": "GenericError",
+        "desc": "Outgoing migration needs two fds in the fdset, got 0"
+    }
+}
+
+>
+> I also am confused why ->removed flags is ever needed, and why we can't
+> already remove the fdsets fds if found matching.
+>
+
+Prior to commit efb87c1697 ("monitor: Clean up fd sets on monitor
+disconnect") we only called monitor_fdset_cleanup() from
+qmp_remove_fd(), so we effectively always removed immediately after
+setting ->removed = true. I don't see a reason to have the flag either.
+
 
