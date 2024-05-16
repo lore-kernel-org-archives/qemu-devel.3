@@ -4,63 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A98C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D15DDC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7WVy-0008JZ-6z; Thu, 16 May 2024 04:31:02 -0400
+	id 1s7WXf-0000fJ-Lg; Thu, 16 May 2024 04:32:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s7WVo-0008J0-MH; Thu, 16 May 2024 04:30:56 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s7WXc-0000eg-ST
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:32:44 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s7WVk-00012l-IY; Thu, 16 May 2024 04:30:51 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vg39J3xZqz6D8cf;
- Thu, 16 May 2024 16:27:00 +0800 (CST)
-Received: from lhrpeml100002.china.huawei.com (unknown [7.191.160.241])
- by mail.maildlp.com (Postfix) with ESMTPS id D486714038F;
- Thu, 16 May 2024 16:30:22 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml100002.china.huawei.com (7.191.160.241) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 16 May 2024 09:30:22 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Thu, 16 May 2024 09:30:22 +0100
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, "npiggin@gmail.com"
- <npiggin@gmail.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "danielhb413@gmail.com" <danielhb413@gmail.com>, "vaibhav@linux.ibm.com"
- <vaibhav@linux.ibm.com>, "sbhat@linux.ibm.com" <sbhat@linux.ibm.com>
-Subject: RE: [PATCH v2 1/4] accel/kvm: Extract common KVM vCPU {creation,
- parking} code
-Thread-Topic: [PATCH v2 1/4] accel/kvm: Extract common KVM vCPU {creation,
- parking} code
-Thread-Index: AQHap1J3XuFeE+ZUnUegULMwM5sk3bGZg7Uw
-Date: Thu, 16 May 2024 08:30:22 +0000
-Message-ID: <fc08e87c979a4916aaff649724df9c6b@huawei.com>
-References: <20240516053211.145504-1-harshpb@linux.ibm.com>
- <20240516053211.145504-2-harshpb@linux.ibm.com>
-In-Reply-To: <20240516053211.145504-2-harshpb@linux.ibm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.158.29]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s7WXZ-0001Rs-Md
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:32:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715848361; x=1747384361;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=ct05y/5RHMltKPplq3OAHrXd/tyixF9CmDVpdAJ3hec=;
+ b=ijVaaaB1Vpl1dFJQamw3Z5WMZ0DUJe3XgdRxRcTO3agKnW/2Vi4gY28L
+ 3xOufSgnwb17uIkS/CwLJmSW4OS37Z3+4UbyDd8fwXnP+uKdsM0en2SXS
+ Zk/gswvYG7dYgSr3/3AMIPKes0Jbz518xgiHY34Iou+uMi8RcRkKkeAJH
+ I1rJHfdDA02vAvEZkNPX9vNF9My8VcAe3Guw64YKkf5t7Xe8Q0q3VeSI0
+ BnanNHB4EVsQ16kWnZCA4MSqSxKRIINfr8woXQLULczKrTt+8iZ9gOXxu
+ OpXdoxawz/tGWwqrFVX1UXyMGDw/oxyT+z6NfW5jtsB3UszKBtjaYmFiA g==;
+X-CSE-ConnectionGUID: a/o61BTdS66i7EoaoT88JA==
+X-CSE-MsgGUID: s+ewSWpZT8aurX2ZvYOtpA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="22523100"
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; d="scan'208";a="22523100"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2024 01:32:38 -0700
+X-CSE-ConnectionGUID: bGQTsmEYSJ2NLjLuYj3LmA==
+X-CSE-MsgGUID: TJbB3bBRSUuBPYH2WxOE8A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; d="scan'208";a="35867175"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 16 May 2024 01:32:35 -0700
+Date: Thu, 16 May 2024 16:47:53 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Krempa <pkrempa@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 1/2] hw/core: allow parameter=1 for SMP topology on any
+ machine
+Message-ID: <ZkXIOW/F0oM1v0jQ@intel.com>
+References: <20240513123358.612355-1-berrange@redhat.com>
+ <20240513123358.612355-2-berrange@redhat.com>
+ <ZkIiHgw9rQActD2i@intel.com> <ZkImOkl-HtsFMaAz@redhat.com>
+ <ZkLfVB/1arSlAptC@intel.com> <ZkTrsDdyGRFzVULG@redhat.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZkTrsDdyGRFzVULG@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,256 +89,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Harsh,
+On Wed, May 15, 2024 at 06:06:56PM +0100, Daniel P. Berrangé wrote:
+> Date: Wed, 15 May 2024 18:06:56 +0100
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: Re: [PATCH 1/2] hw/core: allow parameter=1 for SMP topology on any
+>  machine
+> 
+> On Tue, May 14, 2024 at 11:49:40AM +0800, Zhao Liu wrote:
+> > > I'm failing to see what real world technical problems QEMU faces
+> > > with a parameter being set to '1' by a mgmt app, when QEMU itself
+> > > treats all omitted values as being '1' anyway.
+> > > 
+> > > If we're trying to faithfully model the real world, then restricting
+> > > the topology against machine types though still looks inherantly wrong.
+> > > The valid topology ought to be constrained based on the named CPU model.
+> > > eg it doesn't make sense to allow 'dies=4' with a Skylake CPU model,
+> > > only an EPYC CPU model, especially if we want to model cache info in
+> > > a way that matches the real world silicon better.
+> > 
+> > Thanks for figuring out this. This issue is related with Intel CPU
+> > cache model: currently Intel code defaults L3 shared at die level.
+> > This could be resolved by defining the accurate default cache topology
+> > level for CPU model and make Intel CPU models share L3 at package level
+> > except only Cascadelake.
+> > 
+> > Then user could define any other topology levels (die/module) for
+> > Icelake and this won't change the cache topology, unless the user adds
+> > more sockets or further customizes the cache topology in another way [1].
+> > Do you agree with this solution?
+> 
+> Broadly speaking yes. Historically we have created trouble for
+> ourselves (and or our users) by allowing creation of "wierd"
+> guest CPU models, which don't resemble those which can be found
+> in real world silicon. Problems specifically have been around
+> unsual combinations of CPUID features eg user enabled X, but not Y,
+> where real silicon always has X + Y enabled, and guest OS assumed
+> this is always the case.
+> 
+> So if our named CPU models can more faithfully match what you might
+> see in terms of cache topology in the real world, that's likely to
+> be a good thing.
 
-Thanks for your interest in the patch-set but taking away patches like
-this from other series without any discussion can disrupt others work
-and its acceptance on time. This is because we will have to put lot of
-effort in rebasing bigger series and then testing overhead comes along
-with it.
+Good to know what you think, it's the important guide for our work.
 
-The patch-set (from where this  patch has been taken) is part of even
-bigger series and there have been many people and companies toiling
-to fix the bugs collectively in that series and for years.
+> > > As above, I think that restrictions based on machine type, while nice and
+> > > simple, are incorrect long term. If we did impose restrictions based on
+> > > CPU model, then we could trivially expose this info to mgmt apps via the
+> > > existing mechanism for querying supported CPU models. Limiting based on
+> > > CPU model, however, has potentially greater back compat issues, though
+> > > it would be strictly more faithful to hardware.
+> > 
+> > I think as long as the default cache topology model is clearly defined,
+> > users can further customize the CPU topology and adjust the cache
+> > topology based on it. After all, topology is architectural, not CPU
+> > model-specific (linux support for topology does not take into account
+> > specific CPU models).
+> > 
+> > For example, x86, for simplicity, can we assume that all x86 CPU models
+> > support all x86 topology levels (thread/core/module/die/package) without
+> > making distinctions based on specific CPU models?
+> 
+> Hmm, true, if we have direct control over cache topology, the
+> CPU topology is less critical. I'd still be wary of suggesting
+> it is a good idea to use CPU topology configs that don't reflect
+> something the CPU vendor has concievably used in real silicon.
 
-I'm about float the V9 version of the Arch agnostic series which this
-patch is part of and you can rebase your patch-set from there. I'm
-hopeful that it will get accepted in this cycle.
+Thank you! Yes, besides cache, it may affect other features like
+Anthony's RAPL support, MSR is (die/package) topology-aware.
 
+There's still a lot of open here, I'll take your warning into serious
+consideration.
 
-Many thanks
-Salil.
+> > That way as long as the user doesn't change the default topology, then
+> > Guest's cache and other topology information won't be "corrupted".
+> 
+> > And there's one more question, does this rollback mean that smp's
+> > parameters must have compatible default values for all architectures?
+> 
+> Historically we preferred "sockets", when filling missing topology,
+> then more recently we switched to prefer "cores", since high core
+> counts are generally more common in real world than high socket
+> counts.
+> 
+> In theory at some point, one might want to fill in 'dies > 0' for
+> EPYC, or 'modules > 0' for appropriate Intel CPU models, but doing
+> the reverse while theoretically valid, would be wierd as no such
+> topology would exist in real silicon.
+> 
+> Ultimately if you're allowing QEMU guest vCPUs threads to float
+> freely across host CPUs, there is little point in setting dies/
+> modules/threads to a value other than 1, because the guest OS
+> won't benefit from understanding cache differences for dies/
+> modules/threads/etc, if the vCPU can be moved between host CPUs
+> at any time by the host OS scheduler.
+> 
+> Fine grained control over dies/modules/threads only makes more
+> sense if you have strictly pinning vCPU threads 1:1 to host CPUs
+> 
+> IOW, simply preferring "cores" for everything is a reasonable
+> default long term plan for everything, unless the specific
+> architecture target has no concept of "cores".
 
->  From: Harsh Prateek Bora <harshpb@linux.ibm.com>
->  Sent: Thursday, May 16, 2024 6:32 AM
-> =20
->  From: Salil Mehta <salil.mehta@huawei.com>
-> =20
->  KVM vCPU creation is done once during the vCPU realization when Qemu
->  vCPU thread is spawned. This is common to all the architectures as of no=
-w.
-> =20
->  Hot-unplug of vCPU results in destruction of the vCPU object in QOM but
->  the corresponding KVM vCPU object in the Host KVM is not destroyed as
->  KVM doesn't support vCPU removal. Therefore, its representative KVM
->  vCPU object/context in Qemu is parked.
-> =20
->  Refactor architecture common logic so that some APIs could be reused by
->  vCPU Hotplug code of some architectures likes ARM, Loongson etc. Update
->  new/old APIs with trace events instead of DPRINTF. No functional change =
-is
->  intended here.
-> =20
->  Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
->  Reviewed-by: Gavin Shan <gshan@redhat.com>
->  Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
->  Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->  Tested-by: Xianglai Li <lixianglai@loongson.cn>
->  Tested-by: Miguel Luis <miguel.luis@oracle.com>
->  Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
->  [harshpb: fixed rebase failures in include/sysemu/kvm.h]
->  Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->  ---
->   include/sysemu/kvm.h   | 15 ++++++++++
->   accel/kvm/kvm-all.c    | 64 ++++++++++++++++++++++++++++++++--------
->  --
->   accel/kvm/trace-events |  5 +++-
->   3 files changed, 68 insertions(+), 16 deletions(-)
-> =20
->  diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h index
->  eaf801bc93..fa3ec74442 100644
->  --- a/include/sysemu/kvm.h
->  +++ b/include/sysemu/kvm.h
->  @@ -434,6 +434,21 @@ void kvm_set_sigmask_len(KVMState *s, unsigned
->  int sigmask_len);
-> =20
->   int kvm_physical_memory_addr_from_host(KVMState *s, void
->  *ram_addr,
->                                          hwaddr *phys_addr);
->  +/**
->  + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
->  + * @cpu: QOM CPUState object for which KVM vCPU has to be
->  fetched/created.
->  + *
->  + * @returns: 0 when success, errno (<0) when failed.
->  + */
->  +int kvm_create_vcpu(CPUState *cpu);
->  +
->  +/**
->  + * kvm_park_vcpu - Park QEMU KVM vCPU context
->  + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to
->  be parked.
->  + *
->  + * @returns: none
->  + */
->  +void kvm_park_vcpu(CPUState *cpu);
-> =20
->   #endif /* COMPILING_PER_TARGET */
-> =20
->  diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c index
->  d7281b93f3..30d42847de 100644
->  --- a/accel/kvm/kvm-all.c
->  +++ b/accel/kvm/kvm-all.c
->  @@ -128,6 +128,7 @@ static QemuMutex kml_slots_lock;  #define
->  kvm_slots_unlock()  qemu_mutex_unlock(&kml_slots_lock)
-> =20
->   static void kvm_slot_init_dirty_bitmap(KVMSlot *mem);
->  +static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id);
-> =20
->   static inline void kvm_resample_fd_remove(int gsi)  { @@ -340,14 +341,5=
-3
->  @@ err:
->       return ret;
->   }
-> =20
->  +void kvm_park_vcpu(CPUState *cpu)
->  +{
->  +    struct KVMParkedVcpu *vcpu;
->  +
->  +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->  +
->  +    vcpu =3D g_malloc0(sizeof(*vcpu));
->  +    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
->  +    vcpu->kvm_fd =3D cpu->kvm_fd;
->  +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node); }
->  +
->  +int kvm_create_vcpu(CPUState *cpu)
->  +{
->  +    unsigned long vcpu_id =3D kvm_arch_vcpu_id(cpu);
->  +    KVMState *s =3D kvm_state;
->  +    int kvm_fd;
->  +
->  +    trace_kvm_create_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->  +
->  +    /* check if the KVM vCPU already exist but is parked */
->  +    kvm_fd =3D kvm_get_vcpu(s, vcpu_id);
->  +    if (kvm_fd < 0) {
->  +        /* vCPU not parked: create a new KVM vCPU */
->  +        kvm_fd =3D kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
->  +        if (kvm_fd < 0) {
->  +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu",
->  vcpu_id);
->  +            return kvm_fd;
->  +        }
->  +    }
->  +
->  +    cpu->kvm_fd =3D kvm_fd;
->  +    cpu->kvm_state =3D s;
->  +    cpu->vcpu_dirty =3D true;
->  +    cpu->dirty_pages =3D 0;
->  +    cpu->throttle_us_per_full =3D 0;
->  +
->  +    return 0;
->  +}
->  +
->   static int do_kvm_destroy_vcpu(CPUState *cpu)  {
->       KVMState *s =3D kvm_state;
->       long mmap_size;
->  -    struct KVMParkedVcpu *vcpu =3D NULL;
->       int ret =3D 0;
-> =20
->  -    trace_kvm_destroy_vcpu();
->  +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> =20
->       ret =3D kvm_arch_destroy_vcpu(cpu);
->       if (ret < 0) {
->  @@ -373,10 +413,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
->           }
->       }
-> =20
->  -    vcpu =3D g_malloc0(sizeof(*vcpu));
->  -    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
->  -    vcpu->kvm_fd =3D cpu->kvm_fd;
->  -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
->  +    kvm_park_vcpu(cpu);
->   err:
->       return ret;
->   }
->  @@ -397,6 +434,8 @@ static int kvm_get_vcpu(KVMState *s, unsigned long
->  vcpu_id)
->           if (cpu->vcpu_id =3D=3D vcpu_id) {
->               int kvm_fd;
-> =20
->  +            trace_kvm_get_vcpu(vcpu_id);
->  +
->               QLIST_REMOVE(cpu, node);
->               kvm_fd =3D cpu->kvm_fd;
->               g_free(cpu);
->  @@ -404,7 +443,7 @@ static int kvm_get_vcpu(KVMState *s, unsigned long
->  vcpu_id)
->           }
->       }
-> =20
->  -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
->  +    return -ENOENT;
->   }
-> =20
->   int kvm_init_vcpu(CPUState *cpu, Error **errp) @@ -415,19 +454,14 @@
->  int kvm_init_vcpu(CPUState *cpu, Error **errp)
-> =20
->       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> =20
->  -    ret =3D kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
->  +    ret =3D kvm_create_vcpu(cpu);
->       if (ret < 0) {
->  -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu faile=
-d
->  (%lu)",
->  +        error_setg_errno(errp, -ret,
->  +                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
->                            kvm_arch_vcpu_id(cpu));
->           goto err;
->       }
-> =20
->  -    cpu->kvm_fd =3D ret;
->  -    cpu->kvm_state =3D s;
->  -    cpu->vcpu_dirty =3D true;
->  -    cpu->dirty_pages =3D 0;
->  -    cpu->throttle_us_per_full =3D 0;
->  -
->       mmap_size =3D kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
->       if (mmap_size < 0) {
->           ret =3D mmap_size;
->  diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events index
->  681ccb667d..75c1724e78 100644
->  --- a/accel/kvm/trace-events
->  +++ b/accel/kvm/trace-events
->  @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev fd %=
-d,
->  type 0x%x, arg %p"
->   kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable to
->  retrieve ONEREG %" PRIu64 " from KVM: %s"
->   kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable to se=
-t
->  ONEREG %" PRIu64 " to KVM: %s"
->   kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id:
->  %lu"
->  +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d
->  id: %lu"
->  +kvm_get_vcpu(unsigned long arch_cpu_id) "id: %lu"
->  +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d
->  id: %lu"
->  +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id:
->  %lu"
->   kvm_irqchip_commit_routes(void) ""
->   kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s
->  vector %d virq %d"
->   kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=3D%d"
->  @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
->   kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" pages
->  (took %"PRIi64" us)"
->   kvm_dirty_ring_reaper_kick(const char *reason) "%s"
->   kvm_dirty_ring_flush(int finished) "%d"
->  -kvm_destroy_vcpu(void) ""
->   kvm_failed_get_vcpu_mmap_size(void) ""
->   kvm_cpu_exec(void) ""
->   kvm_interrupt_exit_request(void) ""
->  --
->  2.39.3
+Thank you very much for your education, it has helped me understand the
+meaning of SMP much better!
+
+It makes sense to default the cache topology configuration to core, I'll
+check further to see if it would conflict with the current x86 default
+cache topology encoding model and how to defuse the potential conflict.
+
+The CPU topology building is centralized in the general SMP code, while
+cache topology is scattered throughout the architectures' code, which is
+a significant difference between the two. I'll refresh the smp cache
+series later.
+
+Regards,
+Zhao
 
 
