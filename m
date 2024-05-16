@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A04C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A192AC25B74
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7eWW-0006E3-Ap; Thu, 16 May 2024 13:04:08 -0400
+	id 1s7eXL-0006OF-V6; Thu, 16 May 2024 13:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cconte@redhat.com>) id 1s7eWU-0006Dv-BR
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:04:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7eXI-0006Nu-2J
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:04:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cconte@redhat.com>) id 1s7eWS-0005Ao-Hx
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:04:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7eXF-0005HM-H3
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:04:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715879042;
+ s=mimecast20190719; t=1715879091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=+nQAVrOJxNP42VoG6IKoq8gVTV0PH5iDHxJe1gtiuo8=;
- b=GdgLv64onikP5Uz3KoAa4lS6Eqrx1zJFf6cmzB1aw2lC1vWRJxlUNe58/wVSkhXoNmjRcC
- 4iwhDHN/pJGK0o+G1vN7A3JIrE+R4/bQnmglKJtRXcN7ryLSLsRgitfOsKpYyXBFFqlfsl
- G4GYSUnl1MfrXAdTg+tyMUKSZFacFro=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0D9CEweTmvCxU29VizO14WawymhhGHfMJRWLw+l5BEQ=;
+ b=iLKGh9O6WYkgyVR1QHkMJW9Eqdq5y0Y7yMe1zNiGqgLAsYxCbFW5fllLPcH1SH3UbsJm6W
+ bed5zv7MsYIQB9O9/N9VutMmAsWV8mkVnOzKx7scSZ1Eop7SGR1kFkncmNnY3tPIyErYYr
+ qpxGEgSHESmR/i7XKFhLWPfXCWjFOD4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434-PszJ0psYMIyHsjCBv1erWw-1; Thu, 16 May 2024 13:02:15 -0400
-X-MC-Unique: PszJ0psYMIyHsjCBv1erWw-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6a15390ceceso104963506d6.2
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:02:15 -0700 (PDT)
+ us-mta-367-oxTnl-IWP56c1O97cK96_g-1; Thu, 16 May 2024 13:04:50 -0400
+X-MC-Unique: oxTnl-IWP56c1O97cK96_g-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-420094e8896so29209055e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:04:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715878934; x=1716483734;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+nQAVrOJxNP42VoG6IKoq8gVTV0PH5iDHxJe1gtiuo8=;
- b=Igkmt6NTgjnfmdUSPkTl9Y4KY7coODqGJdtxyKvG36koJJpZNx0LDMf8//M3zaN7LY
- iOKQDaTbywmxYekjANUp6glqeJonpHjHVdz/FTun9TIFM4ZVz5OFvM28akqdeLUWRtCe
- EvVFfauNj6ESCsm8Db1b7STN03fOiaD2/S3QpNfC99tZ+3tt+/AsSE3x08KLE/HNlbvR
- EeFxmJndrbPRyyAq6PouBW7y+ccuqfNl9W1Q3ar14qhinxMfwJ0NzggypfYls1vk6y4/
- HWHv+EcIqWbtuzyAEBZgX88/rWv9aFsFIS7U7mh9ySSUEYbhAvStkeVhCF7tGylurKcR
- DY5g==
-X-Gm-Message-State: AOJu0YxnRvX2j+O5ZZOLNttARZ+a4myd2+MgdXo71msfSBWUAGR6wCIs
- Z9tGFNuk1B5YYhg0fCJJ1NBvZ+P7Tm6P/LN+kei4aVBaEP5PRCbFqifiT0OPYm3n2hQlKFP24DX
- Kz3Yx0mbCQmTN3kjdJbRqVBRT+RRqxmqtwlz09miNpqiizN5Ft0G9vZSvJ+KtBNJA39zCg1qPCo
- bVJbvU5yhhGwfRcZGyqUcLv1OlSnCKjgIVqCp6
-X-Received: by 2002:a05:6214:5502:b0:6a3:5e6b:1b85 with SMTP id
- 6a1803df08f44-6a35e6b1d4cmr30299176d6.57.1715878934494; 
- Thu, 16 May 2024 10:02:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBeIPLw3HXhY6geg22uXEuweld+qXbe2+gDQQxoGmPEdgf+ALzON+Fea6aSt8yTYagNMzP4w==
-X-Received: by 2002:a05:6214:5502:b0:6a3:5e6b:1b85 with SMTP id
- 6a1803df08f44-6a35e6b1d4cmr30298786d6.57.1715878934038; 
- Thu, 16 May 2024 10:02:14 -0700 (PDT)
-Received: from toolbox.redhat.com ([2001:b07:ad4:d988:9d0:f1f0:af07:9889])
+ d=1e100.net; s=20230601; t=1715879089; x=1716483889;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0D9CEweTmvCxU29VizO14WawymhhGHfMJRWLw+l5BEQ=;
+ b=CUvj6STAjWqmR8GQ72qTzscavsj/N1+OGDMQAorJ6CU6DovIrDzNxh5zyj1nzme2Z3
+ /1kj32w8mNHDW5PKkt8TErkEDgYAcuw3WZY4GQvvzJ2+pdSq1+O51YjsqmVBGvD/mxxu
+ wm26mlae0pSvwqDKcv9hXWu9fXReLl6MNa9/FE0V5Lm+7JgWxB/TYidzHJ0LjP4T1a1K
+ xL5O3U6dtq88jz4DojROANFprGQRJSujMvELp9TJqSq7yXtykhzx6hezhUGGmfoUwZz/
+ ZUJu+948FuWtUp0XXIqeQCsBW2+qDoeymcTmTBJIt5KwPO104vJWuhOThAcUeRBeqB9g
+ yYeg==
+X-Gm-Message-State: AOJu0YzKbW1ZT1GFt3+If89cCzGq565VZkCewCd2wtbFjndOVsHW89iW
+ giPqFTVCs+Vfq9WTxSmJyfPn0la6d8LxAPDtItOwjw7lWbXBNayF+q0G6+a5Mp2dLrQNjZnnMFC
+ aNGSXvWn2rR25nsxPk5ur+53y2NRqbWhEC8Q22mbg2oGZbutHqWo8
+X-Received: by 2002:a7b:ce0e:0:b0:41f:bcd7:303f with SMTP id
+ 5b1f17b1804b1-41feaa38a8emr203082225e9.16.1715879089023; 
+ Thu, 16 May 2024 10:04:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGg0HmDkhoKd0mxyLGR9FbMnDBVRmHpmFI9RHGzh1LFHo35rIgJT1xYMQdbYguaPgS3fsWB5A==
+X-Received: by 2002:a7b:ce0e:0:b0:41f:bcd7:303f with SMTP id
+ 5b1f17b1804b1-41feaa38a8emr203081835e9.16.1715879088365; 
+ Thu, 16 May 2024 10:04:48 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:443:357d:1f98:7ef8:1117:f7bb])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f194e2dsm77703746d6.70.2024.05.16.10.02.12
+ 5b1f17b1804b1-41fccce24efsm274180635e9.19.2024.05.16.10.04.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 May 2024 10:02:13 -0700 (PDT)
-From: Camilla Conte <cconte@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Camilla Conte <cconte@redhat.com>, berrange@redhat.com,
- richard.henderson@linaro.org, alex.bennee@linaro.org
-Subject: [PATCH] gitlab-ci: Replace Docker with Kaniko
-Date: Thu, 16 May 2024 17:52:43 +0100
-Message-ID: <20240516165410.28800-3-cconte@redhat.com>
-X-Mailer: git-send-email 2.45.0
+ Thu, 16 May 2024 10:04:47 -0700 (PDT)
+Date: Thu, 16 May 2024 13:04:42 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 2/3] docs: define policy limiting the inclusion of
+ generated files
+Message-ID: <20240516130328-mutt-send-email-mst@kernel.org>
+References: <20240516162230.937047-1-berrange@redhat.com>
+ <20240516162230.937047-3-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cconte@redhat.com;
+In-Reply-To: <20240516162230.937047-3-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -98,66 +110,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enables caching from the qemu-project repository.
+On Thu, May 16, 2024 at 05:22:29PM +0100, Daniel P. Berrangé wrote:
+> Files contributed to QEMU are generally expected to be provided in the
+> preferred format for manipulation. IOW, we generally don't expect to
+> have generated / compiled code included in the tree, rather, we expect
+> to run the code generator / compiler as part of the build process.
+> 
+> There are some obvious exceptions to this seen in our existing tree, the
+> biggest one being the inclusion of many binary firmware ROMs. A more
+> niche example is the inclusion of a generated eBPF program. Or the CI
+> dockerfiles which are mostly auto-generated. In these cases, however,
+> the preferred format source code is still required to be included,
+> alongside the generated output.
+> 
+> Tools which perform user defined algorithmic transformations on code are
+> not considered to be "code generators". ie, we permit use of coccinelle,
+> spell checkers, and sed/awk/etc to manipulate code. Such use of automated
+> manipulation should still be declared in the commit message.
+> 
+> One off generators which create a boilerplate file which the author then
+> fills in, are acceptable if their output has clear copyright and license
+> status. This could be where a contributor writes a throwaway python
+> script to automate creation of some mundane piece of code for example.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  docs/devel/code-provenance.rst | 55 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+> 
+> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> index 7c42fae571..eabb3e7c08 100644
+> --- a/docs/devel/code-provenance.rst
+> +++ b/docs/devel/code-provenance.rst
+> @@ -210,3 +210,58 @@ mailing list.
+>  It is also recommended to attempt to contact the original author to let them
+>  know you are interested in taking over their work, in case they still intended
+>  to return to the work, or had any suggestions about the best way to continue.
+> +
+> +Inclusion of generated files
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +Files in patches contributed to QEMU are generally expected to be provided
+> +only in the preferred format for making modifications. The implication of
+> +this is that the output of code generators or compilers is usually not
+> +appropriate to contribute to QEMU.
+> +
+> +For reasons of practicality there are some exceptions to this rule, where
+> +generated code is permitted, provided it is also accompanied by the
+> +corresponding preferred source format. This is done where it is impractical
+> +to expect those building QEMU to run the code generation or compilation
+> +process. A non-exhustive list of examples is:
+> +
+> + * Images: where an bitmap image is created from a vector file it is common
+> +   to include the rendered bitmaps at desired resolution(s), since subtle
+> +   changes in the rasterization process / tools may affect quality. The
+> +   original vector file is expected to accompany any generated bitmaps.
+> +
+> + * Firmware: QEMU includes pre-compiled binary ROMs for a variety of guest
+> +   firmwares. When such binary ROMs are contributed, the corresponding source
+> +   must also be provided, either directly, or through a git submodule link.
+> +
+> + * Dockerfiles: the majority of the dockerfiles are automatically generated
+> +   from a canonical list of build dependencies maintained in tree, together
+> +   with the libvirt-ci git submodule link. The generated dockerfiles are
+> +   included in tree because it is desirable to be able to directly build
+> +   container images from a clean git checkout.
+> +
+> + * EBPF: QEMU includes some generated EBPF machine code, since the required
+> +   eBPF compilation tools are not broadly available on all targetted OS
+> +   distributions. The corresponding eBPF C code for the binary is also
+> +   provided. This is a time limited exception until the eBPF toolchain is
+> +   sufficiently broadly available in distros.
+> +
+> +In all cases above, the existence of generated files must be acknowledged
+> +and justified in the commit that introduces them.
+> +
+> +Tools which perform changes to existing code with deterministic algorithmic
+> +manipulation, driven by user specified inputs, are not generally considered
+> +to be "generators".
+> +
+> +IOW, using coccinelle to convert code from one pattern to another pattern, or
+> +fixing docs typos with a spell checker, or transforming code using sed / awk /
+> +etc, are not considered to be acts of code generation. Where an automated
+> +manipulation is performed on code, however, this should be declared in the
+> +commit message.
+> +
+> +At times contributors may use or create scripts/tools to generate an initial
+> +boilerplate code template which is then filled in to produce the final patch.
+> +The output of such a tool would still be considered the "preferred format",
+> +since it is intended to be a foundation for further human authored changes.
+> +Such tools are acceptable to use, provided they follow a deterministic process
+> +and there is clearly defined copyright and licensing for their output.
 
-Uses a dedicated "$NAME-cache" tag for caching, to address limitations.
-See issue "when using --cache=true, kaniko fail to push cache layer [...]":
-https://github.com/GoogleContainerTools/kaniko/issues/1459
+GPL seems sufficiently clear on the matter:
+The source code for a work means the preferred form of the work for making modifications to it. 
 
-Does not specify a context since no Dockerfile is using COPY or ADD instructions.
+Do we really need to play lawyer?
 
-Does not enable reproducible builds as
-that results in builds failing with an out of memory error.
-See issue "Using --reproducible loads entire image into memory":
-https://github.com/GoogleContainerTools/kaniko/issues/862
-
-Previous attempts, for the records:
-  - Alex BennÃ©e: https://lore.kernel.org/qemu-devel/20230330101141.30199-12-alex.bennee@linaro.org/
-  - Camilla Conte (me): https://lore.kernel.org/qemu-devel/20230531150824.32349-6-cconte@redhat.com/
-
-Signed-off-by: Camilla Conte <cconte@redhat.com>
----
- .gitlab-ci.d/container-template.yml | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
-
-diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
-index 4eec72f383..066f253dd5 100644
---- a/.gitlab-ci.d/container-template.yml
-+++ b/.gitlab-ci.d/container-template.yml
-@@ -1,21 +1,18 @@
- .container_job_template:
-   extends: .base_job_template
--  image: docker:latest
-   stage: containers
--  services:
--    - docker:dind
-+  image:
-+    name: gcr.io/kaniko-project/executor:debug
-+    entrypoint: [""]
-+  variables:
-+    DOCKERFILE: "$CI_PROJECT_DIR/tests/docker/dockerfiles/$NAME.docker"
-+    CACHE_REPO: "$CI_REGISTRY/qemu-project/qemu/qemu/$NAME-cache"
-   before_script:
-     - export TAG="$CI_REGISTRY_IMAGE/qemu/$NAME:$QEMU_CI_CONTAINER_TAG"
--    # Always ':latest' because we always use upstream as a common cache source
--    - export COMMON_TAG="$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:latest"
--    - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
--    - until docker info; do sleep 1; done
-   script:
-     - echo "TAG:$TAG"
--    - echo "COMMON_TAG:$COMMON_TAG"
--    - docker build --tag "$TAG" --cache-from "$TAG" --cache-from "$COMMON_TAG"
--      --build-arg BUILDKIT_INLINE_CACHE=1
--      -f "tests/docker/dockerfiles/$NAME.docker" "."
--    - docker push "$TAG"
--  after_script:
--    - docker logout
-+    - /kaniko/executor
-+      --dockerfile "$DOCKERFILE"
-+      --destination "$TAG"
-+      --cache=true
-+      --cache-repo="$CACHE_REPO"
--- 
-2.45.0
+> -- 
+> 2.43.0
 
 
