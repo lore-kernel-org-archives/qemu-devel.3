@@ -4,68 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5AAC25B77
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC7FC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:32:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7bH4-000275-5w; Thu, 16 May 2024 09:35:58 -0400
+	id 1s7c8X-000290-Ac; Thu, 16 May 2024 10:31:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s7bH0-00026p-F3; Thu, 16 May 2024 09:35:54 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s7c8P-00027K-EK
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 10:31:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s7bGv-0000Jj-Tu; Thu, 16 May 2024 09:35:54 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vg9xR5GTpz6J6j3;
- Thu, 16 May 2024 21:32:11 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 8E225140CF4;
- Thu, 16 May 2024 21:35:43 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 16 May 2024 14:35:43 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Thu, 16 May 2024 14:35:43 +0100
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, "npiggin@gmail.com"
- <npiggin@gmail.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "danielhb413@gmail.com" <danielhb413@gmail.com>, "vaibhav@linux.ibm.com"
- <vaibhav@linux.ibm.com>, "sbhat@linux.ibm.com" <sbhat@linux.ibm.com>
-Subject: RE: [PATCH v2 1/4] accel/kvm: Extract common KVM vCPU {creation,
- parking} code
-Thread-Topic: [PATCH v2 1/4] accel/kvm: Extract common KVM vCPU {creation,
- parking} code
-Thread-Index: AQHap1J3XuFeE+ZUnUegULMwM5sk3bGZg7UwgAAQyoCAAC+4UIAAACWAgAATpAA=
-Date: Thu, 16 May 2024 13:35:43 +0000
-Message-ID: <7a5608c768254869a4a6b68d719c24f1@huawei.com>
-References: <20240516053211.145504-1-harshpb@linux.ibm.com>
- <20240516053211.145504-2-harshpb@linux.ibm.com>
- <fc08e87c979a4916aaff649724df9c6b@huawei.com>
- <bfb5888c-c66c-4000-ba12-5af202b0fe17@linux.ibm.com>
- <2e290791a92949d79fe0fdfcb972a029@huawei.com>
- <49f4d0cb-260e-45fb-a678-2dec45c9fab8@linux.ibm.com>
-In-Reply-To: <49f4d0cb-260e-45fb-a678-2dec45c9fab8@linux.ibm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.158.29]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s7c8E-0006Yz-34
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 10:31:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715869852;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HMOrMd5eLON6neBV6JnxbfqD5+KH8iQmyMs5YjrbM4s=;
+ b=RaVrb7ZJ5WQi4A+ojsP5xNKCSOix7Re4yNTYM/nL8EuOQL3jvMCvSobHtyGxCKmmGyLZVE
+ FXhkdeJQb6MOPJjPH/TaMEDylnu18KXlfXiiJjvodEkKOBEZTRAWDpYPnVgyQMQJP5MN/W
+ 1nrYtBJlU/vyLNJNL6beGDOTkw/cYMw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-159-Bi0pdiL0MdKqhs-_VQGHIA-1; Thu, 16 May 2024 10:30:47 -0400
+X-MC-Unique: Bi0pdiL0MdKqhs-_VQGHIA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-351c67dbc8dso1863097f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 07:30:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715869847; x=1716474647;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HMOrMd5eLON6neBV6JnxbfqD5+KH8iQmyMs5YjrbM4s=;
+ b=xUeD7bVhikw13gK2fRdZ/seBtnSYD8I0agDyA2IWH65tMBAvr2hMhRR/ty2e2RCvmP
+ +4ZdYaVE2a0BCFWIrGjcqZhTJfuni+xNMXGe91hQFA/uYDbuPx+ijXq9OEi3WKSJJUbk
+ 6kckkf4JVRiBKWVUNnkArwIGopAoHhppLG9TfhiDwLT/bfCyK3EP6fUQAWe81r5Fj7kq
+ 20FipT+GrJV4nZYBrCY/Nfc0Oqrk3SoGZqpOJCczRV8Zr0yNDZ2yHaQMCYnNY5mupdNZ
+ w75Ko6fDZPV1y8MPB6UMYp+IC8vjk7LLONneIOAbrhNjtEzcBkxG9iVLjbhApdIkpnXX
+ IjMQ==
+X-Gm-Message-State: AOJu0Ywu4QsfDl1Ss2hd9gfRHzwyAWs6518/WS0PoidQgyNOs9Lb9wNj
+ 60JtIso+IAQqq6AsGWrZ/bZ4an9VRc+vipz941RcJMVR9eSUiHbXqxBKPj6TTw48k+XG/5Ct5lG
+ NUbxLRWa0x22Pg0J5GFa4zzH5HK/B5duReuM4ZkQD6Hnkdf9BQqvsxUPfL+RJsddgJvmLER+kDx
+ 09AmOdcJ30zlnP27seSV94DlmUaVA=
+X-Received: by 2002:a05:6000:551:b0:34b:b0ac:c63c with SMTP id
+ ffacd0b85a97d-3504aa66a14mr12721844f8f.66.1715869846733; 
+ Thu, 16 May 2024 07:30:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyCOk9QCf9U0HvZdTZInmZreKK4KAtn1K8Vzr3aFORUSZxG7mQCRO3+vHqWCY3UccWT+7zq+6xgnTnyu7Crp8=
+X-Received: by 2002:a05:6000:551:b0:34b:b0ac:c63c with SMTP id
+ ffacd0b85a97d-3504aa66a14mr12721800f8f.66.1715869846287; Thu, 16 May 2024
+ 07:30:46 -0700 (PDT)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240514215740.940155-1-jsnow@redhat.com>
+ <20240514215740.940155-6-jsnow@redhat.com>
+ <87a5kqpaaw.fsf@pond.sub.org>
+In-Reply-To: <87a5kqpaaw.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 16 May 2024 10:30:32 -0400
+Message-ID: <CAFn=p-abjRbSvcHPSUorp80SZaf5Xwi89WtvhebXK_SRw3Cg4w@mail.gmail.com>
+Subject: Re: [PATCH 05/20] qapi/parser: adjust info location for doc body
+ section
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, 
+ Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
+ Mads Ynddal <mads@ynddal.dk>, 
+ Jason Wang <jasowang@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Qemu-block <qemu-block@nongnu.org>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Victor Toso de Carvalho <victortoso@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Lukas Straub <lukasstraub2@web.de>, 
+ Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000ab50e3061893143b"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,268 +110,279 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQo+ICBGcm9tOiBIYXJzaCBQcmF0ZWVrIEJvcmEgPGhhcnNocGJAbGludXguaWJtLmNvbT4NCj4g
-IFNlbnQ6IFRodXJzZGF5LCBNYXkgMTYsIDIwMjQgMjowNyBQTQ0KPiAgDQo+ICBIaSBTYWxpbCwN
-Cj4gIA0KPiAgT24gNS8xNi8yNCAxNzo0MiwgU2FsaWwgTWVodGEgd3JvdGU6DQo+ICA+IEhpIEhh
-cnNoLA0KPiAgPg0KPiAgPj4gICBGcm9tOiBIYXJzaCBQcmF0ZWVrIEJvcmEgPGhhcnNocGJAbGlu
-dXguaWJtLmNvbT4NCj4gID4+ICAgU2VudDogVGh1cnNkYXksIE1heSAxNiwgMjAyNCAxMToxNSBB
-TQ0KPiAgPj4NCj4gID4+ICAgSGkgU2FsaWwsDQo+ICA+Pg0KPiAgPj4gICBUaGFua3MgZm9yIHlv
-dXIgZW1haWwuDQo+ICA+PiAgIFlvdXIgcGF0Y2ggMS84IGlzIGluY2x1ZGVkIGhlcmUgYmFzZWQg
-b24gcmV2aWV3IGNvbW1lbnRzIG9uIG15ICBwcmV2aW91cw0KPiAgPj4gICBwYXRjaCBmcm9tIG9u
-ZSBvZiB0aGUgbWFpbnRhaW5lcnMgaW4gdGhlIGNvbW11bml0eSBhbmQgdGhlcmVmb3JlIEkgIGhh
-ZA0KPiAgPj4gICBrZXB0IHlvdSBpbiBDQyB0byBiZSBhd2FyZSBvZiB0aGUgZGVzaXJlIG9mIGhh
-dmluZyB0aGlzIGluZGVwZW5kZW50IHBhdGNoIHRvDQo+ICA+PiAgIGdldCBtZXJnZWQgZWFybGll
-ciBldmVuIGlmIHlvdXIgb3RoZXIgcGF0Y2hlcyBpbiB0aGUgc2VyaWVzIG1heSBnbyB0aHJvdWdo
-DQo+ICA+PiAgIGZ1cnRoZXIgcmV2aWV3cy4NCj4gID4NCj4gID4gSSByZWFsbHkgZG9u4oCZdCBr
-bm93IHdoaWNoIGRpc2N1c3Npb24gYXJlICB5b3UgcG9pbnRpbmcgYXQ/IFBsZWFzZQ0KPiAgPiB1
-bmRlcnN0YW5kIHlvdSBhcmUgZml4aW5nIGEgYnVnIGFuZCB3ZSBhcmUgcHVzaGluZyBhIGZlYXR1
-cmUgd2hpY2ggaGFzIGdvdCBsYXJnZSBzZXJpZXMuDQo+ICA+IEl0IHdpbGwgYnJlYWsgdGhlIHBh
-dGNoLXNldCAgd2hpY2ggaXMgYWJvdXQgdCBiZSBtZXJnZWQuDQo+ICA+DQo+ICA+IFRoZXJlIHdp
-bGwgYmUgc2lnbmlmaWNhbnQgb3ZlcmhlYWQgb2YgdGVzdGluZyBvbiB1cyBmb3IgdGhlIHdvcmsg
-d2UNCj4gID4gaGF2ZSBiZWVuIGNhcnJ5aW5nIGZvcndhcmQgZm9yIGxhcmdlIHRpbWUuIFRoaXMg
-d2lsbCBiZSBkaXNydXB0aXZlLiBQbGVhc2UgZG9udCENCj4gID4NCj4gIA0KPiAgSSB3YXMgcmVm
-ZXJyaW5nIHRvIHRoZSByZXZpZXcgZGlzY3Vzc2lvbiBvbiBteSBwcmV2IHBhdGNoIGhlcmU6DQo+
-ICBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsL0QxOTFEMkpGQVI3TC4yRUg0UzQ0
-NU00VEdLQGdtYWlsLmNvbS8NCg0KDQpTdXJlLCBJJ20sIG5vdCBzdXJlIHdoYXQgdGhpcyBtZWFu
-cy4gDQoNCg0KPiAgQWx0aG91Z2ggeW91ciBwYXRjaCB3YXMgaW5jbHVkZWQgd2l0aCB0aGlzIHNl
-cmllcyBvbmx5IHRvIGZhY2lsaXRhdGUgcmV2aWV3IG9mDQo+ICB0aGUgYWRkaXRpb25hbCBwYXRj
-aGVzIGRlcGVuZGluZyBvbiBqdXN0IG9uZSBvZiB5b3VyIHBhdGNoLg0KDQoNCkdlbmVyYWxseSB5
-b3UgcmViYXNlIHlvdXIgcGF0Y2gtc2V0IG92ZXIgdGhlIG90aGVyIGFuZCBjbGVhcmx5IHN0YXRl
-IG9uIHRoZSBjb3Zlcg0KbGV0dGVyIHRoYXQgdGhpcyBwYXRjaC1zZXQgaXMgZGVwZW5kZW50IHVw
-b24gc3VjaCBhbmQgc3VjaCBwYXRjaC1zZXQuIEp1c3QgaW1hZ2luZQ0KaWYgZXZlcnlvbmUgc3Rh
-cnRzIHRvIHVuaWxhdGVyYWxseSBwaWNrIHVwIHBhdGNoZXMgZnJvbSBlYWNoIG90aGVyJ3MgcGF0
-Y2gtc2V0IGl0IHdpbGwNCmNyZWF0ZSBhIGNoYW9zIG5vdCBvbmx5IGZvciB0aGUgZmVhdHVyZSBv
-d25lcnMgYnV0IGFsc28gZm9yIHRoZSBtYWludGFpbmVycy4NCg0KDQo+ICANCj4gIEkgYW0gbm90
-IHN1cmUgd2hhdCBpcyBhcHBlYXJpbmcgZGlzcnVwdGl2ZSBoZXJlLiBJdCBpcyBhIGNvbW1vbiBw
-cmFjdGl2ZSBpbg0KPiAgdGhlIGNvbW11bml0eSB0aGF0IG1haW50YWluZXIocykgY2FuIHBpY2sg
-aW5kaXZpZHVhbCBwYXRjaGVzIGZyb20gdGhlDQo+ICBzZXJpZXMgaWYgaXQgaGFzIGJlZW4gdmV0
-dGVkIGJ5IHNpZ2luaWZpY2FudCBudW1iZXIgb2YgcmV2aWV3ZXJzLg0KDQoNCkRvbuKAmXQgeW91
-IHRoaW5rIHRoaXMgcGF0Y2gtc2V0IGlzIGFza2luZyBmb3IgYWNjZXB0YW5jZSBmb3IgYSBwYXRj
-aCBhbHJlYWR5IA0KcGFydCBvZiBhbm90aGVyIHBhdGNoLXNldCB3aGljaCBpcyBhYm91dCB0byBi
-ZSBhY2NlcHRlZCBhbmQgaXMgYSBiaWdnZXIgZmVhdHVyZT8NCldpbGwgaXQgY2F1c2UgbWFpbnRl
-bmFuY2Ugb3ZlcmhlYWQgYXQgdGhlIGxhc3QgbW9tZW50PyBZZXMsIG9mIGNvdXJzZSENCg0KDQo+
-ICBIb3dldmVyLCBpbiB0aGlzIGNhc2UsIHNpbmNlIHlvdSBoYXZlIG1lbnRpb25lZCB0byBwb3N0
-IG5leHQgdmVyc2lvbiBzb29uLA0KPiAgeW91IG5lZWQgbm90IHdvcnJ5IGFib3V0IGl0IGFzIHRo
-YXQgd291bGQgYmUgdGhlIHByZWZlcnJlZCB2ZXJzaW9uIGZvciBib3RoDQo+ICBvZiB0aGUgc2Vy
-aWVzLg0KDQoNClllcywgYnV0IHBsZWFzZSB1bmRlcnN0YW5kIHdlIGFyZSB3b3JraW5nIGZvciB0
-aGUgYmVuZWZpdCBvZiBvdmVyYWxsIGNvbW11bml0eS4NClBsZWFzZSBjb29wZXJhdGUgaGVyZS4N
-Cg0KPiAgDQo+ICA+DQo+ICA+Pg0KPiAgPj4gICBJIGFtIGhvcGluZyB0byBzZWUgeW91ciB2OSBz
-b29uIGFuZCB0aGVyZWFmdGVyIG1haW50YWluZXIocykgbWF5DQo+ICBjaG9vc2UgdG8NCj4gID4+
-ICAgcGljayB0aGUgbGF0ZXN0IGluZGVwZW5kZW50IHBhdGNoIGlmIG5lZWRzIHRvIGJlIG1lcmdl
-ZCBlYXJsaWVyLg0KPiAgPg0KPiAgPg0KPiAgPiBJIGRvbuKAmXQgdGhpbmsgeW91IGFyZSB1bmRl
-cnN0YW5kaW5nIHdoYXQgcHJvYmxlbSBpdCBpcyBjYXVzaW5nLiBGb3INCj4gID4geW91ciBzbWFs
-bCBidWcgZml4IHlvdSBhcmUgY2F1c2luZyBzaWduaWZpY2FudCBkZWxheXMgYXQgb3VyIGVuZC4N
-Cj4gID4NCj4gIA0KPiAgSSBob3BlIEkgY2xhcmZpZWQgYWJvdmUgdGhhdCBpbmNsdWRpbmcgeW91
-ciBwYXRjaCBoZXJlIGRvZXNudCBkZWxheSBhbnl0aGluZy4NCj4gIEhvcGluZyB0byBzZWUgeW91
-ciB2OSBzb29uIQ0KPiAgDQo+ICBUaGFua3MNCj4gIEhhcnNoDQo+ICA+DQo+ICA+IFRoYW5rcw0K
-PiAgPiBTYWxpbC4NCj4gID4+DQo+ICA+PiAgIFRoYW5rcyBmb3IgeW91ciB3b3JrIGFuZCBsZXQn
-cyBiZSBob3BlZnVsIGl0IGdldHMgbWVyZ2VkIHNvb24uDQo+ICA+Pg0KPiAgPj4gICByZWdhcmRz
-LA0KPiAgPj4gICBIYXJzaA0KPiAgPj4NCj4gID4+ICAgT24gNS8xNi8yNCAxNDowMCwgU2FsaWwg
-TWVodGEgd3JvdGU6DQo+ICA+PiAgID4gSGkgSGFyc2gsDQo+ICA+PiAgID4NCj4gID4+ICAgPiBU
-aGFua3MgZm9yIHlvdXIgaW50ZXJlc3QgaW4gdGhlIHBhdGNoLXNldCBidXQgdGFraW5nIGF3YXkg
-cGF0Y2hlcyBsaWtlDQo+ICA+PiAgID4gdGhpcyBmcm9tIG90aGVyIHNlcmllcyB3aXRob3V0IGFu
-eSBkaXNjdXNzaW9uIGNhbiBkaXNydXB0IG90aGVycyB3b3JrDQo+ICA+PiAgID4gYW5kIGl0cyBh
-Y2NlcHRhbmNlIG9uIHRpbWUuIFRoaXMgaXMgYmVjYXVzZSB3ZSB3aWxsIGhhdmUgdG8gcHV0IGxv
-dCBvZg0KPiAgPj4gICA+IGVmZm9ydCBpbiByZWJhc2luZyBiaWdnZXIgc2VyaWVzIGFuZCB0aGVu
-IHRlc3Rpbmcgb3ZlcmhlYWQgY29tZXMNCj4gIGFsb25nDQo+ICA+PiAgID4gd2l0aCBpdC4NCj4g
-ID4+ICAgPg0KPiAgPj4gICA+IFRoZSBwYXRjaC1zZXQgKGZyb20gd2hlcmUgdGhpcyAgcGF0Y2gg
-aGFzIGJlZW4gdGFrZW4pIGlzIHBhcnQgb2YgZXZlbg0KPiAgPj4gICA+IGJpZ2dlciBzZXJpZXMg
-YW5kIHRoZXJlIGhhdmUgYmVlbiBtYW55IHBlb3BsZSBhbmQgY29tcGFuaWVzIHRvaWxpbmcNCj4g
-IHRvDQo+ICA+PiAgID4gZml4IHRoZSBidWdzIGNvbGxlY3RpdmVseSBpbiB0aGF0IHNlcmllcyBh
-bmQgZm9yIHllYXJzLg0KPiAgPj4gICA+DQo+ICA+PiAgID4gSSdtIGFib3V0IGZsb2F0IHRoZSBW
-OSB2ZXJzaW9uIG9mIHRoZSBBcmNoIGFnbm9zdGljIHNlcmllcyB3aGljaCB0aGlzDQo+ICA+PiAg
-ID4gcGF0Y2ggaXMgcGFydCBvZiBhbmQgeW91IGNhbiByZWJhc2UgeW91ciBwYXRjaC1zZXQgZnJv
-bSB0aGVyZS4gSSdtDQo+ICA+PiAgID4gaG9wZWZ1bCB0aGF0IGl0IHdpbGwgZ2V0IGFjY2VwdGVk
-IGluIHRoaXMgY3ljbGUuDQo+ICA+PiAgID4NCj4gID4+ICAgPg0KPiAgPj4gICA+IE1hbnkgdGhh
-bmtzDQo+ICA+PiAgID4gU2FsaWwuDQo+ICA+PiAgID4NCj4gID4+ICAgPj4gICBGcm9tOiBIYXJz
-aCBQcmF0ZWVrIEJvcmEgPGhhcnNocGJAbGludXguaWJtLmNvbT4NCj4gID4+ICAgPj4gICBTZW50
-OiBUaHVyc2RheSwgTWF5IDE2LCAyMDI0IDY6MzIgQU0NCj4gID4+ICAgPj4NCj4gID4+ICAgPj4g
-ICBGcm9tOiBTYWxpbCBNZWh0YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT4NCj4gID4+ICAgPj4N
-Cj4gID4+ICAgPj4gICBLVk0gdkNQVSBjcmVhdGlvbiBpcyBkb25lIG9uY2UgZHVyaW5nIHRoZSB2
-Q1BVIHJlYWxpemF0aW9uIHdoZW4NCj4gID4+ICAgUWVtdQ0KPiAgPj4gICA+PiAgIHZDUFUgdGhy
-ZWFkIGlzIHNwYXduZWQuIFRoaXMgaXMgY29tbW9uIHRvIGFsbCB0aGUgYXJjaGl0ZWN0dXJlcyBh
-cw0KPiAgb2YNCj4gID4+ICAgbm93Lg0KPiAgPj4gICA+Pg0KPiAgPj4gICA+PiAgIEhvdC11bnBs
-dWcgb2YgdkNQVSByZXN1bHRzIGluIGRlc3RydWN0aW9uIG9mIHRoZSB2Q1BVIG9iamVjdCBpbg0K
-PiAgUU9NDQo+ICA+PiAgIGJ1dA0KPiAgPj4gICA+PiAgIHRoZSBjb3JyZXNwb25kaW5nIEtWTSB2
-Q1BVIG9iamVjdCBpbiB0aGUgSG9zdCBLVk0gaXMgbm90DQo+ICBkZXN0cm95ZWQNCj4gID4+ICAg
-YXMNCj4gID4+ICAgPj4gICBLVk0gZG9lc24ndCBzdXBwb3J0IHZDUFUgcmVtb3ZhbC4gVGhlcmVm
-b3JlLCBpdHMgcmVwcmVzZW50YXRpdmUNCj4gIEtWTQ0KPiAgPj4gICA+PiAgIHZDUFUgb2JqZWN0
-L2NvbnRleHQgaW4gUWVtdSBpcyBwYXJrZWQuDQo+ICA+PiAgID4+DQo+ICA+PiAgID4+ICAgUmVm
-YWN0b3IgYXJjaGl0ZWN0dXJlIGNvbW1vbiBsb2dpYyBzbyB0aGF0IHNvbWUgQVBJcyBjb3VsZCBi
-ZQ0KPiAgcmV1c2VkDQo+ICA+PiAgIGJ5DQo+ICA+PiAgID4+ICAgdkNQVSBIb3RwbHVnIGNvZGUg
-b2Ygc29tZSBhcmNoaXRlY3R1cmVzIGxpa2VzIEFSTSwgTG9vbmdzb24gZXRjLg0KPiAgPj4gICBV
-cGRhdGUNCj4gID4+ICAgPj4gICBuZXcvb2xkIEFQSXMgd2l0aCB0cmFjZSBldmVudHMgaW5zdGVh
-ZCBvZiBEUFJJTlRGLiBObyBmdW5jdGlvbmFsDQo+ICA+PiAgIGNoYW5nZSBpcw0KPiAgPj4gICA+
-PiAgIGludGVuZGVkIGhlcmUuDQo+ICA+PiAgID4+DQo+ICA+PiAgID4+ICAgU2lnbmVkLW9mZi1i
-eTogU2FsaWwgTWVodGEgPHNhbGlsLm1laHRhQGh1YXdlaS5jb20+DQo+ICA+PiAgID4+ICAgUmV2
-aWV3ZWQtYnk6IEdhdmluIFNoYW4gPGdzaGFuQHJlZGhhdC5jb20+DQo+ICA+PiAgID4+ICAgVGVz
-dGVkLWJ5OiBWaXNobnUgUGFqanVyaSA8dmlzaG51QG9zLmFtcGVyZWNvbXB1dGluZy5jb20+DQo+
-ICA+PiAgID4+ICAgUmV2aWV3ZWQtYnk6IEpvbmF0aGFuIENhbWVyb24NCj4gIDxKb25hdGhhbi5D
-YW1lcm9uQGh1YXdlaS5jb20+DQo+ICA+PiAgID4+ICAgVGVzdGVkLWJ5OiBYaWFuZ2xhaSBMaSA8
-bGl4aWFuZ2xhaUBsb29uZ3Nvbi5jbj4NCj4gID4+ICAgPj4gICBUZXN0ZWQtYnk6IE1pZ3VlbCBM
-dWlzIDxtaWd1ZWwubHVpc0BvcmFjbGUuY29tPg0KPiAgPj4gICA+PiAgIFJldmlld2VkLWJ5OiBT
-aGFvcWluIEh1YW5nIDxzaGFodWFuZ0ByZWRoYXQuY29tPg0KPiAgPj4gICA+PiAgIFtoYXJzaHBi
-OiBmaXhlZCByZWJhc2UgZmFpbHVyZXMgaW4gaW5jbHVkZS9zeXNlbXUva3ZtLmhdDQo+ICA+PiAg
-ID4+ICAgU2lnbmVkLW9mZi1ieTogSGFyc2ggUHJhdGVlayBCb3JhIDxoYXJzaHBiQGxpbnV4Lmli
-bS5jb20+DQo+ICA+PiAgID4+ICAgLS0tDQo+ICA+PiAgID4+ICAgIGluY2x1ZGUvc3lzZW11L2t2
-bS5oICAgfCAxNSArKysrKysrKysrDQo+ICA+PiAgID4+ICAgIGFjY2VsL2t2bS9rdm0tYWxsLmMg
-ICAgfCA2NA0KPiAgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0NCj4gID4+ICAg
-LS0tLS0NCj4gID4+ICAgPj4gICAtLQ0KPiAgPj4gICA+PiAgICBhY2NlbC9rdm0vdHJhY2UtZXZl
-bnRzIHwgIDUgKysrLQ0KPiAgPj4gICA+PiAgICAzIGZpbGVzIGNoYW5nZWQsIDY4IGluc2VydGlv
-bnMoKyksIDE2IGRlbGV0aW9ucygtKQ0KPiAgPj4gICA+Pg0KPiAgPj4gICA+PiAgIGRpZmYgLS1n
-aXQgYS9pbmNsdWRlL3N5c2VtdS9rdm0uaCBiL2luY2x1ZGUvc3lzZW11L2t2bS5oIGluZGV4DQo+
-ICA+PiAgID4+ICAgZWFmODAxYmM5My4uZmEzZWM3NDQ0MiAxMDA2NDQNCj4gID4+ICAgPj4gICAt
-LS0gYS9pbmNsdWRlL3N5c2VtdS9rdm0uaA0KPiAgPj4gICA+PiAgICsrKyBiL2luY2x1ZGUvc3lz
-ZW11L2t2bS5oDQo+ICA+PiAgID4+ICAgQEAgLTQzNCw2ICs0MzQsMjEgQEAgdm9pZCBrdm1fc2V0
-X3NpZ21hc2tfbGVuKEtWTVN0YXRlICpzLA0KPiAgPj4gICB1bnNpZ25lZA0KPiAgPj4gICA+PiAg
-IGludCBzaWdtYXNrX2xlbik7DQo+ICA+PiAgID4+DQo+ICA+PiAgID4+ICAgIGludCBrdm1fcGh5
-c2ljYWxfbWVtb3J5X2FkZHJfZnJvbV9ob3N0KEtWTVN0YXRlICpzLCB2b2lkDQo+ICA+PiAgID4+
-ICAgKnJhbV9hZGRyLA0KPiAgPj4gICA+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBod2FkZHIgKnBoeXNfYWRkcik7DQo+ICA+PiAgID4+ICAgKy8qKg0KPiAgPj4g
-ICA+PiAgICsgKiBrdm1fY3JlYXRlX3ZjcHUgLSBHZXRzIGEgcGFya2VkIEtWTSB2Q1BVIG9yIGNy
-ZWF0ZXMgYSBLVk0NCj4gID4+ICAgdkNQVQ0KPiAgPj4gICA+PiAgICsgKiBAY3B1OiBRT00gQ1BV
-U3RhdGUgb2JqZWN0IGZvciB3aGljaCBLVk0gdkNQVSBoYXMgdG8gYmUNCj4gID4+ICAgPj4gICBm
-ZXRjaGVkL2NyZWF0ZWQuDQo+ICA+PiAgID4+ICAgKyAqDQo+ICA+PiAgID4+ICAgKyAqIEByZXR1
-cm5zOiAwIHdoZW4gc3VjY2VzcywgZXJybm8gKDwwKSB3aGVuIGZhaWxlZC4NCj4gID4+ICAgPj4g
-ICArICovDQo+ICA+PiAgID4+ICAgK2ludCBrdm1fY3JlYXRlX3ZjcHUoQ1BVU3RhdGUgKmNwdSk7
-DQo+ICA+PiAgID4+ICAgKw0KPiAgPj4gICA+PiAgICsvKioNCj4gID4+ICAgPj4gICArICoga3Zt
-X3BhcmtfdmNwdSAtIFBhcmsgUUVNVSBLVk0gdkNQVSBjb250ZXh0DQo+ICA+PiAgID4+ICAgKyAq
-IEBjcHU6IFFPTSBDUFVTdGF0ZSBvYmplY3QgZm9yIHdoaWNoIFFFTVUgS1ZNIHZDUFUNCj4gIGNv
-bnRleHQNCj4gID4+ICAgaGFzIHRvDQo+ICA+PiAgID4+ICAgYmUgcGFya2VkLg0KPiAgPj4gICA+
-PiAgICsgKg0KPiAgPj4gICA+PiAgICsgKiBAcmV0dXJuczogbm9uZQ0KPiAgPj4gICA+PiAgICsg
-Ki8NCj4gID4+ICAgPj4gICArdm9pZCBrdm1fcGFya192Y3B1KENQVVN0YXRlICpjcHUpOw0KPiAg
-Pj4gICA+Pg0KPiAgPj4gICA+PiAgICAjZW5kaWYgLyogQ09NUElMSU5HX1BFUl9UQVJHRVQgKi8N
-Cj4gID4+ICAgPj4NCj4gID4+ICAgPj4gICBkaWZmIC0tZ2l0IGEvYWNjZWwva3ZtL2t2bS1hbGwu
-YyBiL2FjY2VsL2t2bS9rdm0tYWxsLmMgaW5kZXgNCj4gID4+ICAgPj4gICBkNzI4MWI5M2YzLi4z
-MGQ0Mjg0N2RlIDEwMDY0NA0KPiAgPj4gICA+PiAgIC0tLSBhL2FjY2VsL2t2bS9rdm0tYWxsLmMN
-Cj4gID4+ICAgPj4gICArKysgYi9hY2NlbC9rdm0va3ZtLWFsbC5jDQo+ICA+PiAgID4+ICAgQEAg
-LTEyOCw2ICsxMjgsNyBAQCBzdGF0aWMgUWVtdU11dGV4IGttbF9zbG90c19sb2NrOyAgI2RlZmlu
-ZQ0KPiAgPj4gICA+PiAgIGt2bV9zbG90c191bmxvY2soKSAgcWVtdV9tdXRleF91bmxvY2soJmtt
-bF9zbG90c19sb2NrKQ0KPiAgPj4gICA+Pg0KPiAgPj4gICA+PiAgICBzdGF0aWMgdm9pZCBrdm1f
-c2xvdF9pbml0X2RpcnR5X2JpdG1hcChLVk1TbG90ICptZW0pOw0KPiAgPj4gICA+PiAgICtzdGF0
-aWMgaW50IGt2bV9nZXRfdmNwdShLVk1TdGF0ZSAqcywgdW5zaWduZWQgbG9uZyB2Y3B1X2lkKTsN
-Cj4gID4+ICAgPj4NCj4gID4+ICAgPj4gICAgc3RhdGljIGlubGluZSB2b2lkIGt2bV9yZXNhbXBs
-ZV9mZF9yZW1vdmUoaW50IGdzaSkgIHsgQEAgLTM0MCwxNA0KPiAgPj4gICArMzQxLDUzDQo+ICA+
-PiAgID4+ICAgQEAgZXJyOg0KPiAgPj4gICA+PiAgICAgICAgcmV0dXJuIHJldDsNCj4gID4+ICAg
-Pj4gICAgfQ0KPiAgPj4gICA+Pg0KPiAgPj4gICA+PiAgICt2b2lkIGt2bV9wYXJrX3ZjcHUoQ1BV
-U3RhdGUgKmNwdSkNCj4gID4+ICAgPj4gICArew0KPiAgPj4gICA+PiAgICsgICAgc3RydWN0IEtW
-TVBhcmtlZFZjcHUgKnZjcHU7DQo+ICA+PiAgID4+ICAgKw0KPiAgPj4gICA+PiAgICsgICAgdHJh
-Y2Vfa3ZtX3BhcmtfdmNwdShjcHUtPmNwdV9pbmRleCwNCj4gIGt2bV9hcmNoX3ZjcHVfaWQoY3B1
-KSk7DQo+ICA+PiAgID4+ICAgKw0KPiAgPj4gICA+PiAgICsgICAgdmNwdSA9IGdfbWFsbG9jMChz
-aXplb2YoKnZjcHUpKTsNCj4gID4+ICAgPj4gICArICAgIHZjcHUtPnZjcHVfaWQgPSBrdm1fYXJj
-aF92Y3B1X2lkKGNwdSk7DQo+ICA+PiAgID4+ICAgKyAgICB2Y3B1LT5rdm1fZmQgPSBjcHUtPmt2
-bV9mZDsNCj4gID4+ICAgPj4gICArICAgIFFMSVNUX0lOU0VSVF9IRUFEKCZrdm1fc3RhdGUtPmt2
-bV9wYXJrZWRfdmNwdXMsIHZjcHUsDQo+ICA+PiAgIG5vZGUpOyB9DQo+ICA+PiAgID4+ICAgKw0K
-PiAgPj4gICA+PiAgICtpbnQga3ZtX2NyZWF0ZV92Y3B1KENQVVN0YXRlICpjcHUpDQo+ICA+PiAg
-ID4+ICAgK3sNCj4gID4+ICAgPj4gICArICAgIHVuc2lnbmVkIGxvbmcgdmNwdV9pZCA9IGt2bV9h
-cmNoX3ZjcHVfaWQoY3B1KTsNCj4gID4+ICAgPj4gICArICAgIEtWTVN0YXRlICpzID0ga3ZtX3N0
-YXRlOw0KPiAgPj4gICA+PiAgICsgICAgaW50IGt2bV9mZDsNCj4gID4+ICAgPj4gICArDQo+ICA+
-PiAgID4+ICAgKyAgICB0cmFjZV9rdm1fY3JlYXRlX3ZjcHUoY3B1LT5jcHVfaW5kZXgsDQo+ICBr
-dm1fYXJjaF92Y3B1X2lkKGNwdSkpOw0KPiAgPj4gICA+PiAgICsNCj4gID4+ICAgPj4gICArICAg
-IC8qIGNoZWNrIGlmIHRoZSBLVk0gdkNQVSBhbHJlYWR5IGV4aXN0IGJ1dCBpcyBwYXJrZWQgKi8N
-Cj4gID4+ICAgPj4gICArICAgIGt2bV9mZCA9IGt2bV9nZXRfdmNwdShzLCB2Y3B1X2lkKTsNCj4g
-ID4+ICAgPj4gICArICAgIGlmIChrdm1fZmQgPCAwKSB7DQo+ICA+PiAgID4+ICAgKyAgICAgICAg
-LyogdkNQVSBub3QgcGFya2VkOiBjcmVhdGUgYSBuZXcgS1ZNIHZDUFUgKi8NCj4gID4+ICAgPj4g
-ICArICAgICAgICBrdm1fZmQgPSBrdm1fdm1faW9jdGwocywgS1ZNX0NSRUFURV9WQ1BVLCB2Y3B1
-X2lkKTsNCj4gID4+ICAgPj4gICArICAgICAgICBpZiAoa3ZtX2ZkIDwgMCkgew0KPiAgPj4gICA+
-PiAgICsgICAgICAgICAgICBlcnJvcl9yZXBvcnQoIktWTV9DUkVBVEVfVkNQVSBJT0NUTCBmYWls
-ZWQgZm9yIHZDUFUNCj4gICVsdSIsDQo+ICA+PiAgID4+ICAgdmNwdV9pZCk7DQo+ICA+PiAgID4+
-ICAgKyAgICAgICAgICAgIHJldHVybiBrdm1fZmQ7DQo+ICA+PiAgID4+ICAgKyAgICAgICAgfQ0K
-PiAgPj4gICA+PiAgICsgICAgfQ0KPiAgPj4gICA+PiAgICsNCj4gID4+ICAgPj4gICArICAgIGNw
-dS0+a3ZtX2ZkID0ga3ZtX2ZkOw0KPiAgPj4gICA+PiAgICsgICAgY3B1LT5rdm1fc3RhdGUgPSBz
-Ow0KPiAgPj4gICA+PiAgICsgICAgY3B1LT52Y3B1X2RpcnR5ID0gdHJ1ZTsNCj4gID4+ICAgPj4g
-ICArICAgIGNwdS0+ZGlydHlfcGFnZXMgPSAwOw0KPiAgPj4gICA+PiAgICsgICAgY3B1LT50aHJv
-dHRsZV91c19wZXJfZnVsbCA9IDA7DQo+ICA+PiAgID4+ICAgKw0KPiAgPj4gICA+PiAgICsgICAg
-cmV0dXJuIDA7DQo+ICA+PiAgID4+ICAgK30NCj4gID4+ICAgPj4gICArDQo+ICA+PiAgID4+ICAg
-IHN0YXRpYyBpbnQgZG9fa3ZtX2Rlc3Ryb3lfdmNwdShDUFVTdGF0ZSAqY3B1KSAgew0KPiAgPj4g
-ICA+PiAgICAgICAgS1ZNU3RhdGUgKnMgPSBrdm1fc3RhdGU7DQo+ICA+PiAgID4+ICAgICAgICBs
-b25nIG1tYXBfc2l6ZTsNCj4gID4+ICAgPj4gICAtICAgIHN0cnVjdCBLVk1QYXJrZWRWY3B1ICp2
-Y3B1ID0gTlVMTDsNCj4gID4+ICAgPj4gICAgICAgIGludCByZXQgPSAwOw0KPiAgPj4gICA+Pg0K
-PiAgPj4gICA+PiAgIC0gICAgdHJhY2Vfa3ZtX2Rlc3Ryb3lfdmNwdSgpOw0KPiAgPj4gICA+PiAg
-ICsgICAgdHJhY2Vfa3ZtX2Rlc3Ryb3lfdmNwdShjcHUtPmNwdV9pbmRleCwNCj4gID4+ICAga3Zt
-X2FyY2hfdmNwdV9pZChjcHUpKTsNCj4gID4+ICAgPj4NCj4gID4+ICAgPj4gICAgICAgIHJldCA9
-IGt2bV9hcmNoX2Rlc3Ryb3lfdmNwdShjcHUpOw0KPiAgPj4gICA+PiAgICAgICAgaWYgKHJldCA8
-IDApIHsNCj4gID4+ICAgPj4gICBAQCAtMzczLDEwICs0MTMsNyBAQCBzdGF0aWMgaW50IGRvX2t2
-bV9kZXN0cm95X3ZjcHUoQ1BVU3RhdGUNCj4gID4+ICAgKmNwdSkNCj4gID4+ICAgPj4gICAgICAg
-ICAgICB9DQo+ICA+PiAgID4+ICAgICAgICB9DQo+ICA+PiAgID4+DQo+ICA+PiAgID4+ICAgLSAg
-ICB2Y3B1ID0gZ19tYWxsb2MwKHNpemVvZigqdmNwdSkpOw0KPiAgPj4gICA+PiAgIC0gICAgdmNw
-dS0+dmNwdV9pZCA9IGt2bV9hcmNoX3ZjcHVfaWQoY3B1KTsNCj4gID4+ICAgPj4gICAtICAgIHZj
-cHUtPmt2bV9mZCA9IGNwdS0+a3ZtX2ZkOw0KPiAgPj4gICA+PiAgIC0gICAgUUxJU1RfSU5TRVJU
-X0hFQUQoJmt2bV9zdGF0ZS0+a3ZtX3BhcmtlZF92Y3B1cywgdmNwdSwNCj4gID4+ICAgbm9kZSk7
-DQo+ICA+PiAgID4+ICAgKyAgICBrdm1fcGFya192Y3B1KGNwdSk7DQo+ICA+PiAgID4+ICAgIGVy
-cjoNCj4gID4+ICAgPj4gICAgICAgIHJldHVybiByZXQ7DQo+ICA+PiAgID4+ICAgIH0NCj4gID4+
-ICAgPj4gICBAQCAtMzk3LDYgKzQzNCw4IEBAIHN0YXRpYyBpbnQga3ZtX2dldF92Y3B1KEtWTVN0
-YXRlICpzLA0KPiAgdW5zaWduZWQNCj4gID4+ICAgbG9uZw0KPiAgPj4gICA+PiAgIHZjcHVfaWQp
-DQo+ICA+PiAgID4+ICAgICAgICAgICAgaWYgKGNwdS0+dmNwdV9pZCA9PSB2Y3B1X2lkKSB7DQo+
-ICA+PiAgID4+ICAgICAgICAgICAgICAgIGludCBrdm1fZmQ7DQo+ICA+PiAgID4+DQo+ICA+PiAg
-ID4+ICAgKyAgICAgICAgICAgIHRyYWNlX2t2bV9nZXRfdmNwdSh2Y3B1X2lkKTsNCj4gID4+ICAg
-Pj4gICArDQo+ICA+PiAgID4+ICAgICAgICAgICAgICAgIFFMSVNUX1JFTU9WRShjcHUsIG5vZGUp
-Ow0KPiAgPj4gICA+PiAgICAgICAgICAgICAgICBrdm1fZmQgPSBjcHUtPmt2bV9mZDsNCj4gID4+
-ICAgPj4gICAgICAgICAgICAgICAgZ19mcmVlKGNwdSk7DQo+ICA+PiAgID4+ICAgQEAgLTQwNCw3
-ICs0NDMsNyBAQCBzdGF0aWMgaW50IGt2bV9nZXRfdmNwdShLVk1TdGF0ZSAqcywNCj4gIHVuc2ln
-bmVkDQo+ICA+PiAgIGxvbmcNCj4gID4+ICAgPj4gICB2Y3B1X2lkKQ0KPiAgPj4gICA+PiAgICAg
-ICAgICAgIH0NCj4gID4+ICAgPj4gICAgICAgIH0NCj4gID4+ICAgPj4NCj4gID4+ICAgPj4gICAt
-ICAgIHJldHVybiBrdm1fdm1faW9jdGwocywgS1ZNX0NSRUFURV9WQ1BVLCAodm9pZCAqKXZjcHVf
-aWQpOw0KPiAgPj4gICA+PiAgICsgICAgcmV0dXJuIC1FTk9FTlQ7DQo+ICA+PiAgID4+ICAgIH0N
-Cj4gID4+ICAgPj4NCj4gID4+ICAgPj4gICAgaW50IGt2bV9pbml0X3ZjcHUoQ1BVU3RhdGUgKmNw
-dSwgRXJyb3IgKiplcnJwKSBAQCAtNDE1LDE5DQo+ICArNDU0LDE0DQo+ICA+PiAgIEBADQo+ICA+
-PiAgID4+ICAgaW50IGt2bV9pbml0X3ZjcHUoQ1BVU3RhdGUgKmNwdSwgRXJyb3IgKiplcnJwKQ0K
-PiAgPj4gICA+Pg0KPiAgPj4gICA+PiAgICAgICAgdHJhY2Vfa3ZtX2luaXRfdmNwdShjcHUtPmNw
-dV9pbmRleCwga3ZtX2FyY2hfdmNwdV9pZChjcHUpKTsNCj4gID4+ICAgPj4NCj4gID4+ICAgPj4g
-ICAtICAgIHJldCA9IGt2bV9nZXRfdmNwdShzLCBrdm1fYXJjaF92Y3B1X2lkKGNwdSkpOw0KPiAg
-Pj4gICA+PiAgICsgICAgcmV0ID0ga3ZtX2NyZWF0ZV92Y3B1KGNwdSk7DQo+ICA+PiAgID4+ICAg
-ICAgICBpZiAocmV0IDwgMCkgew0KPiAgPj4gICA+PiAgIC0gICAgICAgIGVycm9yX3NldGdfZXJy
-bm8oZXJycCwgLXJldCwgImt2bV9pbml0X3ZjcHU6IGt2bV9nZXRfdmNwdQ0KPiAgZmFpbGVkDQo+
-ICA+PiAgID4+ICAgKCVsdSkiLA0KPiAgPj4gICA+PiAgICsgICAgICAgIGVycm9yX3NldGdfZXJy
-bm8oZXJycCwgLXJldCwNCj4gID4+ICAgPj4gICArICAgICAgICAgICAgICAgICAgICAgICAgICJr
-dm1faW5pdF92Y3B1OiBrdm1fY3JlYXRlX3ZjcHUgZmFpbGVkICglbHUpIiwNCj4gID4+ICAgPj4g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIGt2bV9hcmNoX3ZjcHVfaWQoY3B1KSk7DQo+ICA+
-PiAgID4+ICAgICAgICAgICAgZ290byBlcnI7DQo+ICA+PiAgID4+ICAgICAgICB9DQo+ICA+PiAg
-ID4+DQo+ICA+PiAgID4+ICAgLSAgICBjcHUtPmt2bV9mZCA9IHJldDsNCj4gID4+ICAgPj4gICAt
-ICAgIGNwdS0+a3ZtX3N0YXRlID0gczsNCj4gID4+ICAgPj4gICAtICAgIGNwdS0+dmNwdV9kaXJ0
-eSA9IHRydWU7DQo+ICA+PiAgID4+ICAgLSAgICBjcHUtPmRpcnR5X3BhZ2VzID0gMDsNCj4gID4+
-ICAgPj4gICAtICAgIGNwdS0+dGhyb3R0bGVfdXNfcGVyX2Z1bGwgPSAwOw0KPiAgPj4gICA+PiAg
-IC0NCj4gID4+ICAgPj4gICAgICAgIG1tYXBfc2l6ZSA9IGt2bV9pb2N0bChzLCBLVk1fR0VUX1ZD
-UFVfTU1BUF9TSVpFLCAwKTsNCj4gID4+ICAgPj4gICAgICAgIGlmIChtbWFwX3NpemUgPCAwKSB7
-DQo+ICA+PiAgID4+ICAgICAgICAgICAgcmV0ID0gbW1hcF9zaXplOw0KPiAgPj4gICA+PiAgIGRp
-ZmYgLS1naXQgYS9hY2NlbC9rdm0vdHJhY2UtZXZlbnRzIGIvYWNjZWwva3ZtL3RyYWNlLWV2ZW50
-cyBpbmRleA0KPiAgPj4gICA+PiAgIDY4MWNjYjY2N2QuLjc1YzE3MjRlNzggMTAwNjQ0DQo+ICA+
-PiAgID4+ICAgLS0tIGEvYWNjZWwva3ZtL3RyYWNlLWV2ZW50cw0KPiAgPj4gICA+PiAgICsrKyBi
-L2FjY2VsL2t2bS90cmFjZS1ldmVudHMNCj4gID4+ICAgPj4gICBAQCAtOSw2ICs5LDEwIEBAIGt2
-bV9kZXZpY2VfaW9jdGwoaW50IGZkLCBpbnQgdHlwZSwgdm9pZCAqYXJnKQ0KPiAgImRldiBmZA0K
-PiAgPj4gICAlZCwNCj4gID4+ICAgPj4gICB0eXBlIDB4JXgsIGFyZyAlcCINCj4gID4+ICAgPj4g
-ICAga3ZtX2ZhaWxlZF9yZWdfZ2V0KHVpbnQ2NF90IGlkLCBjb25zdCBjaGFyICptc2cpICJXYXJu
-aW5nOg0KPiAgVW5hYmxlIHRvDQo+ICA+PiAgID4+ICAgcmV0cmlldmUgT05FUkVHICUiIFBSSXU2
-NCAiIGZyb20gS1ZNOiAlcyINCj4gID4+ICAgPj4gICAga3ZtX2ZhaWxlZF9yZWdfc2V0KHVpbnQ2
-NF90IGlkLCBjb25zdCBjaGFyICptc2cpICJXYXJuaW5nOg0KPiAgVW5hYmxlIHRvDQo+ICA+PiAg
-IHNldA0KPiAgPj4gICA+PiAgIE9ORVJFRyAlIiBQUkl1NjQgIiB0byBLVk06ICVzIg0KPiAgPj4g
-ICA+PiAgICBrdm1faW5pdF92Y3B1KGludCBjcHVfaW5kZXgsIHVuc2lnbmVkIGxvbmcgYXJjaF9j
-cHVfaWQpICJpbmRleDoNCj4gICVkDQo+ICA+PiAgIGlkOg0KPiAgPj4gICA+PiAgICVsdSINCj4g
-ID4+ICAgPj4gICAra3ZtX2NyZWF0ZV92Y3B1KGludCBjcHVfaW5kZXgsIHVuc2lnbmVkIGxvbmcg
-YXJjaF9jcHVfaWQpDQo+ICAiaW5kZXg6DQo+ICA+PiAgICVkDQo+ICA+PiAgID4+ICAgaWQ6ICVs
-dSINCj4gID4+ICAgPj4gICAra3ZtX2dldF92Y3B1KHVuc2lnbmVkIGxvbmcgYXJjaF9jcHVfaWQp
-ICJpZDogJWx1Ig0KPiAgPj4gICA+PiAgICtrdm1fZGVzdHJveV92Y3B1KGludCBjcHVfaW5kZXgs
-IHVuc2lnbmVkIGxvbmcgYXJjaF9jcHVfaWQpDQo+ICAiaW5kZXg6DQo+ICA+PiAgICVkDQo+ICA+
-PiAgID4+ICAgaWQ6ICVsdSINCj4gID4+ICAgPj4gICAra3ZtX3BhcmtfdmNwdShpbnQgY3B1X2lu
-ZGV4LCB1bnNpZ25lZCBsb25nIGFyY2hfY3B1X2lkKQ0KPiAgImluZGV4OiAlZA0KPiAgPj4gICBp
-ZDoNCj4gID4+ICAgPj4gICAlbHUiDQo+ICA+PiAgID4+ICAgIGt2bV9pcnFjaGlwX2NvbW1pdF9y
-b3V0ZXModm9pZCkgIiINCj4gID4+ICAgPj4gICAga3ZtX2lycWNoaXBfYWRkX21zaV9yb3V0ZShj
-aGFyICpuYW1lLCBpbnQgdmVjdG9yLCBpbnQgdmlycSkgImRldg0KPiAgJXMNCj4gID4+ICAgPj4g
-ICB2ZWN0b3IgJWQgdmlycSAlZCINCj4gID4+ICAgPj4gICAga3ZtX2lycWNoaXBfdXBkYXRlX21z
-aV9yb3V0ZShpbnQgdmlycSkgIlVwZGF0aW5nIE1TSSByb3V0ZQ0KPiAgPj4gICB2aXJxPSVkIg0K
-PiAgPj4gICA+PiAgIEBAIC0yNSw3ICsyOSw2IEBAIGt2bV9kaXJ0eV9yaW5nX3JlYXBlcihjb25z
-dCBjaGFyICpzKSAiJXMiDQo+ICA+PiAgID4+ICAgIGt2bV9kaXJ0eV9yaW5nX3JlYXAodWludDY0
-X3QgY291bnQsIGludDY0X3QgdCkgInJlYXBlZCAlIlBSSXU2NCINCj4gID4+ICAgcGFnZXMNCj4g
-ID4+ICAgPj4gICAodG9vayAlIlBSSWk2NCIgdXMpIg0KPiAgPj4gICA+PiAgICBrdm1fZGlydHlf
-cmluZ19yZWFwZXJfa2ljayhjb25zdCBjaGFyICpyZWFzb24pICIlcyINCj4gID4+ICAgPj4gICAg
-a3ZtX2RpcnR5X3JpbmdfZmx1c2goaW50IGZpbmlzaGVkKSAiJWQiDQo+ICA+PiAgID4+ICAgLWt2
-bV9kZXN0cm95X3ZjcHUodm9pZCkgIiINCj4gID4+ICAgPj4gICAga3ZtX2ZhaWxlZF9nZXRfdmNw
-dV9tbWFwX3NpemUodm9pZCkgIiINCj4gID4+ICAgPj4gICAga3ZtX2NwdV9leGVjKHZvaWQpICIi
-DQo+ICA+PiAgID4+ICAgIGt2bV9pbnRlcnJ1cHRfZXhpdF9yZXF1ZXN0KHZvaWQpICIiDQo+ICA+
-PiAgID4+ICAgLS0NCj4gID4+ICAgPj4gICAyLjM5LjMNCj4gID4+ICAgPg0K
+--000000000000ab50e3061893143b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, May 16, 2024, 1:58=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+ wrote:
+
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Instead of using the info object for the doc block as a whole, update
+> > the info pointer for each call to ensure_untagged_section when the
+> > existing section is otherwise empty. This way, Sphinx error information
+> > will match precisely to where the text actually starts.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  scripts/qapi/parser.py | 9 +++++++--
+> >  1 file changed, 7 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> > index 8cdd5334ec6..41b9319e5cb 100644
+> > --- a/scripts/qapi/parser.py
+> > +++ b/scripts/qapi/parser.py
+> > @@ -662,8 +662,13 @@ def end(self) -> None:
+> >
+> >      def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+> >          if self.all_sections and not self.all_sections[-1].tag:
+> > -            # extend current section
+> > -            self.all_sections[-1].text +=3D '\n'
+>
+> Before, we always append a newline.
+>
+> > +            section =3D self.all_sections[-1]
+> > +            # Section is empty so far; update info to start *here*.
+> > +            if not section.text:
+> > +                section.info =3D info
+> > +            else:
+> > +                # extend current section
+> > +                self.all_sections[-1].text +=3D '\n'
+>
+> Afterwards, we append it only when the section already has some text.
+>
+> The commit message claims the patch only adjusts section.info.  That's a
+> lie :)
+>
+
+Well. It wasn't intentional, so it wasn't a lie... it was just wrong :)
+
+
+> I believe the change makes no difference because .end() strips leading
+> and trailing newline.
+>
+> >              return
+> >          # start new section
+> >          section =3D self.Section(info)
+>
+> You could fix the commit message, but I think backing out the
+> no-difference change is easier.  The appended patch works in my testing.
+>
+> Next one.  Your patch changes the meaning of section.info.  Here's its
+> initialization:
+>
+>     class Section:
+>         # pylint: disable=3Dtoo-few-public-methods
+>         def __init__(self, info: QAPISourceInfo,
+>                      tag: Optional[str] =3D None):
+> --->        # section source info, i.e. where it begins
+>             self.info =3D info
+>             # section tag, if any ('Returns', '@name', ...)
+>             self.tag =3D tag
+>             # section text without tag
+>             self.text =3D ''
+>
+> The comment is now wrong.  Calls for a thorough review of .info's uses.
+>
+
+Hmm... Did I really change its meaning? I guess it's debatable what "where
+it begins" means. Does the tagless section start...
+
+## <-- Here?
+# Hello! <-- Or here?
+##
+
+I assert the *section* starts wherever the first line of text it contains
+starts. Nothing else makes any sense.
+
+There is value in recording where the doc block starts, but that's not a
+task for the *section* info.
+
+I don't think I understand your feedback.
+
+
+> The alternative to changing .info's meaning is to add another member
+> with the meaning you need.  Then we have to review .info's uses to find
+> out which ones to switch to the new one.
+
+
+> Left for later.
+>
+>
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 8cdd5334ec..abeae1ca77 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -663,7 +663,10 @@ def end(self) -> None:
+>      def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+>          if self.all_sections and not self.all_sections[-1].tag:
+>              # extend current section
+> -            self.all_sections[-1].text +=3D '\n'
+> +            section =3D self.all_sections[-1]
+> +            if not section.text:
+> +                section.info =3D info
+> +            section.text +=3D '\n'
+>              return
+>          # start new section
+>          section =3D self.Section(info)
+>
+>
+
+--000000000000ab50e3061893143b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Thu, May 16, 2024, 1:58=E2=80=AFAM Markus Armbruste=
+r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
+er-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:js=
+now@redhat.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&g=
+t; writes:<br>
+<br>
+&gt; Instead of using the info object for the doc block as a whole, update<=
+br>
+&gt; the info pointer for each call to ensure_untagged_section when the<br>
+&gt; existing section is otherwise empty. This way, Sphinx error informatio=
+n<br>
+&gt; will match precisely to where the text actually starts.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 scripts/qapi/parser.py | 9 +++++++--<br>
+&gt;=C2=A0 1 file changed, 7 insertions(+), 2 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py<br>
+&gt; index 8cdd5334ec6..41b9319e5cb 100644<br>
+&gt; --- a/scripts/qapi/parser.py<br>
+&gt; +++ b/scripts/qapi/parser.py<br>
+&gt; @@ -662,8 +662,13 @@ def end(self) -&gt; None:<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 def ensure_untagged_section(self, info: QAPISource=
+Info) -&gt; None:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.all_sections and not self.al=
+l_sections[-1].tag:<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # extend current section<br=
+>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.all_sections[-1].text =
++=3D &#39;\n&#39;<br>
+<br>
+Before, we always append a newline.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 section =3D self.all_sectio=
+ns[-1]<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Section is empty so far; =
+update info to start *here*.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not section.text:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"ht=
+tp://section.info" rel=3D"noreferrer noreferrer" target=3D"_blank">section.=
+info</a> =3D info<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # extend curr=
+ent section<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.all_sect=
+ions[-1].text +=3D &#39;\n&#39;<br>
+<br>
+Afterwards, we append it only when the section already has some text.<br>
+<br>
+The commit message claims the patch only adjusts <a href=3D"http://section.=
+info" rel=3D"noreferrer noreferrer" target=3D"_blank">section.info</a>.=C2=
+=A0 That&#39;s a<br>
+lie :)<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">Well. It wasn&#39;t intentional, so it wasn&#39;t a lie... it was jus=
+t wrong :)</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D=
+"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;=
+border-left:1px #ccc solid;padding-left:1ex">
+<br>
+I believe the change makes no difference because .end() strips leading<br>
+and trailing newline.<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # start new section<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 section =3D self.Section(info)<br>
+<br>
+You could fix the commit message, but I think backing out the<br>
+no-difference change is easier.=C2=A0 The appended patch works in my testin=
+g.<br>
+<br>
+Next one.=C2=A0 Your patch changes the meaning of <a href=3D"http://section=
+.info" rel=3D"noreferrer noreferrer" target=3D"_blank">section.info</a>.=C2=
+=A0 Here&#39;s its<br>
+initialization:<br>
+<br>
+=C2=A0 =C2=A0 class Section:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 # pylint: disable=3Dtoo-few-public-methods<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 def __init__(self, info: QAPISourceInfo,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0tag: Optional[str] =3D None):<br>
+---&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 # section source info, i.e. where it beg=
+ins<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"http://self.info" rel=
+=3D"noreferrer noreferrer" target=3D"_blank">self.info</a> =3D info<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # section tag, if any (&#39;Retur=
+ns&#39;, &#39;@name&#39;, ...)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.tag =3D tag<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # section text without tag<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.text =3D &#39;&#39;<br>
+<br>
+The comment is now wrong.=C2=A0 Calls for a thorough review of .info&#39;s =
+uses.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">Hmm... Did I really change its meaning? I guess it&#39;s debatable wha=
+t &quot;where it begins&quot; means. Does the tagless section start...</div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">## &lt;-- Here?</div><div di=
+r=3D"auto"># Hello! &lt;-- Or here?</div><div dir=3D"auto">##</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">I assert the *section* starts whereve=
+r the first line of text it contains starts. Nothing else makes any sense.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">There is value in record=
+ing where the doc block starts, but that&#39;s not a task for the *section*=
+ info.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I don&#39;t think=
+ I understand your feedback.</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+<br>
+The alternative to changing .info&#39;s meaning is to add another member<br=
+>
+with the meaning you need.=C2=A0 Then we have to review .info&#39;s uses to=
+ find<br>
+out which ones to switch to the new one.</blockquote></div></div><div dir=
+=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+<br>
+Left for later.<br>
+<br>
+<br>
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py<br>
+index 8cdd5334ec..abeae1ca77 100644<br>
+--- a/scripts/qapi/parser.py<br>
++++ b/scripts/qapi/parser.py<br>
+@@ -663,7 +663,10 @@ def end(self) -&gt; None:<br>
+=C2=A0 =C2=A0 =C2=A0def ensure_untagged_section(self, info: QAPISourceInfo)=
+ -&gt; None:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if self.all_sections and not self.all_sec=
+tions[-1].tag:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# extend current section<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.all_sections[-1].text +=3D =
+&#39;\n&#39;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 section =3D self.all_sections[-1=
+]<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not section.text:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"http://=
+section.info" rel=3D"noreferrer noreferrer" target=3D"_blank">section.info<=
+/a> =3D info<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 section.text +=3D &#39;\n&#39;<b=
+r>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# start new section<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0section =3D self.Section(info)<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000ab50e3061893143b--
+
 
