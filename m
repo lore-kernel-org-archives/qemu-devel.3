@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3116C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 12:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805BCC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 12:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Zq4-00054z-7o; Thu, 16 May 2024 08:04:00 -0400
+	id 1s7Zq6-0005CD-8V; Thu, 16 May 2024 08:04:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpx-0004oy-0f
- for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpz-0004qh-5f
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpv-0002N0-9X
- for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:52 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpw-0002Np-3d
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715861029;
+ s=mimecast20190719; t=1715861031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P4cYmv2SKnA1xskE5nVvk7N1vApCer4uxVm1ifMhnG0=;
- b=IGtSfE7hq5z5rPtp9IJK/oj8m0wambpw9frNdgdQTUHs7KPVG/wvbvZuaqx1+WsP95v/ab
- o6N1/Pbh5VEbdQkYmec3SxYw8vkePeTFRuBJt5OD+LWqnu3AMF8dRlN/aEScKwZz3yx+cz
- eVA+lSF4rAwVCXe22skSiSD3S7U5FEc=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-StnOj2UtPP6aK7gCU7f3tQ-1; Thu, 16 May 2024 08:03:48 -0400
-X-MC-Unique: StnOj2UtPP6aK7gCU7f3tQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ bh=tJ6DqocZIUj2ZsNc+DRMGi0kEP3qsENlV3OgiOfu0yY=;
+ b=GzU/r6K+FUB4c60NxuAdk58XtdYM65wnsVkDB+4TQpIlPIrdr9+obV7sWqEZIObbF4UwPg
+ 5novrGlafWDRvceGErQHKmqHDM3tGfyALJMEY2EhxkDIEC1rZMRwpuNleFeDky3CAtAp4c
+ fkw5GXT4tz8aOFChjmRvZ4ZhOYhFzuk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-t3siDbozNGWmmMhp7iPH4w-1; Thu,
+ 16 May 2024 08:03:49 -0400
+X-MC-Unique: t3siDbozNGWmmMhp7iPH4w-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E763B8058CA
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:03:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 728443800096
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:03:49 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.119])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8D8FB200A707;
- Thu, 16 May 2024 12:03:47 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 19CEB40C6EB7;
+ Thu, 16 May 2024 12:03:49 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id EDB08180100A; Thu, 16 May 2024 14:03:44 +0200 (CEST)
+ id 070161801012; Thu, 16 May 2024 14:03:45 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 3/4] MAINTAINERS: drop virtio-gpu maintainership
-Date: Thu, 16 May 2024 14:03:40 +0200
-Message-ID: <20240516120344.531521-4-kraxel@redhat.com>
+Subject: [PATCH 4/4] MAINTAINERS: drop spice+ui maintainership
+Date: Thu, 16 May 2024 14:03:41 +0200
+Message-ID: <20240516120344.531521-5-kraxel@redhat.com>
 In-Reply-To: <20240516120344.531521-1-kraxel@redhat.com>
 References: <20240516120344.531521-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -81,7 +81,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove myself from virtio-gpu entries.
+Remove myself from spice and ui entries.
 Flip status to "Orphan" for entries which have nobody else listed.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
@@ -90,27 +90,27 @@ Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d81376f84746..4d9f4fd09823 100644
+index 4d9f4fd09823..d5b6a1c76abb 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2572,8 +2572,7 @@ F: hw/display/ramfb*.c
- F: include/hw/display/ramfb.h
+@@ -3042,8 +3042,7 @@ F: stubs/memory_device.c
+ F: docs/nvdimm.txt
  
- virtio-gpu
+ SPICE
 -M: Gerd Hoffmann <kraxel@redhat.com>
 -S: Odd Fixes
 +S: Orphan
- F: hw/display/virtio-gpu*
- F: hw/display/virtio-vga.*
- F: include/hw/virtio/virtio-gpu.h
-@@ -2595,7 +2594,6 @@ F: include/hw/virtio/virtio-blk-common.h
+ F: include/ui/qemu-spice.h
+ F: include/ui/spice-display.h
+ F: ui/spice-*.c
+@@ -3053,7 +3052,6 @@ F: qapi/ui.json
+ F: docs/spice-port-fqdn.txt
  
- vhost-user-gpu
+ Graphics
+-M: Gerd Hoffmann <kraxel@redhat.com>
  M: Marc-André Lureau <marcandre.lureau@redhat.com>
--R: Gerd Hoffmann <kraxel@redhat.com>
- S: Maintained
- F: docs/interop/vhost-user-gpu.rst
- F: contrib/vhost-user-gpu
+ S: Odd Fixes
+ F: ui/
 -- 
 2.45.0
 
