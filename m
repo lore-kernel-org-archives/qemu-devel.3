@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6AFC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D6DAC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Wg2-0004Rg-0J; Thu, 16 May 2024 04:41:26 -0400
+	id 1s7Wg4-0004h6-Ix; Thu, 16 May 2024 04:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7Wfn-0003qp-5L
- for qemu-devel@nongnu.org; Thu, 16 May 2024 04:41:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7Wfw-0004HF-S2
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:41:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7Wfi-0003fo-OV
- for qemu-devel@nongnu.org; Thu, 16 May 2024 04:41:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7Wft-0003o8-Ir
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:41:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715848865;
+ s=mimecast20190719; t=1715848874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=epG0+LUIUQ8TmX7txzlhO27bJN74XDeFNmvckDjHEVU=;
- b=YufrCZ/+H0C6La5KyfbvdIVtHVY78+Q553bWl3q/E7UloYxgZ0q9iS7djnGGHP4nRPL3/W
- u0o78EkRsje/vSMTq4EUMCdT8G18zFeZKKJanlJTOL0R9iaoO3Op6Mue/ftVDt/cdTZV8O
- 1YNcmGhACRpOFk/JvnUue1NAtmFSwtM=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xZzxxedEbfJGb19n2QRpwGsMhnAuycLrE0tba6VagJc=;
+ b=KPlGd6l8j/riRP1RBQptZQxks69DaHv89JAwwgk01U8Ds3SOjjGVTVs8sKk8yyLsteLPjT
+ 1/oLeVoE3re9MkaCNGxQzKZolkEIx8ABrGHDAjsVcF2r19uXIUqand/Q7pUIa9d6eBQley
+ WM0re4NqJ8N9uG/F5CMW5QvIq7pi6hg=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-BIuqd-yKMP-C6VEmKKSzFw-1; Thu, 16 May 2024 04:41:01 -0400
-X-MC-Unique: BIuqd-yKMP-C6VEmKKSzFw-1
+ us-mta-1-wBc03cewMdWyMsGGNhATXA-1; Thu, 16 May 2024 04:41:04 -0400
+X-MC-Unique: wBc03cewMdWyMsGGNhATXA-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 349DC800074;
- Thu, 16 May 2024 08:41:01 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2E1C6807D77;
+ Thu, 16 May 2024 08:41:04 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.13])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 530512026D68;
- Thu, 16 May 2024 08:41:00 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 980352026D68;
+ Thu, 16 May 2024 08:41:02 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/5] tests: Remove xfsprogs and g++ from the dockerfiles
-Date: Thu, 16 May 2024 10:40:54 +0200
-Message-ID: <20240516084059.511463-1-thuth@redhat.com>
+Subject: [PATCH v2 2/5] tests/lcitool: Remove 'xfsprogs' from QEMU
+Date: Thu, 16 May 2024 10:40:56 +0200
+Message-ID: <20240516084059.511463-3-thuth@redhat.com>
+In-Reply-To: <20240516084059.511463-1-thuth@redhat.com>
+References: <20240516084059.511463-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -78,60 +81,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The xfsprogs package is not necessary anymore since commit a5730b8bd3
-and we don't need g++ in any of the containers (except for the mingw
-cross compiler container which can be handled differently), so this
-patch series simplifies the dockerfiles a little bit accordingly.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-v2:
-- Include the "Treat the output of lcitool as text" patch
-  (suggestion by Daniel)
-- Handle the g++ in the fedora-win64-cross container via a separate
-  file in tests/lcitool/projects instead of a hack in the refresh script
+QEMU's commit a5730b8bd3 ("block/file-posix: Simplify the
+XFS_IOC_DIOINFO handling") removed the need for the 'xfsprogs'
+package.
 
-PS: I originally wanted to include an update to the libvirt-ci submodule
-    in this series to be able to add the mingw-w64-tools package, too,
-    but that would require an update of the Fedora 38 containers to a
-    newer version - and this is causing lots of unresolved problems like
-    failures in the fuzzer or avocado jobs, so this has to be postponed
-    until these other issues are resolved.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[thuth: Adjusted the patch from the lcitools repo to QEMU's repo]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/lcitool/projects/qemu.yml | 1 -
+ 1 file changed, 1 deletion(-)
 
-Philippe Mathieu-Daudé (1):
-  tests/lcitool: Remove 'xfsprogs' from QEMU
-
-Thomas Huth (4):
-  tests/lcitool/refresh: Treat the output of lcitool as text, not as
-    bytes
-  tests/lcitool: Remove g++ from the containers (except for the MinGW
-    one)
-  tests/lcitool/projects/qemu.yml: Sort entries alphabetically again
-  tests/docker/dockerfiles: Update container files with
-    "lcitool-refresh"
-
- tests/docker/dockerfiles/alpine.docker         |  4 ----
- tests/docker/dockerfiles/centos9.docker        |  4 ----
- .../dockerfiles/debian-amd64-cross.docker      |  4 ----
- .../dockerfiles/debian-arm64-cross.docker      |  4 ----
- .../dockerfiles/debian-armel-cross.docker      |  4 ----
- .../dockerfiles/debian-armhf-cross.docker      |  4 ----
- .../dockerfiles/debian-i686-cross.docker       |  4 ----
- .../dockerfiles/debian-mips64el-cross.docker   |  4 ----
- .../dockerfiles/debian-mipsel-cross.docker     |  4 ----
- .../dockerfiles/debian-ppc64el-cross.docker    |  4 ----
- .../dockerfiles/debian-riscv64-cross.docker    |  3 ---
- .../dockerfiles/debian-s390x-cross.docker      |  4 ----
- tests/docker/dockerfiles/debian.docker         |  4 ----
- .../dockerfiles/fedora-win64-cross.docker      |  2 +-
- tests/docker/dockerfiles/fedora.docker         |  4 ----
- tests/docker/dockerfiles/opensuse-leap.docker  |  4 ----
- tests/docker/dockerfiles/ubuntu2204.docker     |  4 ----
- tests/lcitool/projects/qemu-minimal.yml        |  1 -
- tests/lcitool/projects/qemu-win-installer.yml  |  4 ++++
- tests/lcitool/projects/qemu.yml                | 18 ++++++++----------
- tests/lcitool/refresh                          |  5 +++--
- 21 files changed, 16 insertions(+), 77 deletions(-)
- create mode 100644 tests/lcitool/projects/qemu-win-installer.yml
-
+diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+index 149b15de57..9173d1e36e 100644
+--- a/tests/lcitool/projects/qemu.yml
++++ b/tests/lcitool/projects/qemu.yml
+@@ -121,7 +121,6 @@ packages:
+  - vte
+  - which
+  - xen
+- - xfsprogs
+  - xorriso
+  - zstdtools
+  - zlib
 -- 
 2.45.0
 
