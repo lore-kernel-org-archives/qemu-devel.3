@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024AAC25B7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344A4C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7eya-00074E-5T; Thu, 16 May 2024 13:33:08 -0400
+	id 1s7ezk-0008J2-9J; Thu, 16 May 2024 13:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s7eyY-00073m-1D
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:33:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7ezi-0008Iq-Re
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:34:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1s7eyW-0002sE-6Q
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:33:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7ezh-0003GB-FN
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:34:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715880782;
+ s=mimecast20190719; t=1715880856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bFbhp34npFZca/lPfYkcMAL53WDvbGiDJcr6qspwVqg=;
- b=ZcUpBBeBDq1e56q/G40eAGRZUeeyS2nTeJ4ofIIX+cgLc1opUFl6ntdywdJj1xqAeam2xZ
- mBkTytkmg5+SrrtpBpp0HfmsVBmMlxm+Sbc2EcvNhZzDur5DKKdbC9J2XkCfKZSC40qR+D
- 0bczHFQsyBHYPpklF1QzPLbX2NcayzY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1x8bgVgkbSAZJAalFt9vl6zT2/FV04BS27VkNEP+aTc=;
+ b=Ph19Ieh86wAHW1yUUxxgqYhJQOg+pkB1KGGbmx9JLMrREEBvYiPRc8ykzfF9+bvKQhCCss
+ MV6QgV2E8vaXKIe5EWwex2oGjX62hNw/UHJCqTjr1MshWpPmViLSMHXqNmZm1Xx1ImCS11
+ zcJGJRWc7xnoeznAPUGmd4OTWgP5pxc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-tqyq6LKzOICMaJ0mskcuPQ-1; Thu, 16 May 2024 13:33:01 -0400
-X-MC-Unique: tqyq6LKzOICMaJ0mskcuPQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-34e08bdc701so5283721f8f.3
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:33:00 -0700 (PDT)
+ us-mta-396-A2E8uKUeOSqKVMQUUXsNYQ-1; Thu, 16 May 2024 13:34:15 -0400
+X-MC-Unique: A2E8uKUeOSqKVMQUUXsNYQ-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4200ef4fb81so28479835e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:34:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715880780; x=1716485580;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bFbhp34npFZca/lPfYkcMAL53WDvbGiDJcr6qspwVqg=;
- b=WCmwo3u4hwF2CRAEcPgpq0etweF6j6hk3f/TWC7W/zNMHrYdnvuf+j7tvU/8/6jZLm
- 1dfY5DrG0fIwIGvnUnKQx1CIDZhYVE5xqGshQRAkPmko4GMBHY6FN6ux8qBupIfJWZ5M
- 5VCbRxfviYCBXr3NXQ5BX3fvtUBQuSHWZkkl9MwhMkrn/yytdc/Ro9IAmtsYnn7zRj3f
- LQmZWnpw5sfHGE6lJbpJ9KoLFIshXIylx5YZrA6hyGzzFOzBCAeexiGCj23nK4LIEt40
- FLfO4ds72XPgxrapEHWClSn5530kIIdzhnUxx37ToXTjMHUxyn0lGbtIv14N4akgAx++
- vwzg==
-X-Gm-Message-State: AOJu0YzjfPnC1MkYwNPmYrhTbER0g3Xs80tgIJe1oL5P2yy0YZ7F7F95
- 7+SlLhO7HKg9iqyE/6p3z2FOsMhslXAHzvInWGd+wfOWg2uZW0jysiHKs1zFaqRzPGJeK5weXn3
- sYZINbBWoz4ib6NBYHfKjxqqoFhUFAToAvWvj2SHprxND6/EP0c8NHD5vXg4BTzptwD2jAw3Ye8
- R/mvPViJDqpnZGhllpVCpW5xRacG4=
-X-Received: by 2002:adf:eb45:0:b0:34e:b6b8:80e3 with SMTP id
- ffacd0b85a97d-3504a96881amr12231226f8f.47.1715880779879; 
- Thu, 16 May 2024 10:32:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuWIoO+qn858UsVlzyPLvXtVKyjJywGelTrlQ0AOx9izQ6Gby8pIHlaNdZG7LpnIZ5ayY9XcqDxqpWChHrkTM=
-X-Received: by 2002:adf:eb45:0:b0:34e:b6b8:80e3 with SMTP id
- ffacd0b85a97d-3504a96881amr12231196f8f.47.1715880779572; Thu, 16 May 2024
- 10:32:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715880854; x=1716485654;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1x8bgVgkbSAZJAalFt9vl6zT2/FV04BS27VkNEP+aTc=;
+ b=IAwg9Jx/A71xfF0Zc7cDGifFHgzekGJ5E+3s8YXhzfudlKY3BenjUl7Z2glQoFcGuo
+ QvzuSorPfepV9HGaeCLBYY9aoGZ45vW3iWCSgrNHIpDaqot7wutkCfUlB/Cyr3vCCf5m
+ nORSHfbv2Ms51Z5IglctBMmwr98kLLra9IFEe2CY921IUV3VyjJZ/ytx4iEXlCTGPmaO
+ PKvUWFKKnTcz5WijVyV4OEal0wXo8+eQj2Gl5VZ+0RYJ5gU6a8VSQXJRw8GjZOBz+aA/
+ 4PecurI8bJyRW9TuxZxLfUS0aG+385ZC6x6aXUvibjcMGpH1SM0GYQ959G2KF6OpdYpw
+ ee4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6yOgXE2AZ8BGoHHmNPaIpC/eXlCBprnDz8cgqU+bdbcozE6R1HD0Y3jwPtW6SGVpRmCohGxSUfeRUaaecEdQAnoVUuvw=
+X-Gm-Message-State: AOJu0Yzgjh9xYkQrqYbiPSBLPXzfQSK5mkJP8rdWMmQnh8KhwFKRl9Ki
+ 1ZWCgFwJARp6BQvDmWtaN/NGTUBqEJp9HG1ZHStXsMDEg+TwLm9tRFVJh3jlEpfgIOLiXwMdNEK
+ pRNvXqhaoHK55bKBnGOLDKwj1uW8Wgn/i7T92/aFDD/T2oUEMt47f
+X-Received: by 2002:a05:600c:511f:b0:418:5ef3:4a04 with SMTP id
+ 5b1f17b1804b1-41fead59f07mr181333345e9.18.1715880853640; 
+ Thu, 16 May 2024 10:34:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFoCA4hlDIvE2VVhAj5a+LdLcjHf5IgVb24DZ85WRvsBY03rLm6kE09iYTufuPXBN0dLHXReQ==
+X-Received: by 2002:a05:600c:511f:b0:418:5ef3:4a04 with SMTP id
+ 5b1f17b1804b1-41fead59f07mr181333035e9.18.1715880853141; 
+ Thu, 16 May 2024 10:34:13 -0700 (PDT)
+Received: from redhat.com ([2.52.2.122]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42013bf1a5dsm171320995e9.30.2024.05.16.10.34.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 May 2024 10:34:12 -0700 (PDT)
+Date: Thu, 16 May 2024 13:34:07 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 1/3] docs: introduce dedicated page about code
+ provenance / sign-off
+Message-ID: <20240516133334-mutt-send-email-mst@kernel.org>
+References: <20240516162230.937047-1-berrange@redhat.com>
+ <20240516162230.937047-2-berrange@redhat.com>
+ <CAFEAcA9ocOiZ5E0WSCKoR3nL+qf4LF-AQ6_4HpF9xfipAJhbog@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-7-jsnow@redhat.com>
- <875xvepa64.fsf@pond.sub.org>
-In-Reply-To: <875xvepa64.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 16 May 2024 13:32:46 -0400
-Message-ID: <CAFn=p-YbP7tH8qxRapEDV5tF=5ShDXx9ULquwU_Mu0-un0i==g@mail.gmail.com>
-Subject: Re: [PATCH 06/20] qapi/parser: fix comment parsing immediately
- following a doc block
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, 
- Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Kevin Wolf <kwolf@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
- Mads Ynddal <mads@ynddal.dk>, 
- Jason Wang <jasowang@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Victor Toso de Carvalho <victortoso@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, Lukas Straub <lukasstraub2@web.de>, 
- Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000580360061895a01c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9ocOiZ5E0WSCKoR3nL+qf4LF-AQ6_4HpF9xfipAJhbog@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,150 +112,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000580360061895a01c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, May 16, 2024 at 2:01=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
-
-> John Snow <jsnow@redhat.com> writes:
->
-> > If a comment immediately follows a doc block, the parser doesn't ignore
-> > that token appropriately. Fix that.
->
-> Reproducer?
->
+On Thu, May 16, 2024 at 06:29:39PM +0100, Peter Maydell wrote:
+> On Thu, 16 May 2024 at 17:22, Daniel P. Berrangé <berrange@redhat.com> wrote:
 > >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  scripts/qapi/parser.py | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index 41b9319e5cb..161768b8b96 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -587,7 +587,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                  line =3D self.get_doc_line()
-> >                  first =3D False
-> >
-> > -        self.accept(False)
-> > +        self.accept()
-> >          doc.end()
-> >          return doc
->
-> Can't judge the fix without understanding the problem, and the problem
-> will be easier to understand for me with a reproducer.
->
+> > Currently we have a short paragraph saying that patches must include
+> > a Signed-off-by line, and merely link to the kernel documentation.
+> > The linked kernel docs have a lot of content beyond the part about
+> > sign-off an thus are misleading/distracting to QEMU contributors.
+> 
+> Thanks for this -- I've felt for ages that it was a bit awkward
+> that we didn't have a good place to link people to for the fuller
+> explanation of this.
+> 
+> > This introduces a dedicated 'code-provenance' page in QEMU talking
+> > about why we require sign-off, explaining the other tags we commonly
+> > use, and what to do in some edge cases.
+> 
+> The version of the kernel SubmittingPatches we used to link to
+> includes the text "sorry, no pseudonyms or anonymous contributions".
+> This new documentation doesn't say anything either way about
+> our approach to pseudonyms. I think we should probably say
+> something, but I don't know if we have an in-practice consensus
+> there, so maybe we should approach that as a separate change on
+> top of this patch.
 
-audio.json:
 
-```
-##
-# =3D Audio
-##
+Well given we referred to kernel previously then I guess that's
+the concensus, no?
 
-##
-# @AudiodevPerDirectionOptions:
-#
-# General audio backend options that are used for both playback and
-# recording.
-#
-```
 
-Modify this excerpt to have a comment after the "=3D Audio" header, say for
-instance if you were to take out that intro paragraph and transform it into
-a comment that preceded the AudiodevPerDirectionOptions doc block.
-
-e.g.
-
-```
-##
-# =3D Audio
-##
-
-# Lorem Ipsum
-
-##
-# @AudiodevPerDirectionOptions:
-```
-
-the parser breaks because the line I changed that primes the next token is
-still set to "not ignore comments", but that breaks the parser and gives a
-rather unhelpful message:
-
-../qapi/audio.json:13:1: junk after '##' at start of documentation comment
-
-Encountered when converting developer commentary from documentation
-paragraphs to mere QAPI comments.
-
---js
-
---000000000000580360061895a01c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 16, 2024 at 2:01=E2=80=AF=
-AM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat=
-.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank">jsn=
-ow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; If a comment immediately follows a doc block, the parser doesn&#39;t i=
-gnore<br>
-&gt; that token appropriately. Fix that.<br>
-<br>
-Reproducer?<br>
-<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 scripts/qapi/parser.py | 2 +-<br>
-&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
-&gt;<br>
-&gt; diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py<br>
-&gt; index 41b9319e5cb..161768b8b96 100644<br>
-&gt; --- a/scripts/qapi/parser.py<br>
-&gt; +++ b/scripts/qapi/parser.py<br>
-&gt; @@ -587,7 +587,7 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 line =3D=
- self.get_doc_line()<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 first =
-=3D False<br>
-&gt;=C2=A0 <br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.accept(False)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.accept()<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 doc.end()<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return doc<br>
-<br>
-Can&#39;t judge the fix without understanding the problem, and the problem<=
-br>
-will be easier to understand for me with a reproducer.<br></blockquote><div=
-><br></div><div>audio.json:</div><div><br></div><div>```<br></div><div>##<b=
-r># =3D Audio<br>##<br><br>##<br># @AudiodevPerDirectionOptions:<br>#<br># =
-General audio backend options that are used for both playback and<br># reco=
-rding.<br>#</div><div>```</div><div><br></div><div>Modify this excerpt to h=
-ave a comment after the &quot;=3D Audio&quot; header, say for instance if y=
-ou were to take out that intro paragraph and transform it into a comment th=
-at preceded the AudiodevPerDirectionOptions doc block.</div><div><br></div>=
-<div>e.g.</div><div><br></div><div>```<br></div><div>##</div><div># =3D Aud=
-io</div><div>##</div><div><br></div><div># Lorem Ipsum</div><div><br></div>=
-##<br># @AudiodevPerDirectionOptions:</div><div class=3D"gmail_quote">```<b=
-r></div><div class=3D"gmail_quote"><br></div><div class=3D"gmail_quote">the=
- parser breaks because the line I changed that primes the next token is sti=
-ll set to &quot;not ignore comments&quot;, but that breaks the parser and g=
-ives a rather unhelpful message:<br></div><div class=3D"gmail_quote"><br></=
-div><div class=3D"gmail_quote">../qapi/audio.json:13:1: junk after &#39;##&=
-#39; at start of documentation comment</div><div class=3D"gmail_quote"><br>=
-</div><div class=3D"gmail_quote">Encountered when converting developer comm=
-entary from documentation paragraphs to mere QAPI comments.<br></div><div c=
-lass=3D"gmail_quote"><br></div><div class=3D"gmail_quote">--js<br></div><di=
-v class=3D"gmail_quote"><br></div></div>
-
---000000000000580360061895a01c--
+> So for this patch:
+> 
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+> thanks
+> -- PMM
 
 
