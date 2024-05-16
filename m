@@ -4,52 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59835C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B567C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7X9H-0007mJ-FQ; Thu, 16 May 2024 05:11:39 -0400
+	id 1s7XOt-0001ug-84; Thu, 16 May 2024 05:27:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s7X9E-0007kn-FV
- for qemu-devel@nongnu.org; Thu, 16 May 2024 05:11:36 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s7X9C-0006Oe-Eq
- for qemu-devel@nongnu.org; Thu, 16 May 2024 05:11:36 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxGurBzUVmMXQNAA--.19995S3;
- Thu, 16 May 2024 17:11:29 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx71u4zUVm+8ciAA--.2860S7; 
- Thu, 16 May 2024 17:11:28 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 5/5] target/loongarch/kvm: fpu save the vreg registers high
- 192bit
-Date: Thu, 16 May 2024 17:11:20 +0800
-Message-Id: <20240516091120.1021435-6-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240516091120.1021435-1-gaosong@loongson.cn>
-References: <20240516091120.1021435-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s7XOk-0001uD-Og
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 05:27:38 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s7XOj-0002kl-5P
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 05:27:38 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-572669fd9f9so3204440a12.0
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 02:27:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715851655; x=1716456455; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=n9JpdsCIy6Zjhi1N48wQD00rN34fzG7HE4fp9skXsY4=;
+ b=gO3i0WZ1CZ5wlJzHsXb3J9217zLi3JIvp6wyhiMXSFlTWD91NoZu6hIPA2fsVuCr95
+ +0ARCuouPwEf0r1TUCa2kvBasSCy3YXfkpzCowAh7vUWEzz7dKv6ds61bjWHfkz2guCG
+ HSPkgWlMv2h76gJiUe4Tch8pO/VEUzdrQxBmCc8NIS+qB1TbJNciJ1jsN2O9jWVn40mf
+ RC9xcHFQxutKXMYquatajk9s+c2RAE0OHP1RKfJkjf8OoObT+lkX3uhmdN83GJ34Fflg
+ H8xcDzxQIxzopmdsmmok9DwKE4Ynrd7Behg48YurszXZC7uyjaohlaTmqCkUauDg4vX8
+ D48g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715851655; x=1716456455;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n9JpdsCIy6Zjhi1N48wQD00rN34fzG7HE4fp9skXsY4=;
+ b=k8vc96ZoMa5hvHRQ9JT0U9boVJvRE9LzlNFeD+QLHsXrMlLH+7nvLxGqofsI9jfxKs
+ qUCRpGuMainOBJR9VM0AGFb7MNItJnrCPGPu95PMzYuGt002w/CSQBTHx6bb7Be/KD1I
+ L1S7YZEu+JyLj+Hksb4/RQCJzJxctbX4Lzw6hjYLy4nkX3L/Yu+uLN/oaO+td15CwS4T
+ DVVRIg66+UerCHvwTsKjkXTIf1rxYE0t3pXKvYl7yu4Z/6bBQDa5azJV7ogYNojjop1t
+ WLoTAp18zh9yBlvhF0cW83usJalHRLwbvjO7yIoADXoX+HY8539WvIsAi3eWNL81SUKa
+ c6iQ==
+X-Gm-Message-State: AOJu0Yzgse9xJLCBjy/2v7UKlJIYXZGEFJpDprbtJ15XlrzNGJ7/QVD1
+ fbfebJAtpbParvqFfbCUm0qSjTJTfUQcSg5/n3utEkX+i9lZKn77CE4azZ/QJFu3XhjjJDyv1em
+ 5EfMrdxVxjrUQVIXmLQHA7dZymhvpBI1uZImKyQ==
+X-Google-Smtp-Source: AGHT+IGuWyfp7K6z9uHnAdfxpC7O0qBRXgWk0Y1sCb1eoSUBm/chQx1YrvKaf8096LLd+PjJ/IcFS4rYqW2boLTO5Ik=
+X-Received: by 2002:a50:b410:0:b0:574:f657:e0e with SMTP id
+ 4fb4d7f45d1cf-574f657198bmr2969266a12.25.1715851654741; Thu, 16 May 2024
+ 02:27:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cx71u4zUVm+8ciAA--.2860S7
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20240516091120.1021435-1-gaosong@loongson.cn>
+ <20240516091120.1021435-2-gaosong@loongson.cn>
+In-Reply-To: <20240516091120.1021435-2-gaosong@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 May 2024 10:27:20 +0100
+Message-ID: <CAFEAcA-JULLebQ+FddRUKNhsA=UBS9DWjn_01+K4r9FBf+7wdQ@mail.gmail.com>
+Subject: Re: [PULL 1/5] hw/loongarch: Add compat machine for 9.1
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, 
+ Bibo Mao <maobibo@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,41 +89,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On kvm side, get_fpu/set_fpu save the vreg registers high 192bits,
-but QEMU missing.
+On Thu, 16 May 2024 at 10:12, Song Gao <gaosong@loongson.cn> wrote:
+>
+> From: Bibo Mao <maobibo@loongson.cn>
+>
+> Since migration test case requires compat machine type support,
+> compat machine is added for qemu 9.1 here.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240514110752.989572-1-gaosong@loongson.cn>
----
- target/loongarch/kvm/kvm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+This is not a good justification for adding versioned machine types.
+Adding versioned machine types is putting a massive maintenance
+burden on yourself from now onward:
+ * every release needs a new machine type adding
+ * every change to the board model or to any devices it uses needs
+   to be assessed for cross-version compatibility issues, and
+   if necessary extra properties must be added so old versions
+   of the board model keep the legacy backwards-compatible behaviour
+ * migration compatibility must be maintained
 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index bc75552d0f..8e6e27c8bf 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -436,6 +436,9 @@ static int kvm_loongarch_get_regs_fp(CPUState *cs)
-     env->fcsr0 = fpu.fcsr;
-     for (i = 0; i < 32; i++) {
-         env->fpr[i].vreg.UD[0] = fpu.fpr[i].val64[0];
-+        env->fpr[i].vreg.UD[1] = fpu.fpr[i].val64[1];
-+        env->fpr[i].vreg.UD[2] = fpu.fpr[i].val64[2];
-+        env->fpr[i].vreg.UD[3] = fpu.fpr[i].val64[3];
-     }
-     for (i = 0; i < 8; i++) {
-         env->cf[i] = fpu.fcc & 0xFF;
-@@ -455,6 +458,9 @@ static int kvm_loongarch_put_regs_fp(CPUState *cs)
-     fpu.fcc = 0;
-     for (i = 0; i < 32; i++) {
-         fpu.fpr[i].val64[0] = env->fpr[i].vreg.UD[0];
-+        fpu.fpr[i].val64[1] = env->fpr[i].vreg.UD[1];
-+        fpu.fpr[i].val64[2] = env->fpr[i].vreg.UD[2];
-+        fpu.fpr[i].val64[3] = env->fpr[i].vreg.UD[3];
-     }
- 
-     for (i = 0; i < 8; i++) {
--- 
-2.34.1
+You really do not want to do this until you decide that your
+architecture and machine type are at a level where this is a
+support guarantee you want to provide to users. "It lets us
+run a test case" is not a good reason to do it, and I strongly
+recommend you do not add versioned machine types just for that.
 
+thanks
+-- PMM
 
