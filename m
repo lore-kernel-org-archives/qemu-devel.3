@@ -4,73 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D04C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFCDC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7XPq-000303-SU; Thu, 16 May 2024 05:28:49 -0400
+	id 1s7XSb-0004nn-Up; Thu, 16 May 2024 05:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s7XPi-0002vh-UN
- for qemu-devel@nongnu.org; Thu, 16 May 2024 05:28:39 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s7XPh-0002xS-3E
- for qemu-devel@nongnu.org; Thu, 16 May 2024 05:28:38 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-572d83e3c7eso3256961a12.3
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 02:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715851713; x=1716456513; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xse0HV+IBwKpm7CLpAWSoVjV12ya/IxrzHtwGn09Ovg=;
- b=AsuVSV4TiMONiLLyg/auPwZeTvQ0DwKVxZn3mmogZzuJQrr978fWPaerOCcf2Owpv4
- Ws/5BebsnDzYsjKXg/WFIuSQw59kUUVEwFR/Ewd8G6JI+acpD/XEtTHn0DHgWQUne2px
- Xa3H2CJ61wct0sXuxXgKl0hFRZ/HusPZ8/fbzHnbkbmEW5p/JUWAsRTXBiM8Niqq1qwh
- fJMbR19sPO0t971+vSFFZPAr+Lx1GCGhi+Bw4l0PmTlrnJvt6ZUiq3EGzwrMbUlxVzhn
- begOxaPTTLGiHjqVXHuAYfyIGngX0dN1JayVz/Q8w9FwMDCIxGscQ8QUpCqm6tNuC4Ue
- Q5Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715851713; x=1716456513;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xse0HV+IBwKpm7CLpAWSoVjV12ya/IxrzHtwGn09Ovg=;
- b=Rw8IPigY4yRZmMO1TbhuPfwLMXIJjnQYYOFpFI3ZZVPOn6MMWUNuRQ5f9JO0UiIrD0
- uukQ4krurBNWMfEHLXhQasEUn2UXhMjdICnygReRx8omc8AFZZvoO7OT3yRpR9k/DAYa
- MsjBeJNu87HD94yYTYb8ubmccPsxnrd0IX3zxXhqBwv5+xQ+JPvuoDzFvo9jjzvvFyxv
- h4YpCe45avtWv6JepwDlxBou7cG+imSmSQ9CIJL+Wdg4QiIJw+818qToyjq50zlyNRsf
- TDGJuXzuaylmq5wDDOLzB5FJE5FWbbLOqp7TcH8BI+09hxG7y9gV73D62aRdDZZiwFM2
- 37Cg==
-X-Gm-Message-State: AOJu0YzHBGC1UPg1H0W2YS4k2r9A7M4iKhelek+2vVzkDjuehLyk7sF6
- nCXGR+hxXBz/Nv7NnJocCAV1GE5CmQXPzZciu8VOxSwrVlc1HwLnY25Q0YnV/4iD3+kbKy0ZTdV
- qJrB5W01y5y7fUVQLL/WzHkgiHXxGAACR2Xw60uXhK5ahVlyh0Ao=
-X-Google-Smtp-Source: AGHT+IHBfu3Yg+1Cz+V1AItSx0CwYtQo+ClL3J9KmJLazdDtDd3UiaxubhIuRBE7j3G7ykkWGoIyyfXHFTwiq487kbs=
-X-Received: by 2002:a50:8e12:0:b0:572:67d9:3400 with SMTP id
- 4fb4d7f45d1cf-5734d6b286fmr10622903a12.39.1715851713132; Thu, 16 May 2024
- 02:28:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1s7XSZ-0004mg-Mn; Thu, 16 May 2024 05:31:35 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1s7XSX-0003jX-Vu; Thu, 16 May 2024 05:31:35 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 31DAA41572;
+ Thu, 16 May 2024 11:31:23 +0200 (CEST)
+Message-ID: <6ef80da5-6dac-4717-b683-b4428a3a9835@proxmox.com>
+Date: Thu, 16 May 2024 11:31:22 +0200
 MIME-Version: 1.0
-References: <20240516091120.1021435-1-gaosong@loongson.cn>
-In-Reply-To: <20240516091120.1021435-1-gaosong@loongson.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 16 May 2024 10:28:20 +0100
-Message-ID: <CAFEAcA_UHCYEbpk+V4qS7NpPP_-2kL2XEHM9M_SywfkPZrpsjA@mail.gmail.com>
-Subject: Re: [PULL 0/5] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/3] Fix "virtio-gpu: fix scanout migration post-load"
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20240516084022.1398919-1-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20240516084022.1398919-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,32 +63,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 May 2024 at 10:12, Song Gao <gaosong@loongson.cn> wrote:
->
-> The following changes since commit 922582ace2df59572a671f5c0c5c6c5c706995e5:
->
->   Merge tag 'pull-hppa-20240515' of https://gitlab.com/rth7680/qemu into staging (2024-05-15 11:46:58 +0200)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240516
->
-> for you to fetch changes up to d55d16700a2e2b36c7e34724d4d77f4a75c5243a:
->
->   target/loongarch/kvm: fpu save the vreg registers high 192bit (2024-05-16 16:32:35 +0800)
->
-> ----------------------------------------------------------------
-> pull-loongarch-20240516
->
-> ----------------------------------------------------------------
-> Bibo Mao (3):
->       hw/loongarch: Add compat machine for 9.1
->       hw/loongarch: Remove minimum and default memory size
->       tests: Add migration test for loongarch64
+Am 16.05.24 um 10:40 schrieb marcandre.lureau@redhat.com:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> The aforementioned patch breaks virtio-gpu device migrations for versions
+> pre-9.0/9.0, both forwards and backwards. Versioning of `VMS_STRUCT` is more
+> complex than it may initially appear, as evidenced in the problematic commit
+> dfcf74fa68c ("virtio-gpu: fix scanout migration post-load").
+> 
+> v2:
+>  - use a manual version field test (instead of the more complex struct variant)
+> 
+> v3:
+>  - introduce machine_check_version()
+>  - drop the VMSD version, and use machine version field test
+> 
+> v4:
+>  - drop machine_check_version() approach
+>  - property renamed to x-scanout-vmstate-version
+> 
+> Marc-André Lureau (3):
+>   migration: add "exists" info to load-state-field trace
+>   migration: fix a typo
+>   virtio-gpu: fix v2 migration
+> 
+>  include/hw/virtio/virtio-gpu.h |  1 +
+>  hw/core/machine.c              |  1 +
+>  hw/display/virtio-gpu.c        | 24 ++++++++++++++++--------
+>  migration/vmstate.c            |  7 ++++---
+>  migration/trace-events         |  2 +-
+>  5 files changed, 23 insertions(+), 12 deletions(-)
+> 
 
-RTH: I had a comment about adding the versioned machine type, so we
-should hold off on applying this until that is resolved, I think.
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
 
-thanks
--- PMM
+Tested the same things as for v1/v2, with an Ubuntu 23.10 VM:
+
+Machine type pc-i440fx-8.2:
+1. create snapshot with 8.2, load with patched 9.0
+2. create snapshot with patched 9.0, load with patched 9.0 and with 8.2
+
+Machine type pc-i440fx-9.0:
+1. create snapshot with patched 9.0, load with patched 9.0
+
+No crashes/failures and didn't notice any other issues 🙂
+
+Best Regards,
+Fiona
+
 
