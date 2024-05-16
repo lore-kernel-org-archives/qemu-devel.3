@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97BBC25B78
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3A4C25B7B
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 12:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Zq5-00057z-0n; Thu, 16 May 2024 08:04:01 -0400
+	id 1s7Zq4-000550-9v; Thu, 16 May 2024 08:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpx-0004oz-13
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpv-0004ot-LR
  for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpu-0002My-UA
- for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:52 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7Zpt-0002MN-Nn
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 08:03:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715861029;
+ s=mimecast20190719; t=1715861028;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VIqjM5EDB0EDQN5EIqgrch9ZOwxGoOCxQd9vryEWZrA=;
- b=cUBCR5mI2QVdcIwN+08++saGOm8pjkFnqIHNPhpscM4kozl6bk7t82PVAbCdTnObFSR4xU
- B+vQCZuOwWLvajRAlYvLksE602RXxwn8kVfhjJRnCEGuFTbvfA3qRS7u3e60LZM1Dq9FuC
- zmgW3az/eh7vHlQZWZOuOyp1SnanRqg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-8cmQVVvRPr2O_aN8UOKdMA-1; Thu,
- 16 May 2024 08:03:48 -0400
-X-MC-Unique: 8cmQVVvRPr2O_aN8UOKdMA-1
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=BXuZW1V0p/+Tl0KKQduReGVFFC8cMf6ZpB2tRr+viGo=;
+ b=Ifz8sOSdAScYydP5ruVYzdrRqUshoGLN6ZWncveoM/tBkmDThYhZrOevXi0s2PIPR+Ul2S
+ bXwCeJSPhw68pZ+r1ZKWA51AO2lUOVT4q8590v8l19DZnE0oCmU352oftTqfCC1txrJZp5
+ K8MCuxhvSjJKqkVjj6Tt1fGuCGQBEK0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-43-5TrcSQhzOaaXbQeagi-j_Q-1; Thu, 16 May 2024 08:03:46 -0400
+X-MC-Unique: 5TrcSQhzOaaXbQeagi-j_Q-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E5AF53800090
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:03:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6353C857A81
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 12:03:46 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.119])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8D6601C00A8E;
- Thu, 16 May 2024 12:03:47 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0943E1C00A8E;
+ Thu, 16 May 2024 12:03:45 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id E026B1801001; Thu, 16 May 2024 14:03:44 +0200 (CEST)
+ id C077C1800DE0; Thu, 16 May 2024 14:03:44 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 2/4] MAINTAINERS: drop usb maintainership
-Date: Thu, 16 May 2024 14:03:39 +0200
-Message-ID: <20240516120344.531521-3-kraxel@redhat.com>
-In-Reply-To: <20240516120344.531521-1-kraxel@redhat.com>
-References: <20240516120344.531521-1-kraxel@redhat.com>
+Subject: [PATCH 0/4] MAINTAINERS: update kraxel's entries.
+Date: Thu, 16 May 2024 14:03:37 +0200
+Message-ID: <20240516120344.531521-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
@@ -80,36 +78,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove myself from usb entries.
-Flip status to "Orphan" for entries which have nobody else listed.
+I have not found much time to work on qemu due to being busy with
+firmware (edk2 for the most part).  Time to update the MAINTAINERS
+file entries to match reality.
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- MAINTAINERS | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+I drop spice, ui, audio and usb due to lack of time.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7f52e2912fc3..d81376f84746 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2140,8 +2140,7 @@ F: tests/qtest/fuzz-sdcard-test.c
- F: tests/qtest/sdhci-test.c
- 
- USB
--M: Gerd Hoffmann <kraxel@redhat.com>
--S: Odd Fixes
-+S: Orphan
- F: hw/usb/*
- F: stubs/usb-dev-stub.c
- F: tests/qtest/usb-*-test.c
-@@ -2150,7 +2149,6 @@ F: include/hw/usb.h
- F: include/hw/usb/
- 
- USB (serial adapter)
--R: Gerd Hoffmann <kraxel@redhat.com>
- M: Samuel Thibault <samuel.thibault@ens-lyon.org>
- S: Maintained
- F: hw/usb/dev-serial.c
+I drop virtio-gpu, I don't follow recent development (venus etc.)
+close enough to be able to actually review the changes.  Looking at
+qemu-devel traffic for virtio-gpu it seems to be in good hands with
+multiple people working on it, even though this is not reflected in
+the MAINTAINERS file.
+
+I keep the firmware bits (edk2, fw_cfg).
+
+I also keep some other pieces which don't see much development
+activity such as stdvga and cirrus for now.  I might revisit
+this later.
+
+take care,
+  Gerd
+
+Gerd Hoffmann (4):
+  MAINTAINERS: drop audio maintainership
+  MAINTAINERS: drop usb maintainership
+  MAINTAINERS: drop virtio-gpu maintainership
+  MAINTAINERS: drop spice+ui maintainership
+
+ MAINTAINERS | 31 +++++++------------------------
+ 1 file changed, 7 insertions(+), 24 deletions(-)
+
 -- 
 2.45.0
 
