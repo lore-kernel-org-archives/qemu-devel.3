@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC8CC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5BAC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7edv-0004T6-Go; Thu, 16 May 2024 13:11:47 -0400
+	id 1s7eea-0005DD-Cd; Thu, 16 May 2024 13:12:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7edt-0004RE-PD
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:11:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7edp-0007Sc-96
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:11:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715879500;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aEaccP4u+KJP9Hq1XjJLYqfYaf2aQUEAVFGML5ikN1Q=;
- b=OqAj4diXUglcsLiha27iSnQRXBZD5n7xfVdrWqUu0zMFOr1iN9LFz5mS57e518M7mbgVwS
- ClbYIZGznWOGH/yeJ2TN/Y/hwn3zFwCboTYjEE9Bb7fM8kOUKIXSfAUyVLBDyKtiJeshdt
- Qz8dqKTt47Vqhfg4Pw0WKdZXEg4b27I=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-8U4MOTU-M4qh7fzz-1yklg-1; Thu, 16 May 2024 13:11:38 -0400
-X-MC-Unique: 8U4MOTU-M4qh7fzz-1yklg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a5a180153aeso505803666b.3
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:11:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715879498; x=1716484298;
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1s7eeZ-0005D2-7s
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:12:27 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1s7eeX-0007YT-ET
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:12:27 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-deb99fa47c3so8565174276.2
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715879544; x=1716484344; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ :mime-version:references:message-id:subject:cc:to:date:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=snPyh1RNmFPpaf4s2wMbMsVnyHhD/A9xFV3JyNxhnhg=;
+ b=NlK68Lp2YodbKoEe5ZGbuOqKDSuXfDZ24Nk/8hUJPtyUku1+EEtAonWJPPb6vr239D
+ eR2JTnMTzwBLOd5fsk2+A+HoircPXYt+zbFAUQG01mPD5k9XKIgaKOdGUscS+wdoMETO
+ 2Xs8g8pqD/WNQY3VoVDi3VBrGGC0ht8ppvsRjYIBJvQ0sEUhHn4fMsYZSFb3bHbgV2V9
+ OknZowMRZGxVss5tE0A5lYBSBZDlEZQ4nK1c2SebOcOvWeFRD4BY/JCD7VloYLf2lmRf
+ hGR4nD5TIxL8u5UiCEyEfNu6/8mG99snusJqAnqqWCWJnDdKTryA2kSr6TqNhqx08cFN
+ qclg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715879544; x=1716484344;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aEaccP4u+KJP9Hq1XjJLYqfYaf2aQUEAVFGML5ikN1Q=;
- b=RkryB1Np8TbKEdyRFOQRav1+RXwMVnOp63i3rHHhCxA2gsJF0C+NW2nH4IidAwoFvg
- tvE22rW7/td40TbYvjO1DXJ5+alYObVfEMwrlg1qoCmTxXmefv+xv+nTt9/MbIgyCCzj
- u8JPIxM8uIq8KrQDE3s0DjbZKS/vejgcmZOxO2Wp9GR8jyoMXgjArvyXJdJUYCDjiHC7
- WGDJ1A202VZMSKQrXkRJqOkgEiinLhiSW7VWkspHhpJCHuGKk746+CUUwHVNGt5uVOlp
- bPCFrpSy58r2NeD+AeGAOIBCgdHNofm5SrIrC8H8DYXAzjjPAyR3CoQCEQtnndDYqFJs
- LQ2w==
-X-Gm-Message-State: AOJu0Yw/BRlFZ2leL4PVTUitUgkX1CSOo9WLj9ehs3TvMmp2cWn5Y4Vo
- u2WpyKj1d8m77ijVWwvavMm85QWJtPq/6hmlpCJB5AwhTBhRevfWhwOlcHgTvE1G6JgiSLsQJXm
- saxuYqjjvPlWJE6OpjkRlI+JaD0CA8141mrdJZXYj2RN/lhrFlN1G
-X-Received: by 2002:a17:907:7f08:b0:a5a:743b:20d2 with SMTP id
- a640c23a62f3a-a5a743b2175mr971298766b.38.1715879497577; 
- Thu, 16 May 2024 10:11:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHe3XZxfNnB6TvtxjWZs6Q1SSfDtVD2RtMYEqKXBz7bPyMjZWk8KNwT1kO69rvORDHwCAintw==
-X-Received: by 2002:a17:907:7f08:b0:a5a:743b:20d2 with SMTP id
- a640c23a62f3a-a5a743b2175mr971294666b.38.1715879496996; 
- Thu, 16 May 2024 10:11:36 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:443:357d:1f98:7ef8:1117:f7bb])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1781cdb5sm993884466b.29.2024.05.16.10.11.34
+ bh=snPyh1RNmFPpaf4s2wMbMsVnyHhD/A9xFV3JyNxhnhg=;
+ b=jPwaM3VZnxfjltXOgV0hp64zWM6p3aROWF8/rI6i6hn3jsNM4KMKyGgej1Z0UFex0J
+ 9fEI34usVP7wbzU7/COlty4gBBhi300W0wvOF7tKF9FYjHf9RERWUqCk5kTbZIxS6QVL
+ 7ctb4wkjOf9EKhbG94VfnHZiRHduhtXRtRKSZsDACEoTC/geqWTaXf2+WTg4fZLLAcE+
+ l1jWPswoTz5ti2en4pF5Oyxypxoz4C8CWBgBk9dzzR6ZLOWR1zjf3ipLoVhLlQ5yRimu
+ SvNvV/KU6ZhzFQ9srVK6tS9yI4M49Ulw8tVejCdVLGudXwOpHLoFMDOCVTnPTc5YgamL
+ KWng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVtTjP+C59tp1SVNZDmP3y8eKNoG+dlNep/7ikohzp6OGAMBvDJLU44OyWNDjJltatobcITZuIof+nph2qVm3v5AyYumY=
+X-Gm-Message-State: AOJu0YyC19pLzvyP57Y3I0lwRGsrFtQNj3X4txI1E0UjWZ9pXuupWZWt
+ 9V5DvYVe4jwufiavDLJexIb3RwCBki/SZVHot4j2x+YE8L7dn+0i
+X-Google-Smtp-Source: AGHT+IEWmL1dlJHYMl9hrGJxzFwQWp75Gt/TK3FJTnQhi4RuoY146wK4nRuaqzXyu8ODpPW9uJAdGA==
+X-Received: by 2002:a25:2e0c:0:b0:de6:40b:fef2 with SMTP id
+ 3f1490d57ef6-dee4f2d8e89mr18715674276.18.1715879544040; 
+ Thu, 16 May 2024 10:12:24 -0700 (PDT)
+Received: from debian ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
+ 3f1490d57ef6-debd34fde87sm3559038276.0.2024.05.16.10.12.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 May 2024 10:11:36 -0700 (PDT)
-Date: Thu, 16 May 2024 13:11:26 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 3/3] docs: define policy forbidding use of AI code
- generators
-Message-ID: <20240516130458-mutt-send-email-mst@kernel.org>
-References: <20240516162230.937047-1-berrange@redhat.com>
- <20240516162230.937047-4-berrange@redhat.com>
+ Thu, 16 May 2024 10:12:23 -0700 (PDT)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Thu, 16 May 2024 10:12:19 -0700
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "gregory.price@memverge.com" <gregory.price@memverge.com>,
+ "ira.weiny@intel.com" <ira.weiny@intel.com>,
+ "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+ "a.manzanares@samsung.com" <a.manzanares@samsung.com>,
+ "dave@stgolabs.net" <dave@stgolabs.net>,
+ "nmtadam.samsung@gmail.com" <nmtadam.samsung@gmail.com>,
+ "jim.harris@samsung.com" <jim.harris@samsung.com>,
+ "Jorgen.Hansen@wdc.com" <Jorgen.Hansen@wdc.com>,
+ "wj28.lee@gmail.com" <wj28.lee@gmail.com>,
+ "fan.ni@samsung.com" <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
+Message-ID: <ZkY-c1V-o4100onE@debian>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+ <d708f7c8-2598-4a17-9cbb-935c6ae2a2be@fujitsu.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240516162230.937047-4-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <d708f7c8-2598-4a17-9cbb-935c6ae2a2be@fujitsu.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,105 +110,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 16, 2024 at 05:22:30PM +0100, Daniel P. Berrangé wrote:
-> There has been an explosion of interest in so called AI code generators
-> in the past year or two. Thus far though, this is has not been matched
-> by a broadly accepted legal interpretation of the licensing implications
-> for code generator outputs. While the vendors may claim there is no
-> problem and a free choice of license is possible, they have an inherent
-> conflict of interest in promoting this interpretation. More broadly
-> there is, as yet, no broad consensus on the licensing implications of
-> code generators trained on inputs under a wide variety of licenses
+On Tue, May 14, 2024 at 02:16:51AM +0000, Zhijian Li (Fujitsu) wrote:
+> Hi Fan
 > 
-> The DCO requires contributors to assert they have the right to
-> contribute under the designated project license. Given the lack of
-> consensus on the licensing of AI code generator output, it is not
-> considered credible to assert compliance with the DCO clause (b) or (c)
-> where a patch includes such generated code.
 > 
-> This patch thus defines a policy that the QEMU project will currently
-> not accept contributions where use of AI code generators is either
-> known, or suspected.
+> Do you have a newer instruction to play with the DCD. It seems that
+> the instruction in RFC[0] doesn't work for current code.
 > 
-> This merely reflects the current uncertainty of the field, and should
-> this situation change, the policy is of course subject to future
-> relaxation. Meanwhile requests for exceptions can also be considered on
-> a case by case basis.
+> [0] https://lore.kernel.org/all/20230511175609.2091136-1-fan.ni@samsung.com/
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  docs/devel/code-provenance.rst | 50 +++++++++++++++++++++++++++++++++-
->  1 file changed, 49 insertions(+), 1 deletion(-)
+
+For the testing, the only thing that has been changed for this series is
+the QMP interface for add/release DC extents.
+
+https://lore.kernel.org/linux-cxl/d708f7c8-2598-4a17-9cbb-935c6ae2a2be@fujitsu.com/T/#m05066f0098e976fb1c4b05db5e7ff7ca1bf27b1e
+
+1. Add dynamic capacity extents:
+
+For example, the command to add two continuous extents (each 128MiB long)
+to region 0 (starting at DPA offset 0) looks like below:
+
+{ "execute": "qmp_capabilities" }
+
+{ "execute": "cxl-add-dynamic-capacity",
+  "arguments": {
+      "path": "/machine/peripheral/cxl-dcd0",
+      "hid": 0,
+      "selection-policy": 2,
+      "region-id": 0,
+      "tag": "",
+      "extents": [
+      {
+          "offset": 0,
+          "len": 134217728
+      },
+      {
+          "offset": 134217728,
+          "len": 134217728
+      }
+      ]
+  }
+}
+
+2. Release dynamic capacity extents:
+
+For example, the command to release an extent of size 128MiB from region 0
+(DPA offset 128MiB) looks like below:
+
+{ "execute": "cxl-release-dynamic-capacity",
+  "arguments": {
+      "path": "/machine/peripheral/cxl-dcd0",
+      "hid": 0,
+      "flags": 1,
+      "region-id": 0,
+      "tag": "",
+      "extents": [
+      {
+          "offset": 134217728,
+          "len": 134217728
+      }
+      ]
+  }
+}
+
+btw, I have a wiki page to explain how to test CXL DCD with a tool I
+wrote.
+https://github.com/moking/moking.github.io/wiki/cxl%E2%80%90test%E2%80%90tool:-A-tool-to-ease-CXL-test-with-QEMU-setup%E2%80%90%E2%80%90Using-DCD-test-as-an-example
+
+Let me know if you need more info for testing.
+
+
+Fan
+
 > 
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-> index eabb3e7c08..846dda9a35 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -264,4 +264,52 @@ boilerplate code template which is then filled in to produce the final patch.
->  The output of such a tool would still be considered the "preferred format",
->  since it is intended to be a foundation for further human authored changes.
->  Such tools are acceptable to use, provided they follow a deterministic process
-> -and there is clearly defined copyright and licensing for their output.
-> +and there is clearly defined copyright and licensing for their output. Note
-> +in particular the caveats applying to AI code generators below.
-> +
-> +Use of AI code generators
-> +~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +TL;DR:
-> +
-> +  **Current QEMU project policy is to DECLINE any contributions which are
-> +  believed to include or derive from AI generated code. This includes ChatGPT,
-> +  CoPilot, Llama and similar tools**
-> +
-> +The increasing prevalence of AI code generators, most notably but not limited
-> +to, `Large Language Models <https://en.wikipedia.org/wiki/Large_language_model>`__
-> +(LLMs) results in a number of difficult legal questions and risks for software
-> +projects, including QEMU.
-> +
-> +The QEMU community requires that contributors certify their patch submissions
-> +are made in accordance with the rules of the :ref:`dco` (DCO).
-> +
-> +To satisfy the DCO, the patch contributor has to fully understand the
-> +copyright and license status of code they are contributing to QEMU. With AI
-> +code generators, the copyright and license status of the output is ill-defined
-> +with no generally accepted, settled legal foundation.
-> +
-> +Where the training material is known, it is common for it to include large
-> +volumes of material under restrictive licensing/copyright terms. Even where
-> +the training material is all known to be under open source licenses, it is
-> +likely to be under a variety of terms, not all of which will be compatible
-> +with QEMU's licensing requirements.
-> +
-> +With this in mind, the QEMU project does not consider it is currently possible
-> +for contributors to comply with DCO terms (b) or (c) for the output of commonly
-> +available AI code generators.
-> +
-> +The QEMU maintainers thus require that contributors refrain from using AI code
-> +generators on patches intended to be submitted to the project, and will
-> +decline any contribution if use of AI is either known or suspected.
-> +
-> +Examples of tools impacted by this policy includes both GitHub's CoPilot,
-> +OpenAI's ChatGPT, and Meta's Code Llama, amongst many others which are less
-> +well known.
-> +
-> +This policy may evolve as the legal situation is clarifed. In the meanwhile,
-> +requests for exceptions to this policy will be evaluated by the QEMU project
-> +on a case by case basis. To be granted an exception, a contributor will need
-> +to demonstrate clarity of the license and copyright status for the tool's
-> +output in relation to its training model and code, to the satisfaction of the
-> +project maintainers.
-
-I would definitely want more contributors to pass their
-comments and commit logs though a grammar checker.
-It's unclear to me whether the contributors would
-be required to know whether the checker in question is
-considered "AI" or not.
-
-
-
-
-> -- 
-> 2.43.0
-
+> 
+> On 19/04/2024 07:10, nifan.cxl@gmail.com wrote:
+> > A git tree of this series can be found here (with one extra commit on top
+> > for printing out accepted/pending extent list):
+> > https://github.com/moking/qemu/tree/dcd-v7
+> > 
+> > v6->v7:
+> > 
+> > 1. Fixed the dvsec range register issue mentioned in the the cover letter in v6.
+> >     Only relevant bits are set to mark the device ready (Patch 6). (Jonathan)
+> > 2. Moved the if statement in cxl_setup_memory from Patch 6 to Patch 4. (Jonathan)
+> > 3. Used MIN instead of if statement to get record_count in Patch 7. (Jonathan)
+> > 4. Added "Reviewed-by" tag to Patch 7.
+> > 5. Modified cxl_dc_extent_release_dry_run so the updated extent list can be
+> >     reused in cmd_dcd_release_dyn_cap to simplify the process in Patch 8. (Jørgen)
+> > 6. Added comments to indicate further "TODO" items in cmd_dcd_add_dyn_cap_rsp.
+> >      (Jonathan)
+> > 7. Avoided irrelevant code reformat in Patch 8. (Jonathan)
+> > 8. Modified QMP interfaces for adding/releasing DC extents to allow passing
+> >     tags, selection policy, flags in the interface. (Jonathan, Gregory)
+> > 9. Redesigned the pending list so extents in the same requests are grouped
+> >      together. A new data structure is introduced to represent "extent group"
+> >      in pending list.  (Jonathan)
+> > 10. Added support in QMP interface for "More" flag.
+> > 11. Check "Forced removal" flag for release request and not let it pass through.
+> > 12. Removed the dynamic capacity log type from CxlEventLog definition in cxl.json
+> >     to avoid the side effect it may introduce to inject error to DC event log.
+> >     (Jonathan)
+> > 13. Hard coded the event log type to dynamic capacity event log in QMP
+> >      interfaces. (Jonathan)
+> > 14. Adding space in between "-1]". (Jonathan)
+> > 15. Some minor comment fixes.
+> > 
+> > The code is tested with similar setup and has passed similar tests as listed
+> > in the cover letter of v5[1] and v6[2].
+> > Also, the code is tested with the latest DCD kernel patchset[3].
+> > 
+> > [1] Qemu DCD patchset v5: https://lore.kernel.org/linux-cxl/20240304194331.1586191-1-nifan.cxl@gmail.com/T/#t
+> > [2] Qemu DCD patchset v6: https://lore.kernel.org/linux-cxl/20240325190339.696686-1-nifan.cxl@gmail.com/T/#t
+> > [3] DCD kernel patches: https://lore.kernel.org/linux-cxl/20240324-dcd-type2-upstream-v1-0-b7b00d623625@intel.com/T/#m11c571e21c4fe17c7d04ec5c2c7bc7cbf2cd07e3
+> > 
+> > 
+> > Fan Ni (12):
+> >    hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
+> >      payload of identify memory device command
+> >    hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
+> >      and mailbox command support
+> >    include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
+> >      type3 memory devices
+> >    hw/mem/cxl_type3: Add support to create DC regions to type3 memory
+> >      devices
+> >    hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
+> >      size instead of mr as argument
+> >    hw/mem/cxl_type3: Add host backend and address space handling for DC
+> >      regions
+> >    hw/mem/cxl_type3: Add DC extent list representative and get DC extent
+> >      list mailbox support
+> >    hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
+> >      dynamic capacity response
+> >    hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
+> >      extents
+> >    hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
+> >    hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
+> >    hw/mem/cxl_type3: Allow to release extent superset in QMP interface
+> > 
+> >   hw/cxl/cxl-mailbox-utils.c  | 620 ++++++++++++++++++++++++++++++++++-
+> >   hw/mem/cxl_type3.c          | 633 +++++++++++++++++++++++++++++++++---
+> >   hw/mem/cxl_type3_stubs.c    |  20 ++
+> >   include/hw/cxl/cxl_device.h |  81 ++++-
+> >   include/hw/cxl/cxl_events.h |  18 +
+> >   qapi/cxl.json               |  69 ++++
+> >   6 files changed, 1396 insertions(+), 45 deletions(-)
+> > 
 
