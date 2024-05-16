@@ -4,75 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AE3C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD36C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7WyH-0002Yq-LJ; Thu, 16 May 2024 05:00:17 -0400
+	id 1s7X9H-0007mN-U8; Thu, 16 May 2024 05:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s7WyF-0002YW-KC
- for qemu-devel@nongnu.org; Thu, 16 May 2024 05:00:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s7WyC-0002lH-Ki
- for qemu-devel@nongnu.org; Thu, 16 May 2024 05:00:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715850011;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n/KJU03z5HddHSd+HwHUC1KTd2PvcA3611FDHHgBwKU=;
- b=NjTEo73vWc9eopXCte4lK13oL3N8oSPrdCLBqIKZEqGt0uZ2urWiE1JG9R+4RqfXb7hNn/
- ut8ijlW+F2wbR/NuG+2zPswEcuXdNG4NzZaZzLtODLjK9MehdUv4ffSXh/A57tUv0EMWhB
- pFQbhU4cQA0GiDexNpKsTqY4GnuZ+A0=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-d0-u1FRCP9mrbtO8vyfqIw-1; Thu, 16 May 2024 05:00:02 -0400
-X-MC-Unique: d0-u1FRCP9mrbtO8vyfqIw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 033F5101A554;
- Thu, 16 May 2024 09:00:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2AD76200B4D0;
- Thu, 16 May 2024 09:00:01 +0000 (UTC)
-Date: Thu, 16 May 2024 09:59:58 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 5/5] tests/docker/dockerfiles: Update container files
- with "lcitool-refresh"
-Message-ID: <ZkXLDnd02C9jgiYH@redhat.com>
-References: <20240516084059.511463-1-thuth@redhat.com>
- <20240516084059.511463-6-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1s7X9E-0007lB-PL
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 05:11:37 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1s7X9B-0006Nm-Fe
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 05:11:36 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxXeu6zUVmI3QNAA--.25604S3;
+ Thu, 16 May 2024 17:11:22 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx71u4zUVm+8ciAA--.2860S2; 
+ Thu, 16 May 2024 17:11:20 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+Subject: [PULL 0/5] loongarch-to-apply queue
+Date: Thu, 16 May 2024 17:11:15 +0800
+Message-Id: <20240516091120.1021435-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240516084059.511463-6-thuth@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAf8Cx71u4zUVm+8ciAA--.2860S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,44 +59,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 16, 2024 at 10:40:59AM +0200, Thomas Huth wrote:
-> Run "make lcitool-refresh" after the previous changes to the
-> lcitool files. This removes the g++ and xfslibs-dev packages
-> from the dockerfiles (except for the fedora-win64-cross dockerfile
-> where we keep the C++ compiler).
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  tests/docker/dockerfiles/alpine.docker                | 4 ----
->  tests/docker/dockerfiles/centos9.docker               | 4 ----
->  tests/docker/dockerfiles/debian-amd64-cross.docker    | 4 ----
->  tests/docker/dockerfiles/debian-arm64-cross.docker    | 4 ----
->  tests/docker/dockerfiles/debian-armel-cross.docker    | 4 ----
->  tests/docker/dockerfiles/debian-armhf-cross.docker    | 4 ----
->  tests/docker/dockerfiles/debian-i686-cross.docker     | 4 ----
->  tests/docker/dockerfiles/debian-mips64el-cross.docker | 4 ----
->  tests/docker/dockerfiles/debian-mipsel-cross.docker   | 4 ----
->  tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 4 ----
->  tests/docker/dockerfiles/debian-riscv64-cross.docker  | 3 ---
->  tests/docker/dockerfiles/debian-s390x-cross.docker    | 4 ----
->  tests/docker/dockerfiles/debian.docker                | 4 ----
->  tests/docker/dockerfiles/fedora-win64-cross.docker    | 2 +-
->  tests/docker/dockerfiles/fedora.docker                | 4 ----
->  tests/docker/dockerfiles/opensuse-leap.docker         | 4 ----
->  tests/docker/dockerfiles/ubuntu2204.docker            | 4 ----
->  17 files changed, 1 insertion(+), 64 deletions(-)
+The following changes since commit 922582ace2df59572a671f5c0c5c6c5c706995e5:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+  Merge tag 'pull-hppa-20240515' of https://gitlab.com/rth7680/qemu into staging (2024-05-15 11:46:58 +0200)
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+are available in the Git repository at:
+
+  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240516
+
+for you to fetch changes up to d55d16700a2e2b36c7e34724d4d77f4a75c5243a:
+
+  target/loongarch/kvm: fpu save the vreg registers high 192bit (2024-05-16 16:32:35 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20240516
+
+----------------------------------------------------------------
+Bibo Mao (3):
+      hw/loongarch: Add compat machine for 9.1
+      hw/loongarch: Remove minimum and default memory size
+      tests: Add migration test for loongarch64
+
+Song Gao (2):
+      target/loongarch/kvm: Fix VM recovery from disk failures
+      target/loongarch/kvm: fpu save the vreg registers high 192bit
+
+ hw/loongarch/virt.c                      | 66 +++++++++++++++++++++++---------
+ target/loongarch/kvm/kvm.c               |  6 +++
+ target/loongarch/machine.c               |  6 ++-
+ tests/migration/Makefile                 |  2 +-
+ tests/migration/loongarch64/Makefile     | 18 +++++++++
+ tests/migration/loongarch64/a-b-kernel.S | 49 ++++++++++++++++++++++++
+ tests/migration/loongarch64/a-b-kernel.h | 16 ++++++++
+ tests/migration/migration-test.h         |  3 ++
+ tests/qtest/meson.build                  |  2 +-
+ tests/qtest/migration-test.c             | 10 +++++
+ 10 files changed, 156 insertions(+), 22 deletions(-)
+ create mode 100644 tests/migration/loongarch64/Makefile
+ create mode 100644 tests/migration/loongarch64/a-b-kernel.S
+ create mode 100644 tests/migration/loongarch64/a-b-kernel.h
 
 
