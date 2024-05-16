@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90602C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 13:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD96C25B77
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:01:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7bEH-0001IT-8O; Thu, 16 May 2024 09:33:05 -0400
+	id 1s7beX-0004Nn-LC; Thu, 16 May 2024 10:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7bEF-0001IJ-CK
- for qemu-devel@nongnu.org; Thu, 16 May 2024 09:33:03 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s7beS-0004LE-6S
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 10:00:09 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s7bEA-0007rJ-HC
- for qemu-devel@nongnu.org; Thu, 16 May 2024 09:33:03 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5708d8beec6so3367058a12.0
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 06:32:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s7beP-00054I-JN
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 10:00:07 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-5ce2aada130so189460a12.1
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 07:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715866376; x=1716471176; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1715868000; x=1716472800; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VHCSeImx75FWyBGS+IfbAKi6W9tbuEelFzVtn7xHxCA=;
- b=mKYmqGyTZEwBqLHYP5lqeTmIWao69sKoCIJUKuJPDELwqX0KJJsNJPYo9UVNn3ncyN
- GLe7whTfWSrmcfS/iuiGyM9ZNk8Y/weTZAHrT4fjM1hnbI/HV3uwBo1jIkYCCKk7BW+v
- LvsnoEH3tXqIMNy86oPy9pxxNV0+nBQqo5+Yk2gI78D1FYKc5XCYnzmdvMr24dmC2MSb
- iwKekIfYeT2pM2+9zBIa4au3FKJIGL5+sofYpV2tIP8Zh+sUpppBgrfuCoVT30oaKiGA
- g2/A6/li6DES9xp/UHkVDvQI59T24WZpRemACA5MBT58e1gRDaKHLmjuS7AwBxia546X
- P8QQ==
+ bh=1+cLxh7WiJ2rnnRCEJ4O6GUBbbMkGy+/ZDUfnRBVYVc=;
+ b=E3s+uW/PF40I/hx++hYWrzdEq7AwjbyrebNWWiXKQmJvV5QeXf1v7eZLV/IHqtayhQ
+ Dt+CvVO6JcrK1F7VOYdBJkTcgF26yFoRIev5hpLVJxN2kp7gNkDrwOvw3UW/zlR2nAri
+ gd1UZubDN6uijxVbn001QEamuNBHa0I4XMzhiJ3WsDXM9+3AvzVQE22MiaOMJd3U8H6k
+ 6mZg78sp7syhD3t2AzifkiiE/fapKJ29Kdd//AAyRyS9gKtYsq8x3nfoG2TyxC1euV2B
+ NX979/8eyealZNkAdUaRdB7RLSzGMPfc+3Au4Pr7qMtN9tEx7HvAC6DLYvPaMck1xM1s
+ 0dmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715866376; x=1716471176;
+ d=1e100.net; s=20230601; t=1715868000; x=1716472800;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VHCSeImx75FWyBGS+IfbAKi6W9tbuEelFzVtn7xHxCA=;
- b=d2GoNkbyGuGzXjc5UWI0Pqgu5OPCG7VcBhIgRVEHO6G1F6M19xnEN8BmuRI5VF0S2v
- QNZa54cvwEYg7HNR/y1AjspP6AqAIkQiY70nQJOBb0I3PXF0H5geV14grTFyPr0lrg2i
- zSt2HyL9ZqWURROQPowU++guwLzX+ikiILP1moc1epfzZjaISruREBTH7eoblTDJseu7
- MYjM3jq075LZIB2L4A7pQFrDlBLrD5UeEgLz1UxSy75V55ijKNhyTrM4CKPWfSqeMJE3
- nDcTbTBWZ0e+BTbO8imcBeQdY6EMN+3MJkcYpJ100WaB72JpmT4wqqosDnIa1wP+GY2L
- Mvig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmiBO9U7AtFMA8TaaxXM52AW85UXGLPXUY7NKCUadiiYwQAoLssKaVYv68W03CvN0aXNEKWkFM2FXY/xkpEGhtX7xBMRk=
-X-Gm-Message-State: AOJu0YzuQKnelV3jGnXel5bQ/yqTqCRLIKHF0+X8CKXzcjo0vtYbdX53
- yFp7HwomWDQwHFa3etOlOWVxaEPmgUvAPyImftP2rqlAwdN/EYTjk7oPgLUxeLaccZYYPSAqMX+
- t
-X-Google-Smtp-Source: AGHT+IEjXC0VlP9HgbVBbgzdJFFnrqp36WDR5N2c/d01YG041Gu7dr5yzVuT9pNQ8v1uyD2JmFK1cA==
-X-Received: by 2002:a50:9993:0:b0:571:bed1:3a36 with SMTP id
- 4fb4d7f45d1cf-5734d707663mr19265792a12.38.1715866376483; 
- Thu, 16 May 2024 06:32:56 -0700 (PDT)
-Received: from [10.91.1.91] ([149.14.240.163])
+ bh=1+cLxh7WiJ2rnnRCEJ4O6GUBbbMkGy+/ZDUfnRBVYVc=;
+ b=XHv14HYGrt/vGN01Gi8CQEOtMxI1zOklDS2Ei+jxQ4IuLCVZkCI6OQLIoV8Dc2glKY
+ tj7wz/hNE1KFV7A3vecoA8imkAtstLynyBjtJOBZQXOs4WGW6A8040r1oVrnh77ERZx2
+ ubW6LG4fL4Ha2F5AS+7251CvdRcYi78gSO90mt9UPURzQ8qaZIo5MMoKD0QNVzf8L9qq
+ SVqTVnAxIQyKQPXYtkOLKNCOR9wd/FRqB2lL8VyRtypgOZ/qh59xAsU2pOjObdGBNS3Q
+ H1scm5CUDAc+Cr8RmCEPYuMHs2Y80yDmCHGEp4np4sW1ZoBqoHx5huwYZngBjJwTplCT
+ QB5w==
+X-Gm-Message-State: AOJu0Ywl2K6AySiA6ZqWxhd/2/mcxZhgRPblIe9E2S2RTIGkqyecn8RG
+ rmLCGxfVxeCIKfuvQFQyZKf6keEYpjpJpgEbU1Pj73rXlJ7wmEHalra6i2VdYACiEqr2fu9Xbka
+ 4
+X-Google-Smtp-Source: AGHT+IGEIrwFD904mWvly+yZXXWRoO1/Wz7bT61a7cHFmA+LUZ2JVSa6yBhKorr99h/4V5FK0HwJig==
+X-Received: by 2002:a17:902:e5cb:b0:1eb:63d9:8d85 with SMTP id
+ d9443c01a7336-1ef43d2e27bmr245926885ad.14.1715867999522; 
+ Thu, 16 May 2024 06:59:59 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.42.57])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733bea651asm10414493a12.11.2024.05.16.06.32.56
+ d9443c01a7336-1ef0b9d44e0sm142377685ad.4.2024.05.16.06.59.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 06:32:56 -0700 (PDT)
-Message-ID: <beacd542-9f82-4470-9bbb-75d5773e4820@linaro.org>
-Date: Thu, 16 May 2024 15:32:54 +0200
+ Thu, 16 May 2024 06:59:59 -0700 (PDT)
+Message-ID: <93b5d431-13db-4c44-8546-5b94e293b9e1@ventanamicro.com>
+Date: Thu, 16 May 2024 10:59:54 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/17] ppc64: Fix <sys/user.h> include order
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20240511115400.7587-1-richard.henderson@linaro.org>
- <20240511115400.7587-2-richard.henderson@linaro.org>
- <e24b2563-b2cf-407e-a4b3-e0c5ef847ef4@linaro.org>
- <7af9d602-8252-4e94-b34b-a194f1f5e9ae@linaro.org>
- <cd4fff5b-809a-46dd-85b5-5b4d6b5b7573@linaro.org>
+Subject: Re: [PATCH v2 15/15] hw/misc: EDU: add ATS/PRI capability
+To: Frank Chang <frank.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ <20240307160319.675044-16-dbarboza@ventanamicro.com>
+ <CANzO1D3sxSqXS6x1WkQDpyZ=T9nLQwHJCJRm=2FJn5OtrVN_mw@mail.gmail.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cd4fff5b-809a-46dd-85b5-5b4d6b5b7573@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CANzO1D3sxSqXS6x1WkQDpyZ=T9nLQwHJCJRm=2FJn5OtrVN_mw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +100,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/24 18:55, Philippe Mathieu-Daudé wrote:
-> On 15/5/24 15:53, Richard Henderson wrote:
->> On 5/15/24 15:11, Philippe Mathieu-Daudé wrote:
->>> Hi Richard,
->>>
->>> On 11/5/24 13:53, Richard Henderson wrote:
->>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>>> ---
->>>>   risu_ppc64.c | 3 +--
->>>>   1 file changed, 1 insertion(+), 2 deletions(-)
->>>>
->>>> diff --git a/risu_ppc64.c b/risu_ppc64.c
->>>> index 9df8d58..62cf6aa 100644
->>>> --- a/risu_ppc64.c
->>>> +++ b/risu_ppc64.c
->>>> @@ -11,9 +11,8 @@
->>>>    *     based on Peter Maydell's risu_arm.c
->>>> *****************************************************************************/
->>>> -#include <sys/user.h>
->>>> -
->>>>   #include "risu.h"
->>>> +#include <sys/user.h>
->>>
->>> What is fixed exactly?
->>
->> I don't remember (patch dated in 2022).
->> It is probably a #define namespace issue with cfarm hosts running Centos 7.9?
->> I suppose I should investigate, and drop it if irrelevant.
+Hi Frank!
+
+On 5/7/24 12:32, Frank Chang wrote:
+> Hi Daniel,
 > 
-> It was just out of curiosity (I had a quick look at the headers
-> and couldn't see anything obvious, and other headers also include
-> system headers before "risu.h").
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:05寫道：
+>>
+>> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+>>
+>> Mimic ATS interface with IOMMU translate request with IOMMU_NONE.  If
+>> mapping exists, translation service will return current permission
+>> flags, otherwise will report no permissions.
+>>
+>> Implement and register the IOMMU memory region listener to be notified
+>> whenever an ATS invalidation request is sent from the IOMMU.
+>>
+>> Implement and register the IOMMU memory region listener to be notified
+>> whenever an ATS page request group response is triggered from the IOMMU.
+>>
+>> Introduces a retry mechanism to the timer design so that any page that's
+>> not available should be only accessed after the PRGR notification has
+>> been received.
+>>
+>> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+>> Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
+>> ---
+>>   hw/misc/edu.c | 258 ++++++++++++++++++++++++++++++++++++++++++++++++--
+>>   1 file changed, 251 insertions(+), 7 deletions(-)
 
-Root cause: <sys/user.h> is not self-contained on centos 7.7:
-
-In file included from risu_ppc64.c:14:
-/usr/include/sys/user.h:27:9: error: unknown type name ‘size_t’
-    27 |         size_t          u_tsize;                /* text size (pages) */
-       |         ^~~~~~
-
-I'll update the commit message.
+(...)
 
 
-r~
+>> +
+>>   static void pci_edu_realize(PCIDevice *pdev, Error **errp)
+>>   {
+>>       EduState *edu = EDU(pdev);
+>> +    AddressSpace *dma_as = NULL;
+>>       uint8_t *pci_conf = pdev->config;
+>>       int pos;
+>>
+>> @@ -390,9 +603,28 @@ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
+>>       pos = PCI_CONFIG_SPACE_SIZE;
+>>       if (edu->enable_pasid) {
+>>           /* PCIe Spec 7.8.9 PASID Extended Capability Structure */
+>> -        pcie_add_capability(pdev, 0x1b, 1, pos, 8);
+>> +        pcie_add_capability(pdev, PCI_EXT_CAP_ID_PASID, 1, pos, 8);
+> 
+> This should be included in the 14th commit.
+> 
+>>           pci_set_long(pdev->config + pos + 4, 0x00001400);
+>>           pci_set_long(pdev->wmask + pos + 4,  0xfff0ffff);
+>> +        pos += 8;
+>> +
+>> +        /* ATS Capability */
+>> +        pcie_ats_init(pdev, pos, true);
+>> +        pos += PCI_EXT_CAP_ATS_SIZEOF;
+>> +
+>> +        /* PRI Capability */
+>> +        pcie_add_capability(pdev, PCI_EXT_CAP_ID_PRI, 1, pos, 16);
+>> +        /* PRI STOPPED */
+>> +        pci_set_long(pdev->config + pos +  4, 0x01000000);
+>> +        /* PRI ENABLE bit writable */
+>> +        pci_set_long(pdev->wmask  + pos +  4, 0x00000001);
+>> +        /* PRI Capacity Supported */
+>> +        pci_set_long(pdev->config + pos +  8, 0x00000080);
+>> +        /* PRI Allocations Allowed, 32 */
+>> +        pci_set_long(pdev->config + pos + 12, 0x00000040);
+>> +        pci_set_long(pdev->wmask  + pos + 12, 0x0000007f);
+> 
+> We should use the defines declared in
+> include/standard-headers/linux/pci_regs.h for readability,
+> though some of the bitfields are not defined in the header file.
+> 
+> Regards,
+> Frank Chang
+> 
+>> +
+>> +        pos += 8;
+>>       }
 
+I'll reply here for both patches 14 and 15.
+
+I changed it to use the defines we have in pci_regs.h if we have the definition
+in the header. When we don't have the definition I ended up adding a manual
+comment in the line like it's being done up above.
+
+I'll also add doc changes for each new feature added.
+
+All this said, I'm inclined to remove these 2 patches from the series. It's a
+way of experiment with the riscv-iommu impl but it's not a crucial part of it.
+The changes I made so far, based on your review, were uploaded here:
+
+
+https://gitlab.com/danielhb/qemu/-/commits/edu_pasid_v3
+
+
+Thanks,
+
+Daniel
+
+
+>>
+>>       if (msi_init(pdev, 0, 1, true, false, errp)) {
+>> @@ -409,12 +641,24 @@ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
+>>       memory_region_init_io(&edu->mmio, OBJECT(edu), &edu_mmio_ops, edu,
+>>                       "edu-mmio", 1 * MiB);
+>>       pci_register_bar(pdev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &edu->mmio);
+>> +
+>> +    /* Register IOMMU listener */
+>> +    edu->iommu_listener = (MemoryListener) {
+>> +        .name = "edu-iommu",
+>> +        .region_add = edu_iommu_region_add,
+>> +        .region_del = edu_iommu_region_del,
+>> +    };
+>> +
+>> +    dma_as = pci_device_iommu_address_space(pdev);
+>> +    memory_listener_register(&edu->iommu_listener, dma_as);
+>>   }
+>>
+>>   static void pci_edu_uninit(PCIDevice *pdev)
+>>   {
+>>       EduState *edu = EDU(pdev);
+>>
+>> +    memory_listener_unregister(&edu->iommu_listener);
+>> +
+>>       qemu_mutex_lock(&edu->thr_mutex);
+>>       edu->stopping = true;
+>>       qemu_mutex_unlock(&edu->thr_mutex);
+>> --
+>> 2.43.2
+>>
+>>
 
