@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD96C25B77
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE215C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 14:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7beX-0004Nn-LC; Thu, 16 May 2024 10:00:13 -0400
+	id 1s7bh0-0005gs-2Y; Thu, 16 May 2024 10:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s7beS-0004LE-6S
- for qemu-devel@nongnu.org; Thu, 16 May 2024 10:00:09 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s7beP-00054I-JN
- for qemu-devel@nongnu.org; Thu, 16 May 2024 10:00:07 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-5ce2aada130so189460a12.1
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 07:00:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=85909aada=nsaenz@amazon.es>)
+ id 1s7bgs-0005dd-P7
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 10:02:39 -0400
+Received: from smtp-fw-9102.amazon.com ([207.171.184.29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=85909aada=nsaenz@amazon.es>)
+ id 1s7bgq-0005pG-Cv
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 10:02:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715868000; x=1716472800; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1+cLxh7WiJ2rnnRCEJ4O6GUBbbMkGy+/ZDUfnRBVYVc=;
- b=E3s+uW/PF40I/hx++hYWrzdEq7AwjbyrebNWWiXKQmJvV5QeXf1v7eZLV/IHqtayhQ
- Dt+CvVO6JcrK1F7VOYdBJkTcgF26yFoRIev5hpLVJxN2kp7gNkDrwOvw3UW/zlR2nAri
- gd1UZubDN6uijxVbn001QEamuNBHa0I4XMzhiJ3WsDXM9+3AvzVQE22MiaOMJd3U8H6k
- 6mZg78sp7syhD3t2AzifkiiE/fapKJ29Kdd//AAyRyS9gKtYsq8x3nfoG2TyxC1euV2B
- NX979/8eyealZNkAdUaRdB7RLSzGMPfc+3Au4Pr7qMtN9tEx7HvAC6DLYvPaMck1xM1s
- 0dmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715868000; x=1716472800;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1+cLxh7WiJ2rnnRCEJ4O6GUBbbMkGy+/ZDUfnRBVYVc=;
- b=XHv14HYGrt/vGN01Gi8CQEOtMxI1zOklDS2Ei+jxQ4IuLCVZkCI6OQLIoV8Dc2glKY
- tj7wz/hNE1KFV7A3vecoA8imkAtstLynyBjtJOBZQXOs4WGW6A8040r1oVrnh77ERZx2
- ubW6LG4fL4Ha2F5AS+7251CvdRcYi78gSO90mt9UPURzQ8qaZIo5MMoKD0QNVzf8L9qq
- SVqTVnAxIQyKQPXYtkOLKNCOR9wd/FRqB2lL8VyRtypgOZ/qh59xAsU2pOjObdGBNS3Q
- H1scm5CUDAc+Cr8RmCEPYuMHs2Y80yDmCHGEp4np4sW1ZoBqoHx5huwYZngBjJwTplCT
- QB5w==
-X-Gm-Message-State: AOJu0Ywl2K6AySiA6ZqWxhd/2/mcxZhgRPblIe9E2S2RTIGkqyecn8RG
- rmLCGxfVxeCIKfuvQFQyZKf6keEYpjpJpgEbU1Pj73rXlJ7wmEHalra6i2VdYACiEqr2fu9Xbka
- 4
-X-Google-Smtp-Source: AGHT+IGEIrwFD904mWvly+yZXXWRoO1/Wz7bT61a7cHFmA+LUZ2JVSa6yBhKorr99h/4V5FK0HwJig==
-X-Received: by 2002:a17:902:e5cb:b0:1eb:63d9:8d85 with SMTP id
- d9443c01a7336-1ef43d2e27bmr245926885ad.14.1715867999522; 
- Thu, 16 May 2024 06:59:59 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.57])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0b9d44e0sm142377685ad.4.2024.05.16.06.59.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 06:59:59 -0700 (PDT)
-Message-ID: <93b5d431-13db-4c44-8546-5b94e293b9e1@ventanamicro.com>
-Date: Thu, 16 May 2024 10:59:54 -0300
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1715868157; x=1747404157;
+ h=mime-version:content-transfer-encoding:date:message-id:
+ cc:from:to:references:in-reply-to:subject;
+ bh=PII+OyY3HRsFOpjW5l++XBk5W4fZ/zADl3BCmJlUORM=;
+ b=QgSnYuvOiewSv1aRYKUg5cyngrp3zmH92tcx2WvUZyimkSVBgd+h+fMn
+ g0Hh/k+Z5es6geSkh1XLk+b/RwK2JnSjlGnyaAkWolSUGkhaUCPIM/hBO
+ 6BBfzk3YzSQmnxyHOyn2BNcAlFVTWzedpf2VhpBLalcgUv8mkVTCssZC2 U=;
+X-IronPort-AV: E=Sophos;i="6.08,164,1712620800"; d="scan'208";a="419475431"
+Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
+ configuration and violation
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
+ smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+ by smtp-border-fw-9102.sea19.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2024 14:02:24 +0000
+Received: from EX19MTAEUC001.ant.amazon.com [10.0.17.79:61258]
+ by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.38.98:2525]
+ with esmtp (Farcaster)
+ id 669cf238-0252-433a-b5ae-10131f992275; Thu, 16 May 2024 14:02:23 +0000 (UTC)
+X-Farcaster-Flow-ID: 669cf238-0252-433a-b5ae-10131f992275
+Received: from EX19D004EUC001.ant.amazon.com (10.252.51.190) by
+ EX19MTAEUC001.ant.amazon.com (10.252.51.155) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Thu, 16 May 2024 14:02:23 +0000
+Received: from localhost (10.13.235.138) by EX19D004EUC001.ant.amazon.com
+ (10.252.51.190) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.28; Thu, 16 May
+ 2024 14:02:12 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/15] hw/misc: EDU: add ATS/PRI capability
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-16-dbarboza@ventanamicro.com>
- <CANzO1D3sxSqXS6x1WkQDpyZ=T9nLQwHJCJRm=2FJn5OtrVN_mw@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CANzO1D3sxSqXS6x1WkQDpyZ=T9nLQwHJCJRm=2FJn5OtrVN_mw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 16 May 2024 14:02:09 +0000
+Message-ID: <D1B4HKJAJG21.2DH9F3E1Q6J9L@amazon.com>
+CC: Sean Christopherson <seanjc@google.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, "H . Peter Anvin" <hpa@zytor.com>, 
+ Ingo Molnar <mingo@redhat.com>, Kees Cook <keescook@chromium.org>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, "Vitaly
+ Kuznetsov" <vkuznets@redhat.com>, Wanpeng Li <wanpengli@tencent.com>, "Rick P
+ Edgecombe" <rick.p.edgecombe@intel.com>, Alexander Graf <graf@amazon.com>,
+ Angelina Vu <angelinavu@linux.microsoft.com>, Anna Trikalinou
+ <atrikalinou@microsoft.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ "Forrest Yuan Yu" <yuanyu@google.com>, James Gowans <jgowans@amazon.com>,
+ James Morris <jamorris@linux.microsoft.com>, John Andersen
+ <john.s.andersen@intel.com>, "Madhavan T . Venkataraman"
+ <madvenka@linux.microsoft.com>, Marian Rotariu <marian.c.rotariu@gmail.com>,
+ =?utf-8?q?Mihai_Don=C8=9Bu?= <mdontu@bitdefender.com>,
+ =?utf-8?q?Nicu=C8=99or_C=C3=AE=C8=9Bu?= <nicu.citu@icloud.com>, Thara
+ Gopinath <tgopinath@microsoft.com>, "Trilok Soni" <quic_tsoni@quicinc.com>,
+ Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>, Yu Zhang
+ <yu.c.zhang@linux.intel.com>, =?utf-8?q?=C8=98tefan_=C8=98icleru?=
+ <ssicleru@bitdefender.com>, <dev@lists.cloudhypervisor.org>,
+ <kvm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+ <linux-hyperv@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-security-module@vger.kernel.org>, <qemu-devel@nongnu.org>,
+ <virtualization@lists.linux-foundation.org>, <x86@kernel.org>,
+ <xen-devel@lists.xenproject.org>
+From: Nicolas Saenz Julienne <nsaenz@amazon.com>
+To: =?utf-8?q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+X-Mailer: aerc 0.17.0-129-gd582ac682cdf-dirty
+References: <20240503131910.307630-1-mic@digikod.net>
+ <20240503131910.307630-4-mic@digikod.net> <ZjTuqV-AxQQRWwUW@google.com>
+ <20240506.ohwe7eewu0oB@digikod.net> <ZjmFPZd5q_hEBdBz@google.com>
+ <20240507.ieghomae0UoC@digikod.net> <ZjpTxt-Bxia3bRwB@google.com>
+ <D15VQ97L5M8J.1TDNQE6KLW6JO@amazon.com> <20240514.mai3Ahdoo2qu@digikod.net>
+In-Reply-To: <20240514.mai3Ahdoo2qu@digikod.net>
+X-Originating-IP: [10.13.235.138]
+X-ClientProxiedBy: EX19D046UWA001.ant.amazon.com (10.13.139.112) To
+ EX19D004EUC001.ant.amazon.com (10.252.51.190)
+Received-SPF: pass client-ip=207.171.184.29;
+ envelope-from=prvs=85909aada=nsaenz@amazon.es; helo=smtp-fw-9102.amazon.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,136 +114,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Frank!
+On Tue May 14, 2024 at 12:23 PM UTC, Micka=C3=ABl Sala=C3=BCn wrote:
+> > Development happens
+> > https://github.com/vianpl/{linux,qemu,kvm-unit-tests} and the vsm-next
+> > branch, but I'd advice against looking into it until we add some order
+> > to the rework. Regardless, feel free to get in touch.
+>
+> Thanks for the update.
+>
+> Could we schedule a PUCK meeting to synchronize and help each other?
+> What about June 12?
 
-On 5/7/24 12:32, Frank Chang wrote:
-> Hi Daniel,
-> 
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:05寫道：
->>
->> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->>
->> Mimic ATS interface with IOMMU translate request with IOMMU_NONE.  If
->> mapping exists, translation service will return current permission
->> flags, otherwise will report no permissions.
->>
->> Implement and register the IOMMU memory region listener to be notified
->> whenever an ATS invalidation request is sent from the IOMMU.
->>
->> Implement and register the IOMMU memory region listener to be notified
->> whenever an ATS page request group response is triggered from the IOMMU.
->>
->> Introduces a retry mechanism to the timer design so that any page that's
->> not available should be only accessed after the PRGR notification has
->> been received.
->>
->> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
->> Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
->> ---
->>   hw/misc/edu.c | 258 ++++++++++++++++++++++++++++++++++++++++++++++++--
->>   1 file changed, 251 insertions(+), 7 deletions(-)
+Sounds great! June 12th works for me.
 
-(...)
-
-
->> +
->>   static void pci_edu_realize(PCIDevice *pdev, Error **errp)
->>   {
->>       EduState *edu = EDU(pdev);
->> +    AddressSpace *dma_as = NULL;
->>       uint8_t *pci_conf = pdev->config;
->>       int pos;
->>
->> @@ -390,9 +603,28 @@ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
->>       pos = PCI_CONFIG_SPACE_SIZE;
->>       if (edu->enable_pasid) {
->>           /* PCIe Spec 7.8.9 PASID Extended Capability Structure */
->> -        pcie_add_capability(pdev, 0x1b, 1, pos, 8);
->> +        pcie_add_capability(pdev, PCI_EXT_CAP_ID_PASID, 1, pos, 8);
-> 
-> This should be included in the 14th commit.
-> 
->>           pci_set_long(pdev->config + pos + 4, 0x00001400);
->>           pci_set_long(pdev->wmask + pos + 4,  0xfff0ffff);
->> +        pos += 8;
->> +
->> +        /* ATS Capability */
->> +        pcie_ats_init(pdev, pos, true);
->> +        pos += PCI_EXT_CAP_ATS_SIZEOF;
->> +
->> +        /* PRI Capability */
->> +        pcie_add_capability(pdev, PCI_EXT_CAP_ID_PRI, 1, pos, 16);
->> +        /* PRI STOPPED */
->> +        pci_set_long(pdev->config + pos +  4, 0x01000000);
->> +        /* PRI ENABLE bit writable */
->> +        pci_set_long(pdev->wmask  + pos +  4, 0x00000001);
->> +        /* PRI Capacity Supported */
->> +        pci_set_long(pdev->config + pos +  8, 0x00000080);
->> +        /* PRI Allocations Allowed, 32 */
->> +        pci_set_long(pdev->config + pos + 12, 0x00000040);
->> +        pci_set_long(pdev->wmask  + pos + 12, 0x0000007f);
-> 
-> We should use the defines declared in
-> include/standard-headers/linux/pci_regs.h for readability,
-> though some of the bitfields are not defined in the header file.
-> 
-> Regards,
-> Frank Chang
-> 
->> +
->> +        pos += 8;
->>       }
-
-I'll reply here for both patches 14 and 15.
-
-I changed it to use the defines we have in pci_regs.h if we have the definition
-in the header. When we don't have the definition I ended up adding a manual
-comment in the line like it's being done up above.
-
-I'll also add doc changes for each new feature added.
-
-All this said, I'm inclined to remove these 2 patches from the series. It's a
-way of experiment with the riscv-iommu impl but it's not a crucial part of it.
-The changes I made so far, based on your review, were uploaded here:
-
-
-https://gitlab.com/danielhb/qemu/-/commits/edu_pasid_v3
-
-
-Thanks,
-
-Daniel
-
-
->>
->>       if (msi_init(pdev, 0, 1, true, false, errp)) {
->> @@ -409,12 +641,24 @@ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
->>       memory_region_init_io(&edu->mmio, OBJECT(edu), &edu_mmio_ops, edu,
->>                       "edu-mmio", 1 * MiB);
->>       pci_register_bar(pdev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &edu->mmio);
->> +
->> +    /* Register IOMMU listener */
->> +    edu->iommu_listener = (MemoryListener) {
->> +        .name = "edu-iommu",
->> +        .region_add = edu_iommu_region_add,
->> +        .region_del = edu_iommu_region_del,
->> +    };
->> +
->> +    dma_as = pci_device_iommu_address_space(pdev);
->> +    memory_listener_register(&edu->iommu_listener, dma_as);
->>   }
->>
->>   static void pci_edu_uninit(PCIDevice *pdev)
->>   {
->>       EduState *edu = EDU(pdev);
->>
->> +    memory_listener_unregister(&edu->iommu_listener);
->> +
->>       qemu_mutex_lock(&edu->thr_mutex);
->>       edu->stopping = true;
->>       qemu_mutex_unlock(&edu->thr_mutex);
->> --
->> 2.43.2
->>
->>
+Nicolas
 
