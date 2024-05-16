@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108EFC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA11C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7eY4-0007Jx-S2; Thu, 16 May 2024 13:05:44 -0400
+	id 1s7eYn-0000OT-4k; Thu, 16 May 2024 13:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1s7eY1-0007AV-BB
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:05:41 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ id 1s7eYk-0000Nb-Ud
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:06:27 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1s7eXy-0005Us-Cn
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:05:41 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-de462f3d992so8722851276.2
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:05:37 -0700 (PDT)
+ id 1s7eYi-0005fA-Rc
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:06:26 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-62036051972so93219847b3.1
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715879137; x=1716483937; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=svnRaxp+qCp2pAr6pMbLzaQmbhTIyubR1YovLRC4saY=;
- b=gIxSfvjVpccroOJ8KKvNli/G3tE+zphZv/wnZsEi3DipIBMrm0TbJMao2kOQi9rJco
- aL+smF2FBnvGDEv3t7nxn60GS6qlwpEYefOumTcZmiWHQyvev7PxbFNC7oa2LzNM45Qj
- u9xLV8l/YQfsLFCwQzm+9vwm92mGrFIZaoErWQWK5f7bkr1CMKY0n6tthNwmKa2URAG6
- Y2zk/oY7naZbXhBbPjBjCSnr4PG3ciUFR0Au5fECQNDL2DUSIi2GDQ1dhUp7z9jX04DF
- JdHXjSHlTapB+BLrwM6LyWq+WyWPhot5TR536GqSjmmn/Nvu0wOyIb2q3dkpyS4Kpoh2
- IxNg==
+ d=gmail.com; s=20230601; t=1715879183; x=1716483983; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dOW2XSX5ui5IvG2zdHYpUVdATFaq4d1s0kZscFLQGqc=;
+ b=gm/FLavme68d1HNFkQ7K1uFqn3XZPZ1QYZsCCSUYNfcNzsOidLTJIAkR5NHK1bICCu
+ wa+EMYMaqXr18OfQHVH+UHuc50tbXARzui54azsm1zM/aHedB11bbyNAdNOofWHdIBAh
+ Pz6HOnU2nCd1ZL3jUqyKt22yEtnoLclNbTx8HdJZ9hqNMQLaBrej/xy+MTR80INXGAFG
+ Uf10eDR7IrOnakBY8r/DdiYbNA4k6QmeHltUfTyK/Xe3bj6r6AzNWHo8cGxFVarXlaXi
+ A2yHDblAPhSJJISgIxA2pFymVaawVV47CUff97DlmZvQoy9n9Q13E1xqn9pz3+hW409Z
+ N/2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715879137; x=1716483937;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=svnRaxp+qCp2pAr6pMbLzaQmbhTIyubR1YovLRC4saY=;
- b=vqjxm87TVSsjR5KVVw7ME5DJykkNZU/qs5Wstf1ZmUiRnpBdgqX2tKtu0ntl62k6B3
- UibFEiT//DofhnSw/iMuu4pQwoOVSgxyqvXXDW2fH4T1hpg51XiHo2siiAh+XeabPIlG
- gFpg8ngWGSB5f5BFk0yEpiCDEOFXJ8Zhm1xkj/eE+k9nbxVQ9Yd3rI4cGT6TbfVAed1f
- MblpDcF5Lohc3pSo/9po2Xdl+iOSjsnBXh7JJp5h5aUrXpX3oThunzygmm8Kjxv1BRpp
- 0a8rGsoZOh10MoW19IeC5Qfpricdzx6oH3PkNatuQFp5Ps91ywVzB+pmk5yXHMDehicc
- ilxg==
+ d=1e100.net; s=20230601; t=1715879183; x=1716483983;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dOW2XSX5ui5IvG2zdHYpUVdATFaq4d1s0kZscFLQGqc=;
+ b=LfK5sDl0BC1wTDV6KvuOHYavxWMAfRKWWjrvY5BPbskl2tu3+x/vYMZTYPiyxKkeCK
+ kq1F/EnC+ZDElS7r5p4vG+8XcQkXoM1UZOLxGtMCQm9VkJTqBQhq37Z7JynCw9fevXL+
+ ZhCchjVSgDtcfTHFs8Su8W0P5w7ZwstMi21wKzRsMNBbqwvKO+tk8FZqtIkWB+4PMpRj
+ 4TVbJgOakT5fFM67uspLhj4UZn7HxsJ97fG3ZlmkwgYzz1kvWD3aNXcG0iZTv37h0W+H
+ vmqM3MhOil5mHmN6njI4Y3nfy8PkGDkGZKItg1rBgBAaac7O1RoECyPr/7KM2lQNlgfZ
+ dJGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+tXwFeMMTgp04Zz00b1ESMhqSu0h/Sx8awuvO0bswyCzoKH4qY+YHbmiWdtgr4k02LVjHmKtB03wcTDJ/OPQnepDXGC8=
-X-Gm-Message-State: AOJu0YwDImYWmpt6clpNutQciS8pHtwDLELDUUniT8NJYtAtOxPCabtK
- Bjwzf5ddk9cDd3UXfzOAXHPhJYXFHQDT2qYxl+RZd8DXg4pEl5ze
-X-Google-Smtp-Source: AGHT+IE2RR+DAaC1q8ZIc/X2VU9lfjSHeBKCNRpKBlWm9zEWrGg9+a0nR1xLQb1psmgPdXiB357Fdg==
-X-Received: by 2002:a25:a322:0:b0:de1:2843:9465 with SMTP id
- 3f1490d57ef6-dee4f3089e4mr18532854276.30.1715879136944; 
- Thu, 16 May 2024 10:05:36 -0700 (PDT)
+ AJvYcCW7v4GAdI5zrxWvDcy6ddFPxVY+IpOmiK+eJNxh4AXz+NGb1yx59w8JxPzqyjxxkBi7LH0wTTMIU211E11RFStL9K36m5I=
+X-Gm-Message-State: AOJu0YzLfFdjKXXxok6wkxlbeNDNCWLL0Az4WIcqiXjOEvtvBuPtQ2QO
+ OoTXXr63RBgQga5paJuWybHSzsFpmshMdoh9rmHsWrb0pRvSK7em
+X-Google-Smtp-Source: AGHT+IGwwbWpWFAk0GkKFHBxHOTMWinDKyQxOVq+10qbXzio2qwuTjuYgjPhmPTiMTQaUc5oMx9zqQ==
+X-Received: by 2002:a05:690c:7506:b0:61a:e11b:4305 with SMTP id
+ 00721157ae682-62560f13b08mr87315827b3.1.1715879183566; 
+ Thu, 16 May 2024 10:06:23 -0700 (PDT)
 Received: from debian ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-debd38293bfsm3515687276.52.2024.05.16.10.05.35
+ 00721157ae682-6209e250aa0sm35637397b3.33.2024.05.16.10.06.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 May 2024 10:05:36 -0700 (PDT)
+ Thu, 16 May 2024 10:06:23 -0700 (PDT)
 From: fan <nifan.cxl@gmail.com>
 X-Google-Original-From: fan <fan@debian>
-Date: Thu, 16 May 2024 10:05:33 -0700
-To: Gregory Price <gregory.price@memverge.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- fan.ni@samsung.com
-Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
-Message-ID: <ZkY83c9PXoop_r1A@debian>
+Date: Thu, 16 May 2024 10:06:20 -0700
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "gregory.price@memverge.com" <gregory.price@memverge.com>,
+ "ira.weiny@intel.com" <ira.weiny@intel.com>,
+ "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+ "a.manzanares@samsung.com" <a.manzanares@samsung.com>,
+ "dave@stgolabs.net" <dave@stgolabs.net>,
+ "nmtadam.samsung@gmail.com" <nmtadam.samsung@gmail.com>,
+ "jim.harris@samsung.com" <jim.harris@samsung.com>,
+ "Jorgen.Hansen@wdc.com" <Jorgen.Hansen@wdc.com>,
+ "wj28.lee@gmail.com" <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 04/12] hw/mem/cxl_type3: Add support to create DC
+ regions to type3 memory devices
+Message-ID: <ZkY9DE3v4RGvBqdK@debian>
 References: <20240418232902.583744-1-fan.ni@samsung.com>
- <ZiK25Log7LmtBffa@memverge.com>
+ <20240418232902.583744-5-fan.ni@samsung.com>
+ <c91272cb-f42a-4ead-8d5c-e3ab0544d952@fujitsu.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZiK25Log7LmtBffa@memverge.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2d.google.com
+In-Reply-To: <c91272cb-f42a-4ead-8d5c-e3ab0544d952@fujitsu.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,105 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 19, 2024 at 02:24:36PM -0400, Gregory Price wrote:
-> On Thu, Apr 18, 2024 at 04:10:51PM -0700, nifan.cxl@gmail.com wrote:
-> > A git tree of this series can be found here (with one extra commit on top
-> > for printing out accepted/pending extent list): 
-> > https://github.com/moking/qemu/tree/dcd-v7
-> > 
-> > v6->v7:
-> > 
-> > 1. Fixed the dvsec range register issue mentioned in the the cover letter in v6.
-> >    Only relevant bits are set to mark the device ready (Patch 6). (Jonathan)
-> > 2. Moved the if statement in cxl_setup_memory from Patch 6 to Patch 4. (Jonathan)
-> > 3. Used MIN instead of if statement to get record_count in Patch 7. (Jonathan)
-> > 4. Added "Reviewed-by" tag to Patch 7.
-> > 5. Modified cxl_dc_extent_release_dry_run so the updated extent list can be
-> >    reused in cmd_dcd_release_dyn_cap to simplify the process in Patch 8. (Jørgen) 
-> > 6. Added comments to indicate further "TODO" items in cmd_dcd_add_dyn_cap_rsp.
-> >     (Jonathan)
-> > 7. Avoided irrelevant code reformat in Patch 8. (Jonathan)
-> > 8. Modified QMP interfaces for adding/releasing DC extents to allow passing
-> >    tags, selection policy, flags in the interface. (Jonathan, Gregory)
-> > 9. Redesigned the pending list so extents in the same requests are grouped
-> >     together. A new data structure is introduced to represent "extent group"
-> >     in pending list.  (Jonathan)
-> > 10. Added support in QMP interface for "More" flag. 
-> > 11. Check "Forced removal" flag for release request and not let it pass through.
-> > 12. Removed the dynamic capacity log type from CxlEventLog definition in cxl.json
-> >    to avoid the side effect it may introduce to inject error to DC event log.
-> >    (Jonathan)
-> > 13. Hard coded the event log type to dynamic capacity event log in QMP
-> >     interfaces. (Jonathan)
-> > 14. Adding space in between "-1]". (Jonathan)
-> > 15. Some minor comment fixes.
-> > 
-> > The code is tested with similar setup and has passed similar tests as listed
-> > in the cover letter of v5[1] and v6[2].
-> > Also, the code is tested with the latest DCD kernel patchset[3].
-> > 
-> > [1] Qemu DCD patchset v5: https://lore.kernel.org/linux-cxl/20240304194331.1586191-1-nifan.cxl@gmail.com/T/#t
-> > [2] Qemu DCD patchset v6: https://lore.kernel.org/linux-cxl/20240325190339.696686-1-nifan.cxl@gmail.com/T/#t
-> > [3] DCD kernel patches: https://lore.kernel.org/linux-cxl/20240324-dcd-type2-upstream-v1-0-b7b00d623625@intel.com/T/#m11c571e21c4fe17c7d04ec5c2c7bc7cbf2cd07e3
-> >
+On Tue, May 14, 2024 at 08:14:59AM +0000, Zhijian Li (Fujitsu) wrote:
 > 
-> added review to all patches, will hopefully be able to add a Tested-by
-> tag early next week, along with a v1 RFC for MHD bit-tracking.
 > 
-> We've been testing v5/v6 for a bit, so I expect as soon as we get the
-> MHD code ported over to v7 i'll ship a tested-by tag pretty quick.
+> On 19/04/2024 07:10, nifan.cxl@gmail.com wrote:
+> > From: Fan Ni <fan.ni@samsung.com>
+> > 
 > 
-> The super-set release will complicate a few things but this doesn't
-> look like a blocker on our end, just a change to how we track bits in a
-> shared bit/bytemap.
+> > +}
+> > +
+> >   static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+> >   {
+> >       DeviceState *ds = DEVICE(ct3d);
+> > @@ -635,6 +676,13 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+> >           g_free(p_name);
+> >       }
+> >   
+> > +    if (ct3d->dc.num_regions > 0) {
+> > +        if (!cxl_create_dc_regions(ct3d, errp)) {
+> > +            error_setg(errp, "setup DC regions failed");
 > 
+> This error_set() would cause an assertion if the errp was assigned inside cxl_create_dc_regions();
+> Try error_append_hint() instead
+Thanks, Let me check and fix.
 
-Hi Gregory,
-I am planning to address all the concerns in this series and send out v8
-next week. Jonathan mentioned you have few related patches built on top
-of this series, can you point me to the latest version so I can look
-into it? Also, would you like me to carry them over to send together
-with my series in next version? It could be easier for you to avoid the
-potential rebase needed for your patches?
-
-Let me know.
-
-Thanks,
 Fan
-
-> > 
-> > Fan Ni (12):
-> >   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
-> >     payload of identify memory device command
-> >   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
-> >     and mailbox command support
-> >   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
-> >     type3 memory devices
-> >   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
-> >     devices
-> >   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
-> >     size instead of mr as argument
-> >   hw/mem/cxl_type3: Add host backend and address space handling for DC
-> >     regions
-> >   hw/mem/cxl_type3: Add DC extent list representative and get DC extent
-> >     list mailbox support
-> >   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
-> >     dynamic capacity response
-> >   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
-> >     extents
-> >   hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
-> >   hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
-> >   hw/mem/cxl_type3: Allow to release extent superset in QMP interface
-> > 
-> >  hw/cxl/cxl-mailbox-utils.c  | 620 ++++++++++++++++++++++++++++++++++-
-> >  hw/mem/cxl_type3.c          | 633 +++++++++++++++++++++++++++++++++---
-> >  hw/mem/cxl_type3_stubs.c    |  20 ++
-> >  include/hw/cxl/cxl_device.h |  81 ++++-
-> >  include/hw/cxl/cxl_events.h |  18 +
-> >  qapi/cxl.json               |  69 ++++
-> >  6 files changed, 1396 insertions(+), 45 deletions(-)
-> > 
-> > -- 
-> > 2.43.0
-> > 
+> 
+> #3  0x00007f1fdc4fafc6 in annobin_assert.c_end () at /lib64/libc.so.6
+> #4  0x0000555fd3edbea8 in error_setv
+>      (errp=0x7ffe6d1a3de0, src=0x555fd3fe262b "../hw/mem/cxl_type3.c", line=807, func=0x555fd3fe2fe0 <__func__.21> "cxl_setup_memory", err_class=ERROR_CLASS_GENERIC_ERROR, fmt=0x555fd3fe2939 "setup DC regions failed", ap=0x7ffe6d1a3
+> c00, suffix=0x0) at ../util/error.c:68
+> #5  0x0000555fd3edc126 in error_setg_internal
+>      (errp=0x7ffe6d1a3de0, src=0x555fd3fe262b "../hw/mem/cxl_type3.c", line=807, func=0x555fd3fe2fe0 <__func__.21> "cxl_setup_memory", fmt=0x555fd3fe2939 "setup DC regions failed") at ../util/error.c:105
+> #6  0x0000555fd3819c9f in cxl_setup_memory (ct3d=0x555fd8b2f3e0, errp=0x7ffe6d1a3de0) at ../hw/mem/cxl_type3.c:807
+> #7  0x0000555fd3819d7b in ct3_realize (pci_dev=0x555fd8b2f3e0, errp=0x7ffe6d1a3de0) at ../hw/mem/cxl_type3.c:833
+> #8  0x0000555fd38b575f in pci_qdev_realize (qdev=0x555fd8b2f3e0, errp=0x7ffe6d1a3e60) at ../hw/pci/pci.c:2093
+> #9  0x0000555fd3ccca9b in device_set_realized (obj=0x555fd8b2f3e0, value=true, errp=0x7ffe6d1a40d0)
 
