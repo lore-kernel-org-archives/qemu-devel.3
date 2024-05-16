@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C221C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 04:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36712C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 04:21:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7SbO-0006k6-VU; Thu, 16 May 2024 00:20:23 -0400
+	id 1s7Sc5-0007gW-2Q; Thu, 16 May 2024 00:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
- id 1s7SbL-0006jR-Up
- for qemu-devel@nongnu.org; Thu, 16 May 2024 00:20:20 -0400
+ id 1s7Sbx-0007aS-57
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 00:20:57 -0400
 Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
- id 1s7SbJ-0005hQ-Lw
- for qemu-devel@nongnu.org; Thu, 16 May 2024 00:20:19 -0400
+ id 1s7Sbu-0005re-1l
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 00:20:56 -0400
 Received: by mail-qv1-xf32.google.com with SMTP id
- 6a1803df08f44-69b514d3cf4so83912936d6.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 21:20:17 -0700 (PDT)
+ 6a1803df08f44-69b50b8239fso70625116d6.0
+ for <qemu-devel@nongnu.org>; Wed, 15 May 2024 21:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=enfabrica.net; s=google; t=1715833216; x=1716438016; darn=nongnu.org;
+ d=enfabrica.net; s=google; t=1715833253; x=1716438053; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jZ/jA3bmFbCmciIak5rOQa26USAYzwDhaTglCtCSYjM=;
- b=GHwJicIgmW5wuMQQSWO6KGC+EKKcOBkyB9XoiROMhLiXikr2f8JEgwmWvvm6j6n9xo
- avxSjPDGEuB3jBCMt7q9IK9sQTDWRsrpIWfE46e3zgO8740Op+0jpyJmlvF0w51Xc8zy
- kQWCF1clql/pqkgU41eWEH9QUVvPe3oWX4qlujm3ZZEZ/926T8bWNy0wvqJFTZdxL1qR
- uOPWG6aGUTXCNxDcXPgLfVvW79+J1NZlHaVFH6a5oHg2YAFNQupz0dDIq2cFheKSrgJs
- K35pbWO1f0ATafrd8HOdl1ae9KzGPOcRZmkFqmaPJK1d2s6xl8GCH402frni1E6+UTwE
- h3VQ==
+ bh=5ree70I4T1kP5nIhRwCyaYXmy3zb/hRU8n2ky5i4Lr0=;
+ b=CF1mSbMeNXeEN7bWBmbV9qZuLEeUoGvWn2qMywnN+L8D+dNM1kIjbojbNipFE/geeD
+ 00QyirG4qd/Hoo/EIz4zaRje9o0NYqDqSuV//eXn7OivsOO/aJER1VOmY4p1ha7l0uUf
+ Mk41/Xv+w0sNS0Ev6ytJ3mRJljwq/gtWxra9UBwSgBT8xrvknoQZrCQVLyT+c3r6z21R
+ hz5Z/gk1Ww5M4hM6tPPDyZMQjlGHvurabhQ04o0t5wj9O232v4SsJWKKJt6U+N7RNbEk
+ G0bUcmaY+nT/RYoyILPt7OKmzrB92CYIZR4jUsuYffVdK/Xna9gF8QoD0kmYp4Melqo7
+ in6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715833216; x=1716438016;
+ d=1e100.net; s=20230601; t=1715833253; x=1716438053;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jZ/jA3bmFbCmciIak5rOQa26USAYzwDhaTglCtCSYjM=;
- b=lo+V5JAWTE8sefxqIsbqpKdvaJ673YRgpA8C7eVu30LwntuoiuYVyvwmaFyPCdw/4k
- FWHfwTFkQnee1wJytluCH/eb970CTrhcgpF6MMKwuidvVbdKCb8lkHuWKvH+gcQf5B/F
- SCL5siA8nyHBasACv6o4c4Ui9TVE2tP8xy8QU++9dpmW337u7tAM2SQvgfNKqAguuQ02
- 5M+PAmwkB1S2z+JRiANjUvJ5Xj4As2g+XIl94RdWOv3nsJwp5Wtsey6nzAGGmNM0cifK
- ipoh0KxYWR7JV9eTauwMD0WnWjMMY7bW3iYqdvmARpAn9FyASfKyBTQd/Uu0VOSuxvIC
- lXIQ==
+ bh=5ree70I4T1kP5nIhRwCyaYXmy3zb/hRU8n2ky5i4Lr0=;
+ b=H45xAVPXpP9H+1c9VA3/+01txQTy6npmm7a7+7dSkKoajfKj4z5uUTl6DcZDiLlPbC
+ wxhnMPfZsIKSwn2QgghlWE3rvTsJ3D2vyyqOT3Z6TFI+7apDvMNCj+kxF+ARQt4lhEFQ
+ Qgin+0A7w3XK73ChbXpSjERO9/ZKFBSos5bkxcjJ28irO75xCXkgHEoxBJ92OCaD+u3c
+ UrVOTxxioYn3aq/AU3i1dthn0Bw1Q+Is44uYC4mKo32xSeCPRwH8MkDTNwl6wogNcueS
+ ihL4U60p3ik0rS1ubctlXkw+kriTPoo8GRSA+5dDjjMhTXnRylSdZdWpuacEzVn2K0vK
+ 4+Iw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMEVzJ3riqTR9/cHmKI4IxN7zeen1zwAlJUdfy/BLsQ41lmfudmxuH0gevNp6hcUWdgjm3G0GP+vS79s6lenBLZBddzno=
-X-Gm-Message-State: AOJu0Yy6Oql3xHC3q4a6TXVG5xjijVRhtstqNK1IBsRWofYVyHYSPlPY
- /yMxZVIbm/7R9kYFyi+ezY8g1lXeSYrqEa377dI1f71pKM6QrajQjuTG963cvnNqxm8CNzbs2Zt
- TEfIuXeKP28NlTZS/mNvW5RCz+XYDZKIQl+X50OSZI3x/v/O7dJ1skg==
-X-Google-Smtp-Source: AGHT+IHNVPDiFDLj3SwNVYZuMwJ34ReGYZGnY4cld00pPBBUYHFqowhMhc963prlpBArD1xwGThf5GpmoOO0GSiF2yc=
-X-Received: by 2002:a05:6214:53c2:b0:6a3:5bb8:12e6 with SMTP id
- 6a1803df08f44-6a35bb81689mr33610036d6.61.1715833216626; Wed, 15 May 2024
- 21:20:16 -0700 (PDT)
+ AJvYcCXvqPHp70TW/bPCWIAemYCbveMT1gqrLY9iDPnBakcntsa8tS7vOjVS+VFtKTNcuGuGeKf8G7nZeUX0Y0tIiysPo1ZiKC0=
+X-Gm-Message-State: AOJu0Yyl85Xr//pYjghcd0qRYOvIj21jR37aVQVfXgGAI7fSJxMe7uEv
+ R6iIC+izmRT4TRXlh9wuVSTRx+cSh02txX4jji8H7dSL+le4cKNhTN6PXtywoSnOLZb4DWSDisk
+ M7qAT0m0nrE/kon3wNNyCPH6gkeqqUyT58WC9ifCRe/FaRZJ+s4YmMQ==
+X-Google-Smtp-Source: AGHT+IETWA5ZmnUdYWZ4CRRb/ywpj+JbLxD/wrZiX5ggVKQzkdxHbmLaz0iyA+BKDydKUgFomBccTOtVgSPOd91k3ZU=
+X-Received: by 2002:a05:6214:1786:b0:6a0:e7d8:4adb with SMTP id
+ 6a1803df08f44-6a15cc805d6mr352039326d6.26.1715833253047; Wed, 15 May 2024
+ 21:20:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240516025753.130171-1-fengli@smartx.com>
- <20240516025753.130171-2-fengli@smartx.com>
-In-Reply-To: <20240516025753.130171-2-fengli@smartx.com>
+ <20240516025753.130171-3-fengli@smartx.com>
+In-Reply-To: <20240516025753.130171-3-fengli@smartx.com>
 From: Raphael Norwitz <raphael@enfabrica.net>
-Date: Thu, 16 May 2024 00:20:06 -0400
-Message-ID: <CAMDpr=dDL8p_mh5xiemiAF0QBZMWptF_1EN6PtSCc1E2uTdxoQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] Revert "vhost-user: fix lost reconnect"
+Date: Thu, 16 May 2024 00:20:42 -0400
+Message-ID: <CAMDpr=cGunkw+uEUuuExgj+BH-fm-r6Wy=6+qJaSF1ig00Kx8A@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] vhost-user: fix lost reconnect again
 To: Li Feng <fengli@smartx.com>
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, 
@@ -100,131 +100,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, May 15, 2024 at 10:58=E2=80=AFPM Li Feng <fengli@smartx.com> wrote:
 >
-> This reverts commit f02a4b8e6431598612466f76aac64ab492849abf.
+> When the vhost-user is reconnecting to the backend, and if the vhost-user=
+ fails
+> at the get_features in vhost_dev_init(), then the reconnect will fail
+> and it will not be retriggered forever.
 >
-> Since the current patch cannot completely fix the lost reconnect
-> problem, there is a scenario that is not considered:
-> - When the virtio-blk driver is removed from the guest os,
->   s->connected has no chance to be set to false, resulting in
->   subsequent reconnection not being executed.
+> The reason is:
+> When the vhost-user fail at get_features, the vhost_dev_cleanup will be c=
+alled
+> immediately.
 >
-> The next patch will completely fix this issue with a better approach.
+> vhost_dev_cleanup calls 'memset(hdev, 0, sizeof(struct vhost_dev))'.
+>
+> The reconnect path is:
+> vhost_user_blk_event
+>    vhost_user_async_close(.. vhost_user_blk_disconnect ..)
+>      qemu_chr_fe_set_handlers <----- clear the notifier callback
+>        schedule vhost_user_async_close_bh
+>
+> The vhost->vdev is null, so the vhost_user_blk_disconnect will not be
+> called, then the event fd callback will not be reinstalled.
+>
+> We need to ensure that even if vhost_dev_init initialization fails, the e=
+vent
+> handler still needs to be reinstalled when s->connected is false.
+>
+> All vhost-user devices have this issue, including vhost-user-blk/scsi.
+>
+> Fixes: 71e076a07d ("hw/virtio: generalise CHR_EVENT_CLOSED handling")
 >
 
 Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 
 > Signed-off-by: Li Feng <fengli@smartx.com>
 > ---
->  hw/block/vhost-user-blk.c      |  2 +-
->  hw/scsi/vhost-user-scsi.c      |  3 +--
->  hw/virtio/vhost-user-base.c    |  2 +-
->  hw/virtio/vhost-user.c         | 10 ++--------
->  include/hw/virtio/vhost-user.h |  3 +--
->  5 files changed, 6 insertions(+), 14 deletions(-)
+>  hw/block/vhost-user-blk.c   |  3 ++-
+>  hw/scsi/vhost-user-scsi.c   |  3 ++-
+>  hw/virtio/vhost-user-base.c |  3 ++-
+>  hw/virtio/vhost-user.c      | 10 +---------
+>  4 files changed, 7 insertions(+), 12 deletions(-)
 >
 > diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index 9e6bbc6950..41d1ac3a5a 100644
+> index 41d1ac3a5a..c6842ced48 100644
 > --- a/hw/block/vhost-user-blk.c
 > +++ b/hw/block/vhost-user-blk.c
-> @@ -384,7 +384,7 @@ static void vhost_user_blk_event(void *opaque, QEMUCh=
-rEvent event)
->      case CHR_EVENT_CLOSED:
->          /* defer close until later to avoid circular close */
->          vhost_user_async_close(dev, &s->chardev, &s->dev,
-> -                               vhost_user_blk_disconnect, vhost_user_blk=
-_event);
-> +                               vhost_user_blk_disconnect);
->          break;
->      case CHR_EVENT_BREAK:
->      case CHR_EVENT_MUX_IN:
+> @@ -353,7 +353,7 @@ static void vhost_user_blk_disconnect(DeviceState *de=
+v)
+>      VHostUserBlk *s =3D VHOST_USER_BLK(vdev);
+>
+>      if (!s->connected) {
+> -        return;
+> +        goto done;
+>      }
+>      s->connected =3D false;
+>
+> @@ -361,6 +361,7 @@ static void vhost_user_blk_disconnect(DeviceState *de=
+v)
+>
+>      vhost_dev_cleanup(&s->dev);
+>
+> +done:
+>      /* Re-instate the event handler for new connections */
+>      qemu_chr_fe_set_handlers(&s->chardev, NULL, NULL, vhost_user_blk_eve=
+nt,
+>                               NULL, dev, NULL, true);
 > diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-> index a63b1f4948..48a59e020e 100644
+> index 48a59e020e..b49a11d23b 100644
 > --- a/hw/scsi/vhost-user-scsi.c
 > +++ b/hw/scsi/vhost-user-scsi.c
-> @@ -214,8 +214,7 @@ static void vhost_user_scsi_event(void *opaque, QEMUC=
-hrEvent event)
->      case CHR_EVENT_CLOSED:
->          /* defer close until later to avoid circular close */
->          vhost_user_async_close(dev, &vs->conf.chardev, &vsc->dev,
-> -                               vhost_user_scsi_disconnect,
-> -                               vhost_user_scsi_event);
-> +                               vhost_user_scsi_disconnect);
->          break;
->      case CHR_EVENT_BREAK:
->      case CHR_EVENT_MUX_IN:
+> @@ -181,7 +181,7 @@ static void vhost_user_scsi_disconnect(DeviceState *d=
+ev)
+>      VirtIOSCSICommon *vs =3D VIRTIO_SCSI_COMMON(dev);
+>
+>      if (!s->connected) {
+> -        return;
+> +        goto done;
+>      }
+>      s->connected =3D false;
+>
+> @@ -189,6 +189,7 @@ static void vhost_user_scsi_disconnect(DeviceState *d=
+ev)
+>
+>      vhost_dev_cleanup(&vsc->dev);
+>
+> +done:
+>      /* Re-instate the event handler for new connections */
+>      qemu_chr_fe_set_handlers(&vs->conf.chardev, NULL, NULL,
+>                               vhost_user_scsi_event, NULL, dev, NULL, tru=
+e);
 > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> index a83167191e..4b54255682 100644
+> index 4b54255682..11e72b1e3b 100644
 > --- a/hw/virtio/vhost-user-base.c
 > +++ b/hw/virtio/vhost-user-base.c
-> @@ -254,7 +254,7 @@ static void vub_event(void *opaque, QEMUChrEvent even=
-t)
->      case CHR_EVENT_CLOSED:
->          /* defer close until later to avoid circular close */
->          vhost_user_async_close(dev, &vub->chardev, &vub->vhost_dev,
-> -                               vub_disconnect, vub_event);
-> +                               vub_disconnect);
->          break;
->      case CHR_EVENT_BREAK:
->      case CHR_EVENT_MUX_IN:
+> @@ -225,13 +225,14 @@ static void vub_disconnect(DeviceState *dev)
+>      VHostUserBase *vub =3D VHOST_USER_BASE(vdev);
+>
+>      if (!vub->connected) {
+> -        return;
+> +        goto done;
+>      }
+>      vub->connected =3D false;
+>
+>      vub_stop(vdev);
+>      vhost_dev_cleanup(&vub->vhost_dev);
+>
+> +done:
+>      /* Re-instate the event handler for new connections */
+>      qemu_chr_fe_set_handlers(&vub->chardev,
+>                               NULL, NULL, vub_event,
 > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index cdf9af4a4b..c929097e87 100644
+> index c929097e87..c407ea8939 100644
 > --- a/hw/virtio/vhost-user.c
 > +++ b/hw/virtio/vhost-user.c
-> @@ -2776,7 +2776,6 @@ typedef struct {
->      DeviceState *dev;
->      CharBackend *cd;
->      struct vhost_dev *vhost;
-> -    IOEventHandler *event_cb;
->  } VhostAsyncCallback;
->
+> @@ -2781,16 +2781,8 @@ typedef struct {
 >  static void vhost_user_async_close_bh(void *opaque)
-> @@ -2791,10 +2790,7 @@ static void vhost_user_async_close_bh(void *opaque=
-)
->       */
->      if (vhost->vdev) {
->          data->cb(data->dev);
-> -    } else if (data->event_cb) {
-> -        qemu_chr_fe_set_handlers(data->cd, NULL, NULL, data->event_cb,
-> -                                 NULL, data->dev, NULL, true);
-> -   }
-> +    }
+>  {
+>      VhostAsyncCallback *data =3D opaque;
+> -    struct vhost_dev *vhost =3D data->vhost;
+>
+> -    /*
+> -     * If the vhost_dev has been cleared in the meantime there is
+> -     * nothing left to do as some other path has completed the
+> -     * cleanup.
+> -     */
+> -    if (vhost->vdev) {
+> -        data->cb(data->dev);
+> -    }
+> +    data->cb(data->dev);
 >
 >      g_free(data);
 >  }
-> @@ -2806,8 +2802,7 @@ static void vhost_user_async_close_bh(void *opaque)
->   */
->  void vhost_user_async_close(DeviceState *d,
->                              CharBackend *chardev, struct vhost_dev *vhos=
-t,
-> -                            vu_async_close_fn cb,
-> -                            IOEventHandler *event_cb)
-> +                            vu_async_close_fn cb)
->  {
->      if (!runstate_check(RUN_STATE_SHUTDOWN)) {
->          /*
-> @@ -2823,7 +2818,6 @@ void vhost_user_async_close(DeviceState *d,
->          data->dev =3D d;
->          data->cd =3D chardev;
->          data->vhost =3D vhost;
-> -        data->event_cb =3D event_cb;
->
->          /* Disable any further notifications on the chardev */
->          qemu_chr_fe_set_handlers(chardev,
-> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-use=
-r.h
-> index d7c09ffd34..324cd8663a 100644
-> --- a/include/hw/virtio/vhost-user.h
-> +++ b/include/hw/virtio/vhost-user.h
-> @@ -108,7 +108,6 @@ typedef void (*vu_async_close_fn)(DeviceState *cb);
->
->  void vhost_user_async_close(DeviceState *d,
->                              CharBackend *chardev, struct vhost_dev *vhos=
-t,
-> -                            vu_async_close_fn cb,
-> -                            IOEventHandler *event_cb);
-> +                            vu_async_close_fn cb);
->
->  #endif
 > --
 > 2.45.0
 >
