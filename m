@@ -4,75 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5261FC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA2FC25B7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 08:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Wim-0002Je-Nd; Thu, 16 May 2024 04:44:16 -0400
+	id 1s7WlN-0004Jp-4t; Thu, 16 May 2024 04:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s7Wik-0002Ip-L1
- for qemu-devel@nongnu.org; Thu, 16 May 2024 04:44:14 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7WlI-0004Ax-4L
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:46:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s7Wig-0004oZ-3f
- for qemu-devel@nongnu.org; Thu, 16 May 2024 04:44:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715849050; x=1747385050;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=m2KuwUWLQuvsU1YrEGkqd/3WTTJH4MB4ByuHtxm95W8=;
- b=X20FLATtpWL9dmaAyaZHX/4SIOFNk8G4kZSCp3bL9oraqAKbAdXk8888
- tREhFFWv2ABY5kUlKXUTE4IXrsgr3DHFqXL2fKXVT4ApmJlSxBusWmpek
- nNBkl1bWlLl70i05yN63OJ7ZtKPve0M/s6wznEo5LQUA3N95TEwpXjh9g
- AOqKer3HD2e/ZxFyzACDEGa5NsXi9ZfHZISkbxr34tPrYcQeRAFOmge9D
- aswVJ/xl69j8NEC3caWbRQqucjx+4sivlGTXz8uxPzwDAXuTP0m1Qj4T8
- UKEiQ9+a1W7VL0p/q0ZtmfESdSPk2vC2qIjASEecRzMVVgT4hjnxuTAyX w==;
-X-CSE-ConnectionGUID: xtJoYypQQf2+fflPXQmtxQ==
-X-CSE-MsgGUID: f9gxVxZfTo2GWA24uMWSKg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="12066745"
-X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; d="scan'208";a="12066745"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 May 2024 01:44:07 -0700
-X-CSE-ConnectionGUID: n8T/XUA2T8uBHlyNb0kDvQ==
-X-CSE-MsgGUID: f0zZ7XmuTFGDzxgEp2Zq3w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; d="scan'208";a="31463079"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 16 May 2024 01:44:05 -0700
-Date: Thu, 16 May 2024 16:59:23 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- devel@lists.libvirt.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Krempa <pkrempa@redhat.com>, Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH 2/2] tests: add testing of parameter=1 for SMP topology
-Message-ID: <ZkXK62Oie/zRDEek@intel.com>
-References: <20240513123358.612355-1-berrange@redhat.com>
- <20240513123358.612355-3-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s7WlG-00077D-Cs
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 04:46:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715849209;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9QxeBQ9+urk6IvhMkQ0UM3le9skzN7jhyHotpkemh9Q=;
+ b=RFencvUsvUvfEGODFPzVbnHdEAbGGbCGd439ZxoRsiIX82OL7AtWzBsav8w8u4zo4o9R2n
+ Slx5ayDvyUJS0pCXYdXZEFeFpEwN5BB3JbzMG8Rp9GW+c0JFvxwQA1DARHN0QPSLSxyjjV
+ Opn99ASMOfW28/nBsBL8FmGRiNPvmtM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-691-esPMqCBUPseeztEAzimtrA-1; Thu, 16 May 2024 04:46:36 -0400
+X-MC-Unique: esPMqCBUPseeztEAzimtrA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 64A88185AD2D;
+ Thu, 16 May 2024 08:46:36 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.119])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 06E9D1C007B3;
+ Thu, 16 May 2024 08:46:36 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id D5FFE1800DE0; Thu, 16 May 2024 10:46:34 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-stable@nongnu.org
+Subject: [PATCH v4] hw/pflash: fix block write start
+Date: Thu, 16 May 2024 10:46:34 +0200
+Message-ID: <20240516084634.495446-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240513123358.612355-3-berrange@redhat.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -52
-X-Spam_score: -5.3
-X-Spam_bar: -----
-X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,45 +81,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 13, 2024 at 01:33:58PM +0100, Daniel P. Berrangé wrote:
-> Date: Mon, 13 May 2024 13:33:58 +0100
-> From: "Daniel P. Berrangé" <berrange@redhat.com>
-> Subject: [PATCH 2/2] tests: add testing of parameter=1 for SMP topology
-> 
-> Validate that it is possible to pass 'parameter=1' for any SMP topology
-> parameter, since unsupported parameters are implicitly considered to
-> always have a value of 1.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  tests/unit/test-smp-parse.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-> index 56165e6644..56ce5128f1 100644
-> --- a/tests/unit/test-smp-parse.c
-> +++ b/tests/unit/test-smp-parse.c
-> @@ -330,6 +330,14 @@ static const struct SMPTestData data_generic_valid[] = {
->          .config = SMP_CONFIG_GENERIC(T, 8, T, 2, T, 4, T, 2, T, 16),
->          .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
->          .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
-> +    }, {
-> +        /*
-> +         * Unsupported parameters are always allowed to be set to '1'
-> +         * config: -smp 8,books=1,drawers=1,sockets=2,modules=1,dies=1,cores=4,threads=2,maxcpus=8
-> +         * expect: cpus=8,sockets=2,cores=2,threads=2,maxcpus=8 */
-> +        .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 2, 2, 8),
-> +        .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
-> +        .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
->      },
->  };
->  
+Move the pflash_blk_write_start() call.  We need the offset of the
+first data write, not the offset for the setup (number-of-bytes)
+write.  Without this fix u-boot can do block writes to the first
+flash block only.
 
-As Xiaoyao's suggestion, only the nit in the comment.
+While being at it drop a leftover FIXME.
 
-Others look good to me, so,
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2343
+Fixes: fcc79f2e0955 ("hw/pflash: implement update buffer for block writes")
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
+---
+ hw/block/pflash_cfi01.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 1bda8424b907..c8f1cf5a8722 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -518,10 +518,6 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
+             break;
+         case 0xe8: /* Write to buffer */
+             trace_pflash_write(pfl->name, "write to buffer");
+-            /* FIXME should save @offset, @width for case 1+ */
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: Write to buffer emulation is flawed\n",
+-                          __func__);
+             pfl->status |= 0x80; /* Ready! */
+             break;
+         case 0xf0: /* Probe for AMD flash */
+@@ -574,7 +570,6 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
+             }
+             pfl->counter = value;
+             pfl->wcycle++;
+-            pflash_blk_write_start(pfl, offset);
+             break;
+         case 0x60:
+             if (cmd == 0xd0) {
+@@ -605,6 +600,9 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
+         switch (pfl->cmd) {
+         case 0xe8: /* Block write */
+             /* FIXME check @offset, @width */
++            if (pfl->blk_offset == -1 && pfl->counter) {
++                pflash_blk_write_start(pfl, offset);
++            }
+             if (!pfl->ro && (pfl->blk_offset != -1)) {
+                 pflash_data_write(pfl, offset, value, width, be);
+             } else {
+-- 
+2.45.0
 
 
