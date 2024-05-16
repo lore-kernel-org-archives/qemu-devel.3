@@ -4,50 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFCDC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C991C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 09:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7XSb-0004nn-Up; Thu, 16 May 2024 05:31:37 -0400
+	id 1s7XVW-0006Vy-8w; Thu, 16 May 2024 05:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s7XSZ-0004mg-Mn; Thu, 16 May 2024 05:31:35 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s7XVU-0006VP-Gy
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 05:34:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s7XSX-0003jX-Vu; Thu, 16 May 2024 05:31:35 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 31DAA41572;
- Thu, 16 May 2024 11:31:23 +0200 (CEST)
-Message-ID: <6ef80da5-6dac-4717-b683-b4428a3a9835@proxmox.com>
-Date: Thu, 16 May 2024 11:31:22 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s7XVR-0005VE-Uk
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 05:34:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715852071;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y525LrRc+tFFStpWDHX+On+cvRqDvxTyESsCDX5Zzmw=;
+ b=O61iAf75TVIQOGPTpwMrZf7Zg7A75Nu2syBv0rHgWmoFku9Uyt7L5aH6MFSQuRY0FY7iCQ
+ JbeqLuFHBnTKeyyh5tpb9nEgATZWoazqTgaugZCyPMs8JUV5Es5T6EZphordKpdOeVdZ5M
+ D3fd/QZsyirWI66JpknVpXv6tkAY2Ew=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-_bDK6MS7M4y8SHorqM9FHw-1; Thu, 16 May 2024 05:34:28 -0400
+X-MC-Unique: _bDK6MS7M4y8SHorqM9FHw-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2E92780028D;
+ Thu, 16 May 2024 09:34:28 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 50AB07412;
+ Thu, 16 May 2024 09:34:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 460A121E66E5; Thu, 16 May 2024 11:34:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
+ Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
+ <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
+ <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
+ <hreitz@redhat.com>
+Subject: Re: [PATCH 08/20] qapi/parser: differentiate intro and outro
+ paragraphs
+In-Reply-To: <20240514215740.940155-9-jsnow@redhat.com> (John Snow's message
+ of "Tue, 14 May 2024 17:57:27 -0400")
+References: <20240514215740.940155-1-jsnow@redhat.com>
+ <20240514215740.940155-9-jsnow@redhat.com>
+Date: Thu, 16 May 2024 11:34:26 +0200
+Message-ID: <87a5kqnlr1.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Fix "virtio-gpu: fix scanout migration post-load"
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Xu <peterx@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240516084022.1398919-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20240516084022.1398919-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.935,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,55 +101,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.05.24 um 10:40 schrieb marcandre.lureau@redhat.com:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Hi,
-> 
-> The aforementioned patch breaks virtio-gpu device migrations for versions
-> pre-9.0/9.0, both forwards and backwards. Versioning of `VMS_STRUCT` is more
-> complex than it may initially appear, as evidenced in the problematic commit
-> dfcf74fa68c ("virtio-gpu: fix scanout migration post-load").
-> 
-> v2:
->  - use a manual version field test (instead of the more complex struct variant)
-> 
-> v3:
->  - introduce machine_check_version()
->  - drop the VMSD version, and use machine version field test
-> 
-> v4:
->  - drop machine_check_version() approach
->  - property renamed to x-scanout-vmstate-version
-> 
-> Marc-André Lureau (3):
->   migration: add "exists" info to load-state-field trace
->   migration: fix a typo
->   virtio-gpu: fix v2 migration
-> 
->  include/hw/virtio/virtio-gpu.h |  1 +
->  hw/core/machine.c              |  1 +
->  hw/display/virtio-gpu.c        | 24 ++++++++++++++++--------
->  migration/vmstate.c            |  7 ++++---
->  migration/trace-events         |  2 +-
->  5 files changed, 23 insertions(+), 12 deletions(-)
-> 
+John Snow <jsnow@redhat.com> writes:
 
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+> Add a semantic tag to paragraphs that appear *before* tagged
+> sections/members/features and those that appear after. This will control
+> how they are inlined when doc sections are merged and flattened.
 
-Tested the same things as for v1/v2, with an Ubuntu 23.10 VM:
+This future use is not obvious to me now.  I guess the effective way to
+help me see it is actual patches, which will come in due time.
 
-Machine type pc-i440fx-8.2:
-1. create snapshot with 8.2, load with patched 9.0
-2. create snapshot with patched 9.0, load with patched 9.0 and with 8.2
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  scripts/qapi/parser.py | 22 +++++++++++++++++-----
+>  1 file changed, 17 insertions(+), 5 deletions(-)
+>
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index cf4cbca1c1f..b1794f71e12 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -503,6 +503,10 @@ def get_doc(self) -> 'QAPIDoc':
+>              self.accept(False)
+>              line = self.get_doc_line()
+>              no_more_args = False
+> +            # Paragraphs before members/features/tagged are "intro" paragraphs.
+> +            # Any appearing subsequently are "outro" paragraphs.
+> +            # This is only semantic metadata for the doc generator.
 
-Machine type pc-i440fx-9.0:
-1. create snapshot with patched 9.0, load with patched 9.0
+Not sure about the last sentence.  Isn't it true for almost everything
+around here?
 
-No crashes/failures and didn't notice any other issues 🙂
+Also, long line.  
 
-Best Regards,
-Fiona
+> +            intro = True
+>  
+>              while line is not None:
+>                  # Blank lines
+> @@ -532,6 +536,7 @@ def get_doc(self) -> 'QAPIDoc':
+>                          raise QAPIParseError(
+>                              self, 'feature descriptions expected')
+>                      no_more_args = True
+> +                    intro = False
+
+After feature descriptions.
+
+>                  elif match := self._match_at_name_colon(line):
+>                      # description
+>                      if no_more_args:
+> @@ -547,6 +552,7 @@ def get_doc(self) -> 'QAPIDoc':
+>                              doc.append_line(text)
+>                          line = self.get_doc_indented(doc)
+>                      no_more_args = True
+> +                    intro = False
+
+Or after member descriptions.
+
+>                  elif match := re.match(
+>                          r'(Returns|Errors|Since|Notes?|Examples?|TODO): *',
+>                          line):
+> @@ -557,13 +563,14 @@ def get_doc(self) -> 'QAPIDoc':
+>                          doc.append_line(text)
+>                      line = self.get_doc_indented(doc)
+>                      no_more_args = True
+> +                    intro = False
+
+Or after the first tagged section.
+
+Okay, it does what it says on the tin.
+
+>                  elif line.startswith('='):
+>                      raise QAPIParseError(
+>                          self,
+>                          "unexpected '=' markup in definition documentation")
+>                  else:
+>                      # tag-less paragraph
+> -                    doc.ensure_untagged_section(self.info)
+> +                    doc.ensure_untagged_section(self.info, intro)
+>                      doc.append_line(line)
+>                      line = self.get_doc_paragraph(doc)
+>          else:
+> @@ -617,7 +624,7 @@ def __init__(
+>              self,
+>              info: QAPISourceInfo,
+>              tag: Optional[str] = None,
+> -            kind: str = 'paragraph',
+> +            kind: str = 'intro-paragraph',
+
+The question "why is this optional?" crossed my mind when reviewing the
+previous patch.  I left it unasked, because I felt challenging the
+overlap between @kind and @tag was more useful.  However, the new
+default value 'intro-paragraph' feels more arbitrary to me than the old
+one 'paragraph', and that makes the question pop right back into my
+mind.
+
+Unless I'm mistaken, all calls but one @tag and @kind.  Making that one
+pass it too feels simpler to me.
+
+Moot if we fuse @tag and @kind, of course.
+
+>          ):
+>              # section source info, i.e. where it begins
+>              self.info = info
+> @@ -625,7 +632,7 @@ def __init__(
+>              self.tag = tag
+>              # section text without tag
+>              self.text = ''
+> -            # section type - {paragraph, feature, member, tagged}
+> +            # section type - {<intro|outro>-paragraph, feature, member, tagged}
+
+Long line.
+
+>              self.kind = kind
+>  
+>          def append_line(self, line: str) -> None:
+> @@ -666,7 +673,11 @@ def end(self) -> None:
+>                  raise QAPISemError(
+>                      section.info, "text required after '%s:'" % section.tag)
+>  
+> -    def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+> +    def ensure_untagged_section(
+> +        self,
+> +        info: QAPISourceInfo,
+> +        intro: bool = True,
+
+Two callers, one passes @info, one doesn't.  Passing it always might be
+simpler.
+
+> +    ) -> None:
+>          if self.all_sections and not self.all_sections[-1].tag:
+>              section = self.all_sections[-1]
+>              # Section is empty so far; update info to start *here*.
+> @@ -677,7 +688,8 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+>                  self.all_sections[-1].text += '\n'
+>              return
+>          # start new section
+> -        section = self.Section(info)
+> +        kind = ("intro" if intro else "outro") + "-paragraph"
+> +        section = self.Section(info, kind=kind)
+>          self.sections.append(section)
+>          self.all_sections.append(section)
 
 
