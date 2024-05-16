@@ -4,107 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6AAC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B56C25B78
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7eqs-0003ju-8h; Thu, 16 May 2024 13:25:10 -0400
+	id 1s7evZ-0005Yx-EM; Thu, 16 May 2024 13:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s7eqo-0003hb-1g
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:25:07 -0400
-Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s7eqj-0000zZ-Vc
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:25:03 -0400
-Received: from pps.filterd (m0050093.ppops.net [127.0.0.1])
- by m0050093.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
- 44GEwkm7022542; Thu, 16 May 2024 18:24:43 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=
- jan2016.eng; bh=/ed58JGR9Tf8NVh/Y6fHeeAdLphSJ/BqQAtd2ytUsuM=; b=
- YArams4AWh7UxXz2qY0/OWPZxJWkM5VeLCXomCE4rSK+gvh5cgAAtvXkQm2yR5Wt
- Al/A+MIpUd1zWt/4drBhSZIiw4jtglYuMl1mDj0zWcxUFh6CgU0rot86Nyq6nzsH
- Ba3GXDmdg2k4Mg5PAtp6exQp5FtWoSA4+8eeckBUx5WziAnWi8o3wdGS94MNaWsZ
- N8kKFoM7A6Q+N9iyFvuDRgmR8QE/R/orXStaYLO3uHqXS+Nt4fs6b6LlTUFVZocR
- 8Ou3vSwoTn6+SnCUz2CQk2bBmew+Vo+5Trx0hzg3Su2y0l+gGH6x/8RtUFcHt18W
- 0dS8oMwARhF3mftxYzl61w==
-Received: from prod-mail-ppoint5 (prod-mail-ppoint5.akamai.com [184.51.33.60]
- (may be forged))
- by m0050093.ppops.net-00190b01. (PPS) with ESMTPS id 3y1yxysnj5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 May 2024 18:24:43 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint5.akamai.com [127.0.0.1])
- by prod-mail-ppoint5.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44GFY5j5000906; Thu, 16 May 2024 10:24:41 -0700
-Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
- by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 3y26nb7x5k-1;
- Thu, 16 May 2024 10:24:41 -0700
-Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
- [172.27.97.51])
- by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 49400333B5;
- Thu, 16 May 2024 17:24:39 +0000 (GMT)
-Message-ID: <916bca57-6bf9-48ea-82b7-c528660c6c4c@akamai.com>
-Date: Thu, 16 May 2024 12:24:38 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s7evW-0005Yk-0Q
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:29:59 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s7evU-0001ny-CS
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:29:57 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-5210684cee6so1496577e87.0
+ for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:29:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715880594; x=1716485394; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eturuhnXXopcjfJ4vRMfHyLVpREedj7ePMj3+8z02x0=;
+ b=h+UmGsAe6smkDlPcdnHzWpk8u8m1y8HfRv66M5I7Uc6omLABNYrdYmrkqx+cCFVD5O
+ gjtPJ6WMgSSCgZzDyi7c85q2XOsLw59B0L+MgRbX6QgSn+zcmqOdy8OqjZvqMCi9WBec
+ EElmlQ3xEDtxElmaYdBlKIT7uQdw07GRAwWLgmh+pjSSmTrr4t0iGF4rodIbDeWTZFS9
+ 5c0CKfJRLr/TPPDOZrZUdOUonrbn0oOV02p6reSZa1q6KEz2DH/8sCJLCkwyaAXuOoHi
+ fVngstNWpIFCvyuMrKJaPSNoJauKPf4yZmKA/FonkGuSeFtsl+q61a2pa4bKVgX6HS6s
+ VRbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715880594; x=1716485394;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eturuhnXXopcjfJ4vRMfHyLVpREedj7ePMj3+8z02x0=;
+ b=SQ+ImGDkaFivKfF2w5ix8cWo1v8GA+AKYzxjd3WOGSo+1nOLYV1eN0lDdkJIQqVbDo
+ LY4gBxrSgvjI/bfZXWw7o/UW3RftK9njey3Qfa/7nQBbjq7+HKlVxRfKW1HavhtyApl0
+ +xUogCOEyCPoPlhrQxc7SU+lmq+t0vLcaM4dJNUHJdQRWSpI60lOikrRPFJNYdqIGNeh
+ kXe0Ne39m+9kZecR22nPImEriqN3SxQYU+rFv9rnLtHWebsgxtCVyNE1LdAen1WB23/9
+ 5c+krPM1byuz/IOa/EOkrVjeV9+di+cRi3QiDS9ceLrTM9L8pYYXFeyLO9wD1cyuFb+W
+ PdmQ==
+X-Gm-Message-State: AOJu0YwwBtldLM7zbD5bgyqdFjiWW7aq9JuyjKtJdxav4iahB59lor/g
+ Z3CfOLJLwXlIHi3XjAZZkyNOWVLhSFuTfY+h1Qd/z2Usdup3Ior4/XsO4AqAB+lYD9c3Taw8cUM
+ nPoKmvaO5ze9NtnbS6znkrxxCeXhbjXt+M6s/DA==
+X-Google-Smtp-Source: AGHT+IEZiTYwi6MPVMJPMy8YzP0DsVjdbcl2r7F+Hs4LPdElre3l0CbxcD1RHZe7bw5xKdph7jSpMnZsEHYheOJ1D5o=
+X-Received: by 2002:a05:6512:39d3:b0:51c:5087:909f with SMTP id
+ 2adb3069b0e04-5220fa71af9mr16776527e87.10.1715880594164; Thu, 16 May 2024
+ 10:29:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: CPR/liveupdate: test results using prior bug fix
-To: Michael Tokarev <mjt@tls.msk.ru>,
- Steven Sistare <steven.sistare@oracle.com>, peterx@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- "Hunt, Joshua" <johunt@akamai.com>
-References: <20240228051315.400759-1-peterx@redhat.com>
- <20240228051315.400759-21-peterx@redhat.com>
- <f855963e-b7dd-4ce8-89dc-dfaa87e896c4@akamai.com>
- <82c69792-061d-460f-9db6-88fc8f9df5af@oracle.com>
- <d6176480-d87c-492b-8a0c-04bf81a4f59a@akamai.com>
- <59ad1f18-682b-46fc-a902-884ca6150c7d@akamai.com>
- <fadc022e-7cfd-4201-90e5-0193ce6220bc@tls.msk.ru>
-Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <fadc022e-7cfd-4201-90e5-0193ce6220bc@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- bulkscore=0 adultscore=0
- phishscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405160124
-X-Proofpoint-ORIG-GUID: Ki3Bs1D8wt8nhBQZ7gEKQvI7gXr6O8o_
-X-Proofpoint-GUID: Ki3Bs1D8wt8nhBQZ7gEKQvI7gXr6O8o_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 impostorscore=0
- mlxlogscore=872
- priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 clxscore=1011 spamscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405160125
-Received-SPF: pass client-ip=2620:100:9001:583::1;
- envelope-from=mgalaxy@akamai.com; helo=mx0a-00190b01.pphosted.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+References: <20240516162230.937047-1-berrange@redhat.com>
+ <20240516162230.937047-2-berrange@redhat.com>
+In-Reply-To: <20240516162230.937047-2-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 May 2024 18:29:39 +0100
+Message-ID: <CAFEAcA9ocOiZ5E0WSCKoR3nL+qf4LF-AQ6_4HpF9xfipAJhbog@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] docs: introduce dedicated page about code
+ provenance / sign-off
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,39 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 16 May 2024 at 17:22, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> Currently we have a short paragraph saying that patches must include
+> a Signed-off-by line, and merely link to the kernel documentation.
+> The linked kernel docs have a lot of content beyond the part about
+> sign-off an thus are misleading/distracting to QEMU contributors.
 
-On 5/14/24 08:54, Michael Tokarev wrote:
-> On 5/14/24 16:39, Michael Galaxy wrote:
->> Steve,
->>
->> OK, so it does not look like this bugfix you wrote was included in 
->> 8.2.4 (which was released yesterday). Unfortunately, that means that 
->> anyone using CPR in that release will still (eventually) encounter 
->> the bug like I did.
->
-> 8.2.4 is basically a "bugfix" release for 8.2.3 which I somewhat
-> screwed up (in a minor way), plus a few currently (at the time)
-> queued up changes.   8.2.3 was a big release though.
->
->> I would recommend that y'all consider cherry-picking, perhaps, the 
->> relevant commits for a possible 8.2.5 ?
->
-> Please Cc changes which are relevant for -stable to, well,
-> qemu-stable@nongnu.org :)
->
-> Which changes needs to be picked up?
->
-Steve, can you comment here, please? At a minimum, we have this one: 
-[PULL 20/25] migration: stop vm for cpr
+Thanks for this -- I've felt for ages that it was a bit awkward
+that we didn't have a good place to link people to for the fuller
+explanation of this.
 
-But that pull came with a handful of other changes that are also not in 
-QEMU v8, so I suspect I'm missing some other important changes that 
-might be important for a stable release?
+> This introduces a dedicated 'code-provenance' page in QEMU talking
+> about why we require sign-off, explaining the other tags we commonly
+> use, and what to do in some edge cases.
 
-- Michael
+The version of the kernel SubmittingPatches we used to link to
+includes the text "sorry, no pseudonyms or anonymous contributions".
+This new documentation doesn't say anything either way about
+our approach to pseudonyms. I think we should probably say
+something, but I don't know if we have an in-practice consensus
+there, so maybe we should approach that as a separate change on
+top of this patch.
 
+So for this patch:
 
-> Thanks,
->
-> /mjt
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
