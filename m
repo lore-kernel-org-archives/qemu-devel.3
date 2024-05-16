@@ -4,85 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36712C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 04:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65734C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 04:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7Sc5-0007gW-2Q; Thu, 16 May 2024 00:21:07 -0400
+	id 1s7Sn1-0002Go-U3; Thu, 16 May 2024 00:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
- id 1s7Sbx-0007aS-57
- for qemu-devel@nongnu.org; Thu, 16 May 2024 00:20:57 -0400
-Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
- id 1s7Sbu-0005re-1l
- for qemu-devel@nongnu.org; Thu, 16 May 2024 00:20:56 -0400
-Received: by mail-qv1-xf32.google.com with SMTP id
- 6a1803df08f44-69b50b8239fso70625116d6.0
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 21:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=enfabrica.net; s=google; t=1715833253; x=1716438053; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5ree70I4T1kP5nIhRwCyaYXmy3zb/hRU8n2ky5i4Lr0=;
- b=CF1mSbMeNXeEN7bWBmbV9qZuLEeUoGvWn2qMywnN+L8D+dNM1kIjbojbNipFE/geeD
- 00QyirG4qd/Hoo/EIz4zaRje9o0NYqDqSuV//eXn7OivsOO/aJER1VOmY4p1ha7l0uUf
- Mk41/Xv+w0sNS0Ev6ytJ3mRJljwq/gtWxra9UBwSgBT8xrvknoQZrCQVLyT+c3r6z21R
- hz5Z/gk1Ww5M4hM6tPPDyZMQjlGHvurabhQ04o0t5wj9O232v4SsJWKKJt6U+N7RNbEk
- G0bUcmaY+nT/RYoyILPt7OKmzrB92CYIZR4jUsuYffVdK/Xna9gF8QoD0kmYp4Melqo7
- in6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715833253; x=1716438053;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5ree70I4T1kP5nIhRwCyaYXmy3zb/hRU8n2ky5i4Lr0=;
- b=H45xAVPXpP9H+1c9VA3/+01txQTy6npmm7a7+7dSkKoajfKj4z5uUTl6DcZDiLlPbC
- wxhnMPfZsIKSwn2QgghlWE3rvTsJ3D2vyyqOT3Z6TFI+7apDvMNCj+kxF+ARQt4lhEFQ
- Qgin+0A7w3XK73ChbXpSjERO9/ZKFBSos5bkxcjJ28irO75xCXkgHEoxBJ92OCaD+u3c
- UrVOTxxioYn3aq/AU3i1dthn0Bw1Q+Is44uYC4mKo32xSeCPRwH8MkDTNwl6wogNcueS
- ihL4U60p3ik0rS1ubctlXkw+kriTPoo8GRSA+5dDjjMhTXnRylSdZdWpuacEzVn2K0vK
- 4+Iw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvqPHp70TW/bPCWIAemYCbveMT1gqrLY9iDPnBakcntsa8tS7vOjVS+VFtKTNcuGuGeKf8G7nZeUX0Y0tIiysPo1ZiKC0=
-X-Gm-Message-State: AOJu0Yyl85Xr//pYjghcd0qRYOvIj21jR37aVQVfXgGAI7fSJxMe7uEv
- R6iIC+izmRT4TRXlh9wuVSTRx+cSh02txX4jji8H7dSL+le4cKNhTN6PXtywoSnOLZb4DWSDisk
- M7qAT0m0nrE/kon3wNNyCPH6gkeqqUyT58WC9ifCRe/FaRZJ+s4YmMQ==
-X-Google-Smtp-Source: AGHT+IETWA5ZmnUdYWZ4CRRb/ywpj+JbLxD/wrZiX5ggVKQzkdxHbmLaz0iyA+BKDydKUgFomBccTOtVgSPOd91k3ZU=
-X-Received: by 2002:a05:6214:1786:b0:6a0:e7d8:4adb with SMTP id
- 6a1803df08f44-6a15cc805d6mr352039326d6.26.1715833253047; Wed, 15 May 2024
- 21:20:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s7Smq-0002EY-Vh; Thu, 16 May 2024 00:32:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s7Smk-00019a-CV; Thu, 16 May 2024 00:32:12 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44G3m8HD003211; Thu, 16 May 2024 04:32:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=eokEHeKj2G2AlniVlq8pA/Xr4d9ASFXgGu/0c0SWIdc=;
+ b=kJDM/fI4rulpjHKQ8HP44ZBjN7w4DP/dKdQYUR/B7qcj2VgQCd4Tyl8HXQz5aEtXOW3T
+ tT/nDJCGyMNw/MHl1oBx4yoc6JVJQ2DhbgOWu1NVI2V9Ts3zmszDSI+Xj/yX89msBk8f
+ ilMWIrgBJXS/J6zZl1itCaH1JC+mDOlhVmwRSTkvCdf6x8ykkCv0gRWH1YZM7lN2smBI
+ lwwlk13o9xW3ldugNgtiw/niaX6bID/DQbjtig+B+OjbYyvigMAhnWnzvgyBjx+c9RAx
+ 4qU4HmI80kh8XMTjROfe61QSZKPdxaSyTnDu/7dCZpFnC0hhym+kmIknedfrgY/ai5vZ Ow== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5767rgjm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 04:32:02 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44G4W1R7013691;
+ Thu, 16 May 2024 04:32:01 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y5767rgjk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 04:32:01 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44G30Hkj018828; Thu, 16 May 2024 04:32:01 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y2k0tr4cd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 04:32:01 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44G4VvjH13959816
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 May 2024 04:31:59 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3A7DD58064;
+ Thu, 16 May 2024 04:31:57 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 441FA5806A;
+ Thu, 16 May 2024 04:31:54 +0000 (GMT)
+Received: from [9.195.47.126] (unknown [9.195.47.126])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 May 2024 04:31:53 +0000 (GMT)
+Message-ID: <170efe52-97c4-48dd-b4ce-097655a76d9f@linux.ibm.com>
+Date: Thu, 16 May 2024 10:01:51 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc: handle vcpu hotplug failure gracefully
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: danielhb413@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com
+References: <20240423061058.595674-1-harshpb@linux.ibm.com>
+ <a0f9b2fc-4c8a-4c37-bc36-26bbaa627fec@linux.ibm.com>
+ <D191D2JFAR7L.2EH4S445M4TGK@gmail.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <D191D2JFAR7L.2EH4S445M4TGK@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Kk-CzwFJwQJAGVNitY4wb14K_j4GOsJ4
+X-Proofpoint-ORIG-GUID: HHt7AcnWCS9Dw1JGWkEKJLUXcVflSvde
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20240516025753.130171-1-fengli@smartx.com>
- <20240516025753.130171-3-fengli@smartx.com>
-In-Reply-To: <20240516025753.130171-3-fengli@smartx.com>
-From: Raphael Norwitz <raphael@enfabrica.net>
-Date: Thu, 16 May 2024 00:20:42 -0400
-Message-ID: <CAMDpr=cGunkw+uEUuuExgj+BH-fm-r6Wy=6+qJaSF1ig00Kx8A@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] vhost-user: fix lost reconnect again
-To: Li Feng <fengli@smartx.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "open list:Block layer core" <qemu-block@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Yajun Wu <yajunw@nvidia.com>, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
- envelope-from=raphael@enfabrica.net; helo=mail-qv1-xf32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-16_01,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=999
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 priorityscore=1501 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
+ definitions=main-2405160029
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,139 +117,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 15, 2024 at 10:58=E2=80=AFPM Li Feng <fengli@smartx.com> wrote:
->
-> When the vhost-user is reconnecting to the backend, and if the vhost-user=
- fails
-> at the get_features in vhost_dev_init(), then the reconnect will fail
-> and it will not be retriggered forever.
->
-> The reason is:
-> When the vhost-user fail at get_features, the vhost_dev_cleanup will be c=
-alled
-> immediately.
->
-> vhost_dev_cleanup calls 'memset(hdev, 0, sizeof(struct vhost_dev))'.
->
-> The reconnect path is:
-> vhost_user_blk_event
->    vhost_user_async_close(.. vhost_user_blk_disconnect ..)
->      qemu_chr_fe_set_handlers <----- clear the notifier callback
->        schedule vhost_user_async_close_bh
->
-> The vhost->vdev is null, so the vhost_user_blk_disconnect will not be
-> called, then the event fd callback will not be reinstalled.
->
-> We need to ensure that even if vhost_dev_init initialization fails, the e=
-vent
-> handler still needs to be reinstalled when s->connected is false.
->
-> All vhost-user devices have this issue, including vhost-user-blk/scsi.
->
-> Fixes: 71e076a07d ("hw/virtio: generalise CHR_EVENT_CLOSED handling")
->
+Hi Nick,
 
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
+On 5/14/24 08:39, Nicholas Piggin wrote:
+> On Tue Apr 23, 2024 at 4:30 PM AEST, Harsh Prateek Bora wrote:
+>> + qemu-devel
+>>
+>> On 4/23/24 11:40, Harsh Prateek Bora wrote:
+>>> On ppc64, the PowerVM hypervisor runs with limited memory and a VCPU
+>>> creation during hotplug may fail during kvm_ioctl for KVM_CREATE_VCPU,
+>>> leading to termination of guest since errp is set to &error_fatal while
+>>> calling kvm_init_vcpu. This unexpected behaviour can be avoided by
+>>> pre-creating vcpu and parking it on success or return error otherwise.
+>>> This enables graceful error delivery for any vcpu hotplug failures while
+>>> the guest can keep running.
+> 
+> So this puts in on the park list so when kvm_init_vcpu() later runs it
+> will just take it off the park list instead of issuing another
+> KVM_CREATE_VCPU ioctl.
+> 
+> And kvm_init_vcpu() runs in the vcpu thread function, which does not
+> have a good way to indicate failure to the caller.
+> 
+> I'm don't know a lot about this part of qemu but it seems like a good
+> idea to move fail-able initialisation out of the vcpu thread in that
+> case. So the general idea seems good to me.
+> 
 
-> Signed-off-by: Li Feng <fengli@smartx.com>
-> ---
->  hw/block/vhost-user-blk.c   |  3 ++-
->  hw/scsi/vhost-user-scsi.c   |  3 ++-
->  hw/virtio/vhost-user-base.c |  3 ++-
->  hw/virtio/vhost-user.c      | 10 +---------
->  4 files changed, 7 insertions(+), 12 deletions(-)
->
-> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index 41d1ac3a5a..c6842ced48 100644
-> --- a/hw/block/vhost-user-blk.c
-> +++ b/hw/block/vhost-user-blk.c
-> @@ -353,7 +353,7 @@ static void vhost_user_blk_disconnect(DeviceState *de=
-v)
->      VHostUserBlk *s =3D VHOST_USER_BLK(vdev);
->
->      if (!s->connected) {
-> -        return;
-> +        goto done;
->      }
->      s->connected =3D false;
->
-> @@ -361,6 +361,7 @@ static void vhost_user_blk_disconnect(DeviceState *de=
-v)
->
->      vhost_dev_cleanup(&s->dev);
->
-> +done:
->      /* Re-instate the event handler for new connections */
->      qemu_chr_fe_set_handlers(&s->chardev, NULL, NULL, vhost_user_blk_eve=
-nt,
->                               NULL, dev, NULL, true);
-> diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-> index 48a59e020e..b49a11d23b 100644
-> --- a/hw/scsi/vhost-user-scsi.c
-> +++ b/hw/scsi/vhost-user-scsi.c
-> @@ -181,7 +181,7 @@ static void vhost_user_scsi_disconnect(DeviceState *d=
-ev)
->      VirtIOSCSICommon *vs =3D VIRTIO_SCSI_COMMON(dev);
->
->      if (!s->connected) {
-> -        return;
-> +        goto done;
->      }
->      s->connected =3D false;
->
-> @@ -189,6 +189,7 @@ static void vhost_user_scsi_disconnect(DeviceState *d=
-ev)
->
->      vhost_dev_cleanup(&vsc->dev);
->
-> +done:
->      /* Re-instate the event handler for new connections */
->      qemu_chr_fe_set_handlers(&vs->conf.chardev, NULL, NULL,
->                               vhost_user_scsi_event, NULL, dev, NULL, tru=
-e);
-> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> index 4b54255682..11e72b1e3b 100644
-> --- a/hw/virtio/vhost-user-base.c
-> +++ b/hw/virtio/vhost-user-base.c
-> @@ -225,13 +225,14 @@ static void vub_disconnect(DeviceState *dev)
->      VHostUserBase *vub =3D VHOST_USER_BASE(vdev);
->
->      if (!vub->connected) {
-> -        return;
-> +        goto done;
->      }
->      vub->connected =3D false;
->
->      vub_stop(vdev);
->      vhost_dev_cleanup(&vub->vhost_dev);
->
-> +done:
->      /* Re-instate the event handler for new connections */
->      qemu_chr_fe_set_handlers(&vub->chardev,
->                               NULL, NULL, vub_event,
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index c929097e87..c407ea8939 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -2781,16 +2781,8 @@ typedef struct {
->  static void vhost_user_async_close_bh(void *opaque)
->  {
->      VhostAsyncCallback *data =3D opaque;
-> -    struct vhost_dev *vhost =3D data->vhost;
->
-> -    /*
-> -     * If the vhost_dev has been cleared in the meantime there is
-> -     * nothing left to do as some other path has completed the
-> -     * cleanup.
-> -     */
-> -    if (vhost->vdev) {
-> -        data->cb(data->dev);
-> -    }
-> +    data->cb(data->dev);
->
->      g_free(data);
->  }
-> --
-> 2.45.0
->
+Yeh ..
+
+>>>
+>>> Based on api refactoring to create/park vcpus introduced in 1/8 of patch series:
+>>> https://lore.kernel.org/qemu-devel/20240312020000.12992-2-salil.mehta@huawei.com/
+> 
+> So from this series AFAIKS you're just using kvm_create / kvm_park
+> routines? You could easily pull that patch 1 out ahead of that larger
+> series if progress is slow on it, it's a decent cleanup by itself by
+> the looks.
+> 
+
+Yeh, patch 1 of that series is only we need but the author mentioned on 
+the list that he is about to post next version soon.
+
+>>>
+>>> Tested OK by repeatedly doing a hotplug/unplug of vcpus as below:
+>>>
+>>>    #virsh setvcpus hotplug 40
+>>>    #virsh setvcpus hotplug 70
+>>> error: internal error: unable to execute QEMU command 'device_add':
+>>> kvmppc_cpu_realize: vcpu hotplug failed with -12
+>>>
+>>> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+>>> Suggested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+>>> Suggested-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+>>> Signed-off by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>> ---
+>>> ---
+>>>    target/ppc/kvm.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>>>    1 file changed, 42 insertions(+)
+>>>
+>>> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+>>> index 8231feb2d4..c887f6dfa0 100644
+>>> --- a/target/ppc/kvm.c
+>>> +++ b/target/ppc/kvm.c
+>>> @@ -48,6 +48,8 @@
+>>>    #include "qemu/mmap-alloc.h"
+>>>    #include "elf.h"
+>>>    #include "sysemu/kvm_int.h"
+>>> +#include "sysemu/kvm.h"
+>>> +#include "hw/core/accel-cpu.h"
+>>>    
+>>>    #define PROC_DEVTREE_CPU      "/proc/device-tree/cpus/"
+>>>    
+>>> @@ -2339,6 +2341,43 @@ static void alter_insns(uint64_t *word, uint64_t flags, bool on)
+>>>        }
+>>>    }
+>>>    
+>>> +static int max_cpu_index = 0;
+>>> +
+>>> +static bool kvmppc_cpu_realize(CPUState *cs, Error **errp)
+>>> +{
+>>> +    int ret;
+>>> +
+>>> +    cs->cpu_index = max_cpu_index++;
+>>> +
+>>> +    POWERPC_CPU(cs)->vcpu_id = cs->cpu_index;
+> 
+> So you're overriding the cpu_get_free_index() allocator here.
+> And you need to because vcpu_id needs to be assigned before
+> the KVM create, I guess.
+> 
+
+Yes ..
+
+> I guess it works. I would add a comment like s390x has.
+> 
+Not sure which comment you were referring to but with exporting
+cpu_get_free_index as suggested later, not sure if we still need any
+comment.
+
+>>> +
+>>> +    if (cs->parent_obj.hotplugged) {
+> 
+> Can _all_ kvm cpu creation go via this path? Why just limit it to
+> hotplugged?
+
+For the initial bootup, we actually want to abort if the requested vCPUs
+cant be allocated so that user can retry until the requested vCPUs are
+allocated. For hotplug failure, bringing down entire guest isn't fair,
+hence the fix.
+
+> 
+>>> +        /* create and park to fail gracefully in case vcpu hotplug fails */
+>>> +        ret = kvm_create_vcpu(cs);
+>>> +        if (!ret) {
+>>> +            kvm_park_vcpu(cs);
+> 
+> Seems like a small thing, but I would add a new core kvm function
+> that creates and parks the vcpu, so the target code doesn't have
+> to know about the parking internals, just that it needs to be
+> called.
+
+Make sense, I will add another kvm helper: kvm_create_and_park_vcpu()
+
+> 
+> Unless I'm missing something, we could get all targets to move their kvm
+> create to here and remove it removed from kvm_init_vcpu(), that would
+> just expect it to be on the parked list. But that could be done
+> incrementally.
+
+Hmm ..
+
+> 
+>>> +        } else {
+>>> +            max_cpu_index--;
+>>> +            error_setg(errp, "%s: vcpu hotplug failed with %d",
+>>> +                             __func__, ret);
+>>> +            return false;
+>>> +        }
+>>> +    }
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static void kvmppc_cpu_unrealize(CPUState *cpu)
+>>> +{
+>>> +    if (POWERPC_CPU(cpu)->vcpu_id == (max_cpu_index - 1)) {
+>>> +    /* only reclaim vcpuid if its the last one assigned
+>>> +     * as reclaiming random vcpuid for parked vcpus may lead
+>>> +     * to unexpected behaviour due to an existing kernel bug
+>>> +     * when drc_index doesnt get reclaimed as expected.
+>>> +     */
+>>> +        max_cpu_index--;
+>>> +    }
+> 
+> This looks like a fairly lossy allocator. Using cpu_get_free_index()
+> would be the way to go I think. I would export that and call it here,
+> and then you don't need this. Just have to take care of the assert,
+> something like this:
+> 
+> diff --git a/cpu-common.c b/cpu-common.c
+> index ce78273af5..9f90c8ec9b 100644
+> --- a/cpu-common.c
+> +++ b/cpu-common.c
+> @@ -57,14 +57,11 @@ void cpu_list_unlock(void)
+>       qemu_mutex_unlock(&qemu_cpu_list_lock);
+>   }
+>   
+> -static bool cpu_index_auto_assigned;
+> -
+> -static int cpu_get_free_index(void)
+> +int cpu_get_free_index(void)
+>   {
+>       CPUState *some_cpu;
+>       int max_cpu_index = 0;
+>   
+> -    cpu_index_auto_assigned = true;
+>       CPU_FOREACH(some_cpu) {
+>           if (some_cpu->cpu_index >= max_cpu_index) {
+>               max_cpu_index = some_cpu->cpu_index + 1;
+> @@ -83,8 +80,11 @@ unsigned int cpu_list_generation_id_get(void)
+>   
+>   void cpu_list_add(CPUState *cpu)
+>   {
+> +    static bool cpu_index_auto_assigned;
+> +
+>       QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+>       if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
+> +        cpu_index_auto_assigned = true;
+>           cpu->cpu_index = cpu_get_free_index();
+>           assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+>       } else {
+> 
+
+This indeed seems better, will update v2 as suggested.
+
+Thanks
+Harsh
+> 
+>>> +}
+>>> +
+>>>    static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
+>>>    {
+>>>        PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
+>>> @@ -2963,4 +3002,7 @@ bool kvm_arch_cpu_check_are_resettable(void)
+>>>    
+>>>    void kvm_arch_accel_class_init(ObjectClass *oc)
+>>>    {
+>>> +    AccelClass *ac = ACCEL_CLASS(oc);
+>>> +    ac->cpu_common_realize = kvmppc_cpu_realize;
+>>> +    ac->cpu_common_unrealize = kvmppc_cpu_unrealize;
+>>>    }
+> 
+> Thanks,
+> Nick
 
