@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795F5C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 01:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8352C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 02:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7QFA-0006pb-N6; Wed, 15 May 2024 21:49:16 -0400
+	id 1s7QQ2-0000Li-Sm; Wed, 15 May 2024 22:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcminyard@gmail.com>)
- id 1s7QF8-0006pL-Uf
- for qemu-devel@nongnu.org; Wed, 15 May 2024 21:49:15 -0400
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
+ id 1s7QQ1-0000LV-Q3; Wed, 15 May 2024 22:00:29 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tcminyard@gmail.com>)
- id 1s7QEt-00007R-D3
- for qemu-devel@nongnu.org; Wed, 15 May 2024 21:49:14 -0400
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5b27369b0e3so4124926eaf.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 18:48:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
+ id 1s7QPz-000455-Nu; Wed, 15 May 2024 22:00:29 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-6f0277767fbso3423310a34.3; 
+ Wed, 15 May 2024 19:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715824136; x=1716428936; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
- :sender:from:to:cc:subject:date:message-id:reply-to;
- bh=BbsXdeS+vEJXYUcPtYiKroQxxkqPrXWLVeJjdbE7laQ=;
- b=gNIRmjDd+o0hOGwQOrOjHmsxvkqD7M0UOQDF4WS75bdvyPqz5o41xdcdjJ/S5Uj2fZ
- 8jTWcLgOKB2gav34uKwHSTek/Z3GTQ0+MWROxBxnSKupbREVqm/hdq0QCoWyInHoqejZ
- UplcBUs5UNF1HZd56S698rqi0S4eNCrfhUSZNup7g2dUYJ/ytv9NZ5r4eLzw+2fSinUD
- 9oZZdEoiZAnAHt9AcAgpq8a94lZ0yXoHkFF7Fr5mlnuX940Ue227TxzrQxrJpiyoPxxJ
- YEnsO8jdhugcBDG5DElxs3jhVEAOETqp0IF1+2EgRADM5OfHJB+hYSFCj88BDncFLIN/
- fl5A==
+ d=gmail.com; s=20230601; t=1715824825; x=1716429625; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FsGnIs3tlSReZg5ks73YfeGlNBSYTHn6KqeMTyK0caI=;
+ b=cMkuxAYlndLYjtcYNN3Wy9zjJ8QP1W9XE81HQz06zNyhGY6TmyYMqdn+LPCe4Hw9re
+ +NWTu+KpHS6+KunEIDAg8/dia1IBjWX0zwslv6DYdz76aCId1bS1qNV/kOmZow9lIrK2
+ 6EIhnMO6pe9yS/hZJe2SNYOayEjdfAPt+SW9zKgJ2jx64Y4s1PoYlyKO7Imlj6Wc9QLt
+ kBgkonbi091DABsCUdcevAxMVL3b+459mz+ugYLvSKPKMq2zH7XWzQISOk9/5L/hX1aX
+ kwX6gB2kRxqP1WJuiCs5IYsG/gOL4Du1W8kAFBq+W7BsC5qBRU2ZkdKx/+aKE3JN0aBr
+ 2RtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715824136; x=1716428936;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
- :sender:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BbsXdeS+vEJXYUcPtYiKroQxxkqPrXWLVeJjdbE7laQ=;
- b=mJwH+Quo+ywD/Fchw4bh4Hb6LL8UbtjObXnoadtPuH0BL5spCVa1JVYU9Ff4qGa4kZ
- hyRZmUfQMffa3Mi1r9i9IAxlGe7u7PbFS9PZRorzatV2luzqM5dMBn01Vudj5N9RjY4Q
- Cf/6lPERofANb/M/Y1eZC8TvWR7KHxrHay/p3wpqZvkyXB1abf46rMpgf9VIyGVPgUma
- HG6/RP74cp438oUvSKrnctAU0QM2uhMxD23ycwMxmBN4RYRZzmjkthEjPOWlh6GK3iTf
- iRdfCHqZsASGLpNVz9XQsICOBcQJCY/dcfmZGM5MCA2DvistEhqM1moftNZstvOHqk+N
- RCRg==
-X-Gm-Message-State: AOJu0YzI5p6PHEDP6FcVme7wQRhETAYDgG9XKPk7M9Hp2hLXOsAy9fLP
- EPpZtKsK/xTgWTAb9iV7aogZOK+4/ei50825HuoO20y4D5mxNZk=
-X-Google-Smtp-Source: AGHT+IEpVyOZJZJFWKt7ru3dR8ZWcb2EuCAk6ibyArKXzAavHJg2ZDMV1xoPoRBjVJm8qxrAVGxdzw==
-X-Received: by 2002:a05:6871:b330:b0:23d:bf8d:2453 with SMTP id
- 586e51a60fabf-24172e02ed6mr15323240fac.42.1715824136006; 
- Wed, 15 May 2024 18:48:56 -0700 (PDT)
-Received: from serve.minyard.net ([47.184.136.52])
+ d=1e100.net; s=20230601; t=1715824825; x=1716429625;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FsGnIs3tlSReZg5ks73YfeGlNBSYTHn6KqeMTyK0caI=;
+ b=CZOFyNEMxs9tAcaMb81cCX5xxjzcttTQdXvalK/IE+bl3+2a+trhbvFOM55Ke0AK/b
+ 20KRw9AIaSso5ByhtY0px7ywd4ud6Q0e3ogzDjeSrJZ/qzuohnDAuh0Fbi2E4F9ZIvLY
+ u/Ff5pRasdf4ny4IvM/mVEcCMhz377cuswBpFNBlTLFUE0a1qb3Ux7QMyN4VN6ZeuUHr
+ 1oSS0gvNgGGSoR/C/mWShkW33IiMslOR05Ob4Ff9S3TTor6etrHAiyoQXczPRrmLg+yq
+ r14njNS5XqhFNb2pYF4QB7R7AcCOYAjTJLYmBZa3U+FIyjTjs1frKx44jScwTfcV98Lk
+ +pSQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8D1yBNy52dvuwYDRd1BPy3RnYOGSirox4YICHycsdQI+agmDBCL+x4E8zk9MkA3QjW4eeuga8Nx2DIKL9+abO51PvZ44=
+X-Gm-Message-State: AOJu0YyctXT6+zuOAjWx5ut7aZy/n+qOUpGiDoQczWfYRHatTDFA8MSx
+ YZVhQyR7JUG+EFu1dHsQ5vedEt9KUjiwwlMICp/+JGUU+yk9/g96
+X-Google-Smtp-Source: AGHT+IFjoU6rEIGztxZS76rgH1dtG0NZej8hkDiZIsd/7+k65SD8skS2if/+REaNwvVgYWbp2+wKgA==
+X-Received: by 2002:a9d:7f92:0:b0:6f0:6ea7:6154 with SMTP id
+ 46e09a7af769-6f0e90f483fmr23036987a34.3.1715824825220; 
+ Wed, 15 May 2024 19:00:25 -0700 (PDT)
+Received: from [172.20.149.24] ([222.151.198.97])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2412a3c7d64sm3271073fac.11.2024.05.15.18.48.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 18:48:55 -0700 (PDT)
-Received: from mail.minyard.net (unknown
- [IPv6:2001:470:b8f6:1b:7c63:af71:5b96:9225])
- by serve.minyard.net (Postfix) with ESMTPSA id CF42C1800B7;
- Thu, 16 May 2024 01:48:54 +0000 (UTC)
-Date: Wed, 15 May 2024 20:48:53 -0500
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Corey Minyard <cminyard@mvista.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [RFC PATCH-for-9.1 0/4] hw/i2c: Convert to spec v7 (inclusive)
- terminology
-Message-ID: <ZkVmBdsBRffmlYTR@mail.minyard.net>
-References: <20240408213339.83149-1-philmd@linaro.org>
+ 41be03b00d2f7-6340c4d4a1csm12269738a12.40.2024.05.15.19.00.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 May 2024 19:00:24 -0700 (PDT)
+Message-ID: <966b756c-f4b9-40da-ad35-ddb7c6e7da50@gmail.com>
+Date: Thu, 16 May 2024 11:00:16 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240408213339.83149-1-philmd@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=tcminyard@gmail.com; helo=mail-oo1-xc36.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v4 0/7] virtio-net: add support for SR-IOV emulation
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
+Content-Language: en-US
+From: Yui Washizu <yui.washidu@gmail.com>
+In-Reply-To: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=yui.washidu@gmail.com; helo=mail-ot1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,100 +101,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  minyard@acm.org
-X-ACL-Warn: ,  Corey Minyard <minyard@acm.org>
-From:  Corey Minyard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 08, 2024 at 11:33:34PM +0200, Philippe Mathieu-Daudé wrote:
-> Mechanical (mostly) conversion inspired by Wolfram [*] to
-> use inclusive terminology, similarly to the other renames
-> we did 3 years ago, shortly before the I2C spec v7 was
-> published.
 
-Sorry, I've been extremely busy on this.
+On 2024/04/28 18:05, Akihiko Odaki wrote:
+> Based-on: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
+> ("[PATCH for 9.1 v9 00/11] hw/pci: SR-IOV related fixes and improvements")
+>
+> Introduction
+> ------------
+>
+> This series is based on the RFC series submitted by Yui Washizu[1].
+> See also [2] for the context.
+>
+> This series enables SR-IOV emulation for virtio-net. It is useful
+> to test SR-IOV support on the guest, or to expose several vDPA devices
+> in a VM. vDPA devices can also provide L2 switching feature for
+> offloading though it is out of scope to allow the guest to configure
+> such a feature.
+>
+> The PF side code resides in virtio-pci. The VF side code resides in
+> the PCI common infrastructure, but it is restricted to work only for
+> virtio-net-pci because of lack of validation.
+>
+> User Interface
+> --------------
+>
+> A user can configure a SR-IOV capable virtio-net device by adding
+> virtio-net-pci functions to a bus. Below is a command line example:
+>    -netdev user,id=n -netdev user,id=o
+>    -netdev user,id=p -netdev user,id=q
+>    -device pcie-root-port,id=b
+>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
+>
+> The VFs specify the paired PF with "sriov-pf" property. The PF must be
+> added after all VFs. It is user's responsibility to ensure that VFs have
+> function numbers larger than one of the PF, and the function numbers
+> have a consistent stride.
 
-Since the spec has been redone, I'm good with the renames.
 
-As far as the >80 character lines, I'm fine either way.  I actually like
-to keep them in 80 characters, but the Linux kernel has moved away from
-that, and if it's easier to read with a longer line, that's probably
-better.
+I tried to start a VM with more than 8 VFs allocated using your patch,
+but the following error occured and qemu didn't work:
+VF function number overflows.
 
--corey
+I think the cause of this error is that virtio-net-pci PFs don't have ARI.
+(pcie_ari_init is not added to virtio-net-pci when PFs are initialized.)
+I think it is possible to add it later,
+but how about adding pcie_ari_init ?
 
-> 
-> Posted as RFC to get feedback, if no objection I plan to
-> finish the conversion (SMBus and rest if hw/i2c/).
-> 
-> [*] https://lore.kernel.org/all/20240322132619.6389-1-wsa+renesas@sang-engineering.com/
-> 
-> Philippe Mathieu-Daudé (4):
->   hw/i2c: Fix checkpatch block comment warnings
->   hw/i2c: Fix checkpatch line over 80 chars warnings
->   hw/i2c: Convert to spec v7 terminology (automatically)
->   hw/i2c: Convert to spec v7 terminology (manually)
-> 
->  include/hw/display/i2c-ddc.h     |   2 +-
->  include/hw/gpio/pca9552.h        |   2 +-
->  include/hw/gpio/pca9554.h        |   2 +-
->  include/hw/i2c/aspeed_i2c.h      |   4 +-
->  include/hw/i2c/i2c.h             | 123 ++++++-------
->  include/hw/i2c/i2c_mux_pca954x.h |   2 +-
->  include/hw/i2c/smbus_slave.h     |   4 +-
->  include/hw/nvram/eeprom_at24c.h  |   8 +-
->  include/hw/sensor/tmp105.h       |   2 +-
->  hw/arm/aspeed.c                  | 290 +++++++++++++++++--------------
->  hw/arm/bananapi_m2u.c            |   2 +-
->  hw/arm/cubieboard.c              |   2 +-
->  hw/arm/musicpal.c                |   6 +-
->  hw/arm/npcm7xx_boards.c          |  44 ++---
->  hw/arm/nseries.c                 |   6 +-
->  hw/arm/pxa2xx.c                  |  36 ++--
->  hw/arm/realview.c                |   2 +-
->  hw/arm/spitz.c                   |  12 +-
->  hw/arm/stellaris.c               |   2 +-
->  hw/arm/tosa.c                    |  14 +-
->  hw/arm/versatilepb.c             |   2 +-
->  hw/arm/vexpress.c                |   2 +-
->  hw/arm/z2.c                      |  20 +--
->  hw/audio/wm8750.c                |  18 +-
->  hw/display/ati.c                 |   4 +-
->  hw/display/i2c-ddc.c             |  10 +-
->  hw/display/sii9022.c             |  16 +-
->  hw/display/sm501.c               |   2 +-
->  hw/display/ssd0303.c             |  14 +-
->  hw/display/xlnx_dp.c             |   2 +-
->  hw/gpio/max7310.c                |  14 +-
->  hw/gpio/pca9552.c                |  14 +-
->  hw/gpio/pca9554.c                |  14 +-
->  hw/gpio/pcf8574.c                |  12 +-
->  hw/i2c/aspeed_i2c.c              |  16 +-
->  hw/i2c/core.c                    |  90 +++++-----
->  hw/i2c/i2c_mux_pca954x.c         |   6 +-
->  hw/i2c/imx_i2c.c                 |   2 +-
->  hw/i2c/smbus_slave.c             |  12 +-
->  hw/input/lm832x.c                |  14 +-
->  hw/misc/axp2xx.c                 |  14 +-
->  hw/misc/i2c-echo.c               |  14 +-
->  hw/nvram/eeprom_at24c.c          |  26 +--
->  hw/ppc/e500.c                    |   2 +-
->  hw/ppc/pnv.c                     |   4 +-
->  hw/ppc/sam460ex.c                |   2 +-
->  hw/rtc/ds1338.c                  |  14 +-
->  hw/rtc/m41t80.c                  |  12 +-
->  hw/rtc/twl92230.c                |  16 +-
->  hw/sensor/dps310.c               |  14 +-
->  hw/sensor/emc141x.c              |  16 +-
->  hw/sensor/lsm303dlhc_mag.c       |  16 +-
->  hw/sensor/tmp105.c               |  16 +-
->  hw/sensor/tmp421.c               |  20 +--
->  hw/tpm/tpm_tis_i2c.c             |  12 +-
->  55 files changed, 541 insertions(+), 506 deletions(-)
-> 
-> -- 
-> 2.41.0
-> 
-> 
+As a trial,
+adding pcie_ari_init to virtio_pci_realize enabled the creation of more 
+than 8 VFs.
+
+
+>
+> Keeping VF instances
+> --------------------
+>
+> A problem with SR-IOV emulation is that it needs to hotplug the VFs as
+> the guest requests. Previously, this behavior was implemented by
+> realizing and unrealizing VFs at runtime. However, this strategy does
+> not work well for the proposed virtio-net emulation; in this proposal,
+> device options passed in the command line must be maintained as VFs
+> are hotplugged, but they are consumed when the machine starts and not
+> available after that, which makes realizing VFs at runtime impossible.
+>
+> As an strategy alternative to runtime realization/unrealization, this
+> series proposes to reuse the code to power down PCI Express devices.
+> When a PCI Express device is powered down, it will be hidden from the
+> guest but will be kept realized. This effectively implements the
+> behavior we need for the SR-IOV emulation.
+>
+> Summary
+> -------
+>
+> Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
+> VFs.
+> Patch 2 makes zero stride valid for 1 VF configuration.
+> Patch 3 and 4 adds validations.
+> Patch 5 adds user-created SR-IOV VF infrastructure.
+> Patch 6 makes virtio-pci work as SR-IOV PF for user-created VFs.
+> Patch 7 allows user to create SR-IOV VFs with virtio-net-pci.
+>
+> [1] https://patchew.org/QEMU/1689731808-3009-1-git-send-email-yui.washidu@gmail.com/
+> [2] https://lore.kernel.org/all/5d46f455-f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
+>
+> Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Changes in v4:
+> - Added patch "hw/pci: Fix SR-IOV VF number calculation" to fix division
+>    by zero reported by Yui Washizu.
+> - Rebased.
+> - Link to v3: https://lore.kernel.org/r/20240305-sriov-v3-0-abdb75770372@daynix.com
+>
+> Changes in v3:
+> - Rebased.
+> - Link to v2: https://lore.kernel.org/r/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com
+>
+> Changes in v2:
+> - Changed to keep VF instances.
+> - Link to v1: https://lore.kernel.org/r/20231202-sriov-v1-0-32b3570f7bd6@daynix.com
+>
+> ---
+> Akihiko Odaki (7):
+>        hw/pci: Do not add ROM BAR for SR-IOV VF
+>        hw/pci: Fix SR-IOV VF number calculation
+>        pcie_sriov: Ensure PF and VF are mutually exclusive
+>        pcie_sriov: Check PCI Express for SR-IOV PF
+>        pcie_sriov: Allow user to create SR-IOV device
+>        virtio-pci: Implement SR-IOV PF
+>        virtio-net: Implement SR-IOV VF
+>
+>   include/hw/pci/pci_device.h |   6 +-
+>   include/hw/pci/pcie_sriov.h |  19 +++
+>   hw/pci/pci.c                |  76 +++++++----
+>   hw/pci/pcie_sriov.c         | 298 +++++++++++++++++++++++++++++++++++---------
+>   hw/virtio/virtio-net-pci.c  |   1 +
+>   hw/virtio/virtio-pci.c      |   7 ++
+>   6 files changed, 323 insertions(+), 84 deletions(-)
+> ---
+> base-commit: 2ac5458086ab61282f30c2f8bdf2ae9a0a06a75d
+> change-id: 20231202-sriov-9402fb262be8
+>
+> Best regards,
 
