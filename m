@@ -4,95 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31713C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6AAC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 17:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7emD-0001rR-Pq; Thu, 16 May 2024 13:20:21 -0400
+	id 1s7eqs-0003ju-8h; Thu, 16 May 2024 13:25:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7emC-0001pH-7Q
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:20:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1s7eqo-0003hb-1g
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:25:07 -0400
+Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s7emA-0000HA-6a
- for qemu-devel@nongnu.org; Thu, 16 May 2024 13:20:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715880017;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4joLIfCdfnBX1uf0OTG9nIXXipl/Se23wJVwBrd430M=;
- b=S3TkFFa1Yv9t7qalPwFiTSzTJ1Alc/+6EGlnKBEHrXBLGTRxzuZOUScvyYFK6gYm6M1WRk
- tzBfz4064eFvkCNAbxHSTN701kTm3nt1nNauqdzwQtQDLma4FIuHSMQN4wRCbiv1jSxE69
- dxZbrX2esEg0VfsPjSbIxD4ENXX1gKQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-41-Xv6uc_MqP4i5GThuLRljfg-1; Thu, 16 May 2024 13:20:15 -0400
-X-MC-Unique: Xv6uc_MqP4i5GThuLRljfg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-351d77e63fdso564530f8f.3
- for <qemu-devel@nongnu.org>; Thu, 16 May 2024 10:20:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715880014; x=1716484814;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4joLIfCdfnBX1uf0OTG9nIXXipl/Se23wJVwBrd430M=;
- b=kpftdHEeFRkghgzzINPW600YB8WH+K8Cfue93mD6Naw6Lk6B9CWFlMSRXKy9VGUkMt
- gF/vdXztoo1sQkc+Cty+hpbA+Y2cKxhaye+yyl6HSzXBYASVaxowXRp3EJCHA/EYzGhP
- rRCdPoSvPiOXkjcdeHpBxmG5o1BtrAa9znQNJZJWSklMF+/1AbHfKzleqWRvl4uAHWDS
- 6ahyLNzp/+Ax2fU5FW2QsRXcRB5c2Oy3eYBUyhHLyXeAe4pIq/fHNSXZb60z47AFqSKg
- sYhG+7fYekQ4pjcn0dSvroNCWsfmiMIHZ7qybwKSI0+gLWxucTbaTfNlZfAFe/nPzPWD
- 4umw==
-X-Gm-Message-State: AOJu0YxKrarEcFjd3v0nx0R48Myw4zYZUvSaEjNAbr+IDShdguwc+eYR
- /Xw6f3cEsPrhkR4DrX+vcB6zx8BYZZV/Ckq3oYlxasakfw8ZuDtSuXX3oee7VOafkdpMq4OBxsf
- 9AyN+wzUjAwmLiPG90dhQ3dLImMiqaa4O9ntRvhNDSYeipioURUecZRogE8ws
-X-Received: by 2002:a05:6000:18cc:b0:351:c934:e9d0 with SMTP id
- ffacd0b85a97d-351c934ea1amr7210235f8f.58.1715880014097; 
- Thu, 16 May 2024 10:20:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF54e2Ppm7L2JMxFlQmuy0CHfJWwyZgnj9B/CO8hw9Iq3gN53fgcTxhmU1K3XPTac/BlUSwOQ==
-X-Received: by 2002:a05:6000:18cc:b0:351:c934:e9d0 with SMTP id
- ffacd0b85a97d-351c934ea1amr7210209f8f.58.1715880013565; 
- Thu, 16 May 2024 10:20:13 -0700 (PDT)
-Received: from redhat.com ([2.52.2.122]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502baacfd3sm19646556f8f.84.2024.05.16.10.20.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 May 2024 10:20:13 -0700 (PDT)
-Date: Thu, 16 May 2024 13:20:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 0/3] docs: define policy forbidding use of "AI" / LLM
- code generators
-Message-ID: <20240516131141-mutt-send-email-mst@kernel.org>
-References: <20240516162230.937047-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1s7eqj-0000zZ-Vc
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 13:25:03 -0400
+Received: from pps.filterd (m0050093.ppops.net [127.0.0.1])
+ by m0050093.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 44GEwkm7022542; Thu, 16 May 2024 18:24:43 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=
+ jan2016.eng; bh=/ed58JGR9Tf8NVh/Y6fHeeAdLphSJ/BqQAtd2ytUsuM=; b=
+ YArams4AWh7UxXz2qY0/OWPZxJWkM5VeLCXomCE4rSK+gvh5cgAAtvXkQm2yR5Wt
+ Al/A+MIpUd1zWt/4drBhSZIiw4jtglYuMl1mDj0zWcxUFh6CgU0rot86Nyq6nzsH
+ Ba3GXDmdg2k4Mg5PAtp6exQp5FtWoSA4+8eeckBUx5WziAnWi8o3wdGS94MNaWsZ
+ N8kKFoM7A6Q+N9iyFvuDRgmR8QE/R/orXStaYLO3uHqXS+Nt4fs6b6LlTUFVZocR
+ 8Ou3vSwoTn6+SnCUz2CQk2bBmew+Vo+5Trx0hzg3Su2y0l+gGH6x/8RtUFcHt18W
+ 0dS8oMwARhF3mftxYzl61w==
+Received: from prod-mail-ppoint5 (prod-mail-ppoint5.akamai.com [184.51.33.60]
+ (may be forged))
+ by m0050093.ppops.net-00190b01. (PPS) with ESMTPS id 3y1yxysnj5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 May 2024 18:24:43 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint5.akamai.com [127.0.0.1])
+ by prod-mail-ppoint5.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44GFY5j5000906; Thu, 16 May 2024 10:24:41 -0700
+Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
+ by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 3y26nb7x5k-1;
+ Thu, 16 May 2024 10:24:41 -0700
+Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
+ [172.27.97.51])
+ by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 49400333B5;
+ Thu, 16 May 2024 17:24:39 +0000 (GMT)
+Message-ID: <916bca57-6bf9-48ea-82b7-c528660c6c4c@akamai.com>
+Date: Thu, 16 May 2024 12:24:38 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: CPR/liveupdate: test results using prior bug fix
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ Steven Sistare <steven.sistare@oracle.com>, peterx@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Hunt, Joshua" <johunt@akamai.com>
+References: <20240228051315.400759-1-peterx@redhat.com>
+ <20240228051315.400759-21-peterx@redhat.com>
+ <f855963e-b7dd-4ce8-89dc-dfaa87e896c4@akamai.com>
+ <82c69792-061d-460f-9db6-88fc8f9df5af@oracle.com>
+ <d6176480-d87c-492b-8a0c-04bf81a4f59a@akamai.com>
+ <59ad1f18-682b-46fc-a902-884ca6150c7d@akamai.com>
+ <fadc022e-7cfd-4201-90e5-0193ce6220bc@tls.msk.ru>
+Content-Language: en-US
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <fadc022e-7cfd-4201-90e5-0193ce6220bc@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240516162230.937047-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 adultscore=0
+ phishscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
+ definitions=main-2405160124
+X-Proofpoint-ORIG-GUID: Ki3Bs1D8wt8nhBQZ7gEKQvI7gXr6O8o_
+X-Proofpoint-GUID: Ki3Bs1D8wt8nhBQZ7gEKQvI7gXr6O8o_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 impostorscore=0
+ mlxlogscore=872
+ priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1011 spamscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405160125
+Received-SPF: pass client-ip=2620:100:9001:583::1;
+ envelope-from=mgalaxy@akamai.com; helo=mx0a-00190b01.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
 X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,98 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 16, 2024 at 05:22:27PM +0100, Daniel P. Berrangé wrote:
-> This patch kicks the hornet's nest of AI / LLM code generators.
-> 
-> With the increasing interest in code generators in recent times,
-> it is inevitable that QEMU contributions will include AI generated
-> code. Thus far we have remained silent on the matter. Given that
-> everyone knows these tools exist, our current position has to be
-> considered tacit acceptance of the use of AI generated code in QEMU.
-> 
-> The question for the project is whether that is a good position for
-> QEMU to take or not ?
-> 
-> IANAL, but I like to think I'm reasonably proficient at understanding
-> open source licensing. I am not inherantly against the use of AI tools,
-> rather I am anti-risk. I also want to see OSS licenses respected and
-> complied with.
-> 
-> AFAICT at its current state of (im)maturity the question of licensing
-> of AI code generator output does not have a broadly accepted / settled
-> legal position. This is an inherant bias/self-interest from the vendors
-> promoting their usage, who tend to minimize/dismiss the legal questions.
-> >From my POV, this puts such tools in a position of elevated legal risk.
-> 
-> Given the fuzziness over the legal position of generated code from
-> such tools, I don't consider it credible (today) for a contributor
-> to assert compliance with the DCO terms (b) or (c) (which is a stated
-> pre-requisite for QEMU accepting patches) when a patch includes (or is
-> derived from) AI generated code.
-> 
-> By implication, I think that QEMU must (for now) explicitly decline
-> to (knowingly) accept AI generated code.
-> 
-> Perhaps a few years down the line the legal uncertainty will have
-> reduced and we can re-evaluate this policy.
-> 
-> Discuss...
 
-At this junction, the code generated by these tools is of such
-quality that I really won't expect it to pass even cursory code
-review.
+On 5/14/24 08:54, Michael Tokarev wrote:
+> On 5/14/24 16:39, Michael Galaxy wrote:
+>> Steve,
+>>
+>> OK, so it does not look like this bugfix you wrote was included in 
+>> 8.2.4 (which was released yesterday). Unfortunately, that means that 
+>> anyone using CPR in that release will still (eventually) encounter 
+>> the bug like I did.
+>
+> 8.2.4 is basically a "bugfix" release for 8.2.3 which I somewhat
+> screwed up (in a minor way), plus a few currently (at the time)
+> queued up changes.Â Â  8.2.3 was a big release though.
+>
+>> I would recommend that y'all consider cherry-picking, perhaps, the 
+>> relevant commits for a possible 8.2.5 ?
+>
+> Please Cc changes which are relevant for -stable to, well,
+> qemu-stable@nongnu.org :)
+>
+> Which changes needs to be picked up?
+>
+Steve, can you comment here, please? At a minimum, we have this one: 
+[PULL 20/25] migration: stop vm for cpr
+
+But that pull came with a handful of other changes that are also not in 
+QEMU v8, so I suspect I'm missing some other important changes that 
+might be important for a stable release?
+
+- Michael
 
 
-So for now, I propose adding a single paragraph:
-
- If you wrote the patch, make sure your "From:" and "Signed-off-by:"
- lines use the same spelling. It's okay if you subscribe or contribute to
- the list via more than one address, but using multiple addresses in one
- commit just confuses things. If someone else wrote the patch, git will
- include a "From:" line in the body of the email (different from your
- envelope From:) that will give credit to the correct author; but again,
- that author's Signed-off-by: line is mandatory, with the same spelling.
-
-+Q: I prompted ChatGPT/Copilot/Llama and it wrote
-+   the patch for me. Can I submit it and how do I sign it?
-+A: Your patch is likely trash or trivial. Please write your own code.
-
-
-
-
-
-
-> Changes in v2:
-> 
->  * Fix a huge number of typos in docs
->  * Clarify that maintainers should still add R-b where relevant, even
->    if they are already adding their own S-oB.
->  * Clarify situation when contributor re-starts previously abandoned
->    work from another contributor.
->  * Add info about Suggested-by tag
->  * Add new docs section dealing with the broad topic of "generated
->    files" (whether code generators or compilers)
->  * Simplify the section related to prohibition of AI generated files
->    and give further examples of tools considered covered
->  * Remove repeated references to "LLM" as a specific technology, just
->    use the broad "AI" term, except for one use of LLM as an example.
->  * Add note that the policy may evolve if the legal clarity improves
->  * Add note that exceptions can be requested on case-by-case basis
->    if contributor thinks they can demonstrate a credible copyright
->    and licensing status
-> 
-> Daniel P. Berrangé (3):
->   docs: introduce dedicated page about code provenance / sign-off
->   docs: define policy limiting the inclusion of generated files
->   docs: define policy forbidding use of AI code generators
-> 
->  docs/devel/code-provenance.rst    | 315 ++++++++++++++++++++++++++++++
->  docs/devel/index-process.rst      |   1 +
->  docs/devel/submitting-a-patch.rst |  19 +-
->  3 files changed, 318 insertions(+), 17 deletions(-)
->  create mode 100644 docs/devel/code-provenance.rst
-> 
-> -- 
-> 2.43.0
-
+> Thanks,
+>
+> /mjt
 
