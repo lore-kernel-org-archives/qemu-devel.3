@@ -4,87 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AF3C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 03:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9B0C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 May 2024 03:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7RMG-0002dr-Vq; Wed, 15 May 2024 23:00:41 -0400
+	id 1s7RwK-0002kZ-NL; Wed, 15 May 2024 23:37:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fengli@smartx.com>) id 1s7RLr-0002U7-Ci
- for qemu-devel@nongnu.org; Wed, 15 May 2024 23:00:18 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fengli@smartx.com>) id 1s7RLm-0005zG-HF
- for qemu-devel@nongnu.org; Wed, 15 May 2024 23:00:13 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6f472d550cbso6129896b3a.1
- for <qemu-devel@nongnu.org>; Wed, 15 May 2024 19:58:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1715828289; x=1716433089;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QTX+ubSu9OGm/BIrT1IWFwhZHo7w0Wog7yNHRRYCkA4=;
- b=CB4pHKaNT+54IdrXHq6/ysEubs9/B6Xb0CDop3WIF3QDjO6DggBfQXYvvF2mQyLj/Q
- IpOi8aKXOS2DOARagUEzhFG3p2VG4Inuhi6yIYwgfNfIS5WKrRL5er2cTt0pCgIYTsLM
- 0MY6L5+YikmoG2pvAJSUWOPiIJ0K3vHSbczLxEO0QqtCu6SVFrUXVMetT7aGttk5pFN1
- 2sntmd2Br7GEnAKBObvFu/loee4eYtbDyIn6vNVVX7TqTfiP1dQZLw7jjSA1V28LE8kL
- supws5Hu1x0Q18jtF7Tb4UQoJoQE184BOFLjWDUUos8kqlGk86gi1+8O8Mf89jVJY7wv
- GxAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715828289; x=1716433089;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QTX+ubSu9OGm/BIrT1IWFwhZHo7w0Wog7yNHRRYCkA4=;
- b=UiGu+U+bZO6TyBGNCkwzwIrffNWPw2wObuab7ckgSe77HmuKwLaQEjfPgX+rZJNopQ
- YU1c1gxqUQ/1GoQbHDxOwlPnDFrvrbR5L2PyAYkBwmifKaygULmw60xslqpUmzS2VkNN
- ueNICxzAnJ07vNMls6EuJcgmfzQ7+g7DJQDB8ZicxZINickhsXkJiIHSVtI1leNOPL3o
- X7Tm71BrhAo+5YgF77Hhd09uK6z+Ibn5xqP9YICpco7A+ad/CxipK9OuPICTR0xrA9KM
- OPlvFdeLwZw5BLsmLtAQe/G+7N7DLd37BkzJ33GmY+yfITTSZ5cu8ABLLZZOOL6t2oXN
- sHDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX88PTkAvsg8YW0p8t2WJ7gLIk1CKgY9aHG54S9+OqKrloC+rWKEtbBaWqDHTblpiO2GHu4gf0RYQskFDwJ1d5LqNI0nMw=
-X-Gm-Message-State: AOJu0YwvTE21SXOKpyreOeEnVsFp/KdzAcNUWwMnNZAncp3A3ZMJN1yW
- +X7lmB4O8hmsvBvqmFD075JC/qcrzR32z5P9NjaY2zXveRICboxP5ML+Z7JhuuA=
-X-Google-Smtp-Source: AGHT+IHrHdAnx1CNQUFZgnmgiP4pb00Nk8VmdRwIoX4drHXwPM67F67jkB4Gm1sCExxi2TumGAluAQ==
-X-Received: by 2002:a05:6a00:4b4c:b0:6f3:c10a:7bdd with SMTP id
- d2e1a72fcca58-6f4e02d36a4mr26190042b3a.18.1715828289008; 
- Wed, 15 May 2024 19:58:09 -0700 (PDT)
-Received: from localhost.localdomain.cc (vps-bd302c4a.vps.ovh.ca.
- [15.235.142.94]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f6751f8434sm2320878b3a.184.2024.05.15.19.58.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 May 2024 19:58:08 -0700 (PDT)
-From: Li Feng <fengli@smartx.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org (open list:Block layer core),
- qemu-devel@nongnu.org (open list:All patches CC here)
-Cc: Yajun Wu <yajunw@nvidia.com>,
-	Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v4 2/2] vhost-user: fix lost reconnect again
-Date: Thu, 16 May 2024 10:57:46 +0800
-Message-ID: <20240516025753.130171-3-fengli@smartx.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240516025753.130171-1-fengli@smartx.com>
-References: <20240516025753.130171-1-fengli@smartx.com>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1s7RwH-0002kM-7U
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 23:37:53 -0400
+Received: from esa16.fujitsucc.c3s2.iphmx.com ([216.71.158.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1s7RwB-00016K-IV
+ for qemu-devel@nongnu.org; Wed, 15 May 2024 23:37:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1715830667; x=1747366667;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=lPZAskWm9JlqIZr+cTgnSWPGcsgCFUzXB4AqTSmIF4g=;
+ b=qwbGeoIdDshzH5tPl/7//RkIpCHqI/78mYBZ3oSqNEPvUz82/9tLgxV8
+ Gn1JkRUjBVmpHwyjwYJaBRi1Nta94uaGGUuu8jlvMOSNNtP+flDgMP9Po
+ PzBf9l8Xnfbm6OSqVTdWSvvXSmSjtHZrFyr2ELuPidDXmEC0ATy0zs9Rs
+ TKXmhhuM2Rxvdnd0fZ1Vds/8kyDwEk57IGZ4iPU4A2px4L/YOowDEr7YS
+ 5FrCE7wLyv1t+cOErs7Z8vLEcnFHPEb6fSCRIf5f/ubIPvN5PSx+SRUl8
+ cVBSAovJpIgTk0+J/dt9N9IGWexB1CBAu1SzYICeeJFasYbq0KAX3KLAX Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="119497524"
+X-IronPort-AV: E=Sophos;i="6.08,163,1712588400"; d="scan'208";a="119497524"
+Received: from mail-japaneastazlp17010000.outbound.protection.outlook.com
+ (HELO TYVP286CU001.outbound.protection.outlook.com) ([40.93.73.0])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2024 12:37:40 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EreaJ0dn+uDAvbaQUJZC4r5/Nw4lKUPBLex6sKLWd7gKD4NbKxuVvl/B/baZYeFcPjAPnfEPQjYs6z9WYxyonpijObDVYxkB7z8/Gtw5WLOZuf5IhxOFh6GZQrcMAXNawesW6pGsGE8XsKyfvwNYDw0753s5Y1LEkOj0p3sP3r04x+y85MR64EczsQ0IB/RgMllDZ800RRI00AgHbzMqwlO8e3ETFheN0JWEIezSkWdymX2ytx9nYgVIRWUEr1lFyZz5Pl7NKeHeHX7RTpUab85bWfIm/ykj/OFS1JoWKab4c78XcRMhEYZwDfxYiqinUqTyTpD/ptZlIn+M49YPWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lPZAskWm9JlqIZr+cTgnSWPGcsgCFUzXB4AqTSmIF4g=;
+ b=UiWofTY/hehSzj0K3VcT6NAEl5zsah5WFirX4ELaEOtUF98yKB9LlhaPZa5n7nNkSUs1NLVVmsfzCIMAltGwyYTCw3pTn38HB2qAytTYtwg0zXIYRlM1HivZxixssIOW3QCQklJai1TmE+EgELL8enPAhpDEXLbsGXN96XhaLnkpP0CqYJIE2+bD2lryig+hySAImGwUo/THt0Jc2CyQTxYh3u03SHsjXGcoM9cXhWz/j6sZFCzBg+bFxWH0WV5Q8quiu8MuQzLN35LzVnbY74+C52g849Y2ZsLraudUFaJKLGPmv4tk+UEOYSAwkg4Aamsn8kizBmZmVWZIQaSFyQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
+ by TYCPR01MB10276.jpnprd01.prod.outlook.com (2603:1096:400:1d6::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Thu, 16 May
+ 2024 03:37:36 +0000
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377%6]) with mapi id 15.20.7587.028; Thu, 16 May 2024
+ 03:37:36 +0000
+To: Fabiano Rosas <farosas@suse.de>, Li Zhijian via <qemu-devel@nongnu.org>,
+ Peter Xu <peterx@redhat.com>
+CC: Hailiang Zhang <zhanghailiang@xfusion.com>, Zhang Chen
+ <chen.zhang@intel.com>
+Subject: Re: [PATCH 2/3] migration/colo: make colo_incoming_co() return void
+Thread-Topic: [PATCH 2/3] migration/colo: make colo_incoming_co() return void
+Thread-Index: AQHaocDb5ERluuIX9U+1Isr8/bpCqLGYsfSAgACPUQA=
+Date: Thu, 16 May 2024 03:37:36 +0000
+Message-ID: <29c24cce-18b6-4f3a-b62e-96e2cf31b239@fujitsu.com>
+References: <20240509033106.1321880-1-lizhijian@fujitsu.com>
+ <20240509033106.1321880-2-lizhijian@fujitsu.com> <87le4aew1m.fsf@suse.de>
+In-Reply-To: <87le4aew1m.fsf@suse.de>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|TYCPR01MB10276:EE_
+x-ms-office365-filtering-correlation-id: 1e35e840-aae3-4b29-4588-08dc75598788
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230031|1800799015|376005|366007|38070700009|1580799018; 
+x-microsoft-antispam-message-info: =?utf-8?B?UHViU3kzM2tSaGROamRYUjczTnU5ZEJnR00wSUtMck1TNElRWmpERHlKZU03?=
+ =?utf-8?B?akhUbU1RQlEzYUxLQzdjUm92akt5WlcvRUlwOHpQZWE2MndVVVRvVnRjZEtJ?=
+ =?utf-8?B?UE1MTlNHQWFDczBUMm0rRFNTWkR4MlZ0V1U4NmN6TzE4SlJMSWlPd2cxOWdr?=
+ =?utf-8?B?L2liYXRUelNUSkhlTmF6MjRCbmtFbjZBeHhsWVFzU1lmd3VuMFdlKzlRZlZa?=
+ =?utf-8?B?TExtVUVjT0piTk5HRnVxUTd6eURGdDBBMHdXZWRtbVF4UEJTSlp6MHdraXhZ?=
+ =?utf-8?B?Sjh1WjVBYVJMVURNQXFzOVZLTWpvTlJFbE5KWDJuZkJGN2hyM0tia3JTWEF6?=
+ =?utf-8?B?YzREV3pNZWw3QlVXM0dpaG5uRU5CUVBhc0h4Y2h5aDlJUUNFNzFVS0JMNzc3?=
+ =?utf-8?B?WkN0RmpzWDY5M05pWnNHamJQbXk5aGI5T2k0NTh2ZGU4UTNjQ2lhRHU3bGVy?=
+ =?utf-8?B?dDcyUllrb1JlcEZwMnhFRmhxTVd2UUFRRjJnS01PNlczWWJ4YzFJRWhoc2Uv?=
+ =?utf-8?B?cys1K0pDdUdXVjk1RzhsYUdaMTdQWkJKK083aTlvalRmMFZWRFpNT2hIN01S?=
+ =?utf-8?B?UUwrbTNUWmJ3YTN6MUJmTGdyTGU5eGJ4ZlRQaitGK25TM0Z3RnhTZldIRjV1?=
+ =?utf-8?B?aWFJa2F2SXNuS2NXYnlMeTNrbndYbk9rTlhpMHZUNDlKWHNJVFI3QmJETTBw?=
+ =?utf-8?B?R0txT253S3BaK2txZUx1QWNFSW80VlZTRGtXb01lOEV3a2VtMjlqdEZZWFVy?=
+ =?utf-8?B?cFFkMjBkK1YxbmQ1WFdpQlI3M3hvV3ZrQkw4YXJvY1E5UnNHK2l4WXRHUG9Z?=
+ =?utf-8?B?enpxRHR1cVQ0WFZzQ0xtWTFVc0dva01aUXA5R1NCb25CVjduL2x6OHNHek9r?=
+ =?utf-8?B?REtIRHFocFN5T2lGZHRIazZDdzFuUnkxL0VDTi9jNDBZWm0zNWk5NlZCZkI2?=
+ =?utf-8?B?WTJoUzdqczBMSTNYOS93cHJ3QUdrM2pGMjFFTFhQaTdzdi9BTXo4RkZ3eGVx?=
+ =?utf-8?B?S1ZvRThPaEgybzZVcjNvK3Nhdm53bDlZYjRQbUV6TEdpVlROTVovWTNpZXQ5?=
+ =?utf-8?B?RVp2ekdtU2NGR0hRRzBRdDUvcHFkQ1hhRSttZkJZUkxjejZVLzBRNGtOdzlE?=
+ =?utf-8?B?UzZkZUZLUFE3eDVNd3lVYldxa21ydTduUEdwU2U3T01OK3BaTzN4a2VoMTF2?=
+ =?utf-8?B?VzgwZFRoRUVWKzFjMk5rZVFnb2U2OWs1YlVUSkk1ODgwSURlTFRPRlVHTk5o?=
+ =?utf-8?B?bHRpdmxVZDU1MjZPQ3NCbVhIY21RWVp2bUlMdk5PZ0hDZkJFMXdhY1NabzRR?=
+ =?utf-8?B?amI1akUzK2xWcjZNRlFJNU5GQ2FXWUl0NkNsVlZjZ00vd2t2SGhsLzBibEdI?=
+ =?utf-8?B?ZkhWcWYrOFlGSXg3LzYrNzIvYUN0WkIxdHR5azhDWWQwbUV3Qlc5QTNjU2c5?=
+ =?utf-8?B?YkFGSytMZVptYmo5RDZZNlExck01WlBQRkdRdkNQZ0U3WDNHNnBHc0xHeDJa?=
+ =?utf-8?B?cEdpRHJOQVltNHlhdWN6VXNVNC9DTWZ3WUVoRFhXWWxkbVVaZGpWUlk1bEtu?=
+ =?utf-8?B?dmpyakxqdXhUUlRFNnVNUlZVT016S25taFlPYXZFZWF6NFJHUy9tZ3FjN00z?=
+ =?utf-8?B?ZUNSbWdZVkgyVVJvVGJ2cTI2N1pSY2MzVE85SXF1UlZCQUEwMnM4WU52bG9H?=
+ =?utf-8?B?eVBKTHlhUUQzTGc0ZE9kaXVOS2FXTUZzOW9uWlNEcWZ5UFdCcXdwbnM2VjRh?=
+ =?utf-8?B?THNaVnNOQVdxTFpJdFB5SEtOY2RZNDZ3QkpIRHVsaStNdE52MHFzcG1ILzlF?=
+ =?utf-8?Q?JhB3urjdqxg6hJW4BTZJNr/k3Pj6G8Mo2mygM=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(376005)(366007)(38070700009)(1580799018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZStGWFRtZjExNlJuS2FYWFVQQTlWK2NwWkE2OW42YjFtTWY2VlhnZ2tWRWtX?=
+ =?utf-8?B?cGJnSTJBNnBMcEhjZDUzaGxwWkl1a1VPWmx2dEhrN1hBZDRzVUpQWFRPZlZy?=
+ =?utf-8?B?Q1pueXdINzM0cnBkd0F6a2ZBUzNnc2VzbERNb1R4UzliSUw2OUdhbnd1NEM4?=
+ =?utf-8?B?VWMvQldnTnJWZDBiRWYwcTlZVUVCMTkyZVlUVnZxTUVZL3c4VHJLMkJZMFBF?=
+ =?utf-8?B?YTdzNjQ3QVU2M01SbjF5Vm9Pa0JxR0h2b3lPa1pUclYxOTFON2lsUFNmQjkr?=
+ =?utf-8?B?R3Zwd2ZvWWlWRUxTUFNJRUJjejF0c3NEaU5TemFoNzBpaXVta1NZVHFKL1pB?=
+ =?utf-8?B?dmJpKzEyU0NpSzlqVUdOYURuTTY4dU90WDFsbHF2cmh2bXU0a0p0Y1liTkFs?=
+ =?utf-8?B?ZTVlbkRUQ3NWbWVjK1lRdVNQYURQcnd4c2VEUlQ2RlptYXJJNjByaEdEOEJK?=
+ =?utf-8?B?by9NRjNEeFJTbDRUaSt3cE5rTStmV1B3bFlBYlY3VnNSc1NXdlJKNEZxanFx?=
+ =?utf-8?B?WCtmdVlsalUwdGpFN0pTN0hzY09mQ0JKdzIwZU83ZnQ2YVd6QTh2ZzdNbXE5?=
+ =?utf-8?B?cHVWd3laM0pCVVY0OVJjYnB6VDFBSGtMMHNXdkRCbkVFenpCRWZmUXREUTl0?=
+ =?utf-8?B?RHZiZ1ZWSXl2WXgreE1NU2hjQzU2akdQY29LWXN5eTdSekFKdkFRZXY4WDMy?=
+ =?utf-8?B?TWRsVSs5bTIzQk1HRWJIOFZTZmg2ZWZybWluWWxra0I2WmdvekYxNmhHd2xX?=
+ =?utf-8?B?VU9ZSEwyOFhoVWkyMXF0TUYvZW1pcUdhUktRaXpJS0lSYjZqUlR0dko2Z1Qx?=
+ =?utf-8?B?WUg5b2ZRTXE3dllNRTJRVmczRnhGZ1REcVdWdHhjTTRpRTh6bXdidjljVlN1?=
+ =?utf-8?B?Z0VZYUhubFVOQlNjSzBFRGFqc3p5aFhuNjlkMjN2TzBEVVl1ZlZ2SlBaKzdL?=
+ =?utf-8?B?UHNmdkFxZE5XNDQrUFZram1XRmV4cDFYWDV1RkwrTjh1YzNIYmJpdWU1U1dw?=
+ =?utf-8?B?U0E5dWgzS3l5bC9wYmYyMFhHRzN4Q0k0SGRDOXY1NFpCWkZlcitIR2VEU1Bk?=
+ =?utf-8?B?VUhWZldKVjExUlhGMk82eEFiUWZhNUZTcmhxcWlGRDVRRUpXREFoZ1NXTjdS?=
+ =?utf-8?B?NWYzbjNLN2MyU1AxRk5iYUtIdWNiQ2dGZFh5U0VoTUc3WnFvR1FuOXBKWDE4?=
+ =?utf-8?B?ZEpIdG42bXpsT2FEVXBzNU5HMlpUQXRsUWFueFRGYXJqcGxWNms5aEtaZ205?=
+ =?utf-8?B?TVpHdWZ0QXRpNUMxb0I3SUNiOTVPWnp6VENNTklhcU5teEZucmlFQ1QxM0hj?=
+ =?utf-8?B?Wk8wOWVLOU1JN1lhMVllVlA5enhtN3A2QTBPcDUwcmpib1lHZlQ5b3E2S002?=
+ =?utf-8?B?amF6eVp4Skt6NFlCTkRkaWtUaWFMQy84bVVqejhZUDZTWWtOeXFHUnV6ZWNI?=
+ =?utf-8?B?OUxyL3puMEVCczVSc0pBSGdWTGl0T3MxNFBxWE1rRjl4UmZlT3hGdk9UbEcv?=
+ =?utf-8?B?ZDlXdVRpaVp2RU5IdGI5QzR5dlBXcE83UVJnRVl6SFZnYVNFdFh2a2ErYzhE?=
+ =?utf-8?B?ZWNiR1hjdFl2bUNWKzhIVGtUbEphSWY5UFdvS1lSd2lIWFV1Z0IzRVQ3bWlU?=
+ =?utf-8?B?YjFJbmV6NXlvL3BkTHJWZWpPQVdwTXBFcnFYeFA2UjJudWZmUjRhT2NsSUd2?=
+ =?utf-8?B?VUhDaW5mOE9NVWlOZ1REVVR4ZmN0WEJNaFJXOHV1bzJOSGhBVXFmNUI3N0dG?=
+ =?utf-8?B?RGpzMEVYSDFjN09HNGJ3ZERsenZhVXRGS0JEVzBTb3UyM0N4dmE4QURWQUxl?=
+ =?utf-8?B?b0tCZVh1VWlXcXY2bHFwZkJLdGZhWGpXN2VDNDhRNUNpZGxraUduSlRJRlVG?=
+ =?utf-8?B?NExwK1JtWVNOV05GcS9vR0lCVExMSExRVEZxV2dUcmc0MXY0ZUhoa2Y1dG9V?=
+ =?utf-8?B?TGZIWHhiM2lBSURoREh5dS80Um1NN2o2eStDQUl2bG5ueFBvKytzL1kzUFNj?=
+ =?utf-8?B?NG5ZSnZIQk1wSE9KbG5CZGZONVBMZUl6Y1lvUXFFSHAzd0pXS3ZFR2Zsb0cy?=
+ =?utf-8?B?VzBBR1poM2RuUWExNU54L1czbmVjckUwMmV6dG1BY2hXUVExV1RwY0dTbEIx?=
+ =?utf-8?B?aXh4R04zbk9KRXFpemxqZUJYWnNoWWVyMVcrdE1jNTArTUdmT1hWZm5HbWtK?=
+ =?utf-8?B?b1E9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <308A14F9EB53DB4F8ABBB5D597F599AD@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=fengli@smartx.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: GA9+tJnctLC7DfO4odIr34RKCq5R3VmZIetLMWbaZywcFR52YDiY+8avXpx8pHOwTQhsU+WNC1MkxvFFvnaAOO7Q8Q0r84xM3P9K01NccmLP1tOl9V1xez/o/aY8GITXlxIfwdTlOrkdvnBDO6ePcNUj/QGqLCxftyHMw6JUd04Ch+tC7y7GBW7aau/ubdcHVNVKWUI24RbRFgNGx7OIlX4lDXe7bAhgTaBYfj+2JIrskYA+Mj5+qjcQVMgzbI4EyZjtZc0VwwgoNCpr6Gi67McsTD7AG2ACC2nfXoru0YrMaATZNh8iNg2KKzTq6xR/I7TKuwH1PhEV+0VdoCcqUXzHxaLvj/sK0fyB46PkCEmug6v9MgZ58iUn+CQCgZC6VcZloO12yCjstlzycyUQFA9oPBadIfjmRNmKvHMLWKWtFlrSPHWYe50G5DaaRLq2mRoFQOEjcRIXizoxDRLyNPfdgW0N/V6gNd2h/a+x8RJy+e7ELEB++G/VXQkCB3/sbHksACazI7HFMe1CFIv03UgtfYoOAXEzLeMftS/T/5ibLXpNqSMtTJi7qQVsUCQPHzk8AQNNM/2AnilDHksZDdX4e+PkTtLpNWZ7SV2iRu+8J7b7cLOS/d3cwjj9Nb6r
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e35e840-aae3-4b29-4588-08dc75598788
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 May 2024 03:37:36.5866 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: SpnH3UHfX51XZfTJgrHL5c36h0gfFUHSg3cN7FqEQvH7Yea+Ka4TazEBhq/PJBGcdt7ghlr2fIrq8+gHJgvwRA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB10276
+Received-SPF: pass client-ip=216.71.158.33; envelope-from=lizhijian@fujitsu.com;
+ helo=esa16.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,128 +193,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the vhost-user is reconnecting to the backend, and if the vhost-user fails
-at the get_features in vhost_dev_init(), then the reconnect will fail
-and it will not be retriggered forever.
-
-The reason is:
-When the vhost-user fail at get_features, the vhost_dev_cleanup will be called
-immediately.
-
-vhost_dev_cleanup calls 'memset(hdev, 0, sizeof(struct vhost_dev))'.
-
-The reconnect path is:
-vhost_user_blk_event
-   vhost_user_async_close(.. vhost_user_blk_disconnect ..)
-     qemu_chr_fe_set_handlers <----- clear the notifier callback
-       schedule vhost_user_async_close_bh
-
-The vhost->vdev is null, so the vhost_user_blk_disconnect will not be
-called, then the event fd callback will not be reinstalled.
-
-We need to ensure that even if vhost_dev_init initialization fails, the event
-handler still needs to be reinstalled when s->connected is false.
-
-All vhost-user devices have this issue, including vhost-user-blk/scsi.
-
-Fixes: 71e076a07d ("hw/virtio: generalise CHR_EVENT_CLOSED handling")
-
-Signed-off-by: Li Feng <fengli@smartx.com>
----
- hw/block/vhost-user-blk.c   |  3 ++-
- hw/scsi/vhost-user-scsi.c   |  3 ++-
- hw/virtio/vhost-user-base.c |  3 ++-
- hw/virtio/vhost-user.c      | 10 +---------
- 4 files changed, 7 insertions(+), 12 deletions(-)
-
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 41d1ac3a5a..c6842ced48 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -353,7 +353,7 @@ static void vhost_user_blk_disconnect(DeviceState *dev)
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
- 
-     if (!s->connected) {
--        return;
-+        goto done;
-     }
-     s->connected = false;
- 
-@@ -361,6 +361,7 @@ static void vhost_user_blk_disconnect(DeviceState *dev)
- 
-     vhost_dev_cleanup(&s->dev);
- 
-+done:
-     /* Re-instate the event handler for new connections */
-     qemu_chr_fe_set_handlers(&s->chardev, NULL, NULL, vhost_user_blk_event,
-                              NULL, dev, NULL, true);
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 48a59e020e..b49a11d23b 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -181,7 +181,7 @@ static void vhost_user_scsi_disconnect(DeviceState *dev)
-     VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(dev);
- 
-     if (!s->connected) {
--        return;
-+        goto done;
-     }
-     s->connected = false;
- 
-@@ -189,6 +189,7 @@ static void vhost_user_scsi_disconnect(DeviceState *dev)
- 
-     vhost_dev_cleanup(&vsc->dev);
- 
-+done:
-     /* Re-instate the event handler for new connections */
-     qemu_chr_fe_set_handlers(&vs->conf.chardev, NULL, NULL,
-                              vhost_user_scsi_event, NULL, dev, NULL, true);
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 4b54255682..11e72b1e3b 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -225,13 +225,14 @@ static void vub_disconnect(DeviceState *dev)
-     VHostUserBase *vub = VHOST_USER_BASE(vdev);
- 
-     if (!vub->connected) {
--        return;
-+        goto done;
-     }
-     vub->connected = false;
- 
-     vub_stop(vdev);
-     vhost_dev_cleanup(&vub->vhost_dev);
- 
-+done:
-     /* Re-instate the event handler for new connections */
-     qemu_chr_fe_set_handlers(&vub->chardev,
-                              NULL, NULL, vub_event,
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index c929097e87..c407ea8939 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -2781,16 +2781,8 @@ typedef struct {
- static void vhost_user_async_close_bh(void *opaque)
- {
-     VhostAsyncCallback *data = opaque;
--    struct vhost_dev *vhost = data->vhost;
- 
--    /*
--     * If the vhost_dev has been cleared in the meantime there is
--     * nothing left to do as some other path has completed the
--     * cleanup.
--     */
--    if (vhost->vdev) {
--        data->cb(data->dev);
--    }
-+    data->cb(data->dev);
- 
-     g_free(data);
- }
--- 
-2.45.0
-
+DQoNCk9uIDE2LzA1LzIwMjQgMDM6MDQsIEZhYmlhbm8gUm9zYXMgd3JvdGU6DQo+IExpIFpoaWpp
+YW4gdmlhIDxxZW11LWRldmVsQG5vbmdudS5vcmc+IHdyaXRlczoNCj4gDQo+PiBDdXJyZW50bHks
+IGl0IGFsd2F5cyByZXR1cm5zIDAsIG5vIG5lZWQgdG8gY2hlY2sgdGhlIHJldHVybiB2YWx1ZSBh
+dCBhbGwuDQo+PiBJbiBhZGRpdGlvbiwgZW50ZXIgY29sbyBjb3JvdXRpbmUgb25seSBpZiBtaWdy
+YXRpb25faW5jb21pbmdfY29sb19lbmFibGVkKCkNCj4+IGlzIHRydWUuDQo+PiBPbmNlIHRoZSBk
+ZXN0aW5hdGlvbiBzaWRlIGVudGVycyB0aGUgQ09MTyogc3RhdGUsIHRoZSBDT0xPIHByb2Nlc3Mg
+d2lsbA0KPj4gdGFrZSBvdmVyIHRoZSByZW1haW5pbmcgcHJvY2Vzc2VzIHVudGlsIENPTE8gZXhp
+dHMuDQo+Pg0KPj4gU2lnbmVkLW9mZi1ieTogTGkgWmhpamlhbiA8bGl6aGlqaWFuQGZ1aml0c3Uu
+Y29tPg0KPj4gLS0tDQo+PiAgIG1pZ3JhdGlvbi9jb2xvLmMgICAgICB8IDkgKystLS0tLS0tDQo+
+PiAgIG1pZ3JhdGlvbi9taWdyYXRpb24uYyB8IDYgKysrLS0tDQo+PiAgIDIgZmlsZXMgY2hhbmdl
+ZCwgNSBpbnNlcnRpb25zKCspLCAxMCBkZWxldGlvbnMoLSkNCj4+DQo+PiBkaWZmIC0tZ2l0IGEv
+bWlncmF0aW9uL2NvbG8uYyBiL21pZ3JhdGlvbi9jb2xvLmMNCj4+IGluZGV4IDU2MDBhNDNkNzgu
+Ljk5MTgwNmMwNmEgMTAwNjQ0DQo+PiAtLS0gYS9taWdyYXRpb24vY29sby5jDQo+PiArKysgYi9t
+aWdyYXRpb24vY29sby5jDQo+PiBAQCAtOTI5LDE2ICs5MjksMTMgQEAgb3V0Og0KPj4gICAgICAg
+cmV0dXJuIE5VTEw7DQo+PiAgIH0NCj4+ICAgDQo+PiAtaW50IGNvcm91dGluZV9mbiBjb2xvX2lu
+Y29taW5nX2NvKHZvaWQpDQo+PiArdm9pZCBjb3JvdXRpbmVfZm4gY29sb19pbmNvbWluZ19jbyh2
+b2lkKQ0KPj4gICB7DQo+PiAgICAgICBNaWdyYXRpb25JbmNvbWluZ1N0YXRlICptaXMgPSBtaWdy
+YXRpb25faW5jb21pbmdfZ2V0X2N1cnJlbnQoKTsNCj4+ICAgICAgIFFlbXVUaHJlYWQgdGg7DQo+
+PiAgIA0KPj4gICAgICAgYXNzZXJ0KGJxbF9sb2NrZWQoKSk7DQo+PiAtDQo+PiAtICAgIGlmICgh
+bWlncmF0aW9uX2luY29taW5nX2NvbG9fZW5hYmxlZCgpKSB7DQo+PiAtICAgICAgICByZXR1cm4g
+MDsNCj4+IC0gICAgfQ0KPj4gKyAgICBhc3NlcnQobWlncmF0aW9uX2luY29taW5nX2NvbG9fZW5h
+YmxlZCgpKTsNCj4gDQo+IEZBSUxFRDogbGliY29tbW9uLmZhLnAvbWlncmF0aW9uX2NvbG8uYy5v
+DQo+IC91c3IvYmluL2djYy0xMyAuLi4gLi4vbWlncmF0aW9uL2NvbG8uYw0KPiAuLi9taWdyYXRp
+b24vY29sby5jOjkzMDoxOTogZXJyb3I6IGNvbmZsaWN0aW5nIHR5cGVzIGZvciDigJhjb2xvX2lu
+Y29taW5nX2Nv4oCZOyBoYXZlIOKAmHZvaWQodm9pZCnigJkNCj4gICAgOTMwIHwgdm9pZCBjb3Jv
+dXRpbmVfZm4gY29sb19pbmNvbWluZ19jbyh2b2lkKQ0KPiAgICAgICAgfCAgICAgICAgICAgICAg
+ICAgICBefn5+fn5+fn5+fn5+fn5+DQo+IEluIGZpbGUgaW5jbHVkZWQgZnJvbSAuLi9taWdyYXRp
+b24vY29sby5jOjIwOg0KPiAuLi4gcWVtdS9pbmNsdWRlL21pZ3JhdGlvbi9jb2xvLmg6NTI6MTg6
+IG5vdGU6IHByZXZpb3VzIGRlY2xhcmF0aW9uIG9mIOKAmGNvbG9faW5jb21pbmdfY2/igJkgd2l0
+aCB0eXBlIOKAmGludCh2b2lkKeKAmQ0KPiAgICAgNTIgfCBpbnQgY29yb3V0aW5lX2ZuIGNvbG9f
+aW5jb21pbmdfY28odm9pZCk7DQoNCk15IGZhdWx0LCB3aWxsIGZpeCBpdCBzb29uDQoNClRoYW5r
+cw0KWmhpamlhbg0KPiAgICAgICAgfCAgICAgICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+fn4=
 
