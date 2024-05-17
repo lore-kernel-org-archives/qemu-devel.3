@@ -4,205 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 188CDC25B78
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE925C25B78
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7tqk-0000Qx-Gl; Fri, 17 May 2024 05:26:02 -0400
+	id 1s7tuN-0001f8-KY; Fri, 17 May 2024 05:29:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s7tqh-0000Qe-L5
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:25:59 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s7tqe-0000qf-El
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:25:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715937956; x=1747473956;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=Dwpqxx4U5cNQMy8/XPgWtS54bAzkD2OvrP3xb9mY0PM=;
- b=HFMBEfDwNFBOFncH4axHsiMkj6Y7WkpbpqCZV53KL/LvHNPb2KRszI94
- +IarnDtmCpKMh/v9qmT+dVwTSDbCP2GBz+nU+xFo8HCqtAEKc1ckbKpqv
- sAu85CMtcOv1ZaPvquGxqDgDYof9+2B7KCq2eME11DfccjS282OVL53kQ
- v3rdVLAMrUsDigSzy8vykclGaSPTo9soLTqTijHOUNq5yxqclHRi2pG8l
- cbQIq++iFxI6wSLTZ7Pt6kDHP+QRYU3mMtUqDAx7fPQIE9Dj4W6E/WIkX
- LAcIAuC/A/IyrvPFtJa5wTyDvgjn0/D/IKFyYZtiZJywWxny1vOVzpcJB A==;
-X-CSE-ConnectionGUID: /bl3nBmkSiCQNL1qJmQvjw==
-X-CSE-MsgGUID: cueIliblTjKIoPxSpn9Hag==
-X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="15053702"
-X-IronPort-AV: E=Sophos;i="6.08,167,1712646000"; d="scan'208";a="15053702"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 May 2024 02:25:52 -0700
-X-CSE-ConnectionGUID: 4AZsWTEXQHS+2lQ8JVd6IA==
-X-CSE-MsgGUID: M5FLBKtCTSyFax6RLELfGA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,167,1712646000"; d="scan'208";a="36246805"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 17 May 2024 02:25:18 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 17 May 2024 02:25:18 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 17 May 2024 02:25:17 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Fri, 17 May 2024 02:25:17 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.168)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Fri, 17 May 2024 02:25:17 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=c2aYnHwimJ1MjLJnSIyuWGpj61fHyANnPHTerfgjDilrrD0AsMQV2tcXkBS6i+D2jvtWiWK/Tw3ewpaQ7Mpo+WIl8PxJbTB7cFxP56RqxkJt/ag+m5oQVTjFHK41VexMIEyrc/MKctM94UU3T7bPM3hcTYRL1ENTs/DQwsxEAmy00vbPPnphSw32mjyTnQb2/JRjs8B+LwWaLWn4GOpM+yzFXGwsAB3RKQI64PHnWGeFT4wjc4mfhADr/5e66XDs+YDUKEOh1zjkYdvjjdn8PYY3GiKN6cXEmEIjnJnZRt2346pY9TeM7Gtnf1X8IPKS/svCIOH+N9BXxzkkjZ1JIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Dwpqxx4U5cNQMy8/XPgWtS54bAzkD2OvrP3xb9mY0PM=;
- b=bsqXq8sjgxt0FbvHKHeV98WYU4xrmS9PxJRuFqhp0+u0llb/isi+WjUEdiWvV8iMAaTvelUcDoKkR7HNGtxR5JzlJ4OPrMsHQ1O3qyosDRSPI1I8ihjN+/KLVCHwFnpORY/uTMcF0hEH6gKJw4D3D76hMaTOIzWeFsJ25zsvG10i7qJiklm9Ki3cJll1dn2YOEMTrIYQWUpIygIbtH2Xn8a31fn7B83tPIgnaIs7nZRSeC1LjlocaM6Mx8EKuR6RmIOfie/rqbV+n55WE0TgSv+FTzmSCiNBaKcLkcMxjXZZArN4BxR28yUBpTr/h8dO5fSIljPLPqW9JrQDGiW3aA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DS0PR11MB7928.namprd11.prod.outlook.com (2603:10b6:8:fe::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7587.30; Fri, 17 May 2024 09:25:15 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::21df:af3:be1d:722e]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::21df:af3:be1d:722e%4]) with mapi id 15.20.7587.026; Fri, 17 May 2024
- 09:25:15 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "Peng, Chao P"
- <chao.p.peng@intel.com>, Joao Martins <joao.m.martins@oracle.com>, Eric Auger
- <eric.auger@redhat.com>, "jasonwang@redhat.com" <jasonwang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, CLEMENT MATHIEU--DRIF
- <clement.mathieu--drif@eviden.com>
-Subject: RE: [PATCH 00/16] VFIO: misc cleanups part2
-Thread-Topic: [PATCH 00/16] VFIO: misc cleanups part2
-Thread-Index: AQHapqE2p60OTWt8dkOWUMGGjIYoX7GaFF8AgAESbsA=
-Date: Fri, 17 May 2024 09:25:15 +0000
-Message-ID: <SJ0PR11MB67445D8FADB5C1AD1C96D26392EE2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
- <e242532d-01eb-4521-90b9-0b1069b498b5@redhat.com>
-In-Reply-To: <e242532d-01eb-4521-90b9-0b1069b498b5@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB7928:EE_
-x-ms-office365-filtering-correlation-id: bed17383-2f2b-49bd-50f8-08dc76534296
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230031|366007|1800799015|376005|38070700009;
-x-microsoft-antispam-message-info: =?utf-8?B?SDZkZVVEdUpvVlQwaThkTG0wMERVTDI5eGI2dlhoc3EwOUJKNnArMldmQ01K?=
- =?utf-8?B?TFZOZjNhU1R3Q21GaXVnOVlxV1RFZmh1dUlhYkQ4NVJkK21RRmNIb3h3cUZi?=
- =?utf-8?B?OFRMMEZLYzdTL2JYaktyUXhXTTVSQ2FteUVzcTgrZHFIMXBUalk1L3pRbmJm?=
- =?utf-8?B?ZnVSN1BtdndIZWZVUXpUdXdEU25YTHJSNkd4a0x3ckdGcXQ4TWdjbTZ4L3Jt?=
- =?utf-8?B?dmQ5RHBnUjhKczdzZTRWMGRSekFGQnJyZzEwaVk0eEpKQnEwN1d3cVp3NEVl?=
- =?utf-8?B?M25UZ1RBcTFFNG1pRWJYeW9ja0xGWDJpdjlqNXZacy9jUDYxYzVBckg0emxa?=
- =?utf-8?B?WEdzQVY1TzZGWStFODZqMnZIc0RsUWl4K05xdktYZ0VycXhFQjdNSWhqbHhK?=
- =?utf-8?B?MW4xK0NpMXlDYTU4NUxrRnhWdUk4SmFxUlBxWERsY1ZId0NlK2lXd2dwV0JN?=
- =?utf-8?B?YUFJc2lxVFVoMndBR2xJZUlTMlRBRWUzQWE0MUViSXFtUTR4OFNCRW5naXEx?=
- =?utf-8?B?bi9JK3AvWWtHR0dsbTU1Q1g4Q3dnSCtoaXpEWS9hSWdaUko5aEY3cFdlU0Z3?=
- =?utf-8?B?UWR1RVhzUGZNVFNubEtZaENreTdmWHNKRkloelhScDZ1MkhnWnFPdXZ0WjJu?=
- =?utf-8?B?UmI2ZkI3UXFaUlZ0YTlxb1hqMFJ2eEpVbTc5MU9hbmJaKzErdFlOdjkySXNO?=
- =?utf-8?B?OGtZN3JnemJkRWN4cXpuc3F3SlBtRzdxcXlMUXBFNnNET0Z6Y2tDNitwRDh0?=
- =?utf-8?B?ZTN4Qzl4dmlkUEhvT01NWnVya2EveXNQeFJYVkcxOTBIaXhXKy9GNnRndnpo?=
- =?utf-8?B?aFhZN00zbW9qdEVrM0VGd01vY3pFN0gvY0dxSjljYnFoLzdHN3pZbVFJMnlO?=
- =?utf-8?B?aGREMEt6Ni8wWGYvK0NDcDE3RHkrU0pHV2UyNG5KSlRiQ3ZCamtwOFVnZCta?=
- =?utf-8?B?K2dvZkNmNWMyRWl4Y2lIaUVBN2M4NStIZGNINUwwRHhET3p3d3VHZ3hiMmlp?=
- =?utf-8?B?UlRpWW1CMjhQYjZYSjNpYVl2Mkw4b0dXQko2bG81ZnpqWXRLYW1vRmVJcFh0?=
- =?utf-8?B?UzRKeWdPaFFIODVZS2FSUVBUSU96OUs3bFJLa0dWS2Y1NzVJbjZNVDRHZ0lC?=
- =?utf-8?B?c1pPcmtHc1d1YUpDZTRtSnhBcUFBRkhaUHl6Y0JCYTJpemZ2b2MyQU1MVnM4?=
- =?utf-8?B?SWliemVpSitnaUJQY3RINmNjelNMeUpUMWdvUUVOMytJam4xL1BnQ2hIV3FH?=
- =?utf-8?B?YlhWcTJodWN0NWh5U1BIN2tPRS9PU2dlL2JXZ2tyT01XNFRrZlc2TVIwelZN?=
- =?utf-8?B?dWFLNjdPSE55amJXd0w2S05MTEt4MHhwb0NHL1pNWDNmdlFLcHNZcU9teTVz?=
- =?utf-8?B?MzM3VG5kVmRwUVZEa1ROSjRXM0l6SGZ4dEpsWTB4MFJqNWpaNzdSMXE3MEoy?=
- =?utf-8?B?SEEzVjVCZ3NRVlE4WkNRdXlYOEhyZFVKejZhNTZsL2hVbnc4U0hibEdUY09O?=
- =?utf-8?B?SllmVjNweEdwVHlOanFyMi9ZcEwvSmp0REFFeSt5Y0dsald2SDI1MGliTFYy?=
- =?utf-8?B?Wk5HQlA0aVdKWHB3di9sOTFzUU9yREFIVnBoZWk1clN0aW1NVjRFYVZzQ2xZ?=
- =?utf-8?B?NzRGcHIzaWxIek4rMnJPalUybG8yajQ5Z2ljbTBudEM4MUZGdmdLTWRYTjkv?=
- =?utf-8?B?QVVncHB3VW9tQVU1UWtKTGR1WU0xK25VWkdSODMveitoSkdIUnJSSEVhQjhS?=
- =?utf-8?Q?1Ei9MGEFOUBVuY4lBw=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(376005)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YXlYRVlxT05tVW1SeTc1TVB4a3VVQVdvWEliTFVBK1B6ZVdRZ2RiNWRvdUg3?=
- =?utf-8?B?M0kvaFdWNjBWL2w0TU5lcnI2VWkzUVNFYi91NUJzTWJSVlE5cWx4Qk95MUlI?=
- =?utf-8?B?d1FaeDYrVks1UmlTOXJVNHNLR0o1aExhM3Z4d2k0b0E5a0VJTDVSekFBUTZX?=
- =?utf-8?B?ZEgxRDdtR283bUZLZWE5U3k5aEw1TVdWcUJ6cytZUzdtVDRIbWVQR3NZbjJu?=
- =?utf-8?B?aEFSbks4TFhvOE1Gd1hFbUxrU3YwOTEvQmQyU0JpUkNTNzFOMVBPKzd0OGd3?=
- =?utf-8?B?aWtLUTNVWE1DbVFPMjBmRzl2NVdwc0VSSHVjeXRqYVovczdSZE50dU5jczJq?=
- =?utf-8?B?TW5oekExempqTmIyQVB4OFZWOFdUQks4K2ZSYnNwMFpJU2c0SWJjMEU1eUZl?=
- =?utf-8?B?eUh3SFFaM0Z3MElZSDlaOW1PeC84OE1jdzJWTVJYeVNhcFVMTXFybUc1a1Fq?=
- =?utf-8?B?SlEzcTREbldLMklRa2NtR08wT3ZVYVVXQ1B1ODhIZzRhKzhZZUw4VzBnMkxL?=
- =?utf-8?B?a0ExbEZYdjM2dmw5RlVwaEdUL3BaTGtRZWdiajQ5eDIrRXl0MXE4Y1ZMVmE0?=
- =?utf-8?B?RUFDenVEN080dmhHaDlXWlVBa0dkUFRHUE0xaEFVTStuM2J1QXF1VDA2bE5L?=
- =?utf-8?B?VGVqSy81SmQzdFYzTEdsQ1dkYjFIUHBvNnNNNmFmYlJqR2IxK0lqaHRvMEZO?=
- =?utf-8?B?a0w2aTBiVVFMNHJORUhhVWJPNWFvaXNteGowckdzZFBtdzl0cUluT0YvTVRF?=
- =?utf-8?B?cjB1VUovVE9rZGZwQkhvVlFuKzhMVCtrMmRRYnU4bzhlSk1hSm1vUW0yNW8r?=
- =?utf-8?B?MFg3QTA3YTRqdXBSMXZjeFAxSEQ0eXFKUllMZHkydndGNmI1emJBTE5yV2E0?=
- =?utf-8?B?YS9lbVljSnhHUzBzUklqdXE3dnpOYmdCbmUrSmlreGpBVjdWWjBpNndMbThX?=
- =?utf-8?B?aHU1YVVtMFg4aStISStmMVB0ckVISGtZRk1SSzdVVmdDVENEbUljRThKQXFu?=
- =?utf-8?B?aUpZbnhOcStRUkxINlZ1R1Q3QWxGRHpHY3pNZGtPR2lqc0YvR1psNjZDa0JE?=
- =?utf-8?B?MzBtSm4vWmN3cjEvMWZPNkk2Y2xTeWVTSlVrblNvdkpROGM1V3lmcE5sM1FY?=
- =?utf-8?B?L2RlK3c4R01LZFpjNWMxY1l4cTBDbXI5RHN4ZzRwTUJQbS9jYkMxKzlENzZH?=
- =?utf-8?B?WDhDelZmelA3K09XK3lXanBhL1VZTnBTbDNoZzA0RDB2VlhOMlcvbWdyK090?=
- =?utf-8?B?dDdGZkFsblhnWVdYOUZrYnZxa21nOUt4Z1FycEU5UStjZlBDVGVxSFNieHdK?=
- =?utf-8?B?U1V0L3ZtekZHZnRDZEs5OU9oQ3BtaXA3WXZTZmsrNmpLVzdLUVdlUE9IREJo?=
- =?utf-8?B?bHVZWXhPQTRFT1pLVWlrT3N5TzhKbmMvMUhJdWxSd2pJbUt5UHpYMm55QSs0?=
- =?utf-8?B?NDVVVmdBL2srR1QzaHdQaitSaUpySFhKekJsWmNPck9UcUZrREVQYXlMM3NC?=
- =?utf-8?B?cndGL2lENWc0a01qRy9OZGRIclJpZ2I2bzVxaCtIandWeDdMemlNZjhSbkhx?=
- =?utf-8?B?Q3pMek03NEZoVVlqczFhRzZFNFU3akFJTFd4WkFycHJFQ3EvSkRINDdRaGpi?=
- =?utf-8?B?UXJWUE12V09vZWRTM0RzaUYrcE1vTG1qRVQ0Zm52djNoOCszdE9USmtHRjV1?=
- =?utf-8?B?cU9MZVVkd1QrSm04RDN2cThRRThSTDM5RjIyT01MbzBoR1pYd2JMandwNW9t?=
- =?utf-8?B?bFNUWThqQzhyb3dKeUE1eHhCby93c05nUGRrQjRFSmxWTXNqU21WTFlkK1po?=
- =?utf-8?B?VkpHTGpEL0Z2QjNZS1NlYnNzMDROR0dhSzhRd3NCTXFVYTNzcVNwekptSVFS?=
- =?utf-8?B?ejdiVHEvWjRScEFpajJneE12V2Y3MEhNZVpkeVFqZS9FTTluTEg4V2Y4eVdv?=
- =?utf-8?B?S0tic1VUYlVFa2dSVjhjVFRkV1ovS2pGNEVOalkwYllRaGNpZ09hSTNPTk0z?=
- =?utf-8?B?eXM1QjQ0M2JFTkRmRnZjV2Y5UlpsL2dUUWRzb2hoK0NwaVNJVXdSQ2lNMFJz?=
- =?utf-8?B?VFlVSEZzczlSNGdBRWZSVU9pVVovSWRYK1ZQSnI3dXNrTnRGejlHdjRuZmtW?=
- =?utf-8?Q?QILrT4t3z4T+rtKACKchebQk+?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s7tuM-0001en-28
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:29:46 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s7tuI-0001B4-1P
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:29:45 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1eca195a7c8so3585955ad.2
+ for <qemu-devel@nongnu.org>; Fri, 17 May 2024 02:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1715938179; x=1716542979; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CMAWjyjpSCmVCIAoBYVxPDxn+aC7bC35vzUVWi7kAdI=;
+ b=lZdfCr4eYv15ag31TUdSX+QZpWOw4R3CxugzCsFjoFw7shafh1sVKRnVlpvzsJJAoG
+ Lfvw0OZlopYQ8kOpbQycyXfWnOOAAuxiKEwG/xknZgUS4V/4sI5h+ENzH35lqZZsx/n7
+ rmXnsBCCtRz4WPYS5iqU/mkuqywu6rWa0uli1R2IeMUsSmPTsRP1yR2d4ihM+iINAamn
+ fN2MCsg54feJTjz09UzUbeWD62IKDJVrXWLm3LyM2rkWH2mb2ovY3fHxd4H8b6Q0JGEN
+ OdjIG1KFhzaf1duwHMBbX3HV+gqumhFAQ9dbZf13o2f/WZOIen5eX0Tz16BCdrWoKn44
+ 6aNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715938179; x=1716542979;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CMAWjyjpSCmVCIAoBYVxPDxn+aC7bC35vzUVWi7kAdI=;
+ b=J4ZSODwXotfYdJvDCEfsz946aInr5tmly9fw/mSGM7K+VtzS3vMV9CE10m6nYL4olZ
+ eI3B8VmI6qNAVsznxApowGEqXpUSVmEnXlX/FmGrq3VM8TPbL4TuKs4qWTtK3qowPeWp
+ G+jGDCn0vZva7RgdVermMdLsa+IqGVjUs69uwB9Ei/XfZWgmzrNYUBSxbsnTHOu0k+wy
+ tfv0ccjzvT/sojaBGF6lp+NxgPwmAM09DOJpJeIvDvfeyOpwuzIzK6yuMlaj28YrSsR7
+ ISAg905kCZ59j9jT3D8Y6maHmLCLjz57x4DjmIqhrBMkf9oX7JQWTEZB/PXM4GrG7ffn
+ 4I4w==
+X-Gm-Message-State: AOJu0YxAeDOhc/9HVTS0Qj9KhmwMWz4+NJSGTMLRkkm/gLGVDr92Wmb9
+ 8K4fxb0NhPIqbOhEpgFYBJdhQQC+3Kg83iLiNwvoRaYiXaaee/q8duAS9NAGnRM=
+X-Google-Smtp-Source: AGHT+IHoFtid6WA+9lNuQJHLmQMMA7MSyxu/BmuSxfZaKB3sWWKVubdRMAzV1LgFSZz45RXiJH5sxQ==
+X-Received: by 2002:a17:903:41c4:b0:1eb:50fd:7875 with SMTP id
+ d9443c01a7336-1ef43e2323cmr265470875ad.33.1715938178721; 
+ Fri, 17 May 2024 02:29:38 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.42.57])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f070c54e45sm96408545ad.99.2024.05.17.02.29.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 May 2024 02:29:38 -0700 (PDT)
+Message-ID: <680add99-f5fb-4c75-83de-fef26991b064@ventanamicro.com>
+Date: Fri, 17 May 2024 06:29:33 -0300
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bed17383-2f2b-49bd-50f8-08dc76534296
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 May 2024 09:25:15.0992 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: IPoXU9o7XLNcIKmrfpt3oCsAVIzQ7gIcGbb2kuw32yo9Z+qkewKEYPj+ct7wJvP4Wk1Pw6ZCG2cosHGtloVqALyt3Irhi3mYJ8yu07LWKB8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7928
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/15] hw/riscv/riscv-iommu: add ATS support
+To: Frank Chang <frank.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ <20240307160319.675044-11-dbarboza@ventanamicro.com>
+ <CANzO1D2dj3boVZoWGtM3Ji0S_xPPu2JThFBqXEudJgKVp=S3UA@mail.gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CANzO1D2dj3boVZoWGtM3Ji0S_xPPu2JThFBqXEudJgKVp=S3UA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,76 +99,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogQ8OpZHJp
-YyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPlNlbnQ6IEZyaWRheSwgTWF5IDE3LCAyMDI0
-IDEyOjQ4IEFNDQo+VG86IER1YW4sIFpoZW56aG9uZyA8emhlbnpob25nLmR1YW5AaW50ZWwuY29t
-PjsgcWVtdS0NCj5kZXZlbEBub25nbnUub3JnDQo+Q2M6IGFsZXgud2lsbGlhbXNvbkByZWRoYXQu
-Y29tOyBlcmljLmF1Z2VyQHJlZGhhdC5jb207IFBlbmcsIENoYW8gUA0KPjxjaGFvLnAucGVuZ0Bp
-bnRlbC5jb20+DQo+U3ViamVjdDogUmU6IFtQQVRDSCAwMC8xNl0gVkZJTzogbWlzYyBjbGVhbnVw
-cyBwYXJ0Mg0KPg0KPkhlbGxvIFpoZW56aG9uZywNCj4NCj5PbiA1LzE1LzI0IDEwOjIwLCBaaGVu
-emhvbmcgRHVhbiB3cm90ZToNCj4+IEhpDQo+Pg0KPj4gVGhpcyBpcyB0aGUgbGFzdCByb3VuZCBv
-ZiBjbGVhbnVwIHNlcmllcyB0byBjaGFuZ2UgZnVuY3Rpb25zIGluIGh3L3ZmaW8vDQo+PiB0byBy
-ZXR1cm4gYm9vbCB3aGVuIHRoZSBlcnJvciBpcyBwYXNzZWQgdGhyb3VnaCBlcnJwIHBhcmFtZXRl
-ci4NCj4+DQo+PiBUaGUgZmlyc3Qgcm91bmQgaXMgYXQgaHR0cHM6Ly9saXN0cy5nbnUub3JnL2Fy
-Y2hpdmUvaHRtbC9xZW11LWRldmVsLzIwMjQtDQo+MDUvbXNnMDExNDcuaHRtbA0KPj4NCj4+IEkg
-c2VlIEPDqWRyaWMgaXMgYWxzbyB3b3JraW5nIG9uIHNvbWUgbWlncmF0aW9uIHN0dWZmIGNsZWFu
-dXAsDQo+PiBzbyBkaWRuJ3QgdG91Y2ggbWlncmF0aW9uLmMsIGJ1dCBhbGwgb3RoZXIgZmlsZXMg
-aW4gaHcvdmZpby8gYXJlIGNsZWFudXAgbm93Lg0KPj4NCj4+IFBhdGNoMSBpcyBhIGZpeCBwYXRj
-aCwgYWxsIG90aGVycyBhcmUgY2xlYW51cCBwYXRjaGVzLg0KPj4NCj4+IFRlc3QgZG9uZSBvbiB4
-ODYgcGxhdGZvcm06DQo+PiB2ZmlvIGRldmljZSBob3RwbHVnL3VucGx1ZyB3aXRoIGRpZmZlcmVu
-dCBiYWNrZW5kDQo+PiByZWJvb3QNCj4+DQo+PiBUaGlzIHNlcmllcyBpcyByZWJhc2VkIHRvIGh0
-dHBzOi8vZ2l0aHViLmNvbS9sZWdvYXRlci9xZW11L3RyZWUvdmZpby1uZXh0DQo+DQo+SSBxdWV1
-ZWQgcGFydCAxIGluIHZmaW8tbmV4dCB3aXRoIG90aGVyIGNoYW5nZXMuIHBhcnQgMiBpcyBpbiB2
-ZmlvLTkuMQ0KPmZvciBub3cgYW5kIHNob3VsZCByZWFjaCB2ZmlvLW5leHQgYWZ0ZXIgcmV2aWV3
-cyBuZXh0IHdlZWsuDQo+DQo+VGhlbiwgd2UgaGF2ZSB0byB3b3JrIG9uIHlvdXIgdjUgWzFdIHdo
-aWNoIHNob3VsZCBoYXZlIGFsbCBteSBhdHRlbnRpb24NCj5hZ2FpbiBhZnRlciB0aGUgbmV4dCB2
-ZmlvIFBSLiBZb3UsIEpvYW8gYW5kIEVyaWMgaGF2ZSBmb2xsb3d1cHMgc2VyaWVzDQo+dGhhdCBu
-ZWVkIGEgcmVzeW5jIG9uIHRvcCBvZiB2NSwgcG9zc2libHkgb3RoZXJzIFsyXSBhbmQgWzNdLCBu
-b3Qgc2VudA0KPkFGQUlDVC4gQW55aG93LCB3ZSB3aWxsIG5lZWQgaW5wdXRzIGZyb20gdGhlc2Ug
-cGVvcGxlIGFuZCBJT01NVQ0KPnN0YWtlaG9sZGVycy9tYWludGFpbmVycy4NCg0KVGhhbmtzIGZv
-ciBzaGFyaW5nIHRoZSBwbGFuLg0KDQorSm9hbywgRXJpYywgTWljaGFlbCwgSmFzb24sIE5pY29s
-aW4sIENsZW1lbnQgZm9yIHRoZWlyIGF3YXJlbmVzcy4NCg0KT24gbXkgc2lkZSwgSSBoYXZlIHJl
-YmFzZWQgbmVzdGluZyBzZXJpZXMgb24gdG9wIG9mIHY1WzFdLA0KdGhlIG5ld2VzdCBwYXRjaGVz
-IGF0IGh0dHBzOi8vZ2l0aHViLmNvbS95aWxpdTE3NjUvcWVtdS9jb21taXRzL3poZW56aG9uZy9p
-b21tdWZkX25lc3RpbmdfcmZjdjIvDQppcyB1bmRlciBpbnRlcm5hbCByZXZpZXcsIEZZSS4NCg0K
-VGhhbmtzDQpaaGVuemhvbmcNCg0KPg0KPlRoYW5rcywNCj4NCj5DLg0KPg0KPlsxXSBbUEFUQ0gg
-djUgMDAvMTldIEFkZCBhIGhvc3QgSU9NTVUgZGV2aWNlIGFic3RyYWN0aW9uIHRvIGNoZWNrIHdp
-dGgNCj52SU9NTVUNCj4gICAgIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAy
-NDA1MDcwOTIwNDMuMTE3MjcxNy0xLQ0KPnpoZW56aG9uZy5kdWFuQGludGVsLmNvbS8NCj4NCj5b
-Ml0gW1BBVENIIGF0c192dGQgdjIgMDAvMjVdIEFUUyBzdXBwb3J0IGZvciBWVC1kDQo+ICAgICBo
-dHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyNDA1MTUwNzEwNTcuMzM5OTAtMS1jbGVtZW50
-Lm1hdGhpZXUtLQ0KPmRyaWZAZXZpZGVuLmNvbS8NCj4NCj5bM10gQWRkIFRlZ3JhMjQxIChHcmFj
-ZSkgQ01EUVYgU3VwcG9ydA0KPiAgICAgaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsL2NvdmVy
-LjE3MTI5NzgyMTIuZ2l0Lm5pY29saW5jQG52aWRpYS5jb20vDQo+ICAgICBodHRwczovL2dpdGh1
-Yi5jb20vbmljb2xpbmMvcWVtdS9jb21taXRzL3dpcC9pb21tdWZkX3ZjbWRxLw0KPg0KPg0KPg0K
-Pj4NCj4+IFRoYW5rcw0KPj4gWmhlbnpob25nDQo+Pg0KPj4gWmhlbnpob25nIER1YW4gKDE2KToN
-Cj4+ICAgIHZmaW8vZGlzcGxheTogRml4IGVycm9yIHBhdGggaW4gY2FsbCBzaXRlIG9mIHJhbWZi
-X3NldHVwKCkNCj4+ICAgIHZmaW8vZGlzcGxheTogTWFrZSB2ZmlvX2Rpc3BsYXlfKigpIHJldHVy
-biBib29sDQo+PiAgICB2ZmlvL2hlbHBlcnM6IFVzZSBnX2F1dG9mcmVlIGluIGh3L3ZmaW8vaGVs
-cGVycy5jDQo+PiAgICB2ZmlvL2hlbHBlcnM6IE1ha2UgdmZpb19zZXRfaXJxX3NpZ25hbGluZygp
-IHJldHVybiBib29sDQo+PiAgICB2ZmlvL2hlbHBlcnM6IE1ha2UgdmZpb19kZXZpY2VfZ2V0X25h
-bWUoKSByZXR1cm4gYm9vbA0KPj4gICAgdmZpby9wbGF0Zm9ybTogTWFrZSB2ZmlvX3BvcHVsYXRl
-X2RldmljZSgpIGFuZCB2ZmlvX2Jhc2VfZGV2aWNlX2luaXQoKQ0KPj4gICAgICByZXR1cm4gYm9v
-bA0KPj4gICAgdmZpby9jY3c6IE1ha2UgdmZpb19jY3dfZ2V0X3JlZ2lvbigpIHJldHVybiBhIGJv
-b2wNCj4+ICAgIHZmaW8vcGNpOiBNYWtlIHZmaW9faW50eF9lbmFibGVfa3ZtKCkgcmV0dXJuIGEg
-Ym9vbA0KPj4gICAgdmZpby9wY2k6IE1ha2UgdmZpb19wY2lfcmVsb2NhdGVfbXNpeCgpIGFuZCB2
-ZmlvX21zaXhfZWFybHlfc2V0dXAoKQ0KPj4gICAgICByZXR1cm4gYSBib29sDQo+PiAgICB2Zmlv
-L3BjaTogTWFrZSB2ZmlvX3BvcHVsYXRlX2RldmljZSgpIHJldHVybiBhIGJvb2wNCj4+ICAgIHZm
-aW8vcGNpOiBNYWtlIHZmaW9faW50eF9lbmFibGUoKSByZXR1cm4gYm9vbA0KPj4gICAgdmZpby9w
-Y2k6IE1ha2UgdmZpb19wb3B1bGF0ZV92Z2EoKSByZXR1cm4gYm9vbA0KPj4gICAgdmZpby9wY2k6
-IE1ha2UgY2FwYWJpbGl0eSByZWxhdGVkIGZ1bmN0aW9ucyByZXR1cm4gYm9vbA0KPj4gICAgdmZp
-by9wY2k6IFVzZSBnX2F1dG9mcmVlIGZvciB2ZmlvX3JlZ2lvbl9pbmZvIHBvaW50ZXINCj4+ICAg
-IHZmaW8vcGNpLXF1aXJrczogTWFrZSB2ZmlvX3BjaV9pZ2Rfb3ByZWdpb25faW5pdCgpIHJldHVy
-biBib29sDQo+PiAgICB2ZmlvL3BjaS1xdWlya3M6IE1ha2UgdmZpb19hZGRfKl9jYXAoKSByZXR1
-cm4gYm9vbA0KPj4NCj4+ICAgaHcvdmZpby9wY2kuaCAgICAgICAgICAgICAgICAgfCAgMTIgKy0N
-Cj4+ICAgaW5jbHVkZS9ody92ZmlvL3ZmaW8tY29tbW9uLmggfCAgIDYgKy0NCj4+ICAgaHcvdmZp
-by9hcC5jICAgICAgICAgICAgICAgICAgfCAgMTAgKy0NCj4+ICAgaHcvdmZpby9jY3cuYyAgICAg
-ICAgICAgICAgICAgfCAgMjUgKystLQ0KPj4gICBody92ZmlvL2Rpc3BsYXkuYyAgICAgICAgICAg
-ICB8ICAyMiArKy0tDQo+PiAgIGh3L3ZmaW8vaGVscGVycy5jICAgICAgICAgICAgIHwgIDMzICsr
-LS0tDQo+PiAgIGh3L3ZmaW8vaWdkLmMgICAgICAgICAgICAgICAgIHwgICA1ICstDQo+PiAgIGh3
-L3ZmaW8vcGNpLXF1aXJrcy5jICAgICAgICAgIHwgIDUwICsrKystLS0tDQo+PiAgIGh3L3ZmaW8v
-cGNpLmMgICAgICAgICAgICAgICAgIHwgMjI3ICsrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0t
-LS0tLS0NCj4+ICAgaHcvdmZpby9wbGF0Zm9ybS5jICAgICAgICAgICAgfCAgNjEgKysrKy0tLS0t
-DQo+PiAgIDEwIGZpbGVzIGNoYW5nZWQsIDIxMyBpbnNlcnRpb25zKCspLCAyMzggZGVsZXRpb25z
-KC0pDQo+Pg0KDQo=
+Hi Frank,
+
+
+On 5/7/24 23:57, Frank Chang wrote:
+> Hi Daniel,
+> 
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:06寫道：
+>>
+>> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+>>
+>> Add PCIe Address Translation Services (ATS) capabilities to the IOMMU.
+>> This will add support for ATS translation requests in Fault/Event
+>> queues, Page-request queue and IOATC invalidations.
+>>
+>> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   hw/riscv/riscv-iommu-bits.h |  43 ++++++++++++++-
+>>   hw/riscv/riscv-iommu.c      | 107 +++++++++++++++++++++++++++++++++---
+>>   hw/riscv/riscv-iommu.h      |   1 +
+>>   hw/riscv/trace-events       |   3 +
+>>   4 files changed, 145 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+>> index 9d645d69ea..0994f5ce48 100644
+>> --- a/hw/riscv/riscv-iommu-bits.h
+>> +++ b/hw/riscv/riscv-iommu-bits.h
+>> @@ -81,6 +81,7 @@ struct riscv_iommu_pq_record {
+>>   #define RISCV_IOMMU_CAP_SV57X4          BIT_ULL(19)
+>>   #define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
+>>   #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
+>> +#define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
+>>   #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
+>>   #define RISCV_IOMMU_CAP_PAS             GENMASK_ULL(37, 32)
+>>   #define RISCV_IOMMU_CAP_PD8             BIT_ULL(38)
+>> @@ -201,6 +202,7 @@ struct riscv_iommu_dc {
+>>
+>>   /* Translation control fields */
+>>   #define RISCV_IOMMU_DC_TC_V             BIT_ULL(0)
+>> +#define RISCV_IOMMU_DC_TC_EN_ATS        BIT_ULL(1)
+>>   #define RISCV_IOMMU_DC_TC_DTF           BIT_ULL(4)
+>>   #define RISCV_IOMMU_DC_TC_PDTV          BIT_ULL(5)
+>>   #define RISCV_IOMMU_DC_TC_PRPR          BIT_ULL(6)
+>> @@ -259,6 +261,20 @@ struct riscv_iommu_command {
+>>   #define RISCV_IOMMU_CMD_IODIR_DV        BIT_ULL(33)
+>>   #define RISCV_IOMMU_CMD_IODIR_DID       GENMASK_ULL(63, 40)
+>>
+>> +/* 3.1.4 I/O MMU PCIe ATS */
+>> +#define RISCV_IOMMU_CMD_ATS_OPCODE              4
+>> +#define RISCV_IOMMU_CMD_ATS_FUNC_INVAL          0
+>> +#define RISCV_IOMMU_CMD_ATS_FUNC_PRGR           1
+>> +#define RISCV_IOMMU_CMD_ATS_PID         GENMASK_ULL(31, 12)
+>> +#define RISCV_IOMMU_CMD_ATS_PV          BIT_ULL(32)
+>> +#define RISCV_IOMMU_CMD_ATS_DSV         BIT_ULL(33)
+>> +#define RISCV_IOMMU_CMD_ATS_RID         GENMASK_ULL(55, 40)
+>> +#define RISCV_IOMMU_CMD_ATS_DSEG        GENMASK_ULL(63, 56)
+>> +/* dword1 is the ATS payload, two different payload types for INVAL and PRGR */
+>> +
+>> +/* ATS.PRGR payload */
+>> +#define RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE      GENMASK_ULL(47, 44)
+>> +
+>>   enum riscv_iommu_dc_fsc_atp_modes {
+>>       RISCV_IOMMU_DC_FSC_MODE_BARE = 0,
+>>       RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32 = 8,
+>> @@ -322,7 +338,32 @@ enum riscv_iommu_fq_ttypes {
+>>       RISCV_IOMMU_FQ_TTYPE_TADDR_INST_FETCH = 5,
+>>       RISCV_IOMMU_FQ_TTYPE_TADDR_RD = 6,
+>>       RISCV_IOMMU_FQ_TTYPE_TADDR_WR = 7,
+>> -    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 8,
+>> +    RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ = 8,
+>> +    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 9,
+>> +};
+>> +
+>> +/* Header fields */
+>> +#define RISCV_IOMMU_PREQ_HDR_PID        GENMASK_ULL(31, 12)
+>> +#define RISCV_IOMMU_PREQ_HDR_PV         BIT_ULL(32)
+>> +#define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
+>> +#define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
+>> +#define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
+>> +
+>> +/* Payload fields */
+>> +#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
+>> +#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
+>> +#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
+>> +#define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
+>> +#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
+>> +#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
+>> +
+>> +
+>> +/*
+>> + * struct riscv_iommu_msi_pte - MSI Page Table Entry
+>> + */
+>> +struct riscv_iommu_msi_pte {
+>> +      uint64_t pte;
+>> +      uint64_t mrif_info;
+>>   };
+>>
+>>   /* Fields on pte */
+>> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+>> index 03a610fa75..7af5929b10 100644
+>> --- a/hw/riscv/riscv-iommu.c
+>> +++ b/hw/riscv/riscv-iommu.c
+>> @@ -576,7 +576,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+>>               RISCV_IOMMU_DC_IOHGATP_MODE_BARE);
+>>           ctx->satp = set_field(0, RISCV_IOMMU_ATP_MODE_FIELD,
+>>               RISCV_IOMMU_DC_FSC_MODE_BARE);
+>> -        ctx->tc = RISCV_IOMMU_DC_TC_V;
+>> +        ctx->tc = RISCV_IOMMU_DC_TC_EN_ATS | RISCV_IOMMU_DC_TC_V;
+> 
+> We should OR RISCV_IOMMU_DC_TC_EN_ATS only when IOMMU has ATS capability.
+> (i.e. s->enable_ats == true).
+> 
+>>           ctx->ta = 0;
+>>           ctx->msiptp = 0;
+>>           return 0;
+>> @@ -1021,6 +1021,18 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>>       enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
+>>       enable_pasid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+>>
+>> +    /* Check for ATS request. */
+>> +    if (iotlb->perm == IOMMU_NONE) {
+>> +        /* Check if ATS is disabled. */
+>> +        if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS)) {
+>> +            enable_pri = false;
+>> +            fault = RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
+>> +            goto done;
+>> +        }
+>> +        trace_riscv_iommu_ats(s->parent_obj.id, PCI_BUS_NUM(ctx->devid),
+>> +                PCI_SLOT(ctx->devid), PCI_FUNC(ctx->devid), iotlb->iova);
+> 
+> It's possible that iotlb->perm == IOMMU_NONE,
+> but the translation request comes from riscv_iommu_process_dbg().
+
+That's true. I don't see an easy way to distinguish at this point whether
+the translation was triggered by an actual ATS request or a DBG request.
+
+I'll remove this trace since it's ambiguous.  There are enough traces in ATS
+code in riscv_iommu_ats_inval() and riscv_iommu_ats_prgr(). We also have a trace
+for each command being processed in riscv_iommu_process_cq_tail().
+
+
+Thanks,
+
+
+Daniel
+
+> 
+>> +    }
+>> +
+>>       iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
+>>       perm = iot ? iot->perm : IOMMU_NONE;
+>>       if (perm != IOMMU_NONE) {
+>> @@ -1067,13 +1079,10 @@ done:
+>>
+>>       if (enable_faults && fault) {
+>>           struct riscv_iommu_fq_record ev;
+>> -        unsigned ttype;
+>> -
+>> -        if (iotlb->perm & IOMMU_RW) {
+>> -            ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+>> -        } else {
+>> -            ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
+>> -        }
+>> +        const unsigned ttype =
+>> +            (iotlb->perm & IOMMU_RW) ? RISCV_IOMMU_FQ_TTYPE_UADDR_WR :
+>> +            ((iotlb->perm & IOMMU_RO) ? RISCV_IOMMU_FQ_TTYPE_UADDR_RD :
+>> +            RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ);
+>>           ev.hdr = set_field(0, RISCV_IOMMU_FQ_HDR_CAUSE, fault);
+>>           ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE, ttype);
+>>           ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_PV, enable_pasid);
+>> @@ -1105,6 +1114,73 @@ static MemTxResult riscv_iommu_iofence(RISCVIOMMUState *s, bool notify,
+>>           MEMTXATTRS_UNSPECIFIED);
+>>   }
+>>
+>> +static void riscv_iommu_ats(RISCVIOMMUState *s,
+>> +    struct riscv_iommu_command *cmd, IOMMUNotifierFlag flag,
+>> +    IOMMUAccessFlags perm,
+>> +    void (*trace_fn)(const char *id))
+>> +{
+>> +    RISCVIOMMUSpace *as = NULL;
+>> +    IOMMUNotifier *n;
+>> +    IOMMUTLBEvent event;
+>> +    uint32_t pasid;
+>> +    uint32_t devid;
+>> +    const bool pv = cmd->dword0 & RISCV_IOMMU_CMD_ATS_PV;
+>> +
+>> +    if (cmd->dword0 & RISCV_IOMMU_CMD_ATS_DSV) {
+>> +        /* Use device segment and requester id */
+>> +        devid = get_field(cmd->dword0,
+>> +            RISCV_IOMMU_CMD_ATS_DSEG | RISCV_IOMMU_CMD_ATS_RID);
+>> +    } else {
+>> +        devid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_RID);
+>> +    }
+>> +
+>> +    pasid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
+>> +
+>> +    qemu_mutex_lock(&s->core_lock);
+>> +    QLIST_FOREACH(as, &s->spaces, list) {
+>> +        if (as->devid == devid) {
+>> +            break;
+>> +        }
+>> +    }
+>> +    qemu_mutex_unlock(&s->core_lock);
+>> +
+>> +    if (!as || !as->notifier) {
+>> +        return;
+>> +    }
+>> +
+>> +    event.type = flag;
+>> +    event.entry.perm = perm;
+>> +    event.entry.target_as = s->target_as;
+>> +
+>> +    IOMMU_NOTIFIER_FOREACH(n, &as->iova_mr) {
+>> +        if (!pv || n->iommu_idx == pasid) {
+>> +            event.entry.iova = n->start;
+>> +            event.entry.addr_mask = n->end - n->start;
+>> +            trace_fn(as->iova_mr.parent_obj.name);
+>> +            memory_region_notify_iommu_one(n, &event);
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +static void riscv_iommu_ats_inval(RISCVIOMMUState *s,
+>> +    struct riscv_iommu_command *cmd)
+>> +{
+>> +    return riscv_iommu_ats(s, cmd, IOMMU_NOTIFIER_DEVIOTLB_UNMAP, IOMMU_NONE,
+>> +                           trace_riscv_iommu_ats_inval);
+>> +}
+>> +
+>> +static void riscv_iommu_ats_prgr(RISCVIOMMUState *s,
+>> +    struct riscv_iommu_command *cmd)
+>> +{
+>> +    unsigned resp_code = get_field(cmd->dword1,
+>> +                                   RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE);
+>> +
+>> +    /* Using the access flag to carry response code information */
+>> +    IOMMUAccessFlags perm = resp_code ? IOMMU_NONE : IOMMU_RW;
+>> +    return riscv_iommu_ats(s, cmd, IOMMU_NOTIFIER_MAP, perm,
+>> +                           trace_riscv_iommu_ats_prgr);
+>> +}
+>> +
+>>   static void riscv_iommu_process_ddtp(RISCVIOMMUState *s)
+>>   {
+>>       uint64_t old_ddtp = s->ddtp;
+>> @@ -1260,6 +1336,17 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+>>                   get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
+>>               break;
+>>
+>> +        /* ATS commands */
+>> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_ATS_FUNC_INVAL,
+>> +                             RISCV_IOMMU_CMD_ATS_OPCODE):
+>> +            riscv_iommu_ats_inval(s, &cmd);
+>> +            break;
+>> +
+>> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_ATS_FUNC_PRGR,
+>> +                             RISCV_IOMMU_CMD_ATS_OPCODE):
+>> +            riscv_iommu_ats_prgr(s, &cmd);
+>> +            break;
+>> +
+> 
+> PCIe ATS commands are supported only when capabilities.ATS is set to 1
+> (i.e. s->enable_ats == true).
+> 
+> Regards,
+> Frank Chang
+> 
+>>           default:
+>>           cmd_ill:
+>>               /* Invalid instruction, do not advance instruction index. */
+>> @@ -1648,6 +1735,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+>>       if (s->enable_msi) {
+>>           s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
+>>       }
+>> +    if (s->enable_ats) {
+>> +        s->cap |= RISCV_IOMMU_CAP_ATS;
+>> +    }
+>>       if (s->enable_s_stage) {
+>>           s->cap |= RISCV_IOMMU_CAP_SV32 | RISCV_IOMMU_CAP_SV39 |
+>>                     RISCV_IOMMU_CAP_SV48 | RISCV_IOMMU_CAP_SV57;
+>> @@ -1765,6 +1855,7 @@ static Property riscv_iommu_properties[] = {
+>>       DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
+>>           LIMIT_CACHE_IOT),
+>>       DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
+>> +    DEFINE_PROP_BOOL("ats", RISCVIOMMUState, enable_ats, TRUE),
+>>       DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
+>>       DEFINE_PROP_BOOL("s-stage", RISCVIOMMUState, enable_s_stage, TRUE),
+>>       DEFINE_PROP_BOOL("g-stage", RISCVIOMMUState, enable_g_stage, TRUE),
+>> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+>> index 9b33fb97ef..47f3fdad58 100644
+>> --- a/hw/riscv/riscv-iommu.h
+>> +++ b/hw/riscv/riscv-iommu.h
+>> @@ -38,6 +38,7 @@ struct RISCVIOMMUState {
+>>
+>>       bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
+>>       bool enable_msi;      /* Enable MSI remapping */
+>> +    bool enable_ats;      /* Enable ATS support */
+>>       bool enable_s_stage;  /* Enable S/VS-Stage translation */
+>>       bool enable_g_stage;  /* Enable G-Stage translation */
+>>
+>> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+>> index 42a97caffa..4b486b6420 100644
+>> --- a/hw/riscv/trace-events
+>> +++ b/hw/riscv/trace-events
+>> @@ -9,3 +9,6 @@ riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iov
+>>   riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%"PRIx64" 0x%"PRIx64
+>>   riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
+>>   riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed"
+>> +riscv_iommu_ats(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: translate request %04x:%02x.%u iova: 0x%"PRIx64
+>> +riscv_iommu_ats_inval(const char *id) "%s: dev-iotlb invalidate"
+>> +riscv_iommu_ats_prgr(const char *id) "%s: dev-iotlb page request group response"
+>> --
+>> 2.43.2
+>>
+>>
 
