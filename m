@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10F2C04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 03:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00102C04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 03:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7oKn-0001be-Aw; Thu, 16 May 2024 23:32:41 -0400
+	id 1s7oWI-0003Z8-3R; Thu, 16 May 2024 23:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s7oKk-0001aq-Tp; Thu, 16 May 2024 23:32:38 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1s7oWG-0003Yq-EF; Thu, 16 May 2024 23:44:32 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s7oKj-0000gX-1a; Thu, 16 May 2024 23:32:38 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1ee954e0aa6so1786005ad.3; 
- Thu, 16 May 2024 20:32:36 -0700 (PDT)
+ id 1s7oWD-0002by-IJ; Thu, 16 May 2024 23:44:32 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1ec486198b6so1366815ad.1; 
+ Thu, 16 May 2024 20:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715916755; x=1716521555; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1715917468; x=1716522268; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sS00pXkjFqnUJWTNKOqdHSvE/hgCycvqfhLxDxfnC4c=;
- b=CXffVRPZ7S/1BG0Lw0V1ItB8d5l/husZOvzk9i4/ETbgO0ogCmzYIc2RYg9qPfXhK3
- iqXWPez7gNCc/EY20FaKWtbSLfveCKCMgufwbNCfxiDAE/54HuGmvbvt2rMvVVcMsqnc
- /UoJgno7gVWj88yGqu4ncxlLWD5jnBJnVUIogfUKQiE83B0hArN17ZIZyF0UPZ1Uc9nR
- I7+dOOd8PZyBLNghoDZigv5mskIA7zguG0ze6W1fzF8yKBIWTnkKSxShLuzGQNMj8JH5
- /bk5BCPTNn3WS2nyk+P+/IJUHHf2HOA48wvjQJWrGfSg4WKD9X8oh4RzCCeG7wKFA7p4
- U9LA==
+ bh=d6Qmp6378Gu8u2ixR1XsK7ZRTusBeLsxKAwDsIpfXos=;
+ b=Cd8R9pFwHtyh8WQy3I0ljrsNjpXBviVZJ5dzWkGdjJ1iUPNz2oWSI+u12Hk3c81nAZ
+ CvaI8Mt5wfjPsSO9ynn/Bv9L0vhWn1jukjQi4f5joAv8jwwszRg1jeRMFMzEonvYJw2/
+ mjVkmLgyA/F2KwaqFhOryxguK5nW/Bxr7SIjxJhN0WMi+PijynRGpdqZa5DExmMSf9bT
+ 0O+2xPScKEBtye930d9ZKGZ+TfST219v22l49BnVOBnrmsQB69XjAgbD//O3fH5zKUAh
+ +XQffLmbVqGm8dDcjG+H/II5WVObx+AuVrZwLfd4wdDxfc734NpPJHFKf7XdME238o3V
+ nHmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715916755; x=1716521555;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1715917468; x=1716522268;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=sS00pXkjFqnUJWTNKOqdHSvE/hgCycvqfhLxDxfnC4c=;
- b=p1URy7VwYcyA1I0G/Kf4VdDc+RToY2ttOIsJT7o3qCPNzxxiP/Frhn7ERLoI+PlU0Q
- bcfaoOHpeGTUDqY1gHg+ICsG0r7BkfgADpU8QslY053xfaMdzeIau5LePdIP2ABBG+xw
- sYDvWtXx1BfJ/l2ytTEOSE1ZBj8VXKTch8ljn9vzW07QzLv+Pp95Lrzb+16JPRCPnJqp
- NifWaXRmyoV+DPnNZJ5heK+amoiHJseotUkTw3QDI5uiNVwSRSNlID4KD7gPrl0el4eV
- pGcy3qVNfeNZuYYcH7qhrX4LfpR/juL4NuORteOjKIawF8NvcEzZjsSas9LagAjVnS4E
- 8dKA==
+ bh=d6Qmp6378Gu8u2ixR1XsK7ZRTusBeLsxKAwDsIpfXos=;
+ b=BZspoEgmDmzw8hfDxlhTd0etAkcgVm536L9GbM+yxOiAdWlJGjVFkRgZsc4WqTflVv
+ yuC3UflGXtd7KFUKKat7CFA08Cxrow7dw31ctZ0QTv2EPdxz/Fp4RImk4pdkPBT7O4Bs
+ n5QJrjnfwlmPexQG390V0yj6ZDfKSLW06w0MB+UlJ0GIvEkHpmbU3ZSI3EkHU9OgEIRC
+ mks3Y3Jw7wtwO29wHpX3QbjinZd57jnZqOaHZZBZFXlLY78JEMGx1PmkjpjD5blVMuI/
+ SppxU9pUU9kssRvKE/U2/5BzlVMFBBCc+oUkmoaRHeNq4zDo1M4IumTFz7ZtWdzJgmiF
+ PfeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWU9sWXC2maj0M77x0710ilewIO40LcFx54j8fCoGefr1XWsGPZ/c8JqaEKH4tb6frY28As84btkR0wuxBNMYDXT81L
-X-Gm-Message-State: AOJu0YxgabnsowgTZ5q5PkCDtvDwID8DzRD+TYcUrzCW92CBOPjKiX5s
- vcuBudZGWivr8wVBnu3c+DCVVBirpv30LJgCPKTkfnTOWbTHlgO/
-X-Google-Smtp-Source: AGHT+IEosbd2iee5tve7hPRZSXC3twpZrmd4hS4S37FxNPO3+RR6PkQj4vqyCe7O5YMkAL+/deZHqw==
-X-Received: by 2002:a17:903:11c7:b0:1ec:3c71:eae7 with SMTP id
- d9443c01a7336-1ef44160d99mr244883175ad.47.1715916754723; 
- Thu, 16 May 2024 20:32:34 -0700 (PDT)
+ AJvYcCV5Dws3voTs9BiUfuhQ1CY0irzoX5hvcwNNb1/n4toFWokxCwOMLQ1CNtxqThiATfY9nH/hc2bI6a//mEhroV6Q5AhY1wvw24ewurD9nb/ehEJsuSsIHckCB1A=
+X-Gm-Message-State: AOJu0YzmgojjM7Uw4ImgGTxDwTgkfX50KbleBWqBzUnu3Kenqobl2HA6
+ bW0qaXlPDoVw39spzJzKUGwGLCi0b4/h/PDEK72HHF0Z0mSi0gc0
+X-Google-Smtp-Source: AGHT+IF3F90np45n6VEhE4Zl2OnDXpR8LUk1b2ONujf3rSvQn7jI3q0dr6tH0vlhEAtQMYpYSYlRpA==
+X-Received: by 2002:a17:902:c952:b0:1f0:936a:6de with SMTP id
+ d9443c01a7336-1f0936a0943mr69290585ad.58.1715917467603; 
+ Thu, 16 May 2024 20:44:27 -0700 (PDT)
 Received: from localhost ([1.146.118.37]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f1e1275ba5sm20212755ad.201.2024.05.16.20.32.31
+ d9443c01a7336-1ef0bad6386sm146845585ad.80.2024.05.16.20.44.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 20:32:34 -0700 (PDT)
+ Thu, 16 May 2024 20:44:27 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 17 May 2024 13:32:28 +1000
-Message-Id: <D1BLQ0370ZWR.3OFWPZTX3TWGF@gmail.com>
-Cc: <qemu-devel@nongnu.org>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
- <fbarrat@linux.ibm.com>
-Subject: Re: [PATCH] ppc/pnv: Implement POWER9 LPC PSI serirq outputs and
- auto-clear function
+Date: Fri, 17 May 2024 13:44:20 +1000
+Message-Id: <D1BLZ35ZE9EI.18TYUB70KCCY7@gmail.com>
+Subject: Re: [PATCH v2 1/4] accel/kvm: Extract common KVM vCPU {creation,
+ parking} code
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
+To: "Salil Mehta" <salil.mehta@huawei.com>, "Harsh Prateek Bora"
+ <harshpb@linux.ibm.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "danielhb413@gmail.com" <danielhb413@gmail.com>, "vaibhav@linux.ibm.com"
+ <vaibhav@linux.ibm.com>, "sbhat@linux.ibm.com" <sbhat@linux.ibm.com>
 X-Mailer: aerc 0.17.0
-References: <20240510143026.109098-1-npiggin@gmail.com>
- <cf991fe4-046e-435f-973b-3a27bd6eba6a@kaod.org>
-In-Reply-To: <cf991fe4-046e-435f-973b-3a27bd6eba6a@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+References: <20240516053211.145504-1-harshpb@linux.ibm.com>
+ <20240516053211.145504-2-harshpb@linux.ibm.com>
+ <fc08e87c979a4916aaff649724df9c6b@huawei.com>
+ <bfb5888c-c66c-4000-ba12-5af202b0fe17@linux.ibm.com>
+ <2e290791a92949d79fe0fdfcb972a029@huawei.com>
+ <49f4d0cb-260e-45fb-a678-2dec45c9fab8@linux.ibm.com>
+ <7a5608c768254869a4a6b68d719c24f1@huawei.com>
+In-Reply-To: <7a5608c768254869a4a6b68d719c24f1@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,162 +103,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon May 13, 2024 at 9:49 PM AEST, C=C3=A9dric Le Goater wrote:
-> Hello,
+On Thu May 16, 2024 at 11:35 PM AEST, Salil Mehta wrote:
 >
-> On 5/10/24 16:30, Nicholas Piggin wrote:
-> > The POWER8 LPC ISA device irqs all get combined and reported to the lin=
-e
-> > connected the PSI LPCHC irq. POWER9 changed this so only internal LPC
-> > host controller irqs use that line, and the device irqs get routed to
-> > 4 new lines connected to PSI SERIRQ0-3.
-> >=20
-> > POWER9 also introduced a new feature that automatically clears the irq
-> > status in the LPC host controller when EOI'ed, so software does not hav=
-e
-> > to.
-> >=20
-> > The powernv OPAL (skiboot) firmware managed to work because the LPCHC
-> > irq handler scanned all LPC irqs and handled those including clearing
-> > status even on POWER9 systems. So LPC irqs worked despite OPAL thinking
-> > it was running in POWER9 mode. After this change, UART interrupts show
-> > up on serirq1 which is where OPAL routes them to:
-> >=20
-> >   cat /proc/interrupts
-> >   ...
-> >   20:          0  XIVE-IRQ 1048563 Level     opal-psi#0:lpchc
-> >   ...
-> >   25:         34  XIVE-IRQ 1048568 Level     opal-psi#0:lpc_serirq_mux1
-> >=20
-> > Whereas they previously turn up on lpchc.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   include/hw/ppc/pnv_lpc.h |  12 ++++-
-> >   hw/ppc/pnv.c             |  38 +++++++++++++--
-> >   hw/ppc/pnv_lpc.c         | 100 +++++++++++++++++++++++++++++++++++---=
--
-> >   3 files changed, 136 insertions(+), 14 deletions(-)
-> >=20
-> > diff --git a/include/hw/ppc/pnv_lpc.h b/include/hw/ppc/pnv_lpc.h
-> > index 5d22c45570..57e324b4dc 100644
-> > --- a/include/hw/ppc/pnv_lpc.h
-> > +++ b/include/hw/ppc/pnv_lpc.h
-> > @@ -84,8 +84,18 @@ struct PnvLpcController {
-> >       /* XSCOM registers */
-> >       MemoryRegion xscom_regs;
-> >  =20
-> > +    /*
-> > +     * In P8, ISA irqs are combined with internal sources to drive the
-> > +     * LPCHC interrupt output. P9 ISA irqs raise one of 4 lines that
-> > +     * drive PSI SERIRQ irqs, routing according to OPB routing registe=
+> >  From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> >  Sent: Thursday, May 16, 2024 2:07 PM
+> > =20
+> >  Hi Salil,
+> > =20
+> >  On 5/16/24 17:42, Salil Mehta wrote:
+> >  > Hi Harsh,
+> >  >
+> >  >>   From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> >  >>   Sent: Thursday, May 16, 2024 11:15 AM
+> >  >>
+> >  >>   Hi Salil,
+> >  >>
+> >  >>   Thanks for your email.
+> >  >>   Your patch 1/8 is included here based on review comments on my  p=
+revious
+> >  >>   patch from one of the maintainers in the community and therefore =
+I  had
+> >  >>   kept you in CC to be aware of the desire of having this independe=
+nt patch to
+> >  >>   get merged earlier even if your other patches in the series may g=
+o through
+> >  >>   further reviews.
+> >  >
+> >  > I really don=E2=80=99t know which discussion are  you pointing at? P=
+lease
+> >  > understand you are fixing a bug and we are pushing a feature which h=
+as got large series.
+> >  > It will break the patch-set  which is about t be merged.
+> >  >
+> >  > There will be significant overhead of testing on us for the work we
+> >  > have been carrying forward for large time. This will be disruptive. =
+Please dont!
+> >  >
+> > =20
+> >  I was referring to the review discussion on my prev patch here:
+> >  https://lore.kernel.org/qemu-devel/D191D2JFAR7L.2EH4S445M4TGK@gmail.co=
+m/
+>
+>
+> Sure, I'm, not sure what this means.=20
+>
+>
+> >  Although your patch was included with this series only to facilitate r=
+eview of
+> >  the additional patches depending on just one of your patch.
+>
+>
+> Generally you rebase your patch-set over the other and clearly state on t=
+he cover
+> letter that this patch-set is dependent upon such and such patch-set. Jus=
+t imagine
+> if everyone starts to unilaterally pick up patches from each other's patc=
+h-set it will
+> create a chaos not only for the feature owners but also for the maintaine=
 rs.
-> > +     */
-> > +    bool psi_serirq;
-> > +
-> >       /* PSI to generate interrupts */
-> > -    qemu_irq psi_irq;
-> > +    qemu_irq psi_irq_lpchc;
-> > +
-> > +    /* P9 introduced a serirq mode */
-> > +    qemu_irq psi_irq_serirq[4];
-> >   };
-> >  =20
-> >   struct PnvLpcClass {
-> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > index 6e3a5ccdec..3b1c05a1d8 100644
-> > --- a/hw/ppc/pnv.c
-> > +++ b/hw/ppc/pnv.c
-> > @@ -744,18 +744,48 @@ static ISABus *pnv_chip_power8nvl_isa_create(PnvC=
-hip *chip, Error **errp)
-> >   static ISABus *pnv_chip_power9_isa_create(PnvChip *chip, Error **errp=
-)
-> >   {
-> >       Pnv9Chip *chip9 =3D PNV9_CHIP(chip);
-> > -    qemu_irq irq =3D qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_=
-LPCHC);
-> >  =20
-> > -    qdev_connect_gpio_out(DEVICE(&chip9->lpc), 0, irq);
 >
-> The pnv_chip_power8*_isa_create() routines also need an update.
-
-Good catch, thank you.
-
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "LPCHC", 0,
-> > +                                qdev_get_gpio_in(DEVICE(&chip9->psi),
-> > +                                PSIHB9_IRQ_LPCHC));
-> > +
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 0,
-> > +                                qdev_get_gpio_in(DEVICE(&chip9->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ0));
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 1,
-> > +                                qdev_get_gpio_in(DEVICE(&chip9->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ1));
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 2,
-> > +                                qdev_get_gpio_in(DEVICE(&chip9->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ2));
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 3,
-> > +                                qdev_get_gpio_in(DEVICE(&chip9->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ3));
-> > +
-> >       return pnv_lpc_isa_create(&chip9->lpc, false, errp);
-> >   }
-> >  =20
-> >   static ISABus *pnv_chip_power10_isa_create(PnvChip *chip, Error **err=
-p)
-> >   {
-> >       Pnv10Chip *chip10 =3D PNV10_CHIP(chip);
-> > -    qemu_irq irq =3D qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ=
-_LPCHC);
-> >  =20
-> > -    qdev_connect_gpio_out(DEVICE(&chip10->lpc), 0, irq);
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "LPCHC", 0,
-> > +                                qdev_get_gpio_in(DEVICE(&chip10->psi),
-> > +                                PSIHB9_IRQ_LPCHC));
-> > +
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 0,
-> > +                                qdev_get_gpio_in(DEVICE(&chip10->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ0));
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 1,
-> > +                                qdev_get_gpio_in(DEVICE(&chip10->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ1));
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 2,
-> > +                                qdev_get_gpio_in(DEVICE(&chip10->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ2));
-> > +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 3,
-> > +                                qdev_get_gpio_in(DEVICE(&chip10->psi),
-> > +                                PSIHB9_IRQ_LPC_SIRQ3));
-> > +
-> >       return pnv_lpc_isa_create(&chip10->lpc, false, errp);
-> >   }
-> >  =20
-> > diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-> > index d692858bee..e28eae672f 100644
-> > --- a/hw/ppc/pnv_lpc.c
-> > +++ b/hw/ppc/pnv_lpc.c
-> > @@ -64,6 +64,7 @@ enum {
-> >   #define   LPC_HC_IRQSER_START_4CLK      0x00000000
-> >   #define   LPC_HC_IRQSER_START_6CLK      0x01000000
-> >   #define   LPC_HC_IRQSER_START_8CLK      0x02000000
-> > +#define   LPC_HC_IRQSER_AUTO_CLEAR      0x00800000
-> >   #define LPC_HC_IRQMASK          0x34    /* same bit defs as LPC_HC_IR=
-QSTAT */
-> >   #define LPC_HC_IRQSTAT          0x38
-> >   #define   LPC_HC_IRQ_SERIRQ0            0x80000000 /* all bits down t=
-o ... */
-> > @@ -420,6 +421,34 @@ static const MemoryRegionOps pnv_lpc_mmio_ops =3D =
-{
-> >       .endianness =3D DEVICE_BIG_ENDIAN,
-> >   };
-> >  =20
-> > +/* POWER9 serirq routing, see below */
-> > +static int irq_to_serirq_route[ISA_NUM_IRQS];
 >
-> This static is not friendly for multichip machines. Could we avoid it and
-> move the IRQ routes under PnvLpcController ?
+> > =20
+> >  I am not sure what is appearing disruptive here. It is a common practi=
+ve in
+> >  the community that maintainer(s) can pick individual patches from the
+> >  series if it has been vetted by siginificant number of reviewers.
+>
+>
+> Don=E2=80=99t you think this patch-set is asking for acceptance for a pat=
+ch already=20
+> part of another patch-set which is about to be accepted and is a bigger f=
+eature?
+> Will it cause maintenance overhead at the last moment? Yes, of course!
+>
+>
+> >  However, in this case, since you have mentioned to post next version s=
+oon,
+> >  you need not worry about it as that would be the preferred version for=
+ both
+> >  of the series.
+>
+>
+> Yes, but please understand we are working for the benefit of overall comm=
+unity.
+> Please cooperate here.
 
-Ah yes I don't know what I was thinking. It's trivial to move under
-the controller. I will post a v2 in a bit.
+There might be a misunderstanding, Harsh just said there had not been
+much progress on your series for a while and he wasn't sure what the
+status was. I mentioned that we *could* take your patch 1 (with your
+blessing) if there was a hold up with the rest of the series. He was
+going to check in with you to see how it was going.
+
+This patch 1 was not intended to be merged as is without syncing up with
+you first, but it's understandable you were concerned because that was
+probably not communicated with you clearly.
+
+I appreciate you bringing up your concerns, we'll try to do better.
 
 Thanks,
 Nick
