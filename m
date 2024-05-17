@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2504AC41513
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E60C25B78
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7uGb-00023Q-DA; Fri, 17 May 2024 05:52:45 -0400
+	id 1s7uGq-0002JH-FV; Fri, 17 May 2024 05:53:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1s7uGW-0001wq-JX
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:52:41 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1s7uGn-0002Id-TD
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:52:57 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1s7uGT-0006M7-8D
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:52:39 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6f447976de7so1043283b3a.1
- for <qemu-devel@nongnu.org>; Fri, 17 May 2024 02:52:36 -0700 (PDT)
+ id 1s7uGm-0006Pl-8m
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:52:57 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-53fa455cd94so975421a12.2
+ for <qemu-devel@nongnu.org>; Fri, 17 May 2024 02:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1715939556; x=1716544356; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1715939575; x=1716544375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LEuUjUzQAGNW2bFbTYz8h5s7RYYUBYzAO9/VPokyqDk=;
- b=lmhs2XksSqo5gEAeXvu8DM6jgfOsIPNHd48C1p+EDEtlLyM/iVGiw6NcgaLru83OQX
- 04QHS7QZI9S1jC4HpRjEs0yqS5KZvY/sHAA1cXnale5ptD5TTr1T3obCPi3Pasy8OECk
- s4zyjHpvwBnwn03PEtkYU9SNMBnTUeE9rkRTgGAzB1ZI2xCWTE9NdAvlGOwPMrImqKXd
- Bxz3qPAmcMzfwalqAX64Vu18GdvUymAFJ7Uwz4M+Dx++vSp1UJKwLuj7nExcFbksKk15
- WF1PxQEUXCPxhr4kg45yptW4KzSF/YNsxTPOFVD5RPQLuvl1MVFp2qr5Og1J/1mr8jsW
- kTbA==
+ bh=iZOIOSzWw7S5O/W1X23ZvIZbIDRDARXSDRkqo9S5Wbo=;
+ b=Ki66xKssI/xrW56X4GZixv9fq19SSfXkjtLI6kN2X5TVZwl8kotrLfKcnr8aSpm5ZN
+ /F/LqZWV+EWU7fIgU+4spssxf44keCzxuAw3EnCJYjIsECQNeWpp8i/v8bTKOVyh0XwB
+ 1PUeGgUCqe1JWKdJbyN7fABh6Z6wSxipWe156HYHGcJP1NlTF7irzLB9z/tbYdPyKjvH
+ JrWtPOrwZrluIrGWv0Mwy/NmTd9x87bfxXKifv1Y4l8hccozyy+0NozIb6IxmZrcB+LK
+ RpfI2b2J2VO2Mc7XpdP0JdFWfBAT7AJtBOS5FYG1Ioa0gDg4V7KWG3y9D/AGSOkVRRv/
+ vYcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715939556; x=1716544356;
+ d=1e100.net; s=20230601; t=1715939575; x=1716544375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LEuUjUzQAGNW2bFbTYz8h5s7RYYUBYzAO9/VPokyqDk=;
- b=J/HPhzkHmPYntq8w4EE2sabq36+OudzevLJ82daGQIn2upMAjF4l/ys6Fg34k4gkF3
- iJN19OBpyWYq4X3jubNG4ATx3HIk2/yMo4eCOnPG1ZPi23yzgua0kfbgMnea8yuKrygW
- Uh0aPp6s/f9GN6670GJVL9CIahSZaHohsFCNKtqyElzX0BxE8O8Dk3dk17DcJf0d3zLE
- Y5XBR6j/QVjJClsGY8UFYUv8y+1WGIxtTUMK1UNu2uM1DzWiJM+cPpJJRjydpu3ZD5og
- ZNhUgL+J8FqCXf8QuRULOJAIMChk3mIQfjLueEaLfY9vOGF3nfhSNuRELHWPoUGLZySk
- ZfYQ==
+ bh=iZOIOSzWw7S5O/W1X23ZvIZbIDRDARXSDRkqo9S5Wbo=;
+ b=nD4WRtEiELSCVcC1DMKN1IWzelRQ2f1+e3LnZL3q2GqFmN3fiGnBbQ4YeD9X7rTE/b
+ /IVDB0U2W5eanuWb2wB5oxj/hSWG+B0OBfFDjDzL1Hs0rIQhU/3u6PMz8UXuUl1Q8CJ7
+ u/+/eJo6nRF52FiXOCf5dB2Pg4OwUPyQx6EntCccTA65rFQTpFaLsGcRZMEdFWHJiSc4
+ zI9PS8wnIFLNbD8nsKkrLjcM3O09tk0II3Nd9sfuQEk0Ume09RzpszyUMVyy/cm9yFi4
+ 0U8gsJT19P1FP8LxYNq1D4MO8CAL0BIZMDn5irlsjwsmUHccMxXWbuCFjAN377SlmzAp
+ I0uA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU46+EdzCeD5Az6KBC7fnJq0m6uvb8VEPWxe1clJJZd33fNAPgKonwP/tsnN0apfMaUCSwKCQGdc+6BkSuDjGSUuKGpf70=
-X-Gm-Message-State: AOJu0YxXhLQvbyL093HZmaI+8kq57u8SaCtviGSPUuyRqPpkTTl7exYH
- rZR84tck58IA+G755PgGIHHGunOjeLes371+J0W7y1nviypLnoNxvFg5grG6KiA=
-X-Google-Smtp-Source: AGHT+IFFP6Dkl3daDDTD4vu6KreT8DUtqQntcnTF/HeSHUIyNjqf9c+VO3FiqA+OFhEOCg90WRXDpg==
-X-Received: by 2002:a05:6a20:9c89:b0:1a9:6cdd:6907 with SMTP id
- adf61e73a8af0-1afde10e425mr20880053637.29.1715939555778; 
- Fri, 17 May 2024 02:52:35 -0700 (PDT)
+ AJvYcCWCtg9108vAsDh2sbnNTu1YFDq0HCso30GkY6ctabxgksBsmPKg5y4LGogApkM1GLZyjjx8HCyo+Wz0NSnPpWhvrTEICAY=
+X-Gm-Message-State: AOJu0YyCJECuHOq6Ysa9LY08pjQx0KCB9ExAl9bdLKTUNHS+3IwagfXJ
+ C0HGo+QYGrpopubURlpKDTOWqtbNBtWmCPADAG6b+mC8aqJwn3gicW5+mbVjPhs=
+X-Google-Smtp-Source: AGHT+IFfCKP10yietJFmlfPErr/wBiyYhmkqZuoILVCnXYvWY/jmFJSOCG7TKa5nonuP6aojFG2AMw==
+X-Received: by 2002:a17:90a:fb4c:b0:2b5:af18:4222 with SMTP id
+ 98e67ed59e1d1-2b6ccef64b2mr17104038a91.44.1715939574954; 
+ Fri, 17 May 2024 02:52:54 -0700 (PDT)
 Received: from n37-006-243.byted.org ([180.184.51.134])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b628ca53cesm16975992a91.44.2024.05.17.02.52.32
+ 98e67ed59e1d1-2b628ca53cesm16975992a91.44.2024.05.17.02.52.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 May 2024 02:52:35 -0700 (PDT)
+ Fri, 17 May 2024 02:52:54 -0700 (PDT)
 From: Changqi Lu <luchangqi.123@bytedance.com>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -67,16 +67,17 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
  ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
  kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
  pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v3 02/11] block/raw: add persistent reservation in/out driver
-Date: Fri, 17 May 2024 17:52:09 +0800
-Message-Id: <20240517095218.3107672-3-luchangqi.123@bytedance.com>
+Subject: [PATCH v3 07/11] hw/nvme: add helper functions for converting
+ reservation types
+Date: Fri, 17 May 2024 17:52:14 +0800
+Message-Id: <20240517095218.3107672-8-luchangqi.123@bytedance.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20240517095218.3107672-1-luchangqi.123@bytedance.com>
 References: <20240517095218.3107672-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,91 +100,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add persistent reservation in/out operations for raw driver.
-The following methods are implemented: bdrv_co_pr_read_keys,
-bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
-bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
+This commit introduces two helper functions
+that facilitate the conversion between the
+reservation types used in the NVME protocol
+and those used in the block layer.
 
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
 Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
 ---
- block/raw-format.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ hw/nvme/nvme.h | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/block/raw-format.c b/block/raw-format.c
-index ac7e8495f6..3746bc1bd3 100644
---- a/block/raw-format.c
-+++ b/block/raw-format.c
-@@ -454,6 +454,55 @@ raw_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
-     return bdrv_co_ioctl(bs->file->bs, req, buf);
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index bed8191bd5..6abe479410 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -474,6 +474,46 @@ static inline const char *nvme_io_opc_str(uint8_t opc)
+     }
  }
  
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
-+                    uint32_t num_keys, uint64_t *keys)
++static inline NVMEResvType block_pr_type_to_nvme(BlockPrType type)
 +{
++    switch (type) {
++    case BLK_PR_WRITE_EXCLUSIVE:
++        return NVME_RESV_WRITE_EXCLUSIVE;
++    case BLK_PR_EXCLUSIVE_ACCESS:
++        return NVME_RESV_EXCLUSIVE_ACCESS;
++    case BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY:
++        return NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY;
++    case BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case BLK_PR_WRITE_EXCLUSIVE_ALL_REGS:
++        return NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS;
++    case BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS:
++        return NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS;
++    }
 +
-+    return bdrv_co_pr_read_keys(bs->file->bs, generation, num_keys, keys);
++    return 0;
 +}
 +
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
-+                           uint64_t *key, BlockPrType *type)
++static inline BlockPrType nvme_pr_type_to_block(NVMEResvType type)
 +{
-+    return bdrv_co_pr_read_reservation(bs->file->bs, generation, key, type);
++    switch (type) {
++    case NVME_RESV_WRITE_EXCLUSIVE:
++        return BLK_PR_WRITE_EXCLUSIVE;
++    case NVME_RESV_EXCLUSIVE_ACCESS:
++        return BLK_PR_EXCLUSIVE_ACCESS;
++    case NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY:
++        return BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY;
++    case NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS:
++        return BLK_PR_WRITE_EXCLUSIVE_ALL_REGS;
++    case NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS:
++        return BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS;
++    }
++
++    return 0;
 +}
 +
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_register(BlockDriverState *bs, uint64_t old_key,
-+                   uint64_t new_key, BlockPrType type,
-+                   bool ptpl, bool ignore_key)
-+{
-+    return bdrv_co_pr_register(bs->file->bs, old_key, new_key,
-+                               type, ptpl, ignore_key);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
-+{
-+    return bdrv_co_pr_reserve(bs->file->bs, key, type);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
-+{
-+    return bdrv_co_pr_release(bs->file->bs, key, type);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_clear(BlockDriverState *bs, uint64_t key)
-+{
-+    return bdrv_co_pr_clear(bs->file->bs, key);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
-+                  uint64_t new_key, BlockPrType type, bool abort)
-+{
-+    return bdrv_co_pr_preempt(bs->file->bs, old_key, new_key, type, abort);
-+}
-+
- static int GRAPH_RDLOCK raw_has_zero_init(BlockDriverState *bs)
- {
-     return bdrv_has_zero_init(bs->file->bs);
-@@ -672,6 +721,13 @@ BlockDriver bdrv_raw = {
-     .strong_runtime_opts  = raw_strong_runtime_opts,
-     .mutable_opts         = mutable_opts,
-     .bdrv_cancel_in_flight = raw_cancel_in_flight,
-+    .bdrv_co_pr_read_keys    = raw_co_pr_read_keys,
-+    .bdrv_co_pr_read_reservation = raw_co_pr_read_reservation,
-+    .bdrv_co_pr_register     = raw_co_pr_register,
-+    .bdrv_co_pr_reserve      = raw_co_pr_reserve,
-+    .bdrv_co_pr_release      = raw_co_pr_release,
-+    .bdrv_co_pr_clear        = raw_co_pr_clear,
-+    .bdrv_co_pr_preempt      = raw_co_pr_preempt,
- };
- 
- static void bdrv_raw_init(void)
+ typedef struct NvmeSQueue {
+     struct NvmeCtrl *ctrl;
+     uint16_t    sqid;
 -- 
 2.20.1
 
