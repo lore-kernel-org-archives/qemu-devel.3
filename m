@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3D5C25B7A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 12:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC54C04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 12:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7wf0-0004tB-7H; Fri, 17 May 2024 08:26:06 -0400
+	id 1s7wf4-0004y6-An; Fri, 17 May 2024 08:26:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7wex-0004pt-RL
- for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7wf1-0004u9-B5
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7weu-0006GR-Td
- for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7wez-0006HA-H4
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715948758;
+ s=mimecast20190719; t=1715948764;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=DApQ+nXYtBVZETQJAHEg5UpK8ucf/TgF8ZwZ0VBl8WA=;
- b=Zui+fRPz6+tMCVInH4Kj4/YL7KAyK5NEd7HbLhr9UAeXW/gZx8qDYBwf7or2Q8Au5DYYlI
- acyuAtkoWe3x4ph3EKpYVsvZ3gixCjdra8QInH3aQhFUgh0IxOl72hJokWBRftWcGys4MK
- snrlDgMIz1d/b3tOx88M/Igww2qX4iw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-9rcSEtlHOsC4-ZW48IcTAA-1; Fri, 17 May 2024 08:25:55 -0400
-X-MC-Unique: 9rcSEtlHOsC4-ZW48IcTAA-1
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QTxNrBzfSiSy5sRAFW60eW3MEqICmX9H7w1MzFepTP4=;
+ b=VKJMCXeZmderqyDhI9knm5KUNt0YA5a+69wdIwlHqsdiC8dKIB1z9TI0SvNTnfbZB9pbEc
+ pXAcOqIrhxAk4h7nx8HwM795800/CZJTMk/1m7paPIU7KdqVZdSArSZGmZ0Wm87lSvKWTF
+ +LQocL6jGNMXVrN7X7VvnuzYSbfoJds=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-ov6S77mJP9WMxskeRWQ2Jg-1; Fri,
+ 17 May 2024 08:26:02 -0400
+X-MC-Unique: ov6S77mJP9WMxskeRWQ2Jg-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CF95380066E;
- Fri, 17 May 2024 12:25:54 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5FDCC1C0513E;
+ Fri, 17 May 2024 12:26:02 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.132])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A4D9A1050173;
- Fri, 17 May 2024 12:25:53 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B88F01050173;
+ Fri, 17 May 2024 12:26:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 0/6] Fix s390x crash and clean up container images
-Date: Fri, 17 May 2024 14:25:46 +0200
-Message-ID: <20240517122552.584215-1-thuth@redhat.com>
+Subject: [PULL 6/6] hw/intc/s390_flic: Fix crash that occurs when saving the
+ machine state
+Date: Fri, 17 May 2024 14:25:52 +0200
+Message-ID: <20240517122552.584215-7-thuth@redhat.com>
+In-Reply-To: <20240517122552.584215-1-thuth@redhat.com>
+References: <20240517122552.584215-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -76,56 +80,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 85ef20f1673feaa083f4acab8cf054df77b0dbed:
+adapter_info_so_needed() treats its "opaque" parameter as a S390FLICState,
+but the function belongs to a VMStateDescription that is attached to a
+TYPE_VIRTIO_CCW_BUS device. This is currently causing a crash when the
+user tries to save or migrate the VM state. Fix it by using s390_get_flic()
+to get the correct device here instead.
 
-  Merge tag 'pull-maintainer-may24-160524-2' of https://gitlab.com/stsquad/qemu into staging (2024-05-16 10:02:56 +0200)
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Fixes: 9d1b0f5bf5 ("s390_flic: add migration-enabled property")
+Message-ID: <20240517061553.564529-1-thuth@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/intc/s390_flic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-05-17
-
-for you to fetch changes up to bebe9603fcb072dcdb7fb22005781b3582a4d701:
-
-  hw/intc/s390_flic: Fix crash that occurs when saving the machine state (2024-05-17 11:18:32 +0200)
-
-----------------------------------------------------------------
-* Fix s390x crash when doing migration / savevm
-* Decrease size of CI containers by removing unnecessary packages
-
-----------------------------------------------------------------
-Philippe Mathieu-Daudé (1):
-      tests/lcitool: Remove 'xfsprogs' from QEMU
-
-Thomas Huth (5):
-      tests/lcitool/refresh: Treat the output of lcitool as text, not as bytes
-      tests/lcitool: Remove g++ from the containers (except for the MinGW one)
-      tests/lcitool/projects/qemu.yml: Sort entries alphabetically again
-      tests/docker/dockerfiles: Update container files with "lcitool-refresh"
-      hw/intc/s390_flic: Fix crash that occurs when saving the machine state
-
- hw/intc/s390_flic.c                                   |  2 +-
- tests/docker/dockerfiles/alpine.docker                |  4 ----
- tests/docker/dockerfiles/centos9.docker               |  4 ----
- tests/docker/dockerfiles/debian-amd64-cross.docker    |  4 ----
- tests/docker/dockerfiles/debian-arm64-cross.docker    |  4 ----
- tests/docker/dockerfiles/debian-armel-cross.docker    |  4 ----
- tests/docker/dockerfiles/debian-armhf-cross.docker    |  4 ----
- tests/docker/dockerfiles/debian-i686-cross.docker     |  4 ----
- tests/docker/dockerfiles/debian-mips64el-cross.docker |  4 ----
- tests/docker/dockerfiles/debian-mipsel-cross.docker   |  4 ----
- tests/docker/dockerfiles/debian-ppc64el-cross.docker  |  4 ----
- tests/docker/dockerfiles/debian-riscv64-cross.docker  |  3 ---
- tests/docker/dockerfiles/debian-s390x-cross.docker    |  4 ----
- tests/docker/dockerfiles/debian.docker                |  4 ----
- tests/docker/dockerfiles/fedora-win64-cross.docker    |  2 +-
- tests/docker/dockerfiles/fedora.docker                |  4 ----
- tests/docker/dockerfiles/opensuse-leap.docker         |  4 ----
- tests/docker/dockerfiles/ubuntu2204.docker            |  4 ----
- tests/lcitool/projects/qemu-minimal.yml               |  1 -
- tests/lcitool/projects/qemu-win-installer.yml         |  4 ++++
- tests/lcitool/projects/qemu.yml                       | 18 ++++++++----------
- tests/lcitool/refresh                                 |  5 +++--
- 22 files changed, 17 insertions(+), 78 deletions(-)
- create mode 100644 tests/lcitool/projects/qemu-win-installer.yml
+diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+index 7f93080087..6771645699 100644
+--- a/hw/intc/s390_flic.c
++++ b/hw/intc/s390_flic.c
+@@ -459,7 +459,7 @@ type_init(qemu_s390_flic_register_types)
+ 
+ static bool adapter_info_so_needed(void *opaque)
+ {
+-    S390FLICState *fs = S390_FLIC_COMMON(opaque);
++    S390FLICState *fs = s390_get_flic();
+ 
+     return fs->migration_enabled;
+ }
+-- 
+2.45.0
 
 
