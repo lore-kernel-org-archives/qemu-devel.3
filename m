@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC7AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0CE3C04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7tZ5-0008TO-9t; Fri, 17 May 2024 05:07:47 -0400
+	id 1s7te0-0001VT-JC; Fri, 17 May 2024 05:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s7tZ1-0008PN-Hw
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:07:44 -0400
+ id 1s7tdy-0001VG-Un
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:12:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s7tYw-0005Cq-PK
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:07:43 -0400
+ id 1s7tdl-0006cK-1G
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:12:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715936858;
+ s=mimecast20190719; t=1715937156;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JzU/KZPUm0mHXV6amwcgJs7r4WinGeRzo7OFlaYDIoo=;
- b=TaipvtDUNsu2X5qZcBhXloTyylNhz8s7wGWYdmG1J49PYMV0evSQpTxif/hrziV3BVxULI
- 5lBlTLA20Huf9SeU2Ip/VDeglgSJ9dm9UNNUnn+L9iQXDCuXmA5FxvUia2v8fbCr+ahz49
- DOuDHwsh+HhJ2yZW7WlxmS83vFYocSY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-P7dCSXK5OcOclPapF-_hiQ-1; Fri, 17 May 2024 05:07:36 -0400
-X-MC-Unique: P7dCSXK5OcOclPapF-_hiQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ bh=IE3FSYVikvu5n72OJ0VEJA/xQ83Vm15yLEwhA1ohotY=;
+ b=FNkaAnRJVqX7vLEQpGUgjwHP4m7YtFCSuaqm05Jq0/hbeIujIx83Sf3JBVihHicEC9DiRC
+ G+I5zOp4n9mJVgSM6NCwGBxyCkXYiBCtKInQcskwJU4dDA0yW+H49+Kzh6ykL3A0PSQceA
+ PUvw+XW3clYZyViqjPkF1XZlZ9viTVc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-eQYQvg80MuKTrStGAsJHpw-1; Fri,
+ 17 May 2024 05:12:32 -0400
+X-MC-Unique: eQYQvg80MuKTrStGAsJHpw-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F874802079;
- Fri, 17 May 2024 09:07:35 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 76FCC29AA3BB;
+ Fri, 17 May 2024 09:12:32 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.65])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5E20E200A08E;
- Fri, 17 May 2024 09:07:34 +0000 (UTC)
-Date: Fri, 17 May 2024 10:07:32 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6DB1E2026D68;
+ Fri, 17 May 2024 09:12:31 +0000 (UTC)
+Date: Fri, 17 May 2024 10:12:29 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,
@@ -55,7 +55,7 @@ Cc: qemu-devel@nongnu.org,
  Laurent Vivier <lvivier@redhat.com>
 Subject: Re: [PATCH v2 3/3] crypto: Allow building with GnuTLS but without
  Libtasn1
-Message-ID: <ZkceVO9e0kaLCSlN@redhat.com>
+Message-ID: <ZkcfffathdJlq67Y@redhat.com>
 References: <20240502095642.93368-1-philmd@linaro.org>
  <20240502095642.93368-4-philmd@linaro.org>
 MIME-Version: 1.0
@@ -64,7 +64,7 @@ Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <20240502095642.93368-4-philmd@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -72,7 +72,6 @@ X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.022,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,15 +99,45 @@ On Thu, May 02, 2024 at 11:56:42AM +0200, Philippe Mathieu-Daudé wrote:
 >   Run-time dependency libtasn1 found: NO (tried pkgconfig)
 > 
 >   ../meson.build:1914:10: ERROR: Dependency "libtasn1" not found, tried pkgconfig
+
+Did you actually try to build without libtasn1 present ?
+
+If I remove /usr/lib64/pkgconfig/libtasn1.pc, then the prior
+check for 'gnutls' itself will fail, as libtasn1 is declared
+to be a dep of gnutls in its pkg-config file, regardless of
+what QEMU askes for:
+
+$ pkg-config --cflags --libs gnutls
+Package libtasn1 was not found in the pkg-config search path.
+Perhaps you should add the directory containing `libtasn1.pc'
+to the PKG_CONFIG_PATH environment variable
+Package 'libtasn1', required by 'gnutls', not found
+
+I'm still willing to merge this, because from QEMU's POV,
+libtasn1 isn't required.
+
 > 
 > Fixes: ba7ed407e6 ("configure, meson: convert libtasn1 detection to meson")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
 >  meson.build | 1 +
 >  1 file changed, 1 insertion(+)
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
+> 
+> diff --git a/meson.build b/meson.build
+> index 5db2dbc12e..837a2bdb56 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1912,6 +1912,7 @@ endif
+>  tasn1 = not_found
+>  if gnutls.found()
+>    tasn1 = dependency('libtasn1',
+> +                     required: false,
+>                       method: 'pkg-config')
+>  endif
+>  keyutils = not_found
+> -- 
+> 2.41.0
+> 
 
 With regards,
 Daniel
