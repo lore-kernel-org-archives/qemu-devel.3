@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF488C25B78
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466BBC04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 09:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7uH2-0002MG-RA; Fri, 17 May 2024 05:53:12 -0400
+	id 1s7uMb-0002WM-Jz; Fri, 17 May 2024 05:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1s7uH0-0002LT-EX
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:53:10 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s7uMW-0002Vr-PO
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:58:53 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1s7uGq-0006QL-50
- for qemu-devel@nongnu.org; Fri, 17 May 2024 05:53:09 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2b5388087f9so898114a91.0
- for <qemu-devel@nongnu.org>; Fri, 17 May 2024 02:52:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s7uMU-0007l0-RU
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 05:58:52 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1f3462caso4732068a12.3
+ for <qemu-devel@nongnu.org>; Fri, 17 May 2024 02:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1715939579; x=1716544379; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T+J5rbIfUpvehIGmWcPG1zjcR1aPta5xb+LZyWF/KhY=;
- b=Q6nUk6VPe0/wyaU4If4mS3CBhkCpYb1UrXVNJ1hJnyrIxkndqzLFpFQbOQGc01yAQ+
- 2iQcVPzXNt3byBa2b4mrZ8PbSQ510//+W2pMauAFZuQdTu2nvvHCRHOOLTz+ta9T+I6G
- nO4iOr3PbfFXqXbaSYz++Ze9weSKwnFdRZ7otMc3GYTy7D7vGmLtVUTfjXZr5NcJjNoc
- o7qvmBvGZG3AS78rd2B/httTScaGWG3+6K+vEChrKDIt4I+0iBbNIRwL2TP8W9hxgfbr
- RXcF04heSQNrze/8lgO1Zpt4bwFp8PEz5uT6KP2IAzOSYOg7cMviWbgwPO+cWqancYqC
- r6lw==
+ d=linaro.org; s=google; t=1715939928; x=1716544728; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qTPmUPODZLv6jI3MRsC+xVG4jzWTeuCONjyxcS7El7w=;
+ b=VbJ+uvpgTi+VNE5tmQ9Y8vdQzr/azV526Tf8u0JlfHXJdgWsgACvy1mhduolWW0lPA
+ usCXtPcX/tTK5YMGkhgWcio7PExDnYT7vbGGPHjqOcJHzbN9EhnavlN3ZbV63WTbrJ63
+ w6vDjeJtoMgs3R0GCZLjTHZ/ygWGJQ5wUaD9WwXWHJZ0EZxilYZD3kovRK9kWjmrvIlU
+ OBH/5ykL9EMuLoehfCytgqUWkDy6bP0mlkz0+sPjpo8EPXTxbQz2Lw9DqjacIN+j3weL
+ zgRhsEYSJrgC5hEmCeB7e315fPkhO24piQNfbbRMqA4LdBepgXfS5fMLEfYIf6oaQMG2
+ wGTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715939579; x=1716544379;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=T+J5rbIfUpvehIGmWcPG1zjcR1aPta5xb+LZyWF/KhY=;
- b=ZyG3iNWDRaAB6CC2R0aempDqcL8ZAlF8frThEhumMZ033f5Ekkt0igVluPHw2G8Ho5
- oMrhck01l0Zd5iZf/Bi2FzIY0GUqYvmP/YmC1aFp6oZeULDCx1QrrDNLZpdjULJC91GZ
- KVXupVarZJ3J91qJv5Zb5Q2lwbf7LJ6lDa/6zyh2L0oo0hkxxUAMEigiVYfGbPNTND9j
- duqlY+nB2UkDE6nFgm921kQZrlm/VEtHMoQU3xq1NwAlp2IxrEN9ysXt7WXEU4DnBSTg
- U9ns4lxYZeF6OfSr3Nke2Mcmn64YJPSg3uZcCCJlYG/CBuL9MuObz6WWjJ43JM7faXFF
- Q9Dg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjzcUEW0abbC8gx2xQxLgrB0HBcf3inJiNvQSfZ9nol2KgE4TOz2kvOtb4Pl3W81hJUCy8KcIFykFgNOLd7kndjNpt1m8=
-X-Gm-Message-State: AOJu0YzUF124UMDDRooPPNLPFsX63hCPlI2G8JI/SLFfiyOKisudVZ5b
- YDyZdm33zm4HLOZdahPh8LXKeHnJSlCdcdBAcvOYqXmFZDIlklSwTh6aDJFhgaI=
-X-Google-Smtp-Source: AGHT+IEsNTB7b2SgKIMyR54BI6pekcFfxKddYkXYktbhD+hctte6J7xdVkUDa/6iOXagDeY2YrWudw==
-X-Received: by 2002:a17:90a:c506:b0:2b6:c650:fb54 with SMTP id
- 98e67ed59e1d1-2b6ccd86144mr17928087a91.49.1715939578767; 
- Fri, 17 May 2024 02:52:58 -0700 (PDT)
-Received: from n37-006-243.byted.org ([180.184.51.134])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b628ca53cesm16975992a91.44.2024.05.17.02.52.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 May 2024 02:52:58 -0700 (PDT)
-From: Changqi Lu <luchangqi.123@bytedance.com>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v3 08/11] hw/nvme: enable ONCS reservations
-Date: Fri, 17 May 2024 17:52:15 +0800
-Message-Id: <20240517095218.3107672-9-luchangqi.123@bytedance.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20240517095218.3107672-1-luchangqi.123@bytedance.com>
-References: <20240517095218.3107672-1-luchangqi.123@bytedance.com>
+ d=1e100.net; s=20230601; t=1715939928; x=1716544728;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qTPmUPODZLv6jI3MRsC+xVG4jzWTeuCONjyxcS7El7w=;
+ b=hlYBKQGbemiSV0drAxY4uwFE1sMmbxvL5gMeE6CE61WllfnI1B8B6tIjx74hm7bCZ3
+ N/MyewlvXstmoKf/VVmWIGYtaEkFfz7vLL/tPgFyyQzGRhxtZSCpUDxrEUFzM4wqK7LX
+ SL6Sfc0JtvE2LvrnQSmemM8hy1D4aWcv6GIj7AxDIVM12itxC+DaNnkDLtG9wpRqTMpQ
+ 5pQTIeL06n7WptPS4QVA3i7LpCE6Xt6V9zB3dQhFYFEcJ4gqi05MCainMfruZ6POj2mj
+ kHk9YpOB5tAa7B6Rr00tBn6+6CCczEYYYck0MAxEkLzyE+KaRQPCJqqb5qZeCJDhhlJS
+ EuiA==
+X-Gm-Message-State: AOJu0YxXhBTJzxaFxo7bRV+aKQ31dgGJY5VdYkBxik9fg+q4gmVtmhzO
+ sYr4eNrJ20vLoqCG1B2jOebrMSyTeWCMlfhFBViqHhcz4ODrx9KBQPMFKMSvFIW/Y4faOTodj0w
+ 6oQf9/m3TXAdxBoeJy0smub5QXPGbwpsM9K5IWQ==
+X-Google-Smtp-Source: AGHT+IE2/8c1/IEuLNtWNdGLdOz3qeLg9Wk17ocXA5xldhzVfTWjc6P//XZUhg9NyYFKOEF+d+DoxMsC0pQRvikNKkk=
+X-Received: by 2002:a50:a6cf:0:b0:572:9d24:257a with SMTP id
+ 4fb4d7f45d1cf-5734d5cff4bmr15318912a12.23.1715939928399; Fri, 17 May 2024
+ 02:58:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x1035.google.com
+References: <20240507130349.86851-1-sebastian.huber@embedded-brains.de>
+ <78f54624-2a7f-4478-88b9-bc69b2a482cd@embedded-brains.de>
+In-Reply-To: <78f54624-2a7f-4478-88b9-bc69b2a482cd@embedded-brains.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 May 2024 10:58:34 +0100
+Message-ID: <CAFEAcA_xhvjeBKEonJqY-3SGdY542VL7kjJDDOmFApC8U3Kfag@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Zynq 7000 SoC improvements
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,32 +88,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit enables ONCS to support the reservation
-function at the controller level. It also lays the
-groundwork for detecting and enabling the reservation
-function on a per-namespace basis in RESCAP.
+On Fri, 17 May 2024 at 09:31, Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
+>
+> Hello,
+>
+> is the mailing list the right place for contributions like this?
 
-Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
----
- hw/nvme/ctrl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Yes it is, and this is on my todo list to review. Sorry for
+not getting back to you earlier, but I was on holiday last
+week and at a conference this week. I hope to be able to start
+working through my code review backlog when I'm at my desk
+again next week :-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 127c3d2383..182307a48b 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8248,7 +8248,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     id->nn = cpu_to_le32(NVME_MAX_NAMESPACES);
-     id->oncs = cpu_to_le16(NVME_ONCS_WRITE_ZEROES | NVME_ONCS_TIMESTAMP |
-                            NVME_ONCS_FEATURES | NVME_ONCS_DSM |
--                           NVME_ONCS_COMPARE | NVME_ONCS_COPY);
-+                           NVME_ONCS_COMPARE | NVME_ONCS_COPY |
-+                           NVME_ONCS_RESRVATIONS);
- 
-     /*
-      * NOTE: If this device ever supports a command set that does NOT use 0x0
--- 
-2.20.1
-
+-- PMM
 
