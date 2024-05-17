@@ -4,111 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2F3C04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 17:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0312AC04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 17:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s81h7-0006Rw-VK; Fri, 17 May 2024 13:48:37 -0400
+	id 1s81ob-0003gG-Dd; Fri, 17 May 2024 13:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s81h6-0006RM-HE
- for qemu-devel@nongnu.org; Fri, 17 May 2024 13:48:36 -0400
-Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s81h4-0002T7-Gb
- for qemu-devel@nongnu.org; Fri, 17 May 2024 13:48:36 -0400
-Received: from pps.filterd (m0409409.ppops.net [127.0.0.1])
- by m0409409.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
- 44HHR9i5024629; Fri, 17 May 2024 18:48:30 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=
- jan2016.eng; bh=9ihnITGdnryzGqKaKLXjEtlkMoZ7ciatlf4rt0eVals=; b=
- FlOGlYGOXwQp22taSzT3cpQvWR44tRNVm18Z1+WLZvpbGfaIdYfHV+a16lLko7Iq
- woUA7cifSEQHzAGAx1UwQt37/rh16BAmMuJokyMdXYyrHhwEtW1zidLy/o/+hmPU
- 6mRfRy7lDFplvYd1mj+EOMPBk9a7OBugNNHKSTb5vxb7nLF6yEnN/sC/PdEsTs/9
- UmtjhRuJT83cCb0Yuk0V3i7vCQaWMA5gK3jzaw6ikYTZa76Bt4DyYhlKTiaVGjNg
- QqaZ9lEmO3Wopy2ZjZH99A/PiAcD6lChv22EyBqAsZw8i8Zr/YdyjY/tNqN/yS94
- l0lwBe9G6rk0Ky0tugqX0Q==
-Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18]
- (may be forged))
- by m0409409.ppops.net-00190b01. (PPS) with ESMTPS id 3y6bbkgptg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 May 2024 18:48:30 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
- by prod-mail-ppoint1.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44HC63eA004730; Fri, 17 May 2024 13:48:28 -0400
-Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
- by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 3y240ybcyd-1;
- Fri, 17 May 2024 13:48:28 -0400
-Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
- [172.27.97.51])
- by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 1272C333B9;
- Fri, 17 May 2024 17:48:25 +0000 (GMT)
-Message-ID: <ab1c6134-58d0-4a3f-8853-90a5cae173d7@akamai.com>
-Date: Fri, 17 May 2024 12:48:25 -0500
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s81oZ-0003ff-Dk
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 13:56:19 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s81oX-0003pM-7b
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 13:56:19 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2e1fa1f1d9bso16148661fa.0
+ for <qemu-devel@nongnu.org>; Fri, 17 May 2024 10:56:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715968575; x=1716573375; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ILybd4uCFVq2sLCUT+bII60RqHgIew9z0KFEVI3h8bM=;
+ b=mzbcZEjPcaRNvraxnX/q4KGy2GDImQLzTJKNw+IhCjJUAxdxrAQuZ3CLML3CqN5AoD
+ rxwAM9cDavyU53HHJKNgSVw61W1lsyOEXznhNUvFFQWIra+HiGLPuN9qnEotD7lFArni
+ 0p6/cts85llP1qEQhyWpmfOeZk8fmnpr0ezEGMVXnCFwCgJnnU2LBfLlCdy7xnIcxIOI
+ Mw/Eou5r1QYpK3+B5T1DPC8/OCDYHIo/gx37lo5Q1izSRKRFxFv3Kz3TT6UE3/3+2ps5
+ fiYcJtctzcZVt3YZc4qFxdQcal1TCTbeBAD6wvzIKHA4gGNXWprAn+NCqAZS53Xz6dT2
+ Bvkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715968575; x=1716573375;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ILybd4uCFVq2sLCUT+bII60RqHgIew9z0KFEVI3h8bM=;
+ b=N0WrgbJQzOFzzocLvgBsFF+lK8Fm7OB2/TXv7/XgpAsYnrkg5Ci4lqwutgse2kIao6
+ UUzbAGjL5J+AEs1tt6hF6q9wFw5TlzzY62ajsHYs8UArZcF61q90FpEhKM6DPI+LMLru
+ s8c+nAKQ+DPdbaaaxuA25x2fmVmiReHwOp62GZGIvIcGieyHRHtS/ZCw1axHaFy4Rur4
+ q0HXrLFg384dCXh1PK6e5DnDZq/sfQUdRYzTy1Nq6ud4Cj3J7C49z/YHAxwfw5xr1Tdt
+ vQPqnhdFIRzuggN3DLbyF3saRZ6WJQcGrvh8fm3vvxPdMVbufp5MNFevs6RN1PixcOsP
+ ZJaw==
+X-Gm-Message-State: AOJu0Yysi2RZlaB9UDurGkd2+j/TWY//YrCQJ45s2S3d1wG7CtJGghkW
+ oQy+MSmDR40xAd4L9yn82HggtFtwCStwOodbQ1XfoY8kXo23uaNBKApSYNaeObw=
+X-Google-Smtp-Source: AGHT+IFpF093pv0hwwRWaGrCgDekBb8/acHfg50zvqnRoU954uKhh2TpqwIJQ01ZiDYb3oJCq6+9uw==
+X-Received: by 2002:a05:651c:1055:b0:2d8:8fb6:a53d with SMTP id
+ 38308e7fff4ca-2e52028a6cfmr172105691fa.42.1715968574635; 
+ Fri, 17 May 2024 10:56:14 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a17891f87sm1129992066b.65.2024.05.17.10.56.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 May 2024 10:56:14 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3FAB75F88D;
+ Fri, 17 May 2024 18:56:13 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org,  qemu-riscv@nongnu.org,
+ alistair.francis@wdc.com,  bmeng@tinylab.org,  liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com,  palmer@rivosinc.com,
+ akihiko.odaki@daynix.com,  mjt@tls.msk.ru,  Robin Dapp
+ <rdapp.gcc@gmail.com>
+Subject: Re: [PATCH 1/1] riscv, gdbstub.c: fix reg_width in
+ ricsv_gen_dynamic_vector_feature()
+In-Reply-To: <20240516171010.639591-2-dbarboza@ventanamicro.com> (Daniel
+ Henrique Barboza's message of "Thu, 16 May 2024 14:10:10 -0300")
+References: <20240516171010.639591-1-dbarboza@ventanamicro.com>
+ <20240516171010.639591-2-dbarboza@ventanamicro.com>
+Date: Fri, 17 May 2024 18:56:13 +0100
+Message-ID: <874jawqq4i.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: CPR/liveupdate: test results using prior bug fix
-To: Steven Sistare <steven.sistare@oracle.com>,
- Michael Tokarev <mjt@tls.msk.ru>, peterx@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- "Hunt, Joshua" <johunt@akamai.com>
-References: <20240228051315.400759-1-peterx@redhat.com>
- <20240228051315.400759-21-peterx@redhat.com>
- <f855963e-b7dd-4ce8-89dc-dfaa87e896c4@akamai.com>
- <82c69792-061d-460f-9db6-88fc8f9df5af@oracle.com>
- <d6176480-d87c-492b-8a0c-04bf81a4f59a@akamai.com>
- <59ad1f18-682b-46fc-a902-884ca6150c7d@akamai.com>
- <fadc022e-7cfd-4201-90e5-0193ce6220bc@tls.msk.ru>
- <916bca57-6bf9-48ea-82b7-c528660c6c4c@akamai.com>
- <f6e52844-d886-437c-94b4-22ad6c290532@oracle.com>
-Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <f6e52844-d886-437c-94b4-22ad6c290532@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-17_07,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999
- phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405170137
-X-Proofpoint-GUID: CnZfy9z1TpRH2ZJa6v5VWo2bHg4ptDNI
-X-Proofpoint-ORIG-GUID: CnZfy9z1TpRH2ZJa6v5VWo2bHg4ptDNI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-17_07,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 bulkscore=0
- suspectscore=0 phishscore=0 impostorscore=0 mlxscore=0 mlxlogscore=999
- priorityscore=1501 adultscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405170137
-Received-SPF: pass client-ip=67.231.149.131; envelope-from=mgalaxy@akamai.com;
- helo=mx0a-00190b01.pphosted.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,79 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OK, acknowledged. Thanks, All.
+Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
 
-- Michael
-
-On 5/16/24 13:07, Steven Sistare wrote:
-> On 5/16/2024 1:24 PM, Michael Galaxy wrote:
->> On 5/14/24 08:54, Michael Tokarev wrote:
->>> On 5/14/24 16:39, Michael Galaxy wrote:
->>>> Steve,
->>>>
->>>> OK, so it does not look like this bugfix you wrote was included in 
->>>> 8.2.4 (which was released yesterday). Unfortunately, that means 
->>>> that anyone using CPR in that release will still (eventually) 
->>>> encounter the bug like I did.
->>>
->>> 8.2.4 is basically a "bugfix" release for 8.2.3 which I somewhat
->>> screwed up (in a minor way), plus a few currently (at the time)
->>> queued up changes.   8.2.3 was a big release though.
->>>
->>>> I would recommend that y'all consider cherry-picking, perhaps, the 
->>>> relevant commits for a possible 8.2.5 ?
->>>
->>> Please Cc changes which are relevant for -stable to, well,
->>> qemu-stable@nongnu.org :)
->>>
->>> Which changes needs to be picked up?
->>>
->> Steve, can you comment here, please? At a minimum, we have this one: 
->> [PULL 20/25] migration: stop vm for cpr
->>
->> But that pull came with a handful of other changes that are also not 
->> in QEMU v8, so I suspect I'm missing some other important changes 
->> that might be important for a stable release?
->>
->> - Michael
+> Commit 33a24910ae changed 'reg_width' to use 'vlenb', i.e. vector length
+> in bytes, when in this context we want 'reg_width' as the length in
+> bits.
 >
-> Hi Michael, I sent the full list of commits to this distribution 
-> yesterday, and
-> I see it in my Sent email folder.  Copying verbatim:
+> Fix 'reg_width' back to the value in bits like 7cb59921c05a
+> ("target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'") set
+> beforehand.
 >
-> ----
-> Michael Galaxy, I'm afraid you are out of luck with respect to qemu 8.2.
-> It has some of the cpr reboot commits, but is missing the following:
->
-> 87a2848 migration: massage cpr-reboot documentation
-> cbdafc1 migration: options incompatible with cpr
-> ce5db1c migration: update cpr-reboot description
-> 9867d4d migration: stop vm for cpr
-> 4af667f migration: notifier error checking
-> bf78a04 migration: refactor migrate_fd_connect failures
-> 6835f5a migration: per-mode notifiers
-> 5663dd3 migration: MigrationNotifyFunc
-> c763a23e migration: remove postcopy_after_devices
-> 9d9babf migration: MigrationEvent for notifiers
-> 3e77573 migration: convert to NotifierWithReturn
-> d91f33c migration: remove error from notifier data
-> be19d83 notify: pass error to notifier with return
-> b12635f migration: fix coverity migrate_mode finding
-> 2b58a8b tests/qtest: postcopy migration with suspend
-> b1fdd21 tests/qtest: precopy migration with suspend
-> 5014478 tests/qtest: option to suspend during migration
-> f064975 tests/qtest: migration events
-> 49a5020 migration: preserve suspended for bg_migration
-> 58b1057 migration: preserve suspended for snapshot
-> b4e9ddc migration: preserve suspended runstate
-> d3c86c99 migration: propagate suspended runstate
-> 9ff5e79 cpus: vm_resume
-> 0f1db06 cpus: check running not RUN_STATE_RUNNING
-> b9ae473 cpus: stop vm in suspended runstate
-> f06f316 cpus: vm_was_suspended
->
-> All of those landed in qemu 9.0.
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Reported-by: Robin Dapp <rdapp.gcc@gmail.com>
+> Fixes: 33a24910ae ("target/riscv: Use GDBFeature for dynamic XML")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
+>  target/riscv/gdbstub.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> - Steve
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index d0cc5762c2..358158c42a 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -288,7 +288,7 @@ static GDBFeature *riscv_gen_dynamic_csr_feature(CPUS=
+tate *cs, int base_reg)
+>  static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int ba=
+se_reg)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+> -    int reg_width =3D cpu->cfg.vlenb;
+> +    int reg_width =3D cpu->cfg.vlenb << 3;
+
+You could consider renaming the var to reg_bits for clarity but
+otherwise:
+
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+
+>      GDBFeatureBuilder builder;
+>      int i;
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
