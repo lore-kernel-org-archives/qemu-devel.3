@@ -4,60 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C971C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 01:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026F4C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 01:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7m2s-0005ur-3C; Thu, 16 May 2024 21:06:02 -0400
+	id 1s7m3Z-00064M-4Z; Thu, 16 May 2024 21:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s7m2q-0005uZ-0g; Thu, 16 May 2024 21:06:00 -0400
-Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s7m2m-0000on-DA; Thu, 16 May 2024 21:05:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1715907942; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=eD5J0NZeEwo7qcrWq7uuHiPkYV62U+eoVLnoahoGqbw=;
- b=UP/DVPIaOQC+wZpj6iUzQNwuqTQbV5SUCoXhEKF1OlA5dWjVP3ecNsYybnCGuEr7T2FkLcnmiLnlePA6l6uKKRFksz7lfsBQUfS29Bi0M+NgiXpf3xmcLghYtnoPOzHCvhD+8zSUXlSyZGLIJH8Rv8u79P23/xynuQ+555jQkU4=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045075189;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0W6cmh59_1715907939; 
-Received: from 30.198.0.221(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W6cmh59_1715907939) by smtp.aliyun-inc.com;
- Fri, 17 May 2024 09:05:40 +0800
-Message-ID: <f3698a82-0760-4d7a-b5d6-0188d74e2082@linux.alibaba.com>
-Date: Fri, 17 May 2024 09:04:50 +0800
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1s7m3W-00064B-Vp
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 21:06:42 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1s7m3T-0000to-Sd
+ for qemu-devel@nongnu.org; Thu, 16 May 2024 21:06:42 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Bxc+qXrUZmmr4NAA--.20763S3;
+ Fri, 17 May 2024 09:06:32 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx57mVrUZmm7MjAA--.3982S3; 
+ Fri, 17 May 2024 09:06:31 +0800 (CST)
+Subject: Re: [PULL 0/5] loongarch-to-apply queue
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+References: <20240516091120.1021435-1-gaosong@loongson.cn>
+ <CAFEAcA_UHCYEbpk+V4qS7NpPP_-2kL2XEHM9M_SywfkPZrpsjA@mail.gmail.com>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <03218f2d-9285-9f15-9835-8f317d3694b2@loongson.cn>
+Date: Fri, 17 May 2024 09:06:29 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] riscv, gdbstub.c: fix reg_width in
- ricsv_gen_dynamic_vector_feature()
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, palmer@rivosinc.com, akihiko.odaki@daynix.com,
- alex.bennee@linaro.org, mjt@tls.msk.ru, Robin Dapp <rdapp.gcc@gmail.com>
-References: <20240516171010.639591-1-dbarboza@ventanamicro.com>
- <20240516171010.639591-2-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240516171010.639591-2-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <CAFEAcA_UHCYEbpk+V4qS7NpPP_-2kL2XEHM9M_SywfkPZrpsjA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.119;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Cx57mVrUZmm7MjAA--.3982S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Jr1DXw1xGw13ZFy5tw17twc_yoW8JrW7pr
+ Wak3Z7Gr1kJF17JrsrJ34jqr1Utrn7Gr1xXFn8Xry8CF4DZr15Xr18Jr1rury7A34xCr10
+ qr18J3WDXF1DJrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.033,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,41 +82,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+在 2024/5/16 下午5:28, Peter Maydell 写道:
+> On Thu, 16 May 2024 at 10:12, Song Gao <gaosong@loongson.cn> wrote:
+>> The following changes since commit 922582ace2df59572a671f5c0c5c6c5c706995e5:
+>>
+>>    Merge tag 'pull-hppa-20240515' of https://gitlab.com/rth7680/qemu into staging (2024-05-15 11:46:58 +0200)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240516
+>>
+>> for you to fetch changes up to d55d16700a2e2b36c7e34724d4d77f4a75c5243a:
+>>
+>>    target/loongarch/kvm: fpu save the vreg registers high 192bit (2024-05-16 16:32:35 +0800)
+>>
+>> ----------------------------------------------------------------
+>> pull-loongarch-20240516
+>>
+>> ----------------------------------------------------------------
+>> Bibo Mao (3):
+>>        hw/loongarch: Add compat machine for 9.1
+>>        hw/loongarch: Remove minimum and default memory size
+>>        tests: Add migration test for loongarch64
+> RTH: I had a comment about adding the versioned machine type, so we
+> should hold off on applying this until that is resolved, I think.
+Agreed,   We will try resolved it.   Thanks for your explanation.
 
-On 2024/5/17 1:10, Daniel Henrique Barboza wrote:
-> Commit 33a24910ae changed 'reg_width' to use 'vlenb', i.e. vector length
-> in bytes, when in this context we want 'reg_width' as the length in
-> bits.
->
-> Fix 'reg_width' back to the value in bits like 7cb59921c05a
-> ("target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'") set
-> beforehand.
->
-> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Reported-by: Robin Dapp <rdapp.gcc@gmail.com>
-> Fixes: 33a24910ae ("target/riscv: Use GDBFeature for dynamic XML")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Thanks.
+Song Gao
+> thanks
+> -- PMM
 
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-
-Zhiwei
-
-> ---
->   target/riscv/gdbstub.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index d0cc5762c2..358158c42a 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -288,7 +288,7 @@ static GDBFeature *riscv_gen_dynamic_csr_feature(CPUState *cs, int base_reg)
->   static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
->   {
->       RISCVCPU *cpu = RISCV_CPU(cs);
-> -    int reg_width = cpu->cfg.vlenb;
-> +    int reg_width = cpu->cfg.vlenb << 3;
->       GDBFeatureBuilder builder;
->       int i;
->   
 
