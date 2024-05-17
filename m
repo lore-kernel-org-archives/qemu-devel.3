@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56F7C04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 15:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255F7C04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 15:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7z6q-00051u-E6; Fri, 17 May 2024 11:03:00 -0400
+	id 1s7z6y-0005AY-Ap; Fri, 17 May 2024 11:03:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7z6o-0004zo-H3
- for qemu-devel@nongnu.org; Fri, 17 May 2024 11:02:58 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7z6u-00057i-CZ
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 11:03:04 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7z6b-0005OP-FC
- for qemu-devel@nongnu.org; Fri, 17 May 2024 11:02:58 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-56e1f3462caso5177698a12.3
- for <qemu-devel@nongnu.org>; Fri, 17 May 2024 08:02:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s7z6i-0005Pp-AS
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 11:03:03 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a5a8cd78701so491995166b.2
+ for <qemu-devel@nongnu.org>; Fri, 17 May 2024 08:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715958160; x=1716562960; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715958170; x=1716562970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=prOBORLrKnIubByGiemAya5YeM7dN+tEWn5fMLTmbm4=;
- b=BTAOo7MVw8FmgeeffQ5hpmckUijnZeFsyXxMTUxz6jIZ8+zys4Su+GL5AfLV7hWKRD
- MUrmybui38oMHeug1kb5PawjUPoNOghaZuvCxK1zG1wissDNrwydBIONp8VJg/AxElfG
- 3NWtypXutXR5oFzwGiXfntrBdTE/9pAff6/BhtLNz+zbD/sRRVmXh6UIClCDDFV4rfP8
- Diup4kiMbGIw0Gvxv7hUeVWBGOUlOW8psl4JHWLLenB0IjhLzmj+HAVCfcDbNnP8q/aD
- YhJ2MeGlEY/lCe6jnQiN/auZyOghXEh3WEjo5AHilkT0Zzx1Lea6xH9T87QKVOvcRK/N
- CPvA==
+ bh=RFJQ8eXrLcyhgXUkRkABC/U14von2QfsgkjKz+WC79c=;
+ b=gc2u0LsB9ul/DHWRO66ULOf7EZmlomg+FoaGtZ/jClqsnh28N8tGgG6XogugqCB1Y0
+ iIK9SevZDGiWz3fdfW7WodfHl5pMa1LofoxFddt7Gh9oFX5+8Xduhs9vPIJUVGmvXrDp
+ oNc09P8Vn21Y1m6AuFzGX9YT9rdlkLxIqM4RMMIInNNAC3VPEZE7GZWtnuyCOqWTUxwZ
+ OghH9utl2D5y1DH/NQTBZZ7si6Ijk0VdX4ydOxfx5O9nv+JmWoNuONvCGr2QJ7nfEWCR
+ h798O2S7ZljGkEGNkRRu1pW7oz5dyxHbJOPm4s6IRCCbGxGBtu3EU6Rzwat95OsXABWg
+ KEkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715958160; x=1716562960;
+ d=1e100.net; s=20230601; t=1715958170; x=1716562970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=prOBORLrKnIubByGiemAya5YeM7dN+tEWn5fMLTmbm4=;
- b=n9d0uCzGDqJsvsglGSpWfVa0mVfgkvbhvcQplGyZ/XNCBEqtRezR/1u8LXETyKq1/C
- ssY+jGxzFYNaR4ABmZGab+6CRln/nt+QkZ2mWtDQxIEinW5sUftOFojwKejMaHw4eKEI
- TJBsZWEuI2K87HGHZXmcWTRhXxRl4rbuYti2UpXZCVsU02bQ+HPqrIU9vH7k1iZgbUJx
- bfZgyk7zbHchbUU2A6SJaajsKqXNixM7wkCZzb7h10eYVVRFj7w+1h44zWV2mhkn13n4
- TL/n3PfU6VCm37KJetz25/TdvpbRbuQHK4CVY8OTAxrZB9yC45Bb+p6mAlrLcHVygyrF
- ynqA==
-X-Gm-Message-State: AOJu0YyZKSOSCH2YMjMcA2Gm3hG4h4voRuuSLJrwjrCxnRjiYas2HDqv
- lWOCqQi0ULclXjHb62lNcFRbTb1ak1S85fQiTWv1i0CPvBHAmimrJqf0kMzf1qBf7WxMR4e6uLu
- t
-X-Google-Smtp-Source: AGHT+IFWq5uucdNawk9X0TjU9HFvst4iiS3xx9YJtO5/wDWr0sbwoo05FOLa8VSiWC2IIXsB1plt2g==
-X-Received: by 2002:a50:d745:0:b0:572:4702:2227 with SMTP id
- 4fb4d7f45d1cf-5734d6de22dmr17150495a12.35.1715958160001; 
- Fri, 17 May 2024 08:02:40 -0700 (PDT)
+ bh=RFJQ8eXrLcyhgXUkRkABC/U14von2QfsgkjKz+WC79c=;
+ b=HEeJ3Pcp6fknE7SJoRKrUhI0ahY9SgXWTbaOGqixvZIvrplntuKFBQ55KGHnO15UEV
+ j2Rj3EMqWyfdzgr20/Nmzr7S6Lsl3dGqg2vQFgviYKe44nyh/hkM3DTIDb8gGG+hUdGe
+ T0q2d9S8BSsmWRBYMOO8znLThzeexakppXCRkOmdry+LjVdQsHu3KeSD4EjSgCAJPWXM
+ 1nuyu9tLpA00TcmiP2QuaY/WjKWCo5vhCwcbd/KI3f9KrTAwWcaDheKttRZDsufEimIu
+ tZxJJCu8mI9Q9I+pqZpKePeB+M9xWJq0sFcTxMM0/d0WqjI6nF4z7oxU1/TslCPVOuvS
+ WTzA==
+X-Gm-Message-State: AOJu0YwdJjeRZTDQzlJCQLJH+zq2kjKzSoFbZo852SjsapmtuWkdyzg2
+ Lnk7s1pTqcyKAZVriLOjlBFdS6TdyZVFvDw+rmSqy8Je5fa/8sawTvhFFSs1HqQPcniM6z3Pezw
+ 4
+X-Google-Smtp-Source: AGHT+IFKrBMiYG7qlmBVaN5Hd2LIoLCh4V9QNWcZaoNDQcJfBWAU2doIOGLPdYHpQiynO6lK7trE/g==
+X-Received: by 2002:a17:906:3a8d:b0:a59:be8a:bd6f with SMTP id
+ a640c23a62f3a-a5a2d65f272mr1374782466b.61.1715958170359; 
+ Fri, 17 May 2024 08:02:50 -0700 (PDT)
 Received: from localhost.localdomain ([149.14.240.163])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733c322c61sm12370190a12.86.2024.05.17.08.02.39
+ a640c23a62f3a-a5a17b17886sm1130572866b.210.2024.05.17.08.02.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 May 2024 08:02:39 -0700 (PDT)
+ Fri, 17 May 2024 08:02:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-stable@nongnu.org,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?J=C3=A1n=20Tomko?= <jtomko@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/5] hw/pflash: fix block write start
-Date: Fri, 17 May 2024 17:02:24 +0200
-Message-ID: <20240517150227.32205-3-philmd@linaro.org>
+Subject: [PULL 4/5] tests: add testing of parameter=1 for SMP topology
+Date: Fri, 17 May 2024 17:02:26 +0200
+Message-ID: <20240517150227.32205-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240517150227.32205-1-philmd@linaro.org>
 References: <20240517150227.32205-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,59 +95,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Move the pflash_blk_write_start() call.  We need the offset of the
-first data write, not the offset for the setup (number-of-bytes)
-write.  Without this fix u-boot can do block writes to the first
-flash block only.
+Validate that it is possible to pass 'parameter=1' for any SMP topology
+parameter, since unsupported parameters are implicitly considered to
+always have a value of 1.
 
-While being at it drop a leftover FIXME.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2343
-Fixes: 284a7ee2e290 ("hw/pflash: implement update buffer for block writes")
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240516121237.534875-1-kraxel@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Ján Tomko <jtomko@redhat.com>
+Message-ID: <20240513123358.612355-3-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/block/pflash_cfi01.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ tests/unit/test-smp-parse.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 1bda8424b9..c8f1cf5a87 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -518,10 +518,6 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-             break;
-         case 0xe8: /* Write to buffer */
-             trace_pflash_write(pfl->name, "write to buffer");
--            /* FIXME should save @offset, @width for case 1+ */
--            qemu_log_mask(LOG_UNIMP,
--                          "%s: Write to buffer emulation is flawed\n",
--                          __func__);
-             pfl->status |= 0x80; /* Ready! */
-             break;
-         case 0xf0: /* Probe for AMD flash */
-@@ -574,7 +570,6 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-             }
-             pfl->counter = value;
-             pfl->wcycle++;
--            pflash_blk_write_start(pfl, offset);
-             break;
-         case 0x60:
-             if (cmd == 0xd0) {
-@@ -605,6 +600,9 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-         switch (pfl->cmd) {
-         case 0xe8: /* Block write */
-             /* FIXME check @offset, @width */
-+            if (pfl->blk_offset == -1 && pfl->counter) {
-+                pflash_blk_write_start(pfl, offset);
-+            }
-             if (!pfl->ro && (pfl->blk_offset != -1)) {
-                 pflash_data_write(pfl, offset, value, width, be);
-             } else {
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index 56165e6644..9fdba24fce 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -330,6 +330,14 @@ static const struct SMPTestData data_generic_valid[] = {
+         .config = SMP_CONFIG_GENERIC(T, 8, T, 2, T, 4, T, 2, T, 16),
+         .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
+         .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
++    }, {
++        /*
++         * Unsupported parameters are always allowed to be set to '1'
++         * config: -smp 8,books=1,drawers=1,sockets=2,modules=1,dies=1,cores=2,threads=2,maxcpus=8
++         * expect: cpus=8,sockets=2,cores=2,threads=2,maxcpus=8 */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 2, 2, 8),
++        .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
++        .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
+     },
+ };
+ 
 -- 
 2.41.0
 
