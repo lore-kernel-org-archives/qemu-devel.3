@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC54C04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 12:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFD5C25B77
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 12:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7wf4-0004y6-An; Fri, 17 May 2024 08:26:10 -0400
+	id 1s7wez-0004qA-Aj; Fri, 17 May 2024 08:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7wf1-0004u9-B5
- for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7wew-0004om-FU
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7wez-0006HA-H4
- for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s7weu-0006GQ-Ta
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 08:26:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715948764;
+ s=mimecast20190719; t=1715948758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QTxNrBzfSiSy5sRAFW60eW3MEqICmX9H7w1MzFepTP4=;
- b=VKJMCXeZmderqyDhI9knm5KUNt0YA5a+69wdIwlHqsdiC8dKIB1z9TI0SvNTnfbZB9pbEc
- pXAcOqIrhxAk4h7nx8HwM795800/CZJTMk/1m7paPIU7KdqVZdSArSZGmZ0Wm87lSvKWTF
- +LQocL6jGNMXVrN7X7VvnuzYSbfoJds=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-ov6S77mJP9WMxskeRWQ2Jg-1; Fri,
- 17 May 2024 08:26:02 -0400
-X-MC-Unique: ov6S77mJP9WMxskeRWQ2Jg-1
+ bh=zZ2tfYZTfmYrTRdPDDBMx41AUVQyGSLeTEG9/lN7XKY=;
+ b=Ynrv5VkEkWvnKynekzhmiMlned9Uyuk2Pk6nx6cdzvxQsRJqyKOxWXO+ysOPX9E2fYL0dF
+ +PyhIouvB5tkOTa2F9s2N/Rnvpk0h/bO+Qdx1Gm4YSCroCyu8wSgnLVLxWSb+wFD4whipW
+ Hko9EsQtS6W4GA6tTtCtKyDK3wWA6lw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-513-xSkbXg-6Pnujs2qwkbK3cg-1; Fri, 17 May 2024 08:25:56 -0400
+X-MC-Unique: xSkbXg-6Pnujs2qwkbK3cg-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5FDCC1C0513E;
- Fri, 17 May 2024 12:26:02 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 03B22812296;
+ Fri, 17 May 2024 12:25:56 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.132])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B88F01050173;
- Fri, 17 May 2024 12:26:01 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 205E91050174;
+ Fri, 17 May 2024 12:25:54 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 6/6] hw/intc/s390_flic: Fix crash that occurs when saving the
- machine state
-Date: Fri, 17 May 2024 14:25:52 +0200
-Message-ID: <20240517122552.584215-7-thuth@redhat.com>
+Subject: [PULL 1/6] tests/lcitool/refresh: Treat the output of lcitool as text,
+ not as bytes
+Date: Fri, 17 May 2024 14:25:47 +0200
+Message-ID: <20240517122552.584215-2-thuth@redhat.com>
 In-Reply-To: <20240517122552.584215-1-thuth@redhat.com>
 References: <20240517122552.584215-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -80,35 +80,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-adapter_info_so_needed() treats its "opaque" parameter as a S390FLICState,
-but the function belongs to a VMStateDescription that is attached to a
-TYPE_VIRTIO_CCW_BUS device. This is currently causing a crash when the
-user tries to save or migrate the VM state. Fix it by using s390_get_flic()
-to get the correct device here instead.
+In case lcitool fails (e.g. with a python backtrace), this makes
+the output  of lcitool much more readable.
 
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Fixes: 9d1b0f5bf5 ("s390_flic: add migration-enabled property")
-Message-ID: <20240517061553.564529-1-thuth@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240516084059.511463-2-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/intc/s390_flic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/lcitool/refresh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
-index 7f93080087..6771645699 100644
---- a/hw/intc/s390_flic.c
-+++ b/hw/intc/s390_flic.c
-@@ -459,7 +459,7 @@ type_init(qemu_s390_flic_register_types)
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 24a735a3f2..174818d9c9 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -43,12 +43,12 @@ def atomic_write(filename, content):
  
- static bool adapter_info_so_needed(void *opaque)
- {
--    S390FLICState *fs = S390_FLIC_COMMON(opaque);
-+    S390FLICState *fs = s390_get_flic();
+ def generate(filename, cmd, trailer):
+     print("Generate %s" % filename)
+-    lcitool = subprocess.run(cmd, capture_output=True)
++    lcitool = subprocess.run(cmd, capture_output=True, encoding='utf8')
  
-     return fs->migration_enabled;
- }
+     if lcitool.returncode != 0:
+         raise Exception("Failed to generate %s: %s" % (filename, lcitool.stderr))
+ 
+-    content = lcitool.stdout.decode("utf8")
++    content = lcitool.stdout
+     if trailer is not None:
+         content += trailer
+     atomic_write(filename, content)
 -- 
 2.45.0
 
