@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75060C04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 05:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE59AC04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 May 2024 05:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s7qTf-0005Ar-9W; Fri, 17 May 2024 01:49:59 -0400
+	id 1s7qWI-0007XG-EP; Fri, 17 May 2024 01:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s7qTa-00055H-FE; Fri, 17 May 2024 01:49:55 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s7qTT-0007Eb-LT; Fri, 17 May 2024 01:49:54 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-6f0fd87da53so676711a34.2; 
- Thu, 16 May 2024 22:49:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715924986; x=1716529786; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iL4Y7PlFLru0WP4FWQ4mV2efiOBBC3KcYFaoIpOXn2o=;
- b=VowNkej5wdxvlykFaOHW2/8mDl3hFR8FecQDAsphrZZnqzdUHCHN2xHrOHNNdvkHVD
- qXpXY6gtT5iOSVFLeqUVEgvYob9ruiRZzxBGjkb2ISQEhEREjFSSCLf5fiu35WVTXNUd
- rYT//38KR6TuXMfqni5J3WHtlBEBpr54jk9A2ZTIAdXlCE7dq4qxOAmCoiIfKjZJcLMG
- wKHfbNDWoyjyoKJ/hDM0ABPboYaHyookF4rcexjHveVfJynURaUv+5dRlZvlAO8c3ina
- JBlVXKwjV481W1WS++STRLg1GYpS2OTK9gxQmf8euUZgaf6sIpkqxape/gEN3ls+FgaF
- blcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715924986; x=1716529786;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=iL4Y7PlFLru0WP4FWQ4mV2efiOBBC3KcYFaoIpOXn2o=;
- b=q3DBe8KVH5Rze0a7z84HZaMXzC2iT4li5odaqC5W0mo7HGPnwFEIZTjfzc+tUheRN/
- BC2iFThkB+/EDmlaJemoZ/pjWHRqB7AgMBuu5Lj2DneMAtiIcObi1p+ntVQ+GYY7AOUD
- eOimnt/6LIETNsKiwT4OYQN2k4iaSp76tk1VQ9bmpj7nwg3tCo2mWEcWJcNKVKqSVH3Z
- WPlMiqrbCXaP7R2APhaIzgNHjEafA5iTXH+wmjs6OTEgYDJrACmCRKwwASEmRMDiQjKQ
- atBg8jnSENHLT8LaeKjo0sFodETpE9JiYZjGpmXb0Sgdqoj7mu/ZlYp16Ff16pTrBZ7v
- 05TQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUj6uMYafwNQ9vigw2c5yITFJJGjvYU3695ycgzMXBLmKrxwWHBPIBpYOruqBUyAALMNsyA5FOpo2oNeRSGQQ5uS6bDu3Z4bm/ZmQEFuMvaKD9Yn6+MOAXegx8=
-X-Gm-Message-State: AOJu0YxzP5RZT4gCPpNOeBOMO1EmYcTgpgdgD9XEhHbYi8bDW3dAI5cY
- ErUVN41OkDjCdWITIqfVAv1/D0pOCJryzFdzUQDYoEAaLaeEHb2G
-X-Google-Smtp-Source: AGHT+IFeekaBu9iKi0E4goyHqFO3oQIzmPz5NEK1/26+u/nyPKuAisrqiBwu5SC4EHg6Mia09wraOg==
-X-Received: by 2002:a05:6830:44f:b0:6f0:5a46:702c with SMTP id
- 46e09a7af769-6f0e91175e3mr25143800a34.12.1715924986003; 
- Thu, 16 May 2024 22:49:46 -0700 (PDT)
-Received: from localhost ([1.146.118.37]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6340c4d4a1csm14482098a12.40.2024.05.16.22.49.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 May 2024 22:49:45 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 17 May 2024 15:49:40 +1000
-Message-Id: <D1BON1PFWOVV.2459GV9YO8VK5@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v7 26/61] target/ppc/mmu_common.c: Transform
- ppc_jumbo_xlate() into ppc_6xx_xlate()
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1715555763.git.balaton@eik.bme.hu>
- <6409d95aec6f1300adf64224c47568d0c07cf366.1715555763.git.balaton@eik.bme.hu>
-In-Reply-To: <6409d95aec6f1300adf64224c47568d0c07cf366.1715555763.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=npiggin@gmail.com; helo=mail-ot1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s7qWG-0007X0-M9
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 01:52:40 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s7qWB-0007e7-83
+ for qemu-devel@nongnu.org; Fri, 17 May 2024 01:52:40 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E4E7E6784E;
+ Fri, 17 May 2024 08:52:37 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 10CA4D0BCD;
+ Fri, 17 May 2024 08:52:23 +0300 (MSK)
+Message-ID: <1dd44fa0-ee95-4e83-85de-cc244a078d60@tls.msk.ru>
+Date: Fri, 17 May 2024 08:52:22 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] migration/colo: Tidy up bql_unlock() around
+ bdrv_activate_all()
+To: Li Zhijian <lizhijian@fujitsu.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Hailiang Zhang <zhanghailiang@xfusion.com>, qemu-devel@nongnu.org,
+ Zhang Chen <chen.zhang@intel.com>
+References: <20240516034517.1353664-1-lizhijian@fujitsu.com>
+ <20240516034517.1353664-3-lizhijian@fujitsu.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240516034517.1353664-3-lizhijian@fujitsu.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,122 +87,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon May 13, 2024 at 9:27 AM AEST, BALATON Zoltan wrote:
-> Now that only 6xx cases left in ppc_jumbo_xlate() we can change it
-> to ppc_6xx_xlate() also removing get_physical_address_wtlb().
->
+16.05.2024 06:45, Li Zhijian wrote:
+> Make the code more tight.
+> 
+> Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: Zhang Chen <chen.zhang@intel.com>
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+/mjt
+
 > ---
->  target/ppc/internal.h   |  5 +----
->  target/ppc/mmu_common.c | 38 ++++++++++++--------------------------
->  2 files changed, 13 insertions(+), 30 deletions(-)
->
-> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-> index 98b41a970c..4a4f9b9ec8 100644
-> --- a/target/ppc/internal.h
-> +++ b/target/ppc/internal.h
-> @@ -262,10 +262,7 @@ typedef struct mmu_ctx_t mmu_ctx_t;
->  bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
->                        hwaddr *raddrp, int *psizep, int *protp,
->                        int mmu_idx, bool guest_visible);
-> -int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-> -                                     target_ulong eaddr,
-> -                                     MMUAccessType access_type, int type=
-,
-> -                                     int mmu_idx);
-> +
->  /* Software driven TLB helpers */
->  int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
->                                      int way, int is_code);
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index ddb014e0aa..961062bca1 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -1112,22 +1112,6 @@ void dump_mmu(CPUPPCState *env)
->      }
->  }
-> =20
-> -int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-> -                                     target_ulong eaddr,
-> -                                     MMUAccessType access_type, int type=
-,
-> -                                     int mmu_idx)
-> -{
-> -    switch (env->mmu_model) {
-> -    case POWERPC_MMU_SOFT_6xx:
-> -        return mmu6xx_get_physical_address(env, ctx, eaddr, access_type,=
- type);
-> -    case POWERPC_MMU_SOFT_4xx:
-> -        return mmu40x_get_physical_address(env, &ctx->raddr, &ctx->prot,=
- eaddr,
-> -                                           access_type);
-> -    default:
-> -        cpu_abort(env_cpu(env), "Unknown or invalid MMU model\n");
-> -    }
-> -}
-> -
->  static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong =
-address,
->                                           MMUAccessType access_type, int =
-mmu_idx)
->  {
-> @@ -1326,12 +1310,10 @@ static bool ppc_40x_xlate(PowerPCCPU *cpu, vaddr =
-eaddr,
->      return false;
->  }
-> =20
-> -/* Perform address translation */
-> -/* TODO: Split this by mmu_model. */
-> -static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-> -                            MMUAccessType access_type,
-> -                            hwaddr *raddrp, int *psizep, int *protp,
-> -                            int mmu_idx, bool guest_visible)
-> +static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
-> +                          MMUAccessType access_type,
-> +                          hwaddr *raddrp, int *psizep, int *protp,
-> +                          int mmu_idx, bool guest_visible)
->  {
->      CPUState *cs =3D CPU(cpu);
->      CPUPPCState *env =3D &cpu->env;
-> @@ -1353,8 +1335,10 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr=
- eaddr,
->          type =3D ACCESS_INT;
->      }
-> =20
-> -    ret =3D get_physical_address_wtlb(env, &ctx, eaddr, access_type,
-> -                                    type, mmu_idx);
-> +    ctx.prot =3D 0;
-> +    ctx.hash[0] =3D 0;
-> +    ctx.hash[1] =3D 0;
-> +    ret =3D mmu6xx_get_physical_address(env, &ctx, eaddr, access_type, t=
-ype);
->      if (ret =3D=3D 0) {
->          *raddrp =3D ctx.raddr;
->          *protp =3D ctx.prot;
-> @@ -1498,14 +1482,16 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUA=
-ccessType access_type,
->      case POWERPC_MMU_SOFT_4xx:
->          return ppc_40x_xlate(cpu, eaddr, access_type, raddrp,
->                               psizep, protp, mmu_idx, guest_visible);
-> +    case POWERPC_MMU_SOFT_6xx:
-> +        return ppc_6xx_xlate(cpu, eaddr, access_type, raddrp,
-> +                             psizep, protp, mmu_idx, guest_visible);
->      case POWERPC_MMU_REAL:
->          return ppc_real_mode_xlate(cpu, eaddr, access_type, raddrp, psiz=
-ep,
->                                     protp);
->      case POWERPC_MMU_MPC8xx:
->          cpu_abort(env_cpu(&cpu->env), "MPC8xx MMU model is not implement=
-ed\n");
->      default:
-> -        return ppc_jumbo_xlate(cpu, eaddr, access_type, raddrp,
-> -                               psizep, protp, mmu_idx, guest_visible);
-> +        cpu_abort(CPU(cpu), "Unknown or invalid MMU model\n");
->      }
->  }
-> =20
+> V2: Collected reviewed-by tags
+> This change/comment suggested by "Michael Tokarev <mjt@tls.msk.ru>" came
+> a bit late at that time, let's update it together in these minor set
+> this time.
+> ---
+>   migration/colo.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/migration/colo.c b/migration/colo.c
+> index 991806c06a..1b6d9da1c8 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -838,12 +838,11 @@ static void *colo_process_incoming_thread(void *opaque)
+>       /* Make sure all file formats throw away their mutable metadata */
+>       bql_lock();
+>       bdrv_activate_all(&local_err);
+> +    bql_unlock();
+>       if (local_err) {
+> -        bql_unlock();
+>           error_report_err(local_err);
+>           return NULL;
+>       }
+> -    bql_unlock();
+>   
+>       failover_init_state();
+>   
 
 
