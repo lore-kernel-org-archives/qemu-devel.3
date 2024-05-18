@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C218EC25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 11:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D13AC25B74
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 11:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8Hun-0003Ko-GJ; Sat, 18 May 2024 07:07:49 -0400
+	id 1s8IDE-0002dJ-V0; Sat, 18 May 2024 07:26:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s8Huf-0003Jn-Kf
- for qemu-devel@nongnu.org; Sat, 18 May 2024 07:07:43 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1s8ID3-0002ZC-Cu
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 07:26:41 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s8Hud-0006L9-N5
- for qemu-devel@nongnu.org; Sat, 18 May 2024 07:07:41 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-57230faeb81so3659481a12.0
- for <qemu-devel@nongnu.org>; Sat, 18 May 2024 04:07:38 -0700 (PDT)
+ id 1s8ICo-0001Zu-Rj
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 07:26:40 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-351d79b56cdso738577f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 18 May 2024 04:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716030457; x=1716635257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716031585; x=1716636385; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4dET/NmGtzyD+ACaXmhoU/hPOHENM88UtISuGsnyJ+o=;
- b=fUaPVAQRSzdk/AVKrk/U2zCFDgJQELz0mpgvwR21kr3MrMyGTpvaxEmH9ec5b6c8SM
- tXUim+1p2Esan6Y+nKVmmgYOlSI5nllTdp5+vcktako7lsUBBHgGC4dNmXBvebMNzkiq
- kh1mCQFvpt+HxJkGZeDVNLCdl/TNUbJNyUxm4jtBXTSuH0PGLhtAMznvqrsiBmXP0jxS
- MrVfUCFoHvYPNTBmYF74t8eusFWZsM8HfNhYsYKODEnZ32e2pIf/cryEa0j37DVfii2S
- Sv9RFoV7Yb5fcJaUgnHJdY5kXAhIYUE7dd3xGumVOJgI/7hM07QU7MNBn3u+5T4Hcsk6
- ONIQ==
+ bh=bcMphBZIO735SsDmxdTpooOZeTw0Q0LRRuf7Ju/C+Tg=;
+ b=jXYg+ZSnRwlR9MfP6wWATe6MTgxME3rGY3nJwRfQu3fNLmlyf/APnXZay4AhBqAUu7
+ ic3YXf16rkL8RlRIVYEWqk4TTgO6E9kigi1EPV/eWpW1p7Cpf0Kf3oqIy248nh5YP5eH
+ Bubx1wA3fcGwt6bWcf2MsgXxWTDggo1b1rVyNKzSUqJKKPk+eS+zXFUFiCjCzIy55Lk+
+ DeC5TtxSLPZg5mR7pl9uKQHxIPw4U8rXhwhGZKebBGCCzWKJY8oSOZR4QuoYJHcRVgEq
+ 87Wr8UIrF4xquWzPq8MIFMPz23shVs/2EbmRxmYZeZ2iV3Y/yz/zWEWrQwZ4rENK6rGF
+ qdZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716030457; x=1716635257;
+ d=1e100.net; s=20230601; t=1716031585; x=1716636385;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4dET/NmGtzyD+ACaXmhoU/hPOHENM88UtISuGsnyJ+o=;
- b=uAJiA6PRbnEqfyShzssdvZnQsul9Yv1KI4D1Z4qqtMygENvub2ZsSfufWzjfjgO45/
- jmGuZSbRFogYFNz/ydLUAIBjI5TXOhEQuUfQyFFXKvwJ0PX0HEv6xyDswiF5DWvp1Ikd
- QUFznxGPk7EDSjnA5mK1Qj7/bolvNnFgoN8FHLlpg8nABIk3pOj8ao50wIjv5qYdtKJU
- Z4A+Kl9mG1xJaR+tJVxgdgD7yNgg6HPif0b49uEiox58AsKnA8TiCZwXLsrBX2D00wkz
- D+UqUlq6iiyhM+Rkn3xscqJ3EwShCPx/ix2EXr5aU0Z1ZQ2mVKJBl1FFbPGGSWDrHzGc
- p6YQ==
-X-Gm-Message-State: AOJu0YxSvQ8Wyf60/mwSzhyQXkSL7qzgLTR/wHaUGkoF90fI7CvFh3bY
- qj9lD/wn2tDmJIiKYez0kN/sj8YMsKkQ1IOIKppUmUHRjT6/6+/u/kDDMRI7avk=
-X-Google-Smtp-Source: AGHT+IFv7+uBRngP8CDypa26nFFRW6eGEijtjsaeI/L2XW/TGCqB3kIDGtJK7Q3RW9tfN+w4Y+qzYg==
-X-Received: by 2002:a50:d741:0:b0:572:983e:4aaa with SMTP id
- 4fb4d7f45d1cf-5734d67f615mr21160707a12.31.1716030457222; 
- Sat, 18 May 2024 04:07:37 -0700 (PDT)
+ bh=bcMphBZIO735SsDmxdTpooOZeTw0Q0LRRuf7Ju/C+Tg=;
+ b=w285u7q4Ne0y5MV/aLxiBucactbHw4iDjUO5Yj4g20mR5antAzYFjSf2w05/pdsabO
+ hbPu3qVgbfGJVhelAqrJQdX2Z5N3/0OW+Gec64eMAntjlmYX8TFDdFHyu3BnpvbXHg+y
+ h3vSG6BvgPlp4F3KyTeCmZu2SrgKMRdVfws8N00aTFMLQ2F2npepm0Xzw011KGkqZvFe
+ xgPaFdSaPc9Rsb2d0RldlVXB05F4KnuBIAcWweAx8adkp2QnZxN7EEA77ylBUJNewHwe
+ kdydWY26TWJdbifBIeFd4MmRy697V8AFo0XKxvliMPNUxeHHl3HBLDehq8IgRzYEtJK9
+ FYbg==
+X-Gm-Message-State: AOJu0Yxnk+cXj/Ey9pTKPCMEv/K9g9ZfH4J5cz22tj5PjBExgH04YkcZ
+ eZUc2Y8oXkXJLl1jld/iiuHj+PcPV/7PtmxBnU1BG2UFSUybNoQqrKj5Qa+ll8c=
+X-Google-Smtp-Source: AGHT+IHCEVnoK0Ul8XeQTs9+Y5k5w36VjyJ2Cj3mOdbk/inHfPgR7M5AUeYKgxswfMN7mtZkCJejrA==
+X-Received: by 2002:a5d:45d1:0:b0:34f:c277:b5ca with SMTP id
+ ffacd0b85a97d-3504a737728mr19891068f8f.36.1716031585201; 
+ Sat, 18 May 2024 04:26:25 -0700 (PDT)
 Received: from [10.1.1.126] ([149.14.240.163])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733bed0035sm12820311a12.50.2024.05.18.04.07.36
+ ffacd0b85a97d-3502bbbc955sm23873793f8f.111.2024.05.18.04.26.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 May 2024 04:07:36 -0700 (PDT)
-Message-ID: <9e431f9a-10db-4fb2-b2b7-a4deeff5dfa5@linaro.org>
-Date: Sat, 18 May 2024 13:07:35 +0200
+ Sat, 18 May 2024 04:26:24 -0700 (PDT)
+Message-ID: <95b4f2bb-3eb2-477a-b2af-19cc4ac5849d@linaro.org>
+Date: Sat, 18 May 2024 13:26:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] target/ppc: Implement attn instruction on BookS
- 64-bit processors
+Subject: Re: [PATCH 09/14] target/ppc: add helper to write per-LPAR SPRs
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.vnet.ibm.com>
 References: <20240518093157.407144-1-npiggin@gmail.com>
- <20240518093157.407144-6-npiggin@gmail.com>
+ <20240518093157.407144-10-npiggin@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240518093157.407144-6-npiggin@gmail.com>
+In-Reply-To: <20240518093157.407144-10-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,23 +97,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/18/24 11:31, Nicholas Piggin wrote:
-> +static void gen_attn(DisasContext *ctx)
+> +void spr_core_write_generic32(DisasContext *ctx, int sprn, int gprn)
 > +{
-> +#if defined(CONFIG_USER_ONLY)
-> +    GEN_PRIV(ctx);
-> +#else
-> +    gen_helper_attn(tcg_env);
-> +#endif
-> +}
+> +    TCGv t0 = tcg_temp_new();
+> +    if (!(ctx->flags & POWERPC_FLAG_SMT)) {
+> +        spr_write_generic32(ctx, sprn, gprn);
+> +        return;
+> +    }
+> +
+> +    if (!gen_serialize(ctx)) {
+> +        return;
+> +    }
+> +
+> +    tcg_gen_ext32u_tl(t0, cpu_gpr[gprn]);
 
-You forgot to check priv in system mode.
-Better as
-
-     GEN_PRIV(ctx);
-#ifndef CONFIG_USER_ONLY
-     gen_helper_attn(...)
-#endif
-
+Better to delay allocating the temp until needed, so that you don't allocate one along the 
+return paths.
 
 r~
 
