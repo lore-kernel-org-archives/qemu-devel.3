@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A39C25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 09:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3A8C25B79
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 09:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8GQc-0006Q1-62; Sat, 18 May 2024 05:32:34 -0400
+	id 1s8GQr-0006ZK-5r; Sat, 18 May 2024 05:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s8GQU-0006Mb-1l; Sat, 18 May 2024 05:32:26 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1s8GQp-0006Wc-5k; Sat, 18 May 2024 05:32:47 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s8GQO-0005nO-3O; Sat, 18 May 2024 05:32:24 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1ee42b97b32so32110515ad.2; 
- Sat, 18 May 2024 02:32:19 -0700 (PDT)
+ id 1s8GQn-0005zE-OI; Sat, 18 May 2024 05:32:46 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1ee7963db64so32144535ad.1; 
+ Sat, 18 May 2024 02:32:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716024738; x=1716629538; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716024764; x=1716629564; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=usId0Lc202jfAnfSqLrsahzDXKSkcKXOT0TjzknQTYs=;
- b=R+gYyilghIYJlyrxpsa+GtBSuAPsZslTDvI/kqDqn1O4cubpF6yU25o3EL/gTmegUu
- FJXr8TB0NhMXU3/pfnzaBe0v6oQJSR0CFpBA22ZHHgy+gmFWJVt7yfwpfQ6AN92nDd1V
- JiDRZ2iVvmPNRyxuZ2MIa7FqiHxOYvq2OSSL6RPNK2qmVAsxa/oBgIPoe1JAFP4SrghJ
- t3f2EDtoP3tOI+0IhV/bfp0Gf0+ja/f5A0dbt0IA4YV/lz1T4XhUIVtCmWtLJFpvdn2X
- HCK0HjogjS12KiVab1Fqg65+BBCYyu2B+zL+qmD2rlvO+LQTsLkwoBXrlYDwdmKjdNRE
- YacA==
+ bh=jJb9bvfRee44JjdofCdO48Q2mvLlZY5PLzHGKaPIRNI=;
+ b=AYhyjCbXUNNoNSfqi/pacVLfvCefbLkqehGHw0fSVeVy6oDE4Gf2gBQI9SnwC6kQD3
+ 5KNsXbtTSptqpXWShXfT7X8NF/TNnlzH+PZHl5Cz/vWLsBWmxF9/a2NZddp9lo8KJu0I
+ ndOoN6lTsbod0OgHJr8gZMLIqKm/rRq9pVwEVDjd+01poJCgK0PFtyLyWFYcigUKP/zA
+ 5msdS5XddwCbKOsJbke8z1rRI9NBgVRtfiaFCieKkmMSnphmVDGXEXRQfE8ZaVSxvG2T
+ Ca19DnLr5/GfCbq5E52Az2zLpltFCRRvPwrN8zZu9NnH21lA10KSEMbIV6Porlb09TrW
+ 9gcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716024738; x=1716629538;
+ d=1e100.net; s=20230601; t=1716024764; x=1716629564;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=usId0Lc202jfAnfSqLrsahzDXKSkcKXOT0TjzknQTYs=;
- b=FtvKH3GbdQhHTx+hQj3YYjvcasphIbGSJz+nZHJgA24noxJHfuSFmZ4blHVAZN1cGk
- cFvo4iTJkrcaHc7BsDVaNJEeb3bA6g80z6IFNrc3+wiB1jSM6sHMz1mPjW0TYJ0djCJi
- Ljtp20gSJhmwnL9fx1G/XEPf0LYrcUbq8NdlLxIc7IeaYHhMms1cn0K/skVAVE+rp1q7
- MgZ8i81JwTFI10BRdYtQuIsgliR1/4o48PVyrrEGW+glie3aeAENFuJILycKvI9DKlkm
- G6Rr4qRtj4X4GUTiT4RVJkYvdsJyMCYSt4FlkO2gv4vodONO+XsVkkIY1crtu7tmC7xw
- 4KzA==
+ bh=jJb9bvfRee44JjdofCdO48Q2mvLlZY5PLzHGKaPIRNI=;
+ b=fkdtq9bzZJP9D8FFF/9R/W1y1HGAiqUK2z25Qc5b/dUMOJhhuCMWOCfE/unMyZIFF/
+ K70OhSdA68dWcebZJABKhoWPn7CZIHGWTQy+KBg+DYtipz6Uf7n+Qrz2hrliULYrMzK/
+ LpURZP8uQym5aZvazppE+T8OZib0Qi+4JuHyFnjQwyCVybGPeNhvZRqiqvc3HE2BuXX2
+ DUN8dovxJwg/nfehXEeZ86eHh5rj/er+xbIJZSY37lzzdhwgkS/1nEIPiXicQy/9YVt5
+ 5rJWwQmg3/Kt2nWkjMgkPDOoqDECAizrqptzS5mfHIAdktsm33sW7+qEG59IXAos8IBp
+ wKWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSY/M237tffIO+ZX3ZPeu08VOy87Nl9UshNZQibO1ABJbGknjBJcOwUds8pQNyEJFexYxSJP0Y+QJ46iH4Oyc+JNBehqU=
-X-Gm-Message-State: AOJu0YyjJWlJlX1he9QC9HgFOWwazrJb6UFPctYjV4bizpLm/uaqNQU7
- LjXF/FgaxHSe1VVLLdgueLR0QrivZyooTV+5Yr9+GP30KDM9oD9zR2DhDA==
-X-Google-Smtp-Source: AGHT+IG4gBQf3huoEGmX0EjI343YhBArR7mukcvm6haRtMGnZnQ9FFmjLMe+XZnF2SH5GrP9HDp81g==
-X-Received: by 2002:a17:90b:696:b0:29b:b5a4:c040 with SMTP id
- 98e67ed59e1d1-2b6cd1f0510mr20912068a91.46.1716024738149; 
- Sat, 18 May 2024 02:32:18 -0700 (PDT)
+ AJvYcCUFdIACgS2dbcfk5bDWs6v5AObsrbjpLwVxdaJqczr3d1/CTiVqR6c31Ap5uG5IwDBCfnCHi6SBB2XAPmvdclAOI4v1R24=
+X-Gm-Message-State: AOJu0YweJI1MdyvggDM/dkqvPbIpcxtvTq9epJR7mG6jns+Qjx6B9ld9
+ KAiPw+btwvbIwd1HrNcTLoiBnJ7SlaQ5nexxt0MtTX0uT9TyiCTZoqYojA==
+X-Google-Smtp-Source: AGHT+IHdHyC0QWcreqsO+e+AQYz3C3PzTbXk4ysfvY1pK6H/LiE7nEv7ANHVcCEIqVvmMr8U21oXfw==
+X-Received: by 2002:a17:90b:3a8c:b0:2b3:2a3b:dd0f with SMTP id
+ 98e67ed59e1d1-2b6cc14b8b5mr24598312a91.8.1716024763996; 
+ Sat, 18 May 2024 02:32:43 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b628ea6a05sm18518901a91.52.2024.05.18.02.32.15
+ 98e67ed59e1d1-2b628ea6a05sm18518901a91.52.2024.05.18.02.32.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 May 2024 02:32:17 -0700 (PDT)
+ Sat, 18 May 2024 02:32:43 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.vnet.ibm.com>
-Subject: [PATCH 03/14] target/ppc: Make checkstop actually stop the system
-Date: Sat, 18 May 2024 19:31:45 +1000
-Message-ID: <20240518093157.407144-4-npiggin@gmail.com>
+Subject: [PATCH 11/14] target/ppc: Add SMT support to PTCR SPR
+Date: Sat, 18 May 2024 19:31:53 +1000
+Message-ID: <20240518093157.407144-12-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240518093157.407144-1-npiggin@gmail.com>
 References: <20240518093157.407144-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,56 +95,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-checkstop state does not halt the system, interrupts continue to be
-serviced, and other CPUs run. Make it stop the machine with
-qemu_system_guest_panicked.
+PTCR is a per-core register.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/excp_helper.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ target/ppc/misc_helper.c | 16 ++++++++++++++--
+ target/ppc/translate.c   |  4 ++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 2e3f36a3ef..fd00c044b5 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -19,6 +19,8 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/log.h"
-+#include "sysemu/sysemu.h"
-+#include "sysemu/runstate.h"
- #include "cpu.h"
- #include "exec/exec-all.h"
- #include "internal.h"
-@@ -425,6 +427,8 @@ static void powerpc_set_excp_state(PowerPCCPU *cpu, target_ulong vector,
- 
- static void powerpc_mcheck_checkstop(CPUPPCState *env)
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 6f419c9346..a67930d031 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -173,6 +173,7 @@ void helper_store_sdr1(CPUPPCState *env, target_ulong val)
+ void helper_store_ptcr(CPUPPCState *env, target_ulong val)
  {
-+    /* KVM guests always have MSR[ME] enabled */
-+#ifdef CONFIG_TCG
-     CPUState *cs = env_cpu(env);
+     if (env->spr[SPR_PTCR] != val) {
++        CPUState *cs = env_cpu(env);
+         PowerPCCPU *cpu = env_archcpu(env);
+         target_ulong ptcr_mask = PTCR_PATB | PTCR_PATS;
+         target_ulong patbsize = val & PTCR_PATS;
+@@ -194,8 +195,19 @@ void helper_store_ptcr(CPUPPCState *env, target_ulong val)
+             return;
+         }
  
-     if (FIELD_EX64(env->msr, MSR, ME)) {
-@@ -437,9 +441,15 @@ static void powerpc_mcheck_checkstop(CPUPPCState *env)
-     if (qemu_log_separate()) {
-         qemu_log("Machine check while not allowed. "
-                  "Entering checkstop state\n");
--    }
--    cs->halted = 1;
--    cpu_interrupt_exittb(cs);
+-        env->spr[SPR_PTCR] = val;
+-        tlb_flush(env_cpu(env));
++        if (cs->nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++            env->spr[SPR_PTCR] = val;
++            tlb_flush(cs);
++        } else {
++            CPUState *ccs;
 +
-+    /*
-+     * This stops the machine and logs CPU state without killing QEMU
-+     * (like cpu_abort()) so the machine can still be debugged (because
-+     * it is often a guest error).
-+     */
-+    qemu_system_guest_panicked(NULL);
-+    cpu_loop_exit_noexc(cs);
-+#endif
++            THREAD_SIBLING_FOREACH(cs, ccs) {
++                PowerPCCPU *ccpu = POWERPC_CPU(ccs);
++                CPUPPCState *cenv = &ccpu->env;
++                cenv->spr[SPR_PTCR] = val;
++                tlb_flush(ccs);
++            }
++        }
+     }
  }
  
- static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index ccd90a5feb..60a7afb086 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -971,6 +971,10 @@ void spr_write_hior(DisasContext *ctx, int sprn, int gprn)
+ }
+ void spr_write_ptcr(DisasContext *ctx, int sprn, int gprn)
+ {
++    if (!gen_serialize_core(ctx)) {
++        return;
++    }
++
+     gen_helper_store_ptcr(tcg_env, cpu_gpr[gprn]);
+ }
+ 
 -- 
 2.43.0
 
