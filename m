@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A0F1C25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 16:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4523FC25B74
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 17:24:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8Mt8-0005US-2W; Sat, 18 May 2024 12:26:26 -0400
+	id 1s8Nmo-00069b-IP; Sat, 18 May 2024 13:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s8Mt5-0005UE-Ja
- for qemu-devel@nongnu.org; Sat, 18 May 2024 12:26:23 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1s8Nmh-00068N-UF
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 13:23:52 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s8Mt2-00076E-MB
- for qemu-devel@nongnu.org; Sat, 18 May 2024 12:26:23 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1ee12baa01cso40721545ad.0
- for <qemu-devel@nongnu.org>; Sat, 18 May 2024 09:26:18 -0700 (PDT)
+ id 1s8Nmf-0000jA-LF
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 13:23:51 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6f4603237e0so825383b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 18 May 2024 10:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716049578; x=1716654378; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1716053028; x=1716657828; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+9UPou2AN2Fv/+eWqMKIowE+zb44A6eT1n5SmEDY8qg=;
- b=liOGr6etwsnQgXsZ5ErqXy8w4/t2A/iqaxpKnJ5+y7D6/fEPpXodSXHAvFQVApZHmo
- J4HQa7+sPRFDFqU0LdkMDoQTHWEUgETHUS3H1PnAl5WPc8yndXlCCwEpkUUd4sRThZpL
- eBAE1MouJTtEhsdbd1Rm0xK8vxcqWBpGfF5bS2jArSUjsP5tpyA4xwaONHPAlPwxgdxv
- d0of4RuN60UDy0HUNN8Z4P1T7z2tIZ7I6yV/xEecp6lQxnyBKvBbojlRZULtEMjofDQO
- HNxFXgBQxb0drLua6PJq7Ug/4oLCzXpxCLQ+WnkWm6EIn+yBFkFXSuwCVM4FW4iO3dvB
- M3Ag==
+ bh=iszXkN601Kkbc6mv1er9EvPc1GseDIvNqOx56GUVoj4=;
+ b=gIPwOX/Wr5uFF8vpNlEexKoC4Nt2xpHVGdpmzgP7XaHWEZboDG/MCcklZJ91FRGhdM
+ 1zkz2+XIn8wt9MvmPQSvNfLqupEJsU4940lDIll2srYkcANoJgt1+zC7uOg94+lDqDs1
+ 96UNj1yz0dyyNDv8IyGyQbEGnQjfMFWYcuaPLksGz/iXwkycK2BYe+emWV8K0clGiow4
+ Q9TS6oF7ntSEQSVAT98Be9iM0Ns00g7MpvG72n2SuUH29/zs5g80aQ3ldd6C2zgLurjZ
+ nuUinI590GW5m75hv/ciAT6Lf2mtoW+HPFjj+1X6gmGH63TD2ZfSsRjwnh1YmInSxklz
+ HMJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716049578; x=1716654378;
+ d=1e100.net; s=20230601; t=1716053028; x=1716657828;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+9UPou2AN2Fv/+eWqMKIowE+zb44A6eT1n5SmEDY8qg=;
- b=WBLTFFfSsOd5C+Zr4kezxl2uzIGouFxZNSlf5ud5XuyHb6YQ3oeAzNsTTL118s9blZ
- lVXeIiGSK2qIODwYaCUkPCJ36Rsa4yB6Tac0WqocIvH4l1jid0IJQaUTWegLpe5iTaSb
- AbYw7aadygPV3igOCLUZl6H3n3RUPWbVTQnq+AQzk7k9Mwgm8DL0xZx/qRx5vFmYZWXS
- 7URUzQ8NLeIRmPOth78xmZIMuGfHvMhnLZeV/hhnRdKOwYtLRTMs9zIG2nXb4IPVEx3Y
- uBWCwIvj7xqvXUWMyICgwgXpsGn6kIVjDi3Wz+biImoehBaF3aRZTxG24AO2q2YIz/de
- t4YQ==
+ bh=iszXkN601Kkbc6mv1er9EvPc1GseDIvNqOx56GUVoj4=;
+ b=eSoUTsd/EIwSqPDYk2dglx3NeVSmVdejUfAgtyLfblG2OOiU+W8KfyqGSkXFjdG59b
+ qtTgneEJYi4Eas0IGNtC0qSUpxB0wgMvzNQRwwqn6VeFH7tl6/79fcfCNVuaVY/U3/gm
+ gVcLe46AjV4SQ9K6eLbcN5byHeQvFfH7DCBOsBbkU+pBakAPNVV1X7FRmtDvWnxzdX1G
+ 1zv3TtBQneArBdRDHjUa5v0Fsvd5IguLbZ1hMn3uZtN+6APMBwzXf9CdrtqhSQ99b6TI
+ T4xj3EO3Nlv1Uqyte9nkrcWY+JaV78lFL3/O+dVfu5C82ELPGy9m2UtMuj19O3+oV9XZ
+ Ze/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxwNlrnno9tsTIZT0mFyj8OUqoRf9+y2EXWIFl2v7Fa9xfQstQ+VKLa6nXJbJ849roak5Dhc3Xo7UjOAxVuSNbFml+c/k=
-X-Gm-Message-State: AOJu0YyLDvHl0T4KVaZB9Ox8bH4qi8E/4t+dTOMyLOUsmxSk+KmQKBpQ
- +AK5Ud2uGAgJc7ToEIAlYkBysfVQaMrk2+KzbM43tUZ2DtMccAdJe1ZuVs+F1sQ=
-X-Google-Smtp-Source: AGHT+IF5VohPVpt1/QFZMT4wrwSuILW2R85+jtc3CKFnA6AifS+pg5wWI6yLzH4aS3qcpYo5x4TTIg==
-X-Received: by 2002:a17:902:7284:b0:1e3:c419:35c2 with SMTP id
- d9443c01a7336-1ef43e233bemr228243425ad.34.1716049577955; 
- Sat, 18 May 2024 09:26:17 -0700 (PDT)
+ AJvYcCX98Bxelg+wWg/c8eRxX8ur6fIhKrEqzLXfIGkkid6sHDU5bRpGCO+avcuGN+Sw4/M7qorqiEZjjiARYJGdCNwBQOdcXwI=
+X-Gm-Message-State: AOJu0YwtouCWcHtWjiQfDv+tdWVnvI1P4Js0SLGbM+2PW1hCMCTlRILI
+ WQQhVnJIOvE5AMAdYod2r4Z5O0i554oLPMJXODXRvkBCoH9RZTj8eW4jDEFr1jQ=
+X-Google-Smtp-Source: AGHT+IFsbwSLikFznCbTSQ5rGGQ+WU0X8ROrwFK3ChaHvJ2bf1jDeTWMj6fmWuLckroMEPJvFaWB2w==
+X-Received: by 2002:a05:6a00:3c89:b0:6f4:d5d8:e0a3 with SMTP id
+ d2e1a72fcca58-6f69fbe0465mr3452789b3a.9.1716053027800; 
+ Sat, 18 May 2024 10:23:47 -0700 (PDT)
 Received: from [192.168.68.110] ([177.94.42.57])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f09648bf4esm63789795ad.272.2024.05.18.09.26.14
+ d2e1a72fcca58-6f67b526b44sm5906474b3a.149.2024.05.18.10.23.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 May 2024 09:26:17 -0700 (PDT)
-Message-ID: <719c8281-bf86-4be8-88c5-43b1eb0e91de@ventanamicro.com>
-Date: Sat, 18 May 2024 13:26:12 -0300
+ Sat, 18 May 2024 10:23:47 -0700 (PDT)
+Message-ID: <3cb00bbb-7742-40b7-858c-4bdd2f9cc79b@ventanamicro.com>
+Date: Sat, 18 May 2024 14:23:40 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dias/riscv: Decode all of the pmpcfg and pmpaddr CSRs
-To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- bin.meng@windriver.com, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- liwei1518@gmail.com, palmer@dabbelt.com
-Cc: Alistair Francis <Alistair.Francis@wdc.com>, eric_devolder@yahoo.com
-References: <20240514051615.330979-1-alistair.francis@wdc.com>
+Subject: Re: [PATCH] hw/riscv/virt: Add hotplugging and virtio-md-pci support
+To: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ David Hildenbrand <david@redhat.com>
+Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Santosh Mamila <santosh.mamila@catalinasystems.io>,
+ Chethan Seshadri <Chethan.Seshadri@catalinasystems.io>,
+ Sivakumar Munnangi <siva.munnangi@catalinasystems.io>
+References: <20240514110615.399065-1-bjorn@kernel.org>
 Content-Language: en-US
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240514051615.330979-1-alistair.francis@wdc.com>
+In-Reply-To: <20240514110615.399065-1-bjorn@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,122 +106,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-^ typo in the commit subject: 'disas/riscv: ...'
+Hi Björj,
 
-On 5/14/24 02:16, Alistair Francis wrote:
-> Previously we only listed a single pmpcfg CSR and the first 16 pmpaddr
-> CSRs. This patch fixes this to list all 16 pmpcfg and all 64 pmpaddr
-> CSRs are part of the dissassembly.
-
-I think the correct here is 'disassembly'.
-
+On 5/14/24 08:06, Björn Töpel wrote:
+> From: Björn Töpel <bjorn@rivosinc.com>
 > 
-> Reported-by: Eric DeVolder <eric_devolder@yahoo.com>
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> Virtio-based memory devices allows for dynamic resizing of virtual
+> machine memory, and requires proper hotplugging (add/remove) support
+> to work.
+> 
+> Enable virtio-md-pci with the corresponding missing hotplugging
+> callbacks for the RISC-V "virt" machine.
+> 
+> Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
 > ---
->   disas/riscv.c | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 64 insertions(+), 1 deletion(-)
+> This is basic support for MHP that works with DT. There some minor
+> ACPI SRAT plumbing in there as well. Ideally we'd like proper ACPI MHP
+> support as well. I have a branch [1], where I've applied this patch,
+> plus ACPI GED/PC-DIMM MHP support on top of Sunil's QEMU branch
+> (contains some ACPI DSDT additions) [2], for the curious/brave ones.
+> However, the ACPI MHP support this is not testable on upstream Linux
+> yet (ACPI AIA support, and ACPI NUMA SRAT series are ongoing).
 > 
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index e236c8b5b7..297cfa2f63 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -2190,7 +2190,22 @@ static const char *csr_name(int csrno)
->       case 0x0383: return "mibound";
->       case 0x0384: return "mdbase";
->       case 0x0385: return "mdbound";
-> -    case 0x03a0: return "pmpcfg3";
-> +    case 0x03a0: return "pmpcfg0";
+> I'll follow-up with proper ACPI GED/PC-DIMM MHP patches, once the
+> dependencies land (Linux kernel and QEMU).
+> 
+> I'll post the Linux MHP/virtio-mem v2 patches later this week!
+> 
+> 
+> Cheers,
+> Björn
+> 
+> [1] https://github.com/bjoto/qemu/commits/virtio-mem-pc-dimm-mhp-acpi/
+> [2] https://lore.kernel.org/linux-riscv/20240501121742.1215792-1-sunilvl@ventanamicro.com/
+> ---
+>   hw/riscv/Kconfig           |  2 ++
+>   hw/riscv/virt-acpi-build.c |  7 +++++
+>   hw/riscv/virt.c            | 64 +++++++++++++++++++++++++++++++++++++-
+>   hw/virtio/virtio-mem.c     |  2 +-
+>   4 files changed, 73 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index a2030e3a6ff0..08f82dbb681a 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -56,6 +56,8 @@ config RISCV_VIRT
+>       select PLATFORM_BUS
+>       select ACPI
+>       select ACPI_PCI
+> +    select VIRTIO_MEM_SUPPORTED
+> +    select VIRTIO_PMEM_SUPPORTED
+>   
+>   config SHAKTI_C
+>       bool
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 0925528160f8..6dc3baa9ec86 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -610,6 +610,13 @@ build_srat(GArray *table_data, BIOSLinker *linker, RISCVVirtState *vms)
+>           }
+>       }
+>   
+> +    if (ms->device_memory) {
+> +        build_srat_memory(table_data, ms->device_memory->base,
+> +                          memory_region_size(&ms->device_memory->mr),
+> +                          ms->numa_state->num_nodes - 1,
+> +                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
+> +    }
+> +
+>       acpi_table_end(linker, &table);
 
-Hmm it seems that the code for 'pmpcfg3' was incorrect from the get go.
-Perhaps it's worth adding a:
+When the time comes I believe we'll want this chunk in a separated ACPI patch.
 
-Fixes: ea10325917 ("RISC-V Disassembler")
+>   }
+>   
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 4fdb66052587..16c2bdbfe6b6 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -53,6 +53,8 @@
+>   #include "hw/pci-host/gpex.h"
+>   #include "hw/display/ramfb.h"
+>   #include "hw/acpi/aml-build.h"
+> +#include "hw/mem/memory-device.h"
+> +#include "hw/virtio/virtio-mem-pci.h"
+>   #include "qapi/qapi-visit-common.h"
+>   #include "hw/virtio/virtio-iommu.h"
+>   
+> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machine)
+>       DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+>       int i, base_hartid, hart_count;
+>       int socket_count = riscv_socket_count(machine);
+> +    hwaddr device_memory_base, device_memory_size;
+>   
+>       /* Check socket count limit */
+>       if (VIRT_SOCKETS_MAX < socket_count) {
+> @@ -1553,6 +1556,25 @@ static void virt_machine_init(MachineState *machine)
+>       memory_region_add_subregion(system_memory, memmap[VIRT_MROM].base,
+>                                   mask_rom);
+>   
+> +    device_memory_base = ROUND_UP(s->memmap[VIRT_DRAM].base + machine->ram_size,
+> +                                  GiB);
+> +    device_memory_size = machine->maxram_size - machine->ram_size;
+> +
+> +    if (riscv_is_32bit(&s->soc[0])) {
+> +        hwaddr memtop = device_memory_base + ROUND_UP(device_memory_size, GiB);
+> +
+> +        if (memtop > UINT32_MAX) {
+> +            error_report("Memory exceeds 32-bit limit by %lu bytes",
+> +                         memtop - UINT32_MAX);
+> +            exit(EXIT_FAILURE);
+> +        }
+> +    }
+> +
+> +    if (device_memory_size > 0) {
+> +        machine_memory_devices_init(machine, device_memory_base,
+> +                                    device_memory_size);
+> +    }
+> +
+
+I think we need a design discussion before proceeding here. You're allocating all
+available memory as a memory device area, but in theory we might also support
+pc-dimm hotplugs (which would be the equivalent of adding physical RAM dimms to
+the board.) in the future too. If you're not familiar with this feature you can
+check it out the docs in [1].
+
+As an example, the 'virt' ARM board (hw/arm/virt.c) reserves a space for this
+type of hotplug by checking how much 'ram_slots' we're allocating for it:
+
+device_memory_size = ms->maxram_size - ms->ram_size + ms->ram_slots * GiB;
+
+Other boards do the same with ms->ram_slots. We should consider doing it as well,
+now, even if we're not up to the point of supporting pc-dimm hotplug, to avoid
+having to change the memory layout later in the road and breaking existing
+setups.
+
+If we want to copy the ARM board, ram_slots is capped to ACPI_MAX_RAM_SLOTS (256).
+Each RAM slot is considered to be a 1GiB dimm, i.e. we would reserve 256GiB for
+them.
+
+Note: I do not have the visibility of discussions on the memory management space,
+and I might be missing details such as "we don't care about pc-dimm hotplug
+anymore, it's legacy, we're going to support only virtio-md-pci from now on". We
+had a situation like that with virtio-balloon and virtio-mem in the past, and I'm
+not sure if this might fall in the same category.
+
+I see that David Hildenbrand is also CCed in the patch so he'll let us know if
+I'm out of line with what I'm asking.
 
 
-Regardless of adding a 'Fixes' tag or not:
-
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-
+[1] https://github.com/qemu/qemu/blob/master/docs/memory-hotplug.txt
 
 
 Thanks,
 
 Daniel
 
-> +    case 0x03a1: return "pmpcfg1";
-> +    case 0x03a2: return "pmpcfg2";
-> +    case 0x03a3: return "pmpcfg3";
-> +    case 0x03a4: return "pmpcfg4";
-> +    case 0x03a5: return "pmpcfg5";
-> +    case 0x03a6: return "pmpcfg6";
-> +    case 0x03a7: return "pmpcfg7";
-> +    case 0x03a8: return "pmpcfg8";
-> +    case 0x03a9: return "pmpcfg9";
-> +    case 0x03aa: return "pmpcfg10";
-> +    case 0x03ab: return "pmpcfg11";
-> +    case 0x03ac: return "pmpcfg12";
-> +    case 0x03ad: return "pmpcfg13";
-> +    case 0x03ae: return "pmpcfg14";
-> +    case 0x03af: return "pmpcfg15";
->       case 0x03b0: return "pmpaddr0";
->       case 0x03b1: return "pmpaddr1";
->       case 0x03b2: return "pmpaddr2";
-> @@ -2207,6 +2222,54 @@ static const char *csr_name(int csrno)
->       case 0x03bd: return "pmpaddr13";
->       case 0x03be: return "pmpaddr14";
->       case 0x03bf: return "pmpaddr15";
-> +    case 0x03c0: return "pmpaddr16";
-> +    case 0x03c1: return "pmpaddr17";
-> +    case 0x03c2: return "pmpaddr18";
-> +    case 0x03c3: return "pmpaddr19";
-> +    case 0x03c4: return "pmpaddr20";
-> +    case 0x03c5: return "pmpaddr21";
-> +    case 0x03c6: return "pmpaddr22";
-> +    case 0x03c7: return "pmpaddr23";
-> +    case 0x03c8: return "pmpaddr24";
-> +    case 0x03c9: return "pmpaddr25";
-> +    case 0x03ca: return "pmpaddr26";
-> +    case 0x03cb: return "pmpaddr27";
-> +    case 0x03cc: return "pmpaddr28";
-> +    case 0x03cd: return "pmpaddr29";
-> +    case 0x03ce: return "pmpaddr30";
-> +    case 0x03cf: return "pmpaddr31";
-> +    case 0x03d0: return "pmpaddr32";
-> +    case 0x03d1: return "pmpaddr33";
-> +    case 0x03d2: return "pmpaddr34";
-> +    case 0x03d3: return "pmpaddr35";
-> +    case 0x03d4: return "pmpaddr36";
-> +    case 0x03d5: return "pmpaddr37";
-> +    case 0x03d6: return "pmpaddr38";
-> +    case 0x03d7: return "pmpaddr39";
-> +    case 0x03d8: return "pmpaddr40";
-> +    case 0x03d9: return "pmpaddr41";
-> +    case 0x03da: return "pmpaddr42";
-> +    case 0x03db: return "pmpaddr43";
-> +    case 0x03dc: return "pmpaddr44";
-> +    case 0x03dd: return "pmpaddr45";
-> +    case 0x03de: return "pmpaddr46";
-> +    case 0x03df: return "pmpaddr47";
-> +    case 0x03e0: return "pmpaddr48";
-> +    case 0x03e1: return "pmpaddr49";
-> +    case 0x03e2: return "pmpaddr50";
-> +    case 0x03e3: return "pmpaddr51";
-> +    case 0x03e4: return "pmpaddr52";
-> +    case 0x03e5: return "pmpaddr53";
-> +    case 0x03e6: return "pmpaddr54";
-> +    case 0x03e7: return "pmpaddr55";
-> +    case 0x03e8: return "pmpaddr56";
-> +    case 0x03e9: return "pmpaddr57";
-> +    case 0x03ea: return "pmpaddr58";
-> +    case 0x03eb: return "pmpaddr59";
-> +    case 0x03ec: return "pmpaddr60";
-> +    case 0x03ed: return "pmpaddr61";
-> +    case 0x03ee: return "pmpaddr62";
-> +    case 0x03ef: return "pmpaddr63";
->       case 0x0780: return "mtohost";
->       case 0x0781: return "mfromhost";
->       case 0x0782: return "mreset";
+
+
+
+>       /*
+>        * Init fw_cfg. Must be done before riscv_load_fdt, otherwise the
+>        * device tree cannot be altered and we get FDT_ERR_NOSPACE.
+> @@ -1712,12 +1734,21 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
+>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>   
+>       if (device_is_dynamic_sysbus(mc, dev) ||
+> -        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+> +        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+> +        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           return HOTPLUG_HANDLER(machine);
+>       }
+>       return NULL;
+>   }
+>   
+> +static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+> +                                            DeviceState *dev, Error **errp)
+> +{
+> +    if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+> +        virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+> +    }
+> +}
+> +
+>   static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>                                           DeviceState *dev, Error **errp)
+>   {
+> @@ -1735,6 +1766,34 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>       if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+>           create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
+>       }
+> +
+> +    if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+> +        virtio_md_pci_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+> +    }
+> +}
+> +
+> +static void virt_machine_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+> +                                                  DeviceState *dev,
+> +                                                  Error **errp)
+> +{
+> +    if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+> +        virtio_md_pci_unplug_request(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev),
+> +                                     errp);
+> +    } else {
+> +        error_setg(errp, "device unplug request for unsupported device type: %s",
+> +                   object_get_typename(OBJECT(dev)));
+> +    }
+> +}
+> +
+> +static void virt_machine_device_unplug_cb(HotplugHandler *hotplug_dev,
+> +                                          DeviceState *dev, Error **errp)
+> +{
+> +    if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+> +        virtio_md_pci_unplug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+> +    } else {
+> +        error_setg(errp, "virt: device unplug for unsupported device"
+> +                   " type: %s", object_get_typename(OBJECT(dev)));
+> +    }
+>   }
+>   
+>   static void virt_machine_class_init(ObjectClass *oc, void *data)
+> @@ -1757,7 +1816,10 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+>       assert(!mc->get_hotplug_handler);
+>       mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
+>   
+> +    hc->pre_plug = virt_machine_device_pre_plug_cb;
+>       hc->plug = virt_machine_device_plug_cb;
+> +    hc->unplug_request = virt_machine_device_unplug_request_cb;
+> +    hc->unplug = virt_machine_device_unplug_cb;
+>   
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+>   #ifdef CONFIG_TPM
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index ffd119ebacb7..26c976a3b9b8 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -161,7 +161,7 @@ static bool virtio_mem_has_shared_zeropage(RAMBlock *rb)
+>    * necessary (as the section size can change). But it's more likely that the
+>    * section size will rather get smaller and not bigger over time.
+>    */
+> -#if defined(TARGET_X86_64) || defined(TARGET_I386)
+> +#if defined(TARGET_X86_64) || defined(TARGET_I386)  || defined(TARGET_RISCV)
+>   #define VIRTIO_MEM_USABLE_EXTENT (2 * (128 * MiB))
+>   #elif defined(TARGET_ARM)
+>   #define VIRTIO_MEM_USABLE_EXTENT (2 * (512 * MiB))
+> 
+> base-commit: 9360070196789cc8b9404b2efaf319384e64b107
 
