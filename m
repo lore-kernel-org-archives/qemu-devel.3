@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EA9C25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 10:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1FAC25B74
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 10:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8Hlt-0007EI-Bq; Sat, 18 May 2024 06:58:37 -0400
+	id 1s8Hn5-000819-F8; Sat, 18 May 2024 06:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s8Hlr-0007DL-4y
- for qemu-devel@nongnu.org; Sat, 18 May 2024 06:58:35 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1s8Hn3-0007zn-Ky
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 06:59:49 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s8Hlp-0004Ie-GX
- for qemu-devel@nongnu.org; Sat, 18 May 2024 06:58:34 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a59a934ad50so531795966b.1
- for <qemu-devel@nongnu.org>; Sat, 18 May 2024 03:58:32 -0700 (PDT)
+ id 1s8Hn1-0004Os-80
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 06:59:48 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a5dcb5a0db4so45089566b.2
+ for <qemu-devel@nongnu.org>; Sat, 18 May 2024 03:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716029912; x=1716634712; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716029985; x=1716634785; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xT0eLrzC/Z/BVpcaeEUTbrpvnda7nmxnI4jBsyxh0Jg=;
- b=DrhzZ2tJ/VTbVEYET/H3/mDEtzf53TcSeKgYjQN/MMtQY5/TZ9TgQqYq58YABVul+W
- /tdFJNiotORdkZRkE/RK7RrZYQHC08REO9z3BuuPCByp1ygwZ9caj6tWdQUDiaysYV4o
- LJnfyGUT2EtGDmXm2iDzRD8eqa6DoJNus0T0gTJ5jIHlIcNrfh1yfwmmjpT+KeiQRH9v
- B6gZ3f61dhzv2zcNFPxE8nDJKraXqk0mvYn7OVBcCqLYe6p3vyvQ7YRhdKzSxptuHFu3
- 8Zm3UYkB4xZy/84APFEm5RN7fdmOm5eBNMF4YRJMCKUAdrClbfmVzkp0xO1q5FPh81pJ
- UXbA==
+ bh=wUt83CYN1vWHStsg+gai1at12zafYS8+A1OdzttsHVQ=;
+ b=GHJC3OCPLCGIaPGs4ndf0ggAeQL5Lqdgtr6/j9D6StIsGuz1i6jDSktwv+mQ7F3E2b
+ Luf4Wm1+GzFbAVyt1qpezQheTj1C9RLCkgLuqaX7GUHxluzu1KA33W1CM8noAOmnHe/T
+ 2JDkeEhCotysg2aHLknIWVwdBmG6gI6D3JV+SnRM1BQrGvf7lgb8yFdVQc92ERB887rX
+ LkFM+baY+qVpO6yORKZgOEUgN9/7X8uaEP29IiT07+XjgFa5WsVMXS6jpN4X7CyF245t
+ gGgsdtJaxzymMsq2/sjuxu6FmHERm8aT/W7GKCUqQ7l7DSTWSAMftKhDlm/fBmLKblwI
+ Lb8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716029912; x=1716634712;
+ d=1e100.net; s=20230601; t=1716029985; x=1716634785;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xT0eLrzC/Z/BVpcaeEUTbrpvnda7nmxnI4jBsyxh0Jg=;
- b=bmMAtYRa0SoMH+c4JCCt0RAnLo5hAStX4/ct3LzmDlSB0hndkaCB+3vmBs2C1OBL+8
- HSVxQFBIK5QGMI98CAbzjuwX2Mk/1m6Y4yrsSjZNu65m+DisK2fQN1+QmdIAZZP2s41x
- JThsZASi7OBLrxtPAmzLPuL4/VNukuSNThTDl4BieJDowIX4X7Ny2ZPO1bb+eg2uEz6m
- FKd0Z/StFV6VyvRGI+XzvarOMXN7GX2lhFr/92ALP4fcUQpDqskPsvwd3S+fz99LP4f5
- VGjXBvnWqUJSIYYaO6xxTw3yFK2bDMEOsR3ua5iyvZ18v0IBiz0niO9X+zPblXxK5Xvp
- mbPA==
-X-Gm-Message-State: AOJu0Yw3wa34nCuIG3WPFM8h5znt3Gdwul89f0rTdCnfar8aepbSVOxW
- dBxflZ+PVDTKTTVjM9L4tRnoevbQZzJYKPrgX13jXUPtiuE74Kf7XcD/ejL5w6o=
-X-Google-Smtp-Source: AGHT+IF/KGU4hn7YpNxPSOHaIqmSG7vm6p1RMHSLbDvvH8K1L8xma3BWJOgrstFcdPlbsnhAW9jkyQ==
-X-Received: by 2002:a17:907:3f0d:b0:a55:8f2a:950d with SMTP id
- a640c23a62f3a-a5a2d53b28amr2162580666b.16.1716029911376; 
- Sat, 18 May 2024 03:58:31 -0700 (PDT)
+ bh=wUt83CYN1vWHStsg+gai1at12zafYS8+A1OdzttsHVQ=;
+ b=iaGRvtb4oN2bWQjGsHuB91hVoVNB0WNQ4DFphYu6kzbBob2oyc2rsgIAvsiN24245x
+ peSqGGmfcnsvwUcYUEq6qdwA6aBfoGjynqUb5ZRfyDnTHiyfJ++EECVZ/PKzDQiGNRaY
+ +f4auK1x1Ih06k4T4kwqILNNaUxB5mUgKmH6+CvJItSZiPEetoYlBeoDP2bFxOuzrpbO
+ MGLKyLfuIZCFMQgRemeYD1jJ0aKsKvRhid+zSdqhe5GOBTiGeL0986WywoRePHfEfROo
+ 7kbyWlPOiKAyNPQ04LuQ2ZRX0kyVDP96alcVtdQxiHvdPBfzdoYRMzlO8AFhXfssOUOa
+ A64Q==
+X-Gm-Message-State: AOJu0YyYCRWU3m97B5JIKw9G9kIn8cJxUpH2X7Ey+xTKBqesI8jMQW3z
+ H3UZmDS8dWBf9d6v7eAxx+o08qFIfeqlf77iGbCc2k25XhMX83tqiu1WqYZ64I8=
+X-Google-Smtp-Source: AGHT+IHL9TcRAifn1RewjZJltg5cO/WKslIV0db2s2L0twuEhzn2UtELedoApJqXanTJUVgxkMTnAQ==
+X-Received: by 2002:a17:906:3184:b0:a5a:1579:9033 with SMTP id
+ a640c23a62f3a-a5a2d53abacmr1433043366b.1.1716029980355; 
+ Sat, 18 May 2024 03:59:40 -0700 (PDT)
 Received: from [10.1.1.126] ([149.14.240.163])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17891f87sm1203291066b.65.2024.05.18.03.58.30
+ a640c23a62f3a-a5cdeacb2casm360568166b.67.2024.05.18.03.59.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 May 2024 03:58:31 -0700 (PDT)
-Message-ID: <85266815-a408-4345-9774-2ea52c97eafc@linaro.org>
-Date: Sat, 18 May 2024 12:58:29 +0200
+ Sat, 18 May 2024 03:59:40 -0700 (PDT)
+Message-ID: <d85ce685-e3ec-4ab7-8bf9-80272528b521@linaro.org>
+Date: Sat, 18 May 2024 12:59:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] target/ppc: larx/stcx generation need only apply
- DEF_MEMOP() once
+Subject: Re: [PATCH 02/14] target/ppc: Remove redundant MEMOP_GET_SIZE macro
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.vnet.ibm.com>
 References: <20240518093157.407144-1-npiggin@gmail.com>
- <20240518093157.407144-2-npiggin@gmail.com>
+ <20240518093157.407144-3-npiggin@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240518093157.407144-2-npiggin@gmail.com>
+In-Reply-To: <20240518093157.407144-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,14 +98,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/18/24 11:31, Nicholas Piggin wrote:
-> Use DEF_MEMOP() consistently in larx and stcx. generation, and apply it
-> once when it's used rather than where the macros are expanded, to reduce
-> typing.
+> There is a memop_size() function for this.
 > 
 > Signed-off-by: Nicholas Piggin<npiggin@gmail.com>
 > ---
->   target/ppc/translate.c | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
+>   target/ppc/translate.c | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
