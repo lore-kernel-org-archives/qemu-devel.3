@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AE2C25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 06:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE6DC25B74
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 07:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8E0y-00062d-3D; Sat, 18 May 2024 02:57:56 -0400
+	id 1s8E2p-0006pO-3C; Sat, 18 May 2024 02:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s8E0v-00062L-L6
- for qemu-devel@nongnu.org; Sat, 18 May 2024 02:57:53 -0400
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ (Exim 4.90_1) (envelope-from <mindentropy@gmail.com>)
+ id 1s8E2n-0006ne-Od
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 02:59:49 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s8E0g-0001uP-Dc
- for qemu-devel@nongnu.org; Sat, 18 May 2024 02:57:53 -0400
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-24544cb03abso446422fac.3
- for <qemu-devel@nongnu.org>; Fri, 17 May 2024 23:57:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mindentropy@gmail.com>)
+ id 1s8E2m-0002E2-DC
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 02:59:49 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-620390308e5so8806277b3.3
+ for <qemu-devel@nongnu.org>; Fri, 17 May 2024 23:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716015456; x=1716620256;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y2qKxTfm34cqcZTDxP9E6kX4uYk5pkYFhnki3f7UR2s=;
- b=JYIlkZQg98ABDfQr/dCv73eqOZY/fiDy2VfJy9pHKCc4UZ61MGuw8Tl/7cflucZ1Rq
- Kj73frNkBJkOFj9WoyliMF9IPrOJCp8SzI1nvjgPHSRL49e4hmYIyTu5Z5aKC0JDHt5X
- zkP1DS0eyrQeHskPF//Ep597mp/WhQbZ0V1kgnZQOpo0Iko2+hCTPeAEwSrXoyUXyDlC
- Tsm0/34OciFJugAFxtKu6TjUKqhUaAHp3SUBvUWgMo0T9aai6FMv0oePeY37YhUpVoaz
- 1XXwA3ncPxJBXmPVv2yyv6BBRTKkhf5AtS+m1yy6SLj5KZwVq+0VYaqoNmco53bNjyFD
- JnSg==
+ d=gmail.com; s=20230601; t=1716015586; x=1716620386; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kpaQVoI9YNAFGuUR2tIRTZ3TM5HhnNISO5Cgr8LOCG0=;
+ b=UIqSyGmnD+CMf4uoxgS/+6DT6dxM+dT1Gy7yFOJF6S39igp4+GUlkvU+oe8mdfCeR7
+ bAUhrOgZneGSnrYmMfRpBmLqkzNReA0f7x+9jMldOQEzeC/dhDzYUlglDHXcLCaju0Gk
+ TKyryi6PHkltK3vK5WTiWGNKVP36BrPcXP8m3ljWV9oYdOLcTAoi8V9aaXBohWxuNI5A
+ qEAQfvU/Q0SmkSPTeVMrk8Ak7Eiz1iEuidC+Dhfwh0KvLq2inAzlJsbcbsv/xJIabcbe
+ ui+lswPWofKDdW+PKGjeXY9rETe47xHtlSzGKg1tQRd0tC0rL5E9h4QLCW0Xion4s6KJ
+ SqUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716015456; x=1716620256;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y2qKxTfm34cqcZTDxP9E6kX4uYk5pkYFhnki3f7UR2s=;
- b=lZRNEvyezuzEHCPl92K1aIHvp/E/YNpp7lwP9TMcRm0vUyvU0xIlcRCJXDE7XTbRDR
- 1kbTMUXuyL8ST50jZLTe0VwNtsvOqnuCKkusnz6SKTYmik+0ZIUxTpKvxjIQe3TpNANh
- yktoyrObu6oCvqAj74LIZo8z3MYnjcGTAAPE+KE+daE6ssNliOaaTp5T5kDVtkP8NBXw
- nfd76mZ8ykxiwbt9WFZmgVrWjfnVoSOTwDJ2ID/Tp3Q+LuwqNpq6HZqQoqibxLVn/ZYW
- ZgrFGSY4gYujiYIM+Cgo1TIq13VZWjRZ21DEAM7rqRLsVsUV1STCMCd0nnPP7noZLYKe
- KpiA==
+ d=1e100.net; s=20230601; t=1716015586; x=1716620386;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kpaQVoI9YNAFGuUR2tIRTZ3TM5HhnNISO5Cgr8LOCG0=;
+ b=muZCriRJ4bP8iTGj+DgfkK9uin6F+B0VBEaWhJshyfBm7SxXrZSyY2hl9UkOD5VvHa
+ yu+us5hiMptk2TG6kWij4RYdoKVhJBL45jdb++gZH3hwF0yL9of92Z/u+NQdACQ0YHXG
+ 0cLqd1fYmWunkXvW7cETD6+/3ZBJ/vT3vA0qTU4tv0yjDVAdd7bsaaF4ZDGhlp4L529t
+ S03jDesimKGTYSCBDDYVdyk8ZX9bTy7EX/Y7spHq+Nnvrm2/3uZlRYZf6OdAKXF2Jh3V
+ Gr8reXWuRL2QxMiwl0d6itjllbZoqErQf2zNasr3wG3gFRmfHkIWaFhK7cD7clvAw3TI
+ l5Ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoZyQJSSSvdlGRplU0yKAIx8FeD0RXXCH99SvCeZ5qxTCan51MLRhl1dq8k7iBFIUqzuZ7SXQIGZRXO84ct7E4GC3xGZo=
-X-Gm-Message-State: AOJu0Yy8oRArRdoA9Ysvb+LGDJZLV+R3QAv0F867ADuTfcIo2bFl2FaJ
- egdrg7QjRvplDyObnTJh3mUqy0tEN2DrJC2ANJpUpBnpLGFW7SdCt6olqaUjxzM=
-X-Google-Smtp-Source: AGHT+IHYf935xXdmvGlqoWSPyE409N7Wvm3VbC9rwIE7LgT/REej/WYs5sa7Msn4qQCaqV7rFvPbtQ==
-X-Received: by 2002:a05:6871:7987:b0:22e:7460:d2a8 with SMTP id
- 586e51a60fabf-24172be019emr25437190fac.42.1716015456456; 
- Fri, 17 May 2024 23:57:36 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2a85f3fsm15708052b3a.82.2024.05.17.23.57.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 May 2024 23:57:36 -0700 (PDT)
-Message-ID: <6ac60e11-2d46-4f82-be3e-ef9ae741ede8@daynix.com>
-Date: Sat, 18 May 2024 15:57:32 +0900
+ AJvYcCUSKID86MR3vHKByntX1psGKI1hAjHShv55+CTReQJWAXvf7IqFc6fgAZFptC/GTDUTOtb2odJt9vXTIDwXAAYCx5Yi9lk=
+X-Gm-Message-State: AOJu0YwQlOovBV8is6Ld7r02aSjhPki6bVcStnHq9cgsQDy+TwvJyrmG
+ qrj4fXLqkcSgTe6aX2gIMQjsuH71LHZcD2/4rsp0WqskoTbo+/w08uCigWnYyKcSayaZhgLL51/
+ 7b0+1HSlUtUvCxwtbFD0KE8TRpxQ=
+X-Google-Smtp-Source: AGHT+IH8zCBp+0gbgbKZwivcFHjhETfk293rOAXAVVwqBwGelvzVOZFlujYr/dpJXU872VijnxBWTWj8VZT0N531Koo=
+X-Received: by 2002:a81:a185:0:b0:61a:fc3b:fdd3 with SMTP id
+ 00721157ae682-622b0137bfbmr228203267b3.43.1716015586376; Fri, 17 May 2024
+ 23:59:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] riscv, gdbstub.c: fix reg_width in
- ricsv_gen_dynamic_vector_feature()
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- alex.bennee@linaro.org, Robin Dapp <rdapp.gcc@gmail.com>
-References: <20240517203054.880861-1-dbarboza@ventanamicro.com>
- <20240517203054.880861-2-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240517203054.880861-2-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2001:4860:4864:20::2c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+References: <CAM2a4uwktAA=Uk9_GRnxusvHhfrZg+EUWjfxy95YgxGsQQntjA@mail.gmail.com>
+ <dd957513-1272-40cf-bda5-4d3f717f3c71@linaro.org>
+ <CAM2a4uxuY5PGrHLo72+i2p6Cj-1R37kiXOehrhRMKUn3Xaia=g@mail.gmail.com>
+ <074ed71f-6dca-4a55-9163-60a9305dd27a@linaro.org>
+ <CAFEAcA-fmCNgyczGZaE=otT1x=iVt_-oPwkS308CWkP3wLdhbg@mail.gmail.com>
+ <CAM2a4uwMomHgYVQvRV+3UjsjTkE-BOK=zn8Rgv5y7OGjy0HfTw@mail.gmail.com>
+ <CAFEAcA-CDgR2r7uNh=PQaQfVspa5tnNTwiK7Dbor7faxY25V=w@mail.gmail.com>
+ <CAM2a4uxYKyVJN6GjN8c2fz21eCJxoLh4r3hzqqRMALCHKxt1Uw@mail.gmail.com>
+ <CAM2a4uxh-sMfkbFaJ3C_WAkLqkiOh9MeoyF=VZxy8ahVfAw5dw@mail.gmail.com>
+In-Reply-To: <CAM2a4uxh-sMfkbFaJ3C_WAkLqkiOh9MeoyF=VZxy8ahVfAw5dw@mail.gmail.com>
+From: Gautam Bhat <mindentropy@gmail.com>
+Date: Sat, 18 May 2024 12:29:35 +0530
+Message-ID: <CAM2a4uzg3d=mnZeVo=N3MdNgQgC0hDD-n5xidbD13nf1S0gE5Q@mail.gmail.com>
+Subject: Re: Point where target instructions are read
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=mindentropy@gmail.com; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/05/18 5:30, Daniel Henrique Barboza wrote:
-> Commit 33a24910ae changed 'reg_width' to use 'vlenb', i.e. vector length
-> in bytes, when in this context we want 'reg_width' as the length in
-> bits.
-> 
-> Fix 'reg_width' back to the value in bits like 7cb59921c05a
-> ("target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'") set
-> beforehand.
-> 
-> While we're at it, rename 'reg_width' to 'bitsize' to provide a bit more
-> clarity about what the variable represents. 'bitsize' is also used in
-> riscv_gen_dynamic_csr_feature() with the same purpose, i.e. as an input to
-> gdb_feature_builder_append_reg().
-> 
-> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Reported-by: Robin Dapp <rdapp.gcc@gmail.com>
-> Fixes: 33a24910ae ("target/riscv: Use GDBFeature for dynamic XML")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Acked-by: Alex Bennée <alex.bennee@linaro.org>
+On Sun, Apr 14, 2024 at 2:21=E2=80=AFAM Gautam Bhat <mindentropy@gmail.com>=
+ wrote:
+>
+> Ah I had my .tlb_fill callback set to an empty function with just
+> returning true. I need to put the actual code there. Let me fill this
+> function up and see what happens.
+>
+> -Gautam.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Got it working. I can see the opcode now. Let me proceed with further
+implementation of decoding opcodes etc.
+Thanks for the help.
+
+-Gautam.
 
