@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D13AC25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 11:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90607C25B74
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 May 2024 12:56:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8IDE-0002dJ-V0; Sat, 18 May 2024 07:26:53 -0400
+	id 1s8JbQ-0003kR-21; Sat, 18 May 2024 08:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s8ID3-0002ZC-Cu
- for qemu-devel@nongnu.org; Sat, 18 May 2024 07:26:41 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s8JbI-0003ji-AS
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 08:55:49 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s8ICo-0001Zu-Rj
- for qemu-devel@nongnu.org; Sat, 18 May 2024 07:26:40 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-351d79b56cdso738577f8f.1
- for <qemu-devel@nongnu.org>; Sat, 18 May 2024 04:26:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s8Jb2-0001GP-S7
+ for qemu-devel@nongnu.org; Sat, 18 May 2024 08:55:45 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1ec69e3dbcfso37354945ad.0
+ for <qemu-devel@nongnu.org>; Sat, 18 May 2024 05:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716031585; x=1716636385; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1716036931; x=1716641731; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bcMphBZIO735SsDmxdTpooOZeTw0Q0LRRuf7Ju/C+Tg=;
- b=jXYg+ZSnRwlR9MfP6wWATe6MTgxME3rGY3nJwRfQu3fNLmlyf/APnXZay4AhBqAUu7
- ic3YXf16rkL8RlRIVYEWqk4TTgO6E9kigi1EPV/eWpW1p7Cpf0Kf3oqIy248nh5YP5eH
- Bubx1wA3fcGwt6bWcf2MsgXxWTDggo1b1rVyNKzSUqJKKPk+eS+zXFUFiCjCzIy55Lk+
- DeC5TtxSLPZg5mR7pl9uKQHxIPw4U8rXhwhGZKebBGCCzWKJY8oSOZR4QuoYJHcRVgEq
- 87Wr8UIrF4xquWzPq8MIFMPz23shVs/2EbmRxmYZeZ2iV3Y/yz/zWEWrQwZ4rENK6rGF
- qdZg==
+ bh=gEKwrSVDhciK5xljCqgvaJDYt+P8ob4tabXg53BBlts=;
+ b=lhcf+ZgUMtKKIXDAp3NyD0QL+3q+ssWd2ODjAUu6ZMadII1ksbFvTTeKmiN8N608Nr
+ 83QcbqJ3/FnErQU9mmYZFpsOmZn8VxPt5wqnBzDkRRDPcrBoEznjU48+IL0DcYmyx9rZ
+ 9mnr4PI64Z9hIrW0Kw7lDCrlOsmUZpEbOW7uG+p+Uf2hqIbCErKdEj9V3PPQVAdtN/eP
+ HrHJK85KjtpyAkNytT+I0hbtkoJ10Noy6d/XUwWJhSoLWkvUKrtR7YtR3limAWuK5Atj
+ 0RcAp6povDfmouxRKxTLsve5LpdbxCz3IZwwugxHDL08WXu0ZycXuwKv9nFl1QLULGdz
+ kUIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716031585; x=1716636385;
+ d=1e100.net; s=20230601; t=1716036931; x=1716641731;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bcMphBZIO735SsDmxdTpooOZeTw0Q0LRRuf7Ju/C+Tg=;
- b=w285u7q4Ne0y5MV/aLxiBucactbHw4iDjUO5Yj4g20mR5antAzYFjSf2w05/pdsabO
- hbPu3qVgbfGJVhelAqrJQdX2Z5N3/0OW+Gec64eMAntjlmYX8TFDdFHyu3BnpvbXHg+y
- h3vSG6BvgPlp4F3KyTeCmZu2SrgKMRdVfws8N00aTFMLQ2F2npepm0Xzw011KGkqZvFe
- xgPaFdSaPc9Rsb2d0RldlVXB05F4KnuBIAcWweAx8adkp2QnZxN7EEA77ylBUJNewHwe
- kdydWY26TWJdbifBIeFd4MmRy697V8AFo0XKxvliMPNUxeHHl3HBLDehq8IgRzYEtJK9
- FYbg==
-X-Gm-Message-State: AOJu0Yxnk+cXj/Ey9pTKPCMEv/K9g9ZfH4J5cz22tj5PjBExgH04YkcZ
- eZUc2Y8oXkXJLl1jld/iiuHj+PcPV/7PtmxBnU1BG2UFSUybNoQqrKj5Qa+ll8c=
-X-Google-Smtp-Source: AGHT+IHCEVnoK0Ul8XeQTs9+Y5k5w36VjyJ2Cj3mOdbk/inHfPgR7M5AUeYKgxswfMN7mtZkCJejrA==
-X-Received: by 2002:a5d:45d1:0:b0:34f:c277:b5ca with SMTP id
- ffacd0b85a97d-3504a737728mr19891068f8f.36.1716031585201; 
- Sat, 18 May 2024 04:26:25 -0700 (PDT)
-Received: from [10.1.1.126] ([149.14.240.163])
+ bh=gEKwrSVDhciK5xljCqgvaJDYt+P8ob4tabXg53BBlts=;
+ b=OjtyNYnXJVOFVPqlDXYrosGEiUiBTDjCdTazF9QWUSvuTg4H7/aHPhTpXiyA+p46aN
+ cPX1DeRQMcjEgJNwobVMoQmGiKIDB/kCrYMIgna9gCkNi6KMB63jmYtkKPioDPay9cEE
+ bM5AQAYqA+iV3BTXnmYSqTRNAgCwNZDRuf2jp504mlZzE6ZFI6E171FEoVkSrC5wyvKS
+ qjx28D0okWZaO9Ln2LirxRCUQSjPx2m4eWVO/kmjaKsL9TxeHf0lgPkJx9goBfW+/Ec+
+ q6mmUHYqF6j59cig5YjD28Dl4sAO09nLs3KZpGO9hzu8Uvu+tnwibzV78AVLvLbx9K8H
+ SWzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRW2Y5JM0J33hF3g1CGyVQNQYwjIITMp3hcW0w7Eh6MkkRIqG7w29QkpPTh0ad6MJ1E3vHbR1fTCY+kQSaQqrEqu0ssG0=
+X-Gm-Message-State: AOJu0Yxbq9bUiYFOWRLp+v3Xc9LbDD5uITq+CpgA6JdZfjwx9UjZo+42
+ vyRn235YoK4O9hfh6TOza3PnKhQ21PT4n7tojzNsyy3LVddalxAGbz2Pg8p2pLM=
+X-Google-Smtp-Source: AGHT+IGpV5Ygjw01nuKNkrjlwPvatKRGPJg18mkfUFjRlyzO2keTDe4ExgwjrO0YkacKTXw6xsiYeA==
+X-Received: by 2002:a17:902:bf04:b0:1e2:1df:449b with SMTP id
+ d9443c01a7336-1ef44182635mr222683165ad.69.1716036930872; 
+ Sat, 18 May 2024 05:55:30 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.42.57])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbc955sm23873793f8f.111.2024.05.18.04.26.24
+ d9443c01a7336-1f2f3ed38a9sm5699185ad.158.2024.05.18.05.55.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 May 2024 04:26:24 -0700 (PDT)
-Message-ID: <95b4f2bb-3eb2-477a-b2af-19cc4ac5849d@linaro.org>
-Date: Sat, 18 May 2024 13:26:22 +0200
+ Sat, 18 May 2024 05:55:30 -0700 (PDT)
+Message-ID: <586302b6-0e6e-438d-a218-48a577c5c3b8@ventanamicro.com>
+Date: Sat, 18 May 2024 09:55:25 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/14] target/ppc: add helper to write per-LPAR SPRs
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>
-References: <20240518093157.407144-1-npiggin@gmail.com>
- <20240518093157.407144-10-npiggin@gmail.com>
+Subject: Re: [PATCH 1/2] target/riscv: Extend virtual irq csrs masks to be 64
+ bit wide.
+To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com
+References: <20240513114602.72098-1-rkanwal@rivosinc.com>
+ <20240513114602.72098-2-rkanwal@rivosinc.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240518093157.407144-10-npiggin@gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240513114602.72098-2-rkanwal@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,23 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/18/24 11:31, Nicholas Piggin wrote:
-> +void spr_core_write_generic32(DisasContext *ctx, int sprn, int gprn)
-> +{
-> +    TCGv t0 = tcg_temp_new();
-> +    if (!(ctx->flags & POWERPC_FLAG_SMT)) {
-> +        spr_write_generic32(ctx, sprn, gprn);
-> +        return;
-> +    }
-> +
-> +    if (!gen_serialize(ctx)) {
-> +        return;
-> +    }
-> +
-> +    tcg_gen_ext32u_tl(t0, cpu_gpr[gprn]);
 
-Better to delay allocating the temp until needed, so that you don't allocate one along the 
-return paths.
 
-r~
+On 5/13/24 08:46, Rajnesh Kanwal wrote:
+> AIA extends the width of all IRQ CSRs to 64bit even
+> in 32bit systems by adding missing half CSRs.
+> 
+> This seems to be missed while adding support for
+> virtual IRQs. The whole logic seems to be correct
+> except the width of the masks.
+> 
+> Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual
+> interrupt and IRQ filtering support.")
+> Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual
+> interrupt and IRQ filtering support.")
+> 
+
+Please avoid splitting the commit title when including them in a "Fixes"
+tag. It is ok if the commit this breaks the usual char limit:
+
+> Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
+> Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
+
+
+As for the code:
+
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+> ---
+>   target/riscv/csr.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 45b548eb0b..c9d685dcc5 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1193,18 +1193,18 @@ static const target_ulong sstatus_v1_10_mask = SSTATUS_SIE | SSTATUS_SPIE |
+>    */
+>   
+>   /* Bit STIP can be an alias of mip.STIP that's why it's writable in mvip. */
+> -static const target_ulong mvip_writable_mask = MIP_SSIP | MIP_STIP | MIP_SEIP |
+> +static const uint64_t mvip_writable_mask = MIP_SSIP | MIP_STIP | MIP_SEIP |
+>                                       LOCAL_INTERRUPTS;
+> -static const target_ulong mvien_writable_mask = MIP_SSIP | MIP_SEIP |
+> +static const uint64_t mvien_writable_mask = MIP_SSIP | MIP_SEIP |
+>                                       LOCAL_INTERRUPTS;
+>   
+> -static const target_ulong sip_writable_mask = SIP_SSIP | LOCAL_INTERRUPTS;
+> -static const target_ulong hip_writable_mask = MIP_VSSIP;
+> -static const target_ulong hvip_writable_mask = MIP_VSSIP | MIP_VSTIP |
+> +static const uint64_t sip_writable_mask = SIP_SSIP | LOCAL_INTERRUPTS;
+> +static const uint64_t hip_writable_mask = MIP_VSSIP;
+> +static const uint64_t hvip_writable_mask = MIP_VSSIP | MIP_VSTIP |
+>                                       MIP_VSEIP | LOCAL_INTERRUPTS;
+> -static const target_ulong hvien_writable_mask = LOCAL_INTERRUPTS;
+> +static const uint64_t hvien_writable_mask = LOCAL_INTERRUPTS;
+>   
+> -static const target_ulong vsip_writable_mask = MIP_VSSIP | LOCAL_INTERRUPTS;
+> +static const uint64_t vsip_writable_mask = MIP_VSSIP | LOCAL_INTERRUPTS;
+>   
+>   const bool valid_vm_1_10_32[16] = {
+>       [VM_1_10_MBARE] = true,
 
