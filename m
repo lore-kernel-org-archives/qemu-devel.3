@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 396FFC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 09:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816D1C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 09:43:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8cmX-0007Wq-2P; Sun, 19 May 2024 05:24:41 -0400
+	id 1s8d3y-00022Z-Sn; Sun, 19 May 2024 05:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s8cmR-0007WS-HD
- for qemu-devel@nongnu.org; Sun, 19 May 2024 05:24:35 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1s8d3x-00021w-5Y; Sun, 19 May 2024 05:42:41 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s8cmO-0001Sp-OD
- for qemu-devel@nongnu.org; Sun, 19 May 2024 05:24:34 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1ee7963db64so50286365ad.1
- for <qemu-devel@nongnu.org>; Sun, 19 May 2024 02:24:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1s8d3v-0004ZV-AM; Sun, 19 May 2024 05:42:40 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1ecddf96313so28105565ad.2; 
+ Sun, 19 May 2024 02:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716110671; x=1716715471; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YV0NnIhXRzFdTmmqut057LfXxlesO2gOd0FPWMAf71Q=;
- b=KOM7r9uNAFJueRI8YheWStYwxVO/aTHxLYVk76BCxJxMKUVHbnVtR6+rM193JuX05m
- 5jjtxLeHg3jcpLAgWyZ6+GvM4SdYTPFBOr16wxsSaIM4agpOSKq9mJBqis8GfwWwy/IZ
- ld8sBjeKiSnYOtjnUAT55bpXlTQB38kB7MDk6eFFNMH1wl+C3s/4NA7M8UbotyFrX4Ft
- 7LSIfrAVTzb3bRMVWE2KV5t9TFCdE8pRdTbENEORq9iFVbdlJ8uD5zJuuM/nUZZgvdDs
- hcmEoeIt07eAleDKc0UWoXIpym4vAqZiFePwejVEmgDnt4S+ntZczLq8CX6+Ax+uZzZ5
- KXxA==
+ d=gmail.com; s=20230601; t=1716111757; x=1716716557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aaz6YUca/EDsN6sz3NrbzFJ3pzsAImLY6LO7ZyVY8kw=;
+ b=DLsTl+AH9bXCOPR6osR9yJkrRQhpqG+5xJdFKv5q4DvL9/1aUe2Vlldqu40Sh8G//o
+ q3FNUVAWDRyNHULPXe13c7igtDF1EsfOeZhmf1WwEIBbYF0sEWQVH73jmE1I1AD3Dqpl
+ Bfi6Kd6oaTBAjgTSVlRIk1R7SHNbIZ8IhThMn7hgGQrZcODIF6yMhYyEa7Ldqxn6pyaP
+ sB9FHCmODsmsK0NveYgvC4JDTX6a4hkNtYM8VMvs7GojeaUrIIXDmNLxSpUyuNA+AnCS
+ E42NznR9nQwrMYUyK6ExIOoi24biMgHp3pjjK/yVPo6XJ6KdppVvSHJLnOn7P4VdvbQY
+ H/lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716110671; x=1716715471;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YV0NnIhXRzFdTmmqut057LfXxlesO2gOd0FPWMAf71Q=;
- b=nwb6q1H4OnsHuwlidVNQbgEUntzg9z86bAEIcTINK683pARJ4n/ySXJ5DugW0qi3L8
- 4XNnmGz5mJ2uMIey1qeM5Ia+pd3qVFzPmBDUG9vYOfx1ubFVqZwL2UNWW6sQE5ls6q+U
- 2dPFKXp/FBLk+z7cGWInvqAjJKTbN9Tzo5LDq4e9wLOjIFFjNCPQ+zJuwUpYm4spvFqq
- LWKPuJICXJ3rc5Ky8GinpHrZakirBmDIn5TXnxf7Es7GJjXh6lLcBg2EpRV5D4jOFrcZ
- 50SkaAL3uh54l+jwGUiE0b3ZASzyUrLHG1WGph4ycmQJtLHxl+sP6bOeRyqmZJRAu323
- RmaQ==
+ d=1e100.net; s=20230601; t=1716111757; x=1716716557;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aaz6YUca/EDsN6sz3NrbzFJ3pzsAImLY6LO7ZyVY8kw=;
+ b=oKbkNCvviKh/+1UgRMFWNfCi4STAiCiC+iN6KpSIzn1yIqL1//zGfUGmmkQFAx+7lM
+ 8S07HVsrRBHiiaWis0saACZIPasdPJfsTxqSbfiIqLk2WG1744tlr2zvU8kSpyDIsgGh
+ 010A94oB/hjUHEiR5kxRG0UYOekxnvnP667UXUQmFvTQLHFi/JnaTaz+W/9XILTREHk9
+ 7beCuEaojCR2jnU85IGnblEB5zk0X/WiPtTxiUzmPLJIlsmYiMoIfZdgPrQcFqqdcmy3
+ RIYHkN58Qj34D6sZNWMZg3NwxPgYXtoY21hmh9JrhoO7vSSw1zPvo5x/gPPSZNyhEskg
+ 84Eg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/pe7uP89YrM4PNMtr115Hh0DNHDCgL6YRGpGGyZHqwu9CXzDexd9DpevvPCRDCy45AQInd9mPymldXg8kqzhKbyO4lk4=
-X-Gm-Message-State: AOJu0Yz1RIXNM0YFxoBMYt7F0ogtLOCrIb9g012JV846OSUAH3Z/mOP+
- D3e3VR4rFaviHqyaGfyf3w27LmO7vrKSUQTOHd4EChKES13cgHAKnCHBBr8Dpxo=
-X-Google-Smtp-Source: AGHT+IG4Lg7YVayGWha2kblJdJje6RwdJ0zeG3A1RGVWpPQsXKXUQ7ZA4uvytiDjGCGupwlsC4I4uw==
-X-Received: by 2002:a17:90a:cb8b:b0:2bd:76f6:8d30 with SMTP id
- 98e67ed59e1d1-2bd76f68da6mr503251a91.32.1716110670757; 
- Sun, 19 May 2024 02:24:30 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.57])
+ AJvYcCVW36Y5xbmefQXMXLsJzXL2At8VVtnD6l6FwWTsMWjVrSyw13pfsTjgxyM/nB6d9xQFKYjHNymV1YrXkZ1M9B8qf2p7
+X-Gm-Message-State: AOJu0Ywyxb8UVJ1rkwNktkU1Ii4mo75QaZVf3DHlxDpzTA+ihLZe2WXP
+ U2bm5noUlr9p2h3O9HqhVtFyKBF52JENOXGiirSemUnyaknFnOY9tBHDcg==
+X-Google-Smtp-Source: AGHT+IFtGC6nYWV99JDPDsAAwXX6P7KlYN/1iXWStsNPR5KLnFaB/7C2pXecvsfvO66D5QFpZm9mVw==
+X-Received: by 2002:a17:90a:fc89:b0:2ac:513b:b316 with SMTP id
+ 98e67ed59e1d1-2b6cc450dd9mr30465753a91.10.1716111757350; 
+ Sun, 19 May 2024 02:42:37 -0700 (PDT)
+Received: from localhost.localdomain ([49.47.193.102])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b6c51b3482sm16743763a91.20.2024.05.19.02.24.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 May 2024 02:24:30 -0700 (PDT)
-Message-ID: <afbd3799-fa2a-4c7d-8097-aeaedecf4ec3@ventanamicro.com>
-Date: Sun, 19 May 2024 06:24:23 -0300
+ 98e67ed59e1d1-2b62863a265sm19977932a91.10.2024.05.19.02.42.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 19 May 2024 02:42:37 -0700 (PDT)
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, peter.maydell@linaro.org, qemu-arm@nongnu.org,
+ Rayhan Faizel <rayhan.faizel@gmail.com>
+Subject: [PATCH v3 3/3] hw/misc: Implement mailbox properties for customer OTP
+ and device specific private keys
+Date: Sun, 19 May 2024 15:11:06 +0530
+Message-Id: <20240519094106.2142896-4-rayhan.faizel@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
+References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/virt: Add hotplugging and virtio-md-pci support
-To: David Hildenbrand <david@redhat.com>, =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?=
- <bjorn@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Santosh Mamila <santosh.mamila@catalinasystems.io>,
- Chethan Seshadri <Chethan.Seshadri@catalinasystems.io>,
- Sivakumar Munnangi <siva.munnangi@catalinasystems.io>
-References: <20240514110615.399065-1-bjorn@kernel.org>
- <3cb00bbb-7742-40b7-858c-4bdd2f9cc79b@ventanamicro.com>
- <91086379-1fbc-4179-863a-6bb2e797d564@redhat.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <91086379-1fbc-4179-863a-6bb2e797d564@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,125 +95,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Four mailbox properties are implemented as follows:
+1. Customer OTP: GET_CUSTOMER_OTP and SET_CUSTOMER_OTP
+2. Device-specific private key: GET_PRIVATE_KEY and
+SET_PRIVATE_KEY.
 
-On 5/18/24 16:50, David Hildenbrand wrote:
-> 
-> Hi,
-> 
-> 
->>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
->>> index 4fdb66052587..16c2bdbfe6b6 100644
->>> --- a/hw/riscv/virt.c
->>> +++ b/hw/riscv/virt.c
->>> @@ -53,6 +53,8 @@
->>>    #include "hw/pci-host/gpex.h"
->>>    #include "hw/display/ramfb.h"
->>>    #include "hw/acpi/aml-build.h"
->>> +#include "hw/mem/memory-device.h"
->>> +#include "hw/virtio/virtio-mem-pci.h"
->>>    #include "qapi/qapi-visit-common.h"
->>>    #include "hw/virtio/virtio-iommu.h"
->>> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machine)
->>>        DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
->>>        int i, base_hartid, hart_count;
->>>        int socket_count = riscv_socket_count(machine);
->>> +    hwaddr device_memory_base, device_memory_size;
->>>        /* Check socket count limit */
->>>        if (VIRT_SOCKETS_MAX < socket_count) {
->>> @@ -1553,6 +1556,25 @@ static void virt_machine_init(MachineState *machine)
->>>        memory_region_add_subregion(system_memory, memmap[VIRT_MROM].base,
->>>                                    mask_rom);
->>> +    device_memory_base = ROUND_UP(s->memmap[VIRT_DRAM].base + machine->ram_size,
->>> +                                  GiB);
->>> +    device_memory_size = machine->maxram_size - machine->ram_size;
->>> +
->>> +    if (riscv_is_32bit(&s->soc[0])) {
->>> +        hwaddr memtop = device_memory_base + ROUND_UP(device_memory_size, GiB);
->>> +
->>> +        if (memtop > UINT32_MAX) {
->>> +            error_report("Memory exceeds 32-bit limit by %lu bytes",
->>> +                         memtop - UINT32_MAX);
->>> +            exit(EXIT_FAILURE);
->>> +        }
->>> +    }
->>> +
->>> +    if (device_memory_size > 0) {
->>> +        machine_memory_devices_init(machine, device_memory_base,
->>> +                                    device_memory_size);
->>> +    }
->>> +
->>
->> I think we need a design discussion before proceeding here. You're allocating all
->> available memory as a memory device area, but in theory we might also support
->> pc-dimm hotplugs (which would be the equivalent of adding physical RAM dimms to
->> the board.) in the future too. If you're not familiar with this feature you can
->> check it out the docs in [1].
-> 
-> Note that DIMMs are memory devices as well. You can plug into the memory device area both, ACPI-based memory devices (DIMM, NVDIMM) or virtio-based memory devices (virtio-mem, virtio-pmem).
-> 
->>
->> As an example, the 'virt' ARM board (hw/arm/virt.c) reserves a space for this
->> type of hotplug by checking how much 'ram_slots' we're allocating for it:
->>
->> device_memory_size = ms->maxram_size - ms->ram_size + ms->ram_slots * GiB;
->>
-> 
-> Note that we increased the region size to be able to fit most requests even if alignment of memory devices is weird. See below.
-> 
-> In sane setups, this is usually not required (adding a single additional GB for some flexiility might be good enough).
-> 
->> Other boards do the same with ms->ram_slots. We should consider doing it as well,
->> now, even if we're not up to the point of supporting pc-dimm hotplug, to avoid
->> having to change the memory layout later in the road and breaking existing
->> setups.
->>
->> If we want to copy the ARM board, ram_slots is capped to ACPI_MAX_RAM_SLOTS (256).
->> Each RAM slot is considered to be a 1GiB dimm, i.e. we would reserve 256GiB for
->> them.
-> 
-> This only reserves some *additional* space to fixup weird alignment of memory devices. *not* the actual space for these devices.
-> 
-> We don't consider each DIMM to be 1 GiB in size, but add an additional 1 GiB in case we have to align DIMMs in physical address space.
-> 
-> I *think* this dates back to old x86 handling where we aligned the address of each DIMM to be at a 1 GiB boundary. So if you would have plugged two 128 MiB DIMMs, you'd have required more than 256 MiB of space in the area after aligning inside the memory device area.
-> 
+The customer OTP is located in the rows 36-43. The device-specific private key
+is located in the rows 56-63.
 
-Thanks for the explanation. I missed the part where the ram_slots were being
-used just to solve potential alignment issues and pc-dimms could occupy the same
-space being allocated via machine_memory_devices_init().
+The customer OTP can be locked with the magic numbers 0xffffffff 0xaffe0000
+when running the SET_CUSTOMER_OTP mailbox command. Bit 6 of row 32 indicates
+this lock, which is undocumented. The lock also applies to the device-specific
+private key.
 
-This patch isn't far off then. If we take care to avoid plugging unaligned memory
-we might not even need this spare area.
+Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+---
+ hw/arm/bcm2835_peripherals.c         |  2 +
+ hw/misc/bcm2835_property.c           | 87 ++++++++++++++++++++++++++++
+ include/hw/arm/raspberrypi-fw-defs.h |  2 +
+ include/hw/misc/bcm2835_property.h   |  2 +
+ 4 files changed, 93 insertions(+)
 
->>
->> Note: I do not have the visibility of discussions on the memory management space,
->> and I might be missing details such as "we don't care about pc-dimm hotplug
->> anymore, it's legacy, we're going to support only virtio-md-pci from now on". We
->> had a situation like that with virtio-balloon and virtio-mem in the past, and I'm
->> not sure if this might fall in the same category.
-> 
-> Not sure if I got your comment right, but virtio-mem was never supposed to be a virtio-balloon replacement (especially of the free-page-reporting and memory stats part).
+diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+index 7d735bb56c..ac153a96b9 100644
+--- a/hw/arm/bcm2835_peripherals.c
++++ b/hw/arm/bcm2835_peripherals.c
+@@ -132,6 +132,8 @@ static void raspi_peripherals_base_init(Object *obj)
+                                    OBJECT(&s->fb));
+     object_property_add_const_link(OBJECT(&s->property), "dma-mr",
+                                    OBJECT(&s->gpu_bus_mr));
++    object_property_add_const_link(OBJECT(&s->property), "otp",
++                                   OBJECT(&s->otp));
+ 
+     /* Extended Mass Media Controller */
+     object_initialize_child(obj, "sdhci", &s->sdhci, TYPE_SYSBUS_SDHCI);
+diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
+index bdd9a6bbce..63de3db621 100644
+--- a/hw/misc/bcm2835_property.c
++++ b/hw/misc/bcm2835_property.c
+@@ -32,6 +32,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+     uint32_t tmp;
+     int n;
+     uint32_t offset, length, color;
++    uint32_t start_num, number, otp_row;
+ 
+     /*
+      * Copy the current state of the framebuffer config; we will update
+@@ -322,6 +323,89 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+                         0);
+             resplen = VCHI_BUSADDR_SIZE;
+             break;
++
++        /* Customer OTP */
++
++        case RPI_FWREQ_GET_CUSTOMER_OTP:
++            start_num = ldl_le_phys(&s->dma_as, value + 12);
++            number = ldl_le_phys(&s->dma_as, value + 16);
++
++            resplen = 8 + 4 * number;
++
++            for (n = start_num; n < start_num + number &&
++                 n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
++                otp_row = bcm2835_otp_get_row(s->otp,
++                                              BCM2835_OTP_CUSTOMER_OTP + n);
++                stl_le_phys(&s->dma_as,
++                            value + 20 + ((n - start_num) << 2), otp_row);
++            }
++            break;
++        case RPI_FWREQ_SET_CUSTOMER_OTP:
++            start_num = ldl_le_phys(&s->dma_as, value + 12);
++            number = ldl_le_phys(&s->dma_as, value + 16);
++
++            resplen = 4;
++
++            /* Magic numbers to permanently lock customer OTP */
++            if (start_num == BCM2835_OTP_LOCK_NUM1 &&
++                number == BCM2835_OTP_LOCK_NUM2) {
++                bcm2835_otp_set_row(s->otp,
++                                    BCM2835_OTP_ROW_32,
++                                    BCM2835_OTP_ROW_32_LOCK);
++                break;
++            }
++
++            /* If row 32 has the lock bit, don't allow further writes */
++            if (bcm2835_otp_get_row(s->otp, BCM2835_OTP_ROW_32) &
++                                    BCM2835_OTP_ROW_32_LOCK) {
++                break;
++            }
++
++            for (n = start_num; n < start_num + number &&
++                 n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
++                otp_row = ldl_le_phys(&s->dma_as,
++                                      value + 20 + ((n - start_num) << 2));
++                bcm2835_otp_set_row(s->otp,
++                                    BCM2835_OTP_CUSTOMER_OTP + n, otp_row);
++            }
++            break;
++
++        /* Device-specific private key */
++
++        case RPI_FWREQ_GET_PRIVATE_KEY:
++            start_num = ldl_le_phys(&s->dma_as, value + 12);
++            number = ldl_le_phys(&s->dma_as, value + 16);
++
++            resplen = 8 + 4 * number;
++
++            for (n = start_num; n < start_num + number &&
++                 n < BCM2835_OTP_PRIVATE_KEY_LEN; n++) {
++                otp_row = bcm2835_otp_get_row(s->otp,
++                                              BCM2835_OTP_PRIVATE_KEY + n);
++                stl_le_phys(&s->dma_as,
++                            value + 20 + ((n - start_num) << 2), otp_row);
++            }
++            break;
++        case RPI_FWREQ_SET_PRIVATE_KEY:
++            start_num = ldl_le_phys(&s->dma_as, value + 12);
++            number = ldl_le_phys(&s->dma_as, value + 16);
++
++            resplen = 4;
++
++            /* If row 32 has the lock bit, don't allow further writes */
++            if (bcm2835_otp_get_row(s->otp, BCM2835_OTP_ROW_32) &
++                                    BCM2835_OTP_ROW_32_LOCK) {
++                break;
++            }
++
++            for (n = start_num; n < start_num + number &&
++                 n < BCM2835_OTP_PRIVATE_KEY_LEN; n++) {
++                otp_row = ldl_le_phys(&s->dma_as,
++                                      value + 20 + ((n - start_num) << 2));
++                bcm2835_otp_set_row(s->otp,
++                                    BCM2835_OTP_PRIVATE_KEY + n, otp_row);
++            }
++            break;
+         default:
+             qemu_log_mask(LOG_UNIMP,
+                           "bcm2835_property: unhandled tag 0x%08x\n", tag);
+@@ -449,6 +533,9 @@ static void bcm2835_property_realize(DeviceState *dev, Error **errp)
+     s->dma_mr = MEMORY_REGION(obj);
+     address_space_init(&s->dma_as, s->dma_mr, TYPE_BCM2835_PROPERTY "-memory");
+ 
++    obj = object_property_get_link(OBJECT(dev), "otp", &error_abort);
++    s->otp = BCM2835_OTP(obj);
++
+     /* TODO: connect to MAC address of USB NIC device, once we emulate it */
+     qemu_macaddr_default_if_unset(&s->macaddr);
+ 
+diff --git a/include/hw/arm/raspberrypi-fw-defs.h b/include/hw/arm/raspberrypi-fw-defs.h
+index 8b404e0533..60b8e5b451 100644
+--- a/include/hw/arm/raspberrypi-fw-defs.h
++++ b/include/hw/arm/raspberrypi-fw-defs.h
+@@ -56,6 +56,7 @@ enum rpi_firmware_property_tag {
+     RPI_FWREQ_GET_THROTTLED =                          0x00030046,
+     RPI_FWREQ_GET_CLOCK_MEASURED =                     0x00030047,
+     RPI_FWREQ_NOTIFY_REBOOT =                          0x00030048,
++    RPI_FWREQ_GET_PRIVATE_KEY =                        0x00030081,
+     RPI_FWREQ_SET_CLOCK_STATE =                        0x00038001,
+     RPI_FWREQ_SET_CLOCK_RATE =                         0x00038002,
+     RPI_FWREQ_SET_VOLTAGE =                            0x00038003,
+@@ -73,6 +74,7 @@ enum rpi_firmware_property_tag {
+     RPI_FWREQ_SET_PERIPH_REG =                         0x00038045,
+     RPI_FWREQ_GET_POE_HAT_VAL =                        0x00030049,
+     RPI_FWREQ_SET_POE_HAT_VAL =                        0x00038049,
++    RPI_FWREQ_SET_PRIVATE_KEY =                        0x00038081,
+     RPI_FWREQ_SET_POE_HAT_VAL_OLD =                    0x00030050,
+     RPI_FWREQ_NOTIFY_XHCI_RESET =                      0x00030058,
+     RPI_FWREQ_GET_REBOOT_FLAGS =                       0x00030064,
+diff --git a/include/hw/misc/bcm2835_property.h b/include/hw/misc/bcm2835_property.h
+index ba8896610c..2f93fd0c75 100644
+--- a/include/hw/misc/bcm2835_property.h
++++ b/include/hw/misc/bcm2835_property.h
+@@ -11,6 +11,7 @@
+ #include "hw/sysbus.h"
+ #include "net/net.h"
+ #include "hw/display/bcm2835_fb.h"
++#include "hw/nvram/bcm2835_otp.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_BCM2835_PROPERTY "bcm2835-property"
+@@ -26,6 +27,7 @@ struct BCM2835PropertyState {
+     MemoryRegion iomem;
+     qemu_irq mbox_irq;
+     BCM2835FBState *fbdev;
++    BCM2835OTPState *otp;
+ 
+     MACAddr macaddr;
+     uint32_t board_rev;
+-- 
+2.34.1
 
-I was trying to refer to a situation we faced 3+ years ago in the powerpc machines,
-where we were trying to add virtio-mem support there given that virtio-mem is/was
-been seen (as far as I can remember anyways) as a more robust solution than
-virtio-balloon + DIMM hotplug for guest memory management from the host point of
-view.
-
-I'm probably misrepresenting the whole situation though, it has been awhile :)
-
-
-Thanks,
-
-
-Daniel
-
-
-> 
->>
->> I see that David Hildenbrand is also CCed in the patch so he'll let us know if
->> I'm out of line with what I'm asking.
-> 
-> Supporting PC-DIMMs might be required at some point when dealing with OSes that don't support virtio-mem and friends.
-> 
 
