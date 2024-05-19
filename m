@@ -4,65 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080AAC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 21:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8920C41513
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 21:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8no7-0008K9-8q; Sun, 19 May 2024 17:11:03 -0400
+	id 1s8o4Y-0005Ab-N4; Sun, 19 May 2024 17:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s8nnj-0007ua-Im; Sun, 19 May 2024 17:10:41 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1s8o4X-0005AB-69
+ for qemu-devel@nongnu.org; Sun, 19 May 2024 17:28:01 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s8nni-0000XI-1v; Sun, 19 May 2024 17:10:39 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VjCy462pZz6K99D;
- Mon, 20 May 2024 05:09:48 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id D52321400DD;
- Mon, 20 May 2024 05:10:34 +0800 (CST)
-Received: from 00293818-MRGF.china.huawei.com (10.126.174.235) by
- lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sun, 19 May 2024 22:10:14 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
- <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
- <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
- <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
- <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
- <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
- <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
- <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
- <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
- <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>
-Subject: [PATCH V9 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
- Hotplug Event Bit
-Date: Sun, 19 May 2024 22:06:20 +0100
-Message-ID: <20240519210620.228342-9-salil.mehta@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240519210620.228342-1-salil.mehta@huawei.com>
-References: <20240519210620.228342-1-salil.mehta@huawei.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1s8o4V-0003Lv-IA
+ for qemu-devel@nongnu.org; Sun, 19 May 2024 17:28:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1716154078;
+ bh=bpL3glvGP9bP5fyVRdYTBxuWyYaf+PmtO3r7N7jvLzI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=JyH5CogHp2ZGY53TelVbo59gZDBOvfRjVwL2tsd2/LvHtbRnUzUE76BaM2FYINEU4
+ NoVyXHNCXbJaokt4NqyyoAcuLP3xmnL6Q96rh8v7kB2XI8EcMTn3V+zrlwrN5Kraq7
+ 9lknmE0730M5/33g7d5vD2YZMlrsIIbdJt/OcRl/4oe2do6I38FG357dIVj2JhP1oO
+ SjX1Hk7KQKOtHMUi6jlqU5JGcTUH+xsHFNMc8zU4XXrU6GkB7CEznxXlDwIM3lcb3l
+ 5+ZMdc1CMzI1BOAkqAQ47PPesjL4xXxKtyx/vwceeCjlvtxXWcU/b9dPQuT2HGoiTc
+ RAZmrR9NbOTeQ==
+Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 57772378218E;
+ Sun, 19 May 2024 21:27:56 +0000 (UTC)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+Subject: [PATCH v12 04/13] virtio-gpu: Support context-init feature with
+ virglrenderer
+Date: Mon, 20 May 2024 00:27:03 +0300
+Message-ID: <20240519212712.2605419-5-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
+References: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.174.235]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- lhrpeml500001.china.huawei.com (7.191.163.213)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,37 +87,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
-and non-hotplug events like system power down event. Each of these can be
-selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
-the CPU hotplug event.
+From: Huang Rui <ray.huang@amd.com>
 
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
+Patch "virtio-gpu: CONTEXT_INIT feature" has added the context_init
+feature flags. Expose this feature and support creating virglrenderer
+context with flags using context_id if libvirglrenderer is new enough.
+
+Originally-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/display/virtio-gpu-gl.c    |  4 ++++
+ hw/display/virtio-gpu-virgl.c | 20 ++++++++++++++++++--
+ meson.build                   |  1 +
+ 3 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
-index 0bd3f9399f..3acd6fcd8b 100644
---- a/docs/specs/acpi_hw_reduced_hotplug.rst
-+++ b/docs/specs/acpi_hw_reduced_hotplug.rst
-@@ -64,7 +64,8 @@ GED IO interface (4 byte access)
-        0: Memory hotplug event
-        1: System power down event
-        2: NVDIMM hotplug event
--    3-31: Reserved
-+       3: CPU hotplug event
-+    4-31: Reserved
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index b353c3193afa..4d0a10070ab3 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -138,6 +138,10 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+     VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
+         virtio_gpu_virgl_get_num_capsets(g);
  
- **write_access:**
++#ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
++    g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
++#endif
++
+     virtio_gpu_device_realize(qdev, errp);
+ }
  
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index bfbc6553e879..fc667559cc41 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -106,8 +106,24 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
+     trace_virtio_gpu_cmd_ctx_create(cc.hdr.ctx_id,
+                                     cc.debug_name);
+ 
+-    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen,
+-                                  cc.debug_name);
++    if (cc.context_init) {
++        if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
++                          __func__);
++            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++            return;
++        }
++
++#ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
++        virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
++                                                 cc.context_init,
++                                                 cc.nlen,
++                                                 cc.debug_name);
++        return;
++#endif
++    }
++
++    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen, cc.debug_name);
+ }
+ 
+ static void virgl_cmd_context_destroy(VirtIOGPU *g,
+diff --git a/meson.build b/meson.build
+index 413ec5179145..ba0f067484ca 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2303,6 +2303,7 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+ if virgl.version().version_compare('>=1.0.0')
+   config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
++  config_host_data.set('HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS', 1)
+ endif
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
 -- 
-2.34.1
+2.44.0
 
 
