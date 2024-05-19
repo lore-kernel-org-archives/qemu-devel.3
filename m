@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47077C25B78
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 21:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9206C25B77
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 21:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8nmP-00051Y-2R; Sun, 19 May 2024 17:09:17 -0400
+	id 1s8nn4-0006vy-MR; Sun, 19 May 2024 17:09:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s8nmN-00050g-6H; Sun, 19 May 2024 17:09:15 -0400
+ id 1s8nn2-0006rM-P8; Sun, 19 May 2024 17:09:56 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s8nmK-000098-2N; Sun, 19 May 2024 17:09:14 -0400
+ id 1s8nn1-0000Cq-1v; Sun, 19 May 2024 17:09:56 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VjCwR68pXz6K99D;
- Mon, 20 May 2024 05:08:23 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VjCxG69TCz6K8y0;
+ Mon, 20 May 2024 05:09:06 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id DBD36140736;
- Mon, 20 May 2024 05:09:09 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DBD1A140736;
+ Mon, 20 May 2024 05:09:52 +0800 (CST)
 Received: from 00293818-MRGF.china.huawei.com (10.126.174.235) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sun, 19 May 2024 22:08:48 +0100
+ 15.1.2507.39; Sun, 19 May 2024 22:09:32 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -42,11 +42,12 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, Jonathan
- Cameron <Jonathan.Cameron@huawei.com>, Shaoqin Huang <shahuang@redhat.com>
-Subject: [PATCH V9 4/8] hw/acpi: Update GED _EVT method AML with CPU scan
-Date: Sun, 19 May 2024 22:06:16 +0100
-Message-ID: <20240519210620.228342-5-salil.mehta@huawei.com>
+ <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, Shaoqin
+ Huang <shahuang@redhat.com>
+Subject: [PATCH V9 6/8] physmem: Add helper function to destroy CPU
+ AddressSpace
+Date: Sun, 19 May 2024 22:06:18 +0100
+Message-ID: <20240519210620.228342-7-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240519210620.228342-1-salil.mehta@huawei.com>
 References: <20240519210620.228342-1-salil.mehta@huawei.com>
@@ -81,80 +82,100 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OSPM evaluates _EVT method to map the event. The CPU hotplug event eventually
-results in start of the CPU scan. Scan figures out the CPU and the kind of
-event(plug/unplug) and notifies it back to the guest. Update the GED AML _EVT
-method with the call to \\_SB.CPUS.CSCN
+Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
+involves destruction of the CPU AddressSpace. Add common function to help
+destroy the CPU AddressSpace.
 
-Also, macro CPU_SCAN_METHOD might be referred in other places like during GED
-intialization so it makes sense to have its definition placed in some common
-header file like cpu_hotplug.h. But doing this can cause compilation break
-because of the conflicting macro definitions present in cpu.c and cpu_hotplug.c
-and because both these files get compiled due to historic reasons of x86 world
-i.e. decision to use legacy(GPE.2)/modern(GED) CPU hotplug interface happens
-during runtime [1]. To mitigate above, for now, declare a new common macro
-ACPI_CPU_SCAN_METHOD for CPU scan method instead.
-(This needs a separate discussion later on for clean-up)
-
-Reference:
-[1] https://lore.kernel.org/qemu-devel/1463496205-251412-24-git-send-email-imammedo@redhat.com/
-
-Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
 Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
 Tested-by: Xianglai Li <lixianglai@loongson.cn>
 Tested-by: Miguel Luis <miguel.luis@oracle.com>
 Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
 ---
- hw/acpi/cpu.c                  | 2 +-
- hw/acpi/generic_event_device.c | 4 ++++
- include/hw/acpi/cpu_hotplug.h  | 2 ++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ include/exec/cpu-common.h |  8 ++++++++
+ include/hw/core/cpu.h     |  1 +
+ system/physmem.c          | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 473b37ba88..af2b6655d2 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -327,7 +327,7 @@ const VMStateDescription vmstate_cpu_hotplug = {
- #define CPUHP_RES_DEVICE  "PRES"
- #define CPU_LOCK          "CPLK"
- #define CPU_STS_METHOD    "CSTA"
--#define CPU_SCAN_METHOD   "CSCN"
-+#define CPU_SCAN_METHOD   ACPI_CPU_SCAN_METHOD
- #define CPU_NOTIFY_METHOD "CTFY"
- #define CPU_EJECT_METHOD  "CEJ0"
- #define CPU_OST_METHOD    "COST"
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 54d3b4bf9d..63226b0040 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -109,6 +109,10 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
-                 aml_append(if_ctx, aml_call0(MEMORY_DEVICES_CONTAINER "."
-                                              MEMORY_SLOT_SCAN_METHOD));
-                 break;
-+            case ACPI_GED_CPU_HOTPLUG_EVT:
-+                aml_append(if_ctx, aml_call0(ACPI_CPU_CONTAINER "."
-+                                             ACPI_CPU_SCAN_METHOD));
-+                break;
-             case ACPI_GED_PWR_DOWN_EVT:
-                 aml_append(if_ctx,
-                            aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
-diff --git a/include/hw/acpi/cpu_hotplug.h b/include/hw/acpi/cpu_hotplug.h
-index 48b291e45e..ef631750b4 100644
---- a/include/hw/acpi/cpu_hotplug.h
-+++ b/include/hw/acpi/cpu_hotplug.h
-@@ -20,6 +20,8 @@
- #include "hw/acpi/cpu.h"
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 815342d043..240ee04369 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -129,6 +129,14 @@ size_t qemu_ram_pagesize_largest(void);
+  */
+ void cpu_address_space_init(CPUState *cpu, int asidx,
+                             const char *prefix, MemoryRegion *mr);
++/**
++ * cpu_address_space_destroy:
++ * @cpu: CPU for which address space needs to be destroyed
++ * @asidx: integer index of this address space
++ *
++ * Note that with KVM only one address space is supported.
++ */
++void cpu_address_space_destroy(CPUState *cpu, int asidx);
  
- #define ACPI_CPU_HOTPLUG_REG_LEN 12
-+#define ACPI_CPU_SCAN_METHOD "CSCN"
-+#define ACPI_CPU_CONTAINER "\\_SB.CPUS"
+ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+                             hwaddr len, bool is_write);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index bb398e8237..60b160d0b4 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -486,6 +486,7 @@ struct CPUState {
+     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
  
- typedef struct AcpiCpuHotplug {
-     Object *device;
+     struct CPUAddressSpace *cpu_ases;
++    int cpu_ases_count;
+     int num_ases;
+     AddressSpace *as;
+     MemoryRegion *memory;
+diff --git a/system/physmem.c b/system/physmem.c
+index 342b7a8fd4..146f17826a 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -763,6 +763,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+ 
+     if (!cpu->cpu_ases) {
+         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
++        cpu->cpu_ases_count = cpu->num_ases;
+     }
+ 
+     newas = &cpu->cpu_ases[asidx];
+@@ -776,6 +777,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+     }
+ }
+ 
++void cpu_address_space_destroy(CPUState *cpu, int asidx)
++{
++    CPUAddressSpace *cpuas;
++
++    assert(cpu->cpu_ases);
++    assert(asidx >= 0 && asidx < cpu->num_ases);
++    /* KVM cannot currently support multiple address spaces. */
++    assert(asidx == 0 || !kvm_enabled());
++
++    cpuas = &cpu->cpu_ases[asidx];
++    if (tcg_enabled()) {
++        memory_listener_unregister(&cpuas->tcg_as_listener);
++    }
++
++    address_space_destroy(cpuas->as);
++    g_free_rcu(cpuas->as, rcu);
++
++    if (asidx == 0) {
++        /* reset the convenience alias for address space 0 */
++        cpu->as = NULL;
++    }
++
++    if (--cpu->cpu_ases_count == 0) {
++        g_free(cpu->cpu_ases);
++        cpu->cpu_ases = NULL;
++    }
++}
++
+ AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+ {
+     /* Return the AddressSpace corresponding to the specified index */
 -- 
 2.34.1
 
