@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9206C25B77
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 21:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31552C25B77
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 21:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8nn4-0006vy-MR; Sun, 19 May 2024 17:09:58 -0400
+	id 1s8nnc-0007Wj-FS; Sun, 19 May 2024 17:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s8nn2-0006rM-P8; Sun, 19 May 2024 17:09:56 -0400
+ id 1s8nnR-0007MB-9w; Sun, 19 May 2024 17:10:23 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s8nn1-0000Cq-1v; Sun, 19 May 2024 17:09:56 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VjCxG69TCz6K8y0;
- Mon, 20 May 2024 05:09:06 +0800 (CST)
+ id 1s8nnN-0000Qq-4s; Sun, 19 May 2024 17:10:19 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VjCtV289yz6JB6F;
+ Mon, 20 May 2024 05:06:42 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id DBD1A140736;
- Mon, 20 May 2024 05:09:52 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 0627A140B2F;
+ Mon, 20 May 2024 05:10:14 +0800 (CST)
 Received: from 00293818-MRGF.china.huawei.com (10.126.174.235) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sun, 19 May 2024 22:09:32 +0100
+ 15.1.2507.39; Sun, 19 May 2024 22:09:53 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -44,10 +44,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, Shaoqin
  Huang <shahuang@redhat.com>
-Subject: [PATCH V9 6/8] physmem: Add helper function to destroy CPU
- AddressSpace
-Date: Sun, 19 May 2024 22:06:18 +0100
-Message-ID: <20240519210620.228342-7-salil.mehta@huawei.com>
+Subject: [PATCH V9 7/8] gdbstub: Add helper function to unregister GDB
+ register space
+Date: Sun, 19 May 2024 22:06:19 +0100
+Message-ID: <20240519210620.228342-8-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240519210620.228342-1-salil.mehta@huawei.com>
 References: <20240519210620.228342-1-salil.mehta@huawei.com>
@@ -82,9 +82,8 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
-involves destruction of the CPU AddressSpace. Add common function to help
-destroy the CPU AddressSpace.
+Add common function to help unregister the GDB register space. This shall be
+done in context to the CPU unrealization.
 
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
@@ -92,90 +91,66 @@ Reviewed-by: Gavin Shan <gshan@redhat.com>
 Tested-by: Xianglai Li <lixianglai@loongson.cn>
 Tested-by: Miguel Luis <miguel.luis@oracle.com>
 Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 ---
- include/exec/cpu-common.h |  8 ++++++++
- include/hw/core/cpu.h     |  1 +
- system/physmem.c          | 29 +++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
+ gdbstub/gdbstub.c      | 13 +++++++++++++
+ hw/core/cpu-common.c   |  1 -
+ include/exec/gdbstub.h |  6 ++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 815342d043..240ee04369 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -129,6 +129,14 @@ size_t qemu_ram_pagesize_largest(void);
-  */
- void cpu_address_space_init(CPUState *cpu, int asidx,
-                             const char *prefix, MemoryRegion *mr);
-+/**
-+ * cpu_address_space_destroy:
-+ * @cpu: CPU for which address space needs to be destroyed
-+ * @asidx: integer index of this address space
-+ *
-+ * Note that with KVM only one address space is supported.
-+ */
-+void cpu_address_space_destroy(CPUState *cpu, int asidx);
- 
- void cpu_physical_memory_rw(hwaddr addr, void *buf,
-                             hwaddr len, bool is_write);
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index bb398e8237..60b160d0b4 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -486,6 +486,7 @@ struct CPUState {
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
- 
-     struct CPUAddressSpace *cpu_ases;
-+    int cpu_ases_count;
-     int num_ases;
-     AddressSpace *as;
-     MemoryRegion *memory;
-diff --git a/system/physmem.c b/system/physmem.c
-index 342b7a8fd4..146f17826a 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -763,6 +763,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
- 
-     if (!cpu->cpu_ases) {
-         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-+        cpu->cpu_ases_count = cpu->num_ases;
-     }
- 
-     newas = &cpu->cpu_ases[asidx];
-@@ -776,6 +777,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index b3574997ea..1949b09240 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -617,6 +617,19 @@ void gdb_register_coprocessor(CPUState *cpu,
      }
  }
  
-+void cpu_address_space_destroy(CPUState *cpu, int asidx)
++void gdb_unregister_coprocessor_all(CPUState *cpu)
 +{
-+    CPUAddressSpace *cpuas;
++    /*
++     * Safe to nuke everything. GDBRegisterState::xml is static const char so
++     * it won't be freed
++     */
++    g_array_free(cpu->gdb_regs, true);
 +
-+    assert(cpu->cpu_ases);
-+    assert(asidx >= 0 && asidx < cpu->num_ases);
-+    /* KVM cannot currently support multiple address spaces. */
-+    assert(asidx == 0 || !kvm_enabled());
-+
-+    cpuas = &cpu->cpu_ases[asidx];
-+    if (tcg_enabled()) {
-+        memory_listener_unregister(&cpuas->tcg_as_listener);
-+    }
-+
-+    address_space_destroy(cpuas->as);
-+    g_free_rcu(cpuas->as, rcu);
-+
-+    if (asidx == 0) {
-+        /* reset the convenience alias for address space 0 */
-+        cpu->as = NULL;
-+    }
-+
-+    if (--cpu->cpu_ases_count == 0) {
-+        g_free(cpu->cpu_ases);
-+        cpu->cpu_ases = NULL;
-+    }
++    cpu->gdb_regs = NULL;
++    cpu->gdb_num_regs = 0;
++    cpu->gdb_num_g_regs = 0;
 +}
 +
- AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+ static void gdb_process_breakpoint_remove_all(GDBProcess *p)
  {
-     /* Return the AddressSpace corresponding to the specified index */
+     CPUState *cpu = gdb_get_first_cpu_in_process(p);
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 0f0a247f56..e5140b4bc1 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -274,7 +274,6 @@ static void cpu_common_finalize(Object *obj)
+ {
+     CPUState *cpu = CPU(obj);
+ 
+-    g_array_free(cpu->gdb_regs, TRUE);
+     qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
+     qemu_mutex_destroy(&cpu->work_mutex);
+ }
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index eb14b91139..249d4d4bc8 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -49,6 +49,12 @@ void gdb_register_coprocessor(CPUState *cpu,
+                               gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+                               const GDBFeature *feature, int g_pos);
+ 
++/**
++ * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
++ * @cpu - the CPU associated with registers
++ */
++void gdb_unregister_coprocessor_all(CPUState *cpu);
++
+ /**
+  * gdbserver_start: start the gdb server
+  * @port_or_device: connection spec for gdb
 -- 
 2.34.1
 
