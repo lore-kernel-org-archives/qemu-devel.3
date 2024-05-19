@@ -4,67 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DAB8C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 14:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A029C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 May 2024 15:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8hRv-0001dJ-WF; Sun, 19 May 2024 10:23:44 -0400
+	id 1s8iQl-0005sH-Pi; Sun, 19 May 2024 11:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mrolnik@gmail.com>) id 1s8hRt-0001cy-7u
- for qemu-devel@nongnu.org; Sun, 19 May 2024 10:23:41 -0400
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s8iQk-0005ql-Fy
+ for qemu-devel@nongnu.org; Sun, 19 May 2024 11:26:34 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mrolnik@gmail.com>) id 1s8hRr-0007jh-Vo
- for qemu-devel@nongnu.org; Sun, 19 May 2024 10:23:41 -0400
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-7f6e510b2ecso666097241.2
- for <qemu-devel@nongnu.org>; Sun, 19 May 2024 07:23:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s8iQi-0002Vg-Rk
+ for qemu-devel@nongnu.org; Sun, 19 May 2024 11:26:34 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-34dc8d3fbf1so1247934f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 19 May 2024 08:26:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716128618; x=1716733418; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=fY8cmBvtFyjLLj12uL2aGhEdyrf+K6lLVq/zLBfTdOk=;
- b=S2FO7ilj9XsLzgB3YPlhOkqJfkAJrq45uIXgkeqXqnJghJ1qAoYjx0DQRwRzeWpnXv
- YDTcJR/yjNrQIw3VBLDOnAfeCj1KrKpXh3Ug1Ez9xoK+9nxIL3YKhbTFR0Rk3bbT4icW
- eAlbNASb7DAH5RZHq2OoDOSq1D6E4YQCZ0ZpXxjjbXxgFn3UgyAFVR11LFRJzKWiz2Aa
- SFTNAbq5n52INUZ1iSctkagPSdcSWf49Kklxb0TCrIsS6i0k47Cw0jiEGEAhgKq/+ouN
- e3WMHzT6hHcVSHL7nAdDeD3eqViK57FELywE0sLXIxI2rf3oNHU6VGVZZgeLdJldyHOX
- 8oRQ==
+ d=linaro.org; s=google; t=1716132391; x=1716737191; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gzhbCWF1kyGHTwsUR/MogQJbsziupHZOGRWnzgLfLrw=;
+ b=icVvQsqj+NM84OjHhXO3Y9gtHV5CyAdOG1FUfoaDLiHRBh+Es81CZaILhw6jIOrmLJ
+ ZqsHeyycwQabIIcnsoybvVej0iLJzeNeurBm5kBsd3eTcpFrcE4rxhnatf02nlaz8vo5
+ fESn8fAfYf626VOwWkVxyumDSMf6M1n1g8GlR86vkseXa0rP8fq6uE5ZCqC8BcyIhtyS
+ rCAYvwImD1f5EG2jqUry4xueZT6PTyWZAVbI4aciW95nf9YgHypkWmv66AZWUPoYj/E3
+ bZHB1BfWFsE9iX3PAjvwpZ+EKV/jNT/7zk+e8G4ixS7e+JhvB2fi2/pWiibSCD9MmSK9
+ skdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716128618; x=1716733418;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fY8cmBvtFyjLLj12uL2aGhEdyrf+K6lLVq/zLBfTdOk=;
- b=Wgfp8+KKGXuXLxcWvMynAVHD5Bi1PW7Qq6odIhw3iBvpEmcDWhBAzajmj2kWZyODp8
- 5gJtRJeVw/4xakiZmApRGgTodMYHOACifumu10BHRQ6lP3nlF8PUcXPK4CWSDSmsO0nu
- b1uYm/E+xHIt/503ac7V9ZegzTlohfI6cTOlQfsjCqK+pIe9xdhAXvQGH8AP2uV0hWUe
- r8Et2SyNy68Mss4Rk6tJmAPJMUuDiFAfQy/9UIw6eB84R8WJMr8G4TS93DcBcF1Lz5Gn
- PD9C8aLkfnvXcreWfpb2gilUOtg2NREBgTWgoJuvPyf3LO5lsCwJUsa7i+HpERR/P9a3
- 8XAQ==
-X-Gm-Message-State: AOJu0YzLHpL6KTqIff3eX+OkvRnvPKwYOfNLtbVqQ9FvfKSNRTUjSdec
- xp/rGNH6dSIck4WIAkraWuRaooZrOebUuwK1nq0NjoljdREIZUkzupRwxccYL2Sa0I5xm5yDW9i
- rYpKpegn1fJL47ZsRj0L/JiglqDhUFO2SLK4=
-X-Google-Smtp-Source: AGHT+IG0bMlxGAn2aP0bVwGtEF1zSd5f6+wOZkhnTnpjybZmLoLLbC7bCrBx0EYYZWq+uHhjLr/W3owvQkf00Ggs9FQ=
-X-Received: by 2002:a05:6122:2507:b0:4d4:42c6:b08d with SMTP id
- 71dfb90a1353d-4df8829d346mr22739896e0c.5.1716128618380; Sun, 19 May 2024
- 07:23:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716132391; x=1716737191;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gzhbCWF1kyGHTwsUR/MogQJbsziupHZOGRWnzgLfLrw=;
+ b=SGC7HDVJBo6NA/PMLkvg73Nwti0wE99iPMT1cQe0Eo/Ffw1q1ZTqOa3YGLIauu70EE
+ EqZbDTf7oTjfhrqpzxKTbj/UbPyfMHAPAsIJOz3OyuK7Bgtk6U5hxoF5IUT0BI8O9PnE
+ SpdhThwwP8xmv74Ap4oBhUNBjPz+K09S+nEF+paAGIJHfq53RACNhVOYuaEq36VyWv1Z
+ ioe70rDVwxiMGmKF5MPiQPpYPlaV5gr0is+mOSHKT4RF519s4gkOHZpR208oELzyZ+W3
+ TUfVh2vOa+6q3JWD80Gwfz8cKvIfeofsk2EL3FQloLIxcQ0KS42Mwx7bln9nvl637wUl
+ 1JlA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzrp1Wde8GeqXhubWSkhdcDX9Rd0Dd/owk+OyY9dxtYKMr73Bfrv6nc4sHpQzTP8Ff+Ru1Fo78pjSDdXC1Ki3O1Gk2j0U=
+X-Gm-Message-State: AOJu0YwqVg7bWo1iA6hQGdQhbVZmEOu0DOS9+BEJIt/AQeSvpYBwWib2
+ xWYJtnLi2JcylAnm6LxERHvC7GDtCaqKKQuHWGg2/N+obB0pi4zB6QcWyxqDDUk=
+X-Google-Smtp-Source: AGHT+IH5MIFU+qpiCbk1aNRhb9IncP3XmrIH4IQChjew45UPL+uGfQncuCKqpIbTmnjXYZNbp5/WYA==
+X-Received: by 2002:adf:f1d2:0:b0:343:ae9b:36e0 with SMTP id
+ ffacd0b85a97d-3504a954dabmr18733586f8f.43.1716132390635; 
+ Sun, 19 May 2024 08:26:30 -0700 (PDT)
+Received: from [10.1.1.126] ([149.14.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502bbbc334sm26862561f8f.103.2024.05.19.08.26.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 19 May 2024 08:26:30 -0700 (PDT)
+Message-ID: <c220a44a-5265-4003-b386-cc633f21d44b@linaro.org>
+Date: Sun, 19 May 2024 17:26:28 +0200
 MIME-Version: 1.0
-From: Michael Rolnik <mrolnik@gmail.com>
-Date: Sun, 19 May 2024 17:23:01 +0300
-Message-ID: <CAK4993hFKoQh14k1L4cMrHrDzBn23D59aM-PQJ3pu6uH4qfsGw@mail.gmail.com>
-Subject: A question regarding TARGET_ALIGNED_ONLY flag
-To: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000b0078e0618cf546f"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=mrolnik@gmail.com; helo=mail-ua1-x92e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: A question regarding TARGET_ALIGNED_ONLY flag
+To: Michael Rolnik <mrolnik@gmail.com>, QEMU Developers <qemu-devel@nongnu.org>
+References: <CAK4993hFKoQh14k1L4cMrHrDzBn23D59aM-PQJ3pu6uH4qfsGw@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAK4993hFKoQh14k1L4cMrHrDzBn23D59aM-PQJ3pu6uH4qfsGw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,32 +96,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b0078e0618cf546f
-Content-Type: text/plain; charset="UTF-8"
+On 5/19/24 16:23, Michael Rolnik wrote:
+> Hi all,
+> 
+> Previously there was *TARGET_ALIGNED_ONLY* option that caused all memory accessed to be 
+> aligned, now it seems to be removed.
+> Is there a way to achieve memory access alignment with QEMU v9.0.0 when I am building a 
+> custom target?
 
-Hi all,
-
-Previously there was *TARGET_ALIGNED_ONLY* option that caused all memory
-accessed to be aligned, now it seems to be removed.
-Is there a way to achieve memory access alignment with QEMU v9.0.0 when I
-am building a custom target?
+Explicitly add MO_ALIGN to the MemOp argument of tcg_gen_qemu_{ld,st}_{i32,i64,i128}.
 
 
--- 
-Best Regards,
-Michael Rolnik
+r~
 
---000000000000b0078e0618cf546f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi all,<div><br></div><div>Previously there was=C2=A0<b>TA=
-RGET_ALIGNED_ONLY</b> option that caused all memory accessed to be aligned,=
- now it seems to be removed.</div><div><div>Is there a way to achieve memor=
-y access alignment=C2=A0with QEMU v9.0.0 when I am building a custom target=
-?</div><div><br></div><div><br></div><span class=3D"gmail_signature_prefix"=
->-- </span><br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D=
-"gmail_signature">Best Regards,<br>Michael Rolnik</div></div></div>
-
---000000000000b0078e0618cf546f--
 
