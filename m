@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C361C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 07:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7604EC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 07:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8xIo-0001Zx-SO; Mon, 20 May 2024 03:19:22 -0400
+	id 1s8xN3-0003Gc-Hd; Mon, 20 May 2024 03:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s8xId-0001ZA-B9; Mon, 20 May 2024 03:19:11 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1s8xMj-0003Dj-3u; Mon, 20 May 2024 03:23:25 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s8xIa-0004zk-BO; Mon, 20 May 2024 03:19:10 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1ee12baa01cso71015115ad.0; 
- Mon, 20 May 2024 00:19:07 -0700 (PDT)
+ id 1s8xMg-0005dZ-Vr; Mon, 20 May 2024 03:23:24 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1ee12baa01cso71116425ad.0; 
+ Mon, 20 May 2024 00:23:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716189546; x=1716794346; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716189801; x=1716794601; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kw1kuHl+nRQjv88CkzUyzSrYaWYXR8AwT0V/BT+KKAs=;
- b=BYJ67lKMner/W88vFXI9A9J/fvhedsz8Dp3FuYDNCJiH2x9QFgI0fa4ot88Lc3CTaZ
- 4K1giE4hwpzxXZmpQgULW2uZnQf6234zZBSLC612og+9a7H0MM5DRP/MG0jc1MT6rHO7
- y5MNBEKUY7umWKR6flrV8OZu6KFoyLQx0+Mg4BxxGapMTZgYswH8PM4QMzrmdgEdCeuU
- 9oP4xXh7sTcMfBOBrrLuLfgZlcG+SijmaQXqbFiTBe50yZEnNbEdGc4dlW0aWjvw9hZz
- lPAG6W30uo0+5rqwFxyLmfCATz/Fnnkn+NTimJBOfuSBmnpSSurqqDIAr0HKod87j4no
- EUDQ==
+ bh=aZcQ+s8xLlRETDW2xdAkOxokBoEWt3B+/PKVTwotr4o=;
+ b=dggu7R2HX9ZWNetwSb3JJ245ZirRHYAZBnFojZ0MlBmdeoqbSTZ7emvpwIh93OO5wL
+ lQ9mIvm2dbg2sOF3A8sqynW+Q3IRrf8Be1vEzKfqsjoo6AhwW/ynHaqIQ+88FPWgqPgJ
+ ETjxbX2qlPbAPy2X0JNBIw8+siRZCdGA4Nk3zVOYdkUghLu0joAHxCIxZFeScEPo2wCL
+ lilwoIEy0/KykZlrxWmJsprStX6S0/Gtk6yOL61ujJUAl2sL8uBxG+7Bda8VxB5tRzR8
+ GYGgS5iOYYpdxRvdNwLWyY7L6hJ5KDQ/9RzSME8Z+TgAhQeTG3XlFI66LBAV9DL11sEM
+ AirQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716189546; x=1716794346;
+ d=1e100.net; s=20230601; t=1716189801; x=1716794601;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kw1kuHl+nRQjv88CkzUyzSrYaWYXR8AwT0V/BT+KKAs=;
- b=kiUD9BKmGXsDsLHsAA0OopSDWUe+8QwJKl8fevzvtrMucTZh95egB0k2ka4Psu/sCB
- XV8Zbw0C4hfjgbmhz18qNa/+Cl8bka32d1J3Nz9YyjMoNuYQOS+eplEm6VPE/rXm9hEj
- IR4LsRndWJ6azkZn9zay9YAauw70OP4IeVIbLrdkNO0GhCy/kG/wuPQ2QGKTLS/BPiYn
- hIAL2tHCcQyEXuxUaEazdD73tR8IDd70zGDgSp4BPyv3ncIlPUw+bCD4m+Pj0ipHf3BI
- OJI5szJJYyi1TfjT/u7lOI3+J/Q5hA6kGBQ+3OtL0ll0V3jrVwqzEfyBWt4xwMJ764t1
- 0YMA==
+ bh=aZcQ+s8xLlRETDW2xdAkOxokBoEWt3B+/PKVTwotr4o=;
+ b=O0wqtPY/tN2xqEIZpHlo9obAwe4GSgYWrUzRyKWSOe+LzjdQKgYQ9cktFUP+okG98P
+ aqqKUnzUoz5Q/hIP+jMlVR8+8kOytXLcaLoYl5DquPe9JTEHTvwGKCjljkGV7UApjN7A
+ lZdyr08VjR2hbqPBO/rAgL/IzWRrwmsOJa8kzv3mVy+ujWV7g3gpaf1/Bf+tQfo3on7V
+ aSBoG0V4gcUlPACPSNWy0RaPaT9y6PcB5PatxL/Y6IR4gRJgM+WNeytmSz1/kmlhkKtG
+ eUvB3t66IS90Ok2VsPRZkWZ3B6UO7UmcXXdvoh7WOsOnANo5TDJGS8dlXGfqmwRKZ99s
+ cvtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjAenYU2gBTI3JQ4BjLj671aFmgoWZPd9UWUr8hflcsFvHtizwCwO46s44/deEsM08d6BFcKdAT4edjeuB+cjIxyLW
-X-Gm-Message-State: AOJu0YzuvelUp1YwOWVRn5utmCLV8zsyMIS1isE5qzYW/1DrhqHUTY0n
- NRBH2KyhEhMhG4PO4yo+23J2w4aRTlmRycFPmxB4C5n6jI7O4sl1
-X-Google-Smtp-Source: AGHT+IER4rWhJBhnZRWDQBertoj7p1vySml4YINXf7cYF3BoLrOLwdNINiDwXtNOePh9TAWQheOOxA==
-X-Received: by 2002:a05:6a21:328e:b0:1af:d044:1395 with SMTP id
- adf61e73a8af0-1afde0b0c18mr31015647637.20.1716189546323; 
- Mon, 20 May 2024 00:19:06 -0700 (PDT)
+ AJvYcCVUsFmhB6hVcAPUEuqX6eDcGg57lO+wqBYpAIzFWNxjDFt6Wcbbl2H4XhGDc/7Yd8ADvDzIWeQXRHH0IeG13Gw19bQ/
+X-Gm-Message-State: AOJu0Yxy/93/fMiMPE0S39+tP90pitA8fiJBAhk3Xc/eYp2HXd/+SSyg
+ GP+CtuUJd1vFRBeQh0FmPBuorRbYxBcDbn389Q1Sbx3eG4LYcD65
+X-Google-Smtp-Source: AGHT+IF1U/lLCBmiMMClaq4QXqIoRNh5Y8k8Ly6c/LstXYPkfZMq5lCQMWOa8CkGsrLp6f07N2mfMQ==
+X-Received: by 2002:a05:6a00:1ad0:b0:6f4:d1aa:bbe7 with SMTP id
+ d2e1a72fcca58-6f4e03bf5f8mr31731165b3a.34.1716189800801; 
+ Mon, 20 May 2024 00:23:20 -0700 (PDT)
 Received: from localhost ([1.146.114.227]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2af2b30sm19170661b3a.146.2024.05.20.00.19.03
+ 41be03b00d2f7-665eaa5108fsm3149589a12.7.2024.05.20.00.23.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 00:19:06 -0700 (PDT)
+ Mon, 20 May 2024 00:23:20 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 20 May 2024 17:18:59 +1000
-Message-Id: <D1EAF2H5P5ZY.3PPKAHKC71VHJ@gmail.com>
+Date: Mon, 20 May 2024 17:23:14 +1000
+Message-Id: <D1EAIBNXFORP.201F1G7B0M67B@gmail.com>
 Cc: <qemu-devel@nongnu.org>, "Daniel Henrique Barboza"
  <danielhb413@gmail.com>, "Glenn Miles" <milesg@linux.vnet.ibm.com>
-Subject: Re: [PATCH 05/14] target/ppc: Implement attn instruction on BookS
- 64-bit processors
+Subject: Re: [PATCH 09/14] target/ppc: add helper to write per-LPAR SPRs
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <20240518093157.407144-1-npiggin@gmail.com>
- <20240518093157.407144-6-npiggin@gmail.com>
- <6bedceb6-1f40-4ab5-ac30-ce89f415ee84@linaro.org>
-In-Reply-To: <6bedceb6-1f40-4ab5-ac30-ce89f415ee84@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+ <20240518093157.407144-10-npiggin@gmail.com>
+ <95b4f2bb-3eb2-477a-b2af-19cc4ac5849d@linaro.org>
+In-Reply-To: <95b4f2bb-3eb2-477a-b2af-19cc4ac5849d@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,48 +96,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat May 18, 2024 at 9:05 PM AEST, Richard Henderson wrote:
+On Sat May 18, 2024 at 9:26 PM AEST, Richard Henderson wrote:
 > On 5/18/24 11:31, Nicholas Piggin wrote:
-> > @@ -425,17 +426,17 @@ static void powerpc_set_excp_state(PowerPCCPU *cp=
-u, target_ulong vector,
-> >       env->reserve_addr =3D -1;
-> >   }
-> >  =20
-> > -static void powerpc_mcheck_checkstop(CPUPPCState *env)
-> > -{
-> > -    /* KVM guests always have MSR[ME] enabled */
-> >   #ifdef CONFIG_TCG
-> > +/*
-> > + * This stops the machine and logs CPU state without killing QEMU (lik=
-e
-> > + * cpu_abort()) because it is often a guest error as opposed to a QEMU=
- error,
-> > + * so the machine can still be debugged.
-> > + */
-> > +static G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char =
-*reason)
+> > +void spr_core_write_generic32(DisasContext *ctx, int sprn, int gprn)
 > > +{
-> >       CPUState *cs =3D env_cpu(env);
-> >       FILE *f;
-> >  =20
-> > -    if (FIELD_EX64(env->msr, MSR, ME)) {
-> > -        return;
-> > -    }
-> > -
-> >       f =3D qemu_log_trylock();
-> >       if (f) {
-> >           fprintf(f, "Entering checkstop state: "
-> > @@ -451,6 +452,30 @@ static void powerpc_mcheck_checkstop(CPUPPCState *=
-env)
-> >        */
-> >       qemu_system_guest_panicked(NULL);
-> >       cpu_loop_exit_noexc(cs);
-> > +}
+> > +    TCGv t0 =3D tcg_temp_new();
+> > +    if (!(ctx->flags & POWERPC_FLAG_SMT)) {
+> > +        spr_write_generic32(ctx, sprn, gprn);
+> > +        return;
+> > +    }
+> > +
+> > +    if (!gen_serialize(ctx)) {
+> > +        return;
+> > +    }
+> > +
+> > +    tcg_gen_ext32u_tl(t0, cpu_gpr[gprn]);
 >
-> Looks like you're not using reason.
-> Missed swapping out in the logging block?
+> Better to delay allocating the temp until needed, so that you don't alloc=
+ate one along the=20
+> return paths.
 
-Good catch thanks, I lost the hunk in a rebase.
+Will fix.
 
 Thanks,
 Nick
