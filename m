@@ -4,74 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3D9C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 17:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469DBC25B77
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 17:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s96iv-0004FC-3l; Mon, 20 May 2024 13:22:57 -0400
+	id 1s970b-0000BP-Ce; Mon, 20 May 2024 13:41:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s96is-0004F1-5J
- for qemu-devel@nongnu.org; Mon, 20 May 2024 13:22:54 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s970Q-0000AB-8X
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 13:41:05 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s96iq-0007Bo-AZ
- for qemu-devel@nongnu.org; Mon, 20 May 2024 13:22:53 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5206a5854adso3368028e87.0
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 10:22:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s970N-0002Lo-7z
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 13:41:01 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1eb0e08bfd2so86264245ad.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 10:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716225770; x=1716830570; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wldE+U99LMMyrfroJg3IZRBdIOB0cmQp5cVQCi02LZw=;
- b=iQmhMscc5lStCBUcJkG6FdA+gyaTqtqnYUZKmu5+huupp/VWpi/En2sI3ODZVbIkPR
- XlKC75Ltgan6rQHGG5hOJ/dWH8hBNBEvHOGL15S0qtQDO4rfPz8OGjReWVBPGhTN6B95
- PRDJivI5Jagji3xh9GHZwsn84sBy//EyXyLBwTCgyqixpGBES3on2UDCkdQVe9TYiIOI
- SH9qWb6fLHPVge8doD+Ha8glZJFZ/a/Uo0c8w2YFos9YgIf9LZu2eI6U4b3qiU7ydeoE
- JZwRtwRPPRzgXMLXc5vgAjaJA/V7LC6kfPl6PErEkPvxonxPIptFg92/0DDsRHGCati5
- bcTg==
+ d=ventanamicro.com; s=google; t=1716226857; x=1716831657; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6IvwskBX+e6jBez0GdmP0Yi1G6CHZiMmTF7vZgk08YA=;
+ b=T4sNjZ4JHtc7wySxlqOpxnkr0INWSE31y9qbEIDA03BcvQGEzxnc/GwTmDBw47mumg
+ t+2ojnVlqy45fPq2yv1hvWLkDMsZBoy5rVICNyQqCwj21TfXV7Etlj3W7aKCr3jmJHec
+ hKpobO9gITGIMqAyS6n4EuXiJiMGveLJz+eCKRBTj5Dgjb8Og7DVa/sEptVsVesruoii
+ luaONYzGgFmZ0CmbCGachcsncbWUGnkGMTePVph+kuf3C/4VepuODLLjRAg4u2Hq/59B
+ UJRGaW1egNVWWpSoodf1SSBQFx/Kx0rADZovbWdG7DhRf+XyE4RDOQxhxbJSOR8u17Kp
+ aJAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716225770; x=1716830570;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wldE+U99LMMyrfroJg3IZRBdIOB0cmQp5cVQCi02LZw=;
- b=vM8nsmRt3HkKJkvedsN72IHxbp3dt8J2DJSB+TO8JDXUgj5bz/u1s7gbcMVVwMe/M6
- TaIBWZYHUnqCouxGT+coFHoDJ1iC+LTE3naX00bjjvSfnzup4LDWIdL0XIF0vYN5wXXe
- 2mSi41nU1vB+W59tLaqPRnWfz6PGulmDSauWnz8CoZFotHKUXS6BOBmUm1J85nLhFnp2
- aeRmoHb4clL9TnUAwxnv/Gd7wLQI+YXIL3GRN2p/oJjZiLKcn9jeznYzlSKp8A033zfC
- fwXPCiDChA25/b9Qre2WD7BSHW6kwyGeJEgOm8cy9T+pVHTlOxYlcxtQnvqPYX3RAMwp
- RrUA==
+ d=1e100.net; s=20230601; t=1716226857; x=1716831657;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6IvwskBX+e6jBez0GdmP0Yi1G6CHZiMmTF7vZgk08YA=;
+ b=s4BIRgsNTJE9nc+pY+AYYGUVHxurGc2RQTh2hXYSF5+CKYSR2fFS5E0aDCDXllmnG6
+ dqgcd0olHrtaLJFj92JRT6Wi3xrdUusRaosdbBnV9Ig3DJmksUOr2NsEZl0wRv0pReOG
+ /g35EQTJphEi7mxMrzWcjoofu4TS12vV1VkWzblf/v0ovJgWBr92yR3ErymKNer8sZuX
+ IkQ1YFa3NcAnHv9MfpTROjwZNpVEyeQtyvC12Gad2ino8PCstJ9gTHDVkVcc+NYhYKsC
+ 0zQ2AvbSBVPEm1KV2iIXmk6JZ5ZAN6yp8dffTq4a2+XnKvaVJCYd8ukiyhohAVStDddo
+ DX1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPNceThB9UbEcW1QhPZplXku6x6vWRNLWi1teRfW/NRhWAsYvi0/z4DlaJyyt0klhZYN5mXfL/HbcR0hUBDmZUhIAE4fI=
-X-Gm-Message-State: AOJu0YzuEshqZ+tvSQ0369nJQOQCDEc17DIHDICtNPLKzhRMIyMYBTah
- aQaFVAgLHFSkuNrFYHhP4Nk/IZpNAazZOcKY7lFEJhm6UPgmOd9hb/Hr1X1C3WziitcH/RMh3z3
- KlyFsil1jOJAyR1on9zJjC+VV2Lh7OqtwOgQKbg==
-X-Google-Smtp-Source: AGHT+IGKEcj+Vk5q3AmPdyiGbKhdvWfYETVloQUhMgGDJFicpVOlDPp6YntjbdNx9Ogiv6spxIR3tNmh+XYhvY4E2ho=
-X-Received: by 2002:ac2:4c8c:0:b0:51d:a87e:27ec with SMTP id
- 2adb3069b0e04-5220fc735f1mr18731480e87.9.1716225770061; Mon, 20 May 2024
- 10:22:50 -0700 (PDT)
+ AJvYcCV8Bu5OLCC7jPAiWDtc0mB72MRy0uOCWsCZeN8XIgxj670ZcPT33/7sogkKtgcnWw9UXmUShK8BQ6TKQy9IYmwgUZ1i0cs=
+X-Gm-Message-State: AOJu0YwO1R8AIRC3SnSVQRtD5dMYsNknlYAg7p4cB42CAEceZgV1Bu6H
+ uh40Y/eg7Qo781SVuSKZT+J6B0Z0EpyDl39qi3sKn4JAyN9hTXnZA/KX1Um0rLI=
+X-Google-Smtp-Source: AGHT+IHx1pfRtQPNy8xDMSGdSN+fiID9Bu0RbJTSXQHruG2Zn/8gspgXpjpKTYlBAbmxlELfodmNMA==
+X-Received: by 2002:a05:6a20:9f4a:b0:1b0:278e:34a6 with SMTP id
+ adf61e73a8af0-1b0278e367dmr11716242637.49.1716226857340; 
+ Mon, 20 May 2024 10:40:57 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.42.57])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-66f9b625815sm1012799a12.50.2024.05.20.10.40.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 May 2024 10:40:57 -0700 (PDT)
+Message-ID: <0c7b0674-4ba9-4c87-a130-0277ca0d7a9b@ventanamicro.com>
+Date: Mon, 20 May 2024 14:40:52 -0300
 MIME-Version: 1.0
-References: <20240513233305.2975295-1-perry@mosi.io>
- <42e47d17-1d49-43e8-abd6-76abdcb159dc@linaro.org>
-In-Reply-To: <42e47d17-1d49-43e8-abd6-76abdcb159dc@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 May 2024 18:22:38 +0100
-Message-ID: <CAFEAcA9t9t7R9FR9mwEssT8+7XVcaBdThetZawB+VmL+0OcxDg@mail.gmail.com>
-Subject: Re: [PATCH] physmem: allow debug writes to MMIO regions
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Perry Hung <perry@mosi.io>, qemu-devel@nongnu.org, pbonzini@redhat.com, 
- peterx@redhat.com, david@redhat.com, 
- Andreas Rasmusson <andreas.rasmusson@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/1] pci: allocate a PCI ID for RISC-V IOMMU
+To: Frank Chang <frank.chang@sifive.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com, kraxel@redhat.com
+References: <20240503124244.8804-1-dbarboza@ventanamicro.com>
+ <CAFEAcA_gu40QoTXUPP2f=8vGvEOTbGWKtqR3b-e7YYhbFG0aiw@mail.gmail.com>
+ <d8fcb94e-86cf-4497-b450-1a32e4606512@ventanamicro.com>
+ <CANzO1D1VmQhETKY7zFC7PTu-QntOnZVmXcYor3m2B+6RVcC5mQ@mail.gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CANzO1D1VmQhETKY7zFC7PTu-QntOnZVmXcYor3m2B+6RVcC5mQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,68 +103,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 May 2024 at 13:49, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Perry,
->
-> On 14/5/24 01:33, Perry Hung wrote:
-> > Writes from GDB to memory-mapped IO regions are currently silently
-> > dropped. cpu_memory_rw_debug() calls address_space_write_rom(), which
-> > calls address_space_write_rom_internal(), which ignores all non-ram/rom
-> > regions.
-> >
-> > Add a check for MMIO regions and direct those to address_space_rw()
-> > instead.
-> >
->
-> Reported-by: Andreas Rasmusson <andreas.rasmusson@gmail.com>
-> BugLink: https://bugs.launchpad.net/qemu/+bug/1625216
->
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
-> > Signed-off-by: Perry Hung <perry@mosi.io>
-> > ---
-> >   system/physmem.c | 5 ++++-
-> >   1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index 342b7a8fd4..013cdd2ab1 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -3508,7 +3508,10 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr add=
-r,
-> >           if (l > len)
-> >               l =3D len;
-> >           phys_addr +=3D (addr & ~TARGET_PAGE_MASK);
-> > -        if (is_write) {
-> > +        if (cpu_physical_memory_is_io(phys_addr)) {
-> > +            res =3D address_space_rw(cpu->cpu_ases[asidx].as, phys_add=
-r, attrs,
-> > +                                   buf, l, is_write);
-> > +        } else if (is_write) {
-> >               res =3D address_space_write_rom(cpu->cpu_ases[asidx].as, =
-phys_addr,
-> >                                             attrs, buf, l);
-> >           } else {
 
-The other option is to make address_space_write_rom_internal()
-also write to devices...
 
-> I wonder if we shouldn't be safer with a preliminary patch
-> adding a 'can_do_io' boolean argument to cpu_memory_rw_debug()
-> (updating the call sites), then this patch would become:
->
->      if (can_do_io && cpu_physical_memory_is_io(phys_addr)) {
->
-> One of my worries for example is if someone accidently insert
-> a breakpoint at a I/O address, the device might change its
-> state and return MEMTX_OK which is confusing.
+On 5/10/24 07:47, Frank Chang wrote:
+> Hi Daniel,
+> 
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年5月8日 週三 下午8:42寫道：
+>>
+>>
+>>
+>> On 5/7/24 12:44, Peter Maydell wrote:
+>>> On Fri, 3 May 2024 at 13:43, Daniel Henrique Barboza
+>>> <dbarboza@ventanamicro.com> wrote:
+>>>>
+>>>> Hi,
+>>>>
+>>>> In this RFC I want to check with Gerd and others if it's ok to add a PCI
+>>>> id for the RISC-V IOMMU device. It's currently under review in [1]. The
+>>>> idea is to fold this patch into the RISC-V IOMMU series if we're all ok
+>>>> with this change.
+>>>
+>>> My question here would be "why is this risc-v specific?" (and more
+>>> generally "what is this for?" -- the cover letter and patch and
+>>> documentation page provide almost no information about what this
+>>> device is and why it needs to exist rather than using either
+>>> virtio-iommu or else a model of a real hardware IOMMU.)
+>>
+>> The RISC-V IOMMU device emulation under review ([1]) is a reference implementation of
+>> the riscv-iommu spec [2]. AFAIK it is similar to what we already have with aarch64 'smmuv3'
+>> 'virt' bus, i.e. an impl of ARM's SMMUv3 that isn't tied to a specific vendor.
+>>
+>> The difference here is that the riscv-iommu spec, ratified by RISC-V International (RVI),
+>> predicts that the device could be implemented as a PCIe device. But RVI didn't bother
+>> assigning a PCI ID for their reference IOMMU. The existing implementation in [1] is using
+>> a Rivos PCI ID that we're treating as a placeholder only. We need an ID that reflects that
+>> this is a device that adheres to the riscv-iommu spec, not to an IOMMU of any particular
+>> vendor.
+>>
+>> Since RVI doesn't provide a PCI ID for it we went to Red Hat, and they were kind enough
+>> to give us a PCI ID for the RISC-V IOMMU reference device.
+> 
+> That's great. Thanks to Red Hat.
+> I'm wondering do we have the plan to document the new PCI ID to the IOMMU spec
+> or somewhere else that's publicly accessible?
 
-You can definitely do some silly things if we remove this
-restriction.
+It will be documented in QEMU, as you've already seen in this patch. I'm sure
+that this info will be cascaded for other databases but I'm not sure how or when.
+I think Gerd can give us more info about it.
 
-On the other hand if you're using gdb as a debugger on real
-(bare metal) hardware does anything stop you doing that?
+I guess we'll end up using this same generic ID from QEMU in the kernel side too.
+As of now the kernel IOMMU support is using a Rivos ID ([1], patch 3). Assuming that
+[1] stays this way (I'm not sure if the kernel driver is a Rivos implementation or a
+canonical implementation like we're doing here), we'll need to add a generic kernel
+support that uses the generic ID too.
 
--- PMM
+
+Thanks,
+
+Daniel
+
+[1] https://lore.kernel.org/linux-riscv/cover.1715708679.git.tjeznach@rivosinc.com/
+
+
+
+> 
+> Regards,
+> Frank Chang
+> 
+>>
+>> I'll do a proper job this time and add all this context in the commit msg. Including a
+>> proper shout-out to Gerd and Red Hat.
+>>
+>>
+>>
+>> Thanks,
+>>
+>>
+>> Daniel
+>>
+>>
+>> [1] https://lore.kernel.org/qemu-riscv/20240307160319.675044-1-dbarboza@ventanamicro.com/
+>> [2] https://github.com/riscv-non-isa/riscv-iommu/releases/tag/v1.0.0
+>>
+>>>
+>>> thanks
+>>> -- PMM
+>>
 
