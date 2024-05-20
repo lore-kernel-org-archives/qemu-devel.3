@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826CBC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598A1C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s95KK-0002Dh-LV; Mon, 20 May 2024 11:53:28 -0400
+	id 1s95NC-0003W5-OJ; Mon, 20 May 2024 11:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1s95KI-0002D6-VX
- for qemu-devel@nongnu.org; Mon, 20 May 2024 11:53:26 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1s95KH-0006hA-1d
- for qemu-devel@nongnu.org; Mon, 20 May 2024 11:53:26 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44KBfEAc024242;
- Mon, 20 May 2024 15:53:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding:content-type; s=qcppdkim1; bh=SeWres8
- rrwowhI0h7jJQJjG/Z2zJy9GkoNERbduv0nU=; b=LmbXLxucVzHOO1bGd1trdmQ
- uNyttVJX9q6ojUQmXYXum845POAiscaIAl8lbWLdz3T8sCNACSAyxrI0p8CXStKv
- pwyLe1gDoFh8CzkdM67+6MYrkDAbA6m+2pTDbqe3V0vCkB87xhdCViYVsRN9CWIJ
- 7ENVUYW/hcva1fMvYu57zri8Kc8fhwIaAEQno8eT0SEpyZMwnKYEu5PtzaMxRzNq
- Ub4iicxLl+cKFOHUOl0r1wnzwlRIl8Dr60N5ub/pA1zbLo9MQfbipidME5YjMzyn
- Q6NPrvIwySU+vyvvKcgixXGbXzecv4wYgh3KqZoux8qXjWKxKytO006FNnddGrw=
- =
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4p431a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 May 2024 15:53:17 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44KFrFMu030227
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 May 2024 15:53:15 GMT
-Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 20 May 2024 08:53:15 -0700
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <ltaylorsimpson@gmail.com>, <sidneym@quicinc.com>, <bcain@quicinc.com>,
- <richard.henderson@linaro.org>, <ale@rev.ng>, <anjo@rev.ng>
-Subject: [PATCH] Hexagon: fix HVX store new
-Date: Mon, 20 May 2024 12:53:04 -0300
-Message-ID: <f548dc1c240819c724245e887f29f918441e9125.1716220379.git.quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.37.2
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s95NB-0003Vo-Rd
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:56:25 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s95N9-0007VM-4J
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:56:24 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42016c8daa7so20365295e9.2
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 08:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1716220581; x=1716825381; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=a+RkeEr619EJdkSnk7X+jwlxNgRZI6y2mX4HsuR7B/U=;
+ b=m9yIyEayqwn+YMBYL7HtvOftdtgZQ9xjryc3QcfbN8n/KHQdiDuvLA/R9mokrXLS93
+ 9cgE2AIt/oPRXGlZIGUy2Rt5gXPL3LHcWo4pXM5yXwLFT8KDXDRoxvEauLYTSFxBOJjc
+ NPYEZcAmiXgg736DT7NtKPDdji0vD8c12aaE8MYcerVh0ACbVjPf/UksHU4ces7AuPh9
+ ZAqF+1cZcG7Tkb2A0Zzwa+84ibR0VT338uH0B1VnTKSFND2gWeLs4W/c3pSaLv71UDAZ
+ TIKA6kjMZa9lbL7uU7yE6/AtndqtRIriRMPVpt3+jmTmT3xML9Q4z7Eyb8zrtIFklGHi
+ fXAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716220581; x=1716825381;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a+RkeEr619EJdkSnk7X+jwlxNgRZI6y2mX4HsuR7B/U=;
+ b=OLp/S5k4su6XM+uCTlxTTT3C93gwL6iMCMi2GY8rEOf+bRYJw4qaMe82cBFmtsR1uA
+ jbCrOdGPUsbiK5oGrzSwI/3ck9/SvhVRhCVAqXnbuAgVNv2TpIq0M6CQx9X5Z1JcWnCb
+ VkfDa+/FeVbyCAAiWByi1dEknqxwnAobunf5I2bXKLLdtKjduZT6rPbpt+TmswOgBubC
+ Nnno4djrJ/wpbKs332TC9G3CL6+11s87NzDdDnwjsMZZc7xrAKn9ZFDu+G+Xf06mhuoS
+ th0c/+Hj9MmFEbhwlE/piUA70yUIAjXyY5fXSZOOwansWxAUqO1j5jT+KCmb+BLdUnBC
+ wmyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaVsCjD2d6zKBrJH6Y/1XLdbKQ8jJBjYL5fuB2ygLhc1TO0USbRjLcW6NlsZJcg5AwBMrtZzW7ZEWww5z6ZcDV1oqkfxU=
+X-Gm-Message-State: AOJu0Yw9ZhUmadXcYo6kPWpPS12zJSDXDXELcuTbW7VlltWmcO7/FIBp
+ h4ZWQwZb0hKCp7kDlBdbjcqeOewycu188VzKw8HKv3iMcbnqMBSl1/AItFnnkJ8=
+X-Google-Smtp-Source: AGHT+IGaGk8kAggw345G4Vvn9mku0jKrUQNl5T4Hx0x3tjl0Fe0Gde4F7yAzgPQg5U98201OCcPQgQ==
+X-Received: by 2002:a05:600c:4f06:b0:420:1094:65d with SMTP id
+ 5b1f17b1804b1-42010940753mr217045685e9.12.1716220581356; 
+ Mon, 20 May 2024 08:56:21 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fccfe1277sm414870455e9.42.2024.05.20.08.56.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 May 2024 08:56:20 -0700 (PDT)
+Date: Mon, 20 May 2024 17:56:19 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Fei Wu <fei2.wu@intel.com>
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com, 
+ sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
+ yin.wang@intel.com, 
+ tech-server-platform@lists.riscv.org, tech-server-soc@lists.riscv.org,
+ atishp@rivosinc.com, conor@kernel.org, heinrich.schuchardt@canonical.com,
+ marcin.juszkiewicz@linaro.org
+Subject: Re: [RFC v2 2/2] hw/riscv: Add server platform reference machine
+Message-ID: <20240520-2ca42f1c1d9a9c65f5474529@orel>
+References: <20240312135222.3187945-1-fei2.wu@intel.com>
+ <20240312135222.3187945-3-fei2.wu@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: 7sPqP0NOLGKe0RpN9atwsfl6X-TL4E5h
-X-Proofpoint-GUID: 7sPqP0NOLGKe0RpN9atwsfl6X-TL4E5h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-20_05,2024-05-17_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- bulkscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0 spamscore=0
- impostorscore=0 clxscore=1011 phishscore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405200125
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240312135222.3187945-3-fei2.wu@intel.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,99 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At 09a7e7db0f (Hexagon (target/hexagon) Remove uses of
-op_regs_generated.h.inc, 2024-03-06), we've changed the logic of
-check_new_value() to use the new pre-calculated
-packet->insn[...].dest_idx instead of calculating the index on the fly
-using opcode_reginfo[...]. The dest_idx index is calculated roughly like
-the following:
+On Tue, Mar 12, 2024 at 09:52:21PM GMT, Fei Wu wrote:
+> The RISC-V Server Platform specification[1] defines a standardized set
+> of hardware and software capabilities, that portable system software,
+> such as OS and hypervisors can rely on being present in a RISC-V server
+> platform.
+> 
+> A corresponding Qemu RISC-V server platform reference (rvsp-ref for
+> short) machine type is added to provide a environment for firmware/OS
+> development and testing. The main features included in rvsp-ref are:
+> 
+>  - Based on riscv virt machine type
+>  - A new memory map as close as virt machine as possible
+>  - A new virt CPU type rvsp-ref-cpu for server platform compliance
+>  - AIA
+>  - PCIe AHCI
+>  - PCIe NIC
 
-    for reg in iset[tag]["syntax"]:
-        if reg.is_written():
-            dest_idx = regno
-            break
+We should rebase on the IOMMU series [1] and add an IOMMU to the
+platform, as it's required by the Server Soc spec (which is required
+by the server platform spec).
 
-Thus, we take the first register that is writtable. Before that,
-however, we also used to follow an alphabetical order on the register
-type: 'd', 'e', 'x', and 'y'. No longer following that makes us select
-the wrong register index and the HVX store new instruction does not
-update the memory like expected.
+[1] https://lore.kernel.org/qemu-devel/20240307160319.675044-1-dbarboza@ventanamicro.com/
 
-Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
----
- tests/tcg/hexagon/hvx_misc.c      | 23 +++++++++++++++++++++++
- target/hexagon/gen_trans_funcs.py |  9 ++++++---
- 2 files changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/tests/tcg/hexagon/hvx_misc.c b/tests/tcg/hexagon/hvx_misc.c
-index 1fe14b5158..90c3733da0 100644
---- a/tests/tcg/hexagon/hvx_misc.c
-+++ b/tests/tcg/hexagon/hvx_misc.c
-@@ -474,6 +474,27 @@ static void test_vcombine(void)
-     check_output_w(__LINE__, BUFSIZE);
- }
- 
-+void test_store_new()
-+{
-+    asm volatile(
-+        "r0 = #0x12345678\n"
-+        "v0 = vsplat(r0)\n"
-+        "r0 = #0xff00ff00\n"
-+        "v1 = vsplat(r0)\n"
-+        "{\n"
-+        "   vdeal(v1,v0,r0)\n"
-+        "   vmem(%0) = v0.new\n"
-+        "}\n"
-+        :
-+        : "r"(&output[0])
-+        : "r0", "v0", "v1", "memory"
-+    );
-+    for (int i = 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
-+        expect[0].w[i] = 0x12345678;
-+    }
-+    check_output_w(__LINE__, 1);
-+}
-+
- int main()
- {
-     init_buffers();
-@@ -515,6 +536,8 @@ int main()
- 
-     test_vcombine();
- 
-+    test_store_new();
-+
-     puts(err ? "FAIL" : "PASS");
-     return err ? 1 : 0;
- }
-diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
-index 9f86b4edbd..30f0c73e0c 100755
---- a/target/hexagon/gen_trans_funcs.py
-+++ b/target/hexagon/gen_trans_funcs.py
-@@ -89,6 +89,7 @@ def gen_trans_funcs(f):
- 
-         new_read_idx = -1
-         dest_idx = -1
-+        dest_idx_reg_id = None
-         has_pred_dest = "false"
-         for regno, (reg_type, reg_id, *_) in enumerate(regs):
-             reg = hex_common.get_register(tag, reg_type, reg_id)
-@@ -97,9 +98,11 @@ def gen_trans_funcs(f):
-             """))
-             if reg.is_read() and reg.is_new():
-                 new_read_idx = regno
--            # dest_idx should be the first destination, so check for -1
--            if reg.is_written() and dest_idx == -1:
--                dest_idx = regno
-+            if reg.is_written():
-+                # dest_idx should be the first destination alphabetically
-+                if dest_idx_reg_id is None or reg_id < dest_idx_reg_id:
-+                    dest_idx = regno
-+                    dest_idx_reg_id = reg_id
-             if reg_type == "P" and reg.is_written() and not reg.is_read():
-                 has_pred_dest = "true"
- 
--- 
-2.37.2
-
+Thanks,
+drew
 
