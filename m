@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2959BC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 08:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22829C25B77
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 09:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8yog-0007GH-4R; Mon, 20 May 2024 04:56:22 -0400
+	id 1s8zPA-0002kU-Be; Mon, 20 May 2024 05:34:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s8ynW-000781-Qz
- for qemu-devel@nongnu.org; Mon, 20 May 2024 04:55:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s8ynP-0005LA-So
- for qemu-devel@nongnu.org; Mon, 20 May 2024 04:55:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716195302;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=i4wSriD7WOCYJeEN6ENDnFoP3uXDfNH7EEjMNnjA0yc=;
- b=dq1rKuNQtl6+eVSYVFVfd/30mRrmHNYwYpl4ZrPrZ0qnCBE8X6z8HVxgOEUtQyGKCzHxvL
- ktOwDVMuvjWlT6tiMl4I+7X05aY/u/sl5XfPMp/qARX+1CvDggp15O84ETTuO5EIagorzS
- N48Uw/0zgY2OP53/UK8Rm4yJs0L0zqQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-MfwonOeqP4WApJk0qwFoMA-1; Mon, 20 May 2024 04:54:58 -0400
-X-MC-Unique: MfwonOeqP4WApJk0qwFoMA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 38345185A783;
- Mon, 20 May 2024 08:54:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4429B5618;
- Mon, 20 May 2024 08:54:55 +0000 (UTC)
-Date: Mon, 20 May 2024 09:54:52 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, stefanha@redhat.com,
- qemu-stable@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 2/2] iotests: test NBD+TLS+iothread
-Message-ID: <ZksP3IwzdqzVVg1o@redhat.com>
-References: <20240518025246.791593-4-eblake@redhat.com>
- <20240518025246.791593-6-eblake@redhat.com>
- <iv4tyqsi5bwojgh5hcpr4jfmlw2xvatpgqroxe2dvp27qzbhea@bitj4i5zb5po>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s8zOz-0002j7-Tp
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 05:33:55 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s8zOw-0004t6-TL
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 05:33:52 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-5238b7d0494so3329538e87.3
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 02:33:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716197628; x=1716802428; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=w2AOh+EoMqmIKnJeq/JoD6gLod5i3xql/C0sFWfSqOE=;
+ b=U/gxUCQ203PhtDJJIZ1NfxQzr5sFX1dUy5c124E3iFFpHT0rP5KE1/f5fIE4dQdOfq
+ mNpUUNfZzFwZUxKaafiRhv1pLF7q+1QWaJri883qmbp36SupWh/KEzR4zZKcrEWCOGKq
+ 4xvjJcyVQl3k6zNvbS4ulmoMLzkXg9nIhp/LT53KVckimleZDnXfq3neRFcy1HLer9ns
+ wNnSwtD2wYeaaIj1+FQ07cUEDekYWSnwf/NdMqOg/EY2Ev6NzeePc+tj4yf4qwqB9l+j
+ iHCEyKaNBfIeYmkkzX162JZbXFAUkw7YfSw5kQpSBZa6bxV4Y0O9ujUBh4dth5tmA+R9
+ 2gWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716197628; x=1716802428;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w2AOh+EoMqmIKnJeq/JoD6gLod5i3xql/C0sFWfSqOE=;
+ b=MuNhePw6h3OjA7KYyQF411BBkuCqkDkGVt/rAZhhC5Vh8m6jUNhTiOyWBYzPSjgL4/
+ LxYOd6kK+GFax4/2lE4rrweu611TGbgmCmMtAICoNIjd5noIent73Kj+gRt79zOtFpAg
+ VfUvfyz5SZ0daqc0tm03hai5P2AoCTQjM3368/SSjeDIeV3+8a/Dtwt82mQ3gB6JHxDX
+ WnkNT3U7q7EVL3e4frxffxz2o8mC0+PbvAMoheuG1mMUKje1XveqNAopW357zX5Eeg4A
+ xs+kBmif20gBLWLXzBlQOVp/I2+H/1r6Ixy+F0+E9Z77SyYfkjj1VOJaSLXDFooCxNaj
+ 8QWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1QUjqXTV3gpUOk4zU+y2QYS7sFWV6gSL1jKXBnIo7mEyoxWeQETVgRWnUpbCWL1CMizgtB213uZ/92RUkZgW6aPdVYrk=
+X-Gm-Message-State: AOJu0YyYCuxoRDpi17Y/wu3JU2Nw8Nzdjce3NPb0FRNP8QEJGp1ytc1Z
+ fAo/HLKR2S31g6BSW21imXjPSypf3xnzrsAu43A2oTF05CB7XlcsveBFHKu3eANP7k81qYkHOy9
+ mAmZsS3ZorZlMQPQimPbWTboD3hVqJHTCIk14tg==
+X-Google-Smtp-Source: AGHT+IG6CLQT4EmHWhDmPbA9gQoU9CUSKWxZu4+j5OI3WadQe8u9ckiflItR/PwQCeAW6EP4F9B3MPp+UfL32kPe/CU=
+X-Received: by 2002:a05:6512:63:b0:51f:ffa:d6f7 with SMTP id
+ 2adb3069b0e04-52210277ba5mr22603552e87.59.1716197627633; Mon, 20 May 2024
+ 02:33:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <iv4tyqsi5bwojgh5hcpr4jfmlw2xvatpgqroxe2dvp27qzbhea@bitj4i5zb5po>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240423063234.76282-1-rathc@linux.ibm.com>
+ <20240423063234.76282-7-rathc@linux.ibm.com>
+ <D1BXJXYYCCJF.1KUFFHK83W8CV@gmail.com>
+ <eba18599-1e0a-4b57-a728-b5a7847e4f14@linaro.org>
+ <D1EAEMSLTZZO.19107537679QR@gmail.com>
+In-Reply-To: <D1EAEMSLTZZO.19107537679QR@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Date: Mon, 20 May 2024 11:33:34 +0200
+Message-ID: <CAFXwXr=xC8g=qM-A1zgzM4ipWySJ6dnaUxn8n_fvASfRsdvUXg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] target/ppc: Move div/mod fixed-point insns (64
+ bits operands) to decodetree.
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Chinmay Rath <rathc@linux.ibm.com>,
+ "open list:PowerPC" <qemu-ppc@nongnu.org>, 
+ "qemu-devel@nongnu.org Developers" <qemu-devel@nongnu.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000f5c9110618df65e6"
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,94 +95,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 17, 2024 at 10:08:08PM -0500, Eric Blake wrote:
-> Adding a bit of self-review (in case you want to amend this before
-> pushing, instead of waiting for me to get back online),
-> 
-> On Fri, May 17, 2024 at 09:50:15PM GMT, Eric Blake wrote:
-> > Prevent regressions when using NBD with TLS in the presence of
-> > iothreads, adding coverage the fix to qio channels made in the
-> > previous patch.
-> > 
-> > CC: qemu-stable@nongnu.org
-> > Signed-off-by: Eric Blake <eblake@redhat.com>
-> > ---
-> >  tests/qemu-iotests/tests/nbd-tls-iothread     | 170 ++++++++++++++++++
-> >  tests/qemu-iotests/tests/nbd-tls-iothread.out |  54 ++++++
-> >  2 files changed, 224 insertions(+)
-> >  create mode 100755 tests/qemu-iotests/tests/nbd-tls-iothread
-> >  create mode 100644 tests/qemu-iotests/tests/nbd-tls-iothread.out
+--000000000000f5c9110618df65e6
+Content-Type: text/plain; charset="UTF-8"
 
-> > +
-> > +# pick_unused_port
-> > +# Copied from nbdkit/tests/functions.sh.in with compatible 2-clause BSD license
-> 
-> I'm not sure if I have to include the license text verbatim in this
-> file, and/or have this function moved to a helper utility file.  The
-> original source file that I borrowed pick_unused_port from has:
-> 
-> # Copyright Red Hat
+On Mon, 20 May 2024, 09:18 Nicholas Piggin, <npiggin@gmail.com> wrote:
 
-I checked most of the relevant history, and this Copyright statement
-does indeed appear correct - the code was all written by Richard.
+> > That's another option, yes.  The decodetree script will take multiple
+> input files to
+> > produce one output, so you could separate the insns by base vs 64-bit.
+>
+> Thinking about it a bit more, I guess the downside is that you
+> would usually like to group instruction variants that operate on
+> 64-bit data together with the others in the .decode file.
+>
 
-Thus, you could invoke Red Hat's right to re-license and just declare
-this copy to be under QEMU's normal GPL license, avoiding the question
-of copying the license text.
+A third option is not too care as much about minimising the ppc32 build and
+include all of the helpers all of the time.
 
+r~
 
-> > +#
-> > +# Picks and returns an "unused" port, setting the global variable
-> > +# $port.
-> > +#
-> > +# This is inherently racy, but we need it because qemu does not currently
-> > +# permit NBD+TLS over a Unix domain socket
-> > +pick_unused_port ()
-> > +{
-> > +    if ! (ss --version) >/dev/null 2>&1; then
-> > +        _notrun "ss utility required, skipped this test"
-> > +    fi
-> > +
-> > +    # Start at a random port to make it less likely that two parallel
-> > +    # tests will conflict.
-> > +    port=$(( 50000 + (RANDOM%15000) ))
-> > +    while ss -ltn | grep -sqE ":$port\b"; do
-> > +        ((port++))
-> > +        if [ $port -eq 65000 ]; then port=50000; fi
-> 
-> Also, common.nbd only probes:
->     for ((port = 10809; port <= 10909; port++))
-> and nbdkit's choice of starting with a random offset is interesting.
+>
 
-Yes, a random offset is a nice idea, massively reducing risk of
-clashes through (un)lucky concurrent execution.
+--000000000000f5c9110618df65e6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"auto"><div><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
+"gmail_attr">On Mon, 20 May 2024, 09:18 Nicholas Piggin, &lt;<a href=3D"mai=
+lto:npiggin@gmail.com">npiggin@gmail.com</a>&gt; wrote:</div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;p=
+adding-left:1ex">
+&gt; That&#39;s another option, yes.=C2=A0 The decodetree script will take =
+multiple input files to <br>
+&gt; produce one output, so you could separate the insns by base vs 64-bit.=
+<br>
+<br>
+Thinking about it a bit more, I guess the downside is that you<br>
+would usually like to group instruction variants that operate on<br>
+64-bit data together with the others in the .decode file.<br></blockquote><=
+/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">A third option is =
+not too care as much about minimising the ppc32 build and include all of th=
+e helpers all of the time.</div><div dir=3D"auto"><br></div><div dir=3D"aut=
+o">r~</div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=
+=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
+ing-left:1ex">
+</blockquote></div></div></div>
 
-
-> > +echo
-> > +echo === Cleaning up ===
-> > +echo
-> > +
-> > +_send_qemu_cmd $h1 '{"execute":"quit"}' ''
-> > +_send_qemu_cmd $h2 '{"execute":"quit"}' ''
-> 
-> Since the bug was exposed by this point, I didn't bother to do a clean
-> shutdown of the mirror job or NBD export.  As is, testing that we shut
-> down cleanly despite abandoning a job is probably not a bad idea.
-
-Yeah, perhaps worthwhile, if you can get something that works reliably.
-A reliable partial test is better than an unreliable full test, as we'll
-just end up  killing the latter.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--000000000000f5c9110618df65e6--
 
