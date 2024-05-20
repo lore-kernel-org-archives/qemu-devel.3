@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32BFC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 08:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79211C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 08:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8y1s-0003Sq-K0; Mon, 20 May 2024 04:05:56 -0400
+	id 1s8yG7-0006Vl-OQ; Mon, 20 May 2024 04:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s8y0O-00039G-P6; Mon, 20 May 2024 04:04:24 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1s8yEy-00069u-42; Mon, 20 May 2024 04:19:28 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s8y0N-0004cL-2n; Mon, 20 May 2024 04:04:24 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1edc696df2bso76773035ad.0; 
- Mon, 20 May 2024 01:04:22 -0700 (PDT)
+ id 1s8yEr-0007Cv-3o; Mon, 20 May 2024 04:19:27 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1f2ecea41deso57723535ad.1; 
+ Mon, 20 May 2024 01:19:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716192261; x=1716797061; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1716193157; x=1716797957; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2HLSOlbk8MkRDlwV+ug+nW4TY34NAp2SioguHodiQJo=;
- b=PlRL27dYUlk2uKO1trw0DUBGEQ4gBwbVoumLHRIzdNJkUZnPB9eUOT+oHw6pYw8lRu
- PpUFn4EdJ0J+SaghN9l0AjfgoM2uLcuNfxkhjgWYQiF5WvckpHr9bOFDCBYbvWYbUwnp
- NHO4kgKmQ314E2uPY1TA0y8AAYsJTAzk253wTlnPJHg4GCWja9r/25YIsp/wHdoH7RUE
- R0BZ7CEiUcn23bLeTyeMo2jaAOMG0XiUeg451l7BJ0ol8f9nbJd0DLxjt4eURSEbBiEA
- 0/Vjc9FYgTwWCmr1Z25aI47LgHDUcTpL9yHCUevr46wuBV9oHEwoJ2LlZgTaqvn+tfNL
- EupA==
+ bh=PAYpCWwcQATvupcV2tgualSPZZA5rb1LW0+/UfgwQkI=;
+ b=ZpYWxL35cYZWe4v6pBZF4i4tPTyQCWkkt1ilewM0nsUMzobs24X4D6VBfAfvf7UDnE
+ 1osX+qvzWHtKqsLFy2cQcLCM0VUNNel+GZxzSQBRfa3+7ud1Tq/9A2FM2RzotTAWQMtJ
+ FC31dYjlfTTpglRWiFXsIwsyIxoWG5S+BhUj6ElWneBYfRHciVZtH8Hh96p/Jy7MlKRi
+ QRCmkDexu1D/Xh19Xmu5GNLxDpVBkU3QIFu2bQzY2ASZedSwrd98oGyWK51TPPAgdoKV
+ Dv79u+DuZCIjVF8lWB9yn5g1h1ae+kqlVIxdKFnQSk9jNX6MeVhjqrhIGygP+Hwil3DM
+ CCcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716192261; x=1716797061;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1716193157; x=1716797957;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2HLSOlbk8MkRDlwV+ug+nW4TY34NAp2SioguHodiQJo=;
- b=NYes2O3dsX9hVT+GfsXDRKN+xjifcsoGoQbJaIFtKvLfx47eBfK74yg7fCft7i2AFC
- w6qpi8n3xmlGEZIX0kw4Ueq80m1EyBnwLqPsfe2gps2yz7O3bYI3PqO2vjmhettuCLqt
- e5C9G3+c6yH0eFTMfrU3VsvBtDY0jVRJlGTMHrwwXF6rio4JsuAr5X2992TQF79QKsMX
- WRYqO91PLtYQrieYP/EoUWFzKqfifJxP04M5tC/13urGCgSVshyyTWO+XW9dsa4kG57d
- x9qxjgv0TKB3KMjO8hz4BcJUqlp1O68GNs/bTADZNyfIBpl5WWAwqWk97ZZ98RjkJR5x
- 900Q==
+ bh=PAYpCWwcQATvupcV2tgualSPZZA5rb1LW0+/UfgwQkI=;
+ b=hsK05ogDR+c96wP4mAmpCVjPTSbk9WPRM/I+KyVH5xqNtF1d6uSu6ZBA33MQX9Rn0+
+ 7Qlk4CG1UFAOzljMwUWQc0IeAr+AHWo9i3ImOjQNyoOe9ffx6ZziKM/pCTwaO7hKNGja
+ 3Pi4n0hA0Wwydh9dTbWUiWjWpv9U3jqz0boO8QbHX4UrBRAcPIRlVY2BexmA7PSjA9mw
+ NiBhaQ7oUdsY8fD6hzIOngiqIcheBxdCPDKqmBxYpo2MidVr1iUkWyBMHq/z1lBbqMcv
+ oj/bUM89d92NjmPKJOcM2Rbbsz/oo6j4PmGrzutabiihLTlh8c5hb6OZbwPkTKbgZmf5
+ PD5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfBxnFYVHg9uCL3ch6yqci8kTi7aUgBVySR4VZozOPuqzh+ccrhqSMAYA0yQThUHUZuY6rBbaRNRIyGZkmBaSQfaCiI+Km1aFaZ4vA7Q88GaW+Ef77ylAnZvo=
-X-Gm-Message-State: AOJu0YxuykW5yuVirt7OClwiirxqFm7RHx99QjjXtPlOrdTT9uavh7Nz
- OZ0b4TZDac5/Uahneh44G1ISKdsLAyG4TqY34kGuJJN8lXJeolQT
-X-Google-Smtp-Source: AGHT+IHCcnxMQZJJT6z9Ihx57EeT4LXDGcMlaXuZFNRkJMcpCkXKIAH6Wm1D74NRgWhfucnNiURczg==
-X-Received: by 2002:a17:902:daca:b0:1f2:fb02:3dfd with SMTP id
- d9443c01a7336-1f2fb02401bmr37797175ad.11.1716192261169; 
- Mon, 20 May 2024 01:04:21 -0700 (PDT)
+ AJvYcCV5KF7HZcfesYg0PY1kBYZyC3tFiHaczpIyXvXU0Rc3FtebA/5/UNcvJ2SOHRaiYjX69FpdcLPnbZYog5X4IGmM8ODulCPbE8fmLrcLbWXf12segtNeN5CubYo=
+X-Gm-Message-State: AOJu0Yxm0fNP9kzvd6h2v0z7W5o/6vUEnceaEi76Gpw2jVKO8uO6aXpi
+ ssoFJw3wSF4mA1bdaUhqFk6I18qrgEGUg4UQ5D3B5tN3ffIpbwne
+X-Google-Smtp-Source: AGHT+IH1YapN3itLGtuVif1hmKwKiLGRpJyAjinPbWn72IB64uqS8WyjzVwvjTmXGZwe3vrNltRyKw==
+X-Received: by 2002:a05:6a00:1887:b0:6ed:cd4c:cc21 with SMTP id
+ d2e1a72fcca58-6f4e02ac739mr34767891b3a.13.1716193156109; 
+ Mon, 20 May 2024 01:19:16 -0700 (PDT)
 Received: from localhost ([1.146.114.227]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0bad9da4sm197233065ad.107.2024.05.20.01.04.06
+ d2e1a72fcca58-6f4d2ade27fsm18605744b3a.108.2024.05.20.01.19.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 01:04:20 -0700 (PDT)
+ Mon, 20 May 2024 01:19:15 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 20 May 2024 18:04:03 +1000
-Message-Id: <D1EBDKJQ19G2.7K7FS8Z9BA5D@gmail.com>
-Subject: Re: [PATCH V9 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
+Date: Mon, 20 May 2024 18:18:58 +1000
+Message-Id: <D1EBOZTRN8SZ.Q9F4CFDZ8VYW@gmail.com>
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Salil Mehta" <salil.mehta@huawei.com>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
@@ -80,21 +78,23 @@ Cc: <maz@kernel.org>, <jean-philippe@linaro.org>,
  <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, "Jonathan Cameron"
- <Jonathan.Cameron@huawei.com>, "Shaoqin Huang" <shahuang@redhat.com>
+ <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, "Shaoqin Huang"
+ <shahuang@redhat.com>
+Subject: Re: [PATCH V9 6/8] physmem: Add helper function to destroy CPU
+ AddressSpace
 X-Mailer: aerc 0.17.0
 References: <20240519210620.228342-1-salil.mehta@huawei.com>
- <20240519210620.228342-2-salil.mehta@huawei.com>
-In-Reply-To: <20240519210620.228342-2-salil.mehta@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
+ <20240519210620.228342-7-salil.mehta@huawei.com>
+In-Reply-To: <20240519210620.228342-7-salil.mehta@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,77 +111,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon May 20, 2024 at 7:06 AM AEST, Salil Mehta wrote:
-> KVM vCPU creation is done once during the vCPU realization when Qemu vCPU=
- thread
-> is spawned. This is common to all the architectures as of now.
->
-> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but t=
-he
-> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM doe=
-sn't
-> support vCPU removal. Therefore, its representative KVM vCPU object/conte=
-xt in
-> Qemu is parked.
->
-> Refactor architecture common logic so that some APIs could be reused by v=
-CPU
-> Hotplug code of some architectures likes ARM, Loongson etc. Update new/ol=
-d APIs
-> with trace events instead of DPRINTF. No functional change is intended he=
-re.
+> Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
+> involves destruction of the CPU AddressSpace. Add common function to help
+> destroy the CPU AddressSpace.
 
-This is a nice cleanup and helps with ppc hotplug as well.
-
-Has there been any architecture code posted yet?
-
-Just a few minor thing:
-
->
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Miguel Luis <miguel.luis@oracle.com>
-> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> ---
->  accel/kvm/kvm-all.c    | 64 ++++++++++++++++++++++++++++++++----------
->  accel/kvm/kvm-cpus.h   | 14 +++++++++
->  accel/kvm/trace-events |  5 +++-
->  3 files changed, 67 insertions(+), 16 deletions(-)
->
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index c0be9f5eed..9cd7d69bde 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -128,6 +128,7 @@ static QemuMutex kml_slots_lock;
->  #define kvm_slots_unlock()  qemu_mutex_unlock(&kml_slots_lock)
-> =20
->  static void kvm_slot_init_dirty_bitmap(KVMSlot *mem);
-> +static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id);
-> =20
->  static inline void kvm_resample_fd_remove(int gsi)
->  {
-> @@ -340,14 +341,53 @@ err:
->      return ret;
->  }
-> =20
-> +void kvm_park_vcpu(CPUState *cpu)
-> +{
-> +    struct KVMParkedVcpu *vcpu;
-> +
-> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> +
-> +    vcpu =3D g_malloc0(sizeof(*vcpu));
-> +    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
-> +    vcpu->kvm_fd =3D cpu->kvm_fd;
-> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
-> +}
-
-Could you move kvm_get_vcpu up here so it's next to kvm_park_vcpu, and
-then you don't need to forward declare it. Call it kvm_unpark_vcpu() for
-symmetry with park.
+Patches 6,7 seem okay to me. I would like to see a series where they get
+used. Would it be possible to include at least a TCG user in your
+series? That would make it easier to review and test.
 
 Thanks,
 Nick
