@@ -4,98 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73617C25B77
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 20:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE42AC25B77
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 20:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s99Fy-0005d0-7M; Mon, 20 May 2024 16:05:14 -0400
+	id 1s99LX-0007Wa-OB; Mon, 20 May 2024 16:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s99Fx-0005cX-CP
- for qemu-devel@nongnu.org; Mon, 20 May 2024 16:05:13 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <mjsamp@gmail.com>)
+ id 1s92PP-0003Xw-6T; Mon, 20 May 2024 08:46:31 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s99Ft-0003nA-Hg
- for qemu-devel@nongnu.org; Mon, 20 May 2024 16:05:13 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1ecd3867556so89487725ad.0
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 13:05:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjsamp@gmail.com>)
+ id 1s92PN-0002wZ-38; Mon, 20 May 2024 08:46:30 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a59ad24baa2so66299066b.1; 
+ Mon, 20 May 2024 05:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716235505; x=1716840305; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4mvCA9w6FdFTW0YLCl1SxGRRGxyiZKa7vF0l/I6UfVw=;
- b=KhAXEtDWG7alrsBRq848n9qYrR4E07cLi2gN5UUPPfcbQsmagrqhZR0VL6vxFJOfVP
- ij5cQQB9Na/08wGwUxU5qaCa9KatKbQFakvbRCiL2krSFI+qYxJ4Teyy9N9XM+2zeROX
- SqxtuMR0Qa+Wv0ox7dmnzFu+i6qQ4SwqLq1P0kGmcwsIzBpBW7g8pUTgO+v57LiOMjA8
- tAOjiHOFQPJ3ZCPqQRKYRjJrLdQUWQIzvQVZHEWIJXCZBtpKIStZqUWSsghj47GOx/0T
- VBINK1ChxZjC6AJe7AnAIk4oVhsa0WjTPz/ko2eG9TMGKR64d+2BkS8BcPriLFJkwr0T
- VbOg==
+ d=gmail.com; s=20230601; t=1716209184; x=1716813984; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qL3hM2Jpw3wUfBeVBGw9BMujfU348G+aKDKHbr4d3JI=;
+ b=DjYQiWwgRc+eNP0UYmH8/Bgqh/99Od2SHYZWMTjhspzLfEAzJmigO0ph+w1I5ch++j
+ kKd6Hr7lNy2wlQ60bOiKWmC6w8xKkhiH36rWQoxTD5b3dE0cbz38yKEB76anQmhbdp68
+ erxZOnSSKNSDeG36rZj5rsAtNj/UaAMo7QrFLYMN42eqZoxY6cHYDRz6G/fX9mmD/zN2
+ SrIb76VfYK5DRnEUvKCLzR4NzGxivo9P5eANJDbSGcLrg2OZR0shlnVWRbq5xJKZ3+WW
+ MJIZKHq+yvCPFFpVaEIhd/ZGqbVcij7yPoqebWMN6l7hjUh/n08490+spKj7YwoCDYVF
+ V/mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716235505; x=1716840305;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4mvCA9w6FdFTW0YLCl1SxGRRGxyiZKa7vF0l/I6UfVw=;
- b=uKpwO+KhAmMLtPEWhlrGjIWCpH6aZG6yCO9gxzX2WCbtKYntArB+AD2ois8slFjM2I
- zLfL3mD9cDqRA0wFJ7PXH0lp7DSpDNeWFJ5tOBlXTYo8WZrZCFC0PoUx85htytRfs54D
- la7Ljl/vH5uZ/dQb3NGCBOd31N1TMDisgl45WJnCLEWEo/p1dMM98h07YPko5jDN1u8m
- 2SAFN1RG70QvXoR4CJkkdpfxaEVxfIQZa1muP+cu7cxo0SJ8uIM69i2CZQ3OJntGHRnn
- gjYYqXBHvQJpDY2IAM45GVm0c9fiGmP44QNQu2NoyPVt8BzVdmgdrngoNEqJ2R9eF/L5
- VX5w==
+ d=1e100.net; s=20230601; t=1716209184; x=1716813984;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qL3hM2Jpw3wUfBeVBGw9BMujfU348G+aKDKHbr4d3JI=;
+ b=feVmX10iM1b6m7OQTyk73qq7T1+Iw3rFrpOCsL/yMb5eBVwlWQSBjrgepeydtfxfNB
+ Ekg/ga9Y8Pd+1iBP6ktGP1SslJ86NVKcm/pZzibfmrZjzIIisWPVHCOg2fi4yRPLrTRd
+ zs80/FqDk4TEm6rM6SuhsqTIQAO12gULYeIR4KYib4NYK8FfIjPIcRd+96hvYG6quPQF
+ nzrM1q1bS4QvpTgZWgzY4rjpE0rmQGZR7fHvQr0yrLOhTJXAacRKkQIZPsdCduze5MAv
+ i7dahSjpHU7oRaI3JopNf493aCSE2vfFOvneemO7Fb8V40ZuROz73DlGuiDQnOJOlJyR
+ Ywug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGVzFMtufmOPQp+Tf1BbA2+xc8fP9iYQZPRkDdIuqbiY4VpQjGp1XP9T83Rvx2BP0hwIeJkIHAgCvqyu+i1Jt2fLSOMRI=
-X-Gm-Message-State: AOJu0YwQu1JLDxHKXJYV137/tABasuLZzOx4Tc6hgdnLay063VJHFuuC
- tZIp9TXN65DS6YwlTwcW2xnDuJTz4USIcAixDu37+AXynsGZ5QV4d8889Vm7OL8=
-X-Google-Smtp-Source: AGHT+IEFLRCu2IJdZL1uHp3RA9ZpBhTIE/6+jTWm5NAhke9OSOlFVllfnJvBjnP7w1vDmBAS7Bcoww==
-X-Received: by 2002:a17:902:f54e:b0:1f3:a22:7c4e with SMTP id
- d9443c01a7336-1f30a228073mr17712195ad.17.1716235505493; 
- Mon, 20 May 2024 13:05:05 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:4196:f8dc:1a46:f594:fa63?
- ([2804:7f0:bcc0:4196:f8dc:1a46:f594:fa63])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f3044a81c9sm19062075ad.43.2024.05.20.13.05.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 13:05:05 -0700 (PDT)
-Message-ID: <c9332de0-f36e-4e62-a46c-9d3fd8448795@ventanamicro.com>
-Date: Mon, 20 May 2024 17:04:59 -0300
+ AJvYcCWkvR+OfstnkUopb+GpR78xwNYQJhCsjVEExmhU1+nO9RmToy4T5neF/UrPGSHaqicy0u2uri2+KFry7HEwJibdQGjS
+X-Gm-Message-State: AOJu0YzgxfPFglr/zMymcy5cepESe9Gr6Db9amdZAWnI0WewBK2jAjjE
+ hpxCnpOgHDZTp+SiqYYwl97TP4fRzEN5S82UG1ohmx3tGKGtcKUSb4CucUUvnLcktQM2YhFBR7q
+ aRj7NEZ1JAIo2BtEmRakDD9mh6BBBF2oC
+X-Google-Smtp-Source: AGHT+IGZ8gcECf6HXK9EkjUIdy5wHBhd8odeXPd0ZZNcTuiihmWa+qPxYwH66QQwMXOeRDjUn61ijbgB9RVzUXPRWXo=
+X-Received: by 2002:a17:907:7e8b:b0:a5a:8aea:343f with SMTP id
+ a640c23a62f3a-a5a8aea36a3mr1327385866b.6.1716209184429; Mon, 20 May 2024
+ 05:46:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/virt: Add hotplugging and virtio-md-pci support
-To: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
- David Hildenbrand <david@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Santosh Mamila <santosh.mamila@catalinasystems.io>,
- Chethan Seshadri <Chethan.Seshadri@catalinasystems.io>,
- Sivakumar Munnangi <siva.munnangi@catalinasystems.io>
-References: <20240514110615.399065-1-bjorn@kernel.org>
- <3cb00bbb-7742-40b7-858c-4bdd2f9cc79b@ventanamicro.com>
- <91086379-1fbc-4179-863a-6bb2e797d564@redhat.com>
- <afbd3799-fa2a-4c7d-8097-aeaedecf4ec3@ventanamicro.com>
- <87v838uxk5.fsf@all.your.base.are.belong.to.us>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <87v838uxk5.fsf@all.your.base.are.belong.to.us>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
+References: <CANf3G5GuQp--XSkEjk+pbqz2tbgmXtohoyD1F2tp0z9V9wO2WA@mail.gmail.com>
+In-Reply-To: <CANf3G5GuQp--XSkEjk+pbqz2tbgmXtohoyD1F2tp0z9V9wO2WA@mail.gmail.com>
+From: Marcos Jean Sampaio <mjsamp@gmail.com>
+Date: Mon, 20 May 2024 09:46:13 -0300
+Message-ID: <CANf3G5Ezz4JtPyM1x4y=97H5q4d0=JaPjsjARnHwv8LjYwnfKw@mail.gmail.com>
+Subject: Fwd: spapr-vlan hotplug
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: npiggin@gmail.com, harshpb@linux.ibm.com
+Content-Type: multipart/alternative; boundary="000000000000cc5f2e0618e21667"
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=mjsamp@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 20 May 2024 16:10:57 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,151 +88,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000cc5f2e0618e21667
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+---------- Forwarded message ---------
+De: Marcos Jean Sampaio <mjsamp@gmail.com>
+Date: s=C3=A1b., 18 de mai. de 2024 =C3=A0s 18:02
+Subject: spapr-vlan hotplug
+To: <clg@kaod.org>, <danielhb413@gmail.com>
 
 
-On 5/20/24 15:51, Björn Töpel wrote:
-> Daniel/David,
-> 
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
-> 
->> On 5/18/24 16:50, David Hildenbrand wrote:
->>>
->>> Hi,
->>>
->>>
->>>>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
->>>>> index 4fdb66052587..16c2bdbfe6b6 100644
->>>>> --- a/hw/riscv/virt.c
->>>>> +++ b/hw/riscv/virt.c
->>>>> @@ -53,6 +53,8 @@
->>>>>     #include "hw/pci-host/gpex.h"
->>>>>     #include "hw/display/ramfb.h"
->>>>>     #include "hw/acpi/aml-build.h"
->>>>> +#include "hw/mem/memory-device.h"
->>>>> +#include "hw/virtio/virtio-mem-pci.h"
->>>>>     #include "qapi/qapi-visit-common.h"
->>>>>     #include "hw/virtio/virtio-iommu.h"
->>>>> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machine)
->>>>>         DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
->>>>>         int i, base_hartid, hart_count;
->>>>>         int socket_count = riscv_socket_count(machine);
->>>>> +    hwaddr device_memory_base, device_memory_size;
->>>>>         /* Check socket count limit */
->>>>>         if (VIRT_SOCKETS_MAX < socket_count) {
->>>>> @@ -1553,6 +1556,25 @@ static void virt_machine_init(MachineState *machine)
->>>>>         memory_region_add_subregion(system_memory, memmap[VIRT_MROM].base,
->>>>>                                     mask_rom);
->>>>> +    device_memory_base = ROUND_UP(s->memmap[VIRT_DRAM].base + machine->ram_size,
->>>>> +                                  GiB);
->>>>> +    device_memory_size = machine->maxram_size - machine->ram_size;
->>>>> +
->>>>> +    if (riscv_is_32bit(&s->soc[0])) {
->>>>> +        hwaddr memtop = device_memory_base + ROUND_UP(device_memory_size, GiB);
->>>>> +
->>>>> +        if (memtop > UINT32_MAX) {
->>>>> +            error_report("Memory exceeds 32-bit limit by %lu bytes",
->>>>> +                         memtop - UINT32_MAX);
->>>>> +            exit(EXIT_FAILURE);
->>>>> +        }
->>>>> +    }
->>>>> +
->>>>> +    if (device_memory_size > 0) {
->>>>> +        machine_memory_devices_init(machine, device_memory_base,
->>>>> +                                    device_memory_size);
->>>>> +    }
->>>>> +
->>>>
->>>> I think we need a design discussion before proceeding here. You're allocating all
->>>> available memory as a memory device area, but in theory we might also support
->>>> pc-dimm hotplugs (which would be the equivalent of adding physical RAM dimms to
->>>> the board.) in the future too. If you're not familiar with this feature you can
->>>> check it out the docs in [1].
->>>
->>> Note that DIMMs are memory devices as well. You can plug into the memory device area both, ACPI-based memory devices (DIMM, NVDIMM) or virtio-based memory devices (virtio-mem, virtio-pmem).
->>>
->>>>
->>>> As an example, the 'virt' ARM board (hw/arm/virt.c) reserves a space for this
->>>> type of hotplug by checking how much 'ram_slots' we're allocating for it:
->>>>
->>>> device_memory_size = ms->maxram_size - ms->ram_size + ms->ram_slots * GiB;
->>>>
->>>
->>> Note that we increased the region size to be able to fit most requests even if alignment of memory devices is weird. See below.
->>>
->>> In sane setups, this is usually not required (adding a single additional GB for some flexiility might be good enough).
->>>
->>>> Other boards do the same with ms->ram_slots. We should consider doing it as well,
->>>> now, even if we're not up to the point of supporting pc-dimm hotplug, to avoid
->>>> having to change the memory layout later in the road and breaking existing
->>>> setups.
->>>>
->>>> If we want to copy the ARM board, ram_slots is capped to ACPI_MAX_RAM_SLOTS (256).
->>>> Each RAM slot is considered to be a 1GiB dimm, i.e. we would reserve 256GiB for
->>>> them.
->>>
->>> This only reserves some *additional* space to fixup weird alignment of memory devices. *not* the actual space for these devices.
->>>
->>> We don't consider each DIMM to be 1 GiB in size, but add an additional 1 GiB in case we have to align DIMMs in physical address space.
->>>
->>> I *think* this dates back to old x86 handling where we aligned the address of each DIMM to be at a 1 GiB boundary. So if you would have plugged two 128 MiB DIMMs, you'd have required more than 256 MiB of space in the area after aligning inside the memory device area.
->>>
->>
->> Thanks for the explanation. I missed the part where the ram_slots were being
->> used just to solve potential alignment issues and pc-dimms could occupy the same
->> space being allocated via machine_memory_devices_init().
->>
->> This patch isn't far off then. If we take care to avoid plugging unaligned memory
->> we might not even need this spare area.
-> 
-> I'm a bit lost here, so please bare with me. We don't require the 1 GiB
-> alignment on RV AFAIU. I'm having a hard time figuring out what missing
-> in my patch.
 
-Forget about the 1 GiB size. This is something that we won't need to deal with
-because we don't align in 1 Gib.
+Hello guys,
 
-Let's say for example that we want to support pc-dimm hotplug of 256 slots like the
-'virt' ARM machine does. Let's also say that we will allow users to hotplug any
-DIMM size they want, taking care of any alignment issues by ourselves.
+First, I would like to thank you for making this software possible! Many
+thanks!
 
-In hw/riscv/boot.c I see that our alignment sizes are 4Mb for 32 bits and 2Mb for
-64 bits. Forget 32 bits a bit and let's say that our alignment is 2Mb.
+I just installed and ran AIX and PowerHA on QEMU successfully using virsh
+and virt-manager. I shared my experience on Youtube videos and also on my
+github.
+It worked pretty well after some adjustments but something that I still
+can't do is hotplug a network interface. I've tried using virtio and
+spapr-vlan but in both cases the new device is not hotplugged. In the case
+of virtio it allows me to add it but isn't recognized after cfgmgr. In the
+case of spapr-vlan it just will be recognized and active in the next boot.
 
-So, in a worst case scenario, an user could hotplug 256 slots, all of them unaligned,
-and then we would need to align each one of them by adding 2Mb. So, to account for
-this alignment fixup, we would need 256 * 2Mb RAM reserved for it.
+virsh attach-device --live aix_7200-04-02-2027_node01 netdev.xml
+error: Failed to attach device from netdev.xml
+error: internal error: unable to execute QEMU command 'device_add': Device
+'spapr-vlan' can't go on PCI bus
 
-What I said about "If we take care to avoid plugging unaligned memory we might not even
-need this spare area" is a possible design where we would force every hotplugged DIMM
-to always be memory aligned, avoiding the need for this spare RAM for alignment. This
-would put a bit of extra straing in users/management apps to always deliver aligned
-DIMMs.
-
-In hindsight this is not needed. It's fairly easy to reserve ACPI_MAX_RAM_SLOTS * (2Mb/4Mb)
-and let users hotplug whatever DIMM size they want.
-
-Hope this explains the situation a bit. If we agree on allocating this spare RAM for
-hotplugged mem alignment, we'll probalby need a pre-patch to do a little handling of
-ms->ram_slots, limiting it to ACPI_MAX_RAM_SLOTS (ram_slots can be changed via command
-line). Then it's a matter of reserving ms->ram_slots * align_size when calculating
-device_memory_size.
+netdev.xml content
+<interface type=3D"network">
+  <source network=3D"default" bridge=3D"virbr0"/>
+  <target dev=3D"vnet5"/>
+  <model type=3D"spapr-vlan"/>
+  <alias name=3D"net5"/>
+  <address type=3D"spapr-vio" reg=3D"0x00005000"/>
+</interface>
 
 
-Thanks,
+I also tried add it using qemu-monitor and have the following message:
 
-Daniel
+virsh qemu-monitor-command aix_7200-04-02-2027_node01 --hmp "device_add
+spapr-vlan,netdev=3Dhostnet5,id=3Dnet5,mac=3D56:44:45:30:31:55,reg=3D0x0000=
+5000"
+Error: Bus 'spapr-vio' does not support hotplugging
 
-> 
-> [...]
-> 
->>>> I see that David Hildenbrand is also CCed in the patch so he'll let us know if
->>>> I'm out of line with what I'm asking.
->>>
->>> Supporting PC-DIMMs might be required at some point when dealing with OSes that don't support virtio-mem and friends.
-> 
-> ...and also for testing the PC-DIMM ACPI patching path. ;-)
-> 
-> 
-> Cheers,
-> Björn
+Is there any other way to do this or it isn't working for network
+interfaces? For disks it is working very well. Below you have my
+environment details.
+
+
+My videos
+https://www.youtube.com/playlist?list=3DPLWNnbCzUTMSY6c6rjKtGuSAzHCPONExv2
+
+https://github.com/mjsamp/AIX-on-qemu-ppc64
+
+Environment
+Lenovo ThinkPad E480 Intel=C2=AE Core=E2=84=A2 i3-8130U CPU @ 2.20GHz =C3=
+=97 4 8G Mem
+XrayDisk 240GB SSD
+Ubuntu 20.04.6 LTS (Focal Fossa) 64-bit
+Kernel Linux 5.4.0-181-generic x86_64
+QEMU emulator version 4.2.1 (Debian 1:4.2-3ubuntu6.28)
+libvirt QEMU Driver 6.0.0-0ubuntu8.20
+AIX aix_7200-04-02-2027_1of2_072020.iso
+
+Regardings,
+
+Marcos Jean Sampaio
+
+--000000000000cc5f2e0618e21667
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">---------- Forwarded message ---------<br>De: <b class=3D"g=
+mail_sendername" dir=3D"auto">Marcos Jean Sampaio</b> <span dir=3D"auto">&l=
+t;<a href=3D"mailto:mjsamp@gmail.com">mjsamp@gmail.com</a>&gt;</span><br>Da=
+te: s=C3=A1b., 18 de mai. de 2024 =C3=A0s 18:02<br>Subject: spapr-vlan hotp=
+lug<br>To:  &lt;<a href=3D"mailto:clg@kaod.org">clg@kaod.org</a>&gt;,  &lt;=
+<a href=3D"mailto:danielhb413@gmail.com">danielhb413@gmail.com</a>&gt;<br><=
+/div><br><br><div dir=3D"ltr"><br>Hello guys,<br><br>First, I would like to=
+ thank you for making this software possible! Many thanks!<br><br>I just in=
+stalled and ran AIX and PowerHA on QEMU successfully using virsh and virt-m=
+anager. I shared my experience on Youtube videos and also on my github.<br>=
+It worked pretty well after some adjustments but something that I still can=
+&#39;t do is hotplug a network interface. I&#39;ve tried using virtio and s=
+papr-vlan but in both cases the new device is not hotplugged. In the case o=
+f virtio it allows me to add it but isn&#39;t recognized after cfgmgr. In t=
+he case of spapr-vlan it just will be recognized and active in the next boo=
+t.<br><br>virsh attach-device --live aix_7200-04-02-2027_node01 netdev.xml<=
+br>error: Failed to attach device from netdev.xml<br>error: internal error:=
+ unable to execute QEMU command &#39;device_add&#39;: Device &#39;spapr-vla=
+n&#39; can&#39;t go on PCI bus<br><br>netdev.xml content<br>&lt;interface t=
+ype=3D&quot;network&quot;&gt;<br>=C2=A0 &lt;source network=3D&quot;default&=
+quot; bridge=3D&quot;virbr0&quot;/&gt;<br>=C2=A0 &lt;target dev=3D&quot;vne=
+t5&quot;/&gt;<br>=C2=A0 &lt;model type=3D&quot;spapr-vlan&quot;/&gt;<br>=C2=
+=A0 &lt;alias name=3D&quot;net5&quot;/&gt;<br>=C2=A0 &lt;address type=3D&qu=
+ot;spapr-vio&quot; reg=3D&quot;0x00005000&quot;/&gt;<br>&lt;/interface&gt;<=
+br><br><br>I also tried add it using qemu-monitor and have the following me=
+ssage:<br><br>virsh qemu-monitor-command aix_7200-04-02-2027_node01 --hmp &=
+quot;device_add spapr-vlan,netdev=3Dhostnet5,id=3Dnet5,mac=3D56:44:45:30:31=
+:55,reg=3D0x00005000&quot;<br>Error: Bus &#39;spapr-vio&#39; does not suppo=
+rt hotplugging<br><br>Is there any other way to do this or it isn&#39;t wor=
+king for network interfaces? For disks it is working very well. Below you h=
+ave my environment details.<br><br><br>My videos<br><a href=3D"https://www.=
+youtube.com/playlist?list=3DPLWNnbCzUTMSY6c6rjKtGuSAzHCPONExv2" target=3D"_=
+blank">https://www.youtube.com/playlist?list=3DPLWNnbCzUTMSY6c6rjKtGuSAzHCP=
+ONExv2</a><br><br><a href=3D"https://github.com/mjsamp/AIX-on-qemu-ppc64" t=
+arget=3D"_blank">https://github.com/mjsamp/AIX-on-qemu-ppc64</a><br><br>Env=
+ironment<br>Lenovo ThinkPad E480 Intel=C2=AE Core=E2=84=A2 i3-8130U CPU @ 2=
+.20GHz =C3=97 4 8G Mem<br>XrayDisk 240GB SSD<br>Ubuntu 20.04.6 LTS (Focal F=
+ossa) 64-bit<br>Kernel Linux 5.4.0-181-generic x86_64<br>QEMU emulator vers=
+ion 4.2.1 (Debian 1:4.2-3ubuntu6.28)<br>libvirt QEMU Driver 6.0.0-0ubuntu8.=
+20<br><div>AIX aix_7200-04-02-2027_1of2_072020.iso</div><div><br></div><div=
+>Regardings,</div><div><br></div><div>Marcos Jean Sampaio<br></div></div>
+</div></div>
+
+--000000000000cc5f2e0618e21667--
 
