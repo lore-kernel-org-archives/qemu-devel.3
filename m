@@ -4,64 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CCBC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 18:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC3BC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 18:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s97pj-0000NN-2l; Mon, 20 May 2024 14:34:03 -0400
+	id 1s983y-0004Tu-Jf; Mon, 20 May 2024 14:48:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
- id 1s97pd-0000MX-IA; Mon, 20 May 2024 14:33:57 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
- id 1s97pa-0003Jn-QG; Mon, 20 May 2024 14:33:57 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 3571ECE0C47;
- Mon, 20 May 2024 18:33:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4803C2BD10;
- Mon, 20 May 2024 18:33:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1716230021;
- bh=xu+kl7kjSGnDX+nb2nk6EBZPHESM4Za/vrprxGJk3iU=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=J3dfIoWBHURqbrL0mpawzamLLyoMJQZS/pgs4+wBCVJxXYSzoIIl9ZwtjYNOTROee
- zJz1Y8s+z7fQGRP2KX1dWulW7ed3pAFX0XrL47YQZnm9fwbZrd1dRvZ7fTryCZrCBT
- I1zGsdBORo3MbfGoGMSiMayIMQWw9MtdAYxx0M0XZdZTKvVnxAbvUAHli9wWSY/8tK
- /bslWyXmwvsEA+8KK60UVDNLU5S6I7sZ4ZqsWkhAo/Dkyz/5tUPxAHdl+ubJBE7M2p
- CdbUL+ffzLkg9FmTjByA4itJBTtgxHKH+vwtmkLoYrDaua2Li7wOn4c1D5X3FKYx4k
- I7N9LoreIsOKg==
-From: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin
- Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>
-Cc: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>, Sunil V L
- <sunilvl@ventanamicro.com>,
- Santosh Mamila <santosh.mamila@catalinasystems.io>, Chethan Seshadri
- <Chethan.Seshadri@catalinasystems.io>, Sivakumar Munnangi
- <siva.munnangi@catalinasystems.io>
-Subject: Re: [PATCH] hw/riscv/virt: Add hotplugging and virtio-md-pci support
-In-Reply-To: <3cb00bbb-7742-40b7-858c-4bdd2f9cc79b@ventanamicro.com>
-References: <20240514110615.399065-1-bjorn@kernel.org>
- <3cb00bbb-7742-40b7-858c-4bdd2f9cc79b@ventanamicro.com>
-Date: Mon, 20 May 2024 20:33:37 +0200
-Message-ID: <875xv8wcxq.fsf@all.your.base.are.belong.to.us>
+ (Exim 4.90_1) (envelope-from <perry@mosi.io>) id 1s983x-0004Tc-08
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 14:48:45 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <perry@mosi.io>) id 1s983u-00067C-VR
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 14:48:44 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1ed904c2280so72699435ad.2
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 11:48:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mosi-io.20230601.gappssmtp.com; s=20230601; t=1716230921; x=1716835721;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rgMh1b8jfQDDpXmKRMIWnzZOWOSSOQzEU2PxVTUo8MI=;
+ b=of2poDspEAj90PWueai7DRrNzoITY1mWUrgVXR4LAtvMWKLBttNhemUoRDvV9/WbcJ
+ B3DTvPVruY/miRXCzneYkCH0ipDYkY17X3n8SLWeXw1WVEd+qEheWdWDl3owAhuxofRl
+ N9pOFdERaV/zYXBZXXpnVFX/S9D6LpyJpY1vJ/IQzRe7SqlgLEGuXOxuwSCm/cJZ5uXI
+ c227QF0eUOTDWpisRHW+qUNsASaQ59y0ODAuP509td0fw+5K0GqOZWLz+kuS5ZDfkpsq
+ O2NYWtc/j2e+XcmfhDLj3iy5tmw2kOzpITh6tiq+Uxkw4I3ZOrxC5vRqv8YlcV+R1stj
+ kInw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716230921; x=1716835721;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rgMh1b8jfQDDpXmKRMIWnzZOWOSSOQzEU2PxVTUo8MI=;
+ b=LofBv8X7nFUNO1tTIh+o/RN+QaObRhNLeKaF4QftF54DvxZuEy7no+rKq/uZnKakq6
+ rIiyGISQXdJRLQSjk5b0xWWoUnSpfJU5EpS8cCbca58eyRbKRM8WuWllnxpqVBzYyDp/
+ 7Y09rs110ma7YuemhvFnlSVDYkHLaniXOsi9nVguzIcdy9JF2VMQe4qMgRXC/FWeR+US
+ 9Pr9IGgS/xVQ8H9fgwWloNZr6QR6avQ5+HsRDEuLdl6uXF77EzeFdBbRS7tSD3gnSzXD
+ zOYzkvKOCpd59z0FivyTbjvxvZmdfqMzmxnth3CxvglqRjRjUq4vZKQ6XJ3U0YQQx+yB
+ obpg==
+X-Gm-Message-State: AOJu0YyYvtWQPiXmhM40Rada8w+W3IUA3bYOndSoCZirw1xY2w2j2u7w
+ ME7V2pJf3vcdcGkGxUaOIAd8ULmeeBccdhaTIbLtxih4gZHNP/HTPD42Tc4AIP0=
+X-Google-Smtp-Source: AGHT+IElPGlsaxP7YEIPIcSeUO/IesU7m/LmVIEGelSmAsNKXqbZc6skrq2w7bqzv0zT3ZTHg8xOeQ==
+X-Received: by 2002:a05:6a20:9f9a:b0:1af:fbab:cfaf with SMTP id
+ adf61e73a8af0-1affbabd262mr18120316637.62.1716230920727; 
+ Mon, 20 May 2024 11:48:40 -0700 (PDT)
+Received: from [10.12.0.91] (108-78-254-250.lightspeed.sntcca.sbcglobal.net.
+ [108.78.254.250]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-65cfed58446sm5780730a12.74.2024.05.20.11.48.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 May 2024 11:48:40 -0700 (PDT)
+Message-ID: <8e1b7975-85f8-48f6-8c4a-063f465a7f91@mosi.io>
+Date: Mon, 20 May 2024 11:48:38 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=bjorn@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] physmem: allow debug writes to MMIO regions
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, peterx@redhat.com,
+ david@redhat.com, Andreas Rasmusson <andreas.rasmusson@gmail.com>
+References: <20240513233305.2975295-1-perry@mosi.io>
+ <42e47d17-1d49-43e8-abd6-76abdcb159dc@linaro.org>
+ <CAFEAcA9t9t7R9FR9mwEssT8+7XVcaBdThetZawB+VmL+0OcxDg@mail.gmail.com>
+Content-Language: en-US
+From: Perry Hung <perry@mosi.io>
+In-Reply-To: <CAFEAcA9t9t7R9FR9mwEssT8+7XVcaBdThetZawB+VmL+0OcxDg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::633;
+ envelope-from=perry@mosi.io; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,94 +97,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel,
+Philippe, Peter,
 
-Thanks for taking a look!
+Thank you for the comments. I am not even sure what the semantics of 
+putting a breakpoint or watchpoint
+on device regions are supposed to be. I would imagine it is 
+architecture-specific as to whether this is even allowed.
 
-Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
+It appears for example, that armv8-a allows watchpoints to be set on any 
+type of memory. armv7-a prohibits
+watchpoints on Device or Strongly-ordered memory that might be accessed 
+by instructions multiple times
+(e.g LDM and LDC instructions).
 
-> Hi Bj=C3=B6rj,
+What is the current behavior for QEMU and what should 
+breakpoints/watchpoints do when placed on IO memory?
+
+-perry
+
+On 5/20/24 10:22 AM, Peter Maydell wrote:
+> On Wed, 15 May 2024 at 13:49, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>> Hi Perry,
+>>
+>> On 14/5/24 01:33, Perry Hung wrote:
+>>> Writes from GDB to memory-mapped IO regions are currently silently
+>>> dropped. cpu_memory_rw_debug() calls address_space_write_rom(), which
+>>> calls address_space_write_rom_internal(), which ignores all non-ram/rom
+>>> regions.
+>>>
+>>> Add a check for MMIO regions and direct those to address_space_rw()
+>>> instead.
+>>>
+>> Reported-by: Andreas Rasmusson <andreas.rasmusson@gmail.com>
+>> BugLink: https://bugs.launchpad.net/qemu/+bug/1625216
+>>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
+>>> Signed-off-by: Perry Hung <perry@mosi.io>
+>>> ---
+>>>    system/physmem.c | 5 ++++-
+>>>    1 file changed, 4 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/system/physmem.c b/system/physmem.c
+>>> index 342b7a8fd4..013cdd2ab1 100644
+>>> --- a/system/physmem.c
+>>> +++ b/system/physmem.c
+>>> @@ -3508,7 +3508,10 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>>>            if (l > len)
+>>>                l = len;
+>>>            phys_addr += (addr & ~TARGET_PAGE_MASK);
+>>> -        if (is_write) {
+>>> +        if (cpu_physical_memory_is_io(phys_addr)) {
+>>> +            res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs,
+>>> +                                   buf, l, is_write);
+>>> +        } else if (is_write) {
+>>>                res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
+>>>                                              attrs, buf, l);
+>>>            } else {
+> The other option is to make address_space_write_rom_internal()
+> also write to devices...
 >
-> On 5/14/24 08:06, Bj=C3=B6rn T=C3=B6pel wrote:
->> From: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
->>=20
->> Virtio-based memory devices allows for dynamic resizing of virtual
->> machine memory, and requires proper hotplugging (add/remove) support
->> to work.
->>=20
->> Enable virtio-md-pci with the corresponding missing hotplugging
->> callbacks for the RISC-V "virt" machine.
->>=20
->> Signed-off-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
->> ---
->> This is basic support for MHP that works with DT. There some minor
->> ACPI SRAT plumbing in there as well. Ideally we'd like proper ACPI MHP
->> support as well. I have a branch [1], where I've applied this patch,
->> plus ACPI GED/PC-DIMM MHP support on top of Sunil's QEMU branch
->> (contains some ACPI DSDT additions) [2], for the curious/brave ones.
->> However, the ACPI MHP support this is not testable on upstream Linux
->> yet (ACPI AIA support, and ACPI NUMA SRAT series are ongoing).
->>=20
->> I'll follow-up with proper ACPI GED/PC-DIMM MHP patches, once the
->> dependencies land (Linux kernel and QEMU).
->>=20
->> I'll post the Linux MHP/virtio-mem v2 patches later this week!
->>=20
->>=20
->> Cheers,
->> Bj=C3=B6rn
->>=20
->> [1] https://github.com/bjoto/qemu/commits/virtio-mem-pc-dimm-mhp-acpi/
->> [2] https://lore.kernel.org/linux-riscv/20240501121742.1215792-1-sunilvl=
-@ventanamicro.com/
->> ---
->>   hw/riscv/Kconfig           |  2 ++
->>   hw/riscv/virt-acpi-build.c |  7 +++++
->>   hw/riscv/virt.c            | 64 +++++++++++++++++++++++++++++++++++++-
->>   hw/virtio/virtio-mem.c     |  2 +-
->>   4 files changed, 73 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
->> index a2030e3a6ff0..08f82dbb681a 100644
->> --- a/hw/riscv/Kconfig
->> +++ b/hw/riscv/Kconfig
->> @@ -56,6 +56,8 @@ config RISCV_VIRT
->>       select PLATFORM_BUS
->>       select ACPI
->>       select ACPI_PCI
->> +    select VIRTIO_MEM_SUPPORTED
->> +    select VIRTIO_PMEM_SUPPORTED
->>=20=20=20
->>   config SHAKTI_C
->>       bool
->> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
->> index 0925528160f8..6dc3baa9ec86 100644
->> --- a/hw/riscv/virt-acpi-build.c
->> +++ b/hw/riscv/virt-acpi-build.c
->> @@ -610,6 +610,13 @@ build_srat(GArray *table_data, BIOSLinker *linker, =
-RISCVVirtState *vms)
->>           }
->>       }
->>=20=20=20
->> +    if (ms->device_memory) {
->> +        build_srat_memory(table_data, ms->device_memory->base,
->> +                          memory_region_size(&ms->device_memory->mr),
->> +                          ms->numa_state->num_nodes - 1,
->> +                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENAB=
-LED);
->> +    }
->> +
->>       acpi_table_end(linker, &table);
+>> I wonder if we shouldn't be safer with a preliminary patch
+>> adding a 'can_do_io' boolean argument to cpu_memory_rw_debug()
+>> (updating the call sites), then this patch would become:
+>>
+>>       if (can_do_io && cpu_physical_memory_is_io(phys_addr)) {
+>>
+>> One of my worries for example is if someone accidently insert
+>> a breakpoint at a I/O address, the device might change its
+>> state and return MEMTX_OK which is confusing.
+> You can definitely do some silly things if we remove this
+> restriction.
 >
-> When the time comes I believe we'll want this chunk in a separated ACPI p=
-atch.
-
-Hmm, I first thought about adding this to the ACPI MHP series, but then
-realized that virtio-mem relies on SRAT for ACPI boots (again -- RISC-V
-Linux does not support that upstream yet...).
-
-Do you mean that you'd prefer this chunk in a separate patch?
-
-
-Bj=C3=B6rn
+> On the other hand if you're using gdb as a debugger on real
+> (bare metal) hardware does anything stop you doing that?
+>
+> -- PMM
 
