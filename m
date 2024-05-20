@@ -4,85 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821EAC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 16:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AE5C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 16:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s95qF-0005no-VX; Mon, 20 May 2024 12:26:28 -0400
+	id 1s96Dc-00038Q-4A; Mon, 20 May 2024 12:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s95qD-0005nX-Sx
- for qemu-devel@nongnu.org; Mon, 20 May 2024 12:26:25 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s95qB-0005FA-MV
- for qemu-devel@nongnu.org; Mon, 20 May 2024 12:26:25 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5b290669b0fso2319540eaf.2
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 09:26:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716222382; x=1716827182; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E9mCXSpcnlzjj1edQ7aYUerPHuAkqXU51Ch+KLIEK3A=;
- b=jxN3MvzGNw7x7/IEW1FtuWTdUKBFuaazK5h8YHhC303R2uFeMTHRp90Qk6iq7sbIwU
- RFla2bKiS+N6XRFHcVZjh56erBemGNjcUN5VcHqbeiYAQs1cbkLYT+JuMoTxbUk4090o
- VtTvDtO7rhxCLgsEus/gVpwwt4M3V2xw/r4DWCvDyVr+GNAs51vTpdjKf4QqU1ZhPdrU
- 4e5to2HZcMuiWeK96c7rHTbKf7PWHTj5ChGHD5fC8zFBL/uBm7WxQ5k0pplFRRWw9ZQn
- nMloKfHFXROE3oVR9KzHpE4Z32g3huVUgBb1MPjJz8F6KlFkOTqCPuWmK/4XYT4xrNJW
- tU0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716222382; x=1716827182;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E9mCXSpcnlzjj1edQ7aYUerPHuAkqXU51Ch+KLIEK3A=;
- b=mdMA7TVvR2nKb3oZG+oJ962KeluRGS1CMLD2LcWRB0j3QZCPpcZTYq0DiXMe7AvfoC
- OtHxIh8RRZ+/xYYF6TOLRaurd5x9P2f6tAMDH7/i6iWYm9Lg8d4o9bz0aukjTbxr2oJK
- dUPWf26Daz39SDBOBWJCQFcrZ7wtZMbIwF4PReITByiItfNSoi2ILXwb6c1ixSfuiWWg
- DMi3mcq07N9NcSKbGKilfT+7xuOJMPlFffgZWXs5a/Ma/3sbEjKXDg5/xAHq9k6tIgew
- wCCyLT1QJbyrI4nG6o+REBzA/c4rt4efYE8wwDj2ofbgRLuRIuLArHIJ+0AttcIjgWhK
- QpZg==
-X-Gm-Message-State: AOJu0YwO+l4P9x+5P3S62Q9mNMcdNOLqevY/BTkcEE4IX6f9U6xapmL8
- ZueghHTbKbe0rIxgG+Bfl/2aHb48AOOyowX8x8PlLAbjbatmemGOekv2ZLCOVV4=
-X-Google-Smtp-Source: AGHT+IG32TQtpL2fc9VpWMHxWgAGxplBijkij+8nBr2ZLrn4sV81egyn4VMbQXhutSECv4JyAGI7WA==
-X-Received: by 2002:a05:6359:459d:b0:194:6301:a71c with SMTP id
- e5c5f4694b2df-1946301a802mr2222937655d.16.1716222382045; 
- Mon, 20 May 2024 09:26:22 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.57])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6340b57f28asm17048439a12.26.2024.05.20.09.26.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 09:26:21 -0700 (PDT)
-Message-ID: <986a925a-7743-4126-abdc-4911d027c5ff@ventanamicro.com>
-Date: Mon, 20 May 2024 13:26:17 -0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s96Da-00036c-EC
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 12:50:34 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s96DW-0001R5-40
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 12:50:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vjk410C0dz6JB8l;
+ Tue, 21 May 2024 00:46:41 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 155CC1408F9;
+ Tue, 21 May 2024 00:50:15 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 20 May
+ 2024 17:50:14 +0100
+Date: Mon, 20 May 2024 17:50:12 +0100
+To: fan <nifan.cxl@gmail.com>
+CC: Markus Armbruster <armbru@redhat.com>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>, <gregory.price@memverge.com>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan
+ Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 09/12] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <20240520175012.000045fe@Huawei.com>
+In-Reply-To: <ZjLCS8yJC-OvPsUS@debian>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+ <20240418232902.583744-10-fan.ni@samsung.com>
+ <877cgkxzal.fsf@pond.sub.org> <Zivk37xBGPsL_yo5@debian>
+ <87h6fkob0t.fsf@pond.sub.org> <ZjLCS8yJC-OvPsUS@debian>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/15] riscv: QEMU RISC-V IOMMU Support
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <CANzO1D0x5eyZKoNQfH1Q36ieMw21MjxFO30=gzADWNOV5gKXbw@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CANzO1D0x5eyZKoNQfH1Q36ieMw21MjxFO30=gzADWNOV5gKXbw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,135 +73,206 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 1 May 2024 15:29:31 -0700
+fan <nifan.cxl@gmail.com> wrote:
 
-
-On 5/10/24 08:14, Frank Chang wrote:
-> Hi Daniel,
+> From 873f59ec06c38645768ada452d9b18920a34723e Mon Sep 17 00:00:00 2001
+> From: Fan Ni <fan.ni@samsung.com>
+> Date: Tue, 20 Feb 2024 09:48:31 -0800
+> Subject: [PATCH] hw/cxl/events: Add qmp interfaces to add/release dynamic
+>  capacity extents
+> Status: RO
+> Content-Length: 25172
+> Lines: 731
 > 
-> Thanks for the upstream work.
-> Sorry that it took a while for me to review the patchset.
+> To simulate FM functionalities for initiating Dynamic Capacity Add
+> (Opcode 5604h) and Dynamic Capacity Release (Opcode 5605h) as in CXL spec
+> r3.1 7.6.7.6.5 and 7.6.7.6.6, we implemented two QMP interfaces to issue
+> add/release dynamic capacity extents requests.
 > 
-> Please let me know if you need any help from us to update the IOMMU model.
-> We would like to see it merged for QEMU 9.1.0.
+> With the change, we allow to release an extent only when its DPA range
+> is contained by a single accepted extent in the device. That is to say,
+> extent superset release is not supported yet.
+> 
+> 1. Add dynamic capacity extents:
+> 
+> For example, the command to add two continuous extents (each 128MiB long)
+> to region 0 (starting at DPA offset 0) looks like below:
+> 
+> { "execute": "qmp_capabilities" }
+> 
+> { "execute": "cxl-add-dynamic-capacity",
+>   "arguments": {
+>       "path": "/machine/peripheral/cxl-dcd0",
+>       "host-id": 0,
+>       "selection-policy": 2,
+>       "region": 0,
+>       "tag": "",
+>       "extents": [
+>       {
+>           "offset": 0,
+>           "len": 134217728
+>       },
+>       {
+>           "offset": 134217728,
+>           "len": 134217728
+>       }
+>       ]
+>   }
+> }
+> 
+> 2. Release dynamic capacity extents:
+> 
+> For example, the command to release an extent of size 128MiB from region 0
+> (DPA offset 128MiB) looks like below:
+> 
+> { "execute": "cxl-release-dynamic-capacity",
+>   "arguments": {
+>       "path": "/machine/peripheral/cxl-dcd0",
+>       "host-id": 0,
+>       "flags": 1,
+>       "region": 0,
+>       "tag": "",
+>       "extents": [
+>       {
+>           "offset": 134217728,
+>           "len": 134217728
+>       }
+>       ]
+>   }
+> }
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
 
-Thanks for the help in the reviews!
+Hi Fan,
 
-I'll do some last changes in the riscv-iommu-pci device, and check if we have any
-DT changes that happened that we need to sync up.
+A few trivial questions inline.  I don't feel particularly strongly
+about breaking up the flags fields, but I'd like to understand your
+reasoning for keeping them as single fields?
 
-The plan is to send v3 in the next couple of days. Let's see how it goes.
-
+Is it mainly to keep aligned with the specification or something else?
 
 Thanks,
 
+Jonathan
 
-Daniel
+
+>  #endif /* CXL_EVENTS_H */
+> diff --git a/qapi/cxl.json b/qapi/cxl.json
+> index 4281726dec..27cf39f448 100644
+> --- a/qapi/cxl.json
+> +++ b/qapi/cxl.json
+> @@ -361,3 +361,93 @@
+>  ##
+>  {'command': 'cxl-inject-correctable-error',
+>   'data': {'path': 'str', 'type': 'CxlCorErrorType'}}
+> +
+> +##
+> +# @CXLDynamicCapacityExtent:
+> +#
+> +# A single dynamic capacity extent
+> +#
+> +# @offset: The offset (in bytes) to the start of the region
+> +#     where the extent belongs to
+> +#
+> +# @len: The length of the extent in bytes
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'struct': 'CXLDynamicCapacityExtent',
+> +  'data': {
+> +      'offset':'uint64',
+> +      'len': 'uint64'
+> +  }
+> +}
+> +
+> +##
+> +# @cxl-add-dynamic-capacity:
+> +#
+> +# Command to initiate to add dynamic capacity extents to a host.  It
+> +# simulates operations defined in cxl spec r3.1 7.6.7.6.5.
+> +#
+> +# @path: CXL DCD canonical QOM path
+> +#
+> +# @host-id: The "Host ID" field as defined in cxl spec r3.1
+> +#     Table 7-70.
+> +#
+> +# @selection-policy: The "Selection Policy" bits as defined in
+> +#     cxl spec r3.1 Table 7-70.  It specifies the policy to use for
+> +#     selecting which extents comprise the added capacity.
+
+Hmm. This one is defined as a selection of nameable choices.  Perhaps
+worth an enum?  If we did do that, we'd also need to break the flags
+on in the release flags below.
 
 
-> 
-> Regards,
-> Frank Chang
-> 
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:04寫道：
->>
->> Hi,
->>
->> This is the second version of the work Tomasz sent in July 2023 [1].
->> I'll be helping Tomasz upstreaming it.
->>
->> The core emulation code is left unchanged but a few tweaks were made in
->> v2:
->>
->> - The most notable difference in this version is that the code was split
->>    in smaller chunks. Patch 03 is still a 1700 lines patch, which is an
->>    improvement from the 3800 lines patch from v1, but we can only go so
->>    far when splitting the core components of the emulation. The reality
->>    is that the IOMMU emulation is a rather complex piece of software and
->>    there's not much we can do to alleviate it;
->>
->> - I'm not contributing the HPM support that was present in v1. It shaved
->>    off 600 lines of code from the series, which is already large enough
->>    as is. We'll introduce HPM in later versions or as a follow-up;
->>
->> - The riscv-iommu-header.h header was also trimmed. I shaved it of 300
->>    or so from it, all of them from definitions that the emulation isn't
->>    using it. The header will be eventually be imported from the Linux
->>    driver (not upstream yet), so for now we can live with a trimmed
->>    header for the emulation usage alone;
->>
->> - I added libqos tests for the riscv-iommu-pci device. The idea of these
->>    tests is to give us more confidence in the emulation code;
->>
->> - 'edu' device support. The support was retrieved from Tomasz EDU branch
->>    [2]. This device can then be used to test PCI passthrough to exercise
->>    the IOMMU.
->>
->>
->> Patches based on alistair/riscv-to-apply.next.
->>
->> v1 link: https://lore.kernel.org/qemu-riscv/cover.1689819031.git.tjeznach@rivosinc.com/
->>
->> [1] https://lore.kernel.org/qemu-riscv/cover.1689819031.git.tjeznach@rivosinc.com/
->> [2] https://github.com/tjeznach/qemu.git, branch 'riscv_iommu_edu_impl'
->>
->> Andrew Jones (1):
->>    hw/riscv/riscv-iommu: Add another irq for mrif notifications
->>
->> Daniel Henrique Barboza (2):
->>    test/qtest: add riscv-iommu-pci tests
->>    qtest/riscv-iommu-test: add init queues test
->>
->> Tomasz Jeznach (12):
->>    exec/memtxattr: add process identifier to the transaction attributes
->>    hw/riscv: add riscv-iommu-bits.h
->>    hw/riscv: add RISC-V IOMMU base emulation
->>    hw/riscv: add riscv-iommu-pci device
->>    hw/riscv: add riscv-iommu-sys platform device
->>    hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
->>    hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
->>    hw/riscv/riscv-iommu: add s-stage and g-stage support
->>    hw/riscv/riscv-iommu: add ATS support
->>    hw/riscv/riscv-iommu: add DBG support
->>    hw/misc: EDU: added PASID support
->>    hw/misc: EDU: add ATS/PRI capability
->>
->>   hw/misc/edu.c                    |  297 ++++-
->>   hw/riscv/Kconfig                 |    4 +
->>   hw/riscv/meson.build             |    1 +
->>   hw/riscv/riscv-iommu-bits.h      |  407 ++++++
->>   hw/riscv/riscv-iommu-pci.c       |  173 +++
->>   hw/riscv/riscv-iommu-sys.c       |   93 ++
->>   hw/riscv/riscv-iommu.c           | 2085 ++++++++++++++++++++++++++++++
->>   hw/riscv/riscv-iommu.h           |  146 +++
->>   hw/riscv/trace-events            |   15 +
->>   hw/riscv/trace.h                 |    2 +
->>   hw/riscv/virt.c                  |   33 +-
->>   include/exec/memattrs.h          |    5 +
->>   include/hw/riscv/iommu.h         |   40 +
->>   meson.build                      |    1 +
->>   tests/qtest/libqos/meson.build   |    4 +
->>   tests/qtest/libqos/riscv-iommu.c |   79 ++
->>   tests/qtest/libqos/riscv-iommu.h |   96 ++
->>   tests/qtest/meson.build          |    1 +
->>   tests/qtest/riscv-iommu-test.c   |  234 ++++
->>   19 files changed, 3704 insertions(+), 12 deletions(-)
->>   create mode 100644 hw/riscv/riscv-iommu-bits.h
->>   create mode 100644 hw/riscv/riscv-iommu-pci.c
->>   create mode 100644 hw/riscv/riscv-iommu-sys.c
->>   create mode 100644 hw/riscv/riscv-iommu.c
->>   create mode 100644 hw/riscv/riscv-iommu.h
->>   create mode 100644 hw/riscv/trace-events
->>   create mode 100644 hw/riscv/trace.h
->>   create mode 100644 include/hw/riscv/iommu.h
->>   create mode 100644 tests/qtest/libqos/riscv-iommu.c
->>   create mode 100644 tests/qtest/libqos/riscv-iommu.h
->>   create mode 100644 tests/qtest/riscv-iommu-test.c
->>
->> --
->> 2.43.2
->>
->>
+> +#
+> +# @region: The "Region Number" field as defined in cxl spec r3.1
+> +#     Table 7-70.  The dynamic capacity region where the capacity
+> +#     is being added.  Valid range is from 0-7.
+> +#
+> +# @tag: The "Tag" field as defined in cxl spec r3.1 Table 7-70.
+> +#
+> +# @extents: The "Extent List" field as defined in cxl spec r3.1
+> +#     Table 7-70.
+> +#
+> +# Since : 9.1
+> +##
+> +{ 'command': 'cxl-add-dynamic-capacity',
+> +  'data': { 'path': 'str',
+> +            'host-id': 'uint16',
+> +            'selection-policy': 'uint8',
+> +            'region': 'uint8',
+> +            'tag': 'str',
+> +            'extents': [ 'CXLDynamicCapacityExtent' ]
+> +           }
+> +}
+> +
+> +##
+> +# @cxl-release-dynamic-capacity:
+> +#
+> +# Command to initiate to release dynamic capacity extents from a
+> +# host.  It simulates operations defined in cxl spec r3.1 7.6.7.6.6.
+> +#
+> +# @path: CXL DCD canonical QOM path
+> +#
+> +# @host-id: The "Host ID" field as defined in cxl spec r3.1
+> +#     Table 7-71.
+> +#
+> +# @flags: The "Flags" field as defined in cxl spec r3.1 Table 7-71,
+> +#     with bit[3:0] for removal policy, bit[4] for forced removal,
+> +#     bit[5] for sanitize on release, bit[7:6] reserved.
+
+This can be nicely broken up into removal policy enum plus two flags.
+It might be worth doing so to give a nicer interface?
+
+> +#
+> +# @region: The dynamic capacity region where the extents will be
+> +#     released.
+
+This has a better definition in the add dynamic capacity entry above.
+
+> +#
+> +# @tag: The "Tag" field as defined in cxl spec r3.1 Table 7-71.
+> +#
+> +# @extents: The "Extent List" field as defined in cxl spec r3.1
+> +#     Table 7-71.
+> +#
+> +# Since : 9.1
+> +##
+> +{ 'command': 'cxl-release-dynamic-capacity',
+> +  'data': { 'path': 'str',
+> +            'host-id': 'uint16',
+> +            'flags': 'uint8',
+> +            'region': 'uint8',
+> +            'tag': 'str',
+> +            'extents': [ 'CXLDynamicCapacityExtent' ]
+> +           }
+> +}
+
 
