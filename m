@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC9DC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B592C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s94cZ-0001S4-58; Mon, 20 May 2024 11:08:15 -0400
+	id 1s94lm-0003bX-FS; Mon, 20 May 2024 11:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s94cX-0001Re-9Z
- for qemu-devel@nongnu.org; Mon, 20 May 2024 11:08:13 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1s94ll-0003b8-DC
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:17:45 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s94cV-00050v-NS
- for qemu-devel@nongnu.org; Mon, 20 May 2024 11:08:13 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56e6a1edecfso10574938a12.1
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 08:08:11 -0700 (PDT)
+ id 1s94lj-0007Cj-Od
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:17:45 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-56e56ee8d5cso8428386a12.2
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 08:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716217690; x=1716822490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716218262; x=1716823062; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nx6fREjBjz+KL7CHRbDoyFJoC3fJfDeTjds3bhWNztQ=;
- b=tyjBAgfSmLPdLiNNUEnJI8wvM+Q4ojOsoeuBgvCFC/nk/JLkOsb3f+zZF5oJ2iSCR1
- VzcQFvYUVKcYn36R3DIWIQPM+2YWO9JSUCmm4tzeoXN0URpGyzwNT+qI/hf/r8ra/Rn8
- DEU/AEmw4PfOm2/bZS4Uz27i4XeQ2hwLoNugbuMHHeI77UqUpX+xYhbcwyIWvKhIU2Fh
- vtZlzxdqwq19TbHcH+vG/9/5Cxz8AXzbxI/VcWhxprsFN9mvm4aVxxduXhAsWATyrJcQ
- Sj6dWq8hBD1Pkq/iU1qd+6cRxf2YB1NnVyZdRsD8vq3CXTPiOMQmzmu3wNYSHYDVhfwS
- XWNw==
+ bh=PofadtPjV50gLiZAVOOvtpW2alRq1pf8qNEAm+/jhS0=;
+ b=F20LiyowI1xUnUAYXvSPfVsA13wuBteTEaf5+w1S1x+N2akma+p0TCQ0PLPeEgxkY1
+ /h0rZq+rqVxjV/h6/1c/F8OnLbZWlzGEH3h4zPpmgRcakI+QB27ls20MDSQphSKNgkYi
+ B/LNRRVleid3QciHgzGXAVyCZX+hbMWQL/kpojFqgkQz+XiLbRbih87CPyPv2t079fHU
+ 4wdz/NM4fliAvFdk4Xlgc1f/a/CymWmWlUnWi0Q3QZwcW1RZ0PN3DKICHK17qJ7gRUHa
+ 2XunKBTg3Z1ePa3QS2yzbQ+hxYpRsZnBTQrQhGnC3+GSrU+PXVTeiXsuKxz+ABEsV7xX
+ 8cdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716217690; x=1716822490;
+ d=1e100.net; s=20230601; t=1716218262; x=1716823062;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nx6fREjBjz+KL7CHRbDoyFJoC3fJfDeTjds3bhWNztQ=;
- b=d9qQm2fGM8eOssog0NZm9DNPGAHsVcGhx83rhPQshUg6yiMsXLXEJphA3XYMWVusTA
- dIkQ1P+7Qh+MXNQAE+14xw+4HB6hzn+63+D2dU9NNhjeGP6kW3XHl1LzZSzRvkWhj8rR
- S7iHHh2L17aXlSpDWuv2m391xhN3rRt3B1bfwFNHX5YTWixnmQnN08qgZoB2bJ1uxD3m
- 8l7ZnaKjL0uqz+A8Xa1wBokStZRISyKLrEsnWFvUn50hf8LPRLN0Uc3Ul9MXcF+8AYK2
- PHUgEFmJBUSpkZuxu7V8EhwetmNIxzqsGE04nJ0SUrVzthW6UpCp4z2ysw5Bkq/2IovG
- 98pw==
-X-Gm-Message-State: AOJu0Yy4O6JMaZ53dnrQecwJlTQav+6N3WQeL1DeKfCl+tKLsCnHsZJt
- SRlWMT1bq+047f7rgvVy6bPJSvhcjtnImry7Z/+N6vE9xbEC8lx4XSO+8Ryd3hOFijJnAFQrjsu
- Zdp6ak2dRrUf2MsY/zEtfJg0NrLJgiz/iZMx2Qg==
-X-Google-Smtp-Source: AGHT+IGJa8nC8mplDK21GiXSpSnTu71DD5n/ppTnnWlHcsANgjCGT3GuLtO//oxOVj1twydae6aN4X3e+XTMg4WuAo0=
-X-Received: by 2002:a50:8d55:0:b0:575:2ad0:2887 with SMTP id
- 4fb4d7f45d1cf-5752ad02939mr4648865a12.8.1716217690247; Mon, 20 May 2024
- 08:08:10 -0700 (PDT)
+ bh=PofadtPjV50gLiZAVOOvtpW2alRq1pf8qNEAm+/jhS0=;
+ b=raLkyvZ/KyRuIuxue2L++86fM3KQOwv9/0sgYLJspxPUFQZXoB8cH/BhBVZ8t4v3Aj
+ 1ZYGzMTdPY6YgE3dBJDnmeMR6vmTZweGZxPr5rxRIga5r1pkM4qRMFaKbRy2OVrlU227
+ k4FS4+RJ75/+DMShJengA3zeWlKEGKMgBJYM5x+HuWPYx3R+5T3gfW/rgzJ/aKxAbOUq
+ C1eir/Fzl75K9SL+6PHsTDE6wPLYQW409H4WmE3QYyDlK7+AsPcibIZsud1eOPFHgo7l
+ 8CuPHbQTlNRNTjS/wHFAi4Hcf80HKy/yBOcnsN1L6kG3DvUWqAhxzjQjtLJ+nkHiFMBN
+ e7eg==
+X-Gm-Message-State: AOJu0Yx5aUnDVAs4ihP3g69cCgJ0K69XnbgsDmt2cvYyjjCnB9Z6I5xc
+ eW9GA72jtEqpMrfvsvpYE5A/aTd4kj2hNPlRWlzB5PKwMa0YOtQvEcZzlvBa2pIKTL+qhQhSK16
+ E9k35W1VnG2RQv96iyYWfU/SGWGNSlMu2F/rdCX9TRLtlQwNV
+X-Google-Smtp-Source: AGHT+IFZDi1ihBetfZCvBQ8q86KuydsjQb6GT8OEIJn3zY8L53suS7X6X3bT00M9s/Nw6+snUbkzL4QQLQ76UB9pJWc=
+X-Received: by 2002:a50:d5dc:0:b0:572:7319:ab83 with SMTP id
+ 4fb4d7f45d1cf-5734d5904c1mr21862907a12.6.1716218261691; Mon, 20 May 2024
+ 08:17:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240513113513.640007-1-alex.bennee@linaro.org>
- <20240513113513.640007-3-alex.bennee@linaro.org>
-In-Reply-To: <20240513113513.640007-3-alex.bennee@linaro.org>
+ <20240513113513.640007-4-alex.bennee@linaro.org>
+In-Reply-To: <20240513113513.640007-4-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 May 2024 16:07:59 +0100
-Message-ID: <CAFEAcA_vcAYCpw7j7g9fZVQx5tG_VvEhDKQTb0xnWOERbkEGAw@mail.gmail.com>
-Subject: Re: [Semihosting Tests PATCH 2/3] update includes for bare metal
- compiling
+Date: Mon, 20 May 2024 16:17:31 +0100
+Message-ID: <CAFEAcA_E-kFwSVfN+egkUp4Ff6sCj+LXn78z9xbNHGJ96J9PTA@mail.gmail.com>
+Subject: Re: [Semihosting Tests PATCH 3/3] add SYS_GET_CMDLINE test
 To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,14 +93,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, 13 May 2024 at 12:35, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
 te:
 >
-> We shouldn't use <string.h> for our own implementation. Also the base
-> types we need live in <stdint.h> as <inttypes.h> doesn't exist for the
-> bare metal compilers.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
+> We actually had the stubs to implement this. The main pain is getting
+> the binary name into the program so we can validate the result.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Could you write the commit message so that it makes sense
+without reading the Subject line, please ?
+
+> index 5df95f3..268a9d9 100644
+> --- a/usertest.c
+> +++ b/usertest.c
+> @@ -315,6 +315,26 @@ static int test_feature_detect(void)
+>      return 0;
+>  }
+>
+> +static int test_cmdline(void)
+> +{
+> +    char cmdline[256];
+> +    int actual;
+> +    const char *s, *c;
+> +
+> +    if (semi_get_cmdline(&cmdline[0], sizeof(cmdline), &actual)) {
+> +        semi_write0("FAIL could recover command line\n");
+
+"couldn't", I guess.
+
+> +        return 1;
+> +    }
+> +
+> +    if (strcmp(&cmdline[0], BINARY_NAME) !=3D 0) {
+
+Why "&cmdline[0]" and not just "cmdline" ?
+
+> +        semi_write0("FAIL unexpected command line:");
+
+Space after the colon will make the error message a bit
+more neatly formatted.
+
+> +        semi_write0(&cmdline[0]);
+
+Missing "return 1" ?
+
+> +    }
+
+Is it worth testing that the length value returned
+by the semihosting function matches the length of
+the string?
+
+> +
+> +    semi_write0("PASS command line test\n");
+> +    return 0;
+> +}
+> +
+>  int main(void)
+>  {
+>      void *bufp;
+> @@ -366,6 +386,10 @@ int main(void)
+>          return 1;
+>      }
+>
+> +    if (test_cmdline()) {
+> +        return 1;
+> +    }
+> +
+>      semi_write0("ALL TESTS PASSED\n");
+>
+>      /* If we have EXIT_EXTENDED then use it */
+> --
+> 2.39.2
 
 thanks
 -- PMM
