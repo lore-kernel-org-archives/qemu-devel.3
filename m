@@ -4,51 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A53CC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 11:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D1C1C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 11:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s91Ou-0001T4-Nn; Mon, 20 May 2024 07:41:56 -0400
+	id 1s91Xi-0004yZ-6e; Mon, 20 May 2024 07:51:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s91Ot-0001Sl-Bt; Mon, 20 May 2024 07:41:55 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s91Oq-00069H-FD; Mon, 20 May 2024 07:41:55 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AC6A54E602E;
- Mon, 20 May 2024 13:41:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ctKXdF1MTUCX; Mon, 20 May 2024 13:41:46 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B80674E6000; Mon, 20 May 2024 13:41:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B64B8746E3B;
- Mon, 20 May 2024 13:41:46 +0200 (CEST)
-Date: Mon, 20 May 2024 13:41:46 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-cc: npiggin@gmail.com, qemu-ppc@nongnu.org, danielhb413@gmail.com, 
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 5/6] target/ppc: reduce duplicate code between
- init_proc_POWER{9, 10}
-In-Reply-To: <20240520103329.381158-6-harshpb@linux.ibm.com>
-Message-ID: <d038d95e-dc17-dc9d-c810-80b1832ba8b3@eik.bme.hu>
-References: <20240520103329.381158-1-harshpb@linux.ibm.com>
- <20240520103329.381158-6-harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s91Xc-0004xF-0G
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 07:50:57 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s91XY-0007yd-AR
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 07:50:55 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a59a387fbc9so732627666b.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 04:50:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716205849; x=1716810649; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+J3nEy2JCn2/CgkzZfL/geex+jz5+hP2/DLAqyrU2R8=;
+ b=IPuNY47vnnRo8n3HzEPN8uYnr1IPsoyd4/Jj8YF2Vc7Svjwn1qelBwHZZJZ80AMuPs
+ BhD1FyoQutXNmAljqhzZ/ameWawlEMdH0D8YcMfBGIBCawqXO73BNPhmQNmjsHlrfSw+
+ DuaRbNbDmZzGAwaBdZ4KeiCH0xEuhwwEbYtS3bhv/i/nri/bMCvDGcKkiHXDWXz17Juz
+ YQy9VgHHyFEng+SlnD+3X+13F3OZez1Wrx4cq3l7TJUHMQjp8k3ZgydVySMV8dxqDyql
+ WM3K7eSsuRR7iO7s7NwsgtzJD8uTVBvLB4x42SuiqFTr+wDkPNQR3Qn5iOWr1Hycz77X
+ Zh4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716205849; x=1716810649;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+J3nEy2JCn2/CgkzZfL/geex+jz5+hP2/DLAqyrU2R8=;
+ b=jZDEE5lz3q8TWglLBFCicjJHqdXWX9/E/uqixA+x2L7DRanDoHZHW26c08XyFZ26ls
+ Eb7x9ooqU7w9xHlDAIh//kzMhWl19GM6rcelQyDavdhQHg1hHOi4oGJDN5P4U5e3O5Jg
+ kTjSFiVsoWoRWsvX9EeLCxDvFCbbAySL4MgUtK5KcEYsurap2xFxmQXmUoKQMBFFqVUJ
+ iJWEKMU/pJ8yzx3yIaZ9hAHryc8c+jBa9aJ9DI6PHS+goG3tPKiZplL8JKU7JztAxRTU
+ eqTiCduzNSQIWAmSsSh47jy2LILe1wapfPt5I6sMEMOt4DZdv8OtWHfhPjVUa8+2Y3aI
+ xBaw==
+X-Gm-Message-State: AOJu0YyMJO/7jSwE0Q8iA6PS5moBze2CRqYvxE1jO/ddhQIuVRfzjFcX
+ TvZ5kyHMLnmSerVoJnBqnPPVL/4zpK4RztBKslj3Mz13sUQoNQ8Nd/SYlg==
+X-Google-Smtp-Source: AGHT+IEeywF1qhGQ51IuAslibRS5pdXbMwWHD5HwLUfnwZe9IvpoPW3tXlfOj5x3Vw+bVnRslDgipA==
+X-Received: by 2002:a17:906:7815:b0:a59:c3bb:b83b with SMTP id
+ a640c23a62f3a-a5a2d54c915mr1600421666b.1.1716205848606; 
+ Mon, 20 May 2024 04:50:48 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-077-191-098-013.77.191.pool.telefonica.de.
+ [77.191.98.13]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a1781d4b2sm1437154966b.27.2024.05.20.04.50.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 May 2024 04:50:48 -0700 (PDT)
+Date: Mon, 20 May 2024 11:50:47 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>
+Subject: Re: [PULL 19/34] disas: Use translator_st to get disassembly data
+In-Reply-To: <20240515075247.68024-20-richard.henderson@linaro.org>
+References: <20240515075247.68024-1-richard.henderson@linaro.org>
+ <20240515075247.68024-20-richard.henderson@linaro.org>
+Message-ID: <FD65D32D-E0D7-4991-843F-47B16A86274B@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,102 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 May 2024, Harsh Prateek Bora wrote:
-> Historically, the registration of sprs have been inherited alongwith
-> every new Power arch support being added leading to a lot of code
-> duplication. It's time to do necessary cleanups now to avoid further
-> duplication with newer arch support being added.
->
-> Signed-off-by: Harsh Prateek Bora <harshb@linux.ibm.com>
-> ---
-> target/ppc/cpu_init.c | 43 +++++++++----------------------------------
-> 1 file changed, 9 insertions(+), 34 deletions(-)
->
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 6d82f24c87..636e12ba7a 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6307,7 +6307,7 @@ static struct ppc_radix_page_info POWER9_radix_page_info = {
-> };
-> #endif /* CONFIG_USER_ONLY */
->
-> -static void init_proc_POWER9(CPUPPCState *env)
-> +static inline void register_power9_common_sprs(CPUPPCState *env)
 
-QEMU conventions recommend not adding inline in C files and let the 
-compiler decide about that. The inline may only be needed for functions 
-defined in a header that are meant to be inlined in multiple files. So I 
-think no inline is needed here. (I don't know if this is documented but I 
-saw that in Richard Hendersons's reviews multiple times.)
 
-Regards,
-BALATON Zoltan
+Am 15=2E Mai 2024 07:52:32 UTC schrieb Richard Henderson <richard=2Ehender=
+son@linaro=2Eorg>:
+>Read from already translated pages, or saved mmio data=2E
+>
+>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>Signed-off-by: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
+>---
+> include/disas/disas=2Eh     |  5 +++--
+> include/exec/translator=2Eh |  4 ++--
+> include/qemu/typedefs=2Eh   |  1 +
+> accel/tcg/translator=2Ec    |  2 +-
+> disas/disas-common=2Ec      | 14 --------------
+> disas/disas-mon=2Ec         | 15 +++++++++++++++
+> disas/disas-target=2Ec      | 19 +++++++++++++++++--
+> plugins/api=2Ec             |  4 ++--
+> 8 files changed, 41 insertions(+), 23 deletions(-)
 
-> {
->     /* Common Registers */
->     init_proc_book3s_common(env);
-> @@ -6326,7 +6326,6 @@ static void init_proc_POWER9(CPUPPCState *env)
->     register_power5p_ear_sprs(env);
->     register_power5p_tb_sprs(env);
->     register_power6_common_sprs(env);
-> -    register_HEIR32_spr(env);
->     register_power6_dbg_sprs(env);
->     register_power8_tce_address_control_sprs(env);
->     register_power8_ids_sprs(env);
-> @@ -6342,6 +6341,12 @@ static void init_proc_POWER9(CPUPPCState *env)
->     register_power9_book4_sprs(env);
->     register_power8_rpr_sprs(env);
->     register_power9_mmu_sprs(env);
-> +}
-> +
-> +static void init_proc_POWER9(CPUPPCState *env)
-> +{
-> +    register_power9_common_sprs(env);
-> +    register_HEIR32_spr(env);
->
->     /* POWER9 Specific registers */
->     spr_register_kvm(env, SPR_TIDR, "TIDR", NULL, NULL,
-> @@ -6499,39 +6504,9 @@ static struct ppc_radix_page_info POWER10_radix_page_info = {
->
-> static void init_proc_POWER10(CPUPPCState *env)
-> {
-> -    /* Common Registers */
-> -    init_proc_book3s_common(env);
-> -    register_book3s_207_dbg_sprs(env);
-> -
-> -    /* Common TCG PMU */
-> -    init_tcg_pmu_power8(env);
-> -
-> -    /* POWER8 Specific Registers */
-> -    register_book3s_ids_sprs(env);
-> -    register_amr_sprs(env);
-> -    register_iamr_sprs(env);
-> -    register_book3s_purr_sprs(env);
-> -    register_power5p_common_sprs(env);
-> -    register_power5p_lpar_sprs(env);
-> -    register_power5p_ear_sprs(env);
-> -    register_power5p_tb_sprs(env);
-> -    register_power6_common_sprs(env);
-> +    register_power9_common_sprs(env);
->     register_HEIR64_spr(env);
-> -    register_power6_dbg_sprs(env);
-> -    register_power8_tce_address_control_sprs(env);
-> -    register_power8_ids_sprs(env);
-> -    register_power8_ebb_sprs(env);
-> -    register_power8_fscr_sprs(env);
-> -    register_power8_pmu_sup_sprs(env);
-> -    register_power8_pmu_user_sprs(env);
-> -    register_power8_tm_sprs(env);
-> -    register_power8_pspb_sprs(env);
-> -    register_power8_dpdes_sprs(env);
-> -    register_vtb_sprs(env);
-> -    register_power8_ic_sprs(env);
-> -    register_power9_book4_sprs(env);
-> -    register_power8_rpr_sprs(env);
-> -    register_power9_mmu_sprs(env);
-> +
->     register_power10_hash_sprs(env);
->     register_power10_dexcr_sprs(env);
->     register_power10_pmu_sup_sprs(env);
->
+Hi,
+
+this patch unfortunately breaks the "execlog" plugin which doesn't decode =
+the mnemonics correctly any longer=2E When launching `qemu-system-x86_64 -p=
+lugin /path/to/qemu-build/contrib/plugins/libexeclog=2Eso -d plugin`, it ou=
+tputs either "addb %al, (%bx, %si)" or "=2Ebyte 0x00", regardless of which =
+instruction was actually executed=2E It seems to invoke the disassembler on=
+ zero-initialized data=2E Reverting the patch fixes the problem=2E
+
+Moreover, patch 11 in this pull request "[PULL 11/34] plugins: Use transla=
+tor_st for qemu_plugin_insn_data" causes the plugin to not print the correc=
+t machine code any longer, instead just printing "0x0"=2E I haven't investi=
+gated whether reverting that patch fixes the problem since it doesn't rever=
+t cleanly=2E
+
+It would be nice if somebody could look into this since I'm also trying to=
+ hunt down an alignment problem in the ARM emulator introduced in 9=2E0 whi=
+ch now prevents my guest from booting, and the execlog plugin is one of the=
+ tools I use for investigation=2E
+
+Best regards,
+Bernhard
 
