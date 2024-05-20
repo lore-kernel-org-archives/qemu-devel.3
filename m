@@ -4,73 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5656C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 06:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2AAC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 07:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8wQ9-0005Tz-SU; Mon, 20 May 2024 02:22:53 -0400
+	id 1s8xIL-0001XN-Fq; Mon, 20 May 2024 03:18:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mrolnik@gmail.com>) id 1s8wNZ-0004YE-QN
- for qemu-devel@nongnu.org; Mon, 20 May 2024 02:20:14 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s8xI9-0001Ww-PB; Mon, 20 May 2024 03:18:42 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mrolnik@gmail.com>) id 1s8wNU-0002zs-8W
- for qemu-devel@nongnu.org; Mon, 20 May 2024 02:20:13 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-4df2fcafc19so930181e0c.0
- for <qemu-devel@nongnu.org>; Sun, 19 May 2024 23:20:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s8xI3-0004yB-Dj; Mon, 20 May 2024 03:18:40 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6f457853950so1288557b3a.0; 
+ Mon, 20 May 2024 00:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716186007; x=1716790807; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nWSfJ8nkVTeAGPDn3NsDKwH+Hst3W+GgAFishFrG+fE=;
- b=F7hDNSRfKTfix0ZD7pqJXy5HDrbk/7Bju+hK3j0emTLQhQiB620Tt58lNpRoAJbcqP
- dQL8oNrQDABoUI3Dglpc7KJYvhe/kikaSejj8AurVtFviDKrWsN6FLWEJj+pLFQarDyp
- HQgj8ClIiQpiNmm1X+j9sc/8cWvFEoPGaCY17pUWFOrOMQAdL5nubF8Mii0fcWUAGTt0
- fl5/EKHpurcO7ZPsuzYAIuc0XxkgLGhPFJ1PWHoBndqjI3WeHo6yk5B/itd/qLpu4E6E
- TfjY30c80Nd/g6IJ0NfEL1t+E/bd2WWCtRPkTOh1/4TW5Y+bHAWisMN8uYTJ0WBdRdXL
- QQ/Q==
+ d=gmail.com; s=20230601; t=1716189512; x=1716794312; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7+s4UVcCidt4yDvvgXa0MkAYqlDeRqzByjMEbbQ/j4U=;
+ b=TbpWAiW111Q7Xfo9MyilmFZc/iMlP1VV9DKvIwbN5/E8/wSohU5jqODnb3Uu+pti9L
+ 0CHNDSOD4vHCbBtXHr6keg+w0emzS/yVwaldbwguI4RghZcBI7QWwrREa+/hmjKKM4wO
+ f11WNJ6kgdlxbmPPbFo4kMPxI3JvwSTS3eClRc3HE3d6mO5F2VPzjICRqN+ONRb6lhSq
+ 14AYjVg/8cIpCicy5S4e+3L518kHLmHsXc8ewAiC/FGcRO/Z9GjqAgDIrHPtrKqgKHGC
+ 5GqKY/LnWewcx7Qwbax36cDxsshFGj1mG5NZOyMAp/eJ/vjBlSpssk3Nn5gPjXSHL/XN
+ I3+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716186007; x=1716790807;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nWSfJ8nkVTeAGPDn3NsDKwH+Hst3W+GgAFishFrG+fE=;
- b=FV1aUoS5jvDWEryySZ+muSjMvcF3hBnjofU4O1HrrIKg5/ZVBVSbrgqAQ5DlNqk6pQ
- BhQHterg52a2IluXTRwTCUj7rwOLqsoZM+bupMhotBUsuk+7DXEeFxN9FdKxQjnxuP6/
- xn0313IRKPeIZH5gpCFPSzOJMRLvgv2m9DAuYCE4nprr9b76aLxVLWUZTW37aOWQJ5en
- IlhgQFmKQfuNLx1VGtl3mqhAmkxUPjBZP2dva1LCRsezgGXEE4JLA0YNlaojH7h093nZ
- ebozmjesKNZAGI4vUx7ScXsaCg0fdPT9qvgs/IyzizE2HBefRLv+gjgHl6/lIaPAbjw/
- zzbg==
-X-Gm-Message-State: AOJu0Ywe5DXce35GIJSu+I7DP7v1jUSuBpsNcSCjgaqqST6Hnnq1jJaP
- nZjrPtl2hR9rk/RpEU5pB1Ib7SATQhy6CSnJ7Hev0eR4McPEZLdkQOoNc7E3fWX/3ZPVZ+7LP1i
- CF983GKQWEfAIS3ZPlHWn6T0Ug74=
-X-Google-Smtp-Source: AGHT+IFtVe0Dojaf7BriRlx3lcAuYBXhZxT8xNshYXLRYx1PF/6RAsTA5N3djBisURqZ13fapeYGIX0ElDSZFnn7V2U=
-X-Received: by 2002:a05:6122:908:b0:4df:281d:905 with SMTP id
- 71dfb90a1353d-4df8839f4b2mr23827754e0c.16.1716186006879; Sun, 19 May 2024
- 23:20:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAK4993hFKoQh14k1L4cMrHrDzBn23D59aM-PQJ3pu6uH4qfsGw@mail.gmail.com>
- <c220a44a-5265-4003-b386-cc633f21d44b@linaro.org>
-In-Reply-To: <c220a44a-5265-4003-b386-cc633f21d44b@linaro.org>
-From: Michael Rolnik <mrolnik@gmail.com>
-Date: Mon, 20 May 2024 09:19:30 +0300
-Message-ID: <CAK4993gwpD+HmRJoVvYArEbn7868_2P9f3FV-qjKNGJgJCW+fA@mail.gmail.com>
-Subject: Re: A question regarding TARGET_ALIGNED_ONLY flag
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000004f05000618dcb175"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=mrolnik@gmail.com; helo=mail-vk1-xa30.google.com
+ d=1e100.net; s=20230601; t=1716189512; x=1716794312;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=7+s4UVcCidt4yDvvgXa0MkAYqlDeRqzByjMEbbQ/j4U=;
+ b=S9n7fS/m2GDMr/mJ59pgPEr57DMBGD86GksGSloAnRU8eIH9CH9p9TYhjegnxdrqCs
+ /r0wo4FgyL7fN98duI682kno2PnPQf57DV4zP/4hikVxeD23QyIBHMugqtesOFrmKqEG
+ tjaBSx89M25mDqq+9UNsUnoYA9oxAngeDEt555fwOlE+s9qwXD+kdbc3zRNBscBEgtra
+ hjxG9fiQ/ajTkxzRZdfjqSdOJthiItRipC8BVl89Vpq7QhHH7SQ/FF2lWzlJQ59HGfaz
+ Gbjjt4wq3dHWRx+FTqWxDwFAtZdO0MNtjQUG7O+q0PrquWlku9DgJqcQ/dDQv1Drlp+Y
+ oRWg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXndnqgY2ZV5TmDYgCwjZ+zaKpTwCvDMQSRDOgVkB2eiFauCcXjzDeZLh57Ypt3uRUalBY0fm0gswV/UdEXCxhhufw1
+X-Gm-Message-State: AOJu0Ywtdm6HJ8wysYoNSNJckVw4tX1NJV0+v64grzmQW/MAA4N6Jj5o
+ YD921BCE4y4QicVPs+MrAzQivlFODlIM9nsalJ4unqG5Otxl8Ops
+X-Google-Smtp-Source: AGHT+IGRJjy+X6CjGh3eAD4nIgGaC4hSvmk9Mlg+ljlcs7iZP8pAzyRZ/xzrvi7h17MHhoOmmB+/9g==
+X-Received: by 2002:a05:6a20:3c91:b0:1af:f88d:9efe with SMTP id
+ adf61e73a8af0-1b1ca3ada42mr7805231637.3.1716189511824; 
+ Mon, 20 May 2024 00:18:31 -0700 (PDT)
+Received: from localhost ([1.146.114.227]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f4d2a6669dsm18526072b3a.31.2024.05.20.00.18.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 May 2024 00:18:31 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 20 May 2024 17:18:25 +1000
+Message-Id: <D1EAEMSLTZZO.19107537679QR@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <danielhb413@gmail.com>, <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v2 6/8] target/ppc: Move div/mod fixed-point insns (64
+ bits operands) to decodetree.
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Richard Henderson" <richard.henderson@linaro.org>, "Chinmay Rath"
+ <rathc@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240423063234.76282-1-rathc@linux.ibm.com>
+ <20240423063234.76282-7-rathc@linux.ibm.com>
+ <D1BXJXYYCCJF.1KUFFHK83W8CV@gmail.com>
+ <eba18599-1e0a-4b57-a728-b5a7847e4f14@linaro.org>
+In-Reply-To: <eba18599-1e0a-4b57-a728-b5a7847e4f14@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,66 +98,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004f05000618dcb175
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Thank you Richard.
-
-On Sun, May 19, 2024 at 6:26=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
-
-> On 5/19/24 16:23, Michael Rolnik wrote:
-> > Hi all,
-> >
-> > Previously there was *TARGET_ALIGNED_ONLY* option that caused all memor=
-y
-> accessed to be
-> > aligned, now it seems to be removed.
-> > Is there a way to achieve memory access alignment with QEMU v9.0.0 when
-> I am building a
-> > custom target?
+On Sat May 18, 2024 at 8:48 PM AEST, Richard Henderson wrote:
+> On 5/17/24 14:48, Nicholas Piggin wrote:
+> > On Tue Apr 23, 2024 at 4:32 PM AEST, Chinmay Rath wrote:
+> >> Moving the below instructions to decodetree specification :
+> >>
+> >> 	divd[u, e, eu][o][.]	: XO-form
+> >> 	mod{sd, ud}		: X-form
+> >>
+> >> With this patch, all the fixed-point arithmetic instructions have been
+> >> moved to decodetree.
+> >> The changes were verified by validating that the tcg ops generated by =
+those
+> >> instructions remain the same, which were captured using the '-d in_asm=
+,op' flag.
+> >> Also, remaned do_divwe method in fixedpoint-impl.c.inc to do_dive beca=
+use it is
+> >> now used to divide doubleword operands as well, and not just words.
+> >>
+> >> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> >=20
+> > [...]
+> >=20
+> >> +static bool do_divd(DisasContext *ctx, arg_XO *a, bool sign)
+> >> +{
+> >> +    gen_op_arith_divd(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a-=
+>rb],
+> >> +                      sign, a->oe, a->rc);
+> >> +    return true;
+> >> +}
+> >> +
+> >> +static bool do_modd(DisasContext *ctx, arg_X *a, bool sign)
+> >> +{
+> >> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+> >> +    gen_op_arith_modd(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a-=
+>rb],
+> >> +                      sign);
+> >> +    return true;
+> >> +}
+> >> +
+> >> +TRANS64(DIVD, do_divd, true);
+> >> +TRANS64(DIVDU, do_divd, false);
+> >> +TRANS64(DIVDE, do_dive, gen_helper_DIVDE);
+> >> +TRANS64(DIVDEU, do_dive, gen_helper_DIVDEU);
+> >> +
+> >> +TRANS64(MODSD, do_modd, true);
+> >> +TRANS64(MODUD, do_modd, false);
+> >=20
+> > Sigh. I'm having to fix a bunch of these for 32-bit builds. Just
+> > doing the #ifdef TARGET_PPC64 ... #else qemu_build_not_reached();
+> > thing.
+> >=20
+> > Which is quite ugly and actually prevents using some of these
+> > macros and requires open coding (e.g., because DIVDE helper is
+> > not declared for 32-bit in this case).
 >
-> Explicitly add MO_ALIGN to the MemOp argument of
-> tcg_gen_qemu_{ld,st}_{i32,i64,i128}.
+> Compare sparc:
 >
+> # define gen_helper_pdist     ({ qemu_build_not_reached(); NULL; })
 >
-> r~
+> etc.
+
+That would help indeed.
+
 >
+> > Maybe we should move 64-bit only instructions into their own
+> > .decode file and not build them for 32-bit, so we don't have
+> > to add all these dummy translate functions for them.
 >
+> That's another option, yes.  The decodetree script will take multiple inp=
+ut files to=20
+> produce one output, so you could separate the insns by base vs 64-bit.
 
---=20
-Best Regards,
-Michael Rolnik
+Thinking about it a bit more, I guess the downside is that you
+would usually like to group instruction variants that operate on
+64-bit data together with the others in the .decode file.
 
---0000000000004f05000618dcb175
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thank you Richard.</div><br><div class=3D"gmail_quote"><di=
-v dir=3D"ltr" class=3D"gmail_attr">On Sun, May 19, 2024 at 6:26=E2=80=AFPM =
-Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">richa=
-rd.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">On 5/19/24 16:23, Michael Rolnik wrote:<br>
-&gt; Hi all,<br>
-&gt; <br>
-&gt; Previously there was *TARGET_ALIGNED_ONLY* option that caused all memo=
-ry accessed to be <br>
-&gt; aligned, now it seems to be removed.<br>
-&gt; Is there a way to achieve memory access alignment=C2=A0with QEMU v9.0.=
-0 when I am building a <br>
-&gt; custom target?<br>
-<br>
-Explicitly add MO_ALIGN to the MemOp argument of tcg_gen_qemu_{ld,st}_{i32,=
-i64,i128}.<br>
-<br>
-<br>
-r~<br>
-<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Be=
-st Regards,<br>Michael Rolnik</div>
-
---0000000000004f05000618dcb175--
+Thanks,
+Nick
 
