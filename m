@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C6FC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D0CC25B79
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s94LZ-0004tt-9a; Mon, 20 May 2024 10:50:41 -0400
+	id 1s94at-0000lo-AF; Mon, 20 May 2024 11:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanmaynpatil105@gmail.com>)
- id 1s94LX-0004tX-PN; Mon, 20 May 2024 10:50:39 -0400
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s94ar-0000lH-Q3
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:06:29 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanmaynpatil105@gmail.com>)
- id 1s94LP-0001Rc-FC; Mon, 20 May 2024 10:50:39 -0400
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-3c999d53e04so2068262b6e.2; 
- Mon, 20 May 2024 07:50:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s94ap-0004e3-0Z
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:06:29 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-572baf393ddso10383961a12.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 08:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716216629; x=1716821429; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M+RY37ILR+bGutCGqlDSpT5t/N+Xf3qdqRVhsE5xMYs=;
- b=Xn0UsB8tgiZTtQG2j2HHVFTulIouqhPu8TJvNVlMP/FVSQsXIeornv+84W/6XztZNT
- O8GTJhCiyH3IVvUemiFucHRXJHBWyIVoxcN2QQjVActyPdlMrQog46ZwKSfPK0lSUhT2
- T0xI+ipT8VhMeo5alghq8OVpEbeG200TN1/1N6ibSPikEgl1nEfI0HGOjH9wKVJMIsiv
- e/RdAxpuDjuiN343LfNpVfn35lu5xjuChKd4ddOFGGM7J/f5g0UNG+BYZn6Y7YOU3J73
- GC4HrizGejsLXhU1XYF8DEL7NmRBlicaJv3CkRgiB/QQZ3ZfbVpySUQ4VZiS6fv6ZyuB
- m4Zg==
+ d=linaro.org; s=google; t=1716217585; x=1716822385; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DuNom45ZpE7f0NnvPCGFgzZtr0Ht8Jc6mtyjuE5tUWc=;
+ b=fid4Jrs9dD4iSfnsVYrSd7rbLgKdfAL2Mbf894CX9yHJy96g+jQEmM7E0wAiKz0HYG
+ ILHXrk6BRbxKYni6ISm0aMzSMBB+PS1TnCtDPV5ZDNtUfF08lHuCO42RtQYn4WqRfwTk
+ HYZZyyNJ3WKY0UT/KKbPjEoAPEQZoeD1EXhDeAsoMPuGQKkGmpJi+2EVY+oRUtJ5IlGa
+ j0OPIlmUmUNlKBZsYno1w+q74YX7qzlQj6kkmomvvwVxf10Ixahmq4CuvNO+nFkTqy2K
+ RadPvPNL3vB3lCW3INoZgyw8bwEgxOxiqQbXs0IuwFs9muwlRA6WyWt/5LEMGxBdsYO3
+ aW3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716216629; x=1716821429;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=M+RY37ILR+bGutCGqlDSpT5t/N+Xf3qdqRVhsE5xMYs=;
- b=MrK56ZOk/i0drGCs77RgSJP2k/FlD31WkN4QvIxre8W9rh5mEcaF7xznNKKkfHimV4
- 0l0/lo34eqgR9hDQPnR4QlJYdJsedrSvhdbrQ4YmlvFz1kfPGOnL/gD2H8jyZNa3C9L6
- HP1F6QHVvMZX0ruzo5M7Jc1DRpvcnIVLJDIm7mVBjxYs0uUQf3994SPU14s3P0HUWXeB
- ucW+q660whifZclAM9fotWAb5/eCVzs+V2u3tefPSm7f6Gxod69T/QPvBN3DQTelEvrv
- m90mHAaovtG0k2d5hOSqTkJKO71mXQQ+ZBgvxPjmrBFvaxPz+nZUY46NFQa5YgZXhpIR
- QYAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRWg7wB9RxqWCj3ugUu6ezvIVMr99aYyrYdq6DtSVURR/1yfTfOYzDNRHnnU/ciJ6ihtBthcRMmUIGpPppm2zFh4Ys
-X-Gm-Message-State: AOJu0Yzzo70iPF80s79Hd6vPPYITcMFPAwCRYgP470NDnQ6oSJV7j2eJ
- l91RyYOFp0tc6evMITi3rubUGRa7Q2XfOfWEgkZI0XMU2zdTpBMeQv09jtXbuK/7zQ1XPeikMLf
- Wn3NBfYdTWH8kTbazrz8UTgfuMUc=
-X-Google-Smtp-Source: AGHT+IFqmqI08tjNU9t5EVStkewLXC/QlKKQCWH2TyaV+YAO+xu6bMRaQaDCGD95iIP4xy6aKO1RSB7liXw2K0mEb+E=
-X-Received: by 2002:a05:6808:178b:b0:3c9:6f53:ee11 with SMTP id
- 5614622812f47-3c9970251camr40434136b6e.8.1716216629347; Mon, 20 May 2024
- 07:50:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716217585; x=1716822385;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DuNom45ZpE7f0NnvPCGFgzZtr0Ht8Jc6mtyjuE5tUWc=;
+ b=bjG1SxVqb+UQYmcNDPPc6d1fbRsbUQvRWhAxnLOGofTRGImF61Vp+gpVKR7iwC9T0G
+ 7Lfl9FO2dyNWXuyXqBnvGX3baQNhZ2xNva9CcTAxtZbHZeGYlTIJn6Q8gYqOgXM2CXZs
+ YA4/pqvNc3R4B27Ky3+v5hn1nxpt90zZLgxdW1TCiE9+PRw2Yc+/3zeGxArqZYRYHAvR
+ mni/DynnXwoh6UiyshSaj/pIsYtX7V6A0U4CtEK6EmyI3tLAcv8i1Eg7sa6BTY27NwhO
+ jAIiDHrr2ltbevksJjS8kAL8n2GzqJD5LkniD+KK+H2Sj4cQDV9eiqfZoopwy41Oxn5L
+ S86w==
+X-Gm-Message-State: AOJu0YznL9DiChhlE/zR5JJecIAHHXSQeV93EVDJiUBDfXfixPjN83Yd
+ r5oOVVKZ2MfxtT4jTkeaH7BvNcEpzDj1tjWJmS7uFBntaVcKd8V53Nt9bItE7bpRdXDkqPr3yIF
+ 3uUzlIqo9J8lZZ+1a6ncPjIIEKNYo2PJxjwTh5ryg8aF5B+zH
+X-Google-Smtp-Source: AGHT+IFyNcsChA2tt2/l/WoZktfUsf3S685tOerKJq/vUXPIBNW3BeAPuAYULw62Pm7lDBcoP6ox4/q7uXakmlqrXDg=
+X-Received: by 2002:a50:99c9:0:b0:575:95b:5109 with SMTP id
+ 4fb4d7f45d1cf-5752b44a326mr5233799a12.6.1716217585228; Mon, 20 May 2024
+ 08:06:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240508081502.88375-1-tanmaynpatil105@gmail.com>
- <CAFEAcA_867TphLCF8NeG5OaH9cKwUQjMqXcT9ewgr1QSV57QNQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_867TphLCF8NeG5OaH9cKwUQjMqXcT9ewgr1QSV57QNQ@mail.gmail.com>
-From: Tanmay <tanmaynpatil105@gmail.com>
-Date: Mon, 20 May 2024 20:20:15 +0530
-Message-ID: <CAHnsOnNL_ZbHG48iGSRzoLMsQPUfa2jmOf_aApru3SAgWUCsmQ@mail.gmail.com>
-Subject: Re: [PATCH] Fixes: Indentation using spaces instead of TABS and
- improve formatting
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
- marcandre.lureau@redhat.com, pbonzini@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000008cccef0618e3d2a9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
- envelope-from=tanmaynpatil105@gmail.com; helo=mail-oi1-x22d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240513113513.640007-1-alex.bennee@linaro.org>
+ <20240513113513.640007-2-alex.bennee@linaro.org>
+In-Reply-To: <20240513113513.640007-2-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 May 2024 16:06:13 +0100
+Message-ID: <CAFEAcA-fN32yMKy=cckUayH1+VNuKFim3b0uu7QviaovTZdybw@mail.gmail.com>
+Subject: Re: [Semihosting Tests PATCH 1/3] .editorconfig: add code conventions
+ for tooling
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,70 +91,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008cccef0618e3d2a9
-Content-Type: text/plain; charset="UTF-8"
-
-Sure! Thanks for the update.
-
-~ Tanmay
-
-On Mon, 20 May, 2024, 6:32 pm Peter Maydell, <peter.maydell@linaro.org>
-wrote:
-
-> On Wed, 8 May 2024 at 09:15, Tanmay Patil <tanmaynpatil105@gmail.com>
-> wrote:
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/373
-> >
-> > Files changed:
-> >         - hw/arm/boot.c
-> >         - hw/char/omap_uart.c
-> >         - hw/gpio/zaurus.c
-> >         - hw/input/tsc2005.c
-> >
-> > Signed-off-by: Tanmay Patil <tanmaynpatil105@gmail.com>
+On Mon, 13 May 2024 at 12:35, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> Thanks for this patch; I've applied it to my target-arm.next
-> queue and it will get upstream within the next week or so.
-> (I tweaked the commit message format a bit.)
+> It's a pain when you come back to a code base you haven't touched in a
+> while and realise whatever indent settings you were using having
+> carried over. Add an editorconfig and be done with it.
 >
-> -- PMM
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  .editorconfig | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
+>  create mode 100644 .editorconfig
 >
+> diff --git a/.editorconfig b/.editorconfig
+> new file mode 100644
+> index 0000000..e1540ae
+> --- /dev/null
+> +++ b/.editorconfig
+> @@ -0,0 +1,28 @@
+> +# EditorConfig is a file format and collection of text editor plugins
+> +# for maintaining consistent coding styles between different editors
+> +# and IDEs. Most popular editors support this either natively or via
+> +# plugin.
+> +#
+> +# Check https://editorconfig.org for details.
+> +#
+> +# Emacs: you need https://github.com/10sr/editorconfig-custom-majormode-=
+el
+> +# to automatically enable the appropriate major-mode for your files
+> +# that aren't already caught by your existing config.
+> +#
+> +
+> +root =3D true
+> +
+> +[*]
+> +end_of_line =3D lf
+> +insert_final_newline =3D true
+> +charset =3D utf-8
+> +
+> +[Makefile*]
+> +indent_style =3D tab
+> +indent_size =3D 8
+> +emacs_mode =3D makefile
+> +
+> +[*.{c,h}]
+> +indent_style =3D space
+> +indent_size =3D 4
+> +emacs_mode =3D c
 
---0000000000008cccef0618e3d2a9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The QEMU .editorconfig has a stanza for .s/.S files too:
 
-<div dir=3D"auto">Sure! Thanks for the update.<div dir=3D"auto"><br></div><=
-div dir=3D"auto">~ Tanmay</div></div><br><div class=3D"gmail_quote"><div di=
-r=3D"ltr" class=3D"gmail_attr">On Mon, 20 May, 2024, 6:32 pm Peter Maydell,=
- &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</=
-a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 =
-0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Wed, 8 May 2024 at=
- 09:15, Tanmay Patil &lt;<a href=3D"mailto:tanmaynpatil105@gmail.com" targe=
-t=3D"_blank" rel=3D"noreferrer">tanmaynpatil105@gmail.com</a>&gt; wrote:<br=
->
-&gt;<br>
-&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/373=
-" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-p=
-roject/qemu/-/issues/373</a><br>
-&gt;<br>
-&gt; Files changed:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- hw/arm/boot.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- hw/char/omap_uart.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- hw/gpio/zaurus.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- hw/input/tsc2005.c<br>
-&gt;<br>
-&gt; Signed-off-by: Tanmay Patil &lt;<a href=3D"mailto:tanmaynpatil105@gmai=
-l.com" target=3D"_blank" rel=3D"noreferrer">tanmaynpatil105@gmail.com</a>&g=
-t;<br>
-<br>
-Thanks for this patch; I&#39;ve applied it to my target-arm.next<br>
-queue and it will get upstream within the next week or so.<br>
-(I tweaked the commit message format a bit.)<br>
-<br>
--- PMM<br>
-</blockquote></div>
+[*.{s,S}]
+indent_style =3D tab
+indent_size =3D 8
+emacs_mode =3D asm
 
---0000000000008cccef0618e3d2a9--
+thanks
+-- PMM
 
