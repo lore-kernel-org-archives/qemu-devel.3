@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E976C25B77
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 10:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F263C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 10:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s90Kw-0000gn-Lj; Mon, 20 May 2024 06:33:46 -0400
+	id 1s90L1-0000jZ-Lp; Mon, 20 May 2024 06:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1s90Kv-0000gN-6c; Mon, 20 May 2024 06:33:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1s90Kz-0000il-BP; Mon, 20 May 2024 06:33:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1s90Ks-0008Ut-SF; Mon, 20 May 2024 06:33:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1s90Kx-0008VW-UZ; Mon, 20 May 2024 06:33:49 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44KASA5K021186; Mon, 20 May 2024 10:33:39 GMT
+ 44K9u23e022574; Mon, 20 May 2024 10:33:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=T/GrVZ5hHd3+M0vyzMup29UGRYf8Ys1DoK+B0KnGikk=;
- b=k8WmoIpR1UE19im8AR+SfmF0W9ftpX+JpAwMs+3I6iF9XZR3Y/hOBBSJz8o+p2rXQSyn
- LAhkmk+zdwJnOBlILRNg5KffX0eMM+j6ND95B0uxAUGAot4ezl2Oo7k8QL2OA52z8YiM
- SyaLKMjk709z+daJR9LNjt3XLbvCc6fLsmLpaqBnS7YemMoTLnOkT+Zu5APk1CLeqaCD
- eUtWjX7RJxm9igt0RjxzeEnKAqTO4di7xgOjuhWUSt6i98vq6QHRTl3vN6qDlre1KHTs
- Fbe2AibLszqnI5ywIK1LgHNerfV5mkPnTKepFcFD3cItysMycs7uY0SASF+DZooC99Ld Dw== 
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=oLHPP48FJQe4PgExs5XPQk+GKvk1IrOf0AnrZ2Opom4=;
+ b=pqI36mLb+1llZX0P7EiuKHdd4zUcJq8wE0NYD2G+IcXJVeQszNK5/MMW78HRAiDwmdsU
+ syCjKKHW1ugCwyzGithHpTBpYSjvNL9UN9enTNFztGf3i8rOuXXeR/kfz4PCzeoswr2q
+ q3L91lKch2tjKLq+mbShm/tSNLxGTBKfXpaJGSw8a6si9EwgsQyv/JNU0uywKvuyY/zO
+ JUInfSkuVikoEp/PK2yIWmb1Emx8FSiQ9c0Kl9wLnYdR5E8dfMjlZcn78J4VF8tDR5yH
+ r5ENQja6ynYir/0INHv//jyU6dl0LQ8UflDtYwL0m8zLufYM2oiWtHolwJ8PT5Y9akCC gA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y84sc00b2-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y80w90hg2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 May 2024 10:33:39 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44KAXcHl030423;
- Mon, 20 May 2024 10:33:38 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y84sc00b0-1
+ Mon, 20 May 2024 10:33:45 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44KAXjYl014529;
+ Mon, 20 May 2024 10:33:45 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y80w90hg0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 May 2024 10:33:38 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44KAFEff026457; Mon, 20 May 2024 10:33:37 GMT
+ Mon, 20 May 2024 10:33:45 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44K9oX5v023565; Mon, 20 May 2024 10:33:44 GMT
 Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y785m73nt-1
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77nny83s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 May 2024 10:33:37 +0000
+ Mon, 20 May 2024 10:33:44 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
  by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44KAXXmA38928828
+ 44KAXePO50987470
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 May 2024 10:33:35 GMT
+ Mon, 20 May 2024 10:33:42 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 50C472004E;
- Mon, 20 May 2024 10:33:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3C3022005A;
+ Mon, 20 May 2024 10:33:40 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DD35C2006A;
- Mon, 20 May 2024 10:33:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E978E20040;
+ Mon, 20 May 2024 10:33:38 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com (unknown
  [9.195.33.101]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 20 May 2024 10:33:31 +0000 (GMT)
+ Mon, 20 May 2024 10:33:38 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: npiggin@gmail.com, qemu-ppc@nongnu.org
 Cc: danielhb413@gmail.com, qemu-devel@nongnu.org
-Subject: [PATCH 0/6] target/ppc: misc ppc improvements/optimizations
-Date: Mon, 20 May 2024 16:03:23 +0530
-Message-Id: <20240520103329.381158-1-harshpb@linux.ibm.com>
+Subject: [PATCH 3/6] target/ppc: optimize hreg_compute_pmu_hflags_value
+Date: Mon, 20 May 2024 16:03:26 +0530
+Message-Id: <20240520103329.381158-4-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240520103329.381158-1-harshpb@linux.ibm.com>
+References: <20240520103329.381158-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: mt68jJv0P6MlrLcXe2TneKjoDHKarObN
-X-Proofpoint-GUID: rNE7VoAPrOoYNZ4jfJ8YVQa5bo1dyiBZ
+X-Proofpoint-ORIG-GUID: HtDraHpu1X5ey4Ykf7Sniyogq6_FmzgG
+X-Proofpoint-GUID: Qi5kRh1_LvDV6wI5F6IbLMW8M_O2uBv4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-20_05,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
- lowpriorityscore=0 phishscore=0 spamscore=1 suspectscore=0 bulkscore=0
- adultscore=1 impostorscore=0 clxscore=1015 mlxlogscore=219 malwarescore=0
- mlxscore=1 classifier=spam adjust=0 reason=mlx scancount=1
+ suspectscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
+ mlxlogscore=430 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2405010000 definitions=main-2405200087
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -109,25 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This a set of misc ppc arch specific code improvements/optimizations.
-Although there exists similar instances for potential improvements in
-the legacy ppc code, however, that can be taken up later as well.
+The second if-condition can be true only if the first one above is true.
+Enclose the latter into the former to avoid un-necessary check if first
+condition fails.
 
-Harsh Prateek Bora (6):
-  target/ppc: use locally stored msr and avoid indirect access
-  target/ppc: optimize hreg_compute_pmu_hflags_value
-  target/ppc: optimize hreg_compute_pmu_hflags_value
-  target/ppc: optimize p9 exception handling routines
-  target/ppc: reduce duplicate code between init_proc_POWER{9,10}
-  target/ppc: redue code duplication across Power9/10 init code
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ target/ppc/helper_regs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- target/ppc/cpu_init.h    |  79 +++++++++++++++++++
- target/ppc/cpu_init.c    | 166 ++++++---------------------------------
- target/ppc/excp_helper.c |  39 ++++-----
- target/ppc/helper_regs.c |  19 ++---
- 4 files changed, 134 insertions(+), 169 deletions(-)
- create mode 100644 target/ppc/cpu_init.h
-
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 5de0df5795..89aacdf212 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -66,9 +66,9 @@ static uint32_t hreg_compute_pmu_hflags_value(CPUPPCState *env)
+ #ifndef CONFIG_USER_ONLY
+     if (env->pmc_ins_cnt) {
+         hflags |= 1 << HFLAGS_INSN_CNT;
+-    }
+-    if (env->pmc_ins_cnt & 0x1e) {
+-        hflags |= 1 << HFLAGS_PMC_OTHER;
++        if (env->pmc_ins_cnt & 0x1e) {
++            hflags |= 1 << HFLAGS_PMC_OTHER;
++        }
+     }
+ #endif
+ #endif
 -- 
 2.39.3
 
