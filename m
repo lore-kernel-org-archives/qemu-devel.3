@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B592C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826CBC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 15:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s94lm-0003bX-FS; Mon, 20 May 2024 11:17:46 -0400
+	id 1s95KK-0002Dh-LV; Mon, 20 May 2024 11:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s94ll-0003b8-DC
- for qemu-devel@nongnu.org; Mon, 20 May 2024 11:17:45 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s94lj-0007Cj-Od
- for qemu-devel@nongnu.org; Mon, 20 May 2024 11:17:45 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-56e56ee8d5cso8428386a12.2
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 08:17:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716218262; x=1716823062; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PofadtPjV50gLiZAVOOvtpW2alRq1pf8qNEAm+/jhS0=;
- b=F20LiyowI1xUnUAYXvSPfVsA13wuBteTEaf5+w1S1x+N2akma+p0TCQ0PLPeEgxkY1
- /h0rZq+rqVxjV/h6/1c/F8OnLbZWlzGEH3h4zPpmgRcakI+QB27ls20MDSQphSKNgkYi
- B/LNRRVleid3QciHgzGXAVyCZX+hbMWQL/kpojFqgkQz+XiLbRbih87CPyPv2t079fHU
- 4wdz/NM4fliAvFdk4Xlgc1f/a/CymWmWlUnWi0Q3QZwcW1RZ0PN3DKICHK17qJ7gRUHa
- 2XunKBTg3Z1ePa3QS2yzbQ+hxYpRsZnBTQrQhGnC3+GSrU+PXVTeiXsuKxz+ABEsV7xX
- 8cdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716218262; x=1716823062;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PofadtPjV50gLiZAVOOvtpW2alRq1pf8qNEAm+/jhS0=;
- b=raLkyvZ/KyRuIuxue2L++86fM3KQOwv9/0sgYLJspxPUFQZXoB8cH/BhBVZ8t4v3Aj
- 1ZYGzMTdPY6YgE3dBJDnmeMR6vmTZweGZxPr5rxRIga5r1pkM4qRMFaKbRy2OVrlU227
- k4FS4+RJ75/+DMShJengA3zeWlKEGKMgBJYM5x+HuWPYx3R+5T3gfW/rgzJ/aKxAbOUq
- C1eir/Fzl75K9SL+6PHsTDE6wPLYQW409H4WmE3QYyDlK7+AsPcibIZsud1eOPFHgo7l
- 8CuPHbQTlNRNTjS/wHFAi4Hcf80HKy/yBOcnsN1L6kG3DvUWqAhxzjQjtLJ+nkHiFMBN
- e7eg==
-X-Gm-Message-State: AOJu0Yx5aUnDVAs4ihP3g69cCgJ0K69XnbgsDmt2cvYyjjCnB9Z6I5xc
- eW9GA72jtEqpMrfvsvpYE5A/aTd4kj2hNPlRWlzB5PKwMa0YOtQvEcZzlvBa2pIKTL+qhQhSK16
- E9k35W1VnG2RQv96iyYWfU/SGWGNSlMu2F/rdCX9TRLtlQwNV
-X-Google-Smtp-Source: AGHT+IFZDi1ihBetfZCvBQ8q86KuydsjQb6GT8OEIJn3zY8L53suS7X6X3bT00M9s/Nw6+snUbkzL4QQLQ76UB9pJWc=
-X-Received: by 2002:a50:d5dc:0:b0:572:7319:ab83 with SMTP id
- 4fb4d7f45d1cf-5734d5904c1mr21862907a12.6.1716218261691; Mon, 20 May 2024
- 08:17:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s95KI-0002D6-VX
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:53:26 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s95KH-0006hA-1d
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 11:53:26 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44KBfEAc024242;
+ Mon, 20 May 2024 15:53:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=qcppdkim1; bh=SeWres8
+ rrwowhI0h7jJQJjG/Z2zJy9GkoNERbduv0nU=; b=LmbXLxucVzHOO1bGd1trdmQ
+ uNyttVJX9q6ojUQmXYXum845POAiscaIAl8lbWLdz3T8sCNACSAyxrI0p8CXStKv
+ pwyLe1gDoFh8CzkdM67+6MYrkDAbA6m+2pTDbqe3V0vCkB87xhdCViYVsRN9CWIJ
+ 7ENVUYW/hcva1fMvYu57zri8Kc8fhwIaAEQno8eT0SEpyZMwnKYEu5PtzaMxRzNq
+ Ub4iicxLl+cKFOHUOl0r1wnzwlRIl8Dr60N5ub/pA1zbLo9MQfbipidME5YjMzyn
+ Q6NPrvIwySU+vyvvKcgixXGbXzecv4wYgh3KqZoux8qXjWKxKytO006FNnddGrw=
+ =
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4p431a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 15:53:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44KFrFMu030227
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 15:53:15 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 20 May 2024 08:53:15 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <ltaylorsimpson@gmail.com>, <sidneym@quicinc.com>, <bcain@quicinc.com>,
+ <richard.henderson@linaro.org>, <ale@rev.ng>, <anjo@rev.ng>
+Subject: [PATCH] Hexagon: fix HVX store new
+Date: Mon, 20 May 2024 12:53:04 -0300
+Message-ID: <f548dc1c240819c724245e887f29f918441e9125.1716220379.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-References: <20240513113513.640007-1-alex.bennee@linaro.org>
- <20240513113513.640007-4-alex.bennee@linaro.org>
-In-Reply-To: <20240513113513.640007-4-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 May 2024 16:17:31 +0100
-Message-ID: <CAFEAcA_E-kFwSVfN+egkUp4Ff6sCj+LXn78z9xbNHGJ96J9PTA@mail.gmail.com>
-Subject: Re: [Semihosting Tests PATCH 3/3] add SYS_GET_CMDLINE test
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: 7sPqP0NOLGKe0RpN9atwsfl6X-TL4E5h
+X-Proofpoint-GUID: 7sPqP0NOLGKe0RpN9atwsfl6X-TL4E5h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-20_05,2024-05-17_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 clxscore=1011 phishscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405200125
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,77 +98,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 May 2024 at 12:35, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> We actually had the stubs to implement this. The main pain is getting
-> the binary name into the program so we can validate the result.
+At 09a7e7db0f (Hexagon (target/hexagon) Remove uses of
+op_regs_generated.h.inc, 2024-03-06), we've changed the logic of
+check_new_value() to use the new pre-calculated
+packet->insn[...].dest_idx instead of calculating the index on the fly
+using opcode_reginfo[...]. The dest_idx index is calculated roughly like
+the following:
 
-Could you write the commit message so that it makes sense
-without reading the Subject line, please ?
+    for reg in iset[tag]["syntax"]:
+        if reg.is_written():
+            dest_idx = regno
+            break
 
-> index 5df95f3..268a9d9 100644
-> --- a/usertest.c
-> +++ b/usertest.c
-> @@ -315,6 +315,26 @@ static int test_feature_detect(void)
->      return 0;
->  }
->
-> +static int test_cmdline(void)
-> +{
-> +    char cmdline[256];
-> +    int actual;
-> +    const char *s, *c;
-> +
-> +    if (semi_get_cmdline(&cmdline[0], sizeof(cmdline), &actual)) {
-> +        semi_write0("FAIL could recover command line\n");
+Thus, we take the first register that is writtable. Before that,
+however, we also used to follow an alphabetical order on the register
+type: 'd', 'e', 'x', and 'y'. No longer following that makes us select
+the wrong register index and the HVX store new instruction does not
+update the memory like expected.
 
-"couldn't", I guess.
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+---
+ tests/tcg/hexagon/hvx_misc.c      | 23 +++++++++++++++++++++++
+ target/hexagon/gen_trans_funcs.py |  9 ++++++---
+ 2 files changed, 29 insertions(+), 3 deletions(-)
 
-> +        return 1;
-> +    }
-> +
-> +    if (strcmp(&cmdline[0], BINARY_NAME) !=3D 0) {
+diff --git a/tests/tcg/hexagon/hvx_misc.c b/tests/tcg/hexagon/hvx_misc.c
+index 1fe14b5158..90c3733da0 100644
+--- a/tests/tcg/hexagon/hvx_misc.c
++++ b/tests/tcg/hexagon/hvx_misc.c
+@@ -474,6 +474,27 @@ static void test_vcombine(void)
+     check_output_w(__LINE__, BUFSIZE);
+ }
+ 
++void test_store_new()
++{
++    asm volatile(
++        "r0 = #0x12345678\n"
++        "v0 = vsplat(r0)\n"
++        "r0 = #0xff00ff00\n"
++        "v1 = vsplat(r0)\n"
++        "{\n"
++        "   vdeal(v1,v0,r0)\n"
++        "   vmem(%0) = v0.new\n"
++        "}\n"
++        :
++        : "r"(&output[0])
++        : "r0", "v0", "v1", "memory"
++    );
++    for (int i = 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
++        expect[0].w[i] = 0x12345678;
++    }
++    check_output_w(__LINE__, 1);
++}
++
+ int main()
+ {
+     init_buffers();
+@@ -515,6 +536,8 @@ int main()
+ 
+     test_vcombine();
+ 
++    test_store_new();
++
+     puts(err ? "FAIL" : "PASS");
+     return err ? 1 : 0;
+ }
+diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
+index 9f86b4edbd..30f0c73e0c 100755
+--- a/target/hexagon/gen_trans_funcs.py
++++ b/target/hexagon/gen_trans_funcs.py
+@@ -89,6 +89,7 @@ def gen_trans_funcs(f):
+ 
+         new_read_idx = -1
+         dest_idx = -1
++        dest_idx_reg_id = None
+         has_pred_dest = "false"
+         for regno, (reg_type, reg_id, *_) in enumerate(regs):
+             reg = hex_common.get_register(tag, reg_type, reg_id)
+@@ -97,9 +98,11 @@ def gen_trans_funcs(f):
+             """))
+             if reg.is_read() and reg.is_new():
+                 new_read_idx = regno
+-            # dest_idx should be the first destination, so check for -1
+-            if reg.is_written() and dest_idx == -1:
+-                dest_idx = regno
++            if reg.is_written():
++                # dest_idx should be the first destination alphabetically
++                if dest_idx_reg_id is None or reg_id < dest_idx_reg_id:
++                    dest_idx = regno
++                    dest_idx_reg_id = reg_id
+             if reg_type == "P" and reg.is_written() and not reg.is_read():
+                 has_pred_dest = "true"
+ 
+-- 
+2.37.2
 
-Why "&cmdline[0]" and not just "cmdline" ?
-
-> +        semi_write0("FAIL unexpected command line:");
-
-Space after the colon will make the error message a bit
-more neatly formatted.
-
-> +        semi_write0(&cmdline[0]);
-
-Missing "return 1" ?
-
-> +    }
-
-Is it worth testing that the length value returned
-by the semihosting function matches the length of
-the string?
-
-> +
-> +    semi_write0("PASS command line test\n");
-> +    return 0;
-> +}
-> +
->  int main(void)
->  {
->      void *bufp;
-> @@ -366,6 +386,10 @@ int main(void)
->          return 1;
->      }
->
-> +    if (test_cmdline()) {
-> +        return 1;
-> +    }
-> +
->      semi_write0("ALL TESTS PASSED\n");
->
->      /* If we have EXIT_EXTENDED then use it */
-> --
-> 2.39.2
-
-thanks
--- PMM
 
