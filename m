@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A3EC25B79
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96BA4C25B79
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s945o-0000n5-4J; Mon, 20 May 2024 10:34:24 -0400
+	id 1s9487-0001iU-Pb; Mon, 20 May 2024 10:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s945m-0000mf-LE
- for qemu-devel@nongnu.org; Mon, 20 May 2024 10:34:22 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1s947z-0001by-W8
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:36:40 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s945k-00077N-TX
- for qemu-devel@nongnu.org; Mon, 20 May 2024 10:34:22 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a5cec2c2981so280703066b.1
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:34:20 -0700 (PDT)
+ id 1s947x-0007hC-Re
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:36:39 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5755fafa5a7so2374652a12.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716215659; x=1716820459; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716215796; x=1716820596; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=euD1s9PyxtnETpDK0sKP2l9tsBj/ydNrt4RMXS6iFvU=;
- b=iF//f8nLAcwn6A0PjDESKJKkCN36sNqLu5G1sVBvl0RGAvIHyGrRni8IQlmyyvHSdv
- FQB4+5raFGPZun2SfDL5wwLFZdt7qylZn3n7mcWnaxhAmMASPZ20uucjkzpMIgkS9Rbj
- 8INloHnQAiMkMVR36HTDQ9udyYLcaSOsqulCfxGfB0UKRi22Yf5+UTodpHiSEhJ18+mZ
- 3jPQFyfex3AM24yEBCD0j4c8b06Z8MHbWG7nkAZC1htXpJfl+ZcWGJ4yHaA5vPeyjddp
- Qe3u3CJf2QyEM2nRoJxb6M4JQSaGu/yXDhkW6YY7QOo3L5c3IKYY4JMJyge9O0MzXsKQ
- zuig==
+ bh=AmtG5oN62yyAmZnv258bmJDRpCA4+HfX3KYlwsEc8SM=;
+ b=nl/uQtjYnLeEnJUHNpB5BJ/03Gnq05uwS2rNC2O/W/bEwad1j54Zb1hcVFua5FYRxu
+ OAyTvC+rLSGbhOKo22BaghNfkOfFjYAqn/PlVzsoZ4rQDuCom262CHE+llC9TmKe4fHj
+ ebKxTHYu+MD4h5CU8F5DVY2RZ5d8i3LlfB4vAOXs1po+wMQbE3IZsifSPhUnj+iJJlFI
+ cUbcbOc0JeqAd+cpTYhGE/78NgNeg4chmfMZqjQ5jOf5HwQC3HoUQEi2YOOsyfm6hdNK
+ b8OD3sLWZgocbephUPDLAeXsPyj2kuYZmDNnkaGMEIXrREb6P9YYvitCgVnveG1N2uzc
+ ibNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716215659; x=1716820459;
+ d=1e100.net; s=20230601; t=1716215796; x=1716820596;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=euD1s9PyxtnETpDK0sKP2l9tsBj/ydNrt4RMXS6iFvU=;
- b=TilqluBUKVBYZ6ygpWVV0IEPyXL3dlpsa1hOcxSb4Flt+gZBCEtAHgxpaiPW/5Lmpa
- bXWLLO0XgsAUidudebtBZRnY5LrThRC4Err+kav/YKiJU88VI2irGoXks4Nmc9lKGWqa
- yz9QeDvxh6P4gj+44v+WxSRJd/prvM4mnoEs6MqjNEINkynnROg6p1+fPfWBbNyQa4g2
- pbH2Cv/3yQFvQ7TTIbjXK6uMWd5gzzzbZv5jjdppOhAjDENjgqL6+VDwA7nK6An8qaVf
- A2+yeH/dnT2MC8xpb4lDqZYIz4IcdZsBCrMcRz9qJwZdsVGWQetKemp5nx/hT5/RPiKH
- 7DJQ==
-X-Gm-Message-State: AOJu0Yyxwqu0b4LdmC2qLIgizIfpECMr9gMry8hwJNyeYdhQwAnHwRxc
- qi4/uZoD8sK6G9KiZQnPkzuHG9ml0T334M+V7uKyzvAwNJVpiVNE0wtLtOK1YQYS12DaWN53i9J
- AB+Pf6Im/WNMFjKbL7v7L4pRDNa6bP7bzeZsvfw==
-X-Google-Smtp-Source: AGHT+IHuG3vRveaTkzp5ed4+PECCBYgoIgX76TGlKj+lnxcA/wvDfZdcbpjDM/kgt/+AFLeivEi/qiwMDkS2OCUZ6vs=
-X-Received: by 2002:a50:9e44:0:b0:572:cfa4:3cc6 with SMTP id
- 4fb4d7f45d1cf-5734d597d84mr25344432a12.8.1716215659176; Mon, 20 May 2024
- 07:34:19 -0700 (PDT)
+ bh=AmtG5oN62yyAmZnv258bmJDRpCA4+HfX3KYlwsEc8SM=;
+ b=ifAAv6PEfF8j+DRCcxYuz8I+CRJttNUS3BHC3p1k8s5fsb1pC6TbVpmrFcH/lXQYJI
+ 9aaeJd2SbZiAIcIJTH20a5rFQpb/N4sqnyfrPeXBFIvOjzorGcfxcIl+sY/3B6ectx1C
+ y1v+ngB7GDiLucnYd3li8hoTgvtXxnsVbNtlg72Ej/QahfAAcyLl303TS+gU2aSctOHo
+ Y2BX6glHqz+ve7e3aamwQGKS9ImTgmS9RdNi5O9D/qoqvWn1sztRAuZUBNuU7KRs2MDj
+ hujnofbnfK8iDob+mKj/x8XF5PXVC3RYHduaY8cpAHJPAw/4yXZviDKels0r7pMIFK3o
+ 0pFg==
+X-Gm-Message-State: AOJu0Yy/DAQx0lR5i/y4FyOJIyU4VBqYPvs2yCrEKetRUmx6QEues5G6
+ 3Be1eu2eOr15VF23dNFHtQF8VwCfNIw7ExI3A0yE6qrxFHRow5bbS/MGXBmx8aFoMfHbh0dm7+7
+ 6ZNWJb2PiKIRGyo2gbR4BlxbLTtNDcECgnIIi+g==
+X-Google-Smtp-Source: AGHT+IF96pZJU1sqgtTLzYOUVh+RXVgdTkc0H8l+m3R0yuwzkMD1r4P+15NvXDDJEGiPA6KGq7p1DCe+RNBIosKbnHY=
+X-Received: by 2002:a50:ab59:0:b0:572:a711:3daf with SMTP id
+ 4fb4d7f45d1cf-5734d7047damr17408817a12.40.1716215796122; Mon, 20 May 2024
+ 07:36:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240508141333.44610-1-philmd@linaro.org>
- <CAFEAcA84CfdNZSjZ1R96=5P-VhxGXyaaujF1Y8AxKa+Wvpdp3Q@mail.gmail.com>
- <ba6c3173-12c2-45d8-ade4-b21598800f5b@linaro.org>
-In-Reply-To: <ba6c3173-12c2-45d8-ade4-b21598800f5b@linaro.org>
+References: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 May 2024 15:34:08 +0100
-Message-ID: <CAFEAcA9fZx9=SCRgZ9+S4dZ29yCnZ+i9aX+S8tt42GzP0nXVDw@mail.gmail.com>
-Subject: Re: [PATCH] hw/clock: Expose 'freq-hz' QOM property
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Luc Michel <luc@lmichel.fr>, 
- Damien Hedde <damien.hedde@dahe.fr>,
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Date: Mon, 20 May 2024 15:36:24 +0100
+Message-ID: <CAFEAcA8=vnpPU7bXmd89PSXOB31aEp+RP41BrM1N2kY=nhc8fw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Check clock connection between STM32L4x5 RCC and
+ peripherals
+To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>, 
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,46 +96,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 May 2024 at 22:27, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+On Tue, 7 May 2024 at 19:59, In=C3=A8s Varhol <ines.varhol@telecom-paris.fr=
 > wrote:
 >
-> On 8/5/24 19:46, Peter Maydell wrote:
-> > On Wed, 8 May 2024 at 15:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro=
-.org> wrote:
-> >>
-> >> Expose the clock frequency via the QOM 'freq-hz' property,
-> >> as it might be useful for QTests.
-> >>
-> >> HMP example:
-> >>
-> >>    $ qemu-system-mips -S -monitor stdio -M mipssim
-> >>    (qemu) qom-get /machine/cpu-refclk freq-hz
-> >>    12000000
-> >>
-> >> Inspired-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >
-> > So I have a couple of thoughts here:
-> >
-> > (1) if this is intended for qtests, would exposing the period (i.e.
-> > QOM equivalent of clock_get() rather than clock_get_hz()) be better?
-> > A Hz figure has rounding so it's not as accurate.
+> Among implemented STM32L4x5 devices, USART, GPIO and SYSCFG
+> have a clock source, but none has a corresponding test in QEMU.
 >
-> Indeed, simpler to compare from QTest perspective.
+> This patch makes sure that all 3 devices create a clock,
+> have a QOM property to access the clock frequency,
+> and adds QTests checking that clock enable in RCC has the
+> expected results.
 >
-> > (2) We should document this in clocks.rst; I guess we want to say
-> > "only intended for use in qtests" (i.e. if you're part of QEMU
-> > use the existing function interface, not this).
+> Philippe Mathieu-Daud=C3=A9 suggested the following :
+> ".. We could add the clock properties
+> directly in qdev_init_clock_in(). Seems useful for the QTest
+> framework."
 >
-> OK, and we can also only expose this for QTest using:
+> However Peter Maydell pointed out the following :
+> "...Mostly "frequency" properties on devices are for the case
+> where they *don't* have a Clock input and instead have
+> ad-hoc legacy handling where the board/SoC that creates the
+> device sets an integer property to define the input frequency
+> because it doesn't model the clock tree with Clock objects."
 >
->    if (qtest_enabled()) {
->        object_property_add(obj, "[qtest-]clock-period", ...);
->    }
+> You both agree on the fact that replicating the code in the
+> different devices is a bad idea, what should be the
+> alternative?
 
-Yes, that seems reasonable. (I don't know if we have any other
-qtest-only properties but I don't see any reason why we
-shouldn't have them if we want to expose stuff for tests only.)
+I think we should use the approach discussed in the review
+comments on Philippe's patch
+https://patchew.org/QEMU/20240508141333.44610-1-philmd@linaro.org/
+where if we're running a qtest then the core clock code creates a
+QOM property which is the clock period; the test code can then use
+that.
 
 thanks
 -- PMM
