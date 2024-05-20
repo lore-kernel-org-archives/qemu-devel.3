@@ -4,99 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DACCC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 10:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EBCC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 10:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s90PC-0005UU-Nr; Mon, 20 May 2024 06:38:10 -0400
+	id 1s90ZQ-0007n2-3y; Mon, 20 May 2024 06:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s90P9-0005U4-Mw
- for qemu-devel@nongnu.org; Mon, 20 May 2024 06:38:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1s90ZH-0007jm-QT; Mon, 20 May 2024 06:48:36 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s90P8-0000oP-1n
- for qemu-devel@nongnu.org; Mon, 20 May 2024 06:38:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716201485;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qYybloYhddQjFVVfwcV3qV3Wofv8tKjeWYVubu3SEX0=;
- b=BqAXkEUniaKXXYD8EPHsNBhxHcQKfuMTrkCU3vtx8FM2fS4uqp8ZMpEoWsqdPdebIIDTXK
- vn+Ucn9gZUtnyYPf3Aa1eVc9OmmF4PgJsYmJt2mfVTFB1cpI9ykMrKTQqOyRKAVSnhMSiX
- 49E82LCtw2JaVFNNn5/v7lkbZ9lqDbs=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-IBLB2PPxO5OWAyGzm1dOjA-1; Mon, 20 May 2024 06:38:03 -0400
-X-MC-Unique: IBLB2PPxO5OWAyGzm1dOjA-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7948bc4d8d0so15621285a.3
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 03:38:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716201480; x=1716806280;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qYybloYhddQjFVVfwcV3qV3Wofv8tKjeWYVubu3SEX0=;
- b=WEQ3GhGdgB99v9z0/MvX96NL1uQq+xZit9eUFfGp6F+Hi5Yq/yLEARZcQnap8klsvG
- avnP5vPWpJGX1iFD131os5RX5tSlz30lJecHAHCk5/rv4VwMdfUf8sajo5VJPO11kWuI
- hSUM8WnamXYNym3okMK8S+U12eNaE+7CqyOBpWQ33zZzWOQRILYLlpiTAkrNoYBO37S+
- IhKmesI8CPDVOF9wyVbwiV/yyw9Y8vp9gMi6V6KWhsid8TaRUqRu2OcCJrkqvZbEFWb2
- gSHUUa8ppaDtDfG76w9NPnv26GdGG08FeAfhl90DTJeEHKFaXYhtpvhTDkwAQ/1rt+AD
- rSBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXh8uZMECO6H0cutA31Cts+wRC9HGHeKhmnSCM8XsgjaQVdhwqY9zSIDg76R+p4wRPRO4/AueMrsl9TUGzuCVBs77j7NM=
-X-Gm-Message-State: AOJu0YzPPc+dzIxiZVcYIUfgxV6k9Z+sXRveEU/SbuooxGMb9vObg1mP
- z0Rh7QIRpXhRlfjOws03prT+KCBkwYeaOuvjfj8ywuyYJiaxPT3jeKPnxX3lqPWPhSZMFqK45JE
- OU/Kn+4P1m6FJ5j6sVDKQXbZnvtenCviuyFPqS8/FAYvLEye9RvQVB1VbmWaL
-X-Received: by 2002:a05:620a:3624:b0:793:31:d2fd with SMTP id
- af79cd13be357-7930031d425mr1280018185a.5.1716201480269; 
- Mon, 20 May 2024 03:38:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsaoJz3LpGcvi7rskuvnmDj95NkjPUV0f+AxbJd7hzmrvLMQvfVsW5YGZuf5CoxMvx6Sm2aA==
-X-Received: by 2002:a05:620a:3624:b0:793:31:d2fd with SMTP id
- af79cd13be357-7930031d425mr1280016985a.5.1716201479872; 
- Mon, 20 May 2024 03:37:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf2fc67esm1176913585a.74.2024.05.20.03.37.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 03:37:59 -0700 (PDT)
-Message-ID: <ee406ad2-68c9-47e2-8167-20dbceb1e484@redhat.com>
-Date: Mon, 20 May 2024 12:37:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 13/18] hw/arm/smmuv3: Support nested SMMUs in
- smmuv3_notify_iova()
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1s90ZD-0002dB-Qs; Mon, 20 May 2024 06:48:34 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VjZ2W3cj5z6J9xb;
+ Mon, 20 May 2024 18:44:51 +0800 (CST)
+Received: from lhrpeml100006.china.huawei.com (unknown [7.191.160.224])
+ by mail.maildlp.com (Postfix) with ESMTPS id CC4EE140CB9;
+ Mon, 20 May 2024 18:48:24 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml100006.china.huawei.com (7.191.160.224) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 20 May 2024 11:48:24 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Mon, 20 May 2024 11:48:24 +0100
+To: Nicholas Piggin <npiggin@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
+ <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
+ "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
+ <rafael@kernel.org>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, Linuxarm
+ <linuxarm@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Shaoqin Huang <shahuang@redhat.com>
+Subject: RE: [PATCH V9 1/8] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+Thread-Topic: [PATCH V9 1/8] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+Thread-Index: AQHaqjCk+Krm+sEOpEGrtSE0xbsEKbGfs2mAgAA2vKA=
+Date: Mon, 20 May 2024 10:48:24 +0000
+Message-ID: <68a66945081c444789c0381da0920b6d@huawei.com>
+References: <20240519210620.228342-1-salil.mehta@huawei.com>
+ <20240519210620.228342-2-salil.mehta@huawei.com>
+ <D1EBDKJQ19G2.7K7FS8Z9BA5D@gmail.com>
+In-Reply-To: <D1EBDKJQ19G2.7K7FS8Z9BA5D@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-14-smostafa@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240429032403.74910-14-smostafa@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.126.174.235]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,120 +96,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
-
-On 4/29/24 05:23, Mostafa Saleh wrote:
-> IOMMUTLBEvent only understands IOVA, for stage-2 only SMMUs keep
-> the implementation, while only notify for stage-1 invalidation
-> in case of nesting.
->
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> ---
->  hw/arm/smmuv3.c     | 23 +++++++++++++++--------
->  hw/arm/trace-events |  2 +-
->  2 files changed, 16 insertions(+), 9 deletions(-)
->
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index e0fd494646..96d07234fe 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1051,7 +1051,7 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->                                 IOMMUNotifier *n,
->                                 int asid, int vmid,
->                                 dma_addr_t iova, uint8_t tg,
-> -                               uint64_t num_pages)
-> +                               uint64_t num_pages, int stage)
-add the new param in the doc comment above
->  {
->      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->      IOMMUTLBEvent event;
-> @@ -1075,14 +1075,21 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->              return;
->          }
->  
-> -        if (STAGE1_SUPPORTED(s)) {
-> +        /*
-> +         * IOMMUTLBEvent only understands IOVA, for stage-2 only SMMUs
-> +         * keep the implementation, while only notify for stage-1
-> +         * invalidation in case of nesting.
-> +         */
-> +        if (stage == SMMU_STAGE_1) {
->              tt = select_tt(cfg, iova);
->              if (!tt) {
->                  return;
->              }
->              granule = tt->granule_sz;
-> -        } else {
-> +        } else if (!STAGE1_SUPPORTED(s)) {
-I don't get why you don't test stage == SMMU_STAGE_2 instead
-in each block shouldn't you test if the corresponding state of supported?
->              granule = cfg->s2cfg.granule_sz;
-> +        } else {
-I don't really understand the logic here. Please can you comment each case?
-
-Thanks
-
-Eric
-> +            return;
->          }
->  
->      } else {
-> @@ -1101,7 +1108,7 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->  /* invalidate an asid/vmid/iova range tuple in all mr's */
->  static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
->                                        dma_addr_t iova, uint8_t tg,
-> -                                      uint64_t num_pages)
-> +                                      uint64_t num_pages, int stage)
->  {
->      SMMUDevice *sdev;
->  
-> @@ -1110,10 +1117,10 @@ static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
->          IOMMUNotifier *n;
->  
->          trace_smmuv3_inv_notifiers_iova(mr->parent_obj.name, asid, vmid,
-> -                                        iova, tg, num_pages);
-> +                                        iova, tg, num_pages, stage);
->  
->          IOMMU_NOTIFIER_FOREACH(n, mr) {
-> -            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages);
-> +            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages, stage);
->          }
->      }
->  }
-> @@ -1144,7 +1151,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
->  
->      if (!tg) {
->          trace_smmuv3_range_inval(vmid, asid, addr, tg, 1, ttl, leaf, stage);
-> -        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1);
-> +        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage);
->          if (stage == SMMU_STAGE_1) {
->              smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl);
->          } else {
-> @@ -1167,7 +1174,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
->          num_pages = (mask + 1) >> granule;
->          trace_smmuv3_range_inval(vmid, asid, addr, tg, num_pages,
->                                   ttl, leaf, stage);
-> -        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, num_pages);
-> +        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, num_pages, stage);
->          if (stage == SMMU_STAGE_1) {
->              smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, num_pages, ttl);
->          } else {
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index 593cc571da..be6c8f720b 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -55,7 +55,7 @@ smmuv3_cmdq_tlbi_s12_vmid(int vmid) "vmid=%d"
->  smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
->  smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
->  smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
-> -smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64
-> +smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
->  
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
-
+SGkgTmljaywNCg0KPiAgRnJvbTogTmljaG9sYXMgUGlnZ2luIDxucGlnZ2luQGdtYWlsLmNvbT4N
+Cj4gIFNlbnQ6IE1vbmRheSwgTWF5IDIwLCAyMDI0IDk6MDQgQU0NCj4gIFRvOiBTYWxpbCBNZWh0
+YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsNCj4gIHFl
+bXUtYXJtQG5vbmdudS5vcmcNCj4gIA0KPiAgT24gTW9uIE1heSAyMCwgMjAyNCBhdCA3OjA2IEFN
+IEFFU1QsIFNhbGlsIE1laHRhIHdyb3RlOg0KPiAgPiBLVk0gdkNQVSBjcmVhdGlvbiBpcyBkb25l
+IG9uY2UgZHVyaW5nIHRoZSB2Q1BVIHJlYWxpemF0aW9uIHdoZW4gUWVtdQ0KPiAgPiB2Q1BVIHRo
+cmVhZCBpcyBzcGF3bmVkLiBUaGlzIGlzIGNvbW1vbiB0byBhbGwgdGhlIGFyY2hpdGVjdHVyZXMg
+YXMgb2Ygbm93Lg0KPiAgPg0KPiAgPiBIb3QtdW5wbHVnIG9mIHZDUFUgcmVzdWx0cyBpbiBkZXN0
+cnVjdGlvbiBvZiB0aGUgdkNQVSBvYmplY3QgaW4gUU9NDQo+ICA+IGJ1dCB0aGUgY29ycmVzcG9u
+ZGluZyBLVk0gdkNQVSBvYmplY3QgaW4gdGhlIEhvc3QgS1ZNIGlzIG5vdCBkZXN0cm95ZWQNCj4g
+ID4gYXMgS1ZNIGRvZXNuJ3Qgc3VwcG9ydCB2Q1BVIHJlbW92YWwuIFRoZXJlZm9yZSwgaXRzIHJl
+cHJlc2VudGF0aXZlIEtWTQ0KPiAgPiB2Q1BVIG9iamVjdC9jb250ZXh0IGluIFFlbXUgaXMgcGFy
+a2VkLg0KPiAgPg0KPiAgPiBSZWZhY3RvciBhcmNoaXRlY3R1cmUgY29tbW9uIGxvZ2ljIHNvIHRo
+YXQgc29tZSBBUElzIGNvdWxkIGJlIHJldXNlZA0KPiAgPiBieSB2Q1BVIEhvdHBsdWcgY29kZSBv
+ZiBzb21lIGFyY2hpdGVjdHVyZXMgbGlrZXMgQVJNLCBMb29uZ3NvbiBldGMuDQo+ICA+IFVwZGF0
+ZSBuZXcvb2xkIEFQSXMgd2l0aCB0cmFjZSBldmVudHMgaW5zdGVhZCBvZiBEUFJJTlRGLiBObyBm
+dW5jdGlvbmFsDQo+ICBjaGFuZ2UgaXMgaW50ZW5kZWQgaGVyZS4NCj4gIA0KPiAgVGhpcyBpcyBh
+IG5pY2UgY2xlYW51cCBhbmQgaGVscHMgd2l0aCBwcGMgaG90cGx1ZyBhcyB3ZWxsLg0KDQoNClRo
+YW5rcyBhbmQgZ2xhZCB0aGF0IGl0IGlzIG9mIGhlbHAuDQoNCg0KPiAgDQo+ICBIYXMgdGhlcmUg
+YmVlbiBhbnkgYXJjaGl0ZWN0dXJlIGNvZGUgcG9zdGVkIHlldD8NCg0KDQpZZXMsIEkgY3JlYXRl
+ZCBvbmUgaW4gIEFwcmlsL2Vhcmx5IE1heS4gIEl0IGNvbnRhaW5zIGFyY2ggc3BlY2lmaWMgcGF0
+Y2gtc2V0IHN0YWNrZWQgdXANCm9uIHRoZSBhcmNoIGFnbm9zdGljIHBhdGNoLXNldCBWOC4gQXJj
+aCBzcGVjaWZpYyBwYXRjaC1zZXQgY29udGFpbnMgcGF0Y2hlcyBmcm9tIHRoZQ0KUkZDIFYyIEkg
+ZmxvYXRlZCBsYXN0IHllYXIuIA0KDQpodHRwczovL2dpdGh1Yi5jb20vc2FsaWwtbWVodGEvcWVt
+dS9jb21taXRzL3ZpcnQtY3B1aHAtYXJtdjgvcmZjLXYzLXJjMS8NCg0KDQpBcyBzdWNoLCBhIGNv
+bXBsZXRlIGNvZGUgb2YgUkZDIFYyIHdhcyBwb3N0ZWQgbGFzdCB5ZWFyLiBUaGVyZSBpcyBubyBj
+bGVhciBzZXBhcmF0aW9uIG9mDQphcmNoaXRlY3R1cmUgYWdub3N0aWMgYW5kIHNwZWNpZmljIHBh
+dGNoLXNldCBpbiB0aGlzIHZlcnNpb24uIGFuZCBjYW4gYmUgZm91bmQgYXQgYmVsb3cNCnJlcG9z
+aXRvcnkuDQoNCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyMzA5MjYxMDA0
+MzYuMjgyODQtMS1zYWxpbC5tZWh0YUBodWF3ZWkuY29tLw0KDQoNCkkgc2hhbGwgYmUgZmxvYXRp
+bmcgUkZDIFYzIHNvb24gd2hpY2ggd2lsbCBoYXZlIG9ubHkgQVJNIGFyY2hpdGVjdHVyZSBzcGVj
+aWZpYyBwYXJ0IGFuZA0KeWVzIHdpbGwgYWxzbyBoYXZlIFRDRyBjb2RlIGJ1dCB0aGVyZSBhcmUg
+c29tZSBpc3N1ZXMgdG8gYmUgZml4ZWQgZm9yIFRDRyBhbmQgd2UgYXJlDQp3b3JraW5nIHRvd2Fy
+ZHMgaXQuIEhlbmNlLCB3ZSBoYXZlIGRpc2FibGVkIFRDRyBieSBkZWZhdWx0IGZvciBub3cuDQoN
+Cg0KVGhhbmtzDQpTYWxpbC4NCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KPiAgDQo+ICBKdXN0
+IGEgZmV3IG1pbm9yIHRoaW5nOg0KPiAgDQo+ICA+DQo+ICA+IFNpZ25lZC1vZmYtYnk6IFNhbGls
+IE1laHRhIDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPg0KPiAgPiBSZXZpZXdlZC1ieTogR2F2aW4g
+U2hhbiA8Z3NoYW5AcmVkaGF0LmNvbT4NCj4gID4gVGVzdGVkLWJ5OiBWaXNobnUgUGFqanVyaSA8
+dmlzaG51QG9zLmFtcGVyZWNvbXB1dGluZy5jb20+DQo+ICA+IFJldmlld2VkLWJ5OiBKb25hdGhh
+biBDYW1lcm9uIDxKb25hdGhhbi5DYW1lcm9uQGh1YXdlaS5jb20+DQo+ICA+IFRlc3RlZC1ieTog
+WGlhbmdsYWkgTGkgPGxpeGlhbmdsYWlAbG9vbmdzb24uY24+DQo+ICA+IFRlc3RlZC1ieTogTWln
+dWVsIEx1aXMgPG1pZ3VlbC5sdWlzQG9yYWNsZS5jb20+DQo+ICA+IFJldmlld2VkLWJ5OiBTaGFv
+cWluIEh1YW5nIDxzaGFodWFuZ0ByZWRoYXQuY29tPg0KPiAgPiBSZXZpZXdlZC1ieTogVmlzaG51
+IFBhamp1cmkgPHZpc2hudUBvcy5hbXBlcmVjb21wdXRpbmcuY29tPg0KPiAgPiAtLS0NCj4gID4g
+IGFjY2VsL2t2bS9rdm0tYWxsLmMgICAgfCA2NCArKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKy0tLS0tLQ0KPiAgLS0tLQ0KPiAgPiAgYWNjZWwva3ZtL2t2bS1jcHVzLmggICB8IDE0ICsr
+KysrKysrKw0KPiAgPiAgYWNjZWwva3ZtL3RyYWNlLWV2ZW50cyB8ICA1ICsrKy0NCj4gID4gIDMg
+ZmlsZXMgY2hhbmdlZCwgNjcgaW5zZXJ0aW9ucygrKSwgMTYgZGVsZXRpb25zKC0pDQo+ICA+DQo+
+ICA+IGRpZmYgLS1naXQgYS9hY2NlbC9rdm0va3ZtLWFsbC5jIGIvYWNjZWwva3ZtL2t2bS1hbGwu
+YyBpbmRleA0KPiAgPiBjMGJlOWY1ZWVkLi45Y2Q3ZDY5YmRlIDEwMDY0NA0KPiAgPiAtLS0gYS9h
+Y2NlbC9rdm0va3ZtLWFsbC5jDQo+ICA+ICsrKyBiL2FjY2VsL2t2bS9rdm0tYWxsLmMNCj4gID4g
+QEAgLTEyOCw2ICsxMjgsNyBAQCBzdGF0aWMgUWVtdU11dGV4IGttbF9zbG90c19sb2NrOyAgI2Rl
+ZmluZQ0KPiAgPiBrdm1fc2xvdHNfdW5sb2NrKCkgIHFlbXVfbXV0ZXhfdW5sb2NrKCZrbWxfc2xv
+dHNfbG9jaykNCj4gID4NCj4gID4gIHN0YXRpYyB2b2lkIGt2bV9zbG90X2luaXRfZGlydHlfYml0
+bWFwKEtWTVNsb3QgKm1lbSk7DQo+ICA+ICtzdGF0aWMgaW50IGt2bV9nZXRfdmNwdShLVk1TdGF0
+ZSAqcywgdW5zaWduZWQgbG9uZyB2Y3B1X2lkKTsNCj4gID4NCj4gID4gIHN0YXRpYyBpbmxpbmUg
+dm9pZCBrdm1fcmVzYW1wbGVfZmRfcmVtb3ZlKGludCBnc2kpICB7IEBAIC0zNDAsMTQNCj4gID4g
+KzM0MSw1MyBAQCBlcnI6DQo+ICA+ICAgICAgcmV0dXJuIHJldDsNCj4gID4gIH0NCj4gID4NCj4g
+ID4gK3ZvaWQga3ZtX3BhcmtfdmNwdShDUFVTdGF0ZSAqY3B1KQ0KPiAgPiArew0KPiAgPiArICAg
+IHN0cnVjdCBLVk1QYXJrZWRWY3B1ICp2Y3B1Ow0KPiAgPiArDQo+ICA+ICsgICAgdHJhY2Vfa3Zt
+X3BhcmtfdmNwdShjcHUtPmNwdV9pbmRleCwga3ZtX2FyY2hfdmNwdV9pZChjcHUpKTsNCj4gID4g
+Kw0KPiAgPiArICAgIHZjcHUgPSBnX21hbGxvYzAoc2l6ZW9mKCp2Y3B1KSk7DQo+ICA+ICsgICAg
+dmNwdS0+dmNwdV9pZCA9IGt2bV9hcmNoX3ZjcHVfaWQoY3B1KTsNCj4gID4gKyAgICB2Y3B1LT5r
+dm1fZmQgPSBjcHUtPmt2bV9mZDsNCj4gID4gKyAgICBRTElTVF9JTlNFUlRfSEVBRCgma3ZtX3N0
+YXRlLT5rdm1fcGFya2VkX3ZjcHVzLCB2Y3B1LCBub2RlKTsgfQ0KPiAgDQo+ICBDb3VsZCB5b3Ug
+bW92ZSBrdm1fZ2V0X3ZjcHUgdXAgaGVyZSBzbyBpdCdzIG5leHQgdG8ga3ZtX3BhcmtfdmNwdSwg
+YW5kDQo+ICB0aGVuIHlvdSBkb24ndCBuZWVkIHRvIGZvcndhcmQgZGVjbGFyZSBpdC4gQ2FsbCBp
+dCBrdm1fdW5wYXJrX3ZjcHUoKSBmb3INCj4gIHN5bW1ldHJ5IHdpdGggcGFyay4NCj4gIA0KPiAg
+VGhhbmtzLA0KPiAgTmljaw0K
 
