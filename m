@@ -4,60 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3404C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 10:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A38C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 10:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s90Cm-0006ol-BT; Mon, 20 May 2024 06:25:20 -0400
+	id 1s90Kx-0000gt-07; Mon, 20 May 2024 06:33:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
- id 1s90Cj-0006mp-H3; Mon, 20 May 2024 06:25:17 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <duchao@eswincomputing.com>)
- id 1s90Cf-0005fG-Ct; Mon, 20 May 2024 06:25:15 -0400
-Received: from duchao$eswincomputing.com ( [10.64.112.210] ) by
- ajax-webmail-app1 (Coremail) ; Mon, 20 May 2024 18:22:57 +0800 (GMT+08:00)
-X-Originating-IP: [10.64.112.210]
-Date: Mon, 20 May 2024 18:22:57 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Chao Du" <duchao@eswincomputing.com>
-To: pbonzini@redhat.com, "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair23@gmail.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- anup@brainfault.org, atishp@atishpatra.org
-Subject: Re: [RFC PATCH 0/4] target/riscv/kvm: QEMU support for KVM Guest
- Debug on RISC-V
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20220420(169d3f8c)
- Copyright (c) 2002-2024 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <b93f13c4-05a9-4772-8ed9-a74b2f5f9cef@ventanamicro.com>
-References: <20231221094923.7349-1-duchao@eswincomputing.com>
- <846ec319-6026-4b14-b156-9e1f42c6dba1@ventanamicro.com>
- <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
- <b93f13c4-05a9-4772-8ed9-a74b2f5f9cef@ventanamicro.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s90Kv-0000gX-MU; Mon, 20 May 2024 06:33:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s90Kt-0008V2-S5; Mon, 20 May 2024 06:33:45 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44K9KkJt031201; Mon, 20 May 2024 10:33:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=kiUm3CTdqcX7ZE+siiqzqIMJQ6QJt8w5BNVfDuzRtQ0=;
+ b=EbJVXN1BHHSrp+LcyWocFyuUXzZ3QQC5R+oXF6ZOaGXAS90zUK1WRJWnjZwUQk1M3+7K
+ dBE2S/cHNtViidXfpiKKZQgw166OVJIZduHFiTn8X3SF8g/z8AcfTJ8zC46WQHLqkv2g
+ QCMmdgqRxUI5IIOCYfURuC0M3Eo39BzxEYVzXNWn8GUIeu9RVNxZc2XW3K0hWZYAbIgg
+ Bx0MjJ+elBegLasWqCVGRUIXVxIfSazQ1Me9Qwh1mcYajPW3a937iYe4XL6noFfgeGrI
+ U5Bahoo/f65V+GBlGFKr3YG1/izrz29KlzzfyTnIsJ6qE3AoJrnsUlkub9VZK24BQGGP gg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y83p485qp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 10:33:41 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44KAXf52022322;
+ Mon, 20 May 2024 10:33:41 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y83p485qm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 10:33:41 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44K8gB4k022086; Mon, 20 May 2024 10:33:40 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y76ntfg1e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 10:33:40 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44KAXaVW51249480
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 May 2024 10:33:39 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DA7B820067;
+ Mon, 20 May 2024 10:33:36 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C79A2004B;
+ Mon, 20 May 2024 10:33:35 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com (unknown
+ [9.195.33.101]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 May 2024 10:33:35 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: npiggin@gmail.com, qemu-ppc@nongnu.org
+Cc: danielhb413@gmail.com, qemu-devel@nongnu.org
+Subject: [PATCH 1/6] target/ppc: use locally stored msr and avoid indirect
+ access
+Date: Mon, 20 May 2024 16:03:24 +0530
+Message-Id: <20240520103329.381158-2-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240520103329.381158-1-harshpb@linux.ibm.com>
+References: <20240520103329.381158-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Message-ID: <745db9ba.296.18f95869950.Coremail.duchao@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: TAJkCgC3S+OBJEtm+ysMAA--.3224W
-X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/1tbiAgEDDGZJyRMgfgAFsi
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
- CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
- daVFxhVjvjDU=
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=duchao@eswincomputing.com;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4GWajSrecyuy0dVinF_MHVh-_eA5vCge
+X-Proofpoint-ORIG-GUID: PW77nY7Q8-cPFOmg0t_gk4O_cp4Cck3D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-20_05,2024-05-17_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ priorityscore=1501 mlxlogscore=717 adultscore=0 phishscore=0 clxscore=1015
+ mlxscore=0 spamscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405200087
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,57 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgUGFvbG8sCgpBcyBEYW5pZWwgc3VnZ2VzdGVkLCBjb3VsZCB5b3UgcGxlYXNlIHRha2UgYSBs
-b29rIGF0IHRoaXMgc2VyaWVzID8KClRoYW5rcywKQ2hhbwoKT24gMjAyNC0wNC0xNiAxNzoyNSwg
-RGFuaWVsIEhlbnJpcXVlIEJhcmJvemEgPGRiYXJib3phQHZlbnRhbmFtaWNyby5jb20+IHdyb3Rl
-Ogo+IAo+IE9uIDQvOS8yNCAwNjo0MywgQ2hhbyBEdSB3cm90ZToKPiA+IEhpIERhbmllbCBhbmQg
-YWxsLAo+ID4gCj4gPiBUaGUgS1ZNIHBhdGNoZXMgaGF2ZSBiZWVuIHJldmlld2QgYW5kIGFyZSBp
-biB0aGUgcXVldWUuCj4gPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyNDA0MDIwNjI2
-MjguNTQyNS0xLWR1Y2hhb0Blc3dpbmNvbXB1dGluZy5jb20vCj4gPiAKPiA+IENvdWxkIHlvdSBw
-bGVhc2UgcmV2aWV3IGluIHRoZSBRRU1VIHNpZGUgPwo+ID4gVGhlbiBJIHdpbGwgcmViYXNlIHRo
-aXMgc2VyaWVzIHdpdGggeW91ciBjb21tZW50cy4KPiA+IAo+ID4gU29tZSBOb3RlczoKPiA+IDEu
-IEFzIHRoZSBmaXJzdCBzdGFnZSwgb25seSB0aGUgc29mdHdhcmUgYnJlYWtwb2ludHMgaXMgaW1w
-bGVtZW50ZWQuCj4gPiAyLiBBICdjb3JuZXIgY2FzZScgaW4gd2hpY2ggdGhlIGRlYnVnIGV4Y2Vw
-dGlvbiBpcyBub3QgaW5zZXJ0ZWQgYnkgdGhlCj4gPiBkZWJ1Z2dlciwgbmVlZCB0byBiZSByZS1p
-bmplY3RlZCB0byB0aGUgZ3Vlc3QuIFRoaXMgaXMgbm90IGhhbmRsZWQgeWV0Cj4gPiBpbiB0aGlz
-IHNlcmllcy4KPiAKPiBBc2lkZSBmcm9tIHRoZSBjb21tZW50cyBJIG1hZGUgaW4gcGF0Y2ggMSB3
-LnIudCBjaGVja3MgdGhhdCAocGVyaGFwcykgY2FuIGJlIG1vdmVkCj4gdG8ga3ZtLWFsbC5jLCBp
-dCBsb29rcyBnb29kIHRvIG1lLgo+IAo+IFNpbmNlIHlvdSdyZSBjaGFuZ2luZyBrdm0tYWxsLmMg
-d2UnbGwgbmVlZCBQYW9sbyB0byBhY2sgdGhlIGNoYW5nZXMgaW4gcGF0Y2ggMSwgc28KPiBmZWVs
-IGZyZWUgdG8gd2FpdCBmb3IgaGltIHRvIHRha2UgYSBsb29rIGJlZm9yZSBzZW5kaW5nIHYyLgo+
-IAo+IAo+IFRoYW5rcywKPiAKPiAKPiBEYW5pZWwKPiAKPiA+IAo+ID4gVGhhbmtzLAo+ID4gQ2hh
-bwo+ID4gCj4gPiAKPiA+IE9uIDIwMjMtMTItMjIgMjI6MTYsIERhbmllbCBIZW5yaXF1ZSBCYXJi
-b3phIDxkYmFyYm96YUB2ZW50YW5hbWljcm8uY29tPiB3cm90ZToKPiA+Pgo+ID4+IEhpLAo+ID4+
-Cj4gPj4gSXQgc2VlbXMgdGhhdCB3ZSBzdGlsbCBuZWVkIHRoZSBrZXJuZWwgS1ZNIHNpZGUgdG8g
-YmUgc29ydGVkIG91dCBmaXJzdCBbMV0sCj4gPj4gc28gSSBiZWxpZXZlIHdlIHNob3VsZCB3YWl0
-IGEgYml0IHVudGlsIHdlIGNhbiByZXZpZXcgdGhpcyBSRkMuIE90aGVyd2lzZSB3ZQo+ID4+IG1p
-Z2h0IHJpc2sgcmV2aWV3aW5nIHNvbWV0aGluZyB0aGF0IGhhcyB0byBiZSBjaGFuZ2VkIGxhdGVy
-Lgo+ID4+Cj4gPj4KPiA+PiBbMV0gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcva3ZtLzIwMjMxMjIx
-MDk1MDAyLjc0MDQtMS1kdWNoYW9AZXN3aW5jb21wdXRpbmcuY29tLwo+ID4+Cj4gPj4KPiA+PiBU
-aGFua3MsCj4gPj4KPiA+PiBEYW5pZWwKPiA+Pgo+ID4+IE9uIDEyLzIxLzIzIDA2OjQ5LCBDaGFv
-IER1IHdyb3RlOgo+ID4+PiBUaGlzIHNlcmllcyBpbXBsZW1lbnRzIFFFTVUgS1ZNIEd1ZXN0IERl
-YnVnIG9uIFJJU0MtVi4gQ3VycmVudGx5LCB3ZSBjYW4KPiA+Pj4gZGVidWcgUklTQy1WIEtWTSBn
-dWVzdCBmcm9tIHRoZSBob3N0IHNpZGUsIHdpdGggc29mdHdhcmUgYnJlYWtwb2ludHMuCj4gPj4+
-Cj4gPj4+IEEgYnJpZWYgdGVzdCB3YXMgZG9uZSBvbiBRRU1VIFJJU0MtViBoeXBlcnZpc29yIGVt
-dWxhdG9yLgo+ID4+Pgo+ID4+PiBBIFRPRE8gbGlzdCB3aGljaCB3aWxsIGJlIGFkZGVkIGxhdGVy
-Ogo+ID4+PiAxLiBIVyBicmVha3BvaW50cyBzdXBwb3J0Cj4gPj4+IDIuIFRlc3QgY2FzZXMKPiA+
-Pj4KPiA+Pj4gVGhpcyBzZXJpZXMgaXMgYmFzZWQgb24gUUVNVSA4LjIuMC1yYzQgYW5kIGlzIGFs
-c28gYXZhaWxhYmxlIGF0Ogo+ID4+PiBodHRwczovL2dpdGh1Yi5jb20vRHUtQ2hhby9xZW11L3Ry
-ZWUvcmlzY3ZfZ2Rfc3cKPiA+Pj4KPiA+Pj4gVGhpcyBpcyBkZXBlbmRlbnQgb24gS1ZNIHNpZGUg
-Y2hhbmdlczoKPiA+Pj4gaHR0cHM6Ly9naXRodWIuY29tL0R1LUNoYW8vbGludXgvdHJlZS9yaXNj
-dl9nZF9zdwo+ID4+Pgo+ID4+PiBDaGFvIER1ICg0KToKPiA+Pj4gICAgIHRhcmdldC9yaXNjdi9r
-dm06IGFkZCBzb2Z0d2FyZSBicmVha3BvaW50cyBzdXBwb3J0Cj4gPj4+ICAgICB0YXJnZXQvcmlz
-Y3Yva3ZtOiBpbXBsZW1lbnQga3ZtX2FyY2hfdXBkYXRlX2d1ZXN0X2RlYnVnKCkKPiA+Pj4gICAg
-IHRhcmdldC9yaXNjdi9rdm06IGhhbmRsZSB0aGUgZXhpdCB3aXRoIGRlYnVnIHJlYXNvbgo+ID4+
-PiAgICAgbGludXgtaGVhZGVyczogZW5hYmxlIEtWTSBHVUVTVCBERUJVRyBmb3IgUklTQy1WCj4g
-Pj4+Cj4gPj4+ICAgIGFjY2VsL2t2bS9rdm0tYWxsLmMgICAgICAgICAgIHwgICA4ICstLQo+ID4+
-PiAgICBpbmNsdWRlL3N5c2VtdS9rdm0uaCAgICAgICAgICB8ICAgNiArLQo+ID4+PiAgICBsaW51
-eC1oZWFkZXJzL2FzbS1yaXNjdi9rdm0uaCB8ICAgMSArCj4gPj4+ICAgIHRhcmdldC9hcm0va3Zt
-NjQuYyAgICAgICAgICAgIHwgICA2ICstCj4gPj4+ICAgIHRhcmdldC9pMzg2L2t2bS9rdm0uYyAg
-ICAgICAgIHwgICA2ICstCj4gPj4+ICAgIHRhcmdldC9taXBzL2t2bS5jICAgICAgICAgICAgIHwg
-ICA2ICstCj4gPj4+ICAgIHRhcmdldC9wcGMva3ZtLmMgICAgICAgICAgICAgIHwgICA2ICstCj4g
-Pj4+ICAgIHRhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5jICAgIHwgMTAxICsrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysKPiA+Pj4gICAgdGFyZ2V0L3MzOTB4L2t2bS9rdm0uYyAgICAg
-ICAgfCAgIDYgKy0KPiA+Pj4gICAgOSBmaWxlcyBjaGFuZ2VkLCAxMzAgaW5zZXJ0aW9ucygrKSwg
-MTYgZGVsZXRpb25zKC0pCj4gPj4+Cj4gPj4+IC0tCj4gPj4+IDIuMTcuMQo+ID4+Pgo=
+hreg_compute_hflags_value already stores msr locally to be used in most
+of the logic in the routine however some instances are still using
+env->msr which is unnecessary. Use locally stored value as available.
+
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ target/ppc/helper_regs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 25258986e3..945fa1a596 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -106,10 +106,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
+ 
+     if (ppc_flags & POWERPC_FLAG_DE) {
+         target_ulong dbcr0 = env->spr[SPR_BOOKE_DBCR0];
+-        if ((dbcr0 & DBCR0_ICMP) && FIELD_EX64(env->msr, MSR, DE)) {
++        if ((dbcr0 & DBCR0_ICMP) && FIELD_EX64(msr, MSR, DE)) {
+             hflags |= 1 << HFLAGS_SE;
+         }
+-        if ((dbcr0 & DBCR0_BRT) && FIELD_EX64(env->msr, MSR, DE)) {
++        if ((dbcr0 & DBCR0_BRT) && FIELD_EX64(msr, MSR, DE)) {
+             hflags |= 1 << HFLAGS_BE;
+         }
+     } else {
+-- 
+2.39.3
+
 
