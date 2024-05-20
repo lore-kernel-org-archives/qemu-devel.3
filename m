@@ -4,99 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42E9C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 09:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60200C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 09:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8zd9-00062H-On; Mon, 20 May 2024 05:48:32 -0400
+	id 1s8zkc-0000Uq-IL; Mon, 20 May 2024 05:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s8zd8-00061e-1H
- for qemu-devel@nongnu.org; Mon, 20 May 2024 05:48:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s8zkX-0000UP-2e; Mon, 20 May 2024 05:56:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s8zd6-0007f3-7h
- for qemu-devel@nongnu.org; Mon, 20 May 2024 05:48:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716198507;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UK/95iBmAg6EpTL6BggqtUeHWkOQSZit6swmc+zIvbo=;
- b=beB/MC9wp1yc3EUQCDg4E9D3fCSksS181NhfzCr713gc9THIs2trS/nGRNWQa0MifaEfwX
- 6r+nxCxjN4xnPfbM4MP4gfl8/VE8FFiwJACwB2VchqoNyQ3IV03mQIGKlA1n1ACWacICXv
- 3bowboHuLg8W9v2qEUI6YYvn8QbfxMA=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-4yPgp9eWNuSgnSbWJsbg1g-1; Mon, 20 May 2024 05:48:25 -0400
-X-MC-Unique: 4yPgp9eWNuSgnSbWJsbg1g-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-792b96c3c5fso1566514485a.2
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 02:48:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716198505; x=1716803305;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UK/95iBmAg6EpTL6BggqtUeHWkOQSZit6swmc+zIvbo=;
- b=LfF9gEkoP9ij6oWvF5txwdlSFB7ehIi/W8a3lzmcY+RCRgdB/w1fYAXGCR8xkpd0og
- fRi7zVWCltBWueMvHuKnHY99DO1su+6AhaI7r247q/4bCTQZqQThPklDT7MnAs7mKygC
- 6Y1oNj3EklsMhmIZHwwliAUrIOgZgGCC1+AHFhrBXAKMF1DfFj6Wo2X1NtwK+CZPRPJW
- 0940ELudkh1Iq9rJ3wNhfqKkT/sch3heyeGnNRnavIq4ITb58TWSGTkOAPXjuUZ3oSFT
- vPBz0n/7UANdjFo3u36JoWJcKia1Iv2Ow93nF6aZ7J3n2E1W0s7+SXPV/Znu3R0FLvjn
- JAvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVeW+cNu8sBG2tHDpjOK6sAsKlILjiC1fSy3LvMFjjvrV7Qbw/Yo4bkLahrDqEpe64elhGaWxbOln1uXxMysd8xEDpHtvY=
-X-Gm-Message-State: AOJu0YxtqbIr5EqXcJsFQNDbCjPAMYBnlrP4qbpp6HzvJ5Fpur26RS+r
- t02UN5xr7xLN6eM5JI9otWlwkN49+nsga9T6sMMagReXtKPe36ys+Wqref/veTKc9dgE1zVS1//
- ZECP/4+qV8PDmbEkv8x4deComa6eJ9WMR6NzdJT2iFkWtDk8lS0Bd
-X-Received: by 2002:a05:6214:590b:b0:6a9:4917:7341 with SMTP id
- 6a1803df08f44-6a949177651mr54596266d6.18.1716198504796; 
- Mon, 20 May 2024 02:48:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqqjU/X1veMuhr59Odvi5En0iJfBw3Zl7a76psy7A6Ic4Y7amQiw8NymAlixI+SuujnOQpHA==
-X-Received: by 2002:a05:6214:590b:b0:6a9:4917:7341 with SMTP id
- 6a1803df08f44-6a949177651mr54596066d6.18.1716198504267; 
- Mon, 20 May 2024 02:48:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ab6d76e124sm952916d6.46.2024.05.20.02.48.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 02:48:23 -0700 (PDT)
-Message-ID: <770312ee-8093-431a-bfdf-b01ca90945cf@redhat.com>
-Date: Mon, 20 May 2024 11:48:18 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1s8zkR-0000V9-Oz; Mon, 20 May 2024 05:56:08 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44K7wB0B001839; Mon, 20 May 2024 09:56:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=dLMxtDHxY2OuBeM7XRceWL3P8kqN/KJzyXkRJBBcVMw=;
+ b=ezyDpGt2k7aiGXGgxrTy6NOOL/XpzHuAsuXaCYpwQWJSIRUWMdqvIZeHotFS8VkZU++e
+ +aat6b4T8CdnLNe6UUD57CMaGsOocjoXGebASmwKX5rlR7ZFgcqlPyThiSCBFhQvQdJw
+ IRXd/a0fozVCVoUGY+zMfFYzv8mkuuwCx3RFIlH+D/GMXmeubrkrApn0ASANDKnxJH3g
+ aeEEoB0DENgBRifz2YUJWlBfFBtO6snK7XH1GanN9+1hY1oZeumF72Hp4431+WU/l8UN
+ IEjo9dI7XzzWK1Y0Ml5mGXRZoWIPjlNjCNbq/x0IESoX5gu483lvIy6lgUkuNR6TJ/6I nw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y82k5881w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 09:56:01 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44K9u1Fa015732;
+ Mon, 20 May 2024 09:56:01 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y82k5881u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 09:56:01 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44K7Ohhv008216; Mon, 20 May 2024 09:56:00 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y78vkpr33-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 May 2024 09:56:00 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44K9tuwA11797188
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 May 2024 09:55:58 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BCA4D5805B;
+ Mon, 20 May 2024 09:55:56 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B79E58058;
+ Mon, 20 May 2024 09:55:53 +0000 (GMT)
+Received: from [9.124.210.220] (unknown [9.124.210.220])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 May 2024 09:55:52 +0000 (GMT)
+Message-ID: <85fd9f8a-0a46-4a3e-ab8c-e63633760836@linux.ibm.com>
+Date: Mon, 20 May 2024 15:25:51 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 10/18] hw/arm/smmu-common: Support nested
- translation
+Subject: Re: [PATCH] target/ppc: handle vcpu hotplug failure gracefully
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: danielhb413@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com
+References: <20240423061058.595674-1-harshpb@linux.ibm.com>
+ <a0f9b2fc-4c8a-4c37-bc36-26bbaa627fec@linux.ibm.com>
+ <D191D2JFAR7L.2EH4S445M4TGK@gmail.com>
+ <170efe52-97c4-48dd-b4ce-097655a76d9f@linux.ibm.com>
+ <D1BMB9HRF50E.2UC36WJ1ZHAFU@gmail.com>
 Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-11-smostafa@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240429032403.74910-11-smostafa@google.com>
-Content-Type: text/plain; charset=UTF-8
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <D1BMB9HRF50E.2UC36WJ1ZHAFU@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: KKXBPYl7UuwfxzaOc-2IP4dnoD4_mDe3
+X-Proofpoint-ORIG-GUID: vSLyaU9Uqi6YIrxg-xNKZifk-8TzSwiK
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-20_05,2024-05-17_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
+ definitions=main-2405200082
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.383,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,190 +117,188 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
 
-On 4/29/24 05:23, Mostafa Saleh wrote:
-> When nested translation is requested, do the following:
->
-> - Translate stage-1 IPA using stage-2 to a physical address.
-stage-1 table address IPA into PA through S2 stage
 
-> - Translate stage-1 table walks using stage-2.
-output of S1 stage (IPA) through S2.
-> - Combine both to create a single TLB entry using the logic
->   introduced before.
-this applies to second only. First one is associated with an S2 TLB
-entry, right?
->
-> For stage-1 table translation, the spec (ARM IHI 0070 F.b) says in:
->     7.3.12 F_WALK_EABT:
->         Translation of an IPA for Stage 1 descriptor fetch:
-> 	S2 == 1 (stage 2), CLASS == T
-> So, F_WALK_EABT is used which propagtes to CLASS == TT.
->
-> smmu_ptw() has a new argument SMMUState which include the TLB as
-> stage-1 table address can be cached in there.
->
-> Also in smmu_ptw() a separate path used for nesting to simplify the
-> code, although some logic can be combined.
->
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> ---
->  hw/arm/smmu-common.c         | 67 ++++++++++++++++++++++++++++++------
->  include/hw/arm/smmu-common.h |  2 +-
->  2 files changed, 58 insertions(+), 11 deletions(-)
->
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index c67af3bc6d..d48ec08947 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -306,6 +306,32 @@ SMMUTransTableInfo *select_tt(SMMUTransCfg *cfg, dma_addr_t iova)
->      return NULL;
->  }
->  
-> +/* Translate stage-1 table address using stage-2 page table. */
-> +static inline int translate_table_s1(dma_addr_t *table_addr, SMMUTransCfg *cfg,
-> +                                     SMMUPTWEventInfo *info, SMMUState *bs)
-would suggest translate_table_addr_ipa().
-> +{
-> +    dma_addr_t addr = *table_addr;
-> +    SMMUTLBEntry *cached_entry;
-> +    int asid;
-> +
-> +    asid = cfg->asid;
-> +    cfg->stage = SMMU_STAGE_2;
-> +    cfg->asid = -1;
-> +    cached_entry = smmu_translate(bs, cfg, addr, IOMMU_RO, info);
-so this is going to be cached as an S2 entry. Maybe worth adding a comment.
-> +    cfg->asid = asid;
-> +    cfg->stage = SMMU_NESTED;
-> +
-> +    if (cached_entry) {
-> +        *table_addr = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
-> +        return 0;
-> +    }
-> +
-> +    info->stage = SMMU_STAGE_2;
-> +    info->type = SMMU_PTW_ERR_WALK_EABT;
-> +    info->addr = addr;
-> +    return -EINVAL;
-> +}
-> +
->  /**
->   * smmu_ptw_64_s1 - VMSAv8-64 Walk of the page tables for a given IOVA
->   * @cfg: translation config
-> @@ -321,7 +347,8 @@ SMMUTransTableInfo *select_tt(SMMUTransCfg *cfg, dma_addr_t iova)
->   */
->  static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
->                            dma_addr_t iova, IOMMUAccessFlags perm,
-> -                          SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
-> +                          SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info,
-> +                          SMMUState *bs)
->  {
->      dma_addr_t baseaddr, indexmask;
->      SMMUStage stage = cfg->stage;
-> @@ -369,6 +396,11 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
->                  goto error;
->              }
->              baseaddr = get_table_pte_address(pte, granule_sz);
-> +            if (cfg->stage == SMMU_NESTED) {
-> +                if (translate_table_s1(&baseaddr, cfg, info, bs)) {
-> +                    goto error;
-> +                }
-> +            }
->              level++;
->              continue;
->          } else if (is_page_pte(pte, level)) {
-> @@ -551,10 +583,8 @@ error:
->  }
->  
->  /* combine 2 TLB entries and return in tlbe in nested config. */
-> -static void __attribute__((unused)) combine_tlb(SMMUTLBEntry *tlbe,
-> -                                                SMMUTLBEntry *tlbe_s2,
-> -                                                dma_addr_t iova,
-> -                                                SMMUTransCfg *cfg)
-> +static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
-> +                        dma_addr_t iova, SMMUTransCfg *cfg)
->  {
->      if (tlbe_s2->entry.addr_mask < tlbe->entry.addr_mask) {
->          tlbe->entry.addr_mask = tlbe_s2->entry.addr_mask;
-> @@ -579,14 +609,19 @@ static void __attribute__((unused)) combine_tlb(SMMUTLBEntry *tlbe,
->   * @perm: tentative access type
->   * @tlbe: returned entry
->   * @info: ptw event handle
-> + * @bs: smmu state which includes TLB instance
->   *
->   * return 0 on success
->   */
->  int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
-> -             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
-> +             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info, SMMUState *bs)
->  {
-> +    int ret;
-> +    SMMUTLBEntry tlbe_s2;
-> +    dma_addr_t ipa;
-> +
->      if (cfg->stage == SMMU_STAGE_1) {
-> -        return smmu_ptw_64_s1(cfg, iova, perm, tlbe, info);
-> +        return smmu_ptw_64_s1(cfg, iova, perm, tlbe, info, bs);
->      } else if (cfg->stage == SMMU_STAGE_2) {
->          /*
->           * If bypassing stage 1(or unimplemented), the input address is passed
-> @@ -600,11 +635,23 @@ int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
->              tlbe->entry.perm = IOMMU_NONE;
->              return -EINVAL;
->          }
-> -
-spurious line change
->          return smmu_ptw_64_s2(cfg, iova, perm, tlbe, info);
->      }
->  
-> -    g_assert_not_reached();
-> +    /* SMMU_NESTED. */
-> +    ret = smmu_ptw_64_s1(cfg, iova, perm, tlbe, info, bs);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    ipa = CACHED_ENTRY_TO_ADDR(tlbe, iova);
-> +    ret = smmu_ptw_64_s2(cfg, ipa, perm, &tlbe_s2, info);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    combine_tlb(tlbe, &tlbe_s2, iova, cfg);
-> +    return 0;
->  }
->  
->  SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
-> @@ -660,7 +707,7 @@ SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
->      }
->  
->      cached_entry = g_new0(SMMUTLBEntry, 1);
-> -    status = smmu_ptw(cfg, aligned_addr, flag, cached_entry, info);
-> +    status = smmu_ptw(cfg, aligned_addr, flag, cached_entry, info, bs);
->      if (status) {
->              g_free(cached_entry);
->              return NULL;
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index 1db566d451..cf0fd3ec74 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -185,7 +185,7 @@ static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
->   * pair, according to @cfg translation config
->   */
->  int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
-> -             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info);
-> +             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info, SMMUState *bs);
->  
->  
->  /*
-Thanks
+On 5/17/24 09:30, Nicholas Piggin wrote:
+> On Thu May 16, 2024 at 2:31 PM AEST, Harsh Prateek Bora wrote:
+>> Hi Nick,
+>>
+>> On 5/14/24 08:39, Nicholas Piggin wrote:
+>>> On Tue Apr 23, 2024 at 4:30 PM AEST, Harsh Prateek Bora wrote:
+>>>> + qemu-devel
+>>>>
+>>>> On 4/23/24 11:40, Harsh Prateek Bora wrote:
+>>>>> On ppc64, the PowerVM hypervisor runs with limited memory and a VCPU
+>>>>> creation during hotplug may fail during kvm_ioctl for KVM_CREATE_VCPU,
+>>>>> leading to termination of guest since errp is set to &error_fatal while
+>>>>> calling kvm_init_vcpu. This unexpected behaviour can be avoided by
+>>>>> pre-creating vcpu and parking it on success or return error otherwise.
+>>>>> This enables graceful error delivery for any vcpu hotplug failures while
+>>>>> the guest can keep running.
+>>>
+>>> So this puts in on the park list so when kvm_init_vcpu() later runs it
+>>> will just take it off the park list instead of issuing another
+>>> KVM_CREATE_VCPU ioctl.
+>>>
+>>> And kvm_init_vcpu() runs in the vcpu thread function, which does not
+>>> have a good way to indicate failure to the caller.
+>>>
+>>> I'm don't know a lot about this part of qemu but it seems like a good
+>>> idea to move fail-able initialisation out of the vcpu thread in that
+>>> case. So the general idea seems good to me.
+>>>
+>>
+>> Yeh ..
+>>
+>>>>>
+>>>>> Based on api refactoring to create/park vcpus introduced in 1/8 of patch series:
+>>>>> https://lore.kernel.org/qemu-devel/20240312020000.12992-2-salil.mehta@huawei.com/
+>>>
+>>> So from this series AFAIKS you're just using kvm_create / kvm_park
+>>> routines? You could easily pull that patch 1 out ahead of that larger
+>>> series if progress is slow on it, it's a decent cleanup by itself by
+>>> the looks.
+>>>
+>>
+>> Yeh, patch 1 of that series is only we need but the author mentioned on
+>> the list that he is about to post next version soon.
+>>
+>>>>>
+>>>>> Tested OK by repeatedly doing a hotplug/unplug of vcpus as below:
+>>>>>
+>>>>>     #virsh setvcpus hotplug 40
+>>>>>     #virsh setvcpus hotplug 70
+>>>>> error: internal error: unable to execute QEMU command 'device_add':
+>>>>> kvmppc_cpu_realize: vcpu hotplug failed with -12
+>>>>>
+>>>>> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+>>>>> Suggested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+>>>>> Suggested-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+>>>>> Signed-off by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>>>> ---
+>>>>> ---
+>>>>>     target/ppc/kvm.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>>>>>     1 file changed, 42 insertions(+)
+>>>>>
+>>>>> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+>>>>> index 8231feb2d4..c887f6dfa0 100644
+>>>>> --- a/target/ppc/kvm.c
+>>>>> +++ b/target/ppc/kvm.c
+>>>>> @@ -48,6 +48,8 @@
+>>>>>     #include "qemu/mmap-alloc.h"
+>>>>>     #include "elf.h"
+>>>>>     #include "sysemu/kvm_int.h"
+>>>>> +#include "sysemu/kvm.h"
+>>>>> +#include "hw/core/accel-cpu.h"
+>>>>>     
+>>>>>     #define PROC_DEVTREE_CPU      "/proc/device-tree/cpus/"
+>>>>>     
+>>>>> @@ -2339,6 +2341,43 @@ static void alter_insns(uint64_t *word, uint64_t flags, bool on)
+>>>>>         }
+>>>>>     }
+>>>>>     
+>>>>> +static int max_cpu_index = 0;
+>>>>> +
+>>>>> +static bool kvmppc_cpu_realize(CPUState *cs, Error **errp)
+>>>>> +{
+>>>>> +    int ret;
+>>>>> +
+>>>>> +    cs->cpu_index = max_cpu_index++;
+>>>>> +
+>>>>> +    POWERPC_CPU(cs)->vcpu_id = cs->cpu_index;
+>>>
+>>> So you're overriding the cpu_get_free_index() allocator here.
+>>> And you need to because vcpu_id needs to be assigned before
+>>> the KVM create, I guess.
+>>>
+>>
+>> Yes ..
+>>
+>>> I guess it works. I would add a comment like s390x has.
+>>>
+>> Not sure which comment you were referring to but with exporting
+>> cpu_get_free_index as suggested later, not sure if we still need any
+>> comment.
+> 
+> Yeah that's true.
+> 
+>>>>> +
+>>>>> +    if (cs->parent_obj.hotplugged) {
+>>>
+>>> Can _all_ kvm cpu creation go via this path? Why just limit it to
+>>> hotplugged?
+>>
+>> For the initial bootup, we actually want to abort if the requested vCPUs
+>> cant be allocated so that user can retry until the requested vCPUs are
+>> allocated. For hotplug failure, bringing down entire guest isn't fair,
+>> hence the fix.
+> 
+> But you could make the error handling depend on hotplugged, no?
+> Perhaps put that error handling decision in common code so policy
+> is the same for all targets and back ends.
 
-Eric
+Hmm, I think just setting errp appropriately would suffice for both
+cases as existing behaviour takes care of the rest of handling.
+Something like below:
 
++static bool kvmppc_cpu_realize(CPUState *cs, Error **errp)
++{
++    int ret;
++    const char *vcpu_str = (cs->parent_obj.hotplugged == true) ?
++                           "hotplug" : "create";
++    cs->cpu_index = cpu_get_free_index();
++
++    POWERPC_CPU(cs)->vcpu_id = cs->cpu_index;
++
++    /* create and park to fail gracefully in case vcpu hotplug fails */
++    ret = kvm_create_and_park_vcpu(cs);
++    if (ret) {
++        error_setg(errp, "%s: vcpu %s failed with %d",
++                         __func__, vcpu_str, ret);
++        return false;
++    }
++    return true;
++}
+
+
+> 
+> [...]
+> 
+>>>>> +}
+>>>>> +
+>>>>>     static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
+>>>>>     {
+>>>>>         PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
+>>>>> @@ -2963,4 +3002,7 @@ bool kvm_arch_cpu_check_are_resettable(void)
+>>>>>     
+>>>>>     void kvm_arch_accel_class_init(ObjectClass *oc)
+>>>>>     {
+>>>>> +    AccelClass *ac = ACCEL_CLASS(oc);
+>>>>> +    ac->cpu_common_realize = kvmppc_cpu_realize;
+>>>>> +    ac->cpu_common_unrealize = kvmppc_cpu_unrealize;
+>>>>>     }
+> 
+> One other thing I noticed -- cpu_common_realize seems to be for
+> core code and cpu_target_realize for targets. Should we be
+> using the latter here? If not, a comment would be warranted and
+> probably also a comment in accel_cpu_common_realize().
+
+Well, I looked at that initially but looks like accel_cpu itself (which
+contains vector for cpu_target_realize) doesnt get initialized in case
+of kvm on ppc for some reason and therefore wouldnt work. I think
+this change is generic enough for cpu_common_realize as well (now having
+similar behaviour for initial vcpus also), so I guess comment may not 
+really be needed, but let me know if still need any comment.
+
+Else, I can post next version with above proposed diff.
+
+regards,
+Harsh
+
+> 
+> Thanks,
+> Nick
 
