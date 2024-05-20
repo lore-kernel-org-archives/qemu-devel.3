@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED49C3DA40
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A3EC25B79
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s942W-0006u2-5Q; Mon, 20 May 2024 10:31:00 -0400
+	id 1s945o-0000n5-4J; Mon, 20 May 2024 10:34:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s942C-0006qx-A2
- for qemu-devel@nongnu.org; Mon, 20 May 2024 10:30:53 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1s945m-0000mf-LE
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:34:22 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9429-0006Ns-Gk
- for qemu-devel@nongnu.org; Mon, 20 May 2024 10:30:39 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-574f7c0bab4so9425302a12.0
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:30:35 -0700 (PDT)
+ id 1s945k-00077N-TX
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:34:22 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a5cec2c2981so280703066b.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716215434; x=1716820234; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716215659; x=1716820459; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uNkndTB/EfiXIMFigE3HW7JUkwKzX31GL4b5ChXEUvA=;
- b=ZfCjfX0ZaA1qC96S8HbwulkKnFLZH0a4Iej3/2EkmSBLsda8uzW2Gcc+WXLRv3ptKR
- bN8fcICM/9+2pY0GbuTLWapzybr72PFoYPxr8nFh+TkcRJeIabcND9lax50lMpO12OYT
- PkS0I1p2apKZgM+T4tVZ7lnHLEOH+ieH5XhD6aGEcWaYQGtIuIqXXV95HYID2wyNdLuq
- hTyVWl0WpRUyTSCL2ZYvLukSnn0XM3sLm6KOnTZZTVtBv0QNKXZ4nhJ54K8X5FVrqb/7
- HAywSBmRSelA6wHIHi4q1yeb00DZOz31mvR643JwO18WPY4wmo1U2jA1ji1PViR6wPF5
- gUfQ==
+ bh=euD1s9PyxtnETpDK0sKP2l9tsBj/ydNrt4RMXS6iFvU=;
+ b=iF//f8nLAcwn6A0PjDESKJKkCN36sNqLu5G1sVBvl0RGAvIHyGrRni8IQlmyyvHSdv
+ FQB4+5raFGPZun2SfDL5wwLFZdt7qylZn3n7mcWnaxhAmMASPZ20uucjkzpMIgkS9Rbj
+ 8INloHnQAiMkMVR36HTDQ9udyYLcaSOsqulCfxGfB0UKRi22Yf5+UTodpHiSEhJ18+mZ
+ 3jPQFyfex3AM24yEBCD0j4c8b06Z8MHbWG7nkAZC1htXpJfl+ZcWGJ4yHaA5vPeyjddp
+ Qe3u3CJf2QyEM2nRoJxb6M4JQSaGu/yXDhkW6YY7QOo3L5c3IKYY4JMJyge9O0MzXsKQ
+ zuig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716215434; x=1716820234;
+ d=1e100.net; s=20230601; t=1716215659; x=1716820459;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uNkndTB/EfiXIMFigE3HW7JUkwKzX31GL4b5ChXEUvA=;
- b=aAWfgKKRJdXaAOgMiP4cMbT/aRNUibS3tkgUSBd2BMNFiM4VhU2uPQccjCqHGFJL6t
- cqscHMaqGqnK8vkHU41CElBDZbmpVNYgHk9UhKCSxRV4u9DZGid5sistOahPO3F6dgMe
- gKB04VvDYkuVJbEpc3xnCkj3bk50+HyhImkBATi33/mbKYpJlp1Z/38+dAobkSlBZ0A9
- fk7gURlXPYcrD2v/51SgUaktknqhsLpNZwJ1NGWkoT5IuOxwF0tUOX/d67t2o0GlfSb3
- s4U6kPGNL/TQBjbiX4YcHht1LeKsJAMuxk65QSe4fTixxgz1KDrPOe3vieu3vFuw6K1A
- nMgw==
-X-Gm-Message-State: AOJu0Yz/P2epsfzTbjoIKuNc8mSLAsmUxvGs6p0W3kHoeY2IPSrVKgH+
- qd4FU0xyqzVxPis1dzPdzhhU80Db+xWfkde9QfQnwP99tEfoA5WdUPy5eG1OscVWKMrwwmHGD8y
- bQV3TVt7TbveFcbsJc2y7llRPLzquigHjIKGtug==
-X-Google-Smtp-Source: AGHT+IG+4oFTocgXk3/VAjefRi0K1IqkKqpfB6hfqv/iJ6iHqPvE7ATa9LBiNqAUfyT+rT4NBxNiPuWzKLtOQVYA6z4=
-X-Received: by 2002:a17:906:3791:b0:a5c:dce0:9f4e with SMTP id
- a640c23a62f3a-a5d5ecdc434mr601716266b.28.1716215433700; Mon, 20 May 2024
- 07:30:33 -0700 (PDT)
+ bh=euD1s9PyxtnETpDK0sKP2l9tsBj/ydNrt4RMXS6iFvU=;
+ b=TilqluBUKVBYZ6ygpWVV0IEPyXL3dlpsa1hOcxSb4Flt+gZBCEtAHgxpaiPW/5Lmpa
+ bXWLLO0XgsAUidudebtBZRnY5LrThRC4Err+kav/YKiJU88VI2irGoXks4Nmc9lKGWqa
+ yz9QeDvxh6P4gj+44v+WxSRJd/prvM4mnoEs6MqjNEINkynnROg6p1+fPfWBbNyQa4g2
+ pbH2Cv/3yQFvQ7TTIbjXK6uMWd5gzzzbZv5jjdppOhAjDENjgqL6+VDwA7nK6An8qaVf
+ A2+yeH/dnT2MC8xpb4lDqZYIz4IcdZsBCrMcRz9qJwZdsVGWQetKemp5nx/hT5/RPiKH
+ 7DJQ==
+X-Gm-Message-State: AOJu0Yyxwqu0b4LdmC2qLIgizIfpECMr9gMry8hwJNyeYdhQwAnHwRxc
+ qi4/uZoD8sK6G9KiZQnPkzuHG9ml0T334M+V7uKyzvAwNJVpiVNE0wtLtOK1YQYS12DaWN53i9J
+ AB+Pf6Im/WNMFjKbL7v7L4pRDNa6bP7bzeZsvfw==
+X-Google-Smtp-Source: AGHT+IHuG3vRveaTkzp5ed4+PECCBYgoIgX76TGlKj+lnxcA/wvDfZdcbpjDM/kgt/+AFLeivEi/qiwMDkS2OCUZ6vs=
+X-Received: by 2002:a50:9e44:0:b0:572:cfa4:3cc6 with SMTP id
+ 4fb4d7f45d1cf-5734d597d84mr25344432a12.8.1716215659176; Mon, 20 May 2024
+ 07:34:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240512102013.211127-1-ines.varhol@telecom-paris.fr>
- <20240512102013.211127-3-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240512102013.211127-3-ines.varhol@telecom-paris.fr>
+References: <20240508141333.44610-1-philmd@linaro.org>
+ <CAFEAcA84CfdNZSjZ1R96=5P-VhxGXyaaujF1Y8AxKa+Wvpdp3Q@mail.gmail.com>
+ <ba6c3173-12c2-45d8-ade4-b21598800f5b@linaro.org>
+In-Reply-To: <ba6c3173-12c2-45d8-ade4-b21598800f5b@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 May 2024 15:30:23 +0100
-Message-ID: <CAFEAcA_tPLe7_rzmzOds7wAEFaP7Npk_4WqoBACC6nUTWTBfGw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] hw/misc: In STM32L4x5 EXTI,
- handle direct line interrupts
-To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 20 May 2024 15:34:08 +0100
+Message-ID: <CAFEAcA9fZx9=SCRgZ9+S4dZ29yCnZ+i9aX+S8tt42GzP0nXVDw@mail.gmail.com>
+Subject: Re: [PATCH] hw/clock: Expose 'freq-hz' QOM property
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Luc Michel <luc@lmichel.fr>, 
+ Damien Hedde <damien.hedde@dahe.fr>,
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,77 +93,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 12 May 2024 at 11:20, In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
-r> wrote:
+On Wed, 8 May 2024 at 22:27, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> The previous implementation for EXTI interrupts only handled
-> "configurable" interrupts, like those originating from STM32L4x5 SYSCFG
-> (the only device currently connected to the EXTI up until now).
-> In order to connect STM32L4x5 USART to the EXTI, this commit adds
-> handling for direct interrupts (interrupts without configurable edge),
-> as well as a comment that will be useful to connect other devices to the
-> EXTI.
+> On 8/5/24 19:46, Peter Maydell wrote:
+> > On Wed, 8 May 2024 at 15:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro=
+.org> wrote:
+> >>
+> >> Expose the clock frequency via the QOM 'freq-hz' property,
+> >> as it might be useful for QTests.
+> >>
+> >> HMP example:
+> >>
+> >>    $ qemu-system-mips -S -monitor stdio -M mipssim
+> >>    (qemu) qom-get /machine/cpu-refclk freq-hz
+> >>    12000000
+> >>
+> >> Inspired-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >
+> > So I have a couple of thoughts here:
+> >
+> > (1) if this is intended for qtests, would exposing the period (i.e.
+> > QOM equivalent of clock_get() rather than clock_get_hz()) be better?
+> > A Hz figure has rounding so it's not as accurate.
 >
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> ---
->  hw/misc/stm32l4x5_exti.c | 23 ++++++++++++++++++++++-
->  1 file changed, 22 insertions(+), 1 deletion(-)
+> Indeed, simpler to compare from QTest perspective.
 >
-> diff --git a/hw/misc/stm32l4x5_exti.c b/hw/misc/stm32l4x5_exti.c
-> index eebefc6cd3..1817bbdad2 100644
-> --- a/hw/misc/stm32l4x5_exti.c
-> +++ b/hw/misc/stm32l4x5_exti.c
-> @@ -106,6 +106,27 @@ static void stm32l4x5_exti_set_irq(void *opaque, int=
- irq, int level)
->          return;
->      }
+> > (2) We should document this in clocks.rst; I guess we want to say
+> > "only intended for use in qtests" (i.e. if you're part of QEMU
+> > use the existing function interface, not this).
 >
-> +    /* In case of a direct line interrupt */
-> +    if (extract32(exti_romask[bank], irq, 1)) {
-> +        if (level) {
-> +            qemu_irq_raise(s->irq[oirq]);
-> +        } else {
-> +            qemu_irq_lower(s->irq[oirq]);
-> +        }
+> OK, and we can also only expose this for QTest using:
+>
+>    if (qtest_enabled()) {
+>        object_property_add(obj, "[qtest-]clock-period", ...);
+>    }
 
-You can say this more concisely as
-           qemu_set_irq(s->irq[oirq], level);
-
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * In case of a configurable interrupt
-> +     *
-> +     * Note that while the real EXTI uses edge detection to tell
-> +     * apart a line rising (the level changes from 0 to 1) and a line
-> +     * staying high (the level was 1 and is set to 1), the current
-> +     * implementation relies on the fact that this handler will only
-> +     * be called when there's a level change. That means that the
-> +     * devices creating a configurable interrupt (like STM32L4x5 GPIO)
-> +     * have to set their IRQs only on a change.
-> +     */
-
-You cannot rely on this in QEMU's qemu_irq API. The set
-function may be called multiple times with the same input
-level value. If you need to detect rising edges then this
-device needs to have a state field that records the current
-value so it can compare the 'level' argument here against
-what it was previously.
-
->      if (((1 << irq) & s->rtsr[bank]) && level) {
->          /* Rising Edge */
->          s->pr[bank] |=3D 1 << irq;
-> @@ -116,7 +137,7 @@ static void stm32l4x5_exti_set_irq(void *opaque, int =
-irq, int level)
->          qemu_irq_pulse(s->irq[oirq]);
->      }
->      /*
-> -     * In the following situations :
-> +     * In the following situations (for configurable interrupts) :
->       * - falling edge but rising trigger selected
->       * - rising edge but falling trigger selected
->       * - no trigger selected
+Yes, that seems reasonable. (I don't know if we have any other
+qtest-only properties but I don't see any reason why we
+shouldn't have them if we want to expose stuff for tests only.)
 
 thanks
 -- PMM
