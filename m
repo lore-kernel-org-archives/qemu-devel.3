@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC7DC41513
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 13:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D86C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:00:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s93XV-0005ln-A7; Mon, 20 May 2024 09:58:57 -0400
+	id 1s93Z9-0007WB-0j; Mon, 20 May 2024 10:00:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s93XT-0005kr-Fh
- for qemu-devel@nongnu.org; Mon, 20 May 2024 09:58:55 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s93Yw-0007RN-2v
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:00:26 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s93XO-0000zS-2c
- for qemu-devel@nongnu.org; Mon, 20 May 2024 09:58:55 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-51f72a29f13so3917292e87.3
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 06:58:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s93Yr-0001GZ-O4
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:00:25 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-351d79b56cdso1848426f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716213528; x=1716818328; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XUNEEf6o0vIvlGoVCkOBNOApbEzu6uUelzCwIt8oTZw=;
- b=RRxTfyucRxDOJnsc0adxc7pkvSG0SKWyQ0oS0ZITKJn2D0aZzhqE6VNP2mba9dWP18
- +B8m2to+PYgsPWHWnXTA763CdeBLmMhDue6fiB8V5jAnhn5+BWBK/EbJzxgqPqbcWbxo
- dNgaIOPHylEilcFpVrWc93dNKGjeqvLQIXF5M3gcGIzlPIryZiS3Z4CvbAYL0917YMWU
- kwlPuGzFhfqm87AQXiRrm5ECwkxZ4mpZD4Evzb45Y9/0BOT+T2l++coFwyfTNDrH2Dvk
- nnnl995RdSQ9jRe7DCjwlZaeNGuk8nyDG3eFXCLGc73iPVE4CyTJYg04lzXvbBmG+lis
- PDCA==
+ d=ventanamicro.com; s=google; t=1716213617; x=1716818417; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=V/8nB0KE9iIsTN79NqvxoOEILL8ZAx+/Vn72nMsp2no=;
+ b=hS8f2SJWA9CSpKK38e+dOTA2ksiHnryVSY5EnLGThsEue3qPd3u3kvqv43NRaZ+T8j
+ 27ExOygtbHTw+7FZGz136Lvp4RcGobFxWOXG0WYEJQMnSINwEytee4G4YJAbEjVrVazA
+ IIzPl48wi6ZGKyh7IRdZEjwuGpA/DXvdGUla9071RnehS3jZVuCkR1meK6vUw6jS4zfM
+ 6WG9WIs3fZ0t77IV8f1mlxJkoAcoDVO/ntVMulbINka8LwNnjinIOASSFbYvH42iI1Qc
+ cB5+kb/vEwcZ2xMHU2hcAfH7J++yBwGeUSTWqdwWVfG5eG/wgBpCkWmyelZGV83lF+on
+ MolQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716213528; x=1716818328;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XUNEEf6o0vIvlGoVCkOBNOApbEzu6uUelzCwIt8oTZw=;
- b=CI055FAEwiQBo2VMW1tZ34qIMoqP9bbDgSIkqwvKau6u4gaUAgL7q7itOYLuphqsqb
- 5FAoMD2cCKNyulewV0yU9OYB3o2YRdKeKHKsIvsR8wjfH+TEtfzkBLuNYkVZtckoRKmm
- P+92ZyCw5Df2XMQJrKwmXC973UxlPgrdMOhSr6oXmFSxb0ek4szx+SG46SV0/91Tk+lA
- Smr/GRZXVhW2tJdol+jgQyYIDFj3VOP1CnHWZZ9XiIcpr46XPTGaMgE3fUCj+kxbXSks
- 9/8eioFfBTzFYzObY0SZuujnFM/bge82d0ihi1WS+4KfneaqsD5aNiEJTebW4Jy61pLW
- lQBg==
-X-Gm-Message-State: AOJu0YxaQdGFqoDijKXGeirbbzM2kYZtl5G3i0rXhR4Sk5kZICTzd+Cn
- ScBd8Y8SAT9x+NIVb3FeeAh7bupXkX9vFmmaia7H2HnH3LZ2wT6Fqpc/538VXru7nj1nNHH5NXa
- VyoJ1iFy5KjEWV+WYGpU+kOWJYVrtZ7MLrxeon9ZmUMeAfolw
-X-Google-Smtp-Source: AGHT+IFYrPWwRxlbRR5BkspD7WQ1euUprVd+rzz2LeZOw3meysRtxVKfVamxdcUPvYwzL0yZKiKTiBr+Bo5+M0TpRgE=
-X-Received: by 2002:a05:6512:15a8:b0:51d:9ea3:5649 with SMTP id
- 2adb3069b0e04-5220ff71d30mr24451019e87.10.1716213527923; Mon, 20 May 2024
- 06:58:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716213617; x=1716818417;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V/8nB0KE9iIsTN79NqvxoOEILL8ZAx+/Vn72nMsp2no=;
+ b=QH864tGp1x2y59dHRK0zy6bB5e92EqKwCwXApLXAf4ZeQEaHAlTXzaHJej4CUpYWj7
+ cK9vmfALebBQmuc5c7JxgqPNMqIMAqhr09smNp7yJP3HKkVzwnUaDAO03hnL5BlcodaB
+ mpysLxSr+38z8wJY7wXzTNB4X8hJApdKOTgGn3+2qHBuoH8bUemWNSuwgJNROE/MEN4L
+ 7WfMPm8GWMjfyfClk/ZQqysJ+X8N2XgMQtRJ3sLVicDFFmLhma+oTKhx2HTNFPVJ2tx8
+ 1DqHln0M/iblmEO/vkvC4aeWV8pVMMEJ32CQrInXojMNsCi/MaxX9MB2aCeYgadewy/B
+ 8tZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXryZUuEl7GW1YyCG4HvvIHzxix+02VdXKN16JiyHgee7UgRqB9WZxdtDSoSUMoL3ZrJax8Zj0REwem/RQyhQkK0ssdJg0=
+X-Gm-Message-State: AOJu0YwfmeNBOBoBcTuCFEx2FelBstnEyXq3BrePWbEfHMW6HEdc6OG8
+ 7f07mxnYUTHMJU8YJhhdwfb9s0Xm/et5q6TWbfzcaKoJyf5iZEneoBUa51o2zxQ=
+X-Google-Smtp-Source: AGHT+IFLpbWP3ka8QglB6EKizB2vIq+AC0qtpJO8/weU6wWqo26JMk+QNw2LiHAsuTorINsCnQr1HQ==
+X-Received: by 2002:adf:fccf:0:b0:34d:3d05:cf3a with SMTP id
+ ffacd0b85a97d-3504a6311a6mr19597458f8f.22.1716213617546; 
+ Mon, 20 May 2024 07:00:17 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502b896a5bsm29063380f8f.36.2024.05.20.07.00.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 May 2024 07:00:17 -0700 (PDT)
+Date: Mon, 20 May 2024 16:00:16 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: "Wu, Fei2" <fei2.wu@intel.com>
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com, 
+ sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
+ yin.wang@intel.com, 
+ tech-server-platform@lists.riscv.org, tech-server-soc@lists.riscv.org,
+ atishp@rivosinc.com, conor@kernel.org, heinrich.schuchardt@canonical.com,
+ marcin.juszkiewicz@linaro.org
+Subject: Re: [RISC-V][tech-server-soc] [RFC v2 1/2] target/riscv: Add server
+ platform reference cpu
+Message-ID: <20240520-ecc94488050a20d80f9c790e@orel>
+References: <20240312135222.3187945-1-fei2.wu@intel.com>
+ <20240312135222.3187945-2-fei2.wu@intel.com>
 MIME-Version: 1.0
-References: <20240507130349.86851-1-sebastian.huber@embedded-brains.de>
- <20240507130349.86851-3-sebastian.huber@embedded-brains.de>
-In-Reply-To: <20240507130349.86851-3-sebastian.huber@embedded-brains.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 May 2024 14:58:36 +0100
-Message-ID: <CAFEAcA_KBcL9UsqpOMk7GhWwokdEmC3fKZg_q7tdyt9LM7RFpA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/arm/xilinx_zynq: Support up to two CPU cores
-To: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x135.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240312135222.3187945-2-fei2.wu@intel.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,131 +105,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 May 2024 at 14:04, Sebastian Huber
-<sebastian.huber@embedded-brains.de> wrote:
->
-> The Zynq 7000 SoCs contain two Arm Cortex-A9 MPCore (the Zynq 7000S have only
-> one core).  Add support for up to two simulated cores.
->
-> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
-> ---
->  hw/arm/xilinx_zynq.c | 42 +++++++++++++++++++++++++++---------------
->  1 file changed, 27 insertions(+), 15 deletions(-)
->
-> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-> index 078abd77bd..3b858e3e9a 100644
-> --- a/hw/arm/xilinx_zynq.c
-> +++ b/hw/arm/xilinx_zynq.c
-> @@ -184,6 +184,8 @@ static void zynq_init(MachineState *machine)
->      SysBusDevice *busdev;
->      qemu_irq pic[64];
->      int n;
-> +    unsigned int smp_cpus = machine->smp.cpus;
-> +    qemu_irq cpu_irq[2];
+On Tue, Mar 12, 2024 at 09:52:20PM GMT, Wu, Fei2 wrote:
+> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+> profile support, plus Sv48, Svadu, H, Sscofmpf etc. This patch provides
+> a virt CPU type (rvsp-ref) as compliant as possible.
 
-We prefer not to have arrays of qemu_irq like this that are
-just passing qemu_irqs from one place to another. Instead
-at the point where you want the ARM_CPU_IRQ of a particular
-CPU, call qdev_get_gpio_in() on the CPU object there.
+We should add the RVA23 profile cpu type first, and then base a reference
+cpu type on that. But, I guess we should version the reference type, since
+we shouldn't expect the reference type to be bound to only RVA23 forever.
 
-I suggest dropping the "ARMCPU *cpu" local from this function
-and instead adding an "ARMCPU *cpu[ZYNQ_MAX_CPUS]" array to
-the ZynqMachineState struct.
-
->      /* max 2GB ram */
->      if (machine->ram_size > 2 * GiB) {
-> @@ -191,21 +193,27 @@ static void zynq_init(MachineState *machine)
->          exit(EXIT_FAILURE);
->      }
->
-> -    cpu = ARM_CPU(object_new(machine->cpu_type));
-> +    for (n = 0; n < smp_cpus; n++) {
-> +        Object *cpuobj = object_new(machine->cpu_type);
->
-> -    /* By default A9 CPUs have EL3 enabled.  This board does not
-> -     * currently support EL3 so the CPU EL3 property is disabled before
-> -     * realization.
-> -     */
-> -    if (object_property_find(OBJECT(cpu), "has_el3")) {
-> -        object_property_set_bool(OBJECT(cpu), "has_el3", false, &error_fatal);
-> -    }
-> +        /* By default A9 CPUs have EL3 enabled.  This board does not
-> +         * currently support EL3 so the CPU EL3 property is disabled before
-> +         * realization.
-> +         */
-
-If you're moving comment text around checkpatch will suggest that
-you fix it up to our current coding standard, which is that
-a multiline comment has the "/*" on a line of its own.
-
-> +        if (object_property_find(cpuobj, "has_el3")) {
-> +            object_property_set_bool(cpuobj, "has_el3", false, &error_fatal);
-> +        }
-> +
-> +        object_property_set_int(cpuobj, "midr", ZYNQ_BOARD_MIDR,
-> +                                &error_fatal);
-> +        object_property_set_int(cpuobj, "reset-cbar", MPCORE_PERIPHBASE,
-> +                                &error_fatal);
->
-> -    object_property_set_int(OBJECT(cpu), "midr", ZYNQ_BOARD_MIDR,
-> -                            &error_fatal);
-> -    object_property_set_int(OBJECT(cpu), "reset-cbar", MPCORE_PERIPHBASE,
-> -                            &error_fatal);
-> -    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-> +        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-> +
-> +        cpu_irq[n] = qdev_get_gpio_in(DEVICE(cpuobj), ARM_CPU_IRQ);
-> +    }
-> +    cpu = ARM_CPU(first_cpu);
->
->      /* DDR remapped to address zero.  */
->      memory_region_add_subregion(address_space_mem, 0, machine->ram);
-> @@ -238,10 +246,14 @@ static void zynq_init(MachineState *machine)
->      sysbus_mmio_map(SYS_BUS_DEVICE(slcr), 0, 0xF8000000);
->
->      dev = qdev_new(TYPE_A9MPCORE_PRIV);
-> -    qdev_prop_set_uint32(dev, "num-cpu", 1);
-> +    qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
->      busdev = SYS_BUS_DEVICE(dev);
->      sysbus_realize_and_unref(busdev, &error_fatal);
->      sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
-> +    for (n = 0; n < smp_cpus; n++) {
-> +        sysbus_connect_irq(busdev, n, cpu_irq[n]);
-> +    }
-
-Looks like you have based this on a version of QEMU which doesn't
-have commit 68a5827b80117973 which wires up the FIQ line of the
-A9MPCORE_PRIV device to the CPUs.
-
-> +    zynq_binfo.gic_cpu_if_addr = MPCORE_PERIPHBASE + 0x100;
->      sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
->      sysbus_connect_irq(busdev, 0,
->                         qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ));
-> @@ -357,7 +369,7 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
->      MachineClass *mc = MACHINE_CLASS(oc);
->      mc->desc = "Xilinx Zynq Platform Baseboard for Cortex-A9";
->      mc->init = zynq_init;
-> -    mc->max_cpus = 1;
-> +    mc->max_cpus = 2;
->      mc->no_sdcard = 1;
->      mc->ignore_memory_transaction_failures = true;
->      mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a9");
-> --
-
-I'm not making this a condition for accepting this patch, but
-since you're working on this board model would you consider
-writing up some documentation for it? It's one of the boards
-we do not currently have documented at all. This doesn't have to
-be very extensive: a few paragraphs describing what the board
-type is, maybe linking to a reference to the hardware, listing
-what is and isn't implemented, and (if there are some convenient
-examples available) perhaps listing some examples of use.
-docs/system/arm/xlnx-versal-virt.rst is the docs for the
-Xilinx Versal board; the rendered version of that is:
-https://www.qemu.org/docs/master/system/arm/xlnx-versal-virt.html
-or https://www.qemu.org/docs/master/system/arm/realview.html
-is an example of a more minimal board documentation page.
-
-thanks
--- PMM
+Thanks,
+drew
 
