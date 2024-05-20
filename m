@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C76A4C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 17:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385D8C25B7A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 17:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s977U-0002CM-Kw; Mon, 20 May 2024 13:48:20 -0400
+	id 1s977T-0002C2-VM; Mon, 20 May 2024 13:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1s977R-0002Bm-Vt
- for qemu-devel@nongnu.org; Mon, 20 May 2024 13:48:18 -0400
+ id 1s977Q-0002B7-3M
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 13:48:16 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1s977O-0003k1-Ko
- for qemu-devel@nongnu.org; Mon, 20 May 2024 13:48:16 -0400
+ id 1s977O-0003ku-6V
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 13:48:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716227295; x=1747763295;
+ t=1716227294; x=1747763294;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=CfBulfqouTJD2KFyY/RsB2TzLeKk14JepRumF3y0b/o=;
- b=HhZzu8Sotl014qdC5FiqMS3S2jvbPU5viutRyXX3ebvu6AsEyqk+TQg7
- C6zSKnv64bA4fgPeNEzSk//5bbe4rMTkt+UT9zbZ696/J2J/6l1/EQoM+
- sZ2aRqCyKYtQgEAd5GDqmtZOQxaUMv1PnSPTVDgOxxs2IwVn0TGP6SFf4
- b4iaW09vlDPrkh6m8WuFODI8mPOaZKoHQh2uyIkJVWVHI1JJ/VZkXyP8I
- PhAs9XGQ4Wh1duNAbFrEGjXlhQMUxvnrDPkndHRH0Y6qRuGjlHhQzCvaj
- tWQW9a3xBhSmVEpa36xGXqqGK7ylZmkCeY6t6PcUubQ/RAO8PlLyTyQ1u w==;
-X-CSE-ConnectionGUID: GeIXK0HsShuKmzYJX0W76A==
-X-CSE-MsgGUID: m1ckPSbsT2+Lri7MqS7osw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12222100"
-X-IronPort-AV: E=Sophos;i="6.08,175,1712646000"; d="scan'208";a="12222100"
+ bh=QJXh6BRmMMdAUv/q0OwnCX9WbdXcP+WLjiUsGv13T9M=;
+ b=Rm2DwSQPr7S/e1eMobie6tlWkzrZoNUzyz6tUZLr3GZPUvnXEsy9BpzS
+ Ip62adHACABEoh+EBG/lgRU5fSAIpn17Sbsb7duc6tpZQI2FJvrfIPu6g
+ qKon6SZsgIPUbE49BYRCjEbWbv43xs+euePiFkMOMjhbLo+lBhCwXGHcy
+ swa1nVUCT638ih+lSL4qFZEOrTcFN1veIGSiorLy9rQQlAFlGTwH4owdg
+ wOsz3hNxjIG6L6TCi50LE5rA4qtwq6iDbslFtSJR6u+S2QkCbHpYabBG8
+ as/PFdY4bTdpo3aMBFp1/dhYMzdFVSdicfSdt68HX4VM0QYTbvGX7uPFR w==;
+X-CSE-ConnectionGUID: 27An84ljQzu00u84Mp9Kyg==
+X-CSE-MsgGUID: y4q0A2C1RxWbb3bnJu4ulw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12222090"
+X-IronPort-AV: E=Sophos;i="6.08,175,1712646000"; d="scan'208";a="12222090"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2024 10:47:58 -0700
-X-CSE-ConnectionGUID: oQ9wEy1SRO6iM5NDUC4qoA==
-X-CSE-MsgGUID: UAKUAeTuSK6HfBecV+NT2A==
+ 20 May 2024 10:47:56 -0700
+X-CSE-ConnectionGUID: YZBN68fwTaS/of2KMwaXNg==
+X-CSE-MsgGUID: MZhaeiBNQBK9Mxzdz5VxNw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,175,1712646000"; d="scan'208";a="32746638"
+X-IronPort-AV: E=Sophos;i="6.08,175,1712646000"; d="scan'208";a="32746629"
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.100])
  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2024 10:47:58 -0700
+ 20 May 2024 10:47:56 -0700
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mst@redhat.com, thuth@redhat.com, cfontana@suse.de,
  xiaoyao.li@intel.com, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH 3/3] target/i386: Move host_cpu_enable_cpu_pm into
- kvm_cpu_realizefn()
-Date: Mon, 20 May 2024 10:47:33 -0700
-Message-Id: <20240520174733.32979-4-zide.chen@intel.com>
+Subject: [PATCH 1/3] vl: Allow multiple -overcommit commands
+Date: Mon, 20 May 2024 10:47:31 -0700
+Message-Id: <20240520174733.32979-2-zide.chen@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240520174733.32979-1-zide.chen@intel.com>
 References: <20240520174733.32979-1-zide.chen@intel.com>
@@ -83,71 +82,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It seems not a good idea to expand features in host_cpu_realizefn,
-which is for host CPU only.  Additionally, cpu-pm option is KVM
-specific, and it's cleaner to put it in kvm_cpu_realizefn(), together
-with the WAITPKG code.
+Both cpu-pm and mem-lock are related to system resource overcommit, but
+they are separate from each other, in terms of how they are realized,
+and of course, they are applied to different system resources.
 
-Fixes: f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using AccelCPUClass")
+It's tempting to use separate command lines to specify their behavior.
+e.g., in the following example, the cpu-pm command is quietly
+overwritten, and it's not easy to notice it without careful inspection.
+
+  --overcommit mem-lock=on
+  --overcommit cpu-pm=on
+
+Fixes: c8c9dc42b7ca ("Remove the deprecated -realtime option")
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 ---
- target/i386/host-cpu.c    | 12 ------------
- target/i386/kvm/kvm-cpu.c | 11 +++++++++--
- 2 files changed, 9 insertions(+), 14 deletions(-)
+ system/vl.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
-index 280e427c017c..8b8bf5afeccf 100644
---- a/target/i386/host-cpu.c
-+++ b/target/i386/host-cpu.c
-@@ -42,15 +42,6 @@ static uint32_t host_cpu_phys_bits(void)
-     return host_phys_bits;
- }
- 
--static void host_cpu_enable_cpu_pm(X86CPU *cpu)
--{
--    CPUX86State *env = &cpu->env;
--
--    host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
--               &cpu->mwait.ecx, &cpu->mwait.edx);
--    env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
--}
--
- static uint32_t host_cpu_adjust_phys_bits(X86CPU *cpu)
- {
-     uint32_t host_phys_bits = host_cpu_phys_bits();
-@@ -83,9 +74,6 @@ bool host_cpu_realizefn(CPUState *cs, Error **errp)
-     X86CPU *cpu = X86_CPU(cs);
-     CPUX86State *env = &cpu->env;
- 
--    if (cpu->max_features && enable_cpu_pm) {
--        host_cpu_enable_cpu_pm(cpu);
--    }
-     if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
-         uint32_t phys_bits = host_cpu_adjust_phys_bits(cpu);
- 
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 3adcedf0dbc3..197c892da89a 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -64,9 +64,16 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-      *   cpu_common_realizefn() (via xcc->parent_realize)
-      */
-     if (cpu->max_features) {
--        if (enable_cpu_pm && kvm_has_waitpkg()) {
--            env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
-+        if (enable_cpu_pm) {
-+            if (kvm_has_waitpkg()) {
-+                env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
-+            }
+diff --git a/system/vl.c b/system/vl.c
+index a3eede5fa5b8..ed682643805b 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3545,8 +3545,12 @@ void qemu_init(int argc, char **argv)
+                 if (!opts) {
+                     exit(1);
+                 }
+-                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", false);
+-                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", false);
 +
-+            host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
-+                       &cpu->mwait.ecx, &cpu->mwait.edx);
-+            env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
-         }
-+
-         if (cpu->ucode_rev == 0) {
-             cpu->ucode_rev =
-                 kvm_arch_get_supported_msr_feature(kvm_state,
++                /* Don't override the -overcommit option if set */
++                enable_mlock = enable_mlock ||
++                    qemu_opt_get_bool(opts, "mem-lock", false);
++                enable_cpu_pm = enable_cpu_pm ||
++                    qemu_opt_get_bool(opts, "cpu-pm", false);
+                 break;
+             case QEMU_OPTION_compat:
+                 {
 -- 
 2.34.1
 
