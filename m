@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 844F5C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 06:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D94C25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 06:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s8w9e-00072s-Ox; Mon, 20 May 2024 02:05:52 -0400
+	id 1s8wH8-00016d-3e; Mon, 20 May 2024 02:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3Db1=MX=kaod.org=clg@ozlabs.org>)
- id 1s8w94-0006y6-IX; Mon, 20 May 2024 02:05:15 -0400
+ id 1s8wH5-00015j-GA; Mon, 20 May 2024 02:13:31 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3Db1=MX=kaod.org=clg@ozlabs.org>)
- id 1s8w92-0000ep-7U; Mon, 20 May 2024 02:05:14 -0400
+ id 1s8wH1-000250-M4; Mon, 20 May 2024 02:13:31 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VjRqn1W5Cz4wjF;
- Mon, 20 May 2024 16:05:09 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VjS1F3nVdz4wjF;
+ Mon, 20 May 2024 16:13:21 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VjRqh6k4yz4wb0;
- Mon, 20 May 2024 16:05:04 +1000 (AEST)
-Message-ID: <03454ced-31ad-4585-9b99-a04da4a4bf33@kaod.org>
-Date: Mon, 20 May 2024 08:05:01 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VjS194Kw1z4wbp;
+ Mon, 20 May 2024 16:13:17 +1000 (AEST)
+Message-ID: <dfcf9e54-3fe5-4551-bfd3-814d9cd62724@kaod.org>
+Date: Mon, 20 May 2024 08:13:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/5] hw/ppc: SPI controller wiring to P10 chip
+Subject: Re: [PATCH v3 5/5] tests/qtest: Add pnv-spi-seeprom qtest
 To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
  calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.vnet.ibm.com,
- dantan@us.ibm.com, milesg@linux.vnet.ibm.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ dantan@us.ibm.com, milesg@linux.vnet.ibm.com
 References: <20240515174149.17713-1-chalapathi.v@linux.ibm.com>
- <20240515174149.17713-5-chalapathi.v@linux.ibm.com>
+ <20240515174149.17713-6-chalapathi.v@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240515174149.17713-5-chalapathi.v@linux.ibm.com>
+In-Reply-To: <20240515174149.17713-6-chalapathi.v@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=3Db1=MX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -67,121 +66,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Phil
-
 On 5/15/24 19:41, Chalapathi V wrote:
-> In this commit, create SPI controller on p10 chip and connect cs irq.
-> 
-> The QOM tree of spi controller and seeprom are.
-> /machine (powernv10-machine)
->    /chip[0] (power10_v2.0-pnv-chip)
->      /pib_spic[2] (pnv-spi-controller)
->        /pnv-spi-bus.2 (SSI)
->        /xscom-spi-controller-regs[0] (memory-region)
-> 
-> /machine (powernv10-machine)
->    /peripheral-anon (container)
->      /device[0] (25csm04)
->        /WP#[0] (irq)
->        /ssi-gpio-cs[0] (irq)
-> 
-> (qemu) qom-get /machine/peripheral-anon /device[76] "parent_bus"
-> "/machine/chip[0]/pib_spic[2]/pnv-spi-bus.2"
+> In this commit Write a qtest pnv-spi-seeprom-test to check the
+> SPI transactions between spi controller and seeprom device.
 > 
 > Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 > ---
->   include/hw/ppc/pnv_chip.h   |  3 +++
->   hw/ppc/pnv.c                | 21 ++++++++++++++++++++-
->   hw/ppc/pnv_spi_controller.c |  8 ++++++++
->   3 files changed, 31 insertions(+), 1 deletion(-)
+>   tests/qtest/pnv-spi-seeprom-test.c | 129 +++++++++++++++++++++++++++++
+>   tests/qtest/meson.build            |   1 +
+>   2 files changed, 130 insertions(+)
+>   create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
 > 
-> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-> index 8589f3291e..d464858f79 100644
-> --- a/include/hw/ppc/pnv_chip.h
-> +++ b/include/hw/ppc/pnv_chip.h
-> @@ -6,6 +6,7 @@
->   #include "hw/ppc/pnv_core.h"
->   #include "hw/ppc/pnv_homer.h"
->   #include "hw/ppc/pnv_n1_chiplet.h"
-> +#include "hw/ssi/pnv_spi.h"
->   #include "hw/ppc/pnv_lpc.h"
->   #include "hw/ppc/pnv_occ.h"
->   #include "hw/ppc/pnv_psi.h"
-> @@ -118,6 +119,8 @@ struct Pnv10Chip {
->       PnvSBE       sbe;
->       PnvHomer     homer;
->       PnvN1Chiplet     n1_chiplet;
-> +#define PNV10_CHIP_MAX_PIB_SPIC 6
-> +    PnvSpiController pib_spic[PNV10_CHIP_MAX_PIB_SPIC];
->   
->       uint32_t     nr_quads;
->       PnvQuad      *quads;
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 6e3a5ccdec..6850592a85 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -1829,6 +1829,11 @@ static void pnv_chip_power10_instance_init(Object *obj)
->       for (i = 0; i < pcc->i2c_num_engines; i++) {
->           object_initialize_child(obj, "i2c[*]", &chip10->i2c[i], TYPE_PNV_I2C);
->       }
+> diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
+> new file mode 100644
+> index 0000000000..bfa57f3234
+> --- /dev/null
+> +++ b/tests/qtest/pnv-spi-seeprom-test.c
+> @@ -0,0 +1,129 @@
+> +/*
+> + * QTest testcase for PowerNV 10 Seeprom Communications
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#include <unistd.h>
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +#include "qemu/bswap.h"
+> +#include "hw/ssi/pnv_spi_regs.h"
 > +
-> +    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC ; i++) {
-> +        object_initialize_child(obj, "pib_spic[*]", &chip10->pib_spic[i],
-> +                                TYPE_PNV_SPI_CONTROLLER);
-> +    }
->   }
->   
->   static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
-> @@ -2043,7 +2048,21 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
->                                 qdev_get_gpio_in(DEVICE(&chip10->psi),
->                                                  PSIHB9_IRQ_SBE_I2C));
->       }
-> -
-> +    /* PIB SPI Controller */
-> +    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
-> +        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "spic_num",
-> +                                i, &error_fatal);
-> +        /* pib_spic[2] connected to 25csm04 which implements 1 byte transfer */
-> +        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "transfer_len",
-> +                                (i == 2) ? 1 : 4, &error_fatal);
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(OBJECT
-> +                                        (&chip10->pib_spic[i])), errp)) {
-> +            return;
-> +        }
-> +        pnv_xscom_add_subregion(chip, PNV10_XSCOM_PIB_SPIC_BASE +
-> +                                i * PNV10_XSCOM_PIB_SPIC_SIZE,
-> +                                &chip10->pib_spic[i].xscom_spic_regs);
-> +    }
->   }
->   
->   static void pnv_rainier_i2c_init(PnvMachineState *pnv)
-> diff --git a/hw/ppc/pnv_spi_controller.c b/hw/ppc/pnv_spi_controller.c
-> index e87f583074..3d47e932de 100644
-> --- a/hw/ppc/pnv_spi_controller.c
-> +++ b/hw/ppc/pnv_spi_controller.c
-> @@ -1067,9 +1067,17 @@ static void operation_sequencer(PnvSpiController *s)
->   static void do_reset(DeviceState *dev)
->   {
->       PnvSpiController *s = PNV_SPICONTROLLER(dev);
-> +    DeviceState *ssi_dev;
->   
->       trace_pnv_spi_reset();
->   
-> +    /* Connect cs irq */
-> +    ssi_dev = ssi_get_cs(s->ssi_bus, 0);
-> +    if (ssi_dev) {
-> +        qemu_irq cs_line = qdev_get_gpio_in_named(ssi_dev, SSI_GPIO_CS, 0);
-> +        qdev_connect_gpio_out_named(DEVICE(s), "cs", 0, cs_line);
-> +    }
+> +#define P10_XSCOM_BASE          0x000603fc00000000ull
+> +#define SPIC2_XSCOM_BASE        0xc0040
 > +
->       /* Reset all N1 and N2 counters, and other constants */
->       s->N2_bits = 0;
->       s->N2_bytes = 0;
+> +/* To transmit READ opcode and address */
+> +#define READ_OP_TDR_DATA        0x0300010000000000
+> +/*
+> + * N1 shift - tx 4 bytes (transmit opcode and address)
+> + * N2 shift - tx and rx 8 bytes.
+> + */
+> +#define READ_OP_COUNTER_CONFIG  0x2040000000002b00
+> +/* SEQ_OP_SELECT_RESPONDER - N1 Shift - N2 Shift * 5 - SEQ_OP_STOP */
+> +#define READ_OP_SEQUENCER       0x1130404040404010
+> +
+> +/* To transmit WREN(Set Write Enable Latch in status0 register) opcode */
+> +#define WRITE_OP_WREN           0x0600000000000000
+> +/* To transmit WRITE opcode, address and data */
+> +#define WRITE_OP_TDR_DATA       0x0300010012345678
+> +/* N1 shift - tx 8 bytes (transmit opcode, address and data) */
+> +#define WRITE_OP_COUNTER_CONFIG 0x4000000000002000
+> +/* SEQ_OP_SELECT_RESPONDER - N1 Shift - SEQ_OP_STOP */
+> +#define WRITE_OP_SEQUENCER      0x1130100000000000
+> +
+> +static uint64_t pnv_xscom_addr(uint32_t pcba)
+> +{
+> +    return P10_XSCOM_BASE | ((uint64_t) pcba << 3);
+> +}
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Thanks,
+I would prefer if the test used the pnv_xscom_addr() definition from
+tests/qtest/pnv-xscom.h.
 
-C.
+> +static uint64_t pnv_spi_seeprom_xscom_addr(uint32_t reg)
+> +{
+> +    return pnv_xscom_addr(SPIC2_XSCOM_BASE + reg);
+> +}
+> +
+> +static void pnv_spi_controller_xscom_write(QTestState *qts, uint32_t reg,
+> +                uint64_t val)
+> +{
+> +    qtest_writeq(qts, pnv_spi_seeprom_xscom_addr(reg), val);
+> +}
+> +
+> +static uint64_t pnv_spi_controller_xscom_read(QTestState *qts, uint32_t reg)
+> +{
+> +    return qtest_readq(qts, pnv_spi_seeprom_xscom_addr(reg));
+> +}
+> +
+> +static void spi_seeprom_transaction(QTestState *qts)
+> +{
+> +    /* SPI transactions to SEEPROM to read from SEEPROM image */
+> +    pnv_spi_controller_xscom_write(qts, COUNTER_CONFIG_REG,
+> +                                    READ_OP_COUNTER_CONFIG);
+> +    pnv_spi_controller_xscom_write(qts, SEQUENCER_OPERATION_REG,
+> +                                    READ_OP_SEQUENCER);
+> +    pnv_spi_controller_xscom_write(qts, TRANSMIT_DATA_REG, READ_OP_TDR_DATA);
+> +    pnv_spi_controller_xscom_write(qts, TRANSMIT_DATA_REG, 0);
+> +    /* Read 5*8 bytes from SEEPROM at 0x100 */
+> +    uint64_t rdr_val = pnv_spi_controller_xscom_read(qts, RECEIVE_DATA_REG);
+> +    printf("RDR READ = 0x%lx\n", rdr_val);
+> +    rdr_val = pnv_spi_controller_xscom_read(qts, RECEIVE_DATA_REG);
+> +    rdr_val = pnv_spi_controller_xscom_read(qts, RECEIVE_DATA_REG);
+> +    rdr_val = pnv_spi_controller_xscom_read(qts, RECEIVE_DATA_REG);
+> +    rdr_val = pnv_spi_controller_xscom_read(qts, RECEIVE_DATA_REG);
+> +    printf("RDR READ = 0x%lx\n", rdr_val);
+> +
+> +    /* SPI transactions to SEEPROM to write to SEEPROM image */
+> +    pnv_spi_controller_xscom_write(qts, COUNTER_CONFIG_REG,
+> +                                    WRITE_OP_COUNTER_CONFIG);
+> +    /* Set Write Enable Latch bit of status0 register */
+> +    pnv_spi_controller_xscom_write(qts, SEQUENCER_OPERATION_REG,
+> +                                    WRITE_OP_SEQUENCER);
+> +    pnv_spi_controller_xscom_write(qts, TRANSMIT_DATA_REG, WRITE_OP_WREN);
+> +    /* write 8 bytes to SEEPROM at 0x100 */
+> +    pnv_spi_controller_xscom_write(qts, SEQUENCER_OPERATION_REG,
+> +                                    WRITE_OP_SEQUENCER);
+> +    pnv_spi_controller_xscom_write(qts, TRANSMIT_DATA_REG, WRITE_OP_TDR_DATA);
+> +}
+> +
+> +/* Find complete path of in_file in the current working directory */
+> +static void find_file(const char *in_file, char *in_path)
+> +{
+> +    g_autofree char *cwd = g_get_current_dir();
+> +    char *filepath = g_build_filename(cwd, in_file, NULL);
+> +    if (!access(filepath, F_OK)) {
+> +        strcpy(in_path, filepath);
+> +    } else {
+> +        strcpy(in_path, "");
+> +        printf("File %s not found within %s\n", in_file, cwd);
+> +    }
+> +}
+> +
+> +static void test_spi_seeprom(void)
+> +{
+> +    QTestState *qts = NULL;
+> +    char seepromfile[500];
+> +    find_file("sbe_measurement_seeprom.bin.ecc", seepromfile);
+
+hmm, could you generate the contents instead ?
+
+> +    if (strcmp(seepromfile, "")) {
+> +        printf("Starting QEMU with seeprom file.\n");
+> +        qts = qtest_initf("-m 2G -machine powernv10 -smp 2,cores=2,"
+> +                          "threads=1 -accel tcg,thread=single -nographic "
+> +                          "-blockdev node-name=pib_spic2,driver=file,"
+> +			  "filename=sbe_measurement_seeprom.bin.ecc "
+> +			  "-device 25csm04,bus=pnv-spi-bus.2,cs=0,"
+> +			  "drive=pib_spic2");
+> +    } else {
+> +        printf("Starting QEMU without seeprom file.\n");
+> +        qts = qtest_initf("-m 2G -machine powernv10 -smp 2,cores=2,"
+> +                          "threads=1 -accel tcg,thread=single -nographic"
+> +			  " -device 25csm04,bus=pnv-spi-bus.2,cs=0");
+> +    }
+> +    spi_seeprom_transaction(qts);
+> +    qtest_quit(qts);
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +    qtest_add_func("spi_seeprom", test_spi_seeprom);
+> +    return g_test_run();
+> +}
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 86293051dc..2fa98b2430 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -171,6 +171,7 @@ qtests_ppc64 = \
+>     qtests_ppc + \
+>     (config_all_devices.has_key('CONFIG_PSERIES') ? ['device-plug-test'] : []) +               \
+>     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xscom-test'] : []) +                 \
+> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
+>     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
+>     (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
+>     (slirp.found() ? ['pxe-test'] : []) +              \
 
 
