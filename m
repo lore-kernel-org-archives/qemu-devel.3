@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D86C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04676C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s93Z9-0007WB-0j; Mon, 20 May 2024 10:00:39 -0400
+	id 1s93bs-0000QC-8G; Mon, 20 May 2024 10:03:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s93Yw-0007RN-2v
- for qemu-devel@nongnu.org; Mon, 20 May 2024 10:00:26 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s93Yr-0001GZ-O4
- for qemu-devel@nongnu.org; Mon, 20 May 2024 10:00:25 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-351d79b56cdso1848426f8f.1
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:00:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716213617; x=1716818417; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=V/8nB0KE9iIsTN79NqvxoOEILL8ZAx+/Vn72nMsp2no=;
- b=hS8f2SJWA9CSpKK38e+dOTA2ksiHnryVSY5EnLGThsEue3qPd3u3kvqv43NRaZ+T8j
- 27ExOygtbHTw+7FZGz136Lvp4RcGobFxWOXG0WYEJQMnSINwEytee4G4YJAbEjVrVazA
- IIzPl48wi6ZGKyh7IRdZEjwuGpA/DXvdGUla9071RnehS3jZVuCkR1meK6vUw6jS4zfM
- 6WG9WIs3fZ0t77IV8f1mlxJkoAcoDVO/ntVMulbINka8LwNnjinIOASSFbYvH42iI1Qc
- cB5+kb/vEwcZ2xMHU2hcAfH7J++yBwGeUSTWqdwWVfG5eG/wgBpCkWmyelZGV83lF+on
- MolQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716213617; x=1716818417;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V/8nB0KE9iIsTN79NqvxoOEILL8ZAx+/Vn72nMsp2no=;
- b=QH864tGp1x2y59dHRK0zy6bB5e92EqKwCwXApLXAf4ZeQEaHAlTXzaHJej4CUpYWj7
- cK9vmfALebBQmuc5c7JxgqPNMqIMAqhr09smNp7yJP3HKkVzwnUaDAO03hnL5BlcodaB
- mpysLxSr+38z8wJY7wXzTNB4X8hJApdKOTgGn3+2qHBuoH8bUemWNSuwgJNROE/MEN4L
- 7WfMPm8GWMjfyfClk/ZQqysJ+X8N2XgMQtRJ3sLVicDFFmLhma+oTKhx2HTNFPVJ2tx8
- 1DqHln0M/iblmEO/vkvC4aeWV8pVMMEJ32CQrInXojMNsCi/MaxX9MB2aCeYgadewy/B
- 8tZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXryZUuEl7GW1YyCG4HvvIHzxix+02VdXKN16JiyHgee7UgRqB9WZxdtDSoSUMoL3ZrJax8Zj0REwem/RQyhQkK0ssdJg0=
-X-Gm-Message-State: AOJu0YwfmeNBOBoBcTuCFEx2FelBstnEyXq3BrePWbEfHMW6HEdc6OG8
- 7f07mxnYUTHMJU8YJhhdwfb9s0Xm/et5q6TWbfzcaKoJyf5iZEneoBUa51o2zxQ=
-X-Google-Smtp-Source: AGHT+IFLpbWP3ka8QglB6EKizB2vIq+AC0qtpJO8/weU6wWqo26JMk+QNw2LiHAsuTorINsCnQr1HQ==
-X-Received: by 2002:adf:fccf:0:b0:34d:3d05:cf3a with SMTP id
- ffacd0b85a97d-3504a6311a6mr19597458f8f.22.1716213617546; 
- Mon, 20 May 2024 07:00:17 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a5bsm29063380f8f.36.2024.05.20.07.00.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 May 2024 07:00:17 -0700 (PDT)
-Date: Mon, 20 May 2024 16:00:16 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: "Wu, Fei2" <fei2.wu@intel.com>
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com, 
- sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
- yin.wang@intel.com, 
- tech-server-platform@lists.riscv.org, tech-server-soc@lists.riscv.org,
- atishp@rivosinc.com, conor@kernel.org, heinrich.schuchardt@canonical.com,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [RISC-V][tech-server-soc] [RFC v2 1/2] target/riscv: Add server
- platform reference cpu
-Message-ID: <20240520-ecc94488050a20d80f9c790e@orel>
-References: <20240312135222.3187945-1-fei2.wu@intel.com>
- <20240312135222.3187945-2-fei2.wu@intel.com>
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1s93bq-0000Pd-Il; Mon, 20 May 2024 10:03:26 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1s93bo-0001eG-F2; Mon, 20 May 2024 10:03:26 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44KB4oEN026247; Mon, 20 May 2024 13:01:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=Os7saOwkoS3oTr9xuuvbVdiETTtORsGl7vlRiblzmb4=;
+ b=XFOq5JMAYs+w4b9vcKiUU9Op3R3GeSEHIvl+NT/KoOKgfPl+4q6VBGr2lJYv5zCRuurn
+ 048Ovr4FQtZ7gtWecdeFkWSgMVn4X8Nk6jB6ukW2OyglnkhuDuN4of/PoNCZRVvjrKcB
+ rjsAmhzI9Rb8yuF+xEFaGqjDVrkNsk1i26Ej7GvuguGMLDi+nFiyJ8VO2ELs4E41/Ea9
+ bA8s6VJx2RiaHXxwBrsHU78j0P+wCNeJ4odUKN8EtRfKiub/GG9SxdOKkkHp8R7/3nwX
+ RcY2893fpMbAuf40I1CGhkvJxqJDGdQ2Z2TNwAADzc6LmZCG5BN1bq5qZPDMD7xdcz66 xg== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y6jx2am8y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 May 2024 13:01:06 +0000
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 44KB5eE5005006; Mon, 20 May 2024 13:01:05 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3y6js6bs6v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 May 2024 13:01:05 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44KD0qPh028778;
+ Mon, 20 May 2024 13:01:04 GMT
+Received: from jonah-ol8.us.oracle.com (dhcp-10-65-165-95.vpn.oracle.com
+ [10.65.165.95])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 3y6js6brp8-6; Mon, 20 May 2024 13:01:04 +0000
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
+ jasowang@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ eperezma@redhat.com, stefanha@redhat.com, qemu-block@nongnu.org,
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
+Subject: [PATCH v2 5/6] vhost,
+ vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
+Date: Mon, 20 May 2024 09:00:47 -0400
+Message-Id: <20240520130048.1483177-6-jonah.palmer@oracle.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240520130048.1483177-1-jonah.palmer@oracle.com>
+References: <20240520130048.1483177-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240312135222.3187945-2-fei2.wu@intel.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-20_05,2024-05-17_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ phishscore=0
+ suspectscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405200108
+X-Proofpoint-GUID: tsV04fynz2xU2Qx4Nu9mKP4zCquod4O2
+X-Proofpoint-ORIG-GUID: tsV04fynz2xU2Qx4Nu9mKP4zCquod4O2
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,18 +100,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonah Palmer <jonah.palmer@oracle.com>
+From:  Jonah Palmer via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 09:52:20PM GMT, Wu, Fei2 wrote:
-> The harts requirements of RISC-V server platform [1] require RVA23 ISA
-> profile support, plus Sv48, Svadu, H, Sscofmpf etc. This patch provides
-> a virt CPU type (rvsp-ref) as compliant as possible.
+Add support for the VIRTIO_F_IN_ORDER feature across a variety of vhost
+devices.
 
-We should add the RVA23 profile cpu type first, and then base a reference
-cpu type on that. But, I guess we should version the reference type, since
-we shouldn't expect the reference type to be bound to only RVA23 forever.
+The inclusion of VIRTIO_F_IN_ORDER in the feature bits arrays for these
+devices ensures that the backend is capable of offering and providing
+support for this feature, and that it can be disabled if the backend
+does not support it.
 
-Thanks,
-drew
+Tested-by: Lei Yang <leiyang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+---
+ hw/block/vhost-user-blk.c    | 1 +
+ hw/net/vhost_net.c           | 2 ++
+ hw/scsi/vhost-scsi.c         | 1 +
+ hw/scsi/vhost-user-scsi.c    | 1 +
+ hw/virtio/vhost-user-fs.c    | 1 +
+ hw/virtio/vhost-user-vsock.c | 1 +
+ net/vhost-vdpa.c             | 1 +
+ 7 files changed, 8 insertions(+)
+
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 9e6bbc6950..1dd0a8ef63 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -51,6 +51,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index fd1a93701a..eb0b1c06e5 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -48,6 +48,7 @@ static const int kernel_feature_bits[] = {
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
+     VIRTIO_NET_F_HASH_REPORT,
+     VHOST_INVALID_FEATURE_BIT
+ };
+@@ -76,6 +77,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
+     VIRTIO_NET_F_RSS,
+     VIRTIO_NET_F_HASH_REPORT,
+     VIRTIO_NET_F_GUEST_USO4,
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index ae26bc19a4..40e7630191 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -38,6 +38,7 @@ static const int kernel_feature_bits[] = {
+     VIRTIO_RING_F_EVENT_IDX,
+     VIRTIO_SCSI_F_HOTPLUG,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index a63b1f4948..1d59951ab7 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -36,6 +36,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_RING_F_EVENT_IDX,
+     VIRTIO_SCSI_F_HOTPLUG,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+index cca2cd41be..9243dbb128 100644
+--- a/hw/virtio/vhost-user-fs.c
++++ b/hw/virtio/vhost-user-fs.c
+@@ -33,6 +33,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
+ 
+     VHOST_INVALID_FEATURE_BIT
+ };
+diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
+index 9431b9792c..cc7e4e47b4 100644
+--- a/hw/virtio/vhost-user-vsock.c
++++ b/hw/virtio/vhost-user-vsock.c
+@@ -21,6 +21,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_RING_F_INDIRECT_DESC,
+     VIRTIO_RING_F_EVENT_IDX,
+     VIRTIO_F_NOTIFY_ON_EMPTY,
++    VIRTIO_F_IN_ORDER,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 85e73dd6a7..ed3185acfa 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -62,6 +62,7 @@ const int vdpa_feature_bits[] = {
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_RING_RESET,
+     VIRTIO_F_VERSION_1,
++    VIRTIO_F_IN_ORDER,
+     VIRTIO_NET_F_CSUM,
+     VIRTIO_NET_F_CTRL_GUEST_OFFLOADS,
+     VIRTIO_NET_F_CTRL_MAC_ADDR,
+-- 
+2.39.3
+
 
