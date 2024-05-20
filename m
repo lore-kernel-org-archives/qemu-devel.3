@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04676C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB622C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 May 2024 14:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s93bs-0000QC-8G; Mon, 20 May 2024 10:03:28 -0400
+	id 1s93mW-0002DZ-Fy; Mon, 20 May 2024 10:14:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1s93bq-0000Pd-Il; Mon, 20 May 2024 10:03:26 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1s93bo-0001eG-F2; Mon, 20 May 2024 10:03:26 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44KB4oEN026247; Mon, 20 May 2024 13:01:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-11-20;
- bh=Os7saOwkoS3oTr9xuuvbVdiETTtORsGl7vlRiblzmb4=;
- b=XFOq5JMAYs+w4b9vcKiUU9Op3R3GeSEHIvl+NT/KoOKgfPl+4q6VBGr2lJYv5zCRuurn
- 048Ovr4FQtZ7gtWecdeFkWSgMVn4X8Nk6jB6ukW2OyglnkhuDuN4of/PoNCZRVvjrKcB
- rjsAmhzI9Rb8yuF+xEFaGqjDVrkNsk1i26Ej7GvuguGMLDi+nFiyJ8VO2ELs4E41/Ea9
- bA8s6VJx2RiaHXxwBrsHU78j0P+wCNeJ4odUKN8EtRfKiub/GG9SxdOKkkHp8R7/3nwX
- RcY2893fpMbAuf40I1CGhkvJxqJDGdQ2Z2TNwAADzc6LmZCG5BN1bq5qZPDMD7xdcz66 xg== 
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y6jx2am8y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 May 2024 13:01:06 +0000
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 44KB5eE5005006; Mon, 20 May 2024 13:01:05 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3y6js6bs6v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 May 2024 13:01:05 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44KD0qPh028778;
- Mon, 20 May 2024 13:01:04 GMT
-Received: from jonah-ol8.us.oracle.com (dhcp-10-65-165-95.vpn.oracle.com
- [10.65.165.95])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3y6js6brp8-6; Mon, 20 May 2024 13:01:04 +0000
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
- jasowang@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- eperezma@redhat.com, stefanha@redhat.com, qemu-block@nongnu.org,
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [PATCH v2 5/6] vhost,
- vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
-Date: Mon, 20 May 2024 09:00:47 -0400
-Message-Id: <20240520130048.1483177-6-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240520130048.1483177-1-jonah.palmer@oracle.com>
-References: <20240520130048.1483177-1-jonah.palmer@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s93mU-0002DH-VA
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:14:26 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s93mS-0003MC-Vp
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 10:14:26 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41fc5645bb1so17539465e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 07:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716214463; x=1716819263; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9DRv/RF9T6pLBQGRdcb4EE1+9iavHaVTAiqNXEwLK0=;
+ b=LYheQFbY1pyxApuVqrWfNQly3bgnVayjc9UiIZFs/gNvUv1r0ryEKo5LXkpG/a7eZa
+ tcvW6VrOYxjGl8D64cMyy/bUjdN0nHmeTRLfErbD0gTaXRPVWIoZjoQrApLHOTmNXd8L
+ 8IwIdrLSK2YULzMzIn8/u4Ei3xgwoB2JY3xxMivp6UBWeudoz9+xhYwjeyOH55ToXpoC
+ B+pHpz+GtEBsPyRvbc4jQhf9e3UN86+9EHbik32HR5kgqTTlFk/x9i3CT6OcbVe2kOhl
+ 202aWjF4S7m+qZYjpNROca4jqNG3MKavhRO4BjxPJjGA1uAynM6nlnUK0OpYYTTQz1Q4
+ msnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716214463; x=1716819263;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9DRv/RF9T6pLBQGRdcb4EE1+9iavHaVTAiqNXEwLK0=;
+ b=hyOnXTjkLM9cvKOn606rWgxIYeDheCe1BmTHYiJWIeDM0ThTbzGeUUB3UPWR8uOISp
+ cD/K9soBQy8ixpCANcsq890G0hV81Li3+TljTFjuSMBR604zmlSzRTfxeZSL5G7VUQzs
+ oWpx7dqKjHQIVi799D6ewah+8izbLHsgItOEzVHvKx84hEB+NVVrFIjXgOre9JvOej54
+ JIVFNHO977m+I5m7e6w2l9XEl6Y4eYgOxHRrC8kVFKduvo0N3+k78ATTkW05W5M4lgDP
+ MJ/wg6+JSNqFCkPUfH6Qf6p11Rec0aoZ+PAtmopm8NnGvXrpXKLm+SFIwU3xJl+K3s7B
+ 6aBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUv5ZRV0aBZKIuCSowI/eYgq8MHTHPBHLKKryaNGeAPgVx8e2FxNsYYmxNpKWVa20CGS2Q/GFh+H4hd7GaM/t2avFbtK0=
+X-Gm-Message-State: AOJu0YxDso4H/19JgqZLyyjif6eyIgk8qd6br08Hv07qy1pJYmZPOe2U
+ y6+4iB0SxFQ55mL8ORkk15fefoIanClINMfWOwxPJU66dJWJV2q5LGHdYM+ricsXYuuJ2rm9M7E
+ Y
+X-Google-Smtp-Source: AGHT+IE0OYZlrY8u3FFXOdbj8d0BqEV+i3MbvJnqd7J51iGWFraB5NPX4M4N7R2RUukvtvIo4VtBIA==
+X-Received: by 2002:a05:600c:15c2:b0:41b:e0e5:a525 with SMTP id
+ 5b1f17b1804b1-41feaa44411mr255533515e9.17.1716214463078; 
+ Mon, 20 May 2024 07:14:23 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502bbbbedbsm29234107f8f.92.2024.05.20.07.14.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 May 2024 07:14:22 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] docs/system/target-arm: Re-alphabetize board list
+Date: Mon, 20 May 2024 15:14:21 +0100
+Message-Id: <20240520141421.1895138-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-20_05,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- phishscore=0
- suspectscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405200108
-X-Proofpoint-GUID: tsV04fynz2xU2Qx4Nu9mKP4zCquod4O2
-X-Proofpoint-ORIG-GUID: tsV04fynz2xU2Qx4Nu9mKP4zCquod4O2
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,125 +89,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonah Palmer <jonah.palmer@oracle.com>
-From:  Jonah Palmer via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the VIRTIO_F_IN_ORDER feature across a variety of vhost
-devices.
+The board list in target-arm.rst is supposed to be in alphabetical
+order by the title text of each file (which is not the same as
+alphabetical order by filename).  A few items had got out of order;
+correct them.
 
-The inclusion of VIRTIO_F_IN_ORDER in the feature bits arrays for these
-devices ensures that the backend is capable of offering and providing
-support for this feature, and that it can be disabled if the backend
-does not support it.
+The entry for
+"Facebook Yosemite v3.5 Platform and CraterLake Server (fby35)"
+remains out-of-order, because this is not its own file
+but is currently part of the aspeed.rst file.
 
-Tested-by: Lei Yang <leiyang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/block/vhost-user-blk.c    | 1 +
- hw/net/vhost_net.c           | 2 ++
- hw/scsi/vhost-scsi.c         | 1 +
- hw/scsi/vhost-user-scsi.c    | 1 +
- hw/virtio/vhost-user-fs.c    | 1 +
- hw/virtio/vhost-user-vsock.c | 1 +
- net/vhost-vdpa.c             | 1 +
- 7 files changed, 8 insertions(+)
+ docs/system/target-arm.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 9e6bbc6950..1dd0a8ef63 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -51,6 +51,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index c9d7c0dda7e..870d30e3502 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -86,16 +86,16 @@ undocumented; you can get a complete list by running
+    arm/bananapi_m2u.rst
+    arm/b-l475e-iot01a.rst
+    arm/sabrelite
++   arm/highbank
+    arm/digic
+    arm/cubieboard
+    arm/emcraft-sf2
+-   arm/highbank
+    arm/musicpal
+    arm/gumstix
+    arm/mainstone
+    arm/kzm
+-   arm/nrf
+    arm/nseries
++   arm/nrf
+    arm/nuvoton
+    arm/imx25-pdk
+    arm/orangepi
+@@ -107,8 +107,8 @@ undocumented; you can get a complete list by running
+    arm/stellaris
+    arm/stm32
+    arm/virt
+-   arm/xlnx-versal-virt
+    arm/xenpvh
++   arm/xlnx-versal-virt
  
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index fd1a93701a..eb0b1c06e5 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -48,6 +48,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_HASH_REPORT,
-     VHOST_INVALID_FEATURE_BIT
- };
-@@ -76,6 +77,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_RSS,
-     VIRTIO_NET_F_HASH_REPORT,
-     VIRTIO_NET_F_GUEST_USO4,
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index ae26bc19a4..40e7630191 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -38,6 +38,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_SCSI_F_HOTPLUG,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index a63b1f4948..1d59951ab7 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -36,6 +36,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_SCSI_F_HOTPLUG,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-index cca2cd41be..9243dbb128 100644
---- a/hw/virtio/vhost-user-fs.c
-+++ b/hw/virtio/vhost-user-fs.c
-@@ -33,6 +33,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
- 
-     VHOST_INVALID_FEATURE_BIT
- };
-diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
-index 9431b9792c..cc7e4e47b4 100644
---- a/hw/virtio/vhost-user-vsock.c
-+++ b/hw/virtio/vhost-user-vsock.c
-@@ -21,6 +21,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_RING_F_INDIRECT_DESC,
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_F_NOTIFY_ON_EMPTY,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 85e73dd6a7..ed3185acfa 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -62,6 +62,7 @@ const int vdpa_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-     VIRTIO_F_VERSION_1,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_CSUM,
-     VIRTIO_NET_F_CTRL_GUEST_OFFLOADS,
-     VIRTIO_NET_F_CTRL_MAC_ADDR,
+ Emulated CPU architecture support
+ =================================
 -- 
-2.39.3
+2.34.1
 
 
