@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96EEAC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FFDC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9P0e-0004jG-NP; Tue, 21 May 2024 08:54:28 -0400
+	id 1s9P0m-0005Q0-8p; Tue, 21 May 2024 08:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9P0Y-0004SM-4g
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:54:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9P0l-0005OD-60
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:54:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9P0U-0005ns-Ar
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:54:21 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9P0i-0005pn-E8
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:54:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716296056;
+ s=mimecast20190719; t=1716296071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M5bFhftGrkOaKS5dqV0ZL9P5jw4L5e6ejLPVbeeiXho=;
- b=NMWwWcncKt66S5s+nbDC4RmUMTXp6WW+nj3FzmWhFBAfXG3AsDxAc7l170/zvDMoRhsLWW
- icu8PZ0Husx6h0WdRVMeEnGPs0do540afo4AtakW+LJzKN/MXCzLskdMVmQglVTjOysH79
- h/xkxosf5FGIvMni1ZQMBmRrJfbj6Gg=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Do/Jl/kDhukA6v/irix7JpXgKeu9Z18l4Z5lw2iH7e4=;
+ b=RPc8iEedP2TNcWVdg6uzo6AoIaPH18/w837gw67TDFQWwMcM9ERIPDpqtI6F8xVXqnGmYP
+ x3Pg1sY41EpSHBDKMyDQ73WTH7lYgM+YggDlvB9CplZwjb/KsVE0yskwpjORbyMresVxkG
+ Eoe52kcwLd0Jmu/zkf0zlFjQ8neREOc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-ggJFs5DUPGya_3St21ijCQ-1; Tue, 21 May 2024 08:54:15 -0400
-X-MC-Unique: ggJFs5DUPGya_3St21ijCQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5729fd97df9so29989a12.1
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:54:14 -0700 (PDT)
+ us-mta-634-M0-hMrzhONWdKjaCEGbCVA-1; Tue, 21 May 2024 08:54:30 -0400
+X-MC-Unique: M0-hMrzhONWdKjaCEGbCVA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a59eea00cafso839221766b.1
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:54:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716296054; x=1716900854;
+ d=1e100.net; s=20230601; t=1716296069; x=1716900869;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M5bFhftGrkOaKS5dqV0ZL9P5jw4L5e6ejLPVbeeiXho=;
- b=uCiPOUYXlfV3Vn+m2fd1NpYZj1pyM69Y/swsGh10Kb7P3UegbkVwflEISzoHeFVxSj
- g44je4Pl+5r8pz16SKEP9Cvc97b9S+dm0tVFhvLnOYjGzhELCGgzZalpiR4S9WlTpwf4
- GyfRZhsrveUkh2p3xuTmS00EtGQPQv4B00QnyCiJFmE7rTf/Ccyf+AWRNeQc7tpFEG6v
- j8Zho6wo/UPwOCyquADfe00y5AtwyAu9wcPhXA6NPq2RKf97BNafJaz0PataVao/DFfX
- ZpKRXo/MzIBTNclvoWssbgIPF1zzELSSUiwwGa9SJxZvp3E996hrEvz+TrDVfGAjxZTv
- yhsQ==
+ bh=Do/Jl/kDhukA6v/irix7JpXgKeu9Z18l4Z5lw2iH7e4=;
+ b=JBUt5g/Fiuc5yB6WDgRci86X4i2HCEVFb1EyGdFIIc8JGksKMuSphNlVJmiKv2jbcG
+ CYUXYGoMqtwruoHy5Evf11QULn3dvFts9JYzYS1QBHJUSaYke3Zyqlg6Bhb4Mxi/Y69X
+ zqjSvQRKLg3dLrHa2LEKb07D26GHtPSSjTLycPDHyF/DUcejYz3Y4SM3O9wdMSKG5bwv
+ WL8GLF3Q2YAum5SCiUNJBJZgY5GinoE3IeIMfrkRzAeowGRPHpTs7/D+yAimCiMjzBdW
+ h0f0U5g73IUZGp1zu5YFoWxAKuY2QksBgEbOeMhn6YiVlJI4dvGe1lYjagpJHTi4JRk/
+ 5tgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5GJO2GVi24tswo+vJdnKlEwaJme80GLQSYf3JJgI6fbrNo3w3AoXx3dqqQkm3rjds+2DCLB0dxD+XzWDrhKbWYQ+mLf8=
-X-Gm-Message-State: AOJu0YxuJ0q7nhSQgRPBRxWaEuxpf0GaHUZGNG+6J1/oo++vIuqSQIFH
- 7JKDvrBONhEAzkMZH/kTtPMuOeN3A58rArVtKJYQZgD9lDdxzqdLQuV2BGr8QbTjgUHTt29f+4h
- Hzseimu7wW1gW4L4t6xIK3jK5fcYgSIYOqaKVDZVBbXCjwHoV6mMd
-X-Received: by 2002:aa7:d294:0:b0:574:eb43:3865 with SMTP id
- 4fb4d7f45d1cf-574eb433921mr12518091a12.32.1716296053813; 
- Tue, 21 May 2024 05:54:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEa7kyt6dumS+csJJkSpt9F7yxjv8TDts5Xuv61EcmBFXEXByVc7tmqF6DA8uUf51KSzLrWtA==
-X-Received: by 2002:aa7:d294:0:b0:574:eb43:3865 with SMTP id
- 4fb4d7f45d1cf-574eb433921mr12518075a12.32.1716296053414; 
- Tue, 21 May 2024 05:54:13 -0700 (PDT)
+ AJvYcCW/AxAKMCCjR4636EoVgFqTJUhNqcYiT4wSve+MLss6wxpdcxbC9sB9lVIh7vQk4INgFs/1SQ6tz/DYA45jt/KFZJhF/Fw=
+X-Gm-Message-State: AOJu0YxvBsx2OXCAjaxXd7RJPvpngqRwgobeZhZKeJwHBlYmQOem6qIy
+ V/TzjQI0opzT4WcA7ETnEkwrGK0DTfPtJ6HKdKKxHoHoGkEUgKG6EKgx/RNrJJM5ZzBozoMMWHd
+ 3c3jsDtANzLcMs4Hf7N3Dj8vOnm7pH9eqZpMb9iHZM+l/iP17bu4/
+X-Received: by 2002:a17:907:35d4:b0:a5a:7d28:54aa with SMTP id
+ a640c23a62f3a-a5a7d285594mr2090962166b.23.1716296069031; 
+ Tue, 21 May 2024 05:54:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHc60oiPsyjSbxUvNfX6BAdDt7X31B0KaeIEoH+SGAz7bDc9z2YjhgGfhD+3YA719xm69TvTw==
+X-Received: by 2002:a17:907:35d4:b0:a5a:7d28:54aa with SMTP id
+ a640c23a62f3a-a5a7d285594mr2090961266b.23.1716296068735; 
+ Tue, 21 May 2024 05:54:28 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5750b47411csm6820829a12.75.2024.05.21.05.54.12
+ a640c23a62f3a-a5ec2a8f320sm424992566b.170.2024.05.21.05.54.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 05:54:12 -0700 (PDT)
-Message-ID: <acd14e4b-bf3a-437d-a0a1-aa8618750d17@redhat.com>
-Date: Tue, 21 May 2024 14:54:11 +0200
+ Tue, 21 May 2024 05:54:28 -0700 (PDT)
+Message-ID: <effd4af0-c43b-4a6b-b07b-8eb89e69613c@redhat.com>
+Date: Tue, 21 May 2024 14:54:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/16] vfio/pci: Make capability related functions return
- bool
+Subject: Re: [PATCH 16/16] vfio/pci-quirks: Make vfio_add_*_cap() return bool
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
 References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
- <20240515082041.556571-14-zhenzhong.duan@intel.com>
+ <20240515082041.556571-17-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240515082041.556571-14-zhenzhong.duan@intel.com>
+In-Reply-To: <20240515082041.556571-17-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -106,23 +105,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/15/24 10:20, Zhenzhong Duan wrote:
-> The functions operating on capability don't have a consistent return style.
+> This is to follow the coding standand in qapi/error.h to return bool
+> for bool-valued functions.
 > 
-> Below functions are in bool-valued functions style:
-> vfio_msi_setup()
-> vfio_msix_setup()
-> vfio_add_std_cap()
-> vfio_add_capabilities()
+> Include below functions:
+> vfio_add_virt_caps()
+> vfio_add_nv_gpudirect_cap()
+> vfio_add_vmd_shadow_cap()
 > 
-> Below two are integer-valued functions:
-> vfio_add_vendor_specific_cap()
-> vfio_setup_pcie_cap()
-> 
-> But the returned integer is only used for check succeed/failure.
-> Change them all to return bool so now all capability related
-> functions follow the coding standand in qapi/error.h to return
-> bool.
-> 
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
 
@@ -134,264 +125,171 @@ C.
 
 
 > ---
->   hw/vfio/pci.c | 77 ++++++++++++++++++++++++---------------------------
->   1 file changed, 36 insertions(+), 41 deletions(-)
+>   hw/vfio/pci.h        |  2 +-
+>   hw/vfio/pci-quirks.c | 42 +++++++++++++++++++-----------------------
+>   hw/vfio/pci.c        |  3 +--
+>   3 files changed, 21 insertions(+), 26 deletions(-)
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 1922593253..ecfbb9619f 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1339,7 +1339,7 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev)
->       }
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index f158681072..bf67df2fbc 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -212,7 +212,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr);
+>   void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr);
+>   void vfio_bar_quirk_finalize(VFIOPCIDevice *vdev, int nr);
+>   void vfio_setup_resetfn_quirk(VFIOPCIDevice *vdev);
+> -int vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
+> +bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
+>   void vfio_quirk_reset(VFIOPCIDevice *vdev);
+>   VFIOQuirk *vfio_quirk_alloc(int nr_mem);
+>   void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr);
+> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> index ca27917159..39dae72497 100644
+> --- a/hw/vfio/pci-quirks.c
+> +++ b/hw/vfio/pci-quirks.c
+> @@ -1536,7 +1536,7 @@ static bool is_valid_std_cap_offset(uint8_t pos)
+>               pos <= (PCI_CFG_SPACE_SIZE - PCI_CAP_SIZEOF));
 >   }
 >   
-> -static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
-> +static bool vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+> -static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+> +static bool vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
 >   {
->       uint16_t ctrl;
->       bool msi_64bit, msi_maskbit;
-> @@ -1349,7 +1349,7 @@ static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->       if (pread(vdev->vbasedev.fd, &ctrl, sizeof(ctrl),
->                 vdev->config_offset + pos + PCI_CAP_FLAGS) != sizeof(ctrl)) {
->           error_setg_errno(errp, errno, "failed reading MSI PCI_CAP_FLAGS");
-> -        return -errno;
-> +        return false;
->       }
->       ctrl = le16_to_cpu(ctrl);
+>       ERRP_GUARD();
+>       PCIDevice *pdev = &vdev->pdev;
+> @@ -1545,18 +1545,18 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+>       uint8_t tmp;
 >   
-> @@ -1362,14 +1362,14 @@ static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->       ret = msi_init(&vdev->pdev, pos, entries, msi_64bit, msi_maskbit, &err);
->       if (ret < 0) {
->           if (ret == -ENOTSUP) {
-> -            return 0;
-> +            return true;
->           }
->           error_propagate_prepend(errp, err, "msi_init failed: ");
-> -        return ret;
-> +        return false;
->       }
->       vdev->msi_cap_size = 0xa + (msi_maskbit ? 0xa : 0) + (msi_64bit ? 0x4 : 0);
->   
-> -    return 0;
-> +    return true;
->   }
->   
->   static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
-> @@ -1644,7 +1644,7 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
->       return vfio_pci_relocate_msix(vdev, errp);
->   }
->   
-> -static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
-> +static bool vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->   {
->       int ret;
->       Error *err = NULL;
-> @@ -1660,11 +1660,11 @@ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->       if (ret < 0) {
->           if (ret == -ENOTSUP) {
->               warn_report_err(err);
-> -            return 0;
-> +            return true;
->           }
->   
->           error_propagate(errp, err);
-> -        return ret;
-> +        return false;
+>       if (vdev->nv_gpudirect_clique == 0xFF) {
+> -        return 0;
+> +        return true;
 >       }
 >   
->       /*
-> @@ -1698,7 +1698,7 @@ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->           memory_region_set_enabled(&vdev->pdev.msix_table_mmio, false);
->       }
->   
-> -    return 0;
-> +    return true;
->   }
->   
->   static void vfio_teardown_msi(VFIOPCIDevice *vdev)
-> @@ -1977,8 +1977,8 @@ static void vfio_pci_disable_rp_atomics(VFIOPCIDevice *vdev)
->       }
->   }
->   
-> -static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
-> -                               Error **errp)
-> +static bool vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
-> +                                Error **errp)
->   {
->       uint16_t flags;
->       uint8_t type;
-> @@ -1992,7 +1992,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
->   
->           error_setg(errp, "assignment of PCIe type 0x%x "
->                      "devices is not currently supported", type);
+>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID)) {
+>           error_setg(errp, "NVIDIA GPUDirect Clique ID: invalid device vendor");
 > -        return -EINVAL;
 > +        return false;
 >       }
 >   
->       if (!pci_bus_is_express(pci_get_bus(&vdev->pdev))) {
-> @@ -2025,7 +2025,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
->           }
->   
->           if (pci_bus_is_express(bus)) {
-> -            return 0;
-> +            return true;
->           }
->   
->       } else if (pci_bus_is_root(pci_get_bus(&vdev->pdev))) {
-> @@ -2063,7 +2063,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
->                * Legacy endpoints don't belong on the root complex.  Windows
->                * seems to be happier with devices if we skip the capability.
->                */
-> -            return 0;
-> +            return true;
->           }
->   
->       } else {
-> @@ -2099,12 +2099,12 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
->       pos = pci_add_capability(&vdev->pdev, PCI_CAP_ID_EXP, pos, size,
->                                errp);
->       if (pos < 0) {
-> -        return pos;
-> +        return false;
->       }
->   
->       vdev->pdev.exp.exp_cap = pos;
->   
-> -    return pos;
-> +    return true;
->   }
->   
->   static void vfio_check_pcie_flr(VFIOPCIDevice *vdev, uint8_t pos)
-> @@ -2137,14 +2137,14 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
->       }
->   }
->   
-> -static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
-> -                                        uint8_t size, Error **errp)
-> +static bool vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
-> +                                         uint8_t size, Error **errp)
->   {
->       PCIDevice *pdev = &vdev->pdev;
->   
->       pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
->       if (pos < 0) {
-> -        return pos;
+>       if (pci_get_byte(pdev->config + PCI_CLASS_DEVICE + 1) !=
+>           PCI_BASE_CLASS_DISPLAY) {
+>           error_setg(errp, "NVIDIA GPUDirect Clique ID: unsupported PCI class");
+> -        return -EINVAL;
 > +        return false;
 >       }
 >   
 >       /*
-> @@ -2156,15 +2156,15 @@ static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
->           memset(pdev->cmask + pos + 3, 0, size - 3);
->       }
->   
-> -    return pos;
-> +    return true;
->   }
->   
-> -static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
-> +static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->   {
->       ERRP_GUARD();
->       PCIDevice *pdev = &vdev->pdev;
->       uint8_t cap_id, next, size;
-> -    int ret;
-> +    bool ret;
->   
->       cap_id = pdev->config[pos];
->       next = pdev->config[pos + PCI_CAP_LIST_NEXT];
-> @@ -2185,9 +2185,8 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->        * will be changed as we unwind the stack.
->        */
->       if (next) {
-> -        ret = vfio_add_std_cap(vdev, next, errp);
-> -        if (ret) {
-> -            return ret;
-> +        if (!vfio_add_std_cap(vdev, next, errp)) {
-> +            return false;
->           }
->       } else {
->           /* Begin the rebuild, use QEMU emulated list bits */
-> @@ -2197,7 +2196,7 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->   
->           ret = vfio_add_virt_caps(vdev, errp);
->           if (ret) {
-> -            return ret;
-> +            return false;
->           }
->       }
->   
-> @@ -2221,28 +2220,27 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->       case PCI_CAP_ID_PM:
->           vfio_check_pm_reset(vdev, pos);
->           vdev->pm_cap = pos;
-> -        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
-> +        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
->           break;
->       case PCI_CAP_ID_AF:
->           vfio_check_af_flr(vdev, pos);
-> -        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
-> +        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
->           break;
->       case PCI_CAP_ID_VNDR:
->           ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
->           break;
->       default:
-> -        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
-> +        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
->           break;
->       }
->   
-> -    if (ret < 0) {
-> +    if (!ret) {
->           error_prepend(errp,
->                         "failed to add PCI capability 0x%x[0x%x]@0x%x: ",
->                         cap_id, size, pos);
-> -        return ret;
->       }
->   
-> -    return 0;
-> +    return ret;
->   }
->   
->   static int vfio_setup_rebar_ecap(VFIOPCIDevice *vdev, uint16_t pos)
-> @@ -2388,23 +2386,21 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->       return;
->   }
->   
-> -static int vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
-> +static bool vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
->   {
->       PCIDevice *pdev = &vdev->pdev;
-> -    int ret;
->   
->       if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
->           !pdev->config[PCI_CAPABILITY_LIST]) {
-> -        return 0; /* Nothing to add */
-> +        return true; /* Nothing to add */
->       }
->   
-> -    ret = vfio_add_std_cap(vdev, pdev->config[PCI_CAPABILITY_LIST], errp);
-> -    if (ret) {
-> -        return ret;
-> +    if (!vfio_add_std_cap(vdev, pdev->config[PCI_CAPABILITY_LIST], errp)) {
+> @@ -1572,7 +1572,7 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+>                   vdev->config_offset + PCI_CAPABILITY_LIST);
+>       if (ret != 1 || !is_valid_std_cap_offset(tmp)) {
+>           error_setg(errp, "NVIDIA GPUDirect Clique ID: error getting cap list");
+> -        return -EINVAL;
 > +        return false;
 >       }
 >   
->       vfio_add_ext_cap(vdev);
+>       do {
+> @@ -1590,13 +1590,13 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+>           pos = 0xD4;
+>       } else {
+>           error_setg(errp, "NVIDIA GPUDirect Clique ID: invalid config space");
+> -        return -EINVAL;
+> +        return false;
+>       }
+>   
+>       ret = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, 8, errp);
+>       if (ret < 0) {
+>           error_prepend(errp, "Failed to add NVIDIA GPUDirect cap: ");
+> -        return ret;
+> +        return false;
+>       }
+>   
+>       memset(vdev->emulated_config_bits + pos, 0xFF, 8);
+> @@ -1608,7 +1608,7 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+>       pci_set_byte(pdev->config + pos++, vdev->nv_gpudirect_clique << 3);
+>       pci_set_byte(pdev->config + pos, 0);
+>   
 > -    return 0;
 > +    return true;
 >   }
 >   
->   void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
-> @@ -3136,8 +3132,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->   
->       vfio_bars_register(vdev);
->   
-> -    ret = vfio_add_capabilities(vdev, errp);
-> -    if (ret) {
-> +    if (!vfio_add_capabilities(vdev, errp)) {
->           goto out_teardown;
+>   /*
+> @@ -1629,7 +1629,7 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+>    */
+>   #define VMD_SHADOW_CAP_VER 1
+>   #define VMD_SHADOW_CAP_LEN 24
+> -static int vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+> +static bool vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       ERRP_GUARD();
+>       uint8_t membar_phys[16];
+> @@ -1639,7 +1639,7 @@ static int vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+>             vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, 0x467F) ||
+>             vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, 0x4C3D) ||
+>             vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, 0x9A0B))) {
+> -        return 0;
+> +        return true;
 >       }
 >   
+>       ret = pread(vdev->vbasedev.fd, membar_phys, 16,
+> @@ -1647,14 +1647,14 @@ static int vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+>       if (ret != 16) {
+>           error_report("VMD %s cannot read MEMBARs (%d)",
+>                        vdev->vbasedev.name, ret);
+> -        return -EFAULT;
+> +        return false;
+>       }
+>   
+>       ret = pci_add_capability(&vdev->pdev, PCI_CAP_ID_VNDR, pos,
+>                                VMD_SHADOW_CAP_LEN, errp);
+>       if (ret < 0) {
+>           error_prepend(errp, "Failed to add VMD MEMBAR Shadow cap: ");
+> -        return ret;
+> +        return false;
+>       }
+>   
+>       memset(vdev->emulated_config_bits + pos, 0xFF, VMD_SHADOW_CAP_LEN);
+> @@ -1664,22 +1664,18 @@ static int vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+>       pci_set_long(vdev->pdev.config + pos, 0x53484457); /* SHDW */
+>       memcpy(vdev->pdev.config + pos + 4, membar_phys, 16);
+>   
+> -    return 0;
+> +    return true;
+>   }
+>   
+> -int vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp)
+> +bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -    int ret;
+> -
+> -    ret = vfio_add_nv_gpudirect_cap(vdev, errp);
+> -    if (ret) {
+> -        return ret;
+> +    if (!vfio_add_nv_gpudirect_cap(vdev, errp)) {
+> +        return false;
+>       }
+>   
+> -    ret = vfio_add_vmd_shadow_cap(vdev, errp);
+> -    if (ret) {
+> -        return ret;
+> +    if (!vfio_add_vmd_shadow_cap(vdev, errp)) {
+> +        return false;
+>       }
+>   
+> -    return 0;
+> +    return true;
+>   }
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 15823c359a..1254650d4a 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2194,8 +2194,7 @@ static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+>           vdev->emulated_config_bits[PCI_CAPABILITY_LIST] = 0xff;
+>           vdev->emulated_config_bits[PCI_STATUS] |= PCI_STATUS_CAP_LIST;
+>   
+> -        ret = vfio_add_virt_caps(vdev, errp);
+> -        if (ret) {
+> +        if (!vfio_add_virt_caps(vdev, errp)) {
+>               return false;
+>           }
+>       }
 
 
