@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A208C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 09:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4FAC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 09:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Lri-00080m-5r; Tue, 21 May 2024 05:33:02 -0400
+	id 1s9M2G-00039E-Bi; Tue, 21 May 2024 05:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s9Lrd-000809-CX
- for qemu-devel@nongnu.org; Tue, 21 May 2024 05:32:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s9M2B-00037S-6m
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 05:43:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s9Lrb-0001Gz-QS
- for qemu-devel@nongnu.org; Tue, 21 May 2024 05:32:57 -0400
+ id 1s9M29-0002qA-AL
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 05:43:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716283973;
+ s=mimecast20190719; t=1716284628;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FxuNXruQERn88CJvHXojix949xQDC5DeLTI9DnbBVtg=;
- b=MQraS8KSCW4F+Fr4NZSdhHqLHlUaZtUPQ91D9cscrdUrJlTd1uDF/wRrrDaXDqXoEsqNC9
- 5Kfq5V5XKxfhEWtQmWqlV+KHoRrTB61W+zM9bAsQt5G9iOMFygM5tBhTbYrYa9Aoigmg9z
- x9aIa7QgaPt5rcfLZzFg4Kr1KyW/i7E=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7amI72qGHb9CShbmVHT3fpwHJPCMvUS/l9EYhYOmMG0=;
+ b=cr935sPxlS5GBblFjDx+z+QVvaUnvUkjKO3lyhqhdbIaumu3XIxQEU6D0Q/pOWp2YE3xC8
+ uD63phscrqWexvrYWLAuyLC7V/XiGop0I4t09OL9gkWuRyeGt9iStSyf7mwbONCe3kiS3Q
+ FmfQi5Vmx1+BR9EkQeiwx41Q17kOOPs=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-g3N8qUtXMsuJR9EOHe_LBA-1; Tue, 21 May 2024 05:32:52 -0400
-X-MC-Unique: g3N8qUtXMsuJR9EOHe_LBA-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a51fdbd06c8so813010266b.3
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 02:32:52 -0700 (PDT)
+ us-mta-422-HjEAAkWCNJ2HWaNlMG4r3A-1; Tue, 21 May 2024 05:43:46 -0400
+X-MC-Unique: HjEAAkWCNJ2HWaNlMG4r3A-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5733eed0c19so2193442a12.2
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 02:43:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716283971; x=1716888771;
+ d=1e100.net; s=20230601; t=1716284625; x=1716889425;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FxuNXruQERn88CJvHXojix949xQDC5DeLTI9DnbBVtg=;
- b=XuBn3k+aQOYHsXTtUTxSW1FOgXYf3ZIAW0uYr/TE1MlNWOgvbSZOidrA71l///05wH
- uv9ft/o2EQoeR7L3pHT39O6sJxWKQByrrFZHG3SvTCWpZQ6bMYKM1bHjiYWwcrM+kImd
- fOnzq/GFI99nld+cbBToIQOjzFoFMOB2imfHL3/FruSEJdmAaFUP3OXzxRguDF2ACyVj
- jrl7HzD+3Ka2we3fzKdq/d5rEKidFc7irEWGfxB3+ECjPF6ldXfQPhSnHGkgw7GiOalR
- DrPxpbAOKSFIpToyQYKG19Ee37n4F0rtdY2BMpsehGqkBikQdci2pbFi4e7uU4aU+VyG
- KWGQ==
+ bh=7amI72qGHb9CShbmVHT3fpwHJPCMvUS/l9EYhYOmMG0=;
+ b=EGiGH+yqiKiICehcXgO6F2YwVqH+60zbYccXwLkeogV1tSFEMWAURhuJTKtIJrZTx4
+ H2BnvQDgedsYIzOJKPCg1B/XabumKEm6YSRcsgJiGbS+ByYbDuYDtRSvJGQOLq2lsVNN
+ Yb3pigA83n3GUPTjC2T8YyZzmioV176bwcXKH1UXWrykoLWCXkXylzfjqWDYXhv3fi7a
+ aUgVlc6cCOCCtPwgK7yMwEHjM+6Hcw/JEYy1fML6+lZvRdGQIMHOxbTdhfc65l9vwJgP
+ A5eO5zwr90EWNsGHWq2Is9oGpPW8Ue6WoZdbaoCghJJK6xw/UP4oYFlUpoSE0ClKO1xh
+ 3x4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU129giL0Gj+kLQTXsDSrHhrXih3NHeT6XES+1XqoK3ncXHxN3/wFcwe4UNYfe4aZCBSwZwWGS5eEHexjbeUwnV4VBIDJg=
-X-Gm-Message-State: AOJu0YxlODsA8+H+3y+RohnmO699Io4kN9LGMFBZUVXVE56Nw7Uu9tFK
- RzCL5KRJusUJjuHxJwX25wzt6exXzlfKMm7TFxIgv5rodzrvQbrHBgu/VWwoPgD6ctT2KKryf6a
- 8JeC0fOsqqer/0Brl5Uas/Ds3Xk0GuqnXaGJa+T9voe8pSSsF2IQA
-X-Received: by 2002:a17:907:2d89:b0:a59:a0b6:638 with SMTP id
- a640c23a62f3a-a5a2d66a7demr2519374766b.61.1716283971161; 
- Tue, 21 May 2024 02:32:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZL5j24+Vao4Lw13GaB1X6iszI+8BxAr0V/hpql1AiYotNhCp0vUXyZD7KxRS6jaaXfnb9qg==
-X-Received: by 2002:a17:907:2d89:b0:a59:a0b6:638 with SMTP id
- a640c23a62f3a-a5a2d66a7demr2519372966b.61.1716283970799; 
- Tue, 21 May 2024 02:32:50 -0700 (PDT)
+ AJvYcCWQFRVL4D8TV8ROJ3dsO5KBs9SD1VPfqx34QHoxi2eiloeZzsL7vH/xITDTVdhh1cmFhm2EhhaCh2+oGdb79NaQZh8Hn2Y=
+X-Gm-Message-State: AOJu0YwAGLqDBqn+c9wbHJJOKl5+vzFnghqvPFCIuzG+OQ5Q7c4AW5dc
+ xEt4bF2GBX1SLbzK18YcVg2blYco2LBM2loflwSWkCVLn12mLDwGnQ1RRtjH9E7nBu+HtJWIU91
+ 3w8W3lRDpKkOnIR7vighOlWXrkXZOde6P8H/Wij5DvUJvCBscqC2w
+X-Received: by 2002:a50:9ecd:0:b0:56e:7751:ae4e with SMTP id
+ 4fb4d7f45d1cf-5734d67bf42mr21696414a12.33.1716284625667; 
+ Tue, 21 May 2024 02:43:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjVeAJH2XfucFeRmHGX71bOzH4CGccB8AlVE1+Q89v3/5XsUvsD3a3jAv7prhV6FqBssnRuw==
+X-Received: by 2002:a50:9ecd:0:b0:56e:7751:ae4e with SMTP id
+ 4fb4d7f45d1cf-5734d67bf42mr21696402a12.33.1716284625276; 
+ Tue, 21 May 2024 02:43:45 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17b01602sm1599919366b.147.2024.05.21.02.32.49
+ 4fb4d7f45d1cf-57421480d99sm14481198a12.8.2024.05.21.02.43.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 02:32:50 -0700 (PDT)
-Message-ID: <689f6ac7-86ce-482f-a59a-fd17f8a5216d@redhat.com>
-Date: Tue, 21 May 2024 11:32:48 +0200
+ Tue, 21 May 2024 02:43:45 -0700 (PDT)
+Message-ID: <d75ffd2e-8fa2-4161-8f35-56fa8c72418c@redhat.com>
+Date: Tue, 21 May 2024 11:43:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 17/18] hw/arm/smmuv3: Add property for OAS
+Subject: Re: [RFC PATCH v3 18/18] hw/arm/virt: Set SMMU OAS based on CPU
+ PARANGE
 Content-Language: en-US
 To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
  peter.maydell@linaro.org, qemu-devel@nongnu.org
@@ -82,12 +83,12 @@ Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
  marcin.juszkiewicz@linaro.org
 References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-18-smostafa@google.com>
+ <20240429032403.74910-19-smostafa@google.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240429032403.74910-18-smostafa@google.com>
+In-Reply-To: <20240429032403.74910-19-smostafa@google.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,7 +96,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,119 +116,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Hi Mostafa,
 
 On 4/29/24 05:24, Mostafa Saleh wrote:
-> Add property that sets the OAS of the SMMU, this in not used in this
-> patch.
+> Use the new SMMU property to make the SMMU OAS match the CPU PARANGE.
+> That's according to SMMU manual ARM IHI 0070F.b:
+>     6.3.6 SMMU_IDR5, OAS must match the system physical address size.
 >
 > Signed-off-by: Mostafa Saleh <smostafa@google.com>
 > ---
->  hw/arm/smmuv3-internal.h |  3 ++-
->  hw/arm/smmuv3.c          | 29 ++++++++++++++++++++++++++++-
->  include/hw/arm/smmuv3.h  |  1 +
->  3 files changed, 31 insertions(+), 2 deletions(-)
+>  hw/arm/virt.c      | 14 ++++++++++++--
+>  target/arm/cpu.h   |  2 ++
+>  target/arm/cpu64.c |  5 +++++
+>  3 files changed, 19 insertions(+), 2 deletions(-)
 >
-> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-> index 0ebf2eebcf..dd91807624 100644
-> --- a/hw/arm/smmuv3-internal.h
-> +++ b/hw/arm/smmuv3-internal.h
-> @@ -111,7 +111,8 @@ REG32(IDR5,                0x14)
->       FIELD(IDR5, VAX,        10, 2);
->       FIELD(IDR5, STALL_MAX,  16, 16);
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 3c93c0c0a6..f203b1f8e1 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -252,6 +252,13 @@ static bool ns_el2_virt_timer_present(void)
+>          arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
+>  }
 >  
-> -#define SMMU_IDR5_OAS 4
-> +#define SMMU_IDR5_OAS_DEF 4 /* 44 bits. */
-> +#define SMMU_IDR5_OAS_MAX 5 /* 48 bits. */
+> +/* We rely on CPU to define system OAS. */
+> +static int32_t get_system_oas(void)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
+> +    return cpu_arm_get_oas(cpu);
+> +}
+> +
+>  static void create_fdt(VirtMachineState *vms)
+>  {
+>      MachineState *ms = MACHINE(vms);
+> @@ -1384,7 +1391,7 @@ static void create_pcie_irq_map(const MachineState *ms,
+>  }
 >  
->  REG32(IIDR,                0x18)
->  REG32(AIDR,                0x1c)
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 4ac818cf7a..39d03e7e24 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -299,7 +299,9 @@ static void smmuv3_init_regs(SMMUv3State *s)
->      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
->      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
+>  static void create_smmu(const VirtMachineState *vms,
+> -                        PCIBus *bus)
+> +                        PCIBus *bus, int32_t oas)
+>  {
+>      char *node;
+>      const char compat[] = "arm,smmu-v3";
+> @@ -1404,6 +1411,9 @@ static void create_smmu(const VirtMachineState *vms,
 >  
-> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS); /* 44 bits */
-> +    /* PTW doesn't support 52 bits. */
-remove the point
-> +    s->oas = MIN(s->oas, SMMU_IDR5_OAS_MAX);
-> +    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, s->oas);
->      /* 4K, 16K and 64K granule support */
->      s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
->      s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
-> @@ -1901,11 +1903,34 @@ static const VMStateDescription vmstate_gbpa = {
->      }
->  };
->  
-> +static const VMStateDescription vmstate_oas = {
-> +    .name = "smmuv3/oas",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-don't you need a .needed function?
-
-I tested backward migration and this fails
-qemu-system-aarch64: error while loading state for instance 0x0 of
-device 'smmuv3'
-qemu-system-aarch64: load of migration failed: No such file or directory
-post-processing ...
+>      object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+>                               &error_abort);
+> +
+> +    qdev_prop_set_uint64(dev, "oas", oas);
+to me you cannot handle that this way because for older machine types
+the smmu oas needs to stay the same as it was before, ie. 44. So you
+need to properly handle the compats.
+Since the new default value depends on the CPU PARANGE this is a bit
+more tricky but maybe you get can inspired from no_its class field trick
+in virt.c and introduce a no_smmu_cpu_oas_align to disable the settings
+up to 9.0 included.
 
 Thanks
 
 Eric
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_INT32(oas, SMMUv3State),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
 > +
-> +static int smmuv3_preload(void *opaque)
+>      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+>      for (i = 0; i < NUM_SMMU_IRQS; i++) {
+> @@ -1578,7 +1588,7 @@ static void create_pcie(VirtMachineState *vms)
+>  
+>          switch (vms->iommu) {
+>          case VIRT_IOMMU_SMMUV3:
+> -            create_smmu(vms, vms->bus);
+> +            create_smmu(vms, vms->bus, get_system_oas());
+>              qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
+>                                     0x0, vms->iommu_phandle, 0x0, 0x10000);
+>              break;
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 17efc5d565..68261ffbf9 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -3287,4 +3287,6 @@ static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
+>  }
+>  #endif
+>  
+> +int32_t cpu_arm_get_oas(ARMCPU *cpu);
+> +
+>  #endif
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 985b1efe16..08da83c082 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -787,6 +787,11 @@ static const gchar *aarch64_gdb_arch_name(CPUState *cs)
+>      return "aarch64";
+>  }
+>  
+> +int32_t cpu_arm_get_oas(ARMCPU *cpu)
 > +{
-> +    SMMUv3State *s = opaque;
-> +
-> +    /*
-> +     * In case it wasn't migrated, use the value used
-> +     * by older QEMU.
-> +     */
-> +    s->oas = SMMU_IDR5_OAS_DEF;
-> +    return 0;
+> +    return FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE);
 > +}
 > +
->  static const VMStateDescription vmstate_smmuv3 = {
->      .name = "smmuv3",
->      .version_id = 1,
->      .minimum_version_id = 1,
->      .priority = MIG_PRI_IOMMU,
-> +    .pre_load = smmuv3_preload,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINT32(features, SMMUv3State),
->          VMSTATE_UINT8(sid_size, SMMUv3State),
-> @@ -1933,6 +1958,7 @@ static const VMStateDescription vmstate_smmuv3 = {
->      },
->      .subsections = (const VMStateDescription * const []) {
->          &vmstate_gbpa,
-> +        &vmstate_oas,
->          NULL
->      }
->  };
-> @@ -1945,6 +1971,7 @@ static Property smmuv3_properties[] = {
->       * Defaults to stage 1
->       */
->      DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-> +    DEFINE_PROP_INT32("oas", SMMUv3State, oas, SMMU_IDR5_OAS_DEF),
->      DEFINE_PROP_END_OF_LIST()
->  };
->  
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index d183a62766..00a9eb4467 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -63,6 +63,7 @@ struct SMMUv3State {
->      qemu_irq     irq[4];
->      QemuMutex mutex;
->      char *stage;
-> +    int32_t oas;
->  };
->  
->  typedef enum {
+>  static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+>  {
+>      CPUClass *cc = CPU_CLASS(oc);
 
 
