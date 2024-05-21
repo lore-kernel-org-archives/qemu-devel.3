@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B22C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 20:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE32BC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 20:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Vtb-0000lx-1X; Tue, 21 May 2024 16:15:39 -0400
+	id 1s9Vtc-0000po-PI; Tue, 21 May 2024 16:15:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9VtZ-0000jS-Gw
- for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:37 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9Vta-0000lq-QB
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:38 -0400
 Received: from rev.ng ([5.9.113.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9VtX-00078g-NA
- for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:37 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9VtY-00079Y-Nu
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
- To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=L4y+UE/w7tr+u96sDR3wroxoNzDD4Ewbcf4Ybopt7nI=; b=UbBGkcniRx7Y7oY
- 5nIYGH4+09oESNMssHAp9ilZbp3nOdEKAvL1QT0L+2w8oepS0HL3BOcsxAsNpie0YCgPWJx4gDSzE
- Y3zoUaMpF+coWGH133GCR+2fdsmlkVHYfLOJeW4WRp5YBle+VZKANd8nUOkmph56Z23p7hW0u/fDE
- KQ=;
+ List-Help; bh=lbvYSLbCPQ1HQg6H+jUM6ipNX66a/4Z+ECU8F8fW2Zc=; b=wVSbU/xl7roNobi
+ r+PJtPcueau5z8ptYVs9rkyVmme/haeElRBMMM8bqj74TEAyPQkWfkEFhgjMs1MRi9opWVn495MN+
+ SoKuA+0rNtLhs6zn+1Lvl6PxvI5uog4QDF4aX3zeNO6guhMS5s7bUghBfKGVI8eIWbtWP1nv3Ewmw
+ Qc=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng,
 	ltaylorsimpson@gmail.com,
 	bcain@quicinc.com
-Subject: [PATCH v3 0/4] target/hexagon: Minor idef-parser cleanup
-Date: Tue, 21 May 2024 22:16:50 +0200
-Message-ID: <20240521201654.25851-1-anjo@rev.ng>
+Subject: [PATCH v3 1/4] target/hexagon: idef-parser remove unused defines
+Date: Tue, 21 May 2024 22:16:51 +0200
+Message-ID: <20240521201654.25851-2-anjo@rev.ng>
+In-Reply-To: <20240521201654.25851-1-anjo@rev.ng>
+References: <20240521201654.25851-1-anjo@rev.ng>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
@@ -61,31 +63,39 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Was running idef-parser with valgrind and noticed we were leaking the
-init_list GArray, which is used to hold instruction arguments that may
-need initialization.  This patchset fixes the leak, removes unused
-macros and undefined functions, and simplifies gen_inst_init_args() to
-only handle predicate values.
+Before switching to GArray/g_string_printf we used fixed size arrays for
+output buffers and instructions arguments among other things.
 
-Changes in v2:
-  * Update comment in 3rd patch
-  * Follow style guide in 4th patch
+Macros defining the sizes of these buffers were left behind, remove
+them.
 
-Changes in v3:
-  * Add reviewed-bys
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/idef-parser/idef-parser.h | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-Anton Johansson (4):
-  target/hexagon: idef-parser remove unused defines
-  target/hexagon: idef-parser remove undefined functions
-  target/hexagon: idef-parser fix leak of init_list
-  target/hexagon: idef-parser simplify predicate init
-
- target/hexagon/idef-parser/idef-parser.h    | 10 ------
- target/hexagon/idef-parser/idef-parser.y    |  2 --
- target/hexagon/idef-parser/parser-helpers.c | 35 +++++++++++++--------
- target/hexagon/idef-parser/parser-helpers.h | 13 --------
- 4 files changed, 22 insertions(+), 38 deletions(-)
-
+diff --git a/target/hexagon/idef-parser/idef-parser.h b/target/hexagon/idef-parser/idef-parser.h
+index 3faa1deecd..8594cbe3a2 100644
+--- a/target/hexagon/idef-parser/idef-parser.h
++++ b/target/hexagon/idef-parser/idef-parser.h
+@@ -23,16 +23,6 @@
+ #include <stdbool.h>
+ #include <glib.h>
+ 
+-#define TCGV_NAME_SIZE 7
+-#define MAX_WRITTEN_REGS 32
+-#define OFFSET_STR_LEN 32
+-#define ALLOC_LIST_LEN 32
+-#define ALLOC_NAME_SIZE 32
+-#define INIT_LIST_LEN 32
+-#define OUT_BUF_LEN (1024 * 1024)
+-#define SIGNATURE_BUF_LEN (128 * 1024)
+-#define HEADER_BUF_LEN (128 * 1024)
+-
+ /* Variadic macros to wrap the buffer printing functions */
+ #define EMIT(c, ...)                                                           \
+     do {                                                                       \
 -- 
 2.45.0
 
