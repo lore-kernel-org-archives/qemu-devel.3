@@ -4,111 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5BFC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 15:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9867C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 15:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9RK8-0006JS-Ra; Tue, 21 May 2024 11:22:44 -0400
+	id 1s9RTo-0000Ac-Po; Tue, 21 May 2024 11:32:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s9RK6-0006Ii-NS
- for qemu-devel@nongnu.org; Tue, 21 May 2024 11:22:42 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s9RK4-00028y-Lr
- for qemu-devel@nongnu.org; Tue, 21 May 2024 11:22:42 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-574b3d6c0f3so9765423a12.0
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 08:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716304958; x=1716909758; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fkV/uxRIlVl+pCSAeNBHiiaGEz3fSr7ZOuqes28Jmjo=;
- b=BEsoAYfKoVcuVlaaGXT+pvYGjSbUdADPHAMP74kvxwZ6S+2JvRYRa+sGmloNOurF1y
- 1lQuuiRo878UUY6dbAeeUSqG/KreOvgXYfBmh5nk9F3kMHK/pcnQNH7Pw6ABUBlpnHmt
- FzJZ8QRPQgRu42xHb6uTDx0PYqz7UzxoFqa3dCdm7dUCzczO6DHI4NMLFqt+sIisbYtu
- kMsyUlveTkQsLmxQsyvNx4y9wu85Q+lmD0oCnTXGk7qqNpTb0NqTkE7RBspZ7j+Da+Oy
- pj+2X4IEoqbv/Nd7g6ltYDDOfkhZDMHMvl6KrrvSAYbX4AEYo+dRjfI6Y+JwU50uCIdx
- r5/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716304958; x=1716909758;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fkV/uxRIlVl+pCSAeNBHiiaGEz3fSr7ZOuqes28Jmjo=;
- b=Sz9Rhd3Gi7FyOH28k01wEhZTE1pFMfTfaH6r52S4+kkM7UuqNHZynewDKVdfwMmo0h
- 6sBLTBz1g2OvpyHfnMenwnwNAEPGlbdeJKMMWPi5teGzcXLr6q0IzwlZod3n5rVOnm00
- rr76f8IT0v0X4JeDk1lUrZM7EsJGm1vhUqaq0uJ9NlDiVMQl5crL9jZFv97igEpx2UPL
- kmcUolg55+ztx1xB8LCOyMUbd9cJC/PBAtMuQOOMEhKRM2wEwutSKObTNGIJ7R/9XvkY
- sgVQzM+N6lS7DgxL9PhqpYCD1rCARHR9PcN7v3N2HNuIlhSrpkviibh0XvzwpmbxEF80
- b4aw==
-X-Gm-Message-State: AOJu0YyEB8QC4sihm3epHItADdOsv3EM8hd8vXFPxkySulXp1hl3Todp
- /F1oQXZ7X2Tq4931FPQXND4Lt1OqCsfTQAAdcVE+q7nk3Xbc6hxqUMj/tiIQc5s=
-X-Google-Smtp-Source: AGHT+IF/GPUFtiLDwsNf+YItYAiAUsdpSAUqO8ZqeQ5MX7KZitIBQw0Rzh/NpLwQ6MzrflcA1xEbJA==
-X-Received: by 2002:a17:907:7619:b0:a5c:dc7e:bc3f with SMTP id
- a640c23a62f3a-a5cdc7ebd44mr1057736766b.43.1716304958240; 
- Tue, 21 May 2024 08:22:38 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1787c6ffsm1622523466b.49.2024.05.21.08.22.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 May 2024 08:22:37 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 583B95F8B0;
- Tue, 21 May 2024 16:22:37 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>,  "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>,  Jonathan Cameron
- <jonathan.cameron@huawei.com>,  "lpieralisi@kernel.org"
- <lpieralisi@kernel.org>,  "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>,  "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>,  "imammedo@redhat.com"
- <imammedo@redhat.com>,  "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>,  "philmd@linaro.org"
- <philmd@linaro.org>,  "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,  "pbonzini@redhat.com"
- <pbonzini@redhat.com>,  "mst@redhat.com" <mst@redhat.com>,
- "will@kernel.org" <will@kernel.org>,  "gshan@redhat.com"
- <gshan@redhat.com>,  "rafael@kernel.org" <rafael@kernel.org>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
- "miguel.luis@oracle.com" <miguel.luis@oracle.com>,
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,  zhukeqian
- <zhukeqian1@huawei.com>,  "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>,  "jiakernel2@gmail.com"
- <jiakernel2@gmail.com>,  "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>,  "npiggin@gmail.com"
- <npiggin@gmail.com>,  "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- Linuxarm <linuxarm@huawei.com>,  Shaoqin Huang <shahuang@redhat.com>
-Subject: Re: [PATCH V10 7/8] gdbstub: Add helper function to unregister GDB
- register space
-In-Reply-To: <00d3d97d51df449a88b771174b37f979@huawei.com> (Salil Mehta's
- message of "Tue, 21 May 2024 14:55:13 +0000")
-References: <20240520233241.229675-1-salil.mehta@huawei.com>
- <20240520233241.229675-8-salil.mehta@huawei.com>
- <87seybibax.fsf@draig.linaro.org>
- <00d3d97d51df449a88b771174b37f979@huawei.com>
-Date: Tue, 21 May 2024 16:22:37 +0100
-Message-ID: <87frubi402.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1s9RTm-0000AJ-E4; Tue, 21 May 2024 11:32:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1s9RTj-0004F3-Gq; Tue, 21 May 2024 11:32:42 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44LFMigq030002; Tue, 21 May 2024 15:32:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : reply-to : to : cc : date : in-reply-to : references : content-type
+ : mime-version : content-transfer-encoding; s=pp1;
+ bh=7H5z3HBvQDzk8alFhgoJ8TnM6w590B/EKRZGSvvkDWI=;
+ b=euOU1Y/gfvlJM0dDYoxD4hmoYnG4qDTjsMvBourEmIzm2aIQyWVAf8pkeRrJgroJvCJ7
+ wcFXhEHw4xbQlo/gcyJEKWemxEPA16dwB1gqcHELzujewnF5XTuZY8czwt6txpkejBPY
+ qwvB2/Q04SuJ9AqJ/xB6d75M//OviEOYv05cbEkJcDHD6XjvB2Nfd9hoUkUjVL89U7BG
+ 8HiSU8SceVnsXcoX5kzvDHtkLkPF6Tj4rtbxjmeHceNpHVesTrkV7lR8dn19VM2ZU7FQ
+ fgHDlLdi1tDI/QMqE+aqobx0JPyXKXoxlmE++uaoAv2m0Ob7TaPT1JpmE0+mfPW1vNok Fw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x6fr0x5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 May 2024 15:32:35 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44LFWYe6014688;
+ Tue, 21 May 2024 15:32:34 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x6fr0x4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 May 2024 15:32:34 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44LEkGnT026474; Tue, 21 May 2024 15:32:34 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y785meb7s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 May 2024 15:32:34 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44LFWVF060031390
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 May 2024 15:32:33 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5CC6758057;
+ Tue, 21 May 2024 15:32:31 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0C93958058;
+ Tue, 21 May 2024 15:32:31 +0000 (GMT)
+Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 21 May 2024 15:32:30 +0000 (GMT)
+Message-ID: <58f7d978e41ab70247048116aa8b1601c2ed64df.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 01/12] target/ppc: Make checkstop actually stop the
+ system
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Chinmay Rath
+ <rathc@linux.ibm.com>
+Date: Tue, 21 May 2024 10:32:30 -0500
+In-Reply-To: <20240521013029.30082-2-npiggin@gmail.com>
+References: <20240521013029.30082-1-npiggin@gmail.com>
+ <20240521013029.30082-2-npiggin@gmail.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: HwyBePfwI0ft-3Fw6VRgbyBvKkkJ8zbi
+X-Proofpoint-ORIG-GUID: 7wVE2rcZvYz1BjnzrMKvtrcD-zKzWqFX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-21_09,2024-05-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 clxscore=1011 adultscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 mlxscore=0 mlxlogscore=848
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405210117
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,100 +115,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Salil Mehta <salil.mehta@huawei.com> writes:
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-> Hi Alex,
->
->>  From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>  Sent: Tuesday, May 21, 2024 1:45 PM
->>  To: Salil Mehta <salil.mehta@huawei.com>
->>=20=20
->>  Salil Mehta <salil.mehta@huawei.com> writes:
->>=20=20
->>  > Add common function to help unregister the GDB register space. This
->>  > shall be done in context to the CPU unrealization.
->>  >
->>  > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
->>  > Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
->>  > Reviewed-by: Gavin Shan <gshan@redhat.com>
->>  > Tested-by: Xianglai Li <lixianglai@loongson.cn>
->>  > Tested-by: Miguel Luis <miguel.luis@oracle.com>
->>  > Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
->>  > Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
->>  > ---
->>  >  gdbstub/gdbstub.c      | 13 +++++++++++++
->>  >  hw/core/cpu-common.c   |  1 -
->>  >  include/exec/gdbstub.h |  6 ++++++
->>  >  3 files changed, 19 insertions(+), 1 deletion(-)
->>  >
->>  > diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c index
->>  > b3574997ea..1949b09240 100644
->>  > --- a/gdbstub/gdbstub.c
->>  > +++ b/gdbstub/gdbstub.c
->>  > @@ -617,6 +617,19 @@ void gdb_register_coprocessor(CPUState *cpu,
->>  >      }
->>  >  }
->>  >
->>  > +void gdb_unregister_coprocessor_all(CPUState *cpu) {
->>  > +    /*
->>  > +     * Safe to nuke everything. GDBRegisterState::xml is static cons=
-t char
->>  so
->>  > +     * it won't be freed
->>  > +     */
->>  > +    g_array_free(cpu->gdb_regs, true);
->>  > +
->>  > +    cpu->gdb_regs =3D NULL;
->>  > +    cpu->gdb_num_regs =3D 0;
->>  > +    cpu->gdb_num_g_regs =3D 0;
->>  > +}
->>  > +
->>  >  static void gdb_process_breakpoint_remove_all(GDBProcess *p)  {
->>  >      CPUState *cpu =3D gdb_get_first_cpu_in_process(p); diff --git
->>  > a/hw/core/cpu-common.c b/hw/core/cpu-common.c index
->>  > 0f0a247f56..e5140b4bc1 100644
->>  > --- a/hw/core/cpu-common.c
->>  > +++ b/hw/core/cpu-common.c
->>  > @@ -274,7 +274,6 @@ static void cpu_common_finalize(Object *obj)  {
->>  >      CPUState *cpu =3D CPU(obj);
->>  >
->>  > -    g_array_free(cpu->gdb_regs, TRUE);
->>=20=20
->>  Is this patch missing something? As far as I can tell the new function =
-never
->>  gets called.
->
->
-> Above was causing double free because eventually this free'ng of 'gdb_reg=
-s' is being
-> done in context to un-realization of ARM CPU. Function ' gdb_unregister_c=
-oprocessor_all'
-> will be used by loongson arch as well. Hence, I placed this newly added f=
-unction
-> in the arch agnostic patch-set=20
->
-> https://lore.kernel.org/qemu-devel/20230926103654.34424-1-salil.mehta@hua=
-wei.com/
->
-> Another approach could be to keep it but make above free'ing as condition=
-al?
->
-> /* in case architecture specific code did not do its job */
-> if (cpu->gdb_regs)
->     g_array_free(cpu->gdb_regs, TRUE);
+Thanks,
 
-No I don't object to moving it to a function. But I would expect the
-patch that adds the function and plumbs it in to also be the patch that
-removes the inline call. Otherwise the tree will be broken in behaviour
-between patches.
+Glenn
 
-Just make it clear in the header that the series needs the pre-requisite
-patches.
+On Tue, 2024-05-21 at 11:30 +1000, Nicholas Piggin wrote:
+> checkstop state does not halt the system, interrupts continue to be
+> serviced, and other CPUs run. Make it stop the machine with
+> qemu_system_guest_panicked.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  target/ppc/excp_helper.c | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 3be086d10b..b2b51537b7 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -19,6 +19,8 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/main-loop.h"
+>  #include "qemu/log.h"
+> +#include "sysemu/sysemu.h"
+> +#include "sysemu/runstate.h"
+>  #include "cpu.h"
+>  #include "exec/exec-all.h"
+>  #include "internal.h"
+> @@ -425,6 +427,8 @@ static void powerpc_set_excp_state(PowerPCCPU
+> *cpu, target_ulong vector,
+>  
+>  static void powerpc_mcheck_checkstop(CPUPPCState *env)
+>  {
+> +    /* KVM guests always have MSR[ME] enabled */
+> +#ifdef CONFIG_TCG
+>      CPUState *cs = env_cpu(env);
+>  
+>      if (FIELD_EX64(env->msr, MSR, ME)) {
+> @@ -437,9 +441,15 @@ static void powerpc_mcheck_checkstop(CPUPPCState
+> *env)
+>      if (qemu_log_separate()) {
+>          qemu_log("Machine check while not allowed. "
+>                   "Entering checkstop state\n");
+> -    }
+> -    cs->halted = 1;
+> -    cpu_interrupt_exittb(cs);
+> +
+> +    /*
+> +     * This stops the machine and logs CPU state without killing
+> QEMU
+> +     * (like cpu_abort()) so the machine can still be debugged
+> (because
+> +     * it is often a guest error).
+> +     */
+> +    qemu_system_guest_panicked(NULL);
+> +    cpu_loop_exit_noexc(cs);
+> +#endif
+>  }
+>  
+>  static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
