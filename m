@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3663EC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF8BCC25B7A
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:45:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9OrH-0001I1-PN; Tue, 21 May 2024 08:44:47 -0400
+	id 1s9OrY-0001Ti-LZ; Tue, 21 May 2024 08:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9OrC-0001Gv-38
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:44:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9Or5-0004C7-OZ
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:44:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716295474;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5JsCz2OoZqOZCvf4HbzHKmtER8lpNGn5k6VVquiqZRg=;
- b=gaTnvaYrP9TANY9CTQGQI6WL5UcT7LTNllqPJLIzw9gQMD/bbfxBrjwJXs/3P4x5KU8qvl
- +7+rIIC8/T7J1nJqjcIfQmNF3niwN/leYeZ3KzQ+pmtc/ULACmA80pEGItATlBCWe9LFja
- 9Z5SJNUBaAS6JJQNXgvxeSjvCImBThQ=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-1WGG0VcdOAuCnYm-c9OFgA-1; Tue, 21 May 2024 08:44:27 -0400
-X-MC-Unique: 1WGG0VcdOAuCnYm-c9OFgA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-574f687a77eso29163a12.2
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:44:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s9OrT-0001Mi-6f
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:44:59 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s9OrR-0004Es-4S
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:44:58 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56e37503115so6125676a12.1
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:44:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716295495; x=1716900295; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ydUjq1x2tHe91ZfF3XRmtjobpywxygD653gDPcLnBqc=;
+ b=erVPjj9KGPtxXJTwO0MVGb9n1fjMGwBq0cR7dTVw8PrH8pNxc5NnVpHOdvoRxdrTSU
+ lOoCQkSAOWV3mBBfJ7V+dt8pE4+vWRj2TghDW+8RjYSwccxAJ9WHiwkmGMWtli4bXsnD
+ pu3IX39glXekvmjNB42xrGB42LQZ6ME+ab+VZEy+yoXc5N3asK0ja29izDL+u7DYOdhe
+ 2JQmh0/aBhMzqXtzloz3zjBBw4cmUEnDfBCeIsFX0CP3mdbQtPoeDsYzLMFjMYvJDM7E
+ 2H8hWkjBTX8H+U0CMmzDAuIQyWoE2V0Rh2/F25idxf44G+Knz8U9gqKh9zYNJgvkgFDg
+ lXfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716295466; x=1716900266;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5JsCz2OoZqOZCvf4HbzHKmtER8lpNGn5k6VVquiqZRg=;
- b=CKgynDw2hoP9AvpGq01NxMgf2qiWWM4GJBTBcMWSiogWQJiYCo9AR3hBufEUiQx8ST
- BwQ5942U3iwlDGDHjfF8GA9aLjg0SWxJlPm46WUoz2QpLNXwWRtdDK/tLX3Qnrl9WysK
- C1gkVbqxfATGhZe8HpcKTNQlvDf42n9F7iCm992OVtUauahifzcYR5NWf5N2PFk78FI6
- Y2ADrXixd3DxvfW0DgNC7hi3xPS1zFTcjzIVMpN0+WcXS3csP8PL+PFxLk8p/rYm/qUE
- CD3QqcWDMHBUoEW3VJhW47p6PX0On/nS5aj3big7Usu9ZjheHpshxwhxn+1L2S7X+8i2
- 0y8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3ByoS9k1EtXYnCYJoaDBjIhVdAJtuZnBct2pQXi9Bwqp2tu6AaAlwasOAjDaW06hd/9/8fDOW5FSV+lAacdEbg6Tj2Y4=
-X-Gm-Message-State: AOJu0YxS0JKx2tdwFGl33PAo/6yfY1WOMWiOt1QrUhZMpnb3KmR31nk7
- USwwLn9oLPjh3Lu0ODpO1PLmivB27vcUgFvPhXxkKJTkkLQCjBj1ruA6OMp2OaERJKTS0TcTLE5
- ON59m8lLfAbXVuIbs2fdFt3XVai48xKxmmA/ulEeVq3dV0QGp98Tj
-X-Received: by 2002:a50:9e6d:0:b0:572:8aab:441c with SMTP id
- 4fb4d7f45d1cf-5734d6ed908mr20608511a12.26.1716295465862; 
- Tue, 21 May 2024 05:44:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEv1QMxxuwkkcoN6V8p/sO7Kmw8vIe4mFszSpPNa/vlVFXYPbSg69qituZIQQBmYRjCY0jMg==
-X-Received: by 2002:a50:9e6d:0:b0:572:8aab:441c with SMTP id
- 4fb4d7f45d1cf-5734d6ed908mr20608499a12.26.1716295465543; 
- Tue, 21 May 2024 05:44:25 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733bed72bbsm16534352a12.57.2024.05.21.05.44.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 05:44:25 -0700 (PDT)
-Message-ID: <483fe0bf-702f-4d6d-8d61-cc9c5a94fb71@redhat.com>
-Date: Tue, 21 May 2024 14:44:24 +0200
+ d=1e100.net; s=20230601; t=1716295495; x=1716900295;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ydUjq1x2tHe91ZfF3XRmtjobpywxygD653gDPcLnBqc=;
+ b=F783sVRv4TPDXmCPqRhsUx6rEmi1PbO0D23N3GRYsk8H2n/JghWA3OB6LSp65+nAbH
+ pGDOddzv+OG00ElUU6L0/uxY2khR1HMpYG+KKkI6AP5UP93FWh4J4d2knneXckfq5Sig
+ gU9RnOyY+45/XTX9FfyCADQ1Tv6Z/oeZAToanNInYEOi8ZMZQG7w8ti3sMFGwHX83xoA
+ aNiclm+WTiLtYb2FmyiDbKR0yUomhXZFvf09vHST4DOJjeUtIpgT/Ts7+EI51TMdrOVd
+ j4e4JJooLVeYTPDblXLZ034ipMWq5sm2Ffe70EIxsl3OjhE+B16VRWp4s8qfTLD44MLC
+ mhLQ==
+X-Gm-Message-State: AOJu0YxPhfApb3dGJIwq3EbOPq+od+gPRcWNr8hPb8d4dFJUEdIv++Tw
+ OLs/cUa/kCykfJxtT2Ktu7mmx3Vw44oyvouRfl9gcYIy5w3RP6uE4owFG7P3x5k=
+X-Google-Smtp-Source: AGHT+IF1Wzf0FP7a5yB88Y0TriuHu8WP/TqVTkLjBRmHAf6gn6wtPe1IUa+HaLOHkRWmutx7VExwyA==
+X-Received: by 2002:a50:c055:0:b0:56b:8153:54f7 with SMTP id
+ 4fb4d7f45d1cf-5734d67b708mr20812151a12.30.1716295495177; 
+ Tue, 21 May 2024 05:44:55 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-574ea09b972sm9599851a12.47.2024.05.21.05.44.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 May 2024 05:44:54 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2D0005F8B0;
+ Tue, 21 May 2024 13:44:54 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: <qemu-devel@nongnu.org>,  <qemu-arm@nongnu.org>,  <maz@kernel.org>,
+ <jean-philippe@linaro.org>,  <jonathan.cameron@huawei.com>,
+ <lpieralisi@kernel.org>,  <peter.maydell@linaro.org>,
+ <richard.henderson@linaro.org>,  <imammedo@redhat.com>,
+ <andrew.jones@linux.dev>,  <david@redhat.com>,  <philmd@linaro.org>,
+ <eric.auger@redhat.com>,  <oliver.upton@linux.dev>,
+ <pbonzini@redhat.com>,  <mst@redhat.com>,  <will@kernel.org>,
+ <gshan@redhat.com>,  <rafael@kernel.org>,  <linux@armlinux.org.uk>,
+ <darren@os.amperecomputing.com>,  <ilkka@os.amperecomputing.com>,
+ <vishnu@os.amperecomputing.com>,  <karl.heubaum@oracle.com>,
+ <miguel.luis@oracle.com>,  <salil.mehta@opnsrc.net>,
+ <zhukeqian1@huawei.com>,  <wangxiongfeng2@huawei.com>,
+ <wangyanan55@huawei.com>,  <jiakernel2@gmail.com>,
+ <maobibo@loongson.cn>,  <lixianglai@loongson.cn>,  <npiggin@gmail.com>,
+ <harshpb@linux.ibm.com>,  <linuxarm@huawei.com>,  Shaoqin Huang
+ <shahuang@redhat.com>
+Subject: Re: [PATCH V10 7/8] gdbstub: Add helper function to unregister GDB
+ register space
+In-Reply-To: <20240520233241.229675-8-salil.mehta@huawei.com> (Salil Mehta's
+ message of "Tue, 21 May 2024 00:32:40 +0100")
+References: <20240520233241.229675-1-salil.mehta@huawei.com>
+ <20240520233241.229675-8-salil.mehta@huawei.com>
+Date: Tue, 21 May 2024 13:44:54 +0100
+Message-ID: <87seybibax.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/16] vfio/pci: Make vfio_populate_vga() return bool
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
-References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
- <20240515082041.556571-13-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240515082041.556571-13-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,101 +112,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/24 10:20, Zhenzhong Duan wrote:
-> This is to follow the coding standand in qapi/error.h to return bool
-> for bool-valued functions.
-> 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Salil Mehta <salil.mehta@huawei.com> writes:
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Add common function to help unregister the GDB register space. This shall=
+ be
+> done in context to the CPU unrealization.
+>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 > ---
->   hw/vfio/pci.h |  2 +-
->   hw/vfio/igd.c |  2 +-
->   hw/vfio/pci.c | 11 +++++------
->   3 files changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index a5ac9efd4b..7914f019d5 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -225,7 +225,7 @@ bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
->   int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
->                                       struct vfio_pci_hot_reset_info **info_p);
->   
-> -int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
-> +bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
->   
->   int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
->                                  struct vfio_region_info *info,
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index b31ee79c60..ffe57c5954 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -478,7 +478,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->        * try to enable it.  Probably shouldn't be using legacy mode without VGA,
->        * but also no point in us enabling VGA if disabled in hardware.
->        */
-> -    if (!(gmch & 0x2) && !vdev->vga && vfio_populate_vga(vdev, &err)) {
-> +    if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
->           error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
->           error_report("IGD device %s failed to enable VGA access, "
->                        "legacy mode disabled", vdev->vbasedev.name);
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index e2ca4507f8..1922593253 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2670,7 +2670,7 @@ static VFIODeviceOps vfio_pci_ops = {
->       .vfio_load_config = vfio_pci_load_config,
->   };
->   
-> -int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-> +bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       struct vfio_region_info *reg_info;
-> @@ -2681,7 +2681,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->           error_setg_errno(errp, -ret,
->                            "failed getting region info for VGA region index %d",
->                            VFIO_PCI_VGA_REGION_INDEX);
-> -        return ret;
-> +        return false;
->       }
->   
->       if (!(reg_info->flags & VFIO_REGION_INFO_FLAG_READ) ||
-> @@ -2691,7 +2691,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->                      (unsigned long)reg_info->flags,
->                      (unsigned long)reg_info->size);
->           g_free(reg_info);
-> -        return -EINVAL;
-> +        return false;
->       }
->   
->       vdev->vga = g_new0(VFIOVGA, 1);
-> @@ -2735,7 +2735,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->                        &vdev->vga->region[QEMU_PCI_VGA_IO_LO].mem,
->                        &vdev->vga->region[QEMU_PCI_VGA_IO_HI].mem);
->   
-> -    return 0;
-> +    return true;
->   }
->   
->   static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-> @@ -2798,8 +2798,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->       g_free(reg_info);
->   
->       if (vdev->features & VFIO_FEATURE_ENABLE_VGA) {
-> -        ret = vfio_populate_vga(vdev, errp);
-> -        if (ret) {
-> +        if (!vfio_populate_vga(vdev, errp)) {
->               error_append_hint(errp, "device does not support "
->                                 "requested feature x-vga\n");
->               return false;
+>  gdbstub/gdbstub.c      | 13 +++++++++++++
+>  hw/core/cpu-common.c   |  1 -
+>  include/exec/gdbstub.h |  6 ++++++
+>  3 files changed, 19 insertions(+), 1 deletion(-)
+>
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index b3574997ea..1949b09240 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -617,6 +617,19 @@ void gdb_register_coprocessor(CPUState *cpu,
+>      }
+>  }
+>=20=20
+> +void gdb_unregister_coprocessor_all(CPUState *cpu)
+> +{
+> +    /*
+> +     * Safe to nuke everything. GDBRegisterState::xml is static const ch=
+ar so
+> +     * it won't be freed
+> +     */
+> +    g_array_free(cpu->gdb_regs, true);
+> +
+> +    cpu->gdb_regs =3D NULL;
+> +    cpu->gdb_num_regs =3D 0;
+> +    cpu->gdb_num_g_regs =3D 0;
+> +}
+> +
+>  static void gdb_process_breakpoint_remove_all(GDBProcess *p)
+>  {
+>      CPUState *cpu =3D gdb_get_first_cpu_in_process(p);
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 0f0a247f56..e5140b4bc1 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -274,7 +274,6 @@ static void cpu_common_finalize(Object *obj)
+>  {
+>      CPUState *cpu =3D CPU(obj);
+>=20=20
+> -    g_array_free(cpu->gdb_regs, TRUE);
 
+Is this patch missing something? As far as I can tell the new function
+never gets called.
+
+>      qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
+>      qemu_mutex_destroy(&cpu->work_mutex);
+>  }
+> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+> index eb14b91139..249d4d4bc8 100644
+> --- a/include/exec/gdbstub.h
+> +++ b/include/exec/gdbstub.h
+> @@ -49,6 +49,12 @@ void gdb_register_coprocessor(CPUState *cpu,
+>                                gdb_get_reg_cb get_reg, gdb_set_reg_cb set=
+_reg,
+>                                const GDBFeature *feature, int g_pos);
+>=20=20
+> +/**
+> + * gdb_unregister_coprocessor_all() - unregisters supplemental set of re=
+gisters
+> + * @cpu - the CPU associated with registers
+> + */
+> +void gdb_unregister_coprocessor_all(CPUState *cpu);
+> +
+>  /**
+>   * gdbserver_start: start the gdb server
+>   * @port_or_device: connection spec for gdb
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
