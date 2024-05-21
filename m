@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4FAC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 09:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D730C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 09:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9M2G-00039E-Bi; Tue, 21 May 2024 05:43:56 -0400
+	id 1s9M5k-00053x-TJ; Tue, 21 May 2024 05:47:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s9M2B-00037S-6m
- for qemu-devel@nongnu.org; Tue, 21 May 2024 05:43:51 -0400
+ id 1s9M5i-00053P-Md
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 05:47:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1s9M29-0002qA-AL
- for qemu-devel@nongnu.org; Tue, 21 May 2024 05:43:50 -0400
+ id 1s9M5g-0003Wi-HW
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 05:47:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716284628;
+ s=mimecast20190719; t=1716284846;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7amI72qGHb9CShbmVHT3fpwHJPCMvUS/l9EYhYOmMG0=;
- b=cr935sPxlS5GBblFjDx+z+QVvaUnvUkjKO3lyhqhdbIaumu3XIxQEU6D0Q/pOWp2YE3xC8
- uD63phscrqWexvrYWLAuyLC7V/XiGop0I4t09OL9gkWuRyeGt9iStSyf7mwbONCe3kiS3Q
- FmfQi5Vmx1+BR9EkQeiwx41Q17kOOPs=
+ bh=HQiYc5TNr7Xv5NJxsOqNGLmBnAfTvbdg+Jiy9BpALIQ=;
+ b=QiFtbRvtWwoChi3n/wID52Pe/7fy7n2D9OqkyYej5QZo63fQP0g9cE5BCr3pfqnEGyJCpl
+ M5qjeYa8V8QNHNTwAETHZGmC02DPJkuUVpKhNNjgIcYH+7rzIRZQZiISpLYf7PTV5aPQOi
+ 7MFkjPmudajLwoGZ2RuWJ0qAKv7gFTs=
 Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
  [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-HjEAAkWCNJ2HWaNlMG4r3A-1; Tue, 21 May 2024 05:43:46 -0400
-X-MC-Unique: HjEAAkWCNJ2HWaNlMG4r3A-1
+ us-mta-214-DXSfWwUzOAyXUSjqf5Mm3w-1; Tue, 21 May 2024 05:47:25 -0400
+X-MC-Unique: DXSfWwUzOAyXUSjqf5Mm3w-1
 Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5733eed0c19so2193442a12.2
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 02:43:46 -0700 (PDT)
+ 4fb4d7f45d1cf-574f411ac2cso4095960a12.2
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 02:47:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716284625; x=1716889425;
+ d=1e100.net; s=20230601; t=1716284844; x=1716889644;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7amI72qGHb9CShbmVHT3fpwHJPCMvUS/l9EYhYOmMG0=;
- b=EGiGH+yqiKiICehcXgO6F2YwVqH+60zbYccXwLkeogV1tSFEMWAURhuJTKtIJrZTx4
- H2BnvQDgedsYIzOJKPCg1B/XabumKEm6YSRcsgJiGbS+ByYbDuYDtRSvJGQOLq2lsVNN
- Yb3pigA83n3GUPTjC2T8YyZzmioV176bwcXKH1UXWrykoLWCXkXylzfjqWDYXhv3fi7a
- aUgVlc6cCOCCtPwgK7yMwEHjM+6Hcw/JEYy1fML6+lZvRdGQIMHOxbTdhfc65l9vwJgP
- A5eO5zwr90EWNsGHWq2Is9oGpPW8Ue6WoZdbaoCghJJK6xw/UP4oYFlUpoSE0ClKO1xh
- 3x4w==
+ bh=HQiYc5TNr7Xv5NJxsOqNGLmBnAfTvbdg+Jiy9BpALIQ=;
+ b=mVv7QQ/ngdAh5zlrSOCDCbsct4NawmK6eo9S8GLrjJAit/G1hG+neudJC8U9FfzkCS
+ D/dQGhbSH/GqvE2t84z3QBez9Eyuq5d02ebdGmdoXd1rGMrQ4Wjph+gaFYwIYqYDdFam
+ V5zO8jVhDDsZEIDgsYk7zXY9zXzeunT63TWRCalMpweIJkkVeyeFS7DyNMBOD6pKxDre
+ Td9a1KJNhrOlPAVqBl4Psm1SKcUTVJToSTIWEHowVW0WTvfv7ObzkBVZDmLies/wc7va
+ iMHZMdC4af53F8J5sWal+spfz3sslj7q96afNBhBL2GgSGejysXkNcmPqwpnxZKtEo0W
+ gMfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQFRVL4D8TV8ROJ3dsO5KBs9SD1VPfqx34QHoxi2eiloeZzsL7vH/xITDTVdhh1cmFhm2EhhaCh2+oGdb79NaQZh8Hn2Y=
-X-Gm-Message-State: AOJu0YwAGLqDBqn+c9wbHJJOKl5+vzFnghqvPFCIuzG+OQ5Q7c4AW5dc
- xEt4bF2GBX1SLbzK18YcVg2blYco2LBM2loflwSWkCVLn12mLDwGnQ1RRtjH9E7nBu+HtJWIU91
- 3w8W3lRDpKkOnIR7vighOlWXrkXZOde6P8H/Wij5DvUJvCBscqC2w
-X-Received: by 2002:a50:9ecd:0:b0:56e:7751:ae4e with SMTP id
- 4fb4d7f45d1cf-5734d67bf42mr21696414a12.33.1716284625667; 
- Tue, 21 May 2024 02:43:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjVeAJH2XfucFeRmHGX71bOzH4CGccB8AlVE1+Q89v3/5XsUvsD3a3jAv7prhV6FqBssnRuw==
-X-Received: by 2002:a50:9ecd:0:b0:56e:7751:ae4e with SMTP id
- 4fb4d7f45d1cf-5734d67bf42mr21696402a12.33.1716284625276; 
- Tue, 21 May 2024 02:43:45 -0700 (PDT)
+ AJvYcCXBeNMYso5Sx9c+7+DiFcRMwaEha0EqyluKafjyZ67XDuIuDlSLtgajREFrA9V8aD+U1HbLP/+w6JxFtmuXcw2RPz58oiA=
+X-Gm-Message-State: AOJu0YydUKIiKmvdmA5NoaFNAch7TiT03nTsIkztksQNeWjpG2uXOPLY
+ WXXsxSE1XF+Sdate9ibfCI5dpy2Bs5LlD/f8t9HIU+YBch6k/97pRsvpd2J8YxuSNuZo58Hsq3e
+ L8ByKCcAk76Z5VPefCl2CinKKUYK4obTHlK6INqSQCZB7ksFkjepj
+X-Received: by 2002:a05:6402:1746:b0:573:50a6:d3b0 with SMTP id
+ 4fb4d7f45d1cf-57350a6d402mr20540118a12.3.1716284843761; 
+ Tue, 21 May 2024 02:47:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF50QJH326buy8wIYaaOxJPflDqEDEzIgf906UomvBDVzeH0QZaYqD15KBopzaOTL+jH1TBvg==
+X-Received: by 2002:a05:6402:1746:b0:573:50a6:d3b0 with SMTP id
+ 4fb4d7f45d1cf-57350a6d402mr20540106a12.3.1716284843231; 
+ Tue, 21 May 2024 02:47:23 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57421480d99sm14481198a12.8.2024.05.21.02.43.44
+ 4fb4d7f45d1cf-5733beb89e7sm16808087a12.21.2024.05.21.02.47.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 02:43:45 -0700 (PDT)
-Message-ID: <d75ffd2e-8fa2-4161-8f35-56fa8c72418c@redhat.com>
-Date: Tue, 21 May 2024 11:43:43 +0200
+ Tue, 21 May 2024 02:47:22 -0700 (PDT)
+Message-ID: <7a30b326-df0e-4907-8ca0-6289665c4708@redhat.com>
+Date: Tue, 21 May 2024 11:47:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 18/18] hw/arm/virt: Set SMMU OAS based on CPU
- PARANGE
+Subject: Re: [RFC PATCH v3 00/18] SMMUv3 nested translation support
 Content-Language: en-US
 To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
  peter.maydell@linaro.org, qemu-devel@nongnu.org
@@ -83,11 +82,10 @@ Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
  marcin.juszkiewicz@linaro.org
 References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-19-smostafa@google.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240429032403.74910-19-smostafa@google.com>
+In-Reply-To: <20240429032403.74910-1-smostafa@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -115,101 +113,175 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Mostafa,
 
-On 4/29/24 05:24, Mostafa Saleh wrote:
-> Use the new SMMU property to make the SMMU OAS match the CPU PARANGE.
-> That's according to SMMU manual ARM IHI 0070F.b:
->     6.3.6 SMMU_IDR5, OAS must match the system physical address size.
+On 4/29/24 05:23, Mostafa Saleh wrote:
+> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
+> but not nested instances.
+> This patch series adds support for nested translation in SMMUv3,
+> this is controlled by property “arm-smmuv3.stage=nested”, and
+> advertised to guests as (IDR0.S1P == 1 && IDR0.S2P == 2)
 >
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> ---
->  hw/arm/virt.c      | 14 ++++++++++++--
->  target/arm/cpu.h   |  2 ++
->  target/arm/cpu64.c |  5 +++++
->  3 files changed, 19 insertions(+), 2 deletions(-)
+> Main changes(architecture):
+> ============================
+> 1) CDs are considered IPA and translated with stage-2.
+> 2) TTBx and tables for stage-1 are considered IPA and translated
+>    with stage-2.
+> 3) Translate the IPA address with stage-2.
 >
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 3c93c0c0a6..f203b1f8e1 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -252,6 +252,13 @@ static bool ns_el2_virt_timer_present(void)
->          arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
->  }
->  
-> +/* We rely on CPU to define system OAS. */
-> +static int32_t get_system_oas(void)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
-> +    return cpu_arm_get_oas(cpu);
-> +}
-> +
->  static void create_fdt(VirtMachineState *vms)
->  {
->      MachineState *ms = MACHINE(vms);
-> @@ -1384,7 +1391,7 @@ static void create_pcie_irq_map(const MachineState *ms,
->  }
->  
->  static void create_smmu(const VirtMachineState *vms,
-> -                        PCIBus *bus)
-> +                        PCIBus *bus, int32_t oas)
->  {
->      char *node;
->      const char compat[] = "arm,smmu-v3";
-> @@ -1404,6 +1411,9 @@ static void create_smmu(const VirtMachineState *vms,
->  
->      object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
->                               &error_abort);
-> +
-> +    qdev_prop_set_uint64(dev, "oas", oas);
-to me you cannot handle that this way because for older machine types
-the smmu oas needs to stay the same as it was before, ie. 44. So you
-need to properly handle the compats.
-Since the new default value depends on the CPU PARANGE this is a bit
-more tricky but maybe you get can inspired from no_its class field trick
-in virt.c and introduce a no_smmu_cpu_oas_align to disable the settings
-up to 9.0 included.
+> TLBs:
+> ======
+> TLBs are the most tricky part.
+>
+> 1) General design
+>    Unified(Combined) design is used, where entries with ASID=-1 are
+>    IPAs(cached from stage-2 config)
+>
+>    TLBs are also modified to cache 2 permissions, a new permission added
+>    "parent_perm."
+>
+>    For non-nested configuration, perm == parent_perm and nothing
+>    changes. This is used to know which stage to use in case there is
+>    a permission fault from a TLB entry.
+>
+> 2) Caching in TLB
+>    Stage-1 and stage-2 are inserted in the TLB as is.
+>    For nested translation, both entries are combined into one TLB
+>    entry. The size (level and granule) are chosen from the smallest entries.
+>    That means that a stage-1 translation can be cached with sage-2
+>    granule in key, this is take into account lookup.
+>
+> 3) TLB Lookup
+>    TLB lookup already uses ASID in key, so it can distinguish between
+>    stage-1 and stage-2.
+>    And as mentioned above, the granule for stage-1 can be different,
+>    If stage-1 lookup failed, we try again with the stage-2 granule.
+>
+> 4) TLB invalidation
+>    - Address invalidation is split, for IOVA(CMD_TLBI_NH_VA
+>      /CMD_TLBI_NH_VAA) and IPA(CMD_TLBI_S2_IPA) based on ASID value
+>    - CMD_TLBI_NH_ASID/CMD_TLBI_NH_ALL: Consider VMID if stage-2 is
+>      supported, and invalidate stage-1 only by VMIDs
+>
+> As far as I understand, this is compliant with the ARM architecture:
+> - ARM ARM DDI 0487J.a: RLGSCG, RTVTYQ, RGNJPZ
+> - ARM IHI 0070F.b: 16.2 Caching
+>
+> An alternative approach would be to instantiate 2 TLBs, one per each
+> stage. I haven’t investigated that.
+>
+> Others
+> =======
+> - Advertise SMMUv3.2-S2FWB, it is NOP for QEMU as it doesn’t support
+>   attributes.
+>
+> - OAS: A typical setup with nesting is to share CPU stage-2 with the
+>   SMMU, and according to the user manual, SMMU OAS must match the
+>   system physical address.
+>
+>   This was discussed before in
+>   https://lore.kernel.org/all/20230226220650.1480786-11-smostafa@google.com/
+>   The implementation here, follows the discussion, where migration is
+>   added and oas is set up from the board (virt). However, the OAS is
+>   chosen based on the CPU PARANGE as there is no fixed one.
+>
+> - For nested configuration, IOVA notifier only notifies for stage-1
+>   invalidations (as far as I understand this is the intended
+>   behaviour as it notifies for IOVA)
+>
+> - Stop ignoring VMID for stage-1 if stage-2 is also supported.
 
-Thanks
+I completed the review pass on my end. I strongly encourage you to move
+the series into a non RFC series to attract more reviewers. Migration
+needs to be fixed and compat handling as well I think but overall the
+nested support looks mostly OK for me. Some stuff are a bit hacky (like
+config local patching to force S2 only) as I mentionned in my comments
+but let see if other reviewers find some more elegant ways to handle things
 
 Eric
-> +
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
->      for (i = 0; i < NUM_SMMU_IRQS; i++) {
-> @@ -1578,7 +1588,7 @@ static void create_pcie(VirtMachineState *vms)
->  
->          switch (vms->iommu) {
->          case VIRT_IOMMU_SMMUV3:
-> -            create_smmu(vms, vms->bus);
-> +            create_smmu(vms, vms->bus, get_system_oas());
->              qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
->                                     0x0, vms->iommu_phandle, 0x0, 0x10000);
->              break;
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 17efc5d565..68261ffbf9 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -3287,4 +3287,6 @@ static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
->  }
->  #endif
->  
-> +int32_t cpu_arm_get_oas(ARMCPU *cpu);
-> +
->  #endif
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 985b1efe16..08da83c082 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -787,6 +787,11 @@ static const gchar *aarch64_gdb_arch_name(CPUState *cs)
->      return "aarch64";
->  }
->  
-> +int32_t cpu_arm_get_oas(ARMCPU *cpu)
-> +{
-> +    return FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE);
-> +}
-> +
->  static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
->  {
->      CPUClass *cc = CPU_CLASS(oc);
+>
+>
+> Future improvements:
+> =====================
+> 1) One small improvement, that I don’t think it’s worth the extra
+>    complexity, is in case of Stage-1 TLB miss for nested translation,
+>    we can do stage-1 walk and lookup for stage-2 TLBs, instead of
+>    doing the full walk.
+>
+> Testing
+> ========
+> 1) IOMMUFD + VFIO
+>    Kernel: https://lore.kernel.org/all/cover.1683688960.git.nicolinc@nvidia.com/
+>    VMM: https://qemu-devel.nongnu.narkive.com/o815DqpI/rfc-v5-0-8-arm-smmuv3-emulation-support
+>
+>    By assigning “virtio-net-pci,netdev=net0,disable-legacy=on,iommu_platform=on,ats=on”,
+>    to a guest VM (on top of QEMU guest) with VIFO and IOMMUFD.
+>
+> 2) Work in progress prototype I am hacking on for nesting on KVM
+>    (this is nowhere near complete, and misses many stuff but it
+>    doesn't require VMs/VFIO) also with virtio-net-pci and git
+>    cloning a bunch of stuff and also observing traces.
+>    https://android-kvm.googlesource.com/linux/+log/refs/heads/smostafa/android15-6.6-smmu-nesting-wip
+>
+> I also modified the Linux driver to test with mixed granules/levels.
+>
+> hw/arm/smmuv3: Split smmuv3_translate() better viewed with --color-moved
+>
+> The first 3 patches are fixes.
+>
+> Changes in v3
+> v2: https://lore.kernel.org/qemu-devel/20240408140818.3799590-1-smostafa@google.com/
+> - Collected Eric Rbs.
+> - Rebased on master.
+> - Fix an existing bug in class encoding.
+> - Fix an existing bug in S2 events missing IPA.
+> - Fix nesting event population (missing class and wrong events)
+> - Remove CALL_FUNC_CFG_S2.
+> - Rework TLB combination logic to cache the largest possible entries.
+> - Refactor nested translation code to be more clear.
+> - Split patch 05 to 4 patches.
+> - Convert asid/vmid in trace events to int also.
+> - Remove some extra traces as it was not needed.
+> - Improve commit messages.
+>
+> Changes in v2:
+> v1: https://lore.kernel.org/qemu-devel/20240325101442.1306300-1-smostafa@google.com/
+> - Collected Eric Rbs
+> - Rework TLB to rely on VMID/ASID instead of an extra key.
+> - Fixed TLB issue with large stage-1 reported by Julian.
+> - Cap the OAS to 48 bits as PTW doesn’t support 52 bits.
+> - Fix ASID/VMID representation in some contexts as 16 bits while
+>   they can be -1
+> - Increase visibility in trace points
+>
+> Mostafa Saleh (18):
+>   hw/arm/smmu-common: Add missing size check for stage-1
+>   hw/arm/smmu: Fix IPA for stage-2 events
+>   hw/arm/smmuv3: Fix encoding of CLASS in events
+>   hw/arm/smmu: Use enum for SMMU stage
+>   hw/arm/smmu: Split smmuv3_translate()
+>   hw/arm/smmu: Consolidate ASID and VMID types
+>   hw/arm/smmuv3: Translate CD and TT using stage-2 table
+>   hw/arm/smmu-common: Add support for nested TLB
+>   hw/arm/smmu-common: Rework TLB lookup for nesting
+>   hw/arm/smmu-common: Support nested translation
+>   hw/arm/smmu: Support nesting in smmuv3_range_inval()
+>   hw/arm/smmu: Support nesting in the rest of commands
+>   hw/arm/smmuv3: Support nested SMMUs in smmuv3_notify_iova()
+>   hw/arm/smmuv3: Support and advertise nesting
+>   hw/arm/smmuv3: Advertise S2FWB
+>   hw/arm/smmu: Refactor SMMU OAS
+>   hw/arm/smmuv3: Add property for OAS
+>   hw/arm/virt: Set SMMU OAS based on CPU PARANGE
+>
+>  hw/arm/smmu-common.c         | 298 ++++++++++++++++++++---
+>  hw/arm/smmuv3-internal.h     |  22 +-
+>  hw/arm/smmuv3.c              | 441 +++++++++++++++++++++++------------
+>  hw/arm/trace-events          |  26 ++-
+>  hw/arm/virt.c                |  14 +-
+>  include/hw/arm/smmu-common.h |  43 +++-
+>  include/hw/arm/smmuv3.h      |   1 +
+>  target/arm/cpu.h             |   2 +
+>  target/arm/cpu64.c           |   5 +
+>  9 files changed, 625 insertions(+), 227 deletions(-)
+>
 
 
