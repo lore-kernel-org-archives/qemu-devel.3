@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58ADFC25B79
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 02:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC19C25B77
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 02:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9FYj-0004GV-4m; Mon, 20 May 2024 22:49:01 -0400
+	id 1s9FZS-0004W4-SX; Mon, 20 May 2024 22:49:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1s9FYh-0004GD-N5
- for qemu-devel@nongnu.org; Mon, 20 May 2024 22:48:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s9FZR-0004TV-J1
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 22:49:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1s9FYR-0002JV-8r
- for qemu-devel@nongnu.org; Mon, 20 May 2024 22:48:58 -0400
+ id 1s9FZF-0002N1-Lr
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 22:49:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716259720;
+ s=mimecast20190719; t=1716259772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aydI7zptD5+uo0Voind6VcRvAu/8cuEQC/sVaMr14ZI=;
- b=PfmTVIRpaE5a64AlWLDDgv9v5M9vhtc2rod7PPRF0M9cRwiXvCmV57CYsYI5uhQUEZ8Hlh
- YmjE1ig26jsrVeM4KpVwBMzL8zCNuAynbu8dmlN58xKM4zj93pHHY338YSzFhHhQ26gZiB
- t+3IYuy4EBDIEGVgVvJR9LeCufhu/uE=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fPhztye5LSuacoa3I2KzsGwZyx6wnIeiY8cgr6k7pr8=;
+ b=g+lIYxyymEzbe6UkbQEBBSQqUeBJ1yQLAn0FfMYC8l3L7XJsES+ap61TGJ3FGFqvoVHz1k
+ zXfd1/ZflXQDHf60vb3A1ZWPMsgOe1uuXdOE7csIFv0EFvQpSh9BMOt1HnFXK4qJMgkJFJ
+ oiePJc0HA1ZAHRx8rSItWokTNNi6TyQ=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-R0sZ1QkwPnKZ17UY1_em8Q-1; Mon, 20 May 2024 22:48:36 -0400
-X-MC-Unique: R0sZ1QkwPnKZ17UY1_em8Q-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2bd92c367ddso275345a91.1
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 19:48:36 -0700 (PDT)
+ us-mta-604-zK-bpj-ZOgO4VwNCn1uugQ-1; Mon, 20 May 2024 22:49:31 -0400
+X-MC-Unique: zK-bpj-ZOgO4VwNCn1uugQ-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2b96f302d84so7519137a91.0
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 19:49:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716259716; x=1716864516;
+ d=1e100.net; s=20230601; t=1716259770; x=1716864570;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aydI7zptD5+uo0Voind6VcRvAu/8cuEQC/sVaMr14ZI=;
- b=ZBMu24XBIhkoH06KTl/DrA1jKHzZ9/uXQ+apph3wcibVeCnFBeGxDksJ1Perw1JTTL
- 89foK0LZ9Umumx6wrNsgLZ1h3Xger6h7uKCCT3uCuLay3buZBc6miEXfACG/oogVa1hC
- eyYpAhDDdQFDSnv875FOayTyErJ3OZiCmNAt3VCgim9mEjjpc9hrd6tylIAv0RK4i4eo
- tVnXdqSrLWVSzI0yt/Dmm1YUDbQ5vJ/r5JqTZ2v0RZeYySKXLOEvyrcr+Zll5d92jBL6
- Tu/5veKss03lDnWT5eb04/aM4dvQHF6/oNHUBmnosibqazX6q1n9lOUf8T10/DJHtJLL
- p91Q==
+ bh=fPhztye5LSuacoa3I2KzsGwZyx6wnIeiY8cgr6k7pr8=;
+ b=wwjirBZA4wS0D4rDGu/QTdcOMjvvV1ptlVTSIlM1hYbw+iU4KfGZGIMkCS5hXhLflN
+ W+qAfy4Yf2aZmNwr7O1cUcqeB/56tg+sNEqGWzJ/E1iC8dnAmIQZ5wUY14V8Pkrc//xM
+ uJZ3KZXpiCCsL5tnPrqHftBBShaXBp1DEPKX+AK3jZiveyKrWCeT+nnqUsPUU2ha1fit
+ PLC5ste0OpG6AjMKUWZmcLU7GqvjQOIpnv/VFwsR+6huX0W8yxFlWpO/zwegJFBs//XQ
+ iHx1nXJz6+Sm73hvLz9ltvmvYjK6BZKWrIEjfcsCDXCqsl4QBSKHQoN0uY/oY9Fvg5k9
+ ATWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJLKxQwVnvVbuG0Jqe+Xz361mq5GwzQy37hF5LPJ2Z3xLcdxwbsZkIJer54hp3+TkUX/w93VdnSj8OxcradYDY9t3dbXQ=
-X-Gm-Message-State: AOJu0Yxt4QAND7bwhBkOi3pFwMegkVIxSfu4OIcq3U+xQUPfiOXr3Q79
- Gczu2W/7Vzj4vWubbPm8rlphbcoNYrZylmGJjw3Stb8i+W7Ja1UNw7CaShmjsvY61awFfENWd73
- lgpMg2J2GFoK6mSly04XQv+WI4W+g7Z7o1mEvThhgl2fD3ax7DNOwBD9AgacOex20A23fcg3/zJ
- ZMZkw8ZlBjqs603X6IGTvliWBiW18=
-X-Received: by 2002:a17:90a:e693:b0:2bd:7762:d5e3 with SMTP id
- 98e67ed59e1d1-2bd7762e415mr4570482a91.9.1716259715835; 
- Mon, 20 May 2024 19:48:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE26cNadbFVJqAf2hs0bJ6G8lT99TuvL1o+C4pavsjv4A1eaQAIPBIwcFDvceqWqbTa5LY/rZRzX0dAEgtiP9Q=
-X-Received: by 2002:a17:90a:e693:b0:2bd:7762:d5e3 with SMTP id
- 98e67ed59e1d1-2bd7762e415mr4570468a91.9.1716259715453; Mon, 20 May 2024
- 19:48:35 -0700 (PDT)
+ AJvYcCU1I9kRsLTRQPg6R+iPfF2ClFFlZUq647DEEqbbd0/6+wWIbTWxQwfPbFmIhPRkV1cfM+aYDSORT2aSCV09nE8qg2VgKeg=
+X-Gm-Message-State: AOJu0YzURQTy9S588vOkC/UXl09fhwTI5csMhII/YNYpuM6EtrZElMX/
+ uL/XeN3jvVh5X1f9Hu7fxlJOIkk1JTnDJ3btuoKfMOIwX05HGVoXJn/W7sz0Yg2urYEQDZYo4ha
+ lkCZYfKv3+phjSvN9LCAoGdf5yrsCR2bOM1BG8+dR5uqHn5cSUAkNOMmqX8IgFuVHGZqtPv0RwO
+ 6vVpOGCzspZMxIWyiHVyogZZYTUYI=
+X-Received: by 2002:a17:90b:124b:b0:2b2:aac3:fc2f with SMTP id
+ 98e67ed59e1d1-2b6cc76d796mr32075376a91.18.1716259770296; 
+ Mon, 20 May 2024 19:49:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3yQE91ozfcBXtzmKk8qFnLlAQ/JD6fA1cfodQSEDoggmsjNBT2o5hFju0TPZN9ooxAimSxrU2B/N5b9lxMNs=
+X-Received: by 2002:a17:90b:124b:b0:2b2:aac3:fc2f with SMTP id
+ 98e67ed59e1d1-2b6cc76d796mr32075359a91.18.1716259770008; Mon, 20 May 2024
+ 19:49:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240517102334.81943-1-zhenzhong.duan@intel.com>
- <CACGkMEvTomFeC1bM3SfY1zGhQ_5i15r6CY6M3jVzau6niNUf_w@mail.gmail.com>
- <SJ0PR11MB6744AECEAA6F9319259B0DF192E92@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <DS0PR11MB752917B52B66A6EF10C10678C3E92@DS0PR11MB7529.namprd11.prod.outlook.com>
-In-Reply-To: <DS0PR11MB752917B52B66A6EF10C10678C3E92@DS0PR11MB7529.namprd11.prod.outlook.com>
+References: <20240517075336.104091-1-f.ebner@proxmox.com>
+ <87h6esjf7i.fsf@suse.de>
+In-Reply-To: <87h6esjf7i.fsf@suse.de>
 From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 21 May 2024 10:48:24 +0800
-Message-ID: <CACGkMEt5ofYt12A6uKUj=QLcLbOnrGT=UkMpee=MUxO6Xy3sxg@mail.gmail.com>
-Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by spec
-To: "Liu, Yi L" <yi.l.liu@intel.com>
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Peng,
- Chao P" <chao.p.peng@intel.com>, 
- Yu Zhang <yu.c.zhang@linux.intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Date: Tue, 21 May 2024 10:49:18 +0800
+Message-ID: <CACGkMEu4w0JjzNVBp6b-mJsnpOcHbCR4XJPsYpC84JamDA9ywA@mail.gmail.com>
+Subject: Re: [PATCH] hw/core/machine: move compatibility flags for VirtIO-net
+ USO to machine 8.1
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, 
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com, 
+ eduardo@habkost.net, yuri.benditovich@daynix.com, andrew@daynix.com, 
+ peterx@redhat.com, t.lamprecht@proxmox.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,95 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 20, 2024 at 12:15=E2=80=AFPM Liu, Yi L <yi.l.liu@intel.com> wro=
+On Tue, May 21, 2024 at 6:23=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
 te:
 >
-> > From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> > Sent: Monday, May 20, 2024 11:41 AM
-> >
-> >
-> >
-> > >-----Original Message-----
-> > >From: Jason Wang <jasowang@redhat.com>
-> > >Sent: Monday, May 20, 2024 8:44 AM
-> > >To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> > >Cc: qemu-devel@nongnu.org; Liu, Yi L <yi.l.liu@intel.com>; Peng, Chao =
-P
-> > ><chao.p.peng@intel.com>; Yu Zhang <yu.c.zhang@linux.intel.com>; Michae=
-l
-> > >S. Tsirkin <mst@redhat.com>; Paolo Bonzini <pbonzini@redhat.com>;
-> > >Richard Henderson <richard.henderson@linaro.org>; Eduardo Habkost
-> > ><eduardo@habkost.net>; Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> > >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined=
- by
-> > >spec
-> > >
-> > >On Fri, May 17, 2024 at 6:26=E2=80=AFPM Zhenzhong Duan
-> > ><zhenzhong.duan@intel.com> wrote:
-> > >>
-> > >> From: Yu Zhang <yu.c.zhang@linux.intel.com>
-> > >>
-> > >> Currently we use only VTD_FR_PASID_TABLE_INV as fault reason.
-> > >> Update with more detailed fault reasons listed in VT-d spec 7.2.3.
-> > >>
-> > >> Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
-> > >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> > >> ---
-> > >
-> > >I wonder if this could be noticed by the guest or not. If yes should
-> > >we consider starting to add thing like version to vtd emulation code?
-> >
-> > Kernel only dumps the reason like below:
-> >
-> > DMAR: [DMA Write NO_PASID] Request device [20:00.0] fault addr 0x123460=
-0000
-> > [fault reason 0x71] SM: Present bit in first-level paging entry is clea=
-r
+> Fiona Ebner <f.ebner@proxmox.com> writes:
 >
-> Yes, guest kernel would notice it as the fault would be injected to vm.
+> > Migration from an 8.2 or 9.0 binary to an 8.1 binary with machine
+> > version 8.1 can fail with:
+> >
+> >> kvm: Features 0x1c0010130afffa7 unsupported. Allowed features: 0x10179=
+bfffe7
+> >> kvm: Failed to load virtio-net:virtio
+> >> kvm: error while loading state for instance 0x0 of device '0000:00:12.=
+0/virtio-net'
+> >> kvm: load of migration failed: Operation not permitted
+> >
+> > The series
+> >
+> > 53da8b5a99 virtio-net: Add support for USO features
+> > 9da1684954 virtio-net: Add USO flags to vhost support.
+> > f03e0cf63b tap: Add check for USO features
+> > 2ab0ec3121 tap: Add USO support to tap device.
+> >
+> > only landed in QEMU 8.2, so the compatibility flags should be part of
+> > machine version 8.1.
+> >
+> > Moving the flags unfortunately breaks forward migration with machine
+> > version 8.1 from a binary without this patch to a binary with this
+> > patch.
+> >
+> > Fixes: 53da8b5a99 ("virtio-net: Add support for USO features")
+> > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 >
-> > Maybe bump 1.0 -> 1.1?
-> > My understanding version number is only informational and is far from
-> > accurate to mark if a feature supported. Driver should check cap/ecap
-> > bits instead.
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 >
-> Should the version ID here be aligned with VT-d spec?
+> I'll get to it eventually, but is this another one where just having
+> -device virtio-net in the command line when testing cross-version
+> migration would already have caught the issue?
 
-Probably, this might be something that could be noticed by the
-management to migration compatibility.
-
-> If yes, it should
-> be 3.0 as the scalable mode was introduced in spec 3.0. And the fault
-> code was redefined together with the introduction of this translation
-> mode. Below is the a snippet from the change log of VT-d spec.
->
-> June 2018 3.0
-> =E2=80=A2 Removed all text related to Extended-Mode.
-> =E2=80=A2 Added support for scalable-mode translation for DMA Remapping, =
-that enables PASIDgranular first-level, second-level, nested and pass-throu=
-gh translation functions.
-> =E2=80=A2 Widen invalidation queue descriptors and page request queue des=
-criptors from 128 bits
-> to 256 bits and redefined page-request and page-response descriptors.
-> =E2=80=A2 Listed all fault conditions in a unified table and described DM=
-A Remapping hardware
-> behavior under each condition. Assigned new code for each fault condition=
- in scalablemode operation.
-> =E2=80=A2 Added support for Accessed/Dirty (A/D) bits in second-level tra=
-nslation.
-> =E2=80=A2 Added support for submitting commands and receiving response fr=
-om virtual DMA
-> Remapping hardware.
-> =E2=80=A2 Added a table on snooping behavior and memory type of hardware =
-access to various
-> remapping structures as appendix.
-> =E2=80=A2 Move Page Request Overflow (PRO) fault reporting from Fault Sta=
-tus register
-> (FSTS_REG) to Page Request Status register (PRS_REG).
->
-> Regards.
-> Yi Liu
+Yes if you are using Qemu >=3D 8.2. Qemu has a default machine type for
+each version.
 
 Thanks
+
+>
 
 
