@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9E7C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 06:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0091C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 07:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9JOh-00077s-ID; Tue, 21 May 2024 02:54:55 -0400
+	id 1s9Jca-00016P-N4; Tue, 21 May 2024 03:09:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1s9JOg-00077Q-3P; Tue, 21 May 2024 02:54:54 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1s9JcX-00015y-Sn; Tue, 21 May 2024 03:09:13 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1s9JOe-0005UJ-34; Tue, 21 May 2024 02:54:53 -0400
+ id 1s9JcU-0007y6-V1; Tue, 21 May 2024 03:09:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716274492; x=1747810492;
+ t=1716275351; x=1747811351;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=MJFagCAwTWioxyB1CsSVPiSRjnKm029Cq9vGFqWdXDk=;
- b=EdqD/0hSpQ347h9s/SM+c0SDE6YBhqSJMsyFsedgJ97o/lyjwaHFtavR
- Jf1KPYSWUnIdUUGRWyty4oz+6hwhtithLN9F3AnJqDYPqY6ly907SKArY
- SprS6bcmzeEDvYq3QfFk2sMcrf7hQFnHcVgILuUapVDuSsToXtASTWPBq
- vrAIvX+aaWgOi8rhNAgByR/I3ds8i05SxyP2g6AwuhQtEolM1jMuWsd8G
- vtn4AtUM4LjR24rpjNHkzjuuohY7vhJsH/460YjwxYXe1vCvl8HKIiWkt
- aBCPkACN3DKVYUhIrDj5DDvgS+Bq/x4kyd7vi7AJtwkXs77oQLxXOfy8i A==;
-X-CSE-ConnectionGUID: 2vxeupyqQHqbFCPwZzQBpA==
-X-CSE-MsgGUID: 9zj7C8xvRdemjkPjPRkTIQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12291117"
-X-IronPort-AV: E=Sophos;i="6.08,177,1712646000"; d="scan'208";a="12291117"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2024 23:54:50 -0700
-X-CSE-ConnectionGUID: QUdzadIASxeufm4NG/Mbew==
-X-CSE-MsgGUID: 82TCQwMpQA2sChTbDAdXkQ==
+ bh=Pvz7MwSyLrso6mVoQ+oMHX6flK5vwhKGpZy9yfr2v4g=;
+ b=ItTfN3MHsVT5Ogqlq/2hQJpI3vlvA2BDDhLyWezOVQto6YsPLf5bHItm
+ vpQCnOtCir+Jyeo+TnX4F771VormmFlbrjnSoG0xrV7fccbuV2HvHzxoa
+ tbtTwZMlHI0Vw2zWnT8SOwuhs1ZHmx42L9t7gkhwkBv+K+MqAdwk8nu2h
+ VBoOoG5JyrT20oTp9Jz3ZQLRnyz5poaRuuJ71qcMZkxngblG0D+Bu8PRT
+ P8f1lrdxA/+BkB0YRVPEr7WSuhBpoUVqQRs7tbZGbX81y5WzNSIo6JAdd
+ X/y2XIcmvpew501KGPB8p0hA1/OfaN0M2ZLSmgf1waIEXzo2vnc28cMHk w==;
+X-CSE-ConnectionGUID: 8Vhfzc0ZQR+HRv6ZetmLDw==
+X-CSE-MsgGUID: G7zCWYnKRu6+RgEb6cZBag==
+X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="37824370"
+X-IronPort-AV: E=Sophos;i="6.08,177,1712646000"; d="scan'208";a="37824370"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 00:09:06 -0700
+X-CSE-ConnectionGUID: ZWknJowKQB2OV9O07QuR3g==
+X-CSE-MsgGUID: 2ZA/SjucQv6SNNZRGIyJ8g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,177,1712646000"; d="scan'208";a="37197040"
-Received: from suyan-mobl.amr.corp.intel.com (HELO [10.124.149.167])
- ([10.124.149.167])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2024 23:54:49 -0700
-Message-ID: <a9718afb-cb52-4d01-b1b9-0e3da69c6b9a@intel.com>
-Date: Mon, 20 May 2024 23:54:48 -0700
+X-IronPort-AV: E=Sophos;i="6.08,177,1712646000"; d="scan'208";a="32681251"
+Received: from pkrish5-mobl2.gar.corp.intel.com (HELO [10.98.172.235])
+ ([10.98.172.235])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 00:09:05 -0700
+Message-ID: <310b54f1-e0b1-4cdb-a187-5014976bc946@intel.com>
+Date: Tue, 21 May 2024 00:09:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/3] vl: Allow multiple -overcommit commands
@@ -62,7 +62,7 @@ From: "Chen, Zide" <zide.chen@intel.com>
 In-Reply-To: <342858a6-c8bd-45fe-8b91-8e0a444eb2e6@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zide.chen@intel.com;
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zide.chen@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -146,8 +146,9 @@ On 5/20/2024 10:16 PM, Thomas Huth wrote:
 > 
 > What do you think about this?
 
-Thank you very much! This is a very good idea! I can update it in V2.
+This is great! Thank you very much! I will update it in V2.
 
+> 
 >  Thomas
 > 
 
