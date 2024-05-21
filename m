@@ -4,155 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06CBC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 10:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECD7C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 10:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9MwV-0000Xu-6C; Tue, 21 May 2024 06:42:03 -0400
+	id 1s9N1H-0003Yu-Uv; Tue, 21 May 2024 06:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1s9MwT-0000XS-5I; Tue, 21 May 2024 06:42:01 -0400
-Received: from mail-vi1eur05on20701.outbound.protection.outlook.com
- ([2a01:111:f403:2613::701]
- helo=EUR05-VI1-obe.outbound.protection.outlook.com)
+ id 1s9N1E-0003VS-NF; Tue, 21 May 2024 06:46:56 -0400
+Received: from mail-am7eur03on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:260e::701]
+ helo=EUR03-AM7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1s9MwQ-0005NK-Gr; Tue, 21 May 2024 06:42:00 -0400
+ id 1s9N1B-0006lm-Pw; Tue, 21 May 2024 06:46:56 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=auQWZ+nGuoY/2C/wNQCOpBHhV9Ne9u08cmcTsgYevTFpAr/zIrLofQmVP0umWFitiwzk4O9rFbUgluQigGvGTVxbblU/yp6w3nLtCrMok+gRlWFut3v6tuo+BVje3muXigr1iLQMmT0rSgoL58ZqqU0WUngBXiOZbL8h/8i6rv7EOLU0hW35R735LkJhagDbkXg85KNE73aoh5oPJ38cyLsImqSUPQOSdjrOWvsefATyVVH/kxvigAm66TMANV3rq+kGkMPHVOyCObYmwNOKDR6MYqpUbiGS0DmsZ3xk3qQwMP4vtD1dRPln7BF1cqRJmyxYDllU3drARkSXm1nh9w==
+ b=BwnU2JK2NNpRLzRnofgcv6tKA1zTvifc21yzvtPgN7jJCfnLOZhceMp46FaMXQ2Q09qPCghR07NBpiTnfXeayjeZ6dmHsndvGlKyXC56wE+iXWf4CDhMc7ORb7/VKwZJ2nWF5NXY3VM45kiO3GrXoLpuAgU1JOqK9ywJJzC78qn6ETarQqnXRnHB9O/y+HdrudIs1FPC+91cxMo346mCJIXI0pzpttafz0JjrJFFMXDbF9e4Hq4tvKYkgzsvHuxo7rkc+gHPaTvzLTk0+A7t6MxOuQgdC4Pt4BKFqQ/4RAr8p5jFa7wHaIkwq77QYNf8PrSkvuFhmTtS69AYBIZ+GA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9COLMnfTdYtTJ1GaUaCJJI6HjrhHWM2idtZO0GAM498=;
- b=FsYv12Q5roldJs+qM08KkKxKsS+YXshzMAGUo7QFn3ANJBtQdFtpwWP62ekJhnnjUezpYtp8KhTiarxjDIKwjd/P7sUKIccupbIcXkLeBdX6WFcW0QOySFJ0BzadKeJTA6zOGNVXTRi17EM/QbmI2+/4pR2UO9UidZRUuPgka932a7jrgr12xlTjZsHe45J2d6QQOCDwS9aQuW47Rxs7R1l0Bm7a5T5Y/ZMp5o1ROZHXSUWHvm8bkLSLXLOzg/gtU+9IgqzEYETFkN7azyKuqGgSuRTvtxF9fF+2iM4nIeLQGYqsa7Y3abR1QMOevbLVHb0y6fBnoccuFYiRY2nULQ==
+ bh=baKsu67GbUR48avJeq39sW90lMsAhFuOH66epB15J7o=;
+ b=TZ/iUY9FjzuVqKhElmZLg9fNfCbpTWkS7LDwELpmCBve7VNYyzL0fnlfanlwwjApBb6RIM7tD6yXJtM07TqnDiUXY1Qyh+9jkSHkqQ5xCtB6nfNbxKIoh0tKU4pBKk+L7Idl8in+ATTmIGZ+GSZdY62LJbbcBXygk6N6Y4QhPpF+7zz9DOBtWgsxpadp/TyAx/RIx0OesMgq9fdiG+u3gDFH1iTn82+AHtz0MqPrhWlAfj01rrfQe4R59VUbHx5UqOgAa82j/1u5RBKcskkeFcNYk3xhVoTfqZ8XuFw4NpbpT75On/cel1+dOk5A/CLg3LtN/DfkiFitP2b0Gt+QqA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9COLMnfTdYtTJ1GaUaCJJI6HjrhHWM2idtZO0GAM498=;
- b=iKwVRAwo7NVKPJc+BsRBjWHxFTgZ0Z/n6C7GnooaaRvjG8TqKKasT+tikB0ga7hRj0ttgcWId1YfqwzlNMHOCQy6WbIsaxmXEhHsZ9zyXtTEb3H+xvS77FLiJNintJLMHe+Zm81qnMjitudSThtzYI/3pGtqpXyVfCy+zRP/lUXY+zKL2yqr8E9KaMGBPsN7wReDY8jT2vDkJW7rgxBQkrquZPrkSUVUtPMzXaZBdrHvDCC0haionc9A8daL5Bdkaw+IsYUMgcHpHLQGVfz/1oYoM1BR3nM8796iRZinIpsuZ/c2gSYtcfm1Pv5EekVs4KEe10Kg4l9taB8Hp2uM2g==
+ bh=baKsu67GbUR48avJeq39sW90lMsAhFuOH66epB15J7o=;
+ b=NqeeyNTKCK4rPWKg2ES7hIRPhc/WL4Q508D3LOypF/5SaeSurNieNniS/ibH7HbaqbNIdtdeOnBOGG5HIowmbEXU5DeyKC2KTYbDJtPGMXN/dZ7eVB82vpQWM/NqsUpYiRxl+KQpggcsTMqQeReKl8e08fYPR3FyAZy839AoyOY20dzjPIGnA51UtURhTwB03+ukq5Wml9A8jCdVpzYiPxsTyWtvabCLw7qr30T1xjc0DIFcQcY/So1R7ZgE/ZdsSIhQHxnYHO86rPyXCfgLjW9lhGFXxiMA+hlv7lo3iY97O3NLFnPcjwURPTcWm4y446ywagxCwsXTvWTjYtPrdg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19) by AM0PR08MB5442.eurprd08.prod.outlook.com
- (2603:10a6:208:182::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.35; Tue, 21 May
- 2024 10:41:53 +0000
+ (2603:10a6:800:205::19) by DB9PR08MB6458.eurprd08.prod.outlook.com
+ (2603:10a6:10:258::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.36; Tue, 21 May
+ 2024 10:46:48 +0000
 Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
  ([fe80::cebf:31ab:1e25:cfb5]) by VI0PR08MB10743.eurprd08.prod.outlook.com
  ([fe80::cebf:31ab:1e25:cfb5%6]) with mapi id 15.20.7587.030; Tue, 21 May 2024
- 10:41:53 +0000
-Message-ID: <594f3477-d38f-488b-b740-63ae08e01ee0@virtuozzo.com>
-Date: Tue, 21 May 2024 12:41:51 +0200
+ 10:46:48 +0000
+Message-ID: <cf9964c9-3775-41ad-8077-3d1a4fc68090@virtuozzo.com>
+Date: Tue, 21 May 2024 12:46:45 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] qcow2: make subclusters discardable
+Subject: Re: [PATCH v2 10/11] qcow2: zero_l2_subclusters: fall through to
+ discard operation when requested
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eblake@redhat.com, berto@igalia.com, jean-louis@dupond.be, den@virtuozzo.com
 References: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
- <20240513063203.113911-10-andrey.drobyshev@virtuozzo.com>
+ <20240513063203.113911-11-andrey.drobyshev@virtuozzo.com>
 Content-Language: en-US
 From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-In-Reply-To: <20240513063203.113911-10-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20240513063203.113911-11-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: WA2P291CA0007.POLP291.PROD.OUTLOOK.COM
- (2603:10a6:1d0:1e::10) To VI0PR08MB10743.eurprd08.prod.outlook.com
+X-ClientProxiedBy: WA1P291CA0006.POLP291.PROD.OUTLOOK.COM
+ (2603:10a6:1d0:19::14) To VI0PR08MB10743.eurprd08.prod.outlook.com
  (2603:10a6:800:205::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|AM0PR08MB5442:EE_
-X-MS-Office365-Filtering-Correlation-Id: b55e2051-d984-44b7-6a82-08dc7982a106
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|DB9PR08MB6458:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8c18d3fd-4287-43ab-6bd1-08dc79835084
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|366007|1800799015;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VXhDbml6dEtnMmJqRzJkWU1sUjVkVzRaWDIwWnh0ZVNwVzZlVXcvNHlRQ1RQ?=
- =?utf-8?B?QzYrYzZnTjQvcDIvQTZZOGVPRk5zS3BuclQxU05LU2RsanV2ek1MQm1rTGk3?=
- =?utf-8?B?VnVBSUlRVHdoUkRua20yMExLb2VXV3g2MUg2cVRzTlpjRFl3Y2l3d2wyS0hq?=
- =?utf-8?B?R1htMjRCQ2Y5UzBOeFBMK29Va2NzcE03cXBNbDRqMjJuWDlzQ0RLUnNFVmxM?=
- =?utf-8?B?T1I1bktHOUZVME5ENFZXRUlNemFkVDNOYStabkoyaUg3cDIxZDZoRm1XYVVX?=
- =?utf-8?B?dHF1bGZVeHA5NDNiakx6UmpMS3dXbnFEdFZjMWl6WmNFczZXZEFUVFZydytN?=
- =?utf-8?B?RlA4MWJyUFV0eFNyTEFQY1oxa3k0cnIrSGg1RForRlB0R3Z4UTk4MkUxNXN6?=
- =?utf-8?B?ZTVTZ2kwSXRnOXNIeW1nNTZxdlQ5cFNJdnh2UEtHek11bzZxaTdHT1JjMWlI?=
- =?utf-8?B?TjhrY2p1VW1vVnMwWVdlMnFvbnRnVmxNWTVuUXMrRE5VN1JVTXJlc0Q5WXNl?=
- =?utf-8?B?QnlmcWVHeTVKaVArNi9vY2FFb3R0WnoyWUVZQUdzU1NOQ0xVN2ErazVIdXN0?=
- =?utf-8?B?dklnQ3k1RHE5SkdmTXE5cTN4QzM1TkRUKytaZzdUTklneGxhekRPbTJjSGpF?=
- =?utf-8?B?RVRaODRpRXBPWWI5OWRGaWlaTmFSbVdKVjZGZmFGSm5LMEt1L3ZpandmRThQ?=
- =?utf-8?B?a21zRDZJc3QrTHh6bkovZmRBU0NLWW94NE0wb2xvdFpRaHRKeVRhL0JSRXNJ?=
- =?utf-8?B?TjZzYkZIck5oL1lvTEErNVZYa3VMM2JUcjF2Q0NUZ2dGa29vSnlmZ0MxZmNy?=
- =?utf-8?B?dkFWci9HdzBLUEJRNnJWS1grRS9adldNd2M5NHhrZExNS0FvRTN4cnN6eWg3?=
- =?utf-8?B?anJhZ2lORjRSaGVCYUxURkx3UVc0Q3ZyN2tCaHpqUkFoYVJpTGdjcWF2TEp1?=
- =?utf-8?B?ZmZyVWlmOFgwcDM0Qi84ejRhTWVqMjY1VzZJcCtLVGdNb3pKL0dtQ3Q4b3Za?=
- =?utf-8?B?Q01taGM4V2xHMkdRUmpFTlMzNjdGWlNuY0lEb0hxY1JGOWhERFlBTmlDblNC?=
- =?utf-8?B?eDhSem1pWkxOTTdRUVFMS0VURTdIbHJ6Qi9ZTm1id2czSEFtSy82TGs1TlVa?=
- =?utf-8?B?cUxUY09aTUFmWWxCRVZFOUtaRmVoOU5zaU5NZS9qZ05zMzRXSUkySk9Jb2xI?=
- =?utf-8?B?blFvUlZGbXd1WWdNZXBObVlqb24veWJ2UlhlT29qRVB2THdzSzAxUEF4Q0ZS?=
- =?utf-8?B?bFpsaUxweUx2TGN6U0t4dDV3MXFMenU3TjhQY2U4VGdaL3dNNk5CNmhRQWRk?=
- =?utf-8?B?N0VuclRoek5mckRpUUxMdlhsMkpkTlJCL0ZDanVPT3I4cFREeldkYUdxME5u?=
- =?utf-8?B?cXprQm1KNlRDTnBMQVp2SisvUWxsTHNUN0xsV0tyMjFGNEl5dTU1KytKZXRv?=
- =?utf-8?B?T1NmWG1qd256Z1lnV2hwV2FHUW9BUU9MSmVMaGZ3ZXpSQUc4dmF5WldiN0pi?=
- =?utf-8?B?WDVwRG9ibUxZVmJwV3hlRjJSTTh6aU9QT2NETzNrZG1NSmhWU1dYTDFrd0tr?=
- =?utf-8?B?b0xKRzVCN2ZTWDMxUXFHaVpvSHBvOEV5TnRoZzN6V3VneGdiT0w3THdvOUx3?=
- =?utf-8?B?eDNMSDl6R3U2cWx1MWhybEpPc2R5bXdlYjNtNEZod2w0eW5DMU1vaFd3cHRO?=
- =?utf-8?B?cUdVT3d0NEh0dkpkMW8rcS9lcVh1bllLQlQ2YmRRSlN1TWwwbkdFT2FnPT0=?=
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ekhtdTl2SXdzRnRDSEJBdGNzNDc0eWNyQ2xjVDNmK2Zkcm5CYlpsdU1VK0xQ?=
+ =?utf-8?B?a0FwWXNnYVdXYlFRV3Q2Z2J6M0ZSbGQ4Mld3UEdvME5qQlNrRnd1YXRwRUFG?=
+ =?utf-8?B?Z1F4YWtRL1YzVnlEK1RJZ3hNeWdFY0h5dnljM204ZDV3TkdhSkZpQjNPMUZ2?=
+ =?utf-8?B?emtUVWVmaEI2MVJKUll1V2taUURXcmFXWDVmM3VqeXIvWGtyNVhhZWNwamRL?=
+ =?utf-8?B?MUYwelA0aGYycEY4NUtsRkVVYW10N0VBbkM2US9WOHNmbG4zeGRkSXIxT2w4?=
+ =?utf-8?B?NncwTmNkTHFaMitFRVZRSVdtQVFPdkVZTTNTb2dwaTB1QTNXM1NnWkhiRzBu?=
+ =?utf-8?B?VklLVzA0THhYbWZmdHNQZ21kUEtaNU9xUjNkRVRzU0MraUxVdFphbURUcVJF?=
+ =?utf-8?B?Zk9kbE0veENIQ3ZST2YrL21aekpia1JRYWgzanpBZGJRclNGVi9KaUZaVFB1?=
+ =?utf-8?B?d0RFWWxZMGNZQTk2MjgxVHZlMHRxajZreFpiTDNuY3lQcW5hMHRWdGN3ZXUz?=
+ =?utf-8?B?cFZFRjlLRmxwbmQycEEwNldXLzZwRmlsR3hZWmozUWNEZUFnamhlVTF3Yi84?=
+ =?utf-8?B?Yzc3eVBrRzlsRU1LNmNYVG9uOUtkdHVlY2E5dHpvbzVYU2FldGJPMVo0UWlF?=
+ =?utf-8?B?WWY1eEg2cURUQ29mSU9XSmd0NVU3UWFIUG1ScFZpK3p1Y0FuNGdGMks4bDZm?=
+ =?utf-8?B?cDJITTFpbmZ4d3FXNVRzOE5EOHpEWkhRcXZzQjN3d0FDbVBmVUFMTVBQMkhN?=
+ =?utf-8?B?MzlkS0thbGVEUU9MWWhoRHBuVE9LRnVYQW1MN1l1UG1ITjRqc0Z3YnJqS01x?=
+ =?utf-8?B?Nmlsd0YzUG9YTG51Z2FNK3A4dW16RWhxQzJxUXp1ZU52VXZaYXZ2MElPZXVS?=
+ =?utf-8?B?THdlTnBRTnc5aEtvZFBjMk90YklaaTJRK29yTUFyS2FSazhMQkxaRXZjcjBK?=
+ =?utf-8?B?Vlp2NFo4dWhhVkJCZWh3aU5Tc0daNDNNeUFGaUl0L2ZGUGMwekp5ZUJwb2Q2?=
+ =?utf-8?B?d01jTnRvSUdnOE56aWQ3dDdNbHNtbTZpd1c5M3RkRk1PdUNVbXlNR3FDd2FI?=
+ =?utf-8?B?WlUrUmd1d3Yvdk1YU2hTSzdnTzdTZzJKTGcxNzJiSVFmMEE1bnVCdTFZeEZw?=
+ =?utf-8?B?My9FY254emhBdDN6NkZVN2dOcjBydldVb09zN0pzM2g3RFUyUnNIc2V4bDBG?=
+ =?utf-8?B?bnl6VnRreGluQTRUTDR3Vno5NDMrL0E3L01tb0N2UjBPWUczRDlSdktuSGJG?=
+ =?utf-8?B?THdUaWgybVdpTk40T05RVmNjak5yWGRtRnZBSFcrd2Rlc2dFUDlobXliWW9w?=
+ =?utf-8?B?QmFzdFRHVlJaWDk1TURtR2JobzZGdWhnZ2d0clhtSFpzdVl5cWIwWXg2YzA4?=
+ =?utf-8?B?NkRoVXBoNmEwNFl1NE9RL1dkWklCUS9RNGpPTEFjSUhoZFBxMmtodURBMUhR?=
+ =?utf-8?B?cS84WElmTDVZSThpUzNVM1FEMHl1WWpTRlZkNkExbW1sVWRCWXNIWXF4Q1dG?=
+ =?utf-8?B?TnNDRU54YnpsYWVVem9ZNkZLcVlOc1psdjdGcVFFWDMva2k5em9hTFpzQlVK?=
+ =?utf-8?B?M1JER0U2Ny9qTGU3OC9rQTJzSnFiN3BUNUFBeGh5QXdmTm5kcVpKb2pmVHVp?=
+ =?utf-8?B?T2tucllWaGJHZmNiQThFbU5UbXRxNCtvYjdMZUhFQlJJenRWQmd4Z1k0dGZj?=
+ =?utf-8?B?SGk1eWY0RkNBVHluN2MxWDh5MCs1SStaSHpTcElNcDJVbWtVUTFNcWxnPT0=?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(366007)(1800799015); DIR:OUT; SFP:1102; 
+ SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NTlIb2d0WFJMTVVKbnd5YVhSV1lxazkxbXRpNjdQa3hxaWNsL1lXY3prZTUx?=
- =?utf-8?B?dkJMN0dmSU84WTBWMG03bGhqRFY3Y29xMlE0UHllYXM2L01TY24rNXpzUlcx?=
- =?utf-8?B?TGZyWnJQS3FsZ1FudzhiUzdWTFluTTVTRldsWGhWbVVncTE2UFdrYWtySEZH?=
- =?utf-8?B?NG56NUFBVkZvYUJpUmZvSWlIdGQxL3BRMDQ2UDBPN0g2R1h4d2NZME1xaVRl?=
- =?utf-8?B?cFkxMWJULzcyQkNsZ3RZMmlhMDNONFJSWW8zeUUyUStSTk40MFgxMTBSQVpw?=
- =?utf-8?B?bWVmZ2F5RStIbFRoSElRVG1vSDlkYmU3SEQwNWY0djJhWVJFbkx1VU9oOHJr?=
- =?utf-8?B?ZXpTcWgwajQyT09BeDJNdzA2RUdQK0V4ZnhBdEZnQzFIZk1iRVpPNzlxK01Z?=
- =?utf-8?B?c3RjZGp5eXhCTjB3clJXYnkvQjRwT1VRbysvL29XWmtJQ1o0ZXFZWHZIZlI2?=
- =?utf-8?B?dEVmOVNvUTRqZTExUGFFeEMyclpuTFd0MlEwYUp4b2diY1RGSTVocDJ6YWUx?=
- =?utf-8?B?eHVjUHhLbzB3WUQrUmJrRUhoY1BZcE5hUUIvNlhURk9LYStkOFkzeTZQcDZU?=
- =?utf-8?B?dVJ6bFZmeFRra0NKNHJ4Z1VJcmx2QTBiVlBGUWhVc0RrMDNZbk5jT1FrT1Iw?=
- =?utf-8?B?TWwzdU56Y0RzR0N4bkI5NkcvQUNCUWRjVExmTGpubXlkaTFtQ0tyQ293eHd2?=
- =?utf-8?B?Y3oxcGJ1OWQwMjhYYnFaaWMzcXQzVW90SGd2YnNXSnBENzhBQWU2UGZSNDNG?=
- =?utf-8?B?WVIzYXVXVFViQktzQnUwS1hKaVV2SjV2RXRMYklCdVhTTzF0RTRSWTdnZG5R?=
- =?utf-8?B?K1RCZ1pqYW5MRGFpZm9UZy9uRS9XRmdtczBobDFSczVZTXFZL2xXK1V4L003?=
- =?utf-8?B?bTR4ZXFaMm9YV2U0MUhEYkFXbUN5NFg2Z1FhNTBFb3ErbDMxdlpncGpqNmNh?=
- =?utf-8?B?ckx0c0FLZ1BxVkVZbVl2UERVN0gzQmJLTVc3R215YVhxbDBES2VBVEw5Y1My?=
- =?utf-8?B?RHJ5TTdXU1RtdHNkTVFyay8rUDNYcXc4M1hSUWlZY3lkVXFIUktPNDZUWmd1?=
- =?utf-8?B?VGZhd0lyTThDUWUzMko3TWFZc3BjL0krb0MzM3lGblBsYnlJbG5zY1RwRWxG?=
- =?utf-8?B?Z1E3VmhTS0h3enArZERxMWZVSnRqcHZuQWlHYnRhVlJMc1ZuZU9rTkx3WVhR?=
- =?utf-8?B?SmJmQjNKSFdmOHNmYnk2dXBkWnRKZWZCM3BvY0w5UXJ6blBxNTZ0OUdBd3hy?=
- =?utf-8?B?cG1NRS9CbDN6dm11L0JTdGwybVlJMWx0M1A3NVZHQmhCckNFbDlRSWlJWUF4?=
- =?utf-8?B?MjBMS08rc01rdHVPRUY0Y2l5ODVoYlR1RVNuLzBHeWxBT1o2V28rR0FrcUo4?=
- =?utf-8?B?cmJMdTRWdmZwMENETHhBelBQcGlPRkcwc1VDZXkvc0hiaVltdWpmZUhZLzhV?=
- =?utf-8?B?U0VWVVVGaEJDRnp0RlNXYkFJdkFJTit6cTQvM2RmNXlMdVlkWUJoL2svNEZY?=
- =?utf-8?B?bCtKR0UyMTNBdWVnYlN4ZzU3UXpROXoyWXVnSjNSbXN5L2wzaktmWHk4NmZY?=
- =?utf-8?B?aEpLVTBWck5xVkpTWVM2ZVQ1dFl2SE9rK01WRVBwV1gwUXdySGJTRFZqMGFo?=
- =?utf-8?B?eVUxd1h6MEkvd21ndlpXNnpPOGdTdFJDWlVWcVNnNXBYZVRRL0FLRWRJYWt6?=
- =?utf-8?B?cU5yb0lNNTAyUlFQQ2hOVFhWQkg2a0thelU1NEJ6MXhxNk1ieU4xNFVDQ0Rk?=
- =?utf-8?B?SENMdi9VL1p4TUJJTi9Uci84OG9XOXprTnFlYkhTMGhZZFhKREh0QVJyQW5W?=
- =?utf-8?B?NEpuNEJ1dFRzb1h3MW1tMlZyYWFkRUZXVkxzby9nRDYySGdDek96ZDhZeElJ?=
- =?utf-8?B?d1JMTjBDMDNFcWN2bTU5UFhBY1ViWnFxT2I4Q2ZGcTJwaWZTMUZUN25JRGR0?=
- =?utf-8?B?M0ZZNjNaSTRFR0VsRTF5bGtrSGt5b1A1U2xsR0c1bEpqWFR6aUNGdGFTNE1o?=
- =?utf-8?B?OExwYTRReW9vb2REYzZiMmhpaFdaamFXUFVpWTNnRTJWRDVsMnI4d0NnRWRK?=
- =?utf-8?B?cHIzVGducU5CbmdYT3dkaTUzUURyMW44TEs4a1djRVkyVGhDUko3RGtidk9r?=
- =?utf-8?B?Tmt1Qmh3Q0tkbGlqRnorWWVCa1hob0wvSGhlbVNjS1BMOTZmR25nV3VWa2ZK?=
- =?utf-8?Q?UNk2HmceD+PdMr1F+g5X3N4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Nm5Vc1psQXR1S3dIQ0tuTDczYUZEUzVjTTg5dk1HeWorTVIxclU1bEg4Z29X?=
+ =?utf-8?B?R3d1RVd4Yk5GMC9lckNJY0pyWGJPQ1hWZUk2N0gxN3J1NnJjbzBxakw5N2tL?=
+ =?utf-8?B?TkRnbHY5L0FyTU5vS1p0UEhGTWl2cDBQdkpuVGxnMXVNNWF6K3l6S1Fyc0pO?=
+ =?utf-8?B?dXpqenlPZ2JKaXhpUmlkTWhxY1RZUktISlR5SXFHZVdjanVORkIyTWEwK1hS?=
+ =?utf-8?B?Q3R6ZDdlU3dKazQ1b2g5UmZ1YTdaM1NXeG92Y1g4d25ydlFLYUpKdVBjcFB5?=
+ =?utf-8?B?d2tINTM5N0dRMXlENnJCYzFmOHM2eUFkS3NBcDJPWG5FT1I3Nyt2SU5sejhY?=
+ =?utf-8?B?N2M0UXlJSEZsMW9QbEl6RTVuT0ZReldqUEk1R05xNlF2S0F2bTh4c2V5bVc0?=
+ =?utf-8?B?WEorWVZyZkY0bmkwdFJiSmVUdnd5SlRmSGRxMjcxcWYyNWZ4cDBiYWdhMEU2?=
+ =?utf-8?B?RGcyanlvT1BiZWhRY3dFdHozcHdBS1NUYnJNekJBNFBWd1JYMDRCNUtGQ084?=
+ =?utf-8?B?NW5GdzZsNzh1ZWQwTTVUOTk5R2Zxc0tBRUZRa3hRV3czQS9jRnFrSUdVaXVu?=
+ =?utf-8?B?TVBOT1NtcmFYNk5BQnlpZWRDVmpSaDVNUW9DbVQxZk80ak9XUkV3eE1JWFRC?=
+ =?utf-8?B?ODVrL0t5VVpmNjNzb2dFVVV0ZEpaSjEvZDVUWHpwYnlJTUt0dEVtWU5mZTJW?=
+ =?utf-8?B?ZGNnUzF0cnV5aGF4UUxrUlBYdFEzTXd4WEdqRjliclMwZmVHZ0ZpL0JVdjQw?=
+ =?utf-8?B?SWZ4NkRuRzJETFk2NytON3Bnd3lxVDJDQnRSSmJ2MmtmTHp2VlVMQUJYTy9y?=
+ =?utf-8?B?ZWlpaWxjUjN0cGlUNVdmVmxOU0JnSE1LZXF0YTQzbXZBcEhnV3cyZHlIOGZR?=
+ =?utf-8?B?a0xsaThaRlZPeEtJQ0taM1l1WVM3RmhoOCtGYXZoUlpDYk5yMUcwTW9rN3Ft?=
+ =?utf-8?B?a2M0dUxUdVQ2OCt2V1ZTVDhJeWNQQVZIbFR6dEpib3JCdDMwWWdaM294VXRu?=
+ =?utf-8?B?NVNCVjlUKzFCOENhME5hSTR1RWJ4cVF0SFRDT1Z4Z1hqckZ6UmlWdzNRaTVS?=
+ =?utf-8?B?cUtManQycVBIZkhlekxQbW1kMGlsbjV2SmNqTDA1UEwxME1FOVlIMjlvM2xl?=
+ =?utf-8?B?TW9abUZuaXR6K0NHNHpxemF5Nm1EcllJRVppS0tqV3NvRVo3QXFrVERqZUpz?=
+ =?utf-8?B?K3hJT3hFU09DbG9jaVlhdmJhdU5JeWY4YU1NNjZYNkc4Z1Jrd0dqV1lGSG5U?=
+ =?utf-8?B?TVc0MUIzZU9sWE5CYW1wRDFWbHBDS0FVRXJzcXlkQ3FCWW9UNzJTS2t4MkVE?=
+ =?utf-8?B?VFJNNVIxSDIzZit5cGtzemkyaEZPKzRmZVVqa1ptM1RmSGRjaTRpS1FMWnhY?=
+ =?utf-8?B?ZjEycHRWQXErVGZwdG1CVmx0b3psNkpPNDNXUElNN3BtMXd6NXBveDh0eUJ0?=
+ =?utf-8?B?K1Z4eXN5V1QrQnZKakQ2OXNUblJYbVBpak5XUUgrNkttZGhzNWwxcTFQVEw5?=
+ =?utf-8?B?T2Y2RkpRU1dpd3F4Vzc1NFR6UjB3Z01Hd2RRS0o0MHJDWjBOWDNUank0ZFV3?=
+ =?utf-8?B?QWNBNEtaWWg3SVJPNWJTQXVXa01tQnpEMEhzSnZFeTB5ODlwRUEyaGFmRzNk?=
+ =?utf-8?B?K045a2pKM2I3OFh4QkhwOGJMcVo2QUhibWg3NncxV3FTdDJDclpISlA2bnJP?=
+ =?utf-8?B?T1ZDRXVaRWk3REJRdFhONENkR2Zwd2RDL0R5aVdnZWpELzN1YW5DWTZmT1ph?=
+ =?utf-8?B?Q05RdmZhV0RVN2RsQnc0Qkw4NndXRDBObWRtcnpNaVlkWCtYL2Fxd0lFc1d0?=
+ =?utf-8?B?Y1R5eU51eHhIa25ibGdPSEFJNXlZcG5FSlRRV2ZFTmQrM0xpcUZZd25lb3ds?=
+ =?utf-8?B?cXhXUUE4azNFaUY2akkvOVFuRFd4dnp5eXBzQ2hNZHdvSVJKaU01Q1FKc1dl?=
+ =?utf-8?B?YTVqczNrV1RkUzAxdTd5OFY3WldKSzBUWGswTHhXbGNzeFRUUmlQMlpHcmlX?=
+ =?utf-8?B?bUY4SWt0U25jMndiQSt2SlU3Y0pnYThYMnp5R0VWTTFJcXBZaStUSVB0YWg4?=
+ =?utf-8?B?ZUNTQW94YUUyZ1Z1RUFKRnZCMTBYdFdRbElwbFV4eFhzU0F1RVMxUStYenFa?=
+ =?utf-8?B?VnRQbHY4ZmdXNTdDUHBJWk91N1JJTDRLbzAwQy81ZFZCYUFNWUE2TE5nSzE1?=
+ =?utf-8?Q?IxFLe+XbaKakaQuJsopaAxg=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b55e2051-d984-44b7-6a82-08dc7982a106
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8c18d3fd-4287-43ab-6bd1-08dc79835084
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2024 10:41:53.5271 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2024 10:46:47.9521 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AkrtJu+mlediETcV7ZuaAEpdmOeNGiPHASRwzVa0d61fxeS1vq66yAIwkikW6kvkKqwZu+8rsQlRnalBkIc8WAlslAAyOFcY00cKE1gVKXE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR08MB5442
-Received-SPF: pass client-ip=2a01:111:f403:2613::701;
+X-MS-Exchange-CrossTenant-UserPrincipalName: VjuzLi2ouEX5/Jj/AoOitsIy2UxpX3K7QAaDK6JnwYuSJ6IOrkq93UmehDeTIGky56M6QzzLbb766a1lygefHVfVjpdt1sdGrKnMQ9p3K50=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6458
+Received-SPF: pass client-ip=2a01:111:f403:260e::701;
  envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR05-VI1-obe.outbound.protection.outlook.com
+ helo=EUR03-AM7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -177,284 +178,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/13/24 08:32, Andrey Drobyshev wrote:
-> This commit makes the discard operation work on the subcluster level
-> rather than cluster level.  It introduces discard_l2_subclusters()
-> function and makes use of it in qcow2 discard implementation, much like
-> it's done with zero_in_l2_slice() / zero_l2_subclusters().  It also
-> changes the qcow2 driver pdiscard_alignment to subcluster_size.  That
-> way subcluster-aligned discards lead to actual fallocate(PUNCH_HOLE)
-> operation and free host disk space.
->
-> This feature will let us gain additional disk space on guest
-> TRIM/discard requests, especially when using large enough clusters
-> (1M, 2M) with subclusters enabled.
->
-> Also rename qcow2_cluster_discard() -> qcow2_subcluster_discard() to
-> reflect the change.
+> When zeroizing subclusters within single cluster, detect usage of the
+> BDRV_REQ_MAY_UNMAP flag and fall through to the subcluster-based discard
+> operation, much like it's done with the cluster-based discards.  That
+> way subcluster-aligned operations "qemu-io -c 'write -z -u ...'" will
+> lead to actual unmap.
 >
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->   block/qcow2-cluster.c  | 106 +++++++++++++++++++++++++++++++++++++----
->   block/qcow2-snapshot.c |   6 +--
->   block/qcow2.c          |  25 +++++-----
->   block/qcow2.h          |   4 +-
->   tests/qemu-iotests/271 |   2 +-
->   5 files changed, 117 insertions(+), 26 deletions(-)
+>   block/qcow2-cluster.c | 26 ++++++++++++++++++++------
+>   1 file changed, 20 insertions(+), 6 deletions(-)
 >
 > diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-> index 8d39e2f960..3c134a7e80 100644
+> index 3c134a7e80..53e04eff93 100644
 > --- a/block/qcow2-cluster.c
 > +++ b/block/qcow2-cluster.c
-> @@ -2105,25 +2105,106 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
->       return nb_clusters;
->   }
+> @@ -2107,15 +2107,16 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
 >   
-> -int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-> -                          uint64_t bytes, enum qcow2_discard_type type,
-> -                          bool full_discard)
-> +static int coroutine_fn GRAPH_RDLOCK
-> +discard_l2_subclusters(BlockDriverState *bs, uint64_t offset,
-> +                       uint64_t nb_subclusters,
-> +                       enum qcow2_discard_type type,
-> +                       bool full_discard)
-> +{
-> +    BDRVQcow2State *s = bs->opaque;
-> +    uint64_t new_l2_bitmap, bitmap_alloc_mask, bitmap_zero_mask;
-> +    int ret, sc = offset_to_sc_index(s, offset);
-> +    g_auto(SubClusterRangeInfo) scri = { 0 };
-> +
-> +    ret = get_sc_range_info(bs, offset, nb_subclusters, &scri);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    new_l2_bitmap = scri.l2_bitmap;
-> +    bitmap_alloc_mask = QCOW_OFLAG_SUB_ALLOC_RANGE(sc, sc + nb_subclusters);
-> +    bitmap_zero_mask = QCOW_OFLAG_SUB_ZERO_RANGE(sc, sc + nb_subclusters);
-> +
-> +    new_l2_bitmap &= ~bitmap_alloc_mask;
-> +
-> +    /*
-> +     * Full discard means we fall through to the backing file, thus we need
-> +     * to mark the subclusters as deallocated and clear the corresponding
-> +     * zero bits.
-> +     *
-> +     * Non-full discard means subclusters should be explicitly marked as
-> +     * zeroes.  In this case QCOW2 specification requires the corresponding
-> +     * allocation status bits to be unset as well.  If the subclusters are
-> +     * deallocated in the first place and there's no backing, the operation
-> +     * can be skipped.
-> +     */
-> +    if (full_discard) {
-> +        new_l2_bitmap &= ~bitmap_zero_mask;
-> +    } else if (bs->backing || scri.l2_bitmap & bitmap_alloc_mask) {
-> +        new_l2_bitmap |= bitmap_zero_mask;
-> +    }
-> +
-> +    /*
-> +     * If after discarding this range there won't be any allocated subclusters
-> +     * left, and new bitmap becomes the same as it'd be after discarding the
-> +     * whole cluster, we better discard it entirely.  That way we'd also
-> +     * update the refcount table.
-> +     */
-> +    if ((full_discard && new_l2_bitmap == 0) ||
-> +            (!full_discard && new_l2_bitmap == QCOW_L2_BITMAP_ALL_ZEROES)) {
-> +        return discard_in_l2_slice(
-> +            bs, QEMU_ALIGN_DOWN(offset, s->cluster_size),
-> +            1, type, full_discard);
-> +    }
-> +
-> +    if (scri.l2_bitmap != new_l2_bitmap) {
-> +        set_l2_bitmap(s, scri.l2_slice, scri.l2_index, new_l2_bitmap);
-> +        qcow2_cache_entry_mark_dirty(s->l2_table_cache, scri.l2_slice);
-> +    }
-> +
-> +    discard_no_unref_any_file(
-> +        bs, (scri.l2_entry & L2E_OFFSET_MASK) + offset_into_cluster(s, offset),
-> +        nb_subclusters * s->subcluster_size, scri.ctype, type);
-> +
-> +    return 0;
-> +}
-> +
-> +int qcow2_subcluster_discard(BlockDriverState *bs, uint64_t offset,
-> +                             uint64_t bytes, enum qcow2_discard_type type,
-> +                             bool full_discard)
+>   static int coroutine_fn GRAPH_RDLOCK
+>   discard_l2_subclusters(BlockDriverState *bs, uint64_t offset,
+> -                       uint64_t nb_subclusters,
+> -                       enum qcow2_discard_type type,
+> -                       bool full_discard)
+> +                       uint64_t nb_subclusters, enum qcow2_discard_type type,
+> +                       bool full_discard, bool uncond_zeroize)
 >   {
 >       BDRVQcow2State *s = bs->opaque;
->       uint64_t end_offset = offset + bytes;
->       uint64_t nb_clusters;
-> +    unsigned head, tail;
->       int64_t cleared;
->       int ret;
+>       uint64_t new_l2_bitmap, bitmap_alloc_mask, bitmap_zero_mask;
+>       int ret, sc = offset_to_sc_index(s, offset);
+>       g_auto(SubClusterRangeInfo) scri = { 0 };
 >   
->       /* Caller must pass aligned values, except at image end */
-> -    assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-> -    assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
-> +    assert(QEMU_IS_ALIGNED(offset, s->subcluster_size));
-> +    assert(QEMU_IS_ALIGNED(end_offset, s->subcluster_size) ||
->              end_offset == bs->total_sectors << BDRV_SECTOR_BITS);
->   
-> -    nb_clusters = size_to_clusters(s, bytes);
-> +    head = MIN(end_offset, ROUND_UP(offset, s->cluster_size)) - offset;
-> +    offset += head;
+> +    assert(!(full_discard && uncond_zeroize));
 > +
-> +    tail = (end_offset >= bs->total_sectors << BDRV_SECTOR_BITS) ? 0 :
-> +           end_offset - MAX(offset, start_of_cluster(s, end_offset));
-> +    end_offset -= tail;
->   
->       s->cache_discards = true;
->   
-> +    if (head) {
-> +        ret = discard_l2_subclusters(bs, offset - head,
-> +                                     size_to_subclusters(s, head), type,
-> +                                     full_discard);
-> +        if (ret < 0) {
-> +            goto fail;
-> +        }
-> +    }
-> +
-> +    nb_clusters = size_to_clusters(s, end_offset - offset);
-> +
->       /* Each L2 slice is handled by its own loop iteration */
->       while (nb_clusters > 0) {
->           cleared = discard_in_l2_slice(bs, offset, nb_clusters, type,
-> @@ -2137,6 +2218,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
->           offset += (cleared * s->cluster_size);
->       }
->   
-> +    if (tail) {
-> +        ret = discard_l2_subclusters(bs, end_offset,
-> +                                     size_to_subclusters(s, tail), type,
-> +                                     full_discard);
-> +        if (ret < 0) {
-> +            goto fail;
-> +        }
-> +    }
-> +
->       ret = 0;
->   fail:
->       s->cache_discards = false;
-> @@ -2286,8 +2376,8 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+>       ret = get_sc_range_info(bs, offset, nb_subclusters, &scri);
+>       if (ret < 0) {
+>           return ret;
+> @@ -2140,7 +2141,8 @@ discard_l2_subclusters(BlockDriverState *bs, uint64_t offset,
 >        */
->       if (s->qcow_version < 3) {
->           if (!bs->backing) {
-> -            return qcow2_cluster_discard(bs, offset, bytes,
-> -                                         QCOW2_DISCARD_REQUEST, false);
-> +            return qcow2_subcluster_discard(bs, offset, bytes,
-> +                                            QCOW2_DISCARD_REQUEST, false);
->           }
->           return -ENOTSUP;
->       }
-> diff --git a/block/qcow2-snapshot.c b/block/qcow2-snapshot.c
-> index 92e47978bf..4e39354d02 100644
-> --- a/block/qcow2-snapshot.c
-> +++ b/block/qcow2-snapshot.c
-> @@ -736,9 +736,9 @@ int qcow2_snapshot_create(BlockDriverState *bs, QEMUSnapshotInfo *sn_info)
->   
->       /* The VM state isn't needed any more in the active L1 table; in fact, it
->        * hurts by causing expensive COW for the next snapshot. */
-> -    qcow2_cluster_discard(bs, qcow2_vm_state_offset(s),
-> -                          ROUND_UP(sn->vm_state_size, s->cluster_size),
-> -                          QCOW2_DISCARD_NEVER, false);
-> +    qcow2_subcluster_discard(bs, qcow2_vm_state_offset(s),
-> +                             ROUND_UP(sn->vm_state_size, s->cluster_size),
-> +                             QCOW2_DISCARD_NEVER, false);
->   
->   #ifdef DEBUG_ALLOC
->       {
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 956128b409..792b106eb6 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -1967,7 +1967,7 @@ static void qcow2_refresh_limits(BlockDriverState *bs, Error **errp)
->           bs->bl.request_alignment = qcrypto_block_get_sector_size(s->crypto);
->       }
->       bs->bl.pwrite_zeroes_alignment = s->subcluster_size;
-> -    bs->bl.pdiscard_alignment = s->cluster_size;
-> +    bs->bl.pdiscard_alignment = s->subcluster_size;
->   }
->   
->   static int GRAPH_UNLOCKED
-> @@ -4112,19 +4112,19 @@ qcow2_co_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes)
->           return -ENOTSUP;
+>       if (full_discard) {
+>           new_l2_bitmap &= ~bitmap_zero_mask;
+> -    } else if (bs->backing || scri.l2_bitmap & bitmap_alloc_mask) {
+> +    } else if (uncond_zeroize || bs->backing ||
+> +               scri.l2_bitmap & bitmap_alloc_mask) {
+>           new_l2_bitmap |= bitmap_zero_mask;
 >       }
 >   
-> -    if (!QEMU_IS_ALIGNED(offset | bytes, s->cluster_size)) {
-> -        assert(bytes < s->cluster_size);
-> +    if (!QEMU_IS_ALIGNED(offset | bytes, bs->bl.pdiscard_alignment)) {
-> +        assert(bytes < bs->bl.pdiscard_alignment);
->           /* Ignore partial clusters, except for the special case of the
->            * complete partial cluster at the end of an unaligned file */
-> -        if (!QEMU_IS_ALIGNED(offset, s->cluster_size) ||
-> +        if (!QEMU_IS_ALIGNED(offset, bs->bl.pdiscard_alignment) ||
->               offset + bytes != bs->total_sectors * BDRV_SECTOR_SIZE) {
->               return -ENOTSUP;
->           }
->       }
->   
->       qemu_co_mutex_lock(&s->lock);
-> -    ret = qcow2_cluster_discard(bs, offset, bytes, QCOW2_DISCARD_REQUEST,
-> -                                false);
-> +    ret = qcow2_subcluster_discard(bs, offset, bytes, QCOW2_DISCARD_REQUEST,
-> +                                   false);
->       qemu_co_mutex_unlock(&s->lock);
->       return ret;
->   }
-> @@ -4335,10 +4335,10 @@ qcow2_co_truncate(BlockDriverState *bs, int64_t offset, bool exact,
+> @@ -2197,7 +2199,7 @@ int qcow2_subcluster_discard(BlockDriverState *bs, uint64_t offset,
+>       if (head) {
+>           ret = discard_l2_subclusters(bs, offset - head,
+>                                        size_to_subclusters(s, head), type,
+> -                                     full_discard);
+> +                                     full_discard, false);
+>           if (ret < 0) {
 >               goto fail;
 >           }
->   
-> -        ret = qcow2_cluster_discard(bs, ROUND_UP(offset, s->cluster_size),
-> -                                    old_length - ROUND_UP(offset,
-> -                                                          s->cluster_size),
-> -                                    QCOW2_DISCARD_ALWAYS, true);
-> +        ret = qcow2_subcluster_discard(bs, ROUND_UP(offset, s->cluster_size),
-> +                                       old_length - ROUND_UP(offset,
-> +                                                             s->cluster_size),
-> +                                       QCOW2_DISCARD_ALWAYS, true);
+> @@ -2221,7 +2223,7 @@ int qcow2_subcluster_discard(BlockDriverState *bs, uint64_t offset,
+>       if (tail) {
+>           ret = discard_l2_subclusters(bs, end_offset,
+>                                        size_to_subclusters(s, tail), type,
+> -                                     full_discard);
+> +                                     full_discard, false);
 >           if (ret < 0) {
->               error_setg_errno(errp, -ret, "Failed to discard cropped clusters");
 >               goto fail;
-> @@ -5032,8 +5032,9 @@ static int GRAPH_RDLOCK qcow2_make_empty(BlockDriverState *bs)
->            * default action for this kind of discard is to pass the discard,
->            * which will ideally result in an actually smaller image file, as
->            * is probably desired. */
-> -        ret = qcow2_cluster_discard(bs, offset, MIN(step, end_offset - offset),
-> -                                    QCOW2_DISCARD_SNAPSHOT, true);
-> +        ret = qcow2_subcluster_discard(bs, offset,
-> +                                       MIN(step, end_offset - offset),
-> +                                       QCOW2_DISCARD_SNAPSHOT, true);
->           if (ret < 0) {
->               break;
 >           }
-> diff --git a/block/qcow2.h b/block/qcow2.h
-> index 197bdcdf53..a65c185b51 100644
-> --- a/block/qcow2.h
-> +++ b/block/qcow2.h
-> @@ -953,8 +953,8 @@ void coroutine_fn GRAPH_RDLOCK
->   qcow2_alloc_cluster_abort(BlockDriverState *bs, QCowL2Meta *m);
+> @@ -2318,6 +2320,18 @@ zero_l2_subclusters(BlockDriverState *bs, uint64_t offset,
+>       int ret, sc = offset_to_sc_index(s, offset);
+>       g_auto(SubClusterRangeInfo) scri = { 0 };
 >   
->   int GRAPH_RDLOCK
-> -qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
-> -                      enum qcow2_discard_type type, bool full_discard);
-> +qcow2_subcluster_discard(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
-> +                         enum qcow2_discard_type type, bool full_discard);
->   
->   int coroutine_fn GRAPH_RDLOCK
->   qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
-> diff --git a/tests/qemu-iotests/271 b/tests/qemu-iotests/271
-> index 59a6fafa2f..04c57813c2 100755
-> --- a/tests/qemu-iotests/271
-> +++ b/tests/qemu-iotests/271
-> @@ -518,7 +518,7 @@ done
->   ############################################################
->   ############################################################
->   
-> -# Test qcow2_cluster_discard() with full and normal discards
-> +# Test qcow2_subcluster_discard() with full and normal discards
->   for use_backing_file in yes no; do
->       echo
->       echo "### Discarding clusters with non-zero bitmaps (backing file: $use_backing_file) ###"
+> +    /*
+> +     * If the request allows discarding subclusters we go down the discard
+> +     * path regardless of their allocation status.  After the discard
+> +     * operation with full_discard=false subclusters are going to be read as
+> +     * zeroes anyway.  But we make sure that subclusters are explicitly
+> +     * zeroed anyway with uncond_zeroize=true.
+> +     */
+> +    if (flags & BDRV_REQ_MAY_UNMAP) {
+> +        return discard_l2_subclusters(bs, offset, nb_subclusters,
+> +                                      QCOW2_DISCARD_REQUEST, false, true);
+> +    }
+> +
+>       ret = get_sc_range_info(bs, offset, nb_subclusters, &scri);
+>       if (ret < 0) {
+>           return ret;
 Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
 -- 
