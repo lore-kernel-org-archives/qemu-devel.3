@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10EEFC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 07:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C99C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 07:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9JhB-0002oJ-FJ; Tue, 21 May 2024 03:14:01 -0400
+	id 1s9Ji1-0003O0-TR; Tue, 21 May 2024 03:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s9JhA-0002nt-3I
- for qemu-devel@nongnu.org; Tue, 21 May 2024 03:14:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s9Jhz-0003NQ-VE
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 03:14:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s9Jh4-0000Jo-Mj
- for qemu-devel@nongnu.org; Tue, 21 May 2024 03:13:59 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s9Jhu-0000Nz-8u
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 03:14:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716275633;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1716275684;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J2sS6ye/jedBdUUHdeiSoOFNPijH2iMnBKcXSWbArRU=;
- b=alnSRB+jgYrtlmRQVrhSZDWCHPohTncyvH+txpbkzYG7WxzttfKgddwHmqyYHyzaVXQihD
- xWbJOezD4aBlTCO16vcoJhhYxIIdon596zns9WqNBKe58sD2ZckAf9azhvLaFg5SJHUNUc
- Isda05rXCM4NpGhPretGVvVCm7sPHSE=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WEd7FRkXslgXzA7Y+2kVaGouw371phQR7Z7EUKc3fiM=;
+ b=EBzWIExaDXcnU05X6oKd3+B5XvRcEvAscjMQGNgBZk5JU9LPz/agG4uSYqNEpMgbj24Xa3
+ ktvlSX5EgBZCi7m4F/jGDEvT1Q7LOwBDKvgIIFXjNyNOWx6VKxFQj2Q1vcsFUgL8UKe3Zp
+ dED9icifJoDcQhm4h+mfQd9Z39rFh8w=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-0r8MQPI4Owq0lNCbbHeTlw-1; Tue, 21 May 2024 03:13:50 -0400
-X-MC-Unique: 0r8MQPI4Owq0lNCbbHeTlw-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-52395bc1813so5218088e87.2
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 00:13:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716275628; x=1716880428;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J2sS6ye/jedBdUUHdeiSoOFNPijH2iMnBKcXSWbArRU=;
- b=KppFRqu9fuIQ0DOUnEjPIhDNQu3R1cohawA/C6+YX6rEf3fxcK5piO1njqFsBAe/6X
- SzD2215mJikWz9gI6Gt/bmGnZFK/xPfItHVMfXblyTU48gpSYa720kHmmhRLlOzD5x0p
- sXWYDyuuLjtO1TVmRYcqL/0oTkjcrPUZxv5qBj1O3ueK6wE1Iimym5ZIdNtKuE1MuuQD
- ghsNQU4Ahc6A0dBrOBFqTGlRrhDIe0N1EWnZtMRr0+ZUnPiCPIT69kokeXCTbGMFfFAx
- ir5NPK3OOs2ywNlSnM+unB0TM3ZRTVuVC1kTSddITmI+aBc0wkLpopOE31dsVJGdkzu1
- 9RxA==
-X-Gm-Message-State: AOJu0YypkUC3JIiaFxPyAFf0scLJdKvtLBQZ+mr43vv0FvhDmZWKP9rp
- HuqZXCrqFPZ8HeAEFU0NvbDbaQkHNL2BGhw9kOx+2HRqrDhyS9e5TxBe0vMgFxKl5vwsFJJ3q2r
- QVOdcZk0LNepPjCCD4bLcGZt01T4gb3L+PMpUB5qcdTDY/VHWZAFv/5sNZmmJzjHrj/RwFL4qJP
- dka4ttIsUqYt8lWAGuXYFwVG71XhHB31rXvOI=
-X-Received: by 2002:a05:6512:158d:b0:519:5df9:d945 with SMTP id
- 2adb3069b0e04-5220fb77429mr26806053e87.4.1716275628198; 
- Tue, 21 May 2024 00:13:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGmI+igKMxD5RGVNA6LcEaNvyRjyshFHQYf92+w2zM9mDd4XoAoFU49lRBE/EnTSvCc2/E6PSP//XOj/CS+SY0=
-X-Received: by 2002:a05:6512:158d:b0:519:5df9:d945 with SMTP id
- 2adb3069b0e04-5220fb77429mr26806026e87.4.1716275627673; Tue, 21 May 2024
- 00:13:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240508175507.22270-1-shentey@gmail.com>
- <20240508175507.22270-7-shentey@gmail.com>
- <4A8C51D4-D809-474F-8E6C-DCCEDCBD3857@gmail.com>
-In-Reply-To: <4A8C51D4-D809-474F-8E6C-DCCEDCBD3857@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 21 May 2024 09:13:37 +0200
-Message-ID: <CABgObfbpNEmM53go0hqKn9sL+isZ950imER5pSg5Hjr1Oc=Xzw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] hw/i386/pc_sysfw: Alias rather than copy isa-bios
- region
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sergio Lopez <slp@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ us-mta-672-UmtJ_4C1NciagOzKDb1NEg-1; Tue, 21 May 2024 03:14:38 -0400
+X-MC-Unique: UmtJ_4C1NciagOzKDb1NEg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5925B8058D5;
+ Tue, 21 May 2024 07:14:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 31F2A492BC6;
+ Tue, 21 May 2024 07:14:31 +0000 (UTC)
+Date: Tue, 21 May 2024 08:14:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000002017300618f18f6f"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V1 24/26] seccomp: cpr-exec blocker
+Message-ID: <ZkxJvkHVBD9XPdXa@redhat.com>
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+ <1714406135-451286-25-git-send-email-steven.sistare@oracle.com>
+ <Zj3SyzYMJzluwKoQ@redhat.com>
+ <00db254b-2e0e-4699-8d0f-df0e64853a23@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <00db254b-2e0e-4699-8d0f-df0e64853a23@oracle.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,50 +89,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002017300618f18f6f
-Content-Type: text/plain; charset="UTF-8"
+On Mon, May 13, 2024 at 03:29:48PM -0400, Steven Sistare wrote:
+> On 5/10/2024 3:54 AM, Daniel P. Berrangé wrote:
+> > On Mon, Apr 29, 2024 at 08:55:33AM -0700, Steve Sistare wrote:
+> > > cpr-exec mode needs permission to exec.  Block it if permission is denied.
+> > > 
+> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > > ---
+> > >   include/sysemu/seccomp.h |  1 +
+> > >   system/qemu-seccomp.c    | 10 ++++++++--
+> > >   system/vl.c              |  6 ++++++
+> > >   3 files changed, 15 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/include/sysemu/seccomp.h b/include/sysemu/seccomp.h
+> > > index fe85989..023c0a1 100644
+> > > --- a/include/sysemu/seccomp.h
+> > > +++ b/include/sysemu/seccomp.h
+> > > @@ -22,5 +22,6 @@
+> > >   #define QEMU_SECCOMP_SET_RESOURCECTL (1 << 4)
+> > >   int parse_sandbox(void *opaque, QemuOpts *opts, Error **errp);
+> > > +uint32_t qemu_seccomp_get_opts(void);
+> > >   #endif
+> > > diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
+> > > index 5c20ac0..0d2a561 100644
+> > > --- a/system/qemu-seccomp.c
+> > > +++ b/system/qemu-seccomp.c
+> > > @@ -360,12 +360,18 @@ static int seccomp_start(uint32_t seccomp_opts, Error **errp)
+> > >       return rc < 0 ? -1 : 0;
+> > >   }
+> > > +static uint32_t seccomp_opts;
+> > > +
+> > > +uint32_t qemu_seccomp_get_opts(void)
+> > > +{
+> > > +    return seccomp_opts;
+> > > +}
+> > > +
+> > >   int parse_sandbox(void *opaque, QemuOpts *opts, Error **errp)
+> > >   {
+> > >       if (qemu_opt_get_bool(opts, "enable", false)) {
+> > > -        uint32_t seccomp_opts = QEMU_SECCOMP_SET_DEFAULT
+> > > -                | QEMU_SECCOMP_SET_OBSOLETE;
+> > >           const char *value = NULL;
+> > > +        seccomp_opts = QEMU_SECCOMP_SET_DEFAULT | QEMU_SECCOMP_SET_OBSOLETE;
+> > >           value = qemu_opt_get(opts, "obsolete");
+> > >           if (value) {
+> > > diff --git a/system/vl.c b/system/vl.c
+> > > index 7252100..b76881e 100644
+> > > --- a/system/vl.c
+> > > +++ b/system/vl.c
+> > > @@ -76,6 +76,7 @@
+> > >   #include "hw/block/block.h"
+> > >   #include "hw/i386/x86.h"
+> > >   #include "hw/i386/pc.h"
+> > > +#include "migration/blocker.h"
+> > >   #include "migration/cpr.h"
+> > >   #include "migration/misc.h"
+> > >   #include "migration/snapshot.h"
+> > > @@ -2493,6 +2494,11 @@ static void qemu_process_early_options(void)
+> > >       QemuOptsList *olist = qemu_find_opts_err("sandbox", NULL);
+> > >       if (olist) {
+> > >           qemu_opts_foreach(olist, parse_sandbox, NULL, &error_fatal);
+> > > +        if (qemu_seccomp_get_opts() & QEMU_SECCOMP_SET_SPAWN) {
+> > > +            Error *blocker = NULL;
+> > > +            error_setg(&blocker, "-sandbox denies exec for cpr-exec");
+> > > +            migrate_add_blocker_mode(&blocker, MIG_MODE_CPR_EXEC, &error_fatal);
+> > > +        }
+> > >       }
+> > >   #endi
+> > 
+> > There are a whole pile of features that get blocked wehn -sandbox is
+> > used. I'm not convinced we should be adding code to check for specific
+> > blocked features, as such a list will always be incomplete at best, and
+> > incorrectly block things at worst.
+> > 
+> > I view this primarily as a documentation task for the cpr-exec command.
+> 
+> For cpr and live migration, we do our best to prevent breaking the guest
+> for cases we know will fail.  Independently, a clear error message here
+> will reduce error reports for this new cpr feature.
 
-Il mar 21 mag 2024, 09:10 Bernhard Beschow <shentey@gmail.com> ha scritto:
+I would expect the QMP command that triggers the sandbox to report a
+clear error when getting EPERM.
 
-> This is the only patch in this series which hasn't got an R-b tag yet (the
-> others are already in master) and I'm not aware of any open issues.
->
+> Would it be more palatable if I move this blocker's creation to cpr_mig_init?
 
-I will queue it then.
+Not particularly, as I don't think other code in QEMU should be looking
+at the sandbox impl.
 
-Paolo
-
-
-> Best regards,
-> Bernhard
->
->
-
---0000000000002017300618f18f6f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mar 21 mag 2024, 09:10 Bernhard Beschow &lt;<a href=
-=3D"mailto:shentey@gmail.com">shentey@gmail.com</a>&gt; ha scritto:</div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">
-This is the only patch in this series which hasn&#39;t got an R-b tag yet (=
-the others are already in master) and I&#39;m not aware of any open issues.=
-<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-I will queue it then.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Pa=
-olo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
-quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Best regards,<br>
-Bernhard<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000002017300618f18f6f--
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
