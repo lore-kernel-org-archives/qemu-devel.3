@@ -4,91 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031F9C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43395C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9OT9-00080G-Gj; Tue, 21 May 2024 08:19:51 -0400
+	id 1s9OTs-0008H9-Gt; Tue, 21 May 2024 08:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9OT7-0007zZ-S1
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:19:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1s9OTp-0008DI-89; Tue, 21 May 2024 08:20:34 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9OT6-0007nd-7l
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:19:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716293987;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PJPIczjkY8bxxbJbkXFg65hUKYa9Enu365H0LCbZElE=;
- b=UzG2MTIuNJE8FgUSQOwio4LLtaAud/xX4vboEvq7WARmVzDyZMpauyUKSHvBUi/Mp8CpKB
- FhmBmbIVKlBD3hOvE7K/P2tJZD6y7X43YAiTxLO0YMDto1A0+RQEzTX0UsOWfxuFkwhs+9
- hzha6PT5qe/+wBcr4Dp5oikFMSbWfAY=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375-Y3dLXSWhPByUTKhAKLKIzQ-1; Tue, 21 May 2024 08:19:45 -0400
-X-MC-Unique: Y3dLXSWhPByUTKhAKLKIzQ-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-6f0e6fb64bcso12754623a34.0
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:19:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716293984; x=1716898784;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PJPIczjkY8bxxbJbkXFg65hUKYa9Enu365H0LCbZElE=;
- b=vMDgftF9FXVBcbf79rAuG5EPSwR1NAqBJttiyNpbguwWnIbS82uwiqdlztZufA3OIm
- ADY+jI1ay06G2J4DVTKok52/vvtmQiPIuw5QwoiA3Ehr20Wr0ddjrVtZGYlr32nBsTOQ
- eyPwGJGjNa0flr2MoTH9EadAqRivjl7QzsnolED8Av7msC8nQ2Aq3i4/oEugOUEsoNol
- TpOaTiV0jF/v3BjDCMcXchspyJSg8F4AR/gv9DnwhMvgxlUE5y+TWIBCXQrRCF45Cqdi
- mjUijps/nrdTVoPk78HvJucwP3wj0zTEtdjhCijTHC9vwxQabqHA295FtVLaA8gSaP8F
- bbWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVR96rhMTSUKw+C+ZVcNghYScAgL9wSp4TCkxyeca5KuFqtKh4w34WEGoXHI8uXXPe9uc2oCxNr+JeQNhSZxgNSAnXeZxk=
-X-Gm-Message-State: AOJu0YzSt9illa0pbltIeLc1D5KsnweizO01N/JbPSdMEzYUwCDc/jqv
- clQ1zZhtJ7J1+IjDDPgrrA656dFgubLOmWs1LPyLoEfeYWhpf5JwH2H8mD7wlt716iCzufzPfir
- MdXefymQjRzek6j/Qvrut+cPmVQpTY2qaA+10anSCIW1I+4Fox8qz7mtWsX7W
-X-Received: by 2002:a05:6870:9624:b0:23d:a4ce:b82e with SMTP id
- 586e51a60fabf-24172bcd4demr34577666fac.30.1716293984041; 
- Tue, 21 May 2024 05:19:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHughFGbtjaHryfjY0kSQvA0uz67RkPQ8wCPMqxfygUkkjxgmfjMA5NblWuq5OSJjDvS29zMw==
-X-Received: by 2002:a05:6870:9624:b0:23d:a4ce:b82e with SMTP id
- 586e51a60fabf-24172bcd4demr34577653fac.30.1716293983671; 
- Tue, 21 May 2024 05:19:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43df553ff3fsm160241721cf.54.2024.05.21.05.19.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 05:19:43 -0700 (PDT)
-Message-ID: <f6ebb051-1a42-4776-989d-97542ecea0b3@redhat.com>
-Date: Tue, 21 May 2024 14:19:41 +0200
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1s9OTh-0007u9-UV; Tue, 21 May 2024 08:20:32 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id E75A9434A2;
+ Tue, 21 May 2024 14:20:20 +0200 (CEST)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, vsementsov@yandex-team.ru,
+ jsnow@redhat.com, f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com
+Subject: [PATCH v4 2/5] block/mirror: replace is_none_mode with sync_mode in
+ MirrorBlockJob struct
+Date: Tue, 21 May 2024 14:20:11 +0200
+Message-Id: <20240521122014.333221-3-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240521122014.333221-1-f.ebner@proxmox.com>
+References: <20240521122014.333221-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/16] vfio/helpers: Use g_autofree in hw/vfio/helpers.c
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
-References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
- <20240515082041.556571-4-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240515082041.556571-4-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,65 +59,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/24 10:20, Zhenzhong Duan wrote:
-> Changed functions include vfio_set_irq_signaling() 
+It is more flexible and is done in preparation to support specifying a
+working bitmap for mirror jobs. In particular, this makes it possible
+to assert that @sync_mode=full when a bitmap is used. That assertion
+is just to be sure, of course the mirror QMP commands will be made to
+fail earlier with a clean error.
 
-this change looks fine
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
+ block/mirror.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-> and vfio_region_setup().
+diff --git a/block/mirror.c b/block/mirror.c
+index c0597039a5..ca23d6ef65 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -51,7 +51,7 @@ typedef struct MirrorBlockJob {
+     BlockDriverState *to_replace;
+     /* Used to block operations on the drive-mirror-replace target */
+     Error *replace_blocker;
+-    bool is_none_mode;
++    MirrorSyncMode sync_mode;
+     BlockMirrorBackingMode backing_mode;
+     /* Whether the target image requires explicit zero-initialization */
+     bool zero_target;
+@@ -722,7 +722,8 @@ static int mirror_exit_common(Job *job)
+                              &error_abort);
+ 
+     if (!abort && s->backing_mode == MIRROR_SOURCE_BACKING_CHAIN) {
+-        BlockDriverState *backing = s->is_none_mode ? src : s->base;
++        BlockDriverState *backing;
++        backing = s->sync_mode == MIRROR_SYNC_MODE_NONE ? src : s->base;
+         BlockDriverState *unfiltered_target = bdrv_skip_filters(target_bs);
+ 
+         if (bdrv_cow_bs(unfiltered_target) != backing) {
+@@ -1015,7 +1016,7 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
+     mirror_free_init(s);
+ 
+     s->last_pause_ns = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
+-    if (!s->is_none_mode) {
++    if (s->sync_mode != MIRROR_SYNC_MODE_NONE) {
+         ret = mirror_dirty_init(s);
+         if (ret < 0 || job_is_cancelled(&s->common.job)) {
+             goto immediate_exit;
+@@ -1714,7 +1715,8 @@ static BlockJob *mirror_start_job(
+                              BlockCompletionFunc *cb,
+                              void *opaque,
+                              const BlockJobDriver *driver,
+-                             bool is_none_mode, BlockDriverState *base,
++                             MirrorSyncMode sync_mode,
++                             BlockDriverState *base,
+                              bool auto_complete, const char *filter_node_name,
+                              bool is_mirror, MirrorCopyMode copy_mode,
+                              Error **errp)
+@@ -1871,7 +1873,7 @@ static BlockJob *mirror_start_job(
+     s->replaces = g_strdup(replaces);
+     s->on_source_error = on_source_error;
+     s->on_target_error = on_target_error;
+-    s->is_none_mode = is_none_mode;
++    s->sync_mode = sync_mode;
+     s->backing_mode = backing_mode;
+     s->zero_target = zero_target;
+     qatomic_set(&s->copy_mode, copy_mode);
+@@ -2008,20 +2010,18 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
+                   bool unmap, const char *filter_node_name,
+                   MirrorCopyMode copy_mode, Error **errp)
+ {
+-    bool is_none_mode;
+     BlockDriverState *base;
+ 
+     GLOBAL_STATE_CODE();
+ 
+     bdrv_graph_rdlock_main_loop();
+-    is_none_mode = mode == MIRROR_SYNC_MODE_NONE;
+     base = mode == MIRROR_SYNC_MODE_TOP ? bdrv_backing_chain_next(bs) : NULL;
+     bdrv_graph_rdunlock_main_loop();
+ 
+     mirror_start_job(job_id, bs, creation_flags, target, replaces,
+                      speed, granularity, buf_size, backing_mode, zero_target,
+                      on_source_error, on_target_error, unmap, NULL, NULL,
+-                     &mirror_job_driver, is_none_mode, base, false,
++                     &mirror_job_driver, mode, base, false,
+                      filter_node_name, true, copy_mode, errp);
+ }
+ 
+@@ -2049,9 +2049,9 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
+                      job_id, bs, creation_flags, base, NULL, speed, 0, 0,
+                      MIRROR_LEAVE_BACKING_CHAIN, false,
+                      on_error, on_error, true, cb, opaque,
+-                     &commit_active_job_driver, false, base, auto_complete,
+-                     filter_node_name, false, MIRROR_COPY_MODE_BACKGROUND,
+-                     errp);
++                     &commit_active_job_driver, MIRROR_SYNC_MODE_FULL, base,
++                     auto_complete, filter_node_name, false,
++                     MIRROR_COPY_MODE_BACKGROUND, errp);
+     if (!job) {
+         goto error_restore_flags;
+     }
+-- 
+2.39.2
 
-I would prefer all users of vfio_get_region_info() to be changed.
-
-Thanks,
-
-C.
-
-
-
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/vfio/helpers.c | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index 47b4096c05..0bb7b40a6a 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -111,7 +111,7 @@ int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
->                              int action, int fd, Error **errp)
->   {
->       ERRP_GUARD();
-> -    struct vfio_irq_set *irq_set;
-> +    g_autofree struct vfio_irq_set *irq_set = NULL;
->       int argsz, ret = 0;
->       const char *name;
->       int32_t *pfd;
-> @@ -130,7 +130,6 @@ int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
->       if (ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irq_set)) {
->           ret = -errno;
->       }
-> -    g_free(irq_set);
->   
->       if (!ret) {
->           return 0;
-> @@ -348,7 +347,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->                         int index, const char *name)
->   {
-> -    struct vfio_region_info *info;
-> +    g_autofree struct vfio_region_info *info = NULL;
->       int ret;
->   
->       ret = vfio_get_region_info(vbasedev, index, &info);
-> @@ -381,8 +380,6 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->           }
->       }
->   
-> -    g_free(info);
-> -
->       trace_vfio_region_setup(vbasedev->name, index, name,
->                               region->flags, region->fd_offset, region->size);
->       return 0;
 
 
