@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F66C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 08:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23578C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 08:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9L6O-0007v7-9e; Tue, 21 May 2024 04:44:08 -0400
+	id 1s9LGH-00032D-5C; Tue, 21 May 2024 04:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1s9L6M-0007ut-PM; Tue, 21 May 2024 04:44:06 -0400
-Received: from mail-db8eur05on20709.outbound.protection.outlook.com
- ([2a01:111:f400:7e1a::709]
- helo=EUR05-DB8-obe.outbound.protection.outlook.com)
+ id 1s9LGG-00031o-0s; Tue, 21 May 2024 04:54:20 -0400
+Received: from mail-am0eur02on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2606::701]
+ helo=EUR02-AM0-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1s9L6K-0008Ao-Lv; Tue, 21 May 2024 04:44:06 -0400
+ id 1s9LGD-0001cs-VB; Tue, 21 May 2024 04:54:19 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jXOWX1fiQi39yvxWYZzUFbTtSGsnVpDupySS1LdOzRBLXy/QoEh/K12kDiSxHqIym7VdqMuD1coIqPmUvjZ3SZ76j3pkSxfkPmSXePrFTCjPq+hWxOYZAyhQn7XhddHkvR/jsIIchocXnyOaLliYBvUeobt1QbhOtxOFnmzHvP0FiABFxbIyuWNor1rcNTiv9vqQ/pRu6kcgnNpvg4XwpxGMvq+SHLVJ545/8bxV2iGWdgDy5eY9LUXhFD75VrYXXzLZvlR4IYNdZljOVG6zSrZ9nep5AuzLPXXM1Hjn/kRsmB8DWxvd6LZ0wV39ZvwG0L3LajEOKmJpYrYVtN/IYg==
+ b=BwjTmRXuzAmz3TF52pmZv8+HEmzVa+gjfawMwxVxOdDdwGlloiyeqn+dibjPZlr+2JzG4Sohs6odT3TBaFRoAg/FreKHZSWKQQbchUdhRJPd5Yo+1XquG97po88XVLVYeMwvPI8PwOIu39NeFit+e29QsF2bFD1hYIeDPO6hbxkWowAzea3wTF9HjGIC3YJq/LcEF2yMBGCj0/MtSW/eC02n9P1QFQblkFhY+BPAfdCJqWwskA8TruScFdAtie37gJywQpsHE73b4PXVksePtV9vaIMnXK9XuoOn/SUmhc/sMUCmmcW28aIH0pRM+oMfY/c8kqo/a7d+NezY5wMpdw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cYOOsjeSbwgrA6h4vw5foOsssTQg++skjMk0qMxRuf8=;
- b=FgXhs/Q7KCQOHmoWJTtC6j8I1Zb++uZCUG94HmVIKqnJBFWmoO2+KSnbZMMHOrUb9e0NYHYGroXgPiHoypVcntU3TrX4/uqcGM9MdGWWcnUDVs7UnOhM6OQb4k3bXPjpVZ3cfz4d9zF92dD+ooF9rtRHpOOJaAkB56iV1B2JuWXGvE7gnMUtWoF4cIteiBhhzpOZYMd8FxR/slUOIKtXbBdrkC48fBbOgnhnpJw3xvmqLwE1bX7v+wXy6mwb1eUUpgXI8+8N7wgitcSjWupUpRzlCMdRpBdBVBf28NtJ8ieyUwOSM7VfDgHq2lDn6R2WhOCzpKAu+20VJcn8s3tD9w==
+ bh=WwzSnMPIiAuXE5zkMmC8uRLbL71pUoPbji9uSBzw8YI=;
+ b=NztQhpcxs166IvD46hBWPZyhIR7i1v0hY0Cjq1q5pk+LTUy9Pwqgt2bLlVZIHGQZfcAxM36I37QX5u5NczNxgLURVYvQMWsnI1gHhedaVduw062+worw2Ot6zYGQjksIJ9u+hjKK2TE/HVORp3V8l3IaldFYsmW03jBQxvVPCOzQW8GzphlzzHynvLZpf4Q4KIKjKZfHSw40YckIgXSNy5DUGer74bOPQE+2fCPQXNhzuNpUwz3wOvw4aPtPbUEhR+LuqvDyq03Lufcko37OLMzPRuSMRAHKIH/Cvia4TYFvMCoGLPIct5F9/zWBU2DI5BJuOXTQy5rHTriRLavGEA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cYOOsjeSbwgrA6h4vw5foOsssTQg++skjMk0qMxRuf8=;
- b=JuStLUoyzG4eNQyQq2dMNcC++h1MUhMnsp2BGlg5OpT7NB1xvVxkdDQXhh206H2RdBdKu/z4Vuogy8Dd8FBohhH+w/t2py00qG3dxWBHWXg+9bXtM4C0mK10LofJUImtiGQITw0+OWBZi1vejjtyFp/ecLSHPRvYWhSGzF2VZPe9UJb1rEOXMbVhljumc+DxYVI79/GHOLnCpwJgmMNoZybsMBdZhpVYKgMV7V92vXnz3FM1RQLfBpZcUdhegcpV9UuEYS59hr5KhhOx1Rvzbbt6DfthUtBDL/sCf6nlJnObqmZN8N+wDZBMljulL+jsOw9N7L+ezy82dr8k4AzCRg==
+ bh=WwzSnMPIiAuXE5zkMmC8uRLbL71pUoPbji9uSBzw8YI=;
+ b=Nf+GLzor/sOecpy0qWnyuhvuSxVfWHMlJV9r17/sj8FF0SzWxTfWq1LI+LLnnzKd3KKEtfk7FRhvvFBaKkpcjgpGO84Msmaga3bEszrPrVv/BDYwue8BuKhzRNAePrl29Hrjm9RFL0O4zY7tlxy0aPMmEP4+espXAmilBoatFZtjCaE4zBiqj5btpWd9DFL9/qGFluYjBWxjwFS8C7oa+RW9+5iEEoe0+tnZjXuUVyZsJqFH4r7tLldAxUrCTXAtH85/HS6BL4dmOMFVQ5k+Vaj3Xk+X2EH09ZEjR0CqpZwdRLvD+mq27h6ZBv5HJbhV6SsjPZ4ntpjJgAXqBvAuDQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19) by AS8PR08MB8327.eurprd08.prod.outlook.com
- (2603:10a6:20b:56e::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.36; Tue, 21 May
- 2024 08:44:00 +0000
+ (2603:10a6:800:205::19) by AS1PR08MB7425.eurprd08.prod.outlook.com
+ (2603:10a6:20b:4c6::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.35; Tue, 21 May
+ 2024 08:54:13 +0000
 Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
  ([fe80::cebf:31ab:1e25:cfb5]) by VI0PR08MB10743.eurprd08.prod.outlook.com
  ([fe80::cebf:31ab:1e25:cfb5%6]) with mapi id 15.20.7587.030; Tue, 21 May 2024
- 08:44:00 +0000
-Message-ID: <c233512d-f4f5-4a25-a4e3-53867da4d34d@virtuozzo.com>
-Date: Tue, 21 May 2024 10:43:58 +0200
+ 08:54:13 +0000
+Message-ID: <349bd4ad-8725-470a-b301-ccb8076a4024@virtuozzo.com>
+Date: Tue, 21 May 2024 10:54:11 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/11] qcow2: put discard requests in the common queue
- when discard-no-unref enabled
+Subject: Re: [PATCH v2 04/11] block/file-posix: add trace event for
+ fallocate() calls
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eblake@redhat.com, berto@igalia.com, jean-louis@dupond.be, den@virtuozzo.com
 References: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
- <20240513063203.113911-4-andrey.drobyshev@virtuozzo.com>
+ <20240513063203.113911-5-andrey.drobyshev@virtuozzo.com>
 Content-Language: en-US
 From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-In-Reply-To: <20240513063203.113911-4-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20240513063203.113911-5-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: WA1P291CA0007.POLP291.PROD.OUTLOOK.COM
@@ -66,100 +66,99 @@ X-ClientProxiedBy: WA1P291CA0007.POLP291.PROD.OUTLOOK.COM
  (2603:10a6:800:205::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|AS8PR08MB8327:EE_
-X-MS-Office365-Filtering-Correlation-Id: 786060ab-060a-48c1-5a6f-08dc7972291f
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|AS1PR08MB7425:EE_
+X-MS-Office365-Filtering-Correlation-Id: be821ec3-8b48-429e-e078-08dc7973965a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|1800799015;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZWpmVjQ2WnJhWDRPNmxSdFlacytmdUtZbFVsVGMxc05jeXJqZGoybUJQQVFu?=
- =?utf-8?B?TnRoanRpamNhMmtXMDVOV0NpS2VKWTZyMXlBTTYzM2crSmk3SW9pYlI1dkdY?=
- =?utf-8?B?SVIxTGlqcUYyRGF4SGlrZWUvM2sxei9nWUpGOVlUazRKQTB5RGhHQjMyM0Q1?=
- =?utf-8?B?Y2g1QkdGUzYyQ1l1WVo2Y0lLS1M0cmNWd3RJbFhOUWplZXBaL3NwUHJQOHdY?=
- =?utf-8?B?cjJXY2JyMzFQdVZ2QkJleE1pQjgzZXp0RzB2dEhHRHJXc2JRbUljc1p0eEhu?=
- =?utf-8?B?QlROdkFnVDRhZ2ZXQmtuSWFvUGtETjVTVFdBSTVwdTVocFBDRTBpR0JzNnlC?=
- =?utf-8?B?eEE5SGJ1Z25CZmcxV1hPbUJQYjM0OHk0Z1lLZ2tQSFVjUFJBM08yM2tBd1JG?=
- =?utf-8?B?Tm1jMVIzbDZmcHo4dkIvSzBSRFU1OWw4SmVNRTVCRWpjYXBXNHU0YUxxSUZF?=
- =?utf-8?B?SktLTWdydUFLOFhhMTZhUG92VGhYVHpGUVpzQk5PRXpQeHptRGVJSnE0S0M4?=
- =?utf-8?B?YzdKR2R0b05uK1RsNDJBY2xlSHJxM0Y5c215ZTFqbVBDclJlZFUzcngyNENB?=
- =?utf-8?B?c282d01EeE9hOFdtVm16Zlkwb01Sa1c3dTI3M3lVRUFJemd3MnM1T0hiRC9q?=
- =?utf-8?B?UWhEUUw0aU16NXNVcHIvdTdac2lqZVVSUmxwajN6ZnZ0ajd2eHVZWTc0RnNI?=
- =?utf-8?B?RU8xU3NxNXBYRExJajhWWThwNlNuWGFWZDhLZHBxMklxUFNkYmtnai9qOW9k?=
- =?utf-8?B?UE9qa29TWEdhdzRuVTZCRzFpakpMTjBNSkJKTUgvZG1pNGhKQVVWQWl1T3Y2?=
- =?utf-8?B?Y3NhVXFQQzF0Mk5DRjlkU2p5RWN3VEoxcjFhbWlIMTBqcTFyZmRiOVlJeUtm?=
- =?utf-8?B?Q21DV3JKcXBZMTY4YlNaNHY1bEEwZjE1TUxCSTRHdEFtTlBmRjZGRlZNQnFX?=
- =?utf-8?B?Zm0xREpGTW5DbU5tUjZQL2NTRG85cDlFVmlIanNoYlA3YW0zeTVLU3JkN1I3?=
- =?utf-8?B?WENINlp3SE9CVlFpTFRMRmF6bXJxUzM4ZkRRNi9CZi9RcnJoUWxNb3RlYjJm?=
- =?utf-8?B?bHErSUNIeW9mdmtqL2U4dXdFTW1KdWFTWm1pZVdPaTN1aE9ONm02dE1hMkd1?=
- =?utf-8?B?YnplVStVdVV5Q2xsTkllOHEyR3dneVB2OWk0eUcvOXo2bS9LZm5QSjdUZExs?=
- =?utf-8?B?ZWozQ01IUkRFa0tOUEsvUUo0WUVwajVhUnA3QnBVNENxdFM4a1dpaGw4dTJI?=
- =?utf-8?B?ak5TOThTZHRwNFI5bmFvRyt6RzRRMFRsczl5M2hrWXBvZFlaNWpqdHk5cWoz?=
- =?utf-8?B?anBrVjFlL0Fnam5QeG9lazhOaGNkOXdzV25oKzZSMnE4UXlNanU0VkQyWkFJ?=
- =?utf-8?B?YUxsWWY5V2tlN2dhNG5teHF2WEg5Y2h2TzhUTzI5OW1nVmpRaGhTZWhtK3dJ?=
- =?utf-8?B?aHNLRGFPakVkOWZWd0NEb01scElEcGdyc1M4dXlzODRzcHlKQjBwdUREUlRp?=
- =?utf-8?B?SHhBeGpSV1FZT093NVVDd25yTnB2RFBEK1NncmhCL0lzMlZDNTQ4UUlPaHpu?=
- =?utf-8?B?aE40TEwxVi9VL041MnErWktpb0U3UDRSWThqb0dabWE1S3VkODUwVWQ2NDRP?=
- =?utf-8?B?a3BtYmMxZU1NTU4zcEora1JpS0ZXeXIwOVV6cW9SdXFISEpkVndhdzNHYlBH?=
- =?utf-8?B?c1VlYWZUTTEzY1FUdjdGZ0E5T3hReDhBdXllR2xiQXB6QVhhcTFLZTV3PT0=?=
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Yk83OVFxSjVxZ1ZGQXM0RWF4bXR1V3VFSnRObjBkZlFObTk3RWxHalFuMUc0?=
+ =?utf-8?B?bHZmdzZEL0oyQ0VMZ3UvSTFNSklaTngrZzlFb2RoWWtKL2RNU2F3THBaZzRE?=
+ =?utf-8?B?SW9pais2TG4xNjhvS2R3b292QWNObHMvdVk1NVFaQXlNVSt2aHl0NGx4bnY3?=
+ =?utf-8?B?R2I5UmVCK0kxT3FoTlpud3FwdUZZUXhPbmkrRlJGSjBWMEVPZU1qVWZBWm1Y?=
+ =?utf-8?B?ZXdwZjd1U01TVTkrcHlnM2Q3dURoa0hKaXJSZmIxWERNbnk4ZS9oNzB4QStC?=
+ =?utf-8?B?czZ1dVl6d21DcDVHUFFCZXpGZ1h1SFl2eDlQNzYzang4SW5kdHV0V1hhTXNi?=
+ =?utf-8?B?WHhoeVlrSEkyblNGaDRzMVdMZWZqSUlXL2dMTWVHbUsvbnV3MkN5bFNsWDc2?=
+ =?utf-8?B?M0xPTGJzQjBtTmNNOXRoTklUbjVTaFNhR3hZUU1GNmFrZFp2Z1c4RjdTK1E5?=
+ =?utf-8?B?ZUV5d2Z1T3ZlcllBbkdLTHlrUVovWGhkcWhTVlAyUEFLQ2swT2RZQ2cxYTRh?=
+ =?utf-8?B?aXRtM0dOSURzOVFRVHEzYmhIS0dJY1FGay8ybFlDS21MYkV1WHlKeFcwTmVQ?=
+ =?utf-8?B?SmdmMVJ1TEltUGJkbml2SGZwVWJXaWFvRm1WRVBUTW1maWFZU2g0eVIyRUM5?=
+ =?utf-8?B?aHJuYnJkTXhZWVVxSTZ6WWZxWVpmMy9IWnJCWjFlaDNjOGEyOU00NUM4aWpT?=
+ =?utf-8?B?OGE5V1FONFhpM1p1Vk5LejFVdElkT0dON0VoZVhCczgzclpQWTNQMjlicE9Y?=
+ =?utf-8?B?NzdQSklmaUg3L3o1bEh6OE1IZnlscnRxM2ZUSnhwUXVnelJvMHpSd0tocWFl?=
+ =?utf-8?B?TE1QeVcxY3hrVGFuVUJwVlBzc2VZT05jcDFmR25xQnZaL3diZnBQWlhhVW5j?=
+ =?utf-8?B?SFA0SU9pRFdrY3NHalNzSmcxM2JWQjlYczFIak5ONnpiUHJvR0tqUmdMc0xw?=
+ =?utf-8?B?eWtaeTQzU2plOElQUkJuM202ckw1djVWRzdiTkM5TkFwb3k4dEJ1R0ZOdnVM?=
+ =?utf-8?B?OHMxc2c2TmVFeUV6TENBcDYweEhGa0EyN2FXa2RGbXlDSCtrM2RZdnpxTk9h?=
+ =?utf-8?B?cG1OWm5rVVlZd3pGVFNWZDl0MXZuK0lQOHlMc2VBRlkxUVQxc290Q2lyYjF0?=
+ =?utf-8?B?ZzNialdzN3VuZEtweUMzbTA2N1g3dFB1djcyWDMyWHl0V2ZOOEcrRmNydUVu?=
+ =?utf-8?B?cWx5YnNLdllrZVF3ZjBvSCtuMFBRYXUzUWxYaTI0bTFpVnBpWTdBNlYwQk1N?=
+ =?utf-8?B?dmVobXVNdGl4eDRIYThVSTZWcmpEMEtaRFFMdTVPRGR0WUowUnRzdTVXRDN1?=
+ =?utf-8?B?a0lac2dUVUtvNCsvbHlWaSs3R0l1V2hHdzdlS2JIZGlMQWdPTTlDN1NwUzYw?=
+ =?utf-8?B?SHkxMW9FUXUxelVVUzlTK1NuVXphSGZDVVRQakdMTGRjelVvTGQ0ZDVEUExi?=
+ =?utf-8?B?L2E2TzVKODcrMFRaUVFTZUt2M1dzVHBRVVFrS0cxcGFpU2NueUtqTVVTNjYz?=
+ =?utf-8?B?UzZUbE1XQVpWaURNbmptdTNYOHJ5WHlLZGZNTlFnd294cTBKemZQbjlMTTdo?=
+ =?utf-8?B?T29PTVowb0lMU3FlejMwMFJlZ0cyTS9DNldhSm1nNGEyRlRLUXF6bXNLOFM4?=
+ =?utf-8?B?Szl4Ym8rUFcyYWhZVjR5ZmRCcnRidEdha0VtMUJESXZPY0g3MTVVaUZBZTZO?=
+ =?utf-8?B?Zlpid3M3cjlrdC96WVJBYW1OUFFHdmVjRDNTUG9xR2xJdzRZVml0M3R3PT0=?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(1800799015); DIR:OUT; SFP:1102; 
+ SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cml4eE1FNG1OZE5GRC9vcG1WTkFQUVMrRFJoclhLUkFKT0E3Mi9xRm5QL09X?=
- =?utf-8?B?czZWNlJQYXFPMXBCNVk1WjM1cHc4ejNpUlE4Y1FDL3RxaXhxdFNKdkgyNTYv?=
- =?utf-8?B?Y2hSczNjYUNUd2U1NDhPSXhQRW1nTFAxZjNxejZad1VGYkQvcWF3TVNiNngr?=
- =?utf-8?B?RmV3dER3aXFndmxZb0UxRmZLL2JuQ21IUEJBWm5RRHR3d2JtWXBiNm4zVWVh?=
- =?utf-8?B?OU9OVmRqWCswODNFVzR6QUFDQWJNT0l4anREcm8xV3VabTFLalRlU0ZsUks1?=
- =?utf-8?B?cmlMVUE5UkljUHgyczM3cGRvZlZ5WnRVWlBrVlVWd09Gb3VyMmxXZ0pqRk5Q?=
- =?utf-8?B?TE1iMWdNQmtOdEpmd1hjSC8xVHNRMjMvRlVNY2NTMlk5ZlA5ODlMc2dqR1JS?=
- =?utf-8?B?WGJHS2VXTXJMdHQrWm5jNS9IV1RTZk5XQklwSnRjb3laNVM5Nlk3OXU3bkN6?=
- =?utf-8?B?UjVWWnFsWUczMzZYRmswdjZuNjZtM28wdXJmc3RqdUtOdDNsUXlIUi9UeE12?=
- =?utf-8?B?d3pHS0d5RS92SWFXMm5vajVoL0lMNG9jSEZsRFVuKzloQ3pKbEppMGJzYys5?=
- =?utf-8?B?cEcrbUJXR3QwRW1IVlZMVlA1QXhrcjZlaENkZUQvVUJPUHc2RjREd01jcGZ0?=
- =?utf-8?B?YkVFMHBEUFM2NjRBUkk4MkZJLzNKaW1CRDlPdnN5VlNlU0t5WUs2MGR2cjRw?=
- =?utf-8?B?a1JBOXlmSEdmSXJIT0F5RDZ0Yld6ZFdEZCszc1ZkVCtIOENXNW9BYWZEVVIz?=
- =?utf-8?B?UkZhTmVMc0dPWlBoR3V2TG83eERuV1V1ZjJxNTRrV2hxbHc5VElvVDJPS2NL?=
- =?utf-8?B?RFhwY05Zck1LWWxUbVNSb1IvYjM3dUF0RzBPeXF2OXV5dXRBeHFNN1Ywb0Jl?=
- =?utf-8?B?MUdQeXBzb29YTVBWQUt0ME5mUC9LYXV3YWxDcFV5T2ZJeWR1R1NTUHdzeUVz?=
- =?utf-8?B?QVpoRWU2SEMyZTlVRTlDTEszRDR1b0Q4OU5VMVUzUmJZRmNUQmdpOUNseFR5?=
- =?utf-8?B?dFNTTUdXTkF3Q05HeFJ5MDVlaE04WE5JcDFkSGdmbXk5akF1SlJkdFNXUnRB?=
- =?utf-8?B?b3RvNmIvV1p5NjVxcUl2RVFkb1lzTjdadnp6WFB5QlhhQXk3REdQRWZJZXpI?=
- =?utf-8?B?bHUvNUlCSXcrQTFvV0Z1c1JScW9ndVJMVkY2Nm9yN3JoRnh5eDNkOVVWZWNr?=
- =?utf-8?B?OE0xbnZ2ZVRqbG9rMXlJMjNjN05MUWRLTDJrL2ZKUy9LQUQxM1RnY2ZVd0dP?=
- =?utf-8?B?VVJtamlUcjdmTTJiSmR4Tjl1Y1VnWnFqSnRMYkdHRlNjMkszTS9HL1R4Ukh1?=
- =?utf-8?B?VkJKaEcvRkRQU2xXYVJkRUhuanVHNEd3aEFLSnk0dUxhSTR1UmttWHZUdnd5?=
- =?utf-8?B?YkttVXh6Vnd4VHZZOXFDNEhZZjZ6R3pzN09yemdzZFBtQzI3TEl2VGxPa0tw?=
- =?utf-8?B?R3hneDM0d2MrTzNOcVBkRjFjb095QU5UeFBZSWVDcVk2ZzBuNnNsTXhPWXYr?=
- =?utf-8?B?eHJmT2syYkJLeXNva0s0MkJZbHVuaS9PeTVZODRCb1NKb1ZHOElBMFY5Ujkz?=
- =?utf-8?B?bUVLWmZ4QVFwQ1FmTXBUUFNkemU5N21qYlRxT0pmcS9pRzV0YjhGelpLV05p?=
- =?utf-8?B?dk9GamZPRUF0L2JBWUM0UHR5VkQ0RmNzMVRlSm9SL2trRWJQY01TQU9sQkpx?=
- =?utf-8?B?UXh6RkpvSmhEbDI1SmJYNW1WR1Q5OHNpVlhKZitKZTlwakJMcU5ESzZtWVpo?=
- =?utf-8?B?ellhYzE0UHFLRzdXWkV4SGxrNTN5MHFIbFBkVkdSQkI3VEExd21jRWc3YjJC?=
- =?utf-8?B?UVNuU3pIY0FpbW1jS3o3WFdiM2NLZVlIU1RYOGJ3dVA1azJHajZPaGtvbmxM?=
- =?utf-8?B?S0llaWxjYllCRXBKWFo5aWpSNjREZTRsQUp1MnhVaHR0Nmh3c0Y1a2NHQkIz?=
- =?utf-8?B?NHlXaG55WUFlbG9xdEY3Q1ZpRXVpbmZFUFdMME9SanRkb3NqdlBLeW1lMDUz?=
- =?utf-8?B?YVo0enI4Y2xwdkhYRVJiTFFpcDhzVWp4U2J4RC9PODdlWGhxdWZFTUlLaFU4?=
- =?utf-8?B?cnFkeHIzNmFjRFh3QlM5WE5TbjVYL1JrVVVkbW5NM05vUEw4UWx6VjlpUGlK?=
- =?utf-8?B?THNvN0FkOUlsMHFDd3NNdU1yMWNwOWtOc2s1RFJxVWtxNDh5cHJ0c0hZWmJ3?=
- =?utf-8?Q?Jd6lABtJKZw4Tpc1Vq9SCjo=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RXFydWQ1L2hLT1BFWFN6amg4cVV4ZUdDRldCVk5ZZ3lnZ083R1N1d01IZ2Z2?=
+ =?utf-8?B?cjMybFNsdVUvM1YyQXRVamp3bVRML2xGeElPYnAwREVCYVRRTGhORkY2UElC?=
+ =?utf-8?B?eFF6ODF1Y1Q0Y0dGbms0Nk5TdDVtYzJRSTB5QThBSW9Deko1bDIwY250Wkhm?=
+ =?utf-8?B?ay9EWTd4MnM0cVhpb0JhYjdXeTZicG9oaURaLzdTOG1XaGptLzNwRzNycmtl?=
+ =?utf-8?B?dXQ3NXNnNlpGb2pjaFZNbUQvTUlJTHZ2M000YXIvdjU4djFBOVVieWJnc0VD?=
+ =?utf-8?B?a2t3dFBQRFJNc1o2QXkwTnZMWWhDNWN3b2dMWS8xVVlhVHVYQ2l4N3RJaGJB?=
+ =?utf-8?B?L1VrZXFWb1hJMVpYamhDZkZtbnhGSktMd0U5Y2FzS04vcTVLVHZrUWpYbTI2?=
+ =?utf-8?B?RSt2ZE8weEw4UHpmWTYwM0NuUkVYMDE1bFNqWWdqdGJ0VkkxOEVmWXY1aUU3?=
+ =?utf-8?B?SHRTMnNVdE9vajlqcUtlZGlNOHNuQmRlbnlCZ0NySFRVQzN6M1ZaSkNaRThI?=
+ =?utf-8?B?cmVNYU03YnZhTmNkNWlHVTJSRkxmRXNQc25NN2NXVHBndUNZTldhNWhPbnNF?=
+ =?utf-8?B?Tnp2Vk40N1AzcWFLSnQ1emZBNHJWRWJZcDBWNDVuVGYrdGRKNTZjcTBNUDFh?=
+ =?utf-8?B?cHdTcFRCMVI4d3lsSmppOTE4RTk0RTVmeW1rLzNKdXJubTJ3QW41dTVKeVIz?=
+ =?utf-8?B?UDBsdEx3TGJjdkFjTU9wSFptc3VnWE0xV1QvaEZCRlpNSmNRR3dBZjNabllH?=
+ =?utf-8?B?MzZ1TDBZcUJQa2QyT3BPWm5tM3VTL2dONGF5SFVrK2llcnoxSDJGN2ZGbDBW?=
+ =?utf-8?B?SXdWTFRBUWJaT25sVmNFZlBZVVVaWVlRWjlVMWN5RC9RamZJMWtDV1J0MXpj?=
+ =?utf-8?B?a3BsbnpydDk1R0I3Mi9ZVmZxVzFKVXpndzFBQ1RZUlFiZmNJMlhKQkZnOU5t?=
+ =?utf-8?B?VnhGQzNSYkNKLzk5Q05mV29IaytUemcxUnhOSXAzb2ZLa2hYMC9lem9lZmky?=
+ =?utf-8?B?ZFdCSmtNQ25zdnVXUHRxc284T3Q3dktBWndPWVFGNVh4UE1hUTJaZE5PL3pI?=
+ =?utf-8?B?MTlZV0FVQTQwTGVOT2hpQ0locThtcmwzUVB1RXJyYmhCQk5jSUR1cS9rNEZG?=
+ =?utf-8?B?bTcwOEdVK3ZHZE9CUHhkczR2VGwwa3dEcFR4MUJiL044Q3RyTUNWZmJYRFdH?=
+ =?utf-8?B?ZUNZZ243ejNyaGdIN0NzRG5ZQlV5bk1oMHV3VjlFUVB3SjNsZHdZY2dMS0Ev?=
+ =?utf-8?B?RG1NbnU1WU8zdEdSQmREc1Z2T2EyZkRlQUxvSk1yY2hSWk50TEl5M2pYQ2lU?=
+ =?utf-8?B?Tk01MVFocWNGZEp4aWJ4MHZaYjM3Z21SMG54WHkyUm5wRCtvZmRtWjhmTldG?=
+ =?utf-8?B?bnM5RW54N0hCc0IzQ0hOaU16R2RTQVV6TTVSb0hiVWVXSDY3VnMxWkhGS3Zh?=
+ =?utf-8?B?RC9hRGNRODVuYzFXbHpBVitwSW1hMHViaFBEVDBiTVRzUEIvMUVYZ1kvRkp6?=
+ =?utf-8?B?M3cwbURuU2pob2IxcE5heFpSL2hXalArUEJSc041OUVQMXI1ekkxUGVORnNs?=
+ =?utf-8?B?dUh6c3FBanhSMTlUbkY3OGNJbWZDMEdONzJ2V2Q5NGlzMDVPYnUvMnJ1REtZ?=
+ =?utf-8?B?MDNXdzdQN0h4aVMwSWwzdDBPSXBJMFZIZHd0Tmx5NU1oc0swcmd0M2grRkp2?=
+ =?utf-8?B?Z0Urd3V2bnk5SGNaV3dWQk1DQmR3NmtyVm1EaWdhUlZoYVlqUzE4ZGNQTjhM?=
+ =?utf-8?B?NmdjRnZXcm42NVFPYUwzY3d2V2tKUllHRGcyblJHUzR5V3F6eHNsY1lCNGEx?=
+ =?utf-8?B?U1JjSVU5dEFwNm5MZkhpK0hDNHgyemZuQzY3TXpHN1cyVy9EMnBVS1UzdU1o?=
+ =?utf-8?B?cVh6eThsSURHSitXUjE4THZWWEdENzU3NG9SQ3JWTTN0cXhmWm9jdmhpcEQ2?=
+ =?utf-8?B?Rms2ZWR3ZllMYUhDSnFVNVVYL0RaelBPVURibS9KSkRSNHR4SGk4MTZmMmF0?=
+ =?utf-8?B?MkVNWWtmUXFoMTdvQkJnMmp4Vkc1OTVLNHBHNlJMMnl1YXc5ZVVqc0V3MEpQ?=
+ =?utf-8?B?VWtiVFp5ejM4Y3hSK1kxZTUyNi8zQllnTE5iRHpQQ1J3aTlPMSsyNHB4SWxk?=
+ =?utf-8?B?N09xZzhQUWtmQnl4WXdWTEQxSm9LWW1kZXUzbG0vTjEzMEREVXM5c2dQQXV4?=
+ =?utf-8?Q?IisbAO7jEJ9+XsiXUdpfP2s=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 786060ab-060a-48c1-5a6f-08dc7972291f
+X-MS-Exchange-CrossTenant-Network-Message-Id: be821ec3-8b48-429e-e078-08dc7973965a
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2024 08:44:00.3946 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2024 08:54:13.1626 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aHTSi2xQ91OaU65YDATN1Bawj2EXVh12dp9ehMsFXzcGJTtkWWDfxGnz0L2YIDInVbev6wo41SFERLrCJUffNxunjyPVmry0dNpx7wVy5o4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB8327
-Received-SPF: pass client-ip=2a01:111:f400:7e1a::709;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0e+fBbf9dsprBkbLmZebueaL7RK+ZcRY2z39NOzJ5XFnHMN0NlPLWRu4o6S3GU784hTQnV+kvLS/E6bp/pdMWgoU7WuWtnDfS3m/lOSLlBk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR08MB7425
+Received-SPF: pass client-ip=2a01:111:f403:2606::701;
  envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR05-DB8-obe.outbound.protection.outlook.com
+ helo=EUR02-AM0-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -179,87 +178,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/13/24 08:31, Andrey Drobyshev wrote:
-> Normally discard requests are stored in the queue attached to BDRVQcow2State
-> to be processed later at once.  Currently discard-no-unref option handling
-> causes these requests to be processed straight away.  Let's fix that.
+> This would ease debugging of write zeroes and discard operations.
 >
-> Note that when doing regular discards qcow2_free_any_cluster() would check
-> for the presence of external data files for us and redirect request to
-> underlying data_file.  Here we want to do the same but avoid refcount updates,
-> thus we perform the same checks.
->
-> Suggested-by: Hanna Czenczek <hreitz@redhat.com>
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->   block/qcow2-cluster.c | 39 +++++++++++++++++++++++++++++----------
->   1 file changed, 29 insertions(+), 10 deletions(-)
+>   block/file-posix.c | 1 +
+>   block/trace-events | 1 +
+>   2 files changed, 2 insertions(+)
 >
-> diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-> index 5f057ba2fd..7dff0bd5a1 100644
-> --- a/block/qcow2-cluster.c
-> +++ b/block/qcow2-cluster.c
-> @@ -1893,6 +1893,28 @@ again:
->       return 0;
->   }
->   
-> +/*
-> + * Helper for adding a discard request to the queue without any refcount
-> + * modifications.  If external data file is used redirects the request to
-> + * the corresponding BdrvChild.
-> + */
-> +static inline void
-> +discard_no_unref_any_file(BlockDriverState *bs, uint64_t offset,
-> +                          uint64_t length, QCow2ClusterType ctype,
-> +                          enum qcow2_discard_type dtype)
-> +{
-> +    BDRVQcow2State *s = bs->opaque;
-> +
-> +    if (s->discard_passthrough[dtype] &&
-> +        (ctype == QCOW2_CLUSTER_NORMAL || ctype == QCOW2_CLUSTER_ZERO_ALLOC)) {
-> +        if (has_data_file(bs)) {
-> +            bdrv_pdiscard(s->data_file, offset, length);
-> +        } else {
-> +            qcow2_queue_discard(bs, offset, length);
-> +        }
-> +    }
-> +}
-> +
->   /*
->    * This discards as many clusters of nb_clusters as possible at once (i.e.
->    * all clusters in the same L2 slice) and returns the number of discarded
-> @@ -1974,12 +1996,10 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
->           if (!keep_reference) {
->               /* Then decrease the refcount */
->               qcow2_free_any_cluster(bs, old_l2_entry, type);
-> -        } else if (s->discard_passthrough[type] &&
-> -                   (cluster_type == QCOW2_CLUSTER_NORMAL ||
-> -                    cluster_type == QCOW2_CLUSTER_ZERO_ALLOC)) {
-> +        } else {
->               /* If we keep the reference, pass on the discard still */
-> -            bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
-> -                          s->cluster_size);
-> +            discard_no_unref_any_file(bs, old_l2_entry & L2E_OFFSET_MASK,
-> +                                      s->cluster_size, cluster_type, type);
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 35684f7e21..45134f0eef 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -1859,6 +1859,7 @@ static int translate_err(int err)
+>   static int do_fallocate(int fd, int mode, off_t offset, off_t len)
+>   {
+>       do {
+> +        trace_file_do_fallocate(fd, mode, offset, len);
+>           if (fallocate(fd, mode, offset, len) == 0) {
+>               return 0;
 >           }
->       }
+> diff --git a/block/trace-events b/block/trace-events
+> index 8e789e1f12..2f7ad28996 100644
+> --- a/block/trace-events
+> +++ b/block/trace-events
+> @@ -203,6 +203,7 @@ curl_setup_preadv(uint64_t bytes, uint64_t start, const char *range) "reading %"
+>   curl_close(void) "close"
 >   
-> @@ -2088,12 +2108,11 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
->               if (!keep_reference) {
->                   /* Then decrease the refcount */
->                   qcow2_free_any_cluster(bs, old_l2_entry, QCOW2_DISCARD_REQUEST);
-> -            } else if (s->discard_passthrough[QCOW2_DISCARD_REQUEST] &&
-> -                       (type == QCOW2_CLUSTER_NORMAL ||
-> -                        type == QCOW2_CLUSTER_ZERO_ALLOC)) {
-> +            } else {
->                   /* If we keep the reference, pass on the discard still */
-> -                bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
-> -                            s->cluster_size);
-> +                discard_no_unref_any_file(bs, old_l2_entry & L2E_OFFSET_MASK,
-> +                                          s->cluster_size, type,
-> +                                          QCOW2_DISCARD_REQUEST);
->               }
->           }
->       }
+>   # file-posix.c
+> +file_do_fallocate(int fd, int mode, int64_t offset, int64_t len) "fd=%d mode=0x%02x offset=%" PRIi64 " len=%" PRIi64
+>   file_copy_file_range(void *bs, int src, int64_t src_off, int dst, int64_t dst_off, int64_t bytes, int flags, int64_t ret) "bs %p src_fd %d offset %"PRIu64" dst_fd %d offset %"PRIu64" bytes %"PRIu64" flags %d ret %"PRId64
+>   file_FindEjectableOpticalMedia(const char *media) "Matching using %s"
+>   file_setup_cdrom(const char *partition) "Using %s as optical disc"
 Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
 -- 
