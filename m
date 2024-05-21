@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14FADC25B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 15:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFCBC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 16:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9RrF-0001dg-Av; Tue, 21 May 2024 11:56:57 -0400
+	id 1s9Rx0-0005YB-I7; Tue, 21 May 2024 12:02:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1s9RrE-0001cD-3K; Tue, 21 May 2024 11:56:56 -0400
+ id 1s9Rwb-0005Bq-LP; Tue, 21 May 2024 12:02:34 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1s9RrC-0000bJ-Ht; Tue, 21 May 2024 11:56:55 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1s9RwY-00020J-Sh; Tue, 21 May 2024 12:02:29 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44LFGdoF012631; Tue, 21 May 2024 15:56:53 GMT
+ 44LEXVoq013602; Tue, 21 May 2024 16:02:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : subject :
  from : reply-to : to : cc : date : in-reply-to : references : content-type
  : mime-version : content-transfer-encoding; s=pp1;
- bh=cDfmERDC5u4fKXYJylBblcDK+dH1ZwQ0v1EINeSaxCQ=;
- b=oJl16Q9C/utrGICEOVsXxJASyOyZhdD29hSiT7TtBB2a2puyQUFYGCKxwXL8V/9zyrP4
- 9BG22Iz+5YAHt7TCqECLxsrqiyFAfvJTC0rrGFTuRCDmGB8NrJPpddi3H8Vh/4Lxl/d3
- V0UhII2CQQiS4UAzIQYag2XNyPjU5J0DtDPHL3eTyFLo2p1OJ1ZN46U20C/cN6eyW1Io
- 2fNLIZ5+FkNrgsO78SOfBaQdZnY41LBowD9eN0amzDAz2FXuRMmzJQDWfynpGqrfdclw
- CCeTW6g2k3SfURQIEUGJtGmJkK14yht3rP1/C+80XrYsv28LoF74k9/fJZBAL6RajrzH FA== 
+ bh=b8SkKPpGehnnu2h7p5j7IUUbq5HbG3U6fJ2F+tsBVqY=;
+ b=fK8tfTJcj91bdKQEl92SOjpGnttnqk6Q0GX/wu18KKugtO+hyMOZ8FUCXcjTX/m4ir+u
+ 64wQ2nhTJKQWfF3JLpr9c7ZE9eXaRWl8tBIbGBgBTBmPINbakqyv1i6LP6H8tak468vh
+ F0LTaQEdPvsN9Zi094QiWX/iyMoyEfK2fozDvDpIGdfdIyWtHYyJIt/yz4CBiAuZya/Y
+ DZiluMuz8w71RzgW1kdY5DEH24IV0lE4W57P4UunyXqGYhtr9zwlxtmGO5NkFE1M6nwC
+ OK5r+SbPovBR4mbzRJF6EwsfaEnvt7qajClthM87jdeUsZwoSInzY/Qli+d9QYMrv+Om Pw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x3t03kh-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8wfpg8rk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 May 2024 15:56:52 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44LFuqFn010206;
- Tue, 21 May 2024 15:56:52 GMT
+ Tue, 21 May 2024 16:02:24 +0000
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44LG2NBV025301;
+ Tue, 21 May 2024 16:02:23 GMT
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x3t03kf-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8wfpg8rg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 May 2024 15:56:52 +0000
+ Tue, 21 May 2024 16:02:23 +0000
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
  by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44LETlM5023565; Tue, 21 May 2024 15:56:51 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77np6jta-1
+ 44LETlOt023565; Tue, 21 May 2024 16:02:23 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77np6m64-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 May 2024 15:56:51 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44LFumV226739382
+ Tue, 21 May 2024 16:02:23 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44LG2Koi27329072
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 May 2024 15:56:51 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A669C58043;
- Tue, 21 May 2024 15:56:48 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 36BDB58065;
- Tue, 21 May 2024 15:56:48 +0000 (GMT)
+ Tue, 21 May 2024 16:02:23 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E8B6258054;
+ Tue, 21 May 2024 16:02:20 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 935685806B;
+ Tue, 21 May 2024 16:02:20 +0000 (GMT)
 Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 21 May 2024 15:56:48 +0000 (GMT)
-Message-ID: <3e0d2db28acb84af56916a6c4f59f58bd0b01cfb.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 08/12] target/ppc: Add SMT support to simple SPRs
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 21 May 2024 16:02:20 +0000 (GMT)
+Message-ID: <82a796f0004e82aa1e84e3eb425d348d8dfbb63d.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 09/12] target/ppc: Add SMT support to PTCR SPR
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>, Chinmay Rath
  <rathc@linux.ibm.com>
-Date: Tue, 21 May 2024 10:56:47 -0500
-In-Reply-To: <20240521013029.30082-9-npiggin@gmail.com>
+Date: Tue, 21 May 2024 11:02:20 -0500
+In-Reply-To: <20240521013029.30082-10-npiggin@gmail.com>
 References: <20240521013029.30082-1-npiggin@gmail.com>
- <20240521013029.30082-9-npiggin@gmail.com>
+ <20240521013029.30082-10-npiggin@gmail.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Ym13_ngTq0CIEarEz38OhrNUEDsrzQjX
-X-Proofpoint-ORIG-GUID: m4r3gzWTzPFCdpQink585L5ssmNrWyvn
+X-Proofpoint-ORIG-GUID: zvJbRU6cAddGEZYxOQ3Y2FzTsS_z5zbI
+X-Proofpoint-GUID: AxIjMQcRScsIJ8h-w_8WuazrGYSv1Nes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-21_09,2024-05-21_01,2024-05-17_01
+ definitions=2024-05-21_10,2024-05-21_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0
- mlxlogscore=933 phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405210119
+ mlxscore=0 adultscore=0
+ spamscore=0 mlxlogscore=922 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405210121
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -125,76 +125,66 @@ Thanks,
 Glenn
 
 On Tue, 2024-05-21 at 11:30 +1000, Nicholas Piggin wrote:
-> AMOR, MMCRC, HRMOR, TSCR, HMEER, RPR SPRs are per-core or per-LPAR
-> registers with simple (generic) implementations.
+> PTCR is a per-core register.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  target/ppc/cpu_init.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>  target/ppc/misc_helper.c | 16 ++++++++++++++--
+>  target/ppc/translate.c   |  4 ++++
+>  2 files changed, 18 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 7684a59d75..023b58a3ac 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -246,7 +246,7 @@ static void register_amr_sprs(CPUPPCState *env)
->      spr_register_hv(env, SPR_AMOR, "AMOR",
->                      SPR_NOACCESS, SPR_NOACCESS,
->                      SPR_NOACCESS, SPR_NOACCESS,
-> -                    &spr_read_generic, &spr_write_generic,
-> +                    &spr_read_generic, &spr_core_lpar_write_generic,
->                      0);
->  #endif /* !CONFIG_USER_ONLY */
->  }
-> @@ -5489,7 +5489,7 @@ static void
-> register_book3s_ids_sprs(CPUPPCState *env)
->      spr_register_hv(env, SPR_MMCRC, "MMCRC",
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   SPR_NOACCESS, SPR_NOACCESS,
-> -                 &spr_read_generic, &spr_write_generic32,
-> +                 &spr_read_generic, &spr_core_write_generic32,
->                   0x00000000);
->      spr_register_hv(env, SPR_MMCRH, "MMCRH",
->                   SPR_NOACCESS, SPR_NOACCESS,
-> @@ -5529,7 +5529,7 @@ static void
-> register_book3s_ids_sprs(CPUPPCState *env)
->      spr_register_hv(env, SPR_HRMOR, "HRMOR",
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   SPR_NOACCESS, SPR_NOACCESS,
-> -                 &spr_read_generic, &spr_write_generic,
-> +                 &spr_read_generic, &spr_core_write_generic,
->                   0x00000000);
+> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+> index 6f419c9346..a67930d031 100644
+> --- a/target/ppc/misc_helper.c
+> +++ b/target/ppc/misc_helper.c
+> @@ -173,6 +173,7 @@ void helper_store_sdr1(CPUPPCState *env,
+> target_ulong val)
+>  void helper_store_ptcr(CPUPPCState *env, target_ulong val)
+>  {
+>      if (env->spr[SPR_PTCR] != val) {
+> +        CPUState *cs = env_cpu(env);
+>          PowerPCCPU *cpu = env_archcpu(env);
+>          target_ulong ptcr_mask = PTCR_PATB | PTCR_PATS;
+>          target_ulong patbsize = val & PTCR_PATS;
+> @@ -194,8 +195,19 @@ void helper_store_ptcr(CPUPPCState *env,
+> target_ulong val)
+>              return;
+>          }
+>  
+> -        env->spr[SPR_PTCR] = val;
+> -        tlb_flush(env_cpu(env));
+> +        if (cs->nr_threads == 1 || !(env->flags &
+> POWERPC_FLAG_SMT_1LPAR)) {
+> +            env->spr[SPR_PTCR] = val;
+> +            tlb_flush(cs);
+> +        } else {
+> +            CPUState *ccs;
+> +
+> +            THREAD_SIBLING_FOREACH(cs, ccs) {
+> +                PowerPCCPU *ccpu = POWERPC_CPU(ccs);
+> +                CPUPPCState *cenv = &ccpu->env;
+> +                cenv->spr[SPR_PTCR] = val;
+> +                tlb_flush(ccs);
+> +            }
+> +        }
+>      }
 >  }
 >  
-> @@ -5757,7 +5757,7 @@ static void
-> register_power_common_book4_sprs(CPUPPCState *env)
->      spr_register_hv(env, SPR_TSCR, "TSCR",
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   SPR_NOACCESS, SPR_NOACCESS,
-> -                 &spr_read_generic, &spr_write_generic32,
-> +                 &spr_read_generic, &spr_core_write_generic32,
->                   0x00000000);
->      spr_register_hv(env, SPR_HMER, "HMER",
->                   SPR_NOACCESS, SPR_NOACCESS,
-> @@ -5767,7 +5767,7 @@ static void
-> register_power_common_book4_sprs(CPUPPCState *env)
->      spr_register_hv(env, SPR_HMEER, "HMEER",
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   SPR_NOACCESS, SPR_NOACCESS,
-> -                 &spr_read_generic, &spr_write_generic,
-> +                 &spr_read_generic, &spr_core_write_generic,
->                   0x00000000);
->      spr_register_hv(env, SPR_TFMR, "TFMR",
->                   SPR_NOACCESS, SPR_NOACCESS,
-> @@ -5843,7 +5843,7 @@ static void
-> register_power8_rpr_sprs(CPUPPCState *env)
->      spr_register_hv(env, SPR_RPR, "RPR",
->                      SPR_NOACCESS, SPR_NOACCESS,
->                      SPR_NOACCESS, SPR_NOACCESS,
-> -                    &spr_read_generic, &spr_write_generic,
-> +                    &spr_read_generic, &spr_core_write_generic,
->                      0x00000103070F1F3F);
->  #endif
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index c688551434..76f829ad12 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -971,6 +971,10 @@ void spr_write_hior(DisasContext *ctx, int sprn,
+> int gprn)
 >  }
+>  void spr_write_ptcr(DisasContext *ctx, int sprn, int gprn)
+>  {
+> +    if (!gen_serialize_core(ctx)) {
+> +        return;
+> +    }
+> +
+>      gen_helper_store_ptcr(tcg_env, cpu_gpr[gprn]);
+>  }
+>  
 
 
