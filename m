@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6417CC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96891C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Ov3-0005Sh-6G; Tue, 21 May 2024 08:48:41 -0400
+	id 1s9OvI-0005hK-FE; Tue, 21 May 2024 08:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9Ouu-0005Lb-C4
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:48:33 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9OvF-0005dj-Uf
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:48:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9Ous-00051W-Ni
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:48:32 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9OvD-00052B-EF
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:48:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716295710;
+ s=mimecast20190719; t=1716295730;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=brQYdc1WHLIYbLy/ggZiRYjXi0y32qZl2Z4Ay0ITnbI=;
- b=Qm9gMHAU87GVDvCLo2wYSIuUnwHwzPADiEdKZaeUdGctxRXnt86eqzQLY6IhhxwlL+CewH
- zXmOuMDDVQcdNvpnXM38oKuzPahXDMOh66b1ixo4QshJaFCTrEk5BJ1YaHRwW0kNDmiMs3
- bVUrswr4ZPLmM87yp5geri0du7oqTEo=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=c6y5dYgSMPeFYxJEukOEYTrv7kXEMx7BjZPG+urXXj0=;
+ b=W+92JFOJRfbQYeW0ElNJmpQsUKuodIJX8BkytOjI6zqAfRsks0FEHAhhJh/UQu5G0D1yOY
+ igBJClu/iHHqyOGBm26d6TBgnyQdjEHTYX+TYWwXBVlmA36VJaVAEBBiad0uEfBYhz++I4
+ EeIkRg1/g8PUeiIbVqPmc3UYJqm2D08=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-l-gIUgLNPAGsjSoXWxz5DQ-1; Tue, 21 May 2024 08:48:20 -0400
-X-MC-Unique: l-gIUgLNPAGsjSoXWxz5DQ-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-5206ef0d6fdso11438853e87.3
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:48:20 -0700 (PDT)
+ us-mta-315-JDKtWNngPAS64ks-KbZNmg-1; Tue, 21 May 2024 08:48:46 -0400
+X-MC-Unique: JDKtWNngPAS64ks-KbZNmg-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5733eed0c19so33605a12.2
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:48:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716295699; x=1716900499;
+ d=1e100.net; s=20230601; t=1716295719; x=1716900519;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=brQYdc1WHLIYbLy/ggZiRYjXi0y32qZl2Z4Ay0ITnbI=;
- b=ArYF1hQUt9qGnouEY9oQ5Wl4VOT0G8hB+hnrLppCD+dUTLe3+PqRAMb5jxPJhMCjXR
- hOIzi5YPcV5HmcpL6rvH1rIx4VcRbhI5qONdFhlEufJGqc2wFtVNkmS85nIyt4O0tJdW
- 2d1dtGi3xGUSofVNIoWP5eI7kJMcThLa/qsp0taiQ8MWW1Yh+4g3iHGhuGHwjkXaV1b6
- 4/8C+Aouur5aMJ7xcCSKGhf8G9JXT+ea5HL78NI9bGFi5uTjs/No7l+WgHLtMaYgBcKO
- VSw7g4XbQgPuOrozo4LVI9yUKYIBFWVKvuV7asfYQg5QVzdMfL/SKQBFzXi6/ZkfZNnJ
- IGXA==
+ bh=c6y5dYgSMPeFYxJEukOEYTrv7kXEMx7BjZPG+urXXj0=;
+ b=dt2LPUeadOf5ZvkPtLS0+/WxXsgyPXEykSPGHsNQElSPjeAPl6BZy2CnmTu2NiBARD
+ kqlPNfhKUSeJ/QFUtaSvSkWFRiKZRzkWieDMbIW+PrarnSKcrire407so1xoSEFZBFxT
+ pu0JN0YLvIRpCNIupjWO0CmL0cbT/YIecpHIxaUzw6fMf2A3TAugWm6w3wDxEikntkND
+ X0lD6V6Ct4B/rle/+syNoxrUP2CpkcksoVxvHp9QE3tCvup8wpAu9isxX6TYyk/b6lWG
+ U6ur9vy6LO8AI8jMDugIs5QwR6NOIwkROKCmrwvWhUVC3K+W4w6IKlLE+XOHAwzN5HBy
+ tXGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuYZM57/0hgYGWlS3PQYzr4AFnvs6s9OIwipV7TXr140QhkfJnlZ9h6bnKRAfCi8L4+WfT36sSdx9+SXhnHgKpD/mfAEI=
-X-Gm-Message-State: AOJu0YydRryyV7osoYtvGRDBTS0zSTVRdfD4H1IBDgor+N/Tw3Jy6xWQ
- 9ko7lD3yQmfuQP+wENUoFG6yw7faN1bjEIwz23FLjwL9ecyIfZvbFQe8pl/PCpVHMfndI4WYKFL
- dlTvpGkZTTfFxQAxtToyYk4pu80OOPJoWXuSd+ZWw1yJ3WdsOxIEqlGma9VoB
-X-Received: by 2002:a19:8c58:0:b0:521:7543:4534 with SMTP id
- 2adb3069b0e04-5220ff74bb3mr19118634e87.62.1716295698976; 
- Tue, 21 May 2024 05:48:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEItCCVKLwMi1RJcIAvRwii0/q8vQ8ji1ZFEy26ArMrZOsHP1Kk5AeNTmTeHVeQ7clpjpmqQ==
-X-Received: by 2002:a19:8c58:0:b0:521:7543:4534 with SMTP id
- 2adb3069b0e04-5220ff74bb3mr19118619e87.62.1716295698547; 
- Tue, 21 May 2024 05:48:18 -0700 (PDT)
+ AJvYcCW8e+UiyVWEn1AL2INmvFHZ7Z9ZQOWPiH7Iv7ypGcKI7g973uuDfTpV6gWbWier1YjdkDPsyNIt8sNC9hW9mG22IuHtK48=
+X-Gm-Message-State: AOJu0YwcupV9inh0T2xbDW7zt9+UJbID2m2UY/2sWsy9zmCPuAlAuvGK
+ lZlx7H7g/Sb7dxZfRALwpgeGt0+SK8uLkIFRgtn6GJaY7ytw6v1CzRCIzdmyhWywYDILoZEfgMF
+ 1Ovn7egbgxaSf0EiXuBXPLKMIORgMDDXR54KJeTq1c88gSLBZD3NM
+X-Received: by 2002:a50:9f21:0:b0:572:71b3:3c4d with SMTP id
+ 4fb4d7f45d1cf-5734d67ae60mr20485573a12.34.1716295719247; 
+ Tue, 21 May 2024 05:48:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrcJ2ETe28A2kOTag4kMAUvIfppXv9p1t6u23ZVmVexLN7yK24o7kdHTmKGT79qU8JkZJJDQ==
+X-Received: by 2002:a50:9f21:0:b0:572:71b3:3c4d with SMTP id
+ 4fb4d7f45d1cf-5734d67ae60mr20485554a12.34.1716295718891; 
+ Tue, 21 May 2024 05:48:38 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a179c7faasm1604675766b.136.2024.05.21.05.48.17
+ 4fb4d7f45d1cf-57509558cdasm6974522a12.59.2024.05.21.05.48.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 05:48:17 -0700 (PDT)
-Message-ID: <5c951708-70c9-415d-85ba-c3bdfa7229df@redhat.com>
-Date: Tue, 21 May 2024 14:48:17 +0200
+ Tue, 21 May 2024 05:48:38 -0700 (PDT)
+Message-ID: <b9f6a9d2-cd52-4935-a806-2c3a3add37e3@redhat.com>
+Date: Tue, 21 May 2024 14:48:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/16] vfio/pci-quirks: Make vfio_pci_igd_opregion_init()
- return bool
+Subject: Re: [PATCH 14/16] vfio/pci: Use g_autofree for vfio_region_info
+ pointer
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
 References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
- <20240515082041.556571-16-zhenzhong.duan@intel.com>
+ <20240515082041.556571-15-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240515082041.556571-16-zhenzhong.duan@intel.com>
+In-Reply-To: <20240515082041.556571-15-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -106,10 +106,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/15/24 10:20, Zhenzhong Duan wrote:
-> This is to follow the coding standand in qapi/error.h to return bool
-> for bool-valued functions.
+> Pointer opregion is freed after vfio_pci_igd_opregion_init().
+> Use 'g_autofree' to avoid the g_free() calls.
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
 
@@ -121,89 +120,29 @@ C.
 
 
 > ---
->   hw/vfio/pci.h        | 6 +++---
->   hw/vfio/igd.c        | 3 +--
->   hw/vfio/pci-quirks.c | 8 ++++----
->   hw/vfio/pci.c        | 3 +--
->   4 files changed, 9 insertions(+), 11 deletions(-)
+>   hw/vfio/pci.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 7914f019d5..f158681072 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -227,9 +227,9 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
->   
->   bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
->   
-> -int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> -                               struct vfio_region_info *info,
-> -                               Error **errp);
-> +bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> +                                struct vfio_region_info *info,
-> +                                Error **errp);
->   
->   void vfio_display_reset(VFIOPCIDevice *vdev);
->   bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index ffe57c5954..402fc5ce1d 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -502,8 +502,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->       }
->   
->       /* Setup OpRegion access */
-> -    ret = vfio_pci_igd_opregion_init(vdev, opregion, &err);
-> -    if (ret) {
-> +    if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
->           error_append_hint(&err, "IGD legacy mode disabled\n");
->           error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
->           goto out;
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index 496fd1ee86..ca27917159 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -1169,8 +1169,8 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
->    * the table and to write the base address of that memory to the ASLS register
->    * of the IGD device.
->    */
-> -int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> -                               struct vfio_region_info *info, Error **errp)
-> +bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> +                                struct vfio_region_info *info, Error **errp)
->   {
->       int ret;
->   
-> @@ -1181,7 +1181,7 @@ int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
->           error_setg(errp, "failed to read IGD OpRegion");
->           g_free(vdev->igd_opregion);
->           vdev->igd_opregion = NULL;
-> -        return -EINVAL;
-> +        return false;
->       }
->   
->       /*
-> @@ -1206,7 +1206,7 @@ int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
->       pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
->       pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
->   
-> -    return 0;
-> +    return true;
->   }
->   
->   /*
 > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index be87478716..15823c359a 100644
+> index ecfbb9619f..be87478716 100644
 > --- a/hw/vfio/pci.c
 > +++ b/hw/vfio/pci.c
-> @@ -3164,8 +3164,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->               goto out_teardown;
+> @@ -3146,7 +3146,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>   
+>       if (!vdev->igd_opregion &&
+>           vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) {
+> -        struct vfio_region_info *opregion;
+> +        g_autofree struct vfio_region_info *opregion = NULL;
+>   
+>           if (vdev->pdev.qdev.hotplugged) {
+>               error_setg(errp,
+> @@ -3165,7 +3165,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
 >           }
 >   
-> -        ret = vfio_pci_igd_opregion_init(vdev, opregion, errp);
-> -        if (ret) {
-> +        if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
+>           ret = vfio_pci_igd_opregion_init(vdev, opregion, errp);
+> -        g_free(opregion);
+>           if (ret) {
 >               goto out_teardown;
 >           }
->       }
 
 
