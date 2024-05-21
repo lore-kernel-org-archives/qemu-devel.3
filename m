@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91290C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 15:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C150CC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 15:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Rh4-00057t-JI; Tue, 21 May 2024 11:46:26 -0400
+	id 1s9Rqe-0001Ux-H8; Tue, 21 May 2024 11:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1s9Rh3-00057V-EZ; Tue, 21 May 2024 11:46:25 -0400
+ id 1s9RqX-0001U9-3b; Tue, 21 May 2024 11:56:13 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1s9Rgx-0007Jg-FH; Tue, 21 May 2024 11:46:25 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ id 1s9RqL-0000Ry-25; Tue, 21 May 2024 11:56:11 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44LFMFIE029340; Tue, 21 May 2024 15:46:17 GMT
+ 44LFsseS007152; Tue, 21 May 2024 15:55:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : subject :
  from : reply-to : to : cc : date : in-reply-to : references : content-type
  : mime-version : content-transfer-encoding; s=pp1;
- bh=zrYmHoTJjHD45z07w0p0SeqoNFJJeuY2bxfb+B8vcVg=;
- b=dhhY7o3L/wQGHHzyPxdSSp3nZtDqh/SJbBlFce5VcGpZkW/8auUnHnSHxmnATo4YRJF9
- tQm0CO4tcSDdWadzjByIyq3b1znSnkpB1rhi790vr1blqleNHtQnPnQYEyElBh7mP+Ic
- Zu5hHzpgJ2+it5hfssZ3/m+dN/NulgE0z6RxhBVGzxj8h9a3D/XFkzOrOWczyQMBHAmu
- 7SimPezyuSkdhawLCaV7iyJ/6bD0yByo9ci1rVOZyGcbt+ZUfhV/ATyvIGIM0Nt0mwQb
- oIKFXaFahda1xpGJtw0aVmeRvmIwfIfqqk8eFnZ+37fXR3DE1RBTKplyeruvQWnq8KSG aw== 
+ bh=X1JQtfmL8zJtbRtbg4mfQ7NNJCGC67zaJkMx9Cun9Ns=;
+ b=DVKlGFKVUPt83SnkDIqE8HdYYyqj/lBZBLJiTIdeRGHak1HIvZjxsjG9dUI0VIOAbEcN
+ u8NDrT2d9QOQhJlIhAMizmxZbDRInhJYCmh844I+2OXvZYZEKVn6dS5ohHy64P53YPIR
+ iKT4c2ug9T4xExEByhlehXB7mIb12TBZszNt/TwpBZ8syLSPctsavljFT+oDcnoHH8nd
+ ZTO/aXIq98wa9j5w1nI+t15LA095RNEgI1AWpLZJQRK6aSRIR/QOX3TeH5dEfSvZY/9c
+ E9eHvfUT64PSsTW33kO3l8OlEWrabFk16ibApi3RFdbDAcorKD/M2Ib9HSKa1WH501Fm vw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x6fr2c9-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x3t03gn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 May 2024 15:46:17 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44LFkGRx002744;
- Tue, 21 May 2024 15:46:16 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x6fr2c7-1
+ Tue, 21 May 2024 15:55:58 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44LFtv3g008953;
+ Tue, 21 May 2024 15:55:57 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y8x3t03gf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 May 2024 15:46:16 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44LDkCnu000923; Tue, 21 May 2024 15:41:27 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77206ne2-1
+ Tue, 21 May 2024 15:55:57 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44LD0voK007412; Tue, 21 May 2024 15:52:25 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y79c2x3h5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 May 2024 15:41:27 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44LFfO8Q13697674
+ Tue, 21 May 2024 15:52:25 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44LFqMWj25887052
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 May 2024 15:41:26 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C6F7C58065;
- Tue, 21 May 2024 15:41:24 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6114C5805D;
- Tue, 21 May 2024 15:41:24 +0000 (GMT)
+ Tue, 21 May 2024 15:52:24 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0D4A858060;
+ Tue, 21 May 2024 15:52:22 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D4F7158043;
+ Tue, 21 May 2024 15:52:21 +0000 (GMT)
 Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 21 May 2024 15:41:24 +0000 (GMT)
-Message-ID: <c11fa27c0078a1b1a8135916ae0dec1fed87942b.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 03/12] target/ppc: Implement attn instruction on
- BookS 64-bit processors
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 21 May 2024 15:52:21 +0000 (GMT)
+Message-ID: <99aea881add8e8e720bf89743d13162b4da95477.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 06/12] target/ppc: Add PPR32 SPR
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, Chinmay Rath
- <rathc@linux.ibm.com>
-Date: Tue, 21 May 2024 10:41:23 -0500
-In-Reply-To: <20240521013029.30082-4-npiggin@gmail.com>
+ Glenn Miles <milesg@linux.vnet.ibm.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Chinmay Rath <rathc@linux.ibm.com>
+Date: Tue, 21 May 2024 10:52:21 -0500
+In-Reply-To: <20240521013029.30082-7-npiggin@gmail.com>
 References: <20240521013029.30082-1-npiggin@gmail.com>
- <20240521013029.30082-4-npiggin@gmail.com>
+ <20240521013029.30082-7-npiggin@gmail.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: UqvtMBClfSTUQN0LivIZGTANnHn-ZZPv
-X-Proofpoint-ORIG-GUID: OmNp4sfQsmJcTcVhdd5f1SV5sGOnMtPo
+X-Proofpoint-GUID: uUiOlX_q4b_pByVXLLIGBMRXQoYlWo7E
+X-Proofpoint-ORIG-GUID: 3P8_eusABJdxTa-hsgENkLH73KyBax_G
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-21_09,2024-05-21_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 adultscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ adultscore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2405010000 definitions=main-2405210119
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,655 +118,131 @@ Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Looks like this patch is failing to apply to the current master head?
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 Thanks,
 
 Glenn
 
 On Tue, 2024-05-21 at 11:30 +1000, Nicholas Piggin wrote:
-> attn is an implementation-specific instruction that on POWER (and G5/
-> 970) can be enabled with a HID bit (disabled = illegal), and
-> executing
-> it causes the host processor to stop and the service processor to be
-> notified. Generally used for debugging.
-> 
-> Implement attn and make it checkstop the system, which should be good
-> enough for QEMU debugging.
+> PPR32 provides access to the upper half of PPR.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  target/ppc/cpu.h                     | 12 +++++
->  target/ppc/helper.h                  |  1 +
->  target/ppc/insn32.decode             |  4 ++
->  target/ppc/cpu_init.c                | 69
-> ++++++++++++++++++++++++++++
->  target/ppc/excp_helper.c             | 43 +++++++++++++----
->  target/ppc/translate/misc-impl.c.inc | 10 ++++
->  6 files changed, 130 insertions(+), 9 deletions(-)
+>  target/ppc/cpu.h        |  1 +
+>  target/ppc/spr_common.h |  2 ++
+>  target/ppc/cpu_init.c   | 12 ++++++++++++
+>  target/ppc/translate.c  | 16 ++++++++++++++++
+>  4 files changed, 31 insertions(+)
 > 
 > diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index c358927211..2532408be0 100644
+> index 2532408be0..141cbefb4c 100644
 > --- a/target/ppc/cpu.h
 > +++ b/target/ppc/cpu.h
-> @@ -1375,6 +1375,9 @@ struct CPUArchState {
->      /* Power management */
->      int (*check_pow)(CPUPPCState *env);
->  
-> +    /* attn instruction enable */
-> +    int (*check_attn)(CPUPPCState *env);
-> +
->  #if !defined(CONFIG_USER_ONLY)
->      void *load_info;  /* holds boot loading state */
->  #endif
-> @@ -1523,6 +1526,7 @@ struct PowerPCCPUClass {
->      int n_host_threads;
->      void (*init_proc)(CPUPPCState *env);
->      int  (*check_pow)(CPUPPCState *env);
-> +    int  (*check_attn)(CPUPPCState *env);
->  };
->  
->  ObjectClass *ppc_cpu_class_by_name(const char *name);
-> @@ -2320,6 +2324,8 @@ void ppc_compat_add_property(Object *obj, const
+> @@ -2120,6 +2120,7 @@ void ppc_compat_add_property(Object *obj, const
 > char *name,
->  #define HID0_NAP            (1 << 22)           /* pre-2.06 */
->  #define HID0_HILE           PPC_BIT(19) /* POWER8 */
->  #define HID0_POWER9_HILE    PPC_BIT(4)
-> +#define HID0_ENABLE_ATTN    PPC_BIT(31) /* POWER8 */
-> +#define HID0_POWER9_ENABLE_ATTN PPC_BIT(3)
->  
->  /*******************************************************************
-> **********/
->  /* PowerPC Instructions types
-> definitions                                    */
-> @@ -3025,6 +3031,12 @@ static inline int
-> check_pow_nocheck(CPUPPCState *env)
->      return 1;
->  }
->  
-> +/* attn enable
-> check                                                         */
-> +static inline int check_attn_none(CPUPPCState *env)
-> +{
-> +    return 0;
-> +}
-> +
->  /*******************************************************************
-> **********/
->  /* PowerPC implementations
-> definitions                                       */
->  
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 55293e20a9..09d50f9b76 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -825,5 +825,6 @@ DEF_HELPER_FLAGS_1(fixup_thrm, TCG_CALL_NO_RWG,
-> void, env)
->  #if defined(TARGET_PPC64)
->  DEF_HELPER_1(clrbhrb, void, env)
->  DEF_HELPER_FLAGS_2(mfbhrbe, TCG_CALL_NO_WG, i64, env, i32)
-> +DEF_HELPER_1(attn, noreturn, env)
+>  #define SPR_POWER_MMCRS       (0x37E)
+>  #define SPR_WORT              (0x37F)
+>  #define SPR_PPR               (0x380)
+> +#define SPR_PPR32             (0x382)
+>  #define SPR_750_GQR0          (0x390)
+>  #define SPR_440_DNV0          (0x390)
+>  #define SPR_750_GQR1          (0x391)
+> diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
+> index eb2561f593..9e40b3b608 100644
+> --- a/target/ppc/spr_common.h
+> +++ b/target/ppc/spr_common.h
+> @@ -203,6 +203,8 @@ void spr_read_tfmr(DisasContext *ctx, int gprn,
+> int sprn);
+>  void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
+>  void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
+>  void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
+> +void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn);
+> +void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn);
 >  #endif
->  #endif
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index d4dd022df4..ee33141476 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -1198,3 +1198,7 @@ EIEIO           011111 ----- ----- -----
-> 1101010110 -
 >  
->  MFBHRBE         011111 ..... ..... ..... 0100101110 -   @XFX_bhrbe
->  CLRBHRB         011111 ----- ----- ----- 0110101110 -
-> +
-> +## Misc POWER instructions
-> +
-> +ATTN            000000 00000 00000 00000 0100000000 0
+>  void register_low_BATs(CPUPPCState *env);
 > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 1ec84b5ddc..ee01415c32 100644
+> index 892fb6ce02..7684a59d75 100644
 > --- a/target/ppc/cpu_init.c
 > +++ b/target/ppc/cpu_init.c
-> @@ -2107,6 +2107,26 @@ static int check_pow_hid0_74xx(CPUPPCState
+> @@ -5623,6 +5623,14 @@ static void register_HEIR64_spr(CPUPPCState
 > *env)
->      return 0;
+>                   0x00000000);
 >  }
 >  
-> +#if defined(TARGET_PPC64)
-> +static int check_attn_hid0(CPUPPCState *env)
+> +static void register_power7_common_sprs(CPUPPCState *env)
 > +{
-> +    if (env->spr[SPR_HID0] & HID0_ENABLE_ATTN) {
-> +        return 1;
-> +    }
-> +
-> +    return 0;
+> +    spr_register(env, SPR_PPR32, "PPR32",
+> +                 &spr_read_ppr32, &spr_write_ppr32,
+> +                 &spr_read_ppr32, &spr_write_ppr32,
+> +                 0x00000000);
 > +}
 > +
-> +static int check_attn_hid0_power9(CPUPPCState *env)
-> +{
-> +    if (env->spr[SPR_HID0] & HID0_POWER9_ENABLE_ATTN) {
-> +        return 1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +#endif
-> +
->  static void init_proc_405(CPUPPCState *env)
+>  static void register_power8_tce_address_control_sprs(CPUPPCState
+> *env)
 >  {
->      register_40x_sprs(env);
-> @@ -2138,6 +2158,7 @@ POWERPC_FAMILY(405)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 405";
->      pcc->init_proc = init_proc_405;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_DCR | PPC_WRTEE |
->                         PPC_CACHE | PPC_CACHE_ICBI | PPC_40x_ICBT |
-> @@ -2210,6 +2231,7 @@ POWERPC_FAMILY(440EP)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 440 EP";
->      pcc->init_proc = init_proc_440EP;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING |
->                         PPC_FLOAT | PPC_FLOAT_FRES | PPC_FLOAT_FSEL |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -2248,6 +2270,7 @@ POWERPC_FAMILY(460EX)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 460 EX";
->      pcc->init_proc = init_proc_440EP;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING |
->                         PPC_FLOAT | PPC_FLOAT_FRES | PPC_FLOAT_FSEL |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -2308,6 +2331,7 @@ POWERPC_FAMILY(440GP)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 440 GP";
->      pcc->init_proc = init_proc_440GP;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING |
->                         PPC_DCR | PPC_DCRX | PPC_WRTEE | PPC_MFAPIDI
-> |
->                         PPC_CACHE | PPC_CACHE_ICBI |
-> @@ -2382,6 +2406,7 @@ POWERPC_FAMILY(440x5)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 440x5";
->      pcc->init_proc = init_proc_440x5;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING |
->                         PPC_DCR | PPC_WRTEE | PPC_RFMCI |
->                         PPC_CACHE | PPC_CACHE_ICBI |
-> @@ -2417,6 +2442,7 @@ POWERPC_FAMILY(440x5wDFPU)(ObjectClass *oc,
-> void *data)
->      dc->desc = "PowerPC 440x5 with double precision FPU";
->      pcc->init_proc = init_proc_440x5;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING |
->                         PPC_FLOAT | PPC_FLOAT_FSQRT |
->                         PPC_FLOAT_STFIWX |
-> @@ -2465,6 +2491,7 @@ POWERPC_FAMILY(MPC5xx)(ObjectClass *oc, void
-> *data)
->      dc->desc = "Freescale 5xx cores (aka RCPU)";
->      pcc->init_proc = init_proc_MPC5xx;
->      pcc->check_pow = check_pow_none;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING |
->                         PPC_MEM_EIEIO | PPC_MEM_SYNC |
->                         PPC_CACHE_ICBI | PPC_FLOAT | PPC_FLOAT_STFIWX
-> |
-> @@ -2507,6 +2534,7 @@ POWERPC_FAMILY(MPC8xx)(ObjectClass *oc, void
-> *data)
->      dc->desc = "Freescale 8xx cores (aka PowerQUICC)";
->      pcc->init_proc = init_proc_MPC8xx;
->      pcc->check_pow = check_pow_none;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING  |
->                         PPC_MEM_EIEIO | PPC_MEM_SYNC |
->                         PPC_CACHE_ICBI | PPC_MFTB;
-> @@ -2557,6 +2585,7 @@ POWERPC_FAMILY(G2)(ObjectClass *oc, void *data)
->      dc->desc = "PowerPC G2";
->      pcc->init_proc = init_proc_G2;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_STFIWX |
-> @@ -2595,6 +2624,7 @@ POWERPC_FAMILY(G2LE)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC G2LE";
->      pcc->init_proc = init_proc_G2;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_STFIWX |
-> @@ -2741,6 +2771,7 @@ POWERPC_FAMILY(e200)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e200 core";
->      pcc->init_proc = init_proc_e200;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      /*
->       * XXX: unimplemented instructions:
->       * dcblc
-> @@ -3029,6 +3060,7 @@ POWERPC_FAMILY(e500v1)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e500v1 core";
->      pcc->init_proc = init_proc_e500v1;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL |
->                         PPC_SPE | PPC_SPE_SINGLE |
->                         PPC_WRTEE | PPC_RFDI |
-> @@ -3072,6 +3104,7 @@ POWERPC_FAMILY(e500v2)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e500v2 core";
->      pcc->init_proc = init_proc_e500v2;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL |
->                         PPC_SPE | PPC_SPE_SINGLE | PPC_SPE_DOUBLE |
->                         PPC_WRTEE | PPC_RFDI |
-> @@ -3115,6 +3148,7 @@ POWERPC_FAMILY(e500mc)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e500mc core";
->      pcc->init_proc = init_proc_e500mc;
->      pcc->check_pow = check_pow_none;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_MFTB |
->                         PPC_WRTEE | PPC_RFDI | PPC_RFMCI |
->                         PPC_CACHE | PPC_CACHE_LOCK | PPC_CACHE_ICBI |
-> @@ -3161,6 +3195,7 @@ POWERPC_FAMILY(e5500)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e5500 core";
->      pcc->init_proc = init_proc_e5500;
->      pcc->check_pow = check_pow_none;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_MFTB |
->                         PPC_WRTEE | PPC_RFDI | PPC_RFMCI |
->                         PPC_CACHE | PPC_CACHE_LOCK | PPC_CACHE_ICBI |
-> @@ -3209,6 +3244,7 @@ POWERPC_FAMILY(e6500)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e6500 core";
->      pcc->init_proc = init_proc_e6500;
->      pcc->check_pow = check_pow_none;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_MFTB |
->                         PPC_WRTEE | PPC_RFDI | PPC_RFMCI |
->                         PPC_CACHE | PPC_CACHE_LOCK | PPC_CACHE_ICBI |
-> @@ -3271,6 +3307,7 @@ POWERPC_FAMILY(603)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 603";
->      pcc->init_proc = init_proc_603;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3310,6 +3347,7 @@ POWERPC_FAMILY(603E)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 603e";
->      pcc->init_proc = init_proc_603;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3355,6 +3393,7 @@ POWERPC_FAMILY(e300)(ObjectClass *oc, void
-> *data)
->      dc->desc = "e300 core";
->      pcc->init_proc = init_proc_e300;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_STFIWX |
-> @@ -3410,6 +3449,7 @@ POWERPC_FAMILY(604)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 604";
->      pcc->init_proc = init_proc_604;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3455,6 +3495,7 @@ POWERPC_FAMILY(604E)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 604E";
->      pcc->init_proc = init_proc_604E;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3511,6 +3552,7 @@ POWERPC_FAMILY(740)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 740";
->      pcc->init_proc = init_proc_740;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3576,6 +3618,7 @@ POWERPC_FAMILY(750)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 750";
->      pcc->init_proc = init_proc_750;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3722,6 +3765,7 @@ POWERPC_FAMILY(750cl)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 750 CL";
->      pcc->init_proc = init_proc_750cl;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      /*
->       * XXX: not implemented:
->       * cache lock instructions:
-> @@ -3829,6 +3873,7 @@ POWERPC_FAMILY(750cx)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 750CX";
->      pcc->init_proc = init_proc_750cx;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3901,6 +3946,7 @@ POWERPC_FAMILY(750fx)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 750FX";
->      pcc->init_proc = init_proc_750fx;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -3973,6 +4019,7 @@ POWERPC_FAMILY(750gx)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 750GX";
->      pcc->init_proc = init_proc_750gx;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -4032,6 +4079,7 @@ POWERPC_FAMILY(745)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 745";
->      pcc->init_proc = init_proc_745;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -4077,6 +4125,7 @@ POWERPC_FAMILY(755)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 755";
->      pcc->init_proc = init_proc_755;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FRSQRTE | PPC_FLOAT_STFIWX |
-> @@ -4143,6 +4192,7 @@ POWERPC_FAMILY(7400)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7400 (aka G4)";
->      pcc->init_proc = init_proc_7400;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4222,6 +4272,7 @@ POWERPC_FAMILY(7410)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7410 (aka G4)";
->      pcc->init_proc = init_proc_7410;
->      pcc->check_pow = check_pow_hid0;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4322,6 +4373,7 @@ POWERPC_FAMILY(7440)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7440 (aka G4)";
->      pcc->init_proc = init_proc_7440;
->      pcc->check_pow = check_pow_hid0_74xx;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4444,6 +4496,7 @@ POWERPC_FAMILY(7450)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7450 (aka G4)";
->      pcc->init_proc = init_proc_7450;
->      pcc->check_pow = check_pow_hid0_74xx;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4573,6 +4626,7 @@ POWERPC_FAMILY(7445)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7445 (aka G4)";
->      pcc->init_proc = init_proc_7445;
->      pcc->check_pow = check_pow_hid0_74xx;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4704,6 +4758,7 @@ POWERPC_FAMILY(7455)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7455 (aka G4)";
->      pcc->init_proc = init_proc_7455;
->      pcc->check_pow = check_pow_hid0_74xx;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4855,6 +4910,7 @@ POWERPC_FAMILY(7457)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 7457 (aka G4)";
->      pcc->init_proc = init_proc_7457;
->      pcc->check_pow = check_pow_hid0_74xx;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -4989,6 +5045,7 @@ POWERPC_FAMILY(e600)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC e600";
->      pcc->init_proc = init_proc_e600;
->      pcc->check_pow = check_pow_hid0_74xx;
-> +    pcc->check_attn = check_attn_none;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -5904,6 +5961,7 @@ POWERPC_FAMILY(970)(ObjectClass *oc, void
-> *data)
->      dc->desc = "PowerPC 970";
->      pcc->init_proc = init_proc_970;
->      pcc->check_pow = check_pow_970;
-> +    pcc->check_attn = check_attn_hid0;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -5979,6 +6037,7 @@ POWERPC_FAMILY(POWER5P)(ObjectClass *oc, void
-> *data)
->      dc->desc = "POWER5+";
->      pcc->init_proc = init_proc_power5plus;
->      pcc->check_pow = check_pow_970;
-> +    pcc->check_attn = check_attn_hid0;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_STRING | PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -6086,6 +6145,7 @@ POWERPC_FAMILY(POWER7)(ObjectClass *oc, void
-> *data)
->      pcc->pcr_supported = PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
->      pcc->init_proc = init_proc_POWER7;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_hid0;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING |
-> PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -6247,6 +6307,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, void
-> *data)
->      pcc->pcr_supported = PCR_COMPAT_2_07 | PCR_COMPAT_2_06 |
-> PCR_COMPAT_2_05;
->      pcc->init_proc = init_proc_POWER8;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_hid0;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING |
-> PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -6439,6 +6500,7 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void
-> *data)
->                           PCR_COMPAT_2_05;
->      pcc->init_proc = init_proc_POWER9;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_hid0_power9;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING |
-> PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -6618,6 +6680,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void
-> *data)
->                           PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
->      pcc->init_proc = init_proc_POWER10;
->      pcc->check_pow = check_pow_nocheck;
-> +    pcc->check_attn = check_attn_hid0_power9;
->      pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING |
-> PPC_MFTB |
->                         PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->                         PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
-> @@ -6856,6 +6919,11 @@ static void init_ppc_proc(PowerPCCPU *cpu)
->          warn_report("no power management check handler registered."
->                      " Attempt QEMU to crash very soon !");
->      }
-> +
-> +    if (env->check_attn == NULL) {
-> +        warn_report("no attn check handler registered."
-> +                    " Attempt QEMU to crash very soon !");
-> +    }
->  }
+>      spr_register_kvm(env, SPR_TAR, "TAR",
+> @@ -6118,6 +6126,7 @@ static void init_proc_POWER7(CPUPPCState *env)
+>      register_power6_common_sprs(env);
+>      register_HEIR32_spr(env);
+>      register_power6_dbg_sprs(env);
+> +    register_power7_common_sprs(env);
+>      register_power7_book4_sprs(env);
 >  
->  
-> @@ -7317,6 +7385,7 @@ static void ppc_cpu_instance_init(Object *obj)
->      env->flags = pcc->flags;
->      env->bfd_mach = pcc->bfd_mach;
->      env->check_pow = pcc->check_pow;
-> +    env->check_attn = pcc->check_attn;
->  
->      /*
->       * Mark HV mode as supported if the CPU has an MSR_HV bit in the
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 17bf8df9d7..e786a9044b 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -154,6 +154,7 @@ static uint32_t ppc_ldl_code(CPUArchState *env,
-> target_ulong addr)
->  
->      return insn;
+>      /* env variables */
+> @@ -6264,6 +6273,7 @@ static void init_proc_POWER8(CPUPPCState *env)
+>      register_power6_common_sprs(env);
+>      register_HEIR32_spr(env);
+>      register_power6_dbg_sprs(env);
+> +    register_power7_common_sprs(env);
+>      register_power8_tce_address_control_sprs(env);
+>      register_power8_ids_sprs(env);
+>      register_power8_ebb_sprs(env);
+> @@ -6431,6 +6441,7 @@ static void init_proc_POWER9(CPUPPCState *env)
+>      register_power6_common_sprs(env);
+>      register_HEIR32_spr(env);
+>      register_power6_dbg_sprs(env);
+> +    register_power7_common_sprs(env);
+>      register_power8_tce_address_control_sprs(env);
+>      register_power8_ids_sprs(env);
+>      register_power8_ebb_sprs(env);
+> @@ -6625,6 +6636,7 @@ static void init_proc_POWER10(CPUPPCState *env)
+>      register_power6_common_sprs(env);
+>      register_HEIR64_spr(env);
+>      register_power6_dbg_sprs(env);
+> +    register_power7_common_sprs(env);
+>      register_power8_tce_address_control_sprs(env);
+>      register_power8_ids_sprs(env);
+>      register_power8_ebb_sprs(env);
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index ca4f4c9371..137370b649 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -1414,6 +1414,22 @@ void spr_read_dexcr_ureg(DisasContext *ctx,
+> int gprn, int sprn)
+>      gen_load_spr(t0, sprn + 16);
+>      tcg_gen_ext32u_tl(cpu_gpr[gprn], t0);
 >  }
 > +
+> +/* The PPR32 SPR accesses the upper 32-bits of PPR */
+> +void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn)
+> +{
+> +    gen_load_spr(cpu_gpr[gprn], SPR_PPR);
+> +    tcg_gen_shri_tl(cpu_gpr[gprn], cpu_gpr[gprn], 32);
+> +}
+> +
+> +void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn)
+> +{
+> +    TCGv t0 = tcg_temp_new();
+> +
+> +    tcg_gen_shli_tl(t0, cpu_gpr[gprn], 32);
+> +    gen_store_spr(SPR_PPR, t0);
+> +    spr_store_dump_spr(SPR_PPR);
+> +}
 >  #endif
 >  
->  static void ppc_excp_debug_sw_tlb(CPUPPCState *env, int excp)
-> @@ -425,21 +426,20 @@ static void powerpc_set_excp_state(PowerPCCPU
-> *cpu, target_ulong vector,
->      env->reserve_addr = -1;
->  }
->  
-> -static void powerpc_mcheck_checkstop(CPUPPCState *env)
-> -{
-> -    /* KVM guests always have MSR[ME] enabled */
->  #ifdef CONFIG_TCG
-> +/*
-> + * This stops the machine and logs CPU state without killing QEMU
-> (like
-> + * cpu_abort()) because it is often a guest error as opposed to a
-> QEMU error,
-> + * so the machine can still be debugged.
-> + */
-> +static G_NORETURN void powerpc_checkstop(CPUPPCState *env, const
-> char *reason)
-> +{
->      CPUState *cs = env_cpu(env);
->      FILE *f;
->  
-> -    if (FIELD_EX64(env->msr, MSR, ME)) {
-> -        return;
-> -    }
-> -
->      f = qemu_log_trylock();
->      if (f) {
-> -        fprintf(f, "Entering checkstop state: "
-> -                   "machine check with MSR[ME]=0\n");
-> +        fprintf(f, "Entering checkstop state: %s\n", reason);
->          cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
->          qemu_log_unlock(f);
->      }
-> @@ -451,6 +451,31 @@ static void powerpc_mcheck_checkstop(CPUPPCState
-> *env)
->       */
->      qemu_system_guest_panicked(NULL);
->      cpu_loop_exit_noexc(cs);
-> +}
-> +
-> +#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
-> +void helper_attn(CPUPPCState *env)
-> +{
-> +    /* POWER attn is unprivileged when enabled by HID, otherwise
-> illegal */
-> +    if ((*env->check_attn)(env)) {
-> +        powerpc_checkstop(env, "host executed attn");
-> +    } else {
-> +        raise_exception_err(env, POWERPC_EXCP_HV_EMU,
-> +                            POWERPC_EXCP_INVAL |
-> POWERPC_EXCP_INVAL_INVAL);
-> +    }
-> +}
-> +#endif
-> +#endif /* CONFIG_TCG */
-> +
-> +static void powerpc_mcheck_checkstop(CPUPPCState *env)
-> +{
-> +    /* KVM guests always have MSR[ME] enabled */
-> +#ifdef CONFIG_TCG
-> +    if (FIELD_EX64(env->msr, MSR, ME)) {
-> +        return;
-> +    }
-> +
-> +    powerpc_checkstop(env, "machine check with MSR[ME]=0");
->  #endif
->  }
->  
-> diff --git a/target/ppc/translate/misc-impl.c.inc
-> b/target/ppc/translate/misc-impl.c.inc
-> index c1661d2f43..cbf82b1ea0 100644
-> --- a/target/ppc/translate/misc-impl.c.inc
-> +++ b/target/ppc/translate/misc-impl.c.inc
-> @@ -145,3 +145,13 @@ static bool trans_EIEIO(DisasContext *ctx,
-> arg_EIEIO *a)
->  
->      return true;
->  }
-> +
-> +static bool trans_ATTN(DisasContext *ctx, arg_ATTN *a)
-> +{
-> +#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
-> +    gen_helper_attn(tcg_env);
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
+>  #define GEN_HANDLER(name, opc1, opc2, opc3, inval,
+> type)                      \
 
 
