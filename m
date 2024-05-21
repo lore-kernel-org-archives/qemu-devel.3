@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 677C7C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 20:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B22C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 20:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Vtb-0000nd-S9; Tue, 21 May 2024 16:15:39 -0400
+	id 1s9Vtb-0000lx-1X; Tue, 21 May 2024 16:15:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9Vta-0000lS-KZ
- for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:38 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9VtZ-0000jS-Gw
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:37 -0400
 Received: from rev.ng ([5.9.113.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9VtY-0007Do-Sc
- for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:38 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9VtX-00078g-NA
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+ To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=WegbjKM20g3bMrQJiNtxmQQ3PxiDPpCuvM0S8BdYwSU=; b=hxSZAYoQUF5MDp6
- Jpbwcwo0RnDQb1lArTar5zDWc7yYFpw6sC76OAdUnQ/DZRgeRItTkFgM76iQa7sN6Fui+JfGC3NSt
- El7N0CsES04lFS2nduTcjSMcyGAUT1BklWXFanSqfh/n4mjjsHgQMD+Y0imaihOyGbiLKp2Nb22wq
- hc=;
+ List-Help; bh=L4y+UE/w7tr+u96sDR3wroxoNzDD4Ewbcf4Ybopt7nI=; b=UbBGkcniRx7Y7oY
+ 5nIYGH4+09oESNMssHAp9ilZbp3nOdEKAvL1QT0L+2w8oepS0HL3BOcsxAsNpie0YCgPWJx4gDSzE
+ Y3zoUaMpF+coWGH133GCR+2fdsmlkVHYfLOJeW4WRp5YBle+VZKANd8nUOkmph56Z23p7hW0u/fDE
+ KQ=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng,
 	ltaylorsimpson@gmail.com,
 	bcain@quicinc.com
-Subject: [PATCH v3 3/4] target/hexagon: idef-parser fix leak of init_list
-Date: Tue, 21 May 2024 22:16:53 +0200
-Message-ID: <20240521201654.25851-4-anjo@rev.ng>
-In-Reply-To: <20240521201654.25851-1-anjo@rev.ng>
-References: <20240521201654.25851-1-anjo@rev.ng>
+Subject: [PATCH v3 0/4] target/hexagon: Minor idef-parser cleanup
+Date: Tue, 21 May 2024 22:16:50 +0200
+Message-ID: <20240521201654.25851-1-anjo@rev.ng>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
@@ -63,43 +61,31 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gen_inst_init_args() is called for instructions using a predicate as an
-rvalue. Upon first call, the list of arguments which might need
-initialization init_list is freed to indicate that they have been
-processed. For instructions without an rvalue predicate,
-gen_inst_init_args() isn't called and init_list will never be freed.
+Was running idef-parser with valgrind and noticed we were leaking the
+init_list GArray, which is used to hold instruction arguments that may
+need initialization.  This patchset fixes the leak, removes unused
+macros and undefined functions, and simplifies gen_inst_init_args() to
+only handle predicate values.
 
-Free init_list from free_instruction() if it hasn't already been freed.
-A comment in free_instruction is also updated.
+Changes in v2:
+  * Update comment in 3rd patch
+  * Follow style guide in 4th patch
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
----
- target/hexagon/idef-parser/parser-helpers.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Changes in v3:
+  * Add reviewed-bys
 
-diff --git a/target/hexagon/idef-parser/parser-helpers.c b/target/hexagon/idef-parser/parser-helpers.c
-index 95f2b43076..c150c308be 100644
---- a/target/hexagon/idef-parser/parser-helpers.c
-+++ b/target/hexagon/idef-parser/parser-helpers.c
-@@ -2121,9 +2121,16 @@ void free_instruction(Context *c)
-         g_string_free(g_array_index(c->inst.strings, GString*, i), TRUE);
-     }
-     g_array_free(c->inst.strings, TRUE);
-+    /*
-+     * Free list of arguments that might need initialization, if they haven't
-+     * already been freed.
-+     */
-+    if (c->inst.init_list) {
-+        g_array_free(c->inst.init_list, TRUE);
-+    }
-     /* Free INAME token value */
-     g_string_free(c->inst.name, TRUE);
--    /* Free variables and registers */
-+    /* Free declared TCGv variables */
-     g_array_free(c->inst.allocated, TRUE);
-     /* Initialize instruction-specific portion of the context */
-     memset(&(c->inst), 0, sizeof(Inst));
+Anton Johansson (4):
+  target/hexagon: idef-parser remove unused defines
+  target/hexagon: idef-parser remove undefined functions
+  target/hexagon: idef-parser fix leak of init_list
+  target/hexagon: idef-parser simplify predicate init
+
+ target/hexagon/idef-parser/idef-parser.h    | 10 ------
+ target/hexagon/idef-parser/idef-parser.y    |  2 --
+ target/hexagon/idef-parser/parser-helpers.c | 35 +++++++++++++--------
+ target/hexagon/idef-parser/parser-helpers.h | 13 --------
+ 4 files changed, 22 insertions(+), 38 deletions(-)
+
 -- 
 2.45.0
 
