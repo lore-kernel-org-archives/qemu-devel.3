@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A02C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 17:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94491C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 17:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9TJ3-0003hm-SF; Tue, 21 May 2024 13:29:45 -0400
+	id 1s9TNq-0005Cb-VW; Tue, 21 May 2024 13:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s9TJ1-0003hP-T3
- for qemu-devel@nongnu.org; Tue, 21 May 2024 13:29:44 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1s9TNn-0005BD-2g
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 13:34:39 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s9TIv-00019h-Gd
- for qemu-devel@nongnu.org; Tue, 21 May 2024 13:29:43 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2bd6ca8742eso465553a91.3
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 10:29:36 -0700 (PDT)
+ id 1s9TNj-00026g-BJ
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 13:34:38 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6f47787a0c3so638776b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 10:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716312575; x=1716917375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716312873; x=1716917673; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SDVZR5XsRniUoANDHBoo+NxNkLjtTS9QGC3g3OV9OF8=;
- b=C573BvV1H/BoN1I2Cha5+RSEmMAGaNpXH0I9SphCHFJ1WHcptskt/+65l57QoJIeDY
- fc7BFsTjvOiEmzI3UpymOVxwf1LEljaw5DbdgGgcJ9Qi9Q50tE9tQCHF8JD8WdXlH8dI
- 6nGAoyhgGk1DFy0z9qmsYE4YEX13gkViDz5A055fNvoIBcIh7Iodca2wu+usTqITjdMN
- m10SKGZgfSQ7MpcX1JVwpqUgidDESO1ZDn5WNNtThCBPJBPps3xrO3b3N9Kuwv1yaUj4
- 2haNjsa/TBRROzdaYo++ai0fDwGpli8s2FGvZ3/suGAgiTCRu/seX1Xaesnk0gCcwioh
- hFfQ==
+ bh=N9YyYjnfgwBc0TZQVflJLaxqMhi1Onl2FcUdAnCkII4=;
+ b=rws4vYuqdOZmmr5ElXGsjvn86e7aQJZlEQXtayuWXu4PK68BK0s67s04R+Ixt4iZUg
+ EPvGJLlOR8aHOIyUlDcYCZdItgFhB1L61+nAuW53k4j9fLzalTfCXXnmG03wvDbwjfSQ
+ uSLKb8LTfuWqEUnYIItY24hWHwaQ00UKgNZHrpPhboqqMn+ajg/lGzT6/NpmDT/Wn3Au
+ yfv+wON7csK6enfvjjXOzji8dvTNvH1iRUODNI8zYXrNB5caasCLLSLs1ZU7OT97Faqm
+ TkCos+bUhb3qYiA0kORg/DZwjk+G6HJ5YHvWlHy+AeFzzDoj2Hl4lLSwYeGgEnXslsmI
+ v64w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716312575; x=1716917375;
+ d=1e100.net; s=20230601; t=1716312873; x=1716917673;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SDVZR5XsRniUoANDHBoo+NxNkLjtTS9QGC3g3OV9OF8=;
- b=wqWWlBE7T0E/mq+s1ON8oF0q+QKddqk5zoFW3imUR25eFCTjWuLVSUpDVImxVDDFos
- 9+wssPgmHZz/EgQZSQWOVZEia3YAK9qHkZ17qAt8wl2EQmc1YuS9cN7NLLy3sPgpnRIq
- juzvn3nmhV0iWkRXDUx0rw+ROcfeedAY3UfLpoqLhOagVwMHlCO+OX1pTdET5n6NvrEt
- 5nfMQdxhAUECmSo7Q4OPZhkqQw7p9hOpE3ab28baooRQpLSIj44t7xhP5hDn5fgPlsj7
- pfK3a23Mq15LS362UsePmsRRKDqcpr3X/Ps0h94Hae7FYKNg3YxUsxV9ZEQIMKOdc8JU
- 7AAA==
-X-Gm-Message-State: AOJu0Yw29TeauOFbFwlMTP5gdmuDtzEelyUAfUNyXhZM0aoUvrMOkBTd
- 2/p0WkxUmQy1NgL4F7FGoCa7ikwRWt8DfRJhsR4SjGCGFPHx++AqfeXsnWPdqtw=
-X-Google-Smtp-Source: AGHT+IEO90ZAADq07tcAd27yDEl5ApSO40VaBxloo+dYGMKYwP6o0hiPiXEKXSkuLTrYJmTpXWAMLA==
-X-Received: by 2002:a17:90b:3608:b0:2bd:839f:7f35 with SMTP id
- 98e67ed59e1d1-2bd839f7f89mr5731963a91.14.1716312575412; 
- Tue, 21 May 2024 10:29:35 -0700 (PDT)
+ bh=N9YyYjnfgwBc0TZQVflJLaxqMhi1Onl2FcUdAnCkII4=;
+ b=UmHILHR2TMsyYmcLADPT4EIfe71HEtRZNz8TU7eTe4JR/yyrmdkG401ZakHDMocXcF
+ iTpxjabovns14sIelUgC9vEkJGLE5wBmwYCbsvh/nyod77rT4/PdPCWPCe7H8SniUPwR
+ 8SN1/a3sMd80bxFUZZpHAey7l/VmyM93973Rb5x2UrBAVZi5DH/5wFFADqIUBte7iaqF
+ UW70dkJMYUfSlRT4jnhuVpKRK4B3MhHgnCoBSzMAG4TlRyhGjNfAKYiblaELSeVkyfDi
+ pskfsrz8VVjpXG//tQnJc8rypVrPQsvVIeAc6zbAd0c6l7lG5N/lGL71sTO5DY+cRfCL
+ PADQ==
+X-Gm-Message-State: AOJu0YzzdzsNZPxMCB9cErz0dzSVaIo9lu+jPFqyjaA1tT4PLQ5uG1Di
+ aDDo7suZlaLdVx4CToCTaefgt5DL4WIzfcf94dJ/H4WJLXe9nTukL4U/pi8j09k=
+X-Google-Smtp-Source: AGHT+IEELy3/DmNfPJdJ+nwszQDTWI1No/I5/BRNEpMmRdf4UM10T9KTNFD47nCqcwB/Gq0gVMUILA==
+X-Received: by 2002:a05:6a00:468b:b0:6f6:7c6a:2c14 with SMTP id
+ d2e1a72fcca58-6f67c6a3007mr12527648b3a.4.1716312873562; 
+ Tue, 21 May 2024 10:34:33 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b96f314fffsm14069920a91.48.2024.05.21.10.29.34
+ d2e1a72fcca58-6f4d2a66c6asm21045970b3a.6.2024.05.21.10.34.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 10:29:35 -0700 (PDT)
-Message-ID: <f5a50f93-6944-4006-b9db-416c237119b0@linaro.org>
-Date: Tue, 21 May 2024 10:29:33 -0700
+ Tue, 21 May 2024 10:34:33 -0700 (PDT)
+Message-ID: <f407d5ba-2405-4723-bf86-dacdb7cf9a91@linaro.org>
+Date: Tue, 21 May 2024 10:34:31 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/12] target/ppc: improve checkstop logging
+Subject: Re: [PATCH v2 03/12] target/ppc: Implement attn instruction on BookS
+ 64-bit processors
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.vnet.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
 References: <20240521013029.30082-1-npiggin@gmail.com>
- <20240521013029.30082-3-npiggin@gmail.com>
+ <20240521013029.30082-4-npiggin@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240521013029.30082-3-npiggin@gmail.com>
+In-Reply-To: <20240521013029.30082-4-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,18 +99,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/20/24 18:30, Nicholas Piggin wrote:
-> Change the logging not to print to stderr as well, because a
-> checkstop is a guest error (or perhaps a simulated machine error)
-> rather than a QEMU error, so send it to the log.
-> 
-> Update the checkstop message, and log CPU registers too.
-> 
-> Signed-off-by: Nicholas Piggin<npiggin@gmail.com>
-> ---
->   target/ppc/excp_helper.c | 14 ++++++++------
->   1 file changed, 8 insertions(+), 6 deletions(-)
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index c358927211..2532408be0 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -3025,6 +3031,12 @@ static inline int check_pow_nocheck(CPUPPCState *env)
+>       return 1;
+>   }
+>   
+> +/* attn enable check                                                         */
+> +static inline int check_attn_none(CPUPPCState *env)
+> +{
+> +    return 0;
+> +}
 
+No point in putting this here, as a static inline...
+
+> @@ -2138,6 +2158,7 @@ POWERPC_FAMILY(405)(ObjectClass *oc, void *data)
+>       dc->desc = "PowerPC 405";
+>       pcc->init_proc = init_proc_405;
+>       pcc->check_pow = check_pow_nocheck;
+> +    pcc->check_attn = check_attn_none;
+
+... when the only uses force an out-of-line instance.
+
+Alternately,
+
+> +#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
+> +void helper_attn(CPUPPCState *env)
+> +{
+> +    /* POWER attn is unprivileged when enabled by HID, otherwise illegal */
+> +    if ((*env->check_attn)(env)) {
+> +        powerpc_checkstop(env, "host executed attn");
+
+... allow the hook to be null to indicate no attn.
+
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
