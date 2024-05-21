@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C06C25B77
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 01:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCDBC25B77
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 01:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ELY-0007un-6N; Mon, 20 May 2024 21:31:20 -0400
+	id 1s9ELK-0007kj-Uq; Mon, 20 May 2024 21:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9ELV-0007tF-Js; Mon, 20 May 2024 21:31:17 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1s9ELE-0007hd-Qp; Mon, 20 May 2024 21:31:01 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9ELU-0005Lv-12; Mon, 20 May 2024 21:31:17 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1ee954e0aa6so63336475ad.3; 
- Mon, 20 May 2024 18:31:14 -0700 (PDT)
+ id 1s9ELD-0005KN-8D; Mon, 20 May 2024 21:31:00 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1ee12baa01cso100637155ad.0; 
+ Mon, 20 May 2024 18:30:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716255073; x=1716859873; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716255057; x=1716859857; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UogJLS5LbK3AS3jvsFfTXAjp3CkBWXTUBHu2pm6GqSs=;
- b=RiYRx4hGqqBL04kRrG+biySKnb33eaPqyrM5nMxIeVV9AH/gljiv9HWU/Myt+MowZ2
- kAy04uRQJxjDvImgMrJzmZ2w3yaWtbE68ihRDbF8mapuepivM4tEtlPBuDAe+NBi+vUA
- Jyk8t7F307W1GCkQrrfsND9q3m8llKlgbg6xA2QXKNxjFSiNhGUsyFNLNM/6LOToKYTw
- tZPtZU2MJ++Ib95onGAkwas9hBnOTToAmTtMgcgyn6zuUGOIVWcSC5A88wOghzOfYTmy
- G6sDSSU2IKkR4wEJK+cCa8yyUvNzzXOnoAbmF9ggS5dQ9rDt/lUi8VJxVXsLbntUtMi8
- cUOw==
+ bh=yt1vYtOLZ3aoBsS6/LYMaUEQfiphsblSQKxcObVD0IY=;
+ b=fcHSZl/uZ7q6NjuVtbmjmXsEZ529t+zlmQolzVB7x0ZkWPktpz/gOpqN9r14lTt3ui
+ 04zNca0onHxDDACHyEU0vSLGmoylipnxyk9FdHX4LpBJoVJ4jgrNXvO9GZW3el9OnzJd
+ ns75q8WcAI/9k4HN9R6IryvMxJmrTXXLTdk5KH/848v3eeZOgGsErtaLnELg5TBlnG3H
+ 3cLAu8aDC8S1ASqMe1oTgUCqPGT8p/62wlfoV9+2/3lxMo4+TAu2AYrCI8kdBeKW8Fp5
+ rQesQpYrQpZyY+bQ1/8z78KKdmFfeqacQ7547NT+DkyXyU5Eb87oMPjQiU4JEMyioUlt
+ hO6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716255073; x=1716859873;
+ d=1e100.net; s=20230601; t=1716255057; x=1716859857;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UogJLS5LbK3AS3jvsFfTXAjp3CkBWXTUBHu2pm6GqSs=;
- b=cfkOEMCrylW5fH15PXFUL1yBwtC2cQ7IrmAeTGIRtawOQFA7Iltl5DHsEjLnlY/BCL
- 2LmtXEsJYzR05nd6nNEaa/FKG4aAk6k4hVs7X1k9Txzryr13xClnY9rP3GJ4JLTvH7MH
- L04tQ7XPTnEl1Abaq573kSEljFXAaq77eD0BMB942SryRqYkgtv5yGyN3jxG0uFUg193
- Hsv3sBZ0lUadT1Wx2PGesRMnGi1tux8XJQ75UAjMRn6PDsMCNWe2lRc9v0WyHrf+a2A/
- nuCD8ollbw03k/Z4MqT19DT4QSauvilc2gaYIW+Zkavc5RGPL58aI80CtwV1COvxpsyG
- ywbQ==
+ bh=yt1vYtOLZ3aoBsS6/LYMaUEQfiphsblSQKxcObVD0IY=;
+ b=VSINcvZ9X36TOdyhnxMAKgz0CeuUJGRMCQuIoOuMnPnLvrULqsYjq3ThkLgC2j39Rc
+ sVxkdjlOIcGZ088b2bxvXH7fm9ETalU9YNmfM/sqG1Oo24ETcFg/U7b05vvrfsezoKFz
+ K3nhoTtHRCPf0mxvzOfaXOEEmBIRmlfl/65A4GeJGk8hYNxzuHSEZctTUEWpFEDLZxWM
+ 2wRbi5ZU6tMGSoxaY61QgoKcQlgtt8zFZTUFLoGgiYV++pYHCchwBrnrbTxmLgNE/xjf
+ nkCBYPjFITHBXtR6ShQeivBxDKowAWBdM9cL2RDsoZX8/JZ6exelCMRCF4pXgfGcfXGz
+ eHcQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPMHRo89mTpYi903narJXIYPl5cJx5/lj3rmrWDyFDcngnDhQoAUIwR8pzlESzUBuSTRJiiJYCt12STJSFUuZUymeXITM=
-X-Gm-Message-State: AOJu0YxII5JH3CHJGo+nnLX/f3khX/rpE7iMWrcbF0Fx1tRodvzVo6Q4
- TVMIr2SQ+gl1SIEP9W7X53DLDn/JzU3Cdq/8iPgcxiY/wI0+oKIJTeU0Ug==
-X-Google-Smtp-Source: AGHT+IGtvLHxUi5PyR4zdLbum+I2X6bRb4sgxoE1vgY+KPuTf+GDFeRz+tiEvrELGfp1hiLmOtl/Ow==
-X-Received: by 2002:a17:90b:4c09:b0:2bd:9255:4738 with SMTP id
- 98e67ed59e1d1-2bd925558d6mr765591a91.5.1716255073239; 
- Mon, 20 May 2024 18:31:13 -0700 (PDT)
+ AJvYcCWII0cuzS+nNI8YvPptZFSRIYJFYD088h6MdrL3t9+YU0Ar4AOcKYLi5csK/qegLm9847Ws4av4J2S8jlWQvgC5pYBKW28=
+X-Gm-Message-State: AOJu0Yz6EU/37Tt5nTnxyFHa7xhmybiaslSdJ6hV7aysMBhrzaLeDgpj
+ HPru8IqlxFrbz1+pe346+htYZN5CxWds0ml+En2aqaoe8fjfzM6oB86akA==
+X-Google-Smtp-Source: AGHT+IHuusVkxnovyOtIhawZ0Wno0E2ysFn2y61lGOMKr4PgqyIpMftCq5nZWPSlEtFA4McKH7xSiQ==
+X-Received: by 2002:a17:90b:4a43:b0:2bd:839f:7f36 with SMTP id
+ 98e67ed59e1d1-2bd839f7ff7mr3103481a91.10.1716255057358; 
+ Mon, 20 May 2024 18:30:57 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bd7f0cd400sm2514953a91.31.2024.05.20.18.31.09
+ 98e67ed59e1d1-2bd7f0cd400sm2514953a91.31.2024.05.20.18.30.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 May 2024 18:31:13 -0700 (PDT)
+ Mon, 20 May 2024 18:30:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -65,16 +65,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Glenn Miles <milesg@linux.vnet.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 09/12] target/ppc: Add SMT support to PTCR SPR
-Date: Tue, 21 May 2024 11:30:25 +1000
-Message-ID: <20240521013029.30082-10-npiggin@gmail.com>
+Subject: [PATCH v2 05/12] target/ppc: Wire up BookE ATB registers for e500
+ family
+Date: Tue, 21 May 2024 11:30:21 +1000
+Message-ID: <20240521013029.30082-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240521013029.30082-1-npiggin@gmail.com>
 References: <20240521013029.30082-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,63 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PTCR is a per-core register.
+From the Freescale PowerPC Architecture Primer:
+
+  Alternate time base APU. This APU, implemented on the e500v2, defines
+  a 64-bit time base counter that differs from the PowerPC defined time
+  base in that it is not writable and counts at a different, and
+  typically much higher, frequency. The alternate time base always
+  counts up, wrapping when the 64-bit count overflows.
+
+This implementation of ATB uses the same frequency as the TB. The
+existing spr_read_atbu/l functions are unused without this patch
+to wire them into the SPR.
+
+RTEMS uses this SPR on the e6500, though this hasn't been tested.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/misc_helper.c | 16 ++++++++++++++--
- target/ppc/translate.c   |  4 ++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ target/ppc/cpu_init.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 6f419c9346..a67930d031 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -173,6 +173,7 @@ void helper_store_sdr1(CPUPPCState *env, target_ulong val)
- void helper_store_ptcr(CPUPPCState *env, target_ulong val)
- {
-     if (env->spr[SPR_PTCR] != val) {
-+        CPUState *cs = env_cpu(env);
-         PowerPCCPU *cpu = env_archcpu(env);
-         target_ulong ptcr_mask = PTCR_PATB | PTCR_PATS;
-         target_ulong patbsize = val & PTCR_PATS;
-@@ -194,8 +195,19 @@ void helper_store_ptcr(CPUPPCState *env, target_ulong val)
-             return;
-         }
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 927721d49a..892fb6ce02 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -920,6 +920,18 @@ static void register_BookE206_sprs(CPUPPCState *env, uint32_t mas_mask,
+ #endif
+ }
  
--        env->spr[SPR_PTCR] = val;
--        tlb_flush(env_cpu(env));
-+        if (cs->nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+            env->spr[SPR_PTCR] = val;
-+            tlb_flush(cs);
-+        } else {
-+            CPUState *ccs;
++static void register_atb_sprs(CPUPPCState *env)
++{
++    spr_register(env, SPR_ATBL, "ATBL",
++                 &spr_read_atbl, SPR_NOACCESS,
++                 &spr_read_atbl, SPR_NOACCESS,
++                 0x00000000);
++    spr_register(env, SPR_ATBU, "ATBU",
++                 &spr_read_atbu, SPR_NOACCESS,
++                 &spr_read_atbu, SPR_NOACCESS,
++                 0x00000000);
++}
 +
-+            THREAD_SIBLING_FOREACH(cs, ccs) {
-+                PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-+                CPUPPCState *cenv = &ccpu->env;
-+                cenv->spr[SPR_PTCR] = val;
-+                tlb_flush(ccs);
-+            }
-+        }
-     }
- }
- 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index c688551434..76f829ad12 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -971,6 +971,10 @@ void spr_write_hior(DisasContext *ctx, int sprn, int gprn)
- }
- void spr_write_ptcr(DisasContext *ctx, int sprn, int gprn)
+ /* SPR specific to PowerPC 440 implementation */
+ static void register_440_sprs(CPUPPCState *env)
  {
-+    if (!gen_serialize_core(ctx)) {
-+        return;
+@@ -2927,6 +2939,11 @@ static void init_proc_e500(CPUPPCState *env, int version)
+     register_BookE206_sprs(env, 0x000000DF, tlbncfg, mmucfg);
+     register_usprgh_sprs(env);
+ 
++    if (version != fsl_e500v1) {
++        /* e500v1 has no support for alternate timebase */
++        register_atb_sprs(env);
 +    }
 +
-     gen_helper_store_ptcr(tcg_env, cpu_gpr[gprn]);
- }
- 
+     spr_register(env, SPR_HID0, "HID0",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
 -- 
 2.43.0
 
