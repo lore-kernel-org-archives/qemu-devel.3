@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BFDC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 07:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10EEFC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 07:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Jdu-0001kj-9c; Tue, 21 May 2024 03:10:38 -0400
+	id 1s9JhB-0002oJ-FJ; Tue, 21 May 2024 03:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s9Jds-0001kJ-MA
- for qemu-devel@nongnu.org; Tue, 21 May 2024 03:10:36 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s9Jdr-0008Os-0b
- for qemu-devel@nongnu.org; Tue, 21 May 2024 03:10:36 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2e3fa13f018so45139671fa.3
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 00:10:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716275431; x=1716880231; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1DhHkbgwvQImqj/TyXbrJlOs9m84RBlKGQq7hVsOVxw=;
- b=bbjv9iHo6BsxVgR33opSizj+xhunjirEtaIJK3h7E+Q8DvOgRy7dKwGm7+krK9j8Yx
- SoJumGcnpZItYbBz6PS+TpTLEqCj5XCfxGWX3DBYmPHWLgw1JubGzpKCBqpNY2z/6/M6
- 86blB0+R6vKI9y9y+Zlt8pisiuHwhjFLk7j75ooN1KpKvT/mBZ/Hv1DbUwtdTRMZq3DL
- cQxYJqsCqyxqwdcOk5W7mXRphF7dHzE0yJxtsSCTDhGG4UF4x9ZvXBw3m7vBKYaefw00
- 4cLJ3kX8DDm4VjVt61FxJk5rVNtlDzwXeq0tCaWLXffBwWrhBglwhnkb+ooiPZt6mjer
- b5XA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s9JhA-0002nt-3I
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 03:14:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s9Jh4-0000Jo-Mj
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 03:13:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716275633;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J2sS6ye/jedBdUUHdeiSoOFNPijH2iMnBKcXSWbArRU=;
+ b=alnSRB+jgYrtlmRQVrhSZDWCHPohTncyvH+txpbkzYG7WxzttfKgddwHmqyYHyzaVXQihD
+ xWbJOezD4aBlTCO16vcoJhhYxIIdon596zns9WqNBKe58sD2ZckAf9azhvLaFg5SJHUNUc
+ Isda05rXCM4NpGhPretGVvVCm7sPHSE=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-669-0r8MQPI4Owq0lNCbbHeTlw-1; Tue, 21 May 2024 03:13:50 -0400
+X-MC-Unique: 0r8MQPI4Owq0lNCbbHeTlw-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52395bc1813so5218088e87.2
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 00:13:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716275431; x=1716880231;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1DhHkbgwvQImqj/TyXbrJlOs9m84RBlKGQq7hVsOVxw=;
- b=tZ8SPpTjZWme3txjEQDbEiAnqYlD9wKqqisRP8SWjybuYbgsv1mFMlfi8V/1nfUvwq
- NidhWHpD4KvaCzX1GkYN3NMFyV4gfY0vHlMZNXXEm8fGc9U+Z9myu6VDzX7auJmfBlKE
- RO2ABIQy5lRQiuyVuCBefz8lMSZtVZ/l1fcZBgI5zqFdObroTMu9cj1zZzNCdqqpZhd5
- HQ00Yjq+1t3Lw2748ElPOLcdI+8aq3hBe64ar/iASYNAEugjUas3UGDC/d3YQyyM21m3
- TMbmJzPTbsow5ColmJaGcO1XUtAftflazwILm88EzgEtMJ1QIxzekse5rExewXfC8ste
- cx6Q==
-X-Gm-Message-State: AOJu0YyEy02B5zLtl+QO3hImWJS5sUdKVlB1x5CYBAjKahLxWD1lczIe
- mnJ8rg+h7Y7U31tUlsyBvCK3LdYcqbaJLAvnF8cIxT4qfpFx+d9WOm3Vcg==
-X-Google-Smtp-Source: AGHT+IE4w3s6GnYOZ6Fo2fcHW25l3iqxsBR3EWrQwtfAx15HF06c9AJfFIX++q9ol4iVLJUio1OD/Q==
-X-Received: by 2002:ac2:4831:0:b0:51d:38ee:ddda with SMTP id
- 2adb3069b0e04-5221057932amr18664697e87.52.1716275430854; 
- Tue, 21 May 2024 00:10:30 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-089-014-182-088.89.14.pool.telefonica.de.
- [89.14.182.88]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57421480d99sm14294489a12.8.2024.05.21.00.10.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 00:10:30 -0700 (PDT)
-Date: Tue, 21 May 2024 07:10:29 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: "Michael S. Tsirkin" <mst@redhat.com>, Sergio Lopez <slp@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_6/6=5D_hw/i386/pc=5Fsysfw=3A_?=
- =?US-ASCII?Q?Alias_rather_than_copy_isa-bios_region?=
-In-Reply-To: <20240508175507.22270-7-shentey@gmail.com>
+ d=1e100.net; s=20230601; t=1716275628; x=1716880428;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J2sS6ye/jedBdUUHdeiSoOFNPijH2iMnBKcXSWbArRU=;
+ b=KppFRqu9fuIQ0DOUnEjPIhDNQu3R1cohawA/C6+YX6rEf3fxcK5piO1njqFsBAe/6X
+ SzD2215mJikWz9gI6Gt/bmGnZFK/xPfItHVMfXblyTU48gpSYa720kHmmhRLlOzD5x0p
+ sXWYDyuuLjtO1TVmRYcqL/0oTkjcrPUZxv5qBj1O3ueK6wE1Iimym5ZIdNtKuE1MuuQD
+ ghsNQU4Ahc6A0dBrOBFqTGlRrhDIe0N1EWnZtMRr0+ZUnPiCPIT69kokeXCTbGMFfFAx
+ ir5NPK3OOs2ywNlSnM+unB0TM3ZRTVuVC1kTSddITmI+aBc0wkLpopOE31dsVJGdkzu1
+ 9RxA==
+X-Gm-Message-State: AOJu0YypkUC3JIiaFxPyAFf0scLJdKvtLBQZ+mr43vv0FvhDmZWKP9rp
+ HuqZXCrqFPZ8HeAEFU0NvbDbaQkHNL2BGhw9kOx+2HRqrDhyS9e5TxBe0vMgFxKl5vwsFJJ3q2r
+ QVOdcZk0LNepPjCCD4bLcGZt01T4gb3L+PMpUB5qcdTDY/VHWZAFv/5sNZmmJzjHrj/RwFL4qJP
+ dka4ttIsUqYt8lWAGuXYFwVG71XhHB31rXvOI=
+X-Received: by 2002:a05:6512:158d:b0:519:5df9:d945 with SMTP id
+ 2adb3069b0e04-5220fb77429mr26806053e87.4.1716275628198; 
+ Tue, 21 May 2024 00:13:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmI+igKMxD5RGVNA6LcEaNvyRjyshFHQYf92+w2zM9mDd4XoAoFU49lRBE/EnTSvCc2/E6PSP//XOj/CS+SY0=
+X-Received: by 2002:a05:6512:158d:b0:519:5df9:d945 with SMTP id
+ 2adb3069b0e04-5220fb77429mr26806026e87.4.1716275627673; Tue, 21 May 2024
+ 00:13:47 -0700 (PDT)
+MIME-Version: 1.0
 References: <20240508175507.22270-1-shentey@gmail.com>
  <20240508175507.22270-7-shentey@gmail.com>
-Message-ID: <4A8C51D4-D809-474F-8E6C-DCCEDCBD3857@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=shentey@gmail.com; helo=mail-lj1-x22b.google.com
+ <4A8C51D4-D809-474F-8E6C-DCCEDCBD3857@gmail.com>
+In-Reply-To: <4A8C51D4-D809-474F-8E6C-DCCEDCBD3857@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 21 May 2024 09:13:37 +0200
+Message-ID: <CABgObfbpNEmM53go0hqKn9sL+isZ950imER5pSg5Hjr1Oc=Xzw@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] hw/i386/pc_sysfw: Alias rather than copy isa-bios
+ region
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Sergio Lopez <slp@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="0000000000002017300618f18f6f"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,96 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000002017300618f18f6f
+Content-Type: text/plain; charset="UTF-8"
+
+Il mar 21 mag 2024, 09:10 Bernhard Beschow <shentey@gmail.com> ha scritto:
+
+> This is the only patch in this series which hasn't got an R-b tag yet (the
+> others are already in master) and I'm not aware of any open issues.
+>
+
+I will queue it then.
+
+Paolo
 
 
-Am 8=2E Mai 2024 17:55:07 UTC schrieb Bernhard Beschow <shentey@gmail=2Eco=
-m>:
->In the -bios case the "isa-bios" memory region is an alias to the BIOS ma=
-pped
->to the top of the 4G memory boundary=2E Do the same in the -pflash case, =
-but only
->for new machine versions for migration compatibility=2E This establishes =
-common
->behavior and makes pflash commands work in the "isa-bios" region which so=
-me
->real-world legacy bioses rely on=2E
+> Best regards,
+> Bernhard
 >
->Note that in the sev_enabled() case, the "isa-bios" memory region in the =
--pflash
->case will now also point to encrypted memory, just like it already does i=
-n the
->-bios case=2E
 >
->When running `info mtree` before and after this commit with
->`qemu-system-x86_64 -S -drive \
->if=3Dpflash,format=3Draw,readonly=3Don,file=3D/usr/share/qemu/bios-256k=
-=2Ebin` and running
->`diff -u before=2Emtree after=2Emtree` results in the following changes i=
-n the
->memory tree:
->
->   --- before=2Emtree
->   +++ after=2Emtree
->   @@ -71,7 +71,7 @@
->        0000000000000000-ffffffffffffffff (prio -1, i/o): pci
->        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
->        00000000000c0000-00000000000dffff (prio 1, rom): pc=2Erom
->   -      00000000000e0000-00000000000fffff (prio 1, rom): isa-bios
->   +      00000000000e0000-00000000000fffff (prio 1, romd): alias isa-bio=
-s @system=2Eflash0 0000000000020000-000000000003ffff
->        00000000000a0000-00000000000bffff (prio 1, i/o): alias smram-regi=
-on @pci 00000000000a0000-00000000000bffff
->        00000000000c0000-00000000000c3fff (prio 1, i/o): alias pam-pci @p=
-ci 00000000000c0000-00000000000c3fff
->        00000000000c4000-00000000000c7fff (prio 1, i/o): alias pam-pci @p=
-ci 00000000000c4000-00000000000c7fff
->   @@ -108,7 +108,7 @@
->        0000000000000000-ffffffffffffffff (prio -1, i/o): pci
->        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
->        00000000000c0000-00000000000dffff (prio 1, rom): pc=2Erom
->   -      00000000000e0000-00000000000fffff (prio 1, rom): isa-bios
->   +      00000000000e0000-00000000000fffff (prio 1, romd): alias isa-bio=
-s @system=2Eflash0 0000000000020000-000000000003ffff
->        00000000000a0000-00000000000bffff (prio 1, i/o): alias smram-regi=
-on @pci 00000000000a0000-00000000000bffff
->        00000000000c0000-00000000000c3fff (prio 1, i/o): alias pam-pci @p=
-ci 00000000000c0000-00000000000c3fff
->        00000000000c4000-00000000000c7fff (prio 1, i/o): alias pam-pci @p=
-ci 00000000000c4000-00000000000c7fff
->   @@ -131,11 +131,14 @@
->   memory-region: pc=2Eram
->   0000000000000000-0000000007ffffff (prio 0, ram): pc=2Eram
->
->   +memory-region: system=2Eflash0
->   +  00000000fffc0000-00000000ffffffff (prio 0, romd): system=2Eflash0
->   +
->   memory-region: pci
->   0000000000000000-ffffffffffffffff (prio -1, i/o): pci
->        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
->        00000000000c0000-00000000000dffff (prio 1, rom): pc=2Erom
->   -    00000000000e0000-00000000000fffff (prio 1, rom): isa-bios
->   +    00000000000e0000-00000000000fffff (prio 1, romd): alias isa-bios =
-@system=2Eflash0 0000000000020000-000000000003ffff
->
->   memory-region: smram
->        00000000000a0000-00000000000bffff (prio 0, ram): alias smram-low =
-@pc=2Eram 00000000000a0000-00000000000bffff
->
->Note that in both cases the "system" memory region contains the entry
->
->  00000000fffc0000-00000000ffffffff (prio 0, romd): system=2Eflash0
->
->but the "system=2Eflash0" memory region only appears standalone when "isa=
--bios" is
->an alias=2E
->
->Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
-Ping
+--0000000000002017300618f18f6f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is the only patch in this series which hasn't got an R-b tag yet (the=
- others are already in master) and I'm not aware of any open issues=2E
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mar 21 mag 2024, 09:10 Bernhard Beschow &lt;<a href=
+=3D"mailto:shentey@gmail.com">shentey@gmail.com</a>&gt; ha scritto:</div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">
+This is the only patch in this series which hasn&#39;t got an R-b tag yet (=
+the others are already in master) and I&#39;m not aware of any open issues.=
+<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+I will queue it then.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Pa=
+olo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
+quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+Best regards,<br>
+Bernhard<br>
+<br>
+</blockquote></div></div></div>
 
-Best regards,
-Bernhard
+--0000000000002017300618f18f6f--
+
 
