@@ -4,47 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0BFC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 20:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D14C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 21:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Vtn-0000xN-J7; Tue, 21 May 2024 16:15:51 -0400
+	id 1s9WgX-0001hW-4d; Tue, 21 May 2024 17:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9Vtl-0000wG-Rn
- for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:49 -0400
-Received: from rev.ng ([5.9.113.41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s9Vtc-0007GO-1S
- for qemu-devel@nongnu.org; Tue, 21 May 2024 16:15:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=rtNFdpJhNV8vl9H8X+58sqRVVdyQGF0AcgLnuM7WTNA=; b=KjQ0Y74nCzTS+g0
- zjqdhgvYp0hpY6iUKeqzx1OcloFQljNs9RTwDJ9Ur9ycGq1YOfDORKNmiZ0Hnkqy3zpAkerOOV/pw
- ow62J/5XglA/rFQkTuLluMXq8dj19WkJO8D5Ohq2aNSX4aH41XUduxyIu9nsqZ9ZEemlPTeL8/sdL
- RY=;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9WgV-0001fg-Ho
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 17:06:12 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9WgT-0008Qg-1W
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 17:06:11 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2b9fe8fc695so1625874a91.1
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 14:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716325567; x=1716930367; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tVtyFTBG+iw77EA6qlS0AHGWtWsOsqyovWMI4nng/iQ=;
+ b=Zk6vXuqUw8NLg5zoo2tdt7EOlzyqPwJ2j8HYo+CSEDLjx+LCthS4J24iRDa/+7KBDt
+ zIJ50dPuV2r4y+nocJ6FlmwASGYd2cJqe3sCeXz/Zgtk+xnqtCb3mNnk1wU/ypQNAzWj
+ qMfMh4+ziD+bL3dwnfi40A8QLiGncf6myEOlTzcfjcFOS//7M5XyT7RLl40igsoHJz1s
+ c4A2ec8yavKWNwDnWZWzN2+qDOYdVuPdmQqSScEIroNkpj4ZmRNyYQERm+DXwQdF0W2P
+ qaMq1nj2VQJlDONGuiqLoi3X94TcuWH/LE+NWp+yEi+0671t7eP4arK0Z9g2REn+ymtG
+ BRwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716325567; x=1716930367;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tVtyFTBG+iw77EA6qlS0AHGWtWsOsqyovWMI4nng/iQ=;
+ b=VnlmQHdvk9lML8zi4uY2iB6C1YXSvq6jo8GrOUyqUv16QBFbIv68O5+0CadW0LslT0
+ +IpnPYB4eBp/foXOrZQpE7mIA3ARlocp5Zm3sfmkWKiOuDBmC8tVzlvfrfEur6JgDHOH
+ WrzzRv3OE/MDCnq3pezDdCR93oHDWAAkBxn39O1TmqZUOONqMU8iqdMpezLC3akby3UH
+ xLBaat2En7gxdMTnk3l6jXouuEz20ZduyNWOmTQCTbRc/0TKFemn1bSUk99BGxvVdcHP
+ 8uHetqCjV06j4qC0+MYQ5FJRlm51647oKDkVmdF6O07GYDcJ1/1hdr0R+CHExSIUtT+5
+ YVQQ==
+X-Gm-Message-State: AOJu0YyDWmK/r3kKOl0fIqHeREZ4oxCiu4wgR82Ub9Y67mUGzwFDI+pe
+ GyHscVbtg2gUuOA/RrdvZBy4EMWChAndLWDONTAKJ2BqcH3UTQDw8hAl/v2xTlkYqvbJQbLOLTp
+ t
+X-Google-Smtp-Source: AGHT+IELy95ztyxe44lOsIweXkJt36Z+gvkD1Touu36RVKjPvPkLVKt+5HghuFSZTff+51MgDTXeIw==
+X-Received: by 2002:a17:90a:fa10:b0:2b5:af07:1cde with SMTP id
+ 98e67ed59e1d1-2bd9f5b8ab6mr301614a91.34.1716325567246; 
+ Tue, 21 May 2024 14:06:07 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2bd70b57953sm5200808a91.30.2024.05.21.14.06.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 May 2024 14:06:06 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: ale@rev.ng,
-	ltaylorsimpson@gmail.com,
-	bcain@quicinc.com
-Subject: [PATCH v3 4/4] target/hexagon: idef-parser simplify predicate init
-Date: Tue, 21 May 2024 22:16:54 +0200
-Message-ID: <20240521201654.25851-5-anjo@rev.ng>
-In-Reply-To: <20240521201654.25851-1-anjo@rev.ng>
-References: <20240521201654.25851-1-anjo@rev.ng>
+Cc: Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] accel/tcg: Init tb size and icount before plugin_gen_tb_end
+Date: Tue, 21 May 2024 14:06:04 -0700
+Message-Id: <20240521210604.130837-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -58,81 +88,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only predicate instruction arguments need to be initialized by
-idef-parser. This commit removes registers from the init_list and
-simplifies gen_inst_init_args() slightly.
+When passing disassembly data to plugin callbacks,
+translator_st_len relies on db->tb->size having been set.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Fixes: 4c833c60e047 ("disas: Use translator_st to get disassembly data")
+Reported-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hexagon/idef-parser/idef-parser.y    |  2 --
- target/hexagon/idef-parser/parser-helpers.c | 26 +++++++++++----------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ accel/tcg/translator.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/hexagon/idef-parser/idef-parser.y b/target/hexagon/idef-parser/idef-parser.y
-index cd2612eb8c..9ffb9f9699 100644
---- a/target/hexagon/idef-parser/idef-parser.y
-+++ b/target/hexagon/idef-parser/idef-parser.y
-@@ -233,8 +233,6 @@ code : '{' statements '}'
- argument_decl : REG
-                 {
-                     emit_arg(c, &@1, &$1);
--                    /* Enqueue register into initialization list */
--                    g_array_append_val(c->inst.init_list, $1);
-                 }
-               | PRED
-                 {
-diff --git a/target/hexagon/idef-parser/parser-helpers.c b/target/hexagon/idef-parser/parser-helpers.c
-index c150c308be..a7dcd85fe4 100644
---- a/target/hexagon/idef-parser/parser-helpers.c
-+++ b/target/hexagon/idef-parser/parser-helpers.c
-@@ -1652,26 +1652,28 @@ void gen_inst(Context *c, GString *iname)
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index c56967eecd..113edcffe3 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -214,14 +214,14 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+     set_can_do_io(db, true);
+     tcg_ctx->emit_before_op = NULL;
  
- 
- /*
-- * Initialize declared but uninitialized registers, but only for
-- * non-conditional instructions
-+ * Initialize declared but uninitialized instruction arguments. Only needed for
-+ * predicate arguments, initialization of registers is handled by the Hexagon
-+ * frontend.
-  */
- void gen_inst_init_args(Context *c, YYLTYPE *locp)
- {
-+    HexValue *val = NULL;
-+    char suffix;
++    /* May be used by disas_log or plugin callbacks. */
++    tb->size = db->pc_next - db->pc_first;
++    tb->icount = db->num_insns;
 +
-+    /* If init_list is NULL arguments have already been initialized */
-     if (!c->inst.init_list) {
-         return;
+     if (plugin_enabled) {
+         plugin_gen_tb_end(cpu, db->num_insns);
      }
  
-     for (unsigned i = 0; i < c->inst.init_list->len; i++) {
--        HexValue *val = &g_array_index(c->inst.init_list, HexValue, i);
--        if (val->type == REGISTER_ARG) {
--            /* Nothing to do here */
--        } else if (val->type == PREDICATE) {
--            char suffix = val->is_dotnew ? 'N' : 'V';
--            EMIT_HEAD(c, "tcg_gen_movi_i%u(P%c%c, 0);\n", val->bit_width,
--                      val->pred.id, suffix);
--        } else {
--            yyassert(c, locp, false, "Invalid arg type!");
--        }
-+        val = &g_array_index(c->inst.init_list, HexValue, i);
-+        suffix = val->is_dotnew ? 'N' : 'V';
-+        yyassert(c, locp, val->type == PREDICATE,
-+                 "Only predicates need to be initialized!");
-+        yyassert(c, locp, val->bit_width == 32,
-+                 "Predicates should always be 32 bits");
-+        EMIT_HEAD(c, "tcg_gen_movi_i32(P%c%c, 0);\n", val->pred.id, suffix);
-     }
- 
-     /* Free argument init list once we have initialized everything */
+-    /* The disas_log hook may use these values rather than recompute.  */
+-    tb->size = db->pc_next - db->pc_first;
+-    tb->icount = db->num_insns;
+-
+     if (qemu_loglevel_mask(CPU_LOG_TB_IN_ASM)
+         && qemu_log_in_addr_range(db->pc_first)) {
+         FILE *logfile = qemu_log_trylock();
 -- 
-2.45.0
+2.34.1
 
 
