@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1430FC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 08:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF580C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 08:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9KYd-0003no-Aq; Tue, 21 May 2024 04:09:15 -0400
+	id 1s9KcY-0005I9-NA; Tue, 21 May 2024 04:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s9KYb-0003kI-3e
- for qemu-devel@nongnu.org; Tue, 21 May 2024 04:09:13 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s9KcW-0005H1-LQ
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 04:13:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s9KYW-00029U-73
- for qemu-devel@nongnu.org; Tue, 21 May 2024 04:09:12 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:2a2a:0:640:d546:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id CD0F460DFA;
- Tue, 21 May 2024 11:08:59 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8819::1:2] (unknown
- [2a02:6b8:b081:8819::1:2])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id w8EiRI0IX8c0-6FbcCN5t; Tue, 21 May 2024 11:08:59 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1716278939;
- bh=ogL4sPHQ1vQtGe9bM/tUAqaIGQSY1xgr5opXqD4TyjY=;
- h=In-Reply-To:Cc:Date:References:To:Subject:Message-ID:From;
- b=vk2QP3fsm153jQWAa6wXIy+C1SNzp9jhUYMZnzuW0OsoQYjJxw8l4wzuX/XFjAC5d
- OCoKP/Edq52OTf2nwXCxn4pZ62pcpQpV0drIrfYWMKBx2DZsYTN8Ctz0kipe2CE1rW
- bip5DicFkOp5cwXPjVNSqLv4bk9hCViJS1tgL6D8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Content-Type: multipart/alternative;
- boundary="------------Tx18aKqxZjxsn032mmmSvseW"
-Message-ID: <42ad8fe7-0de8-4284-9d37-ff6b5f66acdf@yandex-team.ru>
-Date: Tue, 21 May 2024 11:08:58 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s9KcU-0002wf-QT
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 04:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716279193;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=gie66S2+LDm1bDkpb+g5reFf/IPYXUzh6O1OFODj0fk=;
+ b=a1FMdAF4Ig41Wj9q7xfU49bfH2lvGcc8I1uZZ3lbP3Hm7XA1FkVoc6b2ZlVkkAUIKRYyYu
+ wUYHuUrT8RyHW6MRxO/sRi1QBjNJvBzVqszD5DQ7X8YVT9l/ooXYwT0irhpDQv+lRqw9vI
+ h0Ojs3YidirqjBHalmxK1ZpOO+2yozs=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-6E3gJ-DEMi2855tDVpSUrQ-1; Tue,
+ 21 May 2024 04:13:11 -0400
+X-MC-Unique: 6E3gJ-DEMi2855tDVpSUrQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AB1703C025B0;
+ Tue, 21 May 2024 08:13:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 5A68F40C6CB4;
+ Tue, 21 May 2024 08:13:08 +0000 (UTC)
+Date: Tue, 21 May 2024 09:13:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V1 18/26] migration: cpr-exec-args parameter
+Message-ID: <ZkxXkgJejmlnyYIS@redhat.com>
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+ <1714406135-451286-19-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] mc146818rtc: add a way to generate RTC interrupts via
- QMP
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20240506083420.557726-1-d-tatianin@yandex-team.ru>
- <123481715669864@mail.yandex-team.ru>
-Content-Language: en-US
-In-Reply-To: <123481715669864@mail.yandex-team.ru>
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1714406135-451286-19-git-send-email-steven.sistare@oracle.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,297 +84,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------Tx18aKqxZjxsn032mmmSvseW
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Mon, Apr 29, 2024 at 08:55:27AM -0700, Steve Sistare wrote:
+> Create the cpr-exec-args migration parameter, defined as a list of
+> strings.  It will be used for cpr-exec migration mode in a subsequent
+> patch.
+> 
+> No functional change, except that cpr-exec-args is shown by the
+> 'info migrate' command.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  hmp-commands.hx                |  2 +-
+>  migration/migration-hmp-cmds.c | 24 ++++++++++++++++++++++++
+>  migration/options.c            | 13 +++++++++++++
+>  qapi/migration.json            | 18 +++++++++++++++---
+>  4 files changed, 53 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 2e2a3bc..39954ae 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -1012,7 +1012,7 @@ ERST
+>  
+>      {
+>          .name       = "migrate_set_parameter",
+> -        .args_type  = "parameter:s,value:s",
+> +        .args_type  = "parameter:s,value:S",
+>          .params     = "parameter value",
+>          .help       = "Set the parameter for migration",
+>          .cmd        = hmp_migrate_set_parameter,
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 7e96ae6..414c7e8 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -255,6 +255,18 @@ void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict)
+>      qapi_free_MigrationCapabilityStatusList(caps);
+>  }
+>  
+> +static void monitor_print_cpr_exec_args(Monitor *mon, strList *args)
+> +{
+> +    monitor_printf(mon, "%s:",
+> +        MigrationParameter_str(MIGRATION_PARAMETER_CPR_EXEC_ARGS));
+> +
+> +    while (args) {
+> +        monitor_printf(mon, " %s", args->value);
+> +        args = args->next;
+> +    }
+> +    monitor_printf(mon, "\n");
+> +}
+> +
+>  void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>  {
+>      MigrationParameters *params;
+> @@ -397,6 +409,8 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>          monitor_printf(mon, "%s: %s\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+>              qapi_enum_lookup(&MigMode_lookup, params->mode));
+> +        assert(params->has_cpr_exec_args);
+> +        monitor_print_cpr_exec_args(mon, params->cpr_exec_args);
+>      }
+>  
+>      qapi_free_MigrationParameters(params);
+> @@ -690,6 +704,16 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+>          p->has_mode = true;
+>          visit_type_MigMode(v, param, &p->mode, &err);
+>          break;
+> +    case MIGRATION_PARAMETER_CPR_EXEC_ARGS: {
+> +        g_autofree char **strv = g_strsplit(valuestr ?: "", " ", -1);
 
-Could you please take a look at this revision? I think I've taken 
-everyone's feedback into account.
+Splitting on whitespace means it'll break with any arguments containing
+quoted whitespace. If we use g_shell_parse_argv then it should support
+quoting in the normal shell mannre.
 
-Thank you!
+> +        strList **tail = &p->cpr_exec_args;
+> +
+> +        for (int i = 0; strv[i]; i++) {
+> +            QAPI_LIST_APPEND(tail, strv[i]);
+> +        }
+> +        p->has_cpr_exec_args = true;
+> +        break;
+> +    }
+>      default:
+>          assert(0);
+>      }
 
-On 5/14/24 9:57 AM, Daniil Tatianin wrote:
-> ping :)
-> 06.05.2024, 11:34, "Daniil Tatianin" <d-tatianin@yandex-team.ru>:
->
->     This can be used to force-synchronize the time in guest after a long
->     stop-cont pause, which can be useful for serverless-type workload.
->
->     Also add a comment to highlight the fact that this (and one other QMP
->     command) only works for the MC146818 RTC controller.
->
->     Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->     ---
->
->     Changes since v0:
->     - Rename to rtc-inject-irq to match other similar API
->     - Add a comment to highlight that this only works for the I386 RTC
->
->     Changes since v1:
->     - Added a description below the QMP command to explain how it can be
->       used and what it does.
->
->     Changes since v2:
->     - Add a 'broadcast' suffix.
->     - Change the comments to explain the flags we're setting.
->     - Change the command description to fix styling & explain that
->     it's a broadcast command.
->
->     ---
->      hw/rtc/mc146818rtc.c | 20 ++++++++++++++++++++
->      include/hw/rtc/mc146818rtc.h | 1 +
->      qapi/misc-target.json | 19 +++++++++++++++++++
->      3 files changed, 40 insertions(+)
->
->     diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
->     index 3379f92748..2b3754f5c6 100644
->     --- a/hw/rtc/mc146818rtc.c
->     +++ b/hw/rtc/mc146818rtc.c
->     @@ -107,6 +107,11 @@ static void
->     rtc_coalesced_timer_update(MC146818RtcState *s)
->      static QLIST_HEAD(, MC146818RtcState) rtc_devices =
->          QLIST_HEAD_INITIALIZER(rtc_devices);
->
->     +/*
->     + * NOTE:
->     + * The two QMP functions below are _only_ implemented for the
->     MC146818.
->     + * All other RTC devices ignore this.
->     + */
->      void qmp_rtc_reset_reinjection(Error **errp)
->      {
->          MC146818RtcState *s;
->     @@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->          }
->      }
->
->     +void qmp_rtc_inject_irq_broadcast(Error **errp)
->     +{
->     + MC146818RtcState *s;
->     +
->     + QLIST_FOREACH(s, &rtc_devices, link) {
->     + // Update-ended interrupt enable
->     + s->cmos_data[RTC_REG_B] |= REG_B_UIE;
->     +
->     + // Interrupt request flag | update interrupt flag
->     + s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
->     +
->     + qemu_irq_raise(s->irq);
->     + }
->     +}
->     +
->      static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
->      {
->          kvm_reset_irq_delivered();
->     diff --git a/include/hw/rtc/mc146818rtc.h
->     b/include/hw/rtc/mc146818rtc.h
->     index 97cec0b3e8..e9dd0f9c72 100644
->     --- a/include/hw/rtc/mc146818rtc.h
->     +++ b/include/hw/rtc/mc146818rtc.h
->     @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus,
->     int base_year,
->      void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int
->     val);
->      int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
->      void qmp_rtc_reset_reinjection(Error **errp);
->     +void qmp_rtc_inject_irq_broadcast(Error **errp);
->
->      #endif /* HW_RTC_MC146818RTC_H */
->     diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->     index 4e0a6492a9..7d388a3753 100644
->     --- a/qapi/misc-target.json
->     +++ b/qapi/misc-target.json
->     @@ -19,6 +19,25 @@
->      { 'command': 'rtc-reset-reinjection',
->        'if': 'TARGET_I386' }
->
->     +##
->     +# @rtc-inject-irq-broadcast:
->     +#
->     +# Inject an RTC interrupt for all existing RTCs on the system.
->     +# The interrupt forces the guest to synchronize the time with RTC.
->     +# This is useful after a long stop-cont pause, which is common for
->     +# serverless-type workload.
->     +#
->     +# Since: 9.1
->     +#
->     +# Example:
->     +#
->     +# -> { "execute": "rtc-inject-irq-broadcast" }
->     +# <- { "return": {} }
->     +#
->     +##
->     +{ 'command': 'rtc-inject-irq-broadcast',
->     + 'if': 'TARGET_I386' }
->     +
->      ##
->      # @SevState:
->      #
->
->     --
->     2.34.1
->
---------------Tx18aKqxZjxsn032mmmSvseW
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    Could you please take a look at this revision? I think I've taken
-    everyone's feedback into account.<br>
-    <br>
-    Thank you!<br>
-    <br>
-    <div class="moz-cite-prefix">On 5/14/24 9:57 AM, Daniil Tatianin
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:123481715669864@mail.yandex-team.ru">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <div>ping :)</div>
-      <div> </div>
-      <div>06.05.2024, 11:34, "Daniil Tatianin"
-        <a class="moz-txt-link-rfc2396E" href="mailto:d-tatianin@yandex-team.ru">&lt;d-tatianin@yandex-team.ru&gt;</a>:</div>
-      <blockquote>
-        <p>This can be used to force-synchronize the time in guest after
-          a long<br>
-          stop-cont pause, which can be useful for serverless-type
-          workload.<br>
-          <br>
-          Also add a comment to highlight the fact that this (and one
-          other QMP<br>
-          command) only works for the MC146818 RTC controller.<br>
-          <br>
-          Signed-off-by: Daniil Tatianin &lt;<a
-            href="mailto:d-tatianin@yandex-team.ru"
-            rel="noopener noreferrer" moz-do-not-send="true"
-            class="moz-txt-link-freetext">d-tatianin@yandex-team.ru</a>&gt;<br>
-          ---<br>
-          <br>
-          Changes since v0:<br>
-          - Rename to rtc-inject-irq to match other similar API<br>
-          - Add a comment to highlight that this only works for the I386
-          RTC<br>
-          <br>
-          Changes since v1:<br>
-          - Added a description below the QMP command to explain how it
-          can be<br>
-            used and what it does.<br>
-          <br>
-          Changes since v2:<br>
-          - Add a 'broadcast' suffix.<br>
-          - Change the comments to explain the flags we're setting.<br>
-          - Change the command description to fix styling &amp; explain
-          that it's a broadcast command.<br>
-          <br>
-          ---<br>
-           hw/rtc/mc146818rtc.c | 20 ++++++++++++++++++++<br>
-           include/hw/rtc/mc146818rtc.h | 1 +<br>
-           qapi/misc-target.json | 19 +++++++++++++++++++<br>
-           3 files changed, 40 insertions(+)<br>
-          <br>
-          diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c<br>
-          index 3379f92748..2b3754f5c6 100644<br>
-          --- a/hw/rtc/mc146818rtc.c<br>
-          +++ b/hw/rtc/mc146818rtc.c<br>
-          @@ -107,6 +107,11 @@ static void
-          rtc_coalesced_timer_update(MC146818RtcState *s)<br>
-           static QLIST_HEAD(, MC146818RtcState) rtc_devices =<br>
-               QLIST_HEAD_INITIALIZER(rtc_devices);<br>
-           <br>
-          +/*<br>
-          + * NOTE:<br>
-          + * The two QMP functions below are _only_ implemented for the
-          MC146818.<br>
-          + * All other RTC devices ignore this.<br>
-          + */<br>
-           void qmp_rtc_reset_reinjection(Error **errp)<br>
-           {<!-- --><br>
-               MC146818RtcState *s;<br>
-          @@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error
-          **errp)<br>
-               }<br>
-           }<br>
-           <br>
-          +void qmp_rtc_inject_irq_broadcast(Error **errp)<br>
-          +{<!-- --><br>
-          + MC146818RtcState *s;<br>
-          +<br>
-          + QLIST_FOREACH(s, &amp;rtc_devices, link) {<!-- --><br>
-          + // Update-ended interrupt enable<br>
-          + s-&gt;cmos_data[RTC_REG_B] |= REG_B_UIE;<br>
-          +<br>
-          + // Interrupt request flag | update interrupt flag<br>
-          + s-&gt;cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;<br>
-          +<br>
-          + qemu_irq_raise(s-&gt;irq);<br>
-          + }<br>
-          +}<br>
-          +<br>
-           static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)<br>
-           {<!-- --><br>
-               kvm_reset_irq_delivered();<br>
-          diff --git a/include/hw/rtc/mc146818rtc.h
-          b/include/hw/rtc/mc146818rtc.h<br>
-          index 97cec0b3e8..e9dd0f9c72 100644<br>
-          --- a/include/hw/rtc/mc146818rtc.h<br>
-          +++ b/include/hw/rtc/mc146818rtc.h<br>
-          @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus
-          *bus, int base_year,<br>
-           void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr,
-          int val);<br>
-           int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);<br>
-           void qmp_rtc_reset_reinjection(Error **errp);<br>
-          +void qmp_rtc_inject_irq_broadcast(Error **errp);<br>
-           <br>
-           #endif /* HW_RTC_MC146818RTC_H */<br>
-          diff --git a/qapi/misc-target.json b/qapi/misc-target.json<br>
-          index 4e0a6492a9..7d388a3753 100644<br>
-          --- a/qapi/misc-target.json<br>
-          +++ b/qapi/misc-target.json<br>
-          @@ -19,6 +19,25 @@<br>
-           { 'command': 'rtc-reset-reinjection',<br>
-             'if': 'TARGET_I386' }<br>
-           <br>
-          +##<br>
-          +# @rtc-inject-irq-broadcast:<br>
-          +#<br>
-          +# Inject an RTC interrupt for all existing RTCs on the
-          system.<br>
-          +# The interrupt forces the guest to synchronize the time with
-          RTC.<br>
-          +# This is useful after a long stop-cont pause, which is
-          common for<br>
-          +# serverless-type workload.<br>
-          +#<br>
-          +# Since: 9.1<br>
-          +#<br>
-          +# Example:<br>
-          +#<br>
-          +# -&gt; { "execute": "rtc-inject-irq-broadcast" }<br>
-          +# &lt;- { "return": {} }<br>
-          +#<br>
-          +##<br>
-          +{ 'command': 'rtc-inject-irq-broadcast',<br>
-          + 'if': 'TARGET_I386' }<br>
-          +<br>
-           ##<br>
-           # @SevState:<br>
-           #</p>
-        --<br>
-        2.34.1<br>
-         </blockquote>
-    </blockquote>
-  </body>
-</html>
-
---------------Tx18aKqxZjxsn032mmmSvseW--
 
