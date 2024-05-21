@@ -4,74 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EB6C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 16:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3A4C25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 16:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9SAh-00034m-Qo; Tue, 21 May 2024 12:17:03 -0400
+	id 1s9SHb-00061R-JL; Tue, 21 May 2024 12:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9SAf-00032o-RS
- for qemu-devel@nongnu.org; Tue, 21 May 2024 12:17:02 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9SAe-0004hz-8o
- for qemu-devel@nongnu.org; Tue, 21 May 2024 12:17:01 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-57825ff689bso955649a12.3
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 09:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716308218; x=1716913018; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M6LTUce7TaSwInTvTRjvM35KB8kdU6NokoPpAiG5K3M=;
- b=EjUrCBYWFnUIS1Oa4KwbIauClRVlqb6p0j+f5/yA39JmfDqBMP7RdxV0vkSaCWBQyW
- mQrDIu49SvKjwaY7Xcx5Es4VcwX/AxCa5uytp5w77mout4haX147MEyxWQaidA8r27tr
- qJfuKMvsDhTVvrtaxH3Aw6ToLRs1ggcV/gdfy45mow2LYh05cfdYipkDKhsJSLQbNP4h
- aKDX7FrBOH+3EqxKSbyk2l7RU06vv+PLXkzZJ4BD/oXi3M0ifPLVyP1bd+toHgKBZ/Hc
- DWR7nO2XU59mvz1alu/AADFdaa2XTGyq61fZR7xkHoRfzYfErgHYEbsGMddraAm7Rqo4
- O2gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716308218; x=1716913018;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=M6LTUce7TaSwInTvTRjvM35KB8kdU6NokoPpAiG5K3M=;
- b=ZU1xYMveCMKOQGsEumbm3GtIocjnl+MyEUP6cnUPy6mYpWyuSvxirU9IrpJQOZw2TI
- QqSvML/mHyYwPd6BCwYyXyoYKqZL1gWMLP+Yj3929Iu8QCxyl52ud6YhDiWYvPE5FNo6
- ynt7IHwj/TCX22n+Q7viaRzDXDZEc+Av/8sslhC/xoBQwLQeoKGxYPmQ9UVRgB/9v6A1
- A3QAJ+R6VvKybWYZTjwyllq8Cd619tSAodcYK/E0NzpM07kKLVr+o2Dueqmdz3z0p3G1
- sGPqYUKZzlUEhXEYJKqrcUhXOaJ7rozGx1mBPU9Yq8ivs86ceFvu1z08pme4gkpabXpi
- 4Vlg==
-X-Gm-Message-State: AOJu0Yw6/Q3OkjyF/aRSFizvAFgauCWoiy4HREHsIsMPcVbBuYExGSsP
- Vjm8bL6WPCBbZw431H97Dsxi/CMkIPL4T9yVUwS41p8Ur3uNPvTZoJKvXA5b9FzLMidm/196Bas
- 5BsDq/sDcsa41+O70HAkjzufKfLfwv0MTgnep/w==
-X-Google-Smtp-Source: AGHT+IGPIt/AhcgKISwBQfoPANe4hpPV4xmviTBhnj8+x0izsfuQYdKFXe6xWCt+8FTyuhhB5zdk7hekGoiL1MtWi2w=
-X-Received: by 2002:a50:cd44:0:b0:572:df77:c1bf with SMTP id
- 4fb4d7f45d1cf-575750f4033mr6184196a12.3.1716308217894; Tue, 21 May 2024
- 09:16:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1s9SHX-000610-Fo
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 12:24:07 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1s9SHU-0005kU-Aq
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 12:24:07 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9F30960D98;
+ Tue, 21 May 2024 19:23:56 +0300 (MSK)
+Received: from davydov-max-nux.yandex-team.ru (unknown
+ [2a02:6b8:b081:b738::1:8])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id lNMBDR0IZqM0-iRaZq5ub; Tue, 21 May 2024 19:23:56 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1716308636;
+ bh=8dmXIG071P4jqpkop1qyTQRp9nX2PPjwWXGr8cvbSk8=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=0q9uMo3VXP17D04KK+iYnSwsCzOlG1aqtMf9KZL/+PZ9ohqaG94DjjMz4lJA7/i63
+ XoTxC8YWT2F4N+be1LVD8ezbGtol+klSwmUNUqYazdKzO9IjjzIIqHQtAjv/u/6GVY
+ rRekeGbrmg0KbK6r9aBlEIoPy9ytdV6bghghOBSU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Maksim Davydov <davydov-max@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: davydov-max@yandex-team.ru,
+	babu.moger@amd.com,
+	pbonzini@redhat.com
+Subject: [PATCH] target/i386: Add x-amd-ccx-size property
+Date: Tue, 21 May 2024 19:23:47 +0300
+Message-Id: <20240521162347.9149-1-davydov-max@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240506010403.6204-1-richard.henderson@linaro.org>
- <20240506010403.6204-58-richard.henderson@linaro.org>
-In-Reply-To: <20240506010403.6204-58-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 May 2024 17:16:46 +0100
-Message-ID: <CAFEAcA8YQURkn5-SjVFmR16xcv6m2WRmnJpkeg9PVZ+eFGW8fg@mail.gmail.com>
-Subject: Re: [PATCH 57/57] target/arm: Convert SQDMULH, SQRDMULH to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,60 +73,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 May 2024 at 02:10, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> These are the last instructions within disas_simd_three_reg_same
-> and disas_simd_scalar_three_reg_same, so remove them.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/helper.h            |  10 ++
->  target/arm/tcg/a64.decode      |  18 +++
->  target/arm/tcg/translate-a64.c | 276 ++++++++++-----------------------
->  target/arm/tcg/vec_helper.c    |  64 ++++++++
->  4 files changed, 172 insertions(+), 196 deletions(-)
+According to AMD64 Architecture Programmer's Manual volume 3, information
+about the cache topology is exposed by 0x8000001D CPUID leaf, and
+0x8000001E CPUID leaf is exposing information about the topology of the
+entire processor. For example, CPUID on the real EPYC Milan 7713 shows:
 
+* 0x8000001D_EAX_3 = 0x0003c163
+* 0x8000001E_ECX   = 0x00000001
 
-> +void HELPER(neon_sqdmulh_idx_s)(void *vd, void *vn, void *vm,
-> +                                void *vq, uint32_t desc)
-> +{
-> +    intptr_t i, j, opr_sz = simd_oprsz(desc);
-> +    int idx = simd_data(desc);
-> +    int32_t *d = vd, *n = vn, *m = (int32_t *)vm + H4(idx);
-> +
-> +    for (i = 0; i < opr_sz / 4; i += 16 / 4) {
-> +        int32_t mm = m[i];
-> +        for (j = 0; j < 16 / 4; ++j) {
-> +            d[i + j] = do_sqrdmlah_s(n[i + j], mm, 0, false, false, vq);
-> +        }
-> +    }
-> +    clear_tail(d, opr_sz, simd_maxsz(desc));
-> +}
-> +
-> +void HELPER(neon_sqrdmulh_idx_s)(void *vd, void *vn, void *vm,
-> +                                 void *vq, uint32_t desc)
-> +{
-> +    intptr_t i, j, opr_sz = simd_oprsz(desc);
-> +    int idx = simd_data(desc);
-> +    int32_t *d = vd, *n = vn, *m = (int32_t *)vm + H4(idx);
-> +
-> +    for (i = 0; i < opr_sz / 4; i += 16 / 4) {
-> +        int16_t mm = m[i];
+This means that 16 logical processors share one L3 cache, which gives
+8 CCXs per processor, but only 1 node per processor. Thus, on real
+processor models, nodes and CCX are different things. What is more, Zen2,
+for example, has 2 CCX per die. It is also worth considering that for some
+desktop processors the number of cores is not a power of two, so the CCX
+size may vary within single family. Therefore, I suggest making it possible
+to set the CCX size as a property of the CPU. In this case, one will be
+able to set the CCX size if needed, but for others the default value will
+remain.
 
-Wrong type -- this is the 's' version so should be int32_t,
-I think.
+Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
+---
+ target/i386/cpu.c | 19 +++++++++++++------
+ target/i386/cpu.h |  3 +++
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-> +        for (j = 0; j < 16 / 4; ++j) {
-> +            d[i + j] = do_sqrdmlah_s(n[i + j], mm, 0, false, true, vq);
-> +        }
-> +    }
-> +    clear_tail(d, opr_sz, simd_maxsz(desc));
-> +}
-> +
->  void HELPER(sve2_sqrdmlah_s)(void *vd, void *vn, void *vm,
->                               void *va, uint32_t desc)
->  {
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index cfe7c92d6b..bbf8fb137c 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -328,10 +328,10 @@ static void encode_cache_cpuid80000006(CPUCacheInfo *l2,
+ /* Encode cache info for CPUID[8000001D] */
+ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
+                                        X86CPUTopoInfo *topo_info,
++                                       uint32_t l3_threads,
+                                        uint32_t *eax, uint32_t *ebx,
+                                        uint32_t *ecx, uint32_t *edx)
+ {
+-    uint32_t l3_threads;
+     assert(cache->size == cache->line_size * cache->associativity *
+                           cache->partitions * cache->sets);
+ 
+@@ -340,7 +340,8 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
+ 
+     /* L3 is shared among multiple cores */
+     if (cache->level == 3) {
+-        l3_threads = topo_info->cores_per_die * topo_info->threads_per_core;
++        l3_threads = (l3_threads ? l3_threads :
++                      topo_info->cores_per_die * topo_info->threads_per_core);
+         *eax |= (l3_threads - 1) << 14;
+     } else {
+         *eax |= ((topo_info->threads_per_core - 1) << 14);
+@@ -6757,19 +6758,23 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         switch (count) {
+         case 0: /* L1 dcache info */
+             encode_cache_cpuid8000001d(env->cache_info_amd.l1d_cache,
+-                                       &topo_info, eax, ebx, ecx, edx);
++                                       &topo_info, cpu->amd_ccx_size,
++                                       eax, ebx, ecx, edx);
+             break;
+         case 1: /* L1 icache info */
+             encode_cache_cpuid8000001d(env->cache_info_amd.l1i_cache,
+-                                       &topo_info, eax, ebx, ecx, edx);
++                                       &topo_info, cpu->amd_ccx_size,
++                                       eax, ebx, ecx, edx);
+             break;
+         case 2: /* L2 cache info */
+             encode_cache_cpuid8000001d(env->cache_info_amd.l2_cache,
+-                                       &topo_info, eax, ebx, ecx, edx);
++                                       &topo_info, cpu->amd_ccx_size,
++                                       eax, ebx, ecx, edx);
+             break;
+         case 3: /* L3 cache info */
+             encode_cache_cpuid8000001d(env->cache_info_amd.l3_cache,
+-                                       &topo_info, eax, ebx, ecx, edx);
++                                       &topo_info, cpu->amd_ccx_size,
++                                       eax, ebx, ecx, edx);
+             break;
+         default: /* end of info */
+             *eax = *ebx = *ecx = *edx = 0;
+@@ -8105,6 +8110,8 @@ static Property x86_cpu_properties[] = {
+                      false),
+     DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
+                      true),
++    DEFINE_PROP_UINT32("x-amd-ccx-size", X86CPU, amd_ccx_size, 0),
++
+     DEFINE_PROP_END_OF_LIST()
+ };
+ 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index ccccb62fc3..01104847a1 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2036,6 +2036,9 @@ struct ArchCPU {
+      */
+     uint32_t guest_phys_bits;
+ 
++    /* Number of logical processors that shares L3 cache */
++    uint32_t amd_ccx_size;
++
+     /* in order to simplify APIC support, we leave this pointer to the
+        user */
+     struct DeviceState *apic_state;
+-- 
+2.34.1
 
--- PMM
 
