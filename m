@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FCEC25B77
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 01:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E386BC25B77
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 02:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ELN-0007m4-Pd; Mon, 20 May 2024 21:31:09 -0400
+	id 1s9EzU-0001nh-Ai; Mon, 20 May 2024 22:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9ELJ-0007jg-G7; Mon, 20 May 2024 21:31:06 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9ELH-0005Kf-RS; Mon, 20 May 2024 21:31:05 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1eeabda8590so87921545ad.0; 
- Mon, 20 May 2024 18:31:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716255061; x=1716859861; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xELS6oYgKZZUA8AMO1krYjCwP0RoNjeqV7WiJZCCiK8=;
- b=RlRBzjBQ44bZN03jO8PdFTr8jUYAfs8/2jroz7az9gcmdNNo4Nb7MmjTIjcVB99aUK
- E2jCHFKZonGyUp5vUQdDPqaT50J7/AjhVXgs4d11you0p1thFJGrpbMLOo+6hl/zoYIC
- jy/J6jbC3lejO5oqHcheGSw4wKLFaq1yYg4RmfoSmfNIGSmBXokEsdUeO7wO2R6dlnOe
- fv/wt0/L3S+ScKPefL1LHBctWfIQMLz40ePVDVBzAkhb+Sz3rzLw76ORZcLYTJYQNPfo
- lOSM/AMcZGYwjSqAcEI9XgGmhH8kXXJ+SKGTm5Whd1B1Wbj2tAoxxogRxybBjz/4FqRa
- mB8A==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s9EzO-0001ms-DG
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 22:12:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s9EzM-0004VH-9Y
+ for qemu-devel@nongnu.org; Mon, 20 May 2024 22:12:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716257547;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9wYTlOwIsCc4kNL0DH2yK+vO7f7tihGv3LLR9BQNUsU=;
+ b=HKJ3KvXEOKsdbhj1eLHItzHjoTMqsRJpWzTjF1c27RRJLgomaXEZzIV19bEPD2qWAJPHzA
+ qoBlae5vIJThQGBtDwvYi7OVJok7QKNoHKhIaRo9Qe9yPOW9s5U3f/EkDJ4VNJrn64Q/Oi
+ UYhFHF5BTTgCBVUI8Oa6TfPSKO+b/2s=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-8qZaVjcPO8aqJOsHG4afaw-1; Mon, 20 May 2024 22:12:23 -0400
+X-MC-Unique: 8qZaVjcPO8aqJOsHG4afaw-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2a49440f7b5so10815939a91.1
+ for <qemu-devel@nongnu.org>; Mon, 20 May 2024 19:12:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716255061; x=1716859861;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1716257542; x=1716862342;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xELS6oYgKZZUA8AMO1krYjCwP0RoNjeqV7WiJZCCiK8=;
- b=ZmAi8nkkWBecpaxm3qfCA2zV+TaKFA9fNZXEATbtiXRDMFOZP4aGvh3ml7D9vyWogn
- wj5gv870bOeHOrWPXFHKKlHe2dkeg296G034MR+YNnaDutNdH7jYLKUcFcEOWXP/jRDG
- uCJt+ujXQoinrCxzlBCizSmbfhjtCKYbV1Dh/VfJpAG/Lnkz/yYv3YaQ8OEh3MtwJoVX
- eOBGp9X+4RZyT0p0xeNFUnMl7Tgpeas6dIxYSYjk9hZeXITqORxv7Cfl6xg6ChwhGMkR
- /GJJNdhNO4Vnft6UVMIoYRJ5aA+Kcw8eenwdloB6Ttw8Hsu4bo4Y9gtBIqgAaV7G47A9
- xJMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhKWEogRz5T27yEgGU06s1Z/2LlR5ZvFD/2BtufUn1DdAkwK8yysPic3taIOiGGg8aczJP7Bc6JRiGI7dBTmBuEPDy19s=
-X-Gm-Message-State: AOJu0YxxuUeTptRVKiU/4Wy2R/I6phhT6ATKCn6TzGZ1/pdjS6qgNGH0
- +mcMYbEggmJY/Zgga4D144L17le87dPAxp4G8QUNCDOxwniRE+mBQrH74Q==
-X-Google-Smtp-Source: AGHT+IG908KthP33QWrdcsoeqRSjsXhA5tcUx2Jl5Q6MW61VWboIkEJjvBLo/AxYLMvFhLM3Px30rw==
-X-Received: by 2002:a17:90a:eb07:b0:2b4:3659:b3f5 with SMTP id
- 98e67ed59e1d1-2b6ccd886efmr21839507a91.47.1716255061450; 
- Mon, 20 May 2024 18:31:01 -0700 (PDT)
-Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bd7f0cd400sm2514953a91.31.2024.05.20.18.30.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 May 2024 18:31:01 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 06/12] target/ppc: Add PPR32 SPR
-Date: Tue, 21 May 2024 11:30:22 +1000
-Message-ID: <20240521013029.30082-7-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240521013029.30082-1-npiggin@gmail.com>
-References: <20240521013029.30082-1-npiggin@gmail.com>
+ bh=9wYTlOwIsCc4kNL0DH2yK+vO7f7tihGv3LLR9BQNUsU=;
+ b=Af7MVY/lM72HTyU1wiXykhwWH5eciKK7jcyIxzJ4OMfxlIpVsED+RpprfzzLCkULxj
+ KcavRqZ/m5sq6b5IDW3BW8T3GZkYQqsarAszaFk4BluwlyDotXvkv87H1aHn0l8X59zI
+ C5OZtAHMWYdp2ucLReOg4g4SbBmzoWV/3OO2y5jvg3fTfnvYfenC3NLUEXEcAznIGisK
+ Wre0jiSasjSDwL91Y1R4ruvmb9g+XVS3Pa/Grj3DMYOYdODripxT5nrylZeTO8zUCW52
+ qmmOB3dbMl7ECEkuX2s/oZIDM6pNO6HenyqN3mAxPurIzZXJk2K2W61duLbKRnM7b2cp
+ mV7w==
+X-Gm-Message-State: AOJu0Yys9+TaIyZE8nJ5i9VX1QBUICechpwp5PN6UdhOkGEN/cBAPQDO
+ CzeAtdVqdF4f3dh+12bHW6bZUGnEU19M8aLT/3NtU1wGNclEEEYyVXbfJPgpweM8c5io72hi1Cu
+ dIeullf2n+3REFMombUZM7KfVAuSSgRQ2NDxMOkWCK/mG2E00YAUKxncAPTF1GfjwJErHkOvGrB
+ o9QryRWOz1olwkVO/Y3zFkhTyROew=
+X-Received: by 2002:a17:90b:894:b0:2b4:32ae:8569 with SMTP id
+ 98e67ed59e1d1-2b6ccfed280mr28833064a91.40.1716257542012; 
+ Mon, 20 May 2024 19:12:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7s3zBwXyvgxArq9kFNC7+95MZR5EYlpY1xYis3xOpmK5ZcGVIIT0pPOBCsLxUa+fvFwtlbdvqjYGlRGLTZg8=
+X-Received: by 2002:a17:90b:894:b0:2b4:32ae:8569 with SMTP id
+ 98e67ed59e1d1-2b6ccfed280mr28833047a91.40.1716257541619; Mon, 20 May 2024
+ 19:12:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+References: <20240517075336.104091-1-f.ebner@proxmox.com>
+In-Reply-To: <20240517075336.104091-1-f.ebner@proxmox.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 21 May 2024 10:12:10 +0800
+Message-ID: <CACGkMEsn+vtjX90OcfH+ntJfoNXEEp94PzOX2FL80KtitL9Zaw@mail.gmail.com>
+Subject: Re: [PATCH] hw/core/machine: move compatibility flags for VirtIO-net
+ USO to machine 8.1
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, wangyanan55@huawei.com, 
+ philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net, 
+ yuri.benditovich@daynix.com, andrew@daynix.com, peterx@redhat.com, 
+ farosas@suse.de, t.lamprecht@proxmox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,120 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PPR32 provides access to the upper half of PPR.
+On Fri, May 17, 2024 at 3:54=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
+rote:
+>
+> Migration from an 8.2 or 9.0 binary to an 8.1 binary with machine
+> version 8.1 can fail with:
+>
+> > kvm: Features 0x1c0010130afffa7 unsupported. Allowed features: 0x10179b=
+fffe7
+> > kvm: Failed to load virtio-net:virtio
+> > kvm: error while loading state for instance 0x0 of device '0000:00:12.0=
+/virtio-net'
+> > kvm: load of migration failed: Operation not permitted
+>
+> The series
+>
+> 53da8b5a99 virtio-net: Add support for USO features
+> 9da1684954 virtio-net: Add USO flags to vhost support.
+> f03e0cf63b tap: Add check for USO features
+> 2ab0ec3121 tap: Add USO support to tap device.
+>
+> only landed in QEMU 8.2, so the compatibility flags should be part of
+> machine version 8.1.
+>
+> Moving the flags unfortunately breaks forward migration with machine
+> version 8.1 from a binary without this patch to a binary with this
+> patch.
+>
+> Fixes: 53da8b5a99 ("virtio-net: Add support for USO features")
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/cpu.h        |  1 +
- target/ppc/spr_common.h |  2 ++
- target/ppc/cpu_init.c   | 12 ++++++++++++
- target/ppc/translate.c  | 16 ++++++++++++++++
- 4 files changed, 31 insertions(+)
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 2532408be0..141cbefb4c 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2120,6 +2120,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_POWER_MMCRS       (0x37E)
- #define SPR_WORT              (0x37F)
- #define SPR_PPR               (0x380)
-+#define SPR_PPR32             (0x382)
- #define SPR_750_GQR0          (0x390)
- #define SPR_440_DNV0          (0x390)
- #define SPR_750_GQR1          (0x391)
-diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
-index eb2561f593..9e40b3b608 100644
---- a/target/ppc/spr_common.h
-+++ b/target/ppc/spr_common.h
-@@ -203,6 +203,8 @@ void spr_read_tfmr(DisasContext *ctx, int gprn, int sprn);
- void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
- void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
- void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
-+void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn);
-+void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn);
- #endif
- 
- void register_low_BATs(CPUPPCState *env);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 892fb6ce02..7684a59d75 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5623,6 +5623,14 @@ static void register_HEIR64_spr(CPUPPCState *env)
-                  0x00000000);
- }
- 
-+static void register_power7_common_sprs(CPUPPCState *env)
-+{
-+    spr_register(env, SPR_PPR32, "PPR32",
-+                 &spr_read_ppr32, &spr_write_ppr32,
-+                 &spr_read_ppr32, &spr_write_ppr32,
-+                 0x00000000);
-+}
-+
- static void register_power8_tce_address_control_sprs(CPUPPCState *env)
- {
-     spr_register_kvm(env, SPR_TAR, "TAR",
-@@ -6118,6 +6126,7 @@ static void init_proc_POWER7(CPUPPCState *env)
-     register_power6_common_sprs(env);
-     register_HEIR32_spr(env);
-     register_power6_dbg_sprs(env);
-+    register_power7_common_sprs(env);
-     register_power7_book4_sprs(env);
- 
-     /* env variables */
-@@ -6264,6 +6273,7 @@ static void init_proc_POWER8(CPUPPCState *env)
-     register_power6_common_sprs(env);
-     register_HEIR32_spr(env);
-     register_power6_dbg_sprs(env);
-+    register_power7_common_sprs(env);
-     register_power8_tce_address_control_sprs(env);
-     register_power8_ids_sprs(env);
-     register_power8_ebb_sprs(env);
-@@ -6431,6 +6441,7 @@ static void init_proc_POWER9(CPUPPCState *env)
-     register_power6_common_sprs(env);
-     register_HEIR32_spr(env);
-     register_power6_dbg_sprs(env);
-+    register_power7_common_sprs(env);
-     register_power8_tce_address_control_sprs(env);
-     register_power8_ids_sprs(env);
-     register_power8_ebb_sprs(env);
-@@ -6625,6 +6636,7 @@ static void init_proc_POWER10(CPUPPCState *env)
-     register_power6_common_sprs(env);
-     register_HEIR64_spr(env);
-     register_power6_dbg_sprs(env);
-+    register_power7_common_sprs(env);
-     register_power8_tce_address_control_sprs(env);
-     register_power8_ids_sprs(env);
-     register_power8_ebb_sprs(env);
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index ca4f4c9371..137370b649 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -1414,6 +1414,22 @@ void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn)
-     gen_load_spr(t0, sprn + 16);
-     tcg_gen_ext32u_tl(cpu_gpr[gprn], t0);
- }
-+
-+/* The PPR32 SPR accesses the upper 32-bits of PPR */
-+void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn)
-+{
-+    gen_load_spr(cpu_gpr[gprn], SPR_PPR);
-+    tcg_gen_shri_tl(cpu_gpr[gprn], cpu_gpr[gprn], 32);
-+}
-+
-+void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn)
-+{
-+    TCGv t0 = tcg_temp_new();
-+
-+    tcg_gen_shli_tl(t0, cpu_gpr[gprn], 32);
-+    gen_store_spr(SPR_PPR, t0);
-+    spr_store_dump_spr(SPR_PPR);
-+}
- #endif
- 
- #define GEN_HANDLER(name, opc1, opc2, opc3, inval, type)                      \
--- 
-2.43.0
+Thanks
 
 
