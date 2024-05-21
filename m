@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91927C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEC2C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:50:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9OwB-0006y6-Ke; Tue, 21 May 2024 08:49:51 -0400
+	id 1s9OwC-00073l-Fn; Tue, 21 May 2024 08:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s9Ow4-0006n6-82
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:49:45 -0400
+ id 1s9Ow4-0006n2-3Z
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:49:44 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s9Ovy-00055v-Ho
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:49:44 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s9Ovy-00055n-UO
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:49:43 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Axz69emExmbUkCAA--.1429S3;
- Tue, 21 May 2024 20:49:34 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxSepfmExmcEkCAA--.1543S3;
+ Tue, 21 May 2024 20:49:35 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxusZdmExmqDkEAA--.12666S3; 
- Tue, 21 May 2024 20:49:34 +0800 (CST)
+ AQAAf8DxusZdmExmqDkEAA--.12666S5; 
+ Tue, 21 May 2024 20:49:35 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH v3 1/3] hw/intc/loongarch_extioi: Add extioi virt extension
- definition
-Date: Tue, 21 May 2024 20:32:23 +0800
-Message-Id: <20240521123225.231072-2-gaosong@loongson.cn>
+Subject: [PATCH v3 3/3] hw/loongarch/virt: Use MemTxAttrs interface for misc
+ ops
+Date: Tue, 21 May 2024 20:32:25 +0800
+Message-Id: <20240521123225.231072-4-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240521123225.231072-1-gaosong@loongson.cn>
 References: <20240521123225.231072-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxusZdmExmqDkEAA--.12666S3
+X-CM-TRANSID: AQAAf8DxusZdmExmqDkEAA--.12666S5
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,210 +65,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch, IRQs can be routed to four vcpus with hardware extioi.
-This patch adds the extioi virt extension definition so that the IRQ can
-route to 256 vcpus.
+Use MemTxAttrs interface read_with_attrs/write_with_attrs
+for virt_iocsr_misc_ops.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/intc/loongarch_extioi.h | 21 +++++++
- hw/intc/loongarch_extioi.c         | 88 ++++++++++++++++++++++++++++--
- 2 files changed, 105 insertions(+), 4 deletions(-)
+ hw/loongarch/virt.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
-index 410c6e1121..eccc2e0d18 100644
---- a/include/hw/intc/loongarch_extioi.h
-+++ b/include/hw/intc/loongarch_extioi.h
-@@ -41,6 +41,24 @@
- #define EXTIOI_COREMAP_END           (0xD00 - APIC_OFFSET)
- #define EXTIOI_SIZE                  0x800
- 
-+#define EXTIOI_VIRT_BASE             (0x40000000)
-+#define EXTIOI_VIRT_SIZE             (0x1000)
-+#define EXTIOI_VIRT_FEATURES         (0x0)
-+#define  EXTIOI_HAS_VIRT_EXTENSION   (0)
-+#define  EXTIOI_HAS_ENABLE_OPTION    (1)
-+#define  EXTIOI_HAS_INT_ENCODE       (2)
-+#define  EXTIOI_HAS_CPU_ENCODE       (3)
-+#define  EXTIOI_VIRT_HAS_FEATURES    (BIT(EXTIOI_HAS_VIRT_EXTENSION)  \
-+                                      | BIT(EXTIOI_HAS_ENABLE_OPTION) \
-+                                      | BIT(EXTIOI_HAS_INT_ENCODE)    \
-+                                      | BIT(EXTIOI_HAS_CPU_ENCODE))
-+#define EXTIOI_VIRT_CONFIG           (0x4)
-+#define  EXTIOI_ENABLE               (1)
-+#define  EXTIOI_ENABLE_INT_ENCODE    (2)
-+#define  EXTIOI_ENABLE_CPU_ENCODE    (3)
-+#define EXTIOI_VIRT_COREMAP_START    (0x40)
-+#define EXTIOI_VIRT_COREMAP_END      (0x240)
-+
- typedef struct ExtIOICore {
-     uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
-     DECLARE_BITMAP(sw_isr[LS3A_INTC_IP], EXTIOI_IRQS);
-@@ -52,6 +70,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchExtIOI, LOONGARCH_EXTIOI)
- struct LoongArchExtIOI {
-     SysBusDevice parent_obj;
-     uint32_t num_cpu;
-+    uint32_t features;
-+    uint32_t status;
-     /* hardware state */
-     uint32_t nodetype[EXTIOI_IRQS_NODETYPE_COUNT / 2];
-     uint32_t bounce[EXTIOI_IRQS_GROUP_COUNT];
-@@ -65,5 +85,6 @@ struct LoongArchExtIOI {
-     qemu_irq irq[EXTIOI_IRQS];
-     ExtIOICore *cpu;
-     MemoryRegion extioi_system_mem;
-+    MemoryRegion virt_extend;
- };
- #endif /* LOONGARCH_EXTIOI_H */
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 0b358548eb..e605ca64d5 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -143,10 +143,13 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
- 
-     for (i = 0; i < 4; i++) {
-         cpu = val & 0xff;
--        cpu = ctz32(cpu);
--        cpu = (cpu >= 4) ? 0 : cpu;
-         val = val >> 8;
- 
-+        if (!(s->status & BIT(EXTIOI_ENABLE_CPU_ENCODE))) {
-+            cpu = ctz32(cpu);
-+            cpu = (cpu >= 4) ? 0 : cpu;
-+        }
-+
-         if (s->sw_coremap[irq + i] == cpu) {
-             continue;
-         }
-@@ -265,6 +268,61 @@ static const MemoryRegionOps extioi_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
-+static MemTxResult extioi_virt_readw(void *opaque, hwaddr addr, uint64_t *data,
-+                                     unsigned size, MemTxAttrs attrs)
-+{
-+    LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
-+
-+    switch (addr) {
-+    case EXTIOI_VIRT_FEATURES:
-+        *data = s->features;
-+        break;
-+    case EXTIOI_VIRT_CONFIG:
-+        *data = s->status;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult extioi_virt_writew(void *opaque, hwaddr addr,
-+                          uint64_t val, unsigned size,
-+                          MemTxAttrs attrs)
-+{
-+    LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
-+
-+    switch (addr) {
-+    case EXTIOI_VIRT_FEATURES:
-+        return MEMTX_ACCESS_ERROR;
-+
-+    case EXTIOI_VIRT_CONFIG:
-+        /*
-+         * extioi features can only be set at disabled status
-+         */
-+        if ((s->status & BIT(EXTIOI_ENABLE)) && val) {
-+            return MEMTX_ACCESS_ERROR;
-+        }
-+
-+        s->status = val & s->features;
-+        break;
-+    default:
-+        break;
-+    }
-+    return MEMTX_OK;
-+}
-+
-+static const MemoryRegionOps extioi_virt_ops = {
-+    .read_with_attrs = extioi_virt_readw,
-+    .write_with_attrs = extioi_virt_writew,
-+    .impl.min_access_size = 4,
-+    .impl.max_access_size = 4,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 8,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
- static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
- {
-     LoongArchExtIOI *s = LOONGARCH_EXTIOI(dev);
-@@ -284,6 +342,16 @@ static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
-     memory_region_init_io(&s->extioi_system_mem, OBJECT(s), &extioi_ops,
-                           s, "extioi_system_mem", 0x900);
-     sysbus_init_mmio(sbd, &s->extioi_system_mem);
-+
-+    if (s->features & BIT(EXTIOI_HAS_VIRT_EXTENSION)) {
-+        memory_region_init_io(&s->virt_extend, OBJECT(s), &extioi_virt_ops,
-+                              s, "extioi_virt", EXTIOI_VIRT_SIZE);
-+        sysbus_init_mmio(sbd, &s->virt_extend);
-+        s->features |= EXTIOI_VIRT_HAS_FEATURES;
-+    } else {
-+        s->status |= BIT(EXTIOI_ENABLE);
-+    }
-+
-     s->cpu = g_new0(ExtIOICore, s->num_cpu);
-     if (s->cpu == NULL) {
-         error_setg(errp, "Memory allocation for ExtIOICore faile");
-@@ -304,6 +372,13 @@ static void loongarch_extioi_finalize(Object *obj)
-     g_free(s->cpu);
- }
- 
-+static void loongarch_extioi_reset(DeviceState *d)
-+{
-+    LoongArchExtIOI *s = LOONGARCH_EXTIOI(d);
-+
-+    s->status = 0;
-+}
-+
- static int vmstate_extioi_post_load(void *opaque, int version_id)
- {
-     LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
-@@ -333,8 +408,8 @@ static const VMStateDescription vmstate_extioi_core = {
- 
- static const VMStateDescription vmstate_loongarch_extioi = {
-     .name = TYPE_LOONGARCH_EXTIOI,
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .post_load = vmstate_extioi_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(bounce, LoongArchExtIOI, EXTIOI_IRQS_GROUP_COUNT),
-@@ -347,12 +422,16 @@ static const VMStateDescription vmstate_loongarch_extioi = {
- 
-         VMSTATE_STRUCT_VARRAY_POINTER_UINT32(cpu, LoongArchExtIOI, num_cpu,
-                          vmstate_extioi_core, ExtIOICore),
-+        VMSTATE_UINT32(features, LoongArchExtIOI),
-+        VMSTATE_UINT32(status, LoongArchExtIOI),
-         VMSTATE_END_OF_LIST()
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index e7edc6c9f9..0ab2b6860a 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -866,8 +866,9 @@ static void virt_firmware_init(LoongArchVirtMachineState *lvms)
      }
- };
- 
- static Property extioi_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", LoongArchExtIOI, num_cpu, 1),
-+    DEFINE_PROP_BIT("has-virtualization-extension", LoongArchExtIOI, features,
-+                    EXTIOI_HAS_VIRT_EXTENSION, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-@@ -361,6 +440,7 @@ static void loongarch_extioi_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = loongarch_extioi_realize;
-+    dc->reset   = loongarch_extioi_reset;
-     device_class_set_props(dc, extioi_properties);
-     dc->vmsd = &vmstate_loongarch_extioi;
  }
+ 
+-static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
+-                                  uint64_t val, unsigned size)
++static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
++                                         uint64_t val, unsigned size,
++                                         MemTxAttrs attrs)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
+     uint64_t features;
+@@ -875,12 +876,12 @@ static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
+     switch (addr) {
+     case MISC_FUNC_REG:
+         if (!virt_is_veiointc_enabled(lvms)) {
+-            return;
++            return MEMTX_OK;
+         }
+ 
+         features = address_space_ldl(&lvms->as_iocsr,
+                                      EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+-                                     MEMTXATTRS_UNSPECIFIED, NULL);
++                                     attrs, NULL);
+         if (val & BIT_ULL(IOCSRM_EXTIOI_EN)) {
+             features |= BIT(EXTIOI_ENABLE);
+         }
+@@ -890,11 +891,15 @@ static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
+ 
+         address_space_stl(&lvms->as_iocsr,
+                           EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+-                          features, MEMTXATTRS_UNSPECIFIED, NULL);
++                          features, attrs, NULL);
+     }
++
++    return MEMTX_OK;
+ }
+ 
+-static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
++static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
++                                        uint64_t *data,
++                                        unsigned size, MemTxAttrs attrs)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
+     uint64_t ret = 0;
+@@ -924,7 +929,7 @@ static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
+ 
+         features = address_space_ldl(&lvms->as_iocsr,
+                                      EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+-                                     MEMTXATTRS_UNSPECIFIED, NULL);
++                                     attrs, NULL);
+         if (features & BIT(EXTIOI_ENABLE)) {
+             ret |= BIT_ULL(IOCSRM_EXTIOI_EN);
+         }
+@@ -933,12 +938,13 @@ static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
+         }
+     }
+ 
+-    return ret;
++    *data = ret;
++    return MEMTX_OK;
+ }
+ 
+ static const MemoryRegionOps virt_iocsr_misc_ops = {
+-    .read  = virt_iocsr_misc_read,
+-    .write = virt_iocsr_misc_write,
++    .read_with_attrs  = virt_iocsr_misc_read,
++    .write_with_attrs = virt_iocsr_misc_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
 -- 
 2.34.1
 
