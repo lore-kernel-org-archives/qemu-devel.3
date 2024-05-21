@@ -4,162 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBDCC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 10:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED26C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 10:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9N4b-0005m6-3y; Tue, 21 May 2024 06:50:25 -0400
+	id 1s9N6o-0006mC-Nd; Tue, 21 May 2024 06:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1s9N4Z-0005le-LI; Tue, 21 May 2024 06:50:23 -0400
-Received: from mail-db8eur05on2071f.outbound.protection.outlook.com
- ([2a01:111:f400:7e1a::71f]
- helo=EUR05-DB8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1s9N4W-0007FA-5p; Tue, 21 May 2024 06:50:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=g/M3OCSEOBaVxBMJNz4EmsEN9747ag/8AZXDO0u0P+H3Em/HyE2sLkFe60WOdutGXWMi3DgLG9wicoHhMY7RCAOglXlU9dWz5ooevIJc9in2kqd5ECoEG7Wd54dmWiagwZC0OCgFCjpi3DZNywyTub9IdAtsbjxHP1BYsDK/9XnPrHa4VnYdyIhj+b2ob7gCQqnD+DGDE6LtNpzD9Q4rM/fJbxAG8pHh1a7UYwiuzNEh02zzauWt+lpXJJt1C/V2hotQNKSn+DzmdnQ2P6IuhLzyA8rjE+QZ6VFshhx6JDfrZ1YtCsmpvzD+/N3Y3BUJpDLr4Lv59u90u55Ico1zvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OVMpI92TMyyIfj6scHsxQYW606HpzP+9v8Ko7PObq5c=;
- b=oK7s5XVzABAzmbQsRYdNqhsak/HddSSLE7DdPiY4Fbl9YqTzsqXkZ3cm2nQprwEbCHlK3NybmMw0p6d62JfoUNodJKYncT1SG1mwa1Gb0VoFIi+nYbUiwjtMggHjvUbHZYblP+/C3DKrK8P4hlD21JGSKcWLpZYD/zAN0HC4Vl2St6wfaoG2P/y/Nje7ZX2a2q2lC3vemWqXKBU6cfUKn/3iAPbQVpgchDTOH5lXz9ul2PCBTR1Ib4oK1gawQ1cUzWE+z9lAubPCV/A5eEK3OGrhUs7P5IQMQFF60GiJ2reeel/SEY9AXvkYATJhQDm6cel3CjwCmvWmZxBwcfrudA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OVMpI92TMyyIfj6scHsxQYW606HpzP+9v8Ko7PObq5c=;
- b=Ew+V1Bmrb9vHoo9aovrM+wYPEXVC9TL55G1kCTVX1grba+6U6cbhsRqmX+v2AMBVJVy7d+O0iVu+Gr49nOYaWsAcDLc3DGfbyTWVRsgNhE4PYGS+eyovdMk81Xbm8W7gD9vrHqRhP25gvthIPyxlhqjFVGX7yZ/2e3+twXZtySw806ixafTY93TbVowp8lOj5x5MJJZEl9QaG6MTRnCoNim/FzJnSXxRVyZv+3BTBeHxh45uNtjFSBgjMhnNRkJUeDXVjskBHG8icwNJ17wgTvaBSRBOCyK53lFM/Cm/IZeB42eDGj7IXuO/lmGsfw4mSOUDUMPRZXt/6TAEE/3AIw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19) by AS8PR08MB8490.eurprd08.prod.outlook.com
- (2603:10a6:20b:567::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.35; Tue, 21 May
- 2024 10:50:14 +0000
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::cebf:31ab:1e25:cfb5]) by VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::cebf:31ab:1e25:cfb5%6]) with mapi id 15.20.7587.030; Tue, 21 May 2024
- 10:50:14 +0000
-Message-ID: <9bad51d1-979b-432f-b77b-945b6d988e94@virtuozzo.com>
-Date: Tue, 21 May 2024 12:50:12 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/11] iotests/271: add test cases for subcluster-based
- discard/unmap
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- eblake@redhat.com, berto@igalia.com, jean-louis@dupond.be, den@virtuozzo.com
-References: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
- <20240513063203.113911-12-andrey.drobyshev@virtuozzo.com>
-Content-Language: en-US
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-In-Reply-To: <20240513063203.113911-12-andrey.drobyshev@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: WA1P291CA0003.POLP291.PROD.OUTLOOK.COM
- (2603:10a6:1d0:19::6) To VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s9N6o-0006lt-01
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 06:52:42 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s9N6j-0007VV-F4
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 06:52:41 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1bbdb362so6723055a12.1
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 03:52:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1716288754; x=1716893554; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hXn0pKAoJr6AbY03oJK9cmWl2e+1cKAehKSsZgDfkGE=;
+ b=Cnv5OEaazLzef6XZHYrt265Nr1NSXbQ6bgi9cWeETeNvlB/Z1HlbcjE7IWS39Gj7Hi
+ USwwSqn4/9HhtWKJh8NeEy6Es+fiajNRFsq5Cw7l49gXblmxLKtBPvaiQhgbjJSEUNUX
+ 5nf5QejZ4pPvvzCRjNRan1O3Qt4RayuPdFRtyd5t5NXn+ON6ovCSEruXyEVXTH6pM8xd
+ KQR7fAD60Ix+VQZmOgG1M7j5Ix/WYl2CSgVR7a8skfigZmnwEaluNHO6sUM2vgfdoueS
+ 9F2zZLWg7owk6N+9MoRLJ5pCWBRLfAUU10BHQM4qIEGmr4nl0BwPZaC0QWPyjh3vIc/4
+ 9T5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716288754; x=1716893554;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hXn0pKAoJr6AbY03oJK9cmWl2e+1cKAehKSsZgDfkGE=;
+ b=eFSLOWT8daAf/bVrQRtKESxmxZOPwcNRIsRyLpNgQahqPIlQxsF6lTT/U05TFHCZCJ
+ kH61JHfLdXxCleR7P6xY9EaQ4OnFLdH0ivwmZQDu9QoGkdFlRpDXI1UXkwRfgItG/Fnd
+ ZwGcjFMT4hU4LYJ7T8a2diFZRXQybykGnbttK0rz62xB9VX5SKmypqeiPzhceI2NfiYN
+ ZkDHUiWUVGJ/i/K2be4jhsLfQj4aVRKfgiZcIFRocGbOEqavGLTTGZKxVScW3ATb/Ob6
+ AWp74/1oJNn/x98kldV/0RRYLhNGomzjqGuItDkGnkfLTQJdsCAkIFkXRcIE1DGZXu0F
+ cVEQ==
+X-Gm-Message-State: AOJu0YyTpjlnR0MbAU9hgP+kACEuAmQpgRX3RLd6GorVlBiE91jS7WPn
+ hGQV9xM0oGaoOQULRj7JqoEBRlqcQ9m1PCQuMmxpA3yvTeZogR9+1VnqVL9hVQQTF92Du4drd5r
+ 4KYXn8qlq/P4UGys03v+ianXMb+uU2kCaGDvkUA==
+X-Google-Smtp-Source: AGHT+IE7B0W0CxdKc3JB4cEe2rq1Q9342VBmgYAMUJmKHbIVUIoNAABncBDga3ZoD2IgLjUCgLHz/4Rx+IcM4CaKwk4=
+X-Received: by 2002:a50:aade:0:b0:572:9b21:e0c9 with SMTP id
+ 4fb4d7f45d1cf-5734d5cf9damr33662646a12.14.1716288754049; Tue, 21 May 2024
+ 03:52:34 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|AS8PR08MB8490:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4222386e-6916-427b-ca06-08dc7983cba4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SDdDWWNVTkZCZk5vRHBFZkFQS2lkc0lDRW5yY2NFV1l4c0NDQlVIZEFvQU1m?=
- =?utf-8?B?ZGYvczdyS0dwakJJbVlzQU92Y1RjdmVYNmYxdnZaS2Y4Nm81TWIzcGYrY2JZ?=
- =?utf-8?B?YzlGY0NKb04xNVFBRzFscDdWWmJaSHZtbmhoWXZHNVpxcWdlalgrRFpnVWtM?=
- =?utf-8?B?YWsxRE9pWjF6NzJHdGhvRlZJTGd1NGVxR24rN2N5c2FLWUN6bkdEdS9FMnNH?=
- =?utf-8?B?eDZjU2VhQ1Ftb0w1TWcyUHVvR3ppaFpHOUt5TjQvbVNOaEVLaG5HaHBpRXVQ?=
- =?utf-8?B?aFlDYWFsYlZIelBlRGZPWVljaUo0NGF1dHBIU1krbzN0U0l3a2xIWWZ2L05V?=
- =?utf-8?B?Zk1xYnhPbENtV1B3ZEVUZDNOODBReTYrZWZkQzNmWkh1QjZrZEhHTGJxRzEx?=
- =?utf-8?B?b2lWYjRXMTFOb0wyK1dVektObElwNkpJcGE1UmJWK1VBTklUcHNZaHFhV2xl?=
- =?utf-8?B?TDZydUFFRVh2VGdMQXY1em1SQk95RWR6YmVDemZHVlJmWDJJclFPWkUxdnNp?=
- =?utf-8?B?UHl2UzhCbmhnTW1HZWV4OG93RmVpcGEyWWRoL0x5Njh4b1JONmZkQlZoUlpF?=
- =?utf-8?B?V1NTSHgyMmJiOVdzckV2WVBLRFRTWnJOc3VZeG1nV0dWT3JUTWRNd3FZWDkr?=
- =?utf-8?B?L01lejJmbXJpajFxejR1ckVkVmpETUZoeXVhT1Flc3EyeE1pU3ZVRHV5dmdP?=
- =?utf-8?B?a01pRk1WZFl1NVoySW5OcFBrRHIzcEwzaHR0U292MTltUEtrOS9SU1NLZGNj?=
- =?utf-8?B?TWNpOHhiVEthTDJsS1pzY2tia09ocFUxdnFuRVFvQW1EbzhFM21CVk92YTZs?=
- =?utf-8?B?ZzE5bGxMTTQrYmhTZ2wrZVREYWlmaTlrOERlczJUU1prUDZUN0NLSWJYeGJJ?=
- =?utf-8?B?bDhua1ZGZFRFNmdOSGVxaVZpanpFOE9nT2VzUXRKdEMrWExsVjdqM2MraHk5?=
- =?utf-8?B?OFBzMVFLSXhJYVp3S1psNjUvbi9MZFFIQXpqYXNFbmdZNzFQZkprUjE3Mmkx?=
- =?utf-8?B?eml1eXRCMEhsNW9SOEdTVS9ZbGc0bENTV3BLclg2ckUvNXJqOU5qUVJ3N2dj?=
- =?utf-8?B?Y0tDYUNIdkh4OTlodnpPYVlYbFVjejFWSTdaMVpSQVFVbHJRMzlINVRJRmN6?=
- =?utf-8?B?Z0RpeVd1czdxZk9jbDZxa3pUYWk0NG96RGc1TTRNSFlFZ0l3Kzd0TXVHb1RO?=
- =?utf-8?B?VDloYU9xYjFXSUk1NDZ3OS9WWWUzWnNLK053SHRkRFJsTFlZck5mcjV6ck9x?=
- =?utf-8?B?QXMrLzdXU1ZiUnpCalJrZXlnL05FUklSdjRTTmdtNTVESjBJUS9vUEltdmE1?=
- =?utf-8?B?WFZ6SDMzd3FZcktVTVYxa1VTVitKd2d6T3hhR2p4WGVyM3k4REY2eENVMzhq?=
- =?utf-8?B?aG1FS2EycmRnQy9UOFp2NmljMlBKenl3dFVOTzVRbTlObnVsakYwbTEwZTJz?=
- =?utf-8?B?c3J5V2owZXBUS05oVzY1bmI1RFFDSEVZQlVzaFJ1Mk4vVklwU0RBZHNXZHBi?=
- =?utf-8?B?eUFNbzlkZ1BlemppektlbGREY3d2bGIycXlleTF2L1VQMW1acVljYnoxYnJw?=
- =?utf-8?B?aGRueHdMeHNSb2xEcWsrdklZc3Y0U1VYZGtPSzFTMHZQdFB3cmNwempXTVhI?=
- =?utf-8?B?bCtlVHBRUncrK0V2N3ZQM2VmR3E2aUIycktOOVAydkVmZTB0Z016YWZveWRp?=
- =?utf-8?B?ekp2Y1F4dk03bWcrQ3ZlWXRtNXJGVElLOGxwWjBVZHZrZ0JvbTBuSnBnPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MFRHRzZzZmZKQ1UxckFEdUljdlArVTNzcDFydWlRTWxEL0NyOXoxK0dRYUVw?=
- =?utf-8?B?OFlXRkVvMFo2OW1Oem5Ka2JUZUtDVkh2cWFOMFl1MngxYzlsZ05nL3BKdGc1?=
- =?utf-8?B?ZVF1WXRIYWtLaXpicHQ4MnRHYU50Ym82ZDBjY25zMGt2RzlwTm1uYVNmbzJv?=
- =?utf-8?B?VjJsdFZkWVR2OXZSZGFnYWZ0OVU3MUNSZFlXcDMrVnVjblpvL0x6RWRxWXVG?=
- =?utf-8?B?QzgrWXN2ZGtlNTdqNG1XQ3hGQzBFRDVoRjdmVlZaUDZsL2ZoRnJSNkZTbjVW?=
- =?utf-8?B?RERZcmJUOFR0dVRuWFNkR3Q0NW9CUWxQUFZTSmxMamt6VzRCdG1teW5ZZnZZ?=
- =?utf-8?B?MDY3ZVFoSkgxcVNXVzhVZ05vMUtNeDhkSnVhMUEyZGtFV2R1SE1wQzVEWEUy?=
- =?utf-8?B?NVpaZkRCVzlYNCt2N01TZXFWTkI2SXRoWENiTGlLZ2xRSCtFQXcwMXQvOGlP?=
- =?utf-8?B?UnFFMHdKaU42NkRSQmRNeXA4Z1Bod1d1enpWRTlvWW9yNVA2Q1R1aEswdERz?=
- =?utf-8?B?eW94SDY4SFB2MkZiZm5wWVBoc2JZNHZWZnYyQnFSbjdOaXkzaEdQTTRTZW1O?=
- =?utf-8?B?N3BHZnQxalNKcWNLWnJMOEoyamdZMkZ0OVVCYlovbEd0TGJjN0ZUbWhGOFZZ?=
- =?utf-8?B?eUNHVlBRZ1c0WHIydTltSFRkMjI2V09RdGhTTXl5K2RNTUJ5bUtHelBxbDN4?=
- =?utf-8?B?aEE4MVk4NzQwemxXcWU4R2I4MHBhQWY2S2VGcVlKQUE3cnhNdVU2aGxWelpB?=
- =?utf-8?B?aG9GdTFFL3BoZXlReUUrWGJDWENFYzlJQTNCaitsbTQ3dG01a0lMdlJBR2JC?=
- =?utf-8?B?TXkyQ1R4a1lCVzJrb25kZ3Q3M3hrdTN2R1E4RWEyV1dOd0lzc0s3bjNvZDVp?=
- =?utf-8?B?Sm92SFBBTXZCWHdOVDBBcFc3Y2VxZWZJcXZnZXNlQmVRRFlJcDFyVWtoV3JD?=
- =?utf-8?B?Y1JuZ1dOSnh2dU1Ic0tKSTIvbkNkNXlaV2VmZlVXWnFzR1RxOEllb096T0F4?=
- =?utf-8?B?VUtFNlNUVGJ0emw5bTVVRlMyR2NyNU5MdXpyY2xxWEppV3MrelBaaDdzVVlR?=
- =?utf-8?B?Yng0U1BNN2VXb21nN0xjbEJpYk4zcmttSzVDYlI1YTF3U1c4T2VSYTNTRzg5?=
- =?utf-8?B?RmZZR29EdVh2VFhQWGZ3aVAwTlB6NW1JSEozVWxMekxZNCttNmZIeUxoY1Jt?=
- =?utf-8?B?UzkxbWYrTGx6QXRTdTVxUTdUbG5CVWRibVcya0xGR0w4K3ZaTmlKRXdmWEFM?=
- =?utf-8?B?QmRNWmN0T0FUZC95Mk9ORTV3dXlPT1NCSm1EQXBKK3Bkc1hDbTdFNm5iU2FO?=
- =?utf-8?B?MnVvb2xCSGJXdkZVWDU4c1orK2ZqTWFQVExtOTFKa2FLWlU0WGhJVm1PZWI2?=
- =?utf-8?B?NlhmckRhc3dxMXZXVFhDNVRNVGFmUHdncnhSZGRnNzRvT2dIY1ByYnl3U0Nt?=
- =?utf-8?B?eklWNnR2anFQQkovVzMvOTQrM2ZrR2Z2TnY5MEMvcFEyTXBPT3lmbjRSNEF0?=
- =?utf-8?B?d1EvcCsvU0h3c2YwaUtadHlTV2FDcjluTzhlVmNMQTBpMGFkYWRwTHdKMWJ0?=
- =?utf-8?B?ejdnV2NTaTBXaWxNaGs4L1BiVkxUZXdJNzJrQTdSYzJDMTBTRFYzT3hLU05J?=
- =?utf-8?B?elpRSUJyZjJVQ1NWeUtvbjlnd2pMNTE3d3dZcFcwdENFY1hjS3pqaHp2eGpN?=
- =?utf-8?B?RmhMOFNML29MeDRnMVNPUmJWdGpOS3UzUm5Pak55ZmFjNWFEQTdSS20zUmNu?=
- =?utf-8?B?TWFCK0QzME45MFQrQVduQTVnY09UcDBNNkZwR011c2txamhpVVRKVTQxQ21T?=
- =?utf-8?B?YStCNnIvVWQwUGowbXZneWdraFlSK21BQnNZNHUwOVhOaEJaU2oxYWFUNzJj?=
- =?utf-8?B?YXVLWTg3L0NHQngxMWNOaGxtTDZVTnYxQVo4SFhZenRMQjRxcUlOb1NwVjdI?=
- =?utf-8?B?Y3hScEVzaG9hTFQyVHU1c3c5NkRTcmx2Lyt3NWVGZEZWVDJESHVaMHUyVHhP?=
- =?utf-8?B?T0tZTGVDNU5FYzc5SnN3VGt3TUN4M2lLcHQrWmc1SHo1bmYyQVYzZnpFODRo?=
- =?utf-8?B?L1JxcTB6RGpja2czd1RKT3N1MW5tcUNSclAzRVAwaGxhVEhUblpEdmJuRFJC?=
- =?utf-8?B?dmcvZ0dzc0lkQ2JKRXZ6S0F0TTRSOTd6REwybUFWSFNEczNZWnpUdVpzZ3A3?=
- =?utf-8?Q?rV+awzoQ2qnh7TAgPRIkMNg=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4222386e-6916-427b-ca06-08dc7983cba4
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2024 10:50:14.5050 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: I83sAolrSc9OyDAJYBmSaGUKOF7UJHwm0jUXFawqG4390kTZlFq9l6fwjSlEIdFwociqO8WRWu03ULZNeeuWt8++uQwqkTy0CRfkxRGkYJE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB8490
-Received-SPF: pass client-ip=2a01:111:f400:7e1a::71f;
- envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR05-DB8-obe.outbound.protection.outlook.com
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ <20240307160319.675044-4-dbarboza@ventanamicro.com>
+ <CANzO1D35eYan8axod37tAg88r=qg4Jt0CVTvO+0AiwRLbbV64A@mail.gmail.com>
+ <09dc2e36-741d-44de-aac8-4ed2495eaeb1@ventanamicro.com>
+ <abd1e74a-8d74-4ef9-b917-ce1a3c8e6af9@ventanamicro.com>
+ <CAE_xrPhNhxWGT1_MvUJ9Jecz5obRc5tpdk9u_BW57uqC_G1uBA@mail.gmail.com>
+ <4de35d60-d605-47e6-87fe-0ed7c1793069@ventanamicro.com>
+In-Reply-To: <4de35d60-d605-47e6-87fe-0ed7c1793069@ventanamicro.com>
+From: Frank Chang <frank.chang@sifive.com>
+Date: Tue, 21 May 2024 18:52:22 +0800
+Message-ID: <CAE_xrPgME8jCaEuW-yDK-3kzLu66MCMfppt3dpRO5jQOGH9heg@mail.gmail.com>
+Subject: Re: [PATCH v2 03/15] hw/riscv: add RISC-V IOMMU base emulation
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com, 
+ Sebastien Boeuf <seb@rivosinc.com>, Sunil V L <sunilvl@ventanamicro.com>
+Content-Type: multipart/alternative; boundary="0000000000008495510618f49d4d"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=frank.chang@sifive.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,353 +96,1440 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000008495510618f49d4d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Daniel,
 
-On 5/13/24 08:32, Andrey Drobyshev wrote:
-> Add a bunch of test cases covering new subclusters behaviour: unmap of
-> last allocated subclusters; unmap of subclusters within unallocated
-> cluster; discard of unallocated subclusters within a cluster; regular discard
-> of subclusters within a cluster; discard of last allocated subclusters.
+On Tue, May 21, 2024 at 12:17=E2=80=AFAM Daniel Henrique Barboza <
+dbarboza@ventanamicro.com> wrote:
+
+> Hi Frank,
 >
-> Also make all discard/unmap operations enable trace point 'file_do_fallocate'
-> so that actual fallocate() calls are visible.
+> On 5/16/24 04:13, Frank Chang wrote:
+> > On Mon, May 13, 2024 at 8:37=E2=80=AFPM Daniel Henrique Barboza <
+> dbarboza@ventanamicro.com <mailto:dbarboza@ventanamicro.com>> wrote:
+> >
+> >     Hi Frank,
+> >
+> >
+> >     On 5/8/24 08:15, Daniel Henrique Barboza wrote:
+> >      > Hi Frank,
+> >      >
+> >      > I'll reply with that I've done so far. Still missing some stuff:
+> >      >
+> >      > On 5/2/24 08:37, Frank Chang wrote:
+> >      >> Hi Daniel,
+> >      >>
+> >      >> Daniel Henrique Barboza <dbarboza@ventanamicro.com <mailto:
+> dbarboza@ventanamicro.com>> =E6=96=BC 2024=E5=B9=B43=E6=9C=888=E6=97=A5 =
+=E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8812:04=E5=AF=AB=E9=81=93=EF=BC=9A
+> >      >>>
+> >      >>> From: Tomasz Jeznach <tjeznach@rivosinc.com <mailto:
+> tjeznach@rivosinc.com>>
+> >      >>>
+> >      >>> The RISC-V IOMMU specification is now ratified as-per the RISC=
+-V
+> >      >>> international process. The latest frozen specifcation can be
+> found
+> >      >>> at:
+> >      >>>
+> >      >>>
+> https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv=
+-iommu.pdf
+> <
+> https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv=
+-iommu.pdf
+> >
+> >      >>>
+> >      >>> Add the foundation of the device emulation for RISC-V IOMMU,
+> which
+> >      >>> includes an IOMMU that has no capabilities but MSI interrupt
+> support and
+> >      >>> fault queue interfaces. We'll add add more features
+> incrementally in the
+> >      >>> next patches.
+> >      >>>
+> >      >>> Co-developed-by: Sebastien Boeuf <seb@rivosinc.com <mailto:
+> seb@rivosinc.com>>
+> >      >>> Signed-off-by: Sebastien Boeuf <seb@rivosinc.com <mailto:
+> seb@rivosinc.com>>
+> >      >>> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com <mailto:
+> tjeznach@rivosinc.com>>
+> >      >>> Signed-off-by: Daniel Henrique Barboza <
+> dbarboza@ventanamicro.com <mailto:dbarboza@ventanamicro.com>>
+> >      >>> ---
+> >      >>>   hw/riscv/Kconfig         |    4 +
+> >
+> >     (...)
+> >
+> >      >>> +
+> >      >>> +    s->iommus.le_next =3D NULL;
+> >      >>> +    s->iommus.le_prev =3D NULL;
+> >      >>> +    QLIST_INIT(&s->spaces);
+> >      >>> +    qemu_cond_init(&s->core_cond);
+> >      >>> +    qemu_mutex_init(&s->core_lock);
+> >      >>> +    qemu_spin_init(&s->regs_lock);
+> >      >>> +    qemu_thread_create(&s->core_proc, "riscv-iommu-core",
+> >      >>> +        riscv_iommu_core_proc, s, QEMU_THREAD_JOINABLE);
+> >      >>
+> >      >> In our experience, using QEMU thread increases the latency of
+> command
+> >      >> queue processing,
+> >      >> which leads to the potential IOMMU fence timeout in the Linux
+> driver
+> >      >> when using IOMMU with KVM,
+> >      >> e.g. booting the guest Linux.
+> >      >>
+> >      >> Is it possible to remove the thread from the IOMMU just like
+> ARM, AMD,
+> >      >> and Intel IOMMU models?
+> >      >
+> >      > Interesting. We've been using this emulation internally in
+> Ventana, with
+> >      > KVM and VFIO, and didn't experience this issue. Drew is on CC an=
+d
+> can talk
+> >      > more about it.
+> >      >
+> >      > That said, I don't mind this change, assuming it's feasible to
+> make it for this
+> >      > first version.  I'll need to check it how other IOMMUs are doing
+> it.
+> >
+> >
+> >     I removed the threading and it seems to be working fine without it.
+> I'll commit this
+> >     change for v3.
+> >
+> >      >
+> >      >
+> >      >
+> >      >>
+> >      >>> +}
+> >      >>> +
+> >      >
+> >      > (...)
+> >      >
+> >      >>> +
+> >      >>> +static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void
+> *opaque, int devfn)
+> >      >>> +{
+> >      >>> +    RISCVIOMMUState *s =3D (RISCVIOMMUState *) opaque;
+> >      >>> +    PCIDevice *pdev =3D pci_find_device(bus, pci_bus_num(bus)=
+,
+> devfn);
+> >      >>> +    AddressSpace *as =3D NULL;
+> >      >>> +
+> >      >>> +    if (pdev && pci_is_iommu(pdev)) {
+> >      >>> +        return s->target_as;
+> >      >>> +    }
+> >      >>> +
+> >      >>> +    /* Find first registered IOMMU device */
+> >      >>> +    while (s->iommus.le_prev) {
+> >      >>> +        s =3D *(s->iommus.le_prev);
+> >      >>> +    }
+> >      >>> +
+> >      >>> +    /* Find first matching IOMMU */
+> >      >>> +    while (s !=3D NULL && as =3D=3D NULL) {
+> >      >>> +        as =3D riscv_iommu_space(s,
+> PCI_BUILD_BDF(pci_bus_num(bus), devfn));
+> >      >>
+> >      >> For pci_bus_num(),
+> >      >> riscv_iommu_find_as() can be called at the very early stage
+> >      >> where software has no chance to enumerate the bus numbers.
+> >
+> >     I investigated and this doesn't seem to be a problem. This function
+> is called at the
+> >     last step of the realize() steps of both riscv_iommu_pci_realize()
+> and
+> >     riscv_iommu_sys_realize(), and by that time the pci_bus_num() is
+> already assigned.
+> >     Other iommus use pci_bus_num() into their own get_address_space()
+> callbacks like
+> >     this too.
+> >
+> >
+> > Hi Daniel,
+> >
+> > IIUC, pci_bus_num() by default is assigned to pcibus_num():
+> >
+> > static int pcibus_num(PCIBus *bus)
+> > {
+> >      if (pci_bus_is_root(bus)) {
+> >          return 0; /* pci host bridge */
+> >      }
+> >      return bus->parent_dev->config[PCI_SECONDARY_BUS];
+> > }
+> >
+> > If the bus is not the root bus, it tries to read the bus' parent device=
+'s
+> > secondary bus number (PCI_SECONDARY_BUS) field in the PCI configuration
+> space.
+> > This field should be programmable by the SW during PCIe enumeration.
+> > But I don't think SW has a chance to be executed before
+> riscv_iommu_sys_realize() is called,
+> > since it's pretty early before CPU's execution unless RISC-V IOMMU is
+> hot-plugged.
+> > Even if RISC-V IOMMU is hot-plugged, I think riscv_iommu_sys_realize()
+> is still called
+> > before SW aware of the existence of IOMMU on the PCI topology tree.
+> >
+> > Do you think this matches your observation?
 >
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->   tests/qemu-iotests/271     | 70 +++++++++++++++++++++++++++++---------
->   tests/qemu-iotests/271.out | 69 ++++++++++++++++++++++++++++++++++---
->   2 files changed, 119 insertions(+), 20 deletions(-)
+> It does. You have a good point on how the pcibus_num() can vary if SW
+> wants to
+> change the PCI_SECONDARY_BUS and the IOMMU isn't in a root bus. Note that
+> this
+> will not happen with the existing riscv-iommu-pci device as it is now,
+> since it
+> has code to prevent the device to be attached to non-pci root buses, but
+> there's
+> no restrictions in the riscv-iommu-sys device.
 >
-> diff --git a/tests/qemu-iotests/271 b/tests/qemu-iotests/271
-> index 04c57813c2..8b80682cff 100755
-> --- a/tests/qemu-iotests/271
-> +++ b/tests/qemu-iotests/271
-> @@ -81,6 +81,12 @@ _verify_l2_bitmap()
->       fi
->   }
->   
-> +# Filter out trace params which we don't control (file fd)
-> +_filter_trace_fallocate()
-> +{
-> +    sed -E 's/fd=[0-9]+/fd=N/g'
-> +}
-> +
->   # This should be called as _run_test c=XXX sc=XXX off=XXX len=XXX cmd=XXX
->   # c:   cluster number (0 if unset)
->   # sc:  subcluster number inside cluster @c (0 if unset)
-> @@ -94,12 +100,13 @@ _verify_l2_bitmap()
->   #      discard  -> discard
->   _run_test()
->   {
-> -    unset c sc off len cmd
-> +    unset c sc off len cmd opt
->       for var in "$@"; do eval "$var"; done
->       case "${cmd:-write}" in
->           zero)
->               cmd="write -q -z";;
->           unmap)
-> +            opt="--trace enable=file_do_fallocate"
->               cmd="write -q -z -u";;
->           compress)
->               pat=$((${pat:-0} + 1))
-> @@ -108,6 +115,7 @@ _run_test()
->               pat=$((${pat:-0} + 1))
->               cmd="write -q -P ${pat}";;
->           discard)
-> +            opt="--trace enable=file_do_fallocate"
->               cmd="discard -q";;
->           *)
->               echo "Unknown option $cmd"
-> @@ -121,7 +129,7 @@ _run_test()
->       cmd="$cmd ${offset} ${len}"
->       raw_cmd=$(echo $cmd | sed s/-c//) # Raw images don't support -c
->       echo $cmd | sed 's/-P [0-9][0-9]\?/-P PATTERN/'
-> -    $QEMU_IO -c "$cmd" "$TEST_IMG" | _filter_qemu_io
-> +    $QEMU_IO $opt -c "$cmd" "$TEST_IMG" 2>&1 | _filter_qemu_io | _filter_trace_fallocate
->       $QEMU_IO -c "$raw_cmd" -f raw "$TEST_IMG.raw" | _filter_qemu_io
->       _verify_img
->       _verify_l2_bitmap "$c"
-> @@ -202,9 +210,10 @@ for use_backing_file in yes no; do
->       alloc="$(seq 16 31)"; zero="$(seq 0 15)"
->       _run_test sc=0 len=32k cmd=unmap
->   
-> -    ### Zero and unmap cluster #0
-> +    ### Zero and unmap second half of cluster #0 (this will unmap it and
-> +    ### discard l2 entry)
->       alloc=""; zero="$(seq 0 31)"
-> -    _run_test sc=0 len=64k cmd=unmap
-> +    _run_test sc=16 len=32k cmd=unmap
->   
->       ### Write subcluster #1 (middle of subcluster)
->       alloc="1"; zero="0 $(seq 2 31)"
-> @@ -439,6 +448,12 @@ for use_backing_file in yes no; do
->       _verify_l2_bitmap 16
->       _verify_l2_bitmap 17
->   
-> +    # Unmap subclusters #0-#3 of an unallocated cluster #8.  Since
-> +    # 'write -z -u' doesn't lead to full discard, subclusters should become
-> +    # explicitly zeroized
-> +    alloc=""; zero="$(seq 0 3)"
-> +    _run_test c=8 sc=0 len=8k cmd=unmap
-> +
->       # Cluster-aligned request from clusters #9 to #11
->       alloc=""; zero="$(seq 0 31)"
->       _run_test c=9 sc=0 len=192k cmd=unmap
-> @@ -523,26 +538,45 @@ for use_backing_file in yes no; do
->       echo
->       echo "### Discarding clusters with non-zero bitmaps (backing file: $use_backing_file) ###"
->       echo
-> +
-> +    _reset_img 1M
-> +
-> +    # Write first half of cluster #0 and discard another half
-> +    alloc="$(seq 0 15)"; zero=""
-> +    _run_test sc=0 len=32k
-> +    # When discarding unallocated subclusters, they only have to be
-> +    # explicitly zeroized when the image has a backing file
->       if [ "$use_backing_file" = "yes" ]; then
-> -        _make_test_img -o extended_l2=on -F raw -b "$TEST_IMG.base" 1M
-> +        alloc="$(seq 0 15)"; zero="$(seq 16 31)"
->       else
-> -        _make_test_img -o extended_l2=on 1M
-> +        alloc="$(seq 0 15)"; zero=""
->       fi
-> -    # Write clusters #0-#2 and then discard them
-> -    $QEMU_IO -c 'write -q 0 128k' "$TEST_IMG"
-> -    $QEMU_IO -c 'discard -q 0 128k' "$TEST_IMG"
-> +    _run_test sc=16 len=32k cmd=discard
-> +
-> +    # Write cluster #0 and discard its subclusters #0-#3
-> +    alloc="$(seq 0 31)"; zero=""
-> +    _run_test sc=0 len=64k
-> +    alloc="$(seq 4 31)"; zero="$(seq 0 3)"
-> +    _run_test sc=0 len=8k cmd=discard
-> +
-> +    # Discard remaining subclusters #4-#32.  This should unmap the cluster
-> +    # and discard its l2 entry
-> +    alloc=""; zero="$(seq 0 31)"
-> +    _run_test sc=4 len=56k cmd=discard
-> +
-> +    # Write clusters #0-#1 and then discard them
-> +    alloc="$(seq 0 31)"; zero=""
-> +    _run_test sc=0 len=128k
->       # 'qemu-io discard' doesn't do a full discard, it zeroizes the
-> -    # cluster, so both clusters have all zero bits set now
-> +    # cluster, so both clusters have all zero bits set after discard
->       alloc=""; zero="$(seq 0 31)"
-> -    _verify_l2_bitmap 0
-> +    _run_test sc=0 len=128k cmd=discard
->       _verify_l2_bitmap 1
-> +
->       # Now mark the 2nd half of the subclusters from cluster #0 as unallocated
->       poke_file "$TEST_IMG" $(($l2_offset+8)) "\x00\x00"
-> +
->       # Discard cluster #0 again to see how the zero bits have changed
-> -    $QEMU_IO -c 'discard -q 0 64k' "$TEST_IMG"
-> -    # And do a full discard of cluster #1 by shrinking and growing the image
-> -    $QEMU_IMG resize --shrink "$TEST_IMG" 64k
-> -    $QEMU_IMG resize "$TEST_IMG" 1M
->       # A normal discard sets all 'zero' bits only if the image has a
->       # backing file, otherwise it won't touch them.
->       if [ "$use_backing_file" = "yes" ]; then
-> @@ -550,7 +584,11 @@ for use_backing_file in yes no; do
->       else
->           alloc=""; zero="$(seq 0 15)"
->       fi
-> -    _verify_l2_bitmap 0
-> +    _run_test sc=0 len=64k cmd=discard
-> +
-> +    # And do a full discard of cluster #1 by shrinking and growing the image
-> +    $QEMU_IMG resize --shrink "$TEST_IMG" 64k
-> +    $QEMU_IMG resize "$TEST_IMG" 1M
->       # A full discard should clear the L2 entry completely. However
->       # when growing an image with a backing file the new clusters are
->       # zeroized to hide the stale data from the backing file
-> diff --git a/tests/qemu-iotests/271.out b/tests/qemu-iotests/271.out
-> index 0b24d50159..c03e4c9bc2 100644
-> --- a/tests/qemu-iotests/271.out
-> +++ b/tests/qemu-iotests/271.out
-> @@ -29,14 +29,17 @@ L2 entry #0: 0x8000000000050000 ffffffff00000000
->   write -q -P PATTERN 0 64k
->   L2 entry #0: 0x8000000000050000 00000000ffffffff
->   write -q -z -u 0 32k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=32768
->   L2 entry #0: 0x8000000000050000 0000ffffffff0000
-> -write -q -z -u 0 64k
-> +write -q -z -u 32k 32k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
->   L2 entry #0: 0x0000000000000000 ffffffff00000000
->   write -q -P PATTERN 3k 512
->   L2 entry #0: 0x8000000000050000 fffffffd00000002
->   write -q -P PATTERN 0 64k
->   L2 entry #0: 0x8000000000050000 00000000ffffffff
->   discard -q 0 64k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
->   L2 entry #0: 0x0000000000000000 ffffffff00000000
->   write -q -c -P PATTERN 0 64k
->   L2 entry #0: 0x4000000000050000 0000000000000000
-> @@ -71,14 +74,17 @@ L2 entry #0: 0x8000000000050000 ffffffff00000000
->   write -q -P PATTERN 0 64k
->   L2 entry #0: 0x8000000000050000 00000000ffffffff
->   write -q -z -u 0 32k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=32768
->   L2 entry #0: 0x8000000000050000 0000ffffffff0000
-> -write -q -z -u 0 64k
-> +write -q -z -u 32k 32k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
->   L2 entry #0: 0x0000000000000000 ffffffff00000000
->   write -q -P PATTERN 3k 512
->   L2 entry #0: 0x8000000000050000 fffffffd00000002
->   write -q -P PATTERN 0 64k
->   L2 entry #0: 0x8000000000050000 00000000ffffffff
->   discard -q 0 64k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
->   L2 entry #0: 0x0000000000000000 ffffffff00000000
->   write -q -c -P PATTERN 0 64k
->   L2 entry #0: 0x4000000000050000 0000000000000000
-> @@ -301,15 +307,20 @@ L2 entry #14: 0x80000000000a0000 00000000ffffffff
->   L2 entry #15: 0x80000000000b0000 00000000ffffffff
->   L2 entry #16: 0x80000000000c0000 00000000ffffffff
->   L2 entry #17: 0x80000000000d0000 00000000ffffffff
-> +write -q -z -u 512k 8k
-> +L2 entry #8: 0x0000000000000000 0000000f00000000
->   write -q -z -u 576k 192k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
->   L2 entry #9: 0x0000000000000000 ffffffff00000000
->   L2 entry #10: 0x0000000000000000 ffffffff00000000
->   L2 entry #11: 0x0000000000000000 ffffffff00000000
->   write -q -z -u 800k 128k
-> +file_do_fallocate fd=N mode=0x03 offset=557056 len=131072
->   L2 entry #12: 0x8000000000080000 ffff00000000ffff
->   L2 entry #13: 0x0000000000000000 ffffffff00000000
->   L2 entry #14: 0x80000000000a0000 0000ffffffff0000
->   write -q -z -u 991k 128k
-> +file_do_fallocate fd=N mode=0x03 offset=753664 len=129024
->   L2 entry #15: 0x80000000000b0000 ffff00000000ffff
->   L2 entry #16: 0x0000000000000000 ffffffff00000000
->   L2 entry #17: 0x80000000000d0000 00007fffffff8000
-> @@ -339,6 +350,7 @@ L2 entry #27: 0x4000000000120000 0000000000000000
->   write -q -c -P PATTERN 1792k 64k
->   L2 entry #28: 0x4000000000130000 0000000000000000
->   write -q -z -u 1152k 192k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
->   L2 entry #18: 0x0000000000000000 ffffffff00000000
->   L2 entry #19: 0x0000000000000000 ffffffff00000000
->   L2 entry #20: 0x0000000000000000 ffffffff00000000
-> @@ -351,6 +363,8 @@ L2 entry #24: 0x8000000000090000 00000000ffffffff
->   L2 entry #25: 0x80000000000e0000 00000000ffffffff
->   L2 entry #26: 0x80000000000f0000 00000000ffffffff
->   write -q -z -u 1759k 128k
-> +file_do_fallocate fd=N mode=0x03 offset=819200 len=32768
-> +file_do_fallocate fd=N mode=0x03 offset=1245184 len=65536
->   L2 entry #27: 0x80000000000c0000 ffff00000000ffff
->   L2 entry #28: 0x0000000000000000 ffffffff00000000
->   L2 entry #29: 0x8000000000100000 00007fff00008000
-> @@ -369,15 +383,20 @@ L2 entry #14: 0x80000000000a0000 00000000ffffffff
->   L2 entry #15: 0x80000000000b0000 00000000ffffffff
->   L2 entry #16: 0x80000000000c0000 00000000ffffffff
->   L2 entry #17: 0x80000000000d0000 00000000ffffffff
-> +write -q -z -u 512k 8k
-> +L2 entry #8: 0x0000000000000000 0000000f00000000
->   write -q -z -u 576k 192k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
->   L2 entry #9: 0x0000000000000000 ffffffff00000000
->   L2 entry #10: 0x0000000000000000 ffffffff00000000
->   L2 entry #11: 0x0000000000000000 ffffffff00000000
->   write -q -z -u 800k 128k
-> +file_do_fallocate fd=N mode=0x03 offset=557056 len=131072
->   L2 entry #12: 0x8000000000080000 ffff00000000ffff
->   L2 entry #13: 0x0000000000000000 ffffffff00000000
->   L2 entry #14: 0x80000000000a0000 0000ffffffff0000
->   write -q -z -u 991k 128k
-> +file_do_fallocate fd=N mode=0x03 offset=753664 len=129024
->   L2 entry #15: 0x80000000000b0000 ffff00000000ffff
->   L2 entry #16: 0x0000000000000000 ffffffff00000000
->   L2 entry #17: 0x80000000000d0000 00007fffffff8000
-> @@ -407,6 +426,7 @@ L2 entry #27: 0x4000000000120000 0000000000000000
->   write -q -c -P PATTERN 1792k 64k
->   L2 entry #28: 0x4000000000130000 0000000000000000
->   write -q -z -u 1152k 192k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
->   L2 entry #18: 0x0000000000000000 ffffffff00000000
->   L2 entry #19: 0x0000000000000000 ffffffff00000000
->   L2 entry #20: 0x0000000000000000 ffffffff00000000
-> @@ -419,28 +439,69 @@ L2 entry #24: 0x8000000000090000 00000000ffffffff
->   L2 entry #25: 0x80000000000e0000 00000000ffffffff
->   L2 entry #26: 0x80000000000f0000 00000000ffffffff
->   write -q -z -u 1759k 128k
-> +file_do_fallocate fd=N mode=0x03 offset=819200 len=32768
-> +file_do_fallocate fd=N mode=0x03 offset=1245184 len=65536
->   L2 entry #27: 0x80000000000c0000 ffff00000000ffff
->   L2 entry #28: 0x0000000000000000 ffffffff00000000
->   L2 entry #29: 0x0000000000000000 0000ffff00000000
->   
->   ### Discarding clusters with non-zero bitmaps (backing file: yes) ###
->   
-> +Formatting 'TEST_DIR/t.IMGFMT.raw', fmt=raw size=1048576
-> +Formatting 'TEST_DIR/t.IMGFMT.base', fmt=raw size=1048576
->   Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=raw
-> +write -q -P PATTERN 0 32k
-> +L2 entry #0: 0x8000000000050000 000000000000ffff
-> +discard -q 32k 32k
-> +file_do_fallocate fd=N mode=0x03 offset=360448 len=32768
-> +L2 entry #0: 0x8000000000050000 ffff00000000ffff
-> +write -q -P PATTERN 0 64k
-> +L2 entry #0: 0x8000000000050000 00000000ffffffff
-> +discard -q 0 8k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=8192
-> +L2 entry #0: 0x8000000000050000 0000000ffffffff0
-> +discard -q 8k 56k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
-> +L2 entry #0: 0x0000000000000000 ffffffff00000000
-> +write -q -P PATTERN 0 128k
-> +L2 entry #0: 0x8000000000050000 00000000ffffffff
-> +discard -q 0 128k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=131072
->   L2 entry #0: 0x0000000000000000 ffffffff00000000
->   L2 entry #1: 0x0000000000000000 ffffffff00000000
-> +discard -q 0 64k
-> +L2 entry #0: 0x0000000000000000 ffffffff00000000
->   Image resized.
->   Image resized.
-> -L2 entry #0: 0x0000000000000000 ffffffff00000000
->   L2 entry #1: 0x0000000000000000 ffffffff00000000
->   
->   ### Discarding clusters with non-zero bitmaps (backing file: no) ###
->   
-> +Formatting 'TEST_DIR/t.IMGFMT.raw', fmt=raw size=1048576
->   Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
-> +write -q -P PATTERN 0 32k
-> +L2 entry #0: 0x8000000000050000 000000000000ffff
-> +discard -q 32k 32k
-> +file_do_fallocate fd=N mode=0x03 offset=360448 len=32768
-> +L2 entry #0: 0x8000000000050000 000000000000ffff
-> +write -q -P PATTERN 0 64k
-> +L2 entry #0: 0x8000000000050000 00000000ffffffff
-> +discard -q 0 8k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=8192
-> +L2 entry #0: 0x8000000000050000 0000000ffffffff0
-> +discard -q 8k 56k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
-> +L2 entry #0: 0x0000000000000000 ffffffff00000000
-> +write -q -P PATTERN 0 128k
-> +L2 entry #0: 0x8000000000050000 00000000ffffffff
-> +discard -q 0 128k
-> +file_do_fallocate fd=N mode=0x03 offset=327680 len=131072
->   L2 entry #0: 0x0000000000000000 ffffffff00000000
->   L2 entry #1: 0x0000000000000000 ffffffff00000000
-> +discard -q 0 64k
-> +L2 entry #0: 0x0000000000000000 0000ffff00000000
->   Image resized.
->   Image resized.
-> -L2 entry #0: 0x0000000000000000 0000ffff00000000
->   L2 entry #1: 0x0000000000000000 0000000000000000
->   
->   ### Corrupted L2 entries - read test (allocated) ###
-Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
--- 
-Best regards,
-Alexander Ivanov
+Thanks for the explanation.
 
+Do you know where this limitation is from?
+Is it in this patchset or it's somewhere else in the Linux RISC-V IOMMU
+driver?
+
+BTW, for the case like DesignWare PCIe host controller [1],
+we cannot connect RISC-V IOMMU to the root bus ("pcie") [2]
+because it already has a child bus ("dw-pcie") connecting to it [3].
+
+If we try to connect RISC-V IOMMU to the root bus ("pcie"),
+it can't be discovered by Linux PCIe driver as a PCIe Downstream Port
+normally leads to a Link with only Device 0 on it.
+
+PCIe spec 6.0, section 7.3.1 stats:
+"Downstream Ports that do not have ARI Forwarding enabled must associate
+only Device 0 with the device attached to the Logical Bus representing the
+Link
+from the Port."
+
+The PCI slot scan is early returned in the Linux PCIe driver [4][5].
+
+Do you think it's possible to remove this limitation?
+
+[1] https://github.com/qemu/qemu/blob/master/hw/pci-host/designware.c
+[2] https://github.com/qemu/qemu/blob/master/hw/pci-host/designware.c#L695
+[3] https://github.com/qemu/qemu/blob/master/hw/pci-host/designware.c#L409
+[4] https://github.com/torvalds/linux/blob/master/drivers/pci/probe.c#L2674
+[5] https://github.com/torvalds/linux/blob/master/drivers/pci/probe.c#L2652
+
+Regards,
+Frank Chang
+
+>
+> And speaking on riscv-iommu-bus, the current device we have in this serie=
+s
+> is too
+> bare bones, without an actual use case for it (e.g. code to add it in the
+> 'virt'
+> machine), but it's getting in the way nevertheless.
+>
+> I'll remove the riscv-iommu-sys device from v3 and re-introduce it in a
+> later
+> revision or as a follow up series. Sunil has a handful of patches that ad=
+d
+> the
+> riscv-iommu-sys device in the 'virt' machine and the proper ACPI support
+> for it [1],
+> and I intend to use them as a base. We'll then need some minor adjustment=
+s
+> in the
+> existing code to make it fully functional like we're doing with
+> riscv-iommu-pci.
+>
+>
+> Thanks,
+>
+> Daniel
+>
+>
+> [1] https://github.com/vlsunil/qemu/commits/acpi_rimt_poc_v1/
+> >
+> > Regards,
+> > Frank Chang
+> >
+> >
+> >
+> >     Thanks,
+> >
+> >
+> >     Daniel
+> >
+> >
+> >      >
+> >      > I'll see how other IOMMUs are handling their iommu_find_as()
+> >      >
+> >      >
+> >      > Thanks,
+> >      >
+> >      >
+> >      > Daniel
+> >      >
+> >      >
+> >      >>
+> >      >>
+> >      >>
+> >      >>
+> >      >>> +        s =3D s->iommus.le_next;
+> >      >>> +    }
+> >      >>> +
+> >      >>> +    return as ? as : &address_space_memory;
+> >      >>> +}
+> >      >>> +
+> >      >>> +static const PCIIOMMUOps riscv_iommu_ops =3D {
+> >      >>> +    .get_address_space =3D riscv_iommu_find_as,
+> >      >>> +};
+> >      >>> +
+> >      >>> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu,
+> PCIBus *bus,
+> >      >>> +        Error **errp)
+> >      >>> +{
+> >      >>> +    if (bus->iommu_ops &&
+> >      >>> +        bus->iommu_ops->get_address_space =3D=3D
+> riscv_iommu_find_as) {
+> >      >>> +        /* Allow multiple IOMMUs on the same PCIe bus, link
+> known devices */
+> >      >>> +        RISCVIOMMUState *last =3D (RISCVIOMMUState
+> *)bus->iommu_opaque;
+> >      >>> +        QLIST_INSERT_AFTER(last, iommu, iommus);
+> >      >>> +    } else if (bus->iommu_ops =3D=3D NULL) {
+> >      >>> +        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
+> >      >>> +    } else {
+> >      >>> +        error_setg(errp, "can't register secondary IOMMU for
+> PCI bus #%d",
+> >      >>> +            pci_bus_num(bus));
+> >      >>> +    }
+> >      >>> +}
+> >      >>> +
+> >      >>> +static int riscv_iommu_memory_region_index(IOMMUMemoryRegion
+> *iommu_mr,
+> >      >>> +    MemTxAttrs attrs)
+> >      >>> +{
+> >      >>> +    return attrs.unspecified ? RISCV_IOMMU_NOPASID :
+> (int)attrs.pasid;
+> >      >>> +}
+> >      >>> +
+> >      >>> +static int
+> riscv_iommu_memory_region_index_len(IOMMUMemoryRegion *iommu_mr)
+> >      >>> +{
+> >      >>> +    RISCVIOMMUSpace *as =3D container_of(iommu_mr,
+> RISCVIOMMUSpace, iova_mr);
+> >      >>> +    return 1 << as->iommu->pasid_bits;
+> >      >>> +}
+> >      >>> +
+> >      >>> +static void riscv_iommu_memory_region_init(ObjectClass *klass=
+,
+> void *data)
+> >      >>> +{
+> >      >>> +    IOMMUMemoryRegionClass *imrc =3D
+> IOMMU_MEMORY_REGION_CLASS(klass);
+> >      >>> +
+> >      >>> +    imrc->translate =3D riscv_iommu_memory_region_translate;
+> >      >>> +    imrc->notify_flag_changed =3D
+> riscv_iommu_memory_region_notify;
+> >      >>> +    imrc->attrs_to_index =3D riscv_iommu_memory_region_index;
+> >      >>> +    imrc->num_indexes =3D riscv_iommu_memory_region_index_len=
+;
+> >      >>> +}
+> >      >>> +
+> >      >>> +static const TypeInfo riscv_iommu_memory_region_info =3D {
+> >      >>> +    .parent =3D TYPE_IOMMU_MEMORY_REGION,
+> >      >>> +    .name =3D TYPE_RISCV_IOMMU_MEMORY_REGION,
+> >      >>> +    .class_init =3D riscv_iommu_memory_region_init,
+> >      >>> +};
+> >      >>> +
+> >      >>> +static void riscv_iommu_register_mr_types(void)
+> >      >>> +{
+> >      >>> +    type_register_static(&riscv_iommu_memory_region_info);
+> >      >>> +    type_register_static(&riscv_iommu_info);
+> >      >>> +}
+> >      >>> +
+> >      >>> +type_init(riscv_iommu_register_mr_types);
+> >      >>> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> >      >>> new file mode 100644
+> >      >>> index 0000000000..6f740de690
+> >      >>> --- /dev/null
+> >      >>> +++ b/hw/riscv/riscv-iommu.h
+> >      >>> @@ -0,0 +1,141 @@
+> >      >>> +/*
+> >      >>> + * QEMU emulation of an RISC-V IOMMU (Ziommu)
+> >      >>> + *
+> >      >>> + * Copyright (C) 2022-2023 Rivos Inc.
+> >      >>> + *
+> >      >>> + * This program is free software; you can redistribute it
+> and/or modify
+> >      >>> + * it under the terms of the GNU General Public License as
+> published by
+> >      >>> + * the Free Software Foundation; either version 2 of the
+> License.
+> >      >>> + *
+> >      >>> + * This program is distributed in the hope that it will be
+> useful,
+> >      >>> + * but WITHOUT ANY WARRANTY; without even the implied warrant=
+y
+> of
+> >      >>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+> the
+> >      >>> + * GNU General Public License for more details.
+> >      >>> + *
+> >      >>> + * You should have received a copy of the GNU General Public
+> License along
+> >      >>> + * with this program; if not, see <
+> http://www.gnu.org/licenses/ <http://www.gnu.org/licenses/>>.
+> >      >>> + */
+> >      >>> +
+> >      >>> +#ifndef HW_RISCV_IOMMU_STATE_H
+> >      >>> +#define HW_RISCV_IOMMU_STATE_H
+> >      >>> +
+> >      >>> +#include "qemu/osdep.h"
+> >      >>> +#include "qom/object.h"
+> >      >>> +
+> >      >>> +#include "hw/riscv/iommu.h"
+> >      >>> +
+> >      >>> +struct RISCVIOMMUState {
+> >      >>> +    /*< private >*/
+> >      >>> +    DeviceState parent_obj;
+> >      >>> +
+> >      >>> +    /*< public >*/
+> >      >>> +    uint32_t version;     /* Reported interface version numbe=
+r
+> */
+> >      >>> +    uint32_t pasid_bits;  /* process identifier width */
+> >      >>> +    uint32_t bus;         /* PCI bus mapping for non-root
+> endpoints */
+> >      >>> +
+> >      >>> +    uint64_t cap;         /* IOMMU supported capabilities */
+> >      >>> +    uint64_t fctl;        /* IOMMU enabled features */
+> >      >>> +
+> >      >>> +    bool enable_off;      /* Enable out-of-reset OFF mode (DM=
+A
+> disabled) */
+> >      >>> +    bool enable_msi;      /* Enable MSI remapping */
+> >      >>> +
+> >      >>> +    /* IOMMU Internal State */
+> >      >>> +    uint64_t ddtp;        /* Validated Device Directory Tree
+> Root Pointer */
+> >      >>> +
+> >      >>> +    dma_addr_t cq_addr;   /* Command queue base physical
+> address */
+> >      >>> +    dma_addr_t fq_addr;   /* Fault/event queue base physical
+> address */
+> >      >>> +    dma_addr_t pq_addr;   /* Page request queue base physical
+> address */
+> >      >>> +
+> >      >>> +    uint32_t cq_mask;     /* Command queue index bit mask */
+> >      >>> +    uint32_t fq_mask;     /* Fault/event queue index bit mask
+> */
+> >      >>> +    uint32_t pq_mask;     /* Page request queue index bit mas=
+k
+> */
+> >      >>> +
+> >      >>> +    /* interrupt notifier */
+> >      >>> +    void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
+> >      >>> +
+> >      >>> +    /* IOMMU State Machine */
+> >      >>> +    QemuThread core_proc; /* Background processing thread */
+> >      >>> +    QemuMutex core_lock;  /* Global IOMMU lock, used for
+> cache/regs updates */
+> >      >>> +    QemuCond core_cond;   /* Background processing wake up
+> signal */
+> >      >>> +    unsigned core_exec;   /* Processing thread execution
+> actions */
+> >      >>> +
+> >      >>> +    /* IOMMU target address space */
+> >      >>> +    AddressSpace *target_as;
+> >      >>> +    MemoryRegion *target_mr;
+> >      >>> +
+> >      >>> +    /* MSI / MRIF access trap */
+> >      >>> +    AddressSpace trap_as;
+> >      >>> +    MemoryRegion trap_mr;
+> >      >>> +
+> >      >>> +    GHashTable *ctx_cache;          /* Device translation
+> Context Cache */
+> >      >>> +
+> >      >>> +    /* MMIO Hardware Interface */
+> >      >>> +    MemoryRegion regs_mr;
+> >      >>> +    QemuSpin regs_lock;
+> >      >>> +    uint8_t *regs_rw;  /* register state (user write) */
+> >      >>> +    uint8_t *regs_wc;  /* write-1-to-clear mask */
+> >      >>> +    uint8_t *regs_ro;  /* read-only mask */
+> >      >>> +
+> >      >>> +    QLIST_ENTRY(RISCVIOMMUState) iommus;
+> >      >>> +    QLIST_HEAD(, RISCVIOMMUSpace) spaces;
+> >      >>> +};
+> >      >>> +
+> >      >>> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu,
+> PCIBus *bus,
+> >      >>> +         Error **errp);
+> >      >>> +
+> >      >>> +/* private helpers */
+> >      >>> +
+> >      >>> +/* Register helper functions */
+> >      >>> +static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState
+> *s,
+> >      >>> +    unsigned idx, uint32_t set, uint32_t clr)
+> >      >>> +{
+> >      >>> +    uint32_t val;
+> >      >>> +    qemu_spin_lock(&s->regs_lock);
+> >      >>> +    val =3D ldl_le_p(s->regs_rw + idx);
+> >      >>> +    stl_le_p(s->regs_rw + idx, (val & ~clr) | set);
+> >      >>> +    qemu_spin_unlock(&s->regs_lock);
+> >      >>> +    return val;
+> >      >>> +}
+> >      >>> +
+> >      >>> +static inline void riscv_iommu_reg_set32(RISCVIOMMUState *s,
+> >      >>> +    unsigned idx, uint32_t set)
+> >      >>> +{
+> >      >>> +    qemu_spin_lock(&s->regs_lock);
+> >      >>> +    stl_le_p(s->regs_rw + idx, set);
+> >      >>> +    qemu_spin_unlock(&s->regs_lock);
+> >      >>> +}
+> >      >>> +
+> >      >>> +static inline uint32_t riscv_iommu_reg_get32(RISCVIOMMUState
+> *s,
+> >      >>> +    unsigned idx)
+> >      >>> +{
+> >      >>> +    return ldl_le_p(s->regs_rw + idx);
+> >      >>> +}
+> >      >>> +
+> >      >>> +static inline uint64_t riscv_iommu_reg_mod64(RISCVIOMMUState
+> *s,
+> >      >>> +    unsigned idx, uint64_t set, uint64_t clr)
+> >      >>> +{
+> >      >>> +    uint64_t val;
+> >      >>> +    qemu_spin_lock(&s->regs_lock);
+> >      >>> +    val =3D ldq_le_p(s->regs_rw + idx);
+> >      >>> +    stq_le_p(s->regs_rw + idx, (val & ~clr) | set);
+> >      >>> +    qemu_spin_unlock(&s->regs_lock);
+> >      >>> +    return val;
+> >      >>> +}
+> >      >>> +
+> >      >>> +static inline void riscv_iommu_reg_set64(RISCVIOMMUState *s,
+> >      >>> +    unsigned idx, uint64_t set)
+> >      >>> +{
+> >      >>> +    qemu_spin_lock(&s->regs_lock);
+> >      >>> +    stq_le_p(s->regs_rw + idx, set);
+> >      >>> +    qemu_spin_unlock(&s->regs_lock);
+> >      >>> +}
+> >      >>> +
+> >      >>> +static inline uint64_t riscv_iommu_reg_get64(RISCVIOMMUState
+> *s,
+> >      >>> +    unsigned idx)
+> >      >>> +{
+> >      >>> +    return ldq_le_p(s->regs_rw + idx);
+> >      >>> +}
+> >      >>> +
+> >      >>> +
+> >      >>> +
+> >      >>> +#endif
+> >      >>> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+> >      >>> new file mode 100644
+> >      >>> index 0000000000..42a97caffa
+> >      >>> --- /dev/null
+> >      >>> +++ b/hw/riscv/trace-events
+> >      >>> @@ -0,0 +1,11 @@
+> >      >>> +# See documentation at docs/devel/tracing.rst
+> >      >>> +
+> >      >>> +# riscv-iommu.c
+> >      >>> +riscv_iommu_new(const char *id, unsigned b, unsigned d,
+> unsigned f) "%s: device attached %04x:%02x.%d"
+> >      >>> +riscv_iommu_flt(const char *id, unsigned b, unsigned d,
+> unsigned f, uint64_t reason, uint64_t iova) "%s: fault %04x:%02x.%u reaso=
+n:
+> 0x%"PRIx64" iova: 0x%"PRIx64
+> >      >>> +riscv_iommu_pri(const char *id, unsigned b, unsigned d,
+> unsigned f, uint64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx6=
+4
+> >      >>> +riscv_iommu_dma(const char *id, unsigned b, unsigned d,
+> unsigned f, unsigned pasid, const char *dir, uint64_t iova, uint64_t phys=
+)
+> "%s: translate %04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
+> >      >>> +riscv_iommu_msi(const char *id, unsigned b, unsigned d,
+> unsigned f, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI
+> 0x%"PRIx64" -> 0x%"PRIx64
+> >      >>> +riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s:
+> command 0x%"PRIx64" 0x%"PRIx64
+> >      >>> +riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb
+> notifier added"
+> >      >>> +riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb
+> notifier removed"
+> >      >>> diff --git a/hw/riscv/trace.h b/hw/riscv/trace.h
+> >      >>> new file mode 100644
+> >      >>> index 0000000000..b88504b750
+> >      >>> --- /dev/null
+> >      >>> +++ b/hw/riscv/trace.h
+> >      >>> @@ -0,0 +1,2 @@
+> >      >>> +#include "trace/trace-hw_riscv.h"
+> >      >>> +
+> >      >>> diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu=
+.h
+> >      >>> new file mode 100644
+> >      >>> index 0000000000..403b365893
+> >      >>> --- /dev/null
+> >      >>> +++ b/include/hw/riscv/iommu.h
+> >      >>> @@ -0,0 +1,36 @@
+> >      >>> +/*
+> >      >>> + * QEMU emulation of an RISC-V IOMMU (Ziommu)
+> >      >>> + *
+> >      >>> + * Copyright (C) 2022-2023 Rivos Inc.
+> >      >>> + *
+> >      >>> + * This program is free software; you can redistribute it
+> and/or modify
+> >      >>> + * it under the terms of the GNU General Public License as
+> published by
+> >      >>> + * the Free Software Foundation; either version 2 of the
+> License.
+> >      >>> + *
+> >      >>> + * This program is distributed in the hope that it will be
+> useful,
+> >      >>> + * but WITHOUT ANY WARRANTY; without even the implied warrant=
+y
+> of
+> >      >>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+> the
+> >      >>> + * GNU General Public License for more details.
+> >      >>> + *
+> >      >>> + * You should have received a copy of the GNU General Public
+> License along
+> >      >>> + * with this program; if not, see <
+> http://www.gnu.org/licenses/ <http://www.gnu.org/licenses/>>.
+> >      >>> + */
+> >      >>> +
+> >      >>> +#ifndef HW_RISCV_IOMMU_H
+> >      >>> +#define HW_RISCV_IOMMU_H
+> >      >>> +
+> >      >>> +#include "qemu/osdep.h"
+> >      >>> +#include "qom/object.h"
+> >      >>> +
+> >      >>> +#define TYPE_RISCV_IOMMU "riscv-iommu"
+> >      >>> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUState, RISCV_IOMMU)
+> >      >>> +typedef struct RISCVIOMMUState RISCVIOMMUState;
+> >      >>> +
+> >      >>> +#define TYPE_RISCV_IOMMU_MEMORY_REGION "riscv-iommu-mr"
+> >      >>> +typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
+> >      >>> +
+> >      >>> +#define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
+> >      >>> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PC=
+I)
+> >      >>> +typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
+> >      >>> +
+> >      >>> +#endif
+> >      >>> diff --git a/meson.build b/meson.build
+> >      >>> index c59ca496f2..75e56f3282 100644
+> >      >>> --- a/meson.build
+> >      >>> +++ b/meson.build
+> >      >>> @@ -3361,6 +3361,7 @@ if have_system
+> >      >>>       'hw/rdma',
+> >      >>>       'hw/rdma/vmw',
+> >      >>>       'hw/rtc',
+> >      >>> +    'hw/riscv',
+> >      >>>       'hw/s390x',
+> >      >>>       'hw/scsi',
+> >      >>>       'hw/sd',
+> >      >>> --
+> >      >>> 2.43.2
+> >      >>>
+> >      >>>
+> >
+>
+
+--0000000000008495510618f49d4d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Daniel,</div><br><div class=3D"gmail_quote"><div d=
+ir=3D"ltr" class=3D"gmail_attr">On Tue, May 21, 2024 at 12:17=E2=80=AFAM Da=
+niel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@ventanamicro.com" targ=
+et=3D"_blank">dbarboza@ventanamicro.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">Hi Frank,<br>
+<br>
+On 5/16/24 04:13, Frank Chang wrote:<br>
+&gt; On Mon, May 13, 2024 at 8:37=E2=80=AFPM Daniel Henrique Barboza &lt;<a=
+ href=3D"mailto:dbarboza@ventanamicro.com" target=3D"_blank">dbarboza@venta=
+namicro.com</a> &lt;mailto:<a href=3D"mailto:dbarboza@ventanamicro.com" tar=
+get=3D"_blank">dbarboza@ventanamicro.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Hi Frank,<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On 5/8/24 08:15, Daniel Henrique Barboza wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hi Frank,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; I&#39;ll reply with that I&#39;ve done so far=
+. Still missing some stuff:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On 5/2/24 08:37, Frank Chang wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Hi Daniel,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Daniel Henrique Barboza &lt;<a href=3D"ma=
+ilto:dbarboza@ventanamicro.com" target=3D"_blank">dbarboza@ventanamicro.com=
+</a> &lt;mailto:<a href=3D"mailto:dbarboza@ventanamicro.com" target=3D"_bla=
+nk">dbarboza@ventanamicro.com</a>&gt;&gt; =E6=96=BC 2024=E5=B9=B43=E6=9C=88=
+8=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8812:04=E5=AF=AB=E9=81=93=EF=
+=BC=9A<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; From: Tomasz Jeznach &lt;<a href=3D"m=
+ailto:tjeznach@rivosinc.com" target=3D"_blank">tjeznach@rivosinc.com</a> &l=
+t;mailto:<a href=3D"mailto:tjeznach@rivosinc.com" target=3D"_blank">tjeznac=
+h@rivosinc.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; The RISC-V IOMMU specification is now=
+ ratified as-per the RISC-V<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; international process. The latest fro=
+zen specifcation can be found<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; at:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; <a href=3D"https://github.com/riscv-n=
+on-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf" rel=3D"noreferre=
+r" target=3D"_blank">https://github.com/riscv-non-isa/riscv-iommu/releases/=
+download/v1.0/riscv-iommu.pdf</a> &lt;<a href=3D"https://github.com/riscv-n=
+on-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf" rel=3D"noreferre=
+r" target=3D"_blank">https://github.com/riscv-non-isa/riscv-iommu/releases/=
+download/v1.0/riscv-iommu.pdf</a>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; Add the foundation of the device emul=
+ation for RISC-V IOMMU, which<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; includes an IOMMU that has no capabil=
+ities but MSI interrupt support and<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; fault queue interfaces. We&#39;ll add=
+ add more features incrementally in the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; next patches.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; Co-developed-by: Sebastien Boeuf &lt;=
+<a href=3D"mailto:seb@rivosinc.com" target=3D"_blank">seb@rivosinc.com</a> =
+&lt;mailto:<a href=3D"mailto:seb@rivosinc.com" target=3D"_blank">seb@rivosi=
+nc.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; Signed-off-by: Sebastien Boeuf &lt;<a=
+ href=3D"mailto:seb@rivosinc.com" target=3D"_blank">seb@rivosinc.com</a> &l=
+t;mailto:<a href=3D"mailto:seb@rivosinc.com" target=3D"_blank">seb@rivosinc=
+.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; Signed-off-by: Tomasz Jeznach &lt;<a =
+href=3D"mailto:tjeznach@rivosinc.com" target=3D"_blank">tjeznach@rivosinc.c=
+om</a> &lt;mailto:<a href=3D"mailto:tjeznach@rivosinc.com" target=3D"_blank=
+">tjeznach@rivosinc.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; Signed-off-by: Daniel Henrique Barboz=
+a &lt;<a href=3D"mailto:dbarboza@ventanamicro.com" target=3D"_blank">dbarbo=
+za@ventanamicro.com</a> &lt;mailto:<a href=3D"mailto:dbarboza@ventanamicro.=
+com" target=3D"_blank">dbarboza@ventanamicro.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; ---<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0 hw/riscv/Kconfig=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0 4 +<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0(...)<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 s-&gt;iommus.le_n=
+ext =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 s-&gt;iommus.le_p=
+rev =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QLIST_INIT(&amp;s=
+-&gt;spaces);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_cond_init(&a=
+mp;s-&gt;core_cond);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_mutex_init(&=
+amp;s-&gt;core_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_init(&a=
+mp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_thread_creat=
+e(&amp;s-&gt;core_proc, &quot;riscv-iommu-core&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 riscv_iommu_core_proc, s, QEMU_THREAD_JOINABLE);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; In our experience, using QEMU thread incr=
+eases the latency of command<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; queue processing,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; which leads to the potential IOMMU fence =
+timeout in the Linux driver<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; when using IOMMU with KVM,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; e.g. booting the guest Linux.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Is it possible to remove the thread from =
+the IOMMU just like ARM, AMD,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; and Intel IOMMU models?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Interesting. We&#39;ve been using this emulat=
+ion internally in Ventana, with<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; KVM and VFIO, and didn&#39;t experience this =
+issue. Drew is on CC and can talk<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; more about it.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; That said, I don&#39;t mind this change, assu=
+ming it&#39;s feasible to make it for this<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; first version.=C2=A0 I&#39;ll need to check i=
+t how other IOMMUs are doing it.<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0I removed the threading and it seems to be working =
+fine without it. I&#39;ll commit this<br>
+&gt;=C2=A0 =C2=A0 =C2=A0change for v3.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; (...)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static AddressSpace *riscv_iommu_fin=
+d_as(PCIBus *bus, void *opaque, int devfn)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 RISCVIOMMUState *=
+s =3D (RISCVIOMMUState *) opaque;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 PCIDevice *pdev =
+=3D pci_find_device(bus, pci_bus_num(bus), devfn);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 AddressSpace *as =
+=3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 if (pdev &amp;&am=
+p; pci_is_iommu(pdev)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 return s-&gt;target_as;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* Find first reg=
+istered IOMMU device */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 while (s-&gt;iomm=
+us.le_prev) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 s =3D *(s-&gt;iommus.le_prev);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* Find first mat=
+ching IOMMU */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 while (s !=3D NUL=
+L &amp;&amp; as =3D=3D NULL) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 as =3D riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; For pci_bus_num(),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; riscv_iommu_find_as() can be called at th=
+e very early stage<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; where software has no chance to enumerate=
+ the bus numbers.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0I investigated and this doesn&#39;t seem to be a pr=
+oblem. This function is called at the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0last step of the realize() steps of both riscv_iomm=
+u_pci_realize() and<br>
+&gt;=C2=A0 =C2=A0 =C2=A0riscv_iommu_sys_realize(), and by that time the pci=
+_bus_num() is already assigned.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Other iommus use pci_bus_num() into their own get_a=
+ddress_space() callbacks like<br>
+&gt;=C2=A0 =C2=A0 =C2=A0this too.<br>
+&gt; <br>
+&gt; <br>
+&gt; Hi Daniel,<br>
+&gt; <br>
+&gt; IIUC, pci_bus_num() by default is assigned to pcibus_num():<br>
+&gt; <br>
+&gt; static int pcibus_num(PCIBus *bus)<br>
+&gt; {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (pci_bus_is_root(bus)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0; /* pci host bridge */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return bus-&gt;parent_dev-&gt;config[PCI_SECONDARY=
+_BUS];<br>
+&gt; }<br>
+&gt; <br>
+&gt; If the bus is not the root bus, it tries to read the bus&#39; parent d=
+evice&#39;s<br>
+&gt; secondary bus number (PCI_SECONDARY_BUS) field in the PCI configuratio=
+n space.<br>
+&gt; This field should be programmable by the SW during PCIe enumeration.<b=
+r>
+&gt; But I don&#39;t think SW has a chance to be executed before riscv_iomm=
+u_sys_realize() is called,<br>
+&gt; since it&#39;s pretty early before CPU&#39;s execution unless RISC-V I=
+OMMU is hot-plugged.<br>
+&gt; Even if RISC-V IOMMU is hot-plugged, I think riscv_iommu_sys_realize()=
+ is still called<br>
+&gt; before SW aware of the existence of IOMMU on the PCI topology tree.<br=
+>
+&gt; <br>
+&gt; Do you think this matches your observation?<br>
+<br>
+It does. You have a good point on how the pcibus_num() can vary if SW wants=
+ to<br>
+change the PCI_SECONDARY_BUS and the IOMMU isn&#39;t in a root bus. Note th=
+at this<br>
+will not happen with the existing riscv-iommu-pci device as it is now, sinc=
+e it<br>
+has code to prevent the device to be attached to non-pci root buses, but th=
+ere&#39;s<br>
+no restrictions in the riscv-iommu-sys device.<br></blockquote><div><br></d=
+iv><div>Thanks for the explanation.<br></div><div><br></div><div>Do you kno=
+w where this limitation is from?</div><div>Is it in this patchset or it&#39=
+;s somewhere else in the Linux RISC-V IOMMU driver?</div><div><br></div><di=
+v>BTW, for the case like DesignWare PCIe host controller [1],</div><div>we =
+cannot connect RISC-V IOMMU to the root bus (&quot;pcie&quot;) [2]</div><di=
+v>because it already has a child bus (&quot;dw-pcie&quot;) connecting to it=
+ [3].</div><div><br></div><div>If we try to connect RISC-V IOMMU to the roo=
+t bus (&quot;pcie&quot;),</div><div>it can&#39;t be discovered by Linux PCI=
+e driver as a PCIe Downstream Port</div><div>normally leads to a Link with =
+only Device 0 on it.</div><div><br></div><div>PCIe spec 6.0, section 7.3.1 =
+stats:</div><div>&quot;Downstream Ports that do not have ARI
+Forwarding enabled must associate</div><div>only Device 0 with the device a=
+ttached to the Logical Bus representing the Link</div><div>from
+the Port.&quot;</div><div><br></div><div>The PCI slot scan is early returne=
+d in the Linux PCIe driver [4][5].</div><div><br></div><div>Do you think it=
+&#39;s possible to remove this limitation?</div><div><br></div><div>[1]=C2=
+=A0<a href=3D"https://github.com/qemu/qemu/blob/master/hw/pci-host/designwa=
+re.c" target=3D"_blank">https://github.com/qemu/qemu/blob/master/hw/pci-hos=
+t/designware.c</a><br></div><div>[2]=C2=A0<a href=3D"https://github.com/qem=
+u/qemu/blob/master/hw/pci-host/designware.c#L695">https://github.com/qemu/q=
+emu/blob/master/hw/pci-host/designware.c#L695</a></div><div>[3]=C2=A0<a hre=
+f=3D"https://github.com/qemu/qemu/blob/master/hw/pci-host/designware.c#L409=
+">https://github.com/qemu/qemu/blob/master/hw/pci-host/designware.c#L409</a=
+></div><div>[4]=C2=A0<a href=3D"https://github.com/torvalds/linux/blob/mast=
+er/drivers/pci/probe.c#L2674">https://github.com/torvalds/linux/blob/master=
+/drivers/pci/probe.c#L2674</a></div><div>[5]=C2=A0<a href=3D"https://github=
+.com/torvalds/linux/blob/master/drivers/pci/probe.c#L2652">https://github.c=
+om/torvalds/linux/blob/master/drivers/pci/probe.c#L2652</a></div><div><br><=
+/div><div>Regards,</div><div>Frank Chang</div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">
+<br>
+And speaking on riscv-iommu-bus, the current device we have in this series =
+is too<br>
+bare bones, without an actual use case for it (e.g. code to add it in the &=
+#39;virt&#39;<br>
+machine), but it&#39;s getting in the way nevertheless.<br>
+<br>
+I&#39;ll remove the riscv-iommu-sys device from v3 and re-introduce it in a=
+ later<br>
+revision or as a follow up series. Sunil has a handful of patches that add =
+the<br>
+riscv-iommu-sys device in the &#39;virt&#39; machine and the proper ACPI su=
+pport for it [1],<br>
+and I intend to use them as a base. We&#39;ll then need some minor adjustme=
+nts in the<br>
+existing code to make it fully functional like we&#39;re doing with riscv-i=
+ommu-pci.<br>
+<br>
+<br>
+Thanks,<br>
+<br>
+Daniel<br>
+<br>
+<br>
+[1] <a href=3D"https://github.com/vlsunil/qemu/commits/acpi_rimt_poc_v1/" r=
+el=3D"noreferrer" target=3D"_blank">https://github.com/vlsunil/qemu/commits=
+/acpi_rimt_poc_v1/</a><br>
+&gt; <br>
+&gt; Regards,<br>
+&gt; Frank Chang<br>
+&gt; <br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Thanks,<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Daniel<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; I&#39;ll see how other IOMMUs are handling th=
+eir iommu_find_as()<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Thanks,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Daniel<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 s =3D s-&gt;iommus.le_next;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return as ? as : =
+&amp;address_space_memory;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static const PCIIOMMUOps riscv_iommu=
+_ops =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 .get_address_spac=
+e =3D riscv_iommu_find_as,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +void riscv_iommu_pci_setup_iommu(RIS=
+CVIOMMUState *iommu, PCIBus *bus,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 Error **errp)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 if (bus-&gt;iommu=
+_ops &amp;&amp;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 bus-&gt;iommu_ops-&gt;get_address_space =3D=3D riscv_iommu_find_as) =
+{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 /* Allow multiple IOMMUs on the same PCIe bus, link known devices */=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 RISCVIOMMUState *last =3D (RISCVIOMMUState *)bus-&gt;iommu_opaque;<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 QLIST_INSERT_AFTER(last, iommu, iommus);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 } else if (bus-&g=
+t;iommu_ops =3D=3D NULL) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 pci_setup_iommu(bus, &amp;riscv_iommu_ops, iommu);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 } else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 error_setg(errp, &quot;can&#39;t register secondary IOMMU for PCI bu=
+s #%d&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pci_bus_num(bus));<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static int riscv_iommu_memory_region=
+_index(IOMMUMemoryRegion *iommu_mr,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 MemTxAttrs attrs)=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return attrs.unsp=
+ecified ? RISCV_IOMMU_NOPASID : (int)attrs.pasid;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static int riscv_iommu_memory_region=
+_index_len(IOMMUMemoryRegion *iommu_mr)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 RISCVIOMMUSpace *=
+as =3D container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return 1 &lt;&lt;=
+ as-&gt;iommu-&gt;pasid_bits;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static void riscv_iommu_memory_regio=
+n_init(ObjectClass *klass, void *data)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 IOMMUMemoryRegion=
+Class *imrc =3D IOMMU_MEMORY_REGION_CLASS(klass);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 imrc-&gt;translat=
+e =3D riscv_iommu_memory_region_translate;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 imrc-&gt;notify_f=
+lag_changed =3D riscv_iommu_memory_region_notify;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 imrc-&gt;attrs_to=
+_index =3D riscv_iommu_memory_region_index;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 imrc-&gt;num_inde=
+xes =3D riscv_iommu_memory_region_index_len;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static const TypeInfo riscv_iommu_me=
+mory_region_info =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 .parent =3D TYPE_=
+IOMMU_MEMORY_REGION,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 .name =3D TYPE_RI=
+SCV_IOMMU_MEMORY_REGION,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 .class_init =3D r=
+iscv_iommu_memory_region_init,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static void riscv_iommu_register_mr_=
+types(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 type_register_sta=
+tic(&amp;riscv_iommu_memory_region_info);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 type_register_sta=
+tic(&amp;riscv_iommu_info);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +type_init(riscv_iommu_register_mr_ty=
+pes);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; diff --git a/hw/riscv/riscv-iommu.h b=
+/hw/riscv/riscv-iommu.h<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; new file mode 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; index 0000000000..6f740de690<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; --- /dev/null<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +++ b/hw/riscv/riscv-iommu.h<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; @@ -0,0 +1,141 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +/*<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * QEMU emulation of an RISC-V IOMMU=
+ (Ziommu)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * Copyright (C) 2022-2023 Rivos Inc=
+.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * This program is free software; yo=
+u can redistribute it and/or modify<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * it under the terms of the GNU Gen=
+eral Public License as published by<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * the Free Software Foundation; eit=
+her version 2 of the License.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * This program is distributed in th=
+e hope that it will be useful,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * but WITHOUT ANY WARRANTY; without=
+ even the implied warranty of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * MERCHANTABILITY or FITNESS FOR A =
+PARTICULAR PURPOSE.=C2=A0 See the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * GNU General Public License for mo=
+re details.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * You should have received a copy o=
+f the GNU General Public License along<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * with this program; if not, see &l=
+t;<a href=3D"http://www.gnu.org/licenses/" rel=3D"noreferrer" target=3D"_bl=
+ank">http://www.gnu.org/licenses/</a> &lt;<a href=3D"http://www.gnu.org/lic=
+enses/" rel=3D"noreferrer" target=3D"_blank">http://www.gnu.org/licenses/</=
+a>&gt;&gt;.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#ifndef HW_RISCV_IOMMU_STATE_H<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#define HW_RISCV_IOMMU_STATE_H<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#include &quot;qemu/osdep.h&quot;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#include &quot;qom/object.h&quot;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#include &quot;hw/riscv/iommu.h&quot=
+;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +struct RISCVIOMMUState {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /*&lt; private &g=
+t;*/<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 DeviceState paren=
+t_obj;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /*&lt; public &gt=
+;*/<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t version;=
+=C2=A0=C2=A0=C2=A0=C2=A0 /* Reported interface version number */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t pasid_bi=
+ts;=C2=A0 /* process identifier width */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t bus;=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* PCI bus mapping for non-ro=
+ot endpoints */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint64_t cap;=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* IOMMU supported capabiliti=
+es */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint64_t fctl;=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* IOMMU enabled features */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 bool enable_off;=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Enable out-of-reset OFF mode (DMA disable=
+d) */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 bool enable_msi;=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Enable MSI remapping */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* IOMMU Internal=
+ State */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint64_t ddtp;=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Validated Device Directory Tree =
+Root Pointer */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 dma_addr_t cq_add=
+r;=C2=A0=C2=A0 /* Command queue base physical address */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 dma_addr_t fq_add=
+r;=C2=A0=C2=A0 /* Fault/event queue base physical address */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 dma_addr_t pq_add=
+r;=C2=A0=C2=A0 /* Page request queue base physical address */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t cq_mask;=
+=C2=A0=C2=A0=C2=A0=C2=A0 /* Command queue index bit mask */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t fq_mask;=
+=C2=A0=C2=A0=C2=A0=C2=A0 /* Fault/event queue index bit mask */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t pq_mask;=
+=C2=A0=C2=A0=C2=A0=C2=A0 /* Page request queue index bit mask */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* interrupt noti=
+fier */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 void (*notify)(RI=
+SCVIOMMUState *iommu, unsigned vector);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* IOMMU State Ma=
+chine */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QemuThread core_p=
+roc; /* Background processing thread */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QemuMutex core_lo=
+ck;=C2=A0 /* Global IOMMU lock, used for cache/regs updates */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QemuCond core_con=
+d;=C2=A0=C2=A0 /* Background processing wake up signal */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned core_exe=
+c;=C2=A0=C2=A0 /* Processing thread execution actions */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* IOMMU target a=
+ddress space */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 AddressSpace *tar=
+get_as;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 MemoryRegion *tar=
+get_mr;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* MSI / MRIF acc=
+ess trap */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 AddressSpace trap=
+_as;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 MemoryRegion trap=
+_mr;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 GHashTable *ctx_c=
+ache;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Device trans=
+lation Context Cache */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 /* MMIO Hardware =
+Interface */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 MemoryRegion regs=
+_mr;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QemuSpin regs_loc=
+k;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint8_t *regs_rw;=
+=C2=A0 /* register state (user write) */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint8_t *regs_wc;=
+=C2=A0 /* write-1-to-clear mask */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint8_t *regs_ro;=
+=C2=A0 /* read-only mask */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QLIST_ENTRY(RISCV=
+IOMMUState) iommus;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 QLIST_HEAD(, RISC=
+VIOMMUSpace) spaces;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +void riscv_iommu_pci_setup_iommu(RIS=
+CVIOMMUState *iommu, PCIBus *bus,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 Error **errp);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +/* private helpers */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +/* Register helper functions */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static inline uint32_t riscv_iommu_r=
+eg_mod32(RISCVIOMMUState *s,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned idx, uin=
+t32_t set, uint32_t clr)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint32_t val;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_lock(&a=
+mp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 val =3D ldl_le_p(=
+s-&gt;regs_rw + idx);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 stl_le_p(s-&gt;re=
+gs_rw + idx, (val &amp; ~clr) | set);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_unlock(=
+&amp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return val;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static inline void riscv_iommu_reg_s=
+et32(RISCVIOMMUState *s,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned idx, uin=
+t32_t set)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_lock(&a=
+mp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 stl_le_p(s-&gt;re=
+gs_rw + idx, set);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_unlock(=
+&amp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static inline uint32_t riscv_iommu_r=
+eg_get32(RISCVIOMMUState *s,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned idx)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return ldl_le_p(s=
+-&gt;regs_rw + idx);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static inline uint64_t riscv_iommu_r=
+eg_mod64(RISCVIOMMUState *s,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned idx, uin=
+t64_t set, uint64_t clr)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 uint64_t val;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_lock(&a=
+mp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 val =3D ldq_le_p(=
+s-&gt;regs_rw + idx);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 stq_le_p(s-&gt;re=
+gs_rw + idx, (val &amp; ~clr) | set);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_unlock(=
+&amp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return val;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static inline void riscv_iommu_reg_s=
+et64(RISCVIOMMUState *s,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned idx, uin=
+t64_t set)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_lock(&a=
+mp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 stq_le_p(s-&gt;re=
+gs_rw + idx, set);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 qemu_spin_unlock(=
+&amp;s-&gt;regs_lock);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +static inline uint64_t riscv_iommu_r=
+eg_get64(RISCVIOMMUState *s,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 unsigned idx)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 return ldq_le_p(s=
+-&gt;regs_rw + idx);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#endif<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; diff --git a/hw/riscv/trace-events b/=
+hw/riscv/trace-events<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; new file mode 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; index 0000000000..42a97caffa<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; --- /dev/null<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +++ b/hw/riscv/trace-events<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; @@ -0,0 +1,11 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +# See documentation at docs/devel/tr=
+acing.rst<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +# riscv-iommu.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_new(const char *id, unsi=
+gned b, unsigned d, unsigned f) &quot;%s: device attached %04x:%02x.%d&quot=
+;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_flt(const char *id, unsi=
+gned b, unsigned d, unsigned f, uint64_t reason, uint64_t iova) &quot;%s: f=
+ault %04x:%02x.%u reason: 0x%&quot;PRIx64&quot; iova: 0x%&quot;PRIx64<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_pri(const char *id, unsi=
+gned b, unsigned d, unsigned f, uint64_t iova) &quot;%s: page request %04x:=
+%02x.%u iova: 0x%&quot;PRIx64<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_dma(const char *id, unsi=
+gned b, unsigned d, unsigned f, unsigned pasid, const char *dir, uint64_t i=
+ova, uint64_t phys) &quot;%s: translate %04x:%02x.%u #%u %s 0x%&quot;PRIx64=
+&quot; -&gt; 0x%&quot;PRIx64<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_msi(const char *id, unsi=
+gned b, unsigned d, unsigned f, uint64_t iova, uint64_t phys) &quot;%s: tra=
+nslate %04x:%02x.%u MSI 0x%&quot;PRIx64&quot; -&gt; 0x%&quot;PRIx64<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_cmd(const char *id, uint=
+64_t l, uint64_t u) &quot;%s: command 0x%&quot;PRIx64&quot; 0x%&quot;PRIx64=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_notifier_add(const char =
+*id) &quot;%s: dev-iotlb notifier added&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +riscv_iommu_notifier_del(const char =
+*id) &quot;%s: dev-iotlb notifier removed&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; diff --git a/hw/riscv/trace.h b/hw/ri=
+scv/trace.h<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; new file mode 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; index 0000000000..b88504b750<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; --- /dev/null<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +++ b/hw/riscv/trace.h<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; @@ -0,0 +1,2 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#include &quot;trace/trace-hw_riscv.=
+h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; diff --git a/include/hw/riscv/iommu.h=
+ b/include/hw/riscv/iommu.h<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; new file mode 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; index 0000000000..403b365893<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; --- /dev/null<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +++ b/include/hw/riscv/iommu.h<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; @@ -0,0 +1,36 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +/*<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * QEMU emulation of an RISC-V IOMMU=
+ (Ziommu)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * Copyright (C) 2022-2023 Rivos Inc=
+.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * This program is free software; yo=
+u can redistribute it and/or modify<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * it under the terms of the GNU Gen=
+eral Public License as published by<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * the Free Software Foundation; eit=
+her version 2 of the License.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * This program is distributed in th=
+e hope that it will be useful,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * but WITHOUT ANY WARRANTY; without=
+ even the implied warranty of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * MERCHANTABILITY or FITNESS FOR A =
+PARTICULAR PURPOSE.=C2=A0 See the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * GNU General Public License for mo=
+re details.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * You should have received a copy o=
+f the GNU General Public License along<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + * with this program; if not, see &l=
+t;<a href=3D"http://www.gnu.org/licenses/" rel=3D"noreferrer" target=3D"_bl=
+ank">http://www.gnu.org/licenses/</a> &lt;<a href=3D"http://www.gnu.org/lic=
+enses/" rel=3D"noreferrer" target=3D"_blank">http://www.gnu.org/licenses/</=
+a>&gt;&gt;.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; + */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#ifndef HW_RISCV_IOMMU_H<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#define HW_RISCV_IOMMU_H<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#include &quot;qemu/osdep.h&quot;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#include &quot;qom/object.h&quot;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#define TYPE_RISCV_IOMMU &quot;riscv=
+-iommu&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMM=
+UState, RISCV_IOMMU)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +typedef struct RISCVIOMMUState RISCV=
+IOMMUState;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#define TYPE_RISCV_IOMMU_MEMORY_REGI=
+ON &quot;riscv-iommu-mr&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +typedef struct RISCVIOMMUSpace RISCV=
+IOMMUSpace;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#define TYPE_RISCV_IOMMU_PCI &quot;r=
+iscv-iommu-pci&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMM=
+UStatePci, RISCV_IOMMU_PCI)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +typedef struct RISCVIOMMUStatePci RI=
+SCVIOMMUStatePci;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +#endif<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; diff --git a/meson.build b/meson.buil=
+d<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; index c59ca496f2..75e56f3282 100644<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; --- a/meson.build<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +++ b/meson.build<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; @@ -3361,6 +3361,7 @@ if have_system<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;h=
+w/rdma&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;h=
+w/rdma/vmw&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;h=
+w/rtc&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0 &#39;hw/riscv&#39=
+;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;h=
+w/s390x&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;h=
+w/scsi&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;h=
+w/sd&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; --<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt; 2.43.2<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;&gt;<br>
+&gt; <br>
+</blockquote></div></div>
+
+--0000000000008495510618f49d4d--
 
