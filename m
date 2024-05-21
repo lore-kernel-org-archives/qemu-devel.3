@@ -4,135 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22988C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 05:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635EBC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 05:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9Hri-00060H-38; Tue, 21 May 2024 01:16:46 -0400
+	id 1s9I9m-0001Qj-KF; Tue, 21 May 2024 01:35:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9HrM-0005wI-Sv
- for qemu-devel@nongnu.org; Tue, 21 May 2024 01:16:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1s9I9k-0001QV-Sk
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 01:35:24 -0400
+Received: from esa5.hc1455-7.c3s2.iphmx.com ([68.232.139.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9HrL-0005Qz-7N
- for qemu-devel@nongnu.org; Tue, 21 May 2024 01:16:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716268580;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=f6rLL0yYfxe8Lth/pZimRI+J6NNQU8Oz2cXeSJYlm1I=;
- b=LplSjHI0AEr50Se95Lwcc2p/vxWKkzlK1Z6oewwgmb6HxzpAWxQX54gG7jBD9AJ9AU6n7q
- OqqnptWxBACGc1RX3BqrIFxcocNhdg3BLEiG95qWfXcCmAfNwvQCfkbys21Z1quGs60lvk
- VNz8zzgIZBex04xghQ5F9WYTD9TLdEk=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-104-lcp-Bh7tNYiXauU110pf5A-1; Tue, 21 May 2024 01:16:17 -0400
-X-MC-Unique: lcp-Bh7tNYiXauU110pf5A-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6a9a8590196so28314986d6.0
- for <qemu-devel@nongnu.org>; Mon, 20 May 2024 22:16:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716268576; x=1716873376;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f6rLL0yYfxe8Lth/pZimRI+J6NNQU8Oz2cXeSJYlm1I=;
- b=elkFi7bP1pPsX9fC6crEhhsW/Te4/i/Vr9TY6S6c5/3+GG1Va8gpYJj1WbODRxisMM
- a9cnZgab4F1JyM3QQGRofFn7RqL6CHBMnhWAVig60yRDGAJbxi0FwQ82ImlLpFUXUWv4
- 8jA1GxvbOOirs17zRx2+jIDjieTrmBacY+1/+DWfUz86KbLIEVNe3qsEWbFHX8fZswIH
- C0cUoPt4f7EDDCaJ98omnwush4e2Go2RgYlBugy283pZm4xa6uH0OZ4ge6BdFz+b27e/
- 3/WqRKTgY1zjtu3bI5iMspvDj8D93+O3w2ybTior3LjytWgtIexgtMPIGxEcRXL3Hgbh
- hsPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdaxagV0FadfwxhY5n0jjFgrMI0UtVtIg+dSZxe11IJlFIw4wz35ka08RfglzWCRPlz82AZAYQ+s63C1vpVrlfSMkwCSQ=
-X-Gm-Message-State: AOJu0YzwYK95gz6lpg2YW6fK3lB7cpTrpD1QoVGscgzuqu9QkB7byirj
- kH0JX13JK4SiSP780wTWcanU2BaCAGK7n+vfmvuOfJ9COjZJzguAWo8d4BsIyaTPtgEe3T7YHfZ
- hd8s3X4zKONFvJ4zb7OaaKI9iTZFO+oEE7HFioWNP2gM+2+Qifi4H
-X-Received: by 2002:a05:6214:5e8a:b0:6a0:7de0:a28c with SMTP id
- 6a1803df08f44-6a168259719mr261681576d6.65.1716268576578; 
- Mon, 20 May 2024 22:16:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGo1s64d2U5i2GY2FDRNZbPm+KzaO6cUPAvYcUSeAxciUA4bG+ryN4QXeUXMk/tslH6lwWTYw==
-X-Received: by 2002:a05:6214:5e8a:b0:6a0:7de0:a28c with SMTP id
- 6a1803df08f44-6a168259719mr261681466d6.65.1716268576141; 
- Mon, 20 May 2024 22:16:16 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
- [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f1cd271sm118812106d6.101.2024.05.20.22.16.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 May 2024 22:16:15 -0700 (PDT)
-Message-ID: <342858a6-c8bd-45fe-8b91-8e0a444eb2e6@redhat.com>
-Date: Tue, 21 May 2024 07:16:11 +0200
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1s9I9i-0000Nm-K9
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 01:35:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1716269722; x=1747805722;
+ h=message-id:date:mime-version:subject:from:to:cc:
+ references:in-reply-to:content-transfer-encoding;
+ bh=SCUPDGU310DnTYsYaeNWK/y5FGc6tJaxJGlEiMyI7Sw=;
+ b=s+dYw5UwNi5TsthEr622hK6staEZibgtiCa9ZlPQqX6cofdgqx/rmaIE
+ eHI9La22pkHKV6SeL+dNJrXmsCTTmR6Udp8tP5VDiJ5qx9aLQ18fARdpX
+ HiEW4CggxIShJjCGcQQcV4k5XO4oL19zHzSerjr5tlNU9668dnPWu53Zz
+ 4fKOgmzueo9o2rADwXV86xNAoVFY5nbTcPyV2v0wd/KzyxHG5SjAzR/Wp
+ b1Ig6+sU+NynvatSNT7OleitBdCEHwSt0EUi7RVZO4aUFxs2kjCOfB4io
+ C6E9LwS/kQpXl3vK4jr0iksXP6OVpRNSTOUeBr/WtMHvLjFlY6hwj6+CM Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="158356044"
+X-IronPort-AV: E=Sophos;i="6.08,176,1712588400"; d="scan'208";a="158356044"
+Received: from unknown (HELO oym-r2.gw.nic.fujitsu.com) ([210.162.30.90])
+ by esa5.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 14:35:17 +0900
+Received: from oym-m4.gw.nic.fujitsu.com (oym-nat-oym-m4.gw.nic.fujitsu.com
+ [192.168.87.61])
+ by oym-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 0A093CD7E2
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 14:35:15 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id 2C003D52EF
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 14:35:14 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 8848720094AC9
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 14:35:13 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id BCACC1A000A;
+ Tue, 21 May 2024 13:35:12 +0800 (CST)
+Message-ID: <b14ed74c-7fc5-461a-9c5f-fbb94df50e7d@fujitsu.com>
+Date: Tue, 21 May 2024 13:35:12 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] vl: Allow multiple -overcommit commands
-From: Thomas Huth <thuth@redhat.com>
-To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mst@redhat.com, cfontana@suse.de,
- xiaoyao.li@intel.com, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240520174733.32979-1-zide.chen@intel.com>
- <20240520174733.32979-2-zide.chen@intel.com>
- <7b6bb859-acbe-4fb0-a8d5-c1698f597ef7@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <7b6bb859-acbe-4fb0-a8d5-c1698f597ef7@redhat.com>
+Subject: Re: [PATCH v3 2/2] cxl/core: add poison creation event handler
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
+ Jonathan.Cameron@huawei.com, dave@stgolabs.net, ira.weiny@intel.com,
+ alison.schofield@intel.com
+References: <20240417075053.3273543-1-ruansy.fnst@fujitsu.com>
+ <20240417075053.3273543-3-ruansy.fnst@fujitsu.com>
+ <6628008c39e80_a96f29415@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+ <b5eb1017-5f0a-4d68-bb63-41e628706a78@fujitsu.com>
+In-Reply-To: <b5eb1017-5f0a-4d68-bb63-41e628706a78@fujitsu.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28400.005
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28400.005
+X-TMASE-Result: 10--18.138600-10.000000
+X-TMASE-MatchedRID: OnXFgg5KIq2PvrMjLFD6eJTQgFTHgkhZ2q80vLACqaeeT9kASxo4MUbg
+ XczvLJKOfif6PsvfsVJjDSloE/K2AoDL4lw7ay41bMGKOuLn5FWlY4F8r0vXP2O0yVK/5LmcOUJ
+ GvwdveqIaMKZ6Kdx++qByu2sDWGqW2BIRRxPqiXqAO0kpgKezRCy+piTiLP72nc419+1VHFoRQP
+ nsANQIhSm8xqSuoEo4ex+UDbqohJBaTyDiyKJai0H0jmDpcSmLpxAd6mi1Ga3/z5X0Kzxdul292
+ NvkjB1uZ4LpE3hFYlFGhiWNz7usIuCPCC2ZACqAI0cHLI6lhgJUENBIMyKD0Wjliw+xvItdH2FV
+ /Q4wfcSNlF1efden0xLg+Gj28iXz62wfhnJCIYyVF2HD8EHNp2o8zUxTJUAjQWa52++sgNmzhHc
+ t+GcMBE/3QbfXts8PmJxhCNBaN2LiNzFg3s1SJRhvfWx0TE/bCZa9cSpBObnAuQ0xDMaXkN9kut
+ SXDwfHVzYnrImPSZdBCdSPDWIIm7/KM1zCNPCMWTWEh5N2a9EYQYFQ2+HwYAbxceezd6S1Wt19W
+ /5IzWypuN1B0n2bvZwCzlUmqhVlb7A96mLiSaSAwosDBeuPwRxCcOlDoVfTfL8fHUCAmusE3acA
+ rSTnfcL0Uzyk5KX7nagtny7ZPcS/WXZS/HqJ2kY41YX/o/8K9+qbtSz74qV4N1jhRVQFLSAHAop
+ Ed76vCHJHCFbsTn+bNtBoHfBInQq8MbEB8QgeaMHO+hPtLa/pH1q/Md+SQA==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=68.232.139.130;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa5.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,62 +105,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/05/2024 07.08, Thomas Huth wrote:
-> On 20/05/2024 19.47, Zide Chen wrote:
->> Both cpu-pm and mem-lock are related to system resource overcommit, but
->> they are separate from each other, in terms of how they are realized,
->> and of course, they are applied to different system resources.
->>
->> It's tempting to use separate command lines to specify their behavior.
->> e.g., in the following example, the cpu-pm command is quietly
->> overwritten, and it's not easy to notice it without careful inspection.
->>
->>    --overcommit mem-lock=on
->>    --overcommit cpu-pm=on
->>
->> Fixes: c8c9dc42b7ca ("Remove the deprecated -realtime option")
->> Signed-off-by: Zide Chen <zide.chen@intel.com>
->> ---
->>   system/vl.c | 8 ++++++--
->>   1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/system/vl.c b/system/vl.c
->> index a3eede5fa5b8..ed682643805b 100644
->> --- a/system/vl.c
->> +++ b/system/vl.c
->> @@ -3545,8 +3545,12 @@ void qemu_init(int argc, char **argv)
->>                   if (!opts) {
->>                       exit(1);
->>                   }
->> -                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", false);
->> -                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", false);
->> +
->> +                /* Don't override the -overcommit option if set */
->> +                enable_mlock = enable_mlock ||
->> +                    qemu_opt_get_bool(opts, "mem-lock", false);
->> +                enable_cpu_pm = enable_cpu_pm ||
->> +                    qemu_opt_get_bool(opts, "cpu-pm", false);
->>                   break;
->>               case QEMU_OPTION_compat:
->>                   {
+
+
+在 2024/5/3 19:32, Shiyang Ruan 写道:
 > 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+> 在 2024/4/24 2:40, Dan Williams 写道:
+>> Shiyang Ruan wrote:
+>>> Currently driver only traces cxl events, poison creation (for both vmem
+>>> and pmem type) on cxl memdev is silent.
+>>
+>> As it should be.
+>>
+>>> OS needs to be notified then it could handle poison pages in time.
+>>
+>> No, it was always the case that latent poison is an "action optional"
+>> event. I am not understanding the justification for this approach. What
+>> breaks if the kernel does not forward events to memory_failure_queue()?
+> 
+> I think for type3(pmem) device, it should be handled like NVDIMM.  If 
+> there are processes or filesystems running on it, they could be notified 
+> then operate a friendly shutdown if POISON happens.
+> 
+>>
+>> Consider that in the CPU consumption case that the firmware first path
+>> will do its own memory_failure_queue() and in the native case the MCE
+>> handler will take care of this. So that leaves pages that are accessed
+>> by DMA or background operation that encounter poison. Those are "action
+>> optional" scenarios and it is not clear to me how the driver tells the
+>> difference.
+> 
+> So for real CXL device, it always use FW-First path to notify such 
+> failure event?  Then, there is nothing to do with OS-First path?
+> 
+>>
+>> This needs more precision on which agent is repsonsible for what level
+>> of reporting. The distribution of responsibility between ACPI GHES,
+>> EDAC, and the CXL driver is messy and I expect this changelog to
+>> demonstrate it understands all those considerations.
+> 
+> Ok, I'll try to understand them.
 
-Ah, wait, actually, this is a bad idea, too, since now you cannot disable an 
-enabled option anymore. Imagine that you have for example enabled the option 
-in the config file, and now you'd like to disable it on the command line 
-again - you're stuck with the enabled setting in that case.
+Hi Dan,
 
-I think the better solution is to replace the "false" default value at the end:
+I checked the GHES, EDAC codes. I think they belong to FW-First path. 
+GHES polls mem errors, then
+  1. report by EDAC
+  2. construct a MCE, mce_log(), and handle in work queue
+  3. queue it into memory_failure right now if needed (sync, ...)
+And community is adding CXL FW-First trace support[1].
 
-         enable_mlock = qemu_opt_get_bool(opts, "mem-lock", enable_mlock);
-         enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", enable_cpu_pm);
+But in OS-First path, error record is sent to CXL driver via MSI, it 
+won't conflict with FW-First path, I think.
 
-What do you think about this?
+[1] 
+https://lore.kernel.org/linux-cxl/43ab39e9-c9c2-bfe4-7d1c-bad462221c9c@amd.com/T/#t
 
-  Thomas
+> 
+>>
+>>> Per CXL spec, the device error event could be signaled through
+>>> FW-First and OS-First methods.
+>>>
+>>> So, add poison creation event handler in OS-First method:
+>>>    - Qemu:
+>>
+>> Why is QEMU relevant for this patch? QEMU is only a development vehicle
+>> the upstream enabling should be reference shipping or expected to be
+>> shipping hardware implementations.
+> 
+> Yes, but currently we don't have a real CXL device so developing and 
+> verification could only be done on Qemu with simulated CXL device.
+> 
+>>
+>>>      - CXL device reports POISON creation event to OS by MSI by sending
+>>>        GMER/DER after injecting a poison record;
+>>
+>> When you say "inject" here do you mean "add to the poison list if
+>> present". Because "inject" to me means the "Inject Poison" Memory Device
+>> Command.
+> 
+> It's a Qemu qmp command called "cxl-inject-poison", which only adds a 
+> given address,length record to CXL's poison list, doesn't send 
+> INJECT_POISON mbox command.
+> 
+>>
+>>>    - CXL driver:
+>>>      a. parse the POISON event from GMER/DER;
+>>>      b. translate poisoned DPA to HPA (PFN);
+>>>      c. enqueue poisoned PFN to memory_failure's work queue;
+>>>
+>>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+>>> ---
+>>>   drivers/cxl/core/mbox.c   | 119 +++++++++++++++++++++++++++++++++-----
+>>>   drivers/cxl/cxlmem.h      |   8 +--
+>>>   include/linux/cxl-event.h |  18 +++++-
+>>>   3 files changed, 125 insertions(+), 20 deletions(-)
+>>>
+>>> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+>>> index f0f54aeccc87..76af0d73859d 100644
+>>> --- a/drivers/cxl/core/mbox.c
+>>> +++ b/drivers/cxl/core/mbox.c
+>>> @@ -837,25 +837,116 @@ int cxl_enumerate_cmds(struct cxl_memdev_state 
+>>> *mds)
+>>>   }
+>>>   EXPORT_SYMBOL_NS_GPL(cxl_enumerate_cmds, CXL);
+>>> -void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+>>> -                enum cxl_event_log_type type,
+>>> -                enum cxl_event_type event_type,
+>>> -                const uuid_t *uuid, union cxl_event *evt)
+>>> +static void cxl_report_poison(struct cxl_memdev *cxlmd, struct 
+>>> cxl_region *cxlr,
+>>> +                  u64 dpa)
+>>>   {
+>>> -    if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
+>>> +    u64 hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+>>> +    unsigned long pfn = PHYS_PFN(hpa);
+>>> +
+>>> +    if (!IS_ENABLED(CONFIG_MEMORY_FAILURE))
+>>> +        return;
+>>
+>> No need for this check, memory_failure_queue() is already stubbed out in
+>> the CONFIG_MEMORY_FAILURE=n case.
+> Yes, I'm overthinking it.
+> 
+>>
+>>> +    memory_failure_queue(pfn, MF_ACTION_REQUIRED);
+>>
+>> My expectation is MF_ACTION_REQUIRED is not appropriate for CXL event
+>> reported errors since action is only required for direct consumption
+>> events and those need not be reported through the device event queue.
+> Got it.
 
+I'm not very sure about 'Host write/read' type.  In my opinion, these 
+two types of event should be sent from device when CPU is accessing a 
+bad memory address, they could be thought of a sync event which needs 
+the 'MF_ACTION_REQUIRED' flag.  Then, we can determine the flag by the 
+types like this:
+- CXL_EVENT_TRANSACTION_READ | CXL_EVENT_TRANSACTION_WRITE
+                                               => MF_ACTION_REQUIRED
+- CXL_EVENT_TRANSACTION_INJECT_POISON         => MF_SW_SIMULATED
+- others                                      => 0
+
+
+--
+Thanks,
+Ruan.
+
+> 
+>>
+>> It would be useful to collaborate with a BIOS firmware engineer so that
+>> the kernel ends up with similar logic as is used to set CPER record
+>> severity, or at least understands why it would want to be different.
+>> See how ghes_handle_memory_failure() determines the
+>> memory_failure_queue() flags.
+> 
+> Ok, thanks for the advice.
+> 
+> 
+> -- 
+> Ruan.
+> 
+> 
+> 
 
