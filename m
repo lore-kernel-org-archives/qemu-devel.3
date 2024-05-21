@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B73A5C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C8DC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 May 2024 12:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9OUT-0000n6-7M; Tue, 21 May 2024 08:21:13 -0400
+	id 1s9OWO-0005Lk-7k; Tue, 21 May 2024 08:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9OUR-0000mP-Kt
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:21:11 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1s9OWM-0005Kx-03
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:23:10 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9OUN-0008AG-UV
- for qemu-devel@nongnu.org; Tue, 21 May 2024 08:21:11 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-574d1a1c36aso8546843a12.3
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:21:07 -0700 (PDT)
+ id 1s9OWK-0008VL-6W
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 08:23:09 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-573061776e8so8742649a12.1
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 05:23:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716294066; x=1716898866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716294186; x=1716898986; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7hDdgTP8rBIKY8P3kMZkGjeHLGY9HcRDs2wrz8JCDuU=;
- b=HrD90d/h3Qt1wbLopmEPzRuCAACxg+WYaUAz+LwftxjYjD6UygoIzqZjwoUv/5tsvq
- 5b8TfC286fUlT4QjwmGj3u0b0RQj82FM6xemafkZvrlqrmyLMn21J+BGC7JfqG/Ku9gn
- W5cLbP0DiqIomiL09/r9FeqDB0N4foZbI7PvX69rWis3AUrhmxoDgDq/wZUOIHOs3BuV
- VXiRdfzDFMNCb4nMjhRzQUrOYabk4SQWkKnsk3oYDGIJl6s6Xw6gn44yydfbDS3+EFJo
- 80/dgC0nXG8RrpjFwxVzWZTP89ikZPpgG5N0xNfBWLNMKaeC9wJeSYJhFhvZkE7WPf+z
- 8rFQ==
+ bh=q7fiJhhXww+FJgd39GDUtcCfdsk7ZM3c4QyHhDGWztE=;
+ b=Rko/JGwNkc36zoQddsXTP9TJHE+4CY4P4cQrUtqUCVgiR7Yi99ePwdlhncJIXQ6OJt
+ u7FAmGeXVW+YUdHFd2a/4X+Btw05d0UnooG8ASzdIlCYyvwmMShoJ0GT3u401uZeaSiG
+ 1sc8JRI0m6p2BPlP3XsIVcNhmAHc8IO8hNEccbojxjtw0g+ISNXCOB0KTXJN38RzIm4S
+ D8oeP9LFADh1FxaDDuBFFlsalCHggb5FPmIOIhwsqGnvwUfhB4z1yAw8ch6MJaPhxs5M
+ n0qxyOepxyBTsEQ37WJgntb1mHtOlQX00QmX58vyUp7887VUP4hq3AHzMyX/d2FdRPaG
+ b5ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716294066; x=1716898866;
+ d=1e100.net; s=20230601; t=1716294186; x=1716898986;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7hDdgTP8rBIKY8P3kMZkGjeHLGY9HcRDs2wrz8JCDuU=;
- b=LLwtupHJiHl0Bnm6Hb0+VobvJimfhQtP6LAbeNj5USYX3gIprE7Xl2I555ZQkFVBRx
- CP4zkWbbhezRelsrof9NrVRfo3PftS2S1nOoy3zwmmftbJLMl/M8VyyOsIW1ItX2qqZ8
- tyuZugHQ6KKynCYrVaFdnJ3RmzsV9E7yFWKkLUkpiMzIG4SGHZ33d1CkD1ltRUwsxzw5
- c/Uh9YFTlo9CPEfTdWJ3yauY/AJ8DYP7Og2qrsx5i+jwFsUYgrEOUJhu2YJqQuDeBbT7
- ilIMO0lo9RlRcwUhwohWaEgGRqPhIGBT1lWWNP6yJ2oNmgjmEs7JRItgtNfBu/BPK05U
- lZJg==
-X-Gm-Message-State: AOJu0Yxql/AhLQD908nXa6cn86mMIhe3A2td1d2nNUpN2JYi8+l7E3JY
- mrSCyc3AzMwt9pey7A+UB3weUCqtX4W1FUDEUpXPZEnhwrLxfvWuJOPtya+7QbOhgqHzw0aiMTf
- 2CRfZvail/vGWeP16VaB9dYU4hj4U+L3YX2OX2g==
-X-Google-Smtp-Source: AGHT+IHFjpBKnVyRcsJA7j2a0BTfVwN5MlEoUge9aDxaa95Wnnpmep2jFZXpyShNA/rURbpKkmV+xUG1OBiOo4IMAcQ=
-X-Received: by 2002:a50:8d4e:0:b0:571:bed1:3a27 with SMTP id
- 4fb4d7f45d1cf-5734d6f2d33mr22926357a12.38.1716294066242; Tue, 21 May 2024
- 05:21:06 -0700 (PDT)
+ bh=q7fiJhhXww+FJgd39GDUtcCfdsk7ZM3c4QyHhDGWztE=;
+ b=PYVQRohpBvG++6aAqs0Z1QukDCu5v1BGH/YbIlIRybFlyuwYREjcv9h+HogEAN5J7K
+ esFvyv9O6k76/lonriOKcJ+wHvmBju9AYDerwKHM+71G4pgslNn/7qnkFoqvAMPsCP1W
+ 7alYKERvJ/MHRG9nzjz7at3xtQ/ku8rqpdTjGcmLpfWhEwFT/9WrAgdThsA/YJFSQNAZ
+ 8o6eg49Q9zqjUdSuEaFoGzMFVTIZNGjn46SURt1qk4yNF+Uqb5JVnp6gZswSsl8HkU10
+ 2K1Ue6P+i3K4dvqsc4UawHHcSEpgBEt9PIfFi1dEC7Rebhpri+v4HNA/USySJ4S5BnXl
+ 12Zw==
+X-Gm-Message-State: AOJu0YyEb0FVhSvoRXkaZBE/OUJTSKRRoIvJF2jytE2vkrKVlZO+sv2T
+ 1dJbADU39TWKK+mOVrq6LteE6diSjbGNStUYWuN/+EAeoDTkEIycovBLUuIDgj2mo3EBKGCydCz
+ b2ZT5nKgttnmt9GfMysz5TsPx98qenETuqzQE7Qtj2+B1woZj
+X-Google-Smtp-Source: AGHT+IHb0Q/2Ce9Nju/XZxhh5YfPSYmsvO+17gNibXSv2s/Rposds9EPMBmE1WYexqy1CgsHq3Cx4yM0VF58mQzoTYE=
+X-Received: by 2002:a50:cdd6:0:b0:574:ecfd:8306 with SMTP id
+ 4fb4d7f45d1cf-574ecfd8f4amr12762089a12.25.1716294186438; Tue, 21 May 2024
+ 05:23:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240511115400.7587-1-richard.henderson@linaro.org>
- <20240511115400.7587-4-richard.henderson@linaro.org>
-In-Reply-To: <20240511115400.7587-4-richard.henderson@linaro.org>
+ <20240511115400.7587-7-richard.henderson@linaro.org>
+In-Reply-To: <20240511115400.7587-7-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 May 2024 13:20:54 +0100
-Message-ID: <CAFEAcA9Ob-Z2MJsz-0pPL4RGhjDOYL8_Ci9rNDqqPJ+epB+24w@mail.gmail.com>
-Subject: Re: [PATCH 03/17] Standardize reginfo_dump_mismatch printing
+Date: Tue, 21 May 2024 13:22:55 +0100
+Message-ID: <CAFEAcA-u-yNmQqPgGSbEy4=7ihf7JjAJgGa1OG28B-ux0jBLpQ@mail.gmail.com>
+Subject: Re: [PATCH 06/17] ppc64: Clean register values in reginfo_init
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,45 +91,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sat, 11 May 2024 at 12:54, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Hoist the "master vs apprentice" label to apprentice(), since
-> we will want different labels for dumping.  Remove all of the
-> "mismatch" text from reginfo_dump_mismatch -- just print "vs".
+> Smash the stack and thread pointers to deadbeef, as is common
+> for the other architectures.  This allows us to drop these
+> special cases within reginfo_is_eq and reginfo_dump_mismatch.
+>
+> Do not copy the unused special registers that are packed into gregs[].
+> Most of these are related to system instructions and thus are not
+> manipulable via the user-mode instructions targeted by RISU.  LNK and
+> CTR are not initialized by risugen, and since in general we cannot
+> test branches with risugen these can be ignored.  This leaves only
+> XER and CCR as the only special registers to be copied.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  risu.h                     |  4 ++--
->  risu.c                     |  1 +
->  risu_reginfo_aarch64.c     | 12 +++++-------
->  risu_reginfo_arm.c         | 18 +++++++++---------
->  risu_reginfo_i386.c        |  6 +-----
->  risu_reginfo_loongarch64.c | 11 ++++-------
->  risu_reginfo_m68k.c        | 23 +++++++----------------
->  risu_reginfo_ppc64.c       | 25 ++++++++++++-------------
->  risu_reginfo_s390x.c       | 18 +++++++-----------
->  9 files changed, 48 insertions(+), 70 deletions(-)
->
-> diff --git a/risu.h b/risu.h
-> index 2c43384..1b87af2 100644
-> --- a/risu.h
-> +++ b/risu.h
-> @@ -123,8 +123,8 @@ int reginfo_is_eq(struct reginfo *r1, struct reginfo *r2);
->  /* print reginfo state to a stream, returns 1 on success, 0 on failure */
->  int reginfo_dump(struct reginfo *ri, FILE * f);
->
-> -/* reginfo_dump_mismatch: print mismatch details to a stream, ret nonzero=ok */
-> -int reginfo_dump_mismatch(struct reginfo *m, struct reginfo *a, FILE *f);
-> +/* reginfo_dump_mismatch: print mismatch details to a stream */
-> +void reginfo_dump_mismatch(struct reginfo *m, struct reginfo *a, FILE *f);
 
-This commit is also changing the return type of the function,
-which the commit message doesn't say anything about. Since this
-is only risu, not QEMU proper, I don't think we strictly need
-to disentangle this into two commits, but we should describe
-both changes in the commit message.
-
-(Since the only callsite doesn't check the return value and
-in any case if it cared it could call ferror() itself,
-switching to 'void' is fine.)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
