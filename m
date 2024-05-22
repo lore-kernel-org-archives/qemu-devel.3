@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4756DC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:58:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDFCC25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9igw-0003Ug-JE; Wed, 22 May 2024 05:55:26 -0400
+	id 1s9ihG-0003nJ-Nq; Wed, 22 May 2024 05:55:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igl-0003Qy-Qu
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ih4-0003a4-31
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igk-0001Pf-A2
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:15 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ih2-0001jt-Bx
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371710;
+ s=mimecast20190719; t=1716371731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MIGTWmrq7gmEPJCdTPW3Iy9adWxbYc3LKxV5QyfhzTM=;
- b=dJjkHTS06m9DA1rtOub+HmuQwzWFwuVKIikkPu2HGpujUCxPxKf0uMnS79uYm/w2+EdUmD
- d905D0kIrjEwZG3IEY02yofYbxHc7pJbWATqNJ3FCJxccQ6gmxN6nKsT8m0YU+rlNAxQAH
- 8CUVmTLR+z39V5Lw4wSoabjyzk804iY=
+ bh=cRuuNZBzxypv/pnih3IuYyo3ywdxPulrg4+T5lQo/rM=;
+ b=P6I9Q31DQlR1Ax57NapmT7HGqxSG8V9oTceFJHDLkxqO24BB2UNg0rzfbUt9kvBOuPaMW/
+ yf+96w+YwUV2JoJEZK8xXL8+zx9IFL8CISBBf3kQdEIovSPWvbh3ZWR/ZKfipa7fbv6oQR
+ HZvfmL8e4IyB9q/fe+kJ5HfVkmI7NWk=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-388-eW7KvvT5NL-HezqsWx7o5A-1; Wed, 22 May 2024 05:55:07 -0400
-X-MC-Unique: eW7KvvT5NL-HezqsWx7o5A-1
+ us-mta-588-nJjsmpVfPEmlL6Kyq9Euxw-1; Wed, 22 May 2024 05:55:30 -0400
+X-MC-Unique: nJjsmpVfPEmlL6Kyq9Euxw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0066485A58C;
- Wed, 22 May 2024 09:55:07 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B65F5101A551;
+ Wed, 22 May 2024 09:55:29 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B90557414;
- Wed, 22 May 2024 09:55:05 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 95A257412;
+ Wed, 22 May 2024 09:55:28 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 12/47] vfio/ccw: Use g_autofree variable in
- vfio_ccw_register_irq_notifier()
-Date: Wed, 22 May 2024 11:54:07 +0200
-Message-ID: <20240522095442.195243-13-clg@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 28/47] vfio/cpr: Make vfio_cpr_register_container() return bool
+Date: Wed, 22 May 2024 11:54:23 +0200
+Message-ID: <20240522095442.195243-29-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -82,53 +81,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+
+This is to follow the coding standand to return bool if 'Error **'
+is used to pass error.
+
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/ccw.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ include/hw/vfio/vfio-common.h | 2 +-
+ hw/vfio/container.c           | 3 +--
+ hw/vfio/cpr.c                 | 4 ++--
+ hw/vfio/iommufd.c             | 3 +--
+ 4 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 90e4a534371684c08e112364e1537eb8979f73f4..6764388bc47a970329fce2233626ccb8178e0165 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -384,7 +384,7 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-                                            Error **errp)
- {
-     VFIODevice *vdev = &vcdev->vdev;
--    struct vfio_irq_info *irq_info;
-+    g_autofree struct vfio_irq_info *irq_info = NULL;
-     size_t argsz;
-     int fd;
-     EventNotifier *notifier;
-@@ -421,14 +421,14 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-     if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
-               irq_info) < 0 || irq_info->count < 1) {
-         error_setg_errno(errp, errno, "vfio: Error getting irq info");
--        goto out_free_info;
-+        return;
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index e85817e65e65317d08bc2b17b738449198784796..b7bb4f5304addcdb03c971f27f99e5350ad0940a 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -229,7 +229,7 @@ void vfio_detach_device(VFIODevice *vbasedev);
+ int vfio_kvm_device_add_fd(int fd, Error **errp);
+ int vfio_kvm_device_del_fd(int fd, Error **errp);
+ 
+-int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
++bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
+ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer);
+ 
+ extern const MemoryRegionOps vfio_region_ops;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 53649e397cab94f8a2b61e6d66f21d635556e04e..096cc972586df14a4a68074b7038a9661b1558e2 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -618,8 +618,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+         goto free_container_exit;
      }
  
-     if (event_notifier_init(notifier, 0)) {
-         error_setg_errno(errp, errno,
-                          "vfio: Unable to init event notifier for irq (%d)",
-                          irq);
--        goto out_free_info;
-+        return;
+-    ret = vfio_cpr_register_container(bcontainer, errp);
+-    if (ret) {
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
+         goto free_container_exit;
      }
  
-     fd = event_notifier_get_fd(notifier);
-@@ -439,9 +439,6 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         qemu_set_fd_handler(fd, NULL, NULL, vcdev);
-         event_notifier_cleanup(notifier);
-     }
--
--out_free_info:
--    g_free(irq_info);
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 392c2dd95d14664bade0ae74655e91bc839504c0..87e51fcee176fe1fa93349f08e9f9ca84b474729 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -25,12 +25,12 @@ static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+     return 0;
  }
  
- static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
+-int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
++bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
+ {
+     migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+                                 vfio_cpr_reboot_notifier,
+                                 MIG_MODE_CPR_REBOOT);
+-    return 0;
++    return true;
+ }
+ 
+ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 84c86b970e756d34b202d5b18ae51c30c730e092..6a446b16dcd64838dc9ebb6150cd5ed85ec6fef3 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -396,8 +396,7 @@ found_container:
+         goto err_listener_register;
+     }
+ 
+-    ret = vfio_cpr_register_container(bcontainer, errp);
+-    if (ret) {
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
+         goto err_listener_register;
+     }
+ 
 -- 
 2.45.1
 
