@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4734DC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C2D1C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9dDH-0005VQ-Hu; Wed, 22 May 2024 00:04:29 -0400
+	id 1s9dDa-0005bA-MZ; Wed, 22 May 2024 00:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9dDE-0005V0-3l; Wed, 22 May 2024 00:04:24 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1s9dDW-0005Zy-Lo; Wed, 22 May 2024 00:04:43 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9dDC-0007xN-AB; Wed, 22 May 2024 00:04:23 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3c99e6b8b1fso3073284b6e.1; 
- Tue, 21 May 2024 21:04:21 -0700 (PDT)
+ id 1s9dDI-0007xg-NS; Wed, 22 May 2024 00:04:42 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6f4603237e0so373783b3a.0; 
+ Tue, 21 May 2024 21:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716350660; x=1716955460; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pv888GdiOxDIgPgjwwn7UnK1ZS3sV6PekCysk+JGFYk=;
- b=Ss52oKuYzPy6MZ+FeGM+kDiIQ9oadK2oQGcRFDAkYjbbn/x1TgWbhTDkX4lF8Ij0r5
- DX6IfWdqx6fnMAO35S7ClXezBNJuGCh6EZ21vOBacmrYrKjFpS4vcvJm5vta5Od+8eDA
- ENMRQO8AG+7dRYhfHp6AMRiBO5jKqOIG4VUvmK/6oviNWtp04POhkYa9VGOSCTKQLyNL
- xQqqsIcYnfOD07Cxe7kvxbvi8POHG+PramjLJJFQ+fSqWb4IF/cQNbLINRMVmTwQB/Ad
- yoVBCQ6PhsDc7MNCZVMPECCsIW0bS1oxnqPLhoSahY1r4O9wsx9yWM9plleNetUOaiRy
- 8lYQ==
+ d=gmail.com; s=20230601; t=1716350666; x=1716955466; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0b2GXCJ22WFvTHgVXjNvK42VHOxSdD4f2sQ0k5SMWIQ=;
+ b=H08e7ePvWDRGTQ4Rouqb6coQulaXqIqZFiWD6wSYPTyW67ykVdxHsllvCT5L/CrPeS
+ nn9Fxm4UewfuAaOYu0PO+pPx/QUXswOhuBwutWCtYFVWRKVzLf2ZnHwaQHViGtBovYvW
+ fL0lyrOupaPo5LzZRa5+KZg7J339DdaSHJWROjxfuZ0tHFb3Xb3rOrCJ8lxFHiTFKScH
+ qRskUBVWPR+wL3AS/iNoUPjXQdmCxMkJkPI0mO17+atipjdQIFE0WTv1vD0QjWUuR4RN
+ WkjiaiXPsqY93Lu14Qrm7UEUuX8ZravkFVR2FhmVSC3YtZcTq2zJt2kwuSrXD2R6czHZ
+ WOpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716350660; x=1716955460;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pv888GdiOxDIgPgjwwn7UnK1ZS3sV6PekCysk+JGFYk=;
- b=SaXjZnSH6gySs4kp4U5YBpeGqriMzwTWR37vUippGvmOQit9zWf9ebPUVeNfu5DEom
- SD/XgkSFy5tAJpbXY+ZOQ1WgR+R9LiUig0+BUXnLzaCNzrzVwHspsSN1JRdQRYsPFAFG
- PcBHKXiAr0p2fhN7GgqEyUqmqh1GNhZlam0DUo2pVTEC8EoIjrF+PGEy0KJK3nUwh3xl
- 31zDI14MAuXOdvxq7vimpFX+IsOZrtlHH0OkHswINbWx3AFEAY3wY7sDaa0vwxIpUHtC
- AV17dZT5VMCUjVFep+MzAr+dBaEzTvUqhK+IWHhgpgGawEwdsFdMtNN1pCViI6k/lcZ5
- 8aIQ==
+ d=1e100.net; s=20230601; t=1716350666; x=1716955466;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0b2GXCJ22WFvTHgVXjNvK42VHOxSdD4f2sQ0k5SMWIQ=;
+ b=RZrMens1zn2bqQJfmhiB9VmADQEmZ4XMfc/M+git9uLB2Hf2s+1eiquI14ogBcQl9s
+ 74YPqpHrLpPih48fmqxOBRYjjjaI77/RSx3yesDW73RcAN+FK8j+zzIRfzhk3iY5ojk8
+ lUZWjSCuJ10JgoxW3jR2BMIatx4G9S0zQM0M+OBe68MEDTKe/eqgMVEWrscRM1xwVAJQ
+ 2R+KVkJzNIXqDA1o4lY6haysyDLV79C2Z02+H3WBh/CvqWPzGfeY5ypezyMd+JXHbvd2
+ UH22pcmoRepHyMcN5V9+Z2DJoGH820UVnZIoRFyKbdhMm3HQWYNs5sdFkYw6KCIxaFyo
+ m0qg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+OLNnJcRz+x4BEA1VSfKnHyvKoMM4PD3tXTUKq3ShVX+3Z/IQOE7ArEe/ykc4wnilC1h9ltT2oIAG8BT4HRBemNdNcZk=
-X-Gm-Message-State: AOJu0Yw7cfM90pa2lj81lsf09VK5oaFNWeKZQ3MpnD7f3VcjrFC2EUXw
- rzBKmZ4WqhaQet15TjnHDySjaDc7q5ceBToJpYqAGNVo8W0SFrOLh1akbg==
-X-Google-Smtp-Source: AGHT+IE8xUVD3x5xaxEXdEybAKP/dBjdUg/WKNoDPNJoihvhBMUIV/sEJpVIPjmbJTReb1zWZNXekg==
-X-Received: by 2002:a05:6358:6f0d:b0:183:fb12:39f6 with SMTP id
- e5c5f4694b2df-19791e1d8b4mr119356655d.14.1716350659984; 
- Tue, 21 May 2024 21:04:19 -0700 (PDT)
+ AJvYcCUYGqwFIdajR4EsKPhwaIGVlZLdekZ8MFjPMsd/JqWCuR2BUQhK78aGfCBNtvYV0RFkDlJNso1ausxXDmR8hPzY2TZP1fY=
+X-Gm-Message-State: AOJu0Yx2s1Mq+mV9q85mriiqa71iGG21nuWz8cgFxUHNrhuLOsKhQk7R
+ o4pXF3CLA8UF2zesFnJ7hoAlNJgUV144v02XEu+uV18nh/BKMZv4qOj+gQ==
+X-Google-Smtp-Source: AGHT+IFaFWPWJB2d2OMW0uhWNDaqI8vewArE69LE6f5+mNQBgQspjuFSSoOPRWbp3udUMExxnwgSUw==
+X-Received: by 2002:a05:6a20:432a:b0:1af:86e4:bc99 with SMTP id
+ adf61e73a8af0-1b1f8045e52mr1361472637.10.1716350666332; 
+ Tue, 21 May 2024 21:04:26 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6589645bbefsm10197158a12.55.2024.05.21.21.04.17
+ 41be03b00d2f7-6589645bbefsm10197158a12.55.2024.05.21.21.04.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 May 2024 21:04:19 -0700 (PDT)
+ Tue, 21 May 2024 21:04:26 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 0/2] target/ppc: Fix PMU instruction counting
-Date: Wed, 22 May 2024 14:04:09 +1000
-Message-ID: <20240522040411.90655-1-npiggin@gmail.com>
+Subject: [PATCH 2/2] target/ppc: Tidy pmu_count_insns implementation
+Date: Wed, 22 May 2024 14:04:11 +1000
+Message-ID: <20240522040411.90655-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240522040411.90655-1-npiggin@gmail.com>
+References: <20240522040411.90655-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=npiggin@gmail.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,33 +94,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The crux of the problem being that dynamic exits from a TB would
-not count instructions previously executed in the TB. I don't
-know how important it is for PMU to count instructions exactly,
-however for instruction replay this can lead to different counts
-for the same execution (e.g., because TBs can be different sized)
-and that blows up reverse debugging.
+Merge the user-only and full implementations together, and only
+call translator_io_start() and only create and set the label
+when necessary.
 
-I posted something on this out before, but missed a few things
-(most notably faulting memory access). And found that forcing 1
-insn per TB seems to be the only feasible way to do this.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/translate.c | 55 +++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
-Sorry to ping you on this again Richard, it's not urgent but
-you're the guru with this stuff and I'm hesitant to change it
-without a better opinion ... Simple band aid for the meanwhile
-could be leave it as is but just disable counting if
-record/replay is in use.
-
-Thanks,
-Nick
-
-Nicholas Piggin (2):
-  target/ppc: Fix PMC5 instruction counting
-  target/ppc: Tidy pmu_count_insns implementation
-
- target/ppc/translate.c | 163 +++++++++++++++++++++--------------------
- 1 file changed, 83 insertions(+), 80 deletions(-)
-
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 344e78843c..9ce823b018 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -298,6 +298,8 @@ static inline void gen_update_nip(DisasContext *ctx, target_ulong nip)
+ #if defined(TARGET_PPC64)
+ static void pmu_count_insns(DisasContext *ctx)
+ {
++    bool pmc_other, pmc_check_overflow;
++
+     /*
+      * Do not bother calling the helper if the PMU isn't counting
+      * instructions.
+@@ -306,48 +308,47 @@ static void pmu_count_insns(DisasContext *ctx)
+         return;
+     }
+ 
+- #if !defined(CONFIG_USER_ONLY)
+-    TCGLabel *l;
+-    TCGv t0;
++    /*
++     * The PMU insns_inc() and handle_pmc5_overflow() helpers stop the internal
++     * PMU timer if a counter overflow happens. In that case, if the guest is
++     * running with icount and we do not handle it beforehand, the helper can
++     * trigger a 'bad icount read'. So call translator_io_start() for cases
++     * where that might trigger.
++     */
+ 
++ #if defined(CONFIG_USER_ONLY)
+     /*
+-     * The PMU insns_inc() helper stops the internal PMU timer if a
+-     * counter overflows happens. In that case, if the guest is
+-     * running with icount and we do not handle it beforehand,
+-     * the helper can trigger a 'bad icount read'.
++     * User mode can read (but not write) PMC5 and start/stop
++     * the PMU via MMCR0_FC. In this case just increment
++     * PMC5 with base.num_insns.
+      */
+-    translator_io_start(&ctx->base);
++    pmc_other = false;
++    pmc_check_overflow = false;
++ #else
++    pmc_other = ctx->pmc_other;
++    pmc_check_overflow = ctx->mmcr0_pmcjce;
++ #endif
+ 
+     /* Avoid helper calls when only PMC5-6 are enabled. */
+-    if (!ctx->pmc_other) {
+-        l = gen_new_label();
+-        t0 = tcg_temp_new();
++    if (!pmc_other) {
++        TCGv t0 = tcg_temp_new();
+ 
+         gen_load_spr(t0, SPR_POWER_PMC5);
+         tcg_gen_addi_tl(t0, t0, ctx->base.num_insns);
+         gen_store_spr(SPR_POWER_PMC5, t0);
+-        /* Check for overflow, if it's enabled */
+-        if (ctx->mmcr0_pmcjce) {
++
++        if (pmc_check_overflow) {
++            TCGLabel *l = gen_new_label();
++
++            translator_io_start(&ctx->base);
+             tcg_gen_brcondi_tl(TCG_COND_LT, t0, PMC_COUNTER_NEGATIVE_VAL, l);
+             gen_helper_handle_pmc5_overflow(tcg_env);
++            gen_set_label(l);
+         }
+-
+-        gen_set_label(l);
+     } else {
++        translator_io_start(&ctx->base);
+         gen_helper_insns_inc(tcg_env, tcg_constant_i32(ctx->base.num_insns));
+     }
+-  #else
+-    /*
+-     * User mode can read (but not write) PMC5 and start/stop
+-     * the PMU via MMCR0_FC. In this case just increment
+-     * PMC5 with base.num_insns.
+-     */
+-    TCGv t0 = tcg_temp_new();
+-
+-    gen_load_spr(t0, SPR_POWER_PMC5);
+-    tcg_gen_addi_tl(t0, t0, ctx->base.num_insns);
+-    gen_store_spr(SPR_POWER_PMC5, t0);
+-  #endif /* #if !defined(CONFIG_USER_ONLY) */
+ }
+ #else
+ static void pmu_count_insns(DisasContext *ctx)
 -- 
 2.43.0
 
