@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E7CC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 20:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E38C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 21:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9swB-00056O-2U; Wed, 22 May 2024 16:51:51 -0400
+	id 1s9tFh-0000qq-HH; Wed, 22 May 2024 17:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1s9sw9-00052D-A8; Wed, 22 May 2024 16:51:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1s9tFe-0000qS-Dv; Wed, 22 May 2024 17:11:58 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1s9sw7-0005Fp-Ow; Wed, 22 May 2024 16:51:49 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44MIuQ9Q028156; Wed, 22 May 2024 20:51:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=xEornZtyEpDEQM5Uo8+vBijkJQyHRzsURxpL7Q3iikw=;
- b=nlVHV5vzqk9y2V1dzfq5dD1yLH2SuJO/bONMtOLt11jEO4kEWpPFCmiMfv3LendqPOdu
- GZLurPWHxSztE1JC6JTFSMSlWQKryaLNYBvqwJaWPWkWHsVKR+De/PCebZ8U8zA7Q+Q3
- fyIe2hqaouHVo3NF3S4sAnAZcXio/ElufZnQWQjLkM0qspvjC5s9833xBQzu2OTh0E0l
- MVS5Kdabohs5YUsfb4y9qusn5m1hoAI8rVbX4LeF8ZAfHTQjaXuo8pk+jgtsXtxWqjJc
- 6xLxi9q0VcsCA22SEZxU20Oe3QhsxXWaERWZFZmigkYs8oNyJk4TOquC3naYhXb9iTFl FQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9p4x89n6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 20:51:44 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44MKphD6021610;
- Wed, 22 May 2024 20:51:43 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9p4x89n2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 20:51:43 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44MKeGLr023485; Wed, 22 May 2024 20:51:42 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77npe2xg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 20:51:42 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44MKpcmJ38732284
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 May 2024 20:51:40 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8B8D220043;
- Wed, 22 May 2024 20:51:38 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 35BD020040;
- Wed, 22 May 2024 20:51:38 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 22 May 2024 20:51:38 +0000 (GMT)
-Message-ID: <0f31dd7e61cac055f10c565a2eaba7b8ed7a8eea.camel@linux.ibm.com>
-Subject: Re: [PATCH 03/14] target/s390x: Update CR9 bits
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, david@redhat.com, thuth@redhat.com
-Date: Wed, 22 May 2024 22:51:37 +0200
-In-Reply-To: <20240502054417.234340-4-richard.henderson@linaro.org>
-References: <20240502054417.234340-1-richard.henderson@linaro.org>
- <20240502054417.234340-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1s9tFb-0000Pz-5S; Wed, 22 May 2024 17:11:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vl3ml0SG2z67KQL;
+ Thu, 23 May 2024 05:08:07 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4C6E6140A35;
+ Thu, 23 May 2024 05:11:47 +0800 (CST)
+Received: from 00293818-MRGF.china.huawei.com (10.48.156.123) by
+ lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 22 May 2024 22:11:26 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
+ <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
+ <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
+ <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
+ <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
+ <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
+ <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
+ <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
+ <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
+ <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
+ <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
+ <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
+ <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
+ <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>
+Subject: [PATCH V11 0/8] Add architecture agnostic code to support vCPU Hotplug
+Date: Wed, 22 May 2024 22:11:03 +0100
+Message-ID: <20240522211111.232114-1-salil.mehta@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Iukh98gyN9xvRaVcdBKSk0x5b7zgYnyv
-X-Proofpoint-GUID: 5qPelSdz2G9GnNw02WtnhViW08o8__SV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-22_12,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 phishscore=0
- adultscore=0 spamscore=0 clxscore=1015 mlxlogscore=770 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405220144
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.48.156.123]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ lhrpeml500001.china.huawei.com (7.191.163.213)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,19 +73,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-05-01 at 22:44 -0700, Richard Henderson wrote:
-> Update from the PoO 14th edition.
->=20
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> =C2=A0target/s390x/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 | 18 +++++++++++-------
-> =C2=A0target/s390x/tcg/misc_helper.c |=C2=A0 2 +-
-> =C2=A02 files changed, 12 insertions(+), 8 deletions(-)
+Virtual CPU hotplug support is being added across various architectures[1][3].
+This series adds various code bits common across all architectures:
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+1. vCPU creation and Parking code refactor [Patch 1]
+2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
+3. ACPI CPUs AML code change [Patch 4,5]
+4. Helper functions to support unrealization of CPU objects [Patch 6,7]
+5. Docs [Patch 8]
+
+
+Repository:
+
+[*] https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3.arch.agnostic.v10
+
+NOTE: This series is meant to work in conjunction with Architecture specific patch-set.
+For ARM, this will work in combination of the architecture specific part based on
+RFC V2 [1]. This architecture specific patch-set RFC V3 shall be floated soon and is
+present at below location
+
+[*] https://github.com/salil-mehta/qemu/tree/virt-cpuhp-armv8/rfc-v3-rc1
+
+
+Revision History:
+
+Patch-set  V10 -> V11
+1. Addressed Nicholas Piggin's (IBM) comment
+   - moved the traces in kvm_unpark_vcpu and kvm_create_vcpu at the end
+   - Added the Reviewed-by Tag for [PATCH V10 1/8]
+2.  Addressed Alex Bennée's (Linaro) comments
+   - Added a note explaining dependency of the [PATCH V10 7/8] on Arch specific patch-set
+Link: https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/ 
+Link: https://lore.kernel.org/qemu-devel/87frubi402.fsf@draig.linaro.org/
+
+Patch-set  V9 -> V10
+1. Addressed Nicholas Piggin's (IBM) & Philippe Mathieu-Daudé (Linaro) comments
+   - carved out kvm_unpark_vcpu and added its trace
+   - Widened the scope of the kvm_unpark_vcpu so that it can be used by generic framework
+     being thought out
+Link: https://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@huawei.com/
+Link: https://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@linaro.org/
+
+Patch-set  V8 -> V9
+1. Addressed Vishnu Pajjuri's (Ampere) comments
+   - Added kvm_fd to trace in kvm_create_vcpu
+   - Some clean ups: arch vcpu-id and sbd variable
+   - Added the missed initialization of cpu->gdb_num_regs
+2. Addressed the commnet from Zhao Liu (Intel)
+   - Make initialization of CPU Hotplug state conditional (possible_cpu_arch_ids!=NULL)
+Link: https://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@huawei.com/
+
+Patch-set V7 -> V8
+1. Rebased and Fixed the conflicts
+
+Patch-set  V6 -> V7
+1. Addressed Alex Bennée's comments
+   - Updated the docs
+2. Addressed Igor Mammedov's comments
+   - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/9]
+   - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]     
+3. Added Shaoqin Huang's Reviewed-by tags for whole series.
+Link: https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.com/
+
+Patch-set  V5 -> V6
+1. Addressed Gavin Shan's comments
+   - Fixed the assert() ranges of address spaces
+   - Rebased the patch-set to latest changes in the qemu.git
+   - Added Reviewed-by tags for patches {8,9}
+2. Addressed Jonathan Cameron's comments
+   - Updated commit-log for [Patch V5 1/9] with mention of trace events
+   - Added Reviewed-by tags for patches {1,5}
+3. Added Tested-by tags from Xianglai Li
+4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9] 
+Link: https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.com/
+
+Patch-set  V4 -> V5
+1. Addressed Gavin Shan's comments
+   - Fixed the trace events print string for kvm_{create,get,park,destroy}_vcpu
+   - Added Reviewed-by tag for patch {1}
+2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
+3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
+4. Dropped the ARM specific [Patch V4 10/10]
+Link: https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.com/
+
+Patch-set  V3 -> V4
+1. Addressed David Hilderbrand's comments
+   - Fixed the wrong doc comment of kvm_park_vcpu API prototype
+   - Added Reviewed-by tags for patches {2,4}
+Link: https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.com/
+
+Patch-set  V2 -> V3
+1. Addressed Jonathan Cameron's comments
+   - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to 'integer'
+   - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
+   - Updated [Patch V2 3/10] commit-log with details of ACPI_CPU_SCAN_METHOD macro
+   - Updated [Patch V2 5/10] commit-log with details of conditional event handler method
+   - Added Reviewed-by tags for patches {2,3,4,6,7}
+2. Addressed Gavin Shan's comments
+   - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
+   - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
+   - Reset the value of 'gdb_num_g_regs' in gdb_unregister_coprocessor_all
+   - Fixed the kvm_{create,park}_vcpu prototypes docs
+   - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
+3. Addressed one earlier missed comment by Alex Bennée in RFC V1
+   - Added traces instead of DPRINTF in the newly added and some existing functions
+Link: https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com/
+
+Patch-set V1 -> V2
+1. Addressed Alex Bennée's comments
+   - Refactored the kvm_create_vcpu logic to get rid of goto
+   - Added the docs for kvm_{create,park}_vcpu prototypes
+   - Splitted the gdbstub and AddressSpace destruction change into separate patches
+   - Added Reviewed-by tags for patches {2,10}
+Link: https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.com/
+
+References:
+
+[1] https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com/
+[2] https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
+[3] https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/
+
+
+
+Salil Mehta (8):
+  accel/kvm: Extract common KVM vCPU {creation,parking} code
+  hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
+  hw/acpi: Update ACPI GED framework to support vCPU Hotplug
+  hw/acpi: Update GED _EVT method AML with CPU scan
+  hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
+  physmem: Add helper function to destroy CPU AddressSpace
+  gdbstub: Add helper function to unregister GDB register space
+  docs/specs/acpi_hw_reduced_hotplug: Add the CPU Hotplug Event Bit
+
+ accel/kvm/kvm-all.c                    | 95 +++++++++++++++++---------
+ accel/kvm/kvm-cpus.h                   | 23 +++++++
+ accel/kvm/trace-events                 |  5 +-
+ docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
+ gdbstub/gdbstub.c                      | 13 ++++
+ hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++
+ hw/acpi/cpu.c                          | 33 ++++++---
+ hw/acpi/generic_event_device.c         | 21 ++++++
+ hw/core/cpu-common.c                   |  1 -
+ hw/i386/acpi-build.c                   |  3 +-
+ include/exec/cpu-common.h              |  8 +++
+ include/exec/gdbstub.h                 |  6 ++
+ include/hw/acpi/cpu.h                  |  5 +-
+ include/hw/acpi/cpu_hotplug.h          |  4 ++
+ include/hw/acpi/generic_event_device.h |  4 ++
+ include/hw/core/cpu.h                  |  1 +
+ system/physmem.c                       | 29 ++++++++
+ 17 files changed, 212 insertions(+), 48 deletions(-)
+
+-- 
+2.34.1
 
 
