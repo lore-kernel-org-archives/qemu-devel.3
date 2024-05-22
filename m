@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A5DC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD04C25B7D
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9dpB-0001zs-TK; Wed, 22 May 2024 00:43:37 -0400
+	id 1s9dob-0001SF-KV; Wed, 22 May 2024 00:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9dp9-0001p8-L8
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:35 -0400
+ id 1s9doZ-0001QU-VR
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:59 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9dp7-0005wQ-Go
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:35 -0400
+ id 1s9doY-0005uB-8g
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716353013; x=1747889013;
+ t=1716352978; x=1747888978;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=r1ujOT9wnmzL4Jy0xbnj8LOr9Q4ivRZVm5w7T144XKg=;
- b=Bs+enfOPnGSJArIRggqiEGdLxeKLcmeMdvv49wWMd2v4/n+2dBjyKyn2
- nVBEXM8o4bOdcQnbu4oIY91XMaCN8x6TxnKsBTF8TyrNq7AJpzB3YyUYE
- szx0MCe1dyouOq1FxS4yQaP8MO2tO2oLBMad92ZHedSAA38yvgjlR+/Je
- ZjRPnJMw+bUXKzWxMmQ8bYWgxIAVHBNDVL0LdVA1mywVgJKqx79K2KdWX
- gCdx417OYbE2tx4SIpH4zT3TPD0kmrHi3RIyzciy9P3u6NAU5pA1SC9ou
- paClis4h67tj/x+bnx2/kKfVGQBgI7UxQYzOJMwhMM1BdfkQxT6lG8fUl Q==;
-X-CSE-ConnectionGUID: nO8fOkpuRfy7b24YXrGWSA==
-X-CSE-MsgGUID: 5CWtU9nmSFqeaVFyT1I+4w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994210"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994210"
+ bh=C/A9yvMH2CsXWTC4vyEkxTbhyKMCw2D1NBbb5lb7oFU=;
+ b=BgSi0bnqgi+45P+BmBV/5lXIGyqVrFU4CmeySPMj1hH2mwhTwu0zCNJC
+ U7sEfrvXbV2g7YNyJigJAYuemZzbY5L2QZjdq3eu+6hMbB7PUHHtO+T6M
+ h0TToA5rODOpt2cXdWfZ+S7GVkqH/2WOTHklRwL5Z5AtXCfAbSR4ZgwIB
+ clsCsSOVavD56DZ5OEPBsZlLDXo1dSnW+a9Sf55w3ipvHL7UbEofCTD06
+ D9dVkbqFAWRoy7qspimchoLyERzlBbyePn9wLRrKDTWTqlwXo+YRfZs2H
+ ObGg4HFmGEoZ7JukkKRwJ7iyBgc16mWgxcWX+UIIA34BeyTFcZMZq0eCZ w==;
+X-CSE-ConnectionGUID: //6rTQtGRRmZzVoeW3SBmA==
+X-CSE-MsgGUID: 67fNhA3zT8+qcQX6v3EeEg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994145"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994145"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:43:17 -0700
-X-CSE-ConnectionGUID: 1Tf3vL9JQ4Kc2Y4/nZIUog==
-X-CSE-MsgGUID: 8IjPgqwIQ8mvZp6ikIf7IQ==
+ 21 May 2024 21:42:57 -0700
+X-CSE-ConnectionGUID: wl2+Ngo5QI25EXNkwXfBbw==
+X-CSE-MsgGUID: V49bwSJ2TeK/DS9z+wCTWg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683795"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683717"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:43:15 -0700
+ 21 May 2024 21:42:55 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 17/20] vfio: Use g_autofree in all call site of
- vfio_get_region_info()
-Date: Wed, 22 May 2024 12:40:12 +0800
-Message-Id: <20240522044015.412951-18-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 08/20] vfio/pci: Make vfio_intx_enable_kvm() return a bool
+Date: Wed, 22 May 2024 12:40:03 +0800
+Message-Id: <20240522044015.412951-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
@@ -84,144 +83,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are some exceptions when pointer to vfio_region_info is reused.
-In that case, the pointed memory is freed manually.
+Since vfio_intx_enable_kvm() takes an 'Error **' argument,
+best practices suggest to return a bool. See the qapi/error.h
+Rules section.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/helpers.c |  7 ++-----
- hw/vfio/igd.c     |  5 ++---
- hw/vfio/pci.c     | 13 +++----------
- 3 files changed, 7 insertions(+), 18 deletions(-)
+ hw/vfio/pci.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 4b079dc383..27ea26aa48 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -343,7 +343,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
- int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-                       int index, const char *name)
- {
--    struct vfio_region_info *info;
-+    g_autofree struct vfio_region_info *info = NULL;
-     int ret;
- 
-     ret = vfio_get_region_info(vbasedev, index, &info);
-@@ -376,8 +376,6 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-         }
-     }
- 
--    g_free(info);
--
-     trace_vfio_region_setup(vbasedev->name, index, name,
-                             region->flags, region->fd_offset, region->size);
-     return 0;
-@@ -594,14 +592,13 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
- 
- bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
- {
--    struct vfio_region_info *info = NULL;
-+    g_autofree struct vfio_region_info *info = NULL;
-     bool ret = false;
- 
-     if (!vfio_get_region_info(vbasedev, region, &info)) {
-         if (vfio_get_region_info_cap(info, cap_type)) {
-             ret = true;
-         }
--        g_free(info);
-     }
- 
-     return ret;
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 402fc5ce1d..1e79202f2b 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -367,8 +367,8 @@ static const MemoryRegionOps vfio_igd_index_quirk = {
- 
- void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
- {
--    struct vfio_region_info *rom = NULL, *opregion = NULL,
--                            *host = NULL, *lpc = NULL;
-+    g_autofree struct vfio_region_info *rom = NULL;
-+    struct vfio_region_info *opregion = NULL, *host = NULL, *lpc = NULL;
-     VFIOQuirk *quirk;
-     VFIOIGDQuirk *igd;
-     PCIDevice *lpc_bridge;
-@@ -609,7 +609,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, ggms_mb + gms_mb);
- 
- out:
--    g_free(rom);
-     g_free(opregion);
-     g_free(host);
-     g_free(lpc);
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 35ad9b582f..74a79bdf61 100644
+index aad012c348..12fb534d79 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -879,7 +879,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+@@ -116,7 +116,7 @@ static void vfio_intx_eoi(VFIODevice *vbasedev)
+     vfio_unmask_single_irqindex(vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+ }
  
- static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+-static void vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
  {
--    struct vfio_region_info *reg_info;
-+    g_autofree struct vfio_region_info *reg_info = NULL;
-     uint64_t size;
-     off_t off = 0;
-     ssize_t bytes;
-@@ -897,8 +897,6 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-     vdev->rom_size = size = reg_info->size;
-     vdev->rom_offset = reg_info->offset;
- 
--    g_free(reg_info);
--
-     if (!vdev->rom_size) {
-         vdev->rom_read_failed = true;
-         error_report("vfio-pci: Cannot read device rom at "
-@@ -2668,7 +2666,7 @@ static VFIODeviceOps vfio_pci_ops = {
- bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    struct vfio_region_info *reg_info;
-+    g_autofree struct vfio_region_info *reg_info = NULL;
-     int ret;
- 
-     ret = vfio_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
-@@ -2685,7 +2683,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-         error_setg(errp, "unexpected VGA info, flags 0x%lx, size 0x%lx",
-                    (unsigned long)reg_info->flags,
-                    (unsigned long)reg_info->size);
--        g_free(reg_info);
-         return false;
+ #ifdef CONFIG_KVM
+     int irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
+@@ -124,7 +124,7 @@ static void vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+     if (vdev->no_kvm_intx || !kvm_irqfds_enabled() ||
+         vdev->intx.route.mode != PCI_INTX_ENABLED ||
+         !kvm_resamplefds_enabled()) {
+-        return;
++        return true;
      }
  
-@@ -2694,8 +2691,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-     vdev->vga->fd_offset = reg_info->offset;
-     vdev->vga->fd = vdev->vbasedev.fd;
+     /* Get to a known interrupt state */
+@@ -161,7 +161,7 @@ static void vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
  
--    g_free(reg_info);
--
-     vdev->vga->region[QEMU_PCI_VGA_MEM].offset = QEMU_PCI_VGA_MEM_BASE;
-     vdev->vga->region[QEMU_PCI_VGA_MEM].nr = QEMU_PCI_VGA_MEM;
-     QLIST_INIT(&vdev->vga->region[QEMU_PCI_VGA_MEM].quirks);
-@@ -2736,7 +2731,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
- static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    struct vfio_region_info *reg_info;
-+    g_autofree struct vfio_region_info *reg_info = NULL;
-     struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
-     int i, ret = -1;
+     trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
  
-@@ -2790,8 +2785,6 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+-    return;
++    return true;
+ 
+ fail_vfio:
+     kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vdev->intx.interrupt,
+@@ -171,6 +171,9 @@ fail_irqfd:
+ fail:
+     qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
+     vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
++    return false;
++#else
++    return true;
+ #endif
+ }
+ 
+@@ -226,8 +229,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
+         return;
      }
-     vdev->config_offset = reg_info->offset;
  
--    g_free(reg_info);
--
-     if (vdev->features & VFIO_FEATURE_ENABLE_VGA) {
-         if (!vfio_populate_vga(vdev, errp)) {
-             error_append_hint(errp, "device does not support "
+-    vfio_intx_enable_kvm(vdev, &err);
+-    if (err) {
++    if (!vfio_intx_enable_kvm(vdev, &err)) {
+         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+     }
+ 
+@@ -302,8 +304,7 @@ static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+         return -errno;
+     }
+ 
+-    vfio_intx_enable_kvm(vdev, &err);
+-    if (err) {
++    if (!vfio_intx_enable_kvm(vdev, &err)) {
+         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+     }
+ 
 -- 
 2.34.1
 
