@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D17C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 15:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA939C25B79
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 16:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9oGU-00076c-Ep; Wed, 22 May 2024 11:52:30 -0400
+	id 1s9oVR-0007h9-DM; Wed, 22 May 2024 12:07:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s9oGR-00076J-3m
- for qemu-devel@nongnu.org; Wed, 22 May 2024 11:52:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s9oVK-0007eI-Ar
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 12:07:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s9oGP-0001iz-Gu
- for qemu-devel@nongnu.org; Wed, 22 May 2024 11:52:26 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s9oVF-0004mB-2w
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 12:07:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716393144;
+ s=mimecast20190719; t=1716394063;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l/dRuHk4hrxVVqLC/0UvxFQh+tso15+uvsK4/B574w4=;
- b=eO5HnoWp8t3t+xRIqE5vcaMiH7UWMYvGHp05BGP8QiMCeBFfMm0fglZc5G5K/G+ZN9B9HW
- eEk1Pgl6sQJqoPadyd8cX+zuW76723VELtGBwHQF2j/NQA9ye6QoYVHdGjdnIvzcvHV/Q9
- yP66iJliAZuynsAYUeN6iBG7+MLmJ5s=
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zFilv3pbs+35EgsHoQGw65hmxQaAATuFuNpim+MUR0g=;
+ b=bRBz+Bal9nmqv+vPRtFOH/bOx3c4WGrrTfx+7Rp2GYbFFdC0PzHIcRpE6eVxxSt3CUw2eH
+ tZufzIqoH+tgCLG+tzNK0ajN20OvOrgSt+3PCGDcWiyracTflnRKJ5l99NgZOt25uRunX7
+ DcgP8kx2Lm4/t95wDn3SqnbIHKhFeLU=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-283-0KIv9ZgPMBWcXBP7W3Gfhw-1; Wed, 22 May 2024 11:52:22 -0400
-X-MC-Unique: 0KIv9ZgPMBWcXBP7W3Gfhw-1
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-47f072daffdso1432729137.3
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 08:52:22 -0700 (PDT)
+ us-mta-412-3V-X2T7bMBGuE3xZO0jqUg-1; Wed, 22 May 2024 12:07:41 -0400
+X-MC-Unique: 3V-X2T7bMBGuE3xZO0jqUg-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-dc6dbdcfd39so26611227276.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 09:07:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716393142; x=1716997942;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l/dRuHk4hrxVVqLC/0UvxFQh+tso15+uvsK4/B574w4=;
- b=MayeHs0DyRn7NYYnd3x1/qjnMnz5s+b/QTDOVeZUqFhoIXmqR88ycusk+wU7OLtxmc
- NWvvnFZbmG6EfC6g+n10j5ONapJ0wI8/T+OyXeqyRo3KuX5z/OeXnGnQYalgsBhGzHdg
- 1rnDmXJYv02Ove55I4ZVOZ3AicormRHIcIu2rYjKtL4n3ATwhd1jtgFriSvwEBroBzt7
- kTtO9kG2DzYVLK8i8qk4QOBseyZCIfVbrPRXXaKJgtbuPtKsJ0lXhxnappQBuUAQBQzT
- hw/fkyPDBRKvnIFCZmP/tcqldTAte1tYd4WLNWjvFLTc9A8Y5reWn3JepEpFu5S5Slr6
- +zTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxJnXnnrgxNsX0lf3bbucmvLPuNi4QAZ3q/2ouA/2h+iPibww6RaFcyggd2qbKzYeUPw2mgk8l8kuhDVqywT3Rw4yKJYo=
-X-Gm-Message-State: AOJu0Yz1IjROvLDDDiUiArEi5SrCbCmXrmUi8zSKlRpZrek/7svFL4vT
- OtGEaEH61T6EsY0dZf3LhmaPcWQvzmQbq1pBRkibcBEaAB+53CSYpfNP38Bl/u8iMEbKJY1iiwP
- LnHQ4NaCn+K72S63krf5TiBRHm9l3XskeVRD8TRtA6cVBRg4ht4rz
-X-Received: by 2002:a05:6102:2848:b0:47b:b69b:8866 with SMTP id
- ada2fe7eead31-4890a16a3b3mr2436644137.3.1716393141866; 
- Wed, 22 May 2024 08:52:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUbZS5AkHil/Tp+g1Md9zOuV8tquFaD3eh5SEd2eBxYpPri3CXMdnRFueoz9TsaopLhyEZ+g==
-X-Received: by 2002:a05:6102:2848:b0:47b:b69b:8866 with SMTP id
- ada2fe7eead31-4890a16a3b3mr2436614137.3.1716393141111; 
- Wed, 22 May 2024 08:52:21 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43f97a6c7dfsm19261021cf.27.2024.05.22.08.52.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 May 2024 08:52:20 -0700 (PDT)
-Date: Wed, 22 May 2024 11:52:18 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests/qtest/migration-test: Fix the check for a
- successful run of analyze-migration.py
-Message-ID: <Zk4Usr2lwCuN-jMl@x1n>
-References: <20240522092301.421883-1-thuth@redhat.com>
+ d=1e100.net; s=20230601; t=1716394061; x=1716998861;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zFilv3pbs+35EgsHoQGw65hmxQaAATuFuNpim+MUR0g=;
+ b=LYQhrap1AexwgJ1zhwfNX08SuJeWqXfeUhcf/Cj8RNwFEEyDfyJMdZbtUYkkMSXUws
+ fQAGUFzkOVIXfU8oh2pT0RCiV8DgX2MIcZTzM8HelixnYcIajtJIzWY1BmtkJbw37Ru0
+ Pv9Wtvj+lBTwv4rrcbaZvAO99RDruZMH/qeVhf9I+TFG/r2qCNe6cd7fkWwn53y28gLK
+ rk0D0a70b3xOzI8rqLbKJYvWZqTeL4rx4YcUmfThT0jtTDN7krHo2w7m9XH7q+bEzpgk
+ I6dF2mxm3kEZ+kAow0EqB8nl01jMxw+z7+BQoQ57owGzPAfSiiQYSg5Q6byaR1hOunW9
+ DdRQ==
+X-Gm-Message-State: AOJu0YzU3ymAfA7jH24r5uULC6FHUI32n5ihUMlJBSYRrZEZNqx2+cGh
+ x5Ri+FnUJ4CCBAyKUDEdThNyyCsxMhleFnsz/bZ3CYxu8EH9MHUK1/zRDVx7tBSzRl1xY3EyRKz
+ C0M8u+RqEzgchJi820gLDZtHkLEMTbV4TukrzU+2SG1VdaYN22sw4EyjQ3yzxO0K3bnZMGWA1Lm
+ +XP72pICxPSn5dniIRfpufy9XeA6M=
+X-Received: by 2002:a5b:b49:0:b0:de4:634c:b2fb with SMTP id
+ 3f1490d57ef6-df4e0bcafd3mr2574619276.35.1716394060667; 
+ Wed, 22 May 2024 09:07:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZPsKGZkaK960aVcenANeqiEnBLvDfmpByfzVmheFQ1GplmSFQisKMFeZnFzQL6u/071hTioI1SkQfCR3LqGk=
+X-Received: by 2002:a5b:b49:0:b0:de4:634c:b2fb with SMTP id
+ 3f1490d57ef6-df4e0bcafd3mr2574581276.35.1716394060278; Wed, 22 May 2024
+ 09:07:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240522092301.421883-1-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20240520130048.1483177-1-jonah.palmer@oracle.com>
+ <20240520130048.1483177-4-jonah.palmer@oracle.com>
+In-Reply-To: <20240520130048.1483177-4-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 22 May 2024 18:07:04 +0200
+Message-ID: <CAJaqyWdxt+cPNR=unm6P1cGCKV=LwhuMYdVeQLbWF6wYLBLWKg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
+ support
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,32 +102,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 22, 2024 at 11:23:01AM +0200, Thomas Huth wrote:
-> If analyze-migration.py cannot be run or crashes, the error is currently
-> ignored since the code only checks for nonzero values in case the child
-> exited properly. For example, if you run the test with a non-existing
-> Python interpreter, it still succeeds:
-> 
->  $ PYTHON=wrongpython QTEST_QEMU_BINARY=./qemu-system-x86_64 tests/qtest/migration-test
->  ...
->  # Running /x86_64/migration/analyze-script
->  # Using machine type: pc-q35-9.1
->  # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name source,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/src_serial -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1   -uuid 11111111-1111-1111-1111-111111111111  -accel qtest
->  # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name target,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/dest_serial -incoming tcp:127.0.0.1:0 -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1     -accel qtest
->  **
->  ERROR:../../devel/qemu/tests/qtest/migration-test.c:1603:test_analyze_script: code should not be reached
->  migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
->  migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
->  ok 2 /x86_64/migration/analyze-script
->  ...
-> 
-> Let's better fail the test in case the child did not exit properly, too.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On Mon, May 20, 2024 at 3:01=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+> Add VIRTIO_F_IN_ORDER feature support for the virtqueue_fill operation.
+>
+> The goal of the virtqueue_ordered_fill operation when the
+> VIRTIO_F_IN_ORDER feature has been negotiated is to search for this
+> now-used element, set its length, and mark the element as filled in
+> the VirtQueue's used_elems array.
+>
+> By marking the element as filled, it will indicate that this element has
+> been processed and is ready to be flushed, so long as the element is
+> in-order.
+>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  hw/virtio/virtio.c | 36 +++++++++++++++++++++++++++++++++++-
+>  1 file changed, 35 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 7456d61bc8..01b6b32460 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -873,6 +873,38 @@ static void virtqueue_packed_fill(VirtQueue *vq, con=
+st VirtQueueElement *elem,
+>      vq->used_elems[idx].ndescs =3D elem->ndescs;
+>  }
+>
+> +static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement=
+ *elem,
+> +                                   unsigned int len)
+> +{
+> +    unsigned int i, steps, max_steps;
+> +
+> +    i =3D vq->used_idx;
+> +    steps =3D 0;
+> +    /*
+> +     * We shouldn't need to increase 'i' by more than the distance
+> +     * between used_idx and last_avail_idx.
+> +     */
+> +    max_steps =3D (vq->last_avail_idx + vq->vring.num - vq->used_idx)
+> +                % vq->vring.num;
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+I may be missing something, but (+vq->vring.num) is redundant if we (%
+vq->vring.num), isn't it?
 
--- 
-Peter Xu
+> +
+> +    /* Search for element in vq->used_elems */
+> +    while (steps <=3D max_steps) {
+> +        /* Found element, set length and mark as filled */
+> +        if (vq->used_elems[i].index =3D=3D elem->index) {
+> +            vq->used_elems[i].len =3D len;
+> +            vq->used_elems[i].in_order_filled =3D true;
+> +            break;
+> +        }
+> +
+> +        i +=3D vq->used_elems[i].ndescs;
+> +        steps +=3D vq->used_elems[i].ndescs;
+> +
+> +        if (i >=3D vq->vring.num) {
+> +            i -=3D vq->vring.num;
+> +        }
+> +    }
+> +}
+> +
+
+Let's report an error if we finish the loop. I think:
+qemu_log_mask(LOG_GUEST_ERROR,
+              "%s: %s cannot fill buffer id %u\n",
+              __func__, vdev->name, elem->index);
+
+(or similar) should do.
+
+apart form that,
+
+Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+
+>  static void virtqueue_packed_fill_desc(VirtQueue *vq,
+>                                         const VirtQueueElement *elem,
+>                                         unsigned int idx,
+> @@ -923,7 +955,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueEle=
+ment *elem,
+>          return;
+>      }
+>
+> -    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
+> +        virtqueue_ordered_fill(vq, elem, len);
+> +    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) =
+{
+>          virtqueue_packed_fill(vq, elem, len, idx);
+>      } else {
+>          virtqueue_split_fill(vq, elem, len, idx);
+> --
+> 2.39.3
+>
 
 
