@@ -4,80 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39775C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9CDC25B7D
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9iB0-0007xc-3f; Wed, 22 May 2024 05:22:26 -0400
+	id 1s9iBj-0000RT-HZ; Wed, 22 May 2024 05:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s9iAx-0007vS-O1
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:22:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9iBi-0000OS-17
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:23:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s9iAw-0004Rt-AE
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:22:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9iBf-0004ke-Fh
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:23:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716369741;
+ s=mimecast20190719; t=1716369786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=LPG4WJRSwPLziE6YPjjy0vIx3b2KMNnVMzgOkFQ/CzE1TjaCg5jqadOTZlcInuQ2OseobK
- v1EEc1LETutI698yqr8GramgW5iPT5mHDXGa4KHT5mb+AqFzxXrYofXRlGOSIipvd2wkfn
- /Ew9AbB7dQuJy4t/Var7B/raggoZhGE=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1wHqoMjWqmcrD7WUN/4EkY94+5uLPVDFe8nc6nCJ3GA=;
+ b=Yk5fi2D846MxJe3jTPNRNA1Lw1kmCYCovhyfoIFCti+W/B1W3MmZDJrUPF07Q0lXyguza+
+ 56TEk8OukbjuTPdXdf1L4lz/maLZOVs7LWtv0OX7Y9ZELuqYN+BEb5eElvqnbhJmG8SOjH
+ 3Wn/umxKAWquCaJhL97iWDDfCT4f6jA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-IBjhvd4vMwOhVsSTzLSOfQ-1; Wed, 22 May 2024 05:22:19 -0400
-X-MC-Unique: IBjhvd4vMwOhVsSTzLSOfQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59a17f35c8so54796366b.0
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 02:22:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716369738; x=1716974538;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=n7PyLQ2jf82IS1oe7ZOBxL2H2SkU4XzvheuRe+iBmuJhI1ewQyKjr49U845i92tP0W
- mx/LEO4g7yUP6kwO/jsygUirrrOP8jGL6l94pGhn8f53sFAlFMwJhGUt5kKRrnBnZUXQ
- Kax3v16gp275P3KkdAQbKOZzh044yiQqoMVcUT7ZjmqRDltkPU+5+Ubq/vZihx4r4vAr
- z5xWqS18CF5XreFrDJdPBfhSyhH4GrOzLMcGPq/spCW7paprHBKXVr/N6gmfdPJysH88
- iDiqEAbPUEEzDjWPEdaLTjr6+KRfqKF3zQvvORuP2TQkgyYVt4owmgzdKOxeO9Hy9d70
- iF0g==
-X-Gm-Message-State: AOJu0YyZdpn4DrONRPfQbk/hKepzWDzZw1QATl5zpKVLaraH4MPSMPgB
- SyOID17QHgJXOENuHE6sjFt3hpn2ab6/F25XHdu2+htrpDJIFLsFV3YVOBKWhtmqPjbmFai2skl
- oLSm6pQZoXY2UE+CeXvBWp2NM3IAvn4u/U1xDyP0WIoj0cGz0WG90+GaHnQpx
-X-Received: by 2002:a17:907:770b:b0:a62:e9c:f621 with SMTP id
- a640c23a62f3a-a622816877emr92720866b.58.1716369738476; 
- Wed, 22 May 2024 02:22:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHyBTpw5GjmhGBKuZs01IpeY3NvwT2UAw87p7A7oSsKnt65xAbsQRFyMINmdjWbeJQLIGtCFg==
-X-Received: by 2002:a17:907:770b:b0:a62:e9c:f621 with SMTP id
- a640c23a62f3a-a622816877emr92719666b.58.1716369738137; 
- Wed, 22 May 2024 02:22:18 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a61a00e96c1sm394144866b.151.2024.05.22.02.22.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 May 2024 02:22:17 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Dongsheng Zhang <dongsheng.x.zhang@intel.com>
-Cc: qemu-devel@nongnu.org, rkagan@amazon.de, pbonzini@redhat.com,
- mtosatti@redhat.com
-Subject: Re: [PATCH] Hyperv: Correct kvm_hv_handle_exit return value
-Date: Wed, 22 May 2024 11:22:14 +0200
-Message-ID: <20240522092214.568895-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240521200114.11588-1-dongsheng.x.zhang@intel.com>
-References: 
+ us-mta-613-XfwEq2BnM8GHvjQNld6njg-1; Wed, 22 May 2024 05:23:04 -0400
+X-MC-Unique: XfwEq2BnM8GHvjQNld6njg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 507378025FC;
+ Wed, 22 May 2024 09:23:04 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.72])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 193852026D68;
+ Wed, 22 May 2024 09:23:02 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] tests/qtest/migration-test: Fix the check for a successful
+ run of analyze-migration.py
+Date: Wed, 22 May 2024 11:23:01 +0200
+Message-ID: <20240522092301.421883-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,8 +77,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+If analyze-migration.py cannot be run or crashes, the error is currently
+ignored since the code only checks for nonzero values in case the child
+exited properly. For example, if you run the test with a non-existing
+Python interpreter, it still succeeds:
 
-Paolo
+ $ PYTHON=wrongpython QTEST_QEMU_BINARY=./qemu-system-x86_64 tests/qtest/migration-test
+ ...
+ # Running /x86_64/migration/analyze-script
+ # Using machine type: pc-q35-9.1
+ # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name source,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/src_serial -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1   -uuid 11111111-1111-1111-1111-111111111111  -accel qtest
+ # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name target,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/dest_serial -incoming tcp:127.0.0.1:0 -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1     -accel qtest
+ **
+ ERROR:../../devel/qemu/tests/qtest/migration-test.c:1603:test_analyze_script: code should not be reached
+ migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
+ migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
+ ok 2 /x86_64/migration/analyze-script
+ ...
+
+Let's better fail the test in case the child did not exit properly, too.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qtest/migration-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 5b4eca2b20..b7e3406471 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1604,7 +1604,7 @@ static void test_analyze_script(void)
+     }
+ 
+     g_assert(waitpid(pid, &wstatus, 0) == pid);
+-    if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0) {
++    if (!WIFEXITED(wstatus) || WEXITSTATUS(wstatus) != 0) {
+         g_test_message("Failed to analyze the migration stream");
+         g_test_fail();
+     }
+-- 
+2.45.1
 
 
