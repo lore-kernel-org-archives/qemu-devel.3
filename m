@@ -4,65 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E914C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 21:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CF2C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 21:28:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9tIX-00062s-Gw; Wed, 22 May 2024 17:14:57 -0400
+	id 1s9tUy-0004eT-UR; Wed, 22 May 2024 17:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s9tIO-0005l3-HB; Wed, 22 May 2024 17:14:54 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s9tIN-0000fU-1b; Wed, 22 May 2024 17:14:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vl3r81j4jz6JB1G;
- Thu, 23 May 2024 05:11:04 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 790C7140B18;
- Thu, 23 May 2024 05:14:44 +0800 (CST)
-Received: from 00293818-MRGF.china.huawei.com (10.48.156.123) by
- lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 22 May 2024 22:14:23 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
- <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
- <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
- <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
- <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
- <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
- <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
- <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
- <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
- <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>
-Subject: [PATCH V11 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
- Hotplug Event Bit
-Date: Wed, 22 May 2024 22:11:11 +0100
-Message-ID: <20240522211111.232114-9-salil.mehta@huawei.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9tUy-0004eI-0N
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 17:27:48 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9tUv-0002d2-8f
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 17:27:46 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1ed0abbf706so47970765ad.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 14:27:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716413263; x=1717018063; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+mAwxYACA/+n1LxJbM+zRL2KxA068Bu+H5PyVFgDAjY=;
+ b=vpjN9941ARPZuDw74+O0fkRPq5cS6Xlc2vKCOuHtEZ1oF9dtKCYGQ7nh8Yjp2XzAhQ
+ EzkY9zVqd6Es/xEo+OKqtM2XdvwnbPOuDC6OPxv3QfwPK/lJouoKRtgQNL51m0K91Drx
+ B185ixmJAwBfSijl4RjSmkx+w/qUxYXBOmeVsK73ZKm8KsmCSokBDJ92mBapDEMcjYhd
+ SWNwvI2Cexj+MD5i5N5LHOfbED8wyazVZcGCdyI3v4eJxsd9kYMQZsWBreDlY6VBeGjG
+ 3LcefZ8kcMz8fsWzi1XzmPrcB0D3LsDmKyQyp9uCaNAt/Wi+6NACHxqpgbebLyqMXYsb
+ ZQMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716413263; x=1717018063;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+mAwxYACA/+n1LxJbM+zRL2KxA068Bu+H5PyVFgDAjY=;
+ b=OaaCNgadcw8PfwDZSERUNYIB01hKnLLSZf5rG5/OzjWzFkQIPazn8wEcQHKCw0j0OD
+ pPkZZ415zXyeBbwg1kSgduZejOF5ThnCTdDiRRcSb/cI/2npiwJjunGOMZbwNP8yA2Gb
+ 4vQTf2oPWatNue16tp//uFC51V9JSQToQaC4lrEthNVWUwmImJCDBBZYaWIADK4Ezp0z
+ H/LJaf+yyCvrw7JeohREUZYhMCeGJSONUWIdSU9nLHPS1Xh2m3S2ScGRhV8zKoDBL2Bi
+ UzJUXsJIKC24786cRlGFsV9u324bbyrI8qxs+sItCH7/jZTDJjBZvTFLVpzwZQJWL4+z
+ mbdw==
+X-Gm-Message-State: AOJu0YyJ+JwjDfEnCdnlAPLJXLop+JkWrhPhoKnWuzzxbZPTnpTATGF7
+ c44+un/WTuMVGZKytsrRxrhob/vrbRGIcJhpP4j6UQ0oNCLUXN1GvVVutKxnQWGbX4Po2RUm1aD
+ d
+X-Google-Smtp-Source: AGHT+IGAVtSNQrP58pPT+1AKwy59EGfEUqLmXQIEPHUbgpVEK3npb9VVHjednBCW25Ib5e4iiCDXyQ==
+X-Received: by 2002:a17:903:2451:b0:1e5:9391:1d44 with SMTP id
+ d9443c01a7336-1f31c9e726bmr37660235ad.47.1716413263044; 
+ Wed, 22 May 2024 14:27:43 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f2fc06586asm64621705ad.201.2024.05.22.14.27.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 May 2024 14:27:41 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH RISU 0/4] risugen/arm: Convert to use assembly
+Date: Wed, 22 May 2024 14:27:37 -0700
+Message-Id: <20240522212741.297734-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240522211111.232114-1-salil.mehta@huawei.com>
-References: <20240522211111.232114-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.48.156.123]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- lhrpeml500001.china.huawei.com (7.191.163.213)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,36 +88,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
-and non-hotplug events like system power down event. Each of these can be
-selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
-the CPU hotplug event.
+Minor simplifications as well, which are all the
+easier for emitting assembly instead of binary.
 
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
----
- docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+r~
 
-diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
-index 0bd3f9399f..3acd6fcd8b 100644
---- a/docs/specs/acpi_hw_reduced_hotplug.rst
-+++ b/docs/specs/acpi_hw_reduced_hotplug.rst
-@@ -64,7 +64,8 @@ GED IO interface (4 byte access)
-        0: Memory hotplug event
-        1: System power down event
-        2: NVDIMM hotplug event
--    3-31: Reserved
-+       3: CPU hotplug event
-+    4-31: Reserved
- 
- **write_access:**
- 
+Richard Henderson (4):
+  risugen/arm: Convert to use assembly
+  risugen/arm: Fill general regs with 64-bit random data
+  risugen/arm: Switch to thumb mode only once
+  contrib/generate_all: Do not rely on ag
+
+ contrib/generate_all.sh |   4 +-
+ risugen_arm.pm          | 805 +++++++++++++---------------------------
+ 2 files changed, 262 insertions(+), 547 deletions(-)
+
 -- 
 2.34.1
 
