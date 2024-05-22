@@ -4,106 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CFEC25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 16:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21856C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 16:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9odS-0004Qt-Tc; Wed, 22 May 2024 12:16:15 -0400
+	id 1s9ovB-00069d-Qb; Wed, 22 May 2024 12:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1s9odR-0004Nz-69; Wed, 22 May 2024 12:16:13 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s9ovA-00069H-Ul
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 12:34:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1s9odM-0006Ry-MH; Wed, 22 May 2024 12:16:12 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44MFIewn013202; Wed, 22 May 2024 16:15:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=VPqxrUXGBFG7uYUDGVLFyxiwKpqX6xPwReLGS59yy10=;
- b=aVYath5Qyk5q2NboioYJeDd5hQqZNyFkWjfX+alB4v1UgcneAUgbBovaR4vtkX8J46vB
- 5WMb5gL+T4L4fVARZKVALmF5z1FYPbRiSyNKYL87LZvTFAss/Wqn4ISngMiqNB9JCatV
- 6Q+cFMyVIvES0pb0rB8VkWnc/+F0AKpbaGJV+3MzRBXfyMWDziVWq4K2lee1sXkSLQ1t
- 7muX8TuQpi3fQA2Dq3J1oUDJjCMHQR2HfAgB6NOnrE9S2MLyf3lHbQrN7IMIFJijHFne
- OqtMq8XnVbq4ndb/P1X2oFFdy3ntJzkZWoSyqFabc2Cp+3AezMZweK59cdE7m/tgsvaC cw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9k7tg5js-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 16:15:52 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44MGFpZb005524;
- Wed, 22 May 2024 16:15:51 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9k7tg5jh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 16:15:51 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44MFaKuZ008226; Wed, 22 May 2024 16:15:50 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y78vm4gfe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 16:15:50 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44MGFktB33030710
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 May 2024 16:15:49 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D88602004F;
- Wed, 22 May 2024 16:15:46 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D286620040;
- Wed, 22 May 2024 16:15:43 +0000 (GMT)
-Received: from [9.195.36.46] (unknown [9.195.36.46])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 22 May 2024 16:15:43 +0000 (GMT)
-Message-ID: <22634714-47ea-4421-9c2d-1ca61f25879c@linux.ibm.com>
-Date: Wed, 22 May 2024 21:45:41 +0530
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s9ov7-0000v8-EF
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 12:34:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716395661;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+6SZwgxkVKI8HZe1WQLRNYhgjJNn8fIqeZYy03JvixQ=;
+ b=e0gqdQTgB7sDBtiInww2RUtUpTRyHx+nFXX0olpE6QmzcXE+qMF9IQDq6508Dyy0WQHG3X
+ xqwVeE5SRsuZFYsZzGGeb2aM0cnMaU7uTVlC8hrSo8gBQjm2apNStujs4AIKFoF5QA2e++
+ ikwUGw9dWR1XBX/tB3CSjlFOHOtgA9c=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-LngbyqNlPOyG_YcNJQLvdg-1; Wed, 22 May 2024 12:34:19 -0400
+X-MC-Unique: LngbyqNlPOyG_YcNJQLvdg-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-792ba913db8so2468585a.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 09:34:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716395659; x=1717000459;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+6SZwgxkVKI8HZe1WQLRNYhgjJNn8fIqeZYy03JvixQ=;
+ b=hHPbTPMoMNWI4mhJ6TIlfdETyPlzxj9fGljBUdkB6+dlN3fT3m6LN7rbgRp/+DpxRc
+ myYJb8SUObmTzVAKtQ+lwk8bHGLICvyOn3hu0sVQ0z4SuUaNzcKHyzj5jk3gkFHKA+X3
+ BzYkOFjiuBHiq8BI3D3f+KKrMc1wYuJPQ8IMnaQTvUZOUH6BWF4jW7By3fYDLcnq4MY5
+ UpbR7NDU4ExmnT9CU2z9h0loRubpX3fO9Q/i6P6Cw5KP16NpORIWzRe4hvpg7RVm157i
+ pX6XcWKQKdJN7+7Wo+VbUergRlKLZrCtYO3V4ylQ3zUsKv9ptVgMx8YNxOheCOOECIj6
+ Lm4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2TQGb33CVyEp8mRBrBG9aGa02Tg3ZNmj0jySjI3jrwaUIXQvdJ6AqUPeBGMPBEQSS/2BlkiIX43ip6cmfLxNOxrDY7/Q=
+X-Gm-Message-State: AOJu0YzIgvk1ZizPabnJmglpEtEuq4RX4FZo0X5eswUBaQF4hvU3Dbfw
+ Llbar03/0YGB7enRNabXd+afUlRM66Li9msgPhZv4Ja+f4xHjwliap/tvJDAmSrRc/HZanQobK3
+ 7wkdZOdEUHTWbOwAdId2n8Inwxov3u6LLcz+HpYP2SQIrVbLtxKxP
+X-Received: by 2002:a05:622a:1887:b0:439:9377:3aed with SMTP id
+ d75a77b69052e-43f9e19e7f8mr24564321cf.3.1716395658531; 
+ Wed, 22 May 2024 09:34:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHO2PvcQZ0MTZ+wH9K1+uKnzTNSNW+UnkwsZJ+jFJpJPadNgb/TexupxotzRIYlkEF+S3+dzA==
+X-Received: by 2002:a05:622a:1887:b0:439:9377:3aed with SMTP id
+ d75a77b69052e-43f9e19e7f8mr24563841cf.3.1716395657833; 
+ Wed, 22 May 2024 09:34:17 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43f99073d12sm16611231cf.15.2024.05.22.09.34.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 May 2024 09:34:17 -0700 (PDT)
+Date: Wed, 22 May 2024 12:34:15 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH] tests/qtest/migration-test: Run some basic tests on
+ s390x and ppc64 with TCG, too
+Message-ID: <Zk4ehyEUV_JlKYQb@x1n>
+References: <20240522091255.417263-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: container: Fix missing allocation of
- VFIOSpaprContainer
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, harshpb@linux.ibm.com,
- npiggin@gmail.com
-Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
- alex.williamson@redhat.com, qemu-ppc@nongnu.org,
- zhenzhong.duan@intel.com, qemu-devel@nongnu.org
-References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
- <30e9ce3e-08d4-4ab4-b734-d7a7fb0639a9@kaod.org>
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-In-Reply-To: <30e9ce3e-08d4-4ab4-b734-d7a7fb0639a9@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 8qw0fbzXBGPkZ2UZT4X6-0Nmk5SkOtt-
-X-Proofpoint-GUID: AmHDQJd935HmMxHojaJidgT9U-t0g043
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-22_08,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- impostorscore=0 malwarescore=0 suspectscore=0 phishscore=0 clxscore=1015
- adultscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405220110
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240522091255.417263-1-thuth@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,178 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/24 17:53, Cédric Le Goater wrote:
-> Hello Shivaprasad,
->
-> On 5/9/24 21:14, Shivaprasad G Bhat wrote:
->> The commit 6ad359ec29 "(vfio/spapr: Move prereg_listener into
->> spapr container)" began to use the newly introduced VFIOSpaprContainer
->> structure.
->>
->> After several refactors, today the container_of(container,
->> VFIOSpaprContainer, ABC) is used when VFIOSpaprContainer is actually
->> not allocated. On PPC64 systems, this dereference is leading to 
->> corruption
->> showing up as glibc malloc assertion during guest start when using vfio.
->>
->> Patch adds the missing allocation while also making the structure 
->> movement
->> to vfio common header file.
->>
->> Fixes: 6ad359ec29 "(vfio/spapr: Move prereg_listener into spapr 
->> container)"
->> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
->> ---
->>   hw/vfio/container.c           |    6 ++++--
->>   hw/vfio/spapr.c               |    6 ------
->>   include/hw/vfio/vfio-common.h |    6 ++++++
->>   3 files changed, 10 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->> index 77bdec276e..ecaf5786d9 100644
->> --- a/hw/vfio/container.c
->> +++ b/hw/vfio/container.c
->> @@ -539,6 +539,7 @@ static int vfio_connect_container(VFIOGroup 
->> *group, AddressSpace *as,
->>   {
->>       VFIOContainer *container;
->>       VFIOContainerBase *bcontainer;
->> +    VFIOSpaprContainer *scontainer;
->
-> We should do our best to avoid any direct use of ppc related attributes
-> in the common VFIO code. This comment also applies to VFIO_SPAPR_TCE*
-> which are still there because the clean up is not finished. So, this
-> proposal will have to be reworked.
->
-Sure.
-> The first step is to finish the QOMification of VFIOContainer, so
-> that the VFIOContainer instance is created in vfio_connect_container()
-> with :
->
->     container = qdev_new(iommu_type_name);
+On Wed, May 22, 2024 at 11:12:55AM +0200, Thomas Huth wrote:
+> On s390x, we recently had a regression that broke migration / savevm
+> (see commit bebe9603fc ("hw/intc/s390_flic: Fix crash that occurs when
+> saving the machine state"). The problem was merged without being noticed
+> since we currently do not run any migration / savevm related tests on
+> x86 hosts.
+> While we currently cannot run all migration tests for the s390x target
+> on x86 hosts yet (due to some unresolved issues with TCG), we can at
+> least run some of the non-live tests to avoid such problems in the future.
+> Thus enable the "analyze-script" and the "bad_dest" tests before checking
+> for KVM on s390x or ppc64 (this also fixes the problem that the
+> "analyze-script" test was not run on s390x at all anymore since it got
+> disabled again by accident in a previous refactoring of the code).
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-This requires the VFIOContainer to be a DeviceState object.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-The existing base class TYPE_VFIO_IOMMU is an InterfaceClass.
+Irrelevant of this patch, when I was looking at cleaning of bootfile it
+looks to me that we're leaking bootpath in the test loops.. maybe we need a
+bootfile_delete() at the entry of bootfile_create()?
 
-I attempted VFIOContainer object declaration with TYPE_VFIO_IOMMU,
+Or even better, prepare bootfile once only and use it in all tests.  The
+only trick arch is x86 who needs to support suspend_me=true, but maybe we
+can provide two bootfiles.
 
-like
+-- 
+Peter Xu
 
-OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY)
-
-
->
-> This means reworking this part (and vfio_set_iommu()) :
->
->     ...
->     container = g_malloc0(sizeof(*container));
->     container->fd = fd;
->     bcontainer = &container->bcontainer;
->
->     if (!vfio_set_iommu(container, group->fd, space, errp)) {
->         goto free_container_exit;
->     }
->     ...
->
-> VFIOSpaprContainer can then implement its own .init_instance() handler
-> to allocate/initialize attributes required by the pseries machines.
-
-
-With my above changes,
-
-I see the instance_init() is not supported for the InterfaceClass with the
-
-checks from below
-
-commit 422ca1432f7b44f2a9f3ad94a65d36927da021fa
-Author: Marc-André Lureau <marcandre.lureau@redhat.com>
-Date:   Wed Sep 12 16:53:03 2018 +0400
-
-     qom/object: add some interface asserts
-
-Did you suggest me something else?
-
-
-Thank you,
-
-Shivaprasad
-
->
-> While doing this, please try to reduce the use of ->iommu_type which
-> is a design shortcut. I would like to completely remove it at some
-> point.
->
-> Thanks,
->
-> C.
->
->
->
->
->
->
->
->>       int ret, fd;
->>       VFIOAddressSpace *space;
->>
->> @@ -611,7 +612,8 @@ static int vfio_connect_container(VFIOGroup 
->> *group, AddressSpace *as,
->>           goto close_fd_exit;
->>       }
->>
->> -    container = g_malloc0(sizeof(*container));
->> +    scontainer = g_malloc0(sizeof(*scontainer));
->> +    container = &scontainer->container;
->>       container->fd = fd;
->>       bcontainer = &container->bcontainer;
->>
->> @@ -675,7 +677,7 @@ unregister_container_exit:
->>       vfio_cpr_unregister_container(bcontainer);
->>
->>   free_container_exit:
->> -    g_free(container);
->> +    g_free(scontainer);
->>
->>   close_fd_exit:
->>       close(fd);
->> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
->> index 0d949bb728..78d218b7e7 100644
->> --- a/hw/vfio/spapr.c
->> +++ b/hw/vfio/spapr.c
->> @@ -24,12 +24,6 @@
->>   #include "qapi/error.h"
->>   #include "trace.h"
->>
->> -typedef struct VFIOSpaprContainer {
->> -    VFIOContainer container;
->> -    MemoryListener prereg_listener;
->> -    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
->> -} VFIOSpaprContainer;
->> -
->>   static bool 
->> vfio_prereg_listener_skipped_section(MemoryRegionSection *section)
->>   {
->>       if (memory_region_is_iommu(section->mr)) {
->> diff --git a/include/hw/vfio/vfio-common.h 
->> b/include/hw/vfio/vfio-common.h
->> index b9da6c08ef..010fa68ac6 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -82,6 +82,12 @@ typedef struct VFIOContainer {
->>       QLIST_HEAD(, VFIOGroup) group_list;
->>   } VFIOContainer;
->>
->> +typedef struct VFIOSpaprContainer {
->> +    VFIOContainer container;
->> +    MemoryListener prereg_listener;
->> +    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
->> +} VFIOSpaprContainer;
->> +
->>   typedef struct VFIOHostDMAWindow {
->>       hwaddr min_iova;
->>       hwaddr max_iova;
->>
->>
->
 
