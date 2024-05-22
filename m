@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC65C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 03:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 039BFC25B79
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 03:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9cuO-0003Un-03; Tue, 21 May 2024 23:44:56 -0400
+	id 1s9cuL-0003Su-3M; Tue, 21 May 2024 23:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s9cuM-0003U0-N5
- for qemu-devel@nongnu.org; Tue, 21 May 2024 23:44:54 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1s9cuJ-0003Rd-5w
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 23:44:51 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s9cuI-0004By-IH
- for qemu-devel@nongnu.org; Tue, 21 May 2024 23:44:53 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f4603237e0so366377b3a.0
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 20:44:50 -0700 (PDT)
+ id 1s9cuH-0004AG-Dj
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 23:44:50 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3c99257e0cbso2559931b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 21 May 2024 20:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716349489; x=1716954289; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716349488; x=1716954288; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MCy66KKepWlHqXyVaIB/ACSSH0v8RsXCcqK/IUUC3fY=;
- b=kXNUSnbnQne6oUbjAO2SXHzZHU5383wEUr8ds5O64Toqf75aCpQ3VCkM+1NpSFdJgI
- XBBCpf/0ZDzMM9tnJlq+aCbBNM6tg/bvJz85GKk4wUPf/7E4ikV5t93AJF/bnKLQq2Sx
- +yneEELpe3ZE1M5LeKLgVlzqy6kYaZhxSe6zIeBxq0aMyCtdRiu8lCeam5jAbGfElJso
- HmnliWu8OYP94DOz+xDIsvhviw/0XEajBMSG8rOJo1HrOqqKVZMOjyYLXWzw1vH8BKcH
- RgG/U49CEVUDcF22IZsBcvSCCTGNpRXgPCCKWMKFd+zTieACMMP6jlrQa9Ja3n4kI2nw
- SC1w==
+ bh=ANXC48sQiPcmwS+xOFwDre7pgTyWtySeXqXMB92Q6A0=;
+ b=KXpx+4jgwPxFEJQAB6kaBqdAkphKeWZ6wDTgybIPtWiBukj5AyZd27DGCrMXEYH0QG
+ DhPjV09mU/NG48nvU52e1s5ZDhVUJnigYO0N99vXTDe1O9ES98RSPuJjII4m0UrN2EX4
+ ND3PaCHjVj8kz7cNKtbsQKSmHEO6rm3JZue6jze2a9t+NXjYIGUvD5XZIbdMjukaw+FP
+ Gd1aq6I3JGems8c9pqXNZm3X46PKQbv0kNdjcf9QQwD88J3bD7aMX0HIYaAbOeqmqppT
+ S+fdp65ffCEtcq71KP7XLwkNrV5BWmmKMQB/zaIrXh/rf6RI+boITlAM5/s64r16Q4Hw
+ SoKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716349489; x=1716954289;
+ d=1e100.net; s=20230601; t=1716349488; x=1716954288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MCy66KKepWlHqXyVaIB/ACSSH0v8RsXCcqK/IUUC3fY=;
- b=FURkK19VjCbH8oyiqOF3mTWVJCL/sFSiGUhXWZ49gB+O6S8eJsPiZHkJhKrX43aPty
- ftcaCESsQYZfo7nWk53l2du4wA0CAVAL2YnimdgS9bf1kQXEOmC2HE9b03ENDTRbft+n
- +Y/3oPMxUOcgRdBBsCu9qSl3j751m0QSlOZa7LtXEuFkF0kaL4N64+WeqP7HykLU6IVj
- mP891AXbmNqmTMxLZbPaopShzERLHCW48qCZcjfMqm67qJP3t1DUlvPfE8+2KjvM/T+N
- msA1EN+6xUa+akcL/ThmDhQDPkQIdUcjQBpMw80UJFJaZX92rWiOsWW11Y1BOQzh5mEi
- wedg==
-X-Gm-Message-State: AOJu0YzgKB7wjgSUH2cpWtQ7q3R7TgwfTj5NMUZsEQQlRVYl+jYk1jvh
- A4diIRsac+9OPKgcHhpyYIDHO5SFk6eMyrHX0E2o8zCJTVXIKQNbjC43+Z6o/AWEq9NR5oENOE/
- i
-X-Google-Smtp-Source: AGHT+IHJVMunV3m676dcgDuH1PxRaMAPN2Twofbkh3yk0VWY4Nt0t+pcNCirMl5EL6wcrYROaIZU6A==
-X-Received: by 2002:a05:6a00:4644:b0:6ea:ed87:1348 with SMTP id
- d2e1a72fcca58-6f6d57166bamr1365492b3a.13.1716349489020; 
- Tue, 21 May 2024 20:44:49 -0700 (PDT)
+ bh=ANXC48sQiPcmwS+xOFwDre7pgTyWtySeXqXMB92Q6A0=;
+ b=CL7pd8d/JrgzTgpZr84Qz0D1KM7Zg7vnASgoDpRcifEQ8UyBuogRT2qBzUyfwObdG0
+ CojdLt75sirmrgzQMU8ialOJGkZG+ojIMG0Rat5AL+dIzKWle6Qy5TBySGvKPIiNR4Zw
+ CxU0eAAIF/64mBLbVf2m1a0bD970fKmZVQeE/mdf+JwPr5szySO31qHlRy+AS6D6+/nB
+ RD4u/XKRJHzSrU0nefzPsHP/aOEImd3vimAiMQpv52ycXkuvfHawGDgiEvLLj+JyMvCS
+ 9LRwUqCy/5yW/eEq4qeFTfY1rtyBu4njC4Dp+8MSQBqvxan8nk7MCP33yY1C7UxEj7FF
+ NltA==
+X-Gm-Message-State: AOJu0Yxy2in6sYQodtmb4IPE9KMackuBODId1jxotePRRyLp5SOBATOt
+ jG8ehu92SRQ1gyZbs13YWlwsCLgWRo4osIEwGCoJ3G8Sdcus9yDQNcyzwteMu7td0QJEDdQ/+6q
+ 6
+X-Google-Smtp-Source: AGHT+IGSNEX5G9vutdoBSvbTK/y7n9ZUzqejze1hX9h7o386DVoyKuW+PeFr9RJS6gsmXfH14em54A==
+X-Received: by 2002:a05:6808:9a9:b0:3c9:94f2:5cae with SMTP id
+ 5614622812f47-3cdb32e44b0mr997628b6e.17.1716349488011; 
+ Tue, 21 May 2024 20:44:48 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2af2bafsm21416617b3a.162.2024.05.21.20.44.48
+ d2e1a72fcca58-6f4d2af2bafsm21416617b3a.162.2024.05.21.20.44.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 May 2024 20:44:48 -0700 (PDT)
+ Tue, 21 May 2024 20:44:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
 	mark.cave-ayland@ilande.co.uk
-Subject: [PATCH RISU v2 6/8] risugen: Add sparc64 support
-Date: Tue, 21 May 2024 20:44:40 -0700
-Message-Id: <20240522034442.140293-7-richard.henderson@linaro.org>
+Subject: [PATCH RISU v2 5/8] risugen: Be explicit about print destinations
+Date: Tue, 21 May 2024 20:44:39 -0700
+Message-Id: <20240522034442.140293-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522034442.140293-1-richard.henderson@linaro.org>
 References: <20240522034442.140293-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,515 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Printing directly to STDOUT and STDERR will allow the
+print destination to be selected elsewhere.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- risugen            |  10 +-
- risugen_common.pm  |  50 +++++-
- risugen_sparc64.pm | 385 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 443 insertions(+), 2 deletions(-)
- create mode 100644 risugen_sparc64.pm
+ risugen_common.pm | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/risugen b/risugen
-index 2800b8b..830dfd3 100755
---- a/risugen
-+++ b/risugen
-@@ -310,6 +310,8 @@ Valid options:
-                    Useful to test before support for FP is available.
-     --sve        : enable sve floating point
-     --be         : generate instructions in Big-Endian byte order (ppc64 only).
-+    --cross prefix : prefix for the assembler and linker
-+    --keep       : do not remove intermediate files
-     --help       : print this message
- EOT
- }
-@@ -322,6 +324,8 @@ sub main()
-     my $fp_enabled = 1;
-     my $sve_enabled = 0;
-     my $big_endian = 0;
-+    my $cross_prefix = "";
-+    my $keep = 0;
-     my ($infile, $outfile);
- 
-     GetOptions( "help" => sub { usage(); exit(0); },
-@@ -339,6 +343,8 @@ sub main()
-                 "be" => sub { $big_endian = 1; },
-                 "no-fp" => sub { $fp_enabled = 0; },
-                 "sve" => sub { $sve_enabled = 1; },
-+                "cross-prefix=s" => \$cross_prefix,
-+                "keep" => sub { $keep = 1; },
-         ) or return 1;
-     # allow "--pattern re,re" and "--pattern re --pattern re"
-     @pattern_re = split(/,/,join(',',@pattern_re));
-@@ -372,7 +378,9 @@ sub main()
-         'keys' => \@insn_keys,
-         'arch' => $full_arch[0],
-         'subarch' => $full_arch[1] || '',
--        'bigendian' => $big_endian
-+        'bigendian' => $big_endian,
-+        'cross_prefix' => $cross_prefix,
-+        'keep' => $keep,
-     );
- 
-     write_test_code(\%params);
 diff --git a/risugen_common.pm b/risugen_common.pm
-index 5207c0e..228082f 100644
+index 71ee996..5207c0e 100644
 --- a/risugen_common.pm
 +++ b/risugen_common.pm
-@@ -26,7 +26,8 @@ BEGIN {
-     our @EXPORT = qw(open_bin close_bin set_endian insn32 insn16 $bytecount
-                    progress_start progress_update progress_end
-                    eval_with_fields is_pow_of_2 sextract ctz
--                   dump_insn_details);
-+                   dump_insn_details
-+                   open_asm close_asm assemble_and_link);
+@@ -76,7 +76,7 @@ sub progress_start($$)
+     ($proglen, $progmax) = @_;
+     $proglen -= 2; # allow for [] chars
+     $| = 1;        # disable buffering so we can see the meter...
+-    print "[" . " " x $proglen . "]\r";
++    print STDOUT "[" . " " x $proglen . "]\r";
+     $lastprog = 0;
  }
  
- our $bytecount;
-@@ -66,6 +67,53 @@ sub insn16($)
-     $bytecount += 2;
+@@ -87,13 +87,13 @@ sub progress_update($)
+     my $barlen = int($proglen * $done / $progmax);
+     if ($barlen != $lastprog) {
+         $lastprog = $barlen;
+-        print "[" . "-" x $barlen . " " x ($proglen - $barlen) . "]\r";
++        print STDOUT "[" . "-" x $barlen . " " x ($proglen - $barlen) . "]\r";
+     }
  }
  
-+sub open_asm($)
-+{
-+    my ($basename) = @_;
-+    my $fname = $basename . ".s";
-+    open(ASM, ">", $fname) or die "can't open $fname: $!";
-+    select ASM;
-+}
-+
-+sub close_asm
-+{
-+    close(ASM) or die "can't close asm file: $!";
-+    select STDOUT;
-+}
-+
-+sub assemble_and_link($$$@)
-+{
-+    my ($basename, $cross_prefix, $keep, @asflags) = @_;
-+    my $asmfile = $basename . ".s";
-+    my $ldfile = $basename . ".ld";
-+    my $objfile = $basename . ".o";
-+
-+    open(LD, ">", $ldfile) or die "can't open $ldfile: $!";
-+    print LD '
-+        ENTRY(start)
-+        PHDRS { text PT_LOAD FILEHDR PHDRS; }
-+        SECTIONS {
-+            . = SIZEOF_HEADERS;
-+            PROVIDE(start = .);
-+            .text : { *(.text) } :text
-+            .data : { *(.data) } :text
-+        }
-+    ';
-+    close(LD);
-+
-+    my @as = ($cross_prefix . "as", @asflags, "-o", $objfile, $asmfile);
-+    system(@as) == 0 or die "system @as failed: $?";
-+
-+    my @ld = ($cross_prefix . "ld", "-o", $basename, "-T", $ldfile, $objfile);
-+    system(@ld) == 0 or die "system @ld failed: $?";
-+
-+    if (!$keep) {
-+        unlink $asmfile;
-+        unlink $ldfile;
-+        unlink $objfile;
-+    }
-+}
-+
- # Progress bar implementation
- my $lastprog;
- my $proglen;
-diff --git a/risugen_sparc64.pm b/risugen_sparc64.pm
-new file mode 100644
-index 0000000..c9f2ede
---- /dev/null
-+++ b/risugen_sparc64.pm
-@@ -0,0 +1,385 @@
-+#!/usr/bin/perl -w
-+###############################################################################
-+# Copyright (c) 2024 Linaro Limited
-+# All rights reserved. This program and the accompanying materials
-+# are made available under the terms of the Eclipse Public License v1.0
-+# which accompanies this distribution, and is available at
-+# http://www.eclipse.org/legal/epl-v10.html
-+###############################################################################
-+
-+# risugen -- generate a test binary file for use with risu
-+# See 'risugen --help' for usage information.
-+package risugen_sparc64;
-+
-+use strict;
-+use warnings;
-+
-+use risugen_common;
-+
-+require Exporter;
-+
-+our @ISA    = qw(Exporter);
-+our @EXPORT = qw(write_test_code);
-+
-+my $periodic_reg_random = 1;
-+
-+# Maximum alignment restriction permitted for a memory op.
-+my $MAXALIGN = 64;
-+my $MAXBLOCK = 2048;
-+my $PARAMREG = 15;         # %o7
-+
-+my $OP_COMPARE = 0;        # compare registers
-+my $OP_TESTEND = 1;        # end of test, stop
-+my $OP_SETMEMBLOCK = 2;    # g1 is address of memory block (8192 bytes)
-+my $OP_GETMEMBLOCK = 3;    # add the address of memory block to g1
-+my $OP_COMPAREMEM = 4;     # compare memory block
-+
-+my @GREGS = ( "%g0", "%g1", "%g2", "%g3", "%g4", "%g5", "%g6", "%g7",
-+              "%o0", "%o1", "%o2", "%o3", "%o4", "%o5", "%o6", "%o7",
-+              "%l0", "%l1", "%l2", "%l3", "%l4", "%l5", "%l6", "%l7",
-+              "%i0", "%i1", "%i2", "%i3", "%i4", "%i5", "%i6", "%i7" );
-+
-+sub write_data32($)
-+{
-+    my ($val) = @_;
-+    printf "\t.word\t%#x\n", $val;
-+}
-+
-+sub write_data64($)
-+{
-+    my ($val) = @_;
-+    printf "\t.quad\t%#x\n", $val;
-+}
-+
-+sub write_risuop($)
-+{
-+    my ($op) = @_;
-+    printf "\tilltrap\t%#x\n", 0xdead0 + $op;
-+}
-+
-+sub write_mov_rr($$)
-+{
-+    my ($rd, $rs) = @_;
-+    printf "\tmov\t%s,%s\n", $GREGS[$rs], $GREGS[$rd];
-+}
-+
-+sub write_mov_ri($$)
-+{
-+    my ($rd, $imm) = @_;
-+
-+    if (-0x1000 <= $imm < 0x1000) {
-+        printf "\tmov\t%d,%s\n", $imm, $GREGS[$rd];
-+    } else {
-+        my $immhi = $imm & 0xfffff000;
-+        my $immlo = $imm & 0x00000fff;
-+
-+        if ($imm < 0) {
-+            $immhi ^= 0xfffff000;
-+            $immlo |= -0x1000;
-+        }
-+        printf "\tsethi\t%%hi(%d),%s\n", $immhi, $GREGS[$rd];
-+        if ($immlo != 0) {
-+            printf "\txor\t%s,%d,%s\n", $GREGS[$rd], $immlo, $GREGS[$rd];
-+        }
-+    }
-+}
-+
-+sub write_add_rri($$$)
-+{
-+    my ($rd, $rs, $imm) = @_;
-+    die "bad imm!" if ($imm < -0x1000 || $imm >= 0x1000);
-+
-+    printf "\txor\t%s,%d,%s\n", $GREGS[$rs], $imm, $GREGS[$rd];
-+}
-+
-+sub write_sub_rrr($$$)
-+{
-+    my ($rd, $rs1, $rs2) = @_;
-+
-+    printf "\tsub\t%s,%s,%s\n", $GREGS[$rs1], $GREGS[$rs2], $GREGS[$rd];
-+}
-+
-+sub begin_datablock($$)
-+{
-+    my ($align, $label) = @_;
-+    die "bad align!" if ($align < 4 || $align > 255 || !is_pow_of_2($align));
-+
-+    printf ".data\n";
-+    printf "\t.balign %d\n", $align;
-+    printf "%s:\n", $label;
-+}
-+
-+sub end_datablock()
-+{
-+    printf ".text\n"
-+}
-+
-+sub write_ref_datablock($$$$)
-+{
-+    my ($rd, $offset, $scratch, $label) = @_;
-+
-+    printf "\trd\t%%pc,%s\n", $GREGS[$rd];
-+    printf "\tsethi\t%%pc22(%s+%d),%s\n",
-+           $label, $offset + 4, $GREGS[$scratch];
-+    printf "\tor\t%s,%%pc10(%s+%d),%s\n",
-+           $GREGS[$scratch], $label, $offset + 8, $GREGS[$scratch];
-+    printf "\tadd\t%s,%s,%s\n", $GREGS[$scratch], $GREGS[$rd], $GREGS[$rd];
-+}
-+
-+sub write_random_register_data($$)
-+{
-+    my ($fp_enabled, $fsr) = @_;
-+    my $size = 32 * 8;
-+
-+    if ($fp_enabled) {
-+        # random data for 32 double-precision regs plus %gsr
-+        $size += $fp_enabled ? 33 * 8 : 0;
-+    }
-+
-+    begin_datablock(8, "1");
-+    for (my $i = 0; $i < $size; $i += 4) {
-+        write_data32(rand(0xffffffff));
-+    }
-+    if ($fp_enabled) {
-+        # %fsr gets constant data
-+        write_data64($fsr);
-+    }
-+    end_datablock();
-+
-+    write_ref_datablock(1, 0, 2, "1b");
-+
-+    # Load floating point / SIMD registers
-+    if ($fp_enabled) {
-+        for (my $rt = 0; $rt < 64; $rt += 2) {
-+            printf "\tldd\t[%s+%d],%%f%d\n", $GREGS[1], 32 * 8 + $rt * 4, $rt;
-+        }
-+        printf "\tldx\t[%s+%d],%s\n", $GREGS[1], 64 * 8, $GREGS[2];
-+        printf "\twr\t%s,0,%%gsr\n", $GREGS[2];
-+        printf "\tldx\t[%s+%d],%%fsr\n", $GREGS[1], 65 * 8;
-+    }
-+
-+    # Load Y
-+    printf "\tldx\t[%s],%s\n", $GREGS[1], $GREGS[2];
-+    printf "\twr\t%s,0,%%y\n", $GREGS[2];
-+
-+    # Clear flags
-+    printf "\twr\t%%g0,0,%%ccr\n";
-+
-+    # Load general purpose registers
-+    for (my $i = 31; $i >= 1; --$i) {
-+        if (reg_ok($i)) {
-+            printf "\tldx\t[%s+%d],%s\n", $GREGS[1], $i * 8, $GREGS[$i];
-+        }
-+    }
-+
-+    write_risuop($OP_COMPARE);
-+}
-+
-+sub write_memblock_setup()
-+{
-+    begin_datablock($MAXALIGN, "2");
-+
-+    for (my $i = 0; $i < $MAXBLOCK; $i += 4) {
-+        write_data32(rand(0xffffffff));
-+    }
-+
-+    end_datablock();
-+    write_ref_datablock($PARAMREG, 0, 1, "2b");
-+    write_risuop($OP_SETMEMBLOCK);
-+}
-+
-+# Functions used in memory blocks to handle addressing modes.
-+# These all have the same basic API: they get called with parameters
-+# corresponding to the interesting fields of the instruction,
-+# and should generate code to set up the base register to be
-+# valid. They must return the register number of the base register.
-+# The last (array) parameter lists the registers which are trashed
-+# by the instruction (ie which are the targets of the load).
-+# This is used to avoid problems when the base reg is a load target.
-+
-+# Global used to communicate between align(x) and reg() etc.
-+my $alignment_restriction;
-+
-+sub align($)
-+{
-+    my ($a) = @_;
-+    if (!is_pow_of_2($a) || !(0 < $a <= $MAXALIGN)) {
-+        die "bad align() value $a\n";
-+    }
-+    $alignment_restriction = $a;
-+}
-+
-+sub gen_memblock_offset()
-+{
-+    # Generate a random offset within the memory block, of the correct
-+    # alignment. We require the offset to not be within 16 bytes of either
-+    # end, to (more than) allow for the worst case data transfer.
-+    return (rand($MAXBLOCK - 32) + 16) & ~($alignment_restriction - 1);
-+}
-+
-+sub reg_ok($)
-+{
-+    my ($r) = @_;
-+
-+    # Avoid special registers %g7 (tp), %o6 (sp), %i6 (fp).
-+    return $r != 7 && $r != 14 && $r != 30;
-+}
-+
-+sub reg_plus_imm($$@)
-+{
-+    # Handle reg + immediate addressing mode
-+    my ($base, $imm, @trashed) = @_;
-+    my $offset = gen_memblock_offset();
-+    my $scratch = $base != 1 ? 1 : 2;
-+
-+    write_ref_datablock($base, $offset - $imm, $scratch, "2b");
-+    write_mov_ri($scratch, 0);
-+
-+    if (grep $_ == $base, @trashed) {
-+        return -1;
-+    }
-+    return $base;
-+}
-+
-+sub reg($@)
-+{
-+    my ($base, @trashed) = @_;
-+    return reg_plus_imm($base, 0, @trashed);
-+}
-+
-+sub reg_plus_reg($$@)
-+{
-+    # Handle reg + reg addressing mode
-+    my ($base, $idx, @trashed) = @_;
-+    my $offset = gen_memblock_offset();
-+    my $scratch = 1;
-+
-+    if ($base == $idx) {
-+        return -1;
-+    }
-+
-+    while ($base == $scratch || $idx == $scratch) {
-+        ++$scratch;
-+    }
-+
-+    write_ref_datablock($base, $offset, $scratch, "2b");
-+    write_mov_ri($scratch, 0);
-+    write_sub_rrr($base, $base, $idx);
-+
-+    if (grep $_ == $base, @trashed) {
-+        return -1;
-+    }
-+    return $base;
-+}
-+
-+sub gen_one_insn($)
-+{
-+    my ($rec) = @_;
-+    my $insnname = $rec->{name};
-+    my $insnwidth = $rec->{width};
-+    my $fixedbits = $rec->{fixedbits};
-+    my $fixedbitmask = $rec->{fixedbitmask};
-+    my $constraint = $rec->{blocks}{"constraints"};
-+    my $memblock = $rec->{blocks}{"memory"};
-+
-+    # Given an instruction-details array, generate an instruction
-+    my $constraintfailures = 0;
-+
-+    INSN: while(1) {
-+        my $insn = int(rand(0xffffffff));
-+
-+        $insn &= ~$fixedbitmask;
-+        $insn |= $fixedbits;
-+
-+        if (defined $constraint) {
-+            # User-specified constraint: evaluate in an environment
-+            # with variables set corresponding to the variable fields.
-+            my $v = eval_with_fields($insnname, $insn, $rec, "constraints", $constraint);
-+            if (!$v) {
-+                $constraintfailures++;
-+                if ($constraintfailures > 10000) {
-+                    print "10000 consecutive constraint failures for $insnname constraints string:\n$constraint\n";
-+                    exit (1);
-+                }
-+                next INSN;
-+            }
-+        }
-+
-+        # OK, we got a good one
-+        $constraintfailures = 0;
-+
-+        my $basereg;
-+
-+        if (defined $memblock) {
-+            # This is a load or store. We simply evaluate the block,
-+            # which is expected to be a call to a function which emits
-+            # the code to set up the base register and returns the
-+            # number of the base register.
-+            align(16);
-+            $basereg = eval_with_fields($insnname, $insn, $rec, "memory", $memblock);
-+        }
-+
-+	write_data32($insn);
-+
-+        if (defined $memblock) {
-+            # Clean up following a memory access instruction:
-+            # we need to turn the (possibly written-back) basereg
-+            # into an offset from the base of the memory block,
-+            # to avoid making register values depend on memory layout.
-+            # $basereg -1 means the basereg was a target of a load
-+            # (and so it doesn't contain a memory address after the op)
-+            if ($basereg != -1) {
-+                write_mov_ri($basereg, 0);
-+            }
-+            write_risuop($OP_COMPAREMEM);
-+        }
-+        return;
-+    }
-+}
-+
-+sub write_test_code($)
-+{
-+    my ($params) = @_;
-+
-+    my $fp_enabled = $params->{ 'fp_enabled' };
-+    my $fsr = $params->{ 'fpscr' };
-+    my $numinsns = $params->{ 'numinsns' };
-+    my $outfile = $params->{ 'outfile' };
-+
-+    my %insn_details = %{ $params->{ 'details' } };
-+    my @keys = @{ $params->{ 'keys' } };
-+
-+    open_asm($outfile);
-+
-+    # TODO better random number generator?
-+    srand(0);
-+
-+    print STDOUT "Generating code using patterns: @keys...\n";
-+    progress_start(78, $numinsns);
-+
-+    if (grep { defined($insn_details{$_}->{blocks}->{"memory"}) } @keys) {
-+        write_memblock_setup();
-+    }
-+
-+    # memblock setup doesn't clean its registers, so this must come afterwards.
-+    write_random_register_data($fp_enabled, $fsr);
-+
-+    for my $i (1..$numinsns) {
-+        my $insn_enc = $keys[int rand (@keys)];
-+        gen_one_insn($insn_details{$insn_enc});
-+        write_risuop($OP_COMPARE);
-+        # Rewrite the registers periodically.
-+        if ($periodic_reg_random && ($i % 100) == 0) {
-+            write_random_register_data($fp_enabled, $fsr);
-+        }
-+        progress_update($i);
-+    }
-+    write_risuop($OP_TESTEND);
-+    progress_end();
-+
-+    close_asm();
-+    assemble_and_link($outfile, $params->{ 'cross_prefix' },
-+                      $params->{ 'keep' }, "-Av9a");
-+}
-+
-+1;
+ sub progress_end()
+ {
+-    print "[" . "-" x $proglen . "]\n";
++    print STDOUT "[" . "-" x $proglen . "]\n";
+     $| = 0;
+ }
+ 
+@@ -124,7 +124,7 @@ sub eval_with_fields($$$$$) {
+     $evalstr .= "}";
+     my $v = eval $evalstr;
+     if ($@) {
+-        print "Syntax error detected evaluating $insnname $blockname string:\n$block\n$@";
++        print STDERR "Syntax error detected evaluating $insnname $blockname string:\n$block\n$@";
+         exit(1);
+     }
+     return $v;
+@@ -163,20 +163,20 @@ sub dump_insn_details($$)
+ {
+     # Dump the instruction details for one insn
+     my ($insn, $rec) = @_;
+-    print "insn $insn: ";
++    print STDOUT "insn $insn: ";
+     my $insnwidth = $rec->{width};
+     my $fixedbits = $rec->{fixedbits};
+     my $fixedbitmask = $rec->{fixedbitmask};
+     my $constraint = $rec->{blocks}{"constraints"};
+-    print sprintf(" insnwidth %d fixedbits %08x mask %08x ", $insnwidth, $fixedbits, $fixedbitmask);
++    print STDOUT sprintf(" insnwidth %d fixedbits %08x mask %08x ", $insnwidth, $fixedbits, $fixedbitmask);
+     if (defined $constraint) {
+-        print "constraint $constraint ";
++        print STDOUT "constraint $constraint ";
+     }
+     for my $tuple (@{ $rec->{fields} }) {
+         my ($var, $pos, $mask) = @$tuple;
+-        print "($var, $pos, " . sprintf("%08x", $mask) . ") ";
++        print STDOUT "($var, $pos, " . sprintf("%08x", $mask) . ") ";
+     }
+-    print "\n";
++    print STDOUT "\n";
+ }
+ 
+ 1;
 -- 
 2.34.1
 
