@@ -4,83 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C08C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 11:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C975C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 12:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9kRk-0003Yk-2y; Wed, 22 May 2024 07:47:52 -0400
+	id 1s9krl-0005mX-7P; Wed, 22 May 2024 08:14:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s9kRi-0003YF-TQ
- for qemu-devel@nongnu.org; Wed, 22 May 2024 07:47:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9kri-0005lm-PC
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 08:14:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s9kRg-0005lx-Eq
- for qemu-devel@nongnu.org; Wed, 22 May 2024 07:47:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9krh-0002cp-1t
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 08:14:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716378467;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1716380079;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uCr4WA2AUwuOp3c+1uaFvi46ptMzk07EKy/9UlojYJA=;
- b=CI77IHaPdA4SMukUM7E2NrM45eOGzRJFiJVlJPQ65yGlj6/DcY+bBwQ7z5Sak3y8rwU6Tk
- fA9jVuZEIVvInF2vjwRd2obbxwuMGavGcwpl89dlU1MRsACumdECr8oGLVrFj3eV/sHZTe
- +mQVKClXHPHxGSlUo5cWaA0hQuE0LLM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=x68apvtnfDj9d9ZtN2gSU34Z30feRhBcM3shFb96nXk=;
+ b=UCtC8vAo0TIrgyFAym6r+pdR9SmpPQojbTHnDsuFwnNibWo2XAqFshJdDNZW+3hw9SXW6h
+ rRHxlSUVrVCzRd0Pt0RfpMvFzhy2o72+DmKZlt0Bohs1Q+jCNe/eeMUyJqlTJ1OazKRuAr
+ 1kKnVJr/ke1vkjOckP2Mi9naybKn1mc=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-4pXtiA3kPxyF2yxyV2i_jg-1; Wed, 22 May 2024 07:47:45 -0400
-X-MC-Unique: 4pXtiA3kPxyF2yxyV2i_jg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8D332800994;
- Wed, 22 May 2024 11:47:44 +0000 (UTC)
-Received: from redhat.com (dhcp-17-234.lcy.redhat.com [10.42.17.234])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4F12651BF;
- Wed, 22 May 2024 11:47:42 +0000 (UTC)
-Date: Wed, 22 May 2024 12:47:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ us-mta-391-QBqPzuW5PYiK8ivMKNbG0A-1; Wed, 22 May 2024 08:14:38 -0400
+X-MC-Unique: QBqPzuW5PYiK8ivMKNbG0A-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-792b8d07e71so1812393485a.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 05:14:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716380078; x=1716984878;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x68apvtnfDj9d9ZtN2gSU34Z30feRhBcM3shFb96nXk=;
+ b=CFNZBFd1asiANEWJsCougO41eBso/8Xg8bkhW9VSmz9uU5zPhchXvDkxfkPklA2w0S
+ IllUYVeLonZFvrFWSe+hQei17egnX3M35ns3597951e/gI0ISDikVqNNr03wuonqYFyZ
+ c2IzlVmUWxH0IpdRFv5EODi6tsa31p8RrjdjfKbYFhUfIm7O7MoMU/ayzTx154SOAoxO
+ R2nEufRgUNW5/quBO22QhUt2IdgOtqt6pS0RjOnYq4yLsU5//LW00HX86p6nFkZCAHQg
+ bk2IS5dk2jvDhDYhgHbzuIb4pqptLjEPD3Tq2kGop014xlafuziqgxpvmdODAdB424ix
+ X/0w==
+X-Gm-Message-State: AOJu0YxQZtZpd4EC3E4Fn+XektgLJMnJ1cLUJjowQmG0eqpwt0a9Qnwo
+ /WM/5QackMwDFY8IVe05QJomyO0lHsjZzDwv5f7a+7XzKXo2FdcPVMJ1Z8NT2G9UFOVdQSBhE76
+ eBdk3dfzr5d9g74GGBJfcS1Mv3ny2AAsn39KV64NEuEY7r/fnzZHm
+X-Received: by 2002:a05:620a:8230:b0:78d:646d:e2e7 with SMTP id
+ af79cd13be357-794994d091dmr152434785a.66.1716380078003; 
+ Wed, 22 May 2024 05:14:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5r/IRiZDHK6bhO/5WTNTtSDJn+SUMGopZCb03ISeSz3Y+59WRAa69CrvIlC1Jjd8RDlkGXw==
+X-Received: by 2002:a05:620a:8230:b0:78d:646d:e2e7 with SMTP id
+ af79cd13be357-794994d091dmr152431085a.66.1716380077415; 
+ Wed, 22 May 2024 05:14:37 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
+ [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-792e3a40492sm990566685a.86.2024.05.22.05.14.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 May 2024 05:14:37 -0700 (PDT)
+Message-ID: <e103fae7-8d73-4dd0-bab4-3836779896c9@redhat.com>
+Date: Wed, 22 May 2024 14:14:33 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] meson: Add -fno-sanitize=function
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 1/3] qemu-keymap: Free xkb allocations
-Message-ID: <Zk3bXNAIGnhbEUnK@redhat.com>
+ Laurent Vivier <laurent@vivier.eu>, Markus Armbruster <armbru@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org
 References: <20240522-xkb-v3-0-c429de860fa1@daynix.com>
- <20240522-xkb-v3-1-c429de860fa1@daynix.com>
- <CAFEAcA_Sm=j_Q-gP=gaAKpmaMwA1-rO+JLAijzzuuhQOEFyfXA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ <20240522-xkb-v3-2-c429de860fa1@daynix.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240522-xkb-v3-2-c429de860fa1@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA_Sm=j_Q-gP=gaAKpmaMwA1-rO+JLAijzzuuhQOEFyfXA@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,60 +153,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 22, 2024 at 12:35:23PM +0100, Peter Maydell wrote:
-> On Wed, 22 May 2024 at 11:49, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
-> >
-> > This fixes LeakSanitizer complaints with xkbcommon 1.6.0.
-> >
-> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > ---
-> >  qemu-keymap.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/qemu-keymap.c b/qemu-keymap.c
-> > index 8c80f7a4ed65..7a9f38cf9863 100644
-> > --- a/qemu-keymap.c
-> > +++ b/qemu-keymap.c
-> > @@ -237,6 +237,9 @@ int main(int argc, char *argv[])
-> >      xkb_state_unref(state);
-> >      state = NULL;
-> >
-> > +    xkb_keymap_unref(map);
-> > +    xkb_context_unref(ctx);
-> > +
-> >      /* add quirks */
-> >      fprintf(outfile,
-> >              "\n"
-> 
-> This is surely a sanitizer bug. We're unconditionally about
-> to exit() the program here, where everything is freed, so nothing
-> is leaked.
+On 22/05/2024 12.48, Akihiko Odaki wrote:
+> -fsanitize=function enforces the consistency of function types, but
+> include/qemu/lockable.h contains function pointer casts, which violate
+> the rule. We already disables exact type checks for CFI with
+> -fsanitize-cfi-icall-generalize-pointers so disable -fsanitize=function
+> as well.
 
-I'm not sure I'd call it a sanitizer bug, rather its expected behaviour
-of sanitizers. Even if you're about to exit, its important to see info
-about all memory that is not freed by that time, since it can reveal
-leaks that were ongoing in the process that are valid things to fix.
-To make the sanitizers usable you need to get rid of the noise. IOW,
-either have to provide a file to supress reports of memory that is
-expected to remain allocated, or have to free it despite being about
-to exit.  Free'ing is the more maintainable strategy, as IME, supression
-files get outdated over time.
+Ah, I was already wondering why we didn't see this in the CFI builds yet, 
+but now I understand :-)
 
-So as long as the free'ing action is not unreasonably expensive, we
-should just do its, so from my POV I'd
+Anyway, just FYI, I've also opened some bug tickets for this some days ago:
 
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+https://gitlab.com/qemu-project/qemu/-/issues/2346
+https://gitlab.com/qemu-project/qemu/-/issues/2345
 
+(I assume we still should fix the underlying issues at one point in time and 
+remove the compiler flag here again later? Otherwise you could close these 
+with the "Resolves:" keyword in your patch description)
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   qemu_common_flags = [
+>     '-D_GNU_SOURCE', '-D_FILE_OFFSET_BITS=64', '-D_LARGEFILE_SOURCE',
+> -  '-fno-strict-aliasing', '-fno-common', '-fwrapv' ]
+> +  '-fno-sanitize=function', '-fno-strict-aliasing', '-fno-common', '-fwrapv' ]
+>   qemu_cflags = []
+>   qemu_ldflags = []
+
+With GCC, I get:
+
+cc: error: unrecognized argument to ‘-fno-sanitize=’ option: ‘function’
+
+I think you need to add this via cc.get_supported_arguments() to make sure 
+that we only add it for compilers that support this option.
+
+  Thomas
 
 
