@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A73AC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 17:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1482C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 17:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9pUk-0008MA-AG; Wed, 22 May 2024 13:11:20 -0400
+	id 1s9pgS-0006J2-6H; Wed, 22 May 2024 13:23:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s9pUg-0008Kb-Nb
- for qemu-devel@nongnu.org; Wed, 22 May 2024 13:11:16 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1s9pgP-0006IL-Ac
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 13:23:22 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s9pUd-0007ll-IT
- for qemu-devel@nongnu.org; Wed, 22 May 2024 13:11:13 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5c229dabbb6so1287022a12.0
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 10:11:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1s9pgM-0001Vy-SU
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 13:23:20 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2e428242a38so98604191fa.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 10:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716397868; x=1717002668; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AcVKnwBzn+ufikjvreuvHHDbnlRfsupYxPjb4m/40tQ=;
- b=nZP+CoXMemjz3VJxaj8/5Yl3C2PuxJv3vGYipIoRJgWGs0PvSc6uKQ+O3WES3KAZHI
- Cpu+1j5FPMR/8lo/T6jBnR7NxnKmg1vRm/oS7SaGjza2575ov25DIpOVPuYObfey9Jei
- EUPsDzAruUGTGFM2jj42cWvhjKMX3l5ymjB3kQRGMbP0sL+sQaeK8aaB62ftq7/ZROWk
- 6aAjDp6FtrlNpDeLxbD6uZwQWZ1EEceAiqtW7CFxt2jwZJB/VuAybvDz7pYFXlm9v/Ey
- rrFl6TTRLKPJBHE/x3/1Jpq33p42QU6igAyydqsw6y0N7RM9rX2UNw4CnFtfi7C65SxA
- E8Hw==
+ d=gmail.com; s=20230601; t=1716398596; x=1717003396; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=capHptUnvb9f7+wvqsxy4dNEFd1Da9TErzcgNpMjs9g=;
+ b=baVlHaNbIy2o3kDVW2BTY/xvLT5POSFLIN4wdoV2ZBPqP11LZffdi75hgRS5ZmKfwp
+ WV5X7yP9qKwkIUZURfCeIiLFfeNrucAp8drZN4uRx0mKPphNWF71Y/bKiXauKmOLnhOm
+ W4dSgefItLAh+9lXrL1dv+H7IZEoRsVwk5sIpbjqr1CRplXOGG+IuZ9cgTyHCyrom3kt
+ Wum6QFp/+Z9CVxomFdHISVjJNzu0fCNxKpOYfvdD6BSYujBgirf1lVNc2MRyZivGqmuh
+ rgYUap756SqJZANXNP1G5Gr3cLUnnnM9jSk88KISUZMBN+XINQunadKj690OTF6V49q0
+ GHww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716397868; x=1717002668;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AcVKnwBzn+ufikjvreuvHHDbnlRfsupYxPjb4m/40tQ=;
- b=V9BqRALEUrI1vkpAjv/Z2kdQr4umq526Ep+SKX5j42UgkKUu3t8d1wOfx/9BcUuHsZ
- nY07rE5PijjPJVhFAp90LGKdZFqx8m0YmAoYTpkJZuFddzk/Mo4e3ZeEAusoWHIKKneA
- l4XDNnij0+i6EA+pfemb40uBKOzENpIUM6Kjd59lk3MpNfR2IAMcaMW8c0lJTVVT2voA
- PwwCj4DYLDzdlFkbqSpFNLUiE+me/E8RinnCZ3XMDrieOp58DoXCMQwH3OItRk8E3h7y
- HepjKwwBM42GKNKgVdbl/kbhV+eGbNputy5CoudsNQZc5wbnBFcAv7nAvwJfgYGP96jO
- /I/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxDkp1kqpgfZZELzeHL70r5nBYITpUhnI/AZaj5eswyp0r7AgJkbVklvxV3+1/fOf/+IsgcnU5YNYXAJvxvOWPSTS1kX8=
-X-Gm-Message-State: AOJu0YzF86VBj6RLBbp4si4vjs+Cg/If7HLqFXbVerQ25yV3HFfIcoT1
- QTL1Qa71UOG2Qd5rkhtmaQ8wfpBMkfV5NGvg3NX7WqgbIEbZchwcthUvZ1Ja1kk=
-X-Google-Smtp-Source: AGHT+IGzwsYGBTUZOPz/PHt/MlJ8Vxp11EtUAlAfVm5jHQEhk/5e1o2blLdt8XNI/Smw4A7/I2fdvA==
-X-Received: by 2002:a17:90a:e549:b0:29d:dd93:5865 with SMTP id
- 98e67ed59e1d1-2bd9f5e49d6mr2493253a91.46.1716397868294; 
- Wed, 22 May 2024 10:11:08 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bdd9ef08b5sm12126a91.14.2024.05.22.10.11.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 10:11:07 -0700 (PDT)
-Message-ID: <48bd7bb4-aeca-4117-88f2-1eb320aa1e36@linaro.org>
-Date: Wed, 22 May 2024 10:11:06 -0700
+ d=1e100.net; s=20230601; t=1716398596; x=1717003396;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=capHptUnvb9f7+wvqsxy4dNEFd1Da9TErzcgNpMjs9g=;
+ b=OdanAtlUcRRsQbkUoBg0czj6uucgCHN5xbKRFOzq911+8sVy8cl0zCj5Fie8n6kUyv
+ OgE9u8dQkeLvLMyrwKWJd/qE0B4bDBqWbzzePp54ATDW/LdDGW+2IRY5/gEGe6D41Yc/
+ 3DCViBMWOdsAl1OGTyOLG4AySqHwo37P/C6M6bP40OHUf9GaP4Nuo58Vq/aSSB6YUd1F
+ 45RGwamllcW/VP5eUTF13Nql5jRELCRz/9yY/tFXqN7a1cYiikVVq9+TNV7f3Q1eAuSl
+ FTLTBSoFfIvG/AcWR3Y6dsyyqDMTk7kSW67oKyHUvBa3Byvh8Od0U1Av3g5FvvizRoHD
+ TpIg==
+X-Gm-Message-State: AOJu0YxICjKkQ0b+tqwRnXvwQy2oArXAbca5kgFEcdeqmXyphGX2ahwK
+ lV7m0xZ3yLBsT/N4n+YZjt+P6M8mFuRHi06BIHmc0CS+p5dfQgQW9o1q/AbE96fBX7vZNFZ03ln
+ Sdb6Tz7+LMEhuV0dTYMB4uHKi0lE=
+X-Google-Smtp-Source: AGHT+IHsMWqN6GdhH6dGwh15eVFO7Qt/oZ93Dk9rAeFywgEzw46rJIRPiNcRgtK5S48tyu+GXv9eO94HCDmA1OeIE1U=
+X-Received: by 2002:a2e:b1c7:0:b0:2e0:3ad2:b371 with SMTP id
+ 38308e7fff4ca-2e949490864mr21802361fa.25.1716398596226; Wed, 22 May 2024
+ 10:23:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Init tb size and icount before
- plugin_gen_tb_end
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>
-References: <20240521210604.130837-1-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240521210604.130837-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240518080753.7083-1-dorjoychy111@gmail.com>
+ <20240518080753.7083-2-dorjoychy111@gmail.com>
+ <Zk4QGlUAmre1l74h@redhat.com>
+In-Reply-To: <Zk4QGlUAmre1l74h@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Wed, 22 May 2024 23:23:04 +0600
+Message-ID: <CAFfO_h4yLaX9ajTWo+obHYjozJ1NvUouvfFr7AqcrSaCgo8SVg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] machine/microvm: support for loading EIF image
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de, 
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,40 +95,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/24 14:06, Richard Henderson wrote:
-> When passing disassembly data to plugin callbacks,
-> translator_st_len relies on db->tb->size having been set.
-> 
-> Fixes: 4c833c60e047 ("disas: Use translator_st to get disassembly data")
-> Reported-by: Bernhard Beschow <shentey@gmail.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/translator.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-> index c56967eecd..113edcffe3 100644
-> --- a/accel/tcg/translator.c
-> +++ b/accel/tcg/translator.c
-> @@ -214,14 +214,14 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
->       set_can_do_io(db, true);
->       tcg_ctx->emit_before_op = NULL;
->   
-> +    /* May be used by disas_log or plugin callbacks. */
-> +    tb->size = db->pc_next - db->pc_first;
-> +    tb->icount = db->num_insns;
-> +
->       if (plugin_enabled) {
->           plugin_gen_tb_end(cpu, db->num_insns);
->       }
->   
-> -    /* The disas_log hook may use these values rather than recompute.  */
-> -    tb->size = db->pc_next - db->pc_first;
-> -    tb->icount = db->num_insns;
-> -
->       if (qemu_loglevel_mask(CPU_LOG_TB_IN_ASM)
->           && qemu_log_in_addr_range(db->pc_first)) {
->           FILE *logfile = qemu_log_trylock();
+Hi Daniel,
+Thanks for reviewing.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Wed, May 22, 2024 at 9:32=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Sat, May 18, 2024 at 02:07:52PM +0600, Dorjoy Chowdhury wrote:
+> > An EIF (Enclave Image Format)[1] image is used to boot an AWS nitro
+> > enclave[2] virtual machine. The EIF file contains the necessary
+> > kernel, cmdline, ramdisk(s) sections to boot.
+> >
+> > This commit adds support for loading EIF image using the microvm
+> > machine code. For microvm to boot from an EIF file, the kernel and
+> > ramdisk(s) are extracted into a temporary kernel and a temporary
+> > initrd file which are then hooked into the regular x86 boot mechanism
+> > along with the extracted cmdline.
+>
+> I can understand why you did it this way, but I feel its pretty
+> gross to be loading everything into memory, writing it back to
+> disk, and then immediately loading it all back into memory.
+>
+> The root problem is the x86_load_linux() method, which directly
+> accesses the machine properties:
+>
+>     const char *kernel_filename =3D machine->kernel_filename;
+>     const char *initrd_filename =3D machine->initrd_filename;
+>     const char *dtb_filename =3D machine->dtb;
+>     const char *kernel_cmdline =3D machine->kernel_cmdline;
+>
+> To properly handle this, I'd say we need to introduce an abstraction
+> for loading the kernel/inittrd/cmdlkine data.
+>
+> ie on the   X86MachineClass object, we should introduce four virtual
+> methods
+>
+>    uint8_t *(*load_kernel)(X86MachineState *machine);
+>    uint8_t *(*load_initrd)(X86MachineState *machine);
+>    uint8_t *(*load_dtb)(X86MachineState *machine);
+>    uint8_t *(*load_cmdline)(X86MachineState *machine);
+>
+> The default impl of these four methods should just following the
+> existing logic, of reading and returning the data associated with
+> the kernel_filename, initrd_filename, dtb and kernel_cmdline
+> properties.
+>
+> The Nitro machine sub-class, however, can provide an alternative
+> impl of thse virtual methods which returns data directly from
+> the EIF file instead.
+>
+
+Great suggestion! I agree the implementation path you suggested would
+look much nicer as a whole. Now that I looked a bit into the
+"x86_load_linux" implementation, it looks like pretty much everything
+is tied to expecting a filename. For example, after reading the header
+from the kernel_filename x86_load_linux calls into load_multiboot,
+load_elf (which in turn calls load_elf64, 32) and they all expect a
+filename. I think I would need to refactor all of them to instead work
+with (uint8_t *) buffers instead, right? Also in case of
+initrd_filename the existing code maps the file using
+g_mapped_file_new to the X86MachineState member initrd_mapped_file. So
+that will need to be looked into and refactored. Please correct me if
+I misunderstood something about the way to implement your suggested
+approach.
+
+If I am understanding this right, this probably requires a lot of work
+which will also probably not be straightforward to implement or test.
+Right now, the way the code is, it's easy to see that the existing
+code paths are still correct as they are not changed and the new
+nitro-enclave machine code just hooks into them. As the loading to
+memory, writing to disk and loading back to memory only is in the
+execution path of the new nitro-enclave machine type, I think the way
+the patch is right now, is a good first implementation. What do you
+think?
+
+Thanks.
+
+Regards,
+Dorjoy
 
