@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75093C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D932C25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ihX-0005aU-Hk; Wed, 22 May 2024 05:56:03 -0400
+	id 1s9ih0-0003XZ-Vr; Wed, 22 May 2024 05:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihR-0004xl-Vj
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igo-0003Rt-J5
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihQ-0001tl-BB
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igm-0001QM-2P
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371755;
+ s=mimecast20190719; t=1716371715;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N3A+EghA+9cMUObGB+bwhp8bYWIKjsA69gpm6h6H9oo=;
- b=WtpaiktO3gHyK+vzTSeMhWlWMcFIsJmTIJpD5/TwTdTUlqRzVJ/bW8MH93Ox2IuOO9dOYC
- Gc9YIikWQVBFtwgpiee4PiIkanfIutig8/EfDAVYgf2m47tEp6Lw8MyBbRm2+ue5y6q2aH
- SY7OlOBUqNLrzJ93XIMTBwWhtCvIRag=
+ bh=mb4TS0heb25hYEpWvRRpq8aztVfsgZO11urO3GR9nl8=;
+ b=N/JW4uR7pUSB2IEvKeHk06t9nWmhEQMaRckTxBwvV4ITZKSzN5qbhRSh4gAzGaHyOINQDP
+ Ewq1aHaN/Dck4lh4v3aZmAwOP/MxZijWWx3tGtoVohlRo52jZAjU60nDcFHg+Z/fWvyWlO
+ iinx+90NDCLPuge1YZChwtTivo/5i6I=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-eocvhGdLPLCt9UWwp_iT5Q-1; Wed, 22 May 2024 05:55:52 -0400
-X-MC-Unique: eocvhGdLPLCt9UWwp_iT5Q-1
+ us-mta-593-R3SEFLHgPlWuyXg7-NVZRg-1; Wed, 22 May 2024 05:55:13 -0400
+X-MC-Unique: R3SEFLHgPlWuyXg7-NVZRg-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DCFAC81227E;
- Wed, 22 May 2024 09:55:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2D3F7101A525;
+ Wed, 22 May 2024 09:55:13 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B95417412;
- Wed, 22 May 2024 09:55:50 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0C03351BF;
+ Wed, 22 May 2024 09:55:11 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 44/47] vfio/pci-quirks: Make vfio_pci_igd_opregion_init()
- return bool
-Date: Wed, 22 May 2024 11:54:39 +0200
-Message-ID: <20240522095442.195243-45-clg@redhat.com>
+Subject: [PULL 16/47] vfio/migration: Emit VFIO migration QAPI event
+Date: Wed, 22 May 2024 11:54:11 +0200
+Message-ID: <20240522095442.195243-17-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,100 +81,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+Emit VFIO migration QAPI event when a VFIO device changes its migration
+state. This can be used by management applications to get updates on the
+current state of the VFIO device for their own purposes.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+A new per VFIO device capability, "migration-events", is added so events
+can be enabled only for the required devices. It is disabled by default.
+
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.h        | 6 +++---
- hw/vfio/igd.c        | 3 +--
- hw/vfio/pci-quirks.c | 8 ++++----
- hw/vfio/pci.c        | 3 +--
- 4 files changed, 9 insertions(+), 11 deletions(-)
+ include/hw/vfio/vfio-common.h |  1 +
+ hw/vfio/migration.c           | 59 +++++++++++++++++++++++++++++++++--
+ hw/vfio/pci.c                 |  2 ++
+ 3 files changed, 59 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 7914f019d5ed563ae7b60be17033aedacaaa00ff..f1586810726584ecfc35ef685646faacabefbec0 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -227,9 +227,9 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
- 
- bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
- 
--int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
--                               struct vfio_region_info *info,
--                               Error **errp);
-+bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-+                                struct vfio_region_info *info,
-+                                Error **errp);
- 
- void vfio_display_reset(VFIOPCIDevice *vdev);
- bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index ffe57c5954e5d05a57a66b2a3f0cc44fef508126..402fc5ce1da966fda1340f328e0611cb1a2a0635 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -502,8 +502,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index b6ac24953667bc5f72f28480a6bf0f4722069cb9..878e34a12874f63fcb8bbc8dc8ca3d2dfa84fdb4 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -115,6 +115,7 @@ typedef struct VFIODevice {
+     bool no_mmap;
+     bool ram_block_discard_allowed;
+     OnOffAuto enable_migration;
++    bool migration_events;
+     VFIODeviceOps *ops;
+     unsigned int num_irqs;
+     unsigned int num_regions;
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index c4403a38ddb5e7e09fbcde0ad4132653ecaf0d24..af579b868d7caa726fde1eeb73c832ebc3136a7a 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -24,6 +24,7 @@
+ #include "migration/register.h"
+ #include "migration/blocker.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-events-vfio.h"
+ #include "exec/ramlist.h"
+ #include "exec/ram_addr.h"
+ #include "pci.h"
+@@ -80,6 +81,58 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
      }
- 
-     /* Setup OpRegion access */
--    ret = vfio_pci_igd_opregion_init(vdev, opregion, &err);
--    if (ret) {
-+    if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
-         error_append_hint(&err, "IGD legacy mode disabled\n");
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         goto out;
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index 496fd1ee86bd2d53bf094860e330f4f0a5081365..ca27917159785f760f688c8db0a9ac492080d74b 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -1169,8 +1169,8 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
-  * the table and to write the base address of that memory to the ASLS register
-  * of the IGD device.
-  */
--int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
--                               struct vfio_region_info *info, Error **errp)
-+bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-+                                struct vfio_region_info *info, Error **errp)
- {
-     int ret;
- 
-@@ -1181,7 +1181,7 @@ int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-         error_setg(errp, "failed to read IGD OpRegion");
-         g_free(vdev->igd_opregion);
-         vdev->igd_opregion = NULL;
--        return -EINVAL;
-+        return false;
-     }
- 
-     /*
-@@ -1206,7 +1206,7 @@ int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-     pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
-     pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
- 
--    return 0;
-+    return true;
  }
  
- /*
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 8379d2284a20bed0c0bd24e46bbb39e321dc9767..76a3931dba1da1a638ae574825fe9dfe1390b21f 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3161,8 +3161,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-             goto out_teardown;
++static VfioMigrationState
++mig_state_to_qapi_state(enum vfio_device_mig_state state)
++{
++    switch (state) {
++    case VFIO_DEVICE_STATE_STOP:
++        return QAPI_VFIO_MIGRATION_STATE_STOP;
++    case VFIO_DEVICE_STATE_RUNNING:
++        return QAPI_VFIO_MIGRATION_STATE_RUNNING;
++    case VFIO_DEVICE_STATE_STOP_COPY:
++        return QAPI_VFIO_MIGRATION_STATE_STOP_COPY;
++    case VFIO_DEVICE_STATE_RESUMING:
++        return QAPI_VFIO_MIGRATION_STATE_RESUMING;
++    case VFIO_DEVICE_STATE_RUNNING_P2P:
++        return QAPI_VFIO_MIGRATION_STATE_RUNNING_P2P;
++    case VFIO_DEVICE_STATE_PRE_COPY:
++        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY;
++    case VFIO_DEVICE_STATE_PRE_COPY_P2P:
++        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static void vfio_migration_send_event(VFIODevice *vbasedev)
++{
++    VFIOMigration *migration = vbasedev->migration;
++    DeviceState *dev = vbasedev->dev;
++    g_autofree char *qom_path = NULL;
++    Object *obj;
++
++    if (!vbasedev->migration_events) {
++        return;
++    }
++
++    g_assert(vbasedev->ops->vfio_get_object);
++    obj = vbasedev->ops->vfio_get_object(vbasedev);
++    g_assert(obj);
++    qom_path = object_get_canonical_path(obj);
++
++    qapi_event_send_vfio_migration(
++        dev->id, qom_path, mig_state_to_qapi_state(migration->device_state));
++}
++
++static void vfio_migration_set_device_state(VFIODevice *vbasedev,
++                                            enum vfio_device_mig_state state)
++{
++    VFIOMigration *migration = vbasedev->migration;
++
++    migration->device_state = state;
++    vfio_migration_send_event(vbasedev);
++}
++
+ static int vfio_migration_set_state(VFIODevice *vbasedev,
+                                     enum vfio_device_mig_state new_state,
+                                     enum vfio_device_mig_state recover_state,
+@@ -131,12 +184,12 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+             goto reset_device;
          }
  
--        ret = vfio_pci_igd_opregion_init(vdev, opregion, errp);
--        if (ret) {
-+        if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-             goto out_teardown;
-         }
+-        migration->device_state = recover_state;
++        vfio_migration_set_device_state(vbasedev, recover_state);
+ 
+         return ret;
      }
+ 
+-    migration->device_state = new_state;
++    vfio_migration_set_device_state(vbasedev, new_state);
+     if (mig_state->data_fd != -1) {
+         if (migration->data_fd != -1) {
+             /*
+@@ -162,7 +215,7 @@ reset_device:
+                  strerror(errno));
+     }
+ 
+-    migration->device_state = VFIO_DEVICE_STATE_RUNNING;
++    vfio_migration_set_device_state(vbasedev, VFIO_DEVICE_STATE_RUNNING);
+ 
+     return ret;
+ }
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 4789d43c0f9cc7ef94b73adc815377f7222d8c57..b5d1d398b120076c85cdd92d61793393f65e8554 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3388,6 +3388,8 @@ static Property vfio_pci_dev_properties[] = {
+                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
+     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
++                     vbasedev.migration_events, false),
+     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+     DEFINE_PROP_BOOL("x-balloon-allowed", VFIOPCIDevice,
+                      vbasedev.ram_block_discard_allowed, false),
 -- 
 2.45.1
 
