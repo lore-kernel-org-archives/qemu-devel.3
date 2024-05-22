@@ -4,64 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AACA7C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7D6C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9doQ-0001NO-Do; Wed, 22 May 2024 00:42:50 -0400
+	id 1s9dod-0001Su-EZ; Wed, 22 May 2024 00:43:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doO-0001Mw-QL; Wed, 22 May 2024 00:42:48 -0400
+ id 1s9dob-0001SS-Pv
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:01 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doM-0005sV-Hn; Wed, 22 May 2024 00:42:48 -0400
+ id 1s9doZ-0005u5-SR
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716352967; x=1747888967;
+ t=1716352980; x=1747888980;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=zORect+qPLw/ECUAOP8vsbUj5srbMv75NkKPd1oMvdc=;
- b=JL53BZQgOyrgaINLumTV1jaIE/Kx5ZCkLjSYtD1jcGnUXeVScynLGATj
- cNXlTdcYv/nr287UHXoGShu2wQ9zBzo/HRuw4qQeP9HBEgZe3T7lYYiRd
- De/dc+uyOQqix/7kGt0js8SCeoRkik+iH7bh5jNuwS4/Fh2OGqXfbzQo4
- Jv8SkMGliUSLWcXZkia2CE7oCVWFgff5WLnOzXxUHwHwJjd0EatBisl9m
- Uaj2SduFQ2/dPyhkyh+ACeaZWM8UWZTYI06Gsm1o5A3pHVskgPjJlgg1r
- vCTGfWLPO5l5N6hEsgY8Ve+L7ZbrNIkvI9vC08ZojRpmWG6syeYOANcVL Q==;
-X-CSE-ConnectionGUID: 9KJerqy7TJ6Hi/5pBi/n2Q==
-X-CSE-MsgGUID: eJz+0HkOQSGincKmYWglkg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994129"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994129"
+ bh=IPQQMAowSOqAwzmnpcrnJJyj8emLMPn2U5wNNY2Yg40=;
+ b=BOBXgIkLwFWr8j8SptRftp64Jv8a1F71GN4UMi+CJXtHRrogklKgvOOw
+ hjF89bczBVQ+0/VVek7N7EmtrDdts5bPTwwEaZ6CE8rIFNTNnuZr7YEFR
+ Fue/UEKWZwKUqRguhw/7K8LxmHwwECUjKxL1t9a+u1rOfFcZq14JC6lZ9
+ T09pQyj+XMHbA3gIHdZAUXOmEPI44HVsDM3h9JqMFOj2zKw1wun04PI7F
+ mFOJapop9hsDWesaIik2GXYDyty1Ywpg0rxwhMbAGO0Y5k05MVlJp5Cn6
+ Rx1IUW/8blbO012lFk9NciPsQf9cLTJK1TQHYliTbNEBauqmc5JjkgOXY Q==;
+X-CSE-ConnectionGUID: D6tF84QWQO6oMLMoh3QD/A==
+X-CSE-MsgGUID: DHZpG7deQty6sY+tLqHD6Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994149"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994149"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:46 -0700
-X-CSE-ConnectionGUID: bTU4G6FuQiCF3AyfWxZbpA==
-X-CSE-MsgGUID: 6D+aRvS/RDuORxyJwn+yzA==
+ 21 May 2024 21:42:59 -0700
+X-CSE-ConnectionGUID: HC585QCKQrGwDcup6jBBYw==
+X-CSE-MsgGUID: ZuhnbqoUTuCQZ5rWq8tZUg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683657"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683726"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:42 -0700
+ 21 May 2024 21:42:57 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:vfio-ap)
-Subject: [PATCH v2 04/20] vfio/helpers: Make vfio_set_irq_signaling() return
- bool
-Date: Wed, 22 May 2024 12:39:59 +0800
-Message-Id: <20240522044015.412951-5-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 09/20] vfio/pci: Make vfio_pci_relocate_msix() and
+ vfio_msix_early_setup() return a bool
+Date: Wed, 22 May 2024 12:40:04 +0800
+Message-Id: <20240522044015.412951-10-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.10;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -87,283 +83,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+Since vfio_pci_relocate_msix() and vfio_msix_early_setup() takes
+an 'Error **' argument, best practices suggest to return a bool.
+See the qapi/error.h Rules section.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
+By this chance, pass errp directly to vfio_msix_early_setup() to avoid
+calling error_propagate().
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h |  4 ++--
- hw/vfio/ap.c                  |  8 +++----
- hw/vfio/ccw.c                 |  8 +++----
- hw/vfio/helpers.c             | 18 ++++++----------
- hw/vfio/pci.c                 | 40 ++++++++++++++++++-----------------
- hw/vfio/platform.c            | 18 +++++++---------
- 6 files changed, 46 insertions(+), 50 deletions(-)
+ hw/vfio/pci.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b7bb4f5304..b712799caf 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -207,8 +207,8 @@ void vfio_spapr_container_deinit(VFIOContainer *container);
- void vfio_disable_irqindex(VFIODevice *vbasedev, int index);
- void vfio_unmask_single_irqindex(VFIODevice *vbasedev, int index);
- void vfio_mask_single_irqindex(VFIODevice *vbasedev, int index);
--int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
--                           int action, int fd, Error **errp);
-+bool vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
-+                            int action, int fd, Error **errp);
- void vfio_region_write(void *opaque, hwaddr addr,
-                            uint64_t data, unsigned size);
- uint64_t vfio_region_read(void *opaque,
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index ba653ef70f..d8a9615fee 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -117,8 +117,8 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-     fd = event_notifier_get_fd(notifier);
-     qemu_set_fd_handler(fd, fd_read, NULL, vapdev);
- 
--    if (vfio_set_irq_signaling(vdev, irq, 0, VFIO_IRQ_SET_ACTION_TRIGGER, fd,
--                               errp)) {
-+    if (!vfio_set_irq_signaling(vdev, irq, 0, VFIO_IRQ_SET_ACTION_TRIGGER, fd,
-+                                errp)) {
-         qemu_set_fd_handler(fd, NULL, NULL, vapdev);
-         event_notifier_cleanup(notifier);
-     }
-@@ -141,8 +141,8 @@ static void vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
-         return;
-     }
- 
--    if (vfio_set_irq_signaling(&vapdev->vdev, irq, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-+    if (!vfio_set_irq_signaling(&vapdev->vdev, irq, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vapdev->vdev.name);
-     }
- 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 89bb980167..1f578a3c75 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -434,8 +434,8 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-     fd = event_notifier_get_fd(notifier);
-     qemu_set_fd_handler(fd, fd_read, NULL, vcdev);
- 
--    if (vfio_set_irq_signaling(vdev, irq, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
-+    if (!vfio_set_irq_signaling(vdev, irq, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
-         qemu_set_fd_handler(fd, NULL, NULL, vcdev);
-         event_notifier_cleanup(notifier);
-     }
-@@ -464,8 +464,8 @@ static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
-         return;
-     }
- 
--    if (vfio_set_irq_signaling(&vcdev->vdev, irq, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-+    if (!vfio_set_irq_signaling(&vcdev->vdev, irq, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vcdev->vdev.name);
-     }
- 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 1f3bdd9bf0..9edbc96688 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -107,12 +107,12 @@ static const char *index_to_str(VFIODevice *vbasedev, int index)
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 12fb534d79..4fb5fd0c9f 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -1450,13 +1450,13 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
      }
  }
  
--int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
--                           int action, int fd, Error **errp)
-+bool vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
-+                            int action, int fd, Error **errp)
+-static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
  {
-     ERRP_GUARD();
-     g_autofree struct vfio_irq_set *irq_set = NULL;
--    int argsz, ret = 0;
-+    int argsz;
-     const char *name;
-     int32_t *pfd;
+     int target_bar = -1;
+     size_t msix_sz;
  
-@@ -127,15 +127,11 @@ int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
-     pfd = (int32_t *)&irq_set->data;
-     *pfd = fd;
- 
--    if (ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irq_set)) {
--        ret = -errno;
-+    if (!ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irq_set)) {
+     if (!vdev->msix || vdev->msix_relo == OFF_AUTOPCIBAR_OFF) {
+-        return;
 +        return true;
      }
  
--    if (!ret) {
--        return 0;
--    }
--
--    error_setg_errno(errp, -ret, "VFIO_DEVICE_SET_IRQS failure");
-+    error_setg_errno(errp, errno, "VFIO_DEVICE_SET_IRQS failure");
+     /* The actual minimum size of MSI-X structures */
+@@ -1479,7 +1479,7 @@ static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+         if (target_bar < 0) {
+             error_setg(errp, "No automatic MSI-X relocation available for "
+                        "device %04x:%04x", vdev->vendor_id, vdev->device_id);
+-            return;
++            return false;
+         }
+     } else {
+         target_bar = (int)(vdev->msix_relo - OFF_AUTOPCIBAR_BAR0);
+@@ -1489,7 +1489,7 @@ static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+     if (vdev->bars[target_bar].ioport) {
+         error_setg(errp, "Invalid MSI-X relocation BAR %d, "
+                    "I/O port BAR", target_bar);
+-        return;
++        return false;
+     }
  
-     name = index_to_str(vbasedev, index);
-     if (name) {
-@@ -146,7 +142,7 @@ int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
-     error_prepend(errp,
-                   "Failed to %s %s eventfd signaling for interrupt ",
-                   fd < 0 ? "tear down" : "set up", action_to_str(action));
--    return ret;
-+    return false;
+     /* Cannot use a BAR in the "shadow" of a 64-bit BAR */
+@@ -1497,7 +1497,7 @@ static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+          target_bar > 0 && vdev->bars[target_bar - 1].mem64) {
+         error_setg(errp, "Invalid MSI-X relocation BAR %d, "
+                    "consumed by 64-bit BAR %d", target_bar, target_bar - 1);
+-        return;
++        return false;
+     }
+ 
+     /* 2GB max size for 32-bit BARs, cannot double if already > 1G */
+@@ -1505,7 +1505,7 @@ static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+         !vdev->bars[target_bar].mem64) {
+         error_setg(errp, "Invalid MSI-X relocation BAR %d, "
+                    "no space to extend 32-bit BAR", target_bar);
+-        return;
++        return false;
+     }
+ 
+     /*
+@@ -1540,6 +1540,7 @@ static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+ 
+     trace_vfio_msix_relo(vdev->vbasedev.name,
+                          vdev->msix->table_bar, vdev->msix->table_offset);
++    return true;
  }
  
  /*
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index a447013a1d..358da4497b 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -147,10 +147,10 @@ static void vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-         goto fail_irqfd;
+@@ -1550,7 +1551,7 @@ static void vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+  * need to first look for where the MSI-X table lives.  So we
+  * unfortunately split MSI-X setup across two functions.
+  */
+-static void vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+ {
+     uint8_t pos;
+     uint16_t ctrl;
+@@ -1562,25 +1563,25 @@ static void vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+ 
+     pos = pci_find_capability(&vdev->pdev, PCI_CAP_ID_MSIX);
+     if (!pos) {
+-        return;
++        return true;
      }
  
--    if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
--                               VFIO_IRQ_SET_ACTION_UNMASK,
--                               event_notifier_get_fd(&vdev->intx.unmask),
--                               errp)) {
-+    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
-+                                VFIO_IRQ_SET_ACTION_UNMASK,
-+                                event_notifier_get_fd(&vdev->intx.unmask),
-+                                errp)) {
-         goto fail_vfio;
+     if (pread(fd, &ctrl, sizeof(ctrl),
+               vdev->config_offset + pos + PCI_MSIX_FLAGS) != sizeof(ctrl)) {
+         error_setg_errno(errp, errno, "failed to read PCI MSIX FLAGS");
+-        return;
++        return false;
      }
  
-@@ -295,8 +295,8 @@ static int vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-     qemu_set_fd_handler(fd, vfio_intx_interrupt, NULL, vdev);
+     if (pread(fd, &table, sizeof(table),
+               vdev->config_offset + pos + PCI_MSIX_TABLE) != sizeof(table)) {
+         error_setg_errno(errp, errno, "failed to read PCI MSIX TABLE");
+-        return;
++        return false;
+     }
  
--    if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
-+    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
-         qemu_set_fd_handler(fd, NULL, NULL, vdev);
-         event_notifier_cleanup(&vdev->intx.interrupt);
-         return -errno;
-@@ -590,9 +590,10 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-                 fd = event_notifier_get_fd(&vector->interrupt);
-             }
+     if (pread(fd, &pba, sizeof(pba),
+               vdev->config_offset + pos + PCI_MSIX_PBA) != sizeof(pba)) {
+         error_setg_errno(errp, errno, "failed to read PCI MSIX PBA");
+-        return;
++        return false;
+     }
  
--            if (vfio_set_irq_signaling(&vdev->vbasedev,
--                                       VFIO_PCI_MSIX_IRQ_INDEX, nr,
--                                       VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-+            if (!vfio_set_irq_signaling(&vdev->vbasedev,
-+                                        VFIO_PCI_MSIX_IRQ_INDEX, nr,
-+                                        VFIO_IRQ_SET_ACTION_TRIGGER, fd,
-+                                        &err)) {
-                 error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-             }
+     ctrl = le16_to_cpu(ctrl);
+@@ -1598,7 +1599,7 @@ static void vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "failed to get MSI-X irq info");
+         g_free(msix);
+-        return;
++        return false;
+     }
+ 
+     msix->noresize = !!(irq_info.flags & VFIO_IRQ_INFO_NORESIZE);
+@@ -1630,7 +1631,7 @@ static void vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+             error_setg(errp, "hardware reports invalid configuration, "
+                        "MSIX PBA outside of specified BAR");
+             g_free(msix);
+-            return;
++            return false;
          }
-@@ -634,8 +635,9 @@ static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
-         int32_t fd = event_notifier_get_fd(&vector->interrupt);
-         Error *err = NULL;
- 
--        if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX, nr,
--                                   VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-+        if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
-+                                    nr, VFIO_IRQ_SET_ACTION_TRIGGER, fd,
-+                                    &err)) {
-             error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         }
-     }
-@@ -2873,8 +2875,8 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
-     fd = event_notifier_get_fd(&vdev->err_notifier);
-     qemu_set_fd_handler(fd, vfio_err_notifier_handler, NULL, vdev);
- 
--    if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_ERR_IRQ_INDEX, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-+    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_ERR_IRQ_INDEX, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         qemu_set_fd_handler(fd, NULL, NULL, vdev);
-         event_notifier_cleanup(&vdev->err_notifier);
-@@ -2890,8 +2892,8 @@ static void vfio_unregister_err_notifier(VFIOPCIDevice *vdev)
-         return;
      }
  
--    if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_ERR_IRQ_INDEX, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-+    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_ERR_IRQ_INDEX, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
-     qemu_set_fd_handler(event_notifier_get_fd(&vdev->err_notifier),
-@@ -2938,8 +2940,8 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
-     fd = event_notifier_get_fd(&vdev->req_notifier);
-     qemu_set_fd_handler(fd, vfio_req_notifier_handler, NULL, vdev);
+@@ -1641,7 +1642,7 @@ static void vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
  
--    if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_REQ_IRQ_INDEX, 0,
--                           VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-+    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_REQ_IRQ_INDEX, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         qemu_set_fd_handler(fd, NULL, NULL, vdev);
-         event_notifier_cleanup(&vdev->req_notifier);
-@@ -2956,8 +2958,8 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
+     vfio_pci_fixup_msix_region(vdev);
  
--    if (vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_REQ_IRQ_INDEX, 0,
--                               VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-+    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_REQ_IRQ_INDEX, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, -1, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
-     qemu_set_fd_handler(event_notifier_get_fd(&vdev->req_notifier),
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index 2bd16096bb..3233ca8691 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -115,18 +115,17 @@ static int vfio_set_trigger_eventfd(VFIOINTp *intp,
-     VFIODevice *vbasedev = &intp->vdev->vbasedev;
-     int32_t fd = event_notifier_get_fd(intp->interrupt);
-     Error *err = NULL;
--    int ret;
- 
-     qemu_set_fd_handler(fd, (IOHandler *)handler, NULL, intp);
- 
--    ret = vfio_set_irq_signaling(vbasedev, intp->pin, 0,
--                                 VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err);
--    if (ret) {
-+    if (!vfio_set_irq_signaling(vbasedev, intp->pin, 0,
-+                                VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vbasedev->name);
-         qemu_set_fd_handler(fd, NULL, NULL, NULL);
-+        return -EINVAL;
-     }
- 
--    return ret;
-+    return 0;
+-    vfio_pci_relocate_msix(vdev, errp);
++    return vfio_pci_relocate_msix(vdev, errp);
  }
  
- /*
-@@ -355,15 +354,14 @@ static int vfio_set_resample_eventfd(VFIOINTp *intp)
-     int32_t fd = event_notifier_get_fd(intp->unmask);
-     VFIODevice *vbasedev = &intp->vdev->vbasedev;
-     Error *err = NULL;
--    int ret;
+ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+@@ -3130,9 +3131,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
  
-     qemu_set_fd_handler(fd, NULL, NULL, NULL);
--    ret = vfio_set_irq_signaling(vbasedev, intp->pin, 0,
--                                 VFIO_IRQ_SET_ACTION_UNMASK, fd, &err);
--    if (ret) {
-+    if (!vfio_set_irq_signaling(vbasedev, intp->pin, 0,
-+                                VFIO_IRQ_SET_ACTION_UNMASK, fd, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vbasedev->name);
-+        return -EINVAL;
+     vfio_bars_prepare(vdev);
+ 
+-    vfio_msix_early_setup(vdev, &err);
+-    if (err) {
+-        error_propagate(errp, err);
++    if (!vfio_msix_early_setup(vdev, errp)) {
+         goto error;
      }
--    return ret;
-+    return 0;
- }
  
- /**
 -- 
 2.34.1
 
