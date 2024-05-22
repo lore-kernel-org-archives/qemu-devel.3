@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE38EC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 11:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC8FC25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 11:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9kG2-0005C6-6i; Wed, 22 May 2024 07:35:46 -0400
+	id 1s9kI4-0006QT-2k; Wed, 22 May 2024 07:37:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9kFx-0005BM-Ob
- for qemu-devel@nongnu.org; Wed, 22 May 2024 07:35:42 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s9kFw-0003Tj-3b
- for qemu-devel@nongnu.org; Wed, 22 May 2024 07:35:41 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-572af0b12b8so9797366a12.2
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 04:35:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716377738; x=1716982538; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Oj0hYS3BTRER1PX4gT/3sjvwrV41mkExy8kKD+nrBEI=;
- b=IH/Xc/8c4oLp3kkdQZ5vzcJNXSVde6/0LxlBBdrhQabUvcW53jtjvndN6fxd7y7Ur8
- zmdQpP4wV9GklHAla2j+pLCETA5gq4J07gVpNqVW48A8GIBLGEm1zQgjxIki+quUwO2g
- MUYzyxojBBi5sB0zO9kf95MvxIbwscHd+JT6qVueHJLefr1kVgaOCoIF97KuRXj8cAS+
- Dich/B1S8txhzvobqZtTSzvsY7MsQ6yZW29N/RbEDyBvY1bpjM/UU7N+SsLRFOEavdxp
- yYLExwLULgrTYtlXAferecBceFJsPakaEGWzTs7kYu36LBYUCc15LVSF82hMqUKkn6Dh
- qTFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716377738; x=1716982538;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Oj0hYS3BTRER1PX4gT/3sjvwrV41mkExy8kKD+nrBEI=;
- b=hjDh2WUId/EOVeX1UXhzFM5KiWiT+H7fI3mphtC888xV6VRbgNB1819wA1zJZkRQ+j
- hPG56YTfLakyJZZGnG37spCDbEvZbshFnSV77JFPB9ybKY0HnBf3wLotbi1x/SrZmTG3
- 4vhBpZWTsG4JiCPlJbh3DyDL0HYa2lm8HdiKtSFQxGUGDa1nAxUbDrxZfBPR6idllFpI
- Ss+2txTuWsuHlYvgu3Y9TOkiNkou+xJ7yHoHpMHh1xc3mZZjBih+gEuiJz3qZ26dFL8g
- HFtYc/g553GSAVdyfF0jlWCr9wMPU6btsVq3x2m44ZKdX1t4wg4DMMrUNepJxHF+4qdH
- 57+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV48LaQY24TwqASqZp6ex1Sa9MElLfimYduRhtUhel7Yi4Py5s/q/U4Q1j0Wg61uwuJPjez1ofd5VN/44Kmy0Vkkcboe6Q=
-X-Gm-Message-State: AOJu0YwTLWvGhXUshc3lc/CPotEUkL6weTJ67IbegV7NrrjidIcI16fd
- Kl1834R5qGYSN3/04iEFsSF3zpUDBRPL1qb2HlhAFkCR15nQon+o03B8mb74K0fxVcfPMIKrH7P
- 0vsbNL8lII56Te7LqPhDMphRNzHFG04jyqz7vNg==
-X-Google-Smtp-Source: AGHT+IEozem+eUnU6sgbUstKlQYDYbSKvESOnyAQcUu9blnCio+iaety5OjWfIUqBpm3ZVGtgCNfFos+de7BMPaTetA=
-X-Received: by 2002:a50:d74b:0:b0:574:eb80:3308 with SMTP id
- 4fb4d7f45d1cf-57832a0e7d1mr1023641a12.9.1716377737240; Wed, 22 May 2024
- 04:35:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s9kI2-0006Q9-8u
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 07:37:50 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s9kHz-0003o5-7H
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 07:37:50 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5A00B68FA6;
+ Wed, 22 May 2024 14:38:01 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9258CD4B32;
+ Wed, 22 May 2024 14:37:36 +0300 (MSK)
+Message-ID: <9d06883a-8dab-4142-a29e-217df353ef81@tls.msk.ru>
+Date: Wed, 22 May 2024 14:37:36 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] qemu-keymap: Free xkb allocations
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-devel@nongnu.org
 References: <20240522-xkb-v3-0-c429de860fa1@daynix.com>
  <20240522-xkb-v3-1-c429de860fa1@daynix.com>
-In-Reply-To: <20240522-xkb-v3-1-c429de860fa1@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 22 May 2024 12:35:23 +0100
-Message-ID: <CAFEAcA_Sm=j_Q-gP=gaAKpmaMwA1-rO+JLAijzzuuhQOEFyfXA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] qemu-keymap: Free xkb allocations
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, 
- Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <CAFEAcA_Sm=j_Q-gP=gaAKpmaMwA1-rO+JLAijzzuuhQOEFyfXA@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CAFEAcA_Sm=j_Q-gP=gaAKpmaMwA1-rO+JLAijzzuuhQOEFyfXA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,34 +95,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 May 2024 at 11:49, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> This fixes LeakSanitizer complaints with xkbcommon 1.6.0.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  qemu-keymap.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/qemu-keymap.c b/qemu-keymap.c
-> index 8c80f7a4ed65..7a9f38cf9863 100644
-> --- a/qemu-keymap.c
-> +++ b/qemu-keymap.c
-> @@ -237,6 +237,9 @@ int main(int argc, char *argv[])
->      xkb_state_unref(state);
->      state = NULL;
->
-> +    xkb_keymap_unref(map);
-> +    xkb_context_unref(ctx);
-> +
->      /* add quirks */
->      fprintf(outfile,
->              "\n"
+22.05.2024 14:35, Peter Maydell wrote:
+...
+> This is surely a sanitizer bug. We're unconditionally about
+> to exit() the program here, where everything is freed, so nothing
+> is leaked.
 
-This is surely a sanitizer bug. We're unconditionally about
-to exit() the program here, where everything is freed, so nothing
-is leaked.
+https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg00658.html fwiw.
 
-thanks
--- PMM
+/mjt
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
