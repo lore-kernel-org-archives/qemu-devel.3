@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78779C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726E2C25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9igZ-0003Km-PZ; Wed, 22 May 2024 05:55:03 -0400
+	id 1s9igY-0003JF-5K; Wed, 22 May 2024 05:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igY-0003JY-Ok
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igW-0003I2-Ln
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igX-0001MC-57
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igV-0001Lu-3a
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371700;
+ s=mimecast20190719; t=1716371698;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3RLQ8cLxAbacMJh81IpGsppsMBbfX1IyWcmt2O0Rxtw=;
- b=ec/IAYxX73H418E36jybguSxp810OC3mIs+GAwqZ9u9oF6NIwp5YbCkwevvp4Qq4Ue/Tya
- zIUWKkuVaPlr0l5g4w40dGgMq8CKFDnlLkMYd03qb+B++8ohnJ9w50DJX/kHtxutii6vT5
- H0y9vFM7qJwvPBQ1x0y6D05NzWv4pmI=
+ bh=yk48fTK5ShS0KxYI3y5riI0T9zcDblHOiC8pDta+dQE=;
+ b=cIJza6I+UH+8jClMDHZts0RX6PfOxKbBdEtEgoSp1UMD9Na5KG5Sz65UTIMSWYERnvG24J
+ ALS0qfF3ZrERRHV81t24A8pMfKAh+SJPwYUG2LmVD+KKk80YHcsxa0jPv2sVdpARRLMlFv
+ vPYHFACNuD1dxKJWrBv7EACvAA7EgHM=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-O1hqmBF9NN210ggnG7Lpfg-1; Wed,
- 22 May 2024 05:54:56 -0400
-X-MC-Unique: O1hqmBF9NN210ggnG7Lpfg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-DtDUsr4UOrqJRzypIKYYXg-1; Wed,
+ 22 May 2024 05:54:55 -0400
+X-MC-Unique: DtDUsr4UOrqJRzypIKYYXg-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5A60A380008F;
- Wed, 22 May 2024 09:54:56 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DCD467414;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A7AAB1C29EA5;
  Wed, 22 May 2024 09:54:54 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.133])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 196A028E2;
+ Wed, 22 May 2024 09:54:52 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 06/47] vfio: Reverse test on vfio_get_xlat_addr()
-Date: Wed, 22 May 2024 11:54:01 +0200
-Message-ID: <20240522095442.195243-7-clg@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: [PULL 05/47] vfio/migration: Add Error** argument to
+ .vfio_save_config() handler
+Date: Wed, 22 May 2024 11:54:00 +0200
+Message-ID: <20240522095442.195243-6-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -81,49 +83,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It will simplify the changes coming after.
+Use vmstate_save_state_with_err() to improve error reporting in the
+callers and store a reported error under the migration stream. Add
+documentation while at it.
 
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/common.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ include/hw/vfio/vfio-common.h | 25 ++++++++++++++++++++++++-
+ hw/vfio/migration.c           | 25 ++++++++++++++++++-------
+ hw/vfio/pci.c                 |  5 +++--
+ 3 files changed, 45 insertions(+), 10 deletions(-)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 2c97de6c730d963d961bf81c0831326c0e25afa7..c7f274fb5c851e4c44498552891265018d2c5313 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1224,16 +1224,20 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index d66e27db02a4db8329204f88d02a204eedf1caa1..3ff633ad3b395e953a55683f5f0308bca50af3dd 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -133,7 +133,30 @@ struct VFIODeviceOps {
+     int (*vfio_hot_reset_multi)(VFIODevice *vdev);
+     void (*vfio_eoi)(VFIODevice *vdev);
+     Object *(*vfio_get_object)(VFIODevice *vdev);
+-    void (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f);
++
++    /**
++     * @vfio_save_config
++     *
++     * Save device config state
++     *
++     * @vdev: #VFIODevice for which to save the config
++     * @f: #QEMUFile where to send the data
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Returns zero to indicate success and negative for error
++     */
++    int (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f, Error **errp);
++
++    /**
++     * @vfio_load_config
++     *
++     * Load device config state
++     *
++     * @vdev: #VFIODevice for which to load the config
++     * @f: #QEMUFile where to get the data
++     *
++     * Returns zero to indicate success and negative for error
++     */
+     int (*vfio_load_config)(VFIODevice *vdev, QEMUFile *f);
+ };
+ 
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 43fed0dbdbe3415ae2dd68fbe45b302b85a80fa4..5d91364f3bbc34060d84b4b4b1823eadbc7b12bf 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -193,21 +193,30 @@ static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
+     return ret;
+ }
+ 
+-static int vfio_save_device_config_state(QEMUFile *f, void *opaque)
++static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
++                                         Error **errp)
+ {
+     VFIODevice *vbasedev = opaque;
++    int ret;
+ 
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_CONFIG_STATE);
+ 
+     if (vbasedev->ops && vbasedev->ops->vfio_save_config) {
+-        vbasedev->ops->vfio_save_config(vbasedev, f);
++        ret = vbasedev->ops->vfio_save_config(vbasedev, f, errp);
++        if (ret) {
++            return ret;
++        }
      }
  
-     rcu_read_lock();
--    if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
--        ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
--                                    translated_addr);
--        if (ret) {
--            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
--                         "0x%"HWADDR_PRIx") = %d (%s)",
--                         bcontainer, iova, iotlb->addr_mask + 1, ret,
--                         strerror(-ret));
--        }
-+    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
-+        goto out_unlock;
-     }
-+
-+    ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-+                                translated_addr);
-+    if (ret) {
-+        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
-+                     "0x%"HWADDR_PRIx") = %d (%s)",
-+                     bcontainer, iova, iotlb->addr_mask + 1, ret,
-+                     strerror(-ret));
+     qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+ 
+     trace_vfio_save_device_config_state(vbasedev->name);
+ 
+-    return qemu_file_get_error(f);
++    ret = qemu_file_get_error(f);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret, "Failed to save state");
 +    }
-+
-+out_unlock:
-     rcu_read_unlock();
++    return ret;
+ }
  
- out:
+ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
+@@ -592,13 +601,15 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+ static void vfio_save_state(QEMUFile *f, void *opaque)
+ {
+     VFIODevice *vbasedev = opaque;
++    Error *local_err = NULL;
+     int ret;
+ 
+-    ret = vfio_save_device_config_state(f, opaque);
++    ret = vfio_save_device_config_state(f, opaque, &local_err);
+     if (ret) {
+-        error_report("%s: Failed to save device config space",
+-                     vbasedev->name);
+-        qemu_file_set_error(f, ret);
++        error_prepend(&local_err,
++                      "vfio: Failed to save device config space of %s - ",
++                      vbasedev->name);
++        qemu_file_set_error_obj(f, ret, local_err);
+     }
+ }
+ 
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 64780d1b793345c8e8996fe6b7987059ce831c11..fc6e54e871508bb0e2a3ac9079a195c086531f21 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2586,11 +2586,12 @@ static const VMStateDescription vmstate_vfio_pci_config = {
+     }
+ };
+ 
+-static void vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f)
++static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
+ {
+     VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
+ 
+-    vmstate_save_state(f, &vmstate_vfio_pci_config, vdev, NULL);
++    return vmstate_save_state_with_err(f, &vmstate_vfio_pci_config, vdev, NULL,
++                                       errp);
+ }
+ 
+ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
 -- 
 2.45.1
 
