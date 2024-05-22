@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B57FC25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 11:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE38EC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 11:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9k7w-00024u-8Q; Wed, 22 May 2024 07:27:24 -0400
+	id 1s9kG2-0005C6-6i; Wed, 22 May 2024 07:35:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s9k7r-00022t-Nz
- for qemu-devel@nongnu.org; Wed, 22 May 2024 07:27:20 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s9kFx-0005BM-Ob
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 07:35:42 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s9k7o-0001YQ-94
- for qemu-devel@nongnu.org; Wed, 22 May 2024 07:27:17 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1ecd9a81966so5580255ad.0
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 04:27:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s9kFw-0003Tj-3b
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 07:35:41 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-572af0b12b8so9797366a12.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 04:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716377233; x=1716982033; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bCiwcr3BC98IUvU80cUNNmD1mZSliUq/337Wrtxnoqs=;
- b=O/9ns5vlCHuzGETOK1ybP/YVZrKnz+xYutx8+41pbs0UICyjJk2+Q1Vz/+cyRXWkLG
- /+j7LkvOB2bDe8REurPM4PLB3/b2f1uDrgyROpraTJpYHRIR7X9f+Odeq4LpQ/Xoh0eq
- /eOu7udp/ZSK6mSvTZ2+O9s2G6j4vR5GPMhyAk3YW/x3F9MKUke+uO5On2CT75Mjgd9n
- f/XGbu9VXtnR5A4iECGcKkCCsRYkHj2qtseCYkoxZ38cidssVuJXQyzT36QggCtIqHgP
- xtnimPCUjQN16zJG/1dQZIMEjqqNtZoSpJxnr43fI4T1COech8aoWlpl4idzYsvPVTPg
- ZlcA==
+ d=linaro.org; s=google; t=1716377738; x=1716982538; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Oj0hYS3BTRER1PX4gT/3sjvwrV41mkExy8kKD+nrBEI=;
+ b=IH/Xc/8c4oLp3kkdQZ5vzcJNXSVde6/0LxlBBdrhQabUvcW53jtjvndN6fxd7y7Ur8
+ zmdQpP4wV9GklHAla2j+pLCETA5gq4J07gVpNqVW48A8GIBLGEm1zQgjxIki+quUwO2g
+ MUYzyxojBBi5sB0zO9kf95MvxIbwscHd+JT6qVueHJLefr1kVgaOCoIF97KuRXj8cAS+
+ Dich/B1S8txhzvobqZtTSzvsY7MsQ6yZW29N/RbEDyBvY1bpjM/UU7N+SsLRFOEavdxp
+ yYLExwLULgrTYtlXAferecBceFJsPakaEGWzTs7kYu36LBYUCc15LVSF82hMqUKkn6Dh
+ qTFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716377233; x=1716982033;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bCiwcr3BC98IUvU80cUNNmD1mZSliUq/337Wrtxnoqs=;
- b=a7K+fHJMKsi8ankRivgKqfCVw6dfPCyiayQwWljNptiCp+EjZXvfq5txn6AjXVQdAI
- RNGy8k5DeVCJoVCxEv4DzCQNLdwWLcXW6frsuHKzcvN/qviB9bV3HRxdU3uWMMwMcJwe
- 5PuZpP1pg0poQh2t8/K95TD5l/Z3Xd2meNaXOe33MF2/Xr6JbGLRXhl7s4rm2qEZxN7i
- 5PVLWsQYBtYosmQt2RUjSAqZpWul/2VP+vowMaRYRCb89fRPIIICSJjXKVxRCVabWBuG
- G/8iQwZcoXrxxG7GQ1MYk+hICwjjYCym2YQyTFpv4Uqz2iqdl1p6/J6swhE7Lhn5CXIN
- XFUg==
+ d=1e100.net; s=20230601; t=1716377738; x=1716982538;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Oj0hYS3BTRER1PX4gT/3sjvwrV41mkExy8kKD+nrBEI=;
+ b=hjDh2WUId/EOVeX1UXhzFM5KiWiT+H7fI3mphtC888xV6VRbgNB1819wA1zJZkRQ+j
+ hPG56YTfLakyJZZGnG37spCDbEvZbshFnSV77JFPB9ybKY0HnBf3wLotbi1x/SrZmTG3
+ 4vhBpZWTsG4JiCPlJbh3DyDL0HYa2lm8HdiKtSFQxGUGDa1nAxUbDrxZfBPR6idllFpI
+ Ss+2txTuWsuHlYvgu3Y9TOkiNkou+xJ7yHoHpMHh1xc3mZZjBih+gEuiJz3qZ26dFL8g
+ HFtYc/g553GSAVdyfF0jlWCr9wMPU6btsVq3x2m44ZKdX1t4wg4DMMrUNepJxHF+4qdH
+ 57+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgIaH3UabcOmZMS9gbBXUCQLGPL9+m46X3ECl/6vZxGEvZRXdERWq+mE21yKhLaLKReglZDUzYeKmpEeXQAwSolPSpygI=
-X-Gm-Message-State: AOJu0YzAKqxvCpqFQmtt8qaQrhVrB9PoZzfUDGYtK7AhPfK/TEjyCJut
- jFtDC7Lb40BNjGPYGRAgtuTorqN2zKDiMHaz1zm7qpQQqpA6kepVGrnU5oxYUis=
-X-Google-Smtp-Source: AGHT+IGR9nMmrTsT1ueVNGHvIQnLIMIxe68jzyEEPySyU0xZOIqJbv4SKpw/lBTy9p3w39k3WXH1sw==
-X-Received: by 2002:a17:902:d484:b0:1f3:2451:8de8 with SMTP id
- d9443c01a7336-1f32451a471mr20793915ad.7.1716377233417; 
- Wed, 22 May 2024 04:27:13 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bdcd:fb00:6501:2693:db52:c621?
- ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f32219b224sm10630335ad.294.2024.05.22.04.27.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 04:27:12 -0700 (PDT)
-Message-ID: <c74c6bb2-d7fd-4f11-9abe-158c1b48f7e2@ventanamicro.com>
-Date: Wed, 22 May 2024 08:27:08 -0300
+ AJvYcCV48LaQY24TwqASqZp6ex1Sa9MElLfimYduRhtUhel7Yi4Py5s/q/U4Q1j0Wg61uwuJPjez1ofd5VN/44Kmy0Vkkcboe6Q=
+X-Gm-Message-State: AOJu0YwTLWvGhXUshc3lc/CPotEUkL6weTJ67IbegV7NrrjidIcI16fd
+ Kl1834R5qGYSN3/04iEFsSF3zpUDBRPL1qb2HlhAFkCR15nQon+o03B8mb74K0fxVcfPMIKrH7P
+ 0vsbNL8lII56Te7LqPhDMphRNzHFG04jyqz7vNg==
+X-Google-Smtp-Source: AGHT+IEozem+eUnU6sgbUstKlQYDYbSKvESOnyAQcUu9blnCio+iaety5OjWfIUqBpm3ZVGtgCNfFos+de7BMPaTetA=
+X-Received: by 2002:a50:d74b:0:b0:574:eb80:3308 with SMTP id
+ 4fb4d7f45d1cf-57832a0e7d1mr1023641a12.9.1716377737240; Wed, 22 May 2024
+ 04:35:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] target/riscv: Move Guest irqs out of the core
- local irqs range.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
+References: <20240522-xkb-v3-0-c429de860fa1@daynix.com>
+ <20240522-xkb-v3-1-c429de860fa1@daynix.com>
+In-Reply-To: <20240522-xkb-v3-1-c429de860fa1@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 22 May 2024 12:35:23 +0100
+Message-ID: <CAFEAcA_Sm=j_Q-gP=gaAKpmaMwA1-rO+JLAijzzuuhQOEFyfXA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] qemu-keymap: Free xkb allocations
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com
-References: <20240520125157.311503-1-rkanwal@rivosinc.com>
- <20240520125157.311503-3-rkanwal@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240520125157.311503-3-rkanwal@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,64 +101,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/20/24 09:51, Rajnesh Kanwal wrote:
-> Qemu maps IRQs 0:15 for core interrupts and 16 onward for
-> guest interrupts which are later translated to hgiep in
-> `riscv_cpu_set_irq()` function.
-> 
-> With virtual IRQ support added, software now can fully
-> use the whole local interrupt range without any actual
-> hardware attached.
-> 
-> This change moves the guest interrupt range after the
-> core local interrupt range to avoid clash.
-> 
-> Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
-> Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
-> 
-> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+On Wed, 22 May 2024 at 11:49, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> This fixes LeakSanitizer complaints with xkbcommon 1.6.0.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
+>  qemu-keymap.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/qemu-keymap.c b/qemu-keymap.c
+> index 8c80f7a4ed65..7a9f38cf9863 100644
+> --- a/qemu-keymap.c
+> +++ b/qemu-keymap.c
+> @@ -237,6 +237,9 @@ int main(int argc, char *argv[])
+>      xkb_state_unref(state);
+>      state = NULL;
+>
+> +    xkb_keymap_unref(map);
+> +    xkb_context_unref(ctx);
+> +
+>      /* add quirks */
+>      fprintf(outfile,
+>              "\n"
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+This is surely a sanitizer bug. We're unconditionally about
+to exit() the program here, where everything is freed, so nothing
+is leaked.
 
->   target/riscv/cpu_bits.h | 3 ++-
->   target/riscv/csr.c      | 9 ++++++++-
->   2 files changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 74318a925c..a470fda9be 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -695,7 +695,8 @@ typedef enum RISCVException {
->   #define IRQ_M_EXT                          11
->   #define IRQ_S_GEXT                         12
->   #define IRQ_PMU_OVF                        13
-> -#define IRQ_LOCAL_MAX                      16
-> +#define IRQ_LOCAL_MAX                      64
-> +/* -1 is due to bit zero of hgeip and hgeie being ROZ. */
->   #define IRQ_LOCAL_GUEST_MAX                (TARGET_LONG_BITS - 1)
->   
->   /* mip masks */
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 152796ebc0..464e0e57a3 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1148,7 +1148,14 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
->   
->   #define VSTOPI_NUM_SRCS 5
->   
-> -#define LOCAL_INTERRUPTS (~0x1FFF)
-> +/*
-> + * All core local interrupts except the fixed ones 0:12. This macro is for
-> + * virtual interrupts logic so please don't change this to avoid messing up
-> + * the whole support, For reference see AIA spec: `5.3 Interrupt filtering and
-> + * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupts for
-> + * VS level`.
-> + */
-> +#define LOCAL_INTERRUPTS   (~0x1FFFULL)
->   
->   static const uint64_t delegable_ints =
->       S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
+thanks
+-- PMM
 
