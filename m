@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DDBC25B74
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 00:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32C33C25B74
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 00:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ZRK-0005kv-31; Tue, 21 May 2024 20:02:42 -0400
+	id 1s9ZS2-0005xs-Bf; Tue, 21 May 2024 20:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s9ZRI-0005k4-GX
- for qemu-devel@nongnu.org; Tue, 21 May 2024 20:02:40 -0400
+ id 1s9ZS0-0005xK-Ti
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 20:03:24 -0400
 Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s9ZRG-0005jv-LL
- for qemu-devel@nongnu.org; Tue, 21 May 2024 20:02:40 -0400
+ id 1s9ZRz-0005tU-G4
+ for qemu-devel@nongnu.org; Tue, 21 May 2024 20:03:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1716336155;
- bh=QQ8QeBvXKuTmupvqEAW1VpzvAE6BdX8t+qc639EsOiE=;
+ s=mail; t=1716336202;
+ bh=f+PDIf90SVbDhmmXba5eiNR/DCNMYe5eY+taps2n0Vk=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=VZXkD4CRw2jq2g7DKf4uvarm1+JTaBH/TzE5x6WaG9r10IFH4r+dglhfLzpC0qEde
- /wHevRtd4HNokMbgqwOAos/q+gB0i69pjLUx9NB+Vcrf8dWFOV7dmU+vSswshEzsax
- 0xz5mbxB349Qa3gmWHfC21KMuC21zaml4GBPowpSoybr161TAzaYhv1ChB/hJJzb7G
- 6evpvQyC6j63uf7ZADJ2QSmHQko4WR43D0xjAlhL41Pcb6AnWwJTFWPSON50u9Cgth
- SaGvIhn1aVtjJe15wJsUJGeBQB2a/uGLtsMGlnXViNLHm5eTZlKY9MszkYJaePGzRX
- +ZZKy5hdx1ZDg==
+ b=mP4K5q+R43/i48XrG/7n93/Mli9G298LpQfKdmOzTgNRR8OMxbdAwpB48iqSG69UE
+ 1veDqfF8852ICciMtaiGHkbtkijhKlNeOUVzSXazZ97qQki+V/4EhfHL5jzcAoU9yT
+ O5hOKXaWi8T8fnjI+oIbwycS0osb7Yo3FH3SkssE2zGEGDqsTfn/QjBu5F9SYH3RVj
+ VTqy8WEFkIgaxgZUbcgkqRhUmwX987qNuZXKD6673f7rFnyDaXgePRi3l8QpYt3Wcu
+ SipseFEVlZ/Zng3pj0W8AEkgTEW48sL0fYdcXs9+kjZJbsYpwLHBzMhzD5E1cKZuF8
+ HMAI4aPplxi2A==
 Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 281EB378214D;
- Wed, 22 May 2024 00:02:33 +0000 (UTC)
-Message-ID: <f7b1d066-4636-49b0-b921-ea01b20b2c00@collabora.com>
-Date: Wed, 22 May 2024 03:02:30 +0300
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 2DC72378214D;
+ Wed, 22 May 2024 00:03:20 +0000 (UTC)
+Message-ID: <6d63baa2-75e7-4588-9efb-4f90597ec850@collabora.com>
+Date: Wed, 22 May 2024 03:03:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 00/13] Support blob memory and venus on qemu
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+Subject: Re: [PATCH v12 10/13] virtio-gpu: Move fence_poll timer to VirtIOGPUGL
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
@@ -51,10 +50,12 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  Antonio Caggiano <quic_acaggian@quicinc.com>,
  "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
  Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, ernunes@redhat.com,
- Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Roger_Pau_Monn=C3=A9?=
- <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
  Stefano Stabellini <stefano.stabellini@amd.com>,
  =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
@@ -62,12 +63,13 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
- <87o78zi9wb.fsf@draig.linaro.org> <87jzjni569.fsf@draig.linaro.org>
+ <20240519212712.2605419-11-dmitry.osipenko@collabora.com>
+ <4390f6bc-84d4-44be-8487-0591cb4ea348@daynix.com>
 Content-Language: en-US
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <87jzjni569.fsf@draig.linaro.org>
+In-Reply-To: <4390f6bc-84d4-44be-8487-0591cb4ea348@daynix.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
@@ -91,59 +93,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/24 17:57, Alex Bennée wrote:
-> Alex Bennée <alex.bennee@linaro.org> writes:
+On 5/20/24 06:51, Akihiko Odaki wrote:
+> On 2024/05/20 6:27, Dmitry Osipenko wrote:
+>> Move fence_poll timer to VirtIOGPUGL for consistency with cmdq_resume_bh
+>> that are used only by GL device.
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > 
->> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->>
->>> Hello,
->>>
->>> This series enables Vulkan Venus context support on virtio-gpu.
->>>
->>> All virglrender and almost all Linux kernel prerequisite changes
->>> needed by Venus are already in upstream. For kernel there is a pending
->>> KVM patchset that fixes mapping of compound pages needed for DRM drivers
->>> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
->>> from Qemu.
->>>
->>> [1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
->>>
->>> You'll need to use recent Mesa version containing patch that removes
->>> dependency on cross-device feature from Venus that isn't supported by
->>> Qemu [2].
->>>
->>> [2] https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e26987befae78b6ccbb7ae242b
->>>
->>> Example Qemu cmdline that enables Venus:
->>>
->>>   qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,venus=true \
->>>       -machine q35,accel=kvm,memory-backend=mem1 \
->>>       -object memory-backend-memfd,id=mem1,size=8G -m 8G
->>
->> What is the correct device for non-x86 guests? We have virtio-gpu-gl-pci
->> but when doing that I get:
->>
->>   -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true
->>   qemu-system-aarch64: -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true: opengl is not available
->>
->> According to 37f86af087 (virtio-gpu: move virgl realize + properties):
->>
->>   Drop the virgl property, the virtio-gpu-gl-device has virgl enabled no
->>   matter what.  Just use virtio-gpu-device instead if you don't want
->>   enable virgl and opengl.  This simplifies the logic and reduces the test
->>   matrix.
->>
->> but that's not a good solution because that needs virtio-mmio and there
->> are reasons to have a PCI device (for one thing no ambiguity about
->> discovery).
+> Thanks for refacotoring.
 > 
-> Oops my mistake forgetting:
-> 
->   --display gtk,gl=on
-> 
-> Although I do see a lot of eglMakeContext failures.
+> Please move this before "[PATCH v12 01/13] virtio-gpu: Unrealize GL
+> device" so that you don't have to rewrite code introduced by that patch.
 
-Please post the full Qemu cmdline you're using
+I'll improve it all in v13, thank you for the review
 
 -- 
 Best regards,
