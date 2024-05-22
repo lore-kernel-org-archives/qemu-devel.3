@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC05C25B7E
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4E5C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9igz-0003Vu-1H; Wed, 22 May 2024 05:55:30 -0400
+	id 1s9igW-0003HG-5A; Wed, 22 May 2024 05:55:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igo-0003Ru-JV
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igV-0003Gw-0H
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:54:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igm-0001QY-FZ
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igR-0001L1-Ul
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:54:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371715;
+ s=mimecast20190719; t=1716371695;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0VQ9NVIxSHCsEaByjV2CBIUySE2+PXzk48re8ExyFxo=;
- b=dkNjqezOrvKS6ljF359JAChoNQmvspXjqhIgUIFnYBtYWP8NkcxvNtxlbwUD205hsOedVU
- PlTM05hsnuzJvmM6/2epKl/BWWAfYBL/VQz2iihqevPSGui3mCVkC9NSV+htBGe4/uVvTG
- hkFksD60IoEPnoPbcHpr+lUK+LzR8zM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-7kB82LrMOQO0fKBWph7wUA-1; Wed,
- 22 May 2024 05:55:12 -0400
-X-MC-Unique: 7kB82LrMOQO0fKBWph7wUA-1
+ bh=+wkuVxm/m7QZkvBeQpTS3DAa0U02Ht3x47UzpcAta9k=;
+ b=ZvivNpqXHfqG4p7L4vHFu+8G1nqKBM6L50EzpCyMtWncrOLmpECWH4C5nm8MUHFwJV54al
+ Ly7DxQtC4ZMcdyWVx9TF8P7QAWT9tcaN8SuvyJ7mfOkneyt74FtqRXo5mdJVelWqMXuxPj
+ bAIbby+IwM4KbH/+vgUd9PE2apWGjY0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-ooR55a-mO_q16izqU-nXCA-1; Wed, 22 May 2024 05:54:53 -0400
+X-MC-Unique: ooR55a-mO_q16izqU-nXCA-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CAC2B3C025C2;
- Wed, 22 May 2024 09:55:11 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D76D680118E;
+ Wed, 22 May 2024 09:54:52 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A942E28E2;
- Wed, 22 May 2024 09:55:10 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B61C17414;
+ Wed, 22 May 2024 09:54:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 15/47] qapi/vfio: Add VFIO migration QAPI event
-Date: Wed, 22 May 2024 11:54:10 +0200
-Message-ID: <20240522095442.195243-16-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+Subject: [PULL 04/47] vfio/migration: Add an Error** argument to
+ vfio_migration_set_state()
+Date: Wed, 22 May 2024 11:53:59 +0200
+Message-ID: <20240522095442.195243-5-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -81,138 +82,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Avihai Horon <avihaih@nvidia.com>
+Add an Error** argument to vfio_migration_set_state() and adjust
+callers, including vfio_save_setup(). The error will be propagated up
+to qemu_savevm_state_setup() where the save_setup() handler is
+executed.
 
-Add a new QAPI event for VFIO migration. This event will be emitted when
-a VFIO device changes its migration state, for example, during migration
-or when stopping/starting the guest.
+Modify vfio_vmstate_change_prepare() and vfio_vmstate_change() to
+store a reported error under the migration stream if a migration is in
+progress.
 
-This event can be used by management applications to get updates on the
-current state of the VFIO device for their own purposes.
-
-Note that this new event is introduced since VFIO devices have a unique
-set of migration states which cannot be described as accurately by other
-existing events such as run state or migration status.
-
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- MAINTAINERS           |  1 +
- qapi/qapi-schema.json |  1 +
- qapi/vfio.json        | 67 +++++++++++++++++++++++++++++++++++++++++++
- qapi/meson.build      |  1 +
- 4 files changed, 70 insertions(+)
- create mode 100644 qapi/vfio.json
+ hw/vfio/migration.c | 81 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 29 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1b79767d61960189eaa9d3d736e77722b8d5d9f0..448dc951c50913e7111d3bb6833a00acea7f50f1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2164,6 +2164,7 @@ F: hw/vfio/*
- F: include/hw/vfio/
- F: docs/igd-assign.txt
- F: docs/devel/migration/vfio.rst
-+F: qapi/vfio.json
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index bf2fd0759ba6e4fb103cc5c1a43edb180a3d0de4..43fed0dbdbe3415ae2dd68fbe45b302b85a80fa4 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -82,7 +82,8 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
  
- vfio-ccw
- M: Eric Farman <farman@linux.ibm.com>
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-index 5e33da7228f22abd20fa49f32c95e6a381ababd1..b1581988e4eba99cbe9ca53501918dd2d9bcfe44 100644
---- a/qapi/qapi-schema.json
-+++ b/qapi/qapi-schema.json
-@@ -78,5 +78,6 @@
- { 'include': 'pci.json' }
- { 'include': 'stats.json' }
- { 'include': 'virtio.json' }
-+{ 'include': 'vfio.json' }
- { 'include': 'cryptodev.json' }
- { 'include': 'cxl.json' }
-diff --git a/qapi/vfio.json b/qapi/vfio.json
-new file mode 100644
-index 0000000000000000000000000000000000000000..a0e5013188a4d16d842c8463d6e4c33742e06a97
---- /dev/null
-+++ b/qapi/vfio.json
-@@ -0,0 +1,67 @@
-+# -*- Mode: Python -*-
-+# vim: filetype=python
-+#
-+
-+##
-+# = VFIO devices
-+##
-+
-+##
-+# @VfioMigrationState:
-+#
-+# An enumeration of the VFIO device migration states.
-+#
-+# @stop: The device is stopped.
-+#
-+# @running: The device is running.
-+#
-+# @stop-copy: The device is stopped and its internal state is available
-+#     for reading.
-+#
-+# @resuming: The device is stopped and its internal state is available
-+#     for writing.
-+#
-+# @running-p2p: The device is running in the P2P quiescent state.
-+#
-+# @pre-copy: The device is running, tracking its internal state and its
-+#     internal state is available for reading.
-+#
-+# @pre-copy-p2p: The device is running in the P2P quiescent state,
-+#     tracking its internal state and its internal state is available
-+#     for reading.
-+#
-+# Since: 9.1
-+##
-+{ 'enum': 'VfioMigrationState',
-+  'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
-+            'pre-copy', 'pre-copy-p2p' ],
-+  'prefix': 'QAPI_VFIO_MIGRATION_STATE' }
-+
-+##
-+# @VFIO_MIGRATION:
-+#
-+# This event is emitted when a VFIO device migration state is changed.
-+#
-+# @device-id: The device's id, if it has one.
-+#
-+# @qom-path: The device's QOM path.
-+#
-+# @device-state: The new changed device migration state.
-+#
-+# Since: 9.1
-+#
-+# Example:
-+#
-+#     <- { "timestamp": { "seconds": 1713771323, "microseconds": 212268 },
-+#          "event": "VFIO_MIGRATION",
-+#          "data": {
-+#              "device-id": "vfio_dev1",
-+#              "qom-path": "/machine/peripheral/vfio_dev1",
-+#              "device-state": "stop" } }
-+##
-+{ 'event': 'VFIO_MIGRATION',
-+  'data': {
-+      'device-id': 'str',
-+      'qom-path': 'str',
-+      'device-state': 'VfioMigrationState'
-+  } }
-diff --git a/qapi/meson.build b/qapi/meson.build
-index c92af6e063a1b13ec3cce18e0572a859779b2ce4..e7bc54e5d047090aa2cdb823ef9ff4b892adb614 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -52,6 +52,7 @@ qapi_all_modules = [
-   'stats',
-   'trace',
-   'transaction',
-+  'vfio',
-   'virtio',
-   'yank',
- ]
+ static int vfio_migration_set_state(VFIODevice *vbasedev,
+                                     enum vfio_device_mig_state new_state,
+-                                    enum vfio_device_mig_state recover_state)
++                                    enum vfio_device_mig_state recover_state,
++                                    Error **errp)
+ {
+     VFIOMigration *migration = vbasedev->migration;
+     uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
+@@ -92,6 +93,9 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+     struct vfio_device_feature_mig_state *mig_state =
+         (struct vfio_device_feature_mig_state *)feature->data;
+     int ret;
++    g_autofree char *error_prefix =
++        g_strdup_printf("%s: Failed setting device state to %s.",
++                        vbasedev->name, mig_state_to_str(new_state));
+ 
+     feature->argsz = sizeof(buf);
+     feature->flags =
+@@ -102,22 +106,24 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+         ret = -errno;
+ 
+         if (recover_state == VFIO_DEVICE_STATE_ERROR) {
+-            error_report("%s: Failed setting device state to %s, err: %s. "
+-                         "Recover state is ERROR. Resetting device",
+-                         vbasedev->name, mig_state_to_str(new_state),
+-                         strerror(errno));
++            error_setg_errno(errp, errno,
++                             "%s Recover state is ERROR. Resetting device",
++                             error_prefix);
+ 
+             goto reset_device;
+         }
+ 
+-        error_report(
+-            "%s: Failed setting device state to %s, err: %s. Setting device in recover state %s",
+-                     vbasedev->name, mig_state_to_str(new_state),
+-                     strerror(errno), mig_state_to_str(recover_state));
++        error_setg_errno(errp, errno,
++                         "%s Setting device in recover state %s",
++                         error_prefix, mig_state_to_str(recover_state));
+ 
+         mig_state->device_state = recover_state;
+         if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+             ret = -errno;
++            /*
++             * If setting the device in recover state fails, report
++             * the error here and propagate the first error.
++             */
+             error_report(
+                 "%s: Failed setting device in recover state, err: %s. Resetting device",
+                          vbasedev->name, strerror(errno));
+@@ -137,7 +143,7 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+              * This can happen if the device is asynchronously reset and
+              * terminates a data transfer.
+              */
+-            error_report("%s: data_fd out of sync", vbasedev->name);
++            error_setg(errp, "%s: data_fd out of sync", vbasedev->name);
+             close(mig_state->data_fd);
+ 
+             return -EBADF;
+@@ -168,10 +174,11 @@ reset_device:
+  */
+ static int
+ vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
+-                                  enum vfio_device_mig_state new_state)
++                                  enum vfio_device_mig_state new_state,
++                                  Error **errp)
+ {
+     return vfio_migration_set_state(vbasedev, new_state,
+-                                    VFIO_DEVICE_STATE_ERROR);
++                                    VFIO_DEVICE_STATE_ERROR, errp);
+ }
+ 
+ static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
+@@ -399,10 +406,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+         switch (migration->device_state) {
+         case VFIO_DEVICE_STATE_RUNNING:
+             ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
+-                                           VFIO_DEVICE_STATE_RUNNING);
++                                           VFIO_DEVICE_STATE_RUNNING, errp);
+             if (ret) {
+-                error_setg(errp, "%s: Failed to set new PRE_COPY state",
+-                           vbasedev->name);
+                 return ret;
+             }
+ 
+@@ -435,13 +440,20 @@ static void vfio_save_cleanup(void *opaque)
+ {
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
++    Error *local_err = NULL;
++    int ret;
+ 
+     /*
+      * Changing device state from STOP_COPY to STOP can take time. Do it here,
+      * after migration has completed, so it won't increase downtime.
+      */
+     if (migration->device_state == VFIO_DEVICE_STATE_STOP_COPY) {
+-        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
++        ret = vfio_migration_set_state_or_reset(vbasedev,
++                                                VFIO_DEVICE_STATE_STOP,
++                                                &local_err);
++        if (ret) {
++            error_report_err(local_err);
++        }
+     }
+ 
+     g_free(migration->data_buffer);
+@@ -549,11 +561,13 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+     VFIODevice *vbasedev = opaque;
+     ssize_t data_size;
+     int ret;
++    Error *local_err = NULL;
+ 
+     /* We reach here with device state STOP or STOP_COPY only */
+     ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+-                                   VFIO_DEVICE_STATE_STOP);
++                                   VFIO_DEVICE_STATE_STOP, &local_err);
+     if (ret) {
++        error_report_err(local_err);
+         return ret;
+     }
+ 
+@@ -591,14 +605,9 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
+ static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     VFIODevice *vbasedev = opaque;
+-    int ret;
+ 
+-    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
+-                                   vbasedev->migration->device_state);
+-    if (ret) {
+-        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
+-    }
+-    return ret;
++    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
++                                    vbasedev->migration->device_state, errp);
+ }
+ 
+ static int vfio_load_cleanup(void *opaque)
+@@ -714,19 +723,20 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
+     enum vfio_device_mig_state new_state;
++    Error *local_err = NULL;
+     int ret;
+ 
+     new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
+                     VFIO_DEVICE_STATE_PRE_COPY_P2P :
+                     VFIO_DEVICE_STATE_RUNNING_P2P;
+ 
+-    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
++    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+     if (ret) {
+         /*
+          * Migration should be aborted in this case, but vm_state_notify()
+          * currently does not support reporting failures.
+          */
+-        migration_file_set_error(ret, NULL);
++        migration_file_set_error(ret, local_err);
+     }
+ 
+     trace_vfio_vmstate_change_prepare(vbasedev->name, running,
+@@ -738,6 +748,7 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+ {
+     VFIODevice *vbasedev = opaque;
+     enum vfio_device_mig_state new_state;
++    Error *local_err = NULL;
+     int ret;
+ 
+     if (running) {
+@@ -750,13 +761,13 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+                 VFIO_DEVICE_STATE_STOP;
+     }
+ 
+-    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
++    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+     if (ret) {
+         /*
+          * Migration should be aborted in this case, but vm_state_notify()
+          * currently does not support reporting failures.
+          */
+-        migration_file_set_error(ret, NULL);
++        migration_file_set_error(ret, local_err);
+     }
+ 
+     trace_vfio_vmstate_change(vbasedev->name, running, RunState_str(state),
+@@ -769,11 +780,23 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
+     VFIOMigration *migration = container_of(notifier, VFIOMigration,
+                                             migration_state);
+     VFIODevice *vbasedev = migration->vbasedev;
++    Error *local_err = NULL;
++    int ret;
+ 
+     trace_vfio_migration_state_notifier(vbasedev->name, e->type);
+ 
+     if (e->type == MIG_EVENT_PRECOPY_FAILED) {
+-        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
++        /*
++         * MigrationNotifyFunc may not return an error code and an Error
++         * object for MIG_EVENT_PRECOPY_FAILED. Hence, report the error
++         * locally and ignore the errp argument.
++         */
++        ret = vfio_migration_set_state_or_reset(vbasedev,
++                                                VFIO_DEVICE_STATE_RUNNING,
++                                                &local_err);
++        if (ret) {
++            error_report_err(local_err);
++        }
+     }
+     return 0;
+ }
 -- 
 2.45.1
 
