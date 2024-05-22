@@ -4,68 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A370C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100BDC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ihD-0003g7-4H; Wed, 22 May 2024 05:55:43 -0400
+	id 1s9inM-0005UV-4q; Wed, 22 May 2024 06:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ih0-0003XV-SW
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igk-0001Pz-Cf
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371713;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PYGjldkPYHoH5A5sfKwcPOo2ffdx4sbmA1HzAej7FO0=;
- b=U6fzVryKbYvBZtXnyI60YSE9QEDUhFonYR51lfJLpeFcR64VBt3nZUgnxIrQYj7Tt6Ufh3
- 7JJmKL5ufRIQEvism+GazEjpkh+4txNKG38cYXbHv/z3LmR8B3xLQS65bQo77b56VLjsn+
- OvMTW4w83taOuCXxdIiIYfUfpjuUJ3M=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-wMN70ybSPLeA5XI_5yOQkQ-1; Wed, 22 May 2024 05:55:08 -0400
-X-MC-Unique: wMN70ybSPLeA5XI_5yOQkQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 723AE85A58C;
- Wed, 22 May 2024 09:55:08 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 351A528E3;
- Wed, 22 May 2024 09:55:07 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 13/47] vfio/ccw: Make vfio_ccw_register_irq_notifier() return a
- bool
-Date: Wed, 22 May 2024 11:54:08 +0200
-Message-ID: <20240522095442.195243-14-clg@redhat.com>
-In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
-References: <20240522095442.195243-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s9inH-000544-HM
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 06:01:59 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s9inF-00035d-Fb
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 06:01:59 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-571be483ccaso9720073a12.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 03:01:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716372114; x=1716976914; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oegp7+oAJlG8HTHu4rsleQvR6zJkrTgiUoj+staxXc0=;
+ b=xunSh7bRgfqRoI5rmKamtzW8leUSPjFeGAptfg/GQqR8Ey2Vkf4xy9WPD9+J4Kp0ci
+ p1HiTsPgiumKCyWoPfgooIhiOAszvT5CHwbPk33L6FpvONGXRLA4SwTXK6mznVQRGEVo
+ AdJukVFb61Cp+PcNFIN8kH+kzf+rGt32k+52WX8xeopv1MivOIDz4RoIlgFFaSvzdeYu
+ 4XdiYKjaSb+9AAHyWCsIfYYwLLymXnqVC/iKY7U4Yzh+H2p/Oh12+esKusI9kVyjPO/M
+ KBuZVO0IZ6oAdsDBMvpif6x+l1DaKxX4F7yzix7gUzTS+oruWIp+MIEoLv+/0IF6iA8H
+ 2tKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716372114; x=1716976914;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oegp7+oAJlG8HTHu4rsleQvR6zJkrTgiUoj+staxXc0=;
+ b=L36Hx5lHGR/Dam/JgYfVkuPv6AHCU75kJGP2XuTTtq3dvY1+tIAyhNMLmoL4cBqjfu
+ RAnqaei8pYgfPvx/ejMxl0hZW8YQXwvMQonMgNFICfbvMZYDi8pCxb+R3cGwEmnemNI6
+ /+8aZAxQhxt+lGYUhW6hRgJYQW8xb8wzxoUIrxzm7GJf59VDtKRWvdlj2HQ6qtj7nmxa
+ JwzULeI6c0Z8H5n+Q87D7vK12SzWzMEwbQ0DEttztSzWj3xB+9cplsMmejP1HJXgzNAq
+ l2szDxvB0SfUdniOZGuhRX5m8JxkwN9BPx/7ZM60SAkXtQ0O0A69zSgKNIsYUsFNw27h
+ beEg==
+X-Gm-Message-State: AOJu0YzlXij+WXY9Mi02xIeIS1I0H3rnOY5z7aR2HJqmW3TEHpCCrI4h
+ 1Ym2EtL8jO5xqDZpao8ZLZZInELVkBRk1imDoWcjm+cIijhMgirWU+G77e1aqWIzwDVuCRUo63M
+ b+5srpqqgzFpc/4Qjw3GppgTePO76R5lCqVwcDXxhsOJ9L/OOGZA=
+X-Google-Smtp-Source: AGHT+IGiz5JeGkM/WdjU+d5p+qGLN40lDvfWIHDsJD7g1YPKhF0b2Ffzlmw2nIK9n/mB+uoXOcKuih4JrHFUeugwVn0=
+X-Received: by 2002:a50:d51c:0:b0:56e:f64:aaf6 with SMTP id
+ 4fb4d7f45d1cf-578329fe0d0mr867285a12.5.1716372114327; Wed, 22 May 2024
+ 03:01:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240506010403.6204-1-richard.henderson@linaro.org>
+ <20240506010403.6204-32-richard.henderson@linaro.org>
+In-Reply-To: <20240506010403.6204-32-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 22 May 2024 11:01:40 +0100
+Message-ID: <CAFEAcA_ASs4_O22dMi4chcZTT+K=3swJfp3KY83JPbsEJoF-RA@mail.gmail.com>
+Subject: Re: [PATCH 31/57] target/arm: Convert SUQADD and USQADD to gvec
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,98 +88,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since vfio_ccw_register_irq_notifier() takes an 'Error **' argument,
-best practices suggest to return a bool. See the qapi/error.h Rules
-section.
+On Mon, 6 May 2024 at 02:08, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/helper.h            |  16 +++++
+>  target/arm/tcg/translate-a64.h |   6 ++
+>  target/arm/tcg/gengvec64.c     | 106 +++++++++++++++++++++++++++++++
+>  target/arm/tcg/translate-a64.c | 113 ++++++++++++++-------------------
+>  target/arm/tcg/vec_helper.c    |  64 +++++++++++++++++++
+>  5 files changed, 241 insertions(+), 64 deletions(-)
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/ccw.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Somewhere in this patch we break the setting of the QC bit
+for SUQADD vector insns. (I was misreading my test insn
+when I made my remark in the other thread, didn't
+notice it was vector not scalar). Here's an isolated C
+test example:
 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 6764388bc47a970329fce2233626ccb8178e0165..1c630f6e9abe93ae0c2b5615d4409669f096c8c9 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -379,7 +379,7 @@ read_err:
-     css_inject_io_interrupt(sch);
- }
- 
--static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-+static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-                                            unsigned int irq,
-                                            Error **errp)
- {
-@@ -405,13 +405,13 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         break;
-     default:
-         error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
--        return;
-+        return false;
-     }
- 
-     if (vdev->num_irqs < irq + 1) {
-         error_setg(errp, "vfio: IRQ %u not available (number of irqs %u)",
-                    irq, vdev->num_irqs);
--        return;
-+        return false;
-     }
- 
-     argsz = sizeof(*irq_info);
-@@ -421,14 +421,14 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-     if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
-               irq_info) < 0 || irq_info->count < 1) {
-         error_setg_errno(errp, errno, "vfio: Error getting irq info");
--        return;
-+        return false;
-     }
- 
-     if (event_notifier_init(notifier, 0)) {
-         error_setg_errno(errp, errno,
-                          "vfio: Unable to init event notifier for irq (%d)",
-                          irq);
--        return;
-+        return false;
-     }
- 
-     fd = event_notifier_get_fd(notifier);
-@@ -439,6 +439,8 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         qemu_set_fd_handler(fd, NULL, NULL, vcdev);
-         event_notifier_cleanup(notifier);
-     }
-+
-+    return true;
- }
- 
- static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
-@@ -602,20 +604,18 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         goto out_region_err;
-     }
- 
--    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err);
--    if (err) {
-+    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err)) {
-         goto out_io_notifier_err;
-     }
- 
-     if (vcdev->crw_region) {
--        vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX, &err);
--        if (err) {
-+        if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX,
-+                                            &err)) {
-             goto out_irq_notifier_err;
-         }
-     }
- 
--    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &err);
--    if (err) {
-+    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &err)) {
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operation.
--- 
-2.45.1
+#include <stdint.h>
+#include <stdio.h>
 
+static void do_op(void *o, const void *a, const void *b, uint64_t *fpsr)
+{
+    asm volatile(
+        "ld1 { v0.16b }, [%1]\n"
+        "ld1 { v1.16b }, [%2]\n"
+        "msr fpsr, xzr\n"
+        "suqadd v0.4h, v1.4h\n"
+        "mrs x5, fpsr\n"
+        "str x5, [%3]\n"
+        "st1 { v0.16b }, [%0]\n"
+        : : "r"(o), "r"(a), "r"(b), "r"(fpsr) : "v0", "v1", "x5", "memory");
+}
+
+int main(void)
+{
+    uint64_t a[] = { 0xc000, 0x0 };
+    uint64_t b[] = { 0x5000, 0x0 };
+    uint64_t c[] = { 0, 0 };
+    uint64_t fpsr = 0;
+
+    printf("a: 0x%lx : %lx\n", a[1], a[0]);
+    printf("b: 0x%lx : %lx\n", b[1], b[0]);
+    do_op(&c, &a, &b, &fpsr);
+
+    printf("result: 0x%lx : %lx\n", c[1], c[0]);
+    printf("fpsr: 0x%lx\n", fpsr);
+    return 0;
+}
+(build with aarch64-linux-gnu-gcc -o suqadd suqadd.c -static
+and run with qemu-aarch64 suqadd)
+
+After this patch we still generate the right result, but we
+start setting the QC bit.
+
+(Did you do much risu testing on this series?)
+
+thanks
+-- PMM
 
