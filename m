@@ -4,77 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C391C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E38BC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9isy-0004US-SW; Wed, 22 May 2024 06:07:52 -0400
+	id 1s9jGq-0008If-0u; Wed, 22 May 2024 06:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s9isw-0004U1-Es
- for qemu-devel@nongnu.org; Wed, 22 May 2024 06:07:50 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s9jGn-0008Hk-Cd
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 06:32:29 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s9ist-00046N-TD
- for qemu-devel@nongnu.org; Wed, 22 May 2024 06:07:50 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-574b3d6c0f3so10857753a12.0
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 03:07:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s9jGl-0000H5-DY
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 06:32:28 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a59cdd185b9so152565566b.1
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 03:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716372466; x=1716977266; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
- :reply-to; bh=QHnr5PA/4G/g2SGYVeid+45uKyi7cgtITKiXvIxUDsc=;
- b=OTLuUOdi8GXwk4ri4I03QGzbul910gTM0801cZaozB7ci7jwVRWZbkT7nGi01C5ZBz
- HGuvAbeGO4Yo48bXVwndgO9wYHMxgO4GoV+zTftH2VLuPra60ZoSh2GanAcr4SgYN2l6
- jrhWVQY5wH1HQE5uDiiBat+0OrZ0ng8V1SH/G8ARgrRkqeLYLi3P6XipWeE7zZztL7en
- c/m40Lg10tHYd1b82fxU9aSLJbX25mm09f8yYBnEHIMr6qvEIJsiZ65NeRlYE63fXE7z
- uTsP+dSvgR5PKuEDbwIABl0idvyC5FihN0MIquszubYeHl1WJcgLtBbDhyG6fWAKg6Ev
- fOCg==
+ d=linaro.org; s=google; t=1716373945; x=1716978745; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=yNwVZxT4PYwaurJSplUO3c9LvWBXjT1168NPOeMsOL8=;
+ b=K40+V7RJIdHaZW81EPcT7Ytsu5mO7ODVDak3Gs+X/408ZTwmYGBeAJ4vNwo/99s0U+
+ 7nzdip82x0lr/ndi17iXzpeQYh4g6q7KS5mxMq2QTZGNpYh0aBsJQcsn9/qheO/iEMIQ
+ tz2C8epx8jnDYJ0YvHuLmv+WnFu6NGxWh9xhBoj76aoZ1OqFQmkPIuyv2V+Oe0uv4aDM
+ Qb8SAg0lG3cdFuEAepikCGs7uyBO0PYlUoSVpRci8l/rhPUNC71WFl9ZshxLSNVWjmwi
+ cIIzco2SU9vwl2xe+TnlrCPUoL7XBW3yfBZv7wpFNNZ9VvMscTnq3gFKH9ic3K7v9rPv
+ vULg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716372466; x=1716977266;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1716373945; x=1716978745;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QHnr5PA/4G/g2SGYVeid+45uKyi7cgtITKiXvIxUDsc=;
- b=oVbG1CyCIsghWpd9gKCfvVKaIrJ3BzBIHTzFgyfUR0ucAUqPY574pFHEcuVKYCDMIH
- wr1tFxSBSZuYPoeXaIAGUrWixMUk83UpdZ47cGg/RdUmqwmUj7T7LadvmJqi//LqJ8Aw
- Xq4mdbbj94c8BJQs/MrJd/xR4E2OX2epa2IiKbaCG3RuvNcnOqdWvVAV/YAz4tzCtHSw
- L6OhKJevrBVLfhasUMC+DqXkbiuN0iXeHLaS79ttPo9AG1LNnvVifGEWQvpMtQRuZIcv
- QyjXKsQ5Mfkzs7spY4VXk7wuCB5cMvmGGT+7Oev97oGF2qzOFtSnZ8yiZCZYoT7vlidg
- 1WQg==
+ bh=yNwVZxT4PYwaurJSplUO3c9LvWBXjT1168NPOeMsOL8=;
+ b=AeeTvNHU3z0miHNIRH0qsn51LW8MjhlxufzeZZTNuxt7MgqxIsEMsH4nWWq4KQhCpH
+ 213z8IjK3/VKk9kcW2m98Efm45G8akCH+cH+YhydwI14EYk3XjY4MfCRNjZd8oLgubIJ
+ bUbYf6YHw0TgCoaLL3qL2L8EcxUvh9gHHXYsRMdPaqU0VIxDzKt8nV399rWRtxqVplpP
+ cLyLHbb6YQsI2g/MTzd3V+R6pt+VCjpqS3oI3yTk2ylun19PB3fGFRdFTbXkJfK2IBzK
+ HiLnJNHHA4Z5mpermU3BJshHKdIYlJq750M+pyvRO6LICNAZ3RZ95Dddnc/0GlgScHut
+ JCow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvTTovSxRpjqiUbD2Jb0qlzYADLR7II7m7RqQacGAxkuDWCLBv6k4xmtljm2sYg2IoWTD8f2vj7YUL2IgXny8MydrBM/g=
-X-Gm-Message-State: AOJu0Yzm2LWvUGkilwFP4fAt8O2+CVf6WggwanminPqOuWqL8Xvy42qK
- o2cjS/kFHVrJyZ+xrQeBZH8BL21C6G/SFQm+9DCpQufFQGii8g0cY/Ug8A==
-X-Google-Smtp-Source: AGHT+IF/kqvZlUAg6kwS/bCvRQdhF+qbvnCM6SNx0aFueCviA3LbaAy2JGKs5jMDsFv8vSMJIDZOeg==
-X-Received: by 2002:a17:906:c302:b0:a59:b8e2:a0c5 with SMTP id
- a640c23a62f3a-a6228143abfmr78003066b.51.1716372465558; 
- Wed, 22 May 2024 03:07:45 -0700 (PDT)
-Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a179c7fcfsm1740092566b.119.2024.05.22.03.07.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 03:07:45 -0700 (PDT)
-Date: Wed, 22 May 2024 09:29:00 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_accel/tcg=3A_Init_tb_size?=
- =?US-ASCII?Q?_and_icount_before_plugin=5Fgen=5Ftb=5Fend?=
-In-Reply-To: <20240521210604.130837-1-richard.henderson@linaro.org>
-References: <20240521210604.130837-1-richard.henderson@linaro.org>
-Message-ID: <4F2066EE-B0A2-49F6-9B6A-46CA709D541C@gmail.com>
+ AJvYcCURzLPd3W5ylzOv6SqwVzHRjw1FdhoJwToPeoRb/IfmPd8L6/8I/oqZ4ujvM0QQipOrtWOmRWQPr1G1tMkRDPS8CUv1CMM=
+X-Gm-Message-State: AOJu0Yx8swicogHkOcnhdx+aOBnP43Ic0NvFvQ+a9yd5nRPhwFrNsnSj
+ prwciXmRAbG5B5cKzuun6yez9MwE4ni1uPB/faeMLnzRuE8eDlfgyjcOBAJrfUs=
+X-Google-Smtp-Source: AGHT+IFu6qnB8STPzFDg2qxdbI6ApUhaSNJT2Vdj4OHPdOOrsrR7U9cjky5cB1P5czUufD+yiBQ8dw==
+X-Received: by 2002:a17:906:3ac2:b0:a5a:24ab:f5e with SMTP id
+ a640c23a62f3a-a62232b6411mr125505466b.25.1716373945235; 
+ Wed, 22 May 2024 03:32:25 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a1781ce5dsm1752255066b.42.2024.05.22.03.32.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 May 2024 03:32:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2F8555F78B;
+ Wed, 22 May 2024 11:32:24 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
+ <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
+ <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
+ <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
+Subject: Re: [PATCH v12 01/13] virtio-gpu: Unrealize GL device
+In-Reply-To: <20240519212712.2605419-2-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Mon, 20 May 2024 00:27:00 +0300")
+References: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
+ <20240519212712.2605419-2-dmitry.osipenko@collabora.com>
+Date: Wed, 22 May 2024 11:32:24 +0100
+Message-ID: <87zfsigmrr.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,52 +115,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-
-Am 21=2E Mai 2024 21:06:04 UTC schrieb Richard Henderson <richard=2Ehender=
-son@linaro=2Eorg>:
->When passing disassembly data to plugin callbacks,
->translator_st_len relies on db->tb->size having been set=2E
+> Even though GL GPU doesn't support hotplugging today, free virgl
+> resources when GL device is unrealized. For consistency.
 >
->Fixes: 4c833c60e047 ("disas: Use translator_st to get disassembly data")
-
-Indeed! It even works better than ever by also fixing the range of the mac=
-hine code=2E So:
-
-Tested-by: Bernhard Beschow <shentey@gmail=2Ecom>
-
-The only issue that remains is that the machine code is reversed, i=2Ee=2E=
- the first byte is output last=2E But that is a bug that existed before=2E
-
->Reported-by: Bernhard Beschow <shentey@gmail=2Ecom>
->Signed-off-by: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
->---
-> accel/tcg/translator=2Ec | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>  hw/display/virtio-gpu-gl.c     | 11 +++++++++++
+>  hw/display/virtio-gpu-virgl.c  |  6 ++++++
+>  include/hw/virtio/virtio-gpu.h |  1 +
+>  3 files changed, 18 insertions(+)
 >
->diff --git a/accel/tcg/translator=2Ec b/accel/tcg/translator=2Ec
->index c56967eecd=2E=2E113edcffe3 100644
->--- a/accel/tcg/translator=2Ec
->+++ b/accel/tcg/translator=2Ec
->@@ -214,14 +214,14 @@ void translator_loop(CPUState *cpu, TranslationBloc=
-k *tb, int *max_insns,
->     set_can_do_io(db, true);
->     tcg_ctx->emit_before_op =3D NULL;
->=20
->+    /* May be used by disas_log or plugin callbacks=2E */
->+    tb->size =3D db->pc_next - db->pc_first;
->+    tb->icount =3D db->num_insns;
->+
->     if (plugin_enabled) {
->         plugin_gen_tb_end(cpu, db->num_insns);
->     }
->=20
->-    /* The disas_log hook may use these values rather than recompute=2E =
- */
->-    tb->size =3D db->pc_next - db->pc_first;
->-    tb->icount =3D db->num_insns;
->-
->     if (qemu_loglevel_mask(CPU_LOG_TB_IN_ASM)
->         && qemu_log_in_addr_range(db->pc_first)) {
->         FILE *logfile =3D qemu_log_trylock();
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index e06be60dfbfc..0c0a8d136954 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -136,6 +136,16 @@ static Property virtio_gpu_gl_properties[] =3D {
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+>=20=20
+> +static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+> +{
+> +    VirtIOGPU *g =3D VIRTIO_GPU(qdev);
+> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(qdev);
+> +
+> +    if (gl->renderer_inited) {
+> +        virtio_gpu_virgl_deinit(g);
+
+Should we reset the flag at this point or are we relying on the QOM
+lifetime to ensure *gl will be gone shortly after this?
+
+> +    }
+> +}
+> +
+>  static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
+>  {
+>      DeviceClass *dc =3D DEVICE_CLASS(klass);
+> @@ -149,6 +159,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *kla=
+ss, void *data)
+>      vgc->update_cursor_data =3D virtio_gpu_gl_update_cursor_data;
+>=20=20
+>      vdc->realize =3D virtio_gpu_gl_device_realize;
+> +    vdc->unrealize =3D virtio_gpu_gl_device_unrealize;
+>      vdc->reset =3D virtio_gpu_gl_reset;
+>      device_class_set_props(dc, virtio_gpu_gl_properties);
+>  }
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 9f34d0e6619c..6ba4c24fda1d 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -665,3 +665,9 @@ int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
+>=20=20
+>      return capset2_max_ver ? 2 : 1;
+>  }
+> +
+> +void virtio_gpu_virgl_deinit(VirtIOGPU *g)
+> +{
+> +    timer_free(g->fence_poll);
+> +    virgl_renderer_cleanup(NULL);
+> +}
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index 56d6e821bf04..8ece1ec2e98b 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -336,6 +336,7 @@ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+>  void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+>  void virtio_gpu_virgl_reset(VirtIOGPU *g);
+>  int virtio_gpu_virgl_init(VirtIOGPU *g);
+> +void virtio_gpu_virgl_deinit(VirtIOGPU *g);
+>  int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
+>=20=20
+>  #endif
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
