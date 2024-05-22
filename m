@@ -4,106 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127D2C25B7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 22:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AA0BC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 22:30:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9uKT-0005ha-OU; Wed, 22 May 2024 18:21:01 -0400
+	id 1s9uST-0007Hy-OU; Wed, 22 May 2024 18:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9uKR-0005f5-AQ
- for qemu-devel@nongnu.org; Wed, 22 May 2024 18:20:59 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9uSQ-0007HF-VM
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 18:29:14 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9uKP-0003nW-Jl
- for qemu-devel@nongnu.org; Wed, 22 May 2024 18:20:59 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5B2D31F8B9;
- Wed, 22 May 2024 22:20:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716416456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WApCF/NTJsf9MfUlgVC1dp1gFBpa3wLsEpbFdAbSGFA=;
- b=uEOs6bssx1b1AjwW62Q4ZDr5aEz3U4OUJVmnDTukx+FkBVRjHjNf34kOiHovSfkjeobH0n
- waNroZTeo4mOi/hLATzP+UkVKERzSJFtfjthBhSmzaLEs2VlaLJ3G2DFrBAh+qSZBQrlsN
- KkKNHXvYv233oFqxklqFVmp11Bv9G9w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716416456;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WApCF/NTJsf9MfUlgVC1dp1gFBpa3wLsEpbFdAbSGFA=;
- b=LYsIEsSIbC4cu5QbPWG82PIlSfGG6x9BJE42nnV7swb6TIfeh/zCVdzK40Mn8iTcFa111M
- R8ReHoXFOI0VP3Cw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716416456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WApCF/NTJsf9MfUlgVC1dp1gFBpa3wLsEpbFdAbSGFA=;
- b=uEOs6bssx1b1AjwW62Q4ZDr5aEz3U4OUJVmnDTukx+FkBVRjHjNf34kOiHovSfkjeobH0n
- waNroZTeo4mOi/hLATzP+UkVKERzSJFtfjthBhSmzaLEs2VlaLJ3G2DFrBAh+qSZBQrlsN
- KkKNHXvYv233oFqxklqFVmp11Bv9G9w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716416456;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WApCF/NTJsf9MfUlgVC1dp1gFBpa3wLsEpbFdAbSGFA=;
- b=LYsIEsSIbC4cu5QbPWG82PIlSfGG6x9BJE42nnV7swb6TIfeh/zCVdzK40Mn8iTcFa111M
- R8ReHoXFOI0VP3Cw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F129713A6B;
- Wed, 22 May 2024 22:20:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4IaELcZvTmaABAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 22 May 2024 22:20:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 9/9] tests/qtest/migration-test: Fix the check for a successful
- run of analyze-migration.py
-Date: Wed, 22 May 2024 19:20:34 -0300
-Message-Id: <20240522222034.4001-10-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240522222034.4001-1-farosas@suse.de>
-References: <20240522222034.4001-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9uSP-00050Y-CY
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 18:29:14 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1ee42b97b32so13722595ad.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 15:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716416951; x=1717021751; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=X3320DpBpAiZV53qmmVJnOqv3dYF0y2Xf9kZQr/4Vi8=;
+ b=UxhEAVe2mECsWqRDY7GrE0GNxJJdhwnM3nOf9jjvwSCOJ9ZYnshJSz0sVOE4Ulve8I
+ M6BTFyal7a+kpqyoLwfDDi4I2jrAdiP+6whnMMVHXpZvS5O5ynwcLkBkcaP8LM0dgKGs
+ PcM5oxLowVqz0HCSoFFR8uenlEB1o3R9u84b6OL9M5zrtf3idFwBo+x6Yxw7xGu+KG1N
+ Dkh8iAxq4l8BE5B27JXHCnxo7tw3HtVhK7NdTaaQcLSFsfuPTfidy+3idSkoSBX3KYX2
+ QQhMNTXL7cN3kkur2REB5yAllv1hj4rT10yAtzmUUyknDg1IZouyE5DNRPCEzT+g/ONS
+ fHjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716416951; x=1717021751;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X3320DpBpAiZV53qmmVJnOqv3dYF0y2Xf9kZQr/4Vi8=;
+ b=uZfHJABnafna29VztDJN7kp1XtLbsG1memYcH4NPuk5ATbb764893GXy0dBclODYDd
+ 93C5rq/7wcQD8W4csum1qeGuMUzThrVPCb3nd67z35VSHa2CcazB71JvvkY8TmVAiUi2
+ Lg49hHPgecHmsbb6jS8oeksIl3HqO8XMmoVwO3x8T4ZKYWX3lN1qWSXAbpzaZchtbJBl
+ 7UwdrsLx7DAWwXavb5KPbUftQSMyazBpC1IHU/f9m1QheDi9l6gzTPf75Vn/dIIDIM7d
+ 54+RpHe0eDT/4K0aQR95lUoMY1Ntf4pFNVQqvqwUj4U6eFUF7nIvo6ZQxK1V8xPWj95D
+ Mg6w==
+X-Gm-Message-State: AOJu0YyvP35LfAiuDQj8oHNSrSO+HjjpnN2dooHQ/DEKruYhLkZnQw3n
+ C8CpMP+4TEcOC5j9tTT7PX5seiyqPz16MHHxjSBdabBJDFjBiAygJw32YXsbxxlwHuD42/KyH8y
+ E
+X-Google-Smtp-Source: AGHT+IHrmk5yOzD3vgbUS4tGl+UnKDJEyPxOZFMJ68uNjexdiFsMjp6AWgrVEpamLHfENgWkEdKOeA==
+X-Received: by 2002:a17:903:1c2:b0:1ee:1dbe:74f4 with SMTP id
+ d9443c01a7336-1f31c9a4c0emr37416625ad.29.1716416951294; 
+ Wed, 22 May 2024 15:29:11 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f2e14b4024sm101029735ad.40.2024.05.22.15.29.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 May 2024 15:29:10 -0700 (PDT)
+Message-ID: <49b046c7-a446-4acf-9d4c-e01a72f30cd8@linaro.org>
+Date: Wed, 22 May 2024 15:29:09 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RISU 0/4] risugen/arm: Convert to use assembly
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240522212741.297734-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240522212741.297734-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,50 +96,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 5/22/24 14:27, Richard Henderson wrote:
+> Minor simplifications as well, which are all the
+> easier for emitting assembly instead of binary.
+> 
+> r~
+> 
+> Richard Henderson (4):
+>    risugen/arm: Convert to use assembly
+>    risugen/arm: Fill general regs with 64-bit random data
+>    risugen/arm: Switch to thumb mode only once
+>    contrib/generate_all: Do not rely on ag
+> 
+>   contrib/generate_all.sh |   4 +-
+>   risugen_arm.pm          | 805 +++++++++++++---------------------------
+>   2 files changed, 262 insertions(+), 547 deletions(-)
+> 
 
-If analyze-migration.py cannot be run or crashes, the error is currently
-ignored since the code only checks for nonzero values in case the child
-exited properly. For example, if you run the test with a non-existing
-Python interpreter, it still succeeds:
+Oh, meant to say this is based on
 
- $ PYTHON=wrongpython QTEST_QEMU_BINARY=./qemu-system-x86_64 tests/qtest/migration-test
- ...
- # Running /x86_64/migration/analyze-script
- # Using machine type: pc-q35-9.1
- # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name source,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/src_serial -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1   -uuid 11111111-1111-1111-1111-111111111111  -accel qtest
- # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name target,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/dest_serial -incoming tcp:127.0.0.1:0 -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1     -accel qtest
- **
- ERROR:../../devel/qemu/tests/qtest/migration-test.c:1603:test_analyze_script: code should not be reached
- migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
- migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
- ok 2 /x86_64/migration/analyze-script
- ...
+20240522034442.140293-1-richard.henderson@linaro.org
+("[PATCH RISU v2 0/8] ELF and Sparc64 support")
 
-Let's better fail the test in case the child did not exit properly, too.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 5b4eca2b20..b7e3406471 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -1604,7 +1604,7 @@ static void test_analyze_script(void)
-     }
- 
-     g_assert(waitpid(pid, &wstatus, 0) == pid);
--    if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0) {
-+    if (!WIFEXITED(wstatus) || WEXITSTATUS(wstatus) != 0) {
-         g_test_message("Failed to analyze the migration stream");
-         g_test_fail();
-     }
--- 
-2.35.3
-
+r~
 
