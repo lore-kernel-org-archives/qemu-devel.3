@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BA7C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79EADC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ih1-0003Yg-PN; Wed, 22 May 2024 05:55:31 -0400
+	id 1s9igh-0003P4-OM; Wed, 22 May 2024 05:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igw-0003VU-Tt
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igb-0003LQ-2y
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igu-0001g3-Rs
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:26 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igZ-0001Mg-5v
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371722;
+ s=mimecast20190719; t=1716371702;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bWjCvBHLClbA3cqzzO6MNrC/zHAI88qWAW+VrP5Fssw=;
- b=EUS1hJafovU7Z/0RNyAE7IZUxxSeBojUo3UuJGX3OwnYgNLa48Rxayg7OJuAB6q/5v2Efv
- KHJ19L/pYJTXV2ShDtUVcg/b5uMB5WqikfegC/tCFIWtRrQpcchsNa5BL0OAClbXVIjuBJ
- r+EjaETEp77yxooN3xAWiKZEM7MjgHQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-504-q5fNgkBxNVS6bRFaFmjvZA-1; Wed, 22 May 2024 05:55:20 -0400
-X-MC-Unique: q5fNgkBxNVS6bRFaFmjvZA-1
+ bh=xEgW3e/XEuQ2cctgyXjEEqmbcF5A+1Z7ssJBUhFQbnc=;
+ b=ULYADHlkQfK15puymEiimqHGezMez/OWS690KL2WDMJyqLu0GEmgnUNSImo8oAAEE+BP2a
+ YNMwQOMr5HXtg3mneFqvGT4fqWsvuEdGzHObIlwUrJnWLG8fsAtpjoVjYLlmcLIlgkORbz
+ foYP2m3V1ozR4vFR8UBrcHj5w9bPcQg=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-Rz1qrY-fO9y4d9ylXtfhSw-1; Wed,
+ 22 May 2024 05:54:59 -0400
+X-MC-Unique: Rz1qrY-fO9y4d9ylXtfhSw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 41D608058D1;
- Wed, 22 May 2024 09:55:20 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3A5E01C29EA7;
+ Wed, 22 May 2024 09:54:59 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 216E47414;
- Wed, 22 May 2024 09:55:19 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8EE6251BF;
+ Wed, 22 May 2024 09:54:56 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 21/47] vfio: Make VFIOIOMMUClass::attach_device() and its
- wrapper return bool
-Date: Wed, 22 May 2024 11:54:16 +0200
-Message-ID: <20240522095442.195243-22-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+Subject: [PULL 07/47] memory: Add Error** argument to memory_get_xlat_addr()
+Date: Wed, 22 May 2024 11:54:02 +0200
+Message-ID: <20240522095442.195243-8-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,263 +84,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Let the callers do the reporting. This will be useful in
+vfio_iommu_map_dirty_notify().
 
-Make VFIOIOMMUClass::attach_device() and its wrapper function
-vfio_attach_device() return bool.
-
-This is to follow the coding standand to return bool if 'Error **'
-is used to pass error.
-
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h         |  4 ++--
- include/hw/vfio/vfio-container-base.h |  4 ++--
- hw/vfio/ap.c                          |  6 ++----
- hw/vfio/ccw.c                         |  6 ++----
- hw/vfio/common.c                      |  4 ++--
- hw/vfio/container.c                   | 14 +++++++-------
- hw/vfio/iommufd.c                     | 11 +++++------
- hw/vfio/pci.c                         |  5 ++---
- hw/vfio/platform.c                    |  7 +++----
- 9 files changed, 27 insertions(+), 34 deletions(-)
+ include/exec/memory.h  | 15 ++++++++++++++-
+ hw/vfio/common.c       | 13 +++++++++----
+ hw/virtio/vhost-vdpa.c |  5 ++++-
+ system/memory.c        | 10 +++++-----
+ 4 files changed, 32 insertions(+), 11 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 878e34a12874f63fcb8bbc8dc8ca3d2dfa84fdb4..e85817e65e65317d08bc2b17b738449198784796 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -222,8 +222,8 @@ void vfio_region_exit(VFIORegion *region);
- void vfio_region_finalize(VFIORegion *region);
- void vfio_reset_handler(void *opaque);
- struct vfio_device_info *vfio_get_device_info(int fd);
--int vfio_attach_device(char *name, VFIODevice *vbasedev,
--                       AddressSpace *as, Error **errp);
-+bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-+                        AddressSpace *as, Error **errp);
- void vfio_detach_device(VFIODevice *vbasedev);
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index d417d7f363dbbca6553c449582a93d5da73cca40..9cdd64e9c69b63f9d27cebc2e8cb366e22ed7577 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -774,9 +774,22 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+                                              RamDiscardListener *rdl);
  
- int vfio_kvm_device_add_fd(int fd, Error **errp);
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index b04057ad1aff73d974ecec718d0fe45f7a930b59..44927ca8c3583246145defe043ac34da604d39bf 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -117,8 +117,8 @@ struct VFIOIOMMUClass {
-     int (*dma_unmap)(const VFIOContainerBase *bcontainer,
-                      hwaddr iova, ram_addr_t size,
-                      IOMMUTLBEntry *iotlb);
--    int (*attach_device)(const char *name, VFIODevice *vbasedev,
--                         AddressSpace *as, Error **errp);
-+    bool (*attach_device)(const char *name, VFIODevice *vbasedev,
-+                          AddressSpace *as, Error **errp);
-     void (*detach_device)(VFIODevice *vbasedev);
++/**
++ * memory_get_xlat_addr: Extract addresses from a TLB entry
++ *
++ * @iotlb: pointer to an #IOMMUTLBEntry
++ * @vaddr: virtual address
++ * @ram_addr: RAM address
++ * @read_only: indicates if writes are allowed
++ * @mr_has_discard_manager: indicates memory is controlled by a
++ *                          RamDiscardManager
++ * @errp: pointer to Error*, to store an error if it happens.
++ *
++ * Return: true on success, else false setting @errp with error.
++ */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager);
++                          bool *mr_has_discard_manager, Error **errp);
  
-     /* migration feature */
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 8bb024e2fde4a1d72346dee4b662d762374326b9..ba653ef70f08ebdf482009baafc62eb33ebda9a8 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -154,7 +154,6 @@ static void vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
- static void vfio_ap_realize(DeviceState *dev, Error **errp)
- {
-     ERRP_GUARD();
--    int ret;
-     Error *err = NULL;
-     VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
-     VFIODevice *vbasedev = &vapdev->vdev;
-@@ -163,9 +162,8 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    ret = vfio_attach_device(vbasedev->name, vbasedev,
--                             &address_space_memory, errp);
--    if (ret) {
-+    if (!vfio_attach_device(vbasedev->name, vbasedev,
-+                            &address_space_memory, errp)) {
-         goto error;
-     }
- 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 1c630f6e9abe93ae0c2b5615d4409669f096c8c9..89bb98016764e65cf826183d7a38c59d429f6eeb 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -579,7 +579,6 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-     S390CCWDeviceClass *cdc = S390_CCW_DEVICE_GET_CLASS(cdev);
-     VFIODevice *vbasedev = &vcdev->vdev;
-     Error *err = NULL;
--    int ret;
- 
-     /* Call the class init function for subchannel. */
-     if (cdc->realize) {
-@@ -593,9 +592,8 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    ret = vfio_attach_device(cdev->mdevid, vbasedev,
--                             &address_space_memory, errp);
--    if (ret) {
-+    if (!vfio_attach_device(cdev->mdevid, vbasedev,
-+                            &address_space_memory, errp)) {
-         goto out_attach_dev_err;
-     }
- 
+ typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+ typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 1fbd10801d35079341a833fa68a43de2b758cde0..c04a259ffd7cfcfba480335bea1ddff787f47bdc 100644
+index c7f274fb5c851e4c44498552891265018d2c5313..7313043f1d161ed0326b5ba3fa1085608eaf6740 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -1523,8 +1523,8 @@ retry:
-     return info;
- }
+@@ -253,12 +253,13 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
  
--int vfio_attach_device(char *name, VFIODevice *vbasedev,
--                       AddressSpace *as, Error **errp)
-+bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-+                        AddressSpace *as, Error **errp)
+ /* Called with rcu_read_lock held.  */
+ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+-                               ram_addr_t *ram_addr, bool *read_only)
++                               ram_addr_t *ram_addr, bool *read_only,
++                               Error **errp)
  {
-     const VFIOIOMMUClass *ops =
-         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 9534120d4ac835bb58e37667dad8d39205404c08..e7c416774791d506cc7c4696fb6a6d94dc809c8e 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -910,8 +910,8 @@ static int vfio_device_groupid(VFIODevice *vbasedev, Error **errp)
-  * @name and @vbasedev->name are likely to be different depending
-  * on the type of the device, hence the need for passing @name
-  */
--static int vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
--                                     AddressSpace *as, Error **errp)
-+static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-+                                      AddressSpace *as, Error **errp)
- {
-     int groupid = vfio_device_groupid(vbasedev, errp);
-     VFIODevice *vbasedev_iter;
-@@ -920,27 +920,27 @@ static int vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+     bool ret, mr_has_discard_manager;
+ 
+     ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+-                               &mr_has_discard_manager);
++                               &mr_has_discard_manager, errp);
+     if (ret && mr_has_discard_manager) {
+         /*
+          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+@@ -288,6 +289,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
+     void *vaddr;
      int ret;
++    Error *local_err = NULL;
  
-     if (groupid < 0) {
--        return groupid;
-+        return false;
-     }
+     trace_vfio_iommu_map_notify(iotlb->perm == IOMMU_NONE ? "UNMAP" : "MAP",
+                                 iova, iova + iotlb->addr_mask);
+@@ -304,7 +306,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
  
-     trace_vfio_attach_device(vbasedev->name, groupid);
- 
-     group = vfio_get_group(groupid, as, errp);
-     if (!group) {
--        return -ENOENT;
-+        return false;
-     }
- 
-     QLIST_FOREACH(vbasedev_iter, &group->device_list, next) {
-         if (strcmp(vbasedev_iter->name, vbasedev->name) == 0) {
-             error_setg(errp, "device is already attached");
-             vfio_put_group(group);
--            return -EBUSY;
-+            return false;
+-        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
++        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
++            error_report_err(local_err);
+             goto out;
          }
+         /*
+@@ -1213,6 +1216,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     VFIOContainerBase *bcontainer = giommu->bcontainer;
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
+     ram_addr_t translated_addr;
++    Error *local_err = NULL;
+     int ret = -EINVAL;
+ 
+     trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+@@ -1224,7 +1228,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
      }
-     ret = vfio_get_device(group, name, vbasedev, errp);
-     if (ret) {
-         vfio_put_group(group);
--        return ret;
-+        return false;
+ 
+     rcu_read_lock();
+-    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
++    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
++        error_report_err(local_err);
+         goto out_unlock;
      }
  
-     bcontainer = &group->container->bcontainer;
-@@ -948,7 +948,7 @@ static int vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-     QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
-     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index e827b9175fc61f1ef419e48d90a440b00449312a..ed99ab87457d8f31b98ace960713f48d47b27102 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -208,6 +208,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     void *vaddr;
+     int ret;
+     Int128 llend;
++    Error *local_err = NULL;
  
--    return ret;
-+    return true;
- }
+     if (iotlb->target_as != &address_space_memory) {
+         error_report("Wrong target AS \"%s\", only system memory is allowed",
+@@ -227,7 +228,9 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
  
- static void vfio_legacy_detach_device(VFIODevice *vbasedev)
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index c6441279728fcede1dde2a099c076ad04c464a1f..4c6992fca11969bc8fe26c11e902e2521d6bff7a 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -299,8 +299,8 @@ error:
-     return ret;
- }
- 
--static int iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
--                               AddressSpace *as, Error **errp)
-+static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-+                                AddressSpace *as, Error **errp)
+-        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL)) {
++        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
++                                  &local_err)) {
++            error_report_err(local_err);
+             return;
+         }
+         ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
+diff --git a/system/memory.c b/system/memory.c
+index 642a449f8c867d38c62a748a4dfd5c055637c205..9540caa8a1f4da8501bf5ae9d7eedde8b775e1dc 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2179,7 +2179,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+ /* Called with rcu_read_lock held.  */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager)
++                          bool *mr_has_discard_manager, Error **errp)
  {
-     VFIOContainerBase *bcontainer;
-     VFIOIOMMUFDContainer *container;
-@@ -315,7 +315,7 @@ static int iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-     if (vbasedev->fd < 0) {
-         devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
-         if (devfd < 0) {
--            return devfd;
-+            return false;
+     MemoryRegion *mr;
+     hwaddr xlat;
+@@ -2197,7 +2197,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+     mr = address_space_translate(&address_space_memory, iotlb->translated_addr,
+                                  &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
+     if (!memory_region_is_ram(mr)) {
+-        error_report("iommu map to non memory area %" HWADDR_PRIx "", xlat);
++        error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
+         return false;
+     } else if (memory_region_has_ram_discard_manager(mr)) {
+         RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
+@@ -2216,8 +2216,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+          * were already restored before IOMMUs are restored.
+          */
+         if (!ram_discard_manager_is_populated(rdm, &tmp)) {
+-            error_report("iommu map to discarded memory (e.g., unplugged via"
+-                         " virtio-mem): %" HWADDR_PRIx "",
++            error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
++                         " via virtio-mem): %" HWADDR_PRIx "",
+                          iotlb->translated_addr);
+             return false;
          }
-         vbasedev->fd = devfd;
-     } else {
-@@ -392,7 +392,6 @@ static int iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-     memory_listener_register(&bcontainer->listener, bcontainer->space->as);
- 
-     if (bcontainer->error) {
--        ret = -1;
-         error_propagate_prepend(errp, bcontainer->error,
-                                 "memory listener initialization failed: ");
-         goto err_listener_register;
-@@ -431,7 +430,7 @@ found_container:
- 
-     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
-                                    vbasedev->num_regions, vbasedev->flags);
--    return 0;
-+    return true;
- 
- err_listener_register:
-     iommufd_cdev_ram_block_discard_disable(false);
-@@ -444,7 +443,7 @@ err_alloc_ioas:
-     iommufd_cdev_unbind_and_disconnect(vbasedev);
- err_connect_bind:
-     close(vbasedev->fd);
--    return ret;
-+    return false;
- }
- 
- static void iommufd_cdev_detach(VFIODevice *vbasedev)
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 84f7bff664fd7595b75cce1f6974068144f0d42d..c1adef5cf8fb241df510514610f05c8a0d51a9f9 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3027,9 +3027,8 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         name = g_strdup(vbasedev->name);
+@@ -2228,7 +2228,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+      * check that it did not truncate too much.
+      */
+     if (len & iotlb->addr_mask) {
+-        error_report("iommu has granularity incompatible with target AS");
++        error_setg(errp, "iommu has granularity incompatible with target AS");
+         return false;
      }
  
--    ret = vfio_attach_device(name, vbasedev,
--                             pci_device_iommu_address_space(pdev), errp);
--    if (ret) {
-+    if (!vfio_attach_device(name, vbasedev,
-+                            pci_device_iommu_address_space(pdev), errp)) {
-         goto error;
-     }
- 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index dcd2365fb35344d4383989169fa23bab7cc3d8de..2bd16096bbd1b4a1da579448e931cb0803d54bb6 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -552,10 +552,9 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-         return ret;
-     }
- 
--    ret = vfio_attach_device(vbasedev->name, vbasedev,
--                             &address_space_memory, errp);
--    if (ret) {
--        return ret;
-+    if (!vfio_attach_device(vbasedev->name, vbasedev,
-+                            &address_space_memory, errp)) {
-+        return -EINVAL;
-     }
- 
-     ret = vfio_populate_device(vbasedev, errp);
 -- 
 2.45.1
 
