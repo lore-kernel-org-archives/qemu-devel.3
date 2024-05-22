@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C25CC25B7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53794C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ihP-0004kE-RY; Wed, 22 May 2024 05:55:55 -0400
+	id 1s9ihC-0003d6-1N; Wed, 22 May 2024 05:55:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihJ-000458-M6
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ih2-0003Z0-JQ
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihH-0001mW-Qi
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ih0-0001jM-K7
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371747;
+ s=mimecast20190719; t=1716371729;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wrt6okKOnmpVXT/eryr4wzTcDbGf2/zr75j5q/NxDYM=;
- b=B7QZHUX9dXKcB19BfukZ/G1GeSk9fTVriFJqVxp5wemQ5NuCte5LeMfdCOBZ1WyHCQZkVi
- yBY1QcwB0u4PDIH/8ILdqRv23wg7xU4td2uKS7zLM9KQ9cy85sgHKBylnoxYTtvbu8tgeJ
- L6edKthMN4fyA6/bv7vi7uTaRFWUh3w=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-PsrgeyJBPFan7zxVji58Xw-1; Wed, 22 May 2024 05:55:45 -0400
-X-MC-Unique: PsrgeyJBPFan7zxVji58Xw-1
+ bh=vw2zTHzLsIJf+NLe+QWmmQ2AB9G2JtY38zOEeTbtoxo=;
+ b=SLt61pwnsPD+446DSmkxoGq35WSYHBrgborbKleqFvl/2XA8FxVCdRNfJLcfYMXahxHlDs
+ i4HIrIX7iqOcejc3JGX9o2MMGZOvNfvcNbUws1NQbQ3ykHWqPM7O/a0ySUebMgDFWMS/s8
+ g3NdYvYb0jhyqk/yZg6aLgd1qBLkQuY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-GnqohcBzNDuxLVkhRGEqog-1; Wed,
+ 22 May 2024 05:55:25 -0400
+X-MC-Unique: GnqohcBzNDuxLVkhRGEqog-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1705C80118E;
- Wed, 22 May 2024 09:55:45 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AB5F8380008D;
+ Wed, 22 May 2024 09:55:25 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id EABB451BF;
- Wed, 22 May 2024 09:55:43 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8B07E28E5;
+ Wed, 22 May 2024 09:55:24 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 39/47] vfio/pci: Make vfio_populate_device() return a bool
-Date: Wed, 22 May 2024 11:54:34 +0200
-Message-ID: <20240522095442.195243-40-clg@redhat.com>
+Subject: [PULL 25/47] vfio/container: Make vfio_set_iommu() return bool
+Date: Wed, 22 May 2024 11:54:20 +0200
+Message-ID: <20240522095442.195243-26-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,108 +83,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Since vfio_populate_device() takes an 'Error **' argument,
-best practices suggest to return a bool. See the qapi/error.h
-Rules section.
+This is to follow the coding standand to return bool if 'Error **'
+is used to pass error.
 
-By this chance, pass errp directly to vfio_populate_device() to
-avoid calling error_propagate().
-
+Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ hw/vfio/container.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 4fb5fd0c9f61627c402164fc4bed1868540350e0..46d3c618596d95266543e9a0ebc65c04d9a7cc5d 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2740,7 +2740,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-     return 0;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 802828ddff061fef25b8e4c997a68348d4be9892..e330b2897423b97fee467884f4237669ceff4756 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -393,21 +393,20 @@ static const VFIOIOMMUClass *vfio_get_iommu_class(int iommu_type, Error **errp)
+     return VFIO_IOMMU_CLASS(klass);
  }
  
--static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-+static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+-static int vfio_set_iommu(VFIOContainer *container, int group_fd,
+-                          VFIOAddressSpace *space, Error **errp)
++static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
++                           VFIOAddressSpace *space, Error **errp)
  {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     struct vfio_region_info *reg_info;
-@@ -2750,18 +2750,18 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-     /* Sanity check device */
-     if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PCI)) {
-         error_setg(errp, "this isn't a PCI device");
--        return;
+-    int iommu_type, ret;
++    int iommu_type;
+     const VFIOIOMMUClass *vioc;
+ 
+     iommu_type = vfio_get_iommu_type(container, errp);
+     if (iommu_type < 0) {
+-        return iommu_type;
 +        return false;
      }
  
-     if (vbasedev->num_regions < VFIO_PCI_CONFIG_REGION_INDEX + 1) {
-         error_setg(errp, "unexpected number of io regions %u",
-                    vbasedev->num_regions);
--        return;
+-    ret = ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container->fd);
+-    if (ret) {
++    if (ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
+         error_setg_errno(errp, errno, "Failed to set group container");
+-        return -errno;
 +        return false;
      }
  
-     if (vbasedev->num_irqs < VFIO_PCI_MSIX_IRQ_INDEX + 1) {
-         error_setg(errp, "unexpected number of irqs %u", vbasedev->num_irqs);
--        return;
-+        return false;
-     }
- 
-     for (i = VFIO_PCI_BAR0_REGION_INDEX; i < VFIO_PCI_ROM_REGION_INDEX; i++) {
-@@ -2773,7 +2773,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
- 
-         if (ret) {
-             error_setg_errno(errp, -ret, "failed to get region %d info", i);
--            return;
-+            return false;
+     while (ioctl(container->fd, VFIO_SET_IOMMU, iommu_type)) {
+@@ -422,7 +421,7 @@ static int vfio_set_iommu(VFIOContainer *container, int group_fd,
+             continue;
          }
- 
-         QLIST_INIT(&vdev->bars[i].quirks);
-@@ -2783,7 +2783,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-                                VFIO_PCI_CONFIG_REGION_INDEX, &reg_info);
-     if (ret) {
-         error_setg_errno(errp, -ret, "failed to get config info");
--        return;
+         error_setg_errno(errp, errno, "Failed to set iommu for container");
+-        return -errno;
 +        return false;
      }
  
-     trace_vfio_populate_device_config(vdev->vbasedev.name,
-@@ -2804,7 +2804,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-         if (ret) {
-             error_append_hint(errp, "device does not support "
-                               "requested feature x-vga\n");
--            return;
-+            return false;
-         }
+     container->iommu_type = iommu_type;
+@@ -430,11 +429,11 @@ static int vfio_set_iommu(VFIOContainer *container, int group_fd,
+     vioc = vfio_get_iommu_class(iommu_type, errp);
+     if (!vioc) {
+         error_setg(errp, "No available IOMMU models");
+-        return -EINVAL;
++        return false;
      }
  
-@@ -2821,6 +2821,8 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-                     "Could not enable error recovery for the device",
-                     vbasedev->name);
-     }
-+
+     vfio_container_init(&container->bcontainer, space, vioc);
+-    return 0;
 +    return true;
  }
  
- static void vfio_pci_put_device(VFIOPCIDevice *vdev)
-@@ -2977,7 +2979,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-     VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     char *subsys;
--    Error *err = NULL;
-     int i, ret;
-     bool is_mdev;
-     char uuid[UUID_STR_LEN];
-@@ -3036,9 +3037,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         goto error;
-     }
+ static int vfio_get_iommu_info(VFIOContainer *container,
+@@ -615,8 +614,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+     container->fd = fd;
+     bcontainer = &container->bcontainer;
  
--    vfio_populate_device(vdev, &err);
--    if (err) {
--        error_propagate(errp, err);
-+    if (!vfio_populate_device(vdev, errp)) {
-         goto error;
+-    ret = vfio_set_iommu(container, group->fd, space, errp);
+-    if (ret) {
++    if (!vfio_set_iommu(container, group->fd, space, errp)) {
+         goto free_container_exit;
      }
  
 -- 
