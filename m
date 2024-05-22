@@ -4,92 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA5EC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 12:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4D9C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 12:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9lKo-0003JY-I3; Wed, 22 May 2024 08:44:46 -0400
+	id 1s9lMh-0005v5-5P; Wed, 22 May 2024 08:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1s9lKf-0003Fu-IH
- for qemu-devel@nongnu.org; Wed, 22 May 2024 08:44:38 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1s9lKd-00005s-GL
- for qemu-devel@nongnu.org; Wed, 22 May 2024 08:44:37 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42012c85e61so58495e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 05:44:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1716381873; x=1716986673; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=PpiplhRB+RoSsm1f61Y9eFGL8oBS0tcS+U7t9xmTrQI=;
- b=NoaabW5C9IkiXSB8xD00z3YOnQmkVOdMzK40WDvW20pV7eqrtZ5ordll3WLY5yMymI
- dNQik97/u8EhCzdsDNbkVDGDZ1+dE3DQxrvpIfbubfAuJX4h9kn0xvNFInteTBcouWWe
- X+0roCCQOoCE0eNQJlSmqPU0oPRf1FVPG8VdbHZt81gbutO6G6GRG4/OE1PJjjSnwO2v
- Uywe/Xv38d9Ykl/Krcb77BtRLqa9/XbiU1xlQGUEDJLlVxOEkvGXNMxlu/QbOQziDG2J
- yF4etzR9S88+rr8tEuABxwlxpROkrTTrPMLMA+MA/4y9W/ilGktRGKa9LZGxACwYYD0r
- NSfQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9lMe-0005rJ-En
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 08:46:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9lMc-0000Wf-I5
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 08:46:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716381997;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XTKwF7tP/DwA8w2G7mrRPzhW9h4xzIxNvAXMutx8Goo=;
+ b=GOuM0vbD/d+a0sG2iaxi8sEs9wmh0dpQFUpAw4VDoeI8UQD8H1G37A/nLNFhXqTpoCQDDV
+ 6ivlZ0i3eSwybhtTJTacC89dh8E+17ASJHNViMh12gVsF1Q3GXfY2bdygQH7Y6quETrxRl
+ D32NPS8FLlB4Z1JhVzj4kdKmnqt/8Vs=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-638--pRgzCVlPSCNjUkFvlO7xw-1; Wed, 22 May 2024 08:46:36 -0400
+X-MC-Unique: -pRgzCVlPSCNjUkFvlO7xw-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c9ad64e35bso62070b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 05:46:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716381873; x=1716986673;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PpiplhRB+RoSsm1f61Y9eFGL8oBS0tcS+U7t9xmTrQI=;
- b=kCabI0b7SrK4Lh7MxMNCHkiFentB7WrXEF4mxy6kjoglfy/QsqhkKMbdfrIlsaQRzF
- WFWC1zH8zgDIS3mlw0FAZndF+Vok5xtqkHi1pAr0kmf+wYf8ANdnxLJ7ftgjJ3251lDO
- fksAHa4CoFbicQpBkv+e3rJWuqbbXx5QlbkKHbIeJ2z1Edd4bFdwubSHwiCGVfUi6HPq
- N7jYFnFNaFFO2ZyvltqUYp00vPSA1TzOXRFeOOAjUAWsYZYgpaKrChn7+CfLO5yXuFHj
- /oRRWZOsAS3W7rhbbwpm2q4BNXiS3XXRJm2/Ay563J9T7aD4uHVzc6S8+JR8FDe16eYQ
- tbdA==
+ d=1e100.net; s=20230601; t=1716381995; x=1716986795;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XTKwF7tP/DwA8w2G7mrRPzhW9h4xzIxNvAXMutx8Goo=;
+ b=oQ9lTlxck1Wn7GUide9GSsXKYCwwwn1dnhMh72Ac9fPXJlML8Iz9GL5j6H/t/Ng9l8
+ aItxVXd3qd3GxiyD5GE07HHsGJtl22XHCPusuQAGoDgG3WzVCnjRDLsUgSejILIoIVgU
+ SaajCRtgyoQwanTWSfy5j8YIM/+LH/Urp7oR94Mqv2noxUb8dVvgCWzPlNXqZdys1mNL
+ SX3BPOwB+JgslSnpUDJosVZc/bb6Re3qmM8ICHvQXHhWc8H7g7X3UmpVkvnan7m8okFi
+ KTp19j0bVIXreL+LkeUfQFKnuJjxR3q+A2fHU5S5H+5Y7vJj+X8hvDlO+zjsO5zpsIIR
+ GQAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPriRphzGy3rhRAUS8PBaUEdGMzeYna8DgL+oyyokxSJpYII7zS/pwb1urRrNNH55HsrzSK6D281m7t/aywZmlG/zuHv0=
-X-Gm-Message-State: AOJu0YwlDI7I/npRwbyJirQuoDjASC3rgO/jl0Oz5gJu7SOkaLBmNwsO
- pGJQfIUP67bGwnuxTpMT5R1tcAVKAhYzOHk0bQk4rH0jdAy1K9y+nFI3dLlj/g==
-X-Google-Smtp-Source: AGHT+IHpR7OM8N8/VixvqAnkgygA7K6KUDGazOXYn/bLFCO6iMTaSjZAUIuhLmRWQ7hNWXYS0XHNLg==
-X-Received: by 2002:a05:600c:3d05:b0:41b:8715:1158 with SMTP id
- 5b1f17b1804b1-420fc8142admr1802815e9.6.1716381872531; 
- Wed, 22 May 2024 05:44:32 -0700 (PDT)
-Received: from google.com (230.213.79.34.bc.googleusercontent.com.
- [34.79.213.230]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502baacf7esm34667910f8f.77.2024.05.22.05.44.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 May 2024 05:44:32 -0700 (PDT)
-Date: Wed, 22 May 2024 12:44:28 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [RFC PATCH v3 08/18] hw/arm/smmu-common: Add support for nested
- TLB
-Message-ID: <Zk3orJgIIqC4wThC@google.com>
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-9-smostafa@google.com>
- <dc8d52ac-68af-4426-9a60-07ad909c86b0@redhat.com>
- <ZkYkTgDztEyX6GT_@google.com>
- <6b41c718-7e02-4a3d-adf8-a56306ab68d9@redhat.com>
+ AJvYcCVDc9GhPngqR7rUDkqLJLxpkDK+DAHRc0n8nE4BH+FO2PxoPeSzJ1TOIJABV40apUWqAw+MEUYuf4ae6FgM23VSZ8j2LPk=
+X-Gm-Message-State: AOJu0Yx9gya9FtGafs08GRgXkwkbdUVs0dGOsrlHYvfEmmaYFCgb4MZM
+ f4ye1l4lSGFCISW4V9Wn7PFSr/mAu8H20KdSdaN+p9j5CCUMg1DMFMRgTzP9VcvsU0FHkmA7WGP
+ JeLWNQ3ZPA+11jjs8hoeJOVOw3c1jcSSjVKUqDrBFwPGG864p3Azq
+X-Received: by 2002:aca:231a:0:b0:3c8:4d79:3c5d with SMTP id
+ 5614622812f47-3cdba016e1dmr1865053b6e.47.1716381995505; 
+ Wed, 22 May 2024 05:46:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEICjmkhP6pDtwie1lf2dTJ6u53mjn/PYn24UFbkM/mfrxJWyRstdijjksckEi8Hyb+aNurvw==
+X-Received: by 2002:aca:231a:0:b0:3c8:4d79:3c5d with SMTP id
+ 5614622812f47-3cdba016e1dmr1864966b6e.47.1716381993742; 
+ Wed, 22 May 2024 05:46:33 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
+ [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-792bf2a4290sm1385740485a.65.2024.05.22.05.46.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 May 2024 05:46:33 -0700 (PDT)
+Message-ID: <74401a75-3c07-4370-88df-50e325f8930b@redhat.com>
+Date: Wed, 22 May 2024 14:46:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6b41c718-7e02-4a3d-adf8-a56306ab68d9@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=smostafa@google.com; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rfcv2 17/17] tests/qtest: Add intel-iommu test
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20240522062313.453317-1-zhenzhong.duan@intel.com>
+ <20240522062313.453317-18-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240522062313.453317-18-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,198 +151,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
-
-On Mon, May 20, 2024 at 10:20:43AM +0200, Eric Auger wrote:
-> Hi Mostafa,
-> On 5/16/24 17:20, Mostafa Saleh wrote:
-> > Hi Eric,
-> >
-> > On Wed, May 15, 2024 at 03:48:05PM +0200, Eric Auger wrote:
-> >> Hi Mostafa,
-> >>
-> >> On 4/29/24 05:23, Mostafa Saleh wrote:
-> >>> This patch adds support for nested(combined) TLB entries.
-> >> space between nested and (.
-> > Will do.
-> >>> The main function combine_tlb() is not used here but in the next
-> >>> patches, but to simplify the patches it is introduced first.
-> >>>
-> >>> Main changes:
-> >>> 1) New entry added in the TLB, parent_perm, for nested TLB, holds the
-> >> s/entry/field, s/TLB/SMMUTLBEntry struct
-> > Will do.
-> >>>    stage-2 permission, this can be used to know the origin of a
-> >>>    permission fault from a cached entry as caching the “and” of the
-> >>>    permissions loses this information.
-> >>>
-> >>>    SMMUPTWEventInfo is used to hold information about PTW faults so
-> >>>    the event can be populated, the value of stage (which maps to S2
-> >>>    in the event) used to be set based on the current stage for TLB
-> >> I don't understand "(which maps to S2 in the event)". What do you mean?
-> >> This could be S1 or S2 depending on the active stage, no?
-> > Not really, if the IPA size is larger than S2 input size, this is
-> > considered stage-1 fault.
-> >
-> > For TLB permission fault, yes, that is how it is decided.
-> > However, with nesting, a permission fault from a cached entry can be
-> > from a stage-1 or stage-2, that’s why we now cache both and not just
-> > the combined permission, and the logic to set fault stage is modified
-> > accordingly.
-> I meant in smmu_translate() we initially had for permission fault
-> info->stage = cfg->stage whcih can be S1 or S2. Hence the fact I do not
-> understand the sentence
+On 22/05/2024 08.23, Zhenzhong Duan wrote:
+> Add the framework to test the intel-iommu device.
 > 
-> the value of stage (which maps to S2 in the event)
+> Currently only tested cap/ecap bits correctness in scalable
+> modern mode. Also tested cap/ecap bits consistency before
+> and after system reset.
 > 
-> I understand that with nested this computation needs to change because the permission can be linked to either the S1 or S2 stage.
-> Maybe that's just a matter or rephrasing?
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   MAINTAINERS                    |  1 +
+>   tests/qtest/intel-iommu-test.c | 63 ++++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build        |  1 +
+>   3 files changed, 65 insertions(+)
+>   create mode 100644 tests/qtest/intel-iommu-test.c
 > 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 5dab60bd04..f1ef6128c8 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3656,6 +3656,7 @@ S: Supported
+>   F: hw/i386/intel_iommu.c
+>   F: hw/i386/intel_iommu_internal.h
+>   F: include/hw/i386/intel_iommu.h
+> +F: tests/qtest/intel-iommu-test.c
+>   
+>   AMD-Vi Emulation
+>   S: Orphan
+> diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
+> new file mode 100644
+> index 0000000000..e1273bce14
+> --- /dev/null
+> +++ b/tests/qtest/intel-iommu-test.c
+> @@ -0,0 +1,63 @@
+> +/*
+> + * QTest testcase for intel-iommu
+> + *
+> + * Copyright (c) 2024 Intel, Inc.
+> + *
+> + * Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest-single.h"
 
-I see, that’s already how it is used now, I will rephrase it in case
-it is confusing.
+It's a little bit nicer to write new tests without libqtest-single.h (e.g. 
+in case you ever add migration tests later, you must not use anything that 
+uses a global state), so I'd recommend to use "qts = qtest_init(...)" 
+instead of qtest_start(...) and then to use the functions with the "qtest_" 
+prefix instead of the other functions from libqtest-single.h ... but it's 
+only a recommendation, up to you whether you want to respin your patch with 
+it or not.
 
-> 
-> >>>    permission faults, however with the parent_perm, it is now set
-> >>>    based on which perm has the missing permission
-> >>>
-> >>>    When nesting is not enabled it has the same value as perm which
-> >>>    doesn't change the logic.
-> >>>
-> >>> 2) As combined TLB implementation is used, the combination logic
-> >>>    chooses:
-> >>>    - tg and level from the entry which has the smallest addr_mask.
-> >> tbh I am scared bout swapping s1/s2 tg and level. In smmu_iotlb_lookup()
-> >> I see tt->granule_sz being used which is s1 data. I mean it is not
-> >> obvious to me this is correct. Could you maybe give more explanations
-> >> detailing why/how this is guaranted to work.
-> > As you mentioned the next patch reworks the lookup logic, I can reorder
-> > the 2 patches if that is better, please let me know what you think?
-> Yes if you manage to reorder that may be more logical because otherwise
-> it looks incorrect.
+Anyway:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
-Will do.
-> >
-> >> Can you give additional details about what s1+s2 combinations were tested?
-> > I tested with S1 and S2 4K pages
-> > S1 level = 3 and S2 level = 3
-> > S1 level = 2 and S2 level = 3
-> > S1 level = 3 and S2 level = 2
-> > S1 level = 1 and S2 level = 2
-> >
-> > And also tested with with S1 64K granule and S2 4K.
-> OK, I would suggest you mention that in the coverletter because it is
-> reassuring and the combination is not totally obvious - at least to me ;-) -
+Do you want me to pick this up through the qtest tree, or shall this go 
+through some x86-related tree instead?
 
-Will do.
+  Thomas
 
-Thanks,
-Mostafa
-> 
-> Eric
-> >
-> >>>    - Based on that the iova that would be cached is recalculated.
-> >>>    - Translated_addr is chosen from stage-2.
-> >>>
-> >>> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> >>> ---
-> >>>  hw/arm/smmu-common.c         | 32 ++++++++++++++++++++++++++++----
-> >>>  include/hw/arm/smmu-common.h |  1 +
-> >>>  2 files changed, 29 insertions(+), 4 deletions(-)
-> >>>
-> >>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> >>> index 21982621c0..0d6945fa54 100644
-> >>> --- a/hw/arm/smmu-common.c
-> >>> +++ b/hw/arm/smmu-common.c
-> >>> @@ -394,7 +394,7 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
-> >>>          tlbe->entry.translated_addr = gpa;
-> >>>          tlbe->entry.iova = iova & ~mask;
-> >>>          tlbe->entry.addr_mask = mask;
-> >>> -        tlbe->entry.perm = PTE_AP_TO_PERM(ap);
-> >>> +        tlbe->parent_perm = tlbe->entry.perm = PTE_AP_TO_PERM(ap);
-> >> nit: I would prefer on separate lines.
-> > Will do.
-> >
-> >>>          tlbe->level = level;
-> >>>          tlbe->granule = granule_sz;
-> >>>          return 0;
-> >>> @@ -515,7 +515,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
-> >>>          tlbe->entry.translated_addr = gpa;
-> >>>          tlbe->entry.iova = ipa & ~mask;
-> >>>          tlbe->entry.addr_mask = mask;
-> >>> -        tlbe->entry.perm = s2ap;
-> >>> +        tlbe->parent_perm = tlbe->entry.perm = s2ap;
-> >>>          tlbe->level = level;
-> >>>          tlbe->granule = granule_sz;
-> >>>          return 0;
-> >>> @@ -530,6 +530,27 @@ error:
-> >>>      return -EINVAL;
-> >>>  }
-> >>>  
-> >>> +/* combine 2 TLB entries and return in tlbe in nested config. */
-> >> suggestion: combine S1 and S2 TLB entries into a single entry. As a
-> >> result the S1 entry is overriden with combined data.
-> > Will do.
-> >
-> >>> +static void __attribute__((unused)) combine_tlb(SMMUTLBEntry *tlbe,
-> >>> +                                                SMMUTLBEntry *tlbe_s2,
-> >>> +                                                dma_addr_t iova,
-> >>> +                                                SMMUTransCfg *cfg)
-> >>> +{
-> >>> +    if (tlbe_s2->entry.addr_mask < tlbe->entry.addr_mask) {
-> >>> +        tlbe->entry.addr_mask = tlbe_s2->entry.addr_mask;
-> >>> +        tlbe->granule = tlbe_s2->granule;
-> >>> +        tlbe->level = tlbe_s2->level;
-> >>> +    }
-> >>> +
-> >>> +    tlbe->entry.translated_addr = CACHED_ENTRY_TO_ADDR(tlbe_s2,
-> >>> +                                    tlbe->entry.translated_addr);
-> >>> +
-> >>> +    tlbe->entry.iova = iova & ~tlbe->entry.addr_mask;
-> >>> +    /* parent_perm has s2 perm while perm has s1 perm. */
-> >>  suggestion: while perm keeps s1 perm.
-> >>
-> > Will do.
-> >
-> > Thanks,
-> > Mostafa
-> >>> +    tlbe->parent_perm = tlbe_s2->entry.perm;
-> >>> +    return;
-> >>> +}
-> >>> +
-> >>>  /**
-> >>>   * smmu_ptw - Walk the page tables for an IOVA, according to @cfg
-> >>>   *
-> >>> @@ -607,9 +628,12 @@ SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
-> >>>  
-> >>>      cached_entry = smmu_iotlb_lookup(bs, cfg, &tt_combined, aligned_addr);
-> >>>      if (cached_entry) {
-> >>> -        if ((flag & IOMMU_WO) && !(cached_entry->entry.perm & IOMMU_WO)) {
-> >>> +        if ((flag & IOMMU_WO) && !(cached_entry->entry.perm &
-> >>> +            cached_entry->parent_perm & IOMMU_WO)) {
-> >>>              info->type = SMMU_PTW_ERR_PERMISSION;
-> >>> -            info->stage = cfg->stage;
-> >>> +            info->stage = !(cached_entry->entry.perm & IOMMU_WO) ?
-> >>> +                          SMMU_STAGE_1 :
-> >>> +                          SMMU_STAGE_2;
-> >>>              return NULL;
-> >>>          }
-> >>>          return cached_entry;
-> >>> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> >>> index 09d3b9e734..1db566d451 100644
-> >>> --- a/include/hw/arm/smmu-common.h
-> >>> +++ b/include/hw/arm/smmu-common.h
-> >>> @@ -77,6 +77,7 @@ typedef struct SMMUTLBEntry {
-> >>>      IOMMUTLBEntry entry;
-> >>>      uint8_t level;
-> >>>      uint8_t granule;
-> >>> +    IOMMUAccessFlags parent_perm;
-> >>>  } SMMUTLBEntry;
-> >>>  
-> >>>  /* Stage-2 configuration. */
-> >> Thanks
-> >>
-> >> Eric
-> >>
-> 
 
