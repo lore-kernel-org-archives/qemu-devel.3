@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACFA1C25B79
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 15:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D17C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 15:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9oAP-0004Uf-CR; Wed, 22 May 2024 11:46:13 -0400
+	id 1s9oGU-00076c-Ep; Wed, 22 May 2024 11:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s9oAN-0004Si-AW
- for qemu-devel@nongnu.org; Wed, 22 May 2024 11:46:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s9oGR-00076J-3m
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 11:52:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s9oAL-00012H-NM
- for qemu-devel@nongnu.org; Wed, 22 May 2024 11:46:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s9oGP-0001iz-Gu
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 11:52:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716392769;
+ s=mimecast20190719; t=1716393144;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dohSD+xMyXX8VQW8PMZIyNH8UCTgtLWA68tTvl5P8RA=;
- b=AIOUvoZv2i9Q473lEBYLFyvXE2NItadXWH3US3NjcxMAVV4EHWdKUNXjASwXuHgcCW4j7U
- 7/6ZYT4h1JsKzymUKjNhYlB8FbVH6jSjXtYK/mvdrEfMkmIAvZM8XePzl5n0gMKIzTcmLz
- qHe2awv4oLH5rk5ypBmCm0xO0omNZtU=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=l/dRuHk4hrxVVqLC/0UvxFQh+tso15+uvsK4/B574w4=;
+ b=eO5HnoWp8t3t+xRIqE5vcaMiH7UWMYvGHp05BGP8QiMCeBFfMm0fglZc5G5K/G+ZN9B9HW
+ eEk1Pgl6sQJqoPadyd8cX+zuW76723VELtGBwHQF2j/NQA9ye6QoYVHdGjdnIvzcvHV/Q9
+ yP66iJliAZuynsAYUeN6iBG7+MLmJ5s=
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-XiRMpllsONifLt5ESEQBLw-1; Wed, 22 May 2024 11:46:07 -0400
-X-MC-Unique: XiRMpllsONifLt5ESEQBLw-1
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-de61a10141fso20531613276.1
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 08:46:07 -0700 (PDT)
+ us-mta-283-0KIv9ZgPMBWcXBP7W3Gfhw-1; Wed, 22 May 2024 11:52:22 -0400
+X-MC-Unique: 0KIv9ZgPMBWcXBP7W3Gfhw-1
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-47f072daffdso1432729137.3
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 08:52:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716392767; x=1716997567;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dohSD+xMyXX8VQW8PMZIyNH8UCTgtLWA68tTvl5P8RA=;
- b=nBjPVBVp8v5UEhG5PRfQAlROZWaZA6OzvX/2OnxihBYmX3g5C35RX05nQaenJyH0cq
- gg6LZJA+n8F8TdO/snUVuDLVraXdunK0KbytKtNAiG6f+96vhglQt4E1Oht5N5MJQmiJ
- Kc5ufxYffHQX5O5Oaj4z4NgUpVVengJ5rYFli0m93OZK05ok+tTh3WVoxtSiXXyZjEgc
- uQIDdzZunjAaCIHHtc8zRgJM/F32OpttjRnS61wYiL7iEKKbgFEPKEOmcUmzjk52q/gc
- puZP9+kZm0br4HqBMccMPPBc0U/2m7k3e4NRQlv111wotk+3DJwxhcKsyKxBKWVaLC9Z
- 7L3Q==
-X-Gm-Message-State: AOJu0YxNKiD8UZZ9tWFzHNQBboQhNUrPmrFLgmmJM0ft1lXeOnZMFr3p
- 62RBuWDkKWlOmmekn65GeAifTor209aOVbGSOs+O5iix33+en+uCtuQMLo9K5UyQTk6jW7agGPj
- DDnlEMMzucG2J5BG1xoqvitlWZeneyHPPsodIYgRFDQQ6RCmm0BYUjYwY5Co7vmt7oTAviCnHni
- kZKmjBO8W/Y9GahVM+qMHAb3tFHA4=
-X-Received: by 2002:a25:add5:0:b0:de0:de50:d6d4 with SMTP id
- 3f1490d57ef6-df4e0a6e798mr2683754276.8.1716392767259; 
- Wed, 22 May 2024 08:46:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjVEJ7I8YyfrTgHsOl3Et6/mGrY9eCItONq3gG92V0rIP1Z6NuZLnO4gcTlmJVyMvFE4mwGYr59PZjgbp9vHo=
-X-Received: by 2002:a25:add5:0:b0:de0:de50:d6d4 with SMTP id
- 3f1490d57ef6-df4e0a6e798mr2683635276.8.1716392765393; Wed, 22 May 2024
- 08:46:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716393142; x=1716997942;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l/dRuHk4hrxVVqLC/0UvxFQh+tso15+uvsK4/B574w4=;
+ b=MayeHs0DyRn7NYYnd3x1/qjnMnz5s+b/QTDOVeZUqFhoIXmqR88ycusk+wU7OLtxmc
+ NWvvnFZbmG6EfC6g+n10j5ONapJ0wI8/T+OyXeqyRo3KuX5z/OeXnGnQYalgsBhGzHdg
+ 1rnDmXJYv02Ove55I4ZVOZ3AicormRHIcIu2rYjKtL4n3ATwhd1jtgFriSvwEBroBzt7
+ kTtO9kG2DzYVLK8i8qk4QOBseyZCIfVbrPRXXaKJgtbuPtKsJ0lXhxnappQBuUAQBQzT
+ hw/fkyPDBRKvnIFCZmP/tcqldTAte1tYd4WLNWjvFLTc9A8Y5reWn3JepEpFu5S5Slr6
+ +zTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxJnXnnrgxNsX0lf3bbucmvLPuNi4QAZ3q/2ouA/2h+iPibww6RaFcyggd2qbKzYeUPw2mgk8l8kuhDVqywT3Rw4yKJYo=
+X-Gm-Message-State: AOJu0Yz1IjROvLDDDiUiArEi5SrCbCmXrmUi8zSKlRpZrek/7svFL4vT
+ OtGEaEH61T6EsY0dZf3LhmaPcWQvzmQbq1pBRkibcBEaAB+53CSYpfNP38Bl/u8iMEbKJY1iiwP
+ LnHQ4NaCn+K72S63krf5TiBRHm9l3XskeVRD8TRtA6cVBRg4ht4rz
+X-Received: by 2002:a05:6102:2848:b0:47b:b69b:8866 with SMTP id
+ ada2fe7eead31-4890a16a3b3mr2436644137.3.1716393141866; 
+ Wed, 22 May 2024 08:52:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUbZS5AkHil/Tp+g1Md9zOuV8tquFaD3eh5SEd2eBxYpPri3CXMdnRFueoz9TsaopLhyEZ+g==
+X-Received: by 2002:a05:6102:2848:b0:47b:b69b:8866 with SMTP id
+ ada2fe7eead31-4890a16a3b3mr2436614137.3.1716393141111; 
+ Wed, 22 May 2024 08:52:21 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43f97a6c7dfsm19261021cf.27.2024.05.22.08.52.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 May 2024 08:52:20 -0700 (PDT)
+Date: Wed, 22 May 2024 11:52:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] tests/qtest/migration-test: Fix the check for a
+ successful run of analyze-migration.py
+Message-ID: <Zk4Usr2lwCuN-jMl@x1n>
+References: <20240522092301.421883-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20240520130048.1483177-1-jonah.palmer@oracle.com>
- <20240520130048.1483177-3-jonah.palmer@oracle.com>
-In-Reply-To: <20240520130048.1483177-3-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 22 May 2024 17:45:29 +0200
-Message-ID: <CAJaqyWePFXKm9qSjczbWyacadd7Cxv2NxEvM1qT=UYNi_VW7qg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240522092301.421883-1-thuth@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,89 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 20, 2024 at 3:01=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
-> Add VIRTIO_F_IN_ORDER feature support in virtqueue_split_pop and
-> virtqueue_packed_pop.
->
-> VirtQueueElements popped from the available/descritpor ring are added to
-> the VirtQueue's used_elems array in-order and in the same fashion as
-> they would be added the used and descriptor rings, respectively.
->
-> This will allow us to keep track of the current order, what elements
-> have been written, as well as an element's essential data after being
-> processed.
->
-> Tested-by: Lei Yang <leiyang@redhat.com>
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> ---
->  hw/virtio/virtio.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 893a072c9d..7456d61bc8 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -1506,7 +1506,7 @@ static void *virtqueue_alloc_element(size_t sz, uns=
-igned out_num, unsigned in_nu
->
->  static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
->  {
-> -    unsigned int i, head, max;
-> +    unsigned int i, head, max, prev_avail_idx;
->      VRingMemoryRegionCaches *caches;
->      MemoryRegionCache indirect_desc_cache;
->      MemoryRegionCache *desc_cache;
-> @@ -1539,6 +1539,8 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
-e_t sz)
->          goto done;
->      }
->
-> +    prev_avail_idx =3D vq->last_avail_idx;
-> +
->      if (!virtqueue_get_head(vq, vq->last_avail_idx++, &head)) {
->          goto done;
->      }
-> @@ -1630,6 +1632,12 @@ static void *virtqueue_split_pop(VirtQueue *vq, si=
-ze_t sz)
->          elem->in_sg[i] =3D iov[out_num + i];
->      }
->
-> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+On Wed, May 22, 2024 at 11:23:01AM +0200, Thomas Huth wrote:
+> If analyze-migration.py cannot be run or crashes, the error is currently
+> ignored since the code only checks for nonzero values in case the child
+> exited properly. For example, if you run the test with a non-existing
+> Python interpreter, it still succeeds:
+> 
+>  $ PYTHON=wrongpython QTEST_QEMU_BINARY=./qemu-system-x86_64 tests/qtest/migration-test
+>  ...
+>  # Running /x86_64/migration/analyze-script
+>  # Using machine type: pc-q35-9.1
+>  # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name source,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/src_serial -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1   -uuid 11111111-1111-1111-1111-111111111111  -accel qtest
+>  # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name target,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/dest_serial -incoming tcp:127.0.0.1:0 -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1     -accel qtest
+>  **
+>  ERROR:../../devel/qemu/tests/qtest/migration-test.c:1603:test_analyze_script: code should not be reached
+>  migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
+>  migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
+>  ok 2 /x86_64/migration/analyze-script
+>  ...
+> 
+> Let's better fail the test in case the child did not exit properly, too.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-I think vq->last_avail_idx - 1 could be more clear here.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Either way,
-
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-> +        vq->used_elems[prev_avail_idx].index =3D elem->index;
-> +        vq->used_elems[prev_avail_idx].len =3D elem->len;
-> +        vq->used_elems[prev_avail_idx].ndescs =3D elem->ndescs;
-> +    }
-> +
->      vq->inuse++;
->
->      trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
-> @@ -1758,6 +1766,13 @@ static void *virtqueue_packed_pop(VirtQueue *vq, s=
-ize_t sz)
->
->      elem->index =3D id;
->      elem->ndescs =3D (desc_cache =3D=3D &indirect_desc_cache) ? 1 : elem=
-_entries;
-> +
-> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
-> +        vq->used_elems[vq->last_avail_idx].index =3D elem->index;
-> +        vq->used_elems[vq->last_avail_idx].len =3D elem->len;
-> +        vq->used_elems[vq->last_avail_idx].ndescs =3D elem->ndescs;
-> +    }
-> +
->      vq->last_avail_idx +=3D elem->ndescs;
->      vq->inuse +=3D elem->ndescs;
->
-> --
-> 2.39.3
->
+-- 
+Peter Xu
 
 
