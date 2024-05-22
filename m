@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD38C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B34C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9dov-0001XA-5s; Wed, 22 May 2024 00:43:21 -0400
+	id 1s9doL-0001LK-26; Wed, 22 May 2024 00:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9dot-0001WQ-4f
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:19 -0400
+ id 1s9doJ-0001Kp-5X
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:43 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9dor-0005wI-CU
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:18 -0400
+ id 1s9doG-0005sK-9d
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716352998; x=1747888998;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=7eFZrjbfA5oNwZy5OE7kDDJBTgUaqB10QV45V02DIlg=;
- b=SRDmOiJnRUY69P0NEdUgar0WFCZ3VoOzFG4HV+1WNjNXE9zozDvFnniU
- ZqmgECIntQxFIi82OwlXBVBGC1LgMSGroMKQT+4B6JRBA4KyAGCfvf8Wn
- tN370EJx9kcgv5nE7lW635xFdeGzYBbTwLWRdrQZ7UM3K3nngVl6t9yF7
- lOtUw0jKBJ3VQozFY2vZLmbrCkpyywvhQGWQrrOh1oHotIwfLs/RZjT9e
- MmmCjzCXQ19v8gukKhAj5zvOwlq7/lKezEZP5PUhBCAov4RdyFXrmgimB
- 1Z+4H5Xu7qF3TsH72trrVAVatzzk3fjJj31vcR7J5vjfxk7EqJJGB+kU/ A==;
-X-CSE-ConnectionGUID: 8lCcwKGvQ6i95knVbtLhuA==
-X-CSE-MsgGUID: 0OJsuZLKRjOCRxr1N7p2sA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994173"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994173"
+ t=1716352961; x=1747888961;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=y66cScg/UukbHTRP/VO+iec9E/PWgL+SYZtMT6FX0CE=;
+ b=XYdIQrC+tPYBu0ZlUC3ThKcDj55dURwgR2nin3plRras7oMwQ1k2QDW1
+ 0q2MoIH0mx1kbV+Yke/wb0NwQyXmuW9KhR8Y4pGY9myUyuj2ef5yohfJ6
+ F9pmaodMuU8i0MYIzxnIx7SKz5gsEebiSfNL3HE8wC/s1N7WHG7MD+NGB
+ mu7uq6CM0bOFYhNJNh2lfwHnbE4RrYdz9zNP6YGLYLoY8DPD/YvvwD7T4
+ w3YTneDhpE6IdoH6LlDc6L9CQHV5JTBAQge+pwGr5k5vMRcZwuFg0ul8G
+ k0YQuPbZhtb1H9BNiaOIYmzBx43pLL6zO5MsHmEIbcgSbzGYon3BTQge5 g==;
+X-CSE-ConnectionGUID: xj/XyzKpRZWNjpvzgONWkQ==
+X-CSE-MsgGUID: 2V0Nz+0vTxC7vTWkGShV6A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994108"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994108"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:43:06 -0700
-X-CSE-ConnectionGUID: exnLu96UQOuDVLpN7Henkw==
-X-CSE-MsgGUID: ekNCawyETcqSezmqCSgnIQ==
+ 21 May 2024 21:42:35 -0700
+X-CSE-ConnectionGUID: tYSMj8+TSB2dAtYZCK+fjg==
+X-CSE-MsgGUID: 8YYYJbOMQN2p3AJNTdAEmg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683750"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683599"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:43:04 -0700
+ 21 May 2024 21:42:33 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 12/20] vfio/pci: Make vfio_populate_vga() return bool
-Date: Wed, 22 May 2024 12:40:07 +0800
-Message-Id: <20240522044015.412951-13-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 00/20] VFIO: misc cleanups part2
+Date: Wed, 22 May 2024 12:39:55 +0800
+Message-Id: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
-References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,94 +81,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+Hi
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/pci.h |  2 +-
- hw/vfio/igd.c |  2 +-
- hw/vfio/pci.c | 11 +++++------
- 3 files changed, 7 insertions(+), 8 deletions(-)
+This is the last round of cleanup series to change functions in hw/vfio/
+to return bool when the error is passed through errp parameter.
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index a5ac9efd4b..7914f019d5 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -225,7 +225,7 @@ bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
- int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
-                                     struct vfio_pci_hot_reset_info **info_p);
- 
--int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
-+bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
- 
- int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-                                struct vfio_region_info *info,
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index b31ee79c60..ffe57c5954 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -478,7 +478,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-      * try to enable it.  Probably shouldn't be using legacy mode without VGA,
-      * but also no point in us enabling VGA if disabled in hardware.
-      */
--    if (!(gmch & 0x2) && !vdev->vga && vfio_populate_vga(vdev, &err)) {
-+    if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
-         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         error_report("IGD device %s failed to enable VGA access, "
-                      "legacy mode disabled", vdev->vbasedev.name);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 7f35cb8a29..ab8f74299e 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2670,7 +2670,7 @@ static VFIODeviceOps vfio_pci_ops = {
-     .vfio_load_config = vfio_pci_load_config,
- };
- 
--int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-+bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     struct vfio_region_info *reg_info;
-@@ -2681,7 +2681,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-         error_setg_errno(errp, -ret,
-                          "failed getting region info for VGA region index %d",
-                          VFIO_PCI_VGA_REGION_INDEX);
--        return ret;
-+        return false;
-     }
- 
-     if (!(reg_info->flags & VFIO_REGION_INFO_FLAG_READ) ||
-@@ -2691,7 +2691,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-                    (unsigned long)reg_info->flags,
-                    (unsigned long)reg_info->size);
-         g_free(reg_info);
--        return -EINVAL;
-+        return false;
-     }
- 
-     vdev->vga = g_new0(VFIOVGA, 1);
-@@ -2735,7 +2735,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-                      &vdev->vga->region[QEMU_PCI_VGA_IO_LO].mem,
-                      &vdev->vga->region[QEMU_PCI_VGA_IO_HI].mem);
- 
--    return 0;
-+    return true;
- }
- 
- static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-@@ -2798,8 +2798,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-     g_free(reg_info);
- 
-     if (vdev->features & VFIO_FEATURE_ENABLE_VGA) {
--        ret = vfio_populate_vga(vdev, errp);
--        if (ret) {
-+        if (!vfio_populate_vga(vdev, errp)) {
-             error_append_hint(errp, "device does not support "
-                               "requested feature x-vga\n");
-             return false;
+The first round is at 
+https://lists.gnu.org/archive/html/qemu-devel/2024-05/msg01147.html
+
+I see Cédric is also working on some migration stuff cleanup,
+so didn't touch migration.c, but all other files in hw/vfio/ are cleanup now.
+
+Patch1 and patch20 are fix patch, all others are cleanup patches.
+
+Test done on x86 platform:
+vfio device hotplug/unplug with different backend
+reboot
+
+This series is rebased to https://github.com/legoater/qemu/tree/vfio-next
+
+Thanks
+Zhenzhong
+
+Changelog:
+v2:
+- add patch17 to use g_autofree in all callsite of vfio_get_region_info() (Cédric)
+- add patch18 to use g_autofree in vfio_probe_igd_bar4_quirk()
+- add patch19 to drop local err in vfio_ccw_realize() (Cédric)
+- add patch20 to fix a bug I just found
+- add R-B
+
+Zhenzhong Duan (20):
+  vfio/display: Fix error path in call site of ramfb_setup()
+  vfio/display: Make vfio_display_*() return bool
+  vfio/helpers: Use g_autofree in vfio_set_irq_signaling()
+  vfio/helpers: Make vfio_set_irq_signaling() return bool
+  vfio/helpers: Make vfio_device_get_name() return bool
+  vfio/platform: Make vfio_populate_device() and vfio_base_device_init()
+    return bool
+  vfio/ccw: Make vfio_ccw_get_region() return a bool
+  vfio/pci: Make vfio_intx_enable_kvm() return a bool
+  vfio/pci: Make vfio_pci_relocate_msix() and vfio_msix_early_setup()
+    return a bool
+  vfio/pci: Make vfio_populate_device() return a bool
+  vfio/pci: Make vfio_intx_enable() return bool
+  vfio/pci: Make vfio_populate_vga() return bool
+  vfio/pci: Make capability related functions return bool
+  vfio/pci: Use g_autofree for vfio_region_info pointer
+  vfio/pci-quirks: Make vfio_pci_igd_opregion_init() return bool
+  vfio/pci-quirks: Make vfio_add_*_cap() return bool
+  vfio: Use g_autofree in all call site of vfio_get_region_info()
+  vfio/igd: Use g_autofree in vfio_probe_igd_bar4_quirk()
+  vfio/ccw: Drop local @err in vfio_ccw_realize()
+  vfio/ccw: Fix the missed unrealize() call in error path
+
+ hw/vfio/pci.h                 |  12 +-
+ include/hw/vfio/vfio-common.h |   6 +-
+ hw/vfio/ap.c                  |  10 +-
+ hw/vfio/ccw.c                 |  47 ++++---
+ hw/vfio/display.c             |  22 +--
+ hw/vfio/helpers.c             |  36 ++---
+ hw/vfio/igd.c                 |  35 +++--
+ hw/vfio/pci-quirks.c          |  50 ++++---
+ hw/vfio/pci.c                 | 243 ++++++++++++++++------------------
+ hw/vfio/platform.c            |  61 ++++-----
+ 10 files changed, 241 insertions(+), 281 deletions(-)
+
 -- 
 2.34.1
 
