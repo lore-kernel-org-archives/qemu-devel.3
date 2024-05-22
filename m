@@ -4,71 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA6AC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 07:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEC4C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 07:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9gFn-0003h0-HL; Wed, 22 May 2024 03:19:15 -0400
+	id 1s9gHI-0005It-M6; Wed, 22 May 2024 03:20:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s9gFk-0003gc-If
- for qemu-devel@nongnu.org; Wed, 22 May 2024 03:19:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s9gFh-00070o-Af
- for qemu-devel@nongnu.org; Wed, 22 May 2024 03:19:12 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Bx369fnE1mQ5MCAA--.1990S3;
- Wed, 22 May 2024 15:18:55 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxZcVcnE1mAD0FAA--.4435S3; 
- Wed, 22 May 2024 15:18:55 +0800 (CST)
-Subject: Re: [PATCH v3 3/6] hw/loongarch: Refine fwcfg memory map
-To: Bibo Mao <maobibo@loongson.cn>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240515093927.3453674-1-maobibo@loongson.cn>
- <20240515093927.3453674-4-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <d016a31c-76fb-458e-9d75-73cefe9db0c5@loongson.cn>
-Date: Wed, 22 May 2024 15:18:53 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9gHH-0005Gm-AY
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 03:20:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9gHF-0007S9-Do
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 03:20:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716362444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MmoTuLmNiln7XWt3wnZoe4SX4bvQ2heESeO6ilAj+AE=;
+ b=I95ZSFFf3wy77uyZ8JlkVeeDcgINAILxkBdAYigfe005DZTLGWKkrQRy8pKDXSYw9X8vUs
+ OKzDlzbqIhNoSXwYLIFWXAl8ZACWxE3QRoZEIC3qPrsCeD3fympyRPoaxDAQF1DaqNt8s7
+ KOmlFBZCJldhHcphh/SiB2cJCYaGz1A=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-449-fvRfPg_fMT2QOmns2CusYA-1; Wed, 22 May 2024 03:20:42 -0400
+X-MC-Unique: fvRfPg_fMT2QOmns2CusYA-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6a1530209deso11435156d6.1
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 00:20:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716362442; x=1716967242;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MmoTuLmNiln7XWt3wnZoe4SX4bvQ2heESeO6ilAj+AE=;
+ b=Bmy6Gr2HIISfYGllGqO3R29N/fhYmICCgOH6Nc9VULU9BjYQXDo3M7A7AMmoTrllFA
+ v1vagYWxoN8jSvIwBi0ySmM5+rjP0h8VxYsU9JWstBbf09KNBmRwq/JTlIxBsVkvEwRg
+ +nFvStVaDyeuc2KKhl8HszNgytKO3AEYUY6P3CgvKKNdBBMqIA1tHFDmRTWB43tNRRBb
+ rmQdOytIDTGYrwVE90Pd9QI4mi8rXLTYMJzSqD5JcfWUH6L5uhpFyMMEnvG41H0KXbTJ
+ clhQ9o2KA819uCbJOwUMXjOdsosBt3aPYg/Ml8XHppIsOZIqXJ/Nkxg8YHaHA4zevGG3
+ EByQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgdncnXB5hCr3kKEGO0MgdnKlzDBfy41QAP5cB4kdr6BoEjHuoVf9xvu7rqXPDF8EvL4ztN4XGycXyTIFLvO2le3pU998=
+X-Gm-Message-State: AOJu0YwcDNNOsIwsxTsfuxEcShQE6VrmOapLDY6NLslLGTPWMmasS88v
+ yayPYSeBdcUT/MjEiMgt07H2Q6v1tm51rqrFsFSHTID2XotZAFFXZEIoLOx5HSgTmHxVCfWlvgx
+ h1HKH2Fp/14t0C96xmEKRADT/MSXL4TXDogrCJwWZMWWta2oGscHt
+X-Received: by 2002:a05:6214:1c82:b0:6a0:f0eb:1679 with SMTP id
+ 6a1803df08f44-6a84202b1d9mr198067176d6.8.1716362441724; 
+ Wed, 22 May 2024 00:20:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOASzkGHJZSwU0MDuWPvNmE9H6baBVq9KVLOk//1k7K7hc7NPBaXn0aWM+dz7OVlhXsCxaZg==
+X-Received: by 2002:a05:6214:1c82:b0:6a0:f0eb:1679 with SMTP id
+ 6a1803df08f44-6a84202b1d9mr198066926d6.8.1716362441191; 
+ Wed, 22 May 2024 00:20:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6a8c2d39d7esm39459936d6.95.2024.05.22.00.20.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 May 2024 00:20:39 -0700 (PDT)
+Message-ID: <cc246f70-e877-4d14-b0eb-fa210f354be3@redhat.com>
+Date: Wed, 22 May 2024 09:20:37 +0200
 MIME-Version: 1.0
-In-Reply-To: <20240515093927.3453674-4-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 17/20] vfio: Use g_autofree in all call site of
+ vfio_get_region_info()
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
+References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
+ <20240522044015.412951-18-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240522044015.412951-18-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8CxZcVcnE1mAD0FAA--.4435S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWF4xtF17Ar17AF17Kw4UAwc_yoW5Kw4xpF
- 4SqFsagw48JF9rGF1fKa4UWas8Ar1kKay29FW7CF1vkrn7Cr109F48Jw1qqFWkCry8AFy0
- qF4qkrZxu3WYqrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
- VUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-0.405, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,118 +105,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/5/15 ÏÂÎç5:39, Bibo Mao Ð´µÀ:
-> Memory map table for fwcfg is used for UEFI BIOS, UEFI BIOS uses the first
-> entry from fwcfg memory map as the first memory HOB, the second memory HOB
-> will be used if the first memory HOB is used up.
->
-> Memory map table for fwcfg does not care about numa node, however in
-> generic the first memory HOB is part of numa node0, so that runtime
-> memory of UEFI which is allocated from the first memory HOB is located
-> at numa node0.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+On 5/22/24 06:40, Zhenzhong Duan wrote:
+> There are some exceptions when pointer to vfio_region_info is reused.
+> In that case, the pointed memory is freed manually.
+> 
+> Suggested-by: CÃ©dric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Thanks.
-Song Gao
->   hw/loongarch/virt.c | 60 ++++++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 57 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index c996305d87..b67d691fa5 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -912,6 +912,62 @@ static const MemoryRegionOps virt_iocsr_misc_ops = {
->       },
->   };
->   
-> +static void fw_cfg_add_memory(MachineState *ms)
-> +{
-> +    hwaddr base, size, ram_size, gap;
-> +    int nb_numa_nodes, nodes;
-> +    NodeInfo *numa_info;
-> +
-> +    ram_size = ms->ram_size;
-> +    base = VIRT_LOWMEM_BASE;
-> +    gap = VIRT_LOWMEM_SIZE;
-> +    nodes = nb_numa_nodes = ms->numa_state->num_nodes;
-> +    numa_info = ms->numa_state->nodes;
-> +    if (!nodes) {
-> +        nodes = 1;
-> +    }
-> +
-> +    /* add fw_cfg memory map of node0 */
-> +    if (nb_numa_nodes) {
-> +        size = numa_info[0].node_mem;
-> +    } else {
-> +        size = ram_size;
-> +    }
-> +
-> +    if (size >= gap) {
-> +        memmap_add_entry(base, gap, 1);
-> +        size -= gap;
-> +        base = VIRT_HIGHMEM_BASE;
-> +        gap = ram_size - VIRT_LOWMEM_SIZE;
-> +    }
-> +
-> +    if (size) {
-> +        memmap_add_entry(base, size, 1);
-> +        base += size;
-> +    }
-> +
-> +    if (nodes < 2) {
-> +        return;
-> +    }
-> +
-> +    /* add fw_cfg memory map of other nodes */
-> +    size = ram_size - numa_info[0].node_mem;
-> +    gap  = VIRT_LOWMEM_BASE + VIRT_LOWMEM_SIZE;
-> +    if (base < gap && (base + size) > gap) {
-> +        /*
-> +         * memory map for the maining nodes splited into two part
-> +         *   lowram:  [base, +(gap - base))
-> +         *   highram: [VIRT_HIGHMEM_BASE, +(size - (gap - base)))
-> +         */
-> +        memmap_add_entry(base, gap - base, 1);
-> +        size -= gap - base;
-> +        base = VIRT_HIGHMEM_BASE;
-> +    }
-> +
-> +   if (size)
-> +        memmap_add_entry(base, size, 1);
-> +}
-> +
->   static void virt_init(MachineState *machine)
+
+Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/vfio/helpers.c |  7 ++-----
+>   hw/vfio/igd.c     |  5 ++---
+>   hw/vfio/pci.c     | 13 +++----------
+>   3 files changed, 7 insertions(+), 18 deletions(-)
+> 
+> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+> index 4b079dc383..27ea26aa48 100644
+> --- a/hw/vfio/helpers.c
+> +++ b/hw/vfio/helpers.c
+> @@ -343,7 +343,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>                         int index, const char *name)
 >   {
->       LoongArchCPU *lacpu;
-> @@ -958,9 +1014,9 @@ static void virt_init(MachineState *machine)
->       }
->       fdt_add_cpu_nodes(lvms);
->       fdt_add_memory_nodes(machine);
-> +    fw_cfg_add_memory(machine);
+> -    struct vfio_region_info *info;
+> +    g_autofree struct vfio_region_info *info = NULL;
+>       int ret;
 >   
->       /* Node0 memory */
-> -    memmap_add_entry(VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 1);
->       memory_region_init_alias(&lvms->lowmem, NULL, "loongarch.node0.lowram",
->                                machine->ram, offset, VIRT_LOWMEM_SIZE);
->       memory_region_add_subregion(address_space_mem, phyAddr, &lvms->lowmem);
-> @@ -973,7 +1029,6 @@ static void virt_init(MachineState *machine)
->           highram_size = ram_size - VIRT_LOWMEM_SIZE;
+>       ret = vfio_get_region_info(vbasedev, index, &info);
+> @@ -376,8 +376,6 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>           }
 >       }
->       phyAddr = VIRT_HIGHMEM_BASE;
-> -    memmap_add_entry(phyAddr, highram_size, 1);
->       memory_region_init_alias(&lvms->highmem, NULL, "loongarch.node0.highram",
->                                 machine->ram, offset, highram_size);
->       memory_region_add_subregion(address_space_mem, phyAddr, &lvms->highmem);
-> @@ -988,7 +1043,6 @@ static void virt_init(MachineState *machine)
->           memory_region_init_alias(nodemem, NULL, ramName, machine->ram,
->                                    offset,  numa_info[i].node_mem);
->           memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
-> -        memmap_add_entry(phyAddr, numa_info[i].node_mem, 1);
->           offset += numa_info[i].node_mem;
->           phyAddr += numa_info[i].node_mem;
+>   
+> -    g_free(info);
+> -
+>       trace_vfio_region_setup(vbasedev->name, index, name,
+>                               region->flags, region->fd_offset, region->size);
+>       return 0;
+> @@ -594,14 +592,13 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
+>   
+>   bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
+>   {
+> -    struct vfio_region_info *info = NULL;
+> +    g_autofree struct vfio_region_info *info = NULL;
+>       bool ret = false;
+>   
+>       if (!vfio_get_region_info(vbasedev, region, &info)) {
+>           if (vfio_get_region_info_cap(info, cap_type)) {
+>               ret = true;
+>           }
+> -        g_free(info);
 >       }
+>   
+>       return ret;
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 402fc5ce1d..1e79202f2b 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -367,8 +367,8 @@ static const MemoryRegionOps vfio_igd_index_quirk = {
+>   
+>   void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>   {
+> -    struct vfio_region_info *rom = NULL, *opregion = NULL,
+> -                            *host = NULL, *lpc = NULL;
+> +    g_autofree struct vfio_region_info *rom = NULL;
+> +    struct vfio_region_info *opregion = NULL, *host = NULL, *lpc = NULL;
+>       VFIOQuirk *quirk;
+>       VFIOIGDQuirk *igd;
+>       PCIDevice *lpc_bridge;
+> @@ -609,7 +609,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, ggms_mb + gms_mb);
+>   
+>   out:
+> -    g_free(rom);
+>       g_free(opregion);
+>       g_free(host);
+>       g_free(lpc);
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 35ad9b582f..74a79bdf61 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -879,7 +879,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+>   
+>   static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>   {
+> -    struct vfio_region_info *reg_info;
+> +    g_autofree struct vfio_region_info *reg_info = NULL;
+>       uint64_t size;
+>       off_t off = 0;
+>       ssize_t bytes;
+> @@ -897,8 +897,6 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>       vdev->rom_size = size = reg_info->size;
+>       vdev->rom_offset = reg_info->offset;
+>   
+> -    g_free(reg_info);
+> -
+>       if (!vdev->rom_size) {
+>           vdev->rom_read_failed = true;
+>           error_report("vfio-pci: Cannot read device rom at "
+> @@ -2668,7 +2666,7 @@ static VFIODeviceOps vfio_pci_ops = {
+>   bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    struct vfio_region_info *reg_info;
+> +    g_autofree struct vfio_region_info *reg_info = NULL;
+>       int ret;
+>   
+>       ret = vfio_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
+> @@ -2685,7 +2683,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>           error_setg(errp, "unexpected VGA info, flags 0x%lx, size 0x%lx",
+>                      (unsigned long)reg_info->flags,
+>                      (unsigned long)reg_info->size);
+> -        g_free(reg_info);
+>           return false;
+>       }
+>   
+> @@ -2694,8 +2691,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>       vdev->vga->fd_offset = reg_info->offset;
+>       vdev->vga->fd = vdev->vbasedev.fd;
+>   
+> -    g_free(reg_info);
+> -
+>       vdev->vga->region[QEMU_PCI_VGA_MEM].offset = QEMU_PCI_VGA_MEM_BASE;
+>       vdev->vga->region[QEMU_PCI_VGA_MEM].nr = QEMU_PCI_VGA_MEM;
+>       QLIST_INIT(&vdev->vga->region[QEMU_PCI_VGA_MEM].quirks);
+> @@ -2736,7 +2731,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>   static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    struct vfio_region_info *reg_info;
+> +    g_autofree struct vfio_region_info *reg_info = NULL;
+>       struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
+>       int i, ret = -1;
+>   
+> @@ -2790,8 +2785,6 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>       }
+>       vdev->config_offset = reg_info->offset;
+>   
+> -    g_free(reg_info);
+> -
+>       if (vdev->features & VFIO_FEATURE_ENABLE_VGA) {
+>           if (!vfio_populate_vga(vdev, errp)) {
+>               error_append_hint(errp, "device does not support "
 
 
