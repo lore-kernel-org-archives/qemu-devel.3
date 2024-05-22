@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7139CC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4756DC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:58:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ihX-0005XU-1Q; Wed, 22 May 2024 05:56:03 -0400
+	id 1s9igw-0003Ug-JE; Wed, 22 May 2024 05:55:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihP-0004ii-KS
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igl-0003Qy-Qu
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihO-0001qR-2I
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igk-0001Pf-A2
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371752;
+ s=mimecast20190719; t=1716371710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AQLP11xvZN6uvXb51wiiCAK/2iWO1h1NlMZ+wOG0u/E=;
- b=jVaRN2n+y18QFZLBACzht9v8qYhYARgqZqigqsFFNIH+iqwVb3G50TLWub3EV9ndfCPYyD
- xx4ZhRJ1fnwrokF22UeimBSbR0xYIixYyqieWTTB2GUpBsKO09Lk6QItXb+jnSl5UMs3Hs
- s9uwJBQHmsOiYzn5eeCdG47D+tUYndo=
+ bh=MIGTWmrq7gmEPJCdTPW3Iy9adWxbYc3LKxV5QyfhzTM=;
+ b=dJjkHTS06m9DA1rtOub+HmuQwzWFwuVKIikkPu2HGpujUCxPxKf0uMnS79uYm/w2+EdUmD
+ d905D0kIrjEwZG3IEY02yofYbxHc7pJbWATqNJ3FCJxccQ6gmxN6nKsT8m0YU+rlNAxQAH
+ 8CUVmTLR+z39V5Lw4wSoabjyzk804iY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-s5jUAUP2NKK-PRr8cyr-cA-1; Wed, 22 May 2024 05:55:50 -0400
-X-MC-Unique: s5jUAUP2NKK-PRr8cyr-cA-1
+ us-mta-388-eW7KvvT5NL-HezqsWx7o5A-1; Wed, 22 May 2024 05:55:07 -0400
+X-MC-Unique: eW7KvvT5NL-HezqsWx7o5A-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8404F8058D5;
- Wed, 22 May 2024 09:55:50 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0066485A58C;
+ Wed, 22 May 2024 09:55:07 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5B13B51BF;
- Wed, 22 May 2024 09:55:49 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B90557414;
+ Wed, 22 May 2024 09:55:05 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 43/47] vfio/pci: Use g_autofree for vfio_region_info pointer
-Date: Wed, 22 May 2024 11:54:38 +0200
-Message-ID: <20240522095442.195243-44-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 12/47] vfio/ccw: Use g_autofree variable in
+ vfio_ccw_register_irq_notifier()
+Date: Wed, 22 May 2024 11:54:07 +0200
+Message-ID: <20240522095442.195243-13-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,39 +82,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-Pointer opregion is freed after vfio_pci_igd_opregion_init().
-Use 'g_autofree' to avoid the g_free() calls.
-
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/vfio/ccw.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c3323912dd773e80ad2dbbefc5d833e8a33cd147..8379d2284a20bed0c0bd24e46bbb39e321dc9767 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3143,7 +3143,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index 90e4a534371684c08e112364e1537eb8979f73f4..6764388bc47a970329fce2233626ccb8178e0165 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -384,7 +384,7 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+                                            Error **errp)
+ {
+     VFIODevice *vdev = &vcdev->vdev;
+-    struct vfio_irq_info *irq_info;
++    g_autofree struct vfio_irq_info *irq_info = NULL;
+     size_t argsz;
+     int fd;
+     EventNotifier *notifier;
+@@ -421,14 +421,14 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+     if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
+               irq_info) < 0 || irq_info->count < 1) {
+         error_setg_errno(errp, errno, "vfio: Error getting irq info");
+-        goto out_free_info;
++        return;
+     }
  
-     if (!vdev->igd_opregion &&
-         vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) {
--        struct vfio_region_info *opregion;
-+        g_autofree struct vfio_region_info *opregion = NULL;
+     if (event_notifier_init(notifier, 0)) {
+         error_setg_errno(errp, errno,
+                          "vfio: Unable to init event notifier for irq (%d)",
+                          irq);
+-        goto out_free_info;
++        return;
+     }
  
-         if (vdev->pdev.qdev.hotplugged) {
-             error_setg(errp,
-@@ -3162,7 +3162,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         }
+     fd = event_notifier_get_fd(notifier);
+@@ -439,9 +439,6 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+         qemu_set_fd_handler(fd, NULL, NULL, vcdev);
+         event_notifier_cleanup(notifier);
+     }
+-
+-out_free_info:
+-    g_free(irq_info);
+ }
  
-         ret = vfio_pci_igd_opregion_init(vdev, opregion, errp);
--        g_free(opregion);
-         if (ret) {
-             goto out_teardown;
-         }
+ static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
 -- 
 2.45.1
 
