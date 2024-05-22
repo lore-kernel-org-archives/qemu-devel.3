@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298B3C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 08:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E384AC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 08:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9h5z-0004qy-D8; Wed, 22 May 2024 04:13:11 -0400
+	id 1s9hDI-000140-AA; Wed, 22 May 2024 04:20:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1s9h5x-0004qi-Mr
- for qemu-devel@nongnu.org; Wed, 22 May 2024 04:13:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9hDE-00010H-AU
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 04:20:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1s9h5v-0000rB-H3
- for qemu-devel@nongnu.org; Wed, 22 May 2024 04:13:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9hDA-0002Xk-NC
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 04:20:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716365586;
+ s=mimecast20190719; t=1716366034;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QDzuOkB9ikSOxYzt+GfFvlOkKo4pcN9AiF+EeVMA0e0=;
- b=gmp/LBo/+eUEh3d7dX7fHGM57nGj+rq+uzmSLGfJDkER4lIXubgSbQCpfvyTYvDf51tCu5
- sjFXGRqjlDxHusH83co+uQVvBQH1/aI7STNtNTQ164Dy0hyXdsT5V/M3ZARJXcT4s833Dj
- x1M8odryD0GtC1dRNJvf2cEyxKpr86g=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3GQJMJaKvadWph4f5hLpSu9hgBLImxi3b6+1CHO09Fo=;
+ b=WAUDLAZy6IaGghBEbq6vnQloHWkRz63oFAhsN5GH90XUB3yQPrKywOMPl8LruJV1YaAth7
+ n5QGSjBJH63HWnsb9No1QG+zHlBgbd99WQLkla5KnNYCOxAZbYHKipfjdy+IT2RiPR+/EK
+ GI/wBCCk6MIKdqsybNC6Ru+ZkxlZL94=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-dtqQc-bhPg209zWqwqxmKQ-1; Wed, 22 May 2024 04:13:04 -0400
-X-MC-Unique: dtqQc-bhPg209zWqwqxmKQ-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2bd92c35e65so1616462a91.2
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 01:13:04 -0700 (PDT)
+ us-mta-534-YwZQzFTMOq-2Wya2R2Fijw-1; Wed, 22 May 2024 04:20:32 -0400
+X-MC-Unique: YwZQzFTMOq-2Wya2R2Fijw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6a884aca64bso52733326d6.2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 01:20:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716365583; x=1716970383;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QDzuOkB9ikSOxYzt+GfFvlOkKo4pcN9AiF+EeVMA0e0=;
- b=KXekThSYLHtXyNYZnYH18vxnUQHoOgBFatpd4mJG2aYAS7JqDT+mv4EDuikc8kPMLI
- VWtV6ELa5bjjUn1jlqpSEpZYC6cIq5zo3bJ/zxUR2vJ53jaa9znGuGntGbiRCxZFfo1W
- ugo1H0Jyn2vhiW5klWQcSzd0qtFEj+Y0PPrRs+MMUZAmSgpsZlGgObVpXHvzUcZl6pNf
- 4vI3tMou0G307CtKJUpp1UrmC3NsoT0YZz+HJDsgt3cGf5wT3ZIgMt3UyfPttUG8KDG0
- NiF7uaAtRmfUgeZUKrOm/ynUK9ni5ySoFp2f7joJ9V+QNwaGNbtoJ1CIMybmK50/9AwV
- otTQ==
+ d=1e100.net; s=20230601; t=1716366032; x=1716970832;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3GQJMJaKvadWph4f5hLpSu9hgBLImxi3b6+1CHO09Fo=;
+ b=iH4mH87otyimEq3otnl32/b+Lxs7jpTvjTV6lcEqQGUjsKFtDV5njkSul7DL3HWDnB
+ Wq4CEGvo8n/10sao/7kgy+W+1UO27KZe+q7wLM+sTFPOL2dlCBa4cqqsawhYfuzze1YK
+ WhMZfofmNvyoge3pzcg8Z2mPHJb2Ju8jxz1Pvw04wMdY7TJCsQonY5CNfTkYR+fW5Dsw
+ 3uRmdlA4tZLmPBnqWhHx+d7okp0gkaKv8v4VLdWcOsIOSjRJKVrmE60UyKFsN0eQNRFG
+ G2tPUM2uB5XHg19wpe/hsom4j4pmr2viHxgTXhWTMDRJuaooCB+kfjLeYb8KEt9r9YYM
+ kYPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7gAkgvLN1KLy4KT3treHZu1Wi1JmXpZuK7/BtZh0sb838b6HsWqftlkF/HkpE/AkTCD7WcdTYM1BXpsGmtITgbJYq3dE=
-X-Gm-Message-State: AOJu0Yz5d8ayo1NVgR6avDtn/ncYrudnPOtLinmDhAC8iSOthZfiS9pi
- tPGKoVKizGzepBTYsswNbUK0LFJ5Xn5bWeaTJalgtCGmkN4On5jEMs4KO9nSAHUoeGdHM7UdW/L
- TvW+aELXTAmXOnOuf9tB8NAad2DVpfA/0QvJGCHeYFd10hrUANwzcdjcoUIre0OJhqwfRw+IDOS
- AJ6PuFgoa3VZa2pvfZaxuqctc1ias=
-X-Received: by 2002:a17:90a:5215:b0:2bd:9256:8ce0 with SMTP id
- 98e67ed59e1d1-2bd9f461ecemr1461617a91.14.1716365583248; 
- Wed, 22 May 2024 01:13:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGR537pZTH1/XAaC/CchRxpYcCsxrFJd/4X3sjG2hu1ZNSqVfhXLyDH1fN1hSJ6PQv8t5qV9Q8irg95CM0WkIM=
-X-Received: by 2002:a17:90a:5215:b0:2bd:9256:8ce0 with SMTP id
- 98e67ed59e1d1-2bd9f461ecemr1461594a91.14.1716365582815; Wed, 22 May 2024
- 01:13:02 -0700 (PDT)
+ AJvYcCV20TXD57CQ0eW+kKr16ft4wPhskpjFRrucjHvHbBMzLfyE9iA1r5tgUgxzUU5anNi9bsO9wyL/b1HlCeJ+8pA7GAdEDMU=
+X-Gm-Message-State: AOJu0YyTapYcu9yYT42ZeATSZWLT8uu+0uTrBFupL5b5OEecW7YuCMFU
+ 5Npvnum2xz4EPieR6PKXgPRt3ocrNrKAw2zG1HieIywvOqegna7++ECPrSxN3bg3VHjmJGA3HDs
+ JIhrrs7X8Ia3PNPDUKIa+A3A3A0X04Q7Ar1dklleA3cU0MmMGnnup
+X-Received: by 2002:a05:6214:53c9:b0:6ab:6d0e:be3 with SMTP id
+ 6a1803df08f44-6ab809013c8mr10088426d6.43.1716366031787; 
+ Wed, 22 May 2024 01:20:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYLA55Nky201WWSl6+Wj0PMwuBOe/bkn/KN1zg6ZYNRa8VopopmV1ub8PpuCqxqiHQH5UIRQ==
+X-Received: by 2002:a05:6214:53c9:b0:6ab:6d0e:be3 with SMTP id
+ 6a1803df08f44-6ab809013c8mr10088226d6.43.1716366031372; 
+ Wed, 22 May 2024 01:20:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6a35384037esm78771756d6.73.2024.05.22.01.20.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 May 2024 01:20:30 -0700 (PDT)
+Message-ID: <6be3e0e2-1a33-47e5-b6f4-94a2738c215f@redhat.com>
+Date: Wed, 22 May 2024 10:20:27 +0200
 MIME-Version: 1.0
-References: <20240517102334.81943-1-zhenzhong.duan@intel.com>
- <CACGkMEvTomFeC1bM3SfY1zGhQ_5i15r6CY6M3jVzau6niNUf_w@mail.gmail.com>
- <SJ0PR11MB6744AECEAA6F9319259B0DF192E92@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <DS0PR11MB752917B52B66A6EF10C10678C3E92@DS0PR11MB7529.namprd11.prod.outlook.com>
- <CACGkMEt5ofYt12A6uKUj=QLcLbOnrGT=UkMpee=MUxO6Xy3sxg@mail.gmail.com>
- <SJ0PR11MB6744C340AAB1B786D3913F5D92EA2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-In-Reply-To: <SJ0PR11MB6744C340AAB1B786D3913F5D92EA2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 22 May 2024 16:12:51 +0800
-Message-ID: <CACGkMEsV05ujKNEL9JSAsfikWGW582yvfSOdHJgRxZC_1cxgEg@mail.gmail.com>
-Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by spec
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: "Liu, Yi L" <yi.l.liu@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "Peng, Chao P" <chao.p.peng@intel.com>, Yu Zhang <yu.c.zhang@linux.intel.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 20/20] vfio/ccw: Fix the missed unrealize() call in
+ error path
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ "open list:vfio-ccw" <qemu-s390x@nongnu.org>
+References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
+ <20240522044015.412951-21-zhenzhong.duan@intel.com>
+ <8e3efc39-b8a1-4750-86d3-1d2451ad2b65@redhat.com>
+ <PH7PR11MB6722B0B1F6A3D0004BD77F7492EB2@PH7PR11MB6722.namprd11.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <PH7PR11MB6722B0B1F6A3D0004BD77F7492EB2@PH7PR11MB6722.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,7 +96,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,140 +112,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 21, 2024 at 6:25=E2=80=AFPM Duan, Zhenzhong
-<zhenzhong.duan@intel.com> wrote:
->
->
->
-> >-----Original Message-----
-> >From: Jason Wang <jasowang@redhat.com>
-> >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined b=
-y
-> >spec
-> >
-> >On Mon, May 20, 2024 at 12:15=E2=80=AFPM Liu, Yi L <yi.l.liu@intel.com> =
-wrote:
-> >>
-> >> > From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> >> > Sent: Monday, May 20, 2024 11:41 AM
-> >> >
-> >> >
-> >> >
-> >> > >-----Original Message-----
-> >> > >From: Jason Wang <jasowang@redhat.com>
-> >> > >Sent: Monday, May 20, 2024 8:44 AM
-> >> > >To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> >> > >Cc: qemu-devel@nongnu.org; Liu, Yi L <yi.l.liu@intel.com>; Peng, Ch=
-ao
-> >P
-> >> > ><chao.p.peng@intel.com>; Yu Zhang <yu.c.zhang@linux.intel.com>;
-> >Michael
-> >> > >S. Tsirkin <mst@redhat.com>; Paolo Bonzini <pbonzini@redhat.com>;
-> >> > >Richard Henderson <richard.henderson@linaro.org>; Eduardo Habkost
-> >> > ><eduardo@habkost.net>; Marcel Apfelbaum
-> ><marcel.apfelbaum@gmail.com>
-> >> > >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defi=
-ned
-> >by
-> >> > >spec
-> >> > >
-> >> > >On Fri, May 17, 2024 at 6:26=E2=80=AFPM Zhenzhong Duan
-> >> > ><zhenzhong.duan@intel.com> wrote:
-> >> > >>
-> >> > >> From: Yu Zhang <yu.c.zhang@linux.intel.com>
-> >> > >>
-> >> > >> Currently we use only VTD_FR_PASID_TABLE_INV as fault reason.
-> >> > >> Update with more detailed fault reasons listed in VT-d spec 7.2.3=
-.
-> >> > >>
-> >> > >> Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
-> >> > >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> >> > >> ---
-> >> > >
-> >> > >I wonder if this could be noticed by the guest or not. If yes shoul=
-d
-> >> > >we consider starting to add thing like version to vtd emulation cod=
-e?
-> >> >
-> >> > Kernel only dumps the reason like below:
-> >> >
-> >> > DMAR: [DMA Write NO_PASID] Request device [20:00.0] fault addr
-> >0x1234600000
-> >> > [fault reason 0x71] SM: Present bit in first-level paging entry is c=
-lear
-> >>
-> >> Yes, guest kernel would notice it as the fault would be injected to vm=
-.
-> >>
-> >> > Maybe bump 1.0 -> 1.1?
-> >> > My understanding version number is only informational and is far fro=
-m
-> >> > accurate to mark if a feature supported. Driver should check cap/eca=
-p
-> >> > bits instead.
-> >>
-> >> Should the version ID here be aligned with VT-d spec?
-> >
-> >Probably, this might be something that could be noticed by the
-> >management to migration compatibility.
->
-> Could you elaborate what we need to do for migration compatibility?
-> I see version is already exported so libvirt can query it, see:
->
->     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
+On 5/22/24 10:05, Duan, Zhenzhong wrote:
+> Hi Cédric,
+> 
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@redhat.com>
+>> Sent: Wednesday, May 22, 2024 3:52 PM
+>> To: Duan, Zhenzhong <zhenzhong.duan@intel.com>; qemu-
+>> devel@nongnu.org
+>> Cc: alex.williamson@redhat.com; eric.auger@redhat.com; Peng, Chao P
+>> <chao.p.peng@intel.com>; Eric Farman <farman@linux.ibm.com>; Matthew
+>> Rosato <mjrosato@linux.ibm.com>; Thomas Huth <thuth@redhat.com>;
+>> open list:vfio-ccw <qemu-s390x@nongnu.org>
+>> Subject: Re: [PATCH v2 20/20] vfio/ccw: Fix the missed unrealize() call in
+>> error path
+>>
+>> On 5/22/24 06:40, Zhenzhong Duan wrote:
+>>> When get name failed, we should call unrealize() so that
+>>> vfio_ccw_realize() is self contained.
+>>>
+>>> Fixes: 909a6254eda ("vfio/ccw: Make vfio cdev pre-openable by passing a
+>> file handle")
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>
+>> If the realize handler fails, the unrealize handler should be called.
+>> See device_set_realized(). We should be fine without IMO.
+> 
+> Do you mean when vfio_ccw_realize() fails, vfio_ccw_unrealize() will be called?
+> Looked into device_set_realized(), I didn't see where vfio_ccw_unrealize() was called.
+> Do I misunderstand?
 
-It is the Qemu command line parameters not the version of the vmstate.
+no, it's me. I thought it was called in the failure path :/ Anyhow, let's keep
+this patch for a ccw series.
 
-For example -device intel-iommu,version=3D3.0
 
-Qemu then knows it should behave as 3.0.
+Thanks,
 
-Thanks
+C.
 
->
+
+
+> 
 > Thanks
 > Zhenzhong
->
-> >
-> >> If yes, it should
-> >> be 3.0 as the scalable mode was introduced in spec 3.0. And the fault
-> >> code was redefined together with the introduction of this translation
-> >> mode. Below is the a snippet from the change log of VT-d spec.
-> >>
-> >> June 2018 3.0
-> >> =E2=80=A2 Removed all text related to Extended-Mode.
-> >> =E2=80=A2 Added support for scalable-mode translation for DMA Remappin=
-g, that
-> >enables PASIDgranular first-level, second-level, nested and pass-through
-> >translation functions.
-> >> =E2=80=A2 Widen invalidation queue descriptors and page request queue
-> >descriptors from 128 bits
-> >> to 256 bits and redefined page-request and page-response descriptors.
-> >> =E2=80=A2 Listed all fault conditions in a unified table and described=
- DMA
-> >Remapping hardware
-> >> behavior under each condition. Assigned new code for each fault condit=
-ion
-> >in scalablemode operation.
-> >> =E2=80=A2 Added support for Accessed/Dirty (A/D) bits in second-level =
-translation.
-> >> =E2=80=A2 Added support for submitting commands and receiving response=
- from
-> >virtual DMA
-> >> Remapping hardware.
-> >> =E2=80=A2 Added a table on snooping behavior and memory type of hardwa=
-re
-> >access to various
-> >> remapping structures as appendix.
-> >> =E2=80=A2 Move Page Request Overflow (PRO) fault reporting from Fault =
-Status
-> >register
-> >> (FSTS_REG) to Page Request Status register (PRS_REG).
-> >>
-> >> Regards.
-> >> Yi Liu
-> >
-> >Thanks
->
+> 
+>>
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>
+>>> ---
+>>>    hw/vfio/ccw.c | 3 ++-
+>>>    1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+>>> index 168c9e5973..161704cd7b 100644
+>>> --- a/hw/vfio/ccw.c
+>>> +++ b/hw/vfio/ccw.c
+>>> @@ -589,7 +589,7 @@ static void vfio_ccw_realize(DeviceState *dev,
+>> Error **errp)
+>>>        }
+>>>
+>>>        if (!vfio_device_get_name(vbasedev, errp)) {
+>>> -        return;
+>>> +        goto out_unrealize;
+>>>        }
+>>>
+>>>        if (!vfio_attach_device(cdev->mdevid, vbasedev,
+>>> @@ -633,6 +633,7 @@ out_region_err:
+>>>        vfio_detach_device(vbasedev);
+>>>    out_attach_dev_err:
+>>>        g_free(vbasedev->name);
+>>> +out_unrealize:
+>>>        if (cdc->unrealize) {
+>>>            cdc->unrealize(cdev);
+>>>        }
+> 
 
 
