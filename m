@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFCAC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 20:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E7CC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 20:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ssm-0002BS-3c; Wed, 22 May 2024 16:48:20 -0400
+	id 1s9swB-00056O-2U; Wed, 22 May 2024 16:51:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1s9ssj-00027S-11; Wed, 22 May 2024 16:48:17 -0400
+ id 1s9sw9-00052D-A8; Wed, 22 May 2024 16:51:49 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1s9sse-0004aS-GL; Wed, 22 May 2024 16:48:16 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ id 1s9sw7-0005Fp-Ow; Wed, 22 May 2024 16:51:49 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44MKBb2T022175; Wed, 22 May 2024 20:48:09 GMT
+ 44MIuQ9Q028156; Wed, 22 May 2024 20:51:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : subject :
  from : to : cc : date : in-reply-to : references : content-type :
  content-transfer-encoding : mime-version; s=pp1;
- bh=4k1Zj5rsNyVPQCm0nwF9EdTYxHVC9u4pOByWSKvC1e8=;
- b=EN3BDekWSkGpfBSE0Sq5aNCR7uge/VbKTSFeo6g2hwM6rZrfBysvkJlr/I4JYdad38Xa
- LUxwonrV2JRGZdqNmqMEl1XtjU4xfmx01XVmjCrecnw4tofB1RPY4Bm0iiRld8VS5Yh+
- UFBv904JfgsKkywZHVesf5E8tom7hPZUZ7ZozJ+LmsTzfvQhpgU6MgW9wAFPqwzEr6Af
- /s2wM8CCYQY8NmnlADjYNiRoHNZeznPsb74Ef+BoXMaQvxDpUnDVQmaNFWSbGtNPuAO4
- 2+9z7bZ69qBrgM/vxPBoRQZoDCNNTFFdosPRxTovxr1UBZiJxw9Ymt1ZNCEevYEV7NHa JA== 
+ bh=xEornZtyEpDEQM5Uo8+vBijkJQyHRzsURxpL7Q3iikw=;
+ b=nlVHV5vzqk9y2V1dzfq5dD1yLH2SuJO/bONMtOLt11jEO4kEWpPFCmiMfv3LendqPOdu
+ GZLurPWHxSztE1JC6JTFSMSlWQKryaLNYBvqwJaWPWkWHsVKR+De/PCebZ8U8zA7Q+Q3
+ fyIe2hqaouHVo3NF3S4sAnAZcXio/ElufZnQWQjLkM0qspvjC5s9833xBQzu2OTh0E0l
+ MVS5Kdabohs5YUsfb4y9qusn5m1hoAI8rVbX4LeF8ZAfHTQjaXuo8pk+jgtsXtxWqjJc
+ 6xLxi9q0VcsCA22SEZxU20Oe3QhsxXWaERWZFZmigkYs8oNyJk4TOquC3naYhXb9iTFl FQ== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9nx0ga2p-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9p4x89n6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 20:48:08 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44MKm8aY017930;
- Wed, 22 May 2024 20:48:08 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9nx0ga2m-1
+ Wed, 22 May 2024 20:51:44 +0000
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44MKphD6021610;
+ Wed, 22 May 2024 20:51:43 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9p4x89n2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 20:48:08 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44MJ5M0M008123; Wed, 22 May 2024 20:48:07 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y78vm5my7-1
+ Wed, 22 May 2024 20:51:43 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44MKeGLr023485; Wed, 22 May 2024 20:51:42 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77npe2xg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 May 2024 20:48:07 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44MKm3Sb49807640
+ Wed, 22 May 2024 20:51:42 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44MKpcmJ38732284
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 May 2024 20:48:06 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C9F552004D;
- Wed, 22 May 2024 20:48:03 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 66A252004B;
- Wed, 22 May 2024 20:48:03 +0000 (GMT)
+ Wed, 22 May 2024 20:51:40 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8B8D220043;
+ Wed, 22 May 2024 20:51:38 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 35BD020040;
+ Wed, 22 May 2024 20:51:38 +0000 (GMT)
 Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 22 May 2024 20:48:03 +0000 (GMT)
-Message-ID: <6d6cb48e0f2fbb38b8a1ae1891516b54c40ca2b7.camel@linux.ibm.com>
-Subject: Re: [PATCH 02/14] target/s390x: Move cpu_get_tb_cpu_state out of line
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 22 May 2024 20:51:38 +0000 (GMT)
+Message-ID: <0f31dd7e61cac055f10c565a2eaba7b8ed7a8eea.camel@linux.ibm.com>
+Subject: Re: [PATCH 03/14] target/s390x: Update CR9 bits
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, david@redhat.com, thuth@redhat.com
-Date: Wed, 22 May 2024 22:48:03 +0200
-In-Reply-To: <20240502054417.234340-3-richard.henderson@linaro.org>
+Date: Wed, 22 May 2024 22:51:37 +0200
+In-Reply-To: <20240502054417.234340-4-richard.henderson@linaro.org>
 References: <20240502054417.234340-1-richard.henderson@linaro.org>
- <20240502054417.234340-3-richard.henderson@linaro.org>
+ <20240502054417.234340-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: H1--M50OOs09CV5qmX1I6eDYIud6EdSY
-X-Proofpoint-GUID: 8PKGeqy3hcT96qevrPiFW4USmZk9nDJV
+X-Proofpoint-ORIG-GUID: Iukh98gyN9xvRaVcdBKSk0x5b7zgYnyv
+X-Proofpoint-GUID: 5qPelSdz2G9GnNw02WtnhViW08o8__SV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-22_11,2024-05-22_01,2024-05-17_01
+ definitions=2024-05-22_12,2024-05-22_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=769
- impostorscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ impostorscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 phishscore=0
+ adultscore=0 spamscore=0 clxscore=1015 mlxlogscore=770 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2405010000 definitions=main-2405220144
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -115,11 +115,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 2024-05-01 at 22:44 -0700, Richard Henderson wrote:
+> Update from the PoO 14th edition.
+>=20
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> =C2=A0target/s390x/cpu.h | 23 ++---------------------
-> =C2=A0target/s390x/cpu.c | 22 ++++++++++++++++++++++
-> =C2=A02 files changed, 24 insertions(+), 21 deletions(-)
+> =C2=A0target/s390x/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 | 18 +++++++++++-------
+> =C2=A0target/s390x/tcg/misc_helper.c |=C2=A0 2 +-
+> =C2=A02 files changed, 12 insertions(+), 8 deletions(-)
 
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+
 
