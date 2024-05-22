@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2D6C25B74
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 01:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1B9C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 03:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9b4l-0005FC-2l; Tue, 21 May 2024 21:47:31 -0400
+	id 1s9cr9-0002JD-M8; Tue, 21 May 2024 23:41:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s9b4j-0005Dc-Hd
- for qemu-devel@nongnu.org; Tue, 21 May 2024 21:47:29 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s9b4g-0000w6-GT
- for qemu-devel@nongnu.org; Tue, 21 May 2024 21:47:29 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxHOupTk1mUn8CAA--.5244S3;
- Wed, 22 May 2024 09:47:21 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx78enTk1mcewEAA--.14349S3; 
- Wed, 22 May 2024 09:47:21 +0800 (CST)
-Subject: Re: [PATCH v3 2/6] hw/loongarch: Refine fadt memory table for numa
- memory
-To: Bibo Mao <maobibo@loongson.cn>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240515093927.3453674-1-maobibo@loongson.cn>
- <20240515093927.3453674-3-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <74612e74-d5c3-391a-d72a-adbac473a93b@loongson.cn>
-Date: Wed, 22 May 2024 09:47:19 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s9cr6-0002Im-AV; Tue, 21 May 2024 23:41:32 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s9cr1-0003zI-Nx; Tue, 21 May 2024 23:41:30 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6f457853950so375715b3a.0; 
+ Tue, 21 May 2024 20:41:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716349285; x=1716954085; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iaOhH5ot2ybhOhs1vr4n0PD+3R0UiVGJjcNX2rUlsHY=;
+ b=A3iUmgtT0Spb59z4+8+vj6cDOlyHrhhoM4eyHgdzl2yCpA1QF7ct+aPi/cXmBcZ2Vg
+ 35hG86Lt0BeI6Doi6FIb93yWfHzcwKxc0Oh7ib3H7W7i6ykh5MnBIz5gurJXXTSlYOSV
+ HjKA/Ki5Ex0nUIp1qN+I/Lo6s1h2U63wLA3IOhK3QeFaLVKzUW1FpaBE1y5RYFpPqhnJ
+ 7TSoa3qkxfRJyfk93mzqKDUWsos3G8eDeut7623jZkQO0rrHCelScodSxXGND5F55xFJ
+ JkpVvM+xhB4vARzFZYOc/rmZ469P5UXtE93ZPFKTiP7S0P1Rn4cIKBpSxDDTUQIwGinS
+ b1jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716349285; x=1716954085;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iaOhH5ot2ybhOhs1vr4n0PD+3R0UiVGJjcNX2rUlsHY=;
+ b=iGqtFTyqZ1pMsh+39fIHBs+7dIE27uCD+4UEJvEHDTtiFbLGys/bS9yBlQdot6Dwzk
+ KCHQWYhGIVW+cy51kF2XwCEH/uGBdNGvcx5pJfuc1XTDxw+8VV0CYGLgkHmERpxqZMjv
+ u0Cw0v9b9D2franI1HkLaZsxp27DPh8YTP9OOgDaeM0aqefeu3XcQBl37GsprJjv5xFz
+ VEgyzEhq+NkxUEs4WdaFSZqHjLDYwAEvxoezr21ZcQq5CJ+ftrIy1WRyNSGCN4zmaNaY
+ Rd+mGbDNHHFb3vI0Vj4wLWFcZPcmY1bmIgRFZ0gyE8Lj/pnnaP43jbdpBgDjPGxLZCrs
+ k0EQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCeDXtNjPTyI33tdZuhDOx59qHdE6mblGq64Z+lNimYxQHC/GTa/JEORUEMg3cRZYkgNUbpMifNK9KS1qQ9YTbl3hJdFM=
+X-Gm-Message-State: AOJu0Yypmpwh02EIMuzeDnmBbKRxIBzyJb1N43wa+ZAYTjQcqagi1wAB
+ lcEevc2nq/ipqBItQmgMljAB81fVPMYN17syvkLocf5WIT6rfIN+jLp+7A==
+X-Google-Smtp-Source: AGHT+IH2Sh9jB7qI6l2TQEJMFbKJ0M9PxvNcrjA3TEbv0Qt+r1RzNHvpkysvqqRkCxvdSAsCX7t2FQ==
+X-Received: by 2002:a05:6a21:819f:b0:1af:d057:af96 with SMTP id
+ adf61e73a8af0-1b1ca3e9f77mr14008823637.13.1716349284687; 
+ Tue, 21 May 2024 20:41:24 -0700 (PDT)
+Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-6341180dc5csm18751158a12.93.2024.05.21.20.41.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 May 2024 20:41:24 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Glenn Miles <milesg@linux.ibm.com>
+Subject: [PATCH v3] target/ppc: Add PPR32 SPR
+Date: Wed, 22 May 2024 13:41:16 +1000
+Message-ID: <20240522034117.90603-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-In-Reply-To: <20240515093927.3453674-3-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Cx78enTk1mcewEAA--.14349S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJFyUJr1fuF1rKFW8AFy5GFX_yoW5tr1xpF
- 4fKFn5uF4UtFnrGw1fKFyUuFn8Jr18Ka17WFy7uanakFnrCr1I9F48Xw4qqFyYk348ZF1Y
- qF1DGrZxW3WYqrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9N3UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-0.405, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,104 +93,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/5/15 ÏÂÎç5:39, Bibo Mao Ð´µÀ:
-> One LoongArch virt machine platform, there is limitation for memory
-> map information. The minimum memory size is 256M and minimum memory
-> size for numa node0 is 256M also. With qemu numa qtest, it is possible
-> that memory size of numa node0 is 128M.
->
-> Limitations for minimum memory size for both total memory and numa
-> node0 is removed for fadt numa memory table creation.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+PPR32 provides access to the upper half of PPR.
 
-Thanks.
-Song Gao
->   hw/loongarch/virt.c | 46 ++++++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 43 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index f0640d2d80..c996305d87 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -473,6 +473,48 @@ static void fdt_add_memory_node(MachineState *ms,
->       g_free(nodename);
->   }
->   
-> +static void fdt_add_memory_nodes(MachineState *ms)
-> +{
-> +    hwaddr base, size, ram_size, gap;
-> +    int i, nb_numa_nodes, nodes;
-> +    NodeInfo *numa_info;
-> +
-> +    ram_size = ms->ram_size;
-> +    base = VIRT_LOWMEM_BASE;
-> +    gap = VIRT_LOWMEM_SIZE;
-> +    nodes = nb_numa_nodes = ms->numa_state->num_nodes;
-> +    numa_info = ms->numa_state->nodes;
-> +    if (!nodes) {
-> +        nodes = 1;
-> +    }
-> +
-> +    for (i = 0; i < nodes; i++) {
-> +        if (nb_numa_nodes) {
-> +            size = numa_info[i].node_mem;
-> +        } else {
-> +            size = ram_size;
-> +        }
-> +
-> +        /*
-> +         * memory for the node splited into two part
-> +         *   lowram:  [base, +gap)
-> +         *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
-> +         */
-> +        if (size >= gap) {
-> +            fdt_add_memory_node(ms, base, gap, i);
-> +            size -= gap;
-> +            base = VIRT_HIGHMEM_BASE;
-> +            gap = ram_size - VIRT_LOWMEM_SIZE;
-> +        }
-> +
-> +        if (size) {
-> +            fdt_add_memory_node(ms, base, size, i);
-> +            base += size;
-> +            gap -= size;
-> +        }
-> +    }
-> +}
-> +
->   static void virt_build_smbios(LoongArchVirtMachineState *lvms)
->   {
->       MachineState *ms = MACHINE(lvms);
-> @@ -915,10 +957,10 @@ static void virt_init(MachineState *machine)
->           lacpu->phy_id = machine->possible_cpus->cpus[i].arch_id;
->       }
->       fdt_add_cpu_nodes(lvms);
-> +    fdt_add_memory_nodes(machine);
->   
->       /* Node0 memory */
->       memmap_add_entry(VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 1);
-> -    fdt_add_memory_node(machine, VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 0);
->       memory_region_init_alias(&lvms->lowmem, NULL, "loongarch.node0.lowram",
->                                machine->ram, offset, VIRT_LOWMEM_SIZE);
->       memory_region_add_subregion(address_space_mem, phyAddr, &lvms->lowmem);
-> @@ -932,7 +974,6 @@ static void virt_init(MachineState *machine)
->       }
->       phyAddr = VIRT_HIGHMEM_BASE;
->       memmap_add_entry(phyAddr, highram_size, 1);
-> -    fdt_add_memory_node(machine, phyAddr, highram_size, 0);
->       memory_region_init_alias(&lvms->highmem, NULL, "loongarch.node0.highram",
->                                 machine->ram, offset, highram_size);
->       memory_region_add_subregion(address_space_mem, phyAddr, &lvms->highmem);
-> @@ -948,7 +989,6 @@ static void virt_init(MachineState *machine)
->                                    offset,  numa_info[i].node_mem);
->           memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
->           memmap_add_entry(phyAddr, numa_info[i].node_mem, 1);
-> -        fdt_add_memory_node(machine, phyAddr, numa_info[i].node_mem, i);
->           offset += numa_info[i].node_mem;
->           phyAddr += numa_info[i].node_mem;
->       }
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+v3:
+- Don't clobber lower half of PPR.
+- Add spr_load_dump_spr (spr_store_dump_spr was already there).
+
+ target/ppc/cpu.h        |  1 +
+ target/ppc/spr_common.h |  2 ++
+ target/ppc/cpu_init.c   | 12 ++++++++++++
+ target/ppc/translate.c  | 24 ++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+)
+
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 2532408be0..141cbefb4c 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -2120,6 +2120,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_POWER_MMCRS       (0x37E)
+ #define SPR_WORT              (0x37F)
+ #define SPR_PPR               (0x380)
++#define SPR_PPR32             (0x382)
+ #define SPR_750_GQR0          (0x390)
+ #define SPR_440_DNV0          (0x390)
+ #define SPR_750_GQR1          (0x391)
+diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
+index eb2561f593..9e40b3b608 100644
+--- a/target/ppc/spr_common.h
++++ b/target/ppc/spr_common.h
+@@ -203,6 +203,8 @@ void spr_read_tfmr(DisasContext *ctx, int gprn, int sprn);
+ void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
+ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
+ void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
++void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn);
++void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn);
+ #endif
+ 
+ void register_low_BATs(CPUPPCState *env);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 892fb6ce02..7684a59d75 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5623,6 +5623,14 @@ static void register_HEIR64_spr(CPUPPCState *env)
+                  0x00000000);
+ }
+ 
++static void register_power7_common_sprs(CPUPPCState *env)
++{
++    spr_register(env, SPR_PPR32, "PPR32",
++                 &spr_read_ppr32, &spr_write_ppr32,
++                 &spr_read_ppr32, &spr_write_ppr32,
++                 0x00000000);
++}
++
+ static void register_power8_tce_address_control_sprs(CPUPPCState *env)
+ {
+     spr_register_kvm(env, SPR_TAR, "TAR",
+@@ -6118,6 +6126,7 @@ static void init_proc_POWER7(CPUPPCState *env)
+     register_power6_common_sprs(env);
+     register_HEIR32_spr(env);
+     register_power6_dbg_sprs(env);
++    register_power7_common_sprs(env);
+     register_power7_book4_sprs(env);
+ 
+     /* env variables */
+@@ -6264,6 +6273,7 @@ static void init_proc_POWER8(CPUPPCState *env)
+     register_power6_common_sprs(env);
+     register_HEIR32_spr(env);
+     register_power6_dbg_sprs(env);
++    register_power7_common_sprs(env);
+     register_power8_tce_address_control_sprs(env);
+     register_power8_ids_sprs(env);
+     register_power8_ebb_sprs(env);
+@@ -6431,6 +6441,7 @@ static void init_proc_POWER9(CPUPPCState *env)
+     register_power6_common_sprs(env);
+     register_HEIR32_spr(env);
+     register_power6_dbg_sprs(env);
++    register_power7_common_sprs(env);
+     register_power8_tce_address_control_sprs(env);
+     register_power8_ids_sprs(env);
+     register_power8_ebb_sprs(env);
+@@ -6625,6 +6636,7 @@ static void init_proc_POWER10(CPUPPCState *env)
+     register_power6_common_sprs(env);
+     register_HEIR64_spr(env);
+     register_power6_dbg_sprs(env);
++    register_power7_common_sprs(env);
+     register_power8_tce_address_control_sprs(env);
+     register_power8_ids_sprs(env);
+     register_power8_ebb_sprs(env);
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 120858a188..44212192be 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -1411,6 +1411,30 @@ void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn)
+     gen_load_spr(t0, sprn + 16);
+     tcg_gen_ext32u_tl(cpu_gpr[gprn], t0);
+ }
++
++/* The PPR32 SPR accesses the upper 32-bits of PPR */
++void spr_read_ppr32(DisasContext *ctx, int gprn, int sprn)
++{
++    gen_load_spr(cpu_gpr[gprn], SPR_PPR);
++    tcg_gen_shri_tl(cpu_gpr[gprn], cpu_gpr[gprn], 32);
++    spr_load_dump_spr(SPR_PPR);
++}
++
++void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn)
++{
++    TCGv t0 = tcg_temp_new();
++
++    /*
++     * Don't clobber the low 32-bits of the PPR. These are all reserved bits
++     * but TCG does implement them, so it would be surprising to zero them
++     * here. "Priority nops" are similarly careful not to clobber reserved
++     * bits.
++     */
++    gen_load_spr(t0, SPR_PPR);
++    tcg_gen_deposit_tl(t0, t0, cpu_gpr[gprn], 32, 32);
++    gen_store_spr(SPR_PPR, t0);
++    spr_store_dump_spr(SPR_PPR);
++}
+ #endif
+ 
+ #define GEN_HANDLER(name, opc1, opc2, opc3, inval, type)                      \
+-- 
+2.43.0
 
 
