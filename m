@@ -4,81 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B12C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91242C25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9iLI-0004cG-Jz; Wed, 22 May 2024 05:33:04 -0400
+	id 1s9igS-0003FI-Bn; Wed, 22 May 2024 05:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9iLG-0004bt-3r
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:33:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igP-0003Ev-Qr
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:54:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9iLE-0006Hm-Hb
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:33:01 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igM-0001Kd-WB
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:54:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716370379;
+ s=mimecast20190719; t=1716371689;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RFC+rGw9C6TjmmITW33E/J08sm2nDJ8T+NeZr6iC1Ac=;
- b=dLKhlnysTnC/nOXsvYIUw8t28EkbI99vrzWmeKUizDYFbGbwnvDG29KC7mtGIWCt1K5lum
- Q6WDx5pP1HkEBfmGvKw8ES0kRFFxeAeCgcG2uUeCyoq5AIdV/vdIE2hzi0xNmcjGZhUHFT
- QH8Te3w3SS9c1453UbuJAKCPc6JHOiw=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-XKUhUVEPN2me0f6l36Y8xw-1; Wed, 22 May 2024 05:32:57 -0400
-X-MC-Unique: XKUhUVEPN2me0f6l36Y8xw-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-61bea0c36bbso269424437b3.2
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 02:32:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716370377; x=1716975177;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RFC+rGw9C6TjmmITW33E/J08sm2nDJ8T+NeZr6iC1Ac=;
- b=PN297T8cRjFU+qdPrxaLy8LI9/kK8td4GtwMVxZVCQXt7ixJpt/Ea+gfXQ09Ife5dA
- YgdipMjtfSWJNQCoT6DUizt6tPABGYlsENp4h6izX3tnv0CqAZdkVRXjNyMfIoDq2nHD
- FW0LFgAVLX8JsGZOx4XpSPb2a96CS+R0a98rhSrn6RWuhQA9Hvhg5yYxXEwoNZ85rxdq
- shMJ9QyM6TP2/z3XPtTZ0KdGNNsKcXEFyExYzVVpsi1afilAKOYp3fEefySbaCNMVDt2
- GOLCtYwLyx7Wkloq7cWVh1wdRcbIiZz6TfnNhXNLKzSYBphXA07SDG8PjcmEw/ASScvu
- jNQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWeyJS6IGp2GF4Wpv5Y4wOWewtdS3US9XbbAhSOl1xU422pmilFONf3hO3sRI1gXYzQ5xaEOxWg4947tR7wxAw15VtXA1M=
-X-Gm-Message-State: AOJu0YwmmyBYHP1tFr9N6UDI4ic9MFyv3h0wf7BPo/aMpmaZ5tW2DAHd
- 1m/5HQ/fO3a1S+Ci0VlTlF6AhXcSRp0cnYVd7mJH+h//uNX4FL67PVMss4BIrRmwFwvRjOLZGGe
- ETn/gIJviH1wmJ8PCPDC1PSBLpVVw3Ny70M5tsal1ndBjYzboumBe
-X-Received: by 2002:a81:a055:0:b0:61b:2b7:27d8 with SMTP id
- 00721157ae682-627e46ecdc3mr14873777b3.23.1716370377226; 
- Wed, 22 May 2024 02:32:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjLSiW9X6vIZM1rX4e05yv4r8TuKgUhjEjZxPkBrN3GbtoUUkMTxY1lUiEi0LO6cdfABA6Wg==
-X-Received: by 2002:a81:a055:0:b0:61b:2b7:27d8 with SMTP id
- 00721157ae682-627e46ecdc3mr14873647b3.23.1716370376903; 
- Wed, 22 May 2024 02:32:56 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f1cddd9sm131890486d6.75.2024.05.22.02.32.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 02:32:56 -0700 (PDT)
-Message-ID: <23b96ed4-21a5-4783-89f7-7bad38a5c4bf@redhat.com>
-Date: Wed, 22 May 2024 11:32:54 +0200
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SOpwB5ym3LvkjAI8UWd5w1+qL9K/vqjUDgnStmXtsqc=;
+ b=WERjA2uoWuyxgLiGB8WsquRxg/87tvjAH9SeBRm+oCkITwvWxfNGDSxcdylBV9SCfIWkGb
+ l78O4BNDvSQsumV/4MGHESOaz4XbfmzWY7EYBk7YZMDbe0fW0Lz/zt35dUIdo7uQFwGau4
+ kKBd56dBvrylVrCvhNE3BGGT0mwLGag=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-Rrn2BiZIMe6Ua4_ramXw2w-1; Wed,
+ 22 May 2024 05:54:46 -0400
+X-MC-Unique: Rrn2BiZIMe6Ua4_ramXw2w-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 158543C025C2
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 09:54:46 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.133])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 053FC7414;
+ Wed, 22 May 2024 09:54:44 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 00/47] vfio queue
+Date: Wed, 22 May 2024 11:53:55 +0200
+Message-ID: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/20] VFIO: misc cleanups part2
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
-References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -103,32 +77,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/22/24 06:39, Zhenzhong Duan wrote:
-> Hi
-> 
-> This is the last round of cleanup series to change functions in hw/vfio/
-> to return bool when the error is passed through errp parameter.
-> 
-> The first round is at
-> https://lists.gnu.org/archive/html/qemu-devel/2024-05/msg01147.html
-> 
-> I see Cédric is also working on some migration stuff cleanup,
-> so didn't touch migration.c, but all other files in hw/vfio/ are cleanup now.
-> 
-> Patch1 and patch20 are fix patch, all others are cleanup patches.
-> 
-> Test done on x86 platform:
-> vfio device hotplug/unplug with different backend
-> reboot
-> 
-> This series is rebased to https://github.com/legoater/qemu/tree/vfio-next
+The following changes since commit 85ef20f1673feaa083f4acab8cf054df77b0dbed:
 
-Patches 01-18 applied to vfio-next.
+  Merge tag 'pull-maintainer-may24-160524-2' of https://gitlab.com/stsquad/qemu into staging (2024-05-16 10:02:56 +0200)
 
-Thanks,
+are available in the Git repository at:
 
-C.
+  https://github.com/legoater/qemu/ tags/pull-vfio-20240522
 
+for you to fetch changes up to b4e1670c494165d4186930d56f692857f4fec89b:
 
+  vfio/igd: Use g_autofree in vfio_probe_igd_bar4_quirk() (2024-05-22 10:04:22 +0200)
+
+----------------------------------------------------------------
+vfio queue:
+
+* Improvement of error reporting during migration
+* Removed Vendor Specific Capability check on newer machine
+* Addition of a VFIO migration QAPI event
+* Changed prototype of routines using an error parameter to return bool
+* Several cleanups regarding autofree variables
+
+----------------------------------------------------------------
+Avihai Horon (4):
+      qapi/vfio: Add VFIO migration QAPI event
+      vfio/migration: Emit VFIO migration QAPI event
+      vfio/migration: Don't emit STOP_COPY VFIO migration QAPI event twice
+      vfio/migration: Enhance VFIO migration state tracing
+
+Cédric Le Goater (13):
+      vfio: Add Error** argument to .set_dirty_page_tracking() handler
+      vfio: Add Error** argument to vfio_devices_dma_logging_start()
+      migration: Extend migration_file_set_error() with Error* argument
+      vfio/migration: Add an Error** argument to vfio_migration_set_state()
+      vfio/migration: Add Error** argument to .vfio_save_config() handler
+      vfio: Reverse test on vfio_get_xlat_addr()
+      memory: Add Error** argument to memory_get_xlat_addr()
+      vfio: Add Error** argument to .get_dirty_bitmap() handler
+      vfio: Also trace event failures in vfio_save_complete_precopy()
+      vfio/ap: Use g_autofree variable in vfio_ap_register_irq_notifier()
+      vfio/ap: Make vfio_ap_register_irq_notifier() return a bool
+      vfio/ccw: Use g_autofree variable in vfio_ccw_register_irq_notifier()
+      vfio/ccw: Make vfio_ccw_register_irq_notifier() return a bool
+
+Vinayak Kale (1):
+      vfio/pci: migration: Skip config space check for Vendor Specific Information in VSC during restore/load
+
+Zhenzhong Duan (29):
+      vfio/pci: Use g_autofree in vfio_realize
+      vfio/pci: Use g_autofree in iommufd_cdev_get_info_iova_range()
+      vfio: Make VFIOIOMMUClass::attach_device() and its wrapper return bool
+      vfio: Make VFIOIOMMUClass::setup() return bool
+      vfio: Make VFIOIOMMUClass::add_window() and its wrapper return bool
+      vfio/container: Make vfio_connect_container() return bool
+      vfio/container: Make vfio_set_iommu() return bool
+      vfio/container: Make vfio_get_device() return bool
+      vfio/iommufd: Make iommufd_cdev_*() return bool
+      vfio/cpr: Make vfio_cpr_register_container() return bool
+      backends/iommufd: Make iommufd_backend_*() return bool
+      vfio/display: Fix error path in call site of ramfb_setup()
+      vfio/display: Make vfio_display_*() return bool
+      vfio/helpers: Use g_autofree in vfio_set_irq_signaling()
+      vfio/helpers: Make vfio_set_irq_signaling() return bool
+      vfio/helpers: Make vfio_device_get_name() return bool
+      vfio/platform: Make vfio_populate_device() and vfio_base_device_init() return bool
+      vfio/ccw: Make vfio_ccw_get_region() return a bool
+      vfio/pci: Make vfio_intx_enable_kvm() return a bool
+      vfio/pci: Make vfio_pci_relocate_msix() and vfio_msix_early_setup() return a bool
+      vfio/pci: Make vfio_populate_device() return a bool
+      vfio/pci: Make vfio_intx_enable() return bool
+      vfio/pci: Make vfio_populate_vga() return bool
+      vfio/pci: Make capability related functions return bool
+      vfio/pci: Use g_autofree for vfio_region_info pointer
+      vfio/pci-quirks: Make vfio_pci_igd_opregion_init() return bool
+      vfio/pci-quirks: Make vfio_add_*_cap() return bool
+      vfio: Use g_autofree in all call site of vfio_get_region_info()
+      vfio/igd: Use g_autofree in vfio_probe_igd_bar4_quirk()
+
+ MAINTAINERS                           |   1 +
+ qapi/qapi-schema.json                 |   1 +
+ qapi/vfio.json                        |  67 ++++++++
+ hw/vfio/pci.h                         |  13 +-
+ include/exec/memory.h                 |  15 +-
+ include/hw/vfio/vfio-common.h         |  43 ++++--
+ include/hw/vfio/vfio-container-base.h |  55 +++++--
+ include/migration/misc.h              |   2 +-
+ include/sysemu/iommufd.h              |   6 +-
+ backends/iommufd.c                    |  29 ++--
+ hw/core/machine.c                     |   1 +
+ hw/vfio/ap.c                          |  35 ++---
+ hw/vfio/ccw.c                         |  56 +++----
+ hw/vfio/common.c                      | 119 +++++++++------
+ hw/vfio/container-base.c              |  18 +--
+ hw/vfio/container.c                   | 101 ++++++------
+ hw/vfio/cpr.c                         |   4 +-
+ hw/vfio/display.c                     |  22 ++-
+ hw/vfio/helpers.c                     |  36 ++---
+ hw/vfio/igd.c                         |  35 ++---
+ hw/vfio/iommufd.c                     | 109 ++++++-------
+ hw/vfio/migration.c                   | 180 ++++++++++++++++------
+ hw/vfio/pci-quirks.c                  |  50 +++---
+ hw/vfio/pci.c                         | 280 +++++++++++++++++-----------------
+ hw/vfio/platform.c                    |  66 ++++----
+ hw/vfio/spapr.c                       |  28 ++--
+ hw/virtio/vhost-vdpa.c                |   5 +-
+ migration/migration.c                 |   6 +-
+ system/memory.c                       |  10 +-
+ backends/trace-events                 |   4 +-
+ hw/vfio/trace-events                  |   3 +-
+ qapi/meson.build                      |   1 +
+ 32 files changed, 806 insertions(+), 595 deletions(-)
+ create mode 100644 qapi/vfio.json
 
 
