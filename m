@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1F3C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A5DC41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9doV-0001PF-Ep; Wed, 22 May 2024 00:42:55 -0400
+	id 1s9dpB-0001zs-TK; Wed, 22 May 2024 00:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doU-0001Or-7N
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:54 -0400
+ id 1s9dp9-0001p8-L8
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:35 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doS-0005sV-ED
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:53 -0400
+ id 1s9dp7-0005wQ-Go
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716352973; x=1747888973;
+ t=1716353013; x=1747889013;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=jnonh+R/LPS7uBevdbaTjQz/fEBnZL+cByDlYNJn0F8=;
- b=GDULGdW78aGL3GNSsh/F7rN6QRZ6R9Pd7u0+0KL+7pNx/uDYRn1iCN6j
- XrJsJ18Pg0O0i5osu6qY5uhGmBTyzCO18Ng8dL9R/CkVVqS9jsAub+Hor
- KNagrZ1/jx/r3pDCWL/F6iZ19gGtaubw3mmNEb1Ktvk07IElMsWUuPQCw
- nwOtk9GnA8lAQ4iCWW8ZB6wGWuwJASRLk2RmhFOYn7FQm63mtWFV4667C
- VVorN9aUqyb1T8tHpzYJDCgOlbmKF3TyEiFFlD7mFPJwXOhVLtHHj4Mqx
- jTRcvlfGoAXxIbPqTXdoXxjrRo+Tc2GWiNTTzP42KLECe2udI3DvSFXCR Q==;
-X-CSE-ConnectionGUID: KE1/MlUjTIyxQnX2vDjHcQ==
-X-CSE-MsgGUID: i9MYC0DMQfCWnPtXp7/87Q==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994139"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994139"
+ bh=r1ujOT9wnmzL4Jy0xbnj8LOr9Q4ivRZVm5w7T144XKg=;
+ b=Bs+enfOPnGSJArIRggqiEGdLxeKLcmeMdvv49wWMd2v4/n+2dBjyKyn2
+ nVBEXM8o4bOdcQnbu4oIY91XMaCN8x6TxnKsBTF8TyrNq7AJpzB3YyUYE
+ szx0MCe1dyouOq1FxS4yQaP8MO2tO2oLBMad92ZHedSAA38yvgjlR+/Je
+ ZjRPnJMw+bUXKzWxMmQ8bYWgxIAVHBNDVL0LdVA1mywVgJKqx79K2KdWX
+ gCdx417OYbE2tx4SIpH4zT3TPD0kmrHi3RIyzciy9P3u6NAU5pA1SC9ou
+ paClis4h67tj/x+bnx2/kKfVGQBgI7UxQYzOJMwhMM1BdfkQxT6lG8fUl Q==;
+X-CSE-ConnectionGUID: nO8fOkpuRfy7b24YXrGWSA==
+X-CSE-MsgGUID: 5CWtU9nmSFqeaVFyT1I+4w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994210"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994210"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:52 -0700
-X-CSE-ConnectionGUID: SmQFA0toQ2WH2XJetDwJgw==
-X-CSE-MsgGUID: yu8cb8SsTL2OrzHVI7BvQQ==
+ 21 May 2024 21:43:17 -0700
+X-CSE-ConnectionGUID: 1Tf3vL9JQ4Kc2Y4/nZIUog==
+X-CSE-MsgGUID: 8IjPgqwIQ8mvZp6ikIf7IQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683695"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683795"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:50 -0700
+ 21 May 2024 21:43:15 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 06/20] vfio/platform: Make vfio_populate_device() and
- vfio_base_device_init() return bool
-Date: Wed, 22 May 2024 12:40:01 +0800
-Message-Id: <20240522044015.412951-7-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 17/20] vfio: Use g_autofree in all call site of
+ vfio_get_region_info()
+Date: Wed, 22 May 2024 12:40:12 +0800
+Message-Id: <20240522044015.412951-18-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
@@ -84,144 +84,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+There are some exceptions when pointer to vfio_region_info is reused.
+In that case, the pointed memory is freed manually.
 
 Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/platform.c | 40 +++++++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 23 deletions(-)
+ hw/vfio/helpers.c |  7 ++-----
+ hw/vfio/igd.c     |  5 ++---
+ hw/vfio/pci.c     | 13 +++----------
+ 3 files changed, 7 insertions(+), 18 deletions(-)
 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index e1a32863d9..a85c199c76 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -441,7 +441,7 @@ static int vfio_platform_hot_reset_multi(VFIODevice *vbasedev)
-  * @errp: error object
-  *
-  */
--static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
-+static bool vfio_populate_device(VFIODevice *vbasedev, Error **errp)
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 4b079dc383..27ea26aa48 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -343,7 +343,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+                       int index, const char *name)
  {
-     VFIOINTp *intp, *tmp;
-     int i, ret = -1;
-@@ -450,7 +450,7 @@ static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
+-    struct vfio_region_info *info;
++    g_autofree struct vfio_region_info *info = NULL;
+     int ret;
  
-     if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PLATFORM)) {
-         error_setg(errp, "this isn't a platform device");
--        return ret;
-+        return false;
-     }
- 
-     vdev->regions = g_new0(VFIORegion *, vbasedev->num_regions);
-@@ -487,12 +487,11 @@ static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
-                                                     irq.flags);
-             intp = vfio_init_intp(vbasedev, irq, errp);
-             if (!intp) {
--                ret = -1;
-                 goto irq_err;
-             }
+     ret = vfio_get_region_info(vbasedev, index, &info);
+@@ -376,8 +376,6 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
          }
      }
--    return 0;
-+    return true;
- irq_err:
-     timer_del(vdev->mmap_timer);
-     QLIST_FOREACH_SAFE(intp, &vdev->intp_list, next, tmp) {
-@@ -507,7 +506,7 @@ reg_error:
-         g_free(vdev->regions[i]);
-     }
-     g_free(vdev->regions);
--    return ret;
-+    return false;
- }
  
- /* specialized functions for VFIO Platform devices */
-@@ -527,10 +526,8 @@ static VFIODeviceOps vfio_platform_ops = {
-  * fd retrieval, resource query.
-  * Precondition: the device name must be initialized
-  */
--static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-+static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
- {
--    int ret;
+-    g_free(info);
 -
-     /* @fd takes precedence over @sysfsdev which takes precedence over @host */
-     if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
-         g_free(vbasedev->name);
-@@ -538,7 +535,7 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-     } else if (vbasedev->fd < 0) {
-         if (!vbasedev->name || strchr(vbasedev->name, '/')) {
-             error_setg(errp, "wrong host device name");
--            return -EINVAL;
-+            return false;
+     trace_vfio_region_setup(vbasedev->name, index, name,
+                             region->flags, region->fd_offset, region->size);
+     return 0;
+@@ -594,14 +592,13 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
+ 
+ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
+ {
+-    struct vfio_region_info *info = NULL;
++    g_autofree struct vfio_region_info *info = NULL;
+     bool ret = false;
+ 
+     if (!vfio_get_region_info(vbasedev, region, &info)) {
+         if (vfio_get_region_info_cap(info, cap_type)) {
+             ret = true;
          }
- 
-         vbasedev->sysfsdev = g_strdup_printf("/sys/bus/platform/devices/%s",
-@@ -546,20 +543,20 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+-        g_free(info);
      }
  
-     if (!vfio_device_get_name(vbasedev, errp)) {
--        return -EINVAL;
-+        return false;
-     }
+     return ret;
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 402fc5ce1d..1e79202f2b 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -367,8 +367,8 @@ static const MemoryRegionOps vfio_igd_index_quirk = {
  
-     if (!vfio_attach_device(vbasedev->name, vbasedev,
-                             &address_space_memory, errp)) {
--        return -EINVAL;
-+        return false;
-     }
+ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+ {
+-    struct vfio_region_info *rom = NULL, *opregion = NULL,
+-                            *host = NULL, *lpc = NULL;
++    g_autofree struct vfio_region_info *rom = NULL;
++    struct vfio_region_info *opregion = NULL, *host = NULL, *lpc = NULL;
+     VFIOQuirk *quirk;
+     VFIOIGDQuirk *igd;
+     PCIDevice *lpc_bridge;
+@@ -609,7 +609,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, ggms_mb + gms_mb);
  
--    ret = vfio_populate_device(vbasedev, errp);
--    if (ret) {
--        vfio_detach_device(vbasedev);
-+    if (vfio_populate_device(vbasedev, errp)) {
-+        return true;
-     }
+ out:
+-    g_free(rom);
+     g_free(opregion);
+     g_free(host);
+     g_free(lpc);
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 35ad9b582f..74a79bdf61 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -879,7 +879,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
  
--    return ret;
-+    vfio_detach_device(vbasedev);
-+    return false;
- }
+ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+ {
+-    struct vfio_region_info *reg_info;
++    g_autofree struct vfio_region_info *reg_info = NULL;
+     uint64_t size;
+     off_t off = 0;
+     ssize_t bytes;
+@@ -897,8 +897,6 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+     vdev->rom_size = size = reg_info->size;
+     vdev->rom_offset = reg_info->offset;
  
- /**
-@@ -576,7 +573,7 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-     VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
-     SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
+-    g_free(reg_info);
+-
+     if (!vdev->rom_size) {
+         vdev->rom_read_failed = true;
+         error_report("vfio-pci: Cannot read device rom at "
+@@ -2668,7 +2666,7 @@ static VFIODeviceOps vfio_pci_ops = {
+ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+ {
      VFIODevice *vbasedev = &vdev->vbasedev;
--    int i, ret;
-+    int i;
+-    struct vfio_region_info *reg_info;
++    g_autofree struct vfio_region_info *reg_info = NULL;
+     int ret;
  
-     qemu_mutex_init(&vdev->intp_mutex);
- 
-@@ -584,9 +581,8 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-                                 vbasedev->sysfsdev : vbasedev->name,
-                                 vdev->compat);
- 
--    ret = vfio_base_device_init(vbasedev, errp);
--    if (ret) {
--        goto out;
-+    if (!vfio_base_device_init(vbasedev, errp)) {
-+        goto init_err;
+     ret = vfio_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
+@@ -2685,7 +2683,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+         error_setg(errp, "unexpected VGA info, flags 0x%lx, size 0x%lx",
+                    (unsigned long)reg_info->flags,
+                    (unsigned long)reg_info->size);
+-        g_free(reg_info);
+         return false;
      }
  
-     if (!vdev->compat) {
-@@ -618,11 +614,9 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-         }
-         sysbus_init_mmio(sbdev, vdev->regions[i]->mem);
-     }
--out:
--    if (!ret) {
--        return;
--    }
-+    return;
+@@ -2694,8 +2691,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+     vdev->vga->fd_offset = reg_info->offset;
+     vdev->vga->fd = vdev->vbasedev.fd;
  
-+init_err:
-     if (vdev->vbasedev.name) {
-         error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     } else {
+-    g_free(reg_info);
+-
+     vdev->vga->region[QEMU_PCI_VGA_MEM].offset = QEMU_PCI_VGA_MEM_BASE;
+     vdev->vga->region[QEMU_PCI_VGA_MEM].nr = QEMU_PCI_VGA_MEM;
+     QLIST_INIT(&vdev->vga->region[QEMU_PCI_VGA_MEM].quirks);
+@@ -2736,7 +2731,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+ {
+     VFIODevice *vbasedev = &vdev->vbasedev;
+-    struct vfio_region_info *reg_info;
++    g_autofree struct vfio_region_info *reg_info = NULL;
+     struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
+     int i, ret = -1;
+ 
+@@ -2790,8 +2785,6 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+     }
+     vdev->config_offset = reg_info->offset;
+ 
+-    g_free(reg_info);
+-
+     if (vdev->features & VFIO_FEATURE_ENABLE_VGA) {
+         if (!vfio_populate_vga(vdev, errp)) {
+             error_append_hint(errp, "device does not support "
 -- 
 2.34.1
 
