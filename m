@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97042C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 08:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7C1C25B79
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 08:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9h3K-00039a-F3; Wed, 22 May 2024 04:10:26 -0400
+	id 1s9h3l-0003Nv-Q8; Wed, 22 May 2024 04:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s9h3H-000391-6S
- for qemu-devel@nongnu.org; Wed, 22 May 2024 04:10:23 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s9h33-0000Cl-LW
- for qemu-devel@nongnu.org; Wed, 22 May 2024 04:10:22 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxFehbqE1mU5cCAA--.2028S3;
- Wed, 22 May 2024 16:10:04 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxfcdZqE1mPEkFAA--.15287S3; 
- Wed, 22 May 2024 16:10:03 +0800 (CST)
-Subject: Re: [PATCH 1/2] target/loongarch: Add loongarch vector property
- unconditionally
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240521080549.434197-1-maobibo@loongson.cn>
- <20240521080549.434197-2-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <735a6db8-b6a8-d6e6-ce10-93746f995a57@loongson.cn>
-Date: Wed, 22 May 2024 16:10:02 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s9h3j-0003Jz-Dn
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 04:10:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s9h3h-0000Lx-OT
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 04:10:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716365447;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3MX0dfPxJQW/jPdajIzbnapO+LDnoMtyS+J863xbynU=;
+ b=Ikni0Nmt+T+9llPLt99YGxn9aclDWFJq6u6eXz0SRu7XDHXD3mId3E5j4CKjVlOhfeAVk3
+ 11EFN5vAqOuiw1IKMauGNHldws3Gn1nhXXBRmRNWbHmVBpnudgJUFoZ3COnYw9nhXyPY2P
+ Xz/7RMZT8CIIKR1vEUzaBouUjN/NDOU=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-163-tI-JumeHOl6N7wCW1MfL-w-1; Wed, 22 May 2024 04:10:46 -0400
+X-MC-Unique: tI-JumeHOl6N7wCW1MfL-w-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2b3773153feso11545680a91.0
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 01:10:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716365445; x=1716970245;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3MX0dfPxJQW/jPdajIzbnapO+LDnoMtyS+J863xbynU=;
+ b=AMmiUQCKjniy4Md/Yq+IsrptRBw+l8v8kD3UkYlxRyK1ZVT0xhkqqJs3IbA7W/YasA
+ ZLCjEH2mopYun54Qjs7q/diJraUnLr8uFJ3FafN4aqTf6+o8hN/7w/MYsI9qzS65Azfo
+ LN/DiUkYBbjb3y+Uhv7wEPImvW7PB667XZsjXa0Ax4fWKGGsYaMadJta+qsoXHnmNaoP
+ 8QGZKX+TsOlAAohj0hVTBxAjy8stNVXlTWnGbgUAjq/5NXs2H/zcvfXviasSWMu+TeFV
+ 5Rs5sjyUVV9H9EB8mbl+VK27imN/EY3JZ1flytWTIhzNCjQ5ZvBAamtlDkQXRF9vVx4d
+ hTTQ==
+X-Gm-Message-State: AOJu0YwQgTjcomc0Qtr0E18XKDt2G3EkgJyaHaVKcy83XA5Z/+cTnggk
+ EW5yTnn1WJ4rzyAQUIwQZ3+R7fpDS5dj1U5yEXGQEhSl1d3Fdf78w58qV0FZQtSBQyvN/9kNRYx
+ knw5hFyvs63Yr8spxj2nU3TPskC36qfMemaGW3WIoHkzHMwoW5TOwpEYeUIyjzC8X55+dhPeY13
+ U+//lmYcoftgc30FMLoV8WZTcKBoc=
+X-Received: by 2002:a17:90a:f3c6:b0:2b9:e3:355f with SMTP id
+ 98e67ed59e1d1-2bd9f345813mr1396518a91.8.1716365444827; 
+ Wed, 22 May 2024 01:10:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGC6O1kafe7nGK3VWY4HViL/pgQKbvmkYsdnPwWnvuikUQSFS7IUbI7eT0moExTx1i1hgdy4teWG8yKn6+RBU=
+X-Received: by 2002:a17:90a:f3c6:b0:2b9:e3:355f with SMTP id
+ 98e67ed59e1d1-2bd9f345813mr1396489a91.8.1716365444387; Wed, 22 May 2024
+ 01:10:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20240521080549.434197-2-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxfcdZqE1mPEkFAA--.15287S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZF4fCry5Kry5tFyrtr4kXwc_yoW8Xr4Dpr
- ZxuFW2gFWjqFZ7A34DJay5Wr1vvr4xWr12qF1Sk34xurs8Jw1jqF10y39FqF97A3yxCF12
- gw1kK3W3Xa17JabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j1
- q2_UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-0.405, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240522062313.453317-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20240522062313.453317-1-zhenzhong.duan@intel.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 22 May 2024 16:10:33 +0800
+Message-ID: <CACGkMEuDVfL1ijqBdXqJ8UKrBf-Uj5Esw_kxRA2Df9CkcLkc+g@mail.gmail.com>
+Subject: Re: [PATCH rfcv2 00/17] intel_iommu: Enable stage-1 translation for
+ emulated device
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
+ eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
+ nicolinc@nvidia.com, joao.m.martins@oracle.com, 
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com, 
+ chao.p.peng@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,45 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/5/21 ÏÂÎç4:05, Bibo Mao Ð´µÀ:
-> Currently LSX/LASX vector property is decided by the default value.
-> Instead vector property should be added unconditionally, and it is
-> irrelative with its default value. If vector is disabled by default,
-> vector also can be enabled from command line.
+On Wed, May 22, 2024 at 2:25=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
+l.com> wrote:
 >
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+> Hi,
+>
+> Per Jason Wang's suggestion, iommufd nesting series[1] is split into
+> "Enable stage-1 translation for emulated device" series and
+> "Enable stage-1 translation for passthrough device" series.
+>
+> This series enables stage-1 translation support for emulated device
+> in intel iommu which we called "modern" mode.
 
-Thanks.
-Song Gao
->   target/loongarch/cpu.c | 14 ++++----------
->   1 file changed, 4 insertions(+), 10 deletions(-)
->
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index a0cad53676..b5c1ec94af 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -645,16 +645,10 @@ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
->   
->   void loongarch_cpu_post_init(Object *obj)
->   {
-> -    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-> -
-> -    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
-> -        object_property_add_bool(obj, "lsx", loongarch_get_lsx,
-> -                                 loongarch_set_lsx);
-> -    }
-> -    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LASX)) {
-> -        object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-> -                                 loongarch_set_lasx);
-> -    }
-> +    object_property_add_bool(obj, "lsx", loongarch_get_lsx,
-> +                             loongarch_set_lsx);
-> +    object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-> +                             loongarch_set_lasx);
->   }
->   
->   static void loongarch_cpu_init(Object *obj)
+Btw, I think we never merge RFC patches so I guess this series could
+be sent as formal one for the next version.
+
+Thanks
 
 
