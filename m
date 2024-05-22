@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9EADC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B57FC25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 11:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9jWn-0000Rh-3u; Wed, 22 May 2024 06:49:01 -0400
+	id 1s9k7w-00024u-8Q; Wed, 22 May 2024 07:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s9jWl-0000RD-Ma
- for qemu-devel@nongnu.org; Wed, 22 May 2024 06:48:59 -0400
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s9k7r-00022t-Nz
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 07:27:20 -0400
 Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s9jWj-0002m3-7f
- for qemu-devel@nongnu.org; Wed, 22 May 2024 06:48:58 -0400
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s9k7o-0001YQ-94
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 07:27:17 -0400
 Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1ee954e0aa6so9500015ad.3
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 03:48:55 -0700 (PDT)
+ d9443c01a7336-1ecd9a81966so5580255ad.0
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 04:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716374935; x=1716979735;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mqM4Fspwb8wwQhVc9tE0YGZZP9YEJO9lu9jnW/1dzlY=;
- b=TqmqY+LfXVnFWSwURs1uZPTt7Yc2UK1/LDdetli49i1Qky21AGWV+yIxb27GrTASM+
- 4CbJM6UXFcwi1g7fcHiIi5R913jet/92q8Em2WtQPyd0EtD9w3opziBVe0hKlC2Jt0p8
- WwpsAVTws8NQ/14HzM6a2xapI36peuzPxts9hXMgpRi3IOdq4FCOFRo9zPOIGTRBK5p7
- ZrtIL0arbZ3VtttT+ZpwRuliZ8zxK87KHLyGgFDyjdAyJS1/IvFi6nrm34uvoAIInUdi
- sZBGyMPiHqyNNxkU++KtUJIAOVQ4ntw+ue4MN9Iw8Voa9BYX1VvPvBEjdMDX2WI5yoPa
- R5XA==
+ d=ventanamicro.com; s=google; t=1716377233; x=1716982033; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bCiwcr3BC98IUvU80cUNNmD1mZSliUq/337Wrtxnoqs=;
+ b=O/9ns5vlCHuzGETOK1ybP/YVZrKnz+xYutx8+41pbs0UICyjJk2+Q1Vz/+cyRXWkLG
+ /+j7LkvOB2bDe8REurPM4PLB3/b2f1uDrgyROpraTJpYHRIR7X9f+Odeq4LpQ/Xoh0eq
+ /eOu7udp/ZSK6mSvTZ2+O9s2G6j4vR5GPMhyAk3YW/x3F9MKUke+uO5On2CT75Mjgd9n
+ f/XGbu9VXtnR5A4iECGcKkCCsRYkHj2qtseCYkoxZ38cidssVuJXQyzT36QggCtIqHgP
+ xtnimPCUjQN16zJG/1dQZIMEjqqNtZoSpJxnr43fI4T1COech8aoWlpl4idzYsvPVTPg
+ ZlcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716374935; x=1716979735;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mqM4Fspwb8wwQhVc9tE0YGZZP9YEJO9lu9jnW/1dzlY=;
- b=t9NHc5kOT0Zu9iF7kjOqkInOiAlwrzBo8ELu9JaK38puroPGvRGWvdHNgvHFAZAUOj
- WLpZjUod6GNVd6LNRtSAr0EJzQIfR5GrwbdDcR6FdwLC05S2e5BMma/BlwHLUSlHEhus
- oAqSOOA/wOtk9XX18qVz1Cju+dLrTDR14zGvnGuhatZEfTrCjA5V+SUgGw5RmOyk+fZw
- eJVmtgbOEmHYRN9yC05/Eo7zptsHjeVy7SYfWspmXjs3SJeCxIdsVxSVUTlEyS9Z+XtJ
- x9Bqm3thiyID/+ScoDVeDK0AdKeigslyXpcMSlBHV/gP8V0QQSAA8wHme3YnPWKxkYxo
- b5RA==
-X-Gm-Message-State: AOJu0Yysgz+mEz/fgmeFNyUijJPBNu3cLo66s9N08s3RA0D8hXW9y+s6
- iOCpZdD1fADk/mZN1vD953x5ZLM+/pgjjrCxCUp/sVcW5wr7OntXED5Dh0HirA0=
-X-Google-Smtp-Source: AGHT+IEqjwpbgxMA+QxeffW2GKUe+tunJzuVuUZfYu6H9GI6MQq89UkBEsfMJh3Ajsp8MV+kYf1UXA==
-X-Received: by 2002:a17:902:db06:b0:1f3:1036:a262 with SMTP id
- d9443c01a7336-1f31c95c473mr16912775ad.12.1716374934755; 
- Wed, 22 May 2024 03:48:54 -0700 (PDT)
-Received: from localhost ([157.82.204.135])
- by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1f32e24f2bfsm3463285ad.238.2024.05.22.03.48.51
+ d=1e100.net; s=20230601; t=1716377233; x=1716982033;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bCiwcr3BC98IUvU80cUNNmD1mZSliUq/337Wrtxnoqs=;
+ b=a7K+fHJMKsi8ankRivgKqfCVw6dfPCyiayQwWljNptiCp+EjZXvfq5txn6AjXVQdAI
+ RNGy8k5DeVCJoVCxEv4DzCQNLdwWLcXW6frsuHKzcvN/qviB9bV3HRxdU3uWMMwMcJwe
+ 5PuZpP1pg0poQh2t8/K95TD5l/Z3Xd2meNaXOe33MF2/Xr6JbGLRXhl7s4rm2qEZxN7i
+ 5PVLWsQYBtYosmQt2RUjSAqZpWul/2VP+vowMaRYRCb89fRPIIICSJjXKVxRCVabWBuG
+ G/8iQwZcoXrxxG7GQ1MYk+hICwjjYCym2YQyTFpv4Uqz2iqdl1p6/J6swhE7Lhn5CXIN
+ XFUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgIaH3UabcOmZMS9gbBXUCQLGPL9+m46X3ECl/6vZxGEvZRXdERWq+mE21yKhLaLKReglZDUzYeKmpEeXQAwSolPSpygI=
+X-Gm-Message-State: AOJu0YzAKqxvCpqFQmtt8qaQrhVrB9PoZzfUDGYtK7AhPfK/TEjyCJut
+ jFtDC7Lb40BNjGPYGRAgtuTorqN2zKDiMHaz1zm7qpQQqpA6kepVGrnU5oxYUis=
+X-Google-Smtp-Source: AGHT+IGR9nMmrTsT1ueVNGHvIQnLIMIxe68jzyEEPySyU0xZOIqJbv4SKpw/lBTy9p3w39k3WXH1sw==
+X-Received: by 2002:a17:902:d484:b0:1f3:2451:8de8 with SMTP id
+ d9443c01a7336-1f32451a471mr20793915ad.7.1716377233417; 
+ Wed, 22 May 2024 04:27:13 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:bdcd:fb00:6501:2693:db52:c621?
+ ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f32219b224sm10630335ad.294.2024.05.22.04.27.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 03:48:54 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 22 May 2024 19:48:37 +0900
-Subject: [PATCH v3 2/3] meson: Add -fno-sanitize=function
+ Wed, 22 May 2024 04:27:12 -0700 (PDT)
+Message-ID: <c74c6bb2-d7fd-4f11-9abe-158c1b48f7e2@ventanamicro.com>
+Date: Wed, 22 May 2024 08:27:08 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] target/riscv: Move Guest irqs out of the core
+ local irqs range.
+To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com
+References: <20240520125157.311503-1-rkanwal@rivosinc.com>
+ <20240520125157.311503-3-rkanwal@rivosinc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240520125157.311503-3-rkanwal@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240522-xkb-v3-2-c429de860fa1@daynix.com>
-References: <20240522-xkb-v3-0-c429de860fa1@daynix.com>
-In-Reply-To: <20240522-xkb-v3-0-c429de860fa1@daynix.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, 
- Beraldo Leal <bleal@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Laurent Vivier <lvivier@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>, 
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-01a33
-Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
--fsanitize=function enforces the consistency of function types, but
-include/qemu/lockable.h contains function pointer casts, which violate
-the rule. We already disables exact type checks for CFI with
--fsanitize-cfi-icall-generalize-pointers so disable -fsanitize=function
-as well.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 91a0aa64c640..3c3ad0d5f5eb 100644
---- a/meson.build
-+++ b/meson.build
-@@ -298,7 +298,7 @@ endforeach
- 
- qemu_common_flags = [
-   '-D_GNU_SOURCE', '-D_FILE_OFFSET_BITS=64', '-D_LARGEFILE_SOURCE',
--  '-fno-strict-aliasing', '-fno-common', '-fwrapv' ]
-+  '-fno-sanitize=function', '-fno-strict-aliasing', '-fno-common', '-fwrapv' ]
- qemu_cflags = []
- qemu_ldflags = []
- 
+On 5/20/24 09:51, Rajnesh Kanwal wrote:
+> Qemu maps IRQs 0:15 for core interrupts and 16 onward for
+> guest interrupts which are later translated to hgiep in
+> `riscv_cpu_set_irq()` function.
+> 
+> With virtual IRQ support added, software now can fully
+> use the whole local interrupt range without any actual
+> hardware attached.
+> 
+> This change moves the guest interrupt range after the
+> core local interrupt range to avoid clash.
+> 
+> Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
+> Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
+> 
+> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+> ---
 
--- 
-2.45.1
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
+>   target/riscv/cpu_bits.h | 3 ++-
+>   target/riscv/csr.c      | 9 ++++++++-
+>   2 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index 74318a925c..a470fda9be 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -695,7 +695,8 @@ typedef enum RISCVException {
+>   #define IRQ_M_EXT                          11
+>   #define IRQ_S_GEXT                         12
+>   #define IRQ_PMU_OVF                        13
+> -#define IRQ_LOCAL_MAX                      16
+> +#define IRQ_LOCAL_MAX                      64
+> +/* -1 is due to bit zero of hgeip and hgeie being ROZ. */
+>   #define IRQ_LOCAL_GUEST_MAX                (TARGET_LONG_BITS - 1)
+>   
+>   /* mip masks */
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 152796ebc0..464e0e57a3 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1148,7 +1148,14 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
+>   
+>   #define VSTOPI_NUM_SRCS 5
+>   
+> -#define LOCAL_INTERRUPTS (~0x1FFF)
+> +/*
+> + * All core local interrupts except the fixed ones 0:12. This macro is for
+> + * virtual interrupts logic so please don't change this to avoid messing up
+> + * the whole support, For reference see AIA spec: `5.3 Interrupt filtering and
+> + * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupts for
+> + * VS level`.
+> + */
+> +#define LOCAL_INTERRUPTS   (~0x1FFFULL)
+>   
+>   static const uint64_t delegable_ints =
+>       S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
 
