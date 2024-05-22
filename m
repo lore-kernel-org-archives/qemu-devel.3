@@ -4,92 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30360C25B7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 22:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D6FC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 22:21:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9uKF-0005R6-KP; Wed, 22 May 2024 18:20:48 -0400
+	id 1s9uKH-0005Rf-2F; Wed, 22 May 2024 18:20:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9uKB-0005QX-Qr
- for qemu-devel@nongnu.org; Wed, 22 May 2024 18:20:44 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9uKE-0005Qz-MJ
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 18:20:46 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9uK8-0003fZ-8o
- for qemu-devel@nongnu.org; Wed, 22 May 2024 18:20:42 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9uKD-0003jG-16
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 18:20:46 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 0863021C21;
- Wed, 22 May 2024 22:20:38 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 506A221C22;
+ Wed, 22 May 2024 22:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716416438; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=is/RpDpHv5lZV2dWY2IophhyTb//P1hJoNYZQO5ncvc=;
- b=YCmPzBGYT0P7HoZFdeB5+HNUL0ByQaj6Rcw1sP1B+2myRcDd0PI4Q4iqdANcTRbGWN8IuK
- vO9W2S47W3fdJTHlU3awPaFFOM+Sk0exDmenk6Z5LKqczY0Y5TI5ffIF4Ib0pzVZbrdzDs
- 0p6WHP29SXMlDip9JXfBDsZyzIZ/nmY=
+ t=1716416442; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ew10UfF+EsVVsf2jekqvCwSdcpTxG4Fq96bsyCk5mbU=;
+ b=RkVib5YvxP8+aWE6IbEJeBqaEw0jeGl8eFgf9xeBmn2EX3gTVMnFPGLqkC5J7+wvp8O/Eo
+ 3XFpAtwJ3dIUj3/PXAf23cmrFbbPP7moXIeOwMDNqirKYkVAGUrOGIBiMtrk6iHcdkKgIu
+ ILqGvCNZ6VZzsE2rpaAFytVRJHd0ZrY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716416438;
+ s=susede2_ed25519; t=1716416442;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=is/RpDpHv5lZV2dWY2IophhyTb//P1hJoNYZQO5ncvc=;
- b=Tlpan0QTDqOff3r4eAb/0M2cRCBlKnlkjrxjumdDV428je6nG1jAffA3kDg5wjgpxihuRN
- NuDRYg5wEKmYG9CA==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ew10UfF+EsVVsf2jekqvCwSdcpTxG4Fq96bsyCk5mbU=;
+ b=+ViRDCxsCqNVdyXGsu/moSiZ4JuQ0mO0ASGWJHMjzs7r+b7cbhdDhnpMuRifc+yd/nCHWQ
+ bJyGuthC8qZwuqAw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716416438; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=is/RpDpHv5lZV2dWY2IophhyTb//P1hJoNYZQO5ncvc=;
- b=YCmPzBGYT0P7HoZFdeB5+HNUL0ByQaj6Rcw1sP1B+2myRcDd0PI4Q4iqdANcTRbGWN8IuK
- vO9W2S47W3fdJTHlU3awPaFFOM+Sk0exDmenk6Z5LKqczY0Y5TI5ffIF4Ib0pzVZbrdzDs
- 0p6WHP29SXMlDip9JXfBDsZyzIZ/nmY=
+ t=1716416442; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ew10UfF+EsVVsf2jekqvCwSdcpTxG4Fq96bsyCk5mbU=;
+ b=RkVib5YvxP8+aWE6IbEJeBqaEw0jeGl8eFgf9xeBmn2EX3gTVMnFPGLqkC5J7+wvp8O/Eo
+ 3XFpAtwJ3dIUj3/PXAf23cmrFbbPP7moXIeOwMDNqirKYkVAGUrOGIBiMtrk6iHcdkKgIu
+ ILqGvCNZ6VZzsE2rpaAFytVRJHd0ZrY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716416438;
+ s=susede2_ed25519; t=1716416442;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=is/RpDpHv5lZV2dWY2IophhyTb//P1hJoNYZQO5ncvc=;
- b=Tlpan0QTDqOff3r4eAb/0M2cRCBlKnlkjrxjumdDV428je6nG1jAffA3kDg5wjgpxihuRN
- NuDRYg5wEKmYG9CA==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ew10UfF+EsVVsf2jekqvCwSdcpTxG4Fq96bsyCk5mbU=;
+ b=+ViRDCxsCqNVdyXGsu/moSiZ4JuQ0mO0ASGWJHMjzs7r+b7cbhdDhnpMuRifc+yd/nCHWQ
+ bJyGuthC8qZwuqAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D231F13A6B;
- Wed, 22 May 2024 22:20:36 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B0D3813A6B;
+ Wed, 22 May 2024 22:20:40 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WDxUJbRvTmaABAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 22 May 2024 22:20:36 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aCPjHbhvTmaABAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 22 May 2024 22:20:40 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 0/9] Migration patches for 2024-05-22
-Date: Wed, 22 May 2024 19:20:25 -0300
-Message-Id: <20240522222034.4001-1-farosas@suse.de>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Li Zhijian <lizhijian@fujitsu.com>, Zhang Chen <chen.zhang@intel.com>
+Subject: [PULL 2/9] migration/colo: make colo_incoming_co() return void
+Date: Wed, 22 May 2024 19:20:27 -0300
+Message-Id: <20240522222034.4001-3-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240522222034.4001-1-farosas@suse.de>
+References: <20240522222034.4001-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCPT_COUNT_THREE(0.00)[3]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -112,60 +119,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 01782d6b294f95bcde334386f0aaac593cd28c0d:
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-  Merge tag 'hw-misc-20240517' of https://github.com/philmd/qemu into staging (2024-05-18 11:49:01 +0200)
+Currently, it always returns 0, no need to check the return value at all.
+In addition, enter colo coroutine only if migration_incoming_colo_enabled()
+is true.
+Once the destination side enters the COLO* state, the COLO process will
+take over the remaining processes until COLO exits.
 
-are available in the Git repository at:
+Cc: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Zhang Chen <chen.zhang@intel.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+[fixed mangled author email address]
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ include/migration/colo.h | 2 +-
+ migration/colo-stubs.c   | 3 +--
+ migration/colo.c         | 9 ++-------
+ migration/migration.c    | 6 +++---
+ 4 files changed, 7 insertions(+), 13 deletions(-)
 
-  https://gitlab.com/farosas/qemu.git tags/migration-20240522-pull-request
-
-for you to fetch changes up to 8f023a0bd946bb0c122543c64fe2b34bad0dd048:
-
-  tests/qtest/migration-test: Fix the check for a successful run of analyze-migration.py (2024-05-22 17:34:41 -0300)
-
-----------------------------------------------------------------
-Migration pull request
-
-- Li Zhijian's COLO minor fixes
-- Marc-André's virtio-gpu fix
-- Fiona's virtio-net USO fix
-- A couple of migration-test fixes from Thomas
-
-----------------------------------------------------------------
-
-Fiona Ebner (1):
-  hw/core/machine: move compatibility flags for VirtIO-net USO to
-    machine 8.1
-
-Li Zhijian (3):
-  migration/colo: Minor fix for colo error message
-  migration/colo: make colo_incoming_co() return void
-  migration/colo: Tidy up bql_unlock() around bdrv_activate_all()
-
-Marc-André Lureau (3):
-  migration: add "exists" info to load-state-field trace
-  migration: fix a typo
-  virtio-gpu: fix v2 migration
-
-Thomas Huth (2):
-  tests/qtest/migration-test: Run some basic tests on s390x and ppc64
-    with TCG, too
-  tests/qtest/migration-test: Fix the check for a successful run of
-    analyze-migration.py
-
- hw/core/machine.c              |  7 +++---
- hw/display/virtio-gpu.c        | 30 ++++++++++++++++++-------
- include/hw/virtio/virtio-gpu.h |  1 +
- include/migration/colo.h       |  2 +-
- migration/colo-stubs.c         |  3 +--
- migration/colo.c               | 12 +++-------
- migration/migration.c          | 12 +++++-----
- migration/trace-events         |  2 +-
- migration/vmstate.c            |  7 +++---
- tests/qtest/migration-test.c   | 41 +++++++++++++++++-----------------
- 10 files changed, 64 insertions(+), 53 deletions(-)
-
+diff --git a/include/migration/colo.h b/include/migration/colo.h
+index eaac07f26d..43222ef5ae 100644
+--- a/include/migration/colo.h
++++ b/include/migration/colo.h
+@@ -49,7 +49,7 @@ void colo_checkpoint_delay_set(void);
+  *
+  * Called with BQL locked, may temporary release BQL.
+  */
+-int coroutine_fn colo_incoming_co(void);
++void coroutine_fn colo_incoming_co(void);
+ 
+ void colo_shutdown(void);
+ #endif
+diff --git a/migration/colo-stubs.c b/migration/colo-stubs.c
+index f8c069b739..e22ce65234 100644
+--- a/migration/colo-stubs.c
++++ b/migration/colo-stubs.c
+@@ -9,9 +9,8 @@ void colo_shutdown(void)
+ {
+ }
+ 
+-int coroutine_fn colo_incoming_co(void)
++void coroutine_fn colo_incoming_co(void)
+ {
+-    return 0;
+ }
+ 
+ void colo_checkpoint_delay_set(void)
+diff --git a/migration/colo.c b/migration/colo.c
+index e2b450c132..ca37b932ac 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -928,16 +928,13 @@ out:
+     return NULL;
+ }
+ 
+-int coroutine_fn colo_incoming_co(void)
++void coroutine_fn colo_incoming_co(void)
+ {
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     QemuThread th;
+ 
+     assert(bql_locked());
+-
+-    if (!migration_incoming_colo_enabled()) {
+-        return 0;
+-    }
++    assert(migration_incoming_colo_enabled());
+ 
+     qemu_thread_create(&th, "COLO incoming", colo_process_incoming_thread,
+                        mis, QEMU_THREAD_JOINABLE);
+@@ -953,6 +950,4 @@ int coroutine_fn colo_incoming_co(void)
+ 
+     /* We hold the global BQL, so it is safe here */
+     colo_release_ram_cache();
+-
+-    return 0;
+ }
+diff --git a/migration/migration.c b/migration/migration.c
+index 995f0ca923..c004637d29 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -776,9 +776,9 @@ process_incoming_migration_co(void *opaque)
+         goto fail;
+     }
+ 
+-    if (colo_incoming_co() < 0) {
+-        error_setg(&local_err, "colo incoming failed");
+-        goto fail;
++    if (migration_incoming_colo_enabled()) {
++        /* yield until COLO exit */
++        colo_incoming_co();
+     }
+ 
+     migration_bh_schedule(process_incoming_migration_bh, mis);
 -- 
 2.35.3
 
