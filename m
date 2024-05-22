@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB85C25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F3DC25B7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9ihJ-000437-GF; Wed, 22 May 2024 05:55:49 -0400
+	id 1s9ih3-0003ZJ-O1; Wed, 22 May 2024 05:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihG-0003pz-R8
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igq-0003S3-EG
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihD-0001ll-L4
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igo-0001Qv-R8
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371743;
+ s=mimecast20190719; t=1716371718;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vOI4wBHXF1so/a94L2k2ZhYao0kW/v+zFhWWTorCMZE=;
- b=WYhr/OxLQJs/GDvUZ+vjvj2DYLIDPW1CC2rbiyUX/Rx5eLgveB+PZO+i409+0MZHhLPRG+
- NXiZ4jBy6CR6A4CZOdnaH16epoHTo9LZj7AHEyg0hr4RoAG5Asoct70roGpyfnDyvUYpOm
- bBuRFofyrBm4O02SGYDkieocMla7Aas=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-Kcr5uj7nMKeYRYWO1sE8eQ-1; Wed,
- 22 May 2024 05:55:41 -0400
-X-MC-Unique: Kcr5uj7nMKeYRYWO1sE8eQ-1
+ bh=JT/bVHrvMqyK5ucSJY0O+P5XBU+ZBQiDckhZnyN66vk=;
+ b=TkhPxouE7B+dg/6UR9ULhXmXsRdDEPEn2UY3RtsFa/4KCXz5laSt5G0Pbs83agnR11qyHg
+ tlvJ/9+0qpUnIC0JUAXxtmgklaizvbSMqHQxX8InCzQHpWgNFpM1PhigFTOzFv1LYI1Hbz
+ MDxVEtqcyxXbe4cGNvZ8rUoNJW+Ln1c=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-O-ugEHkON0mPg8fxSqaXqQ-1; Wed, 22 May 2024 05:55:16 -0400
+X-MC-Unique: O-ugEHkON0mPg8fxSqaXqQ-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F0D223C025D2;
- Wed, 22 May 2024 09:55:40 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B3D9800994;
+ Wed, 22 May 2024 09:55:16 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CE46228E2;
- Wed, 22 May 2024 09:55:39 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0934951BF;
+ Wed, 22 May 2024 09:55:14 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 36/47] vfio/ccw: Make vfio_ccw_get_region() return a bool
-Date: Wed, 22 May 2024 11:54:31 +0200
-Message-ID: <20240522095442.195243-37-clg@redhat.com>
+Subject: [PULL 18/47] vfio/migration: Enhance VFIO migration state tracing
+Date: Wed, 22 May 2024 11:54:13 +0200
+Message-ID: <20240522095442.195243-19-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,85 +81,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-Since vfio_populate_device() takes an 'Error **' argument,
-best practices suggest to return a bool. See the qapi/error.h
-Rules section.
+Move trace_vfio_migration_set_state() to the top of the function, add
+recover_state to it, and add a new trace event to
+vfio_migration_set_device_state().
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+This improves tracing of device state changes as state changes are now
+also logged when vfio_migration_set_state() fails (covering recover
+state and device reset transitions) and in no-op state transitions to
+the same state.
+
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/ccw.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ hw/vfio/migration.c  | 8 ++++++--
+ hw/vfio/trace-events | 3 ++-
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 8850ca17c84632d278e27819cd52e104ed436d6c..2600e62e37238779800dc2b3a0bd315d7633017b 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -474,7 +474,7 @@ static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
-     event_notifier_cleanup(notifier);
- }
- 
--static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-+static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 56edffaf6251e28e39ef32991394697abb1b9e55..34d4be2ce1b13626a8690d4787366ee41a9ebe1e 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -129,6 +129,9 @@ static void vfio_migration_set_device_state(VFIODevice *vbasedev,
  {
-     VFIODevice *vdev = &vcdev->vdev;
-     struct vfio_region_info *info;
-@@ -483,7 +483,7 @@ static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-     /* Sanity check device */
-     if (!(vdev->flags & VFIO_DEVICE_FLAGS_CCW)) {
-         error_setg(errp, "vfio: Um, this isn't a vfio-ccw device");
--        return;
-+        return false;
-     }
+     VFIOMigration *migration = vbasedev->migration;
  
-     /*
-@@ -493,13 +493,13 @@ static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-     if (vdev->num_regions < VFIO_CCW_CONFIG_REGION_INDEX + 1) {
-         error_setg(errp, "vfio: too few regions (%u), expected at least %u",
-                    vdev->num_regions, VFIO_CCW_CONFIG_REGION_INDEX + 1);
--        return;
-+        return false;
-     }
- 
-     ret = vfio_get_region_info(vdev, VFIO_CCW_CONFIG_REGION_INDEX, &info);
-     if (ret) {
-         error_setg_errno(errp, -ret, "vfio: Error getting config info");
--        return;
-+        return false;
-     }
- 
-     vcdev->io_region_size = info->size;
-@@ -553,7 +553,7 @@ static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-         g_free(info);
-     }
- 
--    return;
-+    return true;
- 
- out_err:
-     g_free(vcdev->crw_region);
-@@ -561,7 +561,7 @@ out_err:
-     g_free(vcdev->async_cmd_region);
-     g_free(vcdev->io_region);
-     g_free(info);
--    return;
-+    return false;
++    trace_vfio_migration_set_device_state(vbasedev->name,
++                                          mig_state_to_str(state));
++
+     migration->device_state = state;
+     vfio_migration_send_event(vbasedev);
  }
+@@ -150,6 +153,9 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+         g_strdup_printf("%s: Failed setting device state to %s.",
+                         vbasedev->name, mig_state_to_str(new_state));
  
- static void vfio_ccw_put_region(VFIOCCWDevice *vcdev)
-@@ -597,8 +597,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         goto out_attach_dev_err;
++    trace_vfio_migration_set_state(vbasedev->name, mig_state_to_str(new_state),
++                                   mig_state_to_str(recover_state));
++
+     if (new_state == migration->device_state) {
+         return 0;
+     }
+@@ -209,8 +215,6 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+         migration->data_fd = mig_state->data_fd;
      }
  
--    vfio_ccw_get_region(vcdev, &err);
--    if (err) {
-+    if (!vfio_ccw_get_region(vcdev, &err)) {
-         goto out_region_err;
-     }
+-    trace_vfio_migration_set_state(vbasedev->name, mig_state_to_str(new_state));
+-
+     return 0;
  
+ reset_device:
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index f0474b244bf04d044e8327c88bf49aef349afcca..64161bf6f44cffd73851a90b70694120a5fb2a82 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -152,7 +152,8 @@ vfio_load_device_config_state(const char *name) " (%s)"
+ vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
+ vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size 0x%"PRIx64" ret %d"
+ vfio_migration_realize(const char *name) " (%s)"
+-vfio_migration_set_state(const char *name, const char *state) " (%s) state %s"
++vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
++vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
+ vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+ vfio_save_cleanup(const char *name) " (%s)"
 -- 
 2.45.1
 
