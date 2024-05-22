@@ -4,78 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5099C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 06:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C148C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 06:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9fQv-0004yI-FM; Wed, 22 May 2024 02:26:41 -0400
+	id 1s9fUt-00031u-Kk; Wed, 22 May 2024 02:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9fQm-0004li-Vs
- for qemu-devel@nongnu.org; Wed, 22 May 2024 02:26:33 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s9fUr-0002uI-4k; Wed, 22 May 2024 02:30:45 -0400
+Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9fQk-0006eK-Oq
- for qemu-devel@nongnu.org; Wed, 22 May 2024 02:26:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716359191; x=1747895191;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=PTpYwvhKNL/GkXgHdnrW7sO+QlTIBmFpWaRFq585gVQ=;
- b=flyFsdkpc3A+7tQFsMkx1qeSgESuGayuN7C8V/k7J+xd2qtXEuS59R+f
- LDe3jsraOvNxbEv1ZN/0NFIdWSE6yial35fhENRKx34VK8zdTk69qVDrr
- +byJMM50+8ehAzY4tW7NAnZVaURl+ev4ewtEGzTazC05s3DKpjhksPD5N
- vVabE1uLzpNOFSnAe+Gpia8C3NM1pdmJX1PWbOCCUWpc+/IeLL0tCXwdk
- FM3NEtFzbFQjF+j4AzCpKuz35b2mjZgtjwa7FQ+G+5kQboedxNhmijPqK
- iotcfyDIzMK9yxLIvW7A0A8FXuCK9+f1Y1dolztk1H+mhrApBVCgZVRmr w==;
-X-CSE-ConnectionGUID: b8u4kNWzQjeDUg9u0x8hvg==
-X-CSE-MsgGUID: 6Dyzkp1WTy62Ft//n+/Bww==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="37972538"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="37972538"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 23:26:30 -0700
-X-CSE-ConnectionGUID: 5VI/SIFPQvGQpuYmbxISpg==
-X-CSE-MsgGUID: /ur7f/pLTb6RQJvfpe5BPQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33597791"
-Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 23:26:25 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s9fUn-0007Fz-Nl; Wed, 22 May 2024 02:30:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1716359436; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=FktyKP61lKeNzicxmroJe7gWiSlkHGxGW4//4iQJVSw=;
+ b=J3FbIaNnrW8eWa/x8aCf7U6pRNZYdsjmT4g56sM37XaDcu1I9oUzUQj5/+Zf71KF1lUIHuxi7DnrTymT2w3sn42QkH5lK0x0cnVtKkkQQHU5EBYhbOj7rgrUwr1kwr5vvXNWQ8L7o4OvRzAOTOxgOxul9ue0nUOqa6RH2YaozNc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R671e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0W7-6sXf_1716359433; 
+Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W7-6sXf_1716359433) by smtp.aliyun-inc.com;
+ Wed, 22 May 2024 14:30:35 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH rfcv2 08/17] intel_iommu: set accessed and dirty bits during
- first stage translation
-Date: Wed, 22 May 2024 14:23:04 +0800
-Message-Id: <20240522062313.453317-9-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240522062313.453317-1-zhenzhong.duan@intel.com>
-References: <20240522062313.453317-1-zhenzhong.duan@intel.com>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
+ dbarboza@ventanamicro.com, bmeng.cn@gmail.com, iwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: [PATCH 1/4] target/riscv: Add zimop extension
+Date: Wed, 22 May 2024 14:29:02 +0800
+Message-Id: <20240522062905.1799-2-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20240522062905.1799-1-zhiwei_liu@linux.alibaba.com>
+References: <20240522062905.1799-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-97.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,88 +69,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Zimop extension defines an encoding space for 40 MOPs.The Zimop
+extension defines 32 MOP instructions named MOP.R.n, where n is
+an integer between 0 and 31, inclusive. The Zimop extension
+additionally defines 8 MOP instructions named MOP.RR.n, where n
+is an integer between 0 and 7.
 
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+These 40 MOPs initially are defined to simply write zero to x[rd],
+but are designed to be redefined by later extensions to perform some
+other action.
+
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- hw/i386/intel_iommu_internal.h |  3 +++
- hw/i386/intel_iommu.c          | 25 +++++++++++++++++++++++++
- 2 files changed, 28 insertions(+)
+ target/riscv/cpu.c                          |  2 ++
+ target/riscv/cpu_cfg.h                      |  1 +
+ target/riscv/insn32.decode                  | 11 ++++++
+ target/riscv/insn_trans/trans_rvzimop.c.inc | 37 +++++++++++++++++++++
+ target/riscv/translate.c                    |  1 +
+ 5 files changed, 52 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzimop.c.inc
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index b6820dbca3..c0a94af820 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -327,6 +327,7 @@ typedef enum VTDFaultReason {
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index eb1a2e7d6d..c1ac521142 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -175,6 +175,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
++    ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_12_0, ext_zimop),
+     ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+@@ -1463,6 +1464,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
++    MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
+     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index cb750154bd..b547fbba9d 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -71,6 +71,7 @@ struct RISCVCPUConfig {
+     bool ext_zihintntl;
+     bool ext_zihintpause;
+     bool ext_zihpm;
++    bool ext_zimop;
+     bool ext_ztso;
+     bool ext_smstateen;
+     bool ext_sstc;
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index f22df04cfd..972a1e8fd1 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -38,6 +38,8 @@
+ %imm_bs   30:2                   !function=ex_shift_3
+ %imm_rnum 20:4
+ %imm_z6   26:1 15:5
++%imm_mop5 30:1 26:2 20:2
++%imm_mop3 30:1 26:2
  
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
-+    VTD_FR_FS_BIT_UPDATE_FAILED = 0x91, /* SFS.10 */
-     VTD_FR_MAX,                 /* Guard */
- } VTDFaultReason;
+ # Argument sets:
+ &empty
+@@ -56,6 +58,8 @@
+ &r2nfvm    vm rd rs1 nf
+ &rnfvm     vm rd rs1 rs2 nf
+ &k_aes     shamt rs2 rs1 rd
++&mop5 imm rd rs1
++&mop3 imm rd rs1 rs2
  
-@@ -547,6 +548,8 @@ typedef struct VTDRootEntry VTDRootEntry;
- /* First Level Paging Structure */
- #define VTD_FL_PT_LEVEL             1
- #define VTD_FL_PT_ENTRY_NR          512
-+#define VTD_FL_PTE_A                0x20
-+#define VTD_FL_PTE_D                0x40
+ # Formats 32:
+ @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
+@@ -98,6 +102,9 @@
+ @k_aes   .. ..... ..... .....  ... ..... ....... &k_aes  shamt=%imm_bs   %rs2 %rs1 %rd
+ @i_aes   .. ..... ..... .....  ... ..... ....... &i      imm=%imm_rnum        %rs1 %rd
  
- /* Masks for First Level Paging Entry */
- #define VTD_FL_RW_MASK              (1ULL << 1)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 1ea030bfbe..0801112e2e 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1802,6 +1802,7 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-     [VTD_FR_FS_NON_CANONICAL] = true,
-+    [VTD_FR_FS_BIT_UPDATE_FAILED] = true,
-     [VTD_FR_MAX] = false,
- };
++@mop5 . . .. .. .... .. ..... ... ..... ....... &mop5 imm=%imm_mop5 %rd %rs1
++@mop3 . . .. .. . ..... ..... ... ..... ....... &mop3 imm=%imm_mop3 %rd %rs1 %rs2
++
+ # Formats 64:
+ @sh5     .......  ..... .....  ... ..... ....... &shift  shamt=%sh5      %rs1 %rd
  
-@@ -1927,6 +1928,20 @@ static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
-             );
- }
- 
-+static MemTxResult vtd_set_flag_in_pte(dma_addr_t base_addr, uint32_t index,
-+                                       uint64_t pte, uint64_t flag)
+@@ -1010,3 +1017,7 @@ amocas_w    00101 . . ..... ..... 010 ..... 0101111 @atom_st
+ amocas_d    00101 . . ..... ..... 011 ..... 0101111 @atom_st
+ # *** RV64 Zacas Standard Extension ***
+ amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
++
++# *** Zimop may-be-operation extension ***
++mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 0111011 @mop5
++mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 0111011 @mop3
+diff --git a/target/riscv/insn_trans/trans_rvzimop.c.inc b/target/riscv/insn_trans/trans_rvzimop.c.inc
+new file mode 100644
+index 0000000000..165aacd2b6
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvzimop.c.inc
+@@ -0,0 +1,37 @@
++/*
++ * RISC-V translation routines for May-Be-Operation(zimop).
++ *
++ * Copyright (c) 2024 Alibaba Group.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#define REQUIRE_ZIMOP(ctx) do {           \
++    if (!ctx->cfg_ptr->ext_zimop) {       \
++        return false;                     \
++    }                                     \
++} while (0)
++
++static bool trans_mop_r_n(DisasContext *ctx, arg_mop_r_n *a)
 +{
-+    if (pte & flag) {
-+        return MEMTX_OK;
-+    }
-+    pte |= flag;
-+    pte = cpu_to_le64(pte);
-+    return dma_memory_write(&address_space_memory,
-+                            base_addr + index * sizeof(pte),
-+                            &pte, sizeof(pte),
-+                            MEMTXATTRS_UNSPECIFIED);
++    REQUIRE_ZIMOP(ctx);
++    gen_set_gpr(ctx, a->rd, ctx->zero);
++    return true;
 +}
 +
- /*
-  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-  * of the translation, can be used for deciding the size of large page.
-@@ -1972,7 +1987,17 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-             return -VTD_FR_WRITE;
-         }
- 
-+        if (vtd_set_flag_in_pte(addr, offset, flpte, VTD_FL_PTE_A)
-+                                                                != MEMTX_OK) {
-+            return -VTD_FR_FS_BIT_UPDATE_FAILED;
-+        }
-+
-         if (vtd_is_last_flpte(flpte, level)) {
-+            if (is_write &&
-+                (vtd_set_flag_in_pte(addr, offset, flpte, VTD_FL_PTE_D) !=
-+                                                                    MEMTX_OK)) {
-+                    return -VTD_FR_FS_BIT_UPDATE_FAILED;
-+            }
-             *flptep = flpte;
-             *flpte_level = level;
-             return 0;
++static bool trans_mop_rr_n(DisasContext *ctx, arg_mop_rr_n *a)
++{
++    REQUIRE_ZIMOP(ctx);
++    gen_set_gpr(ctx, a->rd, ctx->zero);
++    return true;
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 2c27fd4ce1..77c6564834 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1097,6 +1097,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_rvzacas.c.inc"
+ #include "insn_trans/trans_rvzawrs.c.inc"
+ #include "insn_trans/trans_rvzicbo.c.inc"
++#include "insn_trans/trans_rvzimop.c.inc"
+ #include "insn_trans/trans_rvzfa.c.inc"
+ #include "insn_trans/trans_rvzfh.c.inc"
+ #include "insn_trans/trans_rvk.c.inc"
 -- 
-2.34.1
+2.25.1
 
 
