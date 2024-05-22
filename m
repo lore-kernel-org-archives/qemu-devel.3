@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13983C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A620FC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9doT-0001OL-Nu; Wed, 22 May 2024 00:42:53 -0400
+	id 1s9doz-0001Xv-Ie; Wed, 22 May 2024 00:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doS-0001Nw-40; Wed, 22 May 2024 00:42:52 -0400
+ id 1s9dov-0001XC-LT
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:21 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doQ-0005sV-AE; Wed, 22 May 2024 00:42:51 -0400
+ id 1s9dot-0005wM-Ik
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:43:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716352971; x=1747888971;
+ t=1716353000; x=1747889000;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=JCXGA2f5VRq8cLR58D7Xt/OW8TEieNqwtU9mvtZZxD4=;
- b=VSFGTwDE2TAb28OCFXXYVGesQf89I6/IQ3bocfIdR5DtzsbRa2vF7ovd
- JpiKAr4czolmEOFJZNTV0hxs8iYhnVR//gIYxaRNjnWxJhwZ07gckhFLi
- U6dqVJYKK3wnEWsp0Ih7b6QUUVu1m7HS1qENMCyt4RAtIkh0O2yH52gRW
- CPoQaDyejyqogKhyk5qjjGRpXi3aYaAGPriTUOXCutHqad4sDc9dH/Pb9
- EZQOxQhmRzL5fS9deX5uBdpVtSXlF90DbnLD8oS/0OXf4P7/BMPRB467Z
- cKD6ZBcna8tENrLV2kR8vCp8iVTpneNkFrrS3qFmeFA1TSADCf/HJi0er Q==;
-X-CSE-ConnectionGUID: RpJvu+GbR+q0kx6aJam6AQ==
-X-CSE-MsgGUID: btlSvdDrT62tEOJsf1nIpg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994135"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994135"
+ bh=5v8dt/xhJyMNn8cRvbSEnqVQ+GWt/s2v80ibmKizowo=;
+ b=Zv4aD9LDLtBrLGJ53rslRoCGU+WK9F30aLV+OTfMpY0kWs8JFThrpOmR
+ lStiX65nJ5gJz7Lr/bQlxXixUMD9bfewXUXDmGEqDSu8aOk004IKn1k6R
+ 4/JlVwq99hhGwdYIZhWv8c7hvsJt2Wa47/vJsqQKdS+fFTE7UZ8xvpMXk
+ sxoAqKsYC9Hn16CeBku8N5yVV7PXRCmlCNp5H5VribhVPBel1HVcZ1kCJ
+ XfQctRnx25+0XHQyvaG3I0OH6M7VrpBejrPxYiYGSGeW1Y9m847lmg+l/
+ fiixegjWAcHQYFOyqjdxaivXkULWiwiP1rEC8lVThPo6Bi1S1IEtDbxsx g==;
+X-CSE-ConnectionGUID: tcG3vlFOSIu9W5PzpMJoKg==
+X-CSE-MsgGUID: i8K60yDcSKCrEBnsg2v2Uw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994179"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994179"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:49 -0700
-X-CSE-ConnectionGUID: RbCUlBoZQcuF2tGZHj6EQg==
-X-CSE-MsgGUID: C57Vs8dkTZ+iGJ51Qofy1g==
+ 21 May 2024 21:43:08 -0700
+X-CSE-ConnectionGUID: g/we5yYSTZWKH/CvYEHgYw==
+X-CSE-MsgGUID: W3HzLJm2TROFPGZ/teCiig==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683683"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683754"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:46 -0700
+ 21 May 2024 21:43:06 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Thomas Huth <thuth@redhat.com>, Tony Krowiak <akrowiak@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:S390 general arch...)
-Subject: [PATCH v2 05/20] vfio/helpers: Make vfio_device_get_name() return bool
-Date: Wed, 22 May 2024 12:40:00 +0800
-Message-Id: <20240522044015.412951-6-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 13/20] vfio/pci: Make capability related functions return
+ bool
+Date: Wed, 22 May 2024 12:40:08 +0800
+Message-Id: <20240522044015.412951-14-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
@@ -86,129 +84,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+The functions operating on capability don't have a consistent return style.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
+Below functions are in bool-valued functions style:
+vfio_msi_setup()
+vfio_msix_setup()
+vfio_add_std_cap()
+vfio_add_capabilities()
+
+Below two are integer-valued functions:
+vfio_add_vendor_specific_cap()
+vfio_setup_pcie_cap()
+
+But the returned integer is only used for check succeed/failure.
+Change them all to return bool so now all capability related
+functions follow the coding standand in qapi/error.h to return
+bool.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h | 2 +-
- hw/vfio/ap.c                  | 2 +-
- hw/vfio/ccw.c                 | 2 +-
- hw/vfio/helpers.c             | 8 ++++----
- hw/vfio/pci.c                 | 2 +-
- hw/vfio/platform.c            | 5 ++---
- 6 files changed, 10 insertions(+), 11 deletions(-)
+ hw/vfio/pci.c | 77 ++++++++++++++++++++++++---------------------------
+ 1 file changed, 36 insertions(+), 41 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b712799caf..4cb1ab8645 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -279,7 +279,7 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-                           uint64_t size, ram_addr_t ram_addr, Error **errp);
- 
- /* Returns 0 on success, or a negative errno. */
--int vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-+bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
- void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
-                       DeviceState *dev, bool ram_discard);
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index d8a9615fee..c12531a788 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -158,7 +158,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
-     VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
-     VFIODevice *vbasedev = &vapdev->vdev;
- 
--    if (vfio_device_get_name(vbasedev, errp) < 0) {
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index ab8f74299e..c3323912dd 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -1339,7 +1339,7 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev)
      }
- 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 1f578a3c75..8850ca17c8 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -588,7 +588,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         }
-     }
- 
--    if (vfio_device_get_name(vbasedev, errp) < 0) {
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
-     }
- 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 9edbc96688..4b079dc383 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -607,7 +607,7 @@ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
-     return ret;
  }
  
--int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-+bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
+-static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
++static bool vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
  {
-     ERRP_GUARD();
-     struct stat st;
-@@ -616,7 +616,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-         if (stat(vbasedev->sysfsdev, &st) < 0) {
-             error_setg_errno(errp, errno, "no such host device");
-             error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->sysfsdev);
--            return -errno;
-+            return false;
+     uint16_t ctrl;
+     bool msi_64bit, msi_maskbit;
+@@ -1349,7 +1349,7 @@ static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+     if (pread(vdev->vbasedev.fd, &ctrl, sizeof(ctrl),
+               vdev->config_offset + pos + PCI_CAP_FLAGS) != sizeof(ctrl)) {
+         error_setg_errno(errp, errno, "failed reading MSI PCI_CAP_FLAGS");
+-        return -errno;
++        return false;
+     }
+     ctrl = le16_to_cpu(ctrl);
+ 
+@@ -1362,14 +1362,14 @@ static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+     ret = msi_init(&vdev->pdev, pos, entries, msi_64bit, msi_maskbit, &err);
+     if (ret < 0) {
+         if (ret == -ENOTSUP) {
+-            return 0;
++            return true;
          }
-         /* User may specify a name, e.g: VFIO platform device */
-         if (!vbasedev->name) {
-@@ -625,7 +625,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-     } else {
-         if (!vbasedev->iommufd) {
-             error_setg(errp, "Use FD passing only with iommufd backend");
--            return -EINVAL;
-+            return false;
+         error_propagate_prepend(errp, err, "msi_init failed: ");
+-        return ret;
++        return false;
+     }
+     vdev->msi_cap_size = 0xa + (msi_maskbit ? 0xa : 0) + (msi_64bit ? 0x4 : 0);
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
+@@ -1644,7 +1644,7 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+     return vfio_pci_relocate_msix(vdev, errp);
+ }
+ 
+-static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
++static bool vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+ {
+     int ret;
+     Error *err = NULL;
+@@ -1660,11 +1660,11 @@ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+     if (ret < 0) {
+         if (ret == -ENOTSUP) {
+             warn_report_err(err);
+-            return 0;
++            return true;
          }
-         /*
-          * Give a name with fd so any function printing out vbasedev->name
-@@ -636,7 +636,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-         }
+ 
+         error_propagate(errp, err);
+-        return ret;
++        return false;
+     }
+ 
+     /*
+@@ -1698,7 +1698,7 @@ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+         memory_region_set_enabled(&vdev->pdev.msix_table_mmio, false);
      }
  
 -    return 0;
 +    return true;
  }
  
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 358da4497b..aad012c348 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2999,7 +2999,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-                             vdev->host.slot, vdev->host.function);
+ static void vfio_teardown_msi(VFIOPCIDevice *vdev)
+@@ -1977,8 +1977,8 @@ static void vfio_pci_disable_rp_atomics(VFIOPCIDevice *vdev)
+     }
+ }
+ 
+-static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+-                               Error **errp)
++static bool vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
++                                Error **errp)
+ {
+     uint16_t flags;
+     uint8_t type;
+@@ -1992,7 +1992,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+ 
+         error_setg(errp, "assignment of PCIe type 0x%x "
+                    "devices is not currently supported", type);
+-        return -EINVAL;
++        return false;
      }
  
--    if (vfio_device_get_name(vbasedev, errp) < 0) {
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
+     if (!pci_bus_is_express(pci_get_bus(&vdev->pdev))) {
+@@ -2025,7 +2025,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+         }
+ 
+         if (pci_bus_is_express(bus)) {
+-            return 0;
++            return true;
+         }
+ 
+     } else if (pci_bus_is_root(pci_get_bus(&vdev->pdev))) {
+@@ -2063,7 +2063,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+              * Legacy endpoints don't belong on the root complex.  Windows
+              * seems to be happier with devices if we skip the capability.
+              */
+-            return 0;
++            return true;
+         }
+ 
+     } else {
+@@ -2099,12 +2099,12 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+     pos = pci_add_capability(&vdev->pdev, PCI_CAP_ID_EXP, pos, size,
+                              errp);
+     if (pos < 0) {
+-        return pos;
++        return false;
      }
  
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index 3233ca8691..e1a32863d9 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -545,9 +545,8 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
-                                              vbasedev->name);
+     vdev->pdev.exp.exp_cap = pos;
+ 
+-    return pos;
++    return true;
+ }
+ 
+ static void vfio_check_pcie_flr(VFIOPCIDevice *vdev, uint8_t pos)
+@@ -2137,14 +2137,14 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
+     }
+ }
+ 
+-static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
+-                                        uint8_t size, Error **errp)
++static bool vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
++                                         uint8_t size, Error **errp)
+ {
+     PCIDevice *pdev = &vdev->pdev;
+ 
+     pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
+     if (pos < 0) {
+-        return pos;
++        return false;
      }
  
--    ret = vfio_device_get_name(vbasedev, errp);
+     /*
+@@ -2156,15 +2156,15 @@ static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
+         memset(pdev->cmask + pos + 3, 0, size - 3);
+     }
+ 
+-    return pos;
++    return true;
+ }
+ 
+-static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
++static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+ {
+     ERRP_GUARD();
+     PCIDevice *pdev = &vdev->pdev;
+     uint8_t cap_id, next, size;
+-    int ret;
++    bool ret;
+ 
+     cap_id = pdev->config[pos];
+     next = pdev->config[pos + PCI_CAP_LIST_NEXT];
+@@ -2185,9 +2185,8 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+      * will be changed as we unwind the stack.
+      */
+     if (next) {
+-        ret = vfio_add_std_cap(vdev, next, errp);
+-        if (ret) {
+-            return ret;
++        if (!vfio_add_std_cap(vdev, next, errp)) {
++            return false;
+         }
+     } else {
+         /* Begin the rebuild, use QEMU emulated list bits */
+@@ -2197,7 +2196,7 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+ 
+         ret = vfio_add_virt_caps(vdev, errp);
+         if (ret) {
+-            return ret;
++            return false;
+         }
+     }
+ 
+@@ -2221,28 +2220,27 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+     case PCI_CAP_ID_PM:
+         vfio_check_pm_reset(vdev, pos);
+         vdev->pm_cap = pos;
+-        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
++        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
+         break;
+     case PCI_CAP_ID_AF:
+         vfio_check_af_flr(vdev, pos);
+-        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
++        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
+         break;
+     case PCI_CAP_ID_VNDR:
+         ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
+         break;
+     default:
+-        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
++        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
+         break;
+     }
+ 
+-    if (ret < 0) {
++    if (!ret) {
+         error_prepend(errp,
+                       "failed to add PCI capability 0x%x[0x%x]@0x%x: ",
+                       cap_id, size, pos);
+-        return ret;
+     }
+ 
+-    return 0;
++    return ret;
+ }
+ 
+ static int vfio_setup_rebar_ecap(VFIOPCIDevice *vdev, uint16_t pos)
+@@ -2388,23 +2386,21 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+     return;
+ }
+ 
+-static int vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
+ {
+     PCIDevice *pdev = &vdev->pdev;
+-    int ret;
+ 
+     if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
+         !pdev->config[PCI_CAPABILITY_LIST]) {
+-        return 0; /* Nothing to add */
++        return true; /* Nothing to add */
+     }
+ 
+-    ret = vfio_add_std_cap(vdev, pdev->config[PCI_CAPABILITY_LIST], errp);
 -    if (ret) {
 -        return ret;
-+    if (!vfio_device_get_name(vbasedev, errp)) {
-+        return -EINVAL;
++    if (!vfio_add_std_cap(vdev, pdev->config[PCI_CAPABILITY_LIST], errp)) {
++        return false;
      }
  
-     if (!vfio_attach_device(vbasedev->name, vbasedev,
+     vfio_add_ext_cap(vdev);
+-    return 0;
++    return true;
+ }
+ 
+ void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
+@@ -3133,8 +3129,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+ 
+     vfio_bars_register(vdev);
+ 
+-    ret = vfio_add_capabilities(vdev, errp);
+-    if (ret) {
++    if (!vfio_add_capabilities(vdev, errp)) {
+         goto out_teardown;
+     }
+ 
 -- 
 2.34.1
 
