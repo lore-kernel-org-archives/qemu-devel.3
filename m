@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4E5C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92E55C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 09:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9igW-0003HG-5A; Wed, 22 May 2024 05:55:00 -0400
+	id 1s9ihS-0004yp-9j; Wed, 22 May 2024 05:55:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igV-0003Gw-0H
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:54:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihP-0004ez-5b
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igR-0001L1-Ul
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:54:58 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihL-0001ou-TU
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371695;
+ s=mimecast20190719; t=1716371751;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+wkuVxm/m7QZkvBeQpTS3DAa0U02Ht3x47UzpcAta9k=;
- b=ZvivNpqXHfqG4p7L4vHFu+8G1nqKBM6L50EzpCyMtWncrOLmpECWH4C5nm8MUHFwJV54al
- Ly7DxQtC4ZMcdyWVx9TF8P7QAWT9tcaN8SuvyJ7mfOkneyt74FtqRXo5mdJVelWqMXuxPj
- bAIbby+IwM4KbH/+vgUd9PE2apWGjY0=
+ bh=NNLlcHvWav9P68aqT0gvS8T3g+3N5HiMfA2h8sJ5x7g=;
+ b=Vcw7ZD7wowelFSIx/hymDv5LqlHgOhT6yzIWmImVbcQfJHoyt67q6mTkX/aCEpfjTHpoB7
+ MO3uR3zOloamP3HYekorZXYf3H8y/KgWUPyTKugOvjMMEuQgaTJ0GX/OExjGzQjz8qZokT
+ KHJkobvrNs9CsxDLRJQ+ebOk6dC5xNk=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-ooR55a-mO_q16izqU-nXCA-1; Wed, 22 May 2024 05:54:53 -0400
-X-MC-Unique: ooR55a-mO_q16izqU-nXCA-1
+ us-mta-235-yBhmIAcPPXSRCgc3A17tRQ-1; Wed, 22 May 2024 05:55:49 -0400
+X-MC-Unique: yBhmIAcPPXSRCgc3A17tRQ-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D76D680118E;
- Wed, 22 May 2024 09:54:52 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 25C6B8008A4;
+ Wed, 22 May 2024 09:55:49 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B61C17414;
- Wed, 22 May 2024 09:54:51 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 047CA2818;
+ Wed, 22 May 2024 09:55:47 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-Subject: [PULL 04/47] vfio/migration: Add an Error** argument to
- vfio_migration_set_state()
-Date: Wed, 22 May 2024 11:53:59 +0200
-Message-ID: <20240522095442.195243-5-clg@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 42/47] vfio/pci: Make capability related functions return bool
+Date: Wed, 22 May 2024 11:54:37 +0200
+Message-ID: <20240522095442.195243-43-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -82,239 +81,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an Error** argument to vfio_migration_set_state() and adjust
-callers, including vfio_save_setup(). The error will be propagated up
-to qemu_savevm_state_setup() where the save_setup() handler is
-executed.
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Modify vfio_vmstate_change_prepare() and vfio_vmstate_change() to
-store a reported error under the migration stream if a migration is in
-progress.
+The functions operating on capability don't have a consistent return style.
 
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+Below functions are in bool-valued functions style:
+vfio_msi_setup()
+vfio_msix_setup()
+vfio_add_std_cap()
+vfio_add_capabilities()
+
+Below two are integer-valued functions:
+vfio_add_vendor_specific_cap()
+vfio_setup_pcie_cap()
+
+But the returned integer is only used for check succeed/failure.
+Change them all to return bool so now all capability related
+functions follow the coding standand in qapi/error.h to return
+bool.
+
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/migration.c | 81 +++++++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 29 deletions(-)
+ hw/vfio/pci.c | 77 ++++++++++++++++++++++++---------------------------
+ 1 file changed, 36 insertions(+), 41 deletions(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index bf2fd0759ba6e4fb103cc5c1a43edb180a3d0de4..43fed0dbdbe3415ae2dd68fbe45b302b85a80fa4 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -82,7 +82,8 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index ab8f74299eab85e224a02f45d4b506e860b514f9..c3323912dd773e80ad2dbbefc5d833e8a33cd147 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -1339,7 +1339,7 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev)
+     }
+ }
  
- static int vfio_migration_set_state(VFIODevice *vbasedev,
-                                     enum vfio_device_mig_state new_state,
--                                    enum vfio_device_mig_state recover_state)
-+                                    enum vfio_device_mig_state recover_state,
-+                                    Error **errp)
+-static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
++static bool vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
  {
-     VFIOMigration *migration = vbasedev->migration;
-     uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
-@@ -92,6 +93,9 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
-     struct vfio_device_feature_mig_state *mig_state =
-         (struct vfio_device_feature_mig_state *)feature->data;
+     uint16_t ctrl;
+     bool msi_64bit, msi_maskbit;
+@@ -1349,7 +1349,7 @@ static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+     if (pread(vdev->vbasedev.fd, &ctrl, sizeof(ctrl),
+               vdev->config_offset + pos + PCI_CAP_FLAGS) != sizeof(ctrl)) {
+         error_setg_errno(errp, errno, "failed reading MSI PCI_CAP_FLAGS");
+-        return -errno;
++        return false;
+     }
+     ctrl = le16_to_cpu(ctrl);
+ 
+@@ -1362,14 +1362,14 @@ static int vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+     ret = msi_init(&vdev->pdev, pos, entries, msi_64bit, msi_maskbit, &err);
+     if (ret < 0) {
+         if (ret == -ENOTSUP) {
+-            return 0;
++            return true;
+         }
+         error_propagate_prepend(errp, err, "msi_init failed: ");
+-        return ret;
++        return false;
+     }
+     vdev->msi_cap_size = 0xa + (msi_maskbit ? 0xa : 0) + (msi_64bit ? 0x4 : 0);
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
+@@ -1644,7 +1644,7 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+     return vfio_pci_relocate_msix(vdev, errp);
+ }
+ 
+-static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
++static bool vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+ {
      int ret;
-+    g_autofree char *error_prefix =
-+        g_strdup_printf("%s: Failed setting device state to %s.",
-+                        vbasedev->name, mig_state_to_str(new_state));
- 
-     feature->argsz = sizeof(buf);
-     feature->flags =
-@@ -102,22 +106,24 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
-         ret = -errno;
- 
-         if (recover_state == VFIO_DEVICE_STATE_ERROR) {
--            error_report("%s: Failed setting device state to %s, err: %s. "
--                         "Recover state is ERROR. Resetting device",
--                         vbasedev->name, mig_state_to_str(new_state),
--                         strerror(errno));
-+            error_setg_errno(errp, errno,
-+                             "%s Recover state is ERROR. Resetting device",
-+                             error_prefix);
- 
-             goto reset_device;
+     Error *err = NULL;
+@@ -1660,11 +1660,11 @@ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+     if (ret < 0) {
+         if (ret == -ENOTSUP) {
+             warn_report_err(err);
+-            return 0;
++            return true;
          }
  
--        error_report(
--            "%s: Failed setting device state to %s, err: %s. Setting device in recover state %s",
--                     vbasedev->name, mig_state_to_str(new_state),
--                     strerror(errno), mig_state_to_str(recover_state));
-+        error_setg_errno(errp, errno,
-+                         "%s Setting device in recover state %s",
-+                         error_prefix, mig_state_to_str(recover_state));
- 
-         mig_state->device_state = recover_state;
-         if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-             ret = -errno;
-+            /*
-+             * If setting the device in recover state fails, report
-+             * the error here and propagate the first error.
-+             */
-             error_report(
-                 "%s: Failed setting device in recover state, err: %s. Resetting device",
-                          vbasedev->name, strerror(errno));
-@@ -137,7 +143,7 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
-              * This can happen if the device is asynchronously reset and
-              * terminates a data transfer.
-              */
--            error_report("%s: data_fd out of sync", vbasedev->name);
-+            error_setg(errp, "%s: data_fd out of sync", vbasedev->name);
-             close(mig_state->data_fd);
- 
-             return -EBADF;
-@@ -168,10 +174,11 @@ reset_device:
-  */
- static int
- vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
--                                  enum vfio_device_mig_state new_state)
-+                                  enum vfio_device_mig_state new_state,
-+                                  Error **errp)
- {
-     return vfio_migration_set_state(vbasedev, new_state,
--                                    VFIO_DEVICE_STATE_ERROR);
-+                                    VFIO_DEVICE_STATE_ERROR, errp);
- }
- 
- static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
-@@ -399,10 +406,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
-         switch (migration->device_state) {
-         case VFIO_DEVICE_STATE_RUNNING:
-             ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
--                                           VFIO_DEVICE_STATE_RUNNING);
-+                                           VFIO_DEVICE_STATE_RUNNING, errp);
-             if (ret) {
--                error_setg(errp, "%s: Failed to set new PRE_COPY state",
--                           vbasedev->name);
-                 return ret;
-             }
- 
-@@ -435,13 +440,20 @@ static void vfio_save_cleanup(void *opaque)
- {
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
-+    Error *local_err = NULL;
-+    int ret;
+         error_propagate(errp, err);
+-        return ret;
++        return false;
+     }
  
      /*
-      * Changing device state from STOP_COPY to STOP can take time. Do it here,
-      * after migration has completed, so it won't increase downtime.
-      */
-     if (migration->device_state == VFIO_DEVICE_STATE_STOP_COPY) {
--        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
-+        ret = vfio_migration_set_state_or_reset(vbasedev,
-+                                                VFIO_DEVICE_STATE_STOP,
-+                                                &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+        }
+@@ -1698,7 +1698,7 @@ static int vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
+         memory_region_set_enabled(&vdev->pdev.msix_table_mmio, false);
      }
  
-     g_free(migration->data_buffer);
-@@ -549,11 +561,13 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
-     VFIODevice *vbasedev = opaque;
-     ssize_t data_size;
-     int ret;
-+    Error *local_err = NULL;
+-    return 0;
++    return true;
+ }
  
-     /* We reach here with device state STOP or STOP_COPY only */
-     ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
--                                   VFIO_DEVICE_STATE_STOP);
-+                                   VFIO_DEVICE_STATE_STOP, &local_err);
-     if (ret) {
-+        error_report_err(local_err);
-         return ret;
+ static void vfio_teardown_msi(VFIOPCIDevice *vdev)
+@@ -1977,8 +1977,8 @@ static void vfio_pci_disable_rp_atomics(VFIOPCIDevice *vdev)
      }
+ }
  
-@@ -591,14 +605,9 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
- static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
+-static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+-                               Error **errp)
++static bool vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
++                                Error **errp)
  {
-     VFIODevice *vbasedev = opaque;
+     uint16_t flags;
+     uint8_t type;
+@@ -1992,7 +1992,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+ 
+         error_setg(errp, "assignment of PCIe type 0x%x "
+                    "devices is not currently supported", type);
+-        return -EINVAL;
++        return false;
+     }
+ 
+     if (!pci_bus_is_express(pci_get_bus(&vdev->pdev))) {
+@@ -2025,7 +2025,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+         }
+ 
+         if (pci_bus_is_express(bus)) {
+-            return 0;
++            return true;
+         }
+ 
+     } else if (pci_bus_is_root(pci_get_bus(&vdev->pdev))) {
+@@ -2063,7 +2063,7 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+              * Legacy endpoints don't belong on the root complex.  Windows
+              * seems to be happier with devices if we skip the capability.
+              */
+-            return 0;
++            return true;
+         }
+ 
+     } else {
+@@ -2099,12 +2099,12 @@ static int vfio_setup_pcie_cap(VFIOPCIDevice *vdev, int pos, uint8_t size,
+     pos = pci_add_capability(&vdev->pdev, PCI_CAP_ID_EXP, pos, size,
+                              errp);
+     if (pos < 0) {
+-        return pos;
++        return false;
+     }
+ 
+     vdev->pdev.exp.exp_cap = pos;
+ 
+-    return pos;
++    return true;
+ }
+ 
+ static void vfio_check_pcie_flr(VFIOPCIDevice *vdev, uint8_t pos)
+@@ -2137,14 +2137,14 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
+     }
+ }
+ 
+-static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
+-                                        uint8_t size, Error **errp)
++static bool vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
++                                         uint8_t size, Error **errp)
+ {
+     PCIDevice *pdev = &vdev->pdev;
+ 
+     pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
+     if (pos < 0) {
+-        return pos;
++        return false;
+     }
+ 
+     /*
+@@ -2156,15 +2156,15 @@ static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
+         memset(pdev->cmask + pos + 3, 0, size - 3);
+     }
+ 
+-    return pos;
++    return true;
+ }
+ 
+-static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
++static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+ {
+     ERRP_GUARD();
+     PCIDevice *pdev = &vdev->pdev;
+     uint8_t cap_id, next, size;
+-    int ret;
++    bool ret;
+ 
+     cap_id = pdev->config[pos];
+     next = pdev->config[pos + PCI_CAP_LIST_NEXT];
+@@ -2185,9 +2185,8 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+      * will be changed as we unwind the stack.
+      */
+     if (next) {
+-        ret = vfio_add_std_cap(vdev, next, errp);
+-        if (ret) {
+-            return ret;
++        if (!vfio_add_std_cap(vdev, next, errp)) {
++            return false;
+         }
+     } else {
+         /* Begin the rebuild, use QEMU emulated list bits */
+@@ -2197,7 +2196,7 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+ 
+         ret = vfio_add_virt_caps(vdev, errp);
+         if (ret) {
+-            return ret;
++            return false;
+         }
+     }
+ 
+@@ -2221,28 +2220,27 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+     case PCI_CAP_ID_PM:
+         vfio_check_pm_reset(vdev, pos);
+         vdev->pm_cap = pos;
+-        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
++        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
+         break;
+     case PCI_CAP_ID_AF:
+         vfio_check_af_flr(vdev, pos);
+-        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
++        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
+         break;
+     case PCI_CAP_ID_VNDR:
+         ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
+         break;
+     default:
+-        ret = pci_add_capability(pdev, cap_id, pos, size, errp);
++        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
+         break;
+     }
+ 
+-    if (ret < 0) {
++    if (!ret) {
+         error_prepend(errp,
+                       "failed to add PCI capability 0x%x[0x%x]@0x%x: ",
+                       cap_id, size, pos);
+-        return ret;
+     }
+ 
+-    return 0;
++    return ret;
+ }
+ 
+ static int vfio_setup_rebar_ecap(VFIOPCIDevice *vdev, uint16_t pos)
+@@ -2388,23 +2386,21 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+     return;
+ }
+ 
+-static int vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
+ {
+     PCIDevice *pdev = &vdev->pdev;
 -    int ret;
  
--    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
--                                   vbasedev->migration->device_state);
+     if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
+         !pdev->config[PCI_CAPABILITY_LIST]) {
+-        return 0; /* Nothing to add */
++        return true; /* Nothing to add */
+     }
+ 
+-    ret = vfio_add_std_cap(vdev, pdev->config[PCI_CAPABILITY_LIST], errp);
 -    if (ret) {
--        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
--    }
--    return ret;
-+    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-+                                    vbasedev->migration->device_state, errp);
+-        return ret;
++    if (!vfio_add_std_cap(vdev, pdev->config[PCI_CAPABILITY_LIST], errp)) {
++        return false;
+     }
+ 
+     vfio_add_ext_cap(vdev);
+-    return 0;
++    return true;
  }
  
- static int vfio_load_cleanup(void *opaque)
-@@ -714,19 +723,20 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
-     enum vfio_device_mig_state new_state;
-+    Error *local_err = NULL;
-     int ret;
+ void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
+@@ -3133,8 +3129,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
  
-     new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
-                     VFIO_DEVICE_STATE_PRE_COPY_P2P :
-                     VFIO_DEVICE_STATE_RUNNING_P2P;
+     vfio_bars_register(vdev);
  
--    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
-+    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
-     if (ret) {
-         /*
-          * Migration should be aborted in this case, but vm_state_notify()
-          * currently does not support reporting failures.
-          */
--        migration_file_set_error(ret, NULL);
-+        migration_file_set_error(ret, local_err);
+-    ret = vfio_add_capabilities(vdev, errp);
+-    if (ret) {
++    if (!vfio_add_capabilities(vdev, errp)) {
+         goto out_teardown;
      }
  
-     trace_vfio_vmstate_change_prepare(vbasedev->name, running,
-@@ -738,6 +748,7 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
- {
-     VFIODevice *vbasedev = opaque;
-     enum vfio_device_mig_state new_state;
-+    Error *local_err = NULL;
-     int ret;
- 
-     if (running) {
-@@ -750,13 +761,13 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
-                 VFIO_DEVICE_STATE_STOP;
-     }
- 
--    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
-+    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
-     if (ret) {
-         /*
-          * Migration should be aborted in this case, but vm_state_notify()
-          * currently does not support reporting failures.
-          */
--        migration_file_set_error(ret, NULL);
-+        migration_file_set_error(ret, local_err);
-     }
- 
-     trace_vfio_vmstate_change(vbasedev->name, running, RunState_str(state),
-@@ -769,11 +780,23 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
-     VFIOMigration *migration = container_of(notifier, VFIOMigration,
-                                             migration_state);
-     VFIODevice *vbasedev = migration->vbasedev;
-+    Error *local_err = NULL;
-+    int ret;
- 
-     trace_vfio_migration_state_notifier(vbasedev->name, e->type);
- 
-     if (e->type == MIG_EVENT_PRECOPY_FAILED) {
--        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
-+        /*
-+         * MigrationNotifyFunc may not return an error code and an Error
-+         * object for MIG_EVENT_PRECOPY_FAILED. Hence, report the error
-+         * locally and ignore the errp argument.
-+         */
-+        ret = vfio_migration_set_state_or_reset(vbasedev,
-+                                                VFIO_DEVICE_STATE_RUNNING,
-+                                                &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+        }
-     }
-     return 0;
- }
 -- 
 2.45.1
 
