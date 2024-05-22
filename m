@@ -4,112 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B761CC25B78
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE43DC25B7E
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 22:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9u2V-0005tY-QT; Wed, 22 May 2024 18:02:27 -0400
+	id 1s9u2Z-0005uo-Ft; Wed, 22 May 2024 18:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9u2U-0005tC-G3
- for qemu-devel@nongnu.org; Wed, 22 May 2024 18:02:26 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1s9u2X-0005uR-L2; Wed, 22 May 2024 18:02:29 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s9u2R-0000g5-P3
- for qemu-devel@nongnu.org; Wed, 22 May 2024 18:02:25 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1s9u2W-0000gI-3B; Wed, 22 May 2024 18:02:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3A0F521C01;
- Wed, 22 May 2024 22:02:21 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 854ED1F890;
+ Wed, 22 May 2024 22:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716415341; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716415343; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gqyhKjeMdKl7NeWaGnLPvnf7kuP+ltZUXi4WjMEM69A=;
- b=FNkx5FxeNNTaaBuZVkEtG7wFFyrkqG1Q2WiWri7U3UjlB4tu2TuPTFG5p3xtH6D2dhQMob
- GDZu8Nr0j8PxwVcF2St0oiysNYcyE/4BTm+2aOYIC15aQdDqYkZXJv1aGcsXn8ekrzeevT
- KGp+PBvvYwx+IQnTSCKh3MT2W27rMg0=
+ bh=cNI8NstOpoXGQnSvfm4ZgKol35tBxj9SrbRkhKOOFE0=;
+ b=tyOt4JM+qMhV9ABpDwrICBKggYY1qgtV6izT4V5motavDQXOVVK4zo5A3+r8f2BGu5zJ2W
+ i1nDGbdIofvxeggpyAEKTt2oj+qopDD6EhbpqIjTwBUwVMO2wiQN/vyB47exIl5gzJBjx8
+ F3MREtVCq6yg7BlK6pGipCnXG2KJX7k=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716415341;
+ s=susede2_ed25519; t=1716415343;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gqyhKjeMdKl7NeWaGnLPvnf7kuP+ltZUXi4WjMEM69A=;
- b=2oNo0zNyPD+KnnDskNMaaLW7cDsEeCPmRsjhOAaoYcATb5WTnM4L7Q0uwAJp5oCH+kPjQW
- 8ECTUq9gUj8I3SCw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FNkx5Fxe;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2oNo0zNy
+ bh=cNI8NstOpoXGQnSvfm4ZgKol35tBxj9SrbRkhKOOFE0=;
+ b=FA97JBvCnIGjVJPl9gkm/+h+jhIBbPkGA4tUc9XIUnX2aNsq5CmTrpt7ieseE0jCICNytM
+ ywrn67LaOtgNkTCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716415341; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716415343; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gqyhKjeMdKl7NeWaGnLPvnf7kuP+ltZUXi4WjMEM69A=;
- b=FNkx5FxeNNTaaBuZVkEtG7wFFyrkqG1Q2WiWri7U3UjlB4tu2TuPTFG5p3xtH6D2dhQMob
- GDZu8Nr0j8PxwVcF2St0oiysNYcyE/4BTm+2aOYIC15aQdDqYkZXJv1aGcsXn8ekrzeevT
- KGp+PBvvYwx+IQnTSCKh3MT2W27rMg0=
+ bh=cNI8NstOpoXGQnSvfm4ZgKol35tBxj9SrbRkhKOOFE0=;
+ b=tyOt4JM+qMhV9ABpDwrICBKggYY1qgtV6izT4V5motavDQXOVVK4zo5A3+r8f2BGu5zJ2W
+ i1nDGbdIofvxeggpyAEKTt2oj+qopDD6EhbpqIjTwBUwVMO2wiQN/vyB47exIl5gzJBjx8
+ F3MREtVCq6yg7BlK6pGipCnXG2KJX7k=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716415341;
+ s=susede2_ed25519; t=1716415343;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gqyhKjeMdKl7NeWaGnLPvnf7kuP+ltZUXi4WjMEM69A=;
- b=2oNo0zNyPD+KnnDskNMaaLW7cDsEeCPmRsjhOAaoYcATb5WTnM4L7Q0uwAJp5oCH+kPjQW
- 8ECTUq9gUj8I3SCw==
+ bh=cNI8NstOpoXGQnSvfm4ZgKol35tBxj9SrbRkhKOOFE0=;
+ b=FA97JBvCnIGjVJPl9gkm/+h+jhIBbPkGA4tUc9XIUnX2aNsq5CmTrpt7ieseE0jCICNytM
+ ywrn67LaOtgNkTCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D15D213A1E;
- Wed, 22 May 2024 22:02:19 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A403D13A1E;
+ Wed, 22 May 2024 22:02:21 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id INCtJWtrTmbwKwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 22 May 2024 22:02:19 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CD6LGm1rTmbwKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 22 May 2024 22:02:21 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
  Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests/qtest/migration-test: Fix the check for a
- successful run of analyze-migration.py
-Date: Wed, 22 May 2024 19:02:08 -0300
-Message-Id: <171641446561.2133.11651841594450171126.b4-ty@suse.de>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH] tests/qtest/migration-test: Run some basic tests on s390x
+ and ppc64 with TCG, too
+Date: Wed, 22 May 2024 19:02:09 -0300
+Message-Id: <171641446561.2133.7144970086256827850.b4-ty@suse.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240522092301.421883-1-thuth@redhat.com>
-References: <20240522092301.421883-1-thuth@redhat.com>
+In-Reply-To: <20240522091255.417263-1-thuth@redhat.com>
+References: <20240522091255.417263-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-4.05 / 50.00]; BAYES_HAM(-2.75)[98.90%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
  RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 3A0F521C01
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCPT_COUNT_FIVE(0.00)[6]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -132,24 +121,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 May 2024 11:23:01 +0200, Thomas Huth wrote:
-> If analyze-migration.py cannot be run or crashes, the error is currently
-> ignored since the code only checks for nonzero values in case the child
-> exited properly. For example, if you run the test with a non-existing
-> Python interpreter, it still succeeds:
-> 
->  $ PYTHON=wrongpython QTEST_QEMU_BINARY=./qemu-system-x86_64 tests/qtest/migration-test
->  ...
->  # Running /x86_64/migration/analyze-script
->  # Using machine type: pc-q35-9.1
->  # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name source,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/src_serial -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1   -uuid 11111111-1111-1111-1111-111111111111  -accel qtest
->  # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-417639.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-417639.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-9.1, -name target,debug-threads=on -m 150M -serial file:/tmp/migration-test-XPLUN2/dest_serial -incoming tcp:127.0.0.1:0 -drive if=none,id=d0,file=/tmp/migration-test-XPLUN2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1     -accel qtest
->  **
->  ERROR:../../devel/qemu/tests/qtest/migration-test.c:1603:test_analyze_script: code should not be reached
->  migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
->  migration-test: ../../devel/qemu/tests/qtest/libqtest.c:240: qtest_wait_qemu: Assertion `pid == s->qemu_pid' failed.
->  ok 2 /x86_64/migration/analyze-script
->  ...
+On Wed, 22 May 2024 11:12:55 +0200, Thomas Huth wrote:
+> On s390x, we recently had a regression that broke migration / savevm
+> (see commit bebe9603fc ("hw/intc/s390_flic: Fix crash that occurs when
+> saving the machine state"). The problem was merged without being noticed
+> since we currently do not run any migration / savevm related tests on
+> x86 hosts.
+> While we currently cannot run all migration tests for the s390x target
+> on x86 hosts yet (due to some unresolved issues with TCG), we can at
+> least run some of the non-live tests to avoid such problems in the future.
+> Thus enable the "analyze-script" and the "bad_dest" tests before checking
+> for KVM on s390x or ppc64 (this also fixes the problem that the
+> "analyze-script" test was not run on s390x at all anymore since it got
+> disabled again by accident in a previous refactoring of the code).
 > 
 > [...]
 
