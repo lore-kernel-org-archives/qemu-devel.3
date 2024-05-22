@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C2D1C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1F3C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9dDa-0005bA-MZ; Wed, 22 May 2024 00:04:46 -0400
+	id 1s9doV-0001PF-Ep; Wed, 22 May 2024 00:42:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9dDW-0005Zy-Lo; Wed, 22 May 2024 00:04:43 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s9dDI-0007xg-NS; Wed, 22 May 2024 00:04:42 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6f4603237e0so373783b3a.0; 
- Tue, 21 May 2024 21:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716350666; x=1716955466; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0b2GXCJ22WFvTHgVXjNvK42VHOxSdD4f2sQ0k5SMWIQ=;
- b=H08e7ePvWDRGTQ4Rouqb6coQulaXqIqZFiWD6wSYPTyW67ykVdxHsllvCT5L/CrPeS
- nn9Fxm4UewfuAaOYu0PO+pPx/QUXswOhuBwutWCtYFVWRKVzLf2ZnHwaQHViGtBovYvW
- fL0lyrOupaPo5LzZRa5+KZg7J339DdaSHJWROjxfuZ0tHFb3Xb3rOrCJ8lxFHiTFKScH
- qRskUBVWPR+wL3AS/iNoUPjXQdmCxMkJkPI0mO17+atipjdQIFE0WTv1vD0QjWUuR4RN
- WkjiaiXPsqY93Lu14Qrm7UEUuX8ZravkFVR2FhmVSC3YtZcTq2zJt2kwuSrXD2R6czHZ
- WOpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716350666; x=1716955466;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0b2GXCJ22WFvTHgVXjNvK42VHOxSdD4f2sQ0k5SMWIQ=;
- b=RZrMens1zn2bqQJfmhiB9VmADQEmZ4XMfc/M+git9uLB2Hf2s+1eiquI14ogBcQl9s
- 74YPqpHrLpPih48fmqxOBRYjjjaI77/RSx3yesDW73RcAN+FK8j+zzIRfzhk3iY5ojk8
- lUZWjSCuJ10JgoxW3jR2BMIatx4G9S0zQM0M+OBe68MEDTKe/eqgMVEWrscRM1xwVAJQ
- 2R+KVkJzNIXqDA1o4lY6haysyDLV79C2Z02+H3WBh/CvqWPzGfeY5ypezyMd+JXHbvd2
- UH22pcmoRepHyMcN5V9+Z2DJoGH820UVnZIoRFyKbdhMm3HQWYNs5sdFkYw6KCIxaFyo
- m0qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYGqwFIdajR4EsKPhwaIGVlZLdekZ8MFjPMsd/JqWCuR2BUQhK78aGfCBNtvYV0RFkDlJNso1ausxXDmR8hPzY2TZP1fY=
-X-Gm-Message-State: AOJu0Yx2s1Mq+mV9q85mriiqa71iGG21nuWz8cgFxUHNrhuLOsKhQk7R
- o4pXF3CLA8UF2zesFnJ7hoAlNJgUV144v02XEu+uV18nh/BKMZv4qOj+gQ==
-X-Google-Smtp-Source: AGHT+IFaFWPWJB2d2OMW0uhWNDaqI8vewArE69LE6f5+mNQBgQspjuFSSoOPRWbp3udUMExxnwgSUw==
-X-Received: by 2002:a05:6a20:432a:b0:1af:86e4:bc99 with SMTP id
- adf61e73a8af0-1b1f8045e52mr1361472637.10.1716350666332; 
- Tue, 21 May 2024 21:04:26 -0700 (PDT)
-Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6589645bbefsm10197158a12.55.2024.05.21.21.04.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 May 2024 21:04:26 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 2/2] target/ppc: Tidy pmu_count_insns implementation
-Date: Wed, 22 May 2024 14:04:11 +1000
-Message-ID: <20240522040411.90655-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240522040411.90655-1-npiggin@gmail.com>
-References: <20240522040411.90655-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s9doU-0001Or-7N
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:54 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s9doS-0005sV-ED
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716352973; x=1747888973;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=jnonh+R/LPS7uBevdbaTjQz/fEBnZL+cByDlYNJn0F8=;
+ b=GDULGdW78aGL3GNSsh/F7rN6QRZ6R9Pd7u0+0KL+7pNx/uDYRn1iCN6j
+ XrJsJ18Pg0O0i5osu6qY5uhGmBTyzCO18Ng8dL9R/CkVVqS9jsAub+Hor
+ KNagrZ1/jx/r3pDCWL/F6iZ19gGtaubw3mmNEb1Ktvk07IElMsWUuPQCw
+ nwOtk9GnA8lAQ4iCWW8ZB6wGWuwJASRLk2RmhFOYn7FQm63mtWFV4667C
+ VVorN9aUqyb1T8tHpzYJDCgOlbmKF3TyEiFFlD7mFPJwXOhVLtHHj4Mqx
+ jTRcvlfGoAXxIbPqTXdoXxjrRo+Tc2GWiNTTzP42KLECe2udI3DvSFXCR Q==;
+X-CSE-ConnectionGUID: KE1/MlUjTIyxQnX2vDjHcQ==
+X-CSE-MsgGUID: i9MYC0DMQfCWnPtXp7/87Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994139"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994139"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 21:42:52 -0700
+X-CSE-ConnectionGUID: SmQFA0toQ2WH2XJetDwJgw==
+X-CSE-MsgGUID: yu8cb8SsTL2OrzHVI7BvQQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683695"
+Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 21:42:50 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 06/20] vfio/platform: Make vfio_populate_device() and
+ vfio_base_device_init() return bool
+Date: Wed, 22 May 2024 12:40:01 +0800
+Message-Id: <20240522044015.412951-7-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
+References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,104 +84,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge the user-only and full implementations together, and only
-call translator_io_start() and only create and set the label
-when necessary.
+This is to follow the coding standand in qapi/error.h to return bool
+for bool-valued functions.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- target/ppc/translate.c | 55 +++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ hw/vfio/platform.c | 40 +++++++++++++++++-----------------------
+ 1 file changed, 17 insertions(+), 23 deletions(-)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 344e78843c..9ce823b018 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -298,6 +298,8 @@ static inline void gen_update_nip(DisasContext *ctx, target_ulong nip)
- #if defined(TARGET_PPC64)
- static void pmu_count_insns(DisasContext *ctx)
+diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+index e1a32863d9..a85c199c76 100644
+--- a/hw/vfio/platform.c
++++ b/hw/vfio/platform.c
+@@ -441,7 +441,7 @@ static int vfio_platform_hot_reset_multi(VFIODevice *vbasedev)
+  * @errp: error object
+  *
+  */
+-static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
++static bool vfio_populate_device(VFIODevice *vbasedev, Error **errp)
  {
-+    bool pmc_other, pmc_check_overflow;
-+
-     /*
-      * Do not bother calling the helper if the PMU isn't counting
-      * instructions.
-@@ -306,48 +308,47 @@ static void pmu_count_insns(DisasContext *ctx)
-         return;
+     VFIOINTp *intp, *tmp;
+     int i, ret = -1;
+@@ -450,7 +450,7 @@ static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
+ 
+     if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PLATFORM)) {
+         error_setg(errp, "this isn't a platform device");
+-        return ret;
++        return false;
      }
  
-- #if !defined(CONFIG_USER_ONLY)
--    TCGLabel *l;
--    TCGv t0;
-+    /*
-+     * The PMU insns_inc() and handle_pmc5_overflow() helpers stop the internal
-+     * PMU timer if a counter overflow happens. In that case, if the guest is
-+     * running with icount and we do not handle it beforehand, the helper can
-+     * trigger a 'bad icount read'. So call translator_io_start() for cases
-+     * where that might trigger.
-+     */
- 
-+ #if defined(CONFIG_USER_ONLY)
-     /*
--     * The PMU insns_inc() helper stops the internal PMU timer if a
--     * counter overflows happens. In that case, if the guest is
--     * running with icount and we do not handle it beforehand,
--     * the helper can trigger a 'bad icount read'.
-+     * User mode can read (but not write) PMC5 and start/stop
-+     * the PMU via MMCR0_FC. In this case just increment
-+     * PMC5 with base.num_insns.
-      */
--    translator_io_start(&ctx->base);
-+    pmc_other = false;
-+    pmc_check_overflow = false;
-+ #else
-+    pmc_other = ctx->pmc_other;
-+    pmc_check_overflow = ctx->mmcr0_pmcjce;
-+ #endif
- 
-     /* Avoid helper calls when only PMC5-6 are enabled. */
--    if (!ctx->pmc_other) {
--        l = gen_new_label();
--        t0 = tcg_temp_new();
-+    if (!pmc_other) {
-+        TCGv t0 = tcg_temp_new();
- 
-         gen_load_spr(t0, SPR_POWER_PMC5);
-         tcg_gen_addi_tl(t0, t0, ctx->base.num_insns);
-         gen_store_spr(SPR_POWER_PMC5, t0);
--        /* Check for overflow, if it's enabled */
--        if (ctx->mmcr0_pmcjce) {
-+
-+        if (pmc_check_overflow) {
-+            TCGLabel *l = gen_new_label();
-+
-+            translator_io_start(&ctx->base);
-             tcg_gen_brcondi_tl(TCG_COND_LT, t0, PMC_COUNTER_NEGATIVE_VAL, l);
-             gen_helper_handle_pmc5_overflow(tcg_env);
-+            gen_set_label(l);
+     vdev->regions = g_new0(VFIORegion *, vbasedev->num_regions);
+@@ -487,12 +487,11 @@ static int vfio_populate_device(VFIODevice *vbasedev, Error **errp)
+                                                     irq.flags);
+             intp = vfio_init_intp(vbasedev, irq, errp);
+             if (!intp) {
+-                ret = -1;
+                 goto irq_err;
+             }
          }
--
--        gen_set_label(l);
-     } else {
-+        translator_io_start(&ctx->base);
-         gen_helper_insns_inc(tcg_env, tcg_constant_i32(ctx->base.num_insns));
      }
--  #else
--    /*
--     * User mode can read (but not write) PMC5 and start/stop
--     * the PMU via MMCR0_FC. In this case just increment
--     * PMC5 with base.num_insns.
--     */
--    TCGv t0 = tcg_temp_new();
--
--    gen_load_spr(t0, SPR_POWER_PMC5);
--    tcg_gen_addi_tl(t0, t0, ctx->base.num_insns);
--    gen_store_spr(SPR_POWER_PMC5, t0);
--  #endif /* #if !defined(CONFIG_USER_ONLY) */
+-    return 0;
++    return true;
+ irq_err:
+     timer_del(vdev->mmap_timer);
+     QLIST_FOREACH_SAFE(intp, &vdev->intp_list, next, tmp) {
+@@ -507,7 +506,7 @@ reg_error:
+         g_free(vdev->regions[i]);
+     }
+     g_free(vdev->regions);
+-    return ret;
++    return false;
  }
- #else
- static void pmu_count_insns(DisasContext *ctx)
+ 
+ /* specialized functions for VFIO Platform devices */
+@@ -527,10 +526,8 @@ static VFIODeviceOps vfio_platform_ops = {
+  * fd retrieval, resource query.
+  * Precondition: the device name must be initialized
+  */
+-static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
++static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+ {
+-    int ret;
+-
+     /* @fd takes precedence over @sysfsdev which takes precedence over @host */
+     if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
+         g_free(vbasedev->name);
+@@ -538,7 +535,7 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+     } else if (vbasedev->fd < 0) {
+         if (!vbasedev->name || strchr(vbasedev->name, '/')) {
+             error_setg(errp, "wrong host device name");
+-            return -EINVAL;
++            return false;
+         }
+ 
+         vbasedev->sysfsdev = g_strdup_printf("/sys/bus/platform/devices/%s",
+@@ -546,20 +543,20 @@ static int vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+     }
+ 
+     if (!vfio_device_get_name(vbasedev, errp)) {
+-        return -EINVAL;
++        return false;
+     }
+ 
+     if (!vfio_attach_device(vbasedev->name, vbasedev,
+                             &address_space_memory, errp)) {
+-        return -EINVAL;
++        return false;
+     }
+ 
+-    ret = vfio_populate_device(vbasedev, errp);
+-    if (ret) {
+-        vfio_detach_device(vbasedev);
++    if (vfio_populate_device(vbasedev, errp)) {
++        return true;
+     }
+ 
+-    return ret;
++    vfio_detach_device(vbasedev);
++    return false;
+ }
+ 
+ /**
+@@ -576,7 +573,7 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
+     VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
+     SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
+     VFIODevice *vbasedev = &vdev->vbasedev;
+-    int i, ret;
++    int i;
+ 
+     qemu_mutex_init(&vdev->intp_mutex);
+ 
+@@ -584,9 +581,8 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
+                                 vbasedev->sysfsdev : vbasedev->name,
+                                 vdev->compat);
+ 
+-    ret = vfio_base_device_init(vbasedev, errp);
+-    if (ret) {
+-        goto out;
++    if (!vfio_base_device_init(vbasedev, errp)) {
++        goto init_err;
+     }
+ 
+     if (!vdev->compat) {
+@@ -618,11 +614,9 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
+         }
+         sysbus_init_mmio(sbdev, vdev->regions[i]->mem);
+     }
+-out:
+-    if (!ret) {
+-        return;
+-    }
++    return;
+ 
++init_err:
+     if (vdev->vbasedev.name) {
+         error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+     } else {
 -- 
-2.43.0
+2.34.1
 
 
