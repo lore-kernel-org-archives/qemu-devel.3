@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E5BEC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDDDC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9doL-0001Lq-VE; Wed, 22 May 2024 00:42:46 -0400
+	id 1s9doZ-0001QB-G6; Wed, 22 May 2024 00:42:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doK-0001LA-Ko
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:44 -0400
+ id 1s9doX-0001PY-T7; Wed, 22 May 2024 00:42:57 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9doH-0005sg-A0
- for qemu-devel@nongnu.org; Wed, 22 May 2024 00:42:44 -0400
+ id 1s9doW-0005u5-9G; Wed, 22 May 2024 00:42:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716352962; x=1747888962;
+ t=1716352977; x=1747888977;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=nR3/N81fP2lWYnCwoqeFQ8UTmXCJcw0lSyoNyVGiKWY=;
- b=gE+RCA5GIxsbvvJh5PRSK2nDC0FhtXbTZjsN4XjqxmmpQvKUp/I9WdV3
- MZWrrdTgGCwUe2c2FlWCai1LUlMcABgBZAAg7BccaITLf1rg2zaOD6rWM
- rs2g9Ex7LALKiHJNEVTmXg6rn+3t2HHS/AFGP19Kphu6VWwQgRzEk6yi6
- a8bZlQ6wnju2pDC+OeZPfBoodugDiczh09txXVGUTIaDNHA2Xp01xXIMC
- R9BWTTxmB8WqNnkGiJ301nixDxxjT7slkUqdqQT1ZPtKFfKSDAnYuis3Z
- 5WE8MeodIiYvBaGNSGv+uVHtoFyA8+VzhuwT+97pitRwwcLwKXODuNtMA Q==;
-X-CSE-ConnectionGUID: t3ogDDf2RrSBvQl/UgRH9Q==
-X-CSE-MsgGUID: Qb4J5aNASISGXC9/h3N5kQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994119"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994119"
+ bh=Tozqz6eV0xU3+zpVgG2ovdlclK14n3ngNUd3Q6FA2xM=;
+ b=m/cRoheGfPmOTTUMb0WWPwtt/3wFSS0U8mMzFsAb+2G2rJpFa53CTKvW
+ WhIN3y5N5Qgp/FSUq48xXdsY5vd0p8U2QrUCXNtRq96v4QjOFgezIlrcK
+ /1LnO9uj7zN+2FLUFB2vaCewk4VUSGp19t1gsmRB5cpdt6j5YE3lfmrZ4
+ POcVWKuUi5kPjT13CBRWvRFtuOPNlB4kol5e46+X9IOuvS2x7b1OdZYCW
+ o2GH6FDXpg4/P0yrWP6/N7AJYnJVJRITdHBJa5Z/J+/4TDkmoGcqWd1dG
+ dVQ3feEAUx44wm6Y6EIdMWAmNr0+2fwMrA6RFJyMYH+za0pBLPi3VImzs w==;
+X-CSE-ConnectionGUID: w70PTAvuSGC6vDbd7lT54g==
+X-CSE-MsgGUID: GktIPAp8SXquJiqZI9dxdg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994142"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994142"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:39 -0700
-X-CSE-ConnectionGUID: 1HjOn4ARQRumKJwJ2rjyiw==
-X-CSE-MsgGUID: Wa/jqcmkT/OZswNCmxboRw==
+ 21 May 2024 21:42:55 -0700
+X-CSE-ConnectionGUID: 2OrjmukBQsOXBPFcuHL9HQ==
+X-CSE-MsgGUID: GRdHtx3ATNCBkM6SDszd6Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683620"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683707"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:42:37 -0700
+ 21 May 2024 21:42:52 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 02/20] vfio/display: Make vfio_display_*() return bool
-Date: Wed, 22 May 2024 12:39:57 +0800
-Message-Id: <20240522044015.412951-3-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org (open list:vfio-ccw)
+Subject: [PATCH v2 07/20] vfio/ccw: Make vfio_ccw_get_region() return a bool
+Date: Wed, 22 May 2024 12:40:02 +0800
+Message-Id: <20240522044015.412951-8-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
@@ -83,122 +84,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to follow the coding standand in qapi/error.h to return bool
-for bool-valued functions.
+Since vfio_populate_device() takes an 'Error **' argument,
+best practices suggest to return a bool. See the qapi/error.h
+Rules section.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.h     |  2 +-
- hw/vfio/display.c | 20 ++++++++++----------
- hw/vfio/pci.c     |  3 +--
- 3 files changed, 12 insertions(+), 13 deletions(-)
+ hw/vfio/ccw.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 92cd62d115..a5ac9efd4b 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -232,7 +232,7 @@ int vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-                                Error **errp);
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index 8850ca17c8..2600e62e37 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -474,7 +474,7 @@ static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
+     event_notifier_cleanup(notifier);
+ }
  
- void vfio_display_reset(VFIOPCIDevice *vdev);
--int vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
-+bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
- void vfio_display_finalize(VFIOPCIDevice *vdev);
- 
- extern const VMStateDescription vfio_display_vmstate;
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index d28b724102..661e921616 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -348,11 +348,11 @@ static const GraphicHwOps vfio_display_dmabuf_ops = {
-     .ui_info    = vfio_display_edid_ui_info,
- };
- 
--static int vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
-+static bool vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
+-static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
++static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
  {
-     if (!display_opengl) {
-         error_setg(errp, "vfio-display-dmabuf: opengl not available");
--        return -1;
+     VFIODevice *vdev = &vcdev->vdev;
+     struct vfio_region_info *info;
+@@ -483,7 +483,7 @@ static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+     /* Sanity check device */
+     if (!(vdev->flags & VFIO_DEVICE_FLAGS_CCW)) {
+         error_setg(errp, "vfio: Um, this isn't a vfio-ccw device");
+-        return;
 +        return false;
      }
  
-     vdev->dpy = g_new0(VFIODisplay, 1);
-@@ -362,11 +362,11 @@ static int vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
-     if (vdev->enable_ramfb) {
-         vdev->dpy->ramfb = ramfb_setup(errp);
-         if (!vdev->dpy->ramfb) {
--            return -EINVAL;
-+            return false;
-         }
+     /*
+@@ -493,13 +493,13 @@ static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+     if (vdev->num_regions < VFIO_CCW_CONFIG_REGION_INDEX + 1) {
+         error_setg(errp, "vfio: too few regions (%u), expected at least %u",
+                    vdev->num_regions, VFIO_CCW_CONFIG_REGION_INDEX + 1);
+-        return;
++        return false;
      }
-     vfio_display_edid_init(vdev);
--    return 0;
+ 
+     ret = vfio_get_region_info(vdev, VFIO_CCW_CONFIG_REGION_INDEX, &info);
+     if (ret) {
+         error_setg_errno(errp, -ret, "vfio: Error getting config info");
+-        return;
++        return false;
+     }
+ 
+     vcdev->io_region_size = info->size;
+@@ -553,7 +553,7 @@ static void vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+         g_free(info);
+     }
+ 
+-    return;
 +    return true;
- }
  
- static void vfio_display_dmabuf_exit(VFIODisplay *dpy)
-@@ -483,7 +483,7 @@ static const GraphicHwOps vfio_display_region_ops = {
-     .gfx_update = vfio_display_region_update,
- };
- 
--static int vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
-+static bool vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
- {
-     vdev->dpy = g_new0(VFIODisplay, 1);
-     vdev->dpy->con = graphic_console_init(DEVICE(vdev), 0,
-@@ -492,10 +492,10 @@ static int vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
-     if (vdev->enable_ramfb) {
-         vdev->dpy->ramfb = ramfb_setup(errp);
-         if (!vdev->dpy->ramfb) {
--            return -EINVAL;
-+            return false;
-         }
-     }
--    return 0;
-+    return true;
- }
- 
- static void vfio_display_region_exit(VFIODisplay *dpy)
-@@ -510,7 +510,7 @@ static void vfio_display_region_exit(VFIODisplay *dpy)
- 
- /* ---------------------------------------------------------------------- */
- 
--int vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
-+bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
- {
-     struct vfio_device_gfx_plane_info probe;
-     int ret;
-@@ -533,11 +533,11 @@ int vfio_display_probe(VFIOPCIDevice *vdev, Error **errp)
- 
-     if (vdev->display == ON_OFF_AUTO_AUTO) {
-         /* not an error in automatic mode */
--        return 0;
-+        return true;
-     }
- 
-     error_setg(errp, "vfio: device doesn't support any (known) display method");
--    return -1;
+ out_err:
+     g_free(vcdev->crw_region);
+@@ -561,7 +561,7 @@ out_err:
+     g_free(vcdev->async_cmd_region);
+     g_free(vcdev->io_region);
+     g_free(info);
+-    return;
 +    return false;
  }
  
- void vfio_display_finalize(VFIOPCIDevice *vdev)
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c1adef5cf8..a447013a1d 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3200,8 +3200,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+ static void vfio_ccw_put_region(VFIOCCWDevice *vcdev)
+@@ -597,8 +597,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
+         goto out_attach_dev_err;
      }
  
-     if (vdev->display != ON_OFF_AUTO_OFF) {
--        ret = vfio_display_probe(vdev, errp);
--        if (ret) {
-+        if (!vfio_display_probe(vdev, errp)) {
-             goto out_deregister;
-         }
+-    vfio_ccw_get_region(vcdev, &err);
+-    if (err) {
++    if (!vfio_ccw_get_region(vcdev, &err)) {
+         goto out_region_err;
      }
+ 
 -- 
 2.34.1
 
