@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54903C41513
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE205C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 04:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9dpb-0003DH-47; Wed, 22 May 2024 00:44:03 -0400
+	id 1s9dph-0003J8-3V; Wed, 22 May 2024 00:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9dpU-0002z9-FR; Wed, 22 May 2024 00:43:56 -0400
+ id 1s9dpX-00038E-01; Wed, 22 May 2024 00:44:00 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s9dpS-0005wM-Q4; Wed, 22 May 2024 00:43:56 -0400
+ id 1s9dpV-0005wQ-Bx; Wed, 22 May 2024 00:43:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716353034; x=1747889034;
+ t=1716353037; x=1747889037;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=xmbGRIz1xb4wMoX4jBHY9Ji8BqoSSIVbjok4WXnrOz4=;
- b=MyToYGtWa8/o0S0rMvKje+vly4Y2VZUPGQ5TBp68S1ZNEfJZCEFLASLJ
- KM7pXPPMxONR8+zJh2F1p0vnp6BfFHz5rnvnCg1W/rkk45GFU/Vtlg/52
- /x25kFX0uE8uFMOxDzNxO3Nne8exfK+UKjGjDdSxjsxBiU2Pd5nkCmy6C
- /umb8QjD8QBODxRNbXVdsk1zQqwuG+hF80E+VBBVRjg7rg4uP9Nr/g46Z
- /3iGsDJD9KiigkJeba8Kd0PKNwg7LekRtFqPV3ZB6ubqgt1jtBXWukL5b
- E1FXERzJ5v59AHNyvp2oCKteQpE7HLMh0Spv0zYZamz9wC6B+THSFNFq6 Q==;
-X-CSE-ConnectionGUID: cMH0IS8WSx6DWuBlv47T5w==
-X-CSE-MsgGUID: NcP09iLKTtuYd76ifCqHMg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994218"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994218"
+ bh=NOv++k7YIHXe3mdhvNwiZ7ufitLLfKDDIQWej2awCVw=;
+ b=fVw7hCUnBu2G+HfsDep4vjgpg8bpIElHMXKO+WYcxRyQIbsuLAxBhMA4
+ 1QMwr0g7brivtQe5P6Eh7sNN5OdPfO4C2WWM3ltUKYPZ5IV11RVpQPkkp
+ DdITMfXFUc1N89FcXYQ3x5mXVceaBVOJ06c+ru6bUh0lD5NBGGIrO87Jv
+ 8GHMOy5JtSAwG/QFFOKf2ykzWor46FldPLNUg4S1wUbkFSIYsOV7x0lsG
+ rwgoe2Gb9HJ5MIUCuLo4Xfn6k9UdJU3KHIwGW5xk9nJx6DKuP2tXCHjEw
+ z+a8gdAUE6xTKKs4Jjr5iYfnQTtbQ4NveDryAz/xZeUPAlvxCjfcPsjoJ g==;
+X-CSE-ConnectionGUID: 76dDk/nkQSWX9waplNIO4g==
+X-CSE-MsgGUID: uNWP6dFtQ3SWYjkQRXw6oQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="23994222"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="23994222"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:43:23 -0700
-X-CSE-ConnectionGUID: B4s/Lw4VRnivmw6/JJC7WA==
-X-CSE-MsgGUID: 33i6URHjRBu+rVmJ3Qwk6g==
+ 21 May 2024 21:43:26 -0700
+X-CSE-ConnectionGUID: 8qQ1aQAwRGODSSZ+ui4pQg==
+X-CSE-MsgGUID: 9ZBqyuXsR06wHAM0pFaxSA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683809"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33683818"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2024 21:43:20 -0700
+ 21 May 2024 21:43:23 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -51,14 +51,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Eric Farman <farman@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  qemu-s390x@nongnu.org (open list:vfio-ccw)
-Subject: [PATCH v2 19/20] vfio/ccw: Drop local @err in vfio_ccw_realize()
-Date: Wed, 22 May 2024 12:40:14 +0800
-Message-Id: <20240522044015.412951-20-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 20/20] vfio/ccw: Fix the missed unrealize() call in error
+ path
+Date: Wed, 22 May 2024 12:40:15 +0800
+Message-Id: <20240522044015.412951-21-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.10;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -84,84 +84,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use @errp to fetch error information directly and drop the local
-variable @err.
+When get name failed, we should call unrealize() so that
+vfio_ccw_realize() is self contained.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
+Fixes: 909a6254eda ("vfio/ccw: Make vfio cdev pre-openable by passing a file handle")
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/ccw.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ hw/vfio/ccw.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 2600e62e37..168c9e5973 100644
+index 168c9e5973..161704cd7b 100644
 --- a/hw/vfio/ccw.c
 +++ b/hw/vfio/ccw.c
-@@ -574,17 +574,17 @@ static void vfio_ccw_put_region(VFIOCCWDevice *vcdev)
- 
- static void vfio_ccw_realize(DeviceState *dev, Error **errp)
- {
-+    ERRP_GUARD();
-     S390CCWDevice *cdev = S390_CCW_DEVICE(dev);
-     VFIOCCWDevice *vcdev = VFIO_CCW(cdev);
-     S390CCWDeviceClass *cdc = S390_CCW_DEVICE_GET_CLASS(cdev);
-     VFIODevice *vbasedev = &vcdev->vdev;
--    Error *err = NULL;
- 
-     /* Call the class init function for subchannel. */
-     if (cdc->realize) {
--        cdc->realize(cdev, vcdev->vdev.sysfsdev, &err);
--        if (err) {
--            goto out_err_propagate;
-+        cdc->realize(cdev, vcdev->vdev.sysfsdev, errp);
-+        if (*errp) {
-+            return;
-         }
+@@ -589,7 +589,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
      }
  
-@@ -597,27 +597,28 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         goto out_attach_dev_err;
+     if (!vfio_device_get_name(vbasedev, errp)) {
+-        return;
++        goto out_unrealize;
      }
  
--    if (!vfio_ccw_get_region(vcdev, &err)) {
-+    if (!vfio_ccw_get_region(vcdev, errp)) {
-         goto out_region_err;
-     }
- 
--    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err)) {
-+    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, errp)) {
-         goto out_io_notifier_err;
-     }
- 
-     if (vcdev->crw_region) {
-         if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX,
--                                            &err)) {
-+                                            errp)) {
-             goto out_irq_notifier_err;
-         }
-     }
- 
--    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &err)) {
-+    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, errp)) {
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operation.
-          */
--        error_report_err(err);
-+        error_report_err(*errp);
-+        *errp = NULL;
-     }
- 
-     return;
-@@ -635,8 +636,6 @@ out_attach_dev_err:
+     if (!vfio_attach_device(cdev->mdevid, vbasedev,
+@@ -633,6 +633,7 @@ out_region_err:
+     vfio_detach_device(vbasedev);
+ out_attach_dev_err:
+     g_free(vbasedev->name);
++out_unrealize:
      if (cdc->unrealize) {
          cdc->unrealize(cdev);
      }
--out_err_propagate:
--    error_propagate(errp, err);
- }
- 
- static void vfio_ccw_unrealize(DeviceState *dev)
 -- 
 2.34.1
 
