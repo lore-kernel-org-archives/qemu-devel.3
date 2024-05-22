@@ -4,138 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4D9C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 12:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E707CC25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 12:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9lMh-0005v5-5P; Wed, 22 May 2024 08:46:43 -0400
+	id 1s9lNI-0006oQ-5K; Wed, 22 May 2024 08:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9lMe-0005rJ-En
- for qemu-devel@nongnu.org; Wed, 22 May 2024 08:46:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s9lMc-0000Wf-I5
- for qemu-devel@nongnu.org; Wed, 22 May 2024 08:46:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716381997;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XTKwF7tP/DwA8w2G7mrRPzhW9h4xzIxNvAXMutx8Goo=;
- b=GOuM0vbD/d+a0sG2iaxi8sEs9wmh0dpQFUpAw4VDoeI8UQD8H1G37A/nLNFhXqTpoCQDDV
- 6ivlZ0i3eSwybhtTJTacC89dh8E+17ASJHNViMh12gVsF1Q3GXfY2bdygQH7Y6quETrxRl
- D32NPS8FLlB4Z1JhVzj4kdKmnqt/8Vs=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638--pRgzCVlPSCNjUkFvlO7xw-1; Wed, 22 May 2024 08:46:36 -0400
-X-MC-Unique: -pRgzCVlPSCNjUkFvlO7xw-1
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-3c9ad64e35bso62070b6e.3
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 05:46:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1s9lNB-0006aX-O1
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 08:47:15 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1s9lNA-0000p9-1C
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 08:47:13 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41fef5dda72so57915e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 05:47:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1716382030; x=1716986830; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=CxAZSVLZ56+EW157G/uXZntKJFAn9KrC9pysQzHkGHQ=;
+ b=ncSHhivC2UEat7/5GRpfUk/FGwiJqxBTgwR+I0dwkUyShdZXnNoDWtJQ4IghtA2L8M
+ 2Zh8J7kNftvXcROXb78dZ51nJ/uDctWBEE59mWn/mAnNi1/jBjcAsd4vyBdQDBlms6yK
+ Ug96KsNpipuFKmX5AKH+ZaMnIdx1ZV++5gZm69QdpaAFnLdJ9Wosdh4BhAovDAg+PZDI
+ EqlkkmLCiY6/aTw0qITTsA5qVaRULq+l8x4zIcDu1litrensuhZF7QUem+b3cRFRqWi9
+ QMhoOGEZHoUKLAQD+GvI4sv3G0Us5TM7OqUlpN9+Jr//ogaOXLhEDqkIceVzuR7zhlkx
+ zsdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716381995; x=1716986795;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1716382030; x=1716986830;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XTKwF7tP/DwA8w2G7mrRPzhW9h4xzIxNvAXMutx8Goo=;
- b=oQ9lTlxck1Wn7GUide9GSsXKYCwwwn1dnhMh72Ac9fPXJlML8Iz9GL5j6H/t/Ng9l8
- aItxVXd3qd3GxiyD5GE07HHsGJtl22XHCPusuQAGoDgG3WzVCnjRDLsUgSejILIoIVgU
- SaajCRtgyoQwanTWSfy5j8YIM/+LH/Urp7oR94Mqv2noxUb8dVvgCWzPlNXqZdys1mNL
- SX3BPOwB+JgslSnpUDJosVZc/bb6Re3qmM8ICHvQXHhWc8H7g7X3UmpVkvnan7m8okFi
- KTp19j0bVIXreL+LkeUfQFKnuJjxR3q+A2fHU5S5H+5Y7vJj+X8hvDlO+zjsO5zpsIIR
- GQAA==
+ bh=CxAZSVLZ56+EW157G/uXZntKJFAn9KrC9pysQzHkGHQ=;
+ b=WJy+M2ij2KHNbvgE69ljlEP+FX9mSUjc3vxn6WP9oxwO0to9jSGlG/uspYeKr9GcGt
+ MfYF3eN/1Mi+wTyPqx1AR7b2+YeWXCTULOWsBMIT0Ds5yHhwYDBJYR9s48oui+v5J3ww
+ peoKPbZvvlQeaD3tjJXVl7OPt+4cX/QRn8d1D3cEtqAxOp6+AYrAffmibFxCzQtytUhI
+ 0ZzlheMek6AZa8y3d3zAKnK4M2UEaJY2+VbwdIzxN94DVdulVeeaz/q52Ljz1T8PQcF7
+ 2ZPjsNPKJlxl/70yuNOaNYX0ruIrYq8BvFxcxYGRq5qY9NP6sh/GAMsJf9NMwX9dpmX5
+ JsSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDc9GhPngqR7rUDkqLJLxpkDK+DAHRc0n8nE4BH+FO2PxoPeSzJ1TOIJABV40apUWqAw+MEUYuf4ae6FgM23VSZ8j2LPk=
-X-Gm-Message-State: AOJu0Yx9gya9FtGafs08GRgXkwkbdUVs0dGOsrlHYvfEmmaYFCgb4MZM
- f4ye1l4lSGFCISW4V9Wn7PFSr/mAu8H20KdSdaN+p9j5CCUMg1DMFMRgTzP9VcvsU0FHkmA7WGP
- JeLWNQ3ZPA+11jjs8hoeJOVOw3c1jcSSjVKUqDrBFwPGG864p3Azq
-X-Received: by 2002:aca:231a:0:b0:3c8:4d79:3c5d with SMTP id
- 5614622812f47-3cdba016e1dmr1865053b6e.47.1716381995505; 
- Wed, 22 May 2024 05:46:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEICjmkhP6pDtwie1lf2dTJ6u53mjn/PYn24UFbkM/mfrxJWyRstdijjksckEi8Hyb+aNurvw==
-X-Received: by 2002:aca:231a:0:b0:3c8:4d79:3c5d with SMTP id
- 5614622812f47-3cdba016e1dmr1864966b6e.47.1716381993742; 
- Wed, 22 May 2024 05:46:33 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
- [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf2a4290sm1385740485a.65.2024.05.22.05.46.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 05:46:33 -0700 (PDT)
-Message-ID: <74401a75-3c07-4370-88df-50e325f8930b@redhat.com>
-Date: Wed, 22 May 2024 14:46:29 +0200
+ AJvYcCV+3xF7kjMZT7a9xVSadE29AxyZpJuwtWLhZxU+xDeXEC9LwNo2mXCyjGj9pI9+f9rR5FriQdRDgIwfzmfcoutk8HIdfUo=
+X-Gm-Message-State: AOJu0Yz5sVopwWFMhc/IlZTmI5qBh+q6sX04kPWb842p3rpqQisu8wnQ
+ wo6gyYbZkT8hYu7vnGW3feAWPdxflierPMxb8nwleqMgHAF6fstDnejuJ3Mu5A==
+X-Google-Smtp-Source: AGHT+IETwOHkJouFP3GeZBUOh4yMU/26CxPH0F0XnwPjR7//YfmE6yXJ5jk4WBzmrcA8pKYnjg2zKQ==
+X-Received: by 2002:a05:600c:3d05:b0:41b:8715:1158 with SMTP id
+ 5b1f17b1804b1-420fc8142admr1806955e9.6.1716382029990; 
+ Wed, 22 May 2024 05:47:09 -0700 (PDT)
+Received: from google.com (230.213.79.34.bc.googleusercontent.com.
+ [34.79.213.230]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502bbbc077sm34177034f8f.104.2024.05.22.05.47.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 May 2024 05:47:09 -0700 (PDT)
+Date: Wed, 22 May 2024 12:47:05 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+Subject: Re: [RFC PATCH v3 09/18] hw/arm/smmu-common: Rework TLB lookup for
+ nesting
+Message-ID: <Zk3pSdhym_mLak_L@google.com>
+References: <20240429032403.74910-1-smostafa@google.com>
+ <20240429032403.74910-10-smostafa@google.com>
+ <c22b04a2-c15c-4d9e-bfff-8d9922a83122@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 17/17] tests/qtest: Add intel-iommu test
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240522062313.453317-1-zhenzhong.duan@intel.com>
- <20240522062313.453317-18-zhenzhong.duan@intel.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240522062313.453317-18-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c22b04a2-c15c-4d9e-bfff-8d9922a83122@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,67 +101,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/05/2024 08.23, Zhenzhong Duan wrote:
-> Add the framework to test the intel-iommu device.
+Hi Eric,
+
+On Mon, May 20, 2024 at 10:27:50AM +0200, Eric Auger wrote:
+> Hi Mostafa,
 > 
-> Currently only tested cap/ecap bits correctness in scalable
-> modern mode. Also tested cap/ecap bits consistency before
-> and after system reset.
+> On 4/29/24 05:23, Mostafa Saleh wrote:
+> > In the previous patch, comine_tlb() was added which combines 2 TLB
+> > entries into one, which chooses the granule and level from the
+> > smallest entry.
+> >
+> > This means that a nested translation, an entry can be cached with the
+> > granule of stage-2 and not stage-1.
+> >
+> > However, the lookup for an IOVA in nested configuration is done with
+> > stage-1 granule, this patch reworks lookup in that case, so it falls
+> > back to stage-2 granule if no entry is found using stage-1 granule.
+> >
+> > Signed-off-by: Mostafa Saleh <smostafa@google.com>
+> > ---
+> >  hw/arm/smmu-common.c | 24 ++++++++++++++++++++++--
+> >  1 file changed, 22 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> > index 0d6945fa54..c67af3bc6d 100644
+> > --- a/hw/arm/smmu-common.c
+> > +++ b/hw/arm/smmu-common.c
+> > @@ -66,8 +66,10 @@ SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
+> >      return key;
+> >  }
+> >  
+> > -SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+> > -                                SMMUTransTableInfo *tt, hwaddr iova)
+> > +static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
+> > +                                                  SMMUTransCfg *cfg,
+> > +                                                  SMMUTransTableInfo *tt,
+> > +                                                  hwaddr iova)
+> >  {
+> >      uint8_t tg = (tt->granule_sz - 10) / 2;
+> >      uint8_t inputsize = 64 - tt->tsz;
+> > @@ -88,6 +90,24 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+> >          }
+> >          level++;
+> >      }
+> > +    return entry;
+> > +}
+> > +
+> > +SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+> > +                                SMMUTransTableInfo *tt, hwaddr iova)
+> > +{
+> > +    SMMUTLBEntry *entry = NULL;
+> > +
+> > +    entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
+> > +    /*
+> > +     * For nested translation also try the s2 granule, as the TLB will insert
+> > +     * it if the size of s2 tlb entry was smaller.
+> > +     */
+> > +    if (!entry && (cfg->stage == SMMU_NESTED) &&
+> > +        (cfg->s2cfg.granule_sz != tt->granule_sz)) {
+> > +        tt->granule_sz = cfg->s2cfg.granule_sz;
+> is it safe to alter the tt->granule_sz without restoring it? In the
+> positive I think this would deserve a comment.
+
+It should be safe in the current usage, I will add a comment to
+clarify how the function behaves (something as the the granule_sz
+would be updated to the entry tg if found)
+
+Thanks,
+Mostafa
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   MAINTAINERS                    |  1 +
->   tests/qtest/intel-iommu-test.c | 63 ++++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build        |  1 +
->   3 files changed, 65 insertions(+)
->   create mode 100644 tests/qtest/intel-iommu-test.c
+> Eric
+> > +        entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
+> > +    }
+> >  
+> >      if (entry) {
+> >          cfg->iotlb_hits++;
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 5dab60bd04..f1ef6128c8 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3656,6 +3656,7 @@ S: Supported
->   F: hw/i386/intel_iommu.c
->   F: hw/i386/intel_iommu_internal.h
->   F: include/hw/i386/intel_iommu.h
-> +F: tests/qtest/intel-iommu-test.c
->   
->   AMD-Vi Emulation
->   S: Orphan
-> diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
-> new file mode 100644
-> index 0000000000..e1273bce14
-> --- /dev/null
-> +++ b/tests/qtest/intel-iommu-test.c
-> @@ -0,0 +1,63 @@
-> +/*
-> + * QTest testcase for intel-iommu
-> + *
-> + * Copyright (c) 2024 Intel, Inc.
-> + *
-> + * Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest-single.h"
-
-It's a little bit nicer to write new tests without libqtest-single.h (e.g. 
-in case you ever add migration tests later, you must not use anything that 
-uses a global state), so I'd recommend to use "qts = qtest_init(...)" 
-instead of qtest_start(...) and then to use the functions with the "qtest_" 
-prefix instead of the other functions from libqtest-single.h ... but it's 
-only a recommendation, up to you whether you want to respin your patch with 
-it or not.
-
-Anyway:
-Acked-by: Thomas Huth <thuth@redhat.com>
-
-Do you want me to pick this up through the qtest tree, or shall this go 
-through some x86-related tree instead?
-
-  Thomas
-
 
