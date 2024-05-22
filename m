@@ -4,63 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79EADC25B77
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25586C25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:01:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9igh-0003P4-OM; Wed, 22 May 2024 05:55:11 -0400
+	id 1s9ihZ-0005dz-7E; Wed, 22 May 2024 05:56:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igb-0003LQ-2y
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihV-0005LN-I9
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:56:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9igZ-0001Mg-5v
- for qemu-devel@nongnu.org; Wed, 22 May 2024 05:55:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9ihT-0001wn-NJ
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 05:56:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716371702;
+ s=mimecast20190719; t=1716371759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xEgW3e/XEuQ2cctgyXjEEqmbcF5A+1Z7ssJBUhFQbnc=;
- b=ULYADHlkQfK15puymEiimqHGezMez/OWS690KL2WDMJyqLu0GEmgnUNSImo8oAAEE+BP2a
- YNMwQOMr5HXtg3mneFqvGT4fqWsvuEdGzHObIlwUrJnWLG8fsAtpjoVjYLlmcLIlgkORbz
- foYP2m3V1ozR4vFR8UBrcHj5w9bPcQg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-Rz1qrY-fO9y4d9ylXtfhSw-1; Wed,
- 22 May 2024 05:54:59 -0400
-X-MC-Unique: Rz1qrY-fO9y4d9ylXtfhSw-1
+ bh=bI8EFdfj0J9kzuJuVZ6pxe0myBd7KeFUuEsMYCohD7w=;
+ b=RgnPb2+owFArqCQLuar6fQg+E+nr7m+AW7x2z5xX/iBF0RnY2HPNsSc6b1MUomK1QQHgqb
+ FpQJKW52I9L0Aerk8Kfz+a2pR2uw97b5ZHrRYKbSel5hbt83EBV7vOVjNoyuS/0QsanjWp
+ bOdxZfDFM0rHkbZXshME9ZQD0IG3nsY=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-In4WNdwxMkmTp_leCLrxiw-1; Wed, 22 May 2024 05:55:54 -0400
+X-MC-Unique: In4WNdwxMkmTp_leCLrxiw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3A5E01C29EA7;
- Wed, 22 May 2024 09:54:59 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 94FA5101A52C;
+ Wed, 22 May 2024 09:55:54 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.133])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8EE6251BF;
- Wed, 22 May 2024 09:54:56 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7420551BF;
+ Wed, 22 May 2024 09:55:53 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Peter Xu <peterx@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-Subject: [PULL 07/47] memory: Add Error** argument to memory_get_xlat_addr()
-Date: Wed, 22 May 2024 11:54:02 +0200
-Message-ID: <20240522095442.195243-8-clg@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 46/47] vfio: Use g_autofree in all call site of
+ vfio_get_region_info()
+Date: Wed, 22 May 2024 11:54:41 +0200
+Message-ID: <20240522095442.195243-47-clg@redhat.com>
 In-Reply-To: <20240522095442.195243-1-clg@redhat.com>
 References: <20240522095442.195243-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,172 +82,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let the callers do the reporting. This will be useful in
-vfio_iommu_map_dirty_notify().
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: David Hildenbrand <david@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+There are some exceptions when pointer to vfio_region_info is reused.
+In that case, the pointed memory is freed manually.
+
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/exec/memory.h  | 15 ++++++++++++++-
- hw/vfio/common.c       | 13 +++++++++----
- hw/virtio/vhost-vdpa.c |  5 ++++-
- system/memory.c        | 10 +++++-----
- 4 files changed, 32 insertions(+), 11 deletions(-)
+ hw/vfio/helpers.c |  7 ++-----
+ hw/vfio/igd.c     |  5 ++---
+ hw/vfio/pci.c     | 13 +++----------
+ 3 files changed, 7 insertions(+), 18 deletions(-)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index d417d7f363dbbca6553c449582a93d5da73cca40..9cdd64e9c69b63f9d27cebc2e8cb366e22ed7577 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -774,9 +774,22 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
- void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
-                                              RamDiscardListener *rdl);
- 
-+/**
-+ * memory_get_xlat_addr: Extract addresses from a TLB entry
-+ *
-+ * @iotlb: pointer to an #IOMMUTLBEntry
-+ * @vaddr: virtual address
-+ * @ram_addr: RAM address
-+ * @read_only: indicates if writes are allowed
-+ * @mr_has_discard_manager: indicates memory is controlled by a
-+ *                          RamDiscardManager
-+ * @errp: pointer to Error*, to store an error if it happens.
-+ *
-+ * Return: true on success, else false setting @errp with error.
-+ */
- bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-                           ram_addr_t *ram_addr, bool *read_only,
--                          bool *mr_has_discard_manager);
-+                          bool *mr_has_discard_manager, Error **errp);
- 
- typedef struct CoalescedMemoryRange CoalescedMemoryRange;
- typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index c7f274fb5c851e4c44498552891265018d2c5313..7313043f1d161ed0326b5ba3fa1085608eaf6740 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -253,12 +253,13 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
- 
- /* Called with rcu_read_lock held.  */
- static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
--                               ram_addr_t *ram_addr, bool *read_only)
-+                               ram_addr_t *ram_addr, bool *read_only,
-+                               Error **errp)
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 4b079dc383683a71d1d96507a0fb66a4bc3ba923..27ea26aa48f67e6518f871ac651ab8d2703cc611 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -343,7 +343,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+                       int index, const char *name)
  {
-     bool ret, mr_has_discard_manager;
- 
-     ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
--                               &mr_has_discard_manager);
-+                               &mr_has_discard_manager, errp);
-     if (ret && mr_has_discard_manager) {
-         /*
-          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
-@@ -288,6 +289,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     hwaddr iova = iotlb->iova + giommu->iommu_offset;
-     void *vaddr;
+-    struct vfio_region_info *info;
++    g_autofree struct vfio_region_info *info = NULL;
      int ret;
-+    Error *local_err = NULL;
  
-     trace_vfio_iommu_map_notify(iotlb->perm == IOMMU_NONE ? "UNMAP" : "MAP",
-                                 iova, iova + iotlb->addr_mask);
-@@ -304,7 +306,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
-         bool read_only;
- 
--        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
-+        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
-+            error_report_err(local_err);
-             goto out;
+     ret = vfio_get_region_info(vbasedev, index, &info);
+@@ -376,8 +376,6 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
          }
-         /*
-@@ -1213,6 +1216,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     VFIOContainerBase *bcontainer = giommu->bcontainer;
-     hwaddr iova = iotlb->iova + giommu->iommu_offset;
-     ram_addr_t translated_addr;
-+    Error *local_err = NULL;
-     int ret = -EINVAL;
- 
-     trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
-@@ -1224,7 +1228,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
      }
  
-     rcu_read_lock();
--    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
-+    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
-+        error_report_err(local_err);
-         goto out_unlock;
+-    g_free(info);
+-
+     trace_vfio_region_setup(vbasedev->name, index, name,
+                             region->flags, region->fd_offset, region->size);
+     return 0;
+@@ -594,14 +592,13 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
+ 
+ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
+ {
+-    struct vfio_region_info *info = NULL;
++    g_autofree struct vfio_region_info *info = NULL;
+     bool ret = false;
+ 
+     if (!vfio_get_region_info(vbasedev, region, &info)) {
+         if (vfio_get_region_info_cap(info, cap_type)) {
+             ret = true;
+         }
+-        g_free(info);
      }
  
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index e827b9175fc61f1ef419e48d90a440b00449312a..ed99ab87457d8f31b98ace960713f48d47b27102 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -208,6 +208,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     void *vaddr;
-     int ret;
-     Int128 llend;
-+    Error *local_err = NULL;
+     return ret;
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 402fc5ce1da966fda1340f328e0611cb1a2a0635..1e79202f2bd136b0bafd4f08c2f1407e467e0d65 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -367,8 +367,8 @@ static const MemoryRegionOps vfio_igd_index_quirk = {
  
-     if (iotlb->target_as != &address_space_memory) {
-         error_report("Wrong target AS \"%s\", only system memory is allowed",
-@@ -227,7 +228,9 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
-         bool read_only;
- 
--        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL)) {
-+        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
-+                                  &local_err)) {
-+            error_report_err(local_err);
-             return;
-         }
-         ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
-diff --git a/system/memory.c b/system/memory.c
-index 642a449f8c867d38c62a748a4dfd5c055637c205..9540caa8a1f4da8501bf5ae9d7eedde8b775e1dc 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2179,7 +2179,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
- /* Called with rcu_read_lock held.  */
- bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-                           ram_addr_t *ram_addr, bool *read_only,
--                          bool *mr_has_discard_manager)
-+                          bool *mr_has_discard_manager, Error **errp)
+ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
  {
-     MemoryRegion *mr;
-     hwaddr xlat;
-@@ -2197,7 +2197,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-     mr = address_space_translate(&address_space_memory, iotlb->translated_addr,
-                                  &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
-     if (!memory_region_is_ram(mr)) {
--        error_report("iommu map to non memory area %" HWADDR_PRIx "", xlat);
-+        error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
-         return false;
-     } else if (memory_region_has_ram_discard_manager(mr)) {
-         RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
-@@ -2216,8 +2216,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-          * were already restored before IOMMUs are restored.
-          */
-         if (!ram_discard_manager_is_populated(rdm, &tmp)) {
--            error_report("iommu map to discarded memory (e.g., unplugged via"
--                         " virtio-mem): %" HWADDR_PRIx "",
-+            error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
-+                         " via virtio-mem): %" HWADDR_PRIx "",
-                          iotlb->translated_addr);
-             return false;
-         }
-@@ -2228,7 +2228,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-      * check that it did not truncate too much.
-      */
-     if (len & iotlb->addr_mask) {
--        error_report("iommu has granularity incompatible with target AS");
-+        error_setg(errp, "iommu has granularity incompatible with target AS");
+-    struct vfio_region_info *rom = NULL, *opregion = NULL,
+-                            *host = NULL, *lpc = NULL;
++    g_autofree struct vfio_region_info *rom = NULL;
++    struct vfio_region_info *opregion = NULL, *host = NULL, *lpc = NULL;
+     VFIOQuirk *quirk;
+     VFIOIGDQuirk *igd;
+     PCIDevice *lpc_bridge;
+@@ -609,7 +609,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, ggms_mb + gms_mb);
+ 
+ out:
+-    g_free(rom);
+     g_free(opregion);
+     g_free(host);
+     g_free(lpc);
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 35ad9b582f6b99510a812edab5c2855c697a1da2..74a79bdf61f9aeb4860d532b6c076dd3491dd0ab 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -879,7 +879,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+ 
+ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+ {
+-    struct vfio_region_info *reg_info;
++    g_autofree struct vfio_region_info *reg_info = NULL;
+     uint64_t size;
+     off_t off = 0;
+     ssize_t bytes;
+@@ -897,8 +897,6 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+     vdev->rom_size = size = reg_info->size;
+     vdev->rom_offset = reg_info->offset;
+ 
+-    g_free(reg_info);
+-
+     if (!vdev->rom_size) {
+         vdev->rom_read_failed = true;
+         error_report("vfio-pci: Cannot read device rom at "
+@@ -2668,7 +2666,7 @@ static VFIODeviceOps vfio_pci_ops = {
+ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+ {
+     VFIODevice *vbasedev = &vdev->vbasedev;
+-    struct vfio_region_info *reg_info;
++    g_autofree struct vfio_region_info *reg_info = NULL;
+     int ret;
+ 
+     ret = vfio_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
+@@ -2685,7 +2683,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+         error_setg(errp, "unexpected VGA info, flags 0x%lx, size 0x%lx",
+                    (unsigned long)reg_info->flags,
+                    (unsigned long)reg_info->size);
+-        g_free(reg_info);
          return false;
      }
  
+@@ -2694,8 +2691,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+     vdev->vga->fd_offset = reg_info->offset;
+     vdev->vga->fd = vdev->vbasedev.fd;
+ 
+-    g_free(reg_info);
+-
+     vdev->vga->region[QEMU_PCI_VGA_MEM].offset = QEMU_PCI_VGA_MEM_BASE;
+     vdev->vga->region[QEMU_PCI_VGA_MEM].nr = QEMU_PCI_VGA_MEM;
+     QLIST_INIT(&vdev->vga->region[QEMU_PCI_VGA_MEM].quirks);
+@@ -2736,7 +2731,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+ {
+     VFIODevice *vbasedev = &vdev->vbasedev;
+-    struct vfio_region_info *reg_info;
++    g_autofree struct vfio_region_info *reg_info = NULL;
+     struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
+     int i, ret = -1;
+ 
+@@ -2790,8 +2785,6 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+     }
+     vdev->config_offset = reg_info->offset;
+ 
+-    g_free(reg_info);
+-
+     if (vdev->features & VFIO_FEATURE_ENABLE_VGA) {
+         if (!vfio_populate_vga(vdev, errp)) {
+             error_append_hint(errp, "device does not support "
 -- 
 2.45.1
 
