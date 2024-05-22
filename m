@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1196AC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 06:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E34C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 06:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9f7j-0000iP-QT; Wed, 22 May 2024 02:06:52 -0400
+	id 1s9fQT-0004f4-Fq; Wed, 22 May 2024 02:26:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9f7h-0000he-HT
- for qemu-devel@nongnu.org; Wed, 22 May 2024 02:06:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s9fQI-0004V8-AA
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 02:26:02 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s9f7f-0002wv-U9
- for qemu-devel@nongnu.org; Wed, 22 May 2024 02:06:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716358007;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WNKkvyQBUzGg9aGBYCHVor3vKsyE6Iebq1jiHp1mfOE=;
- b=iTRfHAJvUr4Dfx4vBNwFql1LmrUlMTYvOZIcXJlbrtSQp1KkqO7U8ltq2DSCFn71CQjBQ9
- i92QdDn/fyZ1akZdSpXYQnGQfPFji52htKMUDWUSHHVHN/dDv840iOlCBRc0FYJQKa/W5d
- IGbY8IwYj/awT+/u3a97261YFco5Vgw=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-uMwdmzi_PIKMmqG9b5GYjw-1; Wed, 22 May 2024 02:06:46 -0400
-X-MC-Unique: uMwdmzi_PIKMmqG9b5GYjw-1
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-3c9a062825bso12761004b6e.2
- for <qemu-devel@nongnu.org>; Tue, 21 May 2024 23:06:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716358005; x=1716962805;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WNKkvyQBUzGg9aGBYCHVor3vKsyE6Iebq1jiHp1mfOE=;
- b=POHS7GQNexfOlXwO1Ja/0qyXJMHYXWv0NYVGZnmWq7E6RYI/dZJPvjEQhMRXsdDCRT
- ZHC67UKviP+1fecPY+BsnPiuFvhO7ZCCq+T4oTfxOAlLVbRosSr4I4+FubewNnkS4/W6
- etSiIDoe2UzFh80gsQKFDUZ4O2K8cl2qvQTuWsvPWrJOpSa6uczskCMGXKXrRroSYs1P
- IyqpwNodUu1HrPci+LQ1qqIR82BPR8bhtzXNqq66lIPmYp/zVK0DaAsbPZCpnPjlgSGN
- 5TQ0kHrEd6Txf62CUIxMrIOw0EEifab+5l6BjTJHuNhJawXOSpjjCCF3JYV674uHuIvK
- NcJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhz/gwgxMD4Ca4+S52TNxjJ7wf92eXa2Tr+mv618XyoQ5de2XcLncdUVaI5Xb29yu99IUzWmHtAplRZOQ0k39uH+pbkU8=
-X-Gm-Message-State: AOJu0Yz154WT/qT8F/gnbnUucd5KNuY3KuQFWbvXpuuwLOCe0cd3Qaw5
- gWEPcUAEs28xu6Id4h3xf2EAAGXsAKZK738QzmjUtTwNApqtxH7M917CSkLSz11k4uaBTtGPCZR
- Fa40hf3V3M0pLa70kyeVJ3NBrO55F1ybXqpgMUlDgKHik6HGfGc6Ik5AZ+I/l
-X-Received: by 2002:a05:6808:ecd:b0:3c9:6f4b:f825 with SMTP id
- 5614622812f47-3cdb9d3a1abmr1283316b6e.39.1716358004891; 
- Tue, 21 May 2024 23:06:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsPKy08LnmxWpFSQgeC8HI2lAMOJ3+aHMDQ1u/wH9jVe+6pTV8lfCEXnWO/ZeZULs7L822Vw==
-X-Received: by 2002:a05:6808:ecd:b0:3c9:6f4b:f825 with SMTP id
- 5614622812f47-3cdb9d3a1abmr1283308b6e.39.1716358004590; 
- Tue, 21 May 2024 23:06:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7949b862cc0sm13393185a.118.2024.05.21.23.06.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 May 2024 23:06:44 -0700 (PDT)
-Message-ID: <cdc51332-2e15-4a3e-9841-efe3c8ab6da0@redhat.com>
-Date: Wed, 22 May 2024 08:06:42 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s9fQF-0006eK-Oy
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 02:26:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716359160; x=1747895160;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=2sqa5xD65ChPp2kFgW+ttHAbtCvBnY8XoaP9JWX78tA=;
+ b=nxLWephLT45/P/VRr5bD1wyT9v+/AFW2qktBJlsV4c1Olg4g/AKjjcgm
+ 2dvrOxs/XjZesNgOBLSb+fTAbR38oDv3O9SzV7AZiRaQ3jX2ZL96+CmCy
+ 0Qnkj3NHKGnI8lh0ego6GxgY1zHAXEDzcm5xVgoPleUWjbh//+3/hbEhE
+ 4cnvNkRScGgd5SBUhtW7Fq65XJTi+y2nI2f1/XGTux7bnG4bSiT1TWhYL
+ WVVRpN7zV6n4ipT78hZkrkf3rtVudHiqUB/o83jTs7nCnGWh2MjjM0nm+
+ nfHvTWs4klvudaMF/BlQwkHPmIy7nU1vL9zrjlmYZY5F+899z9DXGB0fb Q==;
+X-CSE-ConnectionGUID: 6ddlfq9vQxugMnXQgIjCCQ==
+X-CSE-MsgGUID: 5WQtO+qdSQ2OxNvwMnFHHg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="37972450"
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="37972450"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 23:25:59 -0700
+X-CSE-ConnectionGUID: Zvoe2BO9RvWN3FmvHCS5fg==
+X-CSE-MsgGUID: 6CwyhW0+TA2SXHhrqkpMoQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; d="scan'208";a="33597597"
+Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2024 23:25:54 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH rfcv2 02/17] intel_iommu: Make pasid entry type check accurate
+Date: Wed, 22 May 2024 14:22:58 +0800
+Message-Id: <20240522062313.453317-3-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240522062313.453317-1-zhenzhong.duan@intel.com>
+References: <20240522062313.453317-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/20] vfio/pci: Make vfio_populate_device() return a
- bool
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
-References: <20240522044015.412951-1-zhenzhong.duan@intel.com>
- <20240522044015.412951-11-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240522044015.412951-11-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=192.198.163.7;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,117 +89,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/22/24 06:40, Zhenzhong Duan wrote:
-> Since vfio_populate_device() takes an 'Error **' argument,
-> best practices suggest to return a bool. See the qapi/error.h
-> Rules section.
-> 
-> By this chance, pass errp directly to vfio_populate_device() to
-> avoid calling error_propagate().
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+When guest configures Nested Translation(011b) or First-stage Translation only
+(001b), type check passed unaccurately.
 
+Fails the type check in those cases as their simulation isn't supported yet.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: fb43cf739e1 ("intel_iommu: scalable mode emulation")
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-Thanks,
-
-C.
-
-
-> ---
->   hw/vfio/pci.c | 21 ++++++++++-----------
->   1 file changed, 10 insertions(+), 11 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 4fb5fd0c9f..46d3c61859 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2740,7 +2740,7 @@ int vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->       return 0;
->   }
->   
-> -static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-> +static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       struct vfio_region_info *reg_info;
-> @@ -2750,18 +2750,18 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->       /* Sanity check device */
->       if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PCI)) {
->           error_setg(errp, "this isn't a PCI device");
-> -        return;
-> +        return false;
->       }
->   
->       if (vbasedev->num_regions < VFIO_PCI_CONFIG_REGION_INDEX + 1) {
->           error_setg(errp, "unexpected number of io regions %u",
->                      vbasedev->num_regions);
-> -        return;
-> +        return false;
->       }
->   
->       if (vbasedev->num_irqs < VFIO_PCI_MSIX_IRQ_INDEX + 1) {
->           error_setg(errp, "unexpected number of irqs %u", vbasedev->num_irqs);
-> -        return;
-> +        return false;
->       }
->   
->       for (i = VFIO_PCI_BAR0_REGION_INDEX; i < VFIO_PCI_ROM_REGION_INDEX; i++) {
-> @@ -2773,7 +2773,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->   
->           if (ret) {
->               error_setg_errno(errp, -ret, "failed to get region %d info", i);
-> -            return;
-> +            return false;
->           }
->   
->           QLIST_INIT(&vdev->bars[i].quirks);
-> @@ -2783,7 +2783,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->                                  VFIO_PCI_CONFIG_REGION_INDEX, &reg_info);
->       if (ret) {
->           error_setg_errno(errp, -ret, "failed to get config info");
-> -        return;
-> +        return false;
->       }
->   
->       trace_vfio_populate_device_config(vdev->vbasedev.name,
-> @@ -2804,7 +2804,7 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->           if (ret) {
->               error_append_hint(errp, "device does not support "
->                                 "requested feature x-vga\n");
-> -            return;
-> +            return false;
->           }
->       }
->   
-> @@ -2821,6 +2821,8 @@ static void vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->                       "Could not enable error recovery for the device",
->                       vbasedev->name);
->       }
-> +
-> +    return true;
->   }
->   
->   static void vfio_pci_put_device(VFIOPCIDevice *vdev)
-> @@ -2977,7 +2979,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->       VFIOPCIDevice *vdev = VFIO_PCI(pdev);
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       char *subsys;
-> -    Error *err = NULL;
->       int i, ret;
->       bool is_mdev;
->       char uuid[UUID_STR_LEN];
-> @@ -3036,9 +3037,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->           goto error;
->       }
->   
-> -    vfio_populate_device(vdev, &err);
-> -    if (err) {
-> -        error_propagate(errp, err);
-> +    if (!vfio_populate_device(vdev, errp)) {
->           goto error;
->       }
->   
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index d85aaf4bb8..348e3a441e 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -742,20 +742,16 @@ static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
+                                      VTDPASIDEntry *pe)
+ {
+     switch (VTD_PE_GET_TYPE(pe)) {
+-    case VTD_SM_PASID_ENTRY_FLT:
+     case VTD_SM_PASID_ENTRY_SLT:
+-    case VTD_SM_PASID_ENTRY_NESTED:
+-        break;
++        return true;
+     case VTD_SM_PASID_ENTRY_PT:
+-        if (!x86_iommu->pt_supported) {
+-            return false;
+-        }
+-        break;
++        return x86_iommu->pt_supported;
++    case VTD_SM_PASID_ENTRY_FLT:
++    case VTD_SM_PASID_ENTRY_NESTED:
+     default:
+         /* Unknown type */
+         return false;
+     }
+-    return true;
+ }
+ 
+ static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
+-- 
+2.34.1
 
 
