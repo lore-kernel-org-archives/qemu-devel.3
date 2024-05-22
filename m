@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3EDCC25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F32C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 May 2024 10:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9jRF-0003ID-C9; Wed, 22 May 2024 06:43:17 -0400
+	id 1s9jRK-0003JM-Jp; Wed, 22 May 2024 06:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s9jRD-0003Hi-IE
- for qemu-devel@nongnu.org; Wed, 22 May 2024 06:43:15 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1s9jRI-0003IY-OM
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 06:43:20 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s9jRB-0001fk-V2
- for qemu-devel@nongnu.org; Wed, 22 May 2024 06:43:15 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f304533064so5361295ad.0
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 03:43:13 -0700 (PDT)
+ id 1s9jRF-0001g8-VM
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 06:43:20 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-6001399f22bso916829a12.0
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 03:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716374592; x=1716979392;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716374597; x=1716979397;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CwpNU0IOG2gR/Zc+cT2zm9xVHtaU1yJX2qDLOGZQyH4=;
- b=WgZyBhfz/DoemXZCh1bHl6/ywXEeZsMJRHdF4k20Tv2Jk8HldJJ52yu+YmG7DDv5rF
- 6YARuGmfrOTHT7h6dXt8YyG9IX9fonp7+W96gJ3g5sldcL9SOnDnJ0r/4IdGFgDg9VQy
- RnzFblfYw49CxMHGLa8w3fCyqRGLpr6FB8/qabkryqEe3rmMWDC5KbbkKa0CA/w3xXSa
- l4xtK9sxTEp3ZHsmn69hSHRloSTTkJjPPclNmCPvc9uJyvLt+WSJrYhzEU5ySs8kDvhp
- LM/qQl+ilGj4ezJMPBHfh8y0M6yYyKhUaJv9AqpqRjTymfghnSOqAJC3ZsCZSZvg6dBW
- LT/Q==
+ :reply-to; bh=CinWkEJu0fAiLknHwCrn8NcaRcIHtVxff81S7d3fju4=;
+ b=YfiR/uKfhaNzAPzy2LVKU64O6psqslmowr5kyGWsrs46mawDbcqndPXnXssNgtOqew
+ 8iU1+Akel7obH4XqrSsn5UNV6hpIsmcBMhFoYWoQWDBtlS0nCx6CicR8z7V5o6VPuHUe
+ EmDklFkgo7QOCNxZuHIRHR5XWxf1QH2mYeHRc7RXUi6HSiJGS71fgH6tUU18Y+Pdhxmy
+ PZoP3yLgIhhSOKCuhI8nC4+NgpkZTcYNPFHI0Jg1U2sPtlrBat64Xq035xK3Tc6UB0EU
+ bnWzceph/AkCzEwVnJoJkIJ3wr6HJz8g0+Bvf5LeLCYqJXLQrUoXj6HJ8hkYzJX2DSrT
+ cHwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716374592; x=1716979392;
+ d=1e100.net; s=20230601; t=1716374597; x=1716979397;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CwpNU0IOG2gR/Zc+cT2zm9xVHtaU1yJX2qDLOGZQyH4=;
- b=GPEGuu0OHKMzmUSfwgku4nMio2DAcc+3qqVTO5Oh5BrAwXc2/JFXg+i+De3HLl2yGx
- ytbYpqKD2JHebpDkQUSVon3/MWbVBEhC74LItdtsQZkjEVHKzqJN0x3MI88dI3OGYZWH
- HqHtv1w71c4EtIGMl3ROc9pCoXLbauSUMGSuczXoxIHcazLcgf0kSo+5nhXzMR7si+ML
- /gHMA16G3DgVWPrRBqjSE5OYHPcuKEonvcU5uq5J9JgVgvBZ2hw5GV6iHq6SxBfoE0BV
- fWZduloj7yu98WmjpDSGBQLMJviM00dLKROAhGS/BUqweYD5q/xL1kVfbq7NPlJiqehF
- ncsg==
-X-Gm-Message-State: AOJu0YwX6kUbcXE5PTfj6FmbAi5xYUqbzzE2defrEEczVwKAPDNnHIJY
- d8sMYpPa9GiqM2U8u8TnrC2ptV2rRQoFKtU36cfDXK6urBGz9ymDiSTlddzBFC8=
-X-Google-Smtp-Source: AGHT+IEsqkWo7HnC/L30/fddVqzLgSu+dGeNbKSy6TrvEAgPtcGanF99HwgQD5KZXN/mAT1tMSQRcA==
-X-Received: by 2002:a17:902:cec8:b0:1ec:8206:626f with SMTP id
- d9443c01a7336-1f31aceb165mr25082255ad.9.1716374592134; 
- Wed, 22 May 2024 03:43:12 -0700 (PDT)
+ bh=CinWkEJu0fAiLknHwCrn8NcaRcIHtVxff81S7d3fju4=;
+ b=DPRSbqOBKCywxH4HfEKDEmc+twGLrJr/GwRKp+usOjYbTqzH53+WdkorNMruGPG5bN
+ NAxfTc64L0+AaLpMOXyBcnun6rSQaDUm+yReoGUQT9F4ptogv5+svzjbQzbRaa4KmIMS
+ GA/2fRsffIgdYT0hHZIZKWhtGOthwPFjmExmeD42rlDqUxbLLDsljj27T4yzZzRr5aU7
+ bf+tMHsaT5pXHO+Ut+xlT/Npx0UL1T8K2BZvnLTwziStyKN0NEJGl0LrxbvRCL7HiAtn
+ 5s2Py7Zy5udemUdpMRIWcFvIfD6e5YpgCA41dfJGe+OAtkaRCTMBnprNQ7Qnz4M8mh4e
+ VCMQ==
+X-Gm-Message-State: AOJu0YwH4OTkqaUTITtkPYHdgf89eBsylgRrSmnhEV5X3PHyMCClUk0q
+ 0f0fb/ew2PwO8IsmRDsCEEpZtWXp5UWHl4toeh9Se5S+nbRnGWsp9bkRjdnE6rA=
+X-Google-Smtp-Source: AGHT+IEuTUPOSxEd/SrrnpQXi7eNP9o2TBbZNHvU/ocZTTaFWRlkYK1ttPQGzIppCF5omy40Z7zkug==
+X-Received: by 2002:a17:90a:d303:b0:2bd:7264:ed8d with SMTP id
+ 98e67ed59e1d1-2bd9f450ae6mr1566342a91.17.1716374596659; 
+ Wed, 22 May 2024 03:43:16 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1f3033d8e1csm48952925ad.56.2024.05.22.03.43.08
+ 98e67ed59e1d1-2bd878b9725sm4366645a91.54.2024.05.22.03.43.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 May 2024 03:43:11 -0700 (PDT)
+ Wed, 22 May 2024 03:43:16 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 22 May 2024 19:43:02 +0900
-Subject: [PATCH v2 1/3] qemu-keymap: Free xkb allocations
+Date: Wed, 22 May 2024 19:43:03 +0900
+Subject: [PATCH v2 2/3] meson: Add -fno-sanitize=function
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240522-xkb-v2-1-67b54fa7c98f@daynix.com>
+Message-Id: <20240522-xkb-v2-2-67b54fa7c98f@daynix.com>
 References: <20240522-xkb-v2-0-67b54fa7c98f@daynix.com>
 In-Reply-To: <20240522-xkb-v2-0-67b54fa7c98f@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, 
@@ -80,8 +80,8 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-01a33
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::529;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,27 +103,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This fixes LeakSanitizer complaints with xkbcommon 1.6.0.
+-fsanitize=function enforces the consistency of function types, but
+include/qemu/lockable.h contains function pointer casts, which violate
+the rule. We already disables exact type checks for CFI with
+-fsanitize-cfi-icall-generalize-pointers so disable -fsanitize=function
+as well.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- qemu-keymap.c | 3 +++
- 1 file changed, 3 insertions(+)
+ meson.build | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/qemu-keymap.c b/qemu-keymap.c
-index 8c80f7a4ed65..7a9f38cf9863 100644
---- a/qemu-keymap.c
-+++ b/qemu-keymap.c
-@@ -237,6 +237,9 @@ int main(int argc, char *argv[])
-     xkb_state_unref(state);
-     state = NULL;
+diff --git a/meson.build b/meson.build
+index 91a0aa64c640..9eaf218609eb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -298,7 +298,7 @@ endforeach
  
-+    xkb_keymap_unref(map);
-+    xkb_context_unref(ctx);
-+
-     /* add quirks */
-     fprintf(outfile,
-             "\n"
+ qemu_common_flags = [
+   '-D_GNU_SOURCE', '-D_FILE_OFFSET_BITS=64', '-D_LARGEFILE_SOURCE',
+-  '-fno-strict-aliasing', '-fno-common', '-fwrapv' ]
++  '-fno-sanitize=function', '-fno-strict-aliasing', '-fno-common', '-fwrapv' ]
+ qemu_cflags = []
+ qemu_ldflags = []
+ 
+@@ -3462,14 +3462,12 @@ endif
+ qom_ss = qom_ss.apply({})
+ libqom = static_library('qom', qom_ss.sources() + genh,
+                         dependencies: [qom_ss.dependencies()],
+-                        name_suffix: 'fa',
+                         build_by_default: false)
+ qom = declare_dependency(link_whole: libqom)
+ 
+ event_loop_base = files('event-loop-base.c')
+ event_loop_base = static_library('event-loop-base',
+                                  sources: event_loop_base + genh,
+-                                 name_suffix: 'fa',
+                                  build_by_default: false)
+ event_loop_base = declare_dependency(link_whole: event_loop_base,
+                                      dependencies: [qom])
+@@ -3703,7 +3701,6 @@ qemu_syms = custom_target('qemu.syms', output: 'qemu.syms',
+ authz_ss = authz_ss.apply({})
+ libauthz = static_library('authz', authz_ss.sources() + genh,
+                           dependencies: [authz_ss.dependencies()],
+-                          name_suffix: 'fa',
+                           build_by_default: false)
+ 
+ authz = declare_dependency(link_whole: libauthz,
+@@ -3712,7 +3709,6 @@ authz = declare_dependency(link_whole: libauthz,
+ crypto_ss = crypto_ss.apply({})
+ libcrypto = static_library('crypto', crypto_ss.sources() + genh,
+                            dependencies: [crypto_ss.dependencies()],
+-                           name_suffix: 'fa',
+                            build_by_default: false)
+ 
+ crypto = declare_dependency(link_whole: libcrypto,
+@@ -3722,13 +3718,11 @@ io_ss = io_ss.apply({})
+ libio = static_library('io', io_ss.sources() + genh,
+                        dependencies: [io_ss.dependencies()],
+                        link_with: libqemuutil,
+-                       name_suffix: 'fa',
+                        build_by_default: false)
+ 
+ io = declare_dependency(link_whole: libio, dependencies: [crypto, qom])
+ 
+ libmigration = static_library('migration', sources: migration_files + genh,
+-                              name_suffix: 'fa',
+                               build_by_default: false)
+ migration = declare_dependency(link_with: libmigration,
+                                dependencies: [zlib, qom, io])
+@@ -3738,7 +3732,6 @@ block_ss = block_ss.apply({})
+ libblock = static_library('block', block_ss.sources() + genh,
+                           dependencies: block_ss.dependencies(),
+                           link_depends: block_syms,
+-                          name_suffix: 'fa',
+                           build_by_default: false)
+ 
+ block = declare_dependency(link_whole: [libblock],
+@@ -3748,7 +3741,6 @@ block = declare_dependency(link_whole: [libblock],
+ blockdev_ss = blockdev_ss.apply({})
+ libblockdev = static_library('blockdev', blockdev_ss.sources() + genh,
+                              dependencies: blockdev_ss.dependencies(),
+-                             name_suffix: 'fa',
+                              build_by_default: false)
+ 
+ blockdev = declare_dependency(link_whole: [libblockdev],
+@@ -3757,13 +3749,11 @@ blockdev = declare_dependency(link_whole: [libblockdev],
+ qmp_ss = qmp_ss.apply({})
+ libqmp = static_library('qmp', qmp_ss.sources() + genh,
+                         dependencies: qmp_ss.dependencies(),
+-                        name_suffix: 'fa',
+                         build_by_default: false)
+ 
+ qmp = declare_dependency(link_whole: [libqmp])
+ 
+ libchardev = static_library('chardev', chardev_ss.sources() + genh,
+-                            name_suffix: 'fa',
+                             dependencies: chardev_ss.dependencies(),
+                             build_by_default: false)
+ 
+@@ -3771,7 +3761,6 @@ chardev = declare_dependency(link_whole: libchardev)
+ 
+ hwcore_ss = hwcore_ss.apply({})
+ libhwcore = static_library('hwcore', sources: hwcore_ss.sources() + genh,
+-                           name_suffix: 'fa',
+                            build_by_default: false)
+ hwcore = declare_dependency(link_whole: libhwcore)
+ common_ss.add(hwcore)
+@@ -3807,8 +3796,7 @@ common_all = static_library('common',
+                             sources: common_ss.all_sources() + genh,
+                             include_directories: common_user_inc,
+                             implicit_include_directories: false,
+-                            dependencies: common_ss.all_dependencies(),
+-                            name_suffix: 'fa')
++                            dependencies: common_ss.all_dependencies())
+ 
+ feature_to_c = find_program('scripts/feature_to_c.py')
+ 
+@@ -3909,8 +3897,7 @@ foreach target : target_dirs
+                  objects: objects,
+                  include_directories: target_inc,
+                  c_args: c_args,
+-                 build_by_default: false,
+-                 name_suffix: 'fa')
++                 build_by_default: false)
+ 
+   if target.endswith('-softmmu')
+     execs = [{
 
 -- 
 2.45.1
