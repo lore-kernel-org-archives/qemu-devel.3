@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB04C25B7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2FB4C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHZo-0003Mf-P8; Thu, 23 May 2024 19:10:25 -0400
+	id 1sAHZD-0000xy-Fs; Thu, 23 May 2024 19:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZL-0001dy-GC; Thu, 23 May 2024 19:09:55 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sAHYn-0000B6-5g; Thu, 23 May 2024 19:09:25 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZI-0005qj-Cj; Thu, 23 May 2024 19:09:55 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6f8e859eb20so314914b3a.0; 
- Thu, 23 May 2024 16:09:51 -0700 (PDT)
+ id 1sAHYi-0005mI-3B; Thu, 23 May 2024 19:09:20 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6f8e859eb20so314569b3a.0; 
+ Thu, 23 May 2024 16:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505790; x=1717110590; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505754; x=1717110554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6HIn6EebDMl7L2UyZZ1L1MF0Eu/S2CM8hT7PYe2WBK0=;
- b=kZc37eWBIaqHCWAqi82K5YbalF+sIBlZI2YpCRtveRXjELUklAXWP2JpBTc0X+0R+w
- OV3X+UOasWQRL44X+f1xvKQWQTjHzmaSGFhyjc9pfNSr09jLc4kLJDdN/nCOkbdHWCq+
- qhq8OTGfPN/QySfGgbCYkyEO7SZXbEwwVQujmSgI+s82M8T+Gr+5rbzl4zeH6TLwJnam
- gwBKD99Qmh7uPUJja4aTniqsH83v/ufk17QBIs7GRqrUrAA91S8qXOY3wQcrqXlGZNLw
- AJPIH63oG3zGMqoEldqrMFo83hsp5Nt3P8yOmoAki7EpU1K1MxYxAYPNtkW1n0ggaMb7
- JzhA==
+ bh=xOBnrWHdBAkwYHxm+kILPeze6YeFGGjypHwPQOgKHiQ=;
+ b=C5dYlLjkupTwOubwxFyvFmp4ABaog+J78bCobnN0xcfxvwxC7e0RmTod5izey6SNyF
+ 8m4eqNkvMAZAVyLCdISf3BTharI2Te54EGBZ/Fe2q4SJdqdnkwQQ5he8D8we50UIqGjq
+ /XIdble8mJVwAMkiFi5aG2rG+leo2AVqF+Ju9qPFvk0oPn61hBZ+OcaWX76vmRfIdPkc
+ g5V8dRBUFfn/1pDZ+GjfOz79qSxZpdFZUmAJ6Rzo23My9MFkE91GbosC4IZbipT6YfR5
+ qxSkvmkLAlgQL3Nf/bWPlalYIanfmdz3QRaMbMoumQMpFCe1wTRojF5daJDCP0tdLySB
+ RTow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505790; x=1717110590;
+ d=1e100.net; s=20230601; t=1716505754; x=1717110554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6HIn6EebDMl7L2UyZZ1L1MF0Eu/S2CM8hT7PYe2WBK0=;
- b=nd8CEbIvB8xtOLebu9vNzKE94dj7+fApPXL2J2Vpwc0xZjuHNcZxsFVHJD+EooEPz1
- 76CjV8c8E1FaLu7pwkDt9E7BDRw5AEu9gBMSahDlW7muK8KhMm7KwSYtiVYOE05WPVwD
- HioIHLGnJzCfAxsayZrFbiGX23JZrSOawSosDrZe0l1L2qem67F/9hQQQHxzZbDA9pqg
- QjhNIgbq2jXCWhrl+A2AyygRz/ZMa8g7Y3Pu6yUxYAWzF831Pp9nMAjEoMCQSCn1ZGEc
- hnf81NeAfU5UYbDkdAKPl8KrMybRxGFzIsxom2K9iP5OH/dnPPBfUeKHWyRdpTQt7gHq
- oIVQ==
+ bh=xOBnrWHdBAkwYHxm+kILPeze6YeFGGjypHwPQOgKHiQ=;
+ b=A4eo6dw9vrSrYmzm+zvabiQi3zNlwlB60WfECxBQd4+C7kF0XPIwWzgBWS12FV5sqe
+ e5OW7yiCP1hWvlgfQQc9HX6SxMvS6+6gX9Sy7DSjUdHtWLgqIeiMQz+PmavhkUYSSymZ
+ wlEtRywvWQWg0QBXUhNp5VOLhOcYq8bPkjq5VF6NTlLFhMcXonzvqucUhdFgeqsVdH2t
+ xQ/xbwO+V1qiUmT/CQKWuC6n7ACWs1midv+G0lsNJoyMaIaZRV5OxUbxZ9wkB5k727ys
+ uD05R9ESuxJWOyfNdo2WQr5G4e16A12X99cSIRYN/3C8Qfm/1XDrmsMoMBAcMOca+koN
+ kM9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3uZ5prAqXsBap3sJM66HlgkM7MOczqaVt/3isJzZMFDpvFcp4kyGZantNO1D+AQMKf+1Hge12lUTqgoKBbkiFw3iO
-X-Gm-Message-State: AOJu0YwylNrxWkV2cfIuBnw/jV1NQQhgZnGde8rKTUiRIghAwaF1n2oI
- /oU4jeq9AjtJXQH86Vd7WxhIq6npCBddwJrvS57gO9WcDDXABweb1340hA==
-X-Google-Smtp-Source: AGHT+IH16v6oEV/8o4Y8hKuDJPsHMX4/YBTJFvKwNDu7CuBzg0ffNE+CkYwxEyuihoRA/e6hLJpR4A==
-X-Received: by 2002:a05:6a20:9752:b0:1af:9ec6:afbd with SMTP id
- adf61e73a8af0-1b212d5b99amr924080637.11.1716505789621; 
- Thu, 23 May 2024 16:09:49 -0700 (PDT)
+ AJvYcCVypFNJvIJnLEPKb1LRiYVhlbb/bJBoXi7Nyc8oKz3ZMJ8ZHdSWaVBD6u47ZIAse1/rzoy4/LSMbu13816+rxA+9Dfm
+X-Gm-Message-State: AOJu0YwXZ5kZaGqD104VFEaE4qD7g97Bu7knV14/3Nu6eNkoIg70Cn08
+ zKgzGxZ7iDA6VStKGlRuHU4p8ahKxhZSzmeOmssmE1W2hP2kbw/E+m5YZQ==
+X-Google-Smtp-Source: AGHT+IE63sex7gTFu1t6jqFT3WeotUVy96qqjo5GcVuu8hA0cqhbkE0sFVNW8WhVzS/vMOdwqvzMUw==
+X-Received: by 2002:a05:6a20:de14:b0:1af:ab09:c555 with SMTP id
+ adf61e73a8af0-1b212f34c55mr695366637.47.1716505753967; 
+ Thu, 23 May 2024 16:09:13 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.47
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:09:49 -0700 (PDT)
+ Thu, 23 May 2024 16:09:13 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Glenn Miles <milesg@linux.ibm.com>
-Subject: [PULL 36/72] target/ppc: Implement LDBAR, TTR SPRs
-Date: Fri, 24 May 2024 09:07:09 +1000
-Message-ID: <20240523230747.45703-37-npiggin@gmail.com>
+ Glenn Miles <milesg@linux.vnet.ibm.com>
+Subject: [PULL 24/72] Add support for the clrbhrb and mfbhrbe instructions.
+Date: Fri, 24 May 2024 09:06:57 +1000
+Message-ID: <20240523230747.45703-25-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,57 +94,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LDBAR, TTR are a Power-specific SPRs. These simple implementations
-are enough for IBM proprietary firmware for now.
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Since neither instruction is believed to be critical to
+performance, both instructions were implemented using helper
+functions.
+
+Access to both instructions is controlled by bits in the
+HFSCR (for privileged state) and MMCR0 (for problem state).
+A new function, helper_mmcr0_facility_check, was added for
+checking MMCR0[BHRBA] and raising a facility_unavailable exception
+if required.
+
+NOTE: For P8 and P9, due to a performance issue, branch history will
+not be kept, but the instructions will be allowed to execute
+as normal with the exception that the mfbhrbe instruction will
+always return a zero value.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h      |  2 ++
- target/ppc/cpu_init.c | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+ target/ppc/cpu.h                     |  2 ++
+ target/ppc/helper.h                  |  7 ++++
+ target/ppc/insn32.decode             |  8 +++++
+ target/ppc/misc_helper.c             | 50 ++++++++++++++++++++++++++++
+ target/ppc/translate.c               |  2 ++
+ target/ppc/translate/bhrb-impl.c.inc | 43 ++++++++++++++++++++++++
+ 6 files changed, 112 insertions(+)
+ create mode 100644 target/ppc/translate/bhrb-impl.c.inc
 
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 141cbefb4c..823be85d03 100644
+index 2f91d7dc33..c358927211 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
-@@ -2098,6 +2098,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_DEXCR             (0x33C)
- #define SPR_IC                (0x350)
- #define SPR_VTB               (0x351)
-+#define SPR_LDBAR             (0x352)
- #define SPR_MMCRC             (0x353)
- #define SPR_PSSCR             (0x357)
- #define SPR_440_INV0          (0x370)
-@@ -2144,6 +2145,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_440_IVLIM         (0x399)
- #define SPR_TSCR              (0x399)
- #define SPR_750_DMAU          (0x39A)
-+#define SPR_POWER_TTR         (0x39A)
- #define SPR_750_DMAL          (0x39B)
- #define SPR_440_RSTCFG        (0x39B)
- #define SPR_BOOKE_DCDBTRL     (0x39C)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 415cc7a4e2..d181adc5f1 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5767,6 +5767,16 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
-                  &spr_access_nop, &spr_write_generic,
-                  &spr_access_nop, &spr_write_generic,
-                  0x00000000);
-+    spr_register_hv(env, SPR_LDBAR, "LDBAR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_core_lpar_write_generic,
-+                 0x00000000);
-+    spr_register_hv(env, SPR_POWER_TTR, "TTR",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_core_write_generic,
-+                 0x00000000);
- #endif
- }
+@@ -535,6 +535,7 @@ FIELD(MSR, LE, MSR_LE, 1)
+ #define MMCR0_PMCjCE PPC_BIT(49)         /* MMCR0 PMCj Condition Enabled */
+ #define MMCR0_FCP    PPC_BIT(34)         /* Freeze Counters/BHRB if PR=1 */
+ #define MMCR0_FCPC   PPC_BIT(51)         /* Condition for FCP bit */
++#define MMCR0_BHRBA_NR PPC_BIT_NR(42)    /* BHRB Available */
+ /* MMCR0 userspace r/w mask */
+ #define MMCR0_UREG_MASK (MMCR0_FC | MMCR0_PMAO | MMCR0_PMAE)
+ /* MMCR2 userspace r/w mask */
+@@ -634,6 +635,7 @@ FIELD(MSR, LE, MSR_LE, 1)
  
+ /* HFSCR bits */
+ #define HFSCR_MSGP     PPC_BIT(53) /* Privileged Message Send Facilities */
++#define HFSCR_BHRB     PPC_BIT(59) /* BHRB Instructions */
+ #define HFSCR_IC_MSGP  0xA
+ 
+ #define DBCR0_ICMP (1 << 27)
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 7b07cd1a49..55293e20a9 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -820,3 +820,10 @@ DEF_HELPER_4(DSCLIQ, void, env, fprp, fprp, i32)
+ 
+ DEF_HELPER_1(tbegin, void, env)
+ DEF_HELPER_FLAGS_1(fixup_thrm, TCG_CALL_NO_RWG, void, env)
++
++#if !defined(CONFIG_USER_ONLY)
++#if defined(TARGET_PPC64)
++DEF_HELPER_1(clrbhrb, void, env)
++DEF_HELPER_FLAGS_2(mfbhrbe, TCG_CALL_NO_WG, i64, env, i32)
++#endif
++#endif
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 05c1d8c12d..d4dd022df4 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -1190,3 +1190,11 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
+ @X_sync         ...... .. l:3 ... sc:2 ..... .......... .           &X_sync
+ SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
+ EIEIO           011111 ----- ----- ----- 1101010110 -
++
++# Branch History Rolling Buffer (BHRB) Instructions
++
++&XFX_bhrbe      rt bhrbe
++@XFX_bhrbe      ...... rt:5 bhrbe:10 .......... -       &XFX_bhrbe
++
++MFBHRBE         011111 ..... ..... ..... 0100101110 -   @XFX_bhrbe
++CLRBHRB         011111 ----- ----- ----- 0110101110 -
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 58e808dc96..6f419c9346 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -150,6 +150,17 @@ void helper_msr_facility_check(CPUPPCState *env, uint32_t bit,
+ 
+ #if !defined(CONFIG_USER_ONLY)
+ 
++#ifdef TARGET_PPC64
++static void helper_mmcr0_facility_check(CPUPPCState *env, uint32_t bit,
++                                 uint32_t sprn, uint32_t cause)
++{
++    if (FIELD_EX64(env->msr, MSR, PR) &&
++        !(env->spr[SPR_POWER_MMCR0] & (1ULL << bit))) {
++        raise_fu_exception(env, bit, sprn, cause, GETPC());
++    }
++}
++#endif
++
+ void helper_store_sdr1(CPUPPCState *env, target_ulong val)
+ {
+     if (env->spr[SPR_SDR1] != val) {
+@@ -363,3 +374,42 @@ void helper_fixup_thrm(CPUPPCState *env)
+         env->spr[i] = v;
+     }
+ }
++
++#if !defined(CONFIG_USER_ONLY)
++#if defined(TARGET_PPC64)
++void helper_clrbhrb(CPUPPCState *env)
++{
++    helper_hfscr_facility_check(env, HFSCR_BHRB, "clrbhrb", FSCR_IC_BHRB);
++
++    helper_mmcr0_facility_check(env, MMCR0_BHRBA_NR, 0, FSCR_IC_BHRB);
++
++    if (env->flags & POWERPC_FLAG_BHRB) {
++        memset(env->bhrb, 0, sizeof(env->bhrb));
++    }
++}
++
++uint64_t helper_mfbhrbe(CPUPPCState *env, uint32_t bhrbe)
++{
++    unsigned int index;
++
++    helper_hfscr_facility_check(env, HFSCR_BHRB, "mfbhrbe", FSCR_IC_BHRB);
++
++    helper_mmcr0_facility_check(env, MMCR0_BHRBA_NR, 0, FSCR_IC_BHRB);
++
++    if (!(env->flags & POWERPC_FLAG_BHRB) ||
++         (bhrbe >= env->bhrb_num_entries) ||
++         (env->spr[SPR_POWER_MMCR0] & MMCR0_PMAE)) {
++        return 0;
++    }
++
++    /*
++     * Note: bhrb_offset is the byte offset for writing the
++     * next entry (over the oldest entry), which is why we
++     * must offset bhrbe by 1 to get to the 0th entry.
++     */
++    index = ((env->bhrb_offset / sizeof(uint64_t)) - (bhrbe + 1)) %
++            env->bhrb_num_entries;
++    return env->bhrb[index];
++}
++#endif
++#endif
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 8aa2439700..546f1754de 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -5647,6 +5647,8 @@ static bool resolve_PLS_D(DisasContext *ctx, arg_D *d, arg_PLS_D *a)
+ 
+ #include "translate/misc-impl.c.inc"
+ 
++#include "translate/bhrb-impl.c.inc"
++
+ /* Handles lfdp */
+ static void gen_dform39(DisasContext *ctx)
+ {
+diff --git a/target/ppc/translate/bhrb-impl.c.inc b/target/ppc/translate/bhrb-impl.c.inc
+new file mode 100644
+index 0000000000..3a19bc4555
+--- /dev/null
++++ b/target/ppc/translate/bhrb-impl.c.inc
+@@ -0,0 +1,43 @@
++/*
++ * Power ISA Decode For BHRB Instructions
++ *
++ *  Copyright IBM Corp. 2023
++ *
++ * Authors:
++ *  Glenn Miles      <milesg@linux.vnet.ibm.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
++
++static bool trans_MFBHRBE(DisasContext *ctx, arg_XFX_bhrbe *arg)
++{
++    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
++    TCGv_i32 bhrbe = tcg_constant_i32(arg->bhrbe);
++    gen_helper_mfbhrbe(cpu_gpr[arg->rt], tcg_env, bhrbe);
++    return true;
++}
++
++static bool trans_CLRBHRB(DisasContext *ctx, arg_CLRBHRB *arg)
++{
++    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
++    gen_helper_clrbhrb(tcg_env);
++    return true;
++}
++
++#else
++
++static bool trans_MFBHRBE(DisasContext *ctx, arg_XFX_bhrbe *arg)
++{
++    gen_invalid(ctx);
++    return true;
++}
++
++static bool trans_CLRBHRB(DisasContext *ctx, arg_CLRBHRB *arg)
++{
++    gen_invalid(ctx);
++    return true;
++}
++#endif
 -- 
 2.43.0
 
