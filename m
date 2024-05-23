@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FED2C25B7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE1FC25B79
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHZq-0003V3-Vv; Thu, 23 May 2024 19:10:27 -0400
+	id 1sAHbj-0003TB-BS; Thu, 23 May 2024 19:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZc-0002Wh-Lj; Thu, 23 May 2024 19:10:15 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sAHb5-0000Wx-Sj; Thu, 23 May 2024 19:11:43 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZa-00064r-8p; Thu, 23 May 2024 19:10:12 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6f850ff30c0so996195b3a.0; 
- Thu, 23 May 2024 16:10:08 -0700 (PDT)
+ id 1sAHb3-0006R2-VF; Thu, 23 May 2024 19:11:43 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6f8e98760fcso294942b3a.1; 
+ Thu, 23 May 2024 16:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505807; x=1717110607; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505899; x=1717110699; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wl9n/5mTUsA0Kpi5faa5nkP1+AzmiCWua0ztWpXQSbw=;
- b=GV9qmkXzGoT9+U+1fc1f72wVfqrhAqs7Z0yZYJuiaO4ltBwk7Z8OHPgPFb1JcSSnoS
- 1jXK1weoR4jO4YuMCwanW/uJ3VW7vVwKm++o9pEv5bh/Fs51AsOjD7nww4hXsvLJlo8Z
- 9ClO8k9M7ZsxarZ5oAITdfQ4jb+ZuUReVjYJD/tFkuacxYU+kAtYfzVYhDcUpcmbNFjz
- 5zfOKTPXo1n7s8Ug3N57gAOdyM/O6LgS1CcV5e0Jwu39L9/gkxsetBQHoxAgtjNZjIfh
- 0/GBtz/vwSkiAFiz/ly5x1BoRaATOpm4ClgkssrkAbkXg9Ld/wNnWzFE9Hqh7QhyUltV
- 5H1Q==
+ bh=nuLmmK0ZiA7UO80ik8S5jqOuyqVZgLfQb9PxXw9R3PU=;
+ b=hRSo4Q9az8IQWPHKC4DRsbi8VFxUVPxu4Fszc2r4Abjd4ZR+4GXXcdX5HCwifG5W4t
+ JCfU2D/qBQs7lLVu42yUMH1rVORH2yDl0Gxkq6hh5wA/TPUFun3uDjNTPkDLZLNK78Tq
+ IQqFwibUhNU8nUkrA6et9uRnWZfM55hHb4Q5+BaeFq4Yhd/yqIdl+VNi8IjTufB3P9QQ
+ CDR/sxe0s9JwKXAgMXlx3Pl1nmS9vQEAPOlJtcNxij2xMuir3ENkrdG5/fUClgEMeU49
+ o1UERbMgqVjLw6wH/A0cE+8ubC+DwUJMmRHsYQEC4BVUwYEIIryJBB/TVr8yl3wHKz6f
+ 10ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505807; x=1717110607;
+ d=1e100.net; s=20230601; t=1716505899; x=1717110699;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wl9n/5mTUsA0Kpi5faa5nkP1+AzmiCWua0ztWpXQSbw=;
- b=BKSvppjgbJoq58Vq62NbAr18M3fnTGwD+15esMhYdauOX2o7cCUl5A1Jwd73/nNWUF
- EGnG4StuSnRD1ru50WfIYKyDQovuSAVWXmV1cg1D77UfnUUpXOnZEFrfRXsNL0VjGlyX
- S9ttM3P4fjwkO1tMHFBjA3nPoBrrFjEOg8oZ6VaEbEcHC1q7xDRbOXdqanXWDIH9zSrK
- YijqQcwra5ssDoqIv2tm7iQHMwosesyzB4SqJIouQUo229DkmfWDydTV8xzBFVz4/hd+
- zeeTx9r3B3o990KzqCi3YW1h9qnv27ZPA8dHEc2F2EXy9h9wxgZgqr1ftkpcYn87esw2
- j6cQ==
+ bh=nuLmmK0ZiA7UO80ik8S5jqOuyqVZgLfQb9PxXw9R3PU=;
+ b=jUSb9fV4UHi9294xr1L8O6sVzRgh3lOPxbiB8R8IHVg0Ewx19M049BuG3R7vzkvC+L
+ CJTkJIMrF8V1y6NyHsf5iC7FeyKhAEx3nPFZx6riyAqtjjxTmIwofq5uGurPVG6gBMKn
+ fsB3msLncSvSgyiTjPUg/MCxM7/uPqzT7/v6k0WQoKYY+XkgGYIwKbYAIWW/ZbldlWAi
+ jcD/pQTYLHObPpeRh+q/wdL0dDpcOYHr2HcMLw864PuQqDqPFFJ1EoDToSvh0uFPeOpG
+ q15OnjJS6TfNZ9JyhMBEu27c0NZqV8TbJ94NHQJLsKqb3N0oTColVq89SDNyZ7HzNIQK
+ a+1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAwVwQXt5POIbKALOD64CfxSKXBqUNkoOsKVVqPN4HnfG2/tKf7GqxuK0NnPQ2G+oXuT02WUIpuK2wfpJof+rNUO4u
-X-Gm-Message-State: AOJu0Yx/+k5i/+L/IAAdTgZDaPr6WfQ8YtI6Q+KN03fkMyEt4ApX0GdS
- 7g6Xrth8dn1175xKEm4rfnQP7MMFuXdak4mu1qX3BpXt/g+aAqZmVY8yYw==
-X-Google-Smtp-Source: AGHT+IEajgW+L1/7wUY/hgEy9YIzsuC6l3BeSIQFInm2G0yBWleRGa9R1I+NAQ1QyGeFLRH8Srhncg==
-X-Received: by 2002:a17:902:f686:b0:1f2:f3dc:43ee with SMTP id
- d9443c01a7336-1f4486b95d9mr9087215ad.3.1716505807530; 
- Thu, 23 May 2024 16:10:07 -0700 (PDT)
+ AJvYcCVFumY+YbLavUWXzWtUMb2N78o64Atw63VqQU9jcn5Y3nqbDfpXk6k2w4Gj5HUkCIOeABxPKE76DatpVO8gOKZcYfOB
+X-Gm-Message-State: AOJu0YwGa+e+VTGrLlnB1Bc3Yf8mTpmJpGwb18RgPdQ8kT101LF7rFI/
+ ujJYZ4u2icJBRCq96ULdllD5h3q/jVuo3sNtk2L1DoEU+V8ZJWnXA180gg==
+X-Google-Smtp-Source: AGHT+IF/tOqlJYqc5SUBVJjFLJJbwAPodyw2on0eyUbvbqCFKwUMg200md2+uXCtmHvvutbEhadJ0A==
+X-Received: by 2002:a05:6a21:920b:b0:1b1:ebf2:d767 with SMTP id
+ adf61e73a8af0-1b212df0c74mr1165922637.43.1716505899361; 
+ Thu, 23 May 2024 16:11:39 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.10.05
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.11.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:10:07 -0700 (PDT)
+ Thu, 23 May 2024 16:11:38 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 42/72] target/ppc/mmu_common.c: Remove unneeded local variable
-Date: Fri, 24 May 2024 09:07:15 +1000
-Message-ID: <20240523230747.45703-43-npiggin@gmail.com>
+Subject: [PULL 72/72] target/ppc: Remove pp_check() and reuse
+ ppc_hash32_pp_prot()
+Date: Fri, 24 May 2024 09:07:45 +1000
+Message-ID: <20240523230747.45703-73-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,104 +97,205 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: BALATON Zoltan <balaton@eik.bme.hu>
 
-In mmubooke_check_tlb() and mmubooke206_check_tlb() we can assign the
-value of prot2 directly to the destination, no need to have a separate
-local variable for it.
+The ppc_hash32_pp_prot() function in mmu-hash32.c is the same as
+pp_check() in mmu_common.c, merge these to remove duplicated code.
+Define the common function as static lnline otherwise exporting the
+function from mmu-hash32.c would stop the compiler inlining it which
+results in slightly lower performance.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+[np: move ppc_hash32_pp_prot inline without changing it]
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ target/ppc/mmu-hash32.c | 45 -----------------------------------------
+ target/ppc/mmu-hash32.h | 45 +++++++++++++++++++++++++++++++++++++++++
+ target/ppc/mmu_common.c | 44 ++--------------------------------------
+ 3 files changed, 47 insertions(+), 87 deletions(-)
 
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 1e8f1df0f0..d5f2057eb1 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -37,51 +37,6 @@
+ #  define LOG_BATS(...) do { } while (0)
+ #endif
+ 
+-static int ppc_hash32_pp_prot(int key, int pp, int nx)
+-{
+-    int prot;
+-
+-    if (key == 0) {
+-        switch (pp) {
+-        case 0x0:
+-        case 0x1:
+-        case 0x2:
+-            prot = PAGE_READ | PAGE_WRITE;
+-            break;
+-
+-        case 0x3:
+-            prot = PAGE_READ;
+-            break;
+-
+-        default:
+-            abort();
+-        }
+-    } else {
+-        switch (pp) {
+-        case 0x0:
+-            prot = 0;
+-            break;
+-
+-        case 0x1:
+-        case 0x3:
+-            prot = PAGE_READ;
+-            break;
+-
+-        case 0x2:
+-            prot = PAGE_READ | PAGE_WRITE;
+-            break;
+-
+-        default:
+-            abort();
+-        }
+-    }
+-    if (nx == 0) {
+-        prot |= PAGE_EXEC;
+-    }
+-
+-    return prot;
+-}
+-
+ static int ppc_hash32_pte_prot(int mmu_idx,
+                                target_ulong sr, ppc_hash_pte32_t pte)
+ {
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index 7119a63d97..f0ce6951b4 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -102,6 +102,51 @@ static inline void ppc_hash32_store_hpte1(PowerPCCPU *cpu,
+     stl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2, pte1);
+ }
+ 
++static inline int ppc_hash32_pp_prot(bool key, int pp, bool nx)
++{
++    int prot;
++
++    if (key == 0) {
++        switch (pp) {
++        case 0x0:
++        case 0x1:
++        case 0x2:
++            prot = PAGE_READ | PAGE_WRITE;
++            break;
++
++        case 0x3:
++            prot = PAGE_READ;
++            break;
++
++        default:
++            abort();
++        }
++    } else {
++        switch (pp) {
++        case 0x0:
++            prot = 0;
++            break;
++
++        case 0x1:
++        case 0x3:
++            prot = PAGE_READ;
++            break;
++
++        case 0x2:
++            prot = PAGE_READ | PAGE_WRITE;
++            break;
++
++        default:
++            abort();
++        }
++    }
++    if (nx == 0) {
++        prot |= PAGE_EXEC;
++    }
++
++    return prot;
++}
++
+ typedef struct {
+     uint32_t pte0, pte1;
+ } ppc_hash_pte32_t;
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index f79e390306..09cbeb0052 100644
+index 2c75e53250..e2542694f0 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -628,8 +628,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-                               hwaddr *raddr, int *prot, target_ulong address,
-                               MMUAccessType access_type, int i)
- {
--    int prot2;
+@@ -77,44 +77,6 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+ /*****************************************************************************/
+ /* PowerPC MMU emulation */
+ 
+-static int pp_check(int key, int pp, int nx)
+-{
+-    int access;
 -
-     if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__);
-         return -1;
-@@ -644,17 +642,16 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-     }
- 
-     if (FIELD_EX64(env->msr, MSR, PR)) {
--        prot2 = tlb->prot & 0xF;
-+        *prot = tlb->prot & 0xF;
-     } else {
--        prot2 = (tlb->prot >> 4) & 0xF;
-+        *prot = (tlb->prot >> 4) & 0xF;
-     }
--    *prot = prot2;
--    if (prot2 & prot_for_access_type(access_type)) {
-+    if (*prot & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
-@@ -795,7 +792,6 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
-                                  target_ulong address,
-                                  MMUAccessType access_type, int mmu_idx)
+-    /* Compute access rights */
+-    access = 0;
+-    if (key == 0) {
+-        switch (pp) {
+-        case 0x0:
+-        case 0x1:
+-        case 0x2:
+-            access |= PAGE_WRITE;
+-            /* fall through */
+-        case 0x3:
+-            access |= PAGE_READ;
+-            break;
+-        }
+-    } else {
+-        switch (pp) {
+-        case 0x0:
+-            access = 0;
+-            break;
+-        case 0x1:
+-        case 0x3:
+-            access = PAGE_READ;
+-            break;
+-        case 0x2:
+-            access = PAGE_READ | PAGE_WRITE;
+-            break;
+-        }
+-    }
+-    if (nx == 0) {
+-        access |= PAGE_EXEC;
+-    }
+-
+-    return access;
+-}
+-
+ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+                                     int way, int is_code)
  {
--    int prot2 = 0;
-     uint32_t epid;
-     bool as, pr;
-     bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
-@@ -841,34 +837,34 @@ found_tlb:
-         return -1;
-     }
+@@ -137,7 +99,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                                 MMUAccessType access_type)
+ {
+     target_ulong ptem, mmask;
+-    int access, ret, pteh, ptev, pp;
++    int ret, pteh, ptev, pp;
  
-+    *prot = 0;
-     if (pr) {
-         if (tlb->mas7_3 & MAS3_UR) {
--            prot2 |= PAGE_READ;
-+            *prot |= PAGE_READ;
-         }
-         if (tlb->mas7_3 & MAS3_UW) {
--            prot2 |= PAGE_WRITE;
-+            *prot |= PAGE_WRITE;
-         }
-         if (tlb->mas7_3 & MAS3_UX) {
--            prot2 |= PAGE_EXEC;
-+            *prot |= PAGE_EXEC;
-         }
-     } else {
-         if (tlb->mas7_3 & MAS3_SR) {
--            prot2 |= PAGE_READ;
-+            *prot |= PAGE_READ;
-         }
-         if (tlb->mas7_3 & MAS3_SW) {
--            prot2 |= PAGE_WRITE;
-+            *prot |= PAGE_WRITE;
-         }
-         if (tlb->mas7_3 & MAS3_SX) {
--            prot2 |= PAGE_EXEC;
-+            *prot |= PAGE_EXEC;
-         }
-     }
--    *prot = prot2;
--    if (prot2 & prot_for_access_type(access_type)) {
-+    if (*prot & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
+     ret = -1;
+     /* Check validity and table match */
+@@ -156,11 +118,9 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                     return -3;
+                 }
+             }
+-            /* Compute access rights */
+-            access = pp_check(ctx->key, pp, ctx->nx);
+             /* Keep the matching PTE information */
+             ctx->raddr = pte1;
+-            ctx->prot = access;
++            ctx->prot = ppc_hash32_pp_prot(ctx->key, pp, ctx->nx);
+             if (check_prot_access_type(ctx->prot, access_type)) {
+                 /* Access granted */
+                 qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
 -- 
 2.43.0
 
