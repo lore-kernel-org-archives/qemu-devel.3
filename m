@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0886C25B7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 14:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CDDC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 14:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9rr-0002jT-TQ; Thu, 23 May 2024 10:56:31 -0400
+	id 1sA9rd-0002Hq-7s; Thu, 23 May 2024 10:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sA9ro-0002bY-BF
- for qemu-devel@nongnu.org; Thu, 23 May 2024 10:56:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sA9rB-00025V-KQ
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 10:55:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sA9rj-00041A-Fy
- for qemu-devel@nongnu.org; Thu, 23 May 2024 10:56:25 -0400
+ id 1sA9rA-0003wl-6O
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 10:55:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476182;
+ s=mimecast20190719; t=1716476147;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aZ6f2Wy9JZAIyu5wRg6z9P9zvSbVeUQdfiHCy8ESziQ=;
- b=Gzxbb3LOnsRpbxN0D+sfTJ/FP7Swzcdv17IUwHXGZTsv3CqqJeBSHnnO3Q8OgdTR4ICn4p
- P4jj/og3jn2HeENP1kZUvdI3+QSdwlEKfWzR0tJQnvPb0qBjlGMh4T+d0MtI6iGiS3VahD
- wKbAX8z4GduXHi6TTrM47+xXeF/MO30=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+xyelDCWIlCX+PAbwFYWN2GP5CDp4IfKR8S4cYw8b0U=;
+ b=O0bOI/VfYu2d6Q6CQAAXuONMA1q/srKcrR8VK307QRcOiFU+S14BLFv4EQCQ9slsYq186g
+ aHwHDuTIcanakR/qr8ptaQ1iSUiAHedvKGWKTp7/MFT9yEw6wJxysC42YjisJvQfpcFneA
+ +6sNGwAgMwc2mRzLwTI6WNe3stc4/Nk=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-Z2MGVX3CN9CGjLg5sWTOXQ-1; Thu, 23 May 2024 10:56:21 -0400
-X-MC-Unique: Z2MGVX3CN9CGjLg5sWTOXQ-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43df9a3fc0fso2383831cf.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 07:56:21 -0700 (PDT)
+ us-mta-9-wfWtd-OsO46aucllNvrvzA-1; Thu, 23 May 2024 10:55:46 -0400
+X-MC-Unique: wfWtd-OsO46aucllNvrvzA-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6ab8e7f5f8dso3968516d6.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 07:55:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476177; x=1717080977;
+ d=1e100.net; s=20230601; t=1716476145; x=1717080945;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aZ6f2Wy9JZAIyu5wRg6z9P9zvSbVeUQdfiHCy8ESziQ=;
- b=UGU9U8J/zZieXBk74OP4QwyxcgMaYN/MRkWrEW19fLcThOtIf69ZnYBmNUztZdN9mp
- jdvOIcmYf5nE1XxKQOzJ2TIFUZpXr/q5DWVIQmu9+56J0LqTOZacv5JB+UbtZPOYKO3t
- oEDtVrHTZH+E5VPvyOypGrobf3a5085ZSJausGfgrU3+viMQBPwt86qGD4fNFRMRGX+C
- xER4/j1pNr/HPEWfI48ni9gnTm9ZAeQ9j0s6SFy028LydY6B8IN7pR+X9LEGJLujXhyC
- c90pbxDK+8v25zyIUUg8cnk2+MoartGX7ONAWNedDRp1tSMBLxYLPoHyEOs/1dzLwD7y
- Yw2w==
-X-Gm-Message-State: AOJu0YxZym20arxOgjnvCm/0wdSPxMGSrTzzwp/OrtaywEz225D/2X6O
- i7+sXoOsQprJDeG/nl0Bvwv5+1Y6KvZ2uBIJDV9MhM55jvrQq4Zph4+zq9ZhcU57YLHfKP8zP2W
- 1Wc36xlMkX9iOQUYGLXOL7RCtALhRjuHjbmjP26YwWUqrMLVibpVZwOp3343c8vCEh/7OA+/sS7
- 2nltz//WJlIUrP5fKtUbELF06eA4Jhya3QTb1m
-X-Received: by 2002:a05:622a:1a1e:b0:43a:ed8b:75b1 with SMTP id
- d75a77b69052e-43f9e0f3220mr60046981cf.43.1716476176884; 
- Thu, 23 May 2024 07:56:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBOgeLvfyvxxo1WQ91OSaQxysuTauL71eZuvZYFDk4b9lBg6eKujg38dT6UQ4V+k2bfI7hQg==
-X-Received: by 2002:a05:622a:1a1e:b0:43a:ed8b:75b1 with SMTP id
- d75a77b69052e-43f9e0f3220mr60046581cf.43.1716476176298; 
- Thu, 23 May 2024 07:56:16 -0700 (PDT)
+ bh=+xyelDCWIlCX+PAbwFYWN2GP5CDp4IfKR8S4cYw8b0U=;
+ b=waMJv+dUInW7ggBBRNPf98sU3Rm+AulKTzFtfu/NR+H0DfAN36CFKWohVQ0uX4Ix/K
+ agjPzUN2Q/Pb2CYVfvZCePQilA4luHpn1zcVgAt9IjhRulhhFNJJnxW3s0FLNlRU3MyA
+ sT2IWMkxj6DNWYsnoJzPkwp9qgC+wmc3tmSUdDi6LZ8CYBhQSPVkpIak+5jpfPFaqWQ9
+ YlhQkVBzCYexndgnAJGvrISKz2Lf/z7FSJfdXanC6QswA4G5mEb0fUeG08jBZ89R/Ety
+ JVo+HqrRf4yZ3Az2OzfJabjBgrPSYckgeNNI9n+jsiSDjtSV6PX8IrlzlpKLpQWRnP+1
+ BZJw==
+X-Gm-Message-State: AOJu0Yxgvx8zsXnFxUftJ3kuTuiFVgkFywnXwDF7Qhmm+YyOOU4q9edM
+ tkVgOKc7TdcMbDhvl61B5ew4bNYzVUVIJyNMj/letZ4C2Zwr3ygEoC2REkWP7km4X69THzpGSHA
+ 27OQbw1Iyn53BX/t2by9eJnZvLAThcmyHnbWIx5Rs8VJDklKGrdIA3ileOghfzMxhdjP2hS8X/X
+ KOJ8jwjb31uIz+3/YFLTlzmFmc3pHQtEhl/+TB
+X-Received: by 2002:ad4:4487:0:b0:6aa:206f:c2e with SMTP id
+ 6a1803df08f44-6ab8f5bce70mr36215116d6.15.1716476145616; 
+ Thu, 23 May 2024 07:55:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPLyumh+jE/AutlVpcVipemoO5BlwX8gs6pHLiiSy/sDzeH/XtwPUAVKoaIpJXaHb3J49sgw==
+X-Received: by 2002:ad4:4487:0:b0:6aa:206f:c2e with SMTP id
+ 6a1803df08f44-6ab8f5bce70mr36214506d6.15.1716476145081; 
+ Thu, 23 May 2024 07:55:45 -0700 (PDT)
 Received: from step1.redhat.com (host-79-53-30-109.retail.telecomitalia.it.
  [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43e0a4bdce8sm159322281cf.18.2024.05.23.07.56.12
+ 6a1803df08f44-6ab93c15e1esm5250716d6.4.2024.05.23.07.55.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 07:56:15 -0700 (PDT)
+ Thu, 23 May 2024 07:55:44 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
@@ -83,25 +83,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, gmaglione@redhat.com,
  Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v5 06/13] contrib/vhost-user-*: use QEMU bswap helper functions
-Date: Thu, 23 May 2024 16:55:15 +0200
-Message-ID: <20240523145522.313012-7-sgarzare@redhat.com>
+Subject: [PATCH v5 02/13] libvhost-user: fail vu_message_write() if sendmsg()
+ is failing
+Date: Thu, 23 May 2024 16:55:11 +0200
+Message-ID: <20240523145522.313012-3-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523145522.313012-1-sgarzare@redhat.com>
 References: <20240523145522.313012-1-sgarzare@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,99 +117,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's replace the calls to le*toh() and htole*() with qemu/bswap.h
-helpers to make the code more portable.
+In vu_message_write() we use sendmsg() to send the message header,
+then a write() to send the payload.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+If sendmsg() fails we should avoid sending the payload, since we
+were unable to send the header.
+
+Discovered before fixing the issue with the previous patch, where
+sendmsg() failed on macOS due to wrong parameters, but the frontend
+still sent the payload which the backend incorrectly interpreted
+as a wrong header.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- contrib/vhost-user-blk/vhost-user-blk.c |  9 +++++----
- contrib/vhost-user-input/main.c         | 16 ++++++++--------
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
-index a8ab9269a2..9492146855 100644
---- a/contrib/vhost-user-blk/vhost-user-blk.c
-+++ b/contrib/vhost-user-blk/vhost-user-blk.c
-@@ -16,6 +16,7 @@
-  */
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 22bea0c775..a11afd1960 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -639,6 +639,11 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+         rc = sendmsg(conn_fd, &msg, 0);
+     } while (rc < 0 && (errno == EINTR || errno == EAGAIN));
  
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "standard-headers/linux/virtio_blk.h"
- #include "libvhost-user-glib.h"
- 
-@@ -194,8 +195,8 @@ vub_discard_write_zeroes(VubReq *req, struct iovec *iov, uint32_t iovcnt,
-     #if defined(__linux__) && defined(BLKDISCARD) && defined(BLKZEROOUT)
-     VubDev *vdev_blk = req->vdev_blk;
-     desc = buf;
--    uint64_t range[2] = { le64toh(desc->sector) << 9,
--                          le32toh(desc->num_sectors) << 9 };
-+    uint64_t range[2] = { le64_to_cpu(desc->sector) << 9,
-+                          le32_to_cpu(desc->num_sectors) << 9 };
-     if (type == VIRTIO_BLK_T_DISCARD) {
-         if (ioctl(vdev_blk->blk_fd, BLKDISCARD, range) == 0) {
-             g_free(buf);
-@@ -267,13 +268,13 @@ static int vub_virtio_process_req(VubDev *vdev_blk,
-     req->in = (struct virtio_blk_inhdr *)elem->in_sg[in_num - 1].iov_base;
-     in_num--;
- 
--    type = le32toh(req->out->type);
-+    type = le32_to_cpu(req->out->type);
-     switch (type & ~VIRTIO_BLK_T_BARRIER) {
-     case VIRTIO_BLK_T_IN:
-     case VIRTIO_BLK_T_OUT: {
-         ssize_t ret = 0;
-         bool is_write = type & VIRTIO_BLK_T_OUT;
--        req->sector_num = le64toh(req->out->sector);
-+        req->sector_num = le64_to_cpu(req->out->sector);
-         if (is_write) {
-             ret  = vub_writev(req, &elem->out_sg[1], out_num);
-         } else {
-diff --git a/contrib/vhost-user-input/main.c b/contrib/vhost-user-input/main.c
-index 081230da54..f3362d41ac 100644
---- a/contrib/vhost-user-input/main.c
-+++ b/contrib/vhost-user-input/main.c
-@@ -51,8 +51,8 @@ static void vi_input_send(VuInput *vi, struct virtio_input_event *event)
-     vi->queue[vi->qindex++].event = *event;
- 
-     /* ... until we see a report sync ... */
--    if (event->type != htole16(EV_SYN) ||
--        event->code != htole16(SYN_REPORT)) {
-+    if (event->type != cpu_to_le16(EV_SYN) ||
-+        event->code != cpu_to_le16(SYN_REPORT)) {
-         return;
-     }
- 
-@@ -103,9 +103,9 @@ vi_evdev_watch(VuDev *dev, int condition, void *data)
- 
-         g_debug("input %d %d %d", evdev.type, evdev.code, evdev.value);
- 
--        virtio.type  = htole16(evdev.type);
--        virtio.code  = htole16(evdev.code);
--        virtio.value = htole32(evdev.value);
-+        virtio.type  = cpu_to_le16(evdev.type);
-+        virtio.code  = cpu_to_le16(evdev.code);
-+        virtio.value = cpu_to_le32(evdev.value);
-         vi_input_send(vi, &virtio);
-     }
- }
-@@ -124,9 +124,9 @@ static void vi_handle_status(VuInput *vi, virtio_input_event *event)
- 
-     evdev.input_event_sec = tval.tv_sec;
-     evdev.input_event_usec = tval.tv_usec;
--    evdev.type = le16toh(event->type);
--    evdev.code = le16toh(event->code);
--    evdev.value = le32toh(event->value);
-+    evdev.type = le16_to_cpu(event->type);
-+    evdev.code = le16_to_cpu(event->code);
-+    evdev.value = le32_to_cpu(event->value);
- 
-     rc = write(vi->evdevfd, &evdev, sizeof(evdev));
-     if (rc == -1) {
++    if (rc <= 0) {
++        vu_panic(dev, "Error while writing: %s", strerror(errno));
++        return false;
++    }
++
+     if (vmsg->size) {
+         do {
+             if (vmsg->data) {
 -- 
 2.45.1
 
