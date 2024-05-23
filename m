@@ -4,67 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A34C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 12:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20511C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 12:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA7hi-000451-Sf; Thu, 23 May 2024 08:37:54 -0400
+	id 1sA7ln-0007V8-Mi; Thu, 23 May 2024 08:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhibin.li@intel.com>)
- id 1sA3s0-0003wn-Gp
- for qemu-devel@nongnu.org; Thu, 23 May 2024 04:32:16 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sA7ll-0007TA-0a; Thu, 23 May 2024 08:42:06 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhibin.li@intel.com>)
- id 1sA3ry-0004Nm-2t
- for qemu-devel@nongnu.org; Thu, 23 May 2024 04:32:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716453134; x=1747989134;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=nT8UVHoVMPvOayZ++Vv/EwsYJ0iAXVuVzWJs/feu1dY=;
- b=j3qAXNJz34GNOAsUR169SNVq9j0z6sH3okvF05LNmcPbOdiChhHfOaoX
- 7pY2ptIRMzFZux5/990OxVaGxf8mY7SG2MQnc6xdGI7FIgIBOIaIMDL9h
- McJxm4spKMC1W/KjZnMePsFZ2dErF3hykJFf2etEc9EhOKFqomaVwk1bj
- W5w99Ztx+IeQP/r8y3DLikuKiV+JxlbUIosbq7WQtM7ULTp+GZ5ncPL26
- Re21/7EFBgfIprO31vP8punyrKwkcJn+DNbwoebMvimeK9OPsUYIuZlIo
- wjKE9i5XVPleKmsP0o2wjK3HrcLofUK8+bu+EfGj42Cm/KPWR6pae0c8y g==;
-X-CSE-ConnectionGUID: dklwAa1aRTu1k2cb/xhXNA==
-X-CSE-MsgGUID: YorTke9FQCaIUGlmPqnC0w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11080"; a="38134070"
-X-IronPort-AV: E=Sophos;i="6.08,182,1712646000"; d="scan'208,223";a="38134070"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 May 2024 01:32:08 -0700
-X-CSE-ConnectionGUID: Y89ueP43S+mcdK6iGBOhcw==
-X-CSE-MsgGUID: DB2JQ678TGqKyH7Ul9wdaw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,182,1712646000"; d="scan'208,223";a="34193705"
-Received: from flexbp2.sh.intel.com (HELO localhost) ([10.239.82.162])
- by orviesa007.jf.intel.com with ESMTP; 23 May 2024 01:32:06 -0700
-From: Zhibin Li <zhibin.li@intel.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sA7lg-0001WG-CT; Thu, 23 May 2024 08:42:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1716468107; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=XpR9CRCuDdTNwwcUZZxcBuxKwrdYpzsBKmsRjMd9H6s=;
+ b=w8UiikuOBHGc8fk1PtpaJl2SEIPlKGo4uW0ikk83HjZjMeMJswukG3Fx5eomQqj0fNSc5X3I4FYN0xecHiZNeeg/qj6OLlXWI15VWku4Tutnw9KxsSdpnLAnZiTjJhXnxB5r2SczJmH7TgGebfvruYq7YZlJviNA+C768QpR9mg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R611e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067109;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0W73.MDk_1716468105; 
+Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W73.MDk_1716468105) by smtp.aliyun-inc.com;
+ Thu, 23 May 2024 20:41:46 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: zhibin.li@intel.com
-Subject: [PATCH] dump: use 10 base for phys_base
-Date: Thu, 23 May 2024 16:32:05 +0800
-Message-ID: <20240523083205.2248593-1-zhibin.li@intel.com>
-X-Mailer: git-send-email 2.43.2
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
+ dbarboza@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: [PATCH 0/6] target/riscv: Support Zabha extension 
+Date: Thu, 23 May 2024 20:40:39 +0800
+Message-Id: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhibin.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 23 May 2024 08:37:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,34 +67,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From vmcoreinfo 'phys_base' is a decimal instead a hexadecimal so use base of
-10 instead of 16 when converting this string.
+Zabha adds support AMO operations for byte and half word. If zacas has been implemented,
+zabha also adds support amocas.b and amocas.h.
 
-Signed-off-by: Zhibin Li <zhibin.li@intel.com>
----
-Hi everyone. I'm trying to use 'dump-guest-memory' QMP command to generate a kdump-compressed vmcore file which can be consumed by makedumpfile tool (the command I used is: `dump-guest-memory -l -R test.bin`).
+More details is on the specification here:
+https://github.com/riscv/riscv-zabha
 
-I found that the generated vmcore cannot be parsed correctly by 'makedumpfile' and I noticed that the 'phys_base' is incorrect with KASLR enabled. This is just a quick fix and please let me know if you have any comments.
+The implemenation of zabha follows the way of AMOs and zacas.
 
-By the way, with this fix 'makedumpfile' can proceed to handle the generated vmcore but later on some other issues were found. I'm still trying to debug this. If you have any BKMs about using 'makedumpfile' with QEMU please let me know. Thanks!
+This patch set is based on these two patch set:
+1. https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00207.html
+2. https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00212.html
 
- dump/dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/dump/dump.c b/dump/dump.c
-index 84064d890d..e42ab3ccac 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -1760,7 +1760,7 @@ static void vmcoreinfo_update_phys_base(DumpState *s)
-         }
- 
-         if (prefix && g_str_has_prefix(lines[i], prefix)) {
--            if (qemu_strtou64(lines[i] + strlen(prefix), NULL, 16,
-+            if (qemu_strtou64(lines[i] + strlen(prefix), NULL, 10,
-                               &phys_base) < 0) {
-                 warn_report("Failed to read %s", prefix);
-             } else {
+LIU Zhiwei (6):
+  target/riscv: Move gen_amo before implement Zabha
+  target/riscv: Add AMO instructions for Zabha
+  target/riscv: Move gen_cmpxchg before adding amocas.[b|h]
+  target/riscv: Add amocas.[b|h] for Zabha
+  target/riscv: Enable zabha for max cpu
+  disas/riscv: Support zabha disassemble
+
+ disas/riscv.c                               |  60 ++++++++
+ target/riscv/cpu.c                          |   2 +
+ target/riscv/cpu_cfg.h                      |   1 +
+ target/riscv/insn32.decode                  |  22 +++
+ target/riscv/insn_trans/trans_rva.c.inc     |  21 ---
+ target/riscv/insn_trans/trans_rvzabha.c.inc | 145 ++++++++++++++++++++
+ target/riscv/insn_trans/trans_rvzacas.c.inc |  13 --
+ target/riscv/translate.c                    |  36 +++++
+ 8 files changed, 266 insertions(+), 34 deletions(-)
+ create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
+
 -- 
-2.43.2
+2.25.1
 
 
