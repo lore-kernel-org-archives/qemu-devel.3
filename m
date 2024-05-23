@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B79C4C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79838C25B7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAATk-00089g-4e; Thu, 23 May 2024 11:35:40 -0400
+	id 1sAATb-0007y4-Uv; Thu, 23 May 2024 11:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sAATc-0007yB-5m
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:32 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1sAATJ-0007jr-DU
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:13 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sAATW-0002US-Ck
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:31 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-41fd5dc0439so22026155e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:35:17 -0700 (PDT)
+ id 1sAATF-0002Ri-D7
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:11 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-41fc5645bb1so51084685e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:35:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716478516; x=1717083316; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=J6fEgjF44dVjC/RthJ83lNwuybrE42ozhNHXN4FZkgo=;
- b=qbKRchV3gyoaQUat8T7inZdVLktK7uCYXDaTmKFAuomKTz855Iju+CTuRvs79DOgcx
- Hm+O+3K60N6Kj//r73EAHRtmBd2XsjDb0tA+0NGschC3rVztCOCLcM4r+/8bn+HlmXor
- hIRJuwpUp/xd/hWt2gIHVApsn3qAR2JzhZm02S9r7TVOlFwer8XaU8jYCzfsG/mAUJhc
- ZyrAcxvDkUaJRnElUoxP/k+QrzrbSW/ebzGDHFBiL5uTUhyo1vWqMQp7aFPnZk26lNyL
- zk4atyIAvlt6AgCff1RCR5L5FGYTRugmH346cjRaz8rIsGRE+yN4Mh7mrnzF0ADeIQh2
- Zmmg==
+ d=linaro.org; s=google; t=1716478507; x=1717083307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bf0hQsGVSqS++3HNrIAL2Y7P8r1tW6aT95KUaTxIu7k=;
+ b=saIJ7hqA2DzYo5r8+KJFVfqzTn0khuRoZiBQsaByKX0xQO34870OrEJVijPmCiBzLb
+ ieDAbo4ItLD53JkdxNHs0tNZeeutkTVbNHmHEru2Uk9vCOHVNVOP4Ni/pepzPmFc03Ba
+ mVgXmo+JQaOLkN/8W17uEgCZ4IktaGQH1992LGKISOYOG/Pw6iZjZZvnxii7qgJpufIf
+ Y6AicJ5bQiYMkihXdHrRWT3faThvYGK0+/gtn3OXwZ9xGO3yrD8O1WLDHFYMiCPrqZ6u
+ BXyZTqkKIOu8DCj5pTCyFxbXxvPEfmE3YmUGlvR50GYVDTejKcqfkOWYhHDneW+nkPCn
+ 9WFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716478516; x=1717083316;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=J6fEgjF44dVjC/RthJ83lNwuybrE42ozhNHXN4FZkgo=;
- b=GqDfceLRtBEDbEsyyDkTSVUgL+FjVPzT/9oSoSKsHopSxKfZZAhGfLeQBk57j01pb6
- XbZtN4OPpKJtClrpyV3uH/KwHNxm3WeDnYKXlYaSQaGnngn2LfKJQHN1MJylgUk1llKo
- v5ALIkJNOC8H1zYkdwO3Tgon/VL7QG1mimeTt8Ys7uEEUp1d+n38ndMR0kxoCuNN1Ak9
- 7dq0w7OeYBgqM4qubpWKdx2AvXzasOr1/ZJPOXBFAQsJEOoj1iO4IK/BVEelDi3b/XZp
- udQUH1Jvq/MXc2SNd2gNgga7KQlgZ1164Whhx36DF0pOOe7ofDFCZ4XqHFfVY+IJyC7w
- ayQQ==
-X-Gm-Message-State: AOJu0YwcjAEwAYPUq0rxlGTt1j57qOXM1AAE/cy9Af6gMTxYEgfRzPx4
- glVOk0RK/Uanm6TuCU+xKYNRKwqzyyZfR8tW90Wnn6YP43gpyQIFbgRpggVOAalQY+DI6/W0hvU
- F
-X-Google-Smtp-Source: AGHT+IHud7JTJwaPY0eXCBMNPPkLkbUzadJORgrEhN3yshsixGHh1YiiLdKlz8zqsY3CIaQo+SwkSA==
-X-Received: by 2002:a05:600c:2051:b0:420:309a:fe63 with SMTP id
- 5b1f17b1804b1-420fd324a5emr43948445e9.22.1716478516221; 
- Thu, 23 May 2024 08:35:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716478507; x=1717083307;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bf0hQsGVSqS++3HNrIAL2Y7P8r1tW6aT95KUaTxIu7k=;
+ b=srJQk6UVyMYNqHiEXe/Yb4FEu5OBw3Cz5MaYNSbqBTWA7znqw8LTAP6vbg7mVweRsz
+ 8EaGvO/r7Hz9Y0ILIS9mPwk7w0prNKdiTYTNz2sWu2DYm6+GyCqMtPirI3IVOjunihqu
+ Cs6gX0w/zbTNX3b8cFHVjMuDSINv26wdOjEp/u1sVQRd/HE/hRu0q7zSzhRBfDxx3AW3
+ /ymnzGzhSxACJlQIhqYhsL2XRaS6VW/A+H+W8c2qAkyfOdpW6TA0pHoAWq2U9SeEqTGC
+ XyXYvUAVT/ov23vmr3PXbnl6oRsFiousAMfaqststxvKdzm9SI/S6201lWKFJc2bSk6N
+ M4DA==
+X-Gm-Message-State: AOJu0YzXHRK5LcMPE2gkneLFuWGJJB7mh9mqyCLoWJjjZ7NQ5ulU0Pa3
+ 6cveR4hySzxnr0Lsd9SHdNYZm+GR5lX1cjybZiBnWKDm8DPnaXLrCaY5/BHzlo3hPyRTybn2fvg
+ v
+X-Google-Smtp-Source: AGHT+IGujDTwUvH4wY+/0j7160WVmcr2UQ0Pa+YG/kzoAR916AatUVMwsElS90hEs7Z3IU9LepXfAg==
+X-Received: by 2002:a05:6000:36d:b0:34a:1a7a:9d60 with SMTP id
+ ffacd0b85a97d-354da7b4b64mr4453915f8f.62.1716478507274; 
+ Thu, 23 May 2024 08:35:07 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-354df9b51f7sm3888255f8f.59.2024.05.23.08.35.15
+ ffacd0b85a97d-354df9b51f7sm3888255f8f.59.2024.05.23.08.35.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:35:16 -0700 (PDT)
+ Thu, 23 May 2024 08:35:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/37] target/arm: Convert XAR to decodetree
-Date: Thu, 23 May 2024 16:34:46 +0100
-Message-Id: <20240523153505.2900433-19-peter.maydell@linaro.org>
+Subject: [PULL 00/37] target-arm queue
+Date: Thu, 23 May 2024 16:34:28 +0100
+Message-Id: <20240523153505.2900433-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240523153505.2900433-1-peter.maydell@linaro.org>
-References: <20240523153505.2900433-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,98 +91,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Hi; most of this is the first half of RTH's decodetree conversion;
+the rest is a mix of fixes from the last couple of weeks.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240506010403.6204-11-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/a64.decode      |  4 ++++
- target/arm/tcg/translate-a64.c | 43 +++++++++++-----------------------
- 2 files changed, 18 insertions(+), 29 deletions(-)
+thanks
+-- PMM
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 1292312a7f9..7f354af25d3 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -654,3 +654,7 @@ SM3TT1A         11001110 010 ..... 10 .. 00 ..... ..... @crypto3i
- SM3TT1B         11001110 010 ..... 10 .. 01 ..... ..... @crypto3i
- SM3TT2A         11001110 010 ..... 10 .. 10 ..... ..... @crypto3i
- SM3TT2B         11001110 010 ..... 10 .. 11 ..... ..... @crypto3i
-+
-+### Cryptographic XAR
-+
-+XAR             1100 1110 100 rm:5 imm:6 rn:5 rd:5
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index eea0943911a..3d56e85b767 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4688,6 +4688,20 @@ TRANS_FEAT(SM3TT1B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt1b)
- TRANS_FEAT(SM3TT2A, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2a)
- TRANS_FEAT(SM3TT2B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2b)
- 
-+static bool trans_XAR(DisasContext *s, arg_XAR *a)
-+{
-+    if (!dc_isar_feature(aa64_sha3, s)) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        gen_gvec_xar(MO_64, vec_full_reg_offset(s, a->rd),
-+                     vec_full_reg_offset(s, a->rn),
-+                     vec_full_reg_offset(s, a->rm), a->imm, 16,
-+                     vec_full_reg_size(s));
-+    }
-+    return true;
-+}
-+
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -13581,34 +13595,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     }
- }
- 
--/* Crypto XAR
-- *  31                   21 20  16 15    10 9    5 4    0
-- * +-----------------------+------+--------+------+------+
-- * | 1 1 0 0 1 1 1 0 1 0 0 |  Rm  |  imm6  |  Rn  |  Rd  |
-- * +-----------------------+------+--------+------+------+
-- */
--static void disas_crypto_xar(DisasContext *s, uint32_t insn)
--{
--    int rm = extract32(insn, 16, 5);
--    int imm6 = extract32(insn, 10, 6);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--
--    if (!dc_isar_feature(aa64_sha3, s)) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    gen_gvec_xar(MO_64, vec_full_reg_offset(s, rd),
--                 vec_full_reg_offset(s, rn),
--                 vec_full_reg_offset(s, rm), imm6, 16,
--                 vec_full_reg_size(s));
--}
--
- /* C3.6 Data processing - SIMD, inc Crypto
-  *
-  * As the decode gets a little complex we are using a table based
-@@ -13637,7 +13623,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
-     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
--    { 0xce800000, 0xffe00000, disas_crypto_xar },
-     { 0x0e400400, 0x9f60c400, disas_simd_three_reg_same_fp16 },
-     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
-     { 0x5e400400, 0xdf60c400, disas_simd_scalar_three_reg_same_fp16 },
--- 
-2.34.1
+The following changes since commit 7e1c0047015ffbd408e1aa4a5ec1abe4751dbf7e:
 
+  Merge tag 'migration-20240522-pull-request' of https://gitlab.com/farosas/qemu into staging (2024-05-22 15:32:25 -0700)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240523
+
+for you to fetch changes up to 051aca523db178ad4c49d5ed736ad26308d1df7b:
+
+  target/arm: Convert disas_simd_3same_logic to decodetree (2024-05-23 16:06:29 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * xlnx_dpdma: fix descriptor endianness bug
+ * hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug System registers
+ * hw/arm/npcm7xx: remove setting of mp-affinity
+ * hw/char: Correct STM32L4x5 usart register CR2 field ADD_0 size
+ * hw/intc/arm_gic: Fix handling of NS view of GICC_APR<n>
+ * hw/input/tsc2005: Fix -Wchar-subscripts warning in tsc2005_txrx()
+ * hw: arm: Remove use of tabs in some source files
+ * docs/system: Remove ADC from raspi documentation
+ * target/arm: Start of the conversion of A64 SIMD to decodetree
+
+----------------------------------------------------------------
+Alexandra Diupina (1):
+      xlnx_dpdma: fix descriptor endianness bug
+
+Andrey Shumilin (1):
+      hw/intc/arm_gic: Fix handling of NS view of GICC_APR<n>
+
+Dorjoy Chowdhury (1):
+      hw/arm/npcm7xx: remove setting of mp-affinity
+
+Inès Varhol (1):
+      hw/char: Correct STM32L4x5 usart register CR2 field ADD_0 size
+
+Philippe Mathieu-Daudé (1):
+      hw/input/tsc2005: Fix -Wchar-subscripts warning in tsc2005_txrx()
+
+Rayhan Faizel (1):
+      docs/system: Remove ADC from raspi documentation
+
+Richard Henderson (29):
+      target/arm: Split out gengvec.c
+      target/arm: Split out gengvec64.c
+      target/arm: Convert Cryptographic AES to decodetree
+      target/arm: Convert Cryptographic 3-register SHA to decodetree
+      target/arm: Convert Cryptographic 2-register SHA to decodetree
+      target/arm: Convert Cryptographic 3-register SHA512 to decodetree
+      target/arm: Convert Cryptographic 2-register SHA512 to decodetree
+      target/arm: Convert Cryptographic 4-register to decodetree
+      target/arm: Convert Cryptographic 3-register, imm2 to decodetree
+      target/arm: Convert XAR to decodetree
+      target/arm: Convert Advanced SIMD copy to decodetree
+      target/arm: Convert FMULX to decodetree
+      target/arm: Convert FADD, FSUB, FDIV, FMUL to decodetree
+      target/arm: Convert FMAX, FMIN, FMAXNM, FMINNM to decodetree
+      target/arm: Expand vfp neg and abs inline
+      target/arm: Convert FNMUL to decodetree
+      target/arm: Convert FMLA, FMLS to decodetree
+      target/arm: Convert FCMEQ, FCMGE, FCMGT, FACGE, FACGT to decodetree
+      target/arm: Convert FABD to decodetree
+      target/arm: Convert FRECPS, FRSQRTS to decodetree
+      target/arm: Convert FADDP to decodetree
+      target/arm: Convert FMAXP, FMINP, FMAXNMP, FMINNMP to decodetree
+      target/arm: Use gvec for neon faddp, fmaxp, fminp
+      target/arm: Convert ADDP to decodetree
+      target/arm: Use gvec for neon padd
+      target/arm: Convert SMAXP, SMINP, UMAXP, UMINP to decodetree
+      target/arm: Use gvec for neon pmax, pmin
+      target/arm: Convert FMLAL, FMLSL to decodetree
+      target/arm: Convert disas_simd_3same_logic to decodetree
+
+Tanmay Patil (1):
+      hw: arm: Remove use of tabs in some source files
+
+Zenghui Yu (1):
+      hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug System registers
+
+ docs/system/arm/raspi.rst       |    1 -
+ target/arm/helper.h             |   68 +-
+ target/arm/tcg/helper-a64.h     |   12 +
+ target/arm/tcg/translate-a64.h  |    4 +
+ target/arm/tcg/translate.h      |   51 +
+ target/arm/tcg/a64.decode       |  315 +++-
+ hw/arm/boot.c                   |    8 +-
+ hw/arm/npcm7xx.c                |    3 -
+ hw/char/omap_uart.c             |   49 +-
+ hw/char/stm32l4x5_usart.c       |    2 +-
+ hw/dma/xlnx_dpdma.c             |   68 +-
+ hw/gpio/zaurus.c                |   59 +-
+ hw/input/tsc2005.c              |  135 +-
+ hw/intc/arm_gic.c               |    4 +-
+ target/arm/hvf/hvf.c            |  130 +-
+ target/arm/tcg/gengvec.c        | 1672 +++++++++++++++++++++
+ target/arm/tcg/gengvec64.c      |  190 +++
+ target/arm/tcg/neon_helper.c    |    5 -
+ target/arm/tcg/translate-a64.c  | 3110 +++++++++++++--------------------------
+ target/arm/tcg/translate-neon.c |  136 +-
+ target/arm/tcg/translate-sve.c  |  145 +-
+ target/arm/tcg/translate-vfp.c  |   54 +-
+ target/arm/tcg/translate.c      | 1588 --------------------
+ target/arm/tcg/vec_helper.c     |  221 ++-
+ target/arm/vfp_helper.c         |   30 -
+ target/arm/tcg/meson.build      |    2 +
+ 26 files changed, 3807 insertions(+), 4255 deletions(-)
+ create mode 100644 target/arm/tcg/gengvec.c
+ create mode 100644 target/arm/tcg/gengvec64.c
 
