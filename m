@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6388BC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1774C25B7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9wr-0007tA-Dp; Thu, 23 May 2024 11:01:41 -0400
+	id 1sA9xP-0000qb-Lv; Thu, 23 May 2024 11:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wZ-0006uF-Oc
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:35 -0400
+ id 1sA9wt-00089n-I0
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wV-0004sU-O0
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:23 -0400
+ id 1sA9wr-0004vd-Sa
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476479;
+ s=mimecast20190719; t=1716476501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zjn78Uv8g1mrAzf1P1t6HoPbVp5Vv3EdDmYpZxErxf4=;
- b=eMcvl4i6vh6M7wt9J8Y8FCV6V9je0W35++hP4BfscEQEEzAFR+cCtNR2fbff8t5s2VdR+n
- +sMrbJE9V9tpHk8+i2l8lMsERfBfPqYYD51F+IJ07aqQlQqahH3D5D+BJ1MxAVMUpeKo1O
- oUpOqh9CAdv/TPFnCdxLdbmbLem5GDc=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xtNMjeo30umZmHsb3OdqLgoNlGtwryuHoombtfhUSBM=;
+ b=Q+sDLC8WOt0k7eyWu+jR1OxA0qdKwGWCXW6u94gpEQF1CDDUt1REAKub/waxYZ7Qax0bxe
+ vw3u3ybM+CIzwwgEDdlZerHt4gM1YsO4P0LnyuapTj3q7ecYQvcls0PqTlxgNDRWDYFO7k
+ dsYB0iYMF5Q/ywX7Znzhr+7jZK9BfeA=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-77-BP_jdfLtMtCbBxNwuLMyVA-1; Thu, 23 May 2024 11:01:17 -0400
-X-MC-Unique: BP_jdfLtMtCbBxNwuLMyVA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-574ec1882f6so751468a12.2
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:17 -0700 (PDT)
+ us-mta-213-fV-aEknhNyKV7vAPPq3UGg-1; Thu, 23 May 2024 11:01:39 -0400
+X-MC-Unique: fV-aEknhNyKV7vAPPq3UGg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a59eea00cafso147623166b.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476476; x=1717081276;
+ d=1e100.net; s=20230601; t=1716476497; x=1717081297;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Zjn78Uv8g1mrAzf1P1t6HoPbVp5Vv3EdDmYpZxErxf4=;
- b=E52OphhfOWilJkZiTceNGh8+F/bZ/ER/SxdmiQkGlGm50qzVCVTxT7XuAYzf5AHwzF
- Sq5BMb+XJ0/UOINx+0lRdR2iDTAPkTYVXa/98pWMyPLT1+uTAhRMyDY9L/nkv/ZPJ78y
- e1qR6HyM4q5FEKrO+G1Vy4qtJ1dBNyEThxJoSOybOygp+0aqadBIAIKny4fmR8GIuVFK
- mQkIhYv9VaXAxl5g561+Uhp0gJOvhB8e78grU0xWGbEu0QJ5bF/oXNJN3qjAh3hwBlay
- Mz6KE1QlAJy4K7FVhz0+9os1fsQ16jcScprGvHchH+DkL+xKUpmyh8V1elvwV/hlwEYu
- UAnw==
-X-Gm-Message-State: AOJu0Yy7cpWyift2YMY3CGq8KTBqunVz2Tre6plSpLUOulEJts+yQRSf
- q4mypoavWtBd3VL1nBPpB8+KB3eRma63ioM9F9hs71oRMnk/7rMGFiVAQzjQVkFr9nvEnC7FhJd
- SCy9xrrbBdG1i3T+Y8tVg37+8pd73jMCdzXx+xSoNFShI0wL91x0R3sSF23sIP1HZWW/gap+A//
- 8+O/DUB3JdWFIwQD1ZyXhQQLDiBTCi+odcFThF
-X-Received: by 2002:a50:f602:0:b0:56c:d35:1775 with SMTP id
- 4fb4d7f45d1cf-57832c57587mr4966626a12.35.1716476476389; 
- Thu, 23 May 2024 08:01:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtFZorqbyL5I94Z1GGOnlk03DvesHcab5O6AHtgWqgpsMtWk30WzOSxAhgmLj6wVqzJun62Q==
-X-Received: by 2002:a50:f602:0:b0:56c:d35:1775 with SMTP id
- 4fb4d7f45d1cf-57832c57587mr4966596a12.35.1716476475934; 
- Thu, 23 May 2024 08:01:15 -0700 (PDT)
+ bh=xtNMjeo30umZmHsb3OdqLgoNlGtwryuHoombtfhUSBM=;
+ b=fEkCrNTldjiVkGvMNIzzqSdWcWWi2kyop+0rW0ECqJfi7PwmgZzzzOnr3csiWq5eGX
+ RdGpWgD/mJs8Iwp7jV2juMcHmTHY4UKwsyU2UewLhOp17LLh3ljtMpZl/rgcsVUdLSbZ
+ Crs30sxJnG1Rx8PB8PDpznzrOkh/LbC93Im/dHQ89RnAktn0NV2UEbrLyPDCYa0k+lQK
+ MInZershq7n7VjiAlANL/wLby4EDentzKN7jMDyV1ALMnlJPhrDTiVf8czmxDz0jNVJq
+ P29aFyUX17CZfArRG7PyltHsDd+wUhtxkW+HdqHrVUe3LSMvvrzcNO3kwh++Rbw697Pa
+ 2Plw==
+X-Gm-Message-State: AOJu0YzOV09vpEz4dsgsbicdiEs9ZzenZD7D4u5nxDqPMIyYGzk6g0Lo
+ YU0FYVgj+caWJJax8sl7wSor2whwEPj5bx9ghF+kGT/Us8YwZ68mg3VFBG9D5Iaflu3Ajstz00F
+ JkOhNEnXQ59KRfpfaFbPr+/YqmpPkBv07gfsCvlJXGaZfqKm2wGFziPIGUR//VpFFkPwdRnyb1Y
+ 4SHP/IuW+wjN9uNMGlHGZXzOwmv+xCOZxJRVCS
+X-Received: by 2002:a17:906:71da:b0:a62:2ef9:141 with SMTP id
+ a640c23a62f3a-a622ef902a2mr411232966b.8.1716476496941; 
+ Thu, 23 May 2024 08:01:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQ1x7xnI163X9uaPg6C1hBgi1X7gfiWcXEUJxWmMCqrUCjI8TvjxfA6Xezwdub5LyZ8/D5TQ==
+X-Received: by 2002:a17:906:71da:b0:a62:2ef9:141 with SMTP id
+ a640c23a62f3a-a622ef902a2mr411228166b.8.1716476495839; 
+ Thu, 23 May 2024 08:01:35 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-574f26d1574sm12465022a12.36.2024.05.23.08.01.13
+ a640c23a62f3a-a6214655b23sm422810366b.165.2024.05.23.08.01.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:01:13 -0700 (PDT)
+ Thu, 23 May 2024 08:01:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Babu Moger <babu.moger@amd.com>
-Subject: [PULL 15/23] i386: Expose module level in CPUID[0x1F]
-Date: Thu, 23 May 2024 17:00:28 +0200
-Message-ID: <20240523150036.1050011-16-pbonzini@redhat.com>
+Cc: donsheng <dongsheng.x.zhang@intel.com>, Chao Gao <chao.gao@intel.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL 23/23] target-i386: hyper-v: Correct kvm_hv_handle_exit return
+ value
+Date: Thu, 23 May 2024 17:00:36 +0200
+Message-ID: <20240523150036.1050011-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
 References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -87,7 +89,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,110 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: donsheng <dongsheng.x.zhang@intel.com>
 
-Linux kernel (from v6.4, with commit edc0a2b595765 ("x86/topology: Fix
-erroneous smp_num_siblings on Intel Hybrid platforms") is able to
-handle platforms with Module level enumerated via CPUID.1F.
+This bug fix addresses the incorrect return value of kvm_hv_handle_exit for
+KVM_EXIT_HYPERV_SYNIC, which should be EXCP_INTERRUPT.
 
-Expose the module level in CPUID[0x1F] if the machine has more than 1
-modules.
+Handling of KVM_EXIT_HYPERV_SYNIC in QEMU needs to be synchronous.
+This means that async_synic_update should run in the current QEMU vCPU
+thread before returning to KVM, returning EXCP_INTERRUPT to guarantee this.
+Returning 0 can cause async_synic_update to run asynchronously.
 
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Message-ID: <20240424154929.1487382-15-zhao1.liu@intel.com>
+One problem (kvm-unit-tests's hyperv_synic test fails with timeout error)
+caused by this bug:
+
+When a guest VM writes to the HV_X64_MSR_SCONTROL MSR to enable Hyper-V SynIC,
+a VM exit is triggered and processed by the kvm_hv_handle_exit function of the
+QEMU vCPU. This function then calls the async_synic_update function to set
+synic->sctl_enabled to true. A true value of synic->sctl_enabled is required
+before creating SINT routes using the hyperv_sint_route_new() function.
+
+If kvm_hv_handle_exit returns 0 for KVM_EXIT_HYPERV_SYNIC, the current QEMU
+vCPU thread may return to KVM and enter the guest VM before running
+async_synic_update. In such case, the hyperv_synic test’s subsequent call to
+synic_ctl(HV_TEST_DEV_SINT_ROUTE_CREATE, ...) immediately after writing to
+HV_X64_MSR_SCONTROL can cause QEMU’s hyperv_sint_route_new() function to return
+prematurely (because synic->sctl_enabled is false).
+
+If the SINT route is not created successfully, the SINT interrupt will not be
+fired, resulting in a timeout error in the hyperv_synic test.
+
+Fixes: 267e071bd6d6 (“hyperv: make overlay pages for SynIC”)
+Suggested-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Dongsheng Zhang <dongsheng.x.zhang@intel.com>
+Message-ID: <20240521200114.11588-1-dongsheng.x.zhang@intel.com>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/i386/topology.h | 6 ++++--
- target/i386/cpu.h          | 1 +
- hw/i386/x86-common.c       | 2 +-
- target/i386/cpu.c          | 6 ++++++
- 4 files changed, 12 insertions(+), 3 deletions(-)
+ target/i386/kvm/hyperv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-index 7622d806932..ea871045779 100644
---- a/include/hw/i386/topology.h
-+++ b/include/hw/i386/topology.h
-@@ -71,6 +71,7 @@ enum CPUTopoLevel {
-     CPU_TOPO_LEVEL_INVALID,
-     CPU_TOPO_LEVEL_SMT,
-     CPU_TOPO_LEVEL_CORE,
-+    CPU_TOPO_LEVEL_MODULE,
-     CPU_TOPO_LEVEL_DIE,
-     CPU_TOPO_LEVEL_PACKAGE,
-     CPU_TOPO_LEVEL_MAX,
-@@ -198,11 +199,12 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
- }
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index f2a3fe650a1..b94f12acc2c 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -81,7 +81,7 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
+          */
+         async_safe_run_on_cpu(CPU(cpu), async_synic_update, RUN_ON_CPU_NULL);
  
- /*
-- * Check whether there's extended topology level (die)?
-+ * Check whether there's extended topology level (module or die)?
-  */
- static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
- {
--    return test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-+    return test_bit(CPU_TOPO_LEVEL_MODULE, topo_bitmap) ||
-+           test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
- }
- 
- #endif /* HW_I386_TOPOLOGY_H */
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e79293158a0..196b068614c 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1024,6 +1024,7 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_1F_ECX_TOPO_LEVEL_INVALID  CPUID_B_ECX_TOPO_LEVEL_INVALID
- #define CPUID_1F_ECX_TOPO_LEVEL_SMT      CPUID_B_ECX_TOPO_LEVEL_SMT
- #define CPUID_1F_ECX_TOPO_LEVEL_CORE     CPUID_B_ECX_TOPO_LEVEL_CORE
-+#define CPUID_1F_ECX_TOPO_LEVEL_MODULE   3
- #define CPUID_1F_ECX_TOPO_LEVEL_DIE      5
- 
- /* MSR Feature Bits */
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 994f8424889..34dfa894879 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -273,7 +273,7 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
- 
-     if (ms->smp.modules > 1) {
-         env->nr_modules = ms->smp.modules;
--        /* TODO: Expose module level in CPUID[0x1F]. */
-+        set_bit(CPU_TOPO_LEVEL_MODULE, env->avail_cpu_topo);
-     }
- 
-     if (ms->smp.dies > 1) {
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 92aa4498551..4aea6e3dd24 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -277,6 +277,8 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
-         return 1;
-     case CPU_TOPO_LEVEL_CORE:
-         return topo_info->threads_per_core;
-+    case CPU_TOPO_LEVEL_MODULE:
-+        return topo_info->threads_per_core * topo_info->cores_per_module;
-     case CPU_TOPO_LEVEL_DIE:
-         return topo_info->threads_per_core * topo_info->cores_per_module *
-                topo_info->modules_per_die;
-@@ -297,6 +299,8 @@ static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
-         return 0;
-     case CPU_TOPO_LEVEL_CORE:
-         return apicid_core_offset(topo_info);
-+    case CPU_TOPO_LEVEL_MODULE:
-+        return apicid_module_offset(topo_info);
-     case CPU_TOPO_LEVEL_DIE:
-         return apicid_die_offset(topo_info);
-     case CPU_TOPO_LEVEL_PACKAGE:
-@@ -316,6 +320,8 @@ static uint32_t cpuid1f_topo_type(enum CPUTopoLevel topo_level)
-         return CPUID_1F_ECX_TOPO_LEVEL_SMT;
-     case CPU_TOPO_LEVEL_CORE:
-         return CPUID_1F_ECX_TOPO_LEVEL_CORE;
-+    case CPU_TOPO_LEVEL_MODULE:
-+        return CPUID_1F_ECX_TOPO_LEVEL_MODULE;
-     case CPU_TOPO_LEVEL_DIE:
-         return CPUID_1F_ECX_TOPO_LEVEL_DIE;
-     default:
+-        return 0;
++        return EXCP_INTERRUPT;
+     case KVM_EXIT_HYPERV_HCALL: {
+         uint16_t code = exit->u.hcall.input & 0xffff;
+         bool fast = exit->u.hcall.input & HV_HYPERCALL_FAST;
 -- 
 2.45.1
 
