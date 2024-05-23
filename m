@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5131C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A83C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHqZ-0001ZZ-H5; Thu, 23 May 2024 19:27:43 -0400
+	id 1sAHtw-0003Y7-Du; Thu, 23 May 2024 19:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHqW-0001YC-CN; Thu, 23 May 2024 19:27:40 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1sAHtu-0003X0-Jc; Thu, 23 May 2024 19:31:10 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHqU-0001cd-GG; Thu, 23 May 2024 19:27:40 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-681919f89f2so252465a12.1; 
- Thu, 23 May 2024 16:27:37 -0700 (PDT)
+ id 1sAHts-0002OB-8g; Thu, 23 May 2024 19:31:10 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-6819b3c92bbso228396a12.2; 
+ Thu, 23 May 2024 16:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716506856; x=1717111656; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716507066; x=1717111866; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5OYbhwqjz8pW1dz54VSOIdlLzXg2gMVeFGgIy78z4wc=;
- b=d28YYiUQR0t7NQZ9eegITtTPQAEhgz9Y/tNPFZL1tR/0o9NSqjHD7H/ZZLyXiVOP25
- Ahxf7b6OsNjQNKHgVqEWLzWOWcMCQ+LgTAjltnp33EUAyBsVnRw3/ibcxdD5A+B4mKun
- ovi9tMgQ6uNvmvnczdgeLkMPrAlUYStHiGLwqX6Ktg3gaF+49ernoG2B7zvuUMd0ZT5S
- 5EmbO/60ksbVxFBftyRBxO8HMxVCUftbO5o8pa5Ho34sw31H31iPRQqDIntlNTXUTzCx
- 8ipLxgEBPx8S2Z5hVTOvkr2Rl2ddfB1DvwbCGsBDarTfAk4APAMiLqYJ5E9U4DQ9/mod
- V+Pw==
+ bh=DjbSu5rGzjSF47NyHjrNVidyNNfJUVIM0PP6ou/18N8=;
+ b=AnFaHGrfRZDzyt8h3X9roF+LWF8e8qggANlCp8DNXGJtOUwuF4jvgw1RXmov5yzLh2
+ 17eZLhNowgMoZFf85PMZYDOdQGaKJJYwZrK1tZ/b3fNFgWetT2IL3KpwkdbPao0PXpPz
+ 4xagflnhWuJee2RI2TFa6Y2fYOJK8TT5mRTf/cuMlKRV/r0ouYDUWiBvI8ouBj/os4e1
+ Exo2rVdn7IVknxHSAhB2Y3+caWWkXKqDlHsKuF7P17NLxNEGXsRlzMFM2CIdnwGBdxQs
+ M75375/UcpAKRCi6/Imos8+EL499k25pnHWUPr51l5YjXaqPUiFrnarMFT9JbX9gPeWz
+ 4Eow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716506856; x=1717111656;
+ d=1e100.net; s=20230601; t=1716507066; x=1717111866;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=5OYbhwqjz8pW1dz54VSOIdlLzXg2gMVeFGgIy78z4wc=;
- b=XQJ8GUijtj/umNRvV9avx/Mahhi8NNtJ8jvKeuKdN7sXAWgFC7KhkOTnRU4xqkaGed
- r/QQBi6jazNSRBXAslX17xfBqWZ5TYRaSiQ4NY9mMDK9JOMf5MyZOnsCt42A3P2gdvlg
- LRMp33p/whKkWRgz1fMrNo8Q/r4OI1q3L2Lt7p7D3DKKWJGL2NkpJ2aDe2N6KnHUjHnC
- vI3paMfiQc4O7XLFhUIXAWKPd9rbgibIWI2TF9k572vyBkBihtMSGyAkgiD1tM1cNSSK
- 8ZreUF2OX73CSoBDiDaY9z0I5dLoZwqUEf0gEEvqP5RMiVFGutjfEFRGjvgesNr1Ttp0
- QWwA==
+ bh=DjbSu5rGzjSF47NyHjrNVidyNNfJUVIM0PP6ou/18N8=;
+ b=h9/ddO0PjqyotQtGhB7M9S59SE2EaJRVu4/LqVW2GxkZ/MewJ5OnEFCfv5j7bkqlAX
+ 5KMeWwd2fGhDwonslNv4sISsrZG+J7XiXjF58D9TD/sNfsC4V/PdX9Kjwvjq5OgSYL8D
+ DDIHmr/aE4h6fJ+DWYlOWKm9piOrYQEnrxul/1nD+WlZlh5HIHGApNztKm6R9INUJMy6
+ VnK3HTCbmk5OYiAkk40KehHbIsjd8l2m1yCkw7YMNqXHE+Y89UASTwvugKwOgRUvTkFr
+ 6ZTfGcaZfU92wkD6ZlWg+Gl65jYjRcBRGnIh7zWBY3NrUGK2nIbECA2ClxJaxfse+0mB
+ ctJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWd2NYWmeDGHpTa8Wf8/YWIHaloJTk84bbWmmGLv6F8Mm9Sb7HVMoLT9C+wt859Tf9wfzdR0Pf0qvoyjB/Z2rNIHenQr14+JyE/BfMEcM40j/U9GhF5PIJ64BQ=
-X-Gm-Message-State: AOJu0Yx9HVr1N/L7SA8SD1xxscPJL/6ICTMCcpqqJdzOxuYsCtCm38ga
- ccPqG4v2BBAVUnENP+AFk/NQY0KXa2Hx/ZFi7cZsRt9Qe7oAZtkb
-X-Google-Smtp-Source: AGHT+IHrgDHgru9tLDSGF0iSxFhUwsBmjQuR5X/bcbhYfVn41MJaYFRwRiiekY4gJ2dKTIJADceO5w==
-X-Received: by 2002:a17:90a:a00b:b0:2b1:50:cad4 with SMTP id
- 98e67ed59e1d1-2bf5e84a5d6mr691462a91.1.1716506856207; 
- Thu, 23 May 2024 16:27:36 -0700 (PDT)
+ AJvYcCXkbjGvM7DDeK/vEEZ9Hr9OFfgnLTkp4179ApBXImaDAI2FyaUFNjhTNBeCpaPHrlTJxMG1RbFFXC6ZGUm0epqWZ8/+5aM=
+X-Gm-Message-State: AOJu0Yx+uAwwBXSA4fs1h6yZnOGJwPGySgSHtbaNNXEVkgc/sMxBk7QC
+ 7ZyVaa6FmZfNNcaYWz56mjFkTizqHL8rzwUELT4d8ozVhN4wURRZ1b55Vg==
+X-Google-Smtp-Source: AGHT+IFS3u8xAmOheusrZdTYLa2QhwhaBcMIBqyGXwA7E0kOM2Rbv0qBZ7/Qw/oeF6x5XFM5ILmNaA==
+X-Received: by 2002:a17:903:230a:b0:1f3:1afd:b150 with SMTP id
+ d9443c01a7336-1f4486ed41dmr10867665ad.19.1716507066451; 
+ Thu, 23 May 2024 16:31:06 -0700 (PDT)
 Received: from localhost (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf699abed8sm37358a91.1.2024.05.23.16.27.33
+ d9443c01a7336-1f44c7cea47sm1305925ad.113.2024.05.23.16.31.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 May 2024 16:27:35 -0700 (PDT)
+ Thu, 23 May 2024 16:31:05 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 24 May 2024 09:27:29 +1000
-Message-Id: <D1HEW8JJFC0I.3CUC58PW2DTFB@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 0/2] target/ppc: Fix PMU instruction counting
+Date: Fri, 24 May 2024 09:31:01 +1000
+Message-Id: <D1HEYY14K1VR.2NNF50M4GU723@gmail.com>
+Cc: <qemu-ppc@nongnu.org>
+Subject: Re: [PULL 00/72] ppc-for-9.1-1 queue
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-ppc@nongnu.org>
+To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.17.0
-References: <20240522040411.90655-1-npiggin@gmail.com>
- <39f33a5d-a9fd-4469-ad6d-ca0fe844f571@linaro.org>
-In-Reply-To: <39f33a5d-a9fd-4469-ad6d-ca0fe844f571@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x536.google.com
+References: <20240523230747.45703-1-npiggin@gmail.com>
+In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,36 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 23, 2024 at 8:46 AM AEST, Richard Henderson wrote:
-> On 5/21/24 21:04, Nicholas Piggin wrote:
-> > The crux of the problem being that dynamic exits from a TB would
-> > not count instructions previously executed in the TB. I don't
-> > know how important it is for PMU to count instructions exactly,
-> > however for instruction replay this can lead to different counts
-> > for the same execution (e.g., because TBs can be different sized)
-> > and that blows up reverse debugging.
-> >=20
-> > I posted something on this out before, but missed a few things
-> > (most notably faulting memory access). And found that forcing 1
-> > insn per TB seems to be the only feasible way to do this.
-> >=20
-> > Sorry to ping you on this again Richard, it's not urgent but
-> > you're the guru with this stuff and I'm hesitant to change it
-> > without a better opinion ... Simple band aid for the meanwhile
-> > could be leave it as is but just disable counting if
-> > record/replay is in use.
+On Fri May 24, 2024 at 9:06 AM AEST, Nicholas Piggin wrote:
+> The following changes since commit 70581940cabcc51b329652becddfbc6a261b1b=
+83:
 >
-> When we unwind, we know how many insns remain in the tb.
-> With icount, we adjust cpu->neg.icount_decr.u16.low.
+>   Merge tag 'pull-tcg-20240523' of https://gitlab.com/rth7680/qemu into s=
+taging (2024-05-23 09:47:40 -0700)
 >
-> My suggestion is to change restore_state_to_opc to pass in either the raw=
- insns_left, or=20
-> the inverse: tb->icount - insns_left.
+> are available in the Git repository at:
 >
-> That'll be a trivial mechanical change for the signature of the hook, fir=
-st.
+>   https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.1-1-20240524
 
-That gives me a better place to start looking.
+[snip]
+
+> Glenn Miles (4):
+>       This commit is preparatory to the addition of Branch History Rollin=
+g Buffer (BHRB) functionality, which is being provided today starting with =
+the P8 processor.
+>       This commit continues adding support for the Branch History Rolling=
+ Buffer (BHRB) as is provided starting with the P8 processor and continuing=
+ with its successors.  This commit is limited to the recording and filterin=
+g of taken branches.
+>       Add support for the clrbhrb and mfbhrbe instructions.
+>       Adds migration support for Branch History Rolling Buffer (BHRB) int=
+ernal state.
+
+The BHRB patch subject lines have gone haywire and I didn't notice
+before now. Probably my fault. Hold off and I will fix and give a
+new tag to pull.
 
 Thanks,
 Nick
