@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D138C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1C0C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHYJ-0007Vh-0k; Thu, 23 May 2024 19:08:51 -0400
+	id 1sAHYJ-0007WE-P6; Thu, 23 May 2024 19:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYE-0007TA-4C; Thu, 23 May 2024 19:08:46 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sAHYH-0007V1-9Y; Thu, 23 May 2024 19:08:49 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYB-0005iv-TI; Thu, 23 May 2024 19:08:45 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6f8e819a540so345925b3a.0; 
- Thu, 23 May 2024 16:08:43 -0700 (PDT)
+ id 1sAHYF-0005jP-4B; Thu, 23 May 2024 19:08:49 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-652fd0bb5e6so2647114a12.0; 
+ Thu, 23 May 2024 16:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505722; x=1717110522; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505725; x=1717110525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pkY8lQqpUNnOLCkMNlutX0B0CL92UQRjmLD6ABd+lCg=;
- b=e6jM42J9N8Z6CpH3GrlvQG1XaTvRthsF573ujKl3jCjnPpJxGyvXT47sO9XJvvPbnG
- cjIj4ymO+WF7Zsfg6x7V9jKv4xLgLykMEiXL7sj1M+fsInC4Vgk/t7RsLU+NFZcWh3IQ
- Wm+zBcdQAxw4LrjY3tLliPF/NyQ41qSsH5QOJpf6kcdRhCiG2ES40r0+nkdejHXWz9W9
- SCv6j3cvbaVizb4UwriWoUjxgm5DOO8Jn/bXZkRjvCITzSqGo8gb+U0ET/RCkWQyzu2/
- I+EUUAUbYkj1ugs47q7mxtXUvC6BUSmuhJF7Z9Ro13xGFza2PcUhPp8SKBz4ZmpvEnIs
- lhfA==
+ bh=YJADVCWLglTFQfxilMmH9rvA7nGdqGwE/G1WVCvAaJg=;
+ b=k4qiQ0tswLNXkZ9f+oUk5JABBbJxISA+LVCZq+wngRW8YaYMlyiTQgtoJl3SfSn82q
+ tYE14H3oGGFRzKyi6mOC2Ak1p14SvuMkPmzsbTKZRIlR4PsRgz0qhmNpQKlxp7RONKT/
+ v+Qi0orKkdrVkjkkRnV/8BVnA42vQiLkTGWrXVgUbMe97z/KcJ15U2edQuhrm0rE3Gp6
+ Tc7dg8hGwEgkjAEz98FGR091MZcQWNMDOzIAzkol/IE2s06DBv3pCxwxXQ6k4mP2L5YS
+ rXPwK0AOAUlOaFGtgvVnqL5GTR8VP8gELG26eSQH3gsxahxDZU3KPlAk8gwMo9tthA+N
+ 8nIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505722; x=1717110522;
+ d=1e100.net; s=20230601; t=1716505725; x=1717110525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pkY8lQqpUNnOLCkMNlutX0B0CL92UQRjmLD6ABd+lCg=;
- b=gU67w1MjFqXAotSE2/v9H4OEMjJ5n5+QjkdYtTX+pvVYIsUk1PiuCCcV2tp+woANzU
- q3eYYQ0IriD2GEaYBBjk8qKJ+YfM+xu7i9/g057EAlI8EOBpsu6j+IM4DMFlsiGyNgKP
- +Xk0HhMMyv1VIuyyIff1j58bd4ol3maSuSO/lASSq1uSin/+kmfmXJwGnyV29I564o2v
- 4IuDXktp9NB3S67vJIEl3yBAl+yl7Vjfruodp6kXTHTZ5AXq4GoDv7YQbOvoAZNFJtqs
- 3JOZfLrNrpWWHOJ9bUr1MQesElAdkKRszSALgPmBjpMJ5UeJvLKuB6+3QnsRkxB/CzD4
- R/zg==
+ bh=YJADVCWLglTFQfxilMmH9rvA7nGdqGwE/G1WVCvAaJg=;
+ b=WEJIFpaBBNo8PZKghJSiDH6XYX+qUlZJfULTHAcCsR+7THMGWqShVti676fN8xMPcq
+ QcqeiQ7tSOszAF7Ovj2h0MZwfB9KYmxnUe5LglDozC97x9mZ3fD6x+7tLEvUTDLXjLVu
+ 8fBughb6/VzAO1ypwsLZ+KwjvKGpnPdK9Sm7KHIDUs/DAAF6vfM1Ma/RMFp4mjb4hTN/
+ nzokDXyLnMMJo4vn0P9RNalOMxR0F6Ti2dA5UCcu0OzfWvcKpsnnbNyXYdA7XB3JAeDC
+ MG4kx/79Jn0cQ/uCFIGh+nuYeTuMKzXAEAB4ID04AwqR6NCBZ318Kg8HIPLW7GHkBBxH
+ Qi3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtMDkAcIaqVBp4Qt1Z2NvzHBAdY/71K/pQGuMRMIwXemym8pwgR8/ABO5z+N0nxasTD+YZGF5qfdIRkCpEmJkhpEVZ
-X-Gm-Message-State: AOJu0YyhGI3qhHHNmX6EUXppkTHhGgtXktskkHsjGVZXp5Dgr95qIC/t
- 3DaKkyp0Ck5VHPV95OnPdOaBipLPK+ywjzCs4S+gMISmc1F4aOHNRK6Ozg==
-X-Google-Smtp-Source: AGHT+IEXv0R+AYHq1ORpaLGP3ILqguQeASjukrDzws8jcYt9lA/MOSB9m/avmdFTF8jBBTyJZP/gTQ==
-X-Received: by 2002:a05:6a21:6da3:b0:1b0:180b:218a with SMTP id
- adf61e73a8af0-1b212ccf871mr1070970637.13.1716505721936; 
- Thu, 23 May 2024 16:08:41 -0700 (PDT)
+ AJvYcCX636i0rcDQTBM+fsSvBhwp4SJ7Vs72e7eFSKjHxFBQNeVdOuCma4EMX22Ha0XojMuaZ+1KgjTwt+IGcvtPCt5XoyqF
+X-Gm-Message-State: AOJu0YwqawBk3NBtJNaUv8N8jd5YZ1yRaI7t0z5uuBElgdvrj3xfNw4N
+ WGYGJnclX4y1wgzQ3eQgaH0o8Qyz7kmoDjnbZzLscIr73qnWZ5Ntkya80g==
+X-Google-Smtp-Source: AGHT+IHOJ9IdjkInFP0XNyTPpEjbH91roANGXXV9H4Gy07YAj2KAkppmjrItq1cTgbdrqWEMRXSw0Q==
+X-Received: by 2002:a17:90b:30c:b0:2b3:28df:92bb with SMTP id
+ 98e67ed59e1d1-2bf5e16cee1mr628404a91.13.1716505725119; 
+ Thu, 23 May 2024 16:08:45 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.39
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:08:41 -0700 (PDT)
+ Thu, 23 May 2024 16:08:44 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Chinmay Rath <rathc@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 14/72] target/ppc: Move neg, darn, mod{sw, uw} to decodetree.
-Date: Fri, 24 May 2024 09:06:47 +1000
-Message-ID: <20240523230747.45703-15-npiggin@gmail.com>
+Subject: [PULL 15/72] target/ppc: Move multiply fixed-point insns (64-bit
+ operands) to decodetree.
+Date: Fri, 24 May 2024 09:06:48 +1000
+Message-ID: <20240523230747.45703-16-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,241 +98,292 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Chinmay Rath <rathc@linux.ibm.com>
 
-Moving the below instructions to decodetree specification :
+Moving the following instructions to decodetree :
 
-	neg[o][.]       	: XO-form
-	mod{sw, uw}, darn	: X-form
+	mul{ld, ldo, hd, hdu}[.]	: XO-form
+	madd{hd, hdu, ld}		: VA-form
 
 The changes were verified by validating that the tcg ops generated by those
-instructions remain the same, which were captured with the '-d in_asm,op' flag.
+instructions remain the same, which were captured with the '-d in_asm,op'
+flag.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 [np: 32-bit compile fix]
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/helper.h                        |  4 +-
- target/ppc/insn32.decode                   |  8 ++++
- target/ppc/int_helper.c                    |  4 +-
- target/ppc/translate.c                     | 56 ----------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 48 +++++++++++++++++++
- 5 files changed, 60 insertions(+), 60 deletions(-)
+ target/ppc/insn32.decode                   |   9 ++
+ target/ppc/translate.c                     | 101 --------------------
+ target/ppc/translate/fixedpoint-impl.c.inc | 105 +++++++++++++++++++++
+ 3 files changed, 114 insertions(+), 101 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 6f5c0c20eb..5a97429f1e 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -71,8 +71,8 @@ DEF_HELPER_FLAGS_2(cmpeqb, TCG_CALL_NO_RWG_SE, i32, tl, tl)
- DEF_HELPER_FLAGS_1(popcntw, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_2(bpermd, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_3(srad, tl, env, tl, tl)
--DEF_HELPER_FLAGS_0(darn32, TCG_CALL_NO_RWG, tl)
--DEF_HELPER_FLAGS_0(darn64, TCG_CALL_NO_RWG, tl)
-+DEF_HELPER_FLAGS_0(DARN32, TCG_CALL_NO_RWG, tl)
-+DEF_HELPER_FLAGS_0(DARN64, TCG_CALL_NO_RWG, tl)
- #endif
- 
- DEF_HELPER_FLAGS_1(cntlsw32, TCG_CALL_NO_RWG_SE, i32, i32)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index c5291504dd..3051792a56 100644
+index 3051792a56..46199488f7 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -196,6 +196,9 @@
- &X_a            ra
- @X_a            ...... ra:3 .. ..... ..... .......... .         &X_a
+@@ -384,6 +384,15 @@ MODUW           011111 ..... ..... ..... 0100001011 -   @X
+ DARN            011111 ..... --- .. ----- 1011110011 -  @X_tl
+ NEG             011111 ..... ..... ----- . 001101000 .  @XO_ta
  
-+&X_tl           rt l
-+@X_tl           ...... rt:5 ... l:2 ..... .......... .          &X_tl
++MULLD           011111 ..... ..... ..... 0 011101001 .  @XO_tab_rc
++MULLDO          011111 ..... ..... ..... 1 011101001 .  @XO_tab_rc
++MULHD           011111 ..... ..... ..... - 001001001 .  @XO_tab_rc
++MULHDU          011111 ..... ..... ..... - 000001001 .  @XO_tab_rc
 +
- &XO             rt ra rb oe:bool rc:bool
- @XO             ...... rt:5 ra:5 rb:5 oe:1 ......... rc:1       &XO
- 
-@@ -376,6 +379,11 @@ DIVWU           011111 ..... ..... ..... . 111001011 .  @XO
- DIVWE           011111 ..... ..... ..... . 110101011 .  @XO
- DIVWEU          011111 ..... ..... ..... . 110001011 .  @XO
- 
-+MODSW           011111 ..... ..... ..... 1100001011 -   @X
-+MODUW           011111 ..... ..... ..... 0100001011 -   @X
-+DARN            011111 ..... --- .. ----- 1011110011 -  @X_tl
-+NEG             011111 ..... ..... ----- . 001101000 .  @XO_ta
++MADDLD          000100 ..... ..... ..... ..... 110011   @VA
++MADDHD          000100 ..... ..... ..... ..... 110000   @VA
++MADDHDU         000100 ..... ..... ..... ..... 110001   @VA
 +
  ## Fixed-Point Logical Instructions
  
  CFUGED          011111 ..... ..... ..... 0011011100 -   @X
-diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-index dc1f72ff38..bc25d5b062 100644
---- a/target/ppc/int_helper.c
-+++ b/target/ppc/int_helper.c
-@@ -171,7 +171,7 @@ uint32_t helper_cmpeqb(target_ulong ra, target_ulong rb)
- /*
-  * Return a random number.
-  */
--uint64_t helper_darn32(void)
-+uint64_t helper_DARN32(void)
- {
-     Error *err = NULL;
-     uint32_t ret;
-@@ -186,7 +186,7 @@ uint64_t helper_darn32(void)
-     return ret;
- }
- 
--uint64_t helper_darn64(void)
-+uint64_t helper_DARN64(void)
- {
-     Error *err = NULL;
-     uint64_t ret;
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 59248ae3fb..3756b0c495 100644
+index 3756b0c495..c76c4c9054 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -1877,17 +1877,6 @@ static inline void gen_op_arith_modw(DisasContext *ctx, TCGv ret, TCGv arg1,
-     }
- }
+@@ -1917,62 +1917,6 @@ GEN_INT_ARITH_MODD(modud, 0x08, 0);
+ GEN_INT_ARITH_MODD(modsd, 0x18, 1);
+ #endif
  
--#define GEN_INT_ARITH_MODW(name, opc3, sign)                                \
--static void glue(gen_, name)(DisasContext *ctx)                             \
--{                                                                           \
--    gen_op_arith_modw(ctx, cpu_gpr[rD(ctx->opcode)],                        \
--                      cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)],   \
--                      sign);                                                \
--}
--
--GEN_INT_ARITH_MODW(moduw, 0x08, 0);
--GEN_INT_ARITH_MODW(modsw, 0x18, 1);
--
- #if defined(TARGET_PPC64)
- static inline void gen_op_arith_modd(DisasContext *ctx, TCGv ret, TCGv arg1,
-                                      TCGv arg2, int sign)
-@@ -2054,27 +2043,6 @@ static inline void gen_op_arith_subf(DisasContext *ctx, TCGv ret, TCGv arg1,
-     }
- }
- 
--/* neg neg. nego nego. */
--static inline void gen_op_arith_neg(DisasContext *ctx, bool compute_ov)
+-#if defined(TARGET_PPC64)
+-/* mulhd  mulhd. */
+-static void gen_mulhd(DisasContext *ctx)
 -{
--    TCGv zero = tcg_constant_tl(0);
--    gen_op_arith_subf(ctx, cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)],
--                      zero, 0, 0, compute_ov, Rc(ctx->opcode));
--}
--
--static void gen_neg(DisasContext *ctx)
--{
--    tcg_gen_neg_tl(cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)]);
--    if (unlikely(Rc(ctx->opcode))) {
+-    TCGv lo = tcg_temp_new();
+-    tcg_gen_muls2_tl(lo, cpu_gpr[rD(ctx->opcode)],
+-                     cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
 -        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
 -    }
 -}
 -
--static void gen_nego(DisasContext *ctx)
+-/* mulhdu  mulhdu. */
+-static void gen_mulhdu(DisasContext *ctx)
 -{
--    gen_op_arith_neg(ctx, 1);
--}
--
- /***                            Integer logical                            ***/
- #define GEN_LOGICAL2(name, tcg_op, opc, type)                                 \
- static void glue(gen_, name)(DisasContext *ctx)                               \
-@@ -2400,24 +2368,6 @@ static void gen_cnttzd(DisasContext *ctx)
-         gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
-     }
- }
--
--/* darn */
--static void gen_darn(DisasContext *ctx)
--{
--    int l = L(ctx->opcode);
--
--    if (l > 2) {
--        tcg_gen_movi_i64(cpu_gpr[rD(ctx->opcode)], -1);
--    } else {
--        translator_io_start(&ctx->base);
--        if (l == 0) {
--            gen_helper_darn32(cpu_gpr[rD(ctx->opcode)]);
--        } else {
--            /* Return 64-bit random for both CRN and RRN */
--            gen_helper_darn64(cpu_gpr[rD(ctx->opcode)]);
--        }
+-    TCGv lo = tcg_temp_new();
+-    tcg_gen_mulu2_tl(lo, cpu_gpr[rD(ctx->opcode)],
+-                     cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
 -    }
 -}
- #endif
+-
+-/* mulld  mulld. */
+-static void gen_mulld(DisasContext *ctx)
+-{
+-    tcg_gen_mul_tl(cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)],
+-                   cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
+-    }
+-}
+-
+-/* mulldo  mulldo. */
+-static void gen_mulldo(DisasContext *ctx)
+-{
+-    TCGv_i64 t0 = tcg_temp_new_i64();
+-    TCGv_i64 t1 = tcg_temp_new_i64();
+-
+-    tcg_gen_muls2_i64(t0, t1, cpu_gpr[rA(ctx->opcode)],
+-                      cpu_gpr[rB(ctx->opcode)]);
+-    tcg_gen_mov_i64(cpu_gpr[rD(ctx->opcode)], t0);
+-
+-    tcg_gen_sari_i64(t0, t0, 63);
+-    tcg_gen_setcond_i64(TCG_COND_NE, cpu_ov, t0, t1);
+-    if (is_isa300(ctx)) {
+-        tcg_gen_mov_tl(cpu_ov32, cpu_ov);
+-    }
+-    tcg_gen_or_tl(cpu_so, cpu_so, cpu_ov);
+-
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
+-    }
+-}
+-#endif
+-
+ /* Common subf function */
+ static inline void gen_op_arith_subf(DisasContext *ctx, TCGv ret, TCGv arg1,
+                                      TCGv arg2, bool add_ca, bool compute_ca,
+@@ -5795,36 +5739,6 @@ static void gen_icbt_440(DisasContext *ctx)
+      */
+ }
  
- /***                             Integer rotate                            ***/
-@@ -6243,8 +6193,6 @@ GEN_HANDLER(isel, 0x1F, 0x0F, 0xFF, 0x00000001, PPC_ISEL),
- #if defined(TARGET_PPC64)
- GEN_HANDLER(mulld, 0x1F, 0x09, 0x07, 0x00000000, PPC_64B),
- #endif
--GEN_HANDLER(neg, 0x1F, 0x08, 0x03, 0x0000F800, PPC_INTEGER),
--GEN_HANDLER(nego, 0x1F, 0x08, 0x13, 0x0000F800, PPC_INTEGER),
+-#if defined(TARGET_PPC64)
+-static void gen_maddld(DisasContext *ctx)
+-{
+-    TCGv_i64 t1 = tcg_temp_new_i64();
+-
+-    tcg_gen_mul_i64(t1, cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    tcg_gen_add_i64(cpu_gpr[rD(ctx->opcode)], t1, cpu_gpr[rC(ctx->opcode)]);
+-}
+-
+-/* maddhd maddhdu */
+-static void gen_maddhd_maddhdu(DisasContext *ctx)
+-{
+-    TCGv_i64 lo = tcg_temp_new_i64();
+-    TCGv_i64 hi = tcg_temp_new_i64();
+-    TCGv_i64 t1 = tcg_temp_new_i64();
+-
+-    if (Rc(ctx->opcode)) {
+-        tcg_gen_mulu2_i64(lo, hi, cpu_gpr[rA(ctx->opcode)],
+-                          cpu_gpr[rB(ctx->opcode)]);
+-        tcg_gen_movi_i64(t1, 0);
+-    } else {
+-        tcg_gen_muls2_i64(lo, hi, cpu_gpr[rA(ctx->opcode)],
+-                          cpu_gpr[rB(ctx->opcode)]);
+-        tcg_gen_sari_i64(t1, cpu_gpr[rC(ctx->opcode)], 63);
+-    }
+-    tcg_gen_add2_i64(t1, cpu_gpr[rD(ctx->opcode)], lo, hi,
+-                     cpu_gpr[rC(ctx->opcode)], t1);
+-}
+-#endif /* defined(TARGET_PPC64) */
+-
+ static void gen_tbegin(DisasContext *ctx)
+ {
+     if (unlikely(!ctx->tm_enabled)) {
+@@ -6190,9 +6104,6 @@ GEN_HANDLER_E(cmpeqb, 0x1F, 0x00, 0x07, 0x00600000, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(cmpb, 0x1F, 0x1C, 0x0F, 0x00000001, PPC_NONE, PPC2_ISA205),
+ GEN_HANDLER_E(cmprb, 0x1F, 0x00, 0x06, 0x00400001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER(isel, 0x1F, 0x0F, 0xFF, 0x00000001, PPC_ISEL),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER(mulld, 0x1F, 0x09, 0x07, 0x00000000, PPC_64B),
+-#endif
  GEN_HANDLER2(andi_, "andi.", 0x1C, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
  GEN_HANDLER2(andis_, "andis.", 0x1D, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
  GEN_HANDLER(cntlzw, 0x1F, 0x1A, 0x00, 0x00000000, PPC_INTEGER),
-@@ -6265,7 +6213,6 @@ GEN_HANDLER_E(prtyw, 0x1F, 0x1A, 0x04, 0x0000F801, PPC_NONE, PPC2_ISA205),
- GEN_HANDLER(popcntd, 0x1F, 0x1A, 0x0F, 0x0000F801, PPC_POPCNTWD),
- GEN_HANDLER(cntlzd, 0x1F, 0x1A, 0x01, 0x00000000, PPC_64B),
- GEN_HANDLER_E(cnttzd, 0x1F, 0x1A, 0x11, 0x00000000, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(darn, 0x1F, 0x13, 0x17, 0x001CF801, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(prtyd, 0x1F, 0x1A, 0x05, 0x0000F801, PPC_NONE, PPC2_ISA205),
- GEN_HANDLER_E(bpermd, 0x1F, 0x1C, 0x07, 0x00000001, PPC_NONE, PPC2_PERM_ISA206),
- #endif
-@@ -6450,9 +6397,6 @@ GEN_HANDLER_E(maddhd_maddhdu, 0x04, 0x18, 0xFF, 0x00000000, PPC_NONE,
- GEN_HANDLER_E(maddld, 0x04, 0x19, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA300),
- #endif
+@@ -6391,11 +6302,6 @@ GEN_HANDLER(lvsl, 0x1f, 0x06, 0x00, 0x00000001, PPC_ALTIVEC),
+ GEN_HANDLER(lvsr, 0x1f, 0x06, 0x01, 0x00000001, PPC_ALTIVEC),
+ GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
+ GEN_HANDLER(mtvscr, 0x04, 0x2, 0x19, 0x03ff0000, PPC_ALTIVEC),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER_E(maddhd_maddhdu, 0x04, 0x18, 0xFF, 0x00000000, PPC_NONE,
+-              PPC2_ISA300),
+-GEN_HANDLER_E(maddld, 0x04, 0x19, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA300),
+-#endif
  
--GEN_HANDLER_E(modsw, 0x1F, 0x0B, 0x18, 0x00000001, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(moduw, 0x1F, 0x0B, 0x08, 0x00000001, PPC_NONE, PPC2_ISA300),
--
  #if defined(TARGET_PPC64)
  #undef GEN_INT_ARITH_DIVD
- #define GEN_INT_ARITH_DIVD(name, opc3, sign, compute_ov)                      \
+@@ -6412,13 +6318,6 @@ GEN_HANDLER_E(divde, 0x1F, 0x09, 0x0D, 0, PPC_NONE, PPC2_DIVE_ISA206),
+ GEN_HANDLER_E(divdeo, 0x1F, 0x09, 0x1D, 0, PPC_NONE, PPC2_DIVE_ISA206),
+ GEN_HANDLER_E(modsd, 0x1F, 0x09, 0x18, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(modud, 0x1F, 0x09, 0x08, 0x00000001, PPC_NONE, PPC2_ISA300),
+-
+-#undef GEN_INT_ARITH_MUL_HELPER
+-#define GEN_INT_ARITH_MUL_HELPER(name, opc3)                                  \
+-GEN_HANDLER(name, 0x1F, 0x09, opc3, 0x00000000, PPC_64B)
+-GEN_INT_ARITH_MUL_HELPER(mulhdu, 0x00),
+-GEN_INT_ARITH_MUL_HELPER(mulhd, 0x02),
+-GEN_INT_ARITH_MUL_HELPER(mulldo, 0x17),
+ #endif
+ 
+ #undef GEN_LOGICAL1
 diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 3265c77aa6..584cc4bfb2 100644
+index 584cc4bfb2..077c938b30 100644
 --- a/target/ppc/translate/fixedpoint-impl.c.inc
 +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -485,6 +485,54 @@ TRANS(DIVWU, do_divw, 0);
- TRANS(DIVWE, do_divwe, gen_helper_DIVWE);
- TRANS(DIVWEU, do_divwe, gen_helper_DIVWEU);
+@@ -533,6 +533,111 @@ static bool trans_DARN(DisasContext *ctx, arg_DARN *a)
+     return true;
+ }
  
-+static bool do_modw(DisasContext *ctx, arg_X *a, bool sign)
++static bool trans_MULLD(DisasContext *ctx, arg_MULLD *a)
 +{
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    gen_op_arith_modw(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb],
-+                      sign);
++    REQUIRE_64BIT(ctx);
++#if defined(TARGET_PPC64)
++    tcg_gen_mul_tl(cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb]);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
++    }
++#else
++    qemu_build_not_reached();
++#endif
 +    return true;
 +}
 +
-+TRANS(MODUW, do_modw, false);
-+TRANS(MODSW, do_modw, true);
-+
-+static bool trans_NEG(DisasContext *ctx, arg_NEG *a)
++static bool trans_MULLDO(DisasContext *ctx, arg_MULLD *a)
 +{
-+    if (a->oe) {
-+        TCGv zero = tcg_constant_tl(0);
-+        gen_op_arith_subf(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], zero,
-+                          false, false, true, a->rc);
-+    } else {
-+        tcg_gen_neg_tl(cpu_gpr[a->rt], cpu_gpr[a->ra]);
-+        if (unlikely(a->rc)) {
-+            gen_set_Rc0(ctx, cpu_gpr[a->rt]);
-+        }
++    REQUIRE_64BIT(ctx);
++#if defined(TARGET_PPC64)
++    TCGv_i64 t0 = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    tcg_gen_muls2_i64(t0, t1, cpu_gpr[a->ra], cpu_gpr[a->rb]);
++    tcg_gen_mov_i64(cpu_gpr[a->rt], t0);
++
++    tcg_gen_sari_i64(t0, t0, 63);
++    tcg_gen_setcond_i64(TCG_COND_NE, cpu_ov, t0, t1);
++    if (is_isa300(ctx)) {
++        tcg_gen_mov_tl(cpu_ov32, cpu_ov);
++    }
++    tcg_gen_or_tl(cpu_so, cpu_so, cpu_ov);
++
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
++    }
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool do_mulhd(DisasContext *ctx, arg_XO_tab_rc *a,
++                     void (*helper)(TCGv, TCGv, TCGv, TCGv))
++{
++    TCGv lo = tcg_temp_new();
++    helper(lo, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb]);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
 +    }
 +    return true;
 +}
 +
-+static bool trans_DARN(DisasContext *ctx, arg_DARN *a)
++TRANS64(MULHD, do_mulhd, tcg_gen_muls2_tl);
++TRANS64(MULHDU, do_mulhd, tcg_gen_mulu2_tl);
++
++static bool trans_MADDLD(DisasContext *ctx, arg_MADDLD *a)
 +{
 +    REQUIRE_64BIT(ctx);
 +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
 +#if defined(TARGET_PPC64)
-+    if (a->l > 2) {
-+        tcg_gen_movi_i64(cpu_gpr[a->rt], -1);
-+    } else {
-+        translator_io_start(&ctx->base);
-+        if (a->l == 0) {
-+            gen_helper_DARN32(cpu_gpr[a->rt]);
-+        } else {
-+            /* Return 64-bit random for both CRN and RRN */
-+            gen_helper_DARN64(cpu_gpr[a->rt]);
-+        }
-+    }
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    tcg_gen_mul_i64(t1, cpu_gpr[a->vra], cpu_gpr[a->vrb]);
++    tcg_gen_add_i64(cpu_gpr[a->vrt], t1, cpu_gpr[a->rc]);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_MADDHD(DisasContext *ctx, arg_MADDHD *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++#if defined(TARGET_PPC64)
++    TCGv_i64 lo = tcg_temp_new_i64();
++    TCGv_i64 hi = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    tcg_gen_muls2_i64(lo, hi, cpu_gpr[a->vra], cpu_gpr[a->vrb]);
++    tcg_gen_sari_i64(t1, cpu_gpr[a->rc], 63);
++    tcg_gen_add2_i64(t1, cpu_gpr[a->vrt], lo, hi, cpu_gpr[a->rc], t1);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_MADDHDU(DisasContext *ctx, arg_MADDHDU *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++#if defined(TARGET_PPC64)
++    TCGv_i64 lo = tcg_temp_new_i64();
++    TCGv_i64 hi = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    tcg_gen_mulu2_i64(lo, hi, cpu_gpr[a->vra], cpu_gpr[a->vrb]);
++    tcg_gen_add2_i64(t1, cpu_gpr[a->vrt], lo, hi, cpu_gpr[a->rc],
++                     tcg_constant_i64(0));
 +#else
 +    qemu_build_not_reached();
 +#endif
