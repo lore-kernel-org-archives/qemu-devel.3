@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CCE7C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62F8C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHZH-0001Q1-Co; Thu, 23 May 2024 19:09:51 -0400
+	id 1sAHa2-0004oO-LK; Thu, 23 May 2024 19:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZ7-0000RF-4d; Thu, 23 May 2024 19:09:43 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1sAHZl-00037x-3K; Thu, 23 May 2024 19:10:21 -0400
+Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYx-0005oD-HR; Thu, 23 May 2024 19:09:40 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f8e819a540so346324b3a.0; 
- Thu, 23 May 2024 16:09:25 -0700 (PDT)
+ id 1sAHZc-00065E-Qj; Thu, 23 May 2024 19:10:20 -0400
+Received: by mail-il1-x136.google.com with SMTP id
+ e9e14a558f8ab-3737b27dc95so1569135ab.0; 
+ Thu, 23 May 2024 16:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505763; x=1717110563; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505810; x=1717110610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wqUaQGSgYMin+3lQdQKQjhzEKnE4NEk8qBGjnn1PYKA=;
- b=Iek1cShXx8fQWZyva8d7PXuwpImVm1S9YRy7dwyNufzgVSWvpdFUZ6A3dU5gDN2trO
- ENdeDmsVMnlEXITDSCEEPzsXs5+IJbDQdll9NarlCJkBVrGcM0DvQv/tS3ATFZq0H90+
- 4TZ6YQVbxPeisW8wLSq9+zPrijaZVcfgCtPAU/Tbp+S6hDvx7rsWfHxapW+hvNAJFzhD
- LTBP7EfKZWcCLLnbUnlDFB/MK7w/OtBjtbibU2CLi2FF3N/fwWyL2GAEG8Ymv3cwmK0S
- sRzFThi/12Nd6FUVGcjrKedpx6Ycp/U3bksFdlpyAF8cRe7q8BKdm75T5xyFNuq07g4h
- a7fw==
+ bh=CwUtarmCOIlit6nKCVmwVsEWWjZXwUEGtfIuJDu/51c=;
+ b=O6wDGnPuVQj6sYXRp7pr6Wuy6r7IIpq6uSTdNGi4Rm9BRkwBp8CqRvzBpJ7eoYsoR0
+ hC/bO1/hBjASDS2RK+ym0MpzZFmicciGMqWKV6WCxK9FzWb9rAzP1lharbi1b2zKO9yH
+ qyt2erDb+PDlyo+lO3f6pwi8dG+woHwH2VBMfGnMuT7R2resJA0Jkz6WAa7PVJMmPIZd
+ 5G6SmxgBYjPkfHfF798RnYlFKJC3h7EVAGhgrkZG4I4eENL4xkZceFV0S0AC8H+0t2a9
+ RhGPwFMISHHBlSNFBkicfw2lJi9mLiiluX2EAyax/66ePp1qgboixTGYtmzm3iaM0fJP
+ zZ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505763; x=1717110563;
+ d=1e100.net; s=20230601; t=1716505810; x=1717110610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wqUaQGSgYMin+3lQdQKQjhzEKnE4NEk8qBGjnn1PYKA=;
- b=Ps1NK7xJuQu93BGbg6ebLDrv8SplDGFxAVZEclBepyh/lsoGAwFC0h4sexdKqkJ4Jg
- zxIspXN4yflsuDSMic9+sW9VvHOCxXWMo6oQCI1U4wgDf2+qldki4/Wtoo8ZiYfwpRn7
- N9jDnLa0xrvX3/gmuP6ldXyf48bSSfS0E204MpA820g5ekE5z/XeIIU9eaP6ws42evAa
- lbG/QqgrX+jAtY/dPCoyz0pnCWUlk8kClohu+tEiKLQxuCs48vL2bupxYZ5j16P59cWx
- clMDkOae3f43bxSP+k9nS9DxFtreR3dnuXV72ZM0pE4r1rinbEQzQntrN3ZLLHEhKgaa
- p/DQ==
+ bh=CwUtarmCOIlit6nKCVmwVsEWWjZXwUEGtfIuJDu/51c=;
+ b=AnVulkdYjefVq5HKtyPHib5aYNbH9dkVhUigoY6DE7gB3JGoQCblF63tduYc60O7rd
+ 7BLR9tF3jgXtrrBWMirEpOwOmCDLRX+rWgh9OWOm19a6NTpmNCSLnz1bcI85Awid1NF8
+ rzltwYcT5KsPXmCyWFxx25O+rjvik1LHcdy8dVj//gX5ee/yycY1ar0ayo97NR8M68gu
+ EHBhGWlOnpCf0Vv8/K3n9ryfcPcOSpZIQfRY7eIen6crMDi0hbtKHRiX0aWRw53mJINq
+ uOw/SJa5NoGrykDtJIkEflD8ZPxIgjVPoUQi6wOPscUd0jS58FN4ceAvB61kaUPLrDeD
+ swPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrF5lWFepCpR27O+FNxNIiShqfeCQ8Scmefg4Oxxxy9FChNH0Ji5Ajeqhs7OK6MrIfRKCN0+SfEhmdpWsNNSzAPRD7
-X-Gm-Message-State: AOJu0YyoJ1NsBG5ZK0bBWarwCqRUO040QN8HqOa83i1E9HlCGzX3X6z9
- rYS5wg4XhVSKw7wklVGOzKjS2eM7e+ArFugidmYZHA9aZV8WzCHVP3gxKA==
-X-Google-Smtp-Source: AGHT+IFDzZkKj+s0I/96qv3ijwwOjdAXP3lWyEr4ZKFH45atYFLnrpUpo6MLvXzxJCdmPMqFW9ntuA==
-X-Received: by 2002:a05:6a21:1f28:b0:1a3:e2c4:956e with SMTP id
- adf61e73a8af0-1b212d1d3c4mr839170637.25.1716505762969; 
- Thu, 23 May 2024 16:09:22 -0700 (PDT)
+ AJvYcCXgiWWYq03+q6nE6vMk84DjZULs4ieMQ0Nk8WDgH2Ldk6j82UmvL3QuuIIaeFmLBh8470EukAWurCgjpdnP5FrWBXL/
+X-Gm-Message-State: AOJu0YzDj/pGxrMrGrocQq58CfZ/+k3JhHfAHmim8uFpLicmiiDhNBRh
+ nNRztJhC/yP8E2kA2i9Nr3d+REp+T778TiYBvPSHFY5qWGcNuwjRx8ef4Q==
+X-Google-Smtp-Source: AGHT+IFbpxA8zOzxHC6/1m+Vr5PakA295xwdeklWi7oJqXu66cQx6GVCs1RyPyIYlwWCxauVTA1eiA==
+X-Received: by 2002:a05:6e02:1c88:b0:36c:5228:446 with SMTP id
+ e9e14a558f8ab-3737b31e13amr9395835ab.26.1716505810557; 
+ Thu, 23 May 2024 16:10:10 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.20
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.10.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:09:22 -0700 (PDT)
+ Thu, 23 May 2024 16:10:10 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 27/72] target/ppc: Remove redundant MEMOP_GET_SIZE macro
-Date: Fri, 24 May 2024 09:07:00 +1000
-Message-ID: <20240523230747.45703-28-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 43/72] target/ppc/mmu_common.c: Simplify checking for real mode
+Date: Fri, 24 May 2024 09:07:16 +1000
+Message-ID: <20240523230747.45703-44-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,55 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a memop_size() function for this.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+In get_physical_address_wtlb() the real_mode flag depends on either
+the MSR[IR] or MSR[DR] bit depending on access_type. Extract just the
+needed bit in a more straight forward way instead of doing unnecessary
+computation.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/translate.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ target/ppc/mmu_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 6c103dafe0..cf42dfcc9d 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2840,8 +2840,6 @@ static void gen_isync(DisasContext *ctx)
-     ctx->base.is_jmp = DISAS_EXIT_UPDATE;
- }
- 
--#define MEMOP_GET_SIZE(x)  (1 << ((x) & MO_SIZE))
--
- static void gen_load_locked(DisasContext *ctx, MemOp memop)
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 09cbeb0052..886fb6a657 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1184,8 +1184,10 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                                      int mmu_idx)
  {
-     TCGv gpr = cpu_gpr[rD(ctx->opcode)];
-@@ -2874,7 +2872,7 @@ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
-     TCGv u = tcg_temp_new();
+     int ret = -1;
+-    bool real_mode = (type == ACCESS_CODE && !FIELD_EX64(env->msr, MSR, IR)) ||
+-                     (type != ACCESS_CODE && !FIELD_EX64(env->msr, MSR, DR));
++    bool real_mode;
++
++    real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
++                                      : !FIELD_EX64(env->msr, MSR, DR);
  
-     tcg_gen_qemu_ld_tl(t, EA, ctx->mem_idx, memop);
--    tcg_gen_addi_tl(t2, EA, MEMOP_GET_SIZE(memop));
-+    tcg_gen_addi_tl(t2, EA, memop_size(memop));
-     tcg_gen_qemu_ld_tl(t2, t2, ctx->mem_idx, memop);
-     tcg_gen_addi_tl(u, t, addend);
- 
-@@ -2884,7 +2882,7 @@ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
-     tcg_gen_qemu_st_tl(u, EA, ctx->mem_idx, memop);
- 
-     /* RT = (t != t2 ? t : u = 1<<(s*8-1)) */
--    tcg_gen_movi_tl(u, 1 << (MEMOP_GET_SIZE(memop) * 8 - 1));
-+    tcg_gen_movi_tl(u, 1 << (memop_size(memop) * 8 - 1));
-     tcg_gen_movcond_tl(cond, cpu_gpr[rD(ctx->opcode)], t, t2, t, u);
- }
- 
-@@ -3046,7 +3044,7 @@ static void gen_st_atomic(DisasContext *ctx, MemOp memop)
-             TCGv ea_plus_s = tcg_temp_new();
- 
-             tcg_gen_qemu_ld_tl(t, EA, ctx->mem_idx, memop);
--            tcg_gen_addi_tl(ea_plus_s, EA, MEMOP_GET_SIZE(memop));
-+            tcg_gen_addi_tl(ea_plus_s, EA, memop_size(memop));
-             tcg_gen_qemu_ld_tl(t2, ea_plus_s, ctx->mem_idx, memop);
-             tcg_gen_movcond_tl(TCG_COND_EQ, s, t, t2, src, t);
-             tcg_gen_movcond_tl(TCG_COND_EQ, s2, t, t2, src, t2);
+     switch (env->mmu_model) {
+     case POWERPC_MMU_SOFT_6xx:
 -- 
 2.43.0
 
