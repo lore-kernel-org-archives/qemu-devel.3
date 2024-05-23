@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67920C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 14:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D42FC25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 14:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9tX-0005Zj-Pw; Thu, 23 May 2024 10:58:16 -0400
+	id 1sA9rq-0002iC-Gq; Thu, 23 May 2024 10:56:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sA9sp-0004UQ-36
- for qemu-devel@nongnu.org; Thu, 23 May 2024 10:57:32 -0400
+ id 1sA9rS-0002I4-4g
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 10:56:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sA9sm-00047X-1a
- for qemu-devel@nongnu.org; Thu, 23 May 2024 10:57:30 -0400
+ id 1sA9rP-0003zQ-Cs
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 10:56:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476247;
+ s=mimecast20190719; t=1716476162;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4qTvP6lxIhuzEFJYH1iq7oEMz1Xbgzhb1MVJySeq+gQ=;
- b=Qtdq3f8MYy1K2TxgNiATrCqAm1J1YvjyCgtwudKi4vMJ4pTLCgGKMbpwCKU5SV1GEVuGWd
- ZysACbjf7bure5iv/djae2hG40mcisctfLJaK16FpqEYE46j5AhH4zwJIcjyP5YH0wCmDN
- /VherCTeXCYYD5ChT3VVhXPcMxEXsQM=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hN/AM+u5Z+nLunf2Rn+i5MH2xtaDn5R44afvB9no9H8=;
+ b=Krie9YBayxWKzy+uzdLHzd2eYitjNpY+i8DYzZG7bvVTOUHO2xJxGFmR4cS3ZTe0cA599K
+ vNgYQQ+Nav34nZEJzyeN0Mpj2wpdRsMP5CoWUTwQsWsweqCfjDZ16eyts3wo8tnwk+s8gp
+ yBSSklP8r7n7IWnUdlegpsglPxGUn7I=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-pHZsB537NzyHQUcHcbFddg-1; Thu, 23 May 2024 10:57:26 -0400
-X-MC-Unique: pHZsB537NzyHQUcHcbFddg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-792bd1dc658so35998585a.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 07:57:26 -0700 (PDT)
+ us-mta-227-RWgf_cylNmaV6ZoCUsnj-Q-1; Thu, 23 May 2024 10:56:01 -0400
+X-MC-Unique: RWgf_cylNmaV6ZoCUsnj-Q-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6ab7b258941so3344926d6.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 07:56:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476244; x=1717081044;
+ d=1e100.net; s=20230601; t=1716476161; x=1717080961;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4qTvP6lxIhuzEFJYH1iq7oEMz1Xbgzhb1MVJySeq+gQ=;
- b=jIEoKZrlEynE6fSspqLo9QaPBdpCshvLjZHu0bQcDYHzAM/eqn6K7D/Q1jQEKVOFXT
- ypyabMwMfRR5A15dLH4jBMK2fHgvoRPaWQKVQAOEGf1JXP65vB0RZHLHc/XIDhyG0qho
- Cm/fusx4e9tegKPvRFWsHP4fAp02I25WtRfijpbuhz+mxXoxaEevPZQK6CA0dG6idKGS
- 6EFfHDJsLMSsQqaKtvGegUY+zJnPIIrkI1RIzxWOgLXYoKa8drIZOXdSf9mvMjK6QjUB
- 7RPLqZmR6e7sIKM8bhKmBsRLaLDe99OFattARPMeWAT1Cfsv1yYSmNqj81gtMP/sPRCZ
- zU5w==
-X-Gm-Message-State: AOJu0YwJrL35O7trIU5TNJihF7eu05QXRsrF7IUxDTapmzByIcwiXAh+
- wLDnez83HYCxOalC6FbbIQaoKkJiTQKmmQ3DdJxynNqgCI6CHSLYRwc5poQbwvQYJYPOexkfLPI
- pRl0YO/Ow+0ZJFLWHW871/46e481GGl5SBHgNkDU0C2hOpZaYlfI4+M9j28J8YitbeZjEm8CH0o
- yPx+sE9EPNWA+FS9kePXGnY+g2hLBZXRHBH5m+
-X-Received: by 2002:a05:620a:2443:b0:794:9a59:351e with SMTP id
- af79cd13be357-794a0a424b1mr439564085a.38.1716476244169; 
- Thu, 23 May 2024 07:57:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHp1yk4jpZXBC7fK6rr6gmRwWPbVRC83ZwhgPHVBlqcc9fA+mWGWGswNg8LMwlL6pRnDDgiXA==
-X-Received: by 2002:a05:620a:2443:b0:794:9a59:351e with SMTP id
- af79cd13be357-794a0a424b1mr439558585a.38.1716476243673; 
- Thu, 23 May 2024 07:57:23 -0700 (PDT)
+ bh=hN/AM+u5Z+nLunf2Rn+i5MH2xtaDn5R44afvB9no9H8=;
+ b=r+r+8TRCu5FP69qT4hWdmi9QR1aoVnVZ7dr8q1MYDYdL86aj3FhDRMoRXF2C4TGdKM
+ /7/TzRLnBGRId0CY5JzOOEF+W5GSSvCZ9uh/SNw7zMsQ81hPkdQrWxUjDhY2u7rYLG0F
+ OOkCTOG0eCEFl26mWJnCm+X1e9D5/zsRvTEp+mPTcjnDaVcpZeRcYWHe4FIgbSMI5DIS
+ 7ro6DGF1NFiNuBewo38aQC/dS1to2pCsFg9t1zowpUrPwMVkuFWZPhWgSpgU8tCThIzl
+ aVTRm6pKOjUKzPTLcYfrh9j+gug7mHaihoxQonRhmJwmpnqjowTxk48jZvhBdzpmliYL
+ 87YQ==
+X-Gm-Message-State: AOJu0YxtGqwGdpZeMbwWWrT9cBJ13rCp3qx73hoihgH6n46PjiKwOcTl
+ yvj9Dh5GLlJ+OobBDcjqXmD2tcOoSeO+/frFsvGxyoQjYQ/LOMY1Mf9refbIpizm3rKGo+x13Q2
+ qz0i82CMC+reRHUCgoyvqwrcxrRYSqG6QYaYF+pSQsTp1Eg6ZQcwjSjezZ3k0bQ/4zqEnXd7lr5
+ BAMvWkRii6Og2qhSROkMOoks7N3prsFP2SY54s
+X-Received: by 2002:ad4:4f54:0:b0:6ab:8a1b:6941 with SMTP id
+ 6a1803df08f44-6ab8a1b6b1bmr35374436d6.7.1716476161073; 
+ Thu, 23 May 2024 07:56:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYM6uGiT4bQfpAzvCAcmG6s6un94sj/pZW+pZmEpB7DSlUh5LBB6cJ2/hoTPcTM92uGDVcrg==
+X-Received: by 2002:ad4:4f54:0:b0:6ab:8a1b:6941 with SMTP id
+ 6a1803df08f44-6ab8a1b6b1bmr35374046d6.7.1716476160643; 
+ Thu, 23 May 2024 07:56:00 -0700 (PDT)
 Received: from step1.redhat.com (host-79-53-30-109.retail.telecomitalia.it.
  [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792db4083c1sm1185772885a.76.2024.05.23.07.57.17
+ 6a1803df08f44-6ab8b361681sm11824566d6.84.2024.05.23.07.55.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 07:57:21 -0700 (PDT)
+ Thu, 23 May 2024 07:55:59 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
@@ -83,14 +83,14 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, gmaglione@redhat.com,
  Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v5 13/13] tests/qtest/vhost-user-test: add a test case for
- memory-backend-shm
-Date: Thu, 23 May 2024 16:55:22 +0200
-Message-ID: <20240523145522.313012-14-sgarzare@redhat.com>
+Subject: [PATCH v5 04/13] vhost-user-server: do not set memory fd non-blocking
+Date: Thu, 23 May 2024 16:55:13 +0200
+Message-ID: <20240523145522.313012-5-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523145522.313012-1-sgarzare@redhat.com>
 References: <20240523145522.313012-1-sgarzare@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -100,7 +100,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,78 +116,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`memory-backend-shm` can be used with vhost-user devices, so let's
-add a new test case for it.
+In vhost-user-server we set all fd received from the other peer
+in non-blocking mode. For some of them (e.g. memfd, shm_open, etc.)
+it's not really needed, because we don't use these fd with blocking
+operations, but only to map memory.
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+In addition, in some systems this operation can fail (e.g. in macOS
+setting an fd returned by shm_open() non-blocking fails with errno
+= ENOTTY).
+
+So, let's avoid setting fd non-blocking for those messages that we
+know carry memory fd (e.g. VHOST_USER_ADD_MEM_REG,
+VHOST_USER_SET_MEM_TABLE).
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- tests/qtest/vhost-user-test.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+v3:
+- avoiding setting fd non-blocking for messages where we have memory fd
+  (Eric)
+---
+ util/vhost-user-server.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index d4e437265f..8c1d903b2a 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -44,6 +44,8 @@
-                         "mem-path=%s,share=on -numa node,memdev=mem"
- #define QEMU_CMD_MEMFD  " -m %d -object memory-backend-memfd,id=mem,size=%dM," \
-                         " -numa node,memdev=mem"
-+#define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
-+                        " -numa node,memdev=mem"
- #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
- #define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
- 
-@@ -195,6 +197,7 @@ enum test_memfd {
-     TEST_MEMFD_AUTO,
-     TEST_MEMFD_YES,
-     TEST_MEMFD_NO,
-+    TEST_MEMFD_SHM,
- };
- 
- static void append_vhost_net_opts(TestServer *s, GString *cmd_line,
-@@ -228,6 +231,8 @@ static void append_mem_opts(TestServer *server, GString *cmd_line,
- 
-     if (memfd == TEST_MEMFD_YES) {
-         g_string_append_printf(cmd_line, QEMU_CMD_MEMFD, size, size);
-+    } else if (memfd == TEST_MEMFD_SHM) {
-+        g_string_append_printf(cmd_line, QEMU_CMD_SHM, size, size);
-     } else {
-         const char *root = init_hugepagefs() ? : server->tmpfs;
- 
-@@ -788,6 +793,19 @@ static void *vhost_user_test_setup_memfd(GString *cmd_line, void *arg)
-     return server;
- }
- 
-+static void *vhost_user_test_setup_shm(GString *cmd_line, void *arg)
-+{
-+    TestServer *server = test_server_new("vhost-user-test", arg);
-+    test_server_listen(server);
-+
-+    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
-+    server->vu_ops->append_opts(server, cmd_line, "");
-+
-+    g_test_queue_destroy(vhost_user_test_cleanup, server);
-+
-+    return server;
-+}
-+
- static void test_read_guest_mem(void *obj, void *arg, QGuestAllocator *alloc)
+diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
+index 3bfb1ad3ec..b19229074a 100644
+--- a/util/vhost-user-server.c
++++ b/util/vhost-user-server.c
+@@ -65,6 +65,18 @@ static void vmsg_close_fds(VhostUserMsg *vmsg)
+ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
  {
-     TestServer *server = arg;
-@@ -1081,6 +1099,11 @@ static void register_vhost_user_test(void)
-                  "virtio-net",
-                  test_read_guest_mem, &opts);
- 
-+    opts.before = vhost_user_test_setup_shm;
-+    qos_add_test("vhost-user/read-guest-mem/shm",
-+                 "virtio-net",
-+                 test_read_guest_mem, &opts);
+     int i;
 +
-     if (qemu_memfd_check(MFD_ALLOW_SEALING)) {
-         opts.before = vhost_user_test_setup_memfd;
-         qos_add_test("vhost-user/read-guest-mem/memfd",
++    /*
++     * These messages carry fd used to map memory, not to send/receive messages,
++     * so this operation is useless. In addition, in some systems this
++     * operation can fail (e.g. in macOS setting an fd returned by shm_open()
++     * non-blocking fails with errno = ENOTTY)
++     */
++    if (vmsg->request == VHOST_USER_ADD_MEM_REG ||
++        vmsg->request == VHOST_USER_SET_MEM_TABLE) {
++        return;
++    }
++
+     for (i = 0; i < vmsg->fd_num; i++) {
+         qemu_socket_set_nonblock(vmsg->fds[i]);
+     }
 -- 
 2.45.1
 
