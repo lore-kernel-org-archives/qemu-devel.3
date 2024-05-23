@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDECC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BDDC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAATm-0008Hd-T7; Thu, 23 May 2024 11:35:42 -0400
+	id 1sAATm-0008HO-Mw; Thu, 23 May 2024 11:35:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sAATk-00089k-5g
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:40 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1sAATf-00081x-8F
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:35 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sAATa-0002Uw-9H
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:39 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-41fd5dc0439so22026875e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:35:19 -0700 (PDT)
+ id 1sAATW-0002VO-NM
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:34 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-354ba5663c9so1952429f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716478519; x=1717083319; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716478521; x=1717083321; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GOUAhjCkpKuFCmcb2fcNvFACjE/T8ZQasCxDuNzYDlA=;
- b=ZIT15UpqQg/NF/KxX6SB/ftp6LJB9RPbcTKWZFS/nRySMVGSbpI5r2kXsRJyCSCrFi
- CdPCauPXvcQ16aTWPbLf8vWPw0FSnkC88ulP6uasaj1i21NHAjRYEtbmZdtZ7uMOWjwR
- QgUzLfSJ0LRGFpIkM4vdI8fGVe8MKCEm4ow/EX0LjhEB6A1qdZLRVoNkMZLGpbDIvtC3
- otpvl/qNVlkrSrBx76a4i1LmTJNrExbd4wXRkDhtCOlc2ns2V1gJerr1GIOKwsR+hp/H
- TQ911iAmhuY3sytRaAudLTvAPfNUCnaNwbmuvOc/IdzqtWQZrLsH8x8TGPQH3P76WcRq
- GJSg==
+ :reply-to; bh=AaMTdD1hxgjIPfvS8QEhSXzuebS7gj16do3lFS3yD/E=;
+ b=WzBjPQ5DSf/f3pZD57bhHrhrmO8kr74ZOkLkmz5HSH8RihpxIU8ncVU7zqp7R9OuD3
+ HFroHlqy4YQNwcU7d1Jq/S/frDfNhC9lEByH//cjWd5fR/IlKjXKKF3rwrczFKR4ykfp
+ pI+H6VyKbjBAjKcbacQQ4NdVeMQUjEd4tvc6jbPNb88jjsvoZgVWb+vCFhpaYZIzA9dX
+ XytaWPLFzuhLJeQF50UNfTwnig3QNftI9n5Vo6MXIoyzFD1Aag2f3C9G8wS3+mWDlJo/
+ gbxcL5EzHxKmUn8MStcWV+0jcllGWzSCndPTSXtL2iAg0udI32CqnC8sMtMR7xRqGjof
+ N3vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716478519; x=1717083319;
+ d=1e100.net; s=20230601; t=1716478521; x=1717083321;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GOUAhjCkpKuFCmcb2fcNvFACjE/T8ZQasCxDuNzYDlA=;
- b=XkWnFRQ2wVbz1gYOm97sqll0DOXpklEkmhL6irN+ZLY/XCYbzNdjIJN9A96wQxKhG4
- 8bTvsw5aF9qrRe2+P7QNTz8J0TaFCwdlgGX10hs80RJy1d5Ai0jj85CKHffQesDpuH5F
- xEgsafQk5i3U3CUyqtsCuTFriToB1Z8ZwwFxcAsqExF13f0T7mKqpLvxI1p8NGc8xdJQ
- +GAnC+xo+W1TolMzYwVUM9chonDDYZyiU1rFOnW+wQ5FnRtW9QHGygPaqhl0Mz772y2o
- rXu6DGwogNscSZjDU2aqTqQOXc5oiCqvi/L2uF+aNV+lPGIJ7jqMZnCSUsi9b2wzewqz
- oCnQ==
-X-Gm-Message-State: AOJu0Yw9ttjTXkeEttDqq6QSGyPW+aR7Ta7fzKEzm0pMRd5gA+86gJBM
- BmfU3NffVlX2NHL0HKLhxk1TQ4J3e8+7820MWc3z+U+TxB9TA8OdOmOrSMPPssqdLTp9lSOVcvb
- Y
-X-Google-Smtp-Source: AGHT+IHSDC0L+tWHxMThyKLH27nyq/Ycmo5EM/vscMI8Lu9ePDE3BNDf3aTcYa0ZA1sm6EzXaYYyNQ==
-X-Received: by 2002:adf:efd2:0:b0:355:32f:cc5b with SMTP id
- ffacd0b85a97d-355032fcca3mr526641f8f.21.1716478518851; 
- Thu, 23 May 2024 08:35:18 -0700 (PDT)
+ bh=AaMTdD1hxgjIPfvS8QEhSXzuebS7gj16do3lFS3yD/E=;
+ b=oEVV6u2TCsQPksCFj7JpHV/ZGGYne2vuERhaeLC8ZBqFIXAEvi3sxlSXIFxtjoBR5Q
+ PMVVvd+K/nVuUWofRZhpy9heDZSsrBKqw+Wlr2ElZMzu6ofrWBos5lNuSa6ppb/tpiwy
+ w7FV4s+xnNVZpd1Mvr6VQr/77ofkFeunQx0oA3Hv9LdQjWo88DosVEq7DcqkaVFMS861
+ 1J3Vu6mxu9VknE8181BYA/YoQTkk3q1xq1JX8equO6mwc8+oD257oGdFoU51COpSEvo8
+ J7rM/jcvPQiCezO0eaVpKkJAAV11WBDwuwlt5sazne+6xjyAJ4xrfEVr4ocxJrDVJxM9
+ nXkg==
+X-Gm-Message-State: AOJu0Ywu/W+ta76nPiTPmDKtRJnReGmHMjMVbqBwydXwe5qkCeYZw22I
+ GMSnxVA7PbzAoa+VBdc6an4H8QfoT1vK3Iw4x/KKmOP1I8KeC1iL2KL+e3nc7BWvnGEKnjATzFA
+ o
+X-Google-Smtp-Source: AGHT+IHUM2YcoBRrzf+hvx1LeEZMMeJ6yfyFxcNIEQC2QlewtNsUHr27/nj2MVgtCWbuaJO4Z+GBoQ==
+X-Received: by 2002:adf:e4c3:0:b0:354:f9d9:c37c with SMTP id
+ ffacd0b85a97d-354f9d9c5c1mr1543096f8f.0.1716478521234; 
+ Thu, 23 May 2024 08:35:21 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-354df9b51f7sm3888255f8f.59.2024.05.23.08.35.18
+ ffacd0b85a97d-354df9b51f7sm3888255f8f.59.2024.05.23.08.35.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:35:18 -0700 (PDT)
+ Thu, 23 May 2024 08:35:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/37] target/arm: Expand vfp neg and abs inline
-Date: Thu, 23 May 2024 16:34:51 +0100
-Message-Id: <20240523153505.2900433-24-peter.maydell@linaro.org>
+Subject: [PULL 28/37] target/arm: Convert FRECPS, FRSQRTS to decodetree
+Date: Thu, 23 May 2024 16:34:56 +0100
+Message-Id: <20240523153505.2900433-29-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240523153505.2900433-1-peter.maydell@linaro.org>
 References: <20240523153505.2900433-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,469 +95,449 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+These are the last instructions within handle_3same_float
+and disas_simd_scalar_three_reg_same_fp16 so remove them.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240506010403.6204-16-richard.henderson@linaro.org
+Message-id: 20240506010403.6204-21-richard.henderson@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.h            |  6 ----
- target/arm/tcg/translate.h     | 30 +++++++++++++++++++
- target/arm/tcg/translate-a64.c | 44 +++++++++++++--------------
- target/arm/tcg/translate-vfp.c | 54 +++++++++++++++++-----------------
- target/arm/vfp_helper.c        | 30 -------------------
- 5 files changed, 79 insertions(+), 85 deletions(-)
+ target/arm/tcg/a64.decode      |  12 ++
+ target/arm/tcg/translate-a64.c | 293 ++++-----------------------------
+ 2 files changed, 46 insertions(+), 259 deletions(-)
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 7ee15b96512..0fd01c9c52d 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -132,12 +132,6 @@ DEF_HELPER_3(vfp_maxnumd, f64, f64, f64, ptr)
- DEF_HELPER_3(vfp_minnumh, f16, f16, f16, ptr)
- DEF_HELPER_3(vfp_minnums, f32, f32, f32, ptr)
- DEF_HELPER_3(vfp_minnumd, f64, f64, f64, ptr)
--DEF_HELPER_1(vfp_negh, f16, f16)
--DEF_HELPER_1(vfp_negs, f32, f32)
--DEF_HELPER_1(vfp_negd, f64, f64)
--DEF_HELPER_1(vfp_absh, f16, f16)
--DEF_HELPER_1(vfp_abss, f32, f32)
--DEF_HELPER_1(vfp_absd, f64, f64)
- DEF_HELPER_2(vfp_sqrth, f16, f16, env)
- DEF_HELPER_2(vfp_sqrts, f32, f32, env)
- DEF_HELPER_2(vfp_sqrtd, f64, f64, env)
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index ecfa242eef3..b05a9eb6685 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -406,6 +406,36 @@ static inline void gen_swstep_exception(DisasContext *s, int isv, int ex)
-  */
- uint64_t vfp_expand_imm(int size, uint8_t imm8);
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index a852b5f06f0..84cb38f1dd0 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -731,6 +731,12 @@ FACGT_s         0111 1110 1.1 ..... 11101 1 ..... ..... @rrr_sd
+ FABD_s          0111 1110 110 ..... 00010 1 ..... ..... @rrr_h
+ FABD_s          0111 1110 1.1 ..... 11010 1 ..... ..... @rrr_sd
  
-+static inline void gen_vfp_absh(TCGv_i32 d, TCGv_i32 s)
-+{
-+    tcg_gen_andi_i32(d, s, INT16_MAX);
-+}
++FRECPS_s        0101 1110 010 ..... 00111 1 ..... ..... @rrr_h
++FRECPS_s        0101 1110 0.1 ..... 11111 1 ..... ..... @rrr_sd
 +
-+static inline void gen_vfp_abss(TCGv_i32 d, TCGv_i32 s)
-+{
-+    tcg_gen_andi_i32(d, s, INT32_MAX);
-+}
++FRSQRTS_s       0101 1110 110 ..... 00111 1 ..... ..... @rrr_h
++FRSQRTS_s       0101 1110 1.1 ..... 11111 1 ..... ..... @rrr_sd
 +
-+static inline void gen_vfp_absd(TCGv_i64 d, TCGv_i64 s)
-+{
-+    tcg_gen_andi_i64(d, s, INT64_MAX);
-+}
+ ### Advanced SIMD three same
+ 
+ FADD_v          0.00 1110 010 ..... 00010 1 ..... ..... @qrrr_h
+@@ -784,6 +790,12 @@ FACGT_v         0.10 1110 1.1 ..... 11101 1 ..... ..... @qrrr_sd
+ FABD_v          0.10 1110 110 ..... 00010 1 ..... ..... @qrrr_h
+ FABD_v          0.10 1110 1.1 ..... 11010 1 ..... ..... @qrrr_sd
+ 
++FRECPS_v        0.00 1110 010 ..... 00111 1 ..... ..... @qrrr_h
++FRECPS_v        0.00 1110 0.1 ..... 11111 1 ..... ..... @qrrr_sd
 +
-+static inline void gen_vfp_negh(TCGv_i32 d, TCGv_i32 s)
-+{
-+    tcg_gen_xori_i32(d, s, 1u << 15);
-+}
++FRSQRTS_v       0.00 1110 110 ..... 00111 1 ..... ..... @qrrr_h
++FRSQRTS_v       0.00 1110 1.1 ..... 11111 1 ..... ..... @qrrr_sd
 +
-+static inline void gen_vfp_negs(TCGv_i32 d, TCGv_i32 s)
-+{
-+    tcg_gen_xori_i32(d, s, 1u << 31);
-+}
-+
-+static inline void gen_vfp_negd(TCGv_i64 d, TCGv_i64 s)
-+{
-+    tcg_gen_xori_i64(d, s, 1ull << 63);
-+}
-+
- /* Vector operations shared between ARM and AArch64.  */
- void gen_gvec_ceq0(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-                    uint32_t opr_sz, uint32_t max_sz);
+ ### Advanced SIMD scalar x indexed element
+ 
+ FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 347e2216f9d..29cf6f1fc8e 100644
+index 9d1ddfbdddc..a27c01586c0 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -6591,10 +6591,10 @@ static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
-         tcg_gen_mov_i32(tcg_res, tcg_op);
-         break;
-     case 0x1: /* FABS */
--        tcg_gen_andi_i32(tcg_res, tcg_op, 0x7fff);
-+        gen_vfp_absh(tcg_res, tcg_op);
-         break;
-     case 0x2: /* FNEG */
--        tcg_gen_xori_i32(tcg_res, tcg_op, 0x8000);
-+        gen_vfp_negh(tcg_res, tcg_op);
-         break;
-     case 0x3: /* FSQRT */
-         fpst = fpstatus_ptr(FPST_FPCR_F16);
-@@ -6645,10 +6645,10 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
-         tcg_gen_mov_i32(tcg_res, tcg_op);
-         goto done;
-     case 0x1: /* FABS */
--        gen_helper_vfp_abss(tcg_res, tcg_op);
-+        gen_vfp_abss(tcg_res, tcg_op);
-         goto done;
-     case 0x2: /* FNEG */
--        gen_helper_vfp_negs(tcg_res, tcg_op);
-+        gen_vfp_negs(tcg_res, tcg_op);
-         goto done;
-     case 0x3: /* FSQRT */
-         gen_helper_vfp_sqrts(tcg_res, tcg_op, tcg_env);
-@@ -6720,10 +6720,10 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
+@@ -5035,6 +5035,20 @@ static const FPScalar f_scalar_fabd = {
+ };
+ TRANS(FABD_s, do_fp3_scalar, a, &f_scalar_fabd)
  
++static const FPScalar f_scalar_frecps = {
++    gen_helper_recpsf_f16,
++    gen_helper_recpsf_f32,
++    gen_helper_recpsf_f64,
++};
++TRANS(FRECPS_s, do_fp3_scalar, a, &f_scalar_frecps)
++
++static const FPScalar f_scalar_frsqrts = {
++    gen_helper_rsqrtsf_f16,
++    gen_helper_rsqrtsf_f32,
++    gen_helper_rsqrtsf_f64,
++};
++TRANS(FRSQRTS_s, do_fp3_scalar, a, &f_scalar_frsqrts)
++
+ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a,
+                           gen_helper_gvec_3_ptr * const fns[3])
+ {
+@@ -5182,6 +5196,20 @@ static gen_helper_gvec_3_ptr * const f_vector_fabd[3] = {
+ };
+ TRANS(FABD_v, do_fp3_vector, a, f_vector_fabd)
+ 
++static gen_helper_gvec_3_ptr * const f_vector_frecps[3] = {
++    gen_helper_gvec_recps_h,
++    gen_helper_gvec_recps_s,
++    gen_helper_gvec_recps_d,
++};
++TRANS(FRECPS_v, do_fp3_vector, a, f_vector_frecps)
++
++static gen_helper_gvec_3_ptr * const f_vector_frsqrts[3] = {
++    gen_helper_gvec_rsqrts_h,
++    gen_helper_gvec_rsqrts_s,
++    gen_helper_gvec_rsqrts_d,
++};
++TRANS(FRSQRTS_v, do_fp3_vector, a, f_vector_frsqrts)
++
+ /*
+  * Advanced SIMD scalar/vector x indexed element
+  */
+@@ -9301,107 +9329,6 @@ static void handle_3same_64(DisasContext *s, int opcode, bool u,
+     }
+ }
+ 
+-/* Handle the 3-same-operands float operations; shared by the scalar
+- * and vector encodings. The caller must filter out any encodings
+- * not allocated for the encoding it is dealing with.
+- */
+-static void handle_3same_float(DisasContext *s, int size, int elements,
+-                               int fpopcode, int rd, int rn, int rm)
+-{
+-    int pass;
+-    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
+-
+-    for (pass = 0; pass < elements; pass++) {
+-        if (size) {
+-            /* Double */
+-            TCGv_i64 tcg_op1 = tcg_temp_new_i64();
+-            TCGv_i64 tcg_op2 = tcg_temp_new_i64();
+-            TCGv_i64 tcg_res = tcg_temp_new_i64();
+-
+-            read_vec_element(s, tcg_op1, rn, pass, MO_64);
+-            read_vec_element(s, tcg_op2, rm, pass, MO_64);
+-
+-            switch (fpopcode) {
+-            case 0x1f: /* FRECPS */
+-                gen_helper_recpsf_f64(tcg_res, tcg_op1, tcg_op2, fpst);
+-                break;
+-            case 0x3f: /* FRSQRTS */
+-                gen_helper_rsqrtsf_f64(tcg_res, tcg_op1, tcg_op2, fpst);
+-                break;
+-            default:
+-            case 0x18: /* FMAXNM */
+-            case 0x19: /* FMLA */
+-            case 0x1a: /* FADD */
+-            case 0x1b: /* FMULX */
+-            case 0x1c: /* FCMEQ */
+-            case 0x1e: /* FMAX */
+-            case 0x38: /* FMINNM */
+-            case 0x39: /* FMLS */
+-            case 0x3a: /* FSUB */
+-            case 0x3e: /* FMIN */
+-            case 0x5b: /* FMUL */
+-            case 0x5c: /* FCMGE */
+-            case 0x5d: /* FACGE */
+-            case 0x5f: /* FDIV */
+-            case 0x7a: /* FABD */
+-            case 0x7c: /* FCMGT */
+-            case 0x7d: /* FACGT */
+-                g_assert_not_reached();
+-            }
+-
+-            write_vec_element(s, tcg_res, rd, pass, MO_64);
+-        } else {
+-            /* Single */
+-            TCGv_i32 tcg_op1 = tcg_temp_new_i32();
+-            TCGv_i32 tcg_op2 = tcg_temp_new_i32();
+-            TCGv_i32 tcg_res = tcg_temp_new_i32();
+-
+-            read_vec_element_i32(s, tcg_op1, rn, pass, MO_32);
+-            read_vec_element_i32(s, tcg_op2, rm, pass, MO_32);
+-
+-            switch (fpopcode) {
+-            case 0x1f: /* FRECPS */
+-                gen_helper_recpsf_f32(tcg_res, tcg_op1, tcg_op2, fpst);
+-                break;
+-            case 0x3f: /* FRSQRTS */
+-                gen_helper_rsqrtsf_f32(tcg_res, tcg_op1, tcg_op2, fpst);
+-                break;
+-            default:
+-            case 0x18: /* FMAXNM */
+-            case 0x19: /* FMLA */
+-            case 0x1a: /* FADD */
+-            case 0x1b: /* FMULX */
+-            case 0x1c: /* FCMEQ */
+-            case 0x1e: /* FMAX */
+-            case 0x38: /* FMINNM */
+-            case 0x39: /* FMLS */
+-            case 0x3a: /* FSUB */
+-            case 0x3e: /* FMIN */
+-            case 0x5b: /* FMUL */
+-            case 0x5c: /* FCMGE */
+-            case 0x5d: /* FACGE */
+-            case 0x5f: /* FDIV */
+-            case 0x7a: /* FABD */
+-            case 0x7c: /* FCMGT */
+-            case 0x7d: /* FACGT */
+-                g_assert_not_reached();
+-            }
+-
+-            if (elements == 1) {
+-                /* scalar single so clear high part */
+-                TCGv_i64 tcg_tmp = tcg_temp_new_i64();
+-
+-                tcg_gen_extu_i32_i64(tcg_tmp, tcg_res);
+-                write_vec_element(s, tcg_tmp, rd, pass, MO_64);
+-            } else {
+-                write_vec_element_i32(s, tcg_res, rd, pass, MO_32);
+-            }
+-        }
+-    }
+-
+-    clear_vec_high(s, elements * (size ? 8 : 4) > 8, rd);
+-}
+-
+ /* AdvSIMD scalar three same
+  *  31 30  29 28       24 23  22  21 20  16 15    11  10 9    5 4    0
+  * +-----+---+-----------+------+---+------+--------+---+------+------+
+@@ -9418,33 +9345,6 @@ static void disas_simd_scalar_three_reg_same(DisasContext *s, uint32_t insn)
+     bool u = extract32(insn, 29, 1);
+     TCGv_i64 tcg_rd;
+ 
+-    if (opcode >= 0x18) {
+-        /* Floating point: U, size[1] and opcode indicate operation */
+-        int fpopcode = opcode | (extract32(size, 1, 1) << 5) | (u << 6);
+-        switch (fpopcode) {
+-        case 0x1f: /* FRECPS */
+-        case 0x3f: /* FRSQRTS */
+-            break;
+-        default:
+-        case 0x1b: /* FMULX */
+-        case 0x5d: /* FACGE */
+-        case 0x7d: /* FACGT */
+-        case 0x1c: /* FCMEQ */
+-        case 0x5c: /* FCMGE */
+-        case 0x7a: /* FABD */
+-        case 0x7c: /* FCMGT */
+-            unallocated_encoding(s);
+-            return;
+-        }
+-
+-        if (!fp_access_check(s)) {
+-            return;
+-        }
+-
+-        handle_3same_float(s, extract32(size, 0, 1), 1, fpopcode, rd, rn, rm);
+-        return;
+-    }
+-
      switch (opcode) {
-     case 0x1: /* FABS */
--        gen_helper_vfp_absd(tcg_res, tcg_op);
-+        gen_vfp_absd(tcg_res, tcg_op);
-         goto done;
-     case 0x2: /* FNEG */
--        gen_helper_vfp_negd(tcg_res, tcg_op);
-+        gen_vfp_negd(tcg_res, tcg_op);
-         goto done;
-     case 0x3: /* FSQRT */
-         gen_helper_vfp_sqrtd(tcg_res, tcg_op, tcg_env);
-@@ -6949,7 +6949,7 @@ static void handle_fp_2src_single(DisasContext *s, int opcode,
-     switch (opcode) {
-     case 0x8: /* FNMUL */
-         gen_helper_vfp_muls(tcg_res, tcg_op1, tcg_op2, fpst);
--        gen_helper_vfp_negs(tcg_res, tcg_res);
-+        gen_vfp_negs(tcg_res, tcg_res);
-         break;
-     default:
-     case 0x0: /* FMUL */
-@@ -6983,7 +6983,7 @@ static void handle_fp_2src_double(DisasContext *s, int opcode,
-     switch (opcode) {
-     case 0x8: /* FNMUL */
-         gen_helper_vfp_muld(tcg_res, tcg_op1, tcg_op2, fpst);
--        gen_helper_vfp_negd(tcg_res, tcg_res);
-+        gen_vfp_negd(tcg_res, tcg_res);
-         break;
-     default:
-     case 0x0: /* FMUL */
-@@ -7017,7 +7017,7 @@ static void handle_fp_2src_half(DisasContext *s, int opcode,
-     switch (opcode) {
-     case 0x8: /* FNMUL */
-         gen_helper_advsimd_mulh(tcg_res, tcg_op1, tcg_op2, fpst);
--        tcg_gen_xori_i32(tcg_res, tcg_res, 0x8000);
-+        gen_vfp_negh(tcg_res, tcg_res);
-         break;
-     default:
-     case 0x0: /* FMUL */
-@@ -7102,11 +7102,11 @@ static void handle_fp_3src_single(DisasContext *s, bool o0, bool o1,
-      * flipped if it is a negated-input.
+     case 0x1: /* SQADD, UQADD */
+     case 0x5: /* SQSUB, UQSUB */
+@@ -9561,80 +9461,6 @@ static void disas_simd_scalar_three_reg_same(DisasContext *s, uint32_t insn)
+     write_fp_dreg(s, rd, tcg_rd);
+ }
+ 
+-/* AdvSIMD scalar three same FP16
+- *  31 30  29 28       24 23  22 21 20  16 15 14 13    11 10  9  5 4  0
+- * +-----+---+-----------+---+-----+------+-----+--------+---+----+----+
+- * | 0 1 | U | 1 1 1 1 0 | a | 1 0 |  Rm  | 0 0 | opcode | 1 | Rn | Rd |
+- * +-----+---+-----------+---+-----+------+-----+--------+---+----+----+
+- * v: 0101 1110 0100 0000 0000 0100 0000 0000 => 5e400400
+- * m: 1101 1111 0110 0000 1100 0100 0000 0000 => df60c400
+- */
+-static void disas_simd_scalar_three_reg_same_fp16(DisasContext *s,
+-                                                  uint32_t insn)
+-{
+-    int rd = extract32(insn, 0, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int opcode = extract32(insn, 11, 3);
+-    int rm = extract32(insn, 16, 5);
+-    bool u = extract32(insn, 29, 1);
+-    bool a = extract32(insn, 23, 1);
+-    int fpopcode = opcode | (a << 3) |  (u << 4);
+-    TCGv_ptr fpst;
+-    TCGv_i32 tcg_op1;
+-    TCGv_i32 tcg_op2;
+-    TCGv_i32 tcg_res;
+-
+-    switch (fpopcode) {
+-    case 0x07: /* FRECPS */
+-    case 0x0f: /* FRSQRTS */
+-        break;
+-    default:
+-    case 0x03: /* FMULX */
+-    case 0x04: /* FCMEQ (reg) */
+-    case 0x14: /* FCMGE (reg) */
+-    case 0x15: /* FACGE */
+-    case 0x1a: /* FABD */
+-    case 0x1c: /* FCMGT (reg) */
+-    case 0x1d: /* FACGT */
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    if (!dc_isar_feature(aa64_fp16, s)) {
+-        unallocated_encoding(s);
+-    }
+-
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    fpst = fpstatus_ptr(FPST_FPCR_F16);
+-
+-    tcg_op1 = read_fp_hreg(s, rn);
+-    tcg_op2 = read_fp_hreg(s, rm);
+-    tcg_res = tcg_temp_new_i32();
+-
+-    switch (fpopcode) {
+-    case 0x07: /* FRECPS */
+-        gen_helper_recpsf_f16(tcg_res, tcg_op1, tcg_op2, fpst);
+-        break;
+-    case 0x0f: /* FRSQRTS */
+-        gen_helper_rsqrtsf_f16(tcg_res, tcg_op1, tcg_op2, fpst);
+-        break;
+-    default:
+-    case 0x03: /* FMULX */
+-    case 0x04: /* FCMEQ (reg) */
+-    case 0x14: /* FCMGE (reg) */
+-    case 0x15: /* FACGE */
+-    case 0x1a: /* FABD */
+-    case 0x1c: /* FCMGT (reg) */
+-    case 0x1d: /* FACGT */
+-        g_assert_not_reached();
+-    }
+-
+-    write_fp_sreg(s, rd, tcg_res);
+-}
+-
+ /* AdvSIMD scalar three same extra
+  *  31 30  29 28       24 23  22  21 20  16  15 14    11  10 9  5 4  0
+  * +-----+---+-----------+------+---+------+---+--------+---+----+----+
+@@ -11107,7 +10933,7 @@ static void disas_simd_3same_logic(DisasContext *s, uint32_t insn)
+ 
+ /* Pairwise op subgroup of C3.6.16.
+  *
+- * This is called directly or via the handle_3same_float for float pairwise
++ * This is called directly for float pairwise
+  * operations where the opcode and size are calculated differently.
+  */
+ static void handle_simd_3same_pair(DisasContext *s, int is_q, int u, int opcode,
+@@ -11264,10 +11090,6 @@ static void disas_simd_3same_float(DisasContext *s, uint32_t insn)
+     int rn = extract32(insn, 5, 5);
+     int rd = extract32(insn, 0, 5);
+ 
+-    int datasize = is_q ? 128 : 64;
+-    int esize = 32 << size;
+-    int elements = datasize / esize;
+-
+     if (size == 1 && !is_q) {
+         unallocated_encoding(s);
+         return;
+@@ -11286,13 +11108,6 @@ static void disas_simd_3same_float(DisasContext *s, uint32_t insn)
+         handle_simd_3same_pair(s, is_q, 0, fpopcode, size ? MO_64 : MO_32,
+                                rn, rm, rd);
+         return;
+-    case 0x1f: /* FRECPS */
+-    case 0x3f: /* FRSQRTS */
+-        if (!fp_access_check(s)) {
+-            return;
+-        }
+-        handle_3same_float(s, size, elements, fpopcode, rd, rn, rm);
+-        return;
+ 
+     case 0x1d: /* FMLAL  */
+     case 0x3d: /* FMLSL  */
+@@ -11321,10 +11136,12 @@ static void disas_simd_3same_float(DisasContext *s, uint32_t insn)
+     case 0x1b: /* FMULX */
+     case 0x1c: /* FCMEQ */
+     case 0x1e: /* FMAX */
++    case 0x1f: /* FRECPS */
+     case 0x38: /* FMINNM */
+     case 0x39: /* FMLS */
+     case 0x3a: /* FSUB */
+     case 0x3e: /* FMIN */
++    case 0x3f: /* FRSQRTS */
+     case 0x5b: /* FMUL */
+     case 0x5c: /* FCMGE */
+     case 0x5d: /* FACGE */
+@@ -11666,17 +11483,11 @@ static void disas_simd_three_reg_same_fp16(DisasContext *s, uint32_t insn)
+      * together indicate the operation.
       */
-     if (o1 == true) {
--        gen_helper_vfp_negs(tcg_op3, tcg_op3);
-+        gen_vfp_negs(tcg_op3, tcg_op3);
-     }
+     int fpopcode = opcode | (a << 3) | (u << 4);
+-    int datasize = is_q ? 128 : 64;
+-    int elements = datasize / 16;
+     bool pairwise;
+     TCGv_ptr fpst;
+     int pass;
  
-     if (o0 != o1) {
--        gen_helper_vfp_negs(tcg_op1, tcg_op1);
-+        gen_vfp_negs(tcg_op1, tcg_op1);
-     }
- 
-     gen_helper_vfp_muladds(tcg_res, tcg_op1, tcg_op2, tcg_op3, fpst);
-@@ -7134,11 +7134,11 @@ static void handle_fp_3src_double(DisasContext *s, bool o0, bool o1,
-      * flipped if it is a negated-input.
-      */
-     if (o1 == true) {
--        gen_helper_vfp_negd(tcg_op3, tcg_op3);
-+        gen_vfp_negd(tcg_op3, tcg_op3);
-     }
- 
-     if (o0 != o1) {
--        gen_helper_vfp_negd(tcg_op1, tcg_op1);
-+        gen_vfp_negd(tcg_op1, tcg_op1);
-     }
- 
-     gen_helper_vfp_muladdd(tcg_res, tcg_op1, tcg_op2, tcg_op3, fpst);
-@@ -9239,7 +9239,7 @@ static void handle_3same_float(DisasContext *s, int size, int elements,
-             switch (fpopcode) {
-             case 0x39: /* FMLS */
-                 /* As usual for ARM, separate negation for fused multiply-add */
--                gen_helper_vfp_negd(tcg_op1, tcg_op1);
-+                gen_vfp_negd(tcg_op1, tcg_op1);
-                 /* fall through */
-             case 0x19: /* FMLA */
-                 read_vec_element(s, tcg_res, rd, pass, MO_64);
-@@ -9263,7 +9263,7 @@ static void handle_3same_float(DisasContext *s, int size, int elements,
-                 break;
-             case 0x7a: /* FABD */
-                 gen_helper_vfp_subd(tcg_res, tcg_op1, tcg_op2, fpst);
--                gen_helper_vfp_absd(tcg_res, tcg_res);
-+                gen_vfp_absd(tcg_res, tcg_res);
-                 break;
-             case 0x7c: /* FCMGT */
-                 gen_helper_neon_cgt_f64(tcg_res, tcg_op1, tcg_op2, fpst);
-@@ -9297,7 +9297,7 @@ static void handle_3same_float(DisasContext *s, int size, int elements,
-             switch (fpopcode) {
-             case 0x39: /* FMLS */
-                 /* As usual for ARM, separate negation for fused multiply-add */
--                gen_helper_vfp_negs(tcg_op1, tcg_op1);
-+                gen_vfp_negs(tcg_op1, tcg_op1);
-                 /* fall through */
-             case 0x19: /* FMLA */
-                 read_vec_element_i32(s, tcg_res, rd, pass, MO_32);
-@@ -9321,7 +9321,7 @@ static void handle_3same_float(DisasContext *s, int size, int elements,
-                 break;
-             case 0x7a: /* FABD */
-                 gen_helper_vfp_subs(tcg_res, tcg_op1, tcg_op2, fpst);
--                gen_helper_vfp_abss(tcg_res, tcg_res);
-+                gen_vfp_abss(tcg_res, tcg_res);
-                 break;
-             case 0x7c: /* FCMGT */
-                 gen_helper_neon_cgt_f32(tcg_res, tcg_op1, tcg_op2, fpst);
-@@ -9734,10 +9734,10 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
+     switch (fpopcode) {
+-    case 0x7: /* FRECPS */
+-    case 0xf: /* FRSQRTS */
+-        pairwise = false;
+-        break;
+     case 0x10: /* FMAXNMP */
+     case 0x12: /* FADDP */
+     case 0x16: /* FMAXP */
+@@ -11691,10 +11502,12 @@ static void disas_simd_three_reg_same_fp16(DisasContext *s, uint32_t insn)
+     case 0x3: /* FMULX */
+     case 0x4: /* FCMEQ */
+     case 0x6: /* FMAX */
++    case 0x7: /* FRECPS */
+     case 0x8: /* FMINNM */
+     case 0x9: /* FMLS */
+     case 0xa: /* FSUB */
+     case 0xe: /* FMIN */
++    case 0xf: /* FRSQRTS */
+     case 0x13: /* FMUL */
+     case 0x14: /* FCMGE */
+     case 0x15: /* FACGE */
+@@ -11758,44 +11571,7 @@ static void disas_simd_three_reg_same_fp16(DisasContext *s, uint32_t insn)
+             write_vec_element_i32(s, tcg_res[pass], rd, pass, MO_16);
          }
-         break;
-     case 0x2f: /* FABS */
--        gen_helper_vfp_absd(tcg_rd, tcg_rn);
-+        gen_vfp_absd(tcg_rd, tcg_rn);
-         break;
-     case 0x6f: /* FNEG */
--        gen_helper_vfp_negd(tcg_rd, tcg_rn);
-+        gen_vfp_negd(tcg_rd, tcg_rn);
-         break;
-     case 0x7f: /* FSQRT */
-         gen_helper_vfp_sqrtd(tcg_rd, tcg_rn, tcg_env);
-@@ -12560,10 +12560,10 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-                     }
-                     break;
-                 case 0x2f: /* FABS */
--                    gen_helper_vfp_abss(tcg_res, tcg_op);
-+                    gen_vfp_abss(tcg_res, tcg_op);
-                     break;
-                 case 0x6f: /* FNEG */
--                    gen_helper_vfp_negs(tcg_res, tcg_op);
-+                    gen_vfp_negs(tcg_res, tcg_op);
-                     break;
-                 case 0x7f: /* FSQRT */
-                     gen_helper_vfp_sqrts(tcg_res, tcg_op, tcg_env);
-@@ -13284,7 +13284,7 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-             switch (16 * u + opcode) {
-             case 0x05: /* FMLS */
-                 /* As usual for ARM, separate negation for fused multiply-add */
--                gen_helper_vfp_negd(tcg_op, tcg_op);
-+                gen_vfp_negd(tcg_op, tcg_op);
-                 /* fall through */
-             case 0x01: /* FMLA */
-                 read_vec_element(s, tcg_res, rd, pass, MO_64);
-diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
-index b9af03b7c35..ee532576871 100644
---- a/target/arm/tcg/translate-vfp.c
-+++ b/target/arm/tcg/translate-vfp.c
-@@ -1763,7 +1763,7 @@ static void gen_VMLS_hp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
-     TCGv_i32 tmp = tcg_temp_new_i32();
- 
-     gen_helper_vfp_mulh(tmp, vn, vm, fpst);
--    gen_helper_vfp_negh(tmp, tmp);
-+    gen_vfp_negh(tmp, tmp);
-     gen_helper_vfp_addh(vd, vd, tmp, fpst);
- }
- 
-@@ -1781,7 +1781,7 @@ static void gen_VMLS_sp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
-     TCGv_i32 tmp = tcg_temp_new_i32();
- 
-     gen_helper_vfp_muls(tmp, vn, vm, fpst);
--    gen_helper_vfp_negs(tmp, tmp);
-+    gen_vfp_negs(tmp, tmp);
-     gen_helper_vfp_adds(vd, vd, tmp, fpst);
- }
- 
-@@ -1799,7 +1799,7 @@ static void gen_VMLS_dp(TCGv_i64 vd, TCGv_i64 vn, TCGv_i64 vm, TCGv_ptr fpst)
-     TCGv_i64 tmp = tcg_temp_new_i64();
- 
-     gen_helper_vfp_muld(tmp, vn, vm, fpst);
--    gen_helper_vfp_negd(tmp, tmp);
-+    gen_vfp_negd(tmp, tmp);
-     gen_helper_vfp_addd(vd, vd, tmp, fpst);
- }
- 
-@@ -1819,7 +1819,7 @@ static void gen_VNMLS_hp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
-     TCGv_i32 tmp = tcg_temp_new_i32();
- 
-     gen_helper_vfp_mulh(tmp, vn, vm, fpst);
--    gen_helper_vfp_negh(vd, vd);
-+    gen_vfp_negh(vd, vd);
-     gen_helper_vfp_addh(vd, vd, tmp, fpst);
- }
- 
-@@ -1839,7 +1839,7 @@ static void gen_VNMLS_sp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
-     TCGv_i32 tmp = tcg_temp_new_i32();
- 
-     gen_helper_vfp_muls(tmp, vn, vm, fpst);
--    gen_helper_vfp_negs(vd, vd);
-+    gen_vfp_negs(vd, vd);
-     gen_helper_vfp_adds(vd, vd, tmp, fpst);
- }
- 
-@@ -1859,7 +1859,7 @@ static void gen_VNMLS_dp(TCGv_i64 vd, TCGv_i64 vn, TCGv_i64 vm, TCGv_ptr fpst)
-     TCGv_i64 tmp = tcg_temp_new_i64();
- 
-     gen_helper_vfp_muld(tmp, vn, vm, fpst);
--    gen_helper_vfp_negd(vd, vd);
-+    gen_vfp_negd(vd, vd);
-     gen_helper_vfp_addd(vd, vd, tmp, fpst);
- }
- 
-@@ -1874,8 +1874,8 @@ static void gen_VNMLA_hp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
-     TCGv_i32 tmp = tcg_temp_new_i32();
- 
-     gen_helper_vfp_mulh(tmp, vn, vm, fpst);
--    gen_helper_vfp_negh(tmp, tmp);
--    gen_helper_vfp_negh(vd, vd);
-+    gen_vfp_negh(tmp, tmp);
-+    gen_vfp_negh(vd, vd);
-     gen_helper_vfp_addh(vd, vd, tmp, fpst);
- }
- 
-@@ -1890,8 +1890,8 @@ static void gen_VNMLA_sp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
-     TCGv_i32 tmp = tcg_temp_new_i32();
- 
-     gen_helper_vfp_muls(tmp, vn, vm, fpst);
--    gen_helper_vfp_negs(tmp, tmp);
--    gen_helper_vfp_negs(vd, vd);
-+    gen_vfp_negs(tmp, tmp);
-+    gen_vfp_negs(vd, vd);
-     gen_helper_vfp_adds(vd, vd, tmp, fpst);
- }
- 
-@@ -1906,8 +1906,8 @@ static void gen_VNMLA_dp(TCGv_i64 vd, TCGv_i64 vn, TCGv_i64 vm, TCGv_ptr fpst)
-     TCGv_i64 tmp = tcg_temp_new_i64();
- 
-     gen_helper_vfp_muld(tmp, vn, vm, fpst);
--    gen_helper_vfp_negd(tmp, tmp);
--    gen_helper_vfp_negd(vd, vd);
-+    gen_vfp_negd(tmp, tmp);
-+    gen_vfp_negd(vd, vd);
-     gen_helper_vfp_addd(vd, vd, tmp, fpst);
- }
- 
-@@ -1935,7 +1935,7 @@ static void gen_VNMUL_hp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
- {
-     /* VNMUL: -(fn * fm) */
-     gen_helper_vfp_mulh(vd, vn, vm, fpst);
--    gen_helper_vfp_negh(vd, vd);
-+    gen_vfp_negh(vd, vd);
- }
- 
- static bool trans_VNMUL_hp(DisasContext *s, arg_VNMUL_sp *a)
-@@ -1947,7 +1947,7 @@ static void gen_VNMUL_sp(TCGv_i32 vd, TCGv_i32 vn, TCGv_i32 vm, TCGv_ptr fpst)
- {
-     /* VNMUL: -(fn * fm) */
-     gen_helper_vfp_muls(vd, vn, vm, fpst);
--    gen_helper_vfp_negs(vd, vd);
-+    gen_vfp_negs(vd, vd);
- }
- 
- static bool trans_VNMUL_sp(DisasContext *s, arg_VNMUL_sp *a)
-@@ -1959,7 +1959,7 @@ static void gen_VNMUL_dp(TCGv_i64 vd, TCGv_i64 vn, TCGv_i64 vm, TCGv_ptr fpst)
- {
-     /* VNMUL: -(fn * fm) */
-     gen_helper_vfp_muld(vd, vn, vm, fpst);
--    gen_helper_vfp_negd(vd, vd);
-+    gen_vfp_negd(vd, vd);
- }
- 
- static bool trans_VNMUL_dp(DisasContext *s, arg_VNMUL_dp *a)
-@@ -2110,12 +2110,12 @@ static bool do_vfm_hp(DisasContext *s, arg_VFMA_sp *a, bool neg_n, bool neg_d)
-     vfp_load_reg32(vm, a->vm);
-     if (neg_n) {
-         /* VFNMS, VFMS */
--        gen_helper_vfp_negh(vn, vn);
-+        gen_vfp_negh(vn, vn);
-     }
-     vfp_load_reg32(vd, a->vd);
-     if (neg_d) {
-         /* VFNMA, VFNMS */
--        gen_helper_vfp_negh(vd, vd);
-+        gen_vfp_negh(vd, vd);
-     }
-     fpst = fpstatus_ptr(FPST_FPCR_F16);
-     gen_helper_vfp_muladdh(vd, vn, vm, vd, fpst);
-@@ -2169,12 +2169,12 @@ static bool do_vfm_sp(DisasContext *s, arg_VFMA_sp *a, bool neg_n, bool neg_d)
-     vfp_load_reg32(vm, a->vm);
-     if (neg_n) {
-         /* VFNMS, VFMS */
--        gen_helper_vfp_negs(vn, vn);
-+        gen_vfp_negs(vn, vn);
-     }
-     vfp_load_reg32(vd, a->vd);
-     if (neg_d) {
-         /* VFNMA, VFNMS */
--        gen_helper_vfp_negs(vd, vd);
-+        gen_vfp_negs(vd, vd);
-     }
-     fpst = fpstatus_ptr(FPST_FPCR);
-     gen_helper_vfp_muladds(vd, vn, vm, vd, fpst);
-@@ -2234,12 +2234,12 @@ static bool do_vfm_dp(DisasContext *s, arg_VFMA_dp *a, bool neg_n, bool neg_d)
-     vfp_load_reg64(vm, a->vm);
-     if (neg_n) {
-         /* VFNMS, VFMS */
--        gen_helper_vfp_negd(vn, vn);
-+        gen_vfp_negd(vn, vn);
-     }
-     vfp_load_reg64(vd, a->vd);
-     if (neg_d) {
-         /* VFNMA, VFNMS */
--        gen_helper_vfp_negd(vd, vd);
-+        gen_vfp_negd(vd, vd);
-     }
-     fpst = fpstatus_ptr(FPST_FPCR);
-     gen_helper_vfp_muladdd(vd, vn, vm, vd, fpst);
-@@ -2409,13 +2409,13 @@ static bool trans_VMOV_imm_dp(DisasContext *s, arg_VMOV_imm_dp *a)
- DO_VFP_VMOV(VMOV_reg, sp, tcg_gen_mov_i32)
- DO_VFP_VMOV(VMOV_reg, dp, tcg_gen_mov_i64)
- 
--DO_VFP_2OP(VABS, hp, gen_helper_vfp_absh, aa32_fp16_arith)
--DO_VFP_2OP(VABS, sp, gen_helper_vfp_abss, aa32_fpsp_v2)
--DO_VFP_2OP(VABS, dp, gen_helper_vfp_absd, aa32_fpdp_v2)
-+DO_VFP_2OP(VABS, hp, gen_vfp_absh, aa32_fp16_arith)
-+DO_VFP_2OP(VABS, sp, gen_vfp_abss, aa32_fpsp_v2)
-+DO_VFP_2OP(VABS, dp, gen_vfp_absd, aa32_fpdp_v2)
- 
--DO_VFP_2OP(VNEG, hp, gen_helper_vfp_negh, aa32_fp16_arith)
--DO_VFP_2OP(VNEG, sp, gen_helper_vfp_negs, aa32_fpsp_v2)
--DO_VFP_2OP(VNEG, dp, gen_helper_vfp_negd, aa32_fpdp_v2)
-+DO_VFP_2OP(VNEG, hp, gen_vfp_negh, aa32_fp16_arith)
-+DO_VFP_2OP(VNEG, sp, gen_vfp_negs, aa32_fpsp_v2)
-+DO_VFP_2OP(VNEG, dp, gen_vfp_negd, aa32_fpdp_v2)
- 
- static void gen_VSQRT_hp(TCGv_i32 vd, TCGv_i32 vm)
- {
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 3e5e37abbe8..ce26b8a71a1 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -281,36 +281,6 @@ VFP_BINOP(minnum)
- VFP_BINOP(maxnum)
- #undef VFP_BINOP
- 
--dh_ctype_f16 VFP_HELPER(neg, h)(dh_ctype_f16 a)
--{
--    return float16_chs(a);
--}
+     } else {
+-        for (pass = 0; pass < elements; pass++) {
+-            TCGv_i32 tcg_op1 = tcg_temp_new_i32();
+-            TCGv_i32 tcg_op2 = tcg_temp_new_i32();
+-            TCGv_i32 tcg_res = tcg_temp_new_i32();
 -
--float32 VFP_HELPER(neg, s)(float32 a)
--{
--    return float32_chs(a);
--}
+-            read_vec_element_i32(s, tcg_op1, rn, pass, MO_16);
+-            read_vec_element_i32(s, tcg_op2, rm, pass, MO_16);
 -
--float64 VFP_HELPER(neg, d)(float64 a)
--{
--    return float64_chs(a);
--}
+-            switch (fpopcode) {
+-            case 0x7: /* FRECPS */
+-                gen_helper_recpsf_f16(tcg_res, tcg_op1, tcg_op2, fpst);
+-                break;
+-            case 0xf: /* FRSQRTS */
+-                gen_helper_rsqrtsf_f16(tcg_res, tcg_op1, tcg_op2, fpst);
+-                break;
+-            default:
+-            case 0x0: /* FMAXNM */
+-            case 0x1: /* FMLA */
+-            case 0x2: /* FADD */
+-            case 0x3: /* FMULX */
+-            case 0x4: /* FCMEQ */
+-            case 0x6: /* FMAX */
+-            case 0x8: /* FMINNM */
+-            case 0x9: /* FMLS */
+-            case 0xa: /* FSUB */
+-            case 0xe: /* FMIN */
+-            case 0x13: /* FMUL */
+-            case 0x14: /* FCMGE */
+-            case 0x15: /* FACGE */
+-            case 0x17: /* FDIV */
+-            case 0x1a: /* FABD */
+-            case 0x1c: /* FCMGT */
+-            case 0x1d: /* FACGT */
+-                g_assert_not_reached();
+-            }
 -
--dh_ctype_f16 VFP_HELPER(abs, h)(dh_ctype_f16 a)
--{
--    return float16_abs(a);
--}
--
--float32 VFP_HELPER(abs, s)(float32 a)
--{
--    return float32_abs(a);
--}
--
--float64 VFP_HELPER(abs, d)(float64 a)
--{
--    return float64_abs(a);
--}
--
- dh_ctype_f16 VFP_HELPER(sqrt, h)(dh_ctype_f16 a, CPUARMState *env)
- {
-     return float16_sqrt(a, &env->vfp.fp_status_f16);
+-            write_vec_element_i32(s, tcg_res, rd, pass, MO_16);
+-        }
++        g_assert_not_reached();
+     }
+ 
+     clear_vec_high(s, is_q, rd);
+@@ -13565,7 +13341,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
+     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
+     { 0x0e400400, 0x9f60c400, disas_simd_three_reg_same_fp16 },
+     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
+-    { 0x5e400400, 0xdf60c400, disas_simd_scalar_three_reg_same_fp16 },
+     { 0x00000000, 0x00000000, NULL }
+ };
+ 
 -- 
 2.34.1
 
