@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297F8C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA69C25B7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9w0-0004sJ-7H; Thu, 23 May 2024 11:00:48 -0400
+	id 1sA9wN-0006Sw-NE; Thu, 23 May 2024 11:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9vx-0004iJ-JD
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:45 -0400
+ id 1sA9wK-0006QR-LS
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9vv-0004me-Ng
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:45 -0400
+ id 1sA9wG-0004ql-Eb
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476443;
+ s=mimecast20190719; t=1716476463;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=+cz7/A2Vd7WnBcData+m1wJymCreFQbA7KiqEEru/k8=;
- b=hZtOARx/91xuFcNmGnNr3JYS7ZSaewLwtobl2BSxBD2NUna4MQWowQF0hzD9KdPEBmupuD
- AS5wK04TMeOZbE2xzfNPBR6SV50JbfJhrEBL6xjv0VLwy+o3/lm3vUiUmN7NvUxHWUggPv
- jXBTpHarEH6rS0e1BFV5D1Sa7lyyq/E=
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=05/Tfu6Nc2hb7Y7EBfsPD9418bWLTWo42rB2fId09dI=;
+ b=Qmi5iBWUhEIVu7c0MW/++uTu+/zX13kqjm6BrkQML5CUQzdB2Lgon2O3W5dl1rCDad4AQi
+ FHr2WiHoPWeOIrb1xSfitxE5DW9UPyqf/iWrrGM+/f0YJc14BfKsV2nIl3MezWm/dqDmAc
+ aQ6kBXYE8lzm7SvvwqP+xqB+2toBSR4=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-AJN56AajOtWgsKTs7Ft6fQ-1; Thu, 23 May 2024 11:00:40 -0400
-X-MC-Unique: AJN56AajOtWgsKTs7Ft6fQ-1
+ us-mta-647-HYBVk676MAajWX7vkbr4wg-1; Thu, 23 May 2024 11:01:02 -0400
+X-MC-Unique: HYBVk676MAajWX7vkbr4wg-1
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59eea00cafso147553166b.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:40 -0700 (PDT)
+ a640c23a62f3a-a59c2583f0bso101997066b.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476438; x=1717081238;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+cz7/A2Vd7WnBcData+m1wJymCreFQbA7KiqEEru/k8=;
- b=VsHNxuggvlRrFsydiMu+i7guZqHO1RgtkUnJMPd8HlWTWaV8ZcCt8BdXOm0lUdnAHf
- Oc7e+CDVOc666bE+CDdYU/05t6jAQcnFz6ew8EDsZ88AP2GWnyMrUoctSrwWyXGt+XS3
- lpYK8f1L0vzYO4RZn2EomjqsaQM2/Gvn5UGpAMRvT/SL24rUjpfyHeFFY3+AkQYqzIqs
- yye3rnvqVIRrrN2kX9Stn2IUUMo03c0btySMTQD7qJf8H3Rpw2Hn0FSsVqMk/asgfiOR
- U/2vbf1lSWttVOMyEYJYBoFvKHymDM4j0nb2pT1ecaq/UqJv/MvEuSrhJwRDx5SZsegr
- qP+A==
-X-Gm-Message-State: AOJu0YypboClEcFr+ra1L6S8JrFXViupYeMMfauAYYxPGBUVCZfe4h7A
- 7ROdnMEEogDJgWZQCtTPkFHTbh/4u1xqffmjJCTihmHPtoShEe5ujDK2iypVAxUGn0ecA2PT9ML
- u3YuyW5TkGlyl1ZO2V9WVpS3ZV7R8TncQo9lPw0g8U0tBPn9HrnPZ9I3blyC9hXb7rHnPRT9cxe
- KNwGECXpQS4JY//WPDphhT4sJQ43n4EKcToa5G
-X-Received: by 2002:a17:906:b887:b0:a5a:1a:b0e6 with SMTP id
- a640c23a62f3a-a62280b2e16mr478656366b.9.1716476438633; 
- Thu, 23 May 2024 08:00:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWVLHd61+4NF3uxgdUWkhnHgiVbR2XGKGNk1v2h6XY72LHzeKOHAH3QvHx9SN17DU88AIC8Q==
-X-Received: by 2002:a17:906:b887:b0:a5a:1a:b0e6 with SMTP id
- a640c23a62f3a-a62280b2e16mr478653766b.9.1716476437959; 
- Thu, 23 May 2024 08:00:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716476460; x=1717081260;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=05/Tfu6Nc2hb7Y7EBfsPD9418bWLTWo42rB2fId09dI=;
+ b=dK6aCh9TGVVrs5oTNVkR7kFZ+CQGpRzS/TNY1TqBpXave0Duz56E6cwWRY/cS/vcno
+ GJjuXyhqJPUb2ib5oUAAd61IAON+mYrhw/7yaJoMuMPjKFXuJTu7nkIwiJtFGRqIuhat
+ 9EJ3v9QypFlNmlP1vzsSvM6bMbCpOSC0KrHIrv9zkETp0wa6n9ikNZSaWsgFmzEIsNEr
+ anchVEbPxwCmB2/m75oqDX/WeGcBEH5SHNqw2FheM4pT4ydv2SWNHdKCV/+qgLDSqQGa
+ ZoR7qXuRBy0ZJXb+4RXjmDfGobs87TUo7+jRESBb8S9WI8Lqxgw4ugPZdXGPLR6B31Aj
+ +eJg==
+X-Gm-Message-State: AOJu0YxHgHHRo4oJXvvEJDztrX42RFsUkgV3ZexIaLtamzp8by3qT+cs
+ jS19KrH0Z4FWwUzy1LPoq1bT6Al4hxZ3b8vU5ps1E1N9FGXY6ye2gINrynsQ9lze+Nv7S8SKLmn
+ Lxr3RgJgAwAAoRn9NxbzbagXvG3850yJOX5zgMYKHiJ6VaoyTXfHQT800Fi4rcyuLUtvsZIKIlx
+ px6f6sixqVw+CGJA80I/oNWe10aXCgEZbtZC9P
+X-Received: by 2002:a17:906:b1d5:b0:a59:d063:f5f3 with SMTP id
+ a640c23a62f3a-a622818ebabmr346331666b.63.1716476460136; 
+ Thu, 23 May 2024 08:01:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGChYLkUZANX7KubOBc9U7PW6Kck59/D6CINuJZYufReVR+uKaFg9YHVQOzdytWHAWLIGgKxQ==
+X-Received: by 2002:a17:906:b1d5:b0:a59:d063:f5f3 with SMTP id
+ a640c23a62f3a-a622818ebabmr346329466b.63.1716476459812; 
+ Thu, 23 May 2024 08:00:59 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1787c6b1sm1951952666b.57.2024.05.23.08.00.37
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a5a1781ce5dsm1944254666b.42.2024.05.23.08.00.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:00:37 -0700 (PDT)
+ Thu, 23 May 2024 08:00:57 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/23] i386 changes for 2024-05-23
-Date: Thu, 23 May 2024 17:00:13 +0200
-Message-ID: <20240523150036.1050011-1-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Babu Moger <babu.moger@amd.com>
+Subject: [PULL 09/23] i386/cpu: Consolidate the use of topo_info in
+ cpu_x86_cpuid()
+Date: Thu, 23 May 2024 17:00:22 +0200
+Message-ID: <20240523150036.1050011-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
+References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
@@ -99,84 +107,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 01782d6b294f95bcde334386f0aaac593cd28c0d:
+From: Zhao Liu <zhao1.liu@intel.com>
 
-  Merge tag 'hw-misc-20240517' of https://github.com/philmd/qemu into staging (2024-05-18 11:49:01 +0200)
+In cpu_x86_cpuid(), there are many variables in representing the cpu
+topology, e.g., topo_info, cs->nr_cores and cs->nr_threads.
 
-are available in the Git repository at:
+Since the names of cs->nr_cores and cs->nr_threads do not accurately
+represent its meaning, the use of cs->nr_cores or cs->nr_threads is
+prone to confusion and mistakes.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+And the structure X86CPUTopoInfo names its members clearly, thus the
+variable "topo_info" should be preferred.
 
-for you to fetch changes up to 84d4b72854869821eb89813c195927fdd3078c12:
+In addition, in cpu_x86_cpuid(), to uniformly use the topology variable,
+replace env->dies with topo_info.dies_per_pkg as well.
 
-  target-i386: hyper-v: Correct kvm_hv_handle_exit return value (2024-05-22 19:56:28 +0200)
+Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Message-ID: <20240424154929.1487382-9-zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/cpu.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-----------------------------------------------------------------
-* hw/i386/pc_sysfw: Alias rather than copy isa-bios region
-* target/i386: add control bits support for LAM
-* target/i386: tweaks to new translator
-* target/i386: add support for LAM in CPUID enumeration
-* hw/i386/pc: Support smp.modules for x86 PC machine
-* target-i386: hyper-v: Correct kvm_hv_handle_exit return value
-
-----------------------------------------------------------------
-Bernhard Beschow (1):
-      hw/i386/pc_sysfw: Alias rather than copy isa-bios region
-
-Binbin Wu (1):
-      target/i386: add control bits support for LAM
-
-Paolo Bonzini (2):
-      target/i386: generate simpler code for ROL/ROR with immediate count
-      target/i386: clean up AAM/AAD
-
-Robert Hoo (1):
-      target/i386: add support for LAM in CPUID enumeration
-
-Zhao Liu (16):
-      i386/cpu: Fix i/d-cache topology to core level for Intel CPU
-      i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]
-      i386/cpu: Use APIC ID info get NumSharingCache for CPUID[0x8000001D].EAX[bits 25:14]
-      i386/cpu: Consolidate the use of topo_info in cpu_x86_cpuid()
-      i386/cpu: Introduce bitmap to cache available CPU topology levels
-      i386: Split topology types of CPUID[0x1F] from the definitions of CPUID[0xB]
-      i386/cpu: Decouple CPUID[0x1F] subleaf with specific topology level
-      i386: Introduce module level cpu topology to CPUX86State
-      i386: Support modules_per_die in X86CPUTopoInfo
-      i386: Expose module level in CPUID[0x1F]
-      i386: Support module_id in X86CPUTopoIDs
-      i386/cpu: Introduce module-id to X86CPU
-      hw/i386/pc: Support smp.modules for x86 PC machine
-      i386: Add cache topology info in CPUCacheInfo
-      i386/cpu: Use CPUCacheInfo.share_level to encode CPUID[4]
-      i386/cpu: Use CPUCacheInfo.share_level to encode CPUID[0x8000001D].EAX[bits 25:14]
-
-Zhuocheng Ding (1):
-      tests: Add test case of APIC ID for module level parsing
-
-donsheng (1):
-      target-i386: hyper-v: Correct kvm_hv_handle_exit return value
-
- include/hw/i386/pc.h             |   1 +
- include/hw/i386/topology.h       |  60 +++++++-
- target/i386/cpu.h                |  43 +++++-
- target/i386/helper.h             |   4 +-
- hw/i386/pc.c                     |   3 +
- hw/i386/pc_piix.c                |   3 +
- hw/i386/pc_q35.c                 |   2 +
- hw/i386/pc_sysfw.c               |   8 +-
- hw/i386/x86-common.c             |  54 +++++--
- hw/i386/x86.c                    |  13 +-
- target/i386/cpu.c                | 310 +++++++++++++++++++++++++++++++--------
- target/i386/helper.c             |   4 +
- target/i386/kvm/hyperv.c         |   2 +-
- target/i386/kvm/kvm.c            |   3 +-
- target/i386/tcg/int_helper.c     |  19 +--
- tests/unit/test-x86-topo.c       |  56 ++++---
- target/i386/tcg/decode-new.c.inc |   4 +-
- target/i386/tcg/emit.c.inc       |  34 +++--
- qemu-options.hx                  |  18 ++-
- 19 files changed, 491 insertions(+), 150 deletions(-)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 22a8ca1c9b4..363f5ee4bec 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6165,11 +6165,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     uint32_t limit;
+     uint32_t signature[3];
+     X86CPUTopoInfo topo_info;
++    uint32_t cores_per_pkg;
++    uint32_t threads_per_pkg;
+ 
+     topo_info.dies_per_pkg = env->nr_dies;
+     topo_info.cores_per_die = cs->nr_cores / env->nr_dies;
+     topo_info.threads_per_core = cs->nr_threads;
+ 
++    cores_per_pkg = topo_info.cores_per_die * topo_info.dies_per_pkg;
++    threads_per_pkg = cores_per_pkg * topo_info.threads_per_core;
++
+     /* Calculate & apply limits for different index ranges */
+     if (index >= 0xC0000000) {
+         limit = env->cpuid_xlevel2;
+@@ -6205,8 +6210,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             *ecx |= CPUID_EXT_OSXSAVE;
+         }
+         *edx = env->features[FEAT_1_EDX];
+-        if (cs->nr_cores * cs->nr_threads > 1) {
+-            *ebx |= (cs->nr_cores * cs->nr_threads) << 16;
++        if (threads_per_pkg > 1) {
++            *ebx |= threads_per_pkg << 16;
+             *edx |= CPUID_HT;
+         }
+         if (!cpu->enable_pmu) {
+@@ -6254,15 +6259,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              */
+             if (*eax & 31) {
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+-                int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+-                if (cs->nr_cores > 1) {
++
++                if (cores_per_pkg > 1) {
+                     addressable_cores_width = apicid_pkg_offset(&topo_info) -
+                                               apicid_core_offset(&topo_info);
+ 
+                     *eax &= ~0xFC000000;
+                     *eax |= ((1 << addressable_cores_width) - 1) << 26;
+                 }
+-                if (host_vcpus_per_cache > vcpus_per_socket) {
++                if (host_vcpus_per_cache > threads_per_pkg) {
+                     /* Share the cache at package level. */
+                     addressable_threads_width = apicid_pkg_offset(&topo_info);
+ 
+@@ -6412,12 +6417,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         switch (count) {
+         case 0:
+             *eax = apicid_core_offset(&topo_info);
+-            *ebx = cs->nr_threads;
++            *ebx = topo_info.threads_per_core;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
+             break;
+         case 1:
+             *eax = apicid_pkg_offset(&topo_info);
+-            *ebx = cs->nr_cores * cs->nr_threads;
++            *ebx = threads_per_pkg;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
+             break;
+         default:
+@@ -6437,7 +6442,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         break;
+     case 0x1F:
+         /* V2 Extended Topology Enumeration Leaf */
+-        if (env->nr_dies < 2) {
++        if (topo_info.dies_per_pkg < 2) {
+             *eax = *ebx = *ecx = *edx = 0;
+             break;
+         }
+@@ -6447,7 +6452,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         switch (count) {
+         case 0:
+             *eax = apicid_core_offset(&topo_info);
+-            *ebx = cs->nr_threads;
++            *ebx = topo_info.threads_per_core;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
+             break;
+         case 1:
+@@ -6457,7 +6462,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             break;
+         case 2:
+             *eax = apicid_pkg_offset(&topo_info);
+-            *ebx = cs->nr_cores * cs->nr_threads;
++            *ebx = threads_per_pkg;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_DIE;
+             break;
+         default:
+@@ -6685,7 +6690,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+          * discards multiple thread information if it is set.
+          * So don't set it here for Intel to make Linux guests happy.
+          */
+-        if (cs->nr_cores * cs->nr_threads > 1) {
++        if (threads_per_pkg > 1) {
+             if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
+                 env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
+                 env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
+@@ -6752,7 +6757,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              *eax |= (cpu->guest_phys_bits << 16);
+         }
+         *ebx = env->features[FEAT_8000_0008_EBX];
+-        if (cs->nr_cores * cs->nr_threads > 1) {
++        if (threads_per_pkg > 1) {
+             /*
+              * Bits 15:12 is "The number of bits in the initial
+              * Core::X86::Apic::ApicId[ApicId] value that indicate
+@@ -6760,7 +6765,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              * Bits 7:0 is "The number of threads in the package is NC+1"
+              */
+             *ecx = (apicid_pkg_offset(&topo_info) << 12) |
+-                   ((cs->nr_cores * cs->nr_threads) - 1);
++                   (threads_per_pkg - 1);
+         } else {
+             *ecx = 0;
+         }
 -- 
 2.45.1
 
