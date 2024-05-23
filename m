@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1B4C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 12:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D92EC25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 12:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA7oA-00037m-RS; Thu, 23 May 2024 08:44:34 -0400
+	id 1sA7os-00047e-AY; Thu, 23 May 2024 08:45:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sA7o9-00034T-RB; Thu, 23 May 2024 08:44:33 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
+ id 1sA7om-0003yX-93; Thu, 23 May 2024 08:45:14 -0400
+Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sA7o7-0001xM-LJ; Thu, 23 May 2024 08:44:33 -0400
+ id 1sA7od-00027H-IU; Thu, 23 May 2024 08:45:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1716468266; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=80eZrGYD2ApRnlxbsGZb05SNtMqHECYypkYMLdmoxIs=;
- b=rEjiR2/1K8QAoC9VERLYvfcioSpu3K57yf4zoopgBWwFsC7nCwKLo+Cxhpzfr/kJ0iiL88OYiDQcqwQNAd0dah8r8l+41oFVR6jtQLZsNnAv/uYJwV1AfzXUAMuoufAUVJgPoc++1tkwCfPXukYqu+7UUTau55lgvy/Iyb/o1Ek=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033068173054;
+ t=1716468298; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=cl1dk8KGeV2J7DGWzZY5nTrFzd8F/H5pCPDEr6KMXBc=;
+ b=DDvdusGlnnJAOf2y81yxGTKEwfn9Yx6v1w+aQgLsyJvQYbOO6iUxbvwFiQMlC4wTNdmFRPcYBg5hEc5/t1W8jw4/Y7Ea7sc4AO2zg3SWtVgqtoqDx9lEZjLeeA9Ke5iWDzdzZT10WUUl83kbQZg8+L/AOJ8toPRvjSRfljIdHuA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R621e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045075189;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0W72zYBb_1716468264; 
+ TI=SMTPD_---0W73.NHL_1716468295; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W72zYBb_1716468264) by smtp.aliyun-inc.com;
- Thu, 23 May 2024 20:44:25 +0800
+ fp:SMTPD_---0W73.NHL_1716468295) by smtp.aliyun-inc.com;
+ Thu, 23 May 2024 20:44:57 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
  dbarboza@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com
-Subject: [PATCH 5/6] target/riscv: Enable zabha for max cpu
-Date: Thu, 23 May 2024 20:40:44 +0800
-Message-Id: <20240523124045.1964-6-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH 6/6] disas/riscv: Support zabha disassemble
+Date: Thu, 23 May 2024 20:40:45 +0800
+Message-Id: <20240523124045.1964-7-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
 References: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
+Received-SPF: pass client-ip=115.124.30.97;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
+ helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,29 +71,125 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- target/riscv/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ disas/riscv.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 21d4e36405..9ec03a1edc 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -118,6 +118,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
-     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_12_0, ext_zama16b),
-+    ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_12_0, ext_zabha),
-     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
-     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
-     ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-@@ -1470,6 +1471,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
-     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
-     MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
-+    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
-     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
-     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
-     MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 41050246f3..849af82ddf 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -954,6 +954,26 @@ typedef enum {
+     rv_c_mop_11    = 923,
+     rv_c_mop_13    = 924,
+     rv_c_mop_15    = 925,
++    rv_op_amoswap_b = 926,
++    rv_op_amoadd_b  = 927,
++    rv_op_amoxor_b  = 928,
++    rv_op_amoor_b   = 929,
++    rv_op_amoand_b  = 930,
++    rv_op_amomin_b  = 931,
++    rv_op_amomax_b  = 932,
++    rv_op_amominu_b = 933,
++    rv_op_amomaxu_b = 934,
++    rv_op_amoswap_h = 935,
++    rv_op_amoadd_h  = 936,
++    rv_op_amoxor_h  = 937,
++    rv_op_amoor_h   = 938,
++    rv_op_amoand_h  = 939,
++    rv_op_amomin_h  = 940,
++    rv_op_amomax_h  = 941,
++    rv_op_amominu_h = 942,
++    rv_op_amomaxu_h = 943,
++    rv_op_amocas_b  = 944,
++    rv_op_amocas_h  = 945,
+ } rv_op;
+ 
+ /* register names */
+@@ -2192,6 +2212,26 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "amoswap.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoadd.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoxor.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoor.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoand.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomin.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomax.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amominu.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomaxu.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoswap.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoadd.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoxor.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoor.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoand.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomin.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomax.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amominu.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomaxu.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amocas.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amocas.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+ };
+ 
+ /* CSR names */
+@@ -2923,9 +2963,13 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+         case 11:
+             switch (((inst >> 24) & 0b11111000) |
+                     ((inst >> 12) & 0b00000111)) {
++            case 0: op = rv_op_amoadd_b; break;
++            case 1: op = rv_op_amoadd_h; break;
+             case 2: op = rv_op_amoadd_w; break;
+             case 3: op = rv_op_amoadd_d; break;
+             case 4: op = rv_op_amoadd_q; break;
++            case 8: op = rv_op_amoswap_b; break;
++            case 9: op = rv_op_amoswap_h; break;
+             case 10: op = rv_op_amoswap_w; break;
+             case 11: op = rv_op_amoswap_d; break;
+             case 12: op = rv_op_amoswap_q; break;
+@@ -2947,27 +2991,43 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             case 26: op = rv_op_sc_w; break;
+             case 27: op = rv_op_sc_d; break;
+             case 28: op = rv_op_sc_q; break;
++            case 32: op = rv_op_amoxor_b; break;
++            case 33: op = rv_op_amoxor_h; break;
+             case 34: op = rv_op_amoxor_w; break;
+             case 35: op = rv_op_amoxor_d; break;
+             case 36: op = rv_op_amoxor_q; break;
++            case 40: op = rv_op_amocas_b; break;
++            case 41: op = rv_op_amocas_h; break;
+             case 42: op = rv_op_amocas_w; break;
+             case 43: op = rv_op_amocas_d; break;
+             case 44: op = rv_op_amocas_q; break;
++            case 64: op = rv_op_amoor_b; break;
++            case 65: op = rv_op_amoor_h; break;
+             case 66: op = rv_op_amoor_w; break;
+             case 67: op = rv_op_amoor_d; break;
+             case 68: op = rv_op_amoor_q; break;
++            case 96: op = rv_op_amoand_b; break;
++            case 97: op = rv_op_amoand_h; break;
+             case 98: op = rv_op_amoand_w; break;
+             case 99: op = rv_op_amoand_d; break;
+             case 100: op = rv_op_amoand_q; break;
++            case 128: op = rv_op_amomin_b; break;
++            case 129: op = rv_op_amomin_h; break;
+             case 130: op = rv_op_amomin_w; break;
+             case 131: op = rv_op_amomin_d; break;
+             case 132: op = rv_op_amomin_q; break;
++            case 160: op = rv_op_amomax_b; break;
++            case 161: op = rv_op_amomax_h; break;
+             case 162: op = rv_op_amomax_w; break;
+             case 163: op = rv_op_amomax_d; break;
+             case 164: op = rv_op_amomax_q; break;
++            case 192: op = rv_op_amominu_b; break;
++            case 193: op = rv_op_amominu_h; break;
+             case 194: op = rv_op_amominu_w; break;
+             case 195: op = rv_op_amominu_d; break;
+             case 196: op = rv_op_amominu_q; break;
++            case 224: op = rv_op_amomaxu_b; break;
++            case 225: op = rv_op_amomaxu_h; break;
+             case 226: op = rv_op_amomaxu_w; break;
+             case 227: op = rv_op_amomaxu_d; break;
+             case 228: op = rv_op_amomaxu_q; break;
 -- 
 2.25.1
 
