@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB720C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6129BC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHZm-00039H-3w; Thu, 23 May 2024 19:10:22 -0400
+	id 1sAHbK-0001h3-LA; Thu, 23 May 2024 19:11:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZL-0001g4-MP; Thu, 23 May 2024 19:09:56 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sAHaw-0007mv-7V; Thu, 23 May 2024 19:11:34 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZ3-0005oz-A2; Thu, 23 May 2024 19:09:55 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6f8ecafd661so294877b3a.3; 
- Thu, 23 May 2024 16:09:36 -0700 (PDT)
+ id 1sAHat-0006N6-D5; Thu, 23 May 2024 19:11:32 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6f8e98760fcso294869b3a.1; 
+ Thu, 23 May 2024 16:11:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505775; x=1717110575; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505889; x=1717110689; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=leNP85nF0VhOqKR15AYi1UxMrPgTQvoAv1nRyxHoBYo=;
- b=Wj4Xo5O1TZKLbA4pcDQaSynccUPmme34vLaerjC1RTv3DCq55Kmw+3qiz61wzm+1Xj
- U8efVRgmkZt+cNmc5aktpmVfN8tw0NkVbp+KFSrolqKbd7fSQaP1dwRBv2dfc/wP8GYi
- wVRNTPwVCNLYaGBRZwbnGRGFBiLWBKCfMKBT7vrfFDYfb+0jDNx7nI7ee9ycdqYSZ1zv
- ubO8Ql1wkc5jVDKFK+Ed9MPKhsS7erFbVBW5VufjsoCfZiOAIrZk6KOKqMD85jyLZyR2
- g4seQrwOEKoD1hdmYNhTp+DSDsYMyfDXYbcLVd3Y95bGJc7U8/GzA4BZmiIqFASYH/Kw
- A0hQ==
+ bh=o4GTBmpK/uwjCeV22q5y1Kk/p3bIImzV+8sEKRJvedI=;
+ b=anYwriUecm+vpKb0N0t/53WbkHb+E1cvb2CnZRX9R9Axm6NhdoTd00Y/Qojba2KQqm
+ I+wTLQ3QI3ZCVW2ANfuoeyRQlE9LD0Q/hPdmIb4LtbqYP/ymODTSJqb4ql4Cif7lGBGs
+ quG0nRumYPumSq4chIA8T/AY1XXu/q+6IHWojXwyXZF1rVofOCZvUwk4kIwHHE+KRTyA
+ +XqRHggbSPbYx7WRKd+xaE4/dkSqjJEzgadh07lSR2DXRB+VAHzO1bbV5pzrqVZ5NL2O
+ JiFEmPldeqsSkmxsvDNlIJ/i5MxTVdhVoAbp3SdJ1pq4ezVGpquDMQiXDqNdEeZotgrL
+ NdGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505775; x=1717110575;
+ d=1e100.net; s=20230601; t=1716505889; x=1717110689;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=leNP85nF0VhOqKR15AYi1UxMrPgTQvoAv1nRyxHoBYo=;
- b=jnKRrOpZIFfHqz2hu8Lhf3LVuXjdj6y9tcoCfhmIr0pY6kTTxzeN5B/4ohVMXpssTv
- 6vx5zk57tXU9lcAFJEG306TJjTuABRY3fqb4ZAREgYR32DxGlI4LhpoyVu5lGLJoB2Uv
- QWrKscuZBV+2Z5PVpl+GwlFKP2Iv9M87UHUlLv2Cj92EvQ55g9Acali6HXnrR8Lpsz+k
- AnfuFH6TP5dy8o4YIsICIvRvl5WWI+odEFaZgSD8H2pCABYoSY0R0keW/U0PwWgaEIoX
- zxE5cT44i8zHfLi4S4dQ8KY3xheDu/W1z86vLRoE57Oe9qsrZR2iv71Hj2Vlg0DoA6Ig
- kfuQ==
+ bh=o4GTBmpK/uwjCeV22q5y1Kk/p3bIImzV+8sEKRJvedI=;
+ b=cQoPAsexIERkexEBWFl1fWvKYHoPZ+5ef6ygBsu5gtLp45L6XBpRcbdpz6SzBcX6qa
+ uiW/b8B/wm+oKBl0xgkCk38Y6tqod2mjkbDXNy4jGzNEoCFfnKfbLPjURtPDUnpb5Jr7
+ 8KuZEqyLx1PMmTZPL49o2i7lpz3dwVR/CldVxh6I5zK1ies684ZSrpAXarU3vtN8jeHB
+ NCq6VzxF2qgS4eCkOEkKyzgfKHI7XTEzOGjGDUQY+HoUgtFC1qg8lABzozvV5meA6lWX
+ CoWycQebFEQc/0lTRV3xM19hfn3LQYudwRaBDlTxMW7izPCL+3bxYIh4OVLkNrtHy2w3
+ IyXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVh/ySVGCnkvCi65q69GBZS27J9wtBg+DRTR+zpOCLm2iDntaCX4ewD/EzNYJJVU9DkfjXex19KB/5iF810xpINEBee
-X-Gm-Message-State: AOJu0Ywcyn0Ke46uJNN2Y8HpCab6CCSn7OF3ZxPXTMHhAOD6y/UfQp3q
- u52Th7iWuuztF1GcBFc4I2+NBt6IM3lo1zo2xXtHBimco+uCZNvtN9FT8g==
-X-Google-Smtp-Source: AGHT+IF5ty5lw46Bmv5nOj3/D7PNOt03VdveUSNOTzlHxZiYA52A2GE2gnemuHhTdnFyIGF4W4v9Aw==
-X-Received: by 2002:a05:6a20:d04c:b0:1b0:1be7:3705 with SMTP id
- adf61e73a8af0-1b212cc5089mr1217095637.7.1716505775408; 
- Thu, 23 May 2024 16:09:35 -0700 (PDT)
+ AJvYcCWt5OEX65x2O8AmpdFoScvWBHyAKj+KQUiDYM7QcGJbwp5PYtiBLAWeRmRgHlAdrt8I2wAgZPP5t44zy+/RYoX1alRd
+X-Gm-Message-State: AOJu0YxtlX7BiHTUlj/fmUYFnXg6cI2vI3/9xaPo6asgps2bOdDfIzgy
+ tiw+SXriMgLeHolnfFTcSGMOGG2FWjBkdPUwfv5Gp7h5kdBjMqDl8GWFKg==
+X-Google-Smtp-Source: AGHT+IH6Gpe30mpplUBDBW1yl7T+Ai9PlltkLdEgkYBjboutnQ0PErvsL75KBALwJZoLpF86UQ+0gg==
+X-Received: by 2002:a05:6a00:3388:b0:6f3:c10a:7bdd with SMTP id
+ d2e1a72fcca58-6f8f34b281cmr951744b3a.18.1716505889122; 
+ Thu, 23 May 2024 16:11:29 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.32
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.11.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:09:35 -0700 (PDT)
+ Thu, 23 May 2024 16:11:28 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Glenn Miles <milesg@linux.ibm.com>
-Subject: [PULL 31/72] target/ppc: BookE DECAR SPR is 32-bit
-Date: Fri, 24 May 2024 09:07:04 +1000
-Message-ID: <20240523230747.45703-32-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 69/72] target/ppc/mmu-radix64.c: Drop a local variable
+Date: Fri, 24 May 2024 09:07:42 +1000
+Message-ID: <20240523230747.45703-70-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,27 +94,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DECAR SPR is 32-bits width.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+The value is only used once so no need to introduce a local variable
+for it.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/ppc/mmu-radix64.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index ee01415c32..927721d49a 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -792,7 +792,7 @@ static void register_BookE_sprs(CPUPPCState *env, uint64_t ivor_mask)
-                  0x00000000);
-     spr_register(env, SPR_BOOKE_DECAR, "DECAR",
-                  SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, &spr_write_generic,
-+                 SPR_NOACCESS, &spr_write_generic32,
-                  0x00000000);
-     /* SPRGs */
-     spr_register(env, SPR_USPRG0, "USPRG0",
+diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+index fefa55a5f1..c1e4f00335 100644
+--- a/target/ppc/mmu-radix64.c
++++ b/target/ppc/mmu-radix64.c
+@@ -185,7 +185,6 @@ static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
+                                    int mmu_idx, bool partition_scoped)
+ {
+     CPUPPCState *env = &cpu->env;
+-    int need_prot;
+ 
+     /* Check Page Attributes (pte58:59) */
+     if ((pte & R_PTE_ATT) == R_PTE_ATT_NI_IO && access_type == MMU_INST_FETCH) {
+@@ -210,8 +209,8 @@ static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
+     }
+ 
+     /* Check if requested access type is allowed */
+-    need_prot = prot_for_access_type(access_type);
+-    if (need_prot & ~*prot) { /* Page Protected for that Access */
++    if (prot_for_access_type(access_type) & ~*prot) {
++        /* Page Protected for that Access */
+         *fault_cause |= access_type == MMU_INST_FETCH ? SRR1_NOEXEC_GUARD :
+                                                         DSISR_PROTFAULT;
+         return true;
 -- 
 2.43.0
 
