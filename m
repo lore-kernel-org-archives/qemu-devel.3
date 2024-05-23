@@ -4,83 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF406C25B7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD927C25B7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9wE-0006A3-3b; Thu, 23 May 2024 11:01:02 -0400
+	id 1sA9zF-00008z-Ia; Thu, 23 May 2024 11:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wC-0005zu-KN
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9z7-0008N6-5a
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:04:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wA-0004pi-HG
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:00 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9z4-00057Z-9u
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:04:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476457;
+ s=mimecast20190719; t=1716476637;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GqS2UfS+WDHHZdip3hx7UpMxZQFBBZCwcieJssVifKE=;
- b=COV6z7E+0OLZDnktDamiSY6iHLijxFRlifaoSnRLF5miEAeklbhHUvZR7PW5J5EUmqa2Jc
- jK8xP0DpXccPeBF5+WSKMjdzz5a9pKlBDl1QfKQme+tbh+Ne6gFqWQLP2T1QB5FGr2SlgB
- fKC6cuqVydrOgXUYW+jlBWljQLJEArs=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=B8sp+ftTU62M+N335i+jcRKJLgyYiuL1qyEkERUEZ+M=;
+ b=S5Ua+EX1vmSPe35Dg63oUpi8W2y1PwJ/HcadB0r/g040N2tnuIX9zjEI9FSkkTNW8f88pq
+ hbodO7MEgeqJ+EXCPHJKISpbjY6GLqnIPTBOL4ab1NCLbOM5gns4sDQ7kJxc+fjUE23jy+
+ MNSu+3oN0vmjEnkVbCm0GRP2CEL0/bM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-DBuYk1bANOm-qsHBM7-VBw-1; Thu, 23 May 2024 11:00:56 -0400
-X-MC-Unique: DBuYk1bANOm-qsHBM7-VBw-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a59c942611bso119345166b.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:56 -0700 (PDT)
+ us-mta-543-Z7GMyRw4OT62nsiqp-50gg-1; Thu, 23 May 2024 11:03:54 -0400
+X-MC-Unique: Z7GMyRw4OT62nsiqp-50gg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42015260835so62261165e9.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:03:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476455; x=1717081255;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GqS2UfS+WDHHZdip3hx7UpMxZQFBBZCwcieJssVifKE=;
- b=X0aXm22cKQKJkt5EXf84H9rE8yCGpl2AhSOp6SpSatok6pNkdADjuX3yIVD0ej/UDj
- JB6o84DclxcHI3mP+0IjrjzQsuP/p9cDxRiXnkca5Uf7LjSyNfXiMkLTv1nXjidG2cAm
- 4MEfrw4OtEBwwoigL8gH3VgT5lQj3cj50TfScyRqKQTMFfSQOR7DdAd22kRzisMUBIiI
- 5N7NaczB7N4t7xTRKdkmt3HjMjtYCbOLU2nyKTGki9/RF4/rKkrXxuSKPDeKIHU0q3nP
- pPv1x8vf/MxXahEEHihzQ/uOXJEiENJFv//iXoyCvLrO4rN/94SEdknq9PRH+epBnpxf
- EIyA==
-X-Gm-Message-State: AOJu0YzClt3dYvOZBsvkX4nty9lV0UGQeszEIHBGByK9k81qi4vjFgz6
- 9DX2s6Oa2otMNAfIjz78vjVAPrI+wiYECMdVH8J5karuydaI2Rgev9hcYXgBss5W/D87zgDBcJE
- rrqUEyU423YlFOy2xnmRCTTb5UONujgdUN9szddYz5gavederWPYy1U/TQs1pAZF3eyksx7Absf
- A2QGwQFQRh/dzT+H1jAuG4Lqb3AHW9PdC4VV7w
-X-Received: by 2002:a17:906:a38f:b0:a59:c23d:85d8 with SMTP id
- a640c23a62f3a-a6228156097mr314608666b.51.1716476454902; 
- Thu, 23 May 2024 08:00:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLhQjuaMmnqZnOhZnc8p+AieE+ED4aduMULZnVF2+HgTQfVSbKulXKBrC5G13MSFm84L+I0Q==
-X-Received: by 2002:a17:906:a38f:b0:a59:c23d:85d8 with SMTP id
- a640c23a62f3a-a6228156097mr314606466b.51.1716476454530; 
- Thu, 23 May 2024 08:00:54 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
+ d=1e100.net; s=20230601; t=1716476634; x=1717081434;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B8sp+ftTU62M+N335i+jcRKJLgyYiuL1qyEkERUEZ+M=;
+ b=KX4WGzHp8HCRvFnxbs/eBO+FzSmQGLoKgMmldbpPmNLuJbRGeJnqHfGpui0ZdDbPqx
+ Vw1GSCQ3I7GxVuTCrBSd4Hw86FB016QdSIr3YvzKNzERs+Vd4RsHlhMWEAJcwyP2iQuc
+ H/f5HaUG2Ob7KHeAhj/SdlpCAQywB7rBIkG6+tJsv9vdJ3DUyGgq7c8w4yiHFaRfYSAo
+ K3TbcAmFFQ5r/1RVpgVTbOFRf50dDydxGSz/LTN3ZMIx7mUdT3a9h6+Mfs1q9VhLfnBp
+ /mnR6zEdQkmxmuWq+KUIDr+VM87hIGE6XQpBb7iza7+zhbOwGuPl50dFqYoqt4y/v0az
+ nqCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrqIAoZOWo2LqhNphsRjzCqo9D0BUcXCJ71sazUjPEOliSl21nyOvM5KA2iZQiT0WN9y3YOJyerpFvDpmMAz5Y/kqX270=
+X-Gm-Message-State: AOJu0YzcIT6xTFLPpcSlS2fK4+X8hNGRtTbmtV08vqdzjT634gMltMRW
+ 5FY5FfB30FRhXTSNt9LDVGb6zqdPM+YxERBamwHte14Kz0onyW1Fw4/M5JPIiptMPaIvb8GxI7b
+ Cb2nTOiBusqYuIBghOvQlftsBtrUrjMI4WI/A3MZ07V6lDkQMfL56
+X-Received: by 2002:a7b:cb44:0:b0:41b:ab72:3f4d with SMTP id
+ 5b1f17b1804b1-420fd2d6eb5mr37497425e9.1.1716476633647; 
+ Thu, 23 May 2024 08:03:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHv+nm/wzJjNMhhH0Rl4fJHidTbSbmKZteOvcPqQWibxzJpBB2pLSC4LRCpfYerj2UGxtyv3g==
+X-Received: by 2002:a7b:cb44:0:b0:41b:ab72:3f4d with SMTP id
+ 5b1f17b1804b1-420fd2d6eb5mr37496975e9.1.1716476633172; 
+ Thu, 23 May 2024 08:03:53 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c717:5f00:c949:6700:cce1:e60b?
+ (p200300cbc7175f00c9496700cce1e60b.dip0.t-ipconnect.de.
+ [2003:cb:c717:5f00:c949:6700:cce1:e60b])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17b17d02sm1954719066b.218.2024.05.23.08.00.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:00:53 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Babu Moger <babu.moger@amd.com>
-Subject: [PULL 07/23] i386/cpu: Use APIC ID info to encode cache topo in
- CPUID[4]
-Date: Thu, 23 May 2024 17:00:20 +0200
-Message-ID: <20240523150036.1050011-8-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
-References: <20240523150036.1050011-1-pbonzini@redhat.com>
+ 5b1f17b1804b1-42100fad6ccsm27519325e9.32.2024.05.23.08.03.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 May 2024 08:03:52 -0700 (PDT)
+Message-ID: <e939b421-c3ad-4eea-97f9-0a56eb400a44@redhat.com>
+Date: Thu, 23 May 2024 17:03:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 07/13] vhost-user: enable frontends on any POSIX system
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brad Smith <brad@comstyle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>, stefanha@redhat.com,
+ Hanna Reitz <hreitz@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, gmaglione@redhat.com,
+ Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org
+References: <20240523145522.313012-1-sgarzare@redhat.com>
+ <20240523145522.313012-8-sgarzare@redhat.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240523145522.313012-8-sgarzare@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,7 +147,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,162 +163,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 23.05.24 16:55, Stefano Garzarella wrote:
+> The vhost-user protocol is not really Linux-specific so let's enable
+> vhost-user frontends for any POSIX system.
+> 
+> In vhost_net.c we use VHOST_FILE_UNBIND which is defined in a Linux
+> specific header, let's define it for other systems as well.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 
-Refer to the fixes of cache_info_passthrough ([1], [2]) and SDM, the
-CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26] should use the
-nearest power-of-2 integer.
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-The nearest power-of-2 integer can be calculated by pow2ceil() or by
-using APIC ID offset/width (like L3 topology using 1 << die_offset [3]).
-
-But in fact, CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26]
-are associated with APIC ID. For example, in linux kernel, the field
-"num_threads_sharing" (Bits 25 - 14) is parsed with APIC ID. And for
-another example, on Alder Lake P, the CPUID.04H:EAX[bits 31:26] is not
-matched with actual core numbers and it's calculated by:
-"(1 << (pkg_offset - core_offset)) - 1".
-
-Therefore the topology information of APIC ID should be preferred to
-calculate nearest power-of-2 integer for CPUID.04H:EAX[bits 25:14] and
-CPUID.04H:EAX[bits 31:26]:
-1. d/i cache is shared in a core, 1 << core_offset should be used
-   instead of "cs->nr_threads" in encode_cache_cpuid4() for
-   CPUID.04H.00H:EAX[bits 25:14] and CPUID.04H.01H:EAX[bits 25:14].
-2. L2 cache is supposed to be shared in a core as for now, thereby
-   1 << core_offset should also be used instead of "cs->nr_threads" in
-   encode_cache_cpuid4() for CPUID.04H.02H:EAX[bits 25:14].
-3. Similarly, the value for CPUID.04H:EAX[bits 31:26] should also be
-   calculated with the bit width between the package and SMT levels in
-   the APIC ID (1 << (pkg_offset - core_offset) - 1).
-
-In addition, use APIC ID bits calculations to replace "pow2ceil()" for
-cache_info_passthrough case.
-
-[1]: efb3934adf9e ("x86: cpu: make sure number of addressable IDs for processor cores meets the spec")
-[2]: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-[3]: d65af288a84d ("i386: Update new x86_apicid parsing rules with die_offset support")
-
-Fixes: 7e3482f82480 ("i386: Helpers to encode cache information consistently")
-Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Message-ID: <20240424154929.1487382-7-zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.c | 50 +++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 40 insertions(+), 10 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3c66242f6d3..f3d2b8053b2 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6162,7 +6162,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
- {
-     X86CPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
--    uint32_t die_offset;
-     uint32_t limit;
-     uint32_t signature[3];
-     X86CPUTopoInfo topo_info;
-@@ -6234,7 +6233,18 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
-         break;
--    case 4:
-+    case 4: {
-+        /*
-+         * CPUID.04H:EAX[bits 25:14]: Maximum number of addressable IDs for
-+         * logical processors sharing this cache.
-+         */
-+        int addressable_threads_width;
-+        /*
-+         * CPUID.04H:EAX[bits 31:26]: Maximum number of addressable IDs for
-+         * processor cores in the physical package.
-+         */
-+        int addressable_cores_width;
-+
-         /* cache info: needed for Core compatibility */
-         if (cpu->cache_info_passthrough) {
-             x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
-@@ -6246,40 +6256,59 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
-                 if (cs->nr_cores > 1) {
-+                    addressable_cores_width = apicid_pkg_offset(&topo_info) -
-+                                              apicid_core_offset(&topo_info);
-+
-                     *eax &= ~0xFC000000;
--                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-+                    *eax |= ((1 << addressable_cores_width) - 1) << 26;
-                 }
-                 if (host_vcpus_per_cache > vcpus_per_socket) {
-+                    /* Share the cache at package level. */
-+                    addressable_threads_width = apicid_pkg_offset(&topo_info);
-+
-                     *eax &= ~0x3FFC000;
--                    *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
-+                    *eax |= ((1 << addressable_threads_width) - 1) << 14;
-                 }
-             }
-         } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
-             *eax = *ebx = *ecx = *edx = 0;
-         } else {
-             *eax = 0;
--            int apic_ids_sharing_l1 = cpu->l1_cache_per_core ? cs->nr_threads : 1;
-+            addressable_cores_width = apicid_pkg_offset(&topo_info) -
-+                                      apicid_core_offset(&topo_info);
-+
-             switch (count) {
-             case 0: /* L1 dcache info */
-+                addressable_threads_width = cpu->l1_cache_per_core
-+                    ? apicid_core_offset(&topo_info)
-+                    : 0;
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
--                                    apic_ids_sharing_l1, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 1: /* L1 icache info */
-+                addressable_threads_width = cpu->l1_cache_per_core
-+                    ? apicid_core_offset(&topo_info)
-+                    : 0;
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
--                                    apic_ids_sharing_l1, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 2: /* L2 cache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l2_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 3: /* L3 cache info */
--                die_offset = apicid_die_offset(&topo_info);
-                 if (cpu->enable_l3_cache) {
-+                    addressable_threads_width = apicid_die_offset(&topo_info);
-                     encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
--                                        (1 << die_offset), cs->nr_cores,
-+                                        (1 << addressable_threads_width),
-+                                        (1 << addressable_cores_width),
-                                         eax, ebx, ecx, edx);
-                     break;
-                 }
-@@ -6290,6 +6319,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             }
-         }
-         break;
-+    }
-     case 5:
-         /* MONITOR/MWAIT Leaf */
-         *eax = cpu->mwait.eax; /* Smallest monitor-line size in bytes */
 -- 
-2.45.1
+Cheers,
+
+David / dhildenb
 
 
