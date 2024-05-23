@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64AC4C25B7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A44C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHb5-0000KC-AY; Thu, 23 May 2024 19:11:43 -0400
+	id 1sAHb5-0000J9-6E; Thu, 23 May 2024 19:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHaS-0006R4-Q4; Thu, 23 May 2024 19:11:06 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1sAHaC-0005XS-2s; Thu, 23 May 2024 19:10:51 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHaK-0006GI-QR; Thu, 23 May 2024 19:11:04 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6f8e9555eabso312075b3a.1; 
- Thu, 23 May 2024 16:10:55 -0700 (PDT)
+ id 1sAHaA-0006FB-7r; Thu, 23 May 2024 19:10:47 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2bd9284dd31so2326809a91.3; 
+ Thu, 23 May 2024 16:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505855; x=1717110655; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505843; x=1717110643; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jio2aMib7y+e9zQwmFJ8d9w0bA9aBFqChyGcW4tINAw=;
- b=V7OHNY1Zhav9gEOn0ULmYwjX5SAO37WHTH3FhazuhyLvxMMXsCauw5xXbI+oDZJBYC
- +TWd4rAI9FqQZ/0JUCp0Alj2BRKJ3h0F4G8l57eIS65Yoz8gu1zruni/+friVHavomve
- JjH8x1abeT694T0GvbT8R2Uh7hG8MIEz3lNOpNHPaHh46QLqqsT8wDmykO7PzVR3J8B6
- ksMm1dZo14mBMsQtIdZgLjnA7EeZ8LocwnT9ldTfSKpK0qrIAtCTyg94n/fsErA1x3Ig
- or9a85ib3mHtMBcKb35UFJL3OYOY9KtIZ1M9Nq5j8D+DVRcSGOg2DIXacsnD7trWG9b4
- yKQQ==
+ bh=gGzek4BgVUiOZX20Ziz09caCuLwvQXep/6WVLrtOBek=;
+ b=CZkiJomJsdF0ZZta8eCGWFH1aXY9xFGV6UOL9luXIqK9Jw40XUytwyRysXHzF+xNE7
+ G9qyLBoaoVgnkHy39s3WvJIkxKg9QG5M7fpSni1f27Vy3O5u7dNXCW1hy05NvO7JRK+8
+ DLbG9FM+aEnrgKfyEiCtRjVuDGssfDaUe6ZJAJG4JfHHIQez7tOZIHTiXQqVqiOX8XCJ
+ 3EWOT9fL3pIs8laN3NJ2ZhqBVzlYfA7mozKaJDmma1NAD2i55JapaGlga9htD+WTja9l
+ 6TSFpKhinfGKrh4XXeCQrkuPMlR5CFBK/BSsyDSINlNpwPCpXd31HQJOSI4kJ4xI2atM
+ l91Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505855; x=1717110655;
+ d=1e100.net; s=20230601; t=1716505843; x=1717110643;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Jio2aMib7y+e9zQwmFJ8d9w0bA9aBFqChyGcW4tINAw=;
- b=qBTxeEwSldKNpmo9wjk0h4kDacwXoO/0nqjqt2D5dESqtSYgiUtcwFovhOboBctCU/
- u58Xi6sDba5VswEkzfKFkmSyfKq7V8J+7ffVCqXAAEZyEPPOa8pux9L/njV89/iVia3+
- LQHFTFQjdz3k1HcvZBgDHioafB7f+SoMlFaQY3f1fd5NDqzdWzCDPhU9T5wEnA/j/YaK
- 6kAS069g89QwT+m5Ffe9BcbQ7PLN418MDXoSu/dKZM52IUf0tKmspfCh1uyLGEb89fFj
- oS/haWLZ0sbXBNVQ5egoU3QQKnzNSejdcn1MLuv7snX/bYa9VWOrdQ2kC/NtdBbXhqri
- l7Rw==
+ bh=gGzek4BgVUiOZX20Ziz09caCuLwvQXep/6WVLrtOBek=;
+ b=pqBJqr7GBPmN/EFVwUuOYS1dpUb4eoOrl1Kj56OxwnYMmEkBBtoZbKB1UB5YCNSNGw
+ sZ5HVXxswUfoOSa0HoXkiIbtBvQzLS2pi9WoAwBgsSKly8fpTHRd1Wm5ltuR56YmiK7p
+ rOxMaZK+M3SgJQQK9LdeGDc69I1m1RyZn+c0UJN7Kq2oQU4wXouLJk8azeV27WgdoYgw
+ b3WrWSF5+r1SSKrUm3P9DjoUEzQbxsROdPs9mC3c3MKoKdZ1bl1pO6XcS+3Yc6CvXBLN
+ lLuXnmScxgNUg44qrcJyf+OdqcYmbSy/Oz6cxyxcxtFXqxfsVUMEQKEju7orIsuHZwrR
+ YfYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVG6BoAYRqyFXwuBqA9GHV+f80AgIAcBzapWGTV5esBkJutUU9dvzW0vFOh/NTk/TiG6rcLVG4vy9jZDoeRcroeNyvx
-X-Gm-Message-State: AOJu0YxIeVTUguxWhwW1fCZTyYObOZ1qZFMluMhQJ1Y9q5uc2l/7/PN/
- 8cWfIbCWgVF/O2+S1I4zdLVwgyNdLBdaiQVZIkLjjRvYKX9OWGVbEwIDnQ==
-X-Google-Smtp-Source: AGHT+IGfYqfxEyxkKnFWaxP6qvq9SiCpJ4BKIV0D/3X5eG+DRqyqLrxC6ByS48y7Yu8EVCRZCIO+rQ==
-X-Received: by 2002:a05:6a20:7483:b0:1a7:61f0:9ca9 with SMTP id
- adf61e73a8af0-1b212e57b20mr1037002637.58.1716505854671; 
- Thu, 23 May 2024 16:10:54 -0700 (PDT)
+ AJvYcCUjPjuM063jIZ1HAHuRUYxYtPSnJJDrTeuRlVGfch7vq22G4o4pAw/Wlm6idXqagnPpm0BiG+oPBVgT3liyShsQMIF2
+X-Gm-Message-State: AOJu0YwfL8t0VwcgNSz6UPdREi1QPgu91/DG4hftlZlfPNdUzErwSxu6
+ byJyec8RabTGmJLfiDdcBLISho1TkSDtnriPn/EYRDGq9HopNQ5l8ErAQw==
+X-Google-Smtp-Source: AGHT+IHrziDOOcmeGIKLary+h1JFMJtkTcg8owOng+fhX7UbPoBhn9R3k91x4qxUBkav/lL+V87iWQ==
+X-Received: by 2002:a17:90a:17cf:b0:2bd:9dab:a7b0 with SMTP id
+ 98e67ed59e1d1-2bf5ee1981bmr611035a91.13.1716505842998; 
+ Thu, 23 May 2024 16:10:42 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.10.52
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.10.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:10:54 -0700 (PDT)
+ Thu, 23 May 2024 16:10:42 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 58/72] target/ppc/mmu_common.c: Remove BookE from direct store
- handling
-Date: Fri, 24 May 2024 09:07:31 +1000
-Message-ID: <20240523230747.45703-59-npiggin@gmail.com>
+Subject: [PULL 54/72] target/ppc/mmu_common.c: Replace hard coded constants in
+ ppc_jumbo_xlate()
+Date: Fri, 24 May 2024 09:07:27 +1000
+Message-ID: <20240523230747.45703-55-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,34 +97,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: BALATON Zoltan <balaton@eik.bme.hu>
 
-As BookE never returns -4 we can drop BookE from the direct store case
-in ppc_jumbo_xlate().
+The "2" in booke206_update_mas_tlb_miss() call corresponds to
+MMU_INST_FETCH which is the value of access_type in this branch;
+mmubooke206_esr() only checks for MMU_DATA_STORE and it's called from
+code access so using MMU_DATA_LOAD here seems wrong so replace it with
+access_type here as well that yields the same result. This also makes
+these calls the same as the data access branch further down.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ target/ppc/mmu_common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 004ea2111d..6c6c7c55b6 100644
+index f40481b4b1..6570b280ca 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -1298,12 +1298,7 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-             /* Direct store exception */
-             /* No code fetch is allowed in direct-store areas */
-             cs->exception_index = POWERPC_EXCP_ISI;
--            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
--                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
--                env->error_code = 0;
--            } else {
--                env->error_code = 0x10000000;
--            }
-+            env->error_code = 0x10000000;
-             break;
-         }
-     } else {
+@@ -1287,13 +1287,13 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                 env->spr[SPR_40x_ESR] = 0x00000000;
+                 break;
+             case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, 2, mmu_idx);
++                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+                 /* fall through */
+             case POWERPC_MMU_BOOKE:
+                 cs->exception_index = POWERPC_EXCP_ITLB;
+                 env->error_code = 0;
+                 env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, MMU_DATA_LOAD);
++                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+                 break;
+             case POWERPC_MMU_REAL:
+                 cpu_abort(cs, "PowerPC in real mode should never raise "
 -- 
 2.43.0
 
