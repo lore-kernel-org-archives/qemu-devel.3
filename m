@@ -4,71 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6944DC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6275CC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 20:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAEN4-0003yw-8I; Thu, 23 May 2024 15:45:03 -0400
+	id 1sAEud-0000dr-AI; Thu, 23 May 2024 16:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sAEN0-0003ou-L4; Thu, 23 May 2024 15:44:58 -0400
-Received: from zproxy1.enst.fr ([137.194.2.220])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sAEMv-00034m-LX; Thu, 23 May 2024 15:44:57 -0400
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 7076FC056E;
- Thu, 23 May 2024 21:44:50 +0200 (CEST)
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id UD_yBUHMmLMI; Thu, 23 May 2024 21:44:49 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 67139C05A5;
- Thu, 23 May 2024 21:44:49 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 67139C05A5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1716493489;
- bh=pgzxAEJxEFi3a+StKG5BA+dPFpv0eGIpNRlffze6I28=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=11LYPZMCBx6Qe38+BC0yroJ9QM9UzvVXMuVunqL9uNODYvW1OtLH+i77QTH/AlCKr
- eJM7YqzQc4nSJZy9Uax1XmsUIdU+Ac2mcSR1tMHH0pJVOKILY+zcjhzgB+3vBa2a+t
- svYscsPo0zz3W+k4C1qYy4qEx6Vi3xD45PCB5UNg=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id iqGjNknowc5E; Thu, 23 May 2024 21:44:49 +0200 (CEST)
-Received: from inesv-Inspiron-3501.enst.fr (unknown
- [IPv6:2a04:8ec0:0:124::190c])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id 304AEC056E;
- Thu, 23 May 2024 21:44:48 +0200 (CEST)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAEuc-0000dZ-I7
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 16:19:42 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAEua-0002HL-AB
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 16:19:42 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 239D022CA1;
+ Thu, 23 May 2024 20:19:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1716495578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
+ b=TdftmnAvWA3gTBxu9JPZByiNJAVPpmSECqFwyl+/WdzQeJxppL3HxDjPZ/W8SHXiVK53xA
+ UYG8ERBqJdg/wvKSgUXlBNI2bAWHSPdS9sxYm/tF67U/KXxbq4ELrbdYUGykx9FYTWm6Zu
+ 2PGd5vmzULseVhrGLsNc8i4D4IbA6y0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1716495578;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
+ b=U7GTMSPgYeEcHQI2QnWXLFL3E1PsA1bkN1fE4Er8UhpVZfiw8KbamLWBir/KIcVolRz/71
+ MeGpm3nUHQwRdDDw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1716495578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
+ b=TdftmnAvWA3gTBxu9JPZByiNJAVPpmSECqFwyl+/WdzQeJxppL3HxDjPZ/W8SHXiVK53xA
+ UYG8ERBqJdg/wvKSgUXlBNI2bAWHSPdS9sxYm/tF67U/KXxbq4ELrbdYUGykx9FYTWm6Zu
+ 2PGd5vmzULseVhrGLsNc8i4D4IbA6y0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1716495578;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
+ b=U7GTMSPgYeEcHQI2QnWXLFL3E1PsA1bkN1fE4Er8UhpVZfiw8KbamLWBir/KIcVolRz/71
+ MeGpm3nUHQwRdDDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6761A13A6C;
+ Thu, 23 May 2024 20:19:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uHC8C9ekT2ZqcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 May 2024 20:19:35 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
- Luc Michel <luc@lmichel.fr>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Fiona Ebner <f.ebner@proxmox.com>, Het Gala <het.gala@nutanix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 0/4] Check clock connection between STM32L4x5 RCC and
- peripherals
-Date: Thu, 23 May 2024 21:41:46 +0200
-Message-ID: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.2
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [RFC PATCH 4/4] ci: Add the new migration device tests
+Date: Thu, 23 May 2024 17:19:22 -0300
+Message-Id: <20240523201922.28007-5-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240523201922.28007-1-farosas@suse.de>
+References: <20240523201922.28007-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.220;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy1.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[10];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,51 +124,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Among implemented STM32L4x5 devices, USART, GPIO and SYSCFG
-have a clock source, but none has a corresponding test in QEMU.
+We have two new migration tests that check cross version
+compatibility. One uses the vmstate-static-checker.py script to
+compare the vmstate structures from two different QEMU versions. The
+other runs a simple migration with a few devices present in the VM, to
+catch obvious breakages.
 
-This patch makes sure that all 3 devices create a clock correctly,
-adds a QOM property to access clocks' periods from QTests,
-and adds QTests checking that clock enable in RCC has the
-expected results for all 3 devices.
+Add both tests to the migration-compat-common job.
 
-Thank you for the reviews.
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ .gitlab-ci.d/buildtest.yml | 43 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
-Changes from "v1" to v3:
-- adding a commit to expose `qtest-clock-period`, a QOM property for
-all clocks, only accessible from QTests, and mention it in clock.rst
-- adapt QTests so that they use clock period instead of clock frequency
-- remove `clock-freq-hz` QOM property in STM32L4x5 USART and SYSCFG
-- dropping the commit migrating GPIO clocks as it's already upstream
-
-Changes from v1 to an unfortunate second "v1":
-- upgrading `VMStateDescription` to version 2 to account for
-`VMSTATE_CLOCK()`
-- QTests : consolidating `get_clock_freq_hz()` in a header
-and making appropriate changes in stm32l4x5q_*-test.c
-
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-
-In=C3=A8s Varhol (4):
-  hw/misc: Create STM32L4x5 SYSCFG clock
-  hw/char: Use v2 VMStateDescription for STM32L4x5 USART
-  hw/clock: Expose 'qtest-clock-period' QOM property for QTests
-  tests/qtest: Check STM32L4x5 clock connections
-
- docs/devel/clocks.rst               |  3 ++
- include/hw/misc/stm32l4x5_syscfg.h  |  1 +
- tests/qtest/stm32l4x5.h             | 43 +++++++++++++++++++++++++++++
- hw/arm/stm32l4x5_soc.c              |  2 ++
- hw/char/stm32l4x5_usart.c           |  4 +--
- hw/core/clock.c                     | 16 +++++++++++
- hw/misc/stm32l4x5_syscfg.c          | 19 +++++++++++--
- tests/qtest/stm32l4x5_gpio-test.c   | 23 +++++++++++++++
- tests/qtest/stm32l4x5_syscfg-test.c | 20 ++++++++++++--
- tests/qtest/stm32l4x5_usart-test.c  | 26 +++++++++++++++++
- 10 files changed, 151 insertions(+), 6 deletions(-)
- create mode 100644 tests/qtest/stm32l4x5.h
-
---=20
-2.43.2
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 91c57efded..bc7ac35983 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -202,18 +202,47 @@ build-previous-qemu:
+   needs:
+     - job: build-previous-qemu
+     - job: build-system-opensuse
+-  # The old QEMU could have bugs unrelated to migration that are
+-  # already fixed in the current development branch, so this test
+-  # might fail.
++  # This test is allowed to fail because:
++  #
++  # - The old QEMU could have bugs unrelated to migration that are
++  #   already fixed in the current development branch.
++  #
++  # - The vmstate-static-checker script trips on renames and other
++  #   backward-compatible changes to the vmstate structs.
+   allow_failure: true
+   variables:
+     IMAGE: opensuse-leap
+     MAKE_CHECK_ARGS: check-build
+   script:
+-    # Use the migration-tests from the older QEMU tree. This avoids
+-    # testing an old QEMU against new features/tests that it is not
+-    # compatible with.
+-    - cd build-previous
++    - cd build
++    # device state static test: Tests the vmstate structures for
++    # compatibility across QEMU versions. Uses the latest version of
++    # the tests.
++    # old to new
++    - PYTHON=pyvenv/bin/python3
++          QTEST_QEMU_BINARY_SRC=../build-previous/qemu-system-${TARGET}
++          QTEST_QEMU_BINARY=./qemu-system-${TARGET}
++          ./tests/qtest/migration-test -p /${TARGET}/migration/vmstate-checker-script
++    # new to old skipped because vmstate version bumps are always
++    # backward incompatible.
++
++    # device state runtime test: Performs a cross-version migration
++    # with a select list of devices (see DEFAULT_DEVICES in
++    # migration-test.c). Using the multifd tcp test here, but any will
++    # do.
++    # old to new
++    - QTEST_DEVICE_OPTS=all QTEST_QEMU_BINARY_SRC=../build-previous/qemu-system-${TARGET}
++          QTEST_QEMU_BINARY=./qemu-system-${TARGET} ./tests/qtest/migration-test
++          -p /${TARGET}/migration/multifd/tcp/channels/plain/none
++    # new to old
++    - QTEST_DEVICE_OPTS=all QTEST_QEMU_BINARY_DST=../build-previous/qemu-system-${TARGET}
++          QTEST_QEMU_BINARY=./qemu-system-${TARGET} ./tests/qtest/migration-test
++          -p /${TARGET}/migration/multifd/tcp/channels/plain/none
++
++    # migration core tests: Use the migration-tests from the older
++    # QEMU tree. This avoids testing an old QEMU against new
++    # features/tests that it is not compatible with.
++    - cd ../build-previous
+     # old to new
+     - QTEST_QEMU_BINARY_SRC=./qemu-system-${TARGET}
+           QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
+-- 
+2.35.3
 
 
