@@ -4,86 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D299C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 10:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B314C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 10:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA5GB-0006Z5-KK; Thu, 23 May 2024 06:01:19 -0400
+	id 1sA5JO-0008BV-0c; Thu, 23 May 2024 06:04:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sA5G8-0006U6-4z; Thu, 23 May 2024 06:01:16 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sA5G5-0004Ll-3m; Thu, 23 May 2024 06:01:15 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VlNrB2QXVz67lTC;
- Thu, 23 May 2024 17:57:14 +0800 (CST)
-Received: from lhrpeml100001.china.huawei.com (unknown [7.191.160.183])
- by mail.maildlp.com (Postfix) with ESMTPS id A8FA61400CA;
- Thu, 23 May 2024 18:01:08 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml100001.china.huawei.com (7.191.160.183) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 23 May 2024 11:01:08 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Thu, 23 May 2024 11:01:08 +0100
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
- <rafael@kernel.org>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
- <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "npiggin@gmail.com" <npiggin@gmail.com>, Linuxarm <linuxarm@huawei.com>,
- Shaoqin Huang <shahuang@redhat.com>
-Subject: RE: [PATCH V11 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
-Thread-Topic: [PATCH V11 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
-Thread-Index: AQHarIy1xqvYHVQ4NECnyJL8JKGWMLGkVUEAgABBiDA=
-Date: Thu, 23 May 2024 10:01:08 +0000
-Message-ID: <97e51bc928ad470180c836ce60ae14fe@huawei.com>
-References: <20240522211111.232114-1-salil.mehta@huawei.com>
- <20240522211111.232114-2-salil.mehta@huawei.com>
- <a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com>
-In-Reply-To: <a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.156.123]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sA5JH-00089c-Eg
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 06:04:33 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sA5JF-0004tz-L1
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 06:04:31 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5755fafa5a7so6499011a12.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 03:04:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716458668; x=1717063468; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gseeate5nXuN/96Nm4Hv3YwY4ngTp6AnC0AphvtiByQ=;
+ b=f4RVfXgF/Uif9/vJpy2HLvbwX/BoIDIz9/Orw8vUgKqEK9MKLPJDjTxrUJELLcjqwX
+ K0zkyT2Gp0w9QalpKO09H5mLPhygZPCIXytvfvJrWtyY2aY2Z+w3H64gV0ct09ySWBzB
+ ID3RxER7JGnWod7yy3IU2xGQFqmtA+VRewQ4Xa8ctzOnpHAjRJ1Z6C+erZdmu2fCscPN
+ sUR96TxRx8gzb75bd0OPlM4FZi6iVsgdS+eHmaANjvdggfCTSPB+qBMpFaTzleCA24sA
+ 99M3FnLL+gKU189MXNpLsQDmK6Ot1mZS7x60fzILOFzokySqwqiHaKSUDaPUeqm/Geg3
+ bxLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716458668; x=1717063468;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gseeate5nXuN/96Nm4Hv3YwY4ngTp6AnC0AphvtiByQ=;
+ b=nGotnR6ST0WAzKhXsS/dtuZoq2tkVvTqQUmJlJVv1NN4pdfh+QqnM0Wz31c3p6niQh
+ BsV+m/HLyYz6cnu9zgDTDwWumi1OWPgEps9j9F3vVkgYIpZ3wW1Gjm2UPOWXWKRPTnSt
+ P8FLRmtF/4i3hY7DdFcsWrZi8hrVu7jFa8KJNjT0F1OFpHn5bXRAsDUVykU2+ryTLPzk
+ FgVz2jOGi8T8Lll4Rz2WHKQn9E47gU3noUIxzC/24Pkelzrr7hAW1+YpIQv3tpSZGWzM
+ YNdhaTIn5H0rtmUJrZVTxK6XMvB9IBQI/Rr6s1e9WlqLYmXZ99GkbhXb+2lpBFsm32a+
+ GFXA==
+X-Gm-Message-State: AOJu0YyJwFfEsgo43AMJDp+P5Tka46FFgGGF3etDEexCfpMoKWQU7jTv
+ sA+d575wym8GoQPtNJTKR39YRlIQXX390nGv2L10KPRmWHT0QiFAT6BgXJccpUzWMMOf7mwhwMB
+ hpydR+fCgdAQ2qKtHA0n8x5Jqc+3YLBtXZ6gCvn/69Zb/JGR+
+X-Google-Smtp-Source: AGHT+IGeMq8gVsUDv1ulQ2ehTS/qpcLBfJjV7/2SjkhXIomQ21TUnmM9d4iNSmB+WVbhbh6ugAuQqu31vMBqtSWpc8g=
+X-Received: by 2002:a50:bb03:0:b0:578:258c:1091 with SMTP id
+ 4fb4d7f45d1cf-578329fe356mr2699807a12.4.1716458667920; Thu, 23 May 2024
+ 03:04:27 -0700 (PDT)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240506010403.6204-1-richard.henderson@linaro.org>
+ <20240506010403.6204-5-richard.henderson@linaro.org>
+In-Reply-To: <20240506010403.6204-5-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 23 May 2024 11:04:10 +0100
+Message-ID: <CAFEAcA-U8XsO2ScjeGXMgqJLvVbEFWdp0s7KOEh7-ZK8-evqTA@mail.gmail.com>
+Subject: Re: [PATCH 04/57] target/arm: Convert Cryptographic 3-register SHA to
+ decodetree
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,20 +86,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiAgRnJvbTogSGFyc2ggUHJhdGVlayBCb3JhIDxoYXJzaHBiQGxpbnV4LmlibS5jb20+DQo+ICBT
-ZW50OiBUaHVyc2RheSwgTWF5IDIzLCAyMDI0IDg6MDUgQU0NCj4gIA0KPiAgSGkgU2FsaWwsDQo+
-ICANCj4gIE9uIDUvMjMvMjQgMDI6NDEsIFNhbGlsIE1laHRhIHdyb3RlOg0KPiAgPiArdm9pZCBr
-dm1fcGFya192Y3B1KENQVVN0YXRlICpjcHUpOw0KPiAgPiArDQo+ICA+ICsvKioNCj4gID4gKyAq
-IGt2bV91bnBhcmtfdmNwdSAtIHVucGFyayBRRU1VIEtWTSB2Q1BVIGNvbnRleHQNCj4gID4gKyAq
-IEBzOiBLVk0gU3RhdGUNCj4gID4gKyAqIEBjcHU6IEFyY2hpdGVjdHVyZSB2Q1BVIElEIG9mIHRo
-ZSBwYXJrZWQgdkNQVQ0KPiAgDQo+ICBzL0BjcHUvQHZjcHVpZCA/DQoNCg0KVGhhbmtzLiBXaWxs
-IGZpeCB0aGlzLg0KDQpDaGVlcnMNClNhbGlsLg0KDQoNCj4gIA0KPiAgVGhhbmtzDQo+ICBIYXJz
-aA0KPiAgPiArICoNCj4gID4gKyAqIEByZXR1cm5zOiBLVk0gZmQNCj4gID4gKyAqLw0KPiAgPiAr
-aW50IGt2bV91bnBhcmtfdmNwdShLVk1TdGF0ZSAqcywgdW5zaWduZWQgbG9uZyB2Y3B1X2lkKTsN
-Cj4gID4gICAjZW5kaWYgLyogS1ZNX0NQVVNfSCAqLw0K
+On Mon, 6 May 2024 at 02:05, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/a64.decode      | 11 +++++
+>  target/arm/tcg/translate-a64.c | 78 +++++-----------------------------
+>  2 files changed, 21 insertions(+), 68 deletions(-)
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
