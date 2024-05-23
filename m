@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FFFC25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 08:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C25BC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 08:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA3PR-0005bZ-4w; Thu, 23 May 2024 04:02:45 -0400
+	id 1sA3VC-0007eh-KM; Thu, 23 May 2024 04:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sA3PO-0005aW-Sg
- for qemu-devel@nongnu.org; Thu, 23 May 2024 04:02:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sA3PK-0007NT-Vk
- for qemu-devel@nongnu.org; Thu, 23 May 2024 04:02:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716451357;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=FtkkPdz5t5zW69Hpn/OZYmJns/S7cgX0hhogh55wmBc=;
- b=GE6P+nCBK+PU/xo0LI7AlmCAGuwlaSL1c/veFoaeMkJoDWqZ9ldAvkrwSa9tI2mK64CCzW
- UKuQwvLKNC08Z2iz6MyQU16w5G6JekFhe5TfPijjKX1ENu0Znc3Z6QVDITBpN/RaxSYLPk
- q7JGhE2aWDSGOQkCbNpRjXPiPjuVJOQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-CAK5g4CUNHyib7EqQK5Jjg-1; Thu, 23 May 2024 04:02:34 -0400
-X-MC-Unique: CAK5g4CUNHyib7EqQK5Jjg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D9B6D800CB0;
- Thu, 23 May 2024 08:02:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.86])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 79262C15BF3;
- Thu, 23 May 2024 08:02:33 +0000 (UTC)
-Date: Thu, 23 May 2024 09:02:31 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sA3V9-0007cg-KH
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 04:08:40 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sA3V2-0008RK-Uu
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 04:08:39 -0400
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8BxWep1+U5mlvUCAA--.2890S3;
+ Thu, 23 May 2024 16:08:23 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxJMVz+U5mO4IGAA--.7587S3; 
+ Thu, 23 May 2024 16:08:21 +0800 (CST)
+Subject: Re: [PATCH v3 1/3] hw/intc/loongarch_extioi: Add extioi virt
+ extension definition
+To: Song Gao <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] meson.build: add -mcx16 flag
-Message-ID: <Zk74F0a8ejAp_mP8@redhat.com>
-References: <20240522193016.136866-1-artyomkunakovsky@gmail.com>
+References: <20240521123225.231072-1-gaosong@loongson.cn>
+ <20240521123225.231072-2-gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <592ffd66-1ba2-c511-d587-784f7544c992@loongson.cn>
+Date: Thu, 23 May 2024 16:08:18 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240522193016.136866-1-artyomkunakovsky@gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <20240521123225.231072-2-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxJMVz+U5mO4IGAA--.7587S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxtF43AryfKF4rtr1DJF1fGrX_yoWxZFW3pr
+ yUCFyagr4UJFsrGw4UK3W5uFyDCrs3W342gry2gFy3GF48Cryv934qg3s3tr4rC34kX34S
+ q3Z5ua4UGF4qyrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
+ fJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.89,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,27 +80,216 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 22, 2024 at 10:30:16PM +0300, Artyom Kunakovsky wrote:
-> fix linker error if the project was configured by the './configure --cpu=unknown --target-list=riscv64-softmmu' command
 
-Isn't this simply user error, with the right answer being
-to pass a valid CPU target to --cpu, rather than "unknown"
-
+On 2024/5/21 下午8:32, Song Gao wrote:
+> On LoongArch, IRQs can be routed to four vcpus with hardware extioi.
+> This patch adds the extioi virt extension definition so that the IRQ can
+> route to 256 vcpus.
 > 
-> Signed-off-by: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->  meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   include/hw/intc/loongarch_extioi.h | 21 +++++++
+>   hw/intc/loongarch_extioi.c         | 88 ++++++++++++++++++++++++++++--
+>   2 files changed, 105 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
+> index 410c6e1121..eccc2e0d18 100644
+> --- a/include/hw/intc/loongarch_extioi.h
+> +++ b/include/hw/intc/loongarch_extioi.h
+> @@ -41,6 +41,24 @@
+>   #define EXTIOI_COREMAP_END           (0xD00 - APIC_OFFSET)
+>   #define EXTIOI_SIZE                  0x800
+>   
+> +#define EXTIOI_VIRT_BASE             (0x40000000)
+> +#define EXTIOI_VIRT_SIZE             (0x1000)
+> +#define EXTIOI_VIRT_FEATURES         (0x0)
+> +#define  EXTIOI_HAS_VIRT_EXTENSION   (0)
+> +#define  EXTIOI_HAS_ENABLE_OPTION    (1)
+> +#define  EXTIOI_HAS_INT_ENCODE       (2)
+> +#define  EXTIOI_HAS_CPU_ENCODE       (3)
+> +#define  EXTIOI_VIRT_HAS_FEATURES    (BIT(EXTIOI_HAS_VIRT_EXTENSION)  \
+> +                                      | BIT(EXTIOI_HAS_ENABLE_OPTION) \
+> +                                      | BIT(EXTIOI_HAS_INT_ENCODE)    \
+> +                                      | BIT(EXTIOI_HAS_CPU_ENCODE))
+> +#define EXTIOI_VIRT_CONFIG           (0x4)
+> +#define  EXTIOI_ENABLE               (1)
+> +#define  EXTIOI_ENABLE_INT_ENCODE    (2)
+> +#define  EXTIOI_ENABLE_CPU_ENCODE    (3)
+> +#define EXTIOI_VIRT_COREMAP_START    (0x40)
+> +#define EXTIOI_VIRT_COREMAP_END      (0x240)
+> +
+>   typedef struct ExtIOICore {
+>       uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
+>       DECLARE_BITMAP(sw_isr[LS3A_INTC_IP], EXTIOI_IRQS);
+> @@ -52,6 +70,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchExtIOI, LOONGARCH_EXTIOI)
+>   struct LoongArchExtIOI {
+>       SysBusDevice parent_obj;
+>       uint32_t num_cpu;
+> +    uint32_t features;
+> +    uint32_t status;
+>       /* hardware state */
+>       uint32_t nodetype[EXTIOI_IRQS_NODETYPE_COUNT / 2];
+>       uint32_t bounce[EXTIOI_IRQS_GROUP_COUNT];
+> @@ -65,5 +85,6 @@ struct LoongArchExtIOI {
+>       qemu_irq irq[EXTIOI_IRQS];
+>       ExtIOICore *cpu;
+>       MemoryRegion extioi_system_mem;
+> +    MemoryRegion virt_extend;
+>   };
+>   #endif /* LOONGARCH_EXTIOI_H */
+> diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+> index 0b358548eb..e605ca64d5 100644
+> --- a/hw/intc/loongarch_extioi.c
+> +++ b/hw/intc/loongarch_extioi.c
+> @@ -143,10 +143,13 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
+>   
+>       for (i = 0; i < 4; i++) {
+>           cpu = val & 0xff;
+> -        cpu = ctz32(cpu);
+> -        cpu = (cpu >= 4) ? 0 : cpu;
+>           val = val >> 8;
+>   
+> +        if (!(s->status & BIT(EXTIOI_ENABLE_CPU_ENCODE))) {
+> +            cpu = ctz32(cpu);
+> +            cpu = (cpu >= 4) ? 0 : cpu;
+> +        }
+> +
+>           if (s->sw_coremap[irq + i] == cpu) {
+>               continue;
+>           }
+> @@ -265,6 +268,61 @@ static const MemoryRegionOps extioi_ops = {
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>   };
+>   
+> +static MemTxResult extioi_virt_readw(void *opaque, hwaddr addr, uint64_t *data,
+> +                                     unsigned size, MemTxAttrs attrs)
+> +{
+> +    LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
+> +
+> +    switch (addr) {
+> +    case EXTIOI_VIRT_FEATURES:
+> +        *data = s->features;
+> +        break;
+> +    case EXTIOI_VIRT_CONFIG:
+> +        *data = s->status;
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    return MEMTX_OK;
+> +}
+> +
+> +static MemTxResult extioi_virt_writew(void *opaque, hwaddr addr,
+> +                          uint64_t val, unsigned size,
+> +                          MemTxAttrs attrs)
+> +{
+> +    LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
+> +
+> +    switch (addr) {
+> +    case EXTIOI_VIRT_FEATURES:
+> +        return MEMTX_ACCESS_ERROR;
+> +
+> +    case EXTIOI_VIRT_CONFIG:
+> +        /*
+> +         * extioi features can only be set at disabled status
+> +         */
+> +        if ((s->status & BIT(EXTIOI_ENABLE)) && val) {
+> +            return MEMTX_ACCESS_ERROR;
+> +        }
+> +
+> +        s->status = val & s->features;
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +    return MEMTX_OK;
+> +}
+> +
+> +static const MemoryRegionOps extioi_virt_ops = {
+> +    .read_with_attrs = extioi_virt_readw,
+> +    .write_with_attrs = extioi_virt_writew,
+> +    .impl.min_access_size = 4,
+> +    .impl.max_access_size = 4,
+> +    .valid.min_access_size = 4,
+> +    .valid.max_access_size = 8,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
+> +
+>   static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
+>   {
+>       LoongArchExtIOI *s = LOONGARCH_EXTIOI(dev);
+> @@ -284,6 +342,16 @@ static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
+>       memory_region_init_io(&s->extioi_system_mem, OBJECT(s), &extioi_ops,
+>                             s, "extioi_system_mem", 0x900);
+>       sysbus_init_mmio(sbd, &s->extioi_system_mem);
+> +
+> +    if (s->features & BIT(EXTIOI_HAS_VIRT_EXTENSION)) {
+> +        memory_region_init_io(&s->virt_extend, OBJECT(s), &extioi_virt_ops,
+> +                              s, "extioi_virt", EXTIOI_VIRT_SIZE);
+> +        sysbus_init_mmio(sbd, &s->virt_extend);
+> +        s->features |= EXTIOI_VIRT_HAS_FEATURES;
+> +    } else {
+> +        s->status |= BIT(EXTIOI_ENABLE);
+> +    }
+> +
+>       s->cpu = g_new0(ExtIOICore, s->num_cpu);
+>       if (s->cpu == NULL) {
+>           error_setg(errp, "Memory allocation for ExtIOICore faile");
+> @@ -304,6 +372,13 @@ static void loongarch_extioi_finalize(Object *obj)
+>       g_free(s->cpu);
+>   }
+>   
+> +static void loongarch_extioi_reset(DeviceState *d)
+> +{
+> +    LoongArchExtIOI *s = LOONGARCH_EXTIOI(d);
+> +
+> +    s->status = 0;
+> +}
+> +
+>   static int vmstate_extioi_post_load(void *opaque, int version_id)
+>   {
+>       LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
+> @@ -333,8 +408,8 @@ static const VMStateDescription vmstate_extioi_core = {
+>   
+>   static const VMStateDescription vmstate_loongarch_extioi = {
+>       .name = TYPE_LOONGARCH_EXTIOI,
+> -    .version_id = 2,
+> -    .minimum_version_id = 2,
+> +    .version_id = 3,
+> +    .minimum_version_id = 3,
+>       .post_load = vmstate_extioi_post_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32_ARRAY(bounce, LoongArchExtIOI, EXTIOI_IRQS_GROUP_COUNT),
+> @@ -347,12 +422,16 @@ static const VMStateDescription vmstate_loongarch_extioi = {
+>   
+>           VMSTATE_STRUCT_VARRAY_POINTER_UINT32(cpu, LoongArchExtIOI, num_cpu,
+>                            vmstate_extioi_core, ExtIOICore),
+> +        VMSTATE_UINT32(features, LoongArchExtIOI),
+> +        VMSTATE_UINT32(status, LoongArchExtIOI),
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
+>   
+>   static Property extioi_properties[] = {
+>       DEFINE_PROP_UINT32("num-cpu", LoongArchExtIOI, num_cpu, 1),
+> +    DEFINE_PROP_BIT("has-virtualization-extension", LoongArchExtIOI, features,
+> +                    EXTIOI_HAS_VIRT_EXTENSION, 0),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+> @@ -361,6 +440,7 @@ static void loongarch_extioi_class_init(ObjectClass *klass, void *data)
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+>       dc->realize = loongarch_extioi_realize;
+> +    dc->reset   = loongarch_extioi_reset;
+>       device_class_set_props(dc, extioi_properties);
+>       dc->vmsd = &vmstate_loongarch_extioi;
+>   }
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
