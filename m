@@ -4,76 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D6CC25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 05:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C59C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 05:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA0kt-0001NQ-28; Thu, 23 May 2024 01:12:43 -0400
+	id 1sA0mx-0002Og-RZ; Thu, 23 May 2024 01:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <artyomkunakovsky@gmail.com>)
- id 1sA0kl-0001KS-F6
- for qemu-devel@nongnu.org; Thu, 23 May 2024 01:12:36 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <artyomkunakovsky@gmail.com>)
- id 1sA0kj-0000hZ-GU
- for qemu-devel@nongnu.org; Thu, 23 May 2024 01:12:35 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-51fcb7dc722so1486991e87.1
- for <qemu-devel@nongnu.org>; Wed, 22 May 2024 22:12:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716441151; x=1717045951; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dRRwsbsmD/CH7MCpG8Hp44VC5MjZt/xy5HPTsFlXgYU=;
- b=Wsfq92lTxYMaGvT0XD+krKw86i6hYAZSONV1AT6/NWlNxiPWrbdXHi1T8IncEX5xk+
- cY+jqr3nNEEOP+j2+4E5q7L34Hgk7SGkWf/RbmOKlhox+4EaqMoHxfrgy8JYvjOrIJM7
- Cu8F712IJrS04Ndw8OGYCSdxNQlbWkftAoAsvAzhL9KcjmZVTDuhUv8E5aCkhmnEZBSm
- G32pI5G+u7AANZwv8arDlWWqdBVDCMcbzMjGyrPhGMis/jgXxXxMZ/nOYzqXuoF9pgt3
- O0ySsWv0Lzt2MNy288Nwr7qIM+ZhmYjWtjwKvmWCVPf5VVofPl8NgUb2hCQ/IlTZHr95
- IF1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716441151; x=1717045951;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dRRwsbsmD/CH7MCpG8Hp44VC5MjZt/xy5HPTsFlXgYU=;
- b=RugynePdXZtWID17/X1c21R/m/2x2UrFRZ8iwEiDjMpI6R4LPFmxpDuLuXxA3DdTPN
- lCMPt1m2b6jH3ENW1Fh8TaBt6h9kMfeS2QF5i+xOaVY9o9HBpP4MvAgmAhCwX929RemZ
- Zag3gt2UjiC9VkiH5f3g4Vh2D7ns5pcHJSUTwy/rEhGHu1bCNLqVD9kr6zsLvjDaRhE+
- cvpiNr6gQfornhVV2Ml8EKb2fk+x31kKcwBUrvAjo3Fbrw1IzxBDzzgMsx7APEJHzLEu
- My1v95H2yxMng1mDmvO1wyDSRzC0OFTqvEI8NRdzOE5gJpTpSsvdGpX2IJQ/O0F2T4v3
- 8tyw==
-X-Gm-Message-State: AOJu0YzqwZQgJybINxwuS6JbVYyUOVaY5uZDzsN8Yv0mTHx7zK6T979P
- 6m2KSmmHNaiNGzTBY8O9sMlzwPlJ58WU7/AlBka38f9e+jA0Iz4qgpZonPlf3D4=
-X-Google-Smtp-Source: AGHT+IFp+TzBjE1REXuUVauM/lmHfKkMCnikHLM4MOTFiDldPoeZh18MVK37Kny2haFuWfBmTEXDTg==
-X-Received: by 2002:ac2:4daf:0:b0:518:9762:500e with SMTP id
- 2adb3069b0e04-527ef0255bdmr286080e87.5.1716441150773; 
- Wed, 22 May 2024 22:12:30 -0700 (PDT)
-Received: from localhost.localdomain (95-24-211-236.broadband.corbina.ru.
- [95.24.211.236]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-523b7860398sm2554482e87.117.2024.05.22.22.12.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 May 2024 22:12:30 -0700 (PDT)
-From: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
-Subject: [PATCH v2] meson.build: add -mcx16 flag for x86_64 host
-Date: Thu, 23 May 2024 08:11:18 +0300
-Message-Id: <20240523051118.29367-1-artyomkunakovsky@gmail.com>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sA0mo-0002Mo-3Y; Thu, 23 May 2024 01:14:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sA0mj-0000nd-OH; Thu, 23 May 2024 01:14:41 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44N33Imm022778; Thu, 23 May 2024 05:14:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=kiUm3CTdqcX7ZE+siiqzqIMJQ6QJt8w5BNVfDuzRtQ0=;
+ b=gAt33i0SffLSgI2cVSFcW1dIEXsXpyg1lpa9WxqzilWwu1UsHWHq4LnU3TjiOZdkgEZ6
+ fZAH8MMppLTFGat9TWjYYTMxgdFLutHo7WbgcgonDEpSk2HEV+rEnmxC2zlJ0vucg5yN
+ OI7SP4+gpOCXn84VhvzBZOV6mAS9DsmKXM6eCaiRI0kNuGSBXETwg5BWGnXbGOFP8bOj
+ u6AIl9w7CCOE5fkfgtQNCY1rDgGEs+34KzE64g6QVEP2RUSYbTArVc+oO3Fm/LHuiJQb
+ pBUeOG855tx8y5hVHIupWyeBBll+eCl1Nybp806cENqMVv9rfC/SpjwXsU2VQ9rlYiTb IA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9wj808c8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 May 2024 05:14:29 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44N5ESSP015381;
+ Thu, 23 May 2024 05:14:28 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9wj808c3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 May 2024 05:14:28 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44N4bYi6023459; Thu, 23 May 2024 05:14:28 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y77npg4rd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 May 2024 05:14:28 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44N5EOLe48628106
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 May 2024 05:14:26 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2173A20040;
+ Thu, 23 May 2024 05:14:24 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F17A02004B;
+ Thu, 23 May 2024 05:14:22 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
+ [9.109.242.165])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 May 2024 05:14:22 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, balaton@eik.bme.hu, danielhb413@gmail.com
+Subject: [PATCH v2 1/7] target/ppc: use locally stored msr and avoid indirect
+ access
+Date: Thu, 23 May 2024 10:44:06 +0530
+Message-Id: <20240523051412.226970-2-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240523051412.226970-1-harshpb@linux.ibm.com>
+References: <20240523051412.226970-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=artyomkunakovsky@gmail.com; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: qp10zDUboWDtwjfPjoGvkKB5uZq8wY8n
+X-Proofpoint-ORIG-GUID: eRswrSWc6oCYqQbkNDyhbyoSpLrLZuxW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-23_02,2024-05-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ mlxlogscore=717 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405230033
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,31 +114,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix linker error if the project was configured by the './configure --cpu=unknown --target-list=riscv64-softmmu' command
+hreg_compute_hflags_value already stores msr locally to be used in most
+of the logic in the routine however some instances are still using
+env->msr which is unnecessary. Use locally stored value as available.
 
-Signed-off-by: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- meson.build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/ppc/helper_regs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index a9de71d450..e68fbfc662 100644
---- a/meson.build
-+++ b/meson.build
-@@ -336,6 +336,12 @@ if host_arch == 'i386' and not cc.links('''
-   qemu_common_flags = ['-march=i486'] + qemu_common_flags
- endif
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 25258986e3..945fa1a596 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -106,10 +106,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
  
-+
-+if host_arch == 'x86_64'
-+  qemu_common_flags = ['-mcx16'] + qemu_common_flags
-+endif
-+
-+
- if get_option('prefer_static')
-   qemu_ldflags += get_option('b_pie') ? '-static-pie' : '-static'
- endif
+     if (ppc_flags & POWERPC_FLAG_DE) {
+         target_ulong dbcr0 = env->spr[SPR_BOOKE_DBCR0];
+-        if ((dbcr0 & DBCR0_ICMP) && FIELD_EX64(env->msr, MSR, DE)) {
++        if ((dbcr0 & DBCR0_ICMP) && FIELD_EX64(msr, MSR, DE)) {
+             hflags |= 1 << HFLAGS_SE;
+         }
+-        if ((dbcr0 & DBCR0_BRT) && FIELD_EX64(env->msr, MSR, DE)) {
++        if ((dbcr0 & DBCR0_BRT) && FIELD_EX64(msr, MSR, DE)) {
+             hflags |= 1 << HFLAGS_BE;
+         }
+     } else {
 -- 
-2.25.1
+2.39.3
 
 
