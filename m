@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D83C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F57FC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sADmO-00035o-7E; Thu, 23 May 2024 15:07:08 -0400
+	id 1sADlW-00029O-2c; Thu, 23 May 2024 15:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlz-0002IT-NU
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:45 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlT-00028G-TF
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:11 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlw-0004Lj-Hq
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:42 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlR-0004H0-VK
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:11 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DC0782040D;
- Thu, 23 May 2024 19:06:38 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A716022B79;
+ Thu, 23 May 2024 19:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491198; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716491168; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qcAnGN7Dn8Hx+2ymPsQ94bgP0wRUUi69NxEcC3s4Wwk=;
- b=ToCIBhb/Cm11PcvUFoUcWxAJgSCWw2/BiuDynvZK4sXWXXR/ccQzfkNakbKDS4SLHjm5Pz
- p+3cLr4rstwy3QNYXiTqDildILB1yN46QalpygzP6lzWF8b//aCYZobSTpPc5ZJdGLe9Ht
- il0+6UjCkgW+XHJYwxk6k5p98P9fRr8=
+ bh=3zM6yJwrUnBGwhUnSZK8j874ter6lal7RTb8Pv37dNs=;
+ b=Wg3LQHahoag2mLxT2rDJ/FJolYa/JcopKAgRUY1L4CJbaYSpC7OYTwluC8qaLPLjzPNUf1
+ 5B9yPLkDt62tmqnruns2vOnX6UwrfefG0131OAUaxC99R+Qdg5i95egGCFaO/mid7VejdI
+ a6Io0b5D+ZhOyDlmZuXr70M+xeJf+Ew=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491198;
+ s=susede2_ed25519; t=1716491168;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qcAnGN7Dn8Hx+2ymPsQ94bgP0wRUUi69NxEcC3s4Wwk=;
- b=TobcceVeDKKeSygCTyPqV0TCtDkVvcQblVLzuf5tNY95HUpkpfUlHPi9Gpjg1+6g93Tmcd
- 6kmEz0YxhAs0QsDA==
-Authentication-Results: smtp-out2.suse.de;
+ bh=3zM6yJwrUnBGwhUnSZK8j874ter6lal7RTb8Pv37dNs=;
+ b=8xy3hrevmWTi0iR6zU+5N62Jhc/h77jL7qy7B+fOulx6hpUeKAlQ2D0YU6upafhc0sxEqN
+ /5v7/vFKoOR5xZBQ==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491198; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716491168; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qcAnGN7Dn8Hx+2ymPsQ94bgP0wRUUi69NxEcC3s4Wwk=;
- b=ToCIBhb/Cm11PcvUFoUcWxAJgSCWw2/BiuDynvZK4sXWXXR/ccQzfkNakbKDS4SLHjm5Pz
- p+3cLr4rstwy3QNYXiTqDildILB1yN46QalpygzP6lzWF8b//aCYZobSTpPc5ZJdGLe9Ht
- il0+6UjCkgW+XHJYwxk6k5p98P9fRr8=
+ bh=3zM6yJwrUnBGwhUnSZK8j874ter6lal7RTb8Pv37dNs=;
+ b=Wg3LQHahoag2mLxT2rDJ/FJolYa/JcopKAgRUY1L4CJbaYSpC7OYTwluC8qaLPLjzPNUf1
+ 5B9yPLkDt62tmqnruns2vOnX6UwrfefG0131OAUaxC99R+Qdg5i95egGCFaO/mid7VejdI
+ a6Io0b5D+ZhOyDlmZuXr70M+xeJf+Ew=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491198;
+ s=susede2_ed25519; t=1716491168;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qcAnGN7Dn8Hx+2ymPsQ94bgP0wRUUi69NxEcC3s4Wwk=;
- b=TobcceVeDKKeSygCTyPqV0TCtDkVvcQblVLzuf5tNY95HUpkpfUlHPi9Gpjg1+6g93Tmcd
- 6kmEz0YxhAs0QsDA==
+ bh=3zM6yJwrUnBGwhUnSZK8j874ter6lal7RTb8Pv37dNs=;
+ b=8xy3hrevmWTi0iR6zU+5N62Jhc/h77jL7qy7B+fOulx6hpUeKAlQ2D0YU6upafhc0sxEqN
+ /5v7/vFKoOR5xZBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5214C13A6B;
- Thu, 23 May 2024 19:06:36 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 984FA13A6B;
+ Thu, 23 May 2024 19:06:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uHObBryTT2bUEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:36 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yLbXF56TT2bUEQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
  Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 18/18] migration/ram: Add direct-io support to precopy file
- migration
-Date: Thu, 23 May 2024 16:05:48 -0300
-Message-Id: <20240523190548.23977-19-farosas@suse.de>
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v2 06/18] monitor: Stop removing non-duplicated fds
+Date: Thu, 23 May 2024 16:05:36 -0300
+Message-Id: <20240523190548.23977-7-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240523190548.23977-1-farosas@suse.de>
 References: <20240523190548.23977-1-farosas@suse.de>
@@ -89,17 +87,17 @@ Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[9];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[7];
  RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
  ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -122,185 +120,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We've recently added support for direct-io with multifd, which brings
-performance benefits, but creates a non-uniform user interface by
-coupling direct-io with the multifd capability. This means that users
-cannot keep the direct-io flag enabled while disabling multifd.
+We've been up until now cleaning up any file descriptors that have
+been passed into QEMU and never duplicated[1,2]. A file descriptor
+without duplicates indicates that no part of QEMU has made use of
+it. This approach is starting to show some cracks now that we're
+starting to consume fds from the migration code:
 
-Libvirt in particular already has support for direct-io and parallel
-migration separately from each other, so it would be a regression to
-now require both options together. It's relatively simple for QEMU to
-add support for direct-io migration without multifd, so let's do this
-in order to keep both options decoupled.
+- Doing cleanup every time the last monitor connection closes works to
+  reap unused fds, but also has the side effect of forcing the
+  management layer to pass the file descriptors again in case of a
+  disconnect/re-connect, if that happened to be the only monitor
+  connection.
 
-We cannot simply enable the O_DIRECT flag, however, because not all IO
-performed by the migration thread satisfies the alignment requirements
-of O_DIRECT. There are many small read & writes that add headers and
-synchronization flags to the stream, which at the moment are required
-to always be present.
+  Another side effect is that removing an fd with qmp_remove_fd() is
+  effectively delayed until the last monitor connection closes.
 
-Fortunately, due to fixed-ram migration there is a discernible moment
-where only RAM pages are written to the migration file. Enable
-direct-io during that moment.
+  The reliance on mon_refcount is also problematic because it's racy.
+
+- Checking runstate_is_running() skips the cleanup unless the VM is
+  running and avoids premature cleanup of the fds, but also has the
+  side effect of blocking the legitimate removal of an fd via
+  qmp_remove_fd() if the VM happens to be in another state.
+
+  This affects qmp_remove_fd() and qmp_query_fdsets() in particular
+  because requesting a removal at a bad time (guest stopped) might
+  cause an fd to never be removed, or to be removed at a much later
+  point in time, causing the query command to continue showing the
+  supposedly removed fd/fdset.
+
+Note that file descriptors that *have* been duplicated are owned by
+the code that uses them and will be removed after qemu_close() is
+called. Therefore we've decided that the best course of action to
+avoid the undesired side-effects is to stop managing non-duplicated
+file descriptors.
+
+1- efb87c1697 ("monitor: Clean up fd sets on monitor disconnect")
+2- ebe52b592d ("monitor: Prevent removing fd from set during init")
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/ram.c              | 40 ++++++++++++++++++++++++++++--------
- tests/qtest/migration-test.c | 30 +++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+), 9 deletions(-)
+ monitor/fds.c              | 15 ++++++++-------
+ monitor/hmp.c              |  2 --
+ monitor/monitor-internal.h |  1 -
+ monitor/qmp.c              |  2 --
+ 4 files changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index ceea586b06..5183d1f97c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3131,6 +3131,7 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
-     int i;
-     int64_t t0;
-     int done = 0;
-+    Error **errp = NULL;
+diff --git a/monitor/fds.c b/monitor/fds.c
+index 101e21720d..f7b98814fa 100644
+--- a/monitor/fds.c
++++ b/monitor/fds.c
+@@ -169,6 +169,11 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
  
-     /*
-      * We'll take this lock a little bit long, but it's okay for two reasons.
-@@ -3154,6 +3155,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
-                 goto out;
-             }
- 
-+            if (!migration_direct_io_start(f, errp)) {
-+                return -errno;
-+            }
-+
-             t0 = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
-             i = 0;
-             while ((ret = migration_rate_exceeded(f)) == 0 ||
-@@ -3194,6 +3199,9 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
-                 }
-                 i++;
-             }
-+            if (!migration_direct_io_finish(f, errp)) {
-+                return -errno;
-+            }
-         }
-     }
- 
-@@ -3242,7 +3250,8 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+ static void monitor_fdset_free(MonFdset *mon_fdset)
  {
-     RAMState **temp = opaque;
-     RAMState *rs = *temp;
--    int ret = 0;
-+    int ret = 0, pages;
-+    Error **errp = NULL;
++    /*
++     * Only remove an empty fdset. The fds are owned by the user and
++     * should have been removed with qmp_remove_fd(). The dup_fds are
++     * owned by QEMU and should have been removed with qemu_close().
++     */
+     if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
+         QLIST_REMOVE(mon_fdset, next);
+         g_free(mon_fdset);
+@@ -189,9 +194,7 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+     MonFdsetFd *mon_fdset_fd_next;
  
-     rs->last_stage = !migration_in_colo_state();
- 
-@@ -3257,25 +3266,30 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-             return ret;
-         }
- 
-+        if (!migration_direct_io_start(f, errp)) {
-+            return -errno;
-+        }
-+
-         /* try transferring iterative blocks of memory */
- 
-         /* flush all remaining blocks regardless of rate limiting */
-         qemu_mutex_lock(&rs->bitmap_mutex);
-         while (true) {
--            int pages;
--
-             pages = ram_find_and_save_block(rs);
--            /* no more blocks to sent */
--            if (pages == 0) {
-+            if (pages <= 0) {
-                 break;
-             }
--            if (pages < 0) {
--                qemu_mutex_unlock(&rs->bitmap_mutex);
--                return pages;
--            }
-         }
-         qemu_mutex_unlock(&rs->bitmap_mutex);
- 
-+        if (!migration_direct_io_finish(f, errp)) {
-+            return -errno;
-+        }
-+
-+        if (pages < 0) {
-+            return pages;
-+        }
-+
-         ret = rdma_registration_stop(f, RAM_CONTROL_FINISH);
-         if (ret < 0) {
-             qemu_file_set_error(f, ret);
-@@ -3920,6 +3934,10 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     void *host;
-     size_t read, unread, size;
- 
-+    if (!migration_direct_io_start(f, errp)) {
-+        return false;
-+    }
-+
-     for (set_bit_idx = find_first_bit(bitmap, num_pages);
-          set_bit_idx < num_pages;
-          set_bit_idx = find_next_bit(bitmap, num_pages, clear_bit_idx + 1)) {
-@@ -3955,6 +3973,10 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+     QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
+-        if ((mon_fdset_fd->removed ||
+-                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
+-                runstate_is_running()) {
++        if (mon_fdset_fd->removed) {
+             monitor_fdset_fd_free(mon_fdset_fd);
          }
      }
+@@ -206,7 +209,7 @@ void monitor_fdsets_cleanup(void)
  
-+    if (!migration_direct_io_finish(f, errp)) {
-+        return false;
-+    }
-+
-     return true;
- 
- err:
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 5ced3b90c9..8c6a122c20 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2245,6 +2245,34 @@ static void test_multifd_file_mapped_ram_dio(void)
-     test_file_common(&args, true);
+     QEMU_LOCK_GUARD(&mon_fdsets_lock);
+     QLIST_FOREACH_SAFE(mon_fdset, &mon_fdsets, next, mon_fdset_next) {
+-        monitor_fdset_cleanup(mon_fdset);
++        monitor_fdset_free(mon_fdset);
+     }
  }
  
-+static void *mapped_ram_dio_start(QTestState *from, QTestState *to)
-+{
-+    migrate_mapped_ram_start(from, to);
-+
-+    migrate_set_parameter_bool(from, "direct-io", true);
-+    migrate_set_parameter_bool(to, "direct-io", true);
-+
-+    return NULL;
-+}
-+
-+static void test_precopy_file_mapped_ram_dio(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-+                                           FILE_TEST_FILENAME);
-+    MigrateCommon args = {
-+        .connect_uri = uri,
-+        .listen_uri = "defer",
-+        .start_hook = mapped_ram_dio_start,
-+    };
-+
-+    if (!probe_o_direct_support(tmpfs)) {
-+        g_test_skip("Filesystem does not support O_DIRECT");
-+        return;
-+    }
-+
-+    test_file_common(&args, true);
-+}
-+
- #ifndef _WIN32
- static void multifd_mapped_ram_fdset_end(QTestState *from, QTestState *to,
-                                          void *opaque)
-@@ -3735,6 +3763,8 @@ int main(int argc, char **argv)
+@@ -479,9 +482,7 @@ void monitor_fdset_dup_fd_remove(int dup_fd)
+             if (mon_fdset_fd_dup->fd == dup_fd) {
+                 QLIST_REMOVE(mon_fdset_fd_dup, next);
+                 g_free(mon_fdset_fd_dup);
+-                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
+-                    monitor_fdset_cleanup(mon_fdset);
+-                }
++                monitor_fdset_free(mon_fdset);
+                 return;
+             }
+         }
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 69c1b7e98a..460e8832f6 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1437,11 +1437,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+             monitor_resume(mon);
+         }
+         qemu_mutex_unlock(&mon->mon_lock);
+-        mon_refcount++;
+         break;
  
-     migration_test_add("/migration/multifd/file/mapped-ram/dio",
-                        test_multifd_file_mapped_ram_dio);
-+    migration_test_add("/migration/precopy/file/mapped-ram/dio",
-+                       test_precopy_file_mapped_ram_dio);
+     case CHR_EVENT_CLOSED:
+-        mon_refcount--;
+         monitor_fdsets_cleanup();
+         break;
  
- #ifndef _WIN32
-     qtest_add_func("/migration/multifd/file/mapped-ram/fdset",
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 252de85681..cb628f681d 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -168,7 +168,6 @@ extern bool qmp_dispatcher_co_shutdown;
+ extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ extern QemuMutex monitor_lock;
+ extern MonitorList mon_list;
+-extern int mon_refcount;
+ 
+ extern HMPCommand hmp_cmds[];
+ 
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index a239945e8d..5e538f34c0 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -466,7 +466,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+         data = qmp_greeting(mon);
+         qmp_send_response(mon, data);
+         qobject_unref(data);
+-        mon_refcount++;
+         break;
+     case CHR_EVENT_CLOSED:
+         /*
+@@ -479,7 +478,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+         json_message_parser_destroy(&mon->parser);
+         json_message_parser_init(&mon->parser, handle_qmp_command,
+                                  mon, NULL);
+-        mon_refcount--;
+         monitor_fdsets_cleanup();
+         break;
+     case CHR_EVENT_BREAK:
 -- 
 2.35.3
 
