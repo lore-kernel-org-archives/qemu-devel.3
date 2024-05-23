@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45D7C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AB1C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHZ9-0000To-LW; Thu, 23 May 2024 19:09:43 -0400
+	id 1sAHZR-00020v-G3; Thu, 23 May 2024 19:10:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYc-0008CI-7k; Thu, 23 May 2024 19:09:10 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1sAHZ8-0000S5-VO; Thu, 23 May 2024 19:09:43 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYa-0005ld-7Y; Thu, 23 May 2024 19:09:09 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6f4d6b7168eso3008563b3a.2; 
- Thu, 23 May 2024 16:09:06 -0700 (PDT)
+ id 1sAHYz-0005oX-Kn; Thu, 23 May 2024 19:09:42 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6f693fb0ad4so3283876b3a.1; 
+ Thu, 23 May 2024 16:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505745; x=1717110545; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505769; x=1717110569; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YMC3KrR26fFXaE3oY4A3sqPo0Tq3GFjMOngHn9knGcw=;
- b=MCRHNjmt3vvxLn8jQmRsHmyshN1M4noumih/UJL6sTamUtV4smh/20SjhmktuHj8jQ
- GkjbTd3oe+Z5gYHACn7GejZcJjkDG4/CjoC1VEB5rxkBD88vh2N1vmKJ9ryDn0/NcnGt
- V7QbNeSO67TmpsFDQOipkubxuSUTwoI+yUBC/CtyUWu9JUSYbozwsj30tbYIXIT3lIST
- mwzpTbr+fqQtBN3u/qoB7aN4Os/ekhmcEYFeqM+TNlvNVYbU4z1l3QLB+shsl6JQdjgz
- 2I4XUhRUqqP2V5Pw5TfPlwDxNfIl4nXfFg0t7m9Mz/jF+T5VKYATZTuF20gldAXTHIKR
- A4JA==
+ bh=HQGT5w4aVKrr3NPxoIEcsxRySTZpkRG07sbTk9FlNkw=;
+ b=UxQnj55EHIxBFVBb4z9R1WsIiB10pTkiGO+i/W05ebHqweQ/eaoxsPoVT+xGmpTZyf
+ FQCOQlPEvC25ZqEnSOUhzpoguh69gfzRvlUtZpVpplbdCowzeYmZ/+re3kftbGFgrlU7
+ 7pRHQJuubZaHQ6YQNwJp3xXpRGOOutGJPifUrBpk22osQNu/WqkOYcuAtMMwPU+GQGFG
+ X+YLQ7REjmw33JTiS3lqHezIsQtgfeqPRblmNbuC7yS67m2r1QL5BlPEaU/VvuUS0k22
+ bZTIuDvRVrbfw+0GB9uX9d49TNuUdLAKoA3k6mtLRo5oFU2n7XY5dh5NEnmGg0Hvx+rm
+ rKrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505745; x=1717110545;
+ d=1e100.net; s=20230601; t=1716505769; x=1717110569;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YMC3KrR26fFXaE3oY4A3sqPo0Tq3GFjMOngHn9knGcw=;
- b=W0icS5BlNW1lzhEG3MOxXGB/IH9p0f+1FaWDHerNdlc1D6tTtxV1waPW5r9WoRhD34
- 0v7bTinHRVyMexUO63hj/hNdtLTuGK6RYEVUOw5Xg0egZ4XZiowEnLQsxGbExNXbffic
- krpUKVA/ibH4QDa1OfHpzhxEP/DJsM/wYO1K1Hr1BeEwGF0qR24ka9EnudzN/UnMbkwC
- a1NUexTDKFZTIqcjD7NYOd/ovJt62uJBaZmnfzf1HFeTLSIco1xP+LT7xpvHz2s4H9Ps
- ivrxerIfplS3ihctxSzPBPp3VDbsxDZIPy+VFIGoBwrGEc4itvEbtzO8o6mJKeKCL1Vm
- Dv0A==
+ bh=HQGT5w4aVKrr3NPxoIEcsxRySTZpkRG07sbTk9FlNkw=;
+ b=DyRraIVHwrMDStTIa/Lnx53C4ciTYZEvTRFqXboCga1KMz+gbMwclDqVJo/A6eBCPM
+ e6FGAdaOs9RZcEMoM/EQrlLEW6XV3zIm5rRe721Qk9oSVDTpbL1L8lWgrxR+Ux1RW8qK
+ dypCIHmMT9TZyv8WbccsPWStDT4ZKFV35SD4yGNFmuufUKjOm1UGS3WTHlfkiRERejlS
+ NysYv1oZm84usb5ZJDigZt+D7BBSZQXl6OvVW/iKiHTxVBlmd/eKHIvTv4RC1EYJCYln
+ P6OMSmSf9FsrPMinN6esqTCsY5glyVJ4IP/zORvvVw5B9G5jxCFiWUVpfixEtRohk/9v
+ Jd/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYuuHigYpKrOkSXCpy8aHbSvMdDlWKBzQmIhv19VTWo8CXTAkfsUjVBeLKhhjkWMEHiNmxLVQ+eAWgEmuP07JpQcCp
-X-Gm-Message-State: AOJu0YxK8kIYuP+3wpKvSPW+cogW+wOcIdtOm1H+1wtTewJorBk4+lak
- guiRi7aFrNiZsk1Z6x4ogiUZNYWcGg22dhxdDfaiIlcGOzV6YQWBhxZrhg==
-X-Google-Smtp-Source: AGHT+IE2Zwv5J8Nd5XaQdRS7WqosG7C8swhgHcjcOGVLXv/GW49/bYp5e/UdkxbJENKyWVd3LVtq1A==
-X-Received: by 2002:a05:6a21:789c:b0:1af:86da:3f7 with SMTP id
- adf61e73a8af0-1b212ced305mr1110645637.4.1716505745252; 
- Thu, 23 May 2024 16:09:05 -0700 (PDT)
+ AJvYcCUG/qSdHpCGKP/FZaQS0jAAEwQQxTxIAAbHqiwZLBhU+6Tn1iymkCKZQRbleFSx0YBnQZgni4T6yc6/cM1Sm42YlL9y
+X-Gm-Message-State: AOJu0YwvGSlicTY5ZQNPWPHc6Q6N327cMK7NnjQdbHfRMBN5snHahh6+
+ Pv/fT3/JDTxOGS4wVVH4Ore0H6g4YnydqkKIb+6DtskMU/GZVtzxlWmhqA==
+X-Google-Smtp-Source: AGHT+IFgw/a0XoHbM68ttsRirMFYivy84iFwboS8VPZmN8JCDHRRgg6SmJluSmDlrr4r4CJoJlI2zA==
+X-Received: by 2002:a05:6a00:2a07:b0:6f3:34c0:13c9 with SMTP id
+ d2e1a72fcca58-6f8f42af798mr571005b3a.29.1716505769334; 
+ Thu, 23 May 2024 16:09:29 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.02
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:09:05 -0700 (PDT)
+ Thu, 23 May 2024 16:09:29 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 21/72] target/ppc: Move VMX integer max/min instructions to
- decodetree.
-Date: Fri, 24 May 2024 09:06:54 +1000
-Message-ID: <20240523230747.45703-22-npiggin@gmail.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Glenn Miles <milesg@linux.ibm.com>
+Subject: [PULL 29/72] target/ppc: improve checkstop logging
+Date: Fri, 24 May 2024 09:07:02 +1000
+Message-ID: <20240523230747.45703-30-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,139 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+Change the logging not to print to stderr as well, because a
+checkstop is a guest error (or perhaps a simulated machine error)
+rather than a QEMU error, so send it to the log.
 
-Moving the following instructions to decodetree specification :
-
-	v{max, min}{u, s}{b, h, w, d}	: VX-form
-
-The changes were verified by validating that the tcg ops generated by those
-instructions remain the same, which were captured with the '-d in_asm,op' flag.
+Update the checkstop message, and log CPU registers too.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/insn32.decode            | 22 +++++++++++++++++
- target/ppc/translate/vmx-impl.c.inc | 37 ++++++++++++++++-------------
- target/ppc/translate/vmx-ops.c.inc  | 16 -------------
- 3 files changed, 43 insertions(+), 32 deletions(-)
+ target/ppc/excp_helper.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 16f3711073..05c1d8c12d 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -852,6 +852,28 @@ VEXTSD2Q        000100 ..... 11011 ..... 11000000010    @VX_tb
- VNEGD           000100 ..... 00111 ..... 11000000010    @VX_tb
- VNEGW           000100 ..... 00110 ..... 11000000010    @VX_tb
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index fd00c044b5..a283c97717 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -430,17 +430,19 @@ static void powerpc_mcheck_checkstop(CPUPPCState *env)
+     /* KVM guests always have MSR[ME] enabled */
+ #ifdef CONFIG_TCG
+     CPUState *cs = env_cpu(env);
++    FILE *f;
  
-+## Vector Integer Maximum/Minimum Instructions
-+
-+VMAXUB          000100 ..... ..... ..... 00000000010    @VX
-+VMAXUH          000100 ..... ..... ..... 00001000010    @VX
-+VMAXUW          000100 ..... ..... ..... 00010000010    @VX
-+VMAXUD          000100 ..... ..... ..... 00011000010    @VX
-+
-+VMAXSB          000100 ..... ..... ..... 00100000010    @VX
-+VMAXSH          000100 ..... ..... ..... 00101000010    @VX
-+VMAXSW          000100 ..... ..... ..... 00110000010    @VX
-+VMAXSD          000100 ..... ..... ..... 00111000010    @VX
-+
-+VMINUB          000100 ..... ..... ..... 01000000010    @VX
-+VMINUH          000100 ..... ..... ..... 01001000010    @VX
-+VMINUW          000100 ..... ..... ..... 01010000010    @VX
-+VMINUD          000100 ..... ..... ..... 01011000010    @VX
-+
-+VMINSB          000100 ..... ..... ..... 01100000010    @VX
-+VMINSH          000100 ..... ..... ..... 01101000010    @VX
-+VMINSW          000100 ..... ..... ..... 01110000010    @VX
-+VMINSD          000100 ..... ..... ..... 01111000010    @VX
-+
- ## Vector Mask Manipulation Instructions
+     if (FIELD_EX64(env->msr, MSR, ME)) {
+         return;
+     }
  
- MTVSRBM         000100 ..... 10000 ..... 11001000010    @VX_tb
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index cefe04127c..8084af75cc 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -342,22 +342,6 @@ GEN_VXFORM_V(vsububm, MO_8, tcg_gen_gvec_sub, 0, 16);
- GEN_VXFORM_V(vsubuhm, MO_16, tcg_gen_gvec_sub, 0, 17);
- GEN_VXFORM_V(vsubuwm, MO_32, tcg_gen_gvec_sub, 0, 18);
- GEN_VXFORM_V(vsubudm, MO_64, tcg_gen_gvec_sub, 0, 19);
--GEN_VXFORM_V(vmaxub, MO_8, tcg_gen_gvec_umax, 1, 0);
--GEN_VXFORM_V(vmaxuh, MO_16, tcg_gen_gvec_umax, 1, 1);
--GEN_VXFORM_V(vmaxuw, MO_32, tcg_gen_gvec_umax, 1, 2);
--GEN_VXFORM_V(vmaxud, MO_64, tcg_gen_gvec_umax, 1, 3);
--GEN_VXFORM_V(vmaxsb, MO_8, tcg_gen_gvec_smax, 1, 4);
--GEN_VXFORM_V(vmaxsh, MO_16, tcg_gen_gvec_smax, 1, 5);
--GEN_VXFORM_V(vmaxsw, MO_32, tcg_gen_gvec_smax, 1, 6);
--GEN_VXFORM_V(vmaxsd, MO_64, tcg_gen_gvec_smax, 1, 7);
--GEN_VXFORM_V(vminub, MO_8, tcg_gen_gvec_umin, 1, 8);
--GEN_VXFORM_V(vminuh, MO_16, tcg_gen_gvec_umin, 1, 9);
--GEN_VXFORM_V(vminuw, MO_32, tcg_gen_gvec_umin, 1, 10);
--GEN_VXFORM_V(vminud, MO_64, tcg_gen_gvec_umin, 1, 11);
--GEN_VXFORM_V(vminsb, MO_8, tcg_gen_gvec_smin, 1, 12);
--GEN_VXFORM_V(vminsh, MO_16, tcg_gen_gvec_smin, 1, 13);
--GEN_VXFORM_V(vminsw, MO_32, tcg_gen_gvec_smin, 1, 14);
--GEN_VXFORM_V(vminsd, MO_64, tcg_gen_gvec_smin, 1, 15);
- GEN_VXFORM(vmrghb, 6, 0);
- GEN_VXFORM(vmrghh, 6, 1);
- GEN_VXFORM(vmrghw, 6, 2);
-@@ -727,6 +711,27 @@ TRANS_FLAGS2(ALTIVEC_207, VEQV, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_eqv);
- TRANS_FLAGS2(ALTIVEC_207, VNAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nand);
- TRANS_FLAGS2(ALTIVEC_207, VORC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_orc);
+-    /* Machine check exception is not enabled. Enter checkstop state. */
+-    fprintf(stderr, "Machine check while not allowed. "
+-            "Entering checkstop state\n");
+-    if (qemu_log_separate()) {
+-        qemu_log("Machine check while not allowed. "
+-                 "Entering checkstop state\n");
++    f = qemu_log_trylock();
++    if (f) {
++        fprintf(f, "Entering checkstop state: "
++                   "machine check with MSR[ME]=0\n");
++        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
++        qemu_log_unlock(f);
++    }
  
-+/* Integer Max/Min operations */
-+TRANS_FLAGS(ALTIVEC, VMAXUB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_umax);
-+TRANS_FLAGS(ALTIVEC, VMAXUH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_umax);
-+TRANS_FLAGS(ALTIVEC, VMAXUW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_umax);
-+TRANS_FLAGS2(ALTIVEC_207, VMAXUD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_umax);
-+
-+TRANS_FLAGS(ALTIVEC, VMAXSB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_smax);
-+TRANS_FLAGS(ALTIVEC, VMAXSH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_smax);
-+TRANS_FLAGS(ALTIVEC, VMAXSW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_smax);
-+TRANS_FLAGS2(ALTIVEC_207, VMAXSD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_smax);
-+
-+TRANS_FLAGS(ALTIVEC, VMINUB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_umin);
-+TRANS_FLAGS(ALTIVEC, VMINUH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_umin);
-+TRANS_FLAGS(ALTIVEC, VMINUW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_umin);
-+TRANS_FLAGS2(ALTIVEC_207, VMINUD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_umin);
-+
-+TRANS_FLAGS(ALTIVEC, VMINSB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_smin);
-+TRANS_FLAGS(ALTIVEC, VMINSH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_smin);
-+TRANS_FLAGS(ALTIVEC, VMINSW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_smin);
-+TRANS_FLAGS2(ALTIVEC_207, VMINSD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_smin);
-+
- static TCGv_vec do_vrl_mask_vec(unsigned vece, TCGv_vec vrb)
- {
-     TCGv_vec t0 = tcg_temp_new_vec_matching(vrb),
-diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
-index 80c5217749..7bb11b0549 100644
---- a/target/ppc/translate/vmx-ops.c.inc
-+++ b/target/ppc/translate/vmx-ops.c.inc
-@@ -33,22 +33,6 @@ GEN_VXFORM_DUAL(vsubuhm, bcdsub, 0, 17, PPC_ALTIVEC, PPC_NONE),
- GEN_VXFORM_DUAL(vsubuwm, bcdus, 0, 18, PPC_ALTIVEC, PPC2_ISA300),
- GEN_VXFORM_DUAL(vsubudm, bcds, 0, 19, PPC2_ALTIVEC_207, PPC2_ISA300),
- GEN_VXFORM_300(bcds, 0, 27),
--GEN_VXFORM(vmaxub, 1, 0),
--GEN_VXFORM(vmaxuh, 1, 1),
--GEN_VXFORM(vmaxuw, 1, 2),
--GEN_VXFORM_207(vmaxud, 1, 3),
--GEN_VXFORM(vmaxsb, 1, 4),
--GEN_VXFORM(vmaxsh, 1, 5),
--GEN_VXFORM(vmaxsw, 1, 6),
--GEN_VXFORM_207(vmaxsd, 1, 7),
--GEN_VXFORM(vminub, 1, 8),
--GEN_VXFORM(vminuh, 1, 9),
--GEN_VXFORM(vminuw, 1, 10),
--GEN_VXFORM_207(vminud, 1, 11),
--GEN_VXFORM(vminsb, 1, 12),
--GEN_VXFORM(vminsh, 1, 13),
--GEN_VXFORM(vminsw, 1, 14),
--GEN_VXFORM_207(vminsd, 1, 15),
- GEN_VXFORM(vmrghb, 6, 0),
- GEN_VXFORM(vmrghh, 6, 1),
- GEN_VXFORM(vmrghw, 6, 2),
+     /*
+      * This stops the machine and logs CPU state without killing QEMU
 -- 
 2.43.0
 
