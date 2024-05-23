@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06945C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 13:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CD2C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 13:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA8ZR-00087c-PQ; Thu, 23 May 2024 09:33:27 -0400
+	id 1sA8sC-0007xs-Ba; Thu, 23 May 2024 09:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sA8ZG-00084s-Tl
- for qemu-devel@nongnu.org; Thu, 23 May 2024 09:33:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sA8ZE-00037D-EH
- for qemu-devel@nongnu.org; Thu, 23 May 2024 09:33:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716471190;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=L06W4+rp4bkZNAQDpDimpwNX4jiUGU7n0RPt7dhyjjM=;
- b=ReHT3o3XbyDKGnPmvf64iHBDHYk31wuw0HRPx6xHm5qz+fepHtBuvA+mtmswPxhUtd0Rmk
- vMnkhV9QsyIulrnkYMcFMRaNE3uwaaqIc4OP/il6iGKTxDWFOa5ZtGU77h3UKcRnL3f2nd
- /z2dNXKFSV22ILfe/dwXbXknXPz4lIc=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-34kdeUGzNMalR29DREj-mQ-1; Thu, 23 May 2024 09:33:08 -0400
-X-MC-Unique: 34kdeUGzNMalR29DREj-mQ-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3c9a9449072so1344678b6e.3
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 06:33:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sA8sA-0007xL-Mk
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 09:52:46 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sA8s9-00078U-47
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 09:52:46 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5210684cee6so8327098e87.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 06:52:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716472363; x=1717077163; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ynhGzRyr87pQBh0sgLhYoNHNZQ7rJJWetUh4AtMRnG4=;
+ b=M/wuAOFWPS9+w/xmXRz/TTF7YajVUWHX4w3CBbJXuJdryHWlXmPEGyGjMRfVbdNDMD
+ XwqPM3WC8y16dRFpV/YelSFhx8ThAuF9SQbPMGm0Ct4mhhdcX2/l9pRdmatjLH3GkKn0
+ rPZTg7+JEW8za+kixI/Yp9+HYm/V/89li1NbTJEj6gY71vFQQHSZTTz4Y+L61nwKZiSV
+ 8NUh7MH1dJE84UJHXOMkF7dScMACMg2AigdSmbkJVt8xcvlFtC2661S9J8iBlqdRDkuw
+ QZnqgK89pGTH1SD010GmmXDjJjczCSfAjQaSE+gynKUhyd1U5JaKaXJ4IjJpGeW2saF5
+ v1TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716471187; x=1717075987;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1716472363; x=1717077163;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=L06W4+rp4bkZNAQDpDimpwNX4jiUGU7n0RPt7dhyjjM=;
- b=MjicEizdgsYaT10mpQpdFox95HIekHDRs0VcZP/WPGIKiFg6GLroy1GuGRHvO8cqNu
- nVtAB9FP5RDiVHHZ4lIJ/CQvIdO25drr9CbeDMCFUm1+ResLq+MbBKe3cg4ssDAILDwl
- JD2sdatMkNOr8juax/vE9bIi3fxwudLwy4itTVIL8/vcbwcHZUb98e73JeX1FCEyQ9qd
- p55GOZyTzV/Lq5jCk3EgOBrt0ClANh9+X2juTQ359K9aT/gafM7vHuOZO2DlySc4TeIn
- PcL4geTlWldqESIvDy+wNUFLd86o9EOsLzY5R+gvUR9Q6Fqtfr4sE2HQM7BFN58s5LTY
- ykFQ==
-X-Gm-Message-State: AOJu0YxcAoLswZ0+uCXb3d0qsEfHi+V/OMEzDy6SAvya5E+x1rRFccyx
- VBNJ+iJaF93BMn3EPjwUlDXVgLXcLUt6pa+WOVj8TFDN7OyN6FPV1zK+3yKClb/AuP6OiWxlcbz
- LuFV3HN51X+5YHtDMIiPxiIcm+urQnA6VdOe2zOARuJEKI7OiO81ax1woIVT+Ot2v00wTdgtA0+
- Q6xgRFbuiE40Ps1J8pHb9/2ZXNOP5SdswuU/Pn
-X-Received: by 2002:a05:6808:1247:b0:3c9:956f:889 with SMTP id
- 5614622812f47-3cdbb150913mr6048491b6e.51.1716471187604; 
- Thu, 23 May 2024 06:33:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfam8oJbcF7hZO02XeqrFRPdVckEiWDWS3iGCIqn3QuXXkbMaGDq29z4eVjSnHv24UoP7oCw==
-X-Received: by 2002:a05:6808:1247:b0:3c9:956f:889 with SMTP id
- 5614622812f47-3cdbb150913mr6048448b6e.51.1716471187221; 
- Thu, 23 May 2024 06:33:07 -0700 (PDT)
-Received: from step1.redhat.com (host-79-53-30-109.retail.telecomitalia.it.
- [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf340b32sm1499254685a.126.2024.05.23.06.33.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 06:33:05 -0700 (PDT)
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH] qapi: clarify that the default is backend dependent
-Date: Thu, 23 May 2024 15:33:02 +0200
-Message-ID: <20240523133302.103858-1-sgarzare@redhat.com>
-X-Mailer: git-send-email 2.45.1
+ bh=ynhGzRyr87pQBh0sgLhYoNHNZQ7rJJWetUh4AtMRnG4=;
+ b=pPXiQQPfi1aMl7xuqiyp4H+aR//QXWSq4l2z4V+u0nYNk67xlGDJhF6QCAhvV0ZTce
+ qjCzqAFZhAELKneG8B5gK6O5TjVSWvlroOXpg++3/A+1In3iUgEYbAVULcTWkLuSdspJ
+ jgvoxLJgTA+e4Do7Fn7o90Sq6iMQyfbFmb7bVYmHYE+wOPa88nORb61Y01EC8iBoRT2T
+ 1M5SbciXNCVljWIpNDfvjxkk6+gCtc9fOsQIaoz7+NDU1mTqhDeZu9detqkPnOe0dydR
+ ttdwelhM0YkWsTLHjKxK9eHCyodQQXASFj26UlSOr8NtGJ2cKRJkCavTEgrbAZ0vM09g
+ L2Og==
+X-Gm-Message-State: AOJu0YwznCkSguz8kUrmV25sdoyU0AgFBCuXz6WP5vhT6JlUG/nLg7jD
+ BCTnLuNQ4004pAtCBiOnP7BqcZz2FrFAkyabuLXe1tA7E4KDWBpUJtDPdkBfufSaMUcipBj/pjr
+ obvJBSUqEx+sf0voEEa5je0H/oMznHtHKrpjzAg==
+X-Google-Smtp-Source: AGHT+IHnoYiTKPVu8ly3EsxAJ7tZYiyL0HnDi0BuOo2JQqRNelOs966Ek1Ik7zO7M4PTj8E7EjFKzrSUw1EM0IBZIec=
+X-Received: by 2002:a05:6512:3e22:b0:516:d219:3779 with SMTP id
+ 2adb3069b0e04-526c0d4a203mr3760312e87.58.1716472363021; Thu, 23 May 2024
+ 06:52:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240506010403.6204-1-richard.henderson@linaro.org>
+ <20240506010403.6204-23-richard.henderson@linaro.org>
+In-Reply-To: <20240506010403.6204-23-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 23 May 2024 14:52:31 +0100
+Message-ID: <CAFEAcA9CFW8cgKG7atPqOdpFcBZ-91dkZi1ooAfirLgO-MPvkw@mail.gmail.com>
+Subject: Re: [PATCH 22/57] target/arm: Convert FMAXP, FMINP, FMAXNMP, FMINNMP
+ to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,47 +89,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default value of the @share option of the @MemoryBackendProperties
-eally depends on the backend type, so let's document it explicitly and
-add the default value where it was missing.
+On Mon, 6 May 2024 at 02:08, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> These are the last instructions within disas_simd_three_reg_same_fp16,
+> so remove it.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Cc: David Hildenbrand <david@redhat.com>
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
----
-I followed how we document @share in memfd and epc, but I don't like it
-very much, I just can't think of a better way, so if you have a suggestion
-I can change them in all of them.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Thanks,
-Stefano
----
- qapi/qom.json | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 38dde6d785..8463bd32a2 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -600,7 +600,7 @@
- #     preallocation threads (default: none) (since 7.2)
- #
- # @share: if false, the memory is private to QEMU; if true, it is
--#     shared (default: false)
-+#     shared (default depends on the backend type)
- #
- # @reserve: if true, reserve swap space (or huge pages) if applicable
- #     (default: true) (since 6.1)
-@@ -639,6 +639,8 @@
- #
- # Properties for memory-backend-file objects.
- #
-+# The @share boolean option is false by default with file.
-+#
- # @align: the base address alignment when QEMU mmap(2)s @mem-path.
- #     Some backend stores specified by @mem-path require an alignment
- #     different than the default one used by QEMU, e.g. the device DAX
--- 
-2.45.1
-
+thanks
+-- PMM
 
