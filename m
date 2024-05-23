@@ -4,68 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18099C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 16:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBE3C25B7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 16:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAB7B-00059x-GB; Thu, 23 May 2024 12:16:25 -0400
+	id 1sAB7I-0005D7-K6; Thu, 23 May 2024 12:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAB6p-000512-Gf
+ id 1sAB6t-00051i-7f
  for qemu-devel@nongnu.org; Thu, 23 May 2024 12:16:12 -0400
 Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAB6l-0002YT-IB
- for qemu-devel@nongnu.org; Thu, 23 May 2024 12:16:03 -0400
+ id 1sAB6n-0002Yz-DT
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 12:16:06 -0400
 Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6f693fb0ad4so2954885b3a.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 09:15:56 -0700 (PDT)
+ d2e1a72fcca58-6f472d550cbso3351670b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 09:16:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716480955; x=1717085755; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=jxjK3DkHHHf6Q3bAgJM+eYcdnO2cbviAh8+W/4IvqxA=;
- b=F+Xj03kw3W8wkQ78u10jJOqvtAc4dFMU28razwu2HCTtIEo/jPl5BJwQ4KC5fec0y+
- 04y/aK1BHaJKcmv+xHjcLl/0dkY0H+g2/GYPywpOWo+7YR0Vur+vjVdsoAj/4jBj+hPF
- 1puCbJRBnFxvnLEW9WxMJbTmu8Sjfn7sEj3kZNtTvIxB8ZUZx9xNUHFX5XmwGv969vFP
- IKohTPB3ymFAq5Ry/b4at1rgRDX0YK990puXIQz8uSdsHpEMJSCsY4eikTKsUdD2nqcp
- 2faMcCP4G4oJRysshhgs2RYSH6cv8swVVZdfHxTtGSfG6xiIzc1RR0FWAat0dqiymrJe
- X9yA==
+ d=linaro.org; s=google; t=1716480959; x=1717085759; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/mQMS7XHQY6TkE4rdOTcxfDvk4JYb50U7z9A8FwVzKY=;
+ b=zYKQvNWm/QzWXYRaFtgvS7MEYRGCDkLhNzVPNazCFMZ+iD5CIeZeo8sP7mdnZa6/FG
+ +ogwUeoVeO2fpFoPCEd7nN08bJfCdiNwVtkp2r+Vf35VtZWdil6ulYHkJntWrIWEUvI2
+ JpWlW7NuoFtLLb/o3dAYHXQn++j6XiweOHLOBmOe85G+4fd/Iv/8Xdi/E4n+txy4xC+b
+ +L98KKdCp4ORGC/TwDvB0nwxrFvRc6OGbVh+pQjFndK51q8h7FiC1z37Tg9XfmAqPh9U
+ z+tJsapP4EQWqDYSehMK4xq6lh//SiyOsbh7k37FwG9G09cbi7nPmqzUO1aOpNCxuV7u
+ 8PZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716480955; x=1717085755;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jxjK3DkHHHf6Q3bAgJM+eYcdnO2cbviAh8+W/4IvqxA=;
- b=InVhcyML5Wfyh2Murr1j8jVJSRokOjGOCvK3zYcwUtRVvX4jOnJQoXvKU6D8UCAc+l
- hFH9b14pcDbPv7tgfixVZ6oxrfBT+A6Jg7jP52YkvrumWBHRSmlyz/WqD+9/wKuEkzgW
- VzXlkTaeHx8RqH24HlW9BankmRP+qYs0sqIsPi0IOzmWMSp+OgkkJkU9/pLb8JolYBvR
- mYkNOVXGh5RO7nQuRaN5OW1paTw7PDDvwv6MgAG8pGYA9tgjZQGupsJ9xjuVuctYZZwT
- iGd3b/RyiONqZjwwsSV4dYeWLGkaQfxtnkTKzECBWEvvYrgpy0sw6hVTgdG6LW+JCkRT
- 9XUw==
-X-Gm-Message-State: AOJu0Yw1ae+dbayFt2qaq3lSHDx6QuEMG7Uc11lrV9acyrvIzJuPOuGo
- 9p4Y1yNPaEGy04iKi4k0TmKT5tXY/g3vmE3rBxkFjVFvAADovx5FWdZPv4VvQhGuGK7H2c0TTgT
- K
-X-Google-Smtp-Source: AGHT+IHM+0gB9FTsrSCWpD7ZmmlXDiA4855A6KN+YYd5MduOSWzsMYFjiTuClKe3hIbzmJ+RM1zbHg==
-X-Received: by 2002:a05:6a21:7881:b0:1b0:18e6:ac2c with SMTP id
- adf61e73a8af0-1b1f8b2af46mr6052523637.40.1716480954959; 
- Thu, 23 May 2024 09:15:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716480959; x=1717085759;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/mQMS7XHQY6TkE4rdOTcxfDvk4JYb50U7z9A8FwVzKY=;
+ b=a466tvrYAXf7pBnmhGDG5RnV0MtBPRb9/dm+xCv8+OkTS0QCTfYW+uDVBpu0A+0pBm
+ 8OFCkCtoVtzacm16rl+WS/96nsD6op9h8X9cAPcdou2KMWXxbjdmh8wLqisIsLuZZRMt
+ oIAm9LHweQ/NLQN/jt3OoM0BW2+vbdhCdYK+bAKKLPCZMNYSqVZIBIpLGUBpA1qr4nvU
+ JUutckbuAGm2Lj+6JlwjzKD/0b7obbA3+pIQhbiIahCcpSsLBPkNocD7osrhv+Fgu1Gm
+ PtXbsA8E8t9jQdGlaqLODEA+ZztUto322JC0ksFuH4bIIvjptxGfQplFdSLlUe5U0E33
+ h5SQ==
+X-Gm-Message-State: AOJu0Yx4KU+PTpbNkS9VPHhgzQed+tlkWMVLgAlcnEIIgVC4O1hKrp2Q
+ 7yPyGIBCJ37Dl/QjCsfRitUoO3xd/cAxepvinhADob2e89vYTCfBx5iwfMqxh10mn5YGWP7QGNs
+ e
+X-Google-Smtp-Source: AGHT+IEANUO/RWrdXFS9mu/zO2w9sUzRUQcRYEQR/kd46eFJEB+PJq6eoKMadBKppeEVh47srn3SAQ==
+X-Received: by 2002:a05:6a00:1382:b0:6ed:cd4c:cc1a with SMTP id
+ d2e1a72fcca58-6f6d60300b2mr7251615b3a.8.1716480959466; 
+ Thu, 23 May 2024 09:15:59 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2a9d9acsm24890255b3a.90.2024.05.23.09.15.54
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-6f4d2a9d9acsm24890255b3a.90.2024.05.23.09.15.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 09:15:54 -0700 (PDT)
+ Thu, 23 May 2024 09:15:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/5] tcg patch queue
-Date: Thu, 23 May 2024 09:15:48 -0700
-Message-Id: <20240523161553.774673-1-richard.henderson@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 5/5] accel/tcg: Init tb size and icount before plugin_gen_tb_end
+Date: Thu, 23 May 2024 09:15:53 -0700
+Message-Id: <20240523161553.774673-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240523161553.774673-1-richard.henderson@linaro.org>
+References: <20240523161553.774673-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
  envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
@@ -91,40 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7e1c0047015ffbd408e1aa4a5ec1abe4751dbf7e:
+When passing disassembly data to plugin callbacks,
+translator_st_len relies on db->tb->size having been set.
 
-  Merge tag 'migration-20240522-pull-request' of https://gitlab.com/farosas/qemu into staging (2024-05-22 15:32:25 -0700)
+Fixes: 4c833c60e047 ("disas: Use translator_st to get disassembly data")
+Reported-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ accel/tcg/translator.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-are available in the Git repository at:
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index c56967eecd..113edcffe3 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -214,14 +214,14 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+     set_can_do_io(db, true);
+     tcg_ctx->emit_before_op = NULL;
+ 
++    /* May be used by disas_log or plugin callbacks. */
++    tb->size = db->pc_next - db->pc_first;
++    tb->icount = db->num_insns;
++
+     if (plugin_enabled) {
+         plugin_gen_tb_end(cpu, db->num_insns);
+     }
+ 
+-    /* The disas_log hook may use these values rather than recompute.  */
+-    tb->size = db->pc_next - db->pc_first;
+-    tb->icount = db->num_insns;
+-
+     if (qemu_loglevel_mask(CPU_LOG_TB_IN_ASM)
+         && qemu_log_in_addr_range(db->pc_first)) {
+         FILE *logfile = qemu_log_trylock();
+-- 
+2.34.1
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240523
-
-for you to fetch changes up to bfd43cccab9fb77b8405ca556fc2f2ed3b2920a3:
-
-  accel/tcg: Init tb size and icount before plugin_gen_tb_end (2024-05-22 19:05:26 -0700)
-
-----------------------------------------------------------------
-tcg: Introduce TCG_TARGET_HAS_tst_vec
-accel/tcg: Init tb size and icount before plugin_gen_tb_end
-
-----------------------------------------------------------------
-Richard Henderson (5):
-      tcg: Introduce TCG_TARGET_HAS_tst_vec
-      tcg: Expand TCG_COND_TST* if not TCG_TARGET_HAS_tst_vec
-      tcg/aarch64: Support TCG_TARGET_HAS_tst_vec
-      tcg/arm: Support TCG_TARGET_HAS_tst_vec
-      accel/tcg: Init tb size and icount before plugin_gen_tb_end
-
- include/tcg/tcg.h            |  1 +
- tcg/aarch64/tcg-target.h     |  1 +
- tcg/arm/tcg-target.h         |  1 +
- tcg/i386/tcg-target.h        |  1 +
- tcg/loongarch64/tcg-target.h |  1 +
- tcg/ppc/tcg-target.h         |  1 +
- tcg/s390x/tcg-target.h       |  1 +
- accel/tcg/translator.c       |  8 ++++----
- tcg/tcg-op-vec.c             | 18 ++++++++++++++++++
- tcg/aarch64/tcg-target.c.inc | 26 ++++++++++++++++++++++++--
- tcg/arm/tcg-target.c.inc     | 23 ++++++++++++++++++++---
- 11 files changed, 73 insertions(+), 9 deletions(-)
 
