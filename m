@@ -4,109 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81393C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF97C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sADlN-00022K-JT; Thu, 23 May 2024 15:06:05 -0400
+	id 1sAELt-00039P-DU; Thu, 23 May 2024 15:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlM-00021Y-6w
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:04 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlK-0004GA-Ei
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:03 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D0AD52040D;
- Thu, 23 May 2024 19:06:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491160; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sAELr-00038W-O4
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:43:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sAELq-0002xG-AM
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:43:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716493424;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ER5Peeluxy6JHmSRH7zQ8d3YDDvk/6q9I4V6pgtQEYE=;
- b=1VMJu6e1iveSpV6QYuluTlc9Q/Nyty9M9X33/s/qVrr/IlM6rdvqJJFCQFnfBaKcRPPXc1
- getx6Y7fU4kK1KGK4GP1BmTkjrUx/ln4wiPAkvolg88xR6YM8MLtXlVmIzseYYD11VVJU0
- VoENooGvbryvQ8GlcwdhO3IaDirySUQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491160;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ER5Peeluxy6JHmSRH7zQ8d3YDDvk/6q9I4V6pgtQEYE=;
- b=tCORUTJvo1nPfEALMVo84uUvYWoRtlBg/s8U8MVC8okaTSz0nqw+k/cz4rYQrWIODDA5a6
- /PRGcjCK+iZsaAAg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491160; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ER5Peeluxy6JHmSRH7zQ8d3YDDvk/6q9I4V6pgtQEYE=;
- b=1VMJu6e1iveSpV6QYuluTlc9Q/Nyty9M9X33/s/qVrr/IlM6rdvqJJFCQFnfBaKcRPPXc1
- getx6Y7fU4kK1KGK4GP1BmTkjrUx/ln4wiPAkvolg88xR6YM8MLtXlVmIzseYYD11VVJU0
- VoENooGvbryvQ8GlcwdhO3IaDirySUQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491160;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ER5Peeluxy6JHmSRH7zQ8d3YDDvk/6q9I4V6pgtQEYE=;
- b=tCORUTJvo1nPfEALMVo84uUvYWoRtlBg/s8U8MVC8okaTSz0nqw+k/cz4rYQrWIODDA5a6
- /PRGcjCK+iZsaAAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4BEA713A6B;
- Thu, 23 May 2024 19:05:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0Fn+BJaTT2bUEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:05:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 03/18] tests/qtest/migration: Add a precopy file test with
- fdset
-Date: Thu, 23 May 2024 16:05:33 -0300
-Message-Id: <20240523190548.23977-4-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240523190548.23977-1-farosas@suse.de>
-References: <20240523190548.23977-1-farosas@suse.de>
+ bh=/ncNMcT+e1P1+hJLONPU0NxPQD/JteHLQFan6GKiAvg=;
+ b=AhGNIpVEvWrl3BkD9rjjXr+36mJMpXwo7ATqQbvxBQOn8z+aHJAFrIZ/AaU5q8Dj2XWIqA
+ e0TGqrxToyWG3/8m0dbH2CpTolfnVdeYpDvJZOjHl5XNrFk8M2xPpt9PrHtYc3PYzvLctp
+ nPlnQgnzo2sW9aA9I4RxLWxpNtWy+3k=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-634-QmC8Dq9hMzConAZuVw9KPA-1; Thu, 23 May 2024 15:43:43 -0400
+X-MC-Unique: QmC8Dq9hMzConAZuVw9KPA-1
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-804cadd0835so13229241.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 12:43:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716493421; x=1717098221;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/ncNMcT+e1P1+hJLONPU0NxPQD/JteHLQFan6GKiAvg=;
+ b=aHHj8CyhiYnNukkR+djDKBShZRs363JkjCm5IbWUdBsoMc5gAgCUzGb1zQGRLIQjIv
+ zU1LlfvJx1vo4be9EX47et5XYd2Hn/2Dxgzek76dc62h3788NQfT1tpRJWtGcMG71Fhc
+ N/pfH2PpWa9x6RCuT6Ndu7bJFHoXCawTDdT7G2kkyC+0jZIaCSed+pYyoRUVY4Ss4RGI
+ qsTCtZNGPi61W/oQNMZBjByYBIjBtC9VKy5pSx1VYPVOwfGDaV5/jct3PpR0wzPLQWek
+ Q6zNdZbtwgswW7MsIJcz3pm7c1LJvFmcz917hz9pSjBHgHUF9EatUho4BnmC3+bsaJ/j
+ VE3g==
+X-Gm-Message-State: AOJu0Yx4z84Y43LDIAC+WmPyjjkaDvUQ7bTL5yVGZBKlrZ9ZdqpSu8xw
+ EW7cv9bW22OpP6MtwotvFH97vKICvQglaBTzUR94Pbg3auQd2VqW/xQ4XgOx8vY8ClpwfI9r1H+
+ qF8UezZm8KwFbR5Q+0yk/cu13kJZHwQFF8o6JftNqmHwCFnhUqNQO
+X-Received: by 2002:a05:6102:508c:b0:47e:d83:3baa with SMTP id
+ ada2fe7eead31-48a385060e9mr497406137.1.1716493421304; 
+ Thu, 23 May 2024 12:43:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYV9r14ddpJGyTWcdfRx9gkkRPI0U1UrbWF8cUKJ4pAqffscKWIQsF1rwRAMAG1zmTxCgKBw==
+X-Received: by 2002:a05:6102:508c:b0:47e:d83:3baa with SMTP id
+ ada2fe7eead31-48a385060e9mr497379137.1.1716493420737; 
+ Thu, 23 May 2024 12:43:40 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43faaf0f266sm9783071cf.92.2024.05.23.12.43.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 May 2024 12:43:40 -0700 (PDT)
+Date: Thu, 23 May 2024 15:43:32 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, fam@euphon.net,
+ kwolf@redhat.com, hreitz@redhat.com, marcandre.lureau@redhat.com,
+ farosas@suse.de, pbonzini@redhat.com, richard.henderson@linaro.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 5/6] migration: Rephrase message on failure to save /
+ load Xen device state
+Message-ID: <Zk-cZFil8GYo0JY8@x1n>
+References: <20240513141703.549874-1-armbru@redhat.com>
+ <20240513141703.549874-6-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[9];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240513141703.549874-6-armbru@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,83 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test for file migration using fdset. The passing of fds is more
-complex than using a file path. This is also the scenario where it's
-most important we ensure that the initial migration stream offset is
-respected because the fdset interface is the one used by the
-management layer when providing a non empty migration file.
+On Mon, May 13, 2024 at 04:17:02PM +0200, Markus Armbruster wrote:
+> Functions that use an Error **errp parameter to return errors should
+> not also report them to the user, because reporting is the caller's
+> job.  When the caller does, the error is reported twice.  When it
+> doesn't (because it recovered from the error), there is no error to
+> report, i.e. the report is bogus.
+> 
+> qmp_xen_save_devices_state() and qmp_xen_load_devices_state() violate
+> this principle: they call qemu_save_device_state() and
+> qemu_loadvm_state(), which call error_report_err().
+> 
+> I wish I could clean this up now, but migration's error reporting is
+> too complicated (confused?) for me to mess with it.
 
-Note that fd passing is not available on Windows, so anything that
-uses add-fd needs to exclude that platform.
+:-(
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration-test.c | 44 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+> 
+> Instead, I'm merely improving the error reported by
+> qmp_xen_load_devices_state() and qmp_xen_load_devices_state() to the
+> QMP core from
+> 
+>     An IO error has occurred
+> 
+> to
+>     saving Xen device state failed
+> 
+> and
+> 
+>     loading Xen device state failed
+> 
+> respectively.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index ec905543cf..5bb53f4839 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2013,6 +2013,46 @@ static void test_precopy_file(void)
-     test_file_common(&args, true);
- }
- 
-+#ifndef _WIN32
-+static void fdset_add_fds(QTestState *qts, const char *file, int flags,
-+                          int num_fds)
-+{
-+    for (int i = 0; i < num_fds; i++) {
-+        int fd;
-+
-+        fd = open(file, flags, 0660);
-+        assert(fd != -1);
-+
-+        qtest_qmp_fds_assert_success(qts, &fd, 1, "{'execute': 'add-fd', "
-+                                     "'arguments': {'fdset-id': 1}}");
-+        close(fd);
-+    }
-+}
-+
-+static void *file_offset_fdset_start_hook(QTestState *from, QTestState *to)
-+{
-+    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
-+
-+    fdset_add_fds(from, file, O_WRONLY, 1);
-+    fdset_add_fds(to, file, O_RDONLY, 1);
-+
-+    return NULL;
-+}
-+
-+static void test_precopy_file_offset_fdset(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("file:/dev/fdset/1,offset=%d",
-+                                           FILE_TEST_OFFSET);
-+    MigrateCommon args = {
-+        .connect_uri = uri,
-+        .listen_uri = "defer",
-+        .start_hook = file_offset_fdset_start_hook,
-+    };
-+
-+    test_file_common(&args, false);
-+}
-+#endif
-+
- static void test_precopy_file_offset(void)
- {
-     g_autofree char *uri = g_strdup_printf("file:%s/%s,offset=%d", tmpfs,
-@@ -3521,6 +3561,10 @@ int main(int argc, char **argv)
-                        test_precopy_file);
-     migration_test_add("/migration/precopy/file/offset",
-                        test_precopy_file_offset);
-+#ifndef _WIN32
-+    migration_test_add("/migration/precopy/file/offset/fdset",
-+                       test_precopy_file_offset_fdset);
-+#endif
-     migration_test_add("/migration/precopy/file/offset/bad",
-                        test_precopy_file_offset_bad);
- 
+Acked-by: Peter Xu <peterx@redhat.com>
+
 -- 
-2.35.3
+Peter Xu
 
 
