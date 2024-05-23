@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3A0C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 846F3C25B7D
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9ws-0007yH-3P; Thu, 23 May 2024 11:01:42 -0400
+	id 1sA9wp-0007Y2-9L; Thu, 23 May 2024 11:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wj-00076K-RV
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:35 -0400
+ id 1sA9wX-0006qE-RM
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wi-0004u6-1h
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:33 -0400
+ id 1sA9wT-0004sA-P7
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476491;
+ s=mimecast20190719; t=1716476476;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CHCUPvn1Si9c0g9Vgq43/WNne2Jx2ZEuJMMlB1q2KHs=;
- b=M87NlbDLhYRvlTiqed2SFVlWjQAWHOm3+PCpFgFlk14KO0x4g4e3MYi3+Mp77zyW+fhD+y
- YvIgFANmMp2xXWO6m4hMiHR5YDdTI+iU7E3eNdiJhTyLuliHUeCy2BKPs2EzuRAPVJN/dS
- 8hYepua2aB3z3jwbYgdS4rC5Gf+wHss=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yShvUnEFBwEY8j4FPXWBnw3WpDlGcdHPUpfwzzGz26M=;
+ b=Lzj0PgD1gwXSHQmv+y7TsvntRZAutHtxUDkJEpY8TZT3EMmCR4629KzZur05csq5hFdbO+
+ F6rG29A+SCLSGVfiMIJGAktFipCoK5xFqVhyTGmf5nU6PZ9g2mWxVM8CLRcmjoezVjCm/d
+ gYqTLmv5Tx6Qaq31q6YL9wN8byFf150=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-4XcV9T0VNG25jdnWPLM0ag-1; Thu, 23 May 2024 11:01:29 -0400
-X-MC-Unique: 4XcV9T0VNG25jdnWPLM0ag-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-578282c81bcso1284510a12.2
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:29 -0700 (PDT)
+ us-mta-128-6tvtcunUNQaYFb8TLfOhGA-1; Thu, 23 May 2024 11:01:15 -0400
+X-MC-Unique: 6tvtcunUNQaYFb8TLfOhGA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59a5b06802so98418366b.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476488; x=1717081288;
+ d=1e100.net; s=20230601; t=1716476473; x=1717081273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CHCUPvn1Si9c0g9Vgq43/WNne2Jx2ZEuJMMlB1q2KHs=;
- b=nSiickyxU8mffXu+8QbTpI9XeZugwGOI+/H2cFbAz40DHy7fUkXKRKapUff43DG55d
- 0mIvmsYY0TXbjEc+HxBFOpYcX7q6L4wb0GDap1xeOFPycKQC2CYfGjV2J9T5JwC0/F3O
- Je0cpVEakSo1e5/HTdw2FtIHcJuNnP/av7Pq3RJhgYAN6KEtB32SDfpAoGWfvv1zzaa/
- vnXuF2WWj5oNG6g1E/bVSNSiP7RQyNresBncB0vzdpzV7c3u54yfLzYqi4GNR2uLvke0
- bti3RYcUws+uDjJZrcQFw88NzNUjePilKt2BERrTbnjTdIEmVQ/RcusuIdBy+MGRpqUH
- q7Vw==
-X-Gm-Message-State: AOJu0YwOtrqbQw7iou8Rs/hZkHwMa93+3PvVKM3vXG9xNOS5zn4SIisN
- xc2PBinVhZxxo7Yz3BHdPDlqFp48Oo5i7bOSJ2pdJwl3ZPoP0C+LrqNJExMm4DFz+uqpWhFHey5
- BBaABQwKVcY93vw0s7IUcYCSb09nI+K9b6wHLlKT4cDhkLyKdZSeAPHJe7sCBma3v4067/ODDI4
- etLYZ3qDJEUi9fT7pyJPk3hGohqPgwhBcJJ0Vy
-X-Received: by 2002:a50:d789:0:b0:578:25c9:b990 with SMTP id
- 4fb4d7f45d1cf-57832a3a1b2mr5199791a12.20.1716476487262; 
- Thu, 23 May 2024 08:01:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbcF3+fXwCypRxfjpnpXkUjfvuUquXjGrPBlxFwUFEA1MK2JR/HBw1JlM9goij8dgyS1SoMQ==
-X-Received: by 2002:a50:d789:0:b0:578:25c9:b990 with SMTP id
- 4fb4d7f45d1cf-57832a3a1b2mr5199756a12.20.1716476486788; 
- Thu, 23 May 2024 08:01:26 -0700 (PDT)
+ bh=yShvUnEFBwEY8j4FPXWBnw3WpDlGcdHPUpfwzzGz26M=;
+ b=GTzb5Kyd3a1mF0G5GqHAMRONQf8htBNM3y3c9d/fdwAZgUIMZlSFtl7qeCOBefu8mx
+ s9UHgqPkKN8Y7EezQUqquWoqeVS3oGR7zCM8I3dj0Pi4qjxohn38mOacvHvwoxMFZcCu
+ r9otir62nZHHtwa/1xYr3z2zm+DuzH23yNgfi2GlrwWrBCsP9E/Pqy5XFvTZYnRATvEW
+ obxwcmBASZ9S8K1U6dPX1srJSKkcs7VcaeCUk6uUBfSccNi/PiP3Euy1zHyLmbguOSrA
+ kO5n/obEkwi+XTSLXBfZIJdTqbiaGDcVni3CXRLeLthQZHwf/m3UyaJvjKVD/ebj9k5h
+ b0Sg==
+X-Gm-Message-State: AOJu0YzkpgNnqQTwClQhUgSM/iH2RulFgaqr0zJdvyXhVD35Iph3hIaW
+ BbCNit7a7CG8HYCbndcnJoplJAaTLe6Tv0vyRVBP/m4jTBOCTiAeXsNJtPp5HSHw5puTAF+N999
+ BEUb1Ri/jVoPbWT5VzqOaeM3p5jK1swdD9bTCFVb2xbkhutf4XY2aX4fwcWTqywnm0YZjoFCzp6
+ XtzYgmpITSqs/bo3eCS5/A6Xb9i+idSYg4hmcf
+X-Received: by 2002:a17:906:6d85:b0:a5a:84f9:df73 with SMTP id
+ a640c23a62f3a-a62280a12e6mr334618366b.38.1716476473377; 
+ Thu, 23 May 2024 08:01:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8GxDGdlbBtjruH7ye7KRQ9Ge4f62Jgq8hZrQEPHXpEWKDAtawk404Vw1hWm86OarHBrHTwg==
+X-Received: by 2002:a17:906:6d85:b0:a5a:84f9:df73 with SMTP id
+ a640c23a62f3a-a62280a12e6mr334616966b.38.1716476473008; 
+ Thu, 23 May 2024 08:01:13 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733c34fed1sm19885745a12.96.2024.05.23.08.01.24
+ a640c23a62f3a-a5cdd7f8ea1sm1106720866b.109.2024.05.23.08.01.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:01:25 -0700 (PDT)
+ Thu, 23 May 2024 08:01:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>
-Subject: [PULL 19/23] hw/i386/pc: Support smp.modules for x86 PC machine
-Date: Thu, 23 May 2024 17:00:32 +0200
-Message-ID: <20240523150036.1050011-20-pbonzini@redhat.com>
+Subject: [PULL 14/23] i386: Support modules_per_die in X86CPUTopoInfo
+Date: Thu, 23 May 2024 17:00:27 +0200
+Message-ID: <20240523150036.1050011-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
 References: <20240523150036.1050011-1-pbonzini@redhat.com>
@@ -105,95 +105,244 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-As module-level topology support is added to X86CPU, now we can enable
-the support for the modules parameter on PC machines. With this support,
-we can define a 5-level x86 CPU topology with "-smp":
+Support module level in i386 cpu topology structure "X86CPUTopoInfo".
 
--smp cpus=*,maxcpus=*,sockets=*,dies=*,modules=*,cores=*,threads=*.
+Since x86 does not yet support the "modules" parameter in "-smp",
+X86CPUTopoInfo.modules_per_die is currently always 1.
 
-So, add the 5-level topology example in description of "-smp".
+Therefore, the module level width in APIC ID, which can be calculated by
+"apicid_bitwidth_for_count(topo_info->modules_per_die)", is always 0 for
+now, so we can directly add APIC ID related helpers to support module
+level parsing.
 
-Additionally, add the missed drawers and books options in previous
-example.
+In addition, update topology structure in test-x86-topo.c.
 
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Message-ID: <20240424154929.1487382-19-zhao1.liu@intel.com>
+Message-ID: <20240424154929.1487382-14-zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/pc.c    |  1 +
- qemu-options.hx | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ include/hw/i386/topology.h | 22 +++++++++++++++----
+ hw/i386/x86.c              |  9 +++++++-
+ target/i386/cpu.c          | 13 ++++++-----
+ tests/unit/test-x86-topo.c | 45 ++++++++++++++++++++------------------
+ 4 files changed, 58 insertions(+), 31 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 6126bfdd2a7..7b638da7aaa 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1843,6 +1843,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
-     mc->nvdimm_supported = true;
-     mc->smp_props.dies_supported = true;
-+    mc->smp_props.modules_supported = true;
-     mc->default_ram_id = "pc.ram";
-     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
+diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
+index befeb92b0b1..7622d806932 100644
+--- a/include/hw/i386/topology.h
++++ b/include/hw/i386/topology.h
+@@ -56,7 +56,8 @@ typedef struct X86CPUTopoIDs {
  
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 4d196603368..8ca7f34ef0c 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -281,7 +281,8 @@ ERST
+ typedef struct X86CPUTopoInfo {
+     unsigned dies_per_pkg;
+-    unsigned cores_per_die;
++    unsigned modules_per_die;
++    unsigned cores_per_module;
+     unsigned threads_per_core;
+ } X86CPUTopoInfo;
  
- DEF("smp", HAS_ARG, QEMU_OPTION_smp,
-     "-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]\n"
--    "               [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]\n"
-+    "               [,dies=dies][,clusters=clusters][,modules=modules][,cores=cores]\n"
-+    "               [,threads=threads]\n"
-     "                set the number of initial CPUs to 'n' [default=1]\n"
-     "                maxcpus= maximum number of total CPUs, including\n"
-     "                offline CPUs for hotplug, etc\n"
-@@ -290,7 +291,8 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
-     "                sockets= number of sockets in one book\n"
-     "                dies= number of dies in one socket\n"
-     "                clusters= number of clusters in one die\n"
--    "                cores= number of cores in one cluster\n"
-+    "                modules= number of modules in one cluster\n"
-+    "                cores= number of cores in one module\n"
-     "                threads= number of threads in one core\n"
-     "Note: Different machines may have different subsets of the CPU topology\n"
-     "      parameters supported, so the actual meaning of the supported parameters\n"
-@@ -306,7 +308,7 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
-     "      must be set as 1 in the purpose of correct parsing.\n",
-     QEMU_ARCH_ALL)
- SRST
--``-smp [[cpus=]n][,maxcpus=maxcpus][,sockets=sockets][,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]``
-+``-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets][,dies=dies][,clusters=clusters][,modules=modules][,cores=cores][,threads=threads]``
-     Simulate a SMP system with '\ ``n``\ ' CPUs initially present on
-     the machine type board. On boards supporting CPU hotplug, the optional
-     '\ ``maxcpus``\ ' parameter can be set to enable further CPUs to be
-@@ -345,14 +347,14 @@ SRST
-         -smp 8,sockets=2,cores=2,threads=2,maxcpus=8
+@@ -92,7 +93,13 @@ static inline unsigned apicid_smt_width(X86CPUTopoInfo *topo_info)
+ /* Bit width of the Core_ID field */
+ static inline unsigned apicid_core_width(X86CPUTopoInfo *topo_info)
+ {
+-    return apicid_bitwidth_for_count(topo_info->cores_per_die);
++    return apicid_bitwidth_for_count(topo_info->cores_per_module);
++}
++
++/* Bit width of the Module_ID field */
++static inline unsigned apicid_module_width(X86CPUTopoInfo *topo_info)
++{
++    return apicid_bitwidth_for_count(topo_info->modules_per_die);
+ }
  
-     The following sub-option defines a CPU topology hierarchy (2 sockets
--    totally on the machine, 2 dies per socket, 2 cores per die, 2 threads
--    per core) for PC machines which support sockets/dies/cores/threads.
--    Some members of the option can be omitted but their values will be
--    automatically computed:
-+    totally on the machine, 2 dies per socket, 2 modules per die, 2 cores per
-+    module, 2 threads per core) for PC machines which support sockets/dies
-+    /modules/cores/threads. Some members of the option can be omitted but
-+    their values will be automatically computed:
+ /* Bit width of the Die_ID field */
+@@ -107,10 +114,16 @@ static inline unsigned apicid_core_offset(X86CPUTopoInfo *topo_info)
+     return apicid_smt_width(topo_info);
+ }
  
-     ::
++/* Bit offset of the Module_ID field */
++static inline unsigned apicid_module_offset(X86CPUTopoInfo *topo_info)
++{
++    return apicid_core_offset(topo_info) + apicid_core_width(topo_info);
++}
++
+ /* Bit offset of the Die_ID field */
+ static inline unsigned apicid_die_offset(X86CPUTopoInfo *topo_info)
+ {
+-    return apicid_core_offset(topo_info) + apicid_core_width(topo_info);
++    return apicid_module_offset(topo_info) + apicid_module_width(topo_info);
+ }
  
--        -smp 16,sockets=2,dies=2,cores=2,threads=2,maxcpus=16
-+        -smp 32,sockets=2,dies=2,modules=2,cores=2,threads=2,maxcpus=32
+ /* Bit offset of the Pkg_ID (socket ID) field */
+@@ -142,7 +155,8 @@ static inline void x86_topo_ids_from_idx(X86CPUTopoInfo *topo_info,
+                                          X86CPUTopoIDs *topo_ids)
+ {
+     unsigned nr_dies = topo_info->dies_per_pkg;
+-    unsigned nr_cores = topo_info->cores_per_die;
++    unsigned nr_cores = topo_info->cores_per_module *
++                        topo_info->modules_per_die;
+     unsigned nr_threads = topo_info->threads_per_core;
  
-     The following sub-option defines a CPU topology hierarchy (2 sockets
-     totally on the machine, 2 clusters per socket, 2 cores per cluster,
+     topo_ids->pkg_id = cpu_index / (nr_dies * nr_cores * nr_threads);
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 0b5cc599566..d5d668e814d 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -45,7 +45,14 @@ void init_topo_info(X86CPUTopoInfo *topo_info,
+     MachineState *ms = MACHINE(x86ms);
+ 
+     topo_info->dies_per_pkg = ms->smp.dies;
+-    topo_info->cores_per_die = ms->smp.cores;
++    /*
++     * Though smp.modules means the number of modules in one cluster,
++     * i386 doesn't support cluster level so that the smp.clusters
++     * always defaults to 1, therefore using smp.modules directly is
++     * fine here.
++     */
++    topo_info->modules_per_die = ms->smp.modules;
++    topo_info->cores_per_module = ms->smp.cores;
+     topo_info->threads_per_core = ms->smp.threads;
+ }
+ 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index eb1642c253c..92aa4498551 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -278,10 +278,11 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
+     case CPU_TOPO_LEVEL_CORE:
+         return topo_info->threads_per_core;
+     case CPU_TOPO_LEVEL_DIE:
+-        return topo_info->threads_per_core * topo_info->cores_per_die;
++        return topo_info->threads_per_core * topo_info->cores_per_module *
++               topo_info->modules_per_die;
+     case CPU_TOPO_LEVEL_PACKAGE:
+-        return topo_info->threads_per_core * topo_info->cores_per_die *
+-               topo_info->dies_per_pkg;
++        return topo_info->threads_per_core * topo_info->cores_per_module *
++               topo_info->modules_per_die * topo_info->dies_per_pkg;
+     default:
+         g_assert_not_reached();
+     }
+@@ -6278,10 +6279,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     uint32_t threads_per_pkg;
+ 
+     topo_info.dies_per_pkg = env->nr_dies;
+-    topo_info.cores_per_die = cs->nr_cores / env->nr_dies;
++    topo_info.modules_per_die = env->nr_modules;
++    topo_info.cores_per_module = cs->nr_cores / env->nr_dies / env->nr_modules;
+     topo_info.threads_per_core = cs->nr_threads;
+ 
+-    cores_per_pkg = topo_info.cores_per_die * topo_info.dies_per_pkg;
++    cores_per_pkg = topo_info.cores_per_module * topo_info.modules_per_die *
++                    topo_info.dies_per_pkg;
+     threads_per_pkg = cores_per_pkg * topo_info.threads_per_core;
+ 
+     /* Calculate & apply limits for different index ranges */
+diff --git a/tests/unit/test-x86-topo.c b/tests/unit/test-x86-topo.c
+index 2b104f86d7c..f21b8a5d95c 100644
+--- a/tests/unit/test-x86-topo.c
++++ b/tests/unit/test-x86-topo.c
+@@ -30,13 +30,16 @@ static void test_topo_bits(void)
+ {
+     X86CPUTopoInfo topo_info = {0};
+ 
+-    /* simple tests for 1 thread per core, 1 core per die, 1 die per package */
+-    topo_info = (X86CPUTopoInfo) {1, 1, 1};
++    /*
++     * simple tests for 1 thread per core, 1 core per module,
++     *                  1 module per die, 1 die per package
++     */
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 0);
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 0);
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
+ 
+-    topo_info = (X86CPUTopoInfo) {1, 1, 1};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 0), ==, 0);
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 1), ==, 1);
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 2), ==, 2);
+@@ -45,39 +48,39 @@ static void test_topo_bits(void)
+ 
+     /* Test field width calculation for multiple values
+      */
+-    topo_info = (X86CPUTopoInfo) {1, 1, 2};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 2};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 1);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 3};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 3};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 2);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 4};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 4};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 2);
+ 
+-    topo_info = (X86CPUTopoInfo) {1, 1, 14};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 14};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 4);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 15};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 15};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 4);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 16};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 16};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 4);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 17};
++    topo_info = (X86CPUTopoInfo) {1, 1, 1, 17};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 5);
+ 
+ 
+-    topo_info = (X86CPUTopoInfo) {1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {1, 1, 30, 2};
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 5);
+-    topo_info = (X86CPUTopoInfo) {1, 31, 2};
++    topo_info = (X86CPUTopoInfo) {1, 1, 31, 2};
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 5);
+-    topo_info = (X86CPUTopoInfo) {1, 32, 2};
++    topo_info = (X86CPUTopoInfo) {1, 1, 32, 2};
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 5);
+-    topo_info = (X86CPUTopoInfo) {1, 33, 2};
++    topo_info = (X86CPUTopoInfo) {1, 1, 33, 2};
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 6);
+ 
+-    topo_info = (X86CPUTopoInfo) {1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {1, 1, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
+-    topo_info = (X86CPUTopoInfo) {2, 30, 2};
++    topo_info = (X86CPUTopoInfo) {2, 1, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 1);
+-    topo_info = (X86CPUTopoInfo) {3, 30, 2};
++    topo_info = (X86CPUTopoInfo) {3, 1, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
+-    topo_info = (X86CPUTopoInfo) {4, 30, 2};
++    topo_info = (X86CPUTopoInfo) {4, 1, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
+ 
+     /* build a weird topology and see if IDs are calculated correctly
+@@ -85,18 +88,18 @@ static void test_topo_bits(void)
+ 
+     /* This will use 2 bits for thread ID and 3 bits for core ID
+      */
+-    topo_info = (X86CPUTopoInfo) {1, 6, 3};
++    topo_info = (X86CPUTopoInfo) {1, 1, 6, 3};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 2);
+     g_assert_cmpuint(apicid_core_offset(&topo_info), ==, 2);
+     g_assert_cmpuint(apicid_die_offset(&topo_info), ==, 5);
+     g_assert_cmpuint(apicid_pkg_offset(&topo_info), ==, 5);
+ 
+-    topo_info = (X86CPUTopoInfo) {1, 6, 3};
++    topo_info = (X86CPUTopoInfo) {1, 1, 6, 3};
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 0), ==, 0);
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 1), ==, 1);
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 2), ==, 2);
+ 
+-    topo_info = (X86CPUTopoInfo) {1, 6, 3};
++    topo_info = (X86CPUTopoInfo) {1, 1, 6, 3};
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 1 * 3 + 0), ==,
+                      (1 << 2) | 0);
+     g_assert_cmpuint(x86_apicid_from_cpu_idx(&topo_info, 1 * 3 + 1), ==,
 -- 
 2.45.1
 
