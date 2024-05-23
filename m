@@ -4,115 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA528C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 07:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A75E9C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 07:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA2Wo-0001GA-6p; Thu, 23 May 2024 03:06:18 -0400
+	id 1sA2Zx-0002vO-Ff; Thu, 23 May 2024 03:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sA2Wm-0001Fl-05; Thu, 23 May 2024 03:06:16 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1sA2Zu-0002t0-UB
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 03:09:30 -0400
+Received: from todd.t-8ch.de ([2a01:4f8:c010:41de::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sA2Wj-0004vd-Iw; Thu, 23 May 2024 03:06:15 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44N6pL2r009574; Thu, 23 May 2024 07:05:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=aqf4+Qv3dUYxAzYu5cRaT10hnzSfHy1IWF1VvgLdWJ8=;
- b=hl2L4Rhutkkx0WfFA7FWj6mMlN5ZRl95zn/BPn5aKV3leewvLmwNcuE28uVP8T7BDCll
- +E7pADluaUxEan9CZGRXNcdxDRWC5VeUGZfp5igtCdjXryr+6mkYR0e87cT65hAlOyun
- xQeTBkuvnNIUR2NbwfroSdiOtd3R/q4myK/FT86uA/DKcgxxYrqSeL3sDu/+rtkKmoJx
- DmyYFXXbN9wFJjfsRwU1mA69yrVyYtVboUfJyb/M/ovQY7eruqWWYj942HuOcrM7ydTo
- WLG31VElPN52Tak7EZKZ/IrBvd3chIudhdwHJcNNQwAN1ekOy9hPjyVnqA9FZMPQ0biF Mw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9wkm8g6q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 07:05:32 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44N75WGf030873;
- Thu, 23 May 2024 07:05:32 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9wkm8g6j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 07:05:32 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44N4JpEZ026447; Thu, 23 May 2024 07:05:31 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y785mrfqy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 07:05:31 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44N75SX842008936
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 May 2024 07:05:30 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0622358043;
- Thu, 23 May 2024 07:05:28 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF0CB58067;
- Thu, 23 May 2024 07:05:15 +0000 (GMT)
-Received: from [9.109.242.165] (unknown [9.109.242.165])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 May 2024 07:05:15 +0000 (GMT)
-Message-ID: <a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com>
-Date: Thu, 23 May 2024 12:35:14 +0530
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1sA2Zr-0005HA-Ho
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 03:09:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
+ t=1716448162; bh=mXzHop7tE5Sqk2acfGc4NPzDlj+tcQaFj6sjtxvjHIY=;
+ h=From:Date:Subject:To:Cc:From;
+ b=a15nmSJUK7ezdzRvifH1ZaJv6uFB76uN5v3rt7BjrrCufTssC+aN65hwc984AjjXJ
+ oDJnsb1VRaORo6kwSP3B/PW7OoYryrZiVtQTAf5szrdvp/tlMX2CThZ1x0A/pYPaG8
+ lt9rLeYpfydV1+375mJzmIV5Kl4UNoMdu/cW7bYg=
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Date: Thu, 23 May 2024 09:09:17 +0200
+Subject: [PATCH] hw: debugexit: use runstate API instead of plain exit()
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V11 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
-To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org,
- alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
- jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
- npiggin@gmail.com, linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>
-References: <20240522211111.232114-1-salil.mehta@huawei.com>
- <20240522211111.232114-2-salil.mehta@huawei.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240522211111.232114-2-salil.mehta@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: eQ0Si8-1UY7Or45sVHGBpHTIG4N_oPhz
-X-Proofpoint-GUID: Ylb2JmW30nSgPF0nUNOME4KdUvrkIfdy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-23_03,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- suspectscore=0 adultscore=0 clxscore=1011 mlxscore=0 mlxlogscore=872
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405230045
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240523-debugexit-v1-1-d52fcaf7bf8b@t-8ch.de>
+X-B4-Tracking: v=1; b=H4sIAJzrTmYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUyNj3ZTUpNL01IrMEl0jo1RzUwvzxJSk1CQloPqCotS0zAqwWdGxtbU
+ AAT4+RlsAAAA=
+To: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1716448162; l=1341;
+ i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
+ bh=mXzHop7tE5Sqk2acfGc4NPzDlj+tcQaFj6sjtxvjHIY=;
+ b=qx+m6TfP48G+DHfvzRtkNAqvibNkyrasDCDpdd9ZX+MtPAyiXss4LcK56vZI+JyE1akGkU3oQ
+ RrMau6wLKJJBNIDzp71IFMcjUlavayApTPED76NQBC+oNDAxvUOX7rJ
+X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
+ pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+Received-SPF: pass client-ip=2a01:4f8:c010:41de::1;
+ envelope-from=thomas@t-8ch.de; helo=todd.t-8ch.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,23 +67,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Salil,
+Directly calling exit() prevents any kind of management or handling.
+Instead use the corresponding runstate API.
+The default behavior of the runstate API is the same as exit().
 
-On 5/23/24 02:41, Salil Mehta wrote:
-> +void kvm_park_vcpu(CPUState *cpu);
-> +
-> +/**
-> + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
-> + * @s: KVM State
-> + * @cpu: Architecture vCPU ID of the parked vCPU
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+---
+ hw/misc/debugexit.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-s/@cpu/@vcpuid ?
+diff --git a/hw/misc/debugexit.c b/hw/misc/debugexit.c
+index ab6de69ce72f..c5c562fd9357 100644
+--- a/hw/misc/debugexit.c
++++ b/hw/misc/debugexit.c
+@@ -12,6 +12,7 @@
+ #include "hw/qdev-properties.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
++#include "sysemu/runstate.h"
+ 
+ #define TYPE_ISA_DEBUG_EXIT_DEVICE "isa-debug-exit"
+ OBJECT_DECLARE_SIMPLE_TYPE(ISADebugExitState, ISA_DEBUG_EXIT_DEVICE)
+@@ -32,7 +33,8 @@ static uint64_t debug_exit_read(void *opaque, hwaddr addr, unsigned size)
+ static void debug_exit_write(void *opaque, hwaddr addr, uint64_t val,
+                              unsigned width)
+ {
+-    exit((val << 1) | 1);
++    qemu_system_shutdown_request_with_code(SHUTDOWN_CAUSE_GUEST_SHUTDOWN,
++                                           (val << 1) | 1);
+ }
+ 
+ static const MemoryRegionOps debug_exit_ops = {
 
-Thanks
-Harsh
-> + *
-> + * @returns: KVM fd
-> + */
-> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
->   #endif /* KVM_CPUS_H */
+---
+base-commit: 7e1c0047015ffbd408e1aa4a5ec1abe4751dbf7e
+change-id: 20240523-debugexit-22e7587adbeb
+
+Best regards,
+-- 
+Thomas Weißschuh <thomas@t-8ch.de>
+
 
