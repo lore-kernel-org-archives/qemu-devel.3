@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E3BC25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDD1C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9wG-0006K5-84; Thu, 23 May 2024 11:01:04 -0400
+	id 1sA9w6-0005DK-Nl; Thu, 23 May 2024 11:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wE-0006BX-9P
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sA9w4-00052H-3O
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wC-0004q0-Gv
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:01 -0400
+ id 1sA9w2-0004nl-7A
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476459;
+ s=mimecast20190719; t=1716476448;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0dhR+PG6+GRe0tqU2xY91A0UG6wm/n7V1mcWWHwIM7U=;
- b=VYOytKUpSCMqnMPylSsxzJkXFB9vNti+DG6iQfraJlPj6hMft6fFx5JOa8n27ITVzhGbPx
- Fz8kiZmTwue4o37lSkBDaz70t46C2ibMD0EwKJ87CKDkoMHi0KqaaQLGZZYsPz5ZOIx2Uq
- ++X4ky2EJ+DN+GcWJG+iXD/qPYll7l0=
+ bh=njYSO7HTB+sDeOmmffYU6ooE+v8Mi/U08DiKKYNjzGE=;
+ b=LDIxoY9y/Byi0M5ErTlkeSrHUaGAa2z5ds4ubXEoqQYKiSPQGv3iEwEpeRFJE8xIaYdQQv
+ YnzC2Q82JU0hGY0NmvdmpQLoK+GsKNWjat/eyYU+uxeZPwjNnCT+WLS5dyyHgjvy2HzBCO
+ gfSc2fYnQhEe7Rky3gAxkaBoq/KGwZE=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-nKncs6TQMNe_z5TIqsgd9g-1; Thu, 23 May 2024 11:00:58 -0400
-X-MC-Unique: nKncs6TQMNe_z5TIqsgd9g-1
+ us-mta-689-P7rGI563PRS9X---cgDlkQ-1; Thu, 23 May 2024 11:00:46 -0400
+X-MC-Unique: P7rGI563PRS9X---cgDlkQ-1
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59a63a1f78so121023166b.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:58 -0700 (PDT)
+ a640c23a62f3a-a59aedbd9a9so131181966b.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476457; x=1717081257;
+ d=1e100.net; s=20230601; t=1716476445; x=1717081245;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0dhR+PG6+GRe0tqU2xY91A0UG6wm/n7V1mcWWHwIM7U=;
- b=IhTnB+AG+3USPTOhQYoo3Li8R29wOJ3hMqNVir5v9vuf2TIcXivCst/tnCd6OKR7su
- KnBbwCh9RbnpAyLzjG/09Yi9bb78BPhs/VmfSRPWeAR9Q3EO2cCO42pDU1+PkNn3/pFT
- m6a6jJjcDaLH6H9nohHHdgkLR3xaUc+Tbab2Mw/SSIPrPPAK2A8xc87Swr6T6JQVFfVq
- UCdK70JrK3tqjatIFz7OE/kucC73Q6IOpYlT8Ug5LEyzEDaP3DebZlUymKKPeLTtFf/X
- ib7y2OOHfMywXwIDCYKpC0VL6wqyufjl8g5YlDKRRKlmukQE0SC0UsHz82mlDojv2I8g
- VG5g==
-X-Gm-Message-State: AOJu0YyvAKIwkr9Fo06NEVobbaN6RrHMjag6dIqDdoxcMA2iwz7j3/U/
- rQZnwguzdhMDe4WvLV1jKx14Nr270ArfzUHn1PzTNW/82AzJguHFUNmtBjLy7uko+2qzKJOjE+9
- SwvuBw4WznFrEaPhatfQJtWvFYQaepilYg9MpfJ9Yo57gPFIakmXB+ZnsqvyRFF/qSqgnYjGge7
- NrVg2BfqOsv1/QrO1D1hNSeASoU5HJw5d7b3TQ
-X-Received: by 2002:a17:906:f2ce:b0:a62:c02:425a with SMTP id
- a640c23a62f3a-a62281c804amr373192766b.74.1716476457140; 
- Thu, 23 May 2024 08:00:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/Jd+10a5QOCxHN7FohL3jqfVV9WJ8VXZOV2ru77aqUuREjvc7MTQZGWfAb3XrQ/quXCGoUQ==
-X-Received: by 2002:a17:906:f2ce:b0:a62:c02:425a with SMTP id
- a640c23a62f3a-a62281c804amr373190166b.74.1716476456742; 
- Thu, 23 May 2024 08:00:56 -0700 (PDT)
+ bh=njYSO7HTB+sDeOmmffYU6ooE+v8Mi/U08DiKKYNjzGE=;
+ b=rVIiFdRTV0q7lpNcwFgWFw6QSa7Sd30T+7PquyO45mk0gIWckfT57LC1sASgNFjME7
+ jS+q9s+NuFozLYzNUtJ1E3VE+ZRzhJB96RQZ0aF1OTTDLDT6lrcuFixwFxJGHaQI+tbg
+ oksPSsMoZ4RTo9+MUVI8Wq5rnqmFA3zU8BjrL7+20CsoEnGoBLDqSY+505xQcI2zZokl
+ FHvbk28f1VWMnAsyqXRDE3+e3uXY5CmqDxtwTEOftpwhB/AyndK7Pc9wf9BbnOEwwMgU
+ P357AwE0Sou9g/2ARQhQFTvjldyOnF6blgg9TMgDPP1vCGqXMV31q8YV4Oofg1oe/JLh
+ Kf9w==
+X-Gm-Message-State: AOJu0Yxc6EeW/GV+OnYF5GS6Bpj6UxILLIXkh0L9QKOGn0sQkBApmWxW
+ tnG8lG84cmC59bTfnoa7EK+YgO/BRuqu9w8cPjrJfjNZAkvsHHZ/jej3OADWXDODhxAYcBL5eok
+ qvKKuSb0h7ZITJvzffOwW5kd2HyPMT5TPOUsoMhBxBDCeiq++ATTVZ3GecDy7M84L4Kjz/ZAPZR
+ PnBkb0VzwmxVANEXmwLDWTcEFjESVMZcZ7C8IX
+X-Received: by 2002:a17:906:7158:b0:a59:cd18:92f5 with SMTP id
+ a640c23a62f3a-a62280556d2mr355745866b.11.1716476445069; 
+ Thu, 23 May 2024 08:00:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlWqwt6lkTcobGw3vOKvo57EmJ1TPORZQNO3mGjzdXQtQQ/rU3+v2oUuUlxw3gTnUg4YZ5DA==
+X-Received: by 2002:a17:906:7158:b0:a59:cd18:92f5 with SMTP id
+ a640c23a62f3a-a62280556d2mr355744166b.11.1716476444545; 
+ Thu, 23 May 2024 08:00:44 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17b01785sm1942379266b.164.2024.05.23.08.00.55
+ a640c23a62f3a-a5a55afdea7sm1681003666b.141.2024.05.23.08.00.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:00:55 -0700 (PDT)
+ Thu, 23 May 2024 08:00:43 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Babu Moger <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 08/23] i386/cpu: Use APIC ID info get NumSharingCache for
- CPUID[0x8000001D].EAX[bits 25:14]
-Date: Thu, 23 May 2024 17:00:21 +0200
-Message-ID: <20240523150036.1050011-9-pbonzini@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 03/23] hw/i386/pc_sysfw: Alias rather than copy isa-bios region
+Date: Thu, 23 May 2024 17:00:16 +0200
+Message-ID: <20240523150036.1050011-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
 References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,71 +102,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The commit 8f4202fb1080 ("i386: Populate AMD Processor Cache Information
-for cpuid 0x8000001D") adds the cache topology for AMD CPU by encoding
-the number of sharing threads directly.
+In the -bios case the "isa-bios" memory region is an alias to the BIOS mapped
+to the top of the 4G memory boundary. Do the same in the -pflash case, but only
+for new machine versions for migration compatibility. This establishes common
+behavior and makes pflash commands work in the "isa-bios" region which some
+real-world legacy bioses rely on.
 
-From AMD's APM, NumSharingCache (CPUID[0x8000001D].EAX[bits 25:14])
-means [1]:
+Note that in the sev_enabled() case, the "isa-bios" memory region in the -pflash
+case will now also point to encrypted memory, just like it already does in the
+-bios case.
 
-The number of logical processors sharing this cache is the value of
-this field incremented by 1. To determine which logical processors are
-sharing a cache, determine a Share Id for each processor as follows:
+When running `info mtree` before and after this commit with
+`qemu-system-x86_64 -S -drive \
+if=pflash,format=raw,readonly=on,file=/usr/share/qemu/bios-256k.bin` and running
+`diff -u before.mtree after.mtree` results in the following changes in the
+memory tree:
 
-ShareId = LocalApicId >> log2(NumSharingCache+1)
+   --- before.mtree
+   +++ after.mtree
+   @@ -71,7 +71,7 @@
+        0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+   -      00000000000e0000-00000000000fffff (prio 1, rom): isa-bios
+   +      00000000000e0000-00000000000fffff (prio 1, romd): alias isa-bios @system.flash0 0000000000020000-000000000003ffff
+        00000000000a0000-00000000000bffff (prio 1, i/o): alias smram-region @pci 00000000000a0000-00000000000bffff
+        00000000000c0000-00000000000c3fff (prio 1, i/o): alias pam-pci @pci 00000000000c0000-00000000000c3fff
+        00000000000c4000-00000000000c7fff (prio 1, i/o): alias pam-pci @pci 00000000000c4000-00000000000c7fff
+   @@ -108,7 +108,7 @@
+        0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+   -      00000000000e0000-00000000000fffff (prio 1, rom): isa-bios
+   +      00000000000e0000-00000000000fffff (prio 1, romd): alias isa-bios @system.flash0 0000000000020000-000000000003ffff
+        00000000000a0000-00000000000bffff (prio 1, i/o): alias smram-region @pci 00000000000a0000-00000000000bffff
+        00000000000c0000-00000000000c3fff (prio 1, i/o): alias pam-pci @pci 00000000000c0000-00000000000c3fff
+        00000000000c4000-00000000000c7fff (prio 1, i/o): alias pam-pci @pci 00000000000c4000-00000000000c7fff
+   @@ -131,11 +131,14 @@
+   memory-region: pc.ram
+   0000000000000000-0000000007ffffff (prio 0, ram): pc.ram
 
-Logical processors with the same ShareId then share a cache. If
-NumSharingCache+1 is not a power of two, round it up to the next power
-of two.
+   +memory-region: system.flash0
+   +  00000000fffc0000-00000000ffffffff (prio 0, romd): system.flash0
+   +
+   memory-region: pci
+   0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+   -    00000000000e0000-00000000000fffff (prio 1, rom): isa-bios
+   +    00000000000e0000-00000000000fffff (prio 1, romd): alias isa-bios @system.flash0 0000000000020000-000000000003ffff
 
-From the description above, the calculation of this field should be same
-as CPUID[4].EAX[bits 25:14] for Intel CPUs. So also use the offsets of
-APIC ID to calculate this field.
+   memory-region: smram
+        00000000000a0000-00000000000bffff (prio 0, ram): alias smram-low @pc.ram 00000000000a0000-00000000000bffff
 
-[1]: APM, vol.3, appendix.E.4.15 Function 8000_001Dh--Cache Topology
-     Information
+Note that in both cases the "system" memory region contains the entry
 
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20240424154929.1487382-8-zhao1.liu@intel.com>
+  00000000fffc0000-00000000ffffffff (prio 0, romd): system.flash0
+
+but the "system.flash0" memory region only appears standalone when "isa-bios" is
+an alias.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20240508175507.22270-7-shentey@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/hw/i386/pc.h | 1 +
+ hw/i386/pc.c         | 1 +
+ hw/i386/pc_piix.c    | 3 +++
+ hw/i386/pc_q35.c     | 2 ++
+ hw/i386/pc_sysfw.c   | 8 +++++++-
+ 5 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f3d2b8053b2..22a8ca1c9b4 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -331,7 +331,7 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
-                                        uint32_t *eax, uint32_t *ebx,
-                                        uint32_t *ecx, uint32_t *edx)
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index e52290916cb..ad9c3d9ba84 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -119,6 +119,7 @@ struct PCMachineClass {
+     bool enforce_aligned_dimm;
+     bool broken_reserved_end;
+     bool enforce_amd_1tb_hole;
++    bool isa_bios_alias;
+ 
+     /* generate legacy CPU hotplug AML */
+     bool legacy_cpu_hotplug;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index bfb46e9b548..4a2d6f5a97f 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1816,6 +1816,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_aligned_dimm = true;
+     pcmc->enforce_amd_1tb_hole = true;
++    pcmc->isa_bios_alias = true;
+     /* BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K reported
+      * to be used at the moment, 32K should be enough for a while.  */
+     pcmc->acpi_data_size = 0x20000 + 0x8000;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 99efb3c45cb..ebb51de3809 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -526,12 +526,15 @@ DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
+ 
+ static void pc_i440fx_9_0_machine_options(MachineClass *m)
  {
--    uint32_t l3_threads;
-+    uint32_t num_sharing_cache;
-     assert(cache->size == cache->line_size * cache->associativity *
-                           cache->partitions * cache->sets);
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
++
+     pc_i440fx_9_1_machine_options(m);
+     m->alias = NULL;
+     m->is_default = false;
  
-@@ -340,11 +340,11 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
++    pcmc->isa_bios_alias = false;
+ }
  
-     /* L3 is shared among multiple cores */
-     if (cache->level == 3) {
--        l3_threads = topo_info->cores_per_die * topo_info->threads_per_core;
--        *eax |= (l3_threads - 1) << 14;
-+        num_sharing_cache = 1 << apicid_die_offset(topo_info);
-     } else {
--        *eax |= ((topo_info->threads_per_core - 1) << 14);
-+        num_sharing_cache = 1 << apicid_core_offset(topo_info);
-     }
-+    *eax |= (num_sharing_cache - 1) << 14;
+ DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index bb53a51ac18..bd7db4abacf 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -378,10 +378,12 @@ DEFINE_Q35_MACHINE(v9_1, "pc-q35-9.1", NULL,
  
-     assert(cache->line_size > 0);
-     assert(cache->partitions > 0);
+ static void pc_q35_9_0_machine_options(MachineClass *m)
+ {
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_9_1_machine_options(m);
+     m->alias = NULL;
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
++    pcmc->isa_bios_alias = false;
+ }
+ 
+ DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 82d37cb376b..ac88ad4eb91 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -135,6 +135,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+                                 MemoryRegion *rom_memory)
+ {
+     X86MachineState *x86ms = X86_MACHINE(pcms);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     hwaddr total_size = 0;
+     int i;
+     BlockBackend *blk;
+@@ -184,7 +185,12 @@ static void pc_system_flash_map(PCMachineState *pcms,
+ 
+         if (i == 0) {
+             flash_mem = pflash_cfi01_get_memory(system_flash);
+-            pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
++            if (pcmc->isa_bios_alias) {
++                x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
++                                  true);
++            } else {
++                pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
++            }
+ 
+             /* Encrypt the pflash boot ROM */
+             if (sev_enabled()) {
 -- 
 2.45.1
 
