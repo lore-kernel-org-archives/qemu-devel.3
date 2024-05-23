@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2635BC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC6F1C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 16:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAATp-0008Pd-If; Thu, 23 May 2024 11:35:45 -0400
+	id 1sAB77-000595-NQ; Thu, 23 May 2024 12:16:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sAATg-00084x-P5
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:36 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sAB6p-000515-Lu
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 12:16:12 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sAATZ-0002Tr-KK
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:35:36 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42100fa9dd6so6145015e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:35:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sAB6m-0002Yo-0H
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 12:16:03 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6f44ed6e82fso2649190b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 09:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716478514; x=1717083314; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716480958; x=1717085758; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FY7bVObJBW4qu4CTA5HjKUlXl0mzE7SbKvdFK6oEsjo=;
- b=PM6HU4wHOs6UmB6vMQa1SEYyK9EPQbsWh5t18tPn9D5dZl7sY41Lgt1NK5JcOWY8WZ
- 9fuTIozkvJ6mtdoJFWlEzh+HDjBrW59Tw8dYz3fUpbROk0srqo4JZgGYrvIf+FXwiMgo
- oWgo5oSXflZjhtqCoFWp6jiC9P9h6palXS7oZNPn9Gkl2otOh4qfB/BqvWJ1tWZi3SXS
- woJmvf1F6l4z46OCYr3w6myAE01DY5/8euta9xxwWZXWOUrY8O5jQE+wUFgLoqFLNzid
- QvFl08OtlqM6kLPaFv2R0XNvSGkMiT2HTXw6Nf1UCroQIerlTBvjtfcv17lwYOqhXIOo
- JD/A==
+ :reply-to; bh=UWacmcJvifrn2h1svRsx1ekY33Etna0YPOTwfPRLIos=;
+ b=V1qSH/PNG+eD/VMYQLwL5fvJGKIW9eDZ9sKUrCQTnFpWaYsvIz1oUo7k7PF+ubL34e
+ P862B426wMrhCHrBd/FkLZgEcC3/PrSWRofVhQm3/9sAI1VfiVQ4LuadhS0G1FUqNcgW
+ G8OMZXm4O6UMnWfaqUrbivqkINYetE0tZfPWA7g56VeJBezmK9mmNodbUrKWQJrdw7K0
+ RwwwlFh4v0dQmC5mfC0VFz8Ss7hI3VPdTAre+gJQ4G4nm7WNtRAuJY3InOfCKtq7StGr
+ m9FL/JX8sTu1BzmBhnerKeeuyVgJA9l+GTakg+co3r5iBbg7uS8jz4Z3/OKFJ2Ex56zk
+ HRvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716478514; x=1717083314;
+ d=1e100.net; s=20230601; t=1716480958; x=1717085758;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FY7bVObJBW4qu4CTA5HjKUlXl0mzE7SbKvdFK6oEsjo=;
- b=sSeRiA+E0PSO7fNSOBo9S8+6TGK53/ndphSQR6Gt/+tlVvMjlonywAxAA2iW7wCRZr
- NEma0IkwI18GpwSEB6spzcyosN9sKYzyQG72JZsmIpluywn+roudhBPbZg/EJlCZMCQp
- /21QVCcyXrGv4YOvDL3Ktp4u1vnLTIXb32PGkcSBB9YOote1h4Le7iEq9goVg20IaWcT
- HLzK4iV/ljbr2xvMkbFw56K8bEHffXg7ZZFcVpP49d8gdy5zdSAaFBUSuW2zISA5FrWq
- VyKbXZYiXwR4yX8BgUhLrVx4Pw2GlXvm64PD03Y7HdJrhvX+MLg81ljpHlsGrGFRdbBS
- Mwrg==
-X-Gm-Message-State: AOJu0Yx69brWfIBgNL2iFIH26+8sluAglXJf03dloNYi9ga6y0PCIrAo
- U4oeAOT7tcaiAlIMbRFOaPNJ4EGdAr+Dr2ahYdejZeKwEBhx91+AkIC/N+RtiJ9vhbkONbd33vK
- a
-X-Google-Smtp-Source: AGHT+IGnlT7nfggh9yVEOhnjULM658NwP8S3LjcT/XsGSpCxUYHmuynjJu+ykT6+S0IcZF8yGYTs3A==
-X-Received: by 2002:a5d:604f:0:b0:34e:81ab:463f with SMTP id
- ffacd0b85a97d-354f7521a72mr2274180f8f.20.1716478513779; 
- Thu, 23 May 2024 08:35:13 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ bh=UWacmcJvifrn2h1svRsx1ekY33Etna0YPOTwfPRLIos=;
+ b=USr0KsmmVT36XgxVRdoCtF7XX3FGlfI9W63qqicHLtfhVeuSQzBZkixR54qMbTfYO/
+ FlD/ibn4v1swpl55JoYBnuHhv7e1mS6kyaXyTM3U8XSw0jfMIgSwcTABT+TWId9cXcJF
+ MhR2JSqmA3IAoajgy0SCVFwujPJjsi1aej8yytd/jTf3MpANLyfviuSbkUlCQzqhsrsk
+ OiKkFekruWweq5U/Tc+Mf/8oUqPt2c90p/GXgRf0pAn89MKcYBxRK14LFkza+p6UvMeC
+ 7/xoZSjo4UPEkxUa0X37e3ng5KLD42tdEqTyERGgkQrVNbxdNf986KFr5AqNximiBcqO
+ zBpw==
+X-Gm-Message-State: AOJu0YwJhas6FYN8CpRQgSC8Y0S/g3hLQ1vhVWMRI9gC1T8Z7w0yxYuJ
+ 7nUuHw5/Ima7J664tPuqIsYZmsw/t+iZSIuHKZX0rI+7slDcAmWNwqrT2RuW0GIkd09rwwkWVLQ
+ A
+X-Google-Smtp-Source: AGHT+IGUj0Rw+wOKGQHjSrslOtYl9f3xBS2Ldgre/SQv14JybQbcgeNDLCk3G490S86MHU0ilyNT+A==
+X-Received: by 2002:a05:6a21:2792:b0:1b1:ea57:d6ac with SMTP id
+ adf61e73a8af0-1b1f8a749c2mr5167051637.51.1716480957009; 
+ Thu, 23 May 2024 09:15:57 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-354df9b51f7sm3888255f8f.59.2024.05.23.08.35.13
+ d2e1a72fcca58-6f4d2a9d9acsm24890255b3a.90.2024.05.23.09.15.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:35:13 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Thu, 23 May 2024 09:15:56 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/37] target/arm: Convert Cryptographic 2-register SHA to
- decodetree
-Date: Thu, 23 May 2024 16:34:41 +0100
-Message-Id: <20240523153505.2900433-14-peter.maydell@linaro.org>
+Subject: [PULL 2/5] tcg: Expand TCG_COND_TST* if not TCG_TARGET_HAS_tst_vec
+Date: Thu, 23 May 2024 09:15:50 -0700
+Message-Id: <20240523161553.774673-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240523153505.2900433-1-peter.maydell@linaro.org>
-References: <20240523153505.2900433-1-peter.maydell@linaro.org>
+In-Reply-To: <20240523161553.774673-1-richard.henderson@linaro.org>
+References: <20240523161553.774673-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,110 +93,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240506010403.6204-6-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  6 ++++
- target/arm/tcg/translate-a64.c | 54 +++-------------------------------
- 2 files changed, 10 insertions(+), 50 deletions(-)
+ tcg/tcg-op-vec.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 7590659ee68..350afabc779 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -614,3 +614,9 @@ SHA1SU0         0101 1110 000 ..... 001100 ..... .....  @rrr_q1e0
- SHA256H         0101 1110 000 ..... 010000 ..... .....  @rrr_q1e0
- SHA256H2        0101 1110 000 ..... 010100 ..... .....  @rrr_q1e0
- SHA256SU1       0101 1110 000 ..... 011000 ..... .....  @rrr_q1e0
-+
-+### Cryptographic two-register SHA
-+
-+SHA1H           0101 1110 0010 1000 0000 10 ..... ..... @rr_q1e0
-+SHA1SU1         0101 1110 0010 1000 0001 10 ..... ..... @rr_q1e0
-+SHA256SU0       0101 1110 0010 1000 0010 10 ..... ..... @rr_q1e0
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 9b941451036..11a25158f62 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4606,6 +4606,10 @@ TRANS_FEAT(SHA256H, aa64_sha256, do_gvec_op3_ool, a, 0, gen_helper_crypto_sha256
- TRANS_FEAT(SHA256H2, aa64_sha256, do_gvec_op3_ool, a, 0, gen_helper_crypto_sha256h2)
- TRANS_FEAT(SHA256SU1, aa64_sha256, do_gvec_op3_ool, a, 0, gen_helper_crypto_sha256su1)
+diff --git a/tcg/tcg-op-vec.c b/tcg/tcg-op-vec.c
+index 094298bb27..84af210bc0 100644
+--- a/tcg/tcg-op-vec.c
++++ b/tcg/tcg-op-vec.c
+@@ -508,9 +508,11 @@ void tcg_gen_cmp_vec(TCGCond cond, unsigned vece,
+     TCGTemp *rt = tcgv_vec_temp(r);
+     TCGTemp *at = tcgv_vec_temp(a);
+     TCGTemp *bt = tcgv_vec_temp(b);
++    TCGTemp *tt = NULL;
+     TCGArg ri = temp_arg(rt);
+     TCGArg ai = temp_arg(at);
+     TCGArg bi = temp_arg(bt);
++    TCGArg ti;
+     TCGType type = rt->base_type;
+     int can;
  
-+TRANS_FEAT(SHA1H, aa64_sha1, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha1h)
-+TRANS_FEAT(SHA1SU1, aa64_sha1, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha1su1)
-+TRANS_FEAT(SHA256SU0, aa64_sha256, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha256su0)
+@@ -518,6 +520,18 @@ void tcg_gen_cmp_vec(TCGCond cond, unsigned vece,
+     tcg_debug_assert(bt->base_type >= type);
+     tcg_assert_listed_vecop(INDEX_op_cmp_vec);
+     can = tcg_can_emit_vec_op(INDEX_op_cmp_vec, type, vece);
 +
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -13499,55 +13503,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
++    if (!TCG_TARGET_HAS_tst_vec && is_tst_cond(cond)) {
++        tt = tcg_temp_new_internal(type, TEMP_EBB);
++        ti = temp_arg(tt);
++        vec_gen_3(INDEX_op_and_vec, type, 0, ti, ai, bi);
++        at = tt;
++        ai = ti;
++        bt = tcg_constant_internal(type, 0);
++        bi = temp_arg(bt);
++        cond = tcg_tst_eqne_cond(cond);
++    }
++
+     if (can > 0) {
+         vec_gen_4(INDEX_op_cmp_vec, type, vece, ri, ai, bi, cond);
+     } else {
+@@ -526,6 +540,10 @@ void tcg_gen_cmp_vec(TCGCond cond, unsigned vece,
+         tcg_expand_vec_op(INDEX_op_cmp_vec, type, vece, ri, ai, bi, cond);
+         tcg_swap_vecop_list(hold_list);
      }
++
++    if (tt) {
++        tcg_temp_free_internal(tt);
++    }
  }
  
--/* Crypto two-reg SHA
-- *  31             24 23  22 21       17 16    12 11 10 9    5 4    0
-- * +-----------------+------+-----------+--------+-----+------+------+
-- * | 0 1 0 1 1 1 1 0 | size | 1 0 1 0 0 | opcode | 1 0 |  Rn  |  Rd  |
-- * +-----------------+------+-----------+--------+-----+------+------+
-- */
--static void disas_crypto_two_reg_sha(DisasContext *s, uint32_t insn)
--{
--    int size = extract32(insn, 22, 2);
--    int opcode = extract32(insn, 12, 5);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--    gen_helper_gvec_2 *genfn;
--    bool feature;
--
--    if (size != 0) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    switch (opcode) {
--    case 0: /* SHA1H */
--        feature = dc_isar_feature(aa64_sha1, s);
--        genfn = gen_helper_crypto_sha1h;
--        break;
--    case 1: /* SHA1SU1 */
--        feature = dc_isar_feature(aa64_sha1, s);
--        genfn = gen_helper_crypto_sha1su1;
--        break;
--    case 2: /* SHA256SU0 */
--        feature = dc_isar_feature(aa64_sha256, s);
--        genfn = gen_helper_crypto_sha256su0;
--        break;
--    default:
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!feature) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--    gen_gvec_op2_ool(s, true, rd, rn, 0, genfn);
--}
--
- /* Crypto three-reg SHA512
-  *  31                   21 20  16 15  14  13 12  11  10  9    5 4    0
-  * +-----------------------+------+---+---+-----+--------+------+------+
-@@ -13842,7 +13797,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
-     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
--    { 0x5e280800, 0xff3e0c00, disas_crypto_two_reg_sha },
-     { 0xce608000, 0xffe0b000, disas_crypto_three_reg_sha512 },
-     { 0xcec08000, 0xfffff000, disas_crypto_two_reg_sha512 },
-     { 0xce000000, 0xff808000, disas_crypto_four_reg },
+ static bool do_op3(unsigned vece, TCGv_vec r, TCGv_vec a,
 -- 
 2.34.1
 
