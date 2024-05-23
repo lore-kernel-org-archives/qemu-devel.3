@@ -4,151 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87CDDC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB069C25B7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9wo-0007Pw-BE; Thu, 23 May 2024 11:01:38 -0400
+	id 1sA9wq-0007jV-Mo; Thu, 23 May 2024 11:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9wZ-0006u5-4w
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:35 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sA9wm-0007BB-HS
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9wQ-0004rm-AS
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:22 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sA9wZ-0004t0-AC
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476473;
+ s=mimecast20190719; t=1716476481;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cLelhI9r617cToD99Kpa7HMWkhNDLISrFZNoaAxBSkQ=;
- b=Dl5PdhRadlm8BSQeR/JMnxvTEmY+IEBIbscMezD/0TXozCLv4PnDj3OU6NNbZBGtIyxuAq
- by8zw3Z1iStJoN6xuKQQS3A3PNF6WhrJvPoP3j98JnItJj+bqjofqk6h8BUJyu8gwcINrp
- 5gfEyppj8/548t2CjIAMbYyHa0i2/n0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=zWt+0IRO8XttG7c4iJde9YUji1pZ6Qv+Qw0Qae/rz0s=;
+ b=VFKdcYA7XeZyHrX32hSAFIYQKk9cvrNKHgbuzngNZC7gI7wXv4IW+CMhUbzoZOSexAjSxl
+ fQrLY64cwIX3ioqt+1sXPrDoFPrlSMkskMec88v/wDttfdmGrwKzUnd2SKlSkJ4czhsoV7
+ h1tpXsEf7TngFeTMozbf/1vM5Rt10Ak=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-pJHWJaH8Nym7pqtU_YtcFg-1; Thu, 23 May 2024 11:01:11 -0400
-X-MC-Unique: pJHWJaH8Nym7pqtU_YtcFg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-420061cf1b1so67318425e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:10 -0700 (PDT)
+ us-mta-527-J_SIn7v0NDufk5WfB9qkXA-1; Thu, 23 May 2024 11:01:20 -0400
+X-MC-Unique: J_SIn7v0NDufk5WfB9qkXA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a59c942611bso119371966b.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476470; x=1717081270;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=cLelhI9r617cToD99Kpa7HMWkhNDLISrFZNoaAxBSkQ=;
- b=KrZ6RH3rCUGkJESnlCv32AxTod7TKevg+MrlZtfOTvecXmNCbbEN9miy0iZYZJCoON
- u6qHJaGvjGM/9B4RB9rM/HGmD5JEnepqeASKRHOlOTOf2ls1qkV9hul0MjR85WRCVs3P
- jWAJP0o0WxlWSxHoiy7tz6Aii1eVzwnikJSf2r+R2ekzIBK3u+vCJcUzTDvqeQS64kt4
- 5Q51Ox5JHaY71xnl2xW62sb1iFuNmyIiXu1bVJvwjoJZzlMdK18+hMQ3W7lQWsG7ZIj8
- u/LSpaR72RVVSWRmc0rNUMzMmivRj0EnKMNZF91j7iiCuVso6HVk4+jypGPFQJwoBVrB
- VcGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9UAwzps2Nli/BIN+ggoOMelSj1wwRlYEMNGNE40N5NtNVFZkLpsw3yio8YFjpjOopsWEJukUf+rI8u8eL2DMYDSt1aYI=
-X-Gm-Message-State: AOJu0YyzOn5WCnCTqCn+2Q0DqeJUL14YuEA+g4QLJ5skIYukljbL9GU3
- gHykKgRCbhHQC3+jq1wUfHjfh94OTpNG0GaGo1Y4hXOUUyhfxNey/uwiD8Q6MsWCvyflM5eceCe
- VwutUouDNvRECDCTDzbvLwQPv9QuP1PXbyUGqdN+uygfGaxHC1zBX
-X-Received: by 2002:a05:600c:2907:b0:41e:1f78:314d with SMTP id
- 5b1f17b1804b1-420fd319c41mr36353735e9.24.1716476469878; 
- Thu, 23 May 2024 08:01:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFIDpQRKbf4i0bF5hjZBsxbOW8XqVTN8GpRFPeI+GlZmAuYq/QmhV+UeUi/8dF22EvxrbSw9w==
-X-Received: by 2002:a05:600c:2907:b0:41e:1f78:314d with SMTP id
- 5b1f17b1804b1-420fd319c41mr36353305e9.24.1716476469425; 
- Thu, 23 May 2024 08:01:09 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c717:5f00:c949:6700:cce1:e60b?
- (p200300cbc7175f00c9496700cce1e60b.dip0.t-ipconnect.de.
- [2003:cb:c717:5f00:c949:6700:cce1:e60b])
+ d=1e100.net; s=20230601; t=1716476479; x=1717081279;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zWt+0IRO8XttG7c4iJde9YUji1pZ6Qv+Qw0Qae/rz0s=;
+ b=PQLhumwg/nUnTctHIE/WEr33ekEeQzmGSdlL0N6rqQ/lBjms/MrISvrtNE2Py6ZWNr
+ JrQYQSmYZILDHyqgEVYL+sNjV+YWgiC8Ob8ESR3BhTlUG7lga51Hhzsvp5VmoC8Ol6uC
+ xRZl8G4fFJNfl9wKoPjohskUXCPDutxQbcb+FoBPKEAdaPXWXM01HTFMuFcazaSnQMuB
+ ZpKgcmW0rU9YUvBwSuysY1uwFvJ/t4/CEIyizobVoT7yY4JWUxbyY8YrL4T/6LUbW9Mo
+ 8VLOthlEOgqZKo0o2k5BSj2SIki784v/zGfYG9GtybW1zOzQ/ONz+lB5+WLcC8myHak2
+ sgpw==
+X-Gm-Message-State: AOJu0Yw2meJzjs1/cMYsCSOKWXTAbQrYeJ0m2tstOjVXSXkLLvNzB+JW
+ FGpzf/5+zjSPp6R3cNppUsGb8C1o/TXQqKHNuRLG9azJ5nCQCyCYi5Ps7cyJ2f5jeS8nH2Gjhvc
+ /6Wz+dfsRQCWsT7A/Fh4q/37XE2iXBZZmNIFpkCm5hHLX4qj9a4kY4pTsaqazwHBH5yLXKFHZTv
+ 5AANMsLD2joAVyOt8lqksO3JAnd28FkctafrjJ
+X-Received: by 2002:a17:906:36ce:b0:a55:8f2a:950d with SMTP id
+ a640c23a62f3a-a622806bb8bmr404529066b.16.1716476478794; 
+ Thu, 23 May 2024 08:01:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGB7l5ddttGfdZZFMB7ES5jLOE9IGSW7P1pwZdy0+1zazMMtF62Hn1Q98ELBTRnatIt6qDVLw==
+X-Received: by 2002:a17:906:36ce:b0:a55:8f2a:950d with SMTP id
+ a640c23a62f3a-a622806bb8bmr404527166b.16.1716476478458; 
+ Thu, 23 May 2024 08:01:18 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100fb7fe1sm27268405e9.45.2024.05.23.08.01.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 May 2024 08:01:08 -0700 (PDT)
-Message-ID: <4f0829e9-c0b2-48e9-9235-e4b626b61769@redhat.com>
-Date: Thu, 23 May 2024 17:01:07 +0200
+ a640c23a62f3a-a5a1781d48dsm1939441866b.5.2024.05.23.08.01.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 May 2024 08:01:16 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>
+Subject: [PULL 16/23] i386: Support module_id in X86CPUTopoIDs
+Date: Thu, 23 May 2024 17:00:29 +0200
+Message-ID: <20240523150036.1050011-17-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
+References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/13] vhost-user-server: do not set memory fd
- non-blocking
-To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Brad Smith <brad@comstyle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Coiby Xu <Coiby.Xu@gmail.com>, Markus Armbruster <armbru@redhat.com>,
- slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>, stefanha@redhat.com,
- Hanna Reitz <hreitz@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, gmaglione@redhat.com,
- Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org
-References: <20240523145522.313012-1-sgarzare@redhat.com>
- <20240523145522.313012-5-sgarzare@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240523145522.313012-5-sgarzare@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,30 +102,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.05.24 16:55, Stefano Garzarella wrote:
-> In vhost-user-server we set all fd received from the other peer
-> in non-blocking mode. For some of them (e.g. memfd, shm_open, etc.)
-> it's not really needed, because we don't use these fd with blocking
-> operations, but only to map memory.
-> 
-> In addition, in some systems this operation can fail (e.g. in macOS
-> setting an fd returned by shm_open() non-blocking fails with errno
-> = ENOTTY).
-> 
-> So, let's avoid setting fd non-blocking for those messages that we
-> know carry memory fd (e.g. VHOST_USER_ADD_MEM_REG,
-> VHOST_USER_SET_MEM_TABLE).
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Add module_id member in X86CPUTopoIDs.
 
+module_id can be parsed from APIC ID, so also update APIC ID parsing
+rule to support module level. With this support, the conversions with
+module level between X86CPUTopoIDs, X86CPUTopoInfo and APIC ID are
+completed.
+
+module_id can be also generated from cpu topology, and before i386
+supports "modules" in smp, the default "modules per die" (modules *
+clusters) is only 1, thus the module_id generated in this way is 0,
+so that it will not conflict with the module_id generated by APIC ID.
+
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Message-ID: <20240424154929.1487382-16-zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/hw/i386/topology.h | 17 +++++++++++++----
+ hw/i386/x86-common.c       | 27 +++++++++++++++++----------
+ hw/i386/x86.c              |  4 ++++
+ 3 files changed, 34 insertions(+), 14 deletions(-)
+
+diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
+index ea871045779..dff49fce115 100644
+--- a/include/hw/i386/topology.h
++++ b/include/hw/i386/topology.h
+@@ -50,6 +50,7 @@ typedef uint32_t apic_id_t;
+ typedef struct X86CPUTopoIDs {
+     unsigned pkg_id;
+     unsigned die_id;
++    unsigned module_id;
+     unsigned core_id;
+     unsigned smt_id;
+ } X86CPUTopoIDs;
+@@ -143,6 +144,7 @@ static inline apic_id_t x86_apicid_from_topo_ids(X86CPUTopoInfo *topo_info,
+ {
+     return (topo_ids->pkg_id  << apicid_pkg_offset(topo_info)) |
+            (topo_ids->die_id  << apicid_die_offset(topo_info)) |
++           (topo_ids->module_id << apicid_module_offset(topo_info)) |
+            (topo_ids->core_id << apicid_core_offset(topo_info)) |
+            topo_ids->smt_id;
+ }
+@@ -156,12 +158,16 @@ static inline void x86_topo_ids_from_idx(X86CPUTopoInfo *topo_info,
+                                          X86CPUTopoIDs *topo_ids)
+ {
+     unsigned nr_dies = topo_info->dies_per_pkg;
+-    unsigned nr_cores = topo_info->cores_per_module *
+-                        topo_info->modules_per_die;
++    unsigned nr_modules = topo_info->modules_per_die;
++    unsigned nr_cores = topo_info->cores_per_module;
+     unsigned nr_threads = topo_info->threads_per_core;
+ 
+-    topo_ids->pkg_id = cpu_index / (nr_dies * nr_cores * nr_threads);
+-    topo_ids->die_id = cpu_index / (nr_cores * nr_threads) % nr_dies;
++    topo_ids->pkg_id = cpu_index / (nr_dies * nr_modules *
++                       nr_cores * nr_threads);
++    topo_ids->die_id = cpu_index / (nr_modules * nr_cores *
++                       nr_threads) % nr_dies;
++    topo_ids->module_id = cpu_index / (nr_cores * nr_threads) %
++                          nr_modules;
+     topo_ids->core_id = cpu_index / nr_threads % nr_cores;
+     topo_ids->smt_id = cpu_index % nr_threads;
+ }
+@@ -179,6 +185,9 @@ static inline void x86_topo_ids_from_apicid(apic_id_t apicid,
+     topo_ids->core_id =
+             (apicid >> apicid_core_offset(topo_info)) &
+             ~(0xFFFFFFFFUL << apicid_core_width(topo_info));
++    topo_ids->module_id =
++            (apicid >> apicid_module_offset(topo_info)) &
++            ~(0xFFFFFFFFUL << apicid_module_width(topo_info));
+     topo_ids->die_id =
+             (apicid >> apicid_die_offset(topo_info)) &
+             ~(0xFFFFFFFFUL << apicid_die_width(topo_info));
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 34dfa894879..4d27279901c 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -283,12 +283,9 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+ 
+     /*
+      * If APIC ID is not set,
+-     * set it based on socket/die/core/thread properties.
++     * set it based on socket/die/module/core/thread properties.
+      */
+     if (cpu->apic_id == UNASSIGNED_APIC_ID) {
+-        int max_socket = (ms->smp.max_cpus - 1) /
+-                                smp_threads / smp_cores / ms->smp.dies;
+-
+         /*
+          * die-id was optional in QEMU 4.0 and older, so keep it optional
+          * if there's only one die per socket.
+@@ -300,9 +297,9 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+         if (cpu->socket_id < 0) {
+             error_setg(errp, "CPU socket-id is not set");
+             return;
+-        } else if (cpu->socket_id > max_socket) {
++        } else if (cpu->socket_id > ms->smp.sockets - 1) {
+             error_setg(errp, "Invalid CPU socket-id: %u must be in range 0:%u",
+-                       cpu->socket_id, max_socket);
++                       cpu->socket_id, ms->smp.sockets - 1);
+             return;
+         }
+         if (cpu->die_id < 0) {
+@@ -334,17 +331,27 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+         topo_ids.die_id = cpu->die_id;
+         topo_ids.core_id = cpu->core_id;
+         topo_ids.smt_id = cpu->thread_id;
++
++        /*
++         * TODO: This is the temporary initialization for topo_ids.module_id to
++         * avoid "maybe-uninitialized" compilation errors. Will remove when
++         * X86CPU supports module_id.
++         */
++        topo_ids.module_id = 0;
++
+         cpu->apic_id = x86_apicid_from_topo_ids(&topo_info, &topo_ids);
+     }
+ 
+     cpu_slot = x86_find_cpu_slot(MACHINE(x86ms), cpu->apic_id, &idx);
+     if (!cpu_slot) {
+         x86_topo_ids_from_apicid(cpu->apic_id, &topo_info, &topo_ids);
++
+         error_setg(errp,
+-            "Invalid CPU [socket: %u, die: %u, core: %u, thread: %u] with"
+-            " APIC ID %" PRIu32 ", valid index range 0:%d",
+-            topo_ids.pkg_id, topo_ids.die_id, topo_ids.core_id, topo_ids.smt_id,
+-            cpu->apic_id, ms->possible_cpus->len - 1);
++            "Invalid CPU [socket: %u, die: %u, module: %u, core: %u, thread: %u]"
++            " with APIC ID %" PRIu32 ", valid index range 0:%d",
++            topo_ids.pkg_id, topo_ids.die_id, topo_ids.module_id,
++            topo_ids.core_id, topo_ids.smt_id, cpu->apic_id,
++            ms->possible_cpus->len - 1);
+         return;
+     }
+ 
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index d5d668e814d..a4aa8e08109 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -135,6 +135,10 @@ static const CPUArchIdList *x86_possible_cpu_arch_ids(MachineState *ms)
+             ms->possible_cpus->cpus[i].props.has_die_id = true;
+             ms->possible_cpus->cpus[i].props.die_id = topo_ids.die_id;
+         }
++        if (ms->smp.modules > 1) {
++            ms->possible_cpus->cpus[i].props.has_module_id = true;
++            ms->possible_cpus->cpus[i].props.module_id = topo_ids.module_id;
++        }
+         ms->possible_cpus->cpus[i].props.has_core_id = true;
+         ms->possible_cpus->cpus[i].props.core_id = topo_ids.core_id;
+         ms->possible_cpus->cpus[i].props.has_thread_id = true;
 -- 
-Cheers,
-
-David / dhildenb
+2.45.1
 
 
