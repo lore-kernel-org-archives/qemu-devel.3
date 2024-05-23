@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDE9C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 08:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB3BC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 08:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA3Zu-0001oG-TH; Thu, 23 May 2024 04:13:34 -0400
+	id 1sA3vd-0004mo-Gk; Thu, 23 May 2024 04:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sA3Zs-0001nr-Mv
- for qemu-devel@nongnu.org; Thu, 23 May 2024 04:13:32 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sA3Zn-00018A-CU
- for qemu-devel@nongnu.org; Thu, 23 May 2024 04:13:32 -0400
-Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8AxDOui+k5m3PUCAA--.6218S3;
- Thu, 23 May 2024 16:13:22 +0800 (CST)
-Received: from [10.20.42.173] (unknown [10.20.42.173])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDMef+k5mS4MGAA--.18204S3; 
- Thu, 23 May 2024 16:13:21 +0800 (CST)
-Subject: Re: [PATCH v3 3/3] hw/loongarch/virt: Use MemTxAttrs interface for
- misc ops
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240521123225.231072-1-gaosong@loongson.cn>
- <20240521123225.231072-4-gaosong@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <aa351d65-88ba-445b-5b8c-6b5dbeae5c55@loongson.cn>
-Date: Thu, 23 May 2024 16:13:19 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20240521123225.231072-4-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ (Exim 4.90_1) (envelope-from <artyomkunakovsky@gmail.com>)
+ id 1sA3vc-0004mf-Es
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 04:36:00 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <artyomkunakovsky@gmail.com>)
+ id 1sA3vU-000553-4d
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 04:36:00 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-573061776e8so11206812a12.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 01:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716453349; x=1717058149; darn=nongnu.org;
+ h=mime-version:content-language:accept-language:in-reply-to
+ :references:message-id:date:thread-index:thread-topic:subject:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VHIWCTMhrkzZYMfS53kB4rR35uUDiklAtVpU/Rn+ia4=;
+ b=UuP+j/3jLgnuQG4K3ONmO1F35qr3f7UKIn+mNOxz3mx2nKPfDXQADEZOquGD8i6Kt+
+ HMBqchK5cztrhS252JF7jRTKLzBPZQ4CDOAXwGIIlFUZYP+tTXp23QIwIutdS2vhHoZd
+ Cspsdg5aUWF1tUHEj8EzD1niekPKzLspVqFrm2jSJ9dr6j3qA1GUFnDCK+dERr2h1u3S
+ Q7z5WdwQP1961gCX4uaeN7ti1IaHrPLa7jA3CYY6hFng34yFThn0ieS/GwQyXe9u/349
+ 10Rg0P0ZJojmy+rkCFtr8dzw0DNUbtAJkVRcR1HIV4GqBQjqiXoolCtAXRV5+MdBfWhs
+ KGqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716453349; x=1717058149;
+ h=mime-version:content-language:accept-language:in-reply-to
+ :references:message-id:date:thread-index:thread-topic:subject:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VHIWCTMhrkzZYMfS53kB4rR35uUDiklAtVpU/Rn+ia4=;
+ b=Ol+oaQfdw/5e4YjIFXKMdr8QQGu6yDZDUB4SuAZpA7ofhGf7JzBloIeGyItoAa2+GS
+ 0d2akQ+e0iNWKiCpn0iySPFk59VuxYgl7s4+Qk8gkby6zKb66aP7LMuQplDtHGAaQTAy
+ gcpxohaxz1C+XaM2anyc7O1uyVarLny321K0F+ytXXyojNhRYpj5bw6tiOzm1m9qm+CB
+ Am9fWvbeFOcgfyVxji6jRUo2AxVNZYyJ3BEkRk/9+YX5zKEFHVmFiFiWbSRYNmeCYcp8
+ xmEGoCs2Jf4a0KUtWwIiKQ/w8vN+BUteVb7aVGK6L2yVokbnGMEGRV3Zn/WtGiBV9hiB
+ y93A==
+X-Gm-Message-State: AOJu0Yw5zRbNpExnjODFBQ/IWk+/3gKK8726Td7dcInqlviN+R603CnB
+ 2PU49ZsJOBn5cnPVsddfcAEK9KVB/Psh8cTeExjqzgseHnpdacSG
+X-Google-Smtp-Source: AGHT+IHIeRwrlvZZXml+2jbfoZaIu5qGEym9K8S17IQ99gzoV3leepz7nU2fwi0RTMpWZt4xnOsPyg==
+X-Received: by 2002:a17:906:1296:b0:a59:adf8:a6e1 with SMTP id
+ a640c23a62f3a-a62281435a3mr234054766b.47.1716453348807; 
+ Thu, 23 May 2024 01:35:48 -0700 (PDT)
+Received: from AM7PR10MB3352.EURPRD10.PROD.OUTLOOK.COM
+ ([2603:1026:c03:3801::5]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a17b0150csm1904479666b.154.2024.05.23.01.35.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 May 2024 01:35:48 -0700 (PDT)
+From: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
+To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] meson.build: add -mcx16 flag
+Thread-Topic: [PATCH] meson.build: add -mcx16 flag
+Thread-Index: AXl1LTEyJAVp6aUozX2tTDRt1zMYojhfamE0wKyBWrI=
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Thu, 23 May 2024 08:35:47 +0000
+Message-ID: <AM7PR10MB3352F89C17C05BAA91523253F9F42@AM7PR10MB3352.EURPRD10.PROD.OUTLOOK.COM>
+References: <20240522193016.136866-1-artyomkunakovsky@gmail.com>
+ <Zk74F0a8ejAp_mP8@redhat.com>
+In-Reply-To: <Zk74F0a8ejAp_mP8@redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDMef+k5mS4MGAA--.18204S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCry8KrW3Xw1fXFyxCF45Arc_yoW5CF4fpr
- y8Jr9xZa15KF4a9a98Gr17WF15C3s7Gay3WF47ury09an8CrnF9ryjy39xJr4DA34DZF45
- WFykCrZrCF4qyrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
- 05UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.89,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator: 
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+Content-Type: multipart/alternative;
+ boundary="_000_AM7PR10MB3352F89C17C05BAA91523253F9F42AM7PR10MB3352EURP_"
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=artyomkunakovsky@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,101 +103,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--_000_AM7PR10MB3352F89C17C05BAA91523253F9F42AM7PR10MB3352EURP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
+The compilation error caused by attempting of use 128 bit '__sync_val_compa=
+re_and_swap_16', which is supported on the host but not enabled, I don't th=
+ink this is expected behavior.
 
-On 2024/5/21 下午8:32, Song Gao wrote:
-> Use MemTxAttrs interface read_with_attrs/write_with_attrs
-> for virt_iocsr_misc_ops.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
+Also the patch is little incomplete, I already sent v2 patch, that applying=
+ the flag only for x86_64 host.
+
+With regards,
+Artyom K.
+________________________________
+From: Daniel P. Berrang=E9 <berrange@redhat.com>
+Sent: Thursday, May 23, 2024 11:02:31 AM
+To: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
+Cc: qemu-devel@nongnu.org <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] meson.build: add -mcx16 flag
+
+On Wed, May 22, 2024 at 10:30:16PM +0300, Artyom Kunakovsky wrote:
+> fix linker error if the project was configured by the './configure --cpu=
+=3Dunknown --target-list=3Driscv64-softmmu' command
+
+Isn't this simply user error, with the right answer being
+to pass a valid CPU target to --cpu, rather than "unknown"
+
+>
+> Signed-off-by: Artyom Kunakovsky <artyomkunakovsky@gmail.com>
 > ---
->   hw/loongarch/virt.c | 26 ++++++++++++++++----------
->   1 file changed, 16 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index e7edc6c9f9..0ab2b6860a 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -866,8 +866,9 @@ static void virt_firmware_init(LoongArchVirtMachineState *lvms)
->       }
->   }
->   
-> -static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
-> -                                  uint64_t val, unsigned size)
-> +static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
-> +                                         uint64_t val, unsigned size,
-> +                                         MemTxAttrs attrs)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
->       uint64_t features;
-> @@ -875,12 +876,12 @@ static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
->       switch (addr) {
->       case MISC_FUNC_REG:
->           if (!virt_is_veiointc_enabled(lvms)) {
-> -            return;
-> +            return MEMTX_OK;
->           }
->   
->           features = address_space_ldl(&lvms->as_iocsr,
->                                        EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-> -                                     MEMTXATTRS_UNSPECIFIED, NULL);
-> +                                     attrs, NULL);
->           if (val & BIT_ULL(IOCSRM_EXTIOI_EN)) {
->               features |= BIT(EXTIOI_ENABLE);
->           }
-> @@ -890,11 +891,15 @@ static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
->   
->           address_space_stl(&lvms->as_iocsr,
->                             EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-> -                          features, MEMTXATTRS_UNSPECIFIED, NULL);
-> +                          features, attrs, NULL);
->       }
-> +
-> +    return MEMTX_OK;
->   }
->   
-> -static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
-> +static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-> +                                        uint64_t *data,
-> +                                        unsigned size, MemTxAttrs attrs)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
->       uint64_t ret = 0;
-> @@ -924,7 +929,7 @@ static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
->   
->           features = address_space_ldl(&lvms->as_iocsr,
->                                        EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-> -                                     MEMTXATTRS_UNSPECIFIED, NULL);
-> +                                     attrs, NULL);
->           if (features & BIT(EXTIOI_ENABLE)) {
->               ret |= BIT_ULL(IOCSRM_EXTIOI_EN);
->           }
-> @@ -933,12 +938,13 @@ static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
->           }
->       }
->   
-> -    return ret;
-> +    *data = ret;
-> +    return MEMTX_OK;
->   }
->   
->   static const MemoryRegionOps virt_iocsr_misc_ops = {
-> -    .read  = virt_iocsr_misc_read,
-> -    .write = virt_iocsr_misc_write,
-> +    .read_with_attrs  = virt_iocsr_misc_read,
-> +    .write_with_attrs = virt_iocsr_misc_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
->       .valid = {
->           .min_access_size = 4,
-> 
-I think patch3 should be put ahead of patch2. Without patch3, there is 
-potential problem to access iocsr EXTIOI_VIRT_CONFIG register with 
-MEMTXATTRS_UNSPECIFIED attr.
+>  meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Now extioi is emulated in user space, it will be better if hypervisor 
-and VM know whether v-extioi extension is supported.
+With regards,
+Daniel
+--
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange=
+ :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com=
+ :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange=
+ :|
 
-Regards
-Bibo Mao
 
+--_000_AM7PR10MB3352F89C17C05BAA91523253F9F42AM7PR10MB3352EURP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+</head>
+<body>
+<div dir=3D"auto">The compilation error caused by attempting of use 128 bit=
+ '__sync_val_compare_and_swap_16', which is supported on the host but not e=
+nabled, I don't think this is expected behavior.</div>
+<div dir=3D"auto"><br>
+</div>
+<div dir=3D"auto">Also the patch is little incomplete, I already sent v2 pa=
+tch, that applying the flag only for x86_64 host.</div>
+<div id=3D"ms-outlook-mobile-signature" dir=3D"auto">
+<div><br>
+</div>
+<div dir=3D"auto">With regards,</div>
+<div dir=3D"auto">Artyom K.</div>
+</div>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Daniel P. Berrang=E9 =
+&lt;berrange@redhat.com&gt;<br>
+<b>Sent:</b> Thursday, May 23, 2024 11:02:31 AM<br>
+<b>To:</b> Artyom Kunakovsky &lt;artyomkunakovsky@gmail.com&gt;<br>
+<b>Cc:</b> qemu-devel@nongnu.org &lt;qemu-devel@nongnu.org&gt;<br>
+<b>Subject:</b> Re: [PATCH] meson.build: add -mcx16 flag</font>
+<div>&nbsp;</div>
+</div>
+<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
+">
+<div class=3D"PlainText">On Wed, May 22, 2024 at 10:30:16PM +0300, Artyom K=
+unakovsky wrote:<br>
+&gt; fix linker error if the project was configured by the './configure --c=
+pu=3Dunknown --target-list=3Driscv64-softmmu' command<br>
+<br>
+Isn't this simply user error, with the right answer being<br>
+to pass a valid CPU target to --cpu, rather than &quot;unknown&quot;<br>
+<br>
+&gt; <br>
+&gt; Signed-off-by: Artyom Kunakovsky &lt;artyomkunakovsky@gmail.com&gt;<br=
+>
+&gt; ---<br>
+&gt;&nbsp; meson.build | 2 +-<br>
+&gt;&nbsp; 1 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com">https://berrange.com</a>&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp; -o-&nbsp;&nbsp;&nbsp; <a href=3D"https://www.flickr.com/pho=
+tos/dberrange">
+https://www.flickr.com/photos/dberrange</a> :|<br>
+|: <a href=3D"https://libvirt.org">https://libvirt.org</a>&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -o-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp; <a href=3D"https://fstop138.berrange.com">
+https://fstop138.berrange.com</a> :|<br>
+|: <a href=3D"https://entangle-photo.org">https://entangle-photo.org</a>&nb=
+sp;&nbsp;&nbsp; -o-&nbsp;&nbsp;&nbsp; <a href=3D"https://www.instagram.com/=
+dberrange">
+https://www.instagram.com/dberrange</a> :|<br>
+<br>
+</div>
+</span></font></div>
+</body>
+</html>
+
+--_000_AM7PR10MB3352F89C17C05BAA91523253F9F42AM7PR10MB3352EURP_--
 
