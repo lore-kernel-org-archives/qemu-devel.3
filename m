@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2069EC25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28286C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9w1-0004y2-U5; Thu, 23 May 2024 11:00:49 -0400
+	id 1sA9wt-00083k-Dl; Thu, 23 May 2024 11:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9vy-0004lB-3p
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sA9wh-00073B-Db
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9vw-0004mg-BC
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:45 -0400
+ id 1sA9wf-0004tg-CR
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476443;
+ s=mimecast20190719; t=1716476487;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q8r8fuXfNS1frrmgB4ao1Xxrb7dvTzd90fOiUxzWjNQ=;
- b=Z9H4KFgOlY/m0Of+pg8g+4RD681+wcqP2Ik6HvUOJ+JtH3NBtapI4VDA8ggjVmL7cjeMGQ
- 1Lk16Lo3LJVlbTXisDXJ9dN0XDQ+SYS3QalCqw69V7QvEe4cNU1vOBqxKR3FnOAvRf8kuR
- neAV2nD3Uv2/A+q1h2L8VqdmKlDfsjM=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iN659yH09n/hdzOY/L+ozt0Io3bES4P00+IzSZFQwVs=;
+ b=Ui8FY+rZQDHunnbxVJAX6txfbz4S0KL1tp4bQ7M4F+MYk/BTjSUXgCFGQi6U85sgkYds9b
+ K+rETibc91dZhDCHSzNcOUB4EsjDt2gw1ClADSfcef/a7axPmzbRWbSRq7Y5xDHs6003W4
+ k4c4MKApoSc2IzPiOYj6f5UA5mgCP1k=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-MDXRjKNbNwqnHOI1iR8wnw-1; Thu, 23 May 2024 11:00:41 -0400
-X-MC-Unique: MDXRjKNbNwqnHOI1iR8wnw-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52236a56aa1so1304008e87.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:41 -0700 (PDT)
+ us-mta-252-ITCodQUfMRmEklpA3Qygbg-1; Thu, 23 May 2024 11:01:26 -0400
+X-MC-Unique: ITCodQUfMRmEklpA3Qygbg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a592c35ac06so236264666b.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476439; x=1717081239;
+ d=1e100.net; s=20230601; t=1716476484; x=1717081284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q8r8fuXfNS1frrmgB4ao1Xxrb7dvTzd90fOiUxzWjNQ=;
- b=FE7wOylChET5qK/2O9mALgdh7NpgO/OLC4M47QxGoa0tWBxZDhzrkTWMJNkx7do/fq
- VCgH3X5puSc4i6qmIwOhr3s8Vtdy4APBWUJB2U9WJsLlcDYpZpJt9rDi9W2Yt5rVJTdV
- BfkO9sPbJltBIRwxIT0WEcuC0yw9CuupCYzOgJ1rLN/gaynhHXB4UpA01vSbcEzwcwtH
- apR4JC8rrf4NhfWHgyFYJk/xQJzsfiJBfMViCiFIRc/1RSv5/Im3nESm9WICacQoIFJM
- S9pv0k3XJlUnjkC02/paMNEg+EdHgYiwdGoJXX/fpRGzObp+PO0I3+KNjNoYX1Fr5iDO
- ladg==
-X-Gm-Message-State: AOJu0Yx91yw4RfS0kyG3Z3kVnPYMFWlCIiG8pdFNhnjtwuucDLepzAaV
- 7FfJ+tfS5HEnWGQwUywiJ5tKejg9GVU6NaoRJMDKYKmhySzUQtKeAmWTEAtn233IbSbtwLTVq6g
- v/1zBkIFnYUFOXpvfexIaJx4Iu6Lpho+AQXoy90xOHQeFCC3RRlZnpbwyZ6U5zfuuV5vKK5RTW5
- rfCoBeaDx+vmidjMdHC2dWxOCozr2s6yokwRfv
-X-Received: by 2002:a19:385c:0:b0:51e:25d2:453f with SMTP id
- 2adb3069b0e04-526c15eb8admr2943940e87.68.1716476439637; 
- Thu, 23 May 2024 08:00:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4rX1SNUxqi/sea3OI+oD5NvncjNQHTmyAwiOyekA4TG0W6l9HONHCp7am9z4InagSjIuKeg==
-X-Received: by 2002:a19:385c:0:b0:51e:25d2:453f with SMTP id
- 2adb3069b0e04-526c15eb8admr2943898e87.68.1716476439095; 
- Thu, 23 May 2024 08:00:39 -0700 (PDT)
+ bh=iN659yH09n/hdzOY/L+ozt0Io3bES4P00+IzSZFQwVs=;
+ b=qApHr08acf2dXq84KDY17D9m1mnk4hgKzUp+rN3Gut+2H6wjnAhrxNBMHw1rIx/GkB
+ deLD7ppu2OBKSWRcI9aM2521UK7dPdlUZoneqvocZcLAr5w0NtYmc++XtHKqKzGMTB/l
+ EWt2333qpTF7iJW2mNTwcfLo1taBqlkiVUPeRbs9RNUcQAAs1ypRIQkW7afpOZuJcL3T
+ iAWwbdqk42DUYADKxOwhAJKAyXe0QjDx5IoM+Ge1b8KhVtpkjqvq+zAKk3LjJ3Eq1OJ/
+ maejZ8rMUfZQcyTR9/YxRCGbdmOF2inZKP0ply0U1S3vTN8MkN/SX40QRRF2+M49AYDy
+ H0hw==
+X-Gm-Message-State: AOJu0YySXFbuuIkFtLg45bF16TiGFAp8yYVW65r8SexpSnxe5rUksgZq
+ M/uMbu8nRWW2zSA8MJlODFy6kowNDA11gFoAupVsNPJpy/JpTgGcpGpXYCBoS/TTApXg9UjSGwM
+ TJwI2a+ROZqS2DDkU3sjR9t/QesjrTLJ4Hc4VmCoe/y83j8Ijhr9kgW4kKaE6QIZaODwRhr20Nw
+ mbEbHOmN27LhVeqUc2iK/AV1r27/0j2iY2wFPx
+X-Received: by 2002:a17:906:3893:b0:a59:c345:17fb with SMTP id
+ a640c23a62f3a-a623e6d52f1mr207773566b.5.1716476484726; 
+ Thu, 23 May 2024 08:01:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfSB4TvWhr7kjL24Jog1Ht8TnS7hwBpxo9qw35Rx5Kd12/dhjfyQJw2D4Nj3qoOhHlZi6bYQ==
+X-Received: by 2002:a17:906:3893:b0:a59:c345:17fb with SMTP id
+ a640c23a62f3a-a623e6d52f1mr207771066b.5.1716476484356; 
+ Thu, 23 May 2024 08:01:24 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5ce94e51basm1039266366b.103.2024.05.23.08.00.38
+ a640c23a62f3a-a5a17b17814sm1935303966b.206.2024.05.23.08.01.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:00:38 -0700 (PDT)
+ Thu, 23 May 2024 08:01:23 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/23] target/i386: generate simpler code for ROL/ROR with
- immediate count
-Date: Thu, 23 May 2024 17:00:14 +0200
-Message-ID: <20240523150036.1050011-2-pbonzini@redhat.com>
+Cc: Zhuocheng Ding <zhuocheng.ding@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Babu Moger <babu.moger@amd.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PULL 18/23] tests: Add test case of APIC ID for module level parsing
+Date: Thu, 23 May 2024 17:00:31 +0200
+Message-ID: <20240523150036.1050011-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
 References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,103 +104,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gen_rot_carry and gen_rot_overflow are meant to be called with count == NULL
-if the count cannot be zero.  However this is not done in gen_ROL and gen_ROR,
-and writing everywhere "can_be_zero ? count : NULL" is burdensome and less
-readable.  Just pass can_be_zero as a separate argument.
+From: Zhuocheng Ding <zhuocheng.ding@intel.com>
 
-gen_RCL and gen_RCR use a conditional branch to skip the computation
-if count is zero, so they can pass false unconditionally to gen_rot_overflow.
+After i386 supports module level, it's time to add the test for module
+level's parsing.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240522123914.608516-1-pbonzini@redhat.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Yanan Wang <wangyanan55@huawei.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20240424154929.1487382-18-zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/emit.c.inc | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ tests/unit/test-x86-topo.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 2dee33dd487..33cb59e54b8 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -2901,14 +2901,15 @@ static bool gen_eflags_adcox(DisasContext *s, X86DecodedInsn *decode, bool want_
-     return got_cf;
- }
+diff --git a/tests/unit/test-x86-topo.c b/tests/unit/test-x86-topo.c
+index f21b8a5d95c..55b731ccae5 100644
+--- a/tests/unit/test-x86-topo.c
++++ b/tests/unit/test-x86-topo.c
+@@ -37,6 +37,7 @@ static void test_topo_bits(void)
+     topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 0);
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 0);
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 0);
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
  
--static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old, TCGv count)
-+static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old,
-+                             bool can_be_zero, TCGv count)
- {
-     MemOp ot = decode->op[0].ot;
--    TCGv temp = count ? tcg_temp_new() : decode->cc_src2;
-+    TCGv temp = can_be_zero ? tcg_temp_new() : decode->cc_src2;
+     topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
+@@ -74,13 +75,22 @@ static void test_topo_bits(void)
+     topo_info = (X86CPUTopoInfo) {1, 1, 33, 2};
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 6);
  
-     tcg_gen_xor_tl(temp, old, result);
-     tcg_gen_extract_tl(temp, temp, (8 << ot) - 1, 1);
--    if (count) {
-+    if (can_be_zero) {
-         tcg_gen_movcond_tl(TCG_COND_EQ, decode->cc_src2, count, tcg_constant_tl(0),
-                            decode->cc_src2, temp);
-     }
-@@ -3000,7 +3001,7 @@ static void gen_RCL(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-     /* Compute result and outgoing overflow */
-     tcg_gen_mov_tl(decode->cc_src2, s->T0);
-     tcg_gen_or_tl(s->T0, low, high);
--    gen_rot_overflow(decode, s->T0, decode->cc_src2, NULL);
-+    gen_rot_overflow(decode, s->T0, decode->cc_src2, false, NULL);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {1, 6, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
++    topo_info = (X86CPUTopoInfo) {1, 7, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
++    topo_info = (X86CPUTopoInfo) {1, 8, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
++    topo_info = (X86CPUTopoInfo) {1, 9, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 4);
++
++    topo_info = (X86CPUTopoInfo) {1, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
+-    topo_info = (X86CPUTopoInfo) {2, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {2, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 1);
+-    topo_info = (X86CPUTopoInfo) {3, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {3, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
+-    topo_info = (X86CPUTopoInfo) {4, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {4, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
  
-     if (zero_label) {
-         gen_set_label(zero_label);
-@@ -3053,7 +3054,7 @@ static void gen_RCR(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-     /* Compute result and outgoing overflow */
-     tcg_gen_mov_tl(decode->cc_src2, s->T0);
-     tcg_gen_or_tl(s->T0, low, high);
--    gen_rot_overflow(decode, s->T0, decode->cc_src2, NULL);
-+    gen_rot_overflow(decode, s->T0, decode->cc_src2, false, NULL);
+     /* build a weird topology and see if IDs are calculated correctly
+@@ -91,6 +101,7 @@ static void test_topo_bits(void)
+     topo_info = (X86CPUTopoInfo) {1, 1, 6, 3};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 2);
+     g_assert_cmpuint(apicid_core_offset(&topo_info), ==, 2);
++    g_assert_cmpuint(apicid_module_offset(&topo_info), ==, 5);
+     g_assert_cmpuint(apicid_die_offset(&topo_info), ==, 5);
+     g_assert_cmpuint(apicid_pkg_offset(&topo_info), ==, 5);
  
-     if (zero_label) {
-         gen_set_label(zero_label);
-@@ -3129,9 +3130,10 @@ static TCGv_i32 gen_rot_replicate(MemOp ot, TCGv in)
-     }
- }
- 
--static void gen_rot_carry(X86DecodedInsn *decode, TCGv result, TCGv count, int bit)
-+static void gen_rot_carry(X86DecodedInsn *decode, TCGv result,
-+                          bool can_be_zero, TCGv count, int bit)
- {
--    if (count == NULL) {
-+    if (!can_be_zero) {
-         tcg_gen_extract_tl(decode->cc_dst, result, bit, 1);
-     } else {
-         TCGv temp = tcg_temp_new();
-@@ -3165,8 +3167,8 @@ static void gen_ROL(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-     } else {
-         tcg_gen_rotl_tl(s->T0, s->T0, count);
-     }
--    gen_rot_carry(decode, s->T0, count, 0);
--    gen_rot_overflow(decode, s->T0, old, count);
-+    gen_rot_carry(decode, s->T0, can_be_zero, count, 0);
-+    gen_rot_overflow(decode, s->T0, old, can_be_zero, count);
- }
- 
- static void gen_ROR(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-@@ -3190,12 +3192,12 @@ static void gen_ROR(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-         tcg_gen_rotr_i32(temp32, temp32, count32);
-         /* Zero extend to facilitate later optimization.  */
-         tcg_gen_extu_i32_tl(s->T0, temp32);
--        gen_rot_carry(decode, s->T0, count, 31);
-+        gen_rot_carry(decode, s->T0, can_be_zero, count, 31);
-     } else {
-         tcg_gen_rotr_tl(s->T0, s->T0, count);
--        gen_rot_carry(decode, s->T0, count, TARGET_LONG_BITS - 1);
-+        gen_rot_carry(decode, s->T0, can_be_zero, count, TARGET_LONG_BITS - 1);
-     }
--    gen_rot_overflow(decode, s->T0, old, count);
-+    gen_rot_overflow(decode, s->T0, old, can_be_zero, count);
- }
- 
- static void gen_RORX(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
 -- 
 2.45.1
 
