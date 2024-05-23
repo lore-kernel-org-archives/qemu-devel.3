@@ -4,85 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00F4C25B7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 17:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4510C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 18:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sACZL-0006VY-CJ; Thu, 23 May 2024 13:49:35 -0400
+	id 1sADD2-0008Ra-7i; Thu, 23 May 2024 14:30:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1sACYq-000617-SV
- for qemu-devel@nongnu.org; Thu, 23 May 2024 13:49:08 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1sACYl-0003fq-7F
- for qemu-devel@nongnu.org; Thu, 23 May 2024 13:49:04 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1ee12baa01cso22323975ad.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 10:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716486534; x=1717091334; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=H+4O1LRK0w7JEk6xZ7KkbNisTzSTCmae7n6wPfH43e0=;
- b=biF0IpB9xbZwN1AZWmsJUlllRaAWDQShMoMx0b3ZE52FRYpZ9svlhGDWhUbu72cI7K
- 1kHZqJGwH7ktd45ml4+k53QKT01nz/1Y8efRP0BtgMrTpme/1tG2RpAUBB0p5KbzJbUU
- Ku+3Tg77UBqrOT42CP6A3URgCSZ0uIcmMtUnCk8ayBJFDb5/0fMV4TJFESsC3EPAr6VF
- JbjwaJAw1Z0C6U5eBTZjMCwXkIkm111nYstX7andtqXRVk0MNSq8ZSbq+1yA7ZZe/tEb
- 5DIWhsvmi5x+vWi1gXdSeKBjFbHc1NXjYSNlQ2f96zXfqRIAJvqPJef4erVur3C2epkW
- vESA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716486534; x=1717091334;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=H+4O1LRK0w7JEk6xZ7KkbNisTzSTCmae7n6wPfH43e0=;
- b=v3Z1d1x279NTOA0c3JBKpL3MN8uK+VdlNZ/Dogmb66gZ4KWtf4u6pTJAKhkYeqQq13
- NrxHVEF4Jnlnv1FmIHJIP4WaPOfSnHy8ftUC3DVlio7FCYIK1woBcEEUJAoA3ih0C+rf
- +LcVI0nalmWCxnJFsz35QxbRBDfw0aLkSn11VF0fZ/WrjJGrZQV6ut3Z0PuE1f9iJNfK
- WxJQdX8AGjIcmrDFqZnuLF7uOpu/Ag2+V0mmKZc6mbUVwdQ0BQDcYp9S1JY6hk9DLDu6
- SgNqX4IBsjUMkRxhTZjc4P51PWLm9Hpk1lEHS5ukSmVBV3wZ76wb+IWAQdKMCKNSAc7t
- c/oA==
-X-Gm-Message-State: AOJu0YwWj7rAZNAXRmgS1w95cisfsNJeBxh8qHaOSzsJklhT22jfJNj5
- IlNQXDD+8IUBqbjCpYQA20oMqGJf/KVxTGIfM9CBmDMTpDCx2e7QDSKl4w==
-X-Google-Smtp-Source: AGHT+IEYspVOvGlpOoOl8kIMU1N/66STiITd90cw+dE9S7GNgdR+9/11FKNb0K1MorrvNvQRfgAUpg==
-X-Received: by 2002:a17:902:f544:b0:1e8:ef23:80f6 with SMTP id
- d9443c01a7336-1f44893f1d1mr550575ad.37.1716486533910; 
- Thu, 23 May 2024 10:48:53 -0700 (PDT)
-Received: from localhost.localdomain ([2601:646:8f03:9fee:4f9e:216e:ed5a:642d])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0c137e7esm253436265ad.257.2024.05.23.10.48.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 10:48:53 -0700 (PDT)
-From: nifan.cxl@gmail.com
-To: qemu-devel@nongnu.org
-Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
- nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
- wj28.lee@gmail.com, armbru@redhat.com, mst@redhat.com,
- Fan Ni <fan.ni@samsung.com>, Svetly Todorov <svetly.todorov@memverge.com>
-Subject: [PATCH v8 10/14] hw/cxl/cxl-mailbox-utils: Add mailbox commands to
- support add/release dynamic capacity response
-Date: Thu, 23 May 2024 10:44:50 -0700
-Message-ID: <20240523174651.1089554-11-nifan.cxl@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240523174651.1089554-1-nifan.cxl@gmail.com>
-References: <20240523174651.1089554-1-nifan.cxl@gmail.com>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1sADCy-0008My-UL
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 14:30:33 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1sADCv-0004ck-Bm
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 14:30:31 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 5628F62E8A;
+ Thu, 23 May 2024 18:30:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A444CC2BD10;
+ Thu, 23 May 2024 18:30:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1716489019;
+ bh=p7mhyN9fs29kwWMHIpMXBirzQoL/bUd/WKeU53shb4E=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=gU7MeHrdSslK3iJGZ/ZQb59244nQQgre2s1Gpa/dNeIVPOaGd75MV7S6KHHzL/BY4
+ mGjixWgAU7IGPyXvaKuUI2/7NbuVLXT8S79SsMzXTxznYkWFhr9CLB+5dtQo2JcczR
+ vvGdvHGb1H7/eFthqU7pWuK6RZDYJ0AzBUrmas4zToUStPDrhnim+E45QZ9STfQcLx
+ wCPWmkrJtxXgaICm6rIvJ+zVMNtCM4PKwk20rf+SYGx1hFvvu28CPugJWxxvGsw8b0
+ t6jYOmMrGOq/1EDFUqQU3I2NrQiY+IbywSiDZ+OM45r1Vn4NDOOeldOEUEeHHhtA5c
+ kVXf9r9K2T3lA==
+Date: Thu, 23 May 2024 11:30:16 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ xen-devel@lists.xenproject.org, qemu-devel@nongnu.org, 
+ sstabellini@kernel.org, jgross@suse.com, 
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>, 
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>
+Subject: Re: [PATCH v6 7/8] xen: mapcache: Add support for grant mappings
+In-Reply-To: <CAJy5ezqcnoQ=M4H3RkQ69HAie4jNMEQB42f4NSRZUEWU_5=Gkw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2405231129590.2557291@ubuntu-linux-20-04-desktop>
+References: <20240516154804.1114245-1-edgar.iglesias@gmail.com>
+ <20240516154804.1114245-8-edgar.iglesias@gmail.com>
+ <dxhms.qrh0wkni3yz@linaro.org>
+ <CAJy5ezqcnoQ=M4H3RkQ69HAie4jNMEQB42f4NSRZUEWU_5=Gkw@mail.gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="8323329-1340495454-1716489019=:2557291"
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,502 +79,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Per CXL spec 3.1, two mailbox commands are implemented:
-Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
-Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
+--8323329-1340495454-1716489019=:2557291
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-For the process of the above two commands, we use two-pass approach.
-Pass 1: Check whether the input payload is valid or not; if not, skip
-        Pass 2 and return mailbox process error.
-Pass 2: Do the real work--add or release extents, respectively.
+On Thu, 23 May 2024, Edgar E. Iglesias wrote:
+> On Thu, May 23, 2024 at 9:47 AM Manos Pitsidianakis <manos.pitsidianakis@linaro.org> wrote:
+>       On Thu, 16 May 2024 18:48, "Edgar E. Iglesias" <edgar.iglesias@gmail.com> wrote:
+>       >From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>       >
+>       >Add a second mapcache for grant mappings. The mapcache for
+>       >grants needs to work with XC_PAGE_SIZE granularity since
+>       >we can't map larger ranges than what has been granted to us.
+>       >
+>       >Like with foreign mappings (xen_memory), machines using grants
+>       >are expected to initialize the xen_grants MR and map it
+>       >into their address-map accordingly.
+>       >
+>       >Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+>       >Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+>       >---
+>       > hw/xen/xen-hvm-common.c         |  12 ++-
+>       > hw/xen/xen-mapcache.c           | 163 ++++++++++++++++++++++++++------
+>       > include/hw/xen/xen-hvm-common.h |   3 +
+>       > include/sysemu/xen.h            |   7 ++
+>       > 4 files changed, 152 insertions(+), 33 deletions(-)
+>       >
+>       >diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+>       >index a0a0252da0..b8ace1c368 100644
+>       >--- a/hw/xen/xen-hvm-common.c
+>       >+++ b/hw/xen/xen-hvm-common.c
+>       >@@ -10,12 +10,18 @@
+>       > #include "hw/boards.h"
+>       > #include "hw/xen/arch_hvm.h"
+>       >
+>       >-MemoryRegion xen_memory;
+>       >+MemoryRegion xen_memory, xen_grants;
+>       >
+>       >-/* Check for xen memory.  */
+>       >+/* Check for any kind of xen memory, foreign mappings or grants.  */
+>       > bool xen_mr_is_memory(MemoryRegion *mr)
+>       > {
+>       >-    return mr == &xen_memory;
+>       >+    return mr == &xen_memory || mr == &xen_grants;
+>       >+}
+>       >+
+>       >+/* Check specifically for grants.  */
+>       >+bool xen_mr_is_grants(MemoryRegion *mr)
+>       >+{
+>       >+    return mr == &xen_grants;
+>       > }
+>       >
+>       > void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
+>       >diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+>       >index a07c47b0b1..1cbc2aeaa9 100644
+>       >--- a/hw/xen/xen-mapcache.c
+>       >+++ b/hw/xen/xen-mapcache.c
+>       >@@ -14,6 +14,7 @@
+>       >
+>       > #include <sys/resource.h>
+>       >
+>       >+#include "hw/xen/xen-hvm-common.h"
+>       > #include "hw/xen/xen_native.h"
+>       > #include "qemu/bitmap.h"
+>       >
+>       >@@ -21,6 +22,8 @@
+>       > #include "sysemu/xen-mapcache.h"
+>       > #include "trace.h"
+>       >
+>       >+#include <xenevtchn.h>
+>       >+#include <xengnttab.h>
+>       >
+>       > #if HOST_LONG_BITS == 32
+>       > #  define MCACHE_MAX_SIZE     (1UL<<31) /* 2GB Cap */
+>       >@@ -41,6 +44,7 @@ typedef struct MapCacheEntry {
+>       >     unsigned long *valid_mapping;
+>       >     uint32_t lock;
+>       > #define XEN_MAPCACHE_ENTRY_DUMMY (1 << 0)
+>       >+#define XEN_MAPCACHE_ENTRY_GRANT (1 << 1)
+> 
+>       Might we get more entry kinds in the future? (for example foreign maps).
+>       Maybe this could be an enum.
+> 
+> 
+> Perhaps. Foreign mappings are already supported, this flag separates ordinary foreign mappings from grant foreign mappings.
+> IMO, since this is not an external interface it's probably better to change it once we have a concrete use-case at hand.
+> 
+>  
+>       >     uint8_t flags;
+>       >     hwaddr size;
+>       >     struct MapCacheEntry *next;
+>       >@@ -71,6 +75,8 @@ typedef struct MapCache {
+>       > } MapCache;
+>       >
+>       > static MapCache *mapcache;
+>       >+static MapCache *mapcache_grants;
+>       >+static xengnttab_handle *xen_region_gnttabdev;
+>       >
+>       > static inline void mapcache_lock(MapCache *mc)
+>       > {
+>       >@@ -131,6 +137,12 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+>       >     unsigned long max_mcache_size;
+>       >     unsigned int bucket_shift;
+>       >
+>       >+    xen_region_gnttabdev = xengnttab_open(NULL, 0);
+>       >+    if (xen_region_gnttabdev == NULL) {
+>       >+        error_report("mapcache: Failed to open gnttab device");
+>       >+        exit(EXIT_FAILURE);
+>       >+    }
+>       >+
+>       >     if (HOST_LONG_BITS == 32) {
+>       >         bucket_shift = 16;
+>       >     } else {
+>       >@@ -159,6 +171,15 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+>       >     mapcache = xen_map_cache_init_single(f, opaque,
+>       >                                          bucket_shift,
+>       >                                          max_mcache_size);
+>       >+
+>       >+    /*
+>       >+     * Grant mappings must use XC_PAGE_SIZE granularity since we can't
+>       >+     * map anything beyond the number of pages granted to us.
+>       >+     */
+>       >+    mapcache_grants = xen_map_cache_init_single(f, opaque,
+>       >+                                                XC_PAGE_SHIFT,
+>       >+                                                max_mcache_size);
+>       >+
+>       >     setrlimit(RLIMIT_AS, &rlimit_as);
+>       > }
+>       >
+>       >@@ -168,17 +189,24 @@ static void xen_remap_bucket(MapCache *mc,
+>       >                              hwaddr size,
+>       >                              hwaddr address_index,
+>       >                              bool dummy,
+>       >+                             bool grant,
+>       >+                             bool is_write,
+>       >                              ram_addr_t ram_offset)
+>       > {
+>       >     uint8_t *vaddr_base;
+>       >-    xen_pfn_t *pfns;
+>       >+    uint32_t *refs = NULL;
+>       >+    xen_pfn_t *pfns = NULL;
+>       >     int *err;
+> 
+>       You should use g_autofree to perform automatic cleanup on function exit
+>       instead of manually freeing, since the allocations should only live
+>       within the function call.
+> 
+> 
+> Sounds good, I'll do that in the next version.
+> 
+>  
+>       >     unsigned int i;
+>       >     hwaddr nb_pfn = size >> XC_PAGE_SHIFT;
+>       >
+>       >     trace_xen_remap_bucket(address_index);
+>       >
+>       >-    pfns = g_new0(xen_pfn_t, nb_pfn);
+>       >+    if (grant) {
+>       >+        refs = g_new0(uint32_t, nb_pfn);
+>       >+    } else {
+>       >+        pfns = g_new0(xen_pfn_t, nb_pfn);
+>       >+    }
+>       >     err = g_new0(int, nb_pfn);
+>       >
+>       >     if (entry->vaddr_base != NULL) {
+>       >@@ -207,21 +235,51 @@ static void xen_remap_bucket(MapCache *mc,
+>       >     g_free(entry->valid_mapping);
+>       >     entry->valid_mapping = NULL;
+>       >
+>       >-    for (i = 0; i < nb_pfn; i++) {
+>       >-        pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
+>       >+    if (grant) {
+>       >+        hwaddr grant_base = address_index - (ram_offset >> XC_PAGE_SHIFT);
+>       >+
+>       >+        for (i = 0; i < nb_pfn; i++) {
+>       >+            refs[i] = grant_base + i;
+>       >+        }
+>       >+    } else {
+>       >+        for (i = 0; i < nb_pfn; i++) {
+>       >+            pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
+>       >+        }
+>       >     }
+>       >
+>       >-    /*
+>       >-     * If the caller has requested the mapping at a specific address use
+>       >-     * MAP_FIXED to make sure it's honored.
+>       >-     */
+>       >+    entry->flags &= ~XEN_MAPCACHE_ENTRY_GRANT;
+>       >+
+>       >     if (!dummy) {
+>       >-        vaddr_base = xenforeignmemory_map2(xen_fmem, xen_domid, vaddr,
+>       >-                                           PROT_READ | PROT_WRITE,
+>       >-                                           vaddr ? MAP_FIXED : 0,
+>       >-                                           nb_pfn, pfns, err);
+> 
+>       Since err is not NULL here, the function might return a valid pointer
+>       but individual frames might have failed.
+> 
+> 
+> Yes but AFAICT, the case when some pages fail foreign mapping is handled further down the function (see the valid_mappings bitmap).
+> Note that this series isn't really changing this existing behaviour for foreign mappings. In any case, If we spot a bug in existing code,
+> I'm happy to fix it.
+> 
+>  
+> 
+>       >+        if (grant) {
+>       >+            int prot = PROT_READ;
+>       >+
+>       >+            if (is_write) {
+>       >+                prot |= PROT_WRITE;
+>       >+            }
+>       >+
+>       >+            entry->flags |= XEN_MAPCACHE_ENTRY_GRANT;
+>       >+            assert(vaddr == NULL);
+>       >+            vaddr_base = xengnttab_map_domain_grant_refs(xen_region_gnttabdev,
+>       >+                                                         nb_pfn,
+>       >+                                                         xen_domid, refs,
+>       >+                                                         prot);
+>       >+        } else {
+>       >+            /*
+>       >+             * If the caller has requested the mapping at a specific address use
+>       >+             * MAP_FIXED to make sure it's honored.
+>       >+             *
+>       >+             * We don't yet support upgrading mappings from RO to RW, to handle
+>       >+             * models using ordinary address_space_rw(), foreign mappings ignore
+>       >+             * is_write and are always mapped RW.
+>       >+             */
+>       >+            vaddr_base = xenforeignmemory_map2(xen_fmem, xen_domid, vaddr,
+>       >+                                               PROT_READ | PROT_WRITE,
+>       >+                                               vaddr ? MAP_FIXED : 0,
+>       >+                                               nb_pfn, pfns, err);
+>       >+        }
+>       >         if (vaddr_base == NULL) {
+>       >-            perror("xenforeignmemory_map2");
+>       >+            perror(grant ? "xengnttab_map_domain_grant_refs"
+>       >+                           : "xenforeignmemory_map2");
+>       >             exit(-1);
+>       >         }
+>       >     } else {
+>       >@@ -261,6 +319,7 @@ static void xen_remap_bucket(MapCache *mc,
+>       >         }
+>       >     }
+>       >
+>       >+    g_free(refs);
+>       >     g_free(pfns);
+>       >     g_free(err);
+>       > }
+>       >@@ -268,7 +327,8 @@ static void xen_remap_bucket(MapCache *mc,
+>       > static uint8_t *xen_map_cache_unlocked(MapCache *mc,
+>       >                                        hwaddr phys_addr, hwaddr size,
+>       >                                        ram_addr_t ram_offset,
+>       >-                                       uint8_t lock, bool dma, bool is_write)
+>       >+                                       uint8_t lock, bool dma,
+>       >+                                       bool grant, bool is_write)
+>       > {
+>       >     MapCacheEntry *entry, *pentry = NULL,
+>       >                   *free_entry = NULL, *free_pentry = NULL;
+>       >@@ -340,7 +400,7 @@ tryagain:
+>       >         entry = g_new0(MapCacheEntry, 1);
+>       >         pentry->next = entry;
+>       >         xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy,
+>       >-                         ram_offset);
+>       >+                         grant, is_write, ram_offset);
+>       >     } else if (!entry->lock) {
+>       >         if (!entry->vaddr_base || entry->paddr_index != address_index ||
+>       >                 entry->size != cache_size ||
+>       >@@ -348,7 +408,7 @@ tryagain:
+>       >                     test_bit_size >> XC_PAGE_SHIFT,
+>       >                     entry->valid_mapping)) {
+>       >             xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy,
+>       >-                             ram_offset);
+>       >+                             grant, is_write, ram_offset);
+>       >         }
+>       >     }
+>       >
+>       >@@ -399,12 +459,28 @@ uint8_t *xen_map_cache(MemoryRegion *mr,
+>       >                        uint8_t lock, bool dma,
+>       >                        bool is_write)
+>       > {
+>       >+    bool grant = xen_mr_is_grants(mr);
+>       >+    MapCache *mc = grant ? mapcache_grants : mapcache;
+>       >     uint8_t *p;
+>       >
+>       >-    mapcache_lock(mapcache);
+>       >-    p = xen_map_cache_unlocked(mapcache, phys_addr, size, ram_addr_offset,
+>       >-                               lock, dma, is_write);
+>       >-    mapcache_unlock(mapcache);
+>       >+    if (grant) {
+>       >+        /*
+>       >+         * Grants are only supported via address_space_map(). Anything
+>       >+         * else is considered a user/guest error.
+>       >+         *
+>       >+         * QEMU generally doesn't expect these mappings to ever fail, so
+>       >+         * if this happens we report an error message and abort().
+>       >+         */
+>       >+        if (!lock) {
+> 
+>       Nested if conditions that can be flattened, i.e. this could be
+> 
+>       if (grant && !lock)
+> 
+> 
+> 
+> Sounds good, will flatten this in the next version.
+>  
+> 
+>       >+            error_report("Trying access a grant reference without mapping it.");
+> 
+>       s/Trying access a grant/Tried to access a grant/
+> 
+> 
+> Will fix it, thanks!
 
-Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c  | 394 ++++++++++++++++++++++++++++++++++++
- hw/mem/cxl_type3.c          |  11 +
- include/hw/cxl/cxl_device.h |   4 +
- 3 files changed, 409 insertions(+)
-
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 1915959015..9d54e10cd4 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -19,6 +19,7 @@
- #include "qemu/units.h"
- #include "qemu/uuid.h"
- #include "sysemu/hostmem.h"
-+#include "qemu/range.h"
- 
- #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
- #define CXL_DC_EVENT_LOG_SIZE 8
-@@ -85,6 +86,8 @@ enum {
-     DCD_CONFIG  = 0x48,
-         #define GET_DC_CONFIG          0x0
-         #define GET_DYN_CAP_EXT_LIST   0x1
-+        #define ADD_DYN_CAP_RSP        0x2
-+        #define RELEASE_DYN_CAP        0x3
-     PHYSICAL_SWITCH = 0x51,
-         #define IDENTIFY_SWITCH_DEVICE      0x0
-         #define GET_PHYSICAL_PORT_STATE     0x1
-@@ -1398,6 +1401,391 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/*
-+ * Check whether any bit between addr[nr, nr+size) is set,
-+ * return true if any bit is set, otherwise return false
-+ */
-+static bool test_any_bits_set(const unsigned long *addr, unsigned long nr,
-+                              unsigned long size)
-+{
-+    unsigned long res = find_next_bit(addr, size + nr, nr);
-+
-+    return res < nr + size;
-+}
-+
-+CXLDCRegion *cxl_find_dc_region(CXLType3Dev *ct3d, uint64_t dpa, uint64_t len)
-+{
-+    int i;
-+    CXLDCRegion *region = &ct3d->dc.regions[0];
-+
-+    if (dpa < region->base ||
-+        dpa >= region->base + ct3d->dc.total_capacity) {
-+        return NULL;
-+    }
-+
-+    /*
-+     * CXL r3.1 section 9.13.3: Dynamic Capacity Device (DCD)
-+     *
-+     * Regions are used in increasing-DPA order, with Region 0 being used for
-+     * the lowest DPA of Dynamic Capacity and Region 7 for the highest DPA.
-+     * So check from the last region to find where the dpa belongs. Extents that
-+     * cross multiple regions are not allowed.
-+     */
-+    for (i = ct3d->dc.num_regions - 1; i >= 0; i--) {
-+        region = &ct3d->dc.regions[i];
-+        if (dpa >= region->base) {
-+            if (dpa + len > region->base + region->len) {
-+                return NULL;
-+            }
-+            return region;
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
-+static void cxl_insert_extent_to_extent_list(CXLDCExtentList *list,
-+                                             uint64_t dpa,
-+                                             uint64_t len,
-+                                             uint8_t *tag,
-+                                             uint16_t shared_seq)
-+{
-+    CXLDCExtent *extent;
-+
-+    extent = g_new0(CXLDCExtent, 1);
-+    extent->start_dpa = dpa;
-+    extent->len = len;
-+    if (tag) {
-+        memcpy(extent->tag, tag, 0x10);
-+    }
-+    extent->shared_seq = shared_seq;
-+
-+    QTAILQ_INSERT_TAIL(list, extent, node);
-+}
-+
-+void cxl_remove_extent_from_extent_list(CXLDCExtentList *list,
-+                                        CXLDCExtent *extent)
-+{
-+    QTAILQ_REMOVE(list, extent, node);
-+    g_free(extent);
-+}
-+
-+/*
-+ * CXL r3.1 Table 8-168: Add Dynamic Capacity Response Input Payload
-+ * CXL r3.1 Table 8-170: Release Dynamic Capacity Input Payload
-+ */
-+typedef struct CXLUpdateDCExtentListInPl {
-+    uint32_t num_entries_updated;
-+    uint8_t flags;
-+    uint8_t rsvd[3];
-+    /* CXL r3.1 Table 8-169: Updated Extent */
-+    struct {
-+        uint64_t start_dpa;
-+        uint64_t len;
-+        uint8_t rsvd[8];
-+    } QEMU_PACKED updated_entries[];
-+} QEMU_PACKED CXLUpdateDCExtentListInPl;
-+
-+/*
-+ * For the extents in the extent list to operate, check whether they are valid
-+ * 1. The extent should be in the range of a valid DC region;
-+ * 2. The extent should not cross multiple regions;
-+ * 3. The start DPA and the length of the extent should align with the block
-+ * size of the region;
-+ * 4. The address range of multiple extents in the list should not overlap.
-+ */
-+static CXLRetCode cxl_detect_malformed_extent_list(CXLType3Dev *ct3d,
-+        const CXLUpdateDCExtentListInPl *in)
-+{
-+    uint64_t min_block_size = UINT64_MAX;
-+    CXLDCRegion *region;
-+    CXLDCRegion *lastregion = &ct3d->dc.regions[ct3d->dc.num_regions - 1];
-+    g_autofree unsigned long *blk_bitmap = NULL;
-+    uint64_t dpa, len;
-+    uint32_t i;
-+
-+    for (i = 0; i < ct3d->dc.num_regions; i++) {
-+        region = &ct3d->dc.regions[i];
-+        min_block_size = MIN(min_block_size, region->block_size);
-+    }
-+
-+    blk_bitmap = bitmap_new((lastregion->base + lastregion->len -
-+                             ct3d->dc.regions[0].base) / min_block_size);
-+
-+    for (i = 0; i < in->num_entries_updated; i++) {
-+        dpa = in->updated_entries[i].start_dpa;
-+        len = in->updated_entries[i].len;
-+
-+        region = cxl_find_dc_region(ct3d, dpa, len);
-+        if (!region) {
-+            return CXL_MBOX_INVALID_PA;
-+        }
-+
-+        dpa -= ct3d->dc.regions[0].base;
-+        if (dpa % region->block_size || len % region->block_size) {
-+            return CXL_MBOX_INVALID_EXTENT_LIST;
-+        }
-+        /* the dpa range already covered by some other extents in the list */
-+        if (test_any_bits_set(blk_bitmap, dpa / min_block_size,
-+            len / min_block_size)) {
-+            return CXL_MBOX_INVALID_EXTENT_LIST;
-+        }
-+        bitmap_set(blk_bitmap, dpa / min_block_size, len / min_block_size);
-+   }
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+static CXLRetCode cxl_dcd_add_dyn_cap_rsp_dry_run(CXLType3Dev *ct3d,
-+        const CXLUpdateDCExtentListInPl *in)
-+{
-+    uint32_t i;
-+    CXLDCExtent *ent;
-+    uint64_t dpa, len;
-+    Range range1, range2;
-+
-+    for (i = 0; i < in->num_entries_updated; i++) {
-+        dpa = in->updated_entries[i].start_dpa;
-+        len = in->updated_entries[i].len;
-+
-+        range_init_nofail(&range1, dpa, len);
-+
-+        /*
-+         * TODO: once the pending extent list is added, check against
-+         * the list will be added here.
-+         */
-+
-+        /* to-be-added range should not overlap with range already accepted */
-+        QTAILQ_FOREACH(ent, &ct3d->dc.extents, node) {
-+            range_init_nofail(&range2, ent->start_dpa, ent->len);
-+            if (range_overlaps_range(&range1, &range2)) {
-+                return CXL_MBOX_INVALID_PA;
-+            }
-+        }
-+    }
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+/*
-+ * CXL r3.1 section 8.2.9.9.9.3: Add Dynamic Capacity Response (Opcode 4802h)
-+ * An extent is added to the extent list and becomes usable only after the
-+ * response is processed successfully.
-+ */
-+static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
-+                                          uint8_t *payload_in,
-+                                          size_t len_in,
-+                                          uint8_t *payload_out,
-+                                          size_t *len_out,
-+                                          CXLCCI *cci)
-+{
-+    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLDCExtentList *extent_list = &ct3d->dc.extents;
-+    uint32_t i;
-+    uint64_t dpa, len;
-+    CXLRetCode ret;
-+
-+    if (in->num_entries_updated == 0) {
-+        /*
-+         * TODO: once the pending list is introduced, extents in the beginning
-+         * will get wiped out.
-+         */
-+        return CXL_MBOX_SUCCESS;
-+    }
-+
-+    /* Adding extents causes exceeding device's extent tracking ability. */
-+    if (in->num_entries_updated + ct3d->dc.total_extent_count >
-+        CXL_NUM_EXTENTS_SUPPORTED) {
-+        return CXL_MBOX_RESOURCES_EXHAUSTED;
-+    }
-+
-+    ret = cxl_detect_malformed_extent_list(ct3d, in);
-+    if (ret != CXL_MBOX_SUCCESS) {
-+        return ret;
-+    }
-+
-+    ret = cxl_dcd_add_dyn_cap_rsp_dry_run(ct3d, in);
-+    if (ret != CXL_MBOX_SUCCESS) {
-+        return ret;
-+    }
-+
-+    for (i = 0; i < in->num_entries_updated; i++) {
-+        dpa = in->updated_entries[i].start_dpa;
-+        len = in->updated_entries[i].len;
-+
-+        cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
-+        ct3d->dc.total_extent_count += 1;
-+        /*
-+         * TODO: we will add a pending extent list based on event log record
-+         * and process the list accordingly here.
-+         */
-+    }
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+/*
-+ * Copy extent list from src to dst
-+ * Return value: number of extents copied
-+ */
-+static uint32_t copy_extent_list(CXLDCExtentList *dst,
-+                                 const CXLDCExtentList *src)
-+{
-+    uint32_t cnt = 0;
-+    CXLDCExtent *ent;
-+
-+    if (!dst || !src) {
-+        return 0;
-+    }
-+
-+    QTAILQ_FOREACH(ent, src, node) {
-+        cxl_insert_extent_to_extent_list(dst, ent->start_dpa, ent->len,
-+                                         ent->tag, ent->shared_seq);
-+        cnt++;
-+    }
-+    return cnt;
-+}
-+
-+static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
-+        const CXLUpdateDCExtentListInPl *in, CXLDCExtentList *updated_list,
-+        uint32_t *updated_list_size)
-+{
-+    CXLDCExtent *ent, *ent_next;
-+    uint64_t dpa, len;
-+    uint32_t i;
-+    int cnt_delta = 0;
-+    CXLRetCode ret = CXL_MBOX_SUCCESS;
-+
-+    QTAILQ_INIT(updated_list);
-+    copy_extent_list(updated_list, &ct3d->dc.extents);
-+
-+    for (i = 0; i < in->num_entries_updated; i++) {
-+        Range range;
-+
-+        dpa = in->updated_entries[i].start_dpa;
-+        len = in->updated_entries[i].len;
-+
-+        while (len > 0) {
-+            QTAILQ_FOREACH(ent, updated_list, node) {
-+                range_init_nofail(&range, ent->start_dpa, ent->len);
-+
-+                if (range_contains(&range, dpa)) {
-+                    uint64_t len1, len2 = 0, len_done = 0;
-+                    uint64_t ent_start_dpa = ent->start_dpa;
-+                    uint64_t ent_len = ent->len;
-+
-+                    len1 = dpa - ent->start_dpa;
-+                    /* Found the extent or the subset of an existing extent */
-+                    if (range_contains(&range, dpa + len - 1)) {
-+                        len2 = ent_start_dpa + ent_len - dpa - len;
-+                    } else {
-+                        /*
-+                         * TODO: we reject the attempt to remove an extent
-+                         * that overlaps with multiple extents in the device
-+                         * for now. We will allow it once superset release
-+                         * support is added.
-+                         */
-+                        ret = CXL_MBOX_INVALID_PA;
-+                        goto free_and_exit;
-+                    }
-+                    len_done = ent_len - len1 - len2;
-+
-+                    cxl_remove_extent_from_extent_list(updated_list, ent);
-+                    cnt_delta--;
-+
-+                    if (len1) {
-+                        cxl_insert_extent_to_extent_list(updated_list,
-+                                                         ent_start_dpa,
-+                                                         len1, NULL, 0);
-+                        cnt_delta++;
-+                    }
-+                    if (len2) {
-+                        cxl_insert_extent_to_extent_list(updated_list,
-+                                                         dpa + len,
-+                                                         len2, NULL, 0);
-+                        cnt_delta++;
-+                    }
-+
-+                    if (cnt_delta + ct3d->dc.total_extent_count >
-+                            CXL_NUM_EXTENTS_SUPPORTED) {
-+                        ret = CXL_MBOX_RESOURCES_EXHAUSTED;
-+                        goto free_and_exit;
-+                    }
-+
-+                    len -= len_done;
-+                    /* len == 0 here until superset release is added */
-+                    break;
-+                }
-+            }
-+            if (len) {
-+                ret = CXL_MBOX_INVALID_PA;
-+                goto free_and_exit;
-+            }
-+        }
-+    }
-+free_and_exit:
-+    if (ret != CXL_MBOX_SUCCESS) {
-+        QTAILQ_FOREACH_SAFE(ent, updated_list, node, ent_next) {
-+            cxl_remove_extent_from_extent_list(updated_list, ent);
-+        }
-+        *updated_list_size = 0;
-+    } else {
-+        *updated_list_size = ct3d->dc.total_extent_count + cnt_delta;
-+    }
-+
-+    return ret;
-+}
-+
-+/*
-+ * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (Opcode 4803h)
-+ */
-+static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-+                                          uint8_t *payload_in,
-+                                          size_t len_in,
-+                                          uint8_t *payload_out,
-+                                          size_t *len_out,
-+                                          CXLCCI *cci)
-+{
-+    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLDCExtentList updated_list;
-+    CXLDCExtent *ent, *ent_next;
-+    uint32_t updated_list_size;
-+    CXLRetCode ret;
-+
-+    if (in->num_entries_updated == 0) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    ret = cxl_detect_malformed_extent_list(ct3d, in);
-+    if (ret != CXL_MBOX_SUCCESS) {
-+        return ret;
-+    }
-+
-+    ret = cxl_dc_extent_release_dry_run(ct3d, in, &updated_list,
-+                                        &updated_list_size);
-+    if (ret != CXL_MBOX_SUCCESS) {
-+        return ret;
-+    }
-+
-+    /*
-+     * If the dry run release passes, the returned updated_list will
-+     * be the updated extent list and we just need to clear the extents
-+     * in the accepted list and copy extents in the updated_list to accepted
-+     * list and update the extent count;
-+     */
-+    QTAILQ_FOREACH_SAFE(ent, &ct3d->dc.extents, node, ent_next) {
-+        cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
-+    }
-+    copy_extent_list(&ct3d->dc.extents, &updated_list);
-+    QTAILQ_FOREACH_SAFE(ent, &updated_list, node, ent_next) {
-+        cxl_remove_extent_from_extent_list(&updated_list, ent);
-+    }
-+    ct3d->dc.total_extent_count = updated_list_size;
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
- #define IMMEDIATE_DATA_CHANGE (1 << 2)
- #define IMMEDIATE_POLICY_CHANGE (1 << 3)
-@@ -1448,6 +1836,12 @@ static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
-     [DCD_CONFIG][GET_DYN_CAP_EXT_LIST] = {
-         "DCD_GET_DYNAMIC_CAPACITY_EXTENT_LIST", cmd_dcd_get_dyn_cap_ext_list,
-         8, 0 },
-+    [DCD_CONFIG][ADD_DYN_CAP_RSP] = {
-+        "DCD_ADD_DYNAMIC_CAPACITY_RESPONSE", cmd_dcd_add_dyn_cap_rsp,
-+        ~0, IMMEDIATE_DATA_CHANGE },
-+    [DCD_CONFIG][RELEASE_DYN_CAP] = {
-+        "DCD_RELEASE_DYNAMIC_CAPACITY", cmd_dcd_release_dyn_cap,
-+        ~0, IMMEDIATE_DATA_CHANGE },
- };
- 
- static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index f6ab885270..7c9038938f 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -677,6 +677,15 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-     return true;
- }
- 
-+static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
-+{
-+    CXLDCExtent *ent, *ent_next;
-+
-+    QTAILQ_FOREACH_SAFE(ent, &ct3d->dc.extents, node, ent_next) {
-+        cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
-+    }
-+}
-+
- static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
- {
-     DeviceState *ds = DEVICE(ct3d);
-@@ -873,6 +882,7 @@ err_free_special_ops:
-     g_free(regs->special_ops);
- err_address_space_free:
-     if (ct3d->dc.host_dc) {
-+        cxl_destroy_dc_regions(ct3d);
-         address_space_destroy(&ct3d->dc.host_dc_as);
-     }
-     if (ct3d->hostpmem) {
-@@ -894,6 +904,7 @@ static void ct3_exit(PCIDevice *pci_dev)
-     cxl_doe_cdat_release(cxl_cstate);
-     g_free(regs->special_ops);
-     if (ct3d->dc.host_dc) {
-+        cxl_destroy_dc_regions(ct3d);
-         address_space_destroy(&ct3d->dc.host_dc_as);
-     }
-     if (ct3d->hostpmem) {
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 6aec6ac983..df3511e91b 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -551,4 +551,8 @@ void cxl_event_irq_assert(CXLType3Dev *ct3d);
- 
- void cxl_set_poison_list_overflowed(CXLType3Dev *ct3d);
- 
-+CXLDCRegion *cxl_find_dc_region(CXLType3Dev *ct3d, uint64_t dpa, uint64_t len);
-+
-+void cxl_remove_extent_from_extent_list(CXLDCExtentList *list,
-+                                        CXLDCExtent *extent);
- #endif
--- 
-2.43.0
-
+Please retain my ack
+--8323329-1340495454-1716489019=:2557291--
 
