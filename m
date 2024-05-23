@@ -4,108 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70886C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41FEC25B7A
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sADm8-0002Ja-4T; Thu, 23 May 2024 15:06:55 -0400
+	id 1sADlR-00025F-8R; Thu, 23 May 2024 15:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlt-0002GW-Lj
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:38 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlO-00023p-V7
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:06 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlm-0004KC-0M
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:37 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlN-0004GT-8J
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:06 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 467D322B73;
- Thu, 23 May 2024 19:06:28 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D14BE22B73;
+ Thu, 23 May 2024 19:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1716491164; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+xua7VagbC1TpTuVfzZaNgQ0/sKLFKwgSqqvOnvA/00=;
- b=Vjsq2D853b5vLwPopVR2pmhPN5UdwSj4VJx1S/zJ0WFUL8qyIrIxKNLCpcyrd+3LCCelqb
- 0/RjI8oSrz4tKjTA/Ir+1gZeaScbNF3G5iBu6XzczNejOzmpP7de9V1ES47w3TcSU0dQwh
- 6ahQsXAw8rwRNujyoVq9NeZmrW90INo=
+ bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
+ b=SG0YyFYY7dFSGX9mjIcSrycgRi/QGXIT4kP8VWTx4bekMH3nCFxELK3ijxkMolN7LmdVGW
+ 83otzAadOodyWSkolFk4orv4SuPlBWkDzmjdt21YTCc2jaxKtsbjSlLcojl/EBJw9D4oWu
+ BiGSZzyvDlDTiTCbpFVcE+j8jJ4kStQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491188;
+ s=susede2_ed25519; t=1716491164;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+xua7VagbC1TpTuVfzZaNgQ0/sKLFKwgSqqvOnvA/00=;
- b=ffSq3vjJISf5DHZb8mmVfrI0VVORYIN/9qIOpMQV4qOCkJaZxG7yP4Vl6sFws0zzrHvwP5
- +47NShxoGTNrDHBg==
+ bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
+ b=/U36flAp6HWTV1BkmFgFX7Hyoh/vZdp0amFZYFjKoKOu5/wE96Sk95yJvKzeKm2KsJDuic
+ NHoIneetTes0RqBw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Vjsq2D85;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ffSq3vjJ
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1716491163; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+xua7VagbC1TpTuVfzZaNgQ0/sKLFKwgSqqvOnvA/00=;
- b=Vjsq2D853b5vLwPopVR2pmhPN5UdwSj4VJx1S/zJ0WFUL8qyIrIxKNLCpcyrd+3LCCelqb
- 0/RjI8oSrz4tKjTA/Ir+1gZeaScbNF3G5iBu6XzczNejOzmpP7de9V1ES47w3TcSU0dQwh
- 6ahQsXAw8rwRNujyoVq9NeZmrW90INo=
+ bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
+ b=RQ6HTyDpatvmR7GI6EZREr6OCjNKb8tp0Flj6E7EN7kilVcRlKjNbFE3uzD8xDzn73MJ2O
+ kImLrsoijjmM7Jtz81NfIUHKuhuS6lnmg+n+5Wxs+ZwVns/M4zQAQ+pHmq8bvc3amBQH6F
+ JaWzl2Wyv5dvaLlPJgiTAY60vSAig7A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491188;
+ s=susede2_ed25519; t=1716491163;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+xua7VagbC1TpTuVfzZaNgQ0/sKLFKwgSqqvOnvA/00=;
- b=ffSq3vjJISf5DHZb8mmVfrI0VVORYIN/9qIOpMQV4qOCkJaZxG7yP4Vl6sFws0zzrHvwP5
- +47NShxoGTNrDHBg==
+ bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
+ b=Rex4bWw+3bwFzlgJjReAztETL9VaMoDotDiQxjy4Fz98egWT5SHtU6HGx5frDhgcPw0INs
+ EhFHM5X3D7/3uFCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6F72313A6B;
- Thu, 23 May 2024 19:06:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 519C813A6B;
+ Thu, 23 May 2024 19:06:01 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id aPnMDbKTT2bUEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id oMuNBpmTT2bUEQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:01 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: [PATCH v2 14/18] migration: Add documentation for fdset with multifd
- + file
-Date: Thu, 23 May 2024 16:05:44 -0300
-Message-Id: <20240523190548.23977-15-farosas@suse.de>
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 04/18] monitor: Drop monitor_fdset_dup_fd_add()
+Date: Thu, 23 May 2024 16:05:34 -0300
+Message-Id: <20240523190548.23977-5-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240523190548.23977-1-farosas@suse.de>
 References: <20240523190548.23977-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[9];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCPT_COUNT_FIVE(0.00)[6]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 467D322B73
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -128,94 +122,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the last few changes to the fdset infrastructure, we now allow
-multifd to use an fdset when migrating to a file. This is useful for
-the scenario where the management layer wants to have control over the
-migration file.
+From: Peter Xu <peterx@redhat.com>
 
-By receiving the file descriptors directly, QEMU can delegate some
-high level operating system operations to the management layer (such
-as mandatory access control). The management layer might also want to
-add its own headers before the migration stream.
+This function is not needed, one remove function should already work.
+Clean it up.
 
-Document the "file:/dev/fdset/#" syntax for the multifd migration with
-mapped-ram. The requirements for the fdset mechanism are:
+Here the code doesn't really care about whether we need to keep that dupfd
+around if close() failed: when that happens something got very wrong,
+keeping the dup_fd around the fdsets may not help that situation so far.
 
-- the fdset must contain two fds that are not duplicates between
-  themselves;
-
-- if direct-io is to be used, exactly one of the fds must have the
-  O_DIRECT flag set;
-
-- the file must be opened with WRONLY on the migration source side;
-
-- the file must be opened with RDONLY on the migration destination
-  side.
-
+Cc: Dr. David Alan Gilbert <dave@treblig.org>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+[add missing return statement, removal during traversal is not safe]
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- docs/devel/migration/main.rst       | 24 +++++++++++++++++++-----
- docs/devel/migration/mapped-ram.rst |  6 +++++-
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ include/monitor/monitor.h |  1 -
+ monitor/fds.c             | 28 ++++++----------------------
+ stubs/fdset.c             |  5 -----
+ util/osdep.c              | 15 +--------------
+ 4 files changed, 7 insertions(+), 42 deletions(-)
 
-diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-index 495cdcb112..784c899dca 100644
---- a/docs/devel/migration/main.rst
-+++ b/docs/devel/migration/main.rst
-@@ -47,11 +47,25 @@ over any transport.
-   QEMU interference. Note that QEMU does not flush cached file
-   data/metadata at the end of migration.
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index 965f5d5450..fd9b3f538c 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -53,7 +53,6 @@ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fdset_id, int64_t fdset_id,
+                                 const char *opaque, Error **errp);
+ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags);
+ void monitor_fdset_dup_fd_remove(int dup_fd);
+-int64_t monitor_fdset_dup_fd_find(int dup_fd);
  
--In addition, support is included for migration using RDMA, which
--transports the page data using ``RDMA``, where the hardware takes care of
--transporting the pages, and the load on the CPU is much lower.  While the
--internals of RDMA migration are a bit different, this isn't really visible
--outside the RAM migration code.
-+  The file migration also supports using a file that has already been
-+  opened. A set of file descriptors is passed to QEMU via an "fdset"
-+  (see add-fd QMP command documentation). This method allows a
-+  management application to have control over the migration file
-+  opening operation. There are, however, strict requirements to this
-+  interface if the multifd capability is enabled:
-+
-+    - the fdset must contain two file descriptors that are not
-+      duplicates between themselves;
-+    - if the direct-io capability is to be used, exactly one of the
-+      file descriptors must have the O_DIRECT flag set;
-+    - the file must be opened with WRONLY on the migration source side
-+      and RDONLY on the migration destination side.
-+
-+- rdma migration: support is included for migration using RDMA, which
-+  transports the page data using ``RDMA``, where the hardware takes
-+  care of transporting the pages, and the load on the CPU is much
-+  lower.  While the internals of RDMA migration are a bit different,
-+  this isn't really visible outside the RAM migration code.
+ void monitor_register_hmp(const char *name, bool info,
+                           void (*cmd)(Monitor *mon, const QDict *qdict));
+diff --git a/monitor/fds.c b/monitor/fds.c
+index d86c2c674c..fb9f58c056 100644
+--- a/monitor/fds.c
++++ b/monitor/fds.c
+@@ -458,7 +458,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+ #endif
+ }
  
- All these migration protocols use the same infrastructure to
- save/restore state devices.  This infrastructure is shared with the
-diff --git a/docs/devel/migration/mapped-ram.rst b/docs/devel/migration/mapped-ram.rst
-index fa4cefd9fc..e6505511f0 100644
---- a/docs/devel/migration/mapped-ram.rst
-+++ b/docs/devel/migration/mapped-ram.rst
-@@ -16,7 +16,7 @@ location in the file, rather than constantly being added to a
- sequential stream. Having the pages at fixed offsets also allows the
- usage of O_DIRECT for save/restore of the migration stream as the
- pages are ensured to be written respecting O_DIRECT alignment
--restrictions (direct-io support not yet implemented).
-+restrictions.
+-static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
++void monitor_fdset_dup_fd_remove(int dup_fd)
+ {
+     MonFdset *mon_fdset;
+     MonFdsetFd *mon_fdset_fd_dup;
+@@ -467,31 +467,15 @@ static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
+     QLIST_FOREACH(mon_fdset, &mon_fdsets, next) {
+         QLIST_FOREACH(mon_fdset_fd_dup, &mon_fdset->dup_fds, next) {
+             if (mon_fdset_fd_dup->fd == dup_fd) {
+-                if (remove) {
+-                    QLIST_REMOVE(mon_fdset_fd_dup, next);
+-                    g_free(mon_fdset_fd_dup);
+-                    if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
+-                        monitor_fdset_cleanup(mon_fdset);
+-                    }
+-                    return -1;
+-                } else {
+-                    return mon_fdset->id;
++                QLIST_REMOVE(mon_fdset_fd_dup, next);
++                g_free(mon_fdset_fd_dup);
++                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
++                    monitor_fdset_cleanup(mon_fdset);
+                 }
++                return;
+             }
+         }
+     }
+-
+-    return -1;
+-}
+-
+-int64_t monitor_fdset_dup_fd_find(int dup_fd)
+-{
+-    return monitor_fdset_dup_fd_find_remove(dup_fd, false);
+-}
+-
+-void monitor_fdset_dup_fd_remove(int dup_fd)
+-{
+-    monitor_fdset_dup_fd_find_remove(dup_fd, true);
+ }
  
- Usage
- -----
-@@ -35,6 +35,10 @@ Use a ``file:`` URL for migration:
- Mapped-ram migration is best done non-live, i.e. by stopping the VM on
- the source side before migrating.
+ int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
+diff --git a/stubs/fdset.c b/stubs/fdset.c
+index d7c39a28ac..389e368a29 100644
+--- a/stubs/fdset.c
++++ b/stubs/fdset.c
+@@ -9,11 +9,6 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+     return -1;
+ }
  
-+For best performance enable the ``direct-io`` capability as well:
-+
-+    ``migrate_set_capability direct-io on``
-+
- Use-cases
- ---------
+-int64_t monitor_fdset_dup_fd_find(int dup_fd)
+-{
+-    return -1;
+-}
+-
+ void monitor_fdset_dup_fd_remove(int dupfd)
+ {
+ }
+diff --git a/util/osdep.c b/util/osdep.c
+index e996c4744a..2d9749d060 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -393,21 +393,8 @@ int qemu_open_old(const char *name, int flags, ...)
+ 
+ int qemu_close(int fd)
+ {
+-    int64_t fdset_id;
+-
+     /* Close fd that was dup'd from an fdset */
+-    fdset_id = monitor_fdset_dup_fd_find(fd);
+-    if (fdset_id != -1) {
+-        int ret;
+-
+-        ret = close(fd);
+-        if (ret == 0) {
+-            monitor_fdset_dup_fd_remove(fd);
+-        }
+-
+-        return ret;
+-    }
+-
++    monitor_fdset_dup_fd_remove(fd);
+     return close(fd);
+ }
  
 -- 
 2.35.3
