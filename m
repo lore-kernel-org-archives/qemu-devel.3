@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E186C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE00C3DA40
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHYe-0008JM-87; Thu, 23 May 2024 19:09:12 -0400
+	id 1sAHXa-00078S-6S; Thu, 23 May 2024 19:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYW-0007pN-V6; Thu, 23 May 2024 19:09:05 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1sAHXX-00077a-Ls; Thu, 23 May 2024 19:08:03 -0400
+Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYS-0005kX-Qn; Thu, 23 May 2024 19:09:04 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6f5053dc057so4048833b3a.2; 
- Thu, 23 May 2024 16:09:00 -0700 (PDT)
+ id 1sAHXV-0005cc-84; Thu, 23 May 2024 19:08:03 -0400
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-3737b412ad6so1518155ab.2; 
+ Thu, 23 May 2024 16:08:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505739; x=1717110539; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5lB5GqY0PlW3o6VVUNw0U2Pf07iRZlY3kfJLyLydulk=;
- b=AxTlhCK7joWRkKTZ0sDg7T6+pzrOmHRgKPJK6nKSo1AxItIiUQkx5NvGjXbhgOmGLB
- GjmQr57QNK9QikFfDlUqvaXjjrlZ1IqlVqMFE6elIs2ZU2jDQxUMkZLGxzqf73at+Zkg
- IZMEVDW4GIzur2EEV9GuxckmxvltQm1Cgg4MJVJX0aArpfI3QU74gsHx91YMVAxF+dNC
- iCQ52yhD4IeRkYd+rNS2Puf99oYIQk5G2XfX/lXNHp1g1Vo93qZtp9PuuGXSfdhjjX8y
- UEJCZL80/3D5pcEWDRvu5vLET5SwyHp6MY3ttsj6DKfr2UKw7ofssC474qM/AC4t0+W1
- uXSA==
+ d=gmail.com; s=20230601; t=1716505678; x=1717110478; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zAb6RBluknRBVY2rNEMcQze/Vl8XVQNfTHmRXjnRii0=;
+ b=HfajOEFzSu7VYqO0lhTeAeUyQobwoDSh0uwgRZxr+zRcwldaGnLo60awkVuNt6k+w+
+ y6zy8LL5Vx9TO9e3XA3HznhgZPMWi9pNle0lcdZeRdBydzuv1vh7qToV+BFUWYNU4KWo
+ fKvY0fCKRwuJWV1v/kfbZcY1Es96bSKKBGsK+wDD/Lgw7F7iq9Z2JeSD2/7N8nUV2p0q
+ RxKbNBsAqjeaWlwtzfjSosEgeinZtf2iv40Vhted+MZNuNFAypNRpNM10k9s28eMwE/g
+ MpZONMrmf0pm5IxDXlqS2tF3sIhkvpt4r/+ZaVBfdh9ETtePxDIUavIVICaTnfX4BJ8W
+ vqBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505739; x=1717110539;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5lB5GqY0PlW3o6VVUNw0U2Pf07iRZlY3kfJLyLydulk=;
- b=gVNJ6wiU5vtihf4WResYVsIb1hJq2kSB5qHhib5J11kpZYyne8oRQbr//NTeOypK4I
- ic6j4fvUYCFb0GMoulgSKwp9nvRKx/0LNKHrLHf7aD16LXyspZqBCrKF9mV4OO0Zozbt
- rSGGlkYhs7whFukrhXwYs84iP8RTvm4gZJqC7Q0oM36XlpJtWST0pSv+rXmyok2M7AdH
- dOlAsHGNJ0dMWARz9fyL9VK9jpMLwjkRd2AOtV31/08vyHY7a+e2NDyalWFlL2jF9DDp
- tIHYzF5f0L8Ftr92+g79AaNaK/ZXwuXI8HzzZNG4mYAuhoe/i6loY/xP1AdO5jC2sETI
- eFGQ==
+ d=1e100.net; s=20230601; t=1716505678; x=1717110478;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zAb6RBluknRBVY2rNEMcQze/Vl8XVQNfTHmRXjnRii0=;
+ b=Mz8MbELe8z9gojfA/Xk9JD7g0s/s9EByW+b8SRd3si3BPVpLoqDS5NaMVxiNOqe9j0
+ q9/qMcDIFXeGcOISFMCl14NKK0GMqTHMnC3TvqXoLZVbrtr6hnmmd9ht16heXjg6EY2E
+ wY+dKdoOGKvtA6HYfFzvVMo7ohyXOw0cnxPGj8UvoDd4jSSvNRrKzyatjn+TWKSPMTve
+ niFq0bZ1G3xvAxrY3uEtmhDPLDtlpDCi+gvtDCYDyxp7xZptuxlZinzp2/rRjiRnGcqs
+ 7RIWqWAm7ICUMdMWmmKJXfp0vxFxAOl1xJmKjUkuWgNiChS1nPQaysbhgOtgH7kZBxAA
+ qcXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUmzB5nhDypCOkb4AXlMr3rQsnsvkFR3OUpcWP17kjfmnKSgaDxNsjDMWBA2sATvQD+Sp2blsqgYrvNrLyUrSll/NY
-X-Gm-Message-State: AOJu0YzCU4yKCf6QdgodWVlHKdt+h6NYTj9Zs6teoDRQxqNJpRgBKH3G
- gD0PCYs0HKyZq2pCmK/9YXyVp7VQ1XX94EGRhNfQZo/t7dCI6cEWk/0TqQ==
-X-Google-Smtp-Source: AGHT+IGZt03rty3z8I/fGtyJ6H2C5oPv1s/rS+qsrzq8D5Lzpo6fliZcrPhMH4adyveHBo3AkxGkgA==
-X-Received: by 2002:a05:6a20:564b:b0:1af:e3f1:9af7 with SMTP id
- adf61e73a8af0-1b212d461a6mr911457637.36.1716505738741; 
- Thu, 23 May 2024 16:08:58 -0700 (PDT)
+ AJvYcCVRaYSVOdDpWDfyqXS4Cy1TAB6dquUjXrsqjHCvgLIjoltEeoWKOjhjjM6hjSPJNhAFQ0iTsXOdV6Ppluze5bxT5f3j
+X-Gm-Message-State: AOJu0Yw8MjnVGHaBNWuXsorEvQGp+5i5DjCDFOTCBjyLvijk42HKYNO+
+ BZBq3OGDM71Lr9PTyIBZHA7g6s30KS2ih+ARUNeS1eeXNqwcSyZFSM0Gkw==
+X-Google-Smtp-Source: AGHT+IEpqFE0rjC5+k+n2hRe8b3E4DfEk+NoseFGEKKvo/2i3hXAAmPlolvr/xHQ+d20Jlfx4umvMQ==
+X-Received: by 2002:a92:c26d:0:b0:36b:3b10:7419 with SMTP id
+ e9e14a558f8ab-3737b302a5cmr7193945ab.32.1716505678067; 
+ Thu, 23 May 2024 16:07:58 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.55
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.07.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:08:58 -0700 (PDT)
+ Thu, 23 May 2024 16:07:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 19/72] target/ppc: Move VMX storage access instructions to
- decodetree
-Date: Fri, 24 May 2024 09:06:52 +1000
-Message-ID: <20240523230747.45703-20-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 00/72] ppc-for-9.1-1 queue
+Date: Fri, 24 May 2024 09:06:33 +1000
+Message-ID: <20240523230747.45703-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
-References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,454 +92,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+The following changes since commit 70581940cabcc51b329652becddfbc6a261b1b83:
 
-Moving the following instructions to decodetree specification :
+  Merge tag 'pull-tcg-20240523' of https://gitlab.com/rth7680/qemu into staging (2024-05-23 09:47:40 -0700)
 
-	{l,st}ve{b,h,w}x,
-	{l,st}v{x,xl},
-	lvs{l,r}		: X-form
+are available in the Git repository at:
 
-The changes were verified by validating that the tcg ops generated by those
-instructions remain the same, which were captured using the '-d in_asm,op' flag.
+  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.1-1-20240524
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/helper.h                 |  12 +-
- target/ppc/insn32.decode            |  17 +++
- target/ppc/mem_helper.c             |  12 +-
- target/ppc/translate.c              |   2 -
- target/ppc/translate/vmx-impl.c.inc | 221 ++++++++++++----------------
- target/ppc/translate/vmx-ops.c.inc  |  19 ---
- 6 files changed, 120 insertions(+), 163 deletions(-)
+for you to fetch changes up to 4e0e22a2de927ec827e3464f7aedd47ed22268d2:
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 4267917615..6d6f31366c 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -267,12 +267,12 @@ DEF_HELPER_5(VMSUMSHS, void, env, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_5(VMLADDUHM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr, i32)
- DEF_HELPER_FLAGS_2(mtvscr, TCG_CALL_NO_RWG, void, env, i32)
- DEF_HELPER_FLAGS_1(mfvscr, TCG_CALL_NO_RWG, i32, env)
--DEF_HELPER_3(lvebx, void, env, avr, tl)
--DEF_HELPER_3(lvehx, void, env, avr, tl)
--DEF_HELPER_3(lvewx, void, env, avr, tl)
--DEF_HELPER_3(stvebx, void, env, avr, tl)
--DEF_HELPER_3(stvehx, void, env, avr, tl)
--DEF_HELPER_3(stvewx, void, env, avr, tl)
-+DEF_HELPER_3(LVEBX, void, env, avr, tl)
-+DEF_HELPER_3(LVEHX, void, env, avr, tl)
-+DEF_HELPER_3(LVEWX, void, env, avr, tl)
-+DEF_HELPER_3(STVEBX, void, env, avr, tl)
-+DEF_HELPER_3(STVEHX, void, env, avr, tl)
-+DEF_HELPER_3(STVEWX, void, env, avr, tl)
- #if defined(TARGET_PPC64)
- DEF_HELPER_4(lxvl, void, env, tl, vsr, tl)
- DEF_HELPER_4(lxvll, void, env, tl, vsr, tl)
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index dc62bc90aa..11be21d230 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -661,6 +661,23 @@ DSCRIQ          111111 ..... ..... ...... 001100010 .   @Z22_tap_sh_rc
- 
- VPMSUMD         000100 ..... ..... ..... 10011001000    @VX
- 
-+## Vector Load/Store Instructions
-+
-+LVEBX           011111 ..... ..... ..... 0000000111 -   @X
-+LVEHX           011111 ..... ..... ..... 0000100111 -   @X
-+LVEWX           011111 ..... ..... ..... 0001000111 -   @X
-+LVX             011111 ..... ..... ..... 0001100111 -   @X
-+LVXL            011111 ..... ..... ..... 0101100111 -   @X
-+
-+STVEBX          011111 ..... ..... ..... 0010000111 -   @X
-+STVEHX          011111 ..... ..... ..... 0010100111 -   @X
-+STVEWX          011111 ..... ..... ..... 0011000111 -   @X
-+STVX            011111 ..... ..... ..... 0011100111 -   @X
-+STVXL           011111 ..... ..... ..... 0111100111 -   @X
-+
-+LVSL            011111 ..... ..... ..... 0000000110 -   @X
-+LVSR            011111 ..... ..... ..... 0000100110 -   @X
-+
- ## Vector Integer Instructions
- 
- VCMPEQUB        000100 ..... ..... ..... . 0000000110   @VC
-diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index ea7e8443a8..f88155ad45 100644
---- a/target/ppc/mem_helper.c
-+++ b/target/ppc/mem_helper.c
-@@ -404,9 +404,9 @@ target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-         }                                                       \
-     }
- #define I(x) (x)
--LVE(lvebx, cpu_ldub_data_ra, I, u8)
--LVE(lvehx, cpu_lduw_data_ra, bswap16, u16)
--LVE(lvewx, cpu_ldl_data_ra, bswap32, u32)
-+LVE(LVEBX, cpu_ldub_data_ra, I, u8)
-+LVE(LVEHX, cpu_lduw_data_ra, bswap16, u16)
-+LVE(LVEWX, cpu_ldl_data_ra, bswap32, u32)
- #undef I
- #undef LVE
- 
-@@ -432,9 +432,9 @@ LVE(lvewx, cpu_ldl_data_ra, bswap32, u32)
-         }                                                               \
-     }
- #define I(x) (x)
--STVE(stvebx, cpu_stb_data_ra, I, u8)
--STVE(stvehx, cpu_stw_data_ra, bswap16, u16)
--STVE(stvewx, cpu_stl_data_ra, bswap32, u32)
-+STVE(STVEBX, cpu_stb_data_ra, I, u8)
-+STVE(STVEHX, cpu_stw_data_ra, bswap16, u16)
-+STVE(STVEWX, cpu_stl_data_ra, bswap32, u32)
- #undef I
- #undef LVE
- 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 2cfa7d37ee..2c39605273 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -5790,8 +5790,6 @@ GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x03E00001,
-                PPC_BOOKE, PPC2_BOOKE206),
- GEN_HANDLER2(icbt_440, "icbt", 0x1F, 0x06, 0x08, 0x03E00001,
-              PPC_440_SPEC),
--GEN_HANDLER(lvsl, 0x1f, 0x06, 0x00, 0x00000001, PPC_ALTIVEC),
--GEN_HANDLER(lvsr, 0x1f, 0x06, 0x01, 0x00000001, PPC_ALTIVEC),
- GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
- GEN_HANDLER(mtvscr, 0x04, 0x2, 0x19, 0x03ff0000, PPC_ALTIVEC),
- 
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index b56e615c24..4d5e743cfe 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -14,125 +14,88 @@ static inline TCGv_ptr gen_avr_ptr(int reg)
-     return r;
- }
- 
--#define GEN_VR_LDX(name, opc2, opc3)                                          \
--static void glue(gen_, name)(DisasContext *ctx)                               \
--{                                                                             \
--    TCGv EA;                                                                  \
--    TCGv_i64 avr;                                                             \
--    if (unlikely(!ctx->altivec_enabled)) {                                    \
--        gen_exception(ctx, POWERPC_EXCP_VPU);                                 \
--        return;                                                               \
--    }                                                                         \
--    gen_set_access_type(ctx, ACCESS_INT);                                     \
--    avr = tcg_temp_new_i64();                                                 \
--    EA = tcg_temp_new();                                                      \
--    gen_addr_reg_index(ctx, EA);                                              \
--    tcg_gen_andi_tl(EA, EA, ~0xf);                                            \
--    /*                                                                        \
--     * We only need to swap high and low halves. gen_qemu_ld64_i64            \
--     * does necessary 64-bit byteswap already.                                \
--     */                                                                       \
--    if (ctx->le_mode) {                                                       \
--        gen_qemu_ld64_i64(ctx, avr, EA);                                      \
--        set_avr64(rD(ctx->opcode), avr, false);                               \
--        tcg_gen_addi_tl(EA, EA, 8);                                           \
--        gen_qemu_ld64_i64(ctx, avr, EA);                                      \
--        set_avr64(rD(ctx->opcode), avr, true);                                \
--    } else {                                                                  \
--        gen_qemu_ld64_i64(ctx, avr, EA);                                      \
--        set_avr64(rD(ctx->opcode), avr, true);                                \
--        tcg_gen_addi_tl(EA, EA, 8);                                           \
--        gen_qemu_ld64_i64(ctx, avr, EA);                                      \
--        set_avr64(rD(ctx->opcode), avr, false);                               \
--    }                                                                         \
--}
--
--#define GEN_VR_STX(name, opc2, opc3)                                          \
--static void gen_st##name(DisasContext *ctx)                                   \
--{                                                                             \
--    TCGv EA;                                                                  \
--    TCGv_i64 avr;                                                             \
--    if (unlikely(!ctx->altivec_enabled)) {                                    \
--        gen_exception(ctx, POWERPC_EXCP_VPU);                                 \
--        return;                                                               \
--    }                                                                         \
--    gen_set_access_type(ctx, ACCESS_INT);                                     \
--    avr = tcg_temp_new_i64();                                                 \
--    EA = tcg_temp_new();                                                      \
--    gen_addr_reg_index(ctx, EA);                                              \
--    tcg_gen_andi_tl(EA, EA, ~0xf);                                            \
--    /*                                                                        \
--     * We only need to swap high and low halves. gen_qemu_st64_i64            \
--     * does necessary 64-bit byteswap already.                                \
--     */                                                                       \
--    if (ctx->le_mode) {                                                       \
--        get_avr64(avr, rD(ctx->opcode), false);                               \
--        gen_qemu_st64_i64(ctx, avr, EA);                                      \
--        tcg_gen_addi_tl(EA, EA, 8);                                           \
--        get_avr64(avr, rD(ctx->opcode), true);                                \
--        gen_qemu_st64_i64(ctx, avr, EA);                                      \
--    } else {                                                                  \
--        get_avr64(avr, rD(ctx->opcode), true);                                \
--        gen_qemu_st64_i64(ctx, avr, EA);                                      \
--        tcg_gen_addi_tl(EA, EA, 8);                                           \
--        get_avr64(avr, rD(ctx->opcode), false);                               \
--        gen_qemu_st64_i64(ctx, avr, EA);                                      \
--    }                                                                         \
--}
--
--#define GEN_VR_LVE(name, opc2, opc3, size)                              \
--static void gen_lve##name(DisasContext *ctx)                            \
--    {                                                                   \
--        TCGv EA;                                                        \
--        TCGv_ptr rs;                                                    \
--        if (unlikely(!ctx->altivec_enabled)) {                          \
--            gen_exception(ctx, POWERPC_EXCP_VPU);                       \
--            return;                                                     \
--        }                                                               \
--        gen_set_access_type(ctx, ACCESS_INT);                           \
--        EA = tcg_temp_new();                                            \
--        gen_addr_reg_index(ctx, EA);                                    \
--        if (size > 1) {                                                 \
--            tcg_gen_andi_tl(EA, EA, ~(size - 1));                       \
--        }                                                               \
--        rs = gen_avr_ptr(rS(ctx->opcode));                              \
--        gen_helper_lve##name(tcg_env, rs, EA);                          \
--    }
--
--#define GEN_VR_STVE(name, opc2, opc3, size)                             \
--static void gen_stve##name(DisasContext *ctx)                           \
--    {                                                                   \
--        TCGv EA;                                                        \
--        TCGv_ptr rs;                                                    \
--        if (unlikely(!ctx->altivec_enabled)) {                          \
--            gen_exception(ctx, POWERPC_EXCP_VPU);                       \
--            return;                                                     \
--        }                                                               \
--        gen_set_access_type(ctx, ACCESS_INT);                           \
--        EA = tcg_temp_new();                                            \
--        gen_addr_reg_index(ctx, EA);                                    \
--        if (size > 1) {                                                 \
--            tcg_gen_andi_tl(EA, EA, ~(size - 1));                       \
--        }                                                               \
--        rs = gen_avr_ptr(rS(ctx->opcode));                              \
--        gen_helper_stve##name(tcg_env, rs, EA);                         \
--    }
-+static bool trans_LVX(DisasContext *ctx, arg_X *a)
-+{
-+    TCGv EA;
-+    TCGv_i64 avr;
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    REQUIRE_VECTOR(ctx);
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    avr = tcg_temp_new_i64();
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    tcg_gen_andi_tl(EA, EA, ~0xf);
-+    /*
-+     * We only need to swap high and low halves. gen_qemu_ld64_i64
-+     * does necessary 64-bit byteswap already.
-+     */
-+    gen_qemu_ld64_i64(ctx, avr, EA);
-+    set_avr64(a->rt, avr, !ctx->le_mode);
-+    tcg_gen_addi_tl(EA, EA, 8);
-+    gen_qemu_ld64_i64(ctx, avr, EA);
-+    set_avr64(a->rt, avr, ctx->le_mode);
-+    return true;
-+}
- 
--GEN_VR_LDX(lvx, 0x07, 0x03);
- /* As we don't emulate the cache, lvxl is strictly equivalent to lvx */
--GEN_VR_LDX(lvxl, 0x07, 0x0B);
-+QEMU_FLATTEN
-+static bool trans_LVXL(DisasContext *ctx, arg_LVXL *a)
-+{
-+    return trans_LVX(ctx, a);
-+}
- 
--GEN_VR_LVE(bx, 0x07, 0x00, 1);
--GEN_VR_LVE(hx, 0x07, 0x01, 2);
--GEN_VR_LVE(wx, 0x07, 0x02, 4);
-+static bool trans_STVX(DisasContext *ctx, arg_STVX *a)
-+{
-+    TCGv EA;
-+    TCGv_i64 avr;
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    REQUIRE_VECTOR(ctx);
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    avr = tcg_temp_new_i64();
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    tcg_gen_andi_tl(EA, EA, ~0xf);
-+    /*
-+     * We only need to swap high and low halves. gen_qemu_st64_i64
-+     * does necessary 64-bit byteswap already.
-+     */
-+    get_avr64(avr, a->rt, !ctx->le_mode);
-+    gen_qemu_st64_i64(ctx, avr, EA);
-+    tcg_gen_addi_tl(EA, EA, 8);
-+    get_avr64(avr, a->rt, ctx->le_mode);
-+    gen_qemu_st64_i64(ctx, avr, EA);
-+    return true;
-+}
- 
--GEN_VR_STX(svx, 0x07, 0x07);
- /* As we don't emulate the cache, stvxl is strictly equivalent to stvx */
--GEN_VR_STX(svxl, 0x07, 0x0F);
-+QEMU_FLATTEN
-+static bool trans_STVXL(DisasContext *ctx, arg_STVXL *a)
-+{
-+    return trans_STVX(ctx, a);
-+}
-+
-+static bool do_ldst_ve_X(DisasContext *ctx, arg_X *a, int size,
-+                   void (*helper)(TCGv_env, TCGv_ptr, TCGv))
-+{
-+    TCGv EA;
-+    TCGv_ptr vrt;
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    REQUIRE_VECTOR(ctx);
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    if (size > 1) {
-+        tcg_gen_andi_tl(EA, EA, ~(size - 1));
-+    }
-+    vrt = gen_avr_ptr(a->rt);
-+    helper(tcg_env, vrt, EA);
-+    return true;
-+}
-+
-+TRANS(LVEBX, do_ldst_ve_X, 1, gen_helper_LVEBX);
-+TRANS(LVEHX, do_ldst_ve_X, 2, gen_helper_LVEHX);
-+TRANS(LVEWX, do_ldst_ve_X, 4, gen_helper_LVEWX);
- 
--GEN_VR_STVE(bx, 0x07, 0x04, 1);
--GEN_VR_STVE(hx, 0x07, 0x05, 2);
--GEN_VR_STVE(wx, 0x07, 0x06, 4);
-+TRANS(STVEBX, do_ldst_ve_X, 1, gen_helper_STVEBX);
-+TRANS(STVEHX, do_ldst_ve_X, 2, gen_helper_STVEHX);
-+TRANS(STVEWX, do_ldst_ve_X, 4, gen_helper_STVEWX);
- 
- static void gen_mfvscr(DisasContext *ctx)
- {
-@@ -460,15 +423,17 @@ static void trans_vmrgow(DisasContext *ctx)
-  * Let X be the 32-byte value 0x00 || 0x01 || 0x02 || ... || 0x1E || 0x1F.
-  * Bytes sh:sh+15 of X are placed into vD.
-  */
--static void trans_lvsl(DisasContext *ctx)
-+static bool trans_LVSL(DisasContext *ctx, arg_LVSL *a)
- {
--    int VT = rD(ctx->opcode);
-     TCGv_i64 result = tcg_temp_new_i64();
-     TCGv_i64 sh = tcg_temp_new_i64();
-     TCGv EA = tcg_temp_new();
- 
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    REQUIRE_VECTOR(ctx);
-+
-     /* Get sh(from description) by anding EA with 0xf. */
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_extu_tl_i64(sh, EA);
-     tcg_gen_andi_i64(sh, sh, 0xfULL);
- 
-@@ -478,13 +443,14 @@ static void trans_lvsl(DisasContext *ctx)
-      */
-     tcg_gen_muli_i64(sh, sh, 0x0101010101010101ULL);
-     tcg_gen_addi_i64(result, sh, 0x0001020304050607ull);
--    set_avr64(VT, result, true);
-+    set_avr64(a->rt, result, true);
-     /*
-      * Create bytes sh+8:sh+15 of X(from description) and place them in
-      * lower doubleword of vD.
-      */
-     tcg_gen_addi_i64(result, sh, 0x08090a0b0c0d0e0fULL);
--    set_avr64(VT, result, false);
-+    set_avr64(a->rt, result, false);
-+    return true;
- }
- 
- /*
-@@ -494,16 +460,17 @@ static void trans_lvsl(DisasContext *ctx)
-  * Let X be the 32-byte value 0x00 || 0x01 || 0x02 || ... || 0x1E || 0x1F.
-  * Bytes (16-sh):(31-sh) of X are placed into vD.
-  */
--static void trans_lvsr(DisasContext *ctx)
-+static bool trans_LVSR(DisasContext *ctx, arg_LVSR *a)
- {
--    int VT = rD(ctx->opcode);
-     TCGv_i64 result = tcg_temp_new_i64();
-     TCGv_i64 sh = tcg_temp_new_i64();
-     TCGv EA = tcg_temp_new();
- 
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    REQUIRE_VECTOR(ctx);
- 
-     /* Get sh(from description) by anding EA with 0xf. */
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_extu_tl_i64(sh, EA);
-     tcg_gen_andi_i64(sh, sh, 0xfULL);
- 
-@@ -513,13 +480,14 @@ static void trans_lvsr(DisasContext *ctx)
-      */
-     tcg_gen_muli_i64(sh, sh, 0x0101010101010101ULL);
-     tcg_gen_subfi_i64(result, 0x1011121314151617ULL, sh);
--    set_avr64(VT, result, true);
-+    set_avr64(a->rt, result, true);
-     /*
-      * Create bytes (24-sh):(32-sh) of X(from description) and place them in
-      * lower doubleword of vD.
-      */
-     tcg_gen_subfi_i64(result, 0x18191a1b1c1d1e1fULL, sh);
--    set_avr64(VT, result, false);
-+    set_avr64(a->rt, result, false);
-+    return true;
- }
- 
- /*
-@@ -1158,8 +1126,6 @@ GEN_VXFORM_TRANS_DUAL(vmrgow, PPC_NONE, PPC2_ALTIVEC_207,
- GEN_VXFORM_HETRO(vextubrx, 6, 28)
- GEN_VXFORM_HETRO(vextuhrx, 6, 29)
- GEN_VXFORM_HETRO(vextuwrx, 6, 30)
--GEN_VXFORM_TRANS(lvsl, 6, 31)
--GEN_VXFORM_TRANS(lvsr, 6, 32)
- GEN_VXFORM_TRANS_DUAL(vmrgew, PPC_NONE, PPC2_ALTIVEC_207,
-                 vextuwrx, PPC_NONE, PPC2_ISA300)
- 
-@@ -3365,11 +3331,6 @@ TRANS_FLAGS2(ISA310, VMODUQ, do_vx_helper, gen_helper_VMODUQ)
- #undef DIVS64
- #undef DIVU64
- 
--#undef GEN_VR_LDX
--#undef GEN_VR_STX
--#undef GEN_VR_LVE
--#undef GEN_VR_STVE
--
- #undef GEN_VX_LOGICAL
- #undef GEN_VX_LOGICAL_207
- #undef GEN_VXFORM
-diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
-index 33fec8aca4..672fba3796 100644
---- a/target/ppc/translate/vmx-ops.c.inc
-+++ b/target/ppc/translate/vmx-ops.c.inc
-@@ -1,22 +1,3 @@
--#define GEN_VR_LDX(name, opc2, opc3)                                          \
--GEN_HANDLER(name, 0x1F, opc2, opc3, 0x00000001, PPC_ALTIVEC)
--#define GEN_VR_STX(name, opc2, opc3)                                          \
--GEN_HANDLER(st##name, 0x1F, opc2, opc3, 0x00000001, PPC_ALTIVEC)
--#define GEN_VR_LVE(name, opc2, opc3)                                    \
--    GEN_HANDLER(lve##name, 0x1F, opc2, opc3, 0x00000001, PPC_ALTIVEC)
--#define GEN_VR_STVE(name, opc2, opc3)                                   \
--    GEN_HANDLER(stve##name, 0x1F, opc2, opc3, 0x00000001, PPC_ALTIVEC)
--GEN_VR_LDX(lvx, 0x07, 0x03),
--GEN_VR_LDX(lvxl, 0x07, 0x0B),
--GEN_VR_LVE(bx, 0x07, 0x00),
--GEN_VR_LVE(hx, 0x07, 0x01),
--GEN_VR_LVE(wx, 0x07, 0x02),
--GEN_VR_STX(svx, 0x07, 0x07),
--GEN_VR_STX(svxl, 0x07, 0x0F),
--GEN_VR_STVE(bx, 0x07, 0x04),
--GEN_VR_STVE(hx, 0x07, 0x05),
--GEN_VR_STVE(wx, 0x07, 0x06),
--
- #define GEN_VX_LOGICAL(name, tcg_op, opc2, opc3)                        \
- GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_ALTIVEC)
- 
--- 
-2.43.0
+  target/ppc: Remove pp_check() and reuse ppc_hash32_pp_prot() (2024-05-24 08:57:51 +1000)
 
+----------------------------------------------------------------
+* Fix an interesting TLB invalidate race
+* Implement more instructions with decodetree
+* Add the POWER8/9/10 BHRB facility
+* Add missing instructions, registers, SMT support
+* First round of a big MMU xlate cleanup
+
+----------------------------------------------------------------
+BALATON Zoltan (33):
+      target/ppc: Remove unused helper
+      target/ppc/mmu_common.c: Move calculation of a value closer to its usage
+      target/ppc/mmu_common.c: Remove unneeded local variable
+      target/ppc/mmu_common.c: Simplify checking for real mode
+      target/ppc/mmu_common.c: Drop cases for unimplemented MPC8xx MMU
+      target/ppc/mmu_common.c: Introduce mmu6xx_get_physical_address()
+      target/ppc/mmu_common.c: Move else branch to avoid large if block
+      target/ppc/mmu_common.c: Move some debug logging
+      target/ppc/mmu_common.c: Eliminate ret from mmu6xx_get_physical_address()
+      target/ppc/mmu_common.c: Split out BookE cases before checking real mode
+      target/ppc/mmu_common.c: Split off real mode cases in get_physical_address_wtlb()
+      target/ppc/mmu_common.c: Inline and remove check_physical()
+      target/ppc/mmu_common.c: Fix misindented qemu_log_mask() calls
+      target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
+      target/ppc/mmu_common.c: Replace hard coded constants in ppc_jumbo_xlate()
+      target/ppc/mmu_common.c: Don't use mmu_ctx_t for mmu40x_get_physical_address()
+      target/ppc/mmu_common.c: Don't use mmu_ctx_t in mmubooke_get_physical_address()
+      target/ppc/mmu_common.c: Don't use mmu_ctx_t in mmubooke206_get_physical_address()
+      target/ppc/mmu_common.c: Remove BookE from direct store handling
+      target/ppc/mmu_common.c: Split off BookE handling from ppc_jumbo_xlate()
+      target/ppc/mmu_common.c: Simplify ppc_booke_xlate() part 1
+      target/ppc/mmu_common.c: Simplify ppc_booke_xlate() part 2
+      target/ppc/mmu_common.c: Split off real mode handling from get_physical_address_wtlb()
+      target/ppc/mmu_common.c: Split off 40x cases from ppc_jumbo_xlate()
+      target/ppc/mmu_common.c: Transform ppc_jumbo_xlate() into ppc_6xx_xlate()
+      target/ppc/mmu_common.c: Move mmu_ctx_t type to mmu_common.c
+      target/ppc: Remove id_tlbs flag from CPU env
+      target/ppc: Split off common embedded TLB init
+      target/ppc/mmu-hash32.c: Drop a local variable
+      target/ppc/mmu-radix64.c: Drop a local variable
+      target/ppc: Add a function to check for page protection bit
+      target/ppc: Move out BookE and related MMU functions from mmu_common.c
+      target/ppc: Remove pp_check() and reuse ppc_hash32_pp_prot()
+
+Chinmay Rath (13):
+      target/ppc: Merge various fpu helpers
+      target/ppc: Move floating-point arithmetic instructions to decodetree.
+      target/ppc: Move mul{li, lw, lwo, hw, hwu} instructions to decodetree.
+      target/ppc: Make divw[u] handler method decodetree compatible.
+      target/ppc: Move divw[u, e, eu] instructions to decodetree.
+      target/ppc: Move neg, darn, mod{sw, uw} to decodetree.
+      target/ppc: Move multiply fixed-point insns (64-bit operands) to decodetree.
+      target/ppc: Move div/mod fixed-point insns (64 bits operands) to decodetree.
+      target/ppc: Move cmp{rb, eqb}, tw[i], td[i], isel instructions to decodetree.
+      target/ppc: Move logical fixed-point instructions to decodetree.
+      target/ppc: Move VMX storage access instructions to decodetree
+      target/ppc: Move VMX integer logical instructions to decodetree.
+      target/ppc: Move VMX integer max/min instructions to decodetree.
+
+Dr. David Alan Gilbert (1):
+      target/ppc: Remove unused struct 'mmu_ctx_hash32'
+
+Glenn Miles (4):
+      This commit is preparatory to the addition of Branch History Rolling Buffer (BHRB) functionality, which is being provided today starting with the P8 processor.
+      This commit continues adding support for the Branch History Rolling Buffer (BHRB) as is provided starting with the P8 processor and continuing with its successors.  This commit is limited to the recording and filtering of taken branches.
+      Add support for the clrbhrb and mfbhrbe instructions.
+      Adds migration support for Branch History Rolling Buffer (BHRB) internal state.
+
+Nicholas Piggin (21):
+      spapr: avoid overhead of finding vhyp class in critical operations
+      ppc/spapr: Add ibm,pi-features
+      target/ppc: Fix broadcast tlbie synchronisation
+      tcg/cputlb: Remove non-synced variants of global TLB flushes
+      tcg/cputlb: remove other-cpu capability from TLB flushing
+      target/ppc: Move sync instructions to decodetree
+      target/ppc: Fix embedded memory barriers
+      target/ppc: Add ISA v3.1 variants of sync instruction
+      target/ppc: larx/stcx generation need only apply DEF_MEMOP() once
+      target/ppc: Remove redundant MEMOP_GET_SIZE macro
+      target/ppc: Make checkstop actually stop the system
+      target/ppc: improve checkstop logging
+      target/ppc: Implement attn instruction on BookS 64-bit processors
+      target/ppc: BookE DECAR SPR is 32-bit
+      target/ppc: Add PPR32 SPR
+      target/ppc: add helper to write per-LPAR SPRs
+      target/ppc: Add SMT support to simple SPRs
+      target/ppc: Add SMT support to PTCR SPR
+      target/ppc: Implement LDBAR, TTR SPRs
+      target/ppc: Implement SPRC/SPRD SPRs
+      target/ppc: add SMT support to msgsnd broadcast
+
+ accel/tcg/cputlb.c                             |  145 +--
+ docs/devel/multi-thread-tcg.rst                |   13 +-
+ hw/ppc/pegasos2.c                              |    3 +-
+ hw/ppc/spapr.c                                 |   28 +
+ include/exec/exec-all.h                        |   97 +-
+ target/ppc/cpu.h                               |   64 +-
+ target/ppc/cpu_init.c                          |  235 +++--
+ target/ppc/excp_helper.c                       |  134 ++-
+ target/ppc/fpu_helper.c                        |  235 ++---
+ target/ppc/helper.h                            |   98 +-
+ target/ppc/helper_regs.c                       |   40 +-
+ target/ppc/insn32.decode                       |  204 ++++
+ target/ppc/int_helper.c                        |   24 +-
+ target/ppc/internal.h                          |   40 +-
+ target/ppc/kvm.c                               |    4 +-
+ target/ppc/machine.c                           |   23 +-
+ target/ppc/mem_helper.c                        |   12 +-
+ target/ppc/meson.build                         |    1 +
+ target/ppc/misc_helper.c                       |  132 ++-
+ target/ppc/mmu-book3s-v3.h                     |    4 +-
+ target/ppc/mmu-booke.c                         |  531 +++++++++++
+ target/ppc/mmu-booke.h                         |   17 +
+ target/ppc/mmu-hash32.c                        |   60 +-
+ target/ppc/mmu-hash32.h                        |   45 +
+ target/ppc/mmu-hash64.c                        |   18 +-
+ target/ppc/mmu-radix64.c                       |    9 +-
+ target/ppc/mmu_common.c                        | 1197 ++++++------------------
+ target/ppc/mmu_helper.c                        |   39 +-
+ target/ppc/power8-pmu-regs.c.inc               |    5 +
+ target/ppc/power8-pmu.c                        |   48 +-
+ target/ppc/power8-pmu.h                        |   11 +-
+ target/ppc/spr_common.h                        |    8 +
+ target/ppc/translate.c                         | 1151 ++++-------------------
+ target/ppc/translate/bhrb-impl.c.inc           |   43 +
+ target/ppc/translate/branch-impl.c.inc         |    2 +-
+ target/ppc/translate/fixedpoint-impl.c.inc     |  727 ++++++++++++++
+ target/ppc/translate/fp-impl.c.inc             |  285 +++---
+ target/ppc/translate/fp-ops.c.inc              |   31 -
+ target/ppc/translate/misc-impl.c.inc           |  157 ++++
+ target/ppc/translate/processor-ctrl-impl.c.inc |    2 +-
+ target/ppc/translate/storage-ctrl-impl.c.inc   |    7 +
+ target/ppc/translate/vmx-impl.c.inc            |  280 +++---
+ target/ppc/translate/vmx-ops.c.inc             |   50 -
+ 43 files changed, 3267 insertions(+), 2992 deletions(-)
+ create mode 100644 target/ppc/mmu-booke.c
+ create mode 100644 target/ppc/mmu-booke.h
+ create mode 100644 target/ppc/translate/bhrb-impl.c.inc
+ create mode 100644 target/ppc/translate/misc-impl.c.inc
 
