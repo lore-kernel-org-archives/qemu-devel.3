@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C19C25B7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E541AC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sADlT-000280-HB; Thu, 23 May 2024 15:06:11 -0400
+	id 1sADmK-0002hn-Hs; Thu, 23 May 2024 15:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlR-00025A-3T
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:09 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlv-0002Gb-GI
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:39 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlP-0004Ge-Fp
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:08 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlt-0004LD-2Q
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:38 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 232F622B78;
- Thu, 23 May 2024 19:06:06 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D368220412;
+ Thu, 23 May 2024 19:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491166; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716491195; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ntI6Ev69Q4/AWtXPMvGfO4VO9JtK9Spzna77OmuCw9c=;
- b=Go53YdA1SA6+a5WbRJO+pUKq/veH8Xx+iV1z5aWdhfkKeMA/XyErsdweaBp2qR/3Jr1fpm
- OVaIwm07bnuiaYErIat9zE0Cb/TB/J0sFQqLnXxLoqUK7Kd+R4th/LGaTTkYrP8X0ZuKV8
- AsF96vFzmAFpbmXfSW4RnQcPAw29+lk=
+ bh=OjnxH7khDXmrflJOrKVMiCdjvXgeY6BwXBZDPxXoGaw=;
+ b=g/9ZYB2QtEraUnqA+pfGWx0n5HhZMWF0ebivw5RKRWS3ZdrBRCqTP55e/xnuZExUo9Xmdk
+ iZrS16H44a2SU5DMy3oMl9gmyh0mO3LQPhNkyZjFbe0f2veqRxwWJs5xpfiQhbGxFvc+Pz
+ 2IqKTWHn8AK1lpY8/ZOIGZKhQq3aPo8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491166;
+ s=susede2_ed25519; t=1716491195;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ntI6Ev69Q4/AWtXPMvGfO4VO9JtK9Spzna77OmuCw9c=;
- b=V7CytLSLPBfezC7lkOZC2Gf1Qmv99sdXLILUsRSmntGqJQF9pFQ/GnQroZUQhKRWh4YH8j
- 1Rr2LrDA/JOyPMAA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Go53YdA1;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=V7CytLSL
+ bh=OjnxH7khDXmrflJOrKVMiCdjvXgeY6BwXBZDPxXoGaw=;
+ b=gaYFYbhX1BLt/DTndEKFkFGnJ0+YZQKdt0OKC9y0OcczkiKEmapjhWxiti6/nU58KCP1Lm
+ gSgBRzD/c+R1xRBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491166; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716491195; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ntI6Ev69Q4/AWtXPMvGfO4VO9JtK9Spzna77OmuCw9c=;
- b=Go53YdA1SA6+a5WbRJO+pUKq/veH8Xx+iV1z5aWdhfkKeMA/XyErsdweaBp2qR/3Jr1fpm
- OVaIwm07bnuiaYErIat9zE0Cb/TB/J0sFQqLnXxLoqUK7Kd+R4th/LGaTTkYrP8X0ZuKV8
- AsF96vFzmAFpbmXfSW4RnQcPAw29+lk=
+ bh=OjnxH7khDXmrflJOrKVMiCdjvXgeY6BwXBZDPxXoGaw=;
+ b=g/9ZYB2QtEraUnqA+pfGWx0n5HhZMWF0ebivw5RKRWS3ZdrBRCqTP55e/xnuZExUo9Xmdk
+ iZrS16H44a2SU5DMy3oMl9gmyh0mO3LQPhNkyZjFbe0f2veqRxwWJs5xpfiQhbGxFvc+Pz
+ 2IqKTWHn8AK1lpY8/ZOIGZKhQq3aPo8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491166;
+ s=susede2_ed25519; t=1716491195;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ntI6Ev69Q4/AWtXPMvGfO4VO9JtK9Spzna77OmuCw9c=;
- b=V7CytLSLPBfezC7lkOZC2Gf1Qmv99sdXLILUsRSmntGqJQF9pFQ/GnQroZUQhKRWh4YH8j
- 1Rr2LrDA/JOyPMAA==
+ bh=OjnxH7khDXmrflJOrKVMiCdjvXgeY6BwXBZDPxXoGaw=;
+ b=gaYFYbhX1BLt/DTndEKFkFGnJ0+YZQKdt0OKC9y0OcczkiKEmapjhWxiti6/nU58KCP1Lm
+ gSgBRzD/c+R1xRBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4BB8F13A6B;
- Thu, 23 May 2024 19:06:04 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0A65813A6B;
+ Thu, 23 May 2024 19:06:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0JvzBJyTT2bUEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:04 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id APrUMLmTT2bUEQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
  Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: [PATCH v2 05/18] monitor: Introduce monitor_fdset_*free
-Date: Thu, 23 May 2024 16:05:35 -0300
-Message-Id: <20240523190548.23977-6-farosas@suse.de>
+Subject: [PATCH v2 17/18] migration: Add direct-io helpers
+Date: Thu, 23 May 2024 16:05:47 -0300
+Message-Id: <20240523190548.23977-18-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240523190548.23977-1-farosas@suse.de>
 References: <20240523190548.23977-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-0.03 / 50.00]; MID_CONTAINS_FROM(1.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- BAYES_HAM(-0.02)[54.66%]; MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCPT_COUNT_FIVE(0.00)[6]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 232F622B78
-X-Spamd-Bar: /
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -127,72 +118,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce two new functions to remove and free no longer used fds and
-fdsets.
+We support using O_DIRECT with multifd by isolating the main migration
+channel which does unaligned IO from the multifd channels that do
+aligned IO. When multifd is not enabled, we can still use O_DIRECT, if
+we judiciously enable/disable the flag to avoid the unaligned IO.
 
-We need those to decouple the remove/free routines from
-monitor_fdset_cleanup() which will go away in the next patches.
-
-The new functions:
-
-- monitor_fdset_free() will be used when a monitor connection closes
-  and when an fd is removed to cleanup any fdset that is now empty.
-
-- monitor_fdset_fd_free() will be used to remove one or more fds that
-  have been explicitly targeted by qmp_remove_fd().
+Add helpers to enable/disable direct-io around the aligned parts.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- monitor/fds.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ migration/migration.c | 31 +++++++++++++++++++++++++++++++
+ migration/migration.h |  2 ++
+ migration/qemu-file.c | 29 +++++++++++++++++++++++++++++
+ migration/qemu-file.h |  2 +-
+ 4 files changed, 63 insertions(+), 1 deletion(-)
 
-diff --git a/monitor/fds.c b/monitor/fds.c
-index fb9f58c056..101e21720d 100644
---- a/monitor/fds.c
-+++ b/monitor/fds.c
-@@ -167,6 +167,22 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
-     return -1;
+diff --git a/migration/migration.c b/migration/migration.c
+index e03c80b3aa..be128f95da 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -420,6 +420,37 @@ static void migrate_generate_event(int new_state)
+     }
  }
  
-+static void monitor_fdset_free(MonFdset *mon_fdset)
++bool migration_direct_io_start(QEMUFile *file, Error **errp)
 +{
-+    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
-+        QLIST_REMOVE(mon_fdset, next);
-+        g_free(mon_fdset);
++    if (!migrate_direct_io() || migrate_multifd()) {
++        return true;
 +    }
++
++    /* flush any potentially unaligned IO before setting O_DIRECT */
++    qemu_fflush(file);
++
++    if (!qemu_file_set_direct_io(file, true)) {
++        error_setg(errp, "Failed to enable direct-io");
++        return false;
++    }
++
++    return true;
 +}
 +
-+static void monitor_fdset_fd_free(MonFdsetFd *mon_fdset_fd)
++bool migration_direct_io_finish(QEMUFile *file, Error **errp)
 +{
-+    close(mon_fdset_fd->fd);
-+    g_free(mon_fdset_fd->opaque);
-+    QLIST_REMOVE(mon_fdset_fd, next);
-+    g_free(mon_fdset_fd);
++    if (!migrate_direct_io() || migrate_multifd()) {
++        return true;
++    }
++
++    if (!qemu_file_set_direct_io(file, false)) {
++        error_setg(errp, "Failed to disable direct-io");
++        return false;
++    }
++
++    return true;
 +}
 +
- static void monitor_fdset_cleanup(MonFdset *mon_fdset)
- {
-     MonFdsetFd *mon_fdset_fd;
-@@ -176,17 +192,11 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
-         if ((mon_fdset_fd->removed ||
-                 (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
-                 runstate_is_running()) {
--            close(mon_fdset_fd->fd);
--            g_free(mon_fdset_fd->opaque);
--            QLIST_REMOVE(mon_fdset_fd, next);
--            g_free(mon_fdset_fd);
-+            monitor_fdset_fd_free(mon_fdset_fd);
-         }
+ /*
+  * Send a message on the return channel back to the source
+  * of the migration.
+diff --git a/migration/migration.h b/migration/migration.h
+index 6af01362d4..4d808563b5 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -536,4 +536,6 @@ int migration_rp_wait(MigrationState *s);
+  */
+ void migration_rp_kick(MigrationState *s);
+ 
++bool migration_direct_io_start(QEMUFile *file, Error **errp);
++bool migration_direct_io_finish(QEMUFile *file, Error **errp);
+ #endif
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index 9ccbbb0099..4796be918f 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -52,6 +52,11 @@ struct QEMUFile {
+ 
+     int last_error;
+     Error *last_error_obj;
++    /*
++     * Whether O_DIRECT is in effect. Used to catch code attempting
++     * unaligned IO.
++     */
++    bool dio;
+ };
+ 
+ /*
+@@ -281,6 +286,9 @@ int qemu_fflush(QEMUFile *f)
+     }
+     if (f->iovcnt > 0) {
+         Error *local_error = NULL;
++
++        assert(!f->dio);
++
+         if (qio_channel_writev_all(f->ioc,
+                                    f->iov, f->iovcnt,
+                                    &local_error) < 0) {
+@@ -429,6 +437,8 @@ void qemu_put_buffer_async(QEMUFile *f, const uint8_t *buf, size_t size,
+         return;
      }
  
--    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
--        QLIST_REMOVE(mon_fdset, next);
--        g_free(mon_fdset);
--    }
-+    monitor_fdset_free(mon_fdset);
++    assert(!f->dio);
++
+     add_to_iovec(f, buf, size, may_free);
  }
  
- void monitor_fdsets_cleanup(void)
+@@ -440,6 +450,8 @@ void qemu_put_buffer(QEMUFile *f, const uint8_t *buf, size_t size)
+         return;
+     }
+ 
++    assert(!f->dio);
++
+     while (size > 0) {
+         l = IO_BUF_SIZE - f->buf_index;
+         if (l > size) {
+@@ -558,6 +570,8 @@ off_t qemu_get_offset(QEMUFile *f)
+ 
+ void qemu_put_byte(QEMUFile *f, int v)
+ {
++    assert(!f->dio);
++
+     if (f->last_error) {
+         return;
+     }
+@@ -865,3 +879,18 @@ int qemu_file_get_to_fd(QEMUFile *f, int fd, size_t size)
+ 
+     return 0;
+ }
++
++bool qemu_file_set_direct_io(QEMUFile *f, bool enabled)
++{
++    Error *local_err = NULL;
++
++    qio_channel_file_set_direct_io(f->ioc, enabled, &local_err);
++    if (local_err) {
++        qemu_file_set_error_obj(f, -EINVAL, local_err);
++        return false;
++    }
++
++    f->dio = enabled;
++
++    return true;
++}
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 11c2120edd..118853b21c 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -79,5 +79,5 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                           off_t pos);
+ 
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
+-
++bool qemu_file_set_direct_io(QEMUFile *f, bool enabled);
+ #endif
 -- 
 2.35.3
 
