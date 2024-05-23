@@ -4,102 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D536C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 20:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0006C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAF2B-00084L-7L; Thu, 23 May 2024 16:27:31 -0400
+	id 1sAHYb-00083a-4Q; Thu, 23 May 2024 19:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1sAF27-00083w-FY; Thu, 23 May 2024 16:27:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1sAF25-0004Nc-8I; Thu, 23 May 2024 16:27:27 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44NJWOS4031842; Thu, 23 May 2024 20:27:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=/Q8Nh63N/IYGPOKYt8JILleTYmS1pjj/9hzhLTNjT5w=;
- b=hYV98WSRcCqu7RrBrk5QMHyOpAmQdDdjR8boP2Epxkt3eg4avPMdoyI+loGinybYHlL+
- YocbUoMR6xQZyiWs5UVc5osMMsoMNwdeqHMAaVYO/Jc/lhgQjrhvfKPBv0G+ibTCaDcy
- moMmivnykMiL8GZ85LiWTlJOsUBAadOo4fYgvIgX317N1wPv6ZmDkzlOQ+EFqcHblp4o
- l/cAre40tZVgN9JeK37rJMwh+b1wfvJoygDSeCM8ATWUiNcZCe6LFSU4mMj/qWuMsVvQ
- eyBMXpTG41xC5NfZdNwlBjTKRyKrnjiG61MzL8ABLM0+l6sRthMUvGXsiNyPX6lh1FnV wQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yac1t84uh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 20:27:19 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44NKRJQR019703;
- Thu, 23 May 2024 20:27:19 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yac1t84ud-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 20:27:19 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44NJ8MvW008123; Thu, 23 May 2024 20:27:18 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y78vmbsne-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 20:27:18 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44NKREkh38142622
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 May 2024 20:27:16 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ACC2D58058;
- Thu, 23 May 2024 20:27:14 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE5B85806C;
- Thu, 23 May 2024 20:27:13 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.136.97]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 May 2024 20:27:13 +0000 (GMT)
-Message-ID: <3fee9207627da81707bc8feecc9c611c545ce690.camel@linux.ibm.com>
-Subject: Re: [PATCH 0/7] s390x/ccw: Error reporting cleanups
-From: Eric Farman <farman@linux.ibm.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>, Zhenzhong Duan
- <zhenzhong.duan@intel.com>, Matthew Rosato <mjrosato@linux.ibm.com>, Tony
- Krowiak <akrowiak@linux.ibm.com>
-Date: Thu, 23 May 2024 16:27:13 -0400
-In-Reply-To: <20240522170107.289532-1-clg@redhat.com>
-References: <20240522170107.289532-1-clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: wnaSmWAViqQTrmpgcVOgH03e_oVlJmiC
-X-Proofpoint-ORIG-GUID: 89TDCLtSZHYbKX4CRBqDAGi-fgwMZvWF
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sAHYX-0007pl-SC; Thu, 23 May 2024 19:09:05 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sAHYW-0005kx-4y; Thu, 23 May 2024 19:09:05 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6f6bddf57f6so3423261b3a.0; 
+ Thu, 23 May 2024 16:09:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716505742; x=1717110542; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zTBsxieFnP6H1LC24Dq0DwZTt7yPI0ZXaUq+86G8NVQ=;
+ b=K6FMdeIbz+2hMaG7G8S9gRV9wkwEIAL9Nm2YBdb4Sj0HC8OtLCDgZDJFpsfLW3qbKB
+ 4dnLE2l4PTtTwWVT1HjptEa6ByMsE+HAXpzhmd5MZXN1FISdLn1nlcjKsgMtG71BSpYN
+ clsbId+GlV7a9aR44wiNpFBi+KQiAbfncRqCKSU7JT1qx3HRy5OobhPp7UQTLSZ7Zoby
+ 9eXNTLne1LbxrAI5vs9IDdSz2dXcD2r7uvfsFQzP/xiyNiKHsYpapGxVoUnOY9jXEo9D
+ ewfvffc6H6C7u8zRU5rxPq7vOhv5/my//k/tvKxqqKXtAUcSPgNy85BM2FsG9Lkovwje
+ mfsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716505742; x=1717110542;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zTBsxieFnP6H1LC24Dq0DwZTt7yPI0ZXaUq+86G8NVQ=;
+ b=qpqdRw8MQEmnTVjh3K3kA0RMoVNlg7RDY+enNn2u0G7TXipmcRYUcF48x8VfHv7FxE
+ JJa1jMe8Tnw305bX98cIlUwf5MfZTuABZMu/sHUA88FEtzqRc+7IX4JcaocOBD9VbWrE
+ +xbF6sbVBIwJiC+6r0cKOKh+2g1wZ8e3zgjPpjUZOq3nR81ZGYJn4nARao9GKXB/8Mj1
+ 44wo7oc6vuP6s+ATPA+RVIjQ/QEjvLhRbNI+5o5hA0nfnNPmb13IFMNyDPynOYmfLLAz
+ rcHCDmb46BcLl2ZnHfShQi5y/SmeKj8QOd8S4Hw3w+ly2utOPr8l5alhkYoGpo2d4xoM
+ 37cA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWX9nv0oVGfPliLxSSjpmasvhlUMsclRtjnRGJnJ/EeaBaRJNAyjcniAtSGuk49MTlu9/ODhl2qYkP8vsf+nMhoMJWL
+X-Gm-Message-State: AOJu0Yw7RuDFf5EWJKKYmwe0r4CtR1eOvISXLDUG+EpaWxYYEbsStPYc
+ 8Ou2swL7d2p4nJvaK81RUMi5+Ciiw429DJO3LZy4LSvl1PCv5cBeDEllbw==
+X-Google-Smtp-Source: AGHT+IHnLNMTuNwmVNKb3zPvpLunQaM7/NIlCUPEz2XkKK5y2QtSH9+fVYf3otKfzMvSxYA/zKX7Qg==
+X-Received: by 2002:a05:6a00:2786:b0:6ed:cbe2:3bc8 with SMTP id
+ d2e1a72fcca58-6f8f3f9082emr694025b3a.22.1716505742018; 
+ Thu, 23 May 2024 16:09:02 -0700 (PDT)
+Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 May 2024 16:09:01 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 20/72] target/ppc: Move VMX integer logical instructions to
+ decodetree.
+Date: Fri, 24 May 2024 09:06:53 +1000
+Message-ID: <20240523230747.45703-21-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
+References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-23_11,2024-05-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 mlxscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
- bulkscore=0 lowpriorityscore=0 adultscore=0 spamscore=0 mlxlogscore=788
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405230141
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,48 +96,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-05-22 at 19:01 +0200, C=C3=A9dric Le Goater wrote:
-> Hello,
->=20
-> The first patches of this series simply apply the practices described
-> in the Rules section of the qapi/error.h file for routines taking an
-> 'Error **' argument. The remaining patches are a fixup in the error
-> path of vfio_ccw_realize() and some error reporting adjustements.
->=20
-> Applies on top of this vfio PR :
->=20
-> =C2=A0
-> https://lore.kernel.org/qemu-devel/20240522095442.195243-1-clg@redhat.com
->=20
-> Thanks,
->=20
-> C.
->=20
-> C=C3=A9dric Le Goater (6):
-> =C2=A0 hw/s390x/ccw: Make s390_ccw_get_dev_info() return a bool
-> =C2=A0 s390x/css: Make CCWDeviceClass::realize return bool
-> =C2=A0 hw/s390x/ccw: Remove local Error variable from s390_ccw_realize()
-> =C2=A0 s390x/css: Make S390CCWDeviceClass::realize return bool
-> =C2=A0 vfio/ccw: Use the 'Error **errp' argument of vfio_ccw_realize()
-> =C2=A0 vfio/{ap,ccw}: Use warn_report_err() for IRQ notifier registration
-> =C2=A0=C2=A0=C2=A0 errors
->=20
-> Zhenzhong Duan (1):
-> =C2=A0 vfio/ccw: Fix the missed unrealize() call in error path
->=20
-> =C2=A0hw/s390x/ccw-device.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2=
- +-
-> =C2=A0include/hw/s390x/s390-ccw.h |=C2=A0 2 +-
-> =C2=A0hw/s390x/ccw-device.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3=
- ++-
-> =C2=A0hw/s390x/s390-ccw.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- | 29 +++++++++++++----------------
-> =C2=A0hw/vfio/ap.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
-> =C2=A0hw/vfio/ccw.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 18 ++++++++----------
-> =C2=A06 files changed, 26 insertions(+), 30 deletions(-)
->=20
+From: Chinmay Rath <rathc@linux.ibm.com>
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Moving the following instructions to decodetree specification:
+
+	v{and, andc, nand, or, orc, nor, xor, eqv}	: VX-form
+
+The changes were verified by validating that the tcp ops generated by those
+instructions remain the same, which were captured with the '-d in_asm,op' flag.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/insn32.decode            | 11 +++++++++++
+ target/ppc/translate/vmx-impl.c.inc | 22 ++++++++++------------
+ target/ppc/translate/vmx-ops.c.inc  | 15 ---------------
+ 3 files changed, 21 insertions(+), 27 deletions(-)
+
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 11be21d230..16f3711073 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -709,6 +709,17 @@ VCMPNEZW        000100 ..... ..... ..... . 0110000111   @VC
+ VCMPSQ          000100 ... -- ..... ..... 00101000001   @VX_bf
+ VCMPUQ          000100 ... -- ..... ..... 00100000001   @VX_bf
+ 
++## Vector Integer Logical Instructions
++
++VAND            000100 ..... ..... ..... 10000000100    @VX
++VANDC           000100 ..... ..... ..... 10001000100    @VX
++VNAND           000100 ..... ..... ..... 10110000100    @VX
++VOR             000100 ..... ..... ..... 10010000100    @VX
++VORC            000100 ..... ..... ..... 10101000100    @VX
++VNOR            000100 ..... ..... ..... 10100000100    @VX
++VXOR            000100 ..... ..... ..... 10011000100    @VX
++VEQV            000100 ..... ..... ..... 11010000100    @VX
++
+ ## Vector Integer Average Instructions
+ 
+ VAVGSB          000100 ..... ..... ..... 10100000010    @VX
+diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+index 4d5e743cfe..cefe04127c 100644
+--- a/target/ppc/translate/vmx-impl.c.inc
++++ b/target/ppc/translate/vmx-impl.c.inc
+@@ -205,16 +205,6 @@ static void glue(gen_, name)(DisasContext *ctx)                         \
+            16, 16);                                                     \
+ }
+ 
+-/* Logical operations */
+-GEN_VXFORM_V(vand, MO_64, tcg_gen_gvec_and, 2, 16);
+-GEN_VXFORM_V(vandc, MO_64, tcg_gen_gvec_andc, 2, 17);
+-GEN_VXFORM_V(vor, MO_64, tcg_gen_gvec_or, 2, 18);
+-GEN_VXFORM_V(vxor, MO_64, tcg_gen_gvec_xor, 2, 19);
+-GEN_VXFORM_V(vnor, MO_64, tcg_gen_gvec_nor, 2, 20);
+-GEN_VXFORM_V(veqv, MO_64, tcg_gen_gvec_eqv, 2, 26);
+-GEN_VXFORM_V(vnand, MO_64, tcg_gen_gvec_nand, 2, 22);
+-GEN_VXFORM_V(vorc, MO_64, tcg_gen_gvec_orc, 2, 21);
+-
+ #define GEN_VXFORM(name, opc2, opc3)                                    \
+ static void glue(gen_, name)(DisasContext *ctx)                         \
+ {                                                                       \
+@@ -727,6 +717,16 @@ TRANS_FLAGS(ALTIVEC, VRLH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_rotlv)
+ TRANS_FLAGS(ALTIVEC, VRLW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_rotlv)
+ TRANS_FLAGS2(ALTIVEC_207, VRLD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_rotlv)
+ 
++/* Logical operations */
++TRANS_FLAGS(ALTIVEC, VAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_and);
++TRANS_FLAGS(ALTIVEC, VANDC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_andc);
++TRANS_FLAGS(ALTIVEC, VOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_or);
++TRANS_FLAGS(ALTIVEC, VXOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_xor);
++TRANS_FLAGS(ALTIVEC, VNOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nor);
++TRANS_FLAGS2(ALTIVEC_207, VEQV, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_eqv);
++TRANS_FLAGS2(ALTIVEC_207, VNAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nand);
++TRANS_FLAGS2(ALTIVEC_207, VORC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_orc);
++
+ static TCGv_vec do_vrl_mask_vec(unsigned vece, TCGv_vec vrb)
+ {
+     TCGv_vec t0 = tcg_temp_new_vec_matching(vrb),
+@@ -3331,8 +3331,6 @@ TRANS_FLAGS2(ISA310, VMODUQ, do_vx_helper, gen_helper_VMODUQ)
+ #undef DIVS64
+ #undef DIVU64
+ 
+-#undef GEN_VX_LOGICAL
+-#undef GEN_VX_LOGICAL_207
+ #undef GEN_VXFORM
+ #undef GEN_VXFORM_207
+ #undef GEN_VXFORM_DUAL
+diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+index 672fba3796..80c5217749 100644
+--- a/target/ppc/translate/vmx-ops.c.inc
++++ b/target/ppc/translate/vmx-ops.c.inc
+@@ -1,18 +1,3 @@
+-#define GEN_VX_LOGICAL(name, tcg_op, opc2, opc3)                        \
+-GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_ALTIVEC)
+-
+-#define GEN_VX_LOGICAL_207(name, tcg_op, opc2, opc3) \
+-GEN_HANDLER_E(name, 0x04, opc2, opc3, 0x00000000, PPC_NONE, PPC2_ALTIVEC_207)
+-
+-GEN_VX_LOGICAL(vand, tcg_gen_and_i64, 2, 16),
+-GEN_VX_LOGICAL(vandc, tcg_gen_andc_i64, 2, 17),
+-GEN_VX_LOGICAL(vor, tcg_gen_or_i64, 2, 18),
+-GEN_VX_LOGICAL(vxor, tcg_gen_xor_i64, 2, 19),
+-GEN_VX_LOGICAL(vnor, tcg_gen_nor_i64, 2, 20),
+-GEN_VX_LOGICAL_207(veqv, tcg_gen_eqv_i64, 2, 26),
+-GEN_VX_LOGICAL_207(vnand, tcg_gen_nand_i64, 2, 22),
+-GEN_VX_LOGICAL_207(vorc, tcg_gen_orc_i64, 2, 21),
+-
+ #define GEN_VXFORM(name, opc2, opc3)                                    \
+ GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_ALTIVEC)
+ 
+-- 
+2.43.0
+
 
