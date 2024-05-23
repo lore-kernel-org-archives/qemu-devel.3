@@ -4,102 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6275CC25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A3C2C25B7C
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 20:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAEud-0000dr-AI; Thu, 23 May 2024 16:19:43 -0400
+	id 1sAEuV-0000Vl-KC; Thu, 23 May 2024 16:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAEuc-0000dZ-I7
- for qemu-devel@nongnu.org; Thu, 23 May 2024 16:19:42 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAEuU-0000Up-Hz
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 16:19:34 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAEua-0002HL-AB
- for qemu-devel@nongnu.org; Thu, 23 May 2024 16:19:42 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAEuS-0002GJ-Pq
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 16:19:34 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 239D022CA1;
- Thu, 23 May 2024 20:19:38 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7D4F022CA0;
+ Thu, 23 May 2024 20:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716495578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716495569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
- b=TdftmnAvWA3gTBxu9JPZByiNJAVPpmSECqFwyl+/WdzQeJxppL3HxDjPZ/W8SHXiVK53xA
- UYG8ERBqJdg/wvKSgUXlBNI2bAWHSPdS9sxYm/tF67U/KXxbq4ELrbdYUGykx9FYTWm6Zu
- 2PGd5vmzULseVhrGLsNc8i4D4IbA6y0=
+ bh=Euse3n/rq5BL4NoMkhqVaT353odBzEaY9JhyVNmXZD8=;
+ b=gdKCIXWer+ECPn76ALvrO24emWxJKILLt5h1dhCgnNRJlsCXSr0ba8/IkqGx3ltmgTWYH5
+ GuzmOPs9KwRJe6O12idsicMBiHQEqChCUsTWZkmewVsKzSjkB/4n2xx7lMOyF19Gt1lFRw
+ vuiODt0xrR/ypJ4xtC8O3iYx38hI4F8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716495578;
+ s=susede2_ed25519; t=1716495569;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
- b=U7GTMSPgYeEcHQI2QnWXLFL3E1PsA1bkN1fE4Er8UhpVZfiw8KbamLWBir/KIcVolRz/71
- MeGpm3nUHQwRdDDw==
+ bh=Euse3n/rq5BL4NoMkhqVaT353odBzEaY9JhyVNmXZD8=;
+ b=8i32YBde+f1AFOqfo9xrQW0OXnuosksGsTLVc7TNi+Uk5jTjJIStKiwb1mgRP2UUNUkYSf
+ 64BsiixSFuWR0eDw==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gdKCIXWe;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8i32YBde
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716495578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1716495569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
- b=TdftmnAvWA3gTBxu9JPZByiNJAVPpmSECqFwyl+/WdzQeJxppL3HxDjPZ/W8SHXiVK53xA
- UYG8ERBqJdg/wvKSgUXlBNI2bAWHSPdS9sxYm/tF67U/KXxbq4ELrbdYUGykx9FYTWm6Zu
- 2PGd5vmzULseVhrGLsNc8i4D4IbA6y0=
+ bh=Euse3n/rq5BL4NoMkhqVaT353odBzEaY9JhyVNmXZD8=;
+ b=gdKCIXWer+ECPn76ALvrO24emWxJKILLt5h1dhCgnNRJlsCXSr0ba8/IkqGx3ltmgTWYH5
+ GuzmOPs9KwRJe6O12idsicMBiHQEqChCUsTWZkmewVsKzSjkB/4n2xx7lMOyF19Gt1lFRw
+ vuiODt0xrR/ypJ4xtC8O3iYx38hI4F8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716495578;
+ s=susede2_ed25519; t=1716495569;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9a+i01ypPUBXQqxb3ZkvWdnNpmAXA9MsaEaz7vDZC8k=;
- b=U7GTMSPgYeEcHQI2QnWXLFL3E1PsA1bkN1fE4Er8UhpVZfiw8KbamLWBir/KIcVolRz/71
- MeGpm3nUHQwRdDDw==
+ bh=Euse3n/rq5BL4NoMkhqVaT353odBzEaY9JhyVNmXZD8=;
+ b=8i32YBde+f1AFOqfo9xrQW0OXnuosksGsTLVc7TNi+Uk5jTjJIStKiwb1mgRP2UUNUkYSf
+ 64BsiixSFuWR0eDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6761A13A6C;
- Thu, 23 May 2024 20:19:35 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2C41C13A6C;
+ Thu, 23 May 2024 20:19:26 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uHC8C9ekT2ZqcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 May 2024 20:19:35 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aFb0OM6kT2ZqcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 May 2024 20:19:26 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Fiona Ebner <f.ebner@proxmox.com>, Het Gala <het.gala@nutanix.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [RFC PATCH 4/4] ci: Add the new migration device tests
-Date: Thu, 23 May 2024 17:19:22 -0300
-Message-Id: <20240523201922.28007-5-farosas@suse.de>
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH 1/4] tests/qtest/libqtest: Introduce another qtest_init
+ version with no handshake
+Date: Thu, 23 May 2024 17:19:19 -0300
+Message-Id: <20240523201922.28007-2-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240523201922.28007-1-farosas@suse.de>
 References: <20240523201922.28007-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[10];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 7D4F022CA0
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -124,78 +135,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have two new migration tests that check cross version
-compatibility. One uses the vmstate-static-checker.py script to
-compare the vmstate structures from two different QEMU versions. The
-other runs a simple migration with a few devices present in the VM, to
-catch obvious breakages.
+Introduce a qtest_init version that does not go through the QMP
+handshake, but does pass the test binary environment variables
+forward. This is needed so we can run a simpler instance of QEMU with
+-machine, but not much else.
 
-Add both tests to the migration-compat-common job.
+The existing qtest_init_without_qmp_handshake() is not enough because
+this time we want to pass along the special QTEST_QEMU_BINARY_SRC|DST
+environment variables.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- .gitlab-ci.d/buildtest.yml | 43 +++++++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 7 deletions(-)
+ tests/qtest/libqtest.c | 14 +++++++++-----
+ tests/qtest/libqtest.h | 13 +++++++++++++
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 91c57efded..bc7ac35983 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -202,18 +202,47 @@ build-previous-qemu:
-   needs:
-     - job: build-previous-qemu
-     - job: build-system-opensuse
--  # The old QEMU could have bugs unrelated to migration that are
--  # already fixed in the current development branch, so this test
--  # might fail.
-+  # This test is allowed to fail because:
-+  #
-+  # - The old QEMU could have bugs unrelated to migration that are
-+  #   already fixed in the current development branch.
-+  #
-+  # - The vmstate-static-checker script trips on renames and other
-+  #   backward-compatible changes to the vmstate structs.
-   allow_failure: true
-   variables:
-     IMAGE: opensuse-leap
-     MAKE_CHECK_ARGS: check-build
-   script:
--    # Use the migration-tests from the older QEMU tree. This avoids
--    # testing an old QEMU against new features/tests that it is not
--    # compatible with.
--    - cd build-previous
-+    - cd build
-+    # device state static test: Tests the vmstate structures for
-+    # compatibility across QEMU versions. Uses the latest version of
-+    # the tests.
-+    # old to new
-+    - PYTHON=pyvenv/bin/python3
-+          QTEST_QEMU_BINARY_SRC=../build-previous/qemu-system-${TARGET}
-+          QTEST_QEMU_BINARY=./qemu-system-${TARGET}
-+          ./tests/qtest/migration-test -p /${TARGET}/migration/vmstate-checker-script
-+    # new to old skipped because vmstate version bumps are always
-+    # backward incompatible.
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index d8f80d335e..911e45e189 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -513,11 +513,6 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+         kill(s->qemu_pid, SIGSTOP);
+     }
+ #endif
+-
+-    /* ask endianness of the target */
+-
+-    s->big_endian = qtest_query_target_endianness(s);
+-
+     return s;
+ }
+ 
+@@ -526,11 +521,20 @@ QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
+     return qtest_init_internal(qtest_qemu_binary(NULL), extra_args);
+ }
+ 
++QTestState *qtest_init_with_env_no_handshake(const char *var,
++                                             const char *extra_args)
++{
++    return qtest_init_internal(qtest_qemu_binary(var), extra_args);
++}
 +
-+    # device state runtime test: Performs a cross-version migration
-+    # with a select list of devices (see DEFAULT_DEVICES in
-+    # migration-test.c). Using the multifd tcp test here, but any will
-+    # do.
-+    # old to new
-+    - QTEST_DEVICE_OPTS=all QTEST_QEMU_BINARY_SRC=../build-previous/qemu-system-${TARGET}
-+          QTEST_QEMU_BINARY=./qemu-system-${TARGET} ./tests/qtest/migration-test
-+          -p /${TARGET}/migration/multifd/tcp/channels/plain/none
-+    # new to old
-+    - QTEST_DEVICE_OPTS=all QTEST_QEMU_BINARY_DST=../build-previous/qemu-system-${TARGET}
-+          QTEST_QEMU_BINARY=./qemu-system-${TARGET} ./tests/qtest/migration-test
-+          -p /${TARGET}/migration/multifd/tcp/channels/plain/none
+ QTestState *qtest_init_with_env(const char *var, const char *extra_args)
+ {
+     QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args);
+     QDict *greeting;
+ 
++    /* ask endianness of the target */
++    s->big_endian = qtest_query_target_endianness(s);
 +
-+    # migration core tests: Use the migration-tests from the older
-+    # QEMU tree. This avoids testing an old QEMU against new
-+    # features/tests that it is not compatible with.
-+    - cd ../build-previous
-     # old to new
-     - QTEST_QEMU_BINARY_SRC=./qemu-system-${TARGET}
-           QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
+     /* Read the QMP greeting and then do the handshake */
+     greeting = qtest_qmp_receive(s);
+     qobject_unref(greeting);
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index 6e3d3525bf..5e5554b5ad 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -68,6 +68,19 @@ QTestState *qtest_init(const char *extra_args);
+  */
+ QTestState *qtest_init_with_env(const char *var, const char *extra_args);
+ 
++/**
++ * qtest_init_with_env_no_handshake:
++ * @var: Environment variable from where to take the QEMU binary
++ * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
++ * arguments are subject to word splitting and shell evaluation.
++ *
++ * Like qtest_init_with_env(), but skip the qmp handshake.
++ *
++ * Returns: #QTestState instance.
++ */
++QTestState *qtest_init_with_env_no_handshake(const char *var,
++                                             const char *extra_args);
++
+ /**
+  * qtest_init_without_qmp_handshake:
+  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
 -- 
 2.35.3
 
