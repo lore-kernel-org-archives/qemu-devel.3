@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6F9C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 07:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8427EC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 07:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA2nQ-0003Il-QR; Thu, 23 May 2024 03:23:28 -0400
+	id 1sA2pQ-0005n6-6o; Thu, 23 May 2024 03:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sA2nO-0003FE-QN
- for qemu-devel@nongnu.org; Thu, 23 May 2024 03:23:26 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1sA2pL-0005m5-Jq
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 03:25:27 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sA2nN-0007uM-Bk
- for qemu-devel@nongnu.org; Thu, 23 May 2024 03:23:26 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3504f34a086so4752500f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 00:23:24 -0700 (PDT)
+ id 1sA2pJ-0008Fj-Lc
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 03:25:27 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4202ca70289so50163765e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 00:25:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716449003; x=1717053803; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716449124; x=1717053924; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=3FGKLdbpUt4Mrb46Js/x7JG5VPr8Qb7HNxg3+Jp4sy0=;
- b=FCfg3jHEudBi/LXktrVYPMNnENZC+S8Paa6/S1k1rndxcfDgMMV2+lxA2E7VrXCisr
- xx7/CaZFKJJTZdaI476wvrlbYhnCVP8zLpJqHvT7uFK2cYjrPXF6ehazWXoxmldaEKjn
- /oOvDaUC1H6aBiBZ8dHl+kyhsimKBHRvXrj8M4CG7MqS4fLmJ2SK0H2rD48p36z3o7Xm
- fQIEt6JDpuLRFI7oqg2TF3bY/XcGo88mY5O4KVaSxvYbzCyQEk3bZPb+qQGfU0dM/RYx
- l33fZMYylM4hzUM9AbMl9LX8yZnt2gnIMaia78vizm8mCyC2pgXTpdLrGGaNY1Aq5R5v
- neuw==
+ bh=Amvt3yr1U7bxERPPllnATmCIhAcJ2fZugetDsd/ty+U=;
+ b=mtwADiM/7jH+6OQkPODFMOHtG0SL5AKHh2xk06I71oj2hde4VXbghZAN+BdkUrCnBX
+ FVyn0P0lQrGSvGjvDkDSnd2fFwINLwg2qAwwdbuZdwDb/FpG5Ahii2t+kHGgw0HuLFAo
+ CrBbeDUQ0Yh9q9SKkWdQ0oyfgHukxlCfDVV7DBflUmrPjT0OG6Y3a0F6QLTJmKXyXlVJ
+ 9XQMkPEghv5i1QsmN0MPmC8MqUFXSevsQVaEeYPJ7RUSoICLreU1KB4hYnH5RtlN+Wc8
+ jgegMTx9owUa6K5vnslB3Rcjvaldv5tVpI9IhKdl/EFdhnOL8k2JWUILI6ns9kJdNnN/
+ 04zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716449003; x=1717053803;
+ d=1e100.net; s=20230601; t=1716449124; x=1717053924;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3FGKLdbpUt4Mrb46Js/x7JG5VPr8Qb7HNxg3+Jp4sy0=;
- b=EQXnZQiKlEux+jV8ZayCfIjvg802++74D7yaynt+IxlDwr0oz/yfSckx6vArM1Enlh
- S5uK6r88lwSC1jHQ5jGe6K0aOWDXQwQRLU0637JFOiuXz6RzSYqjIHmNhA4VFxZ2o1w9
- 9PNdqQv4mO2x4KQpCaX8WUrGV6l7kibGB400PKelud1CdHrMcgmgVRqaEoqz8wtZILKL
- TyqAk+FbxQme9KFb+0QH1XTqB5BoaTs3s38Px60RoahIlb9ye0iQ73exkrTB2ozrm3Ko
- wo/uCBQdabAEP4zlcAgrQyeDDFMS4BQP8MnxD1djHyHDdfd/L+n2+OXKcVVtaC0kohr3
- qcTg==
-X-Gm-Message-State: AOJu0Yyyq5WmAoeIkzYRzcmhSzw413qSbKsjH6x+gytPlXxpaIF6YSuc
- 27pSLz88HlL1B34AjfFA0ohVH8Esdt6eACqxlbN7R1yGIqhQqw+aCxTSvl/Wl//WoMaVr8UOvMj
- E
-X-Google-Smtp-Source: AGHT+IGopUWqNNu/3/S2p/eDAVTpCN+RXYSS7MmeBdMEd3XFtFkBUP8yP9N/VGtgXQg/RYpe0kRcxQ==
-X-Received: by 2002:a5d:6908:0:b0:34c:81e0:bce5 with SMTP id
- ffacd0b85a97d-354d8dac945mr3031362f8f.64.1716449003140; 
- Thu, 23 May 2024 00:23:23 -0700 (PDT)
+ bh=Amvt3yr1U7bxERPPllnATmCIhAcJ2fZugetDsd/ty+U=;
+ b=l8H4KOx7fcWGpSjMsyF+PYm4HFIBldT45rrfdymEDM4n4K18IGk38R412/phugP3cS
+ 4AlGN1EP6Kb1GlRMb7yXebXB/MxgjColSTJrC/etOvNQWmDOdaiPy9ghIL6aXaJvUaQ6
+ 9sZD21ZSpHimoAV9FBIQbzQT2zhQLXUg7G9g5Z0c8QZSkaTc5MHYFTHXyeNeJ7IrqQtF
+ 7LeqYFI6UkZ5lJP4DAzqEJODEA5ZKVhn9xBvqRJ2vJ6w7p+RUwtZTv1UgAWLtyS8UJkY
+ 8R1gTR0kxWMYRxeuuKPYQ3/FROBTDldilVhTuelmtGunEcr8u+UIW7Ffm1c7yY2Jhu5i
+ V8hg==
+X-Gm-Message-State: AOJu0YwRlBrCthd1XJhDKp3eto30eRwXjj8Q30q5ED89CbMm0lIDm3pl
+ 3/oPqlq1mr2gMZRwQ0n3Lm+FvJD3OZLFRV8W+wwNFY6k8Ci+2cIz03WFvSIhoKM8+okKl10r6/o
+ R
+X-Google-Smtp-Source: AGHT+IG2S3FrgjLyUmPFveqKUeXM44RCurIbEqxSBrYiKk2mcKlcpCHQT92vb/CQ5I2s7NjnXhMFGQ==
+X-Received: by 2002:a05:600c:2245:b0:419:f31e:267c with SMTP id
+ 5b1f17b1804b1-420fd2d9b5dmr29982175e9.7.1716449124112; 
+ Thu, 23 May 2024 00:25:24 -0700 (PDT)
 Received: from meli-email.org (adsl-73.37.6.3.tellas.gr. [37.6.3.73])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b895887sm35863611f8f.40.2024.05.23.00.23.22
+ 5b1f17b1804b1-42100fa95a3sm16442575e9.36.2024.05.23.00.25.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 00:23:22 -0700 (PDT)
-Date: Thu, 23 May 2024 10:22:56 +0300
+ Thu, 23 May 2024 00:25:23 -0700 (PDT)
+Date: Thu, 23 May 2024 10:25:10 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
 Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH 3/4] MAINTAINERS: drop virtio-gpu maintainership
+Subject: Re: [PATCH 2/4] MAINTAINERS: drop usb maintainership
 User-Agent: meli 0.8.5
 References: <20240516120344.531521-1-kraxel@redhat.com>
- <20240516120344.531521-4-kraxel@redhat.com>
-In-Reply-To: <20240516120344.531521-4-kraxel@redhat.com>
-Message-ID: <dxgix.gs9o4m8aj4o@linaro.org>
+ <20240516120344.531521-3-kraxel@redhat.com>
+In-Reply-To: <20240516120344.531521-3-kraxel@redhat.com>
+Message-ID: <dxgma.fy4ytr0mcmb@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,7 +97,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 16 May 2024 15:03, Gerd Hoffmann <kraxel@redhat.com> wrote:
->Remove myself from virtio-gpu entries.
+>Remove myself from usb entries.
 >Flip status to "Orphan" for entries which have nobody else listed.
 >
 >Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
@@ -106,27 +106,27 @@ On Thu, 16 May 2024 15:03, Gerd Hoffmann <kraxel@redhat.com> wrote:
 > 1 file changed, 1 insertion(+), 3 deletions(-)
 >
 >diff --git a/MAINTAINERS b/MAINTAINERS
->index d81376f84746..4d9f4fd09823 100644
+>index 7f52e2912fc3..d81376f84746 100644
 >--- a/MAINTAINERS
 >+++ b/MAINTAINERS
->@@ -2572,8 +2572,7 @@ F: hw/display/ramfb*.c
-> F: include/hw/display/ramfb.h
+>@@ -2140,8 +2140,7 @@ F: tests/qtest/fuzz-sdcard-test.c
+> F: tests/qtest/sdhci-test.c
 > 
-> virtio-gpu
+> USB
 >-M: Gerd Hoffmann <kraxel@redhat.com>
 >-S: Odd Fixes
 >+S: Orphan
-> F: hw/display/virtio-gpu*
-> F: hw/display/virtio-vga.*
-> F: include/hw/virtio/virtio-gpu.h
->@@ -2595,7 +2594,6 @@ F: include/hw/virtio/virtio-blk-common.h
+> F: hw/usb/*
+> F: stubs/usb-dev-stub.c
+> F: tests/qtest/usb-*-test.c
+>@@ -2150,7 +2149,6 @@ F: include/hw/usb.h
+> F: include/hw/usb/
 > 
-> vhost-user-gpu
-> M: Marc-André Lureau <marcandre.lureau@redhat.com>
+> USB (serial adapter)
 >-R: Gerd Hoffmann <kraxel@redhat.com>
+> M: Samuel Thibault <samuel.thibault@ens-lyon.org>
 > S: Maintained
-> F: docs/interop/vhost-user-gpu.rst
-> F: contrib/vhost-user-gpu
+> F: hw/usb/dev-serial.c
 >-- 
 >2.45.0
 >
