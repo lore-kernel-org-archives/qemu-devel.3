@@ -4,83 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A7DC25B7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E508C25B7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9x5-0000Gv-Mi; Thu, 23 May 2024 11:01:59 -0400
+	id 1sA9xS-0001MA-Ba; Thu, 23 May 2024 11:02:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9ws-00082T-M8
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9xQ-00013c-EG
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:02:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wq-0004vX-VB
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:42 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9xO-0004zi-LG
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:02:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476500;
+ s=mimecast20190719; t=1716476534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N1Pn7vFXvHPKuSMjWiqdhpZacphlqMdCoJigV4EMHgs=;
- b=av0lIyjASPMUjPLJ8Eyu/7rPJpx4OqBrgnnceegxmJGKQAGyfCmmkl08Kpa+Ln1FyhECkn
- c+GsXsgAkn9zRmZmlWcdrzFU8uaACrKaUFoIpeeXxi3hXER1gX1z8buTL9qRSG8XFvGYJX
- FPVE5D7sEmDrI1CsG4m/CtcWvNTERbk=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MaCTFtf6DOSs05csWYBqXWMVWQDGstGUYLGm/TvbN1U=;
+ b=VHd/fKVQbNzmEc9NuOGWAYP63dCPxz0mN4fSIT+QKVAoXKJ3IY8A/ZSt8tQMTDiQOgR+SH
+ ErNfkf1apXY6e1kW6OIjGc4jlzHwXmLItvja2vThIarPk9crCqbcBwkGBMhnEsq764zmTg
+ HoupZA5zwv7LZVyhifs6MiJ3Pv6Lb2g=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-g9D589kjPRSsJ5MD9jrcSA-1; Thu, 23 May 2024 11:01:35 -0400
-X-MC-Unique: g9D589kjPRSsJ5MD9jrcSA-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-52389b09bb6so1078489e87.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:35 -0700 (PDT)
+ us-mta-322-mpfsl2PiOHO1oANXgxsp8g-1; Thu, 23 May 2024 11:02:12 -0400
+X-MC-Unique: mpfsl2PiOHO1oANXgxsp8g-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2e9589df409so731541fa.3
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:02:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476493; x=1717081293;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N1Pn7vFXvHPKuSMjWiqdhpZacphlqMdCoJigV4EMHgs=;
- b=l4pHrIjGg9NPIsa9L3KqBce8gYz67QjUTSs87M6zELlM2LoeOC/s7GbYQyIJ5aieJU
- dmU8rVXUJ20d8QM1We2xsEmYmiu1En/73k2S1xACkmbMe+ojC8r3vQjxTqCiEUfvh89k
- ln5SMEvsur+TSguIz4MYhZb1oA2JoaRPIJ5ZgMxmi2dEarIEAdXpUELQsT3daBQCSk5d
- aEsW2ZxSSDy+076Zfhtj7xaBmzKekDMBNtJA2NgeRU6N8axeSvDmsibNkekyXblbemJ5
- NfxHQ4ORGsJeGz62ql0kA/1H3mtptYMnIud3yZ8lDubvAn8Tuoe9ZPwUTzC3eoWaHER5
- j4uQ==
-X-Gm-Message-State: AOJu0YwJVAkpGJyT1A/xAaykNVl7RVrNbrJ/yUUqEnH4wES74BA+8W4c
- piFE2qUje80xSwSljXqlRj4QRxPwo8BkmMe2S/OMnTUnZMgy7tudPxJ5CNLrJuTi3qUSZuZhod1
- 8xGcGV3qfB+ncQVhJL6t3VQRE8c0eTSjJL9CFUcAGt/vhW5z04IDCyR/EXTmGdbeSvyULuGsoIb
- MZE2w/EvLI8iBKduJ6lCrgvyO3bdmdmVgZmzSZ
-X-Received: by 2002:ac2:4831:0:b0:51d:a87e:27ec with SMTP id
- 2adb3069b0e04-526bd6935camr3149314e87.9.1716476493169; 
- Thu, 23 May 2024 08:01:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWUvHz/WWG9n92xS9THX5XlIQgWnlW34CNhdGutSmy/oCptKLRru/5YxvHBMfmdMV5Q/2SjA==
-X-Received: by 2002:ac2:4831:0:b0:51d:a87e:27ec with SMTP id
- 2adb3069b0e04-526bd6935camr3149288e87.9.1716476492704; 
- Thu, 23 May 2024 08:01:32 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
+ d=1e100.net; s=20230601; t=1716476531; x=1717081331;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=MaCTFtf6DOSs05csWYBqXWMVWQDGstGUYLGm/TvbN1U=;
+ b=gLDkIL7xV1ayL+eHJTzvyeTzXiAwwSdsNpjTVIgT2NqrvPl9JViWq33s8QcWlq/5ki
+ woErymr84gse3Jey+YG9Dr5tD4K9lLxGgY/48bsbyWPoJwBZLLfXt1MnFicHpyEXcLFz
+ /XWukgx9RR/LtaeuA5pati0bqJ8Wieq3M8ujezH6ieLI/h8tWBWz7Axlt7EEMthmCfEQ
+ 5jLeEyqLWTVuBS0+/yz03RPlBqivetOKILI87Te4l9DY9ybByrHXgM/+xA60R2ZJNjPJ
+ JKOGVzM3O3MUA0mcnQtf1hGlZ2yyABnVHLscxFfzVfPizMYj5jFMWScuOTWOCdtpI7Gw
+ eUqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVlVB/hJW9vLqFgJvA0pJ56UM6/jK1/VINWVImYptd7uASKXhBoMpoqv+08HqE6szspanoW2q5qtJM0uxG0aVTYdcdUhMU=
+X-Gm-Message-State: AOJu0YzulmNZTx9+VDva39so5GyLXlCTd6Sk+fu8p3mvnYaBO7eC4D28
+ 9PPFOg362oYyJwCE43Vi28Dpt3XMQelO6VxlnSclXEkcY/kKsY5VM7cWL0zd6C7FybFMcsGgdov
+ zFMQXtwkmP73Fj5uuF3RhQ3VPCUAanb2cBDieo0MgIGOql5oWIQzf
+X-Received: by 2002:a2e:a549:0:b0:2df:b7cf:9607 with SMTP id
+ 38308e7fff4ca-2e9494f2a5bmr41759291fa.22.1716476531245; 
+ Thu, 23 May 2024 08:02:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTZWTuOZt8qZoV0qN+MAIn5YyTxL/CJAAlWmq2uPPVH5xz+vgv1PjqfOQ6Gh6USFDdsXO+dQ==
+X-Received: by 2002:a2e:a549:0:b0:2df:b7cf:9607 with SMTP id
+ 38308e7fff4ca-2e9494f2a5bmr41757671fa.22.1716476529324; 
+ Thu, 23 May 2024 08:02:09 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c717:5f00:c949:6700:cce1:e60b?
+ (p200300cbc7175f00c9496700cce1e60b.dip0.t-ipconnect.de.
+ [2003:cb:c717:5f00:c949:6700:cce1:e60b])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733c2c7de4sm19809096a12.63.2024.05.23.08.01.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:01:31 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Babu Moger <babu.moger@amd.com>
-Subject: [PULL 22/23] i386/cpu: Use CPUCacheInfo.share_level to encode
- CPUID[0x8000001D].EAX[bits 25:14]
-Date: Thu, 23 May 2024 17:00:35 +0200
-Message-ID: <20240523150036.1050011-23-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
-References: <20240523150036.1050011-1-pbonzini@redhat.com>
+ 38308e7fff4ca-2e4d16200f4sm43289701fa.118.2024.05.23.08.02.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 May 2024 08:02:08 -0700 (PDT)
+Message-ID: <c6b56c83-4a25-40fd-b905-9b11f74e040e@redhat.com>
+Date: Thu, 23 May 2024 17:02:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/13] contrib/vhost-user-blk: fix bind() using the
+ right size of the address
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brad Smith <brad@comstyle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>, stefanha@redhat.com,
+ Hanna Reitz <hreitz@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, gmaglione@redhat.com,
+ Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org
+References: <20240523145522.313012-1-sgarzare@redhat.com>
+ <20240523145522.313012-6-sgarzare@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240523145522.313012-6-sgarzare@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,55 +164,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 23.05.24 16:55, Stefano Garzarella wrote:
+> On macOS passing `-s /tmp/vhost.socket` parameter to the vhost-user-blk
+> application, the bind was done on `/tmp/vhost.socke` pathname,
+> missing the last character.
+> 
+> This sounds like one of the portability problems described in the
+> unix(7) manpage:
+> 
+>     Pathname sockets
+>         When  binding  a socket to a pathname, a few rules should
+>         be observed for maximum portability and ease of coding:
+> 
+>         •  The pathname in sun_path should be null-terminated.
+> 
+>         •  The length of the pathname, including the  terminating
+>            null byte, should not exceed the size of sun_path.
+> 
+>         •  The  addrlen  argument  that  describes  the enclosing
+>            sockaddr_un structure should have a value of at least:
+> 
+>                offsetof(struct sockaddr_un, sun_path) +
+>                strlen(addr.sun_path)+1
+> 
+>            or,  more  simply,  addrlen  can   be   specified   as
+>            sizeof(struct sockaddr_un).
+> 
+> So let's follow the last advice and simplify the code as well.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
 
-CPUID[0x8000001D].EAX[bits 25:14] NumSharingCache: number of logical
-processors sharing cache.
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-The number of logical processors sharing this cache is
-NumSharingCache + 1.
-
-After cache models have topology information, we can use
-CPUCacheInfo.share_level to decide which topology level to be encoded
-into CPUID[0x8000001D].EAX[bits 25:14].
-
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Message-ID: <20240424154929.1487382-22-zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f91e1500266..bc2dceb647f 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -478,20 +478,12 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
-                                        uint32_t *eax, uint32_t *ebx,
-                                        uint32_t *ecx, uint32_t *edx)
- {
--    uint32_t num_sharing_cache;
-     assert(cache->size == cache->line_size * cache->associativity *
-                           cache->partitions * cache->sets);
- 
-     *eax = CACHE_TYPE(cache->type) | CACHE_LEVEL(cache->level) |
-                (cache->self_init ? CACHE_SELF_INIT_LEVEL : 0);
--
--    /* L3 is shared among multiple cores */
--    if (cache->level == 3) {
--        num_sharing_cache = 1 << apicid_die_offset(topo_info);
--    } else {
--        num_sharing_cache = 1 << apicid_core_offset(topo_info);
--    }
--    *eax |= (num_sharing_cache - 1) << 14;
-+    *eax |= max_thread_ids_for_cache(topo_info, cache->share_level) << 14;
- 
-     assert(cache->line_size > 0);
-     assert(cache->partitions > 0);
 -- 
-2.45.1
+Cheers,
+
+David / dhildenb
 
 
