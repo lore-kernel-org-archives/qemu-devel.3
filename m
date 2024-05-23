@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD927C25B7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87CDDC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9zF-00008z-Ia; Thu, 23 May 2024 11:04:09 -0400
+	id 1sA9wo-0007Pw-BE; Thu, 23 May 2024 11:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9z7-0008N6-5a
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:04:05 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9wZ-0006u5-4w
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9z4-00057Z-9u
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:04:00 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sA9wQ-0004rm-AS
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476637;
+ s=mimecast20190719; t=1716476473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=B8sp+ftTU62M+N335i+jcRKJLgyYiuL1qyEkERUEZ+M=;
- b=S5Ua+EX1vmSPe35Dg63oUpi8W2y1PwJ/HcadB0r/g040N2tnuIX9zjEI9FSkkTNW8f88pq
- hbodO7MEgeqJ+EXCPHJKISpbjY6GLqnIPTBOL4ab1NCLbOM5gns4sDQ7kJxc+fjUE23jy+
- MNSu+3oN0vmjEnkVbCm0GRP2CEL0/bM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cLelhI9r617cToD99Kpa7HMWkhNDLISrFZNoaAxBSkQ=;
+ b=Dl5PdhRadlm8BSQeR/JMnxvTEmY+IEBIbscMezD/0TXozCLv4PnDj3OU6NNbZBGtIyxuAq
+ by8zw3Z1iStJoN6xuKQQS3A3PNF6WhrJvPoP3j98JnItJj+bqjofqk6h8BUJyu8gwcINrp
+ 5gfEyppj8/548t2CjIAMbYyHa0i2/n0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-Z7GMyRw4OT62nsiqp-50gg-1; Thu, 23 May 2024 11:03:54 -0400
-X-MC-Unique: Z7GMyRw4OT62nsiqp-50gg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42015260835so62261165e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:03:54 -0700 (PDT)
+ us-mta-271-pJHWJaH8Nym7pqtU_YtcFg-1; Thu, 23 May 2024 11:01:11 -0400
+X-MC-Unique: pJHWJaH8Nym7pqtU_YtcFg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-420061cf1b1so67318425e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476634; x=1717081434;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B8sp+ftTU62M+N335i+jcRKJLgyYiuL1qyEkERUEZ+M=;
- b=KX4WGzHp8HCRvFnxbs/eBO+FzSmQGLoKgMmldbpPmNLuJbRGeJnqHfGpui0ZdDbPqx
- Vw1GSCQ3I7GxVuTCrBSd4Hw86FB016QdSIr3YvzKNzERs+Vd4RsHlhMWEAJcwyP2iQuc
- H/f5HaUG2Ob7KHeAhj/SdlpCAQywB7rBIkG6+tJsv9vdJ3DUyGgq7c8w4yiHFaRfYSAo
- K3TbcAmFFQ5r/1RVpgVTbOFRf50dDydxGSz/LTN3ZMIx7mUdT3a9h6+Mfs1q9VhLfnBp
- /mnR6zEdQkmxmuWq+KUIDr+VM87hIGE6XQpBb7iza7+zhbOwGuPl50dFqYoqt4y/v0az
- nqCw==
+ d=1e100.net; s=20230601; t=1716476470; x=1717081270;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=cLelhI9r617cToD99Kpa7HMWkhNDLISrFZNoaAxBSkQ=;
+ b=KrZ6RH3rCUGkJESnlCv32AxTod7TKevg+MrlZtfOTvecXmNCbbEN9miy0iZYZJCoON
+ u6qHJaGvjGM/9B4RB9rM/HGmD5JEnepqeASKRHOlOTOf2ls1qkV9hul0MjR85WRCVs3P
+ jWAJP0o0WxlWSxHoiy7tz6Aii1eVzwnikJSf2r+R2ekzIBK3u+vCJcUzTDvqeQS64kt4
+ 5Q51Ox5JHaY71xnl2xW62sb1iFuNmyIiXu1bVJvwjoJZzlMdK18+hMQ3W7lQWsG7ZIj8
+ u/LSpaR72RVVSWRmc0rNUMzMmivRj0EnKMNZF91j7iiCuVso6HVk4+jypGPFQJwoBVrB
+ VcGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrqIAoZOWo2LqhNphsRjzCqo9D0BUcXCJ71sazUjPEOliSl21nyOvM5KA2iZQiT0WN9y3YOJyerpFvDpmMAz5Y/kqX270=
-X-Gm-Message-State: AOJu0YzcIT6xTFLPpcSlS2fK4+X8hNGRtTbmtV08vqdzjT634gMltMRW
- 5FY5FfB30FRhXTSNt9LDVGb6zqdPM+YxERBamwHte14Kz0onyW1Fw4/M5JPIiptMPaIvb8GxI7b
- Cb2nTOiBusqYuIBghOvQlftsBtrUrjMI4WI/A3MZ07V6lDkQMfL56
-X-Received: by 2002:a7b:cb44:0:b0:41b:ab72:3f4d with SMTP id
- 5b1f17b1804b1-420fd2d6eb5mr37497425e9.1.1716476633647; 
- Thu, 23 May 2024 08:03:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHv+nm/wzJjNMhhH0Rl4fJHidTbSbmKZteOvcPqQWibxzJpBB2pLSC4LRCpfYerj2UGxtyv3g==
-X-Received: by 2002:a7b:cb44:0:b0:41b:ab72:3f4d with SMTP id
- 5b1f17b1804b1-420fd2d6eb5mr37496975e9.1.1716476633172; 
- Thu, 23 May 2024 08:03:53 -0700 (PDT)
+ AJvYcCX9UAwzps2Nli/BIN+ggoOMelSj1wwRlYEMNGNE40N5NtNVFZkLpsw3yio8YFjpjOopsWEJukUf+rI8u8eL2DMYDSt1aYI=
+X-Gm-Message-State: AOJu0YyzOn5WCnCTqCn+2Q0DqeJUL14YuEA+g4QLJ5skIYukljbL9GU3
+ gHykKgRCbhHQC3+jq1wUfHjfh94OTpNG0GaGo1Y4hXOUUyhfxNey/uwiD8Q6MsWCvyflM5eceCe
+ VwutUouDNvRECDCTDzbvLwQPv9QuP1PXbyUGqdN+uygfGaxHC1zBX
+X-Received: by 2002:a05:600c:2907:b0:41e:1f78:314d with SMTP id
+ 5b1f17b1804b1-420fd319c41mr36353735e9.24.1716476469878; 
+ Thu, 23 May 2024 08:01:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFIDpQRKbf4i0bF5hjZBsxbOW8XqVTN8GpRFPeI+GlZmAuYq/QmhV+UeUi/8dF22EvxrbSw9w==
+X-Received: by 2002:a05:600c:2907:b0:41e:1f78:314d with SMTP id
+ 5b1f17b1804b1-420fd319c41mr36353305e9.24.1716476469425; 
+ Thu, 23 May 2024 08:01:09 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c717:5f00:c949:6700:cce1:e60b?
  (p200300cbc7175f00c9496700cce1e60b.dip0.t-ipconnect.de.
  [2003:cb:c717:5f00:c949:6700:cce1:e60b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100fad6ccsm27519325e9.32.2024.05.23.08.03.51
+ 5b1f17b1804b1-42100fb7fe1sm27268405e9.45.2024.05.23.08.01.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 May 2024 08:03:52 -0700 (PDT)
-Message-ID: <e939b421-c3ad-4eea-97f9-0a56eb400a44@redhat.com>
-Date: Thu, 23 May 2024 17:03:50 +0200
+ Thu, 23 May 2024 08:01:08 -0700 (PDT)
+Message-ID: <4f0829e9-c0b2-48e9-9235-e4b626b61769@redhat.com>
+Date: Thu, 23 May 2024 17:01:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/13] vhost-user: enable frontends on any POSIX system
+Subject: Re: [PATCH v5 04/13] vhost-user-server: do not set memory fd
+ non-blocking
 To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -88,9 +89,9 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, gmaglione@redhat.com,
  Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org
 References: <20240523145522.313012-1-sgarzare@redhat.com>
- <20240523145522.313012-8-sgarzare@redhat.com>
-Content-Language: en-US
+ <20240523145522.313012-5-sgarzare@redhat.com>
 From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -136,7 +137,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240523145522.313012-8-sgarzare@redhat.com>
+In-Reply-To: <20240523145522.313012-5-sgarzare@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -164,16 +165,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23.05.24 16:55, Stefano Garzarella wrote:
-> The vhost-user protocol is not really Linux-specific so let's enable
-> vhost-user frontends for any POSIX system.
+> In vhost-user-server we set all fd received from the other peer
+> in non-blocking mode. For some of them (e.g. memfd, shm_open, etc.)
+> it's not really needed, because we don't use these fd with blocking
+> operations, but only to map memory.
 > 
-> In vhost_net.c we use VHOST_FILE_UNBIND which is defined in a Linux
-> specific header, let's define it for other systems as well.
+> In addition, in some systems this operation can fail (e.g. in macOS
+> setting an fd returned by shm_open() non-blocking fails with errno
+> = ENOTTY).
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> So, let's avoid setting fd non-blocking for those messages that we
+> know carry memory fd (e.g. VHOST_USER_ADD_MEM_REG,
+> VHOST_USER_SET_MEM_TABLE).
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 > Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
 
 Reviewed-by: David Hildenbrand <david@redhat.com>
 
