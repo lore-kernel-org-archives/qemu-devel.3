@@ -4,50 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FFAEC25B78
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 01:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD8EC25B78
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 02:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s9xYj-0003cR-7U; Wed, 22 May 2024 21:47:57 -0400
+	id 1s9xmz-0007Fp-R3; Wed, 22 May 2024 22:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s9xYg-0003Bl-36; Wed, 22 May 2024 21:47:54 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1s9xYd-0001DO-TB; Wed, 22 May 2024 21:47:53 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx6+oCoE5mst8CAA--.6061S3;
- Thu, 23 May 2024 09:46:42 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDMf9n05mSDMGAA--.17472S12; 
- Thu, 23 May 2024 09:46:42 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-stable@nongnu.org
-Subject: [PULL 10/10] hw/loongarch/virt: Fix FDT memory node address width
-Date: Thu, 23 May 2024 09:46:37 +0800
-Message-Id: <20240523014637.614872-11-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240523014637.614872-1-gaosong@loongson.cn>
-References: <20240523014637.614872-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9xmy-0007FZ-5j
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 22:02:40 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s9xmw-00042b-Ew
+ for qemu-devel@nongnu.org; Wed, 22 May 2024 22:02:39 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6f467fb2e66so3073743b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 22 May 2024 19:02:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716429757; x=1717034557; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0x7h5g4EFJY46ID01FqLN/0B4mB076BSJJPAvLRoiEc=;
+ b=a/XoRyTY8i6ugX2FJ5+lCK9fky438Cv+DXBN+DlGz0gbWnd66bNMqt1j+qDLSDZTND
+ 7NziySQGUS9/VmLhFj/pUR1qia0upXrWmzcBzcU/PeBB4Fz5InEmff8uxCywAropNS/z
+ xc+WWN16oMp4sUui4rJ6N3ul4VhMomNX7CXNjIKVbTONb/GOx2W82khGlnnkJs5yoMny
+ Z1hBnR7BuKKoYGRyCUf/y4Huuhn5ND4eqW0heza6KTb2YNK6czm7VJOyu6STW1u4wE18
+ gsSXo/gWSEwRFHTpQfAVRW5yq4T2hWcKNblayUDK3eaVBBNOMDclcrbHsojHs1gZJBps
+ Ie9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716429757; x=1717034557;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0x7h5g4EFJY46ID01FqLN/0B4mB076BSJJPAvLRoiEc=;
+ b=iO9ccuoRwF5iTVjtdUObe0FuF1D5l9p++8Tny4XJ4Su+ICqbMAV/2+S3ncVE3HVgfX
+ 5lx4HjmIGoef40t5H8tmX988TxgK2THwZptEwoYBsIfiEXblx/nyFgzZmrFKFGTEH46g
+ /6em1Im1oIVm4K/3MH475EIXw2Kj9iG3qVulSG4DO7nVKi16hLuEIXfqlQsiKULBhIYW
+ mctmP0Yjh6sWirz+08bbNkvAQKyCZ17DrVtnrjHRFIUR0EbGfPQ9Uqypgt/PEcXKhQJF
+ 9RNeGnq5L8TNgCZ9mfd5TnsTgzEOjqUa42dg0dgbW5ga6VH9q9yJSmrPiBQEQZjPOp4o
+ Kcmw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+whi18KCV+5zirvES6vrlQ1EXQ2pziExvDQUzB6UYGIilDRE4ZWPBAo1NZCrstHUAk2UazaKPEsbaiYsnu9C0GzQrVek=
+X-Gm-Message-State: AOJu0YwShMXQqWOJ6wMwZAmSl1VGwCci0jdLrqU7O8Zr5G2yVDWkyoRT
+ mELm9Zae9E/7TyL7geeWfWdrCtO318PUFoBTlY//gN/pvxOoWzeNCNB8/CQsJpz73zqtSsevv8c
+ O
+X-Google-Smtp-Source: AGHT+IG9G8lsqePGd0mAJ89Wq2k7m+AUu2BWA4Gl4LsmOiHMDoG71ZFkjy2IkkBvQk5shybAwQWg5w==
+X-Received: by 2002:a05:6a20:d80b:b0:1b0:1025:2f5 with SMTP id
+ adf61e73a8af0-1b1f84e0c88mr4345005637.0.1716429756775; 
+ Wed, 22 May 2024 19:02:36 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2bdd9f21b9asm450187a91.41.2024.05.22.19.02.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 May 2024 19:02:36 -0700 (PDT)
+Message-ID: <1d478dda-fb1f-4b4f-aa08-d0e4b85c5050@linaro.org>
+Date: Wed, 22 May 2024 19:02:34 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/9] Migration patches for 2024-05-22
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20240522222034.4001-1-farosas@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240522222034.4001-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDMf9n05mSDMGAA--.17472S12
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,34 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+On 5/22/24 15:20, Fabiano Rosas wrote:
+> The following changes since commit 01782d6b294f95bcde334386f0aaac593cd28c0d:
+> 
+>    Merge tag 'hw-misc-20240517' ofhttps://github.com/philmd/qemu  into staging (2024-05-18 11:49:01 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/farosas/qemu.git  tags/migration-20240522-pull-request
+> 
+> for you to fetch changes up to 8f023a0bd946bb0c122543c64fe2b34bad0dd048:
+> 
+>    tests/qtest/migration-test: Fix the check for a successful run of analyze-migration.py (2024-05-22 17:34:41 -0300)
+> 
+> ----------------------------------------------------------------
+> Migration pull request
+> 
+> - Li Zhijian's COLO minor fixes
+> - Marc-André's virtio-gpu fix
+> - Fiona's virtio-net USO fix
+> - A couple of migration-test fixes from Thomas
 
-Higher bits for memory nodes were omitted at qemu_fdt_setprop_cells.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240520-loongarch-fdt-memnode-v1-1-5ea9be93911e@flygoat.com>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/loongarch/virt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index e3bdf085b5..3e6e93edf3 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -464,7 +464,8 @@ static void fdt_add_memory_node(MachineState *ms,
-     char *nodename = g_strdup_printf("/memory@%" PRIx64, base);
- 
-     qemu_fdt_add_subnode(ms->fdt, nodename);
--    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, 0, size);
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", base >> 32, base,
-+                           size >> 32, size);
-     qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "memory");
- 
-     if (ms->numa_state && ms->numa_state->num_nodes) {
--- 
-2.34.1
+r~
 
 
