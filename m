@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B36C25B7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDA7C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHb1-0008AN-8l; Thu, 23 May 2024 19:11:39 -0400
+	id 1sAHa4-00050f-CG; Thu, 23 May 2024 19:10:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZz-0004Pf-1k; Thu, 23 May 2024 19:10:35 -0400
-Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
+ id 1sAHZU-0002Bn-Fi; Thu, 23 May 2024 19:10:05 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHZx-0006EA-8R; Thu, 23 May 2024 19:10:34 -0400
-Received: by mail-il1-x12c.google.com with SMTP id
- e9e14a558f8ab-36dd56cf5f5so22417895ab.3; 
- Thu, 23 May 2024 16:10:32 -0700 (PDT)
+ id 1sAHZS-0005s1-PL; Thu, 23 May 2024 19:10:04 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f44b5d0c50so1607385ad.2; 
+ Thu, 23 May 2024 16:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505831; x=1717110631; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505799; x=1717110599; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZJUFjV3rLbKnuX/4fI8Aob/kdhBC8cIX6xs1sOZu9Zg=;
- b=KsQ0aibdlu8k6NJ4E0jzCCmaRyKJFRjDCE97kgcmYVTyD2pVwY+F3IL1P8KZ94jQn7
- qtzzc5lnVJqtEv9sLBnprOpb/HTLpZOhUC1MhKLHSOm8gdcZKiuCan1oBZWTfgZePFcl
- defCoyioqINNoUUH1Q+F2GIffRrOI2J2rDb6TFNi68dSSdzZ+oDAn/2o78eZWxg9i1a0
- GrOSiAckSe2Wj6+bsW6OyIkSUCWaRx5u7qacLG9EppNyYP6w5TzKL0QO4e9/pxHrUnE9
- nU1CnG+I1ThtVvSekaqmuWPxzpDH5+cfXsCPWVLgWXNcFEiI9BnAQaG3mZLoKb9ewdLE
- xTIg==
+ bh=4xWtYFgPKmZvzoUo1p/mj26aITEKQ3OxBcn5RDEMeAE=;
+ b=nZDJyl4629u5TcOB/FFYp/TOEW+AyrMCUeBzyYLTX8x9n/I4/OotJIwjSpZZ4MPdxs
+ UTcFipkab9dWeUBucjNgnH/cD+EGzUKkHbOKDJfzDd2G124iJQoYqSDYkuo6R+mJkZ/B
+ w01ZWlbpm0DXbJkExij3VdYbTn1XERcxSBywLTytW8vZ6mgjaFbQfni/Ts7c7yO/dL/A
+ ywL22JsHTF0FDK2L/ANFCsBN4fFIp7hS/Z9sEJGCwDKWLRzedwOIJ5qBm0IWEYTi4+WA
+ BWKjK+o5DtRUXt9/q6Q2/TWxhtb7AauXgaFHMosp199vZOZESutgPXa1kAek3uCG5DDt
+ Xo1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505831; x=1717110631;
+ d=1e100.net; s=20230601; t=1716505799; x=1717110599;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZJUFjV3rLbKnuX/4fI8Aob/kdhBC8cIX6xs1sOZu9Zg=;
- b=pQmTyhE01/o4GMlcrdVMlFQKAwy5cvA1OnkF9i3UEKTuKNywFstt/gdlZOVHzaNAta
- uDlCSur1QSnOMvTEJmduq3QVxTBH0wqYE7nL3zyYGbIbgJvGsh3C6XkwSoN3SzGGkTml
- UKr/ITzMU3DG5AxsTJFXzmkUdda4j03Z5XG4/D3Ryy4AKRsD5G88LLPtaV9rpl0xx6EY
- OFoVShzeO0zZWOGrByKf0s9mjvOAZIeBgZ6zGaSX04nsig0FGkgmwPtZRssMxpbhrBfR
- 4g2JuLF5oFRf+JkrcRgJ8WogTiEdCdrisYdyKEvE5ayiRqaZJE3j+oFRw9IoTLeg8cUN
- 2oew==
+ bh=4xWtYFgPKmZvzoUo1p/mj26aITEKQ3OxBcn5RDEMeAE=;
+ b=J7s7Bqx8loLlXRvmr4WPqVIhy6W+hT4u/+6I5y9ByI9DiQ0hDeXoL3Z3sPt3eZy/pC
+ RpzyhBYUmSLNMDm9T9cvdwBWZv3yRVxPAKwYYk75D6Zv+9xjcG7X1ZuCZfRI0I/OJEtg
+ 7wd1GyvG4Awsg5F5FQmQp4xumgFb1TxSw00IjHhl6lvUix13J82o6hdGp5s6qbscUp5X
+ LwJFwGAO4BjsB6WKLJhe3Zuf1JebJ1iX07ZPxKYWAdR4UiJF3uvLOTuDDbVCJpldt42a
+ xdmtPhD29iuBb/FFYHqtodRH78WV9MOLnWhlx3hKco2XYqfVKJ+qJZ/xJ/B3UiVMr2Ma
+ O94w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXV1jq9uoV1pZEA07MjmK4TAh0f4ygK5YLorKF3CSyw0SQimDINECIux9r2eHqGyX0Rzih+MzOzu3WBAuSo/UXltM08
-X-Gm-Message-State: AOJu0YxA9ow52WVbEogO/R/CmTIrHI+BjSqY5gxRx61Ti5DfT0SVmUuj
- DlU91jTvgga43PLLth5FBwL/HP6Y2nb1MTZi/+bcXEHwlWCHqRuwwMvjBA==
-X-Google-Smtp-Source: AGHT+IGu8aYAAIxZMs/t21q7n3hWsfk4HJN5huPQoL0CXiiJXuotgrT2H4t4c3P/nxV+lYufifu9Bg==
-X-Received: by 2002:a05:6e02:1aad:b0:36b:2bc6:6425 with SMTP id
- e9e14a558f8ab-3737b2b48e7mr8648585ab.4.1716505830840; 
- Thu, 23 May 2024 16:10:30 -0700 (PDT)
+ AJvYcCW3SikWC44O+vHvTmLsYm3SJEp3zL9MyEjmQ9NRy1Df6aEhNSc5ttl0ukTkceabxQoe96PRhJjo4SWvPeKxz6drQmM8
+X-Gm-Message-State: AOJu0Yw1eO0XKKhmnqfd6OImUTvEww5XyI2BKxQoDTuf7RquvWXnvMvH
+ T/zOgInp/RlZJGqxaTtcM0idk3OxWAcoEED6P8QuPq/hrYAvgUcCCSv22w==
+X-Google-Smtp-Source: AGHT+IG4zaS0j4WzWY2a7KG7/BeYTBe0VJ7CMttqmMyNn8+/dHxqXTmHadvpNEpKge2hDiTZwr0mAg==
+X-Received: by 2002:a17:902:c60c:b0:1f2:ffcc:8a0b with SMTP id
+ d9443c01a7336-1f4487186d1mr6534515ad.24.1716505798718; 
+ Thu, 23 May 2024 16:09:58 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.10.28
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:10:30 -0700 (PDT)
+ Thu, 23 May 2024 16:09:58 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
  BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 50/72] target/ppc/mmu_common.c: Split off real mode cases in
- get_physical_address_wtlb()
-Date: Fri, 24 May 2024 09:07:23 +1000
-Message-ID: <20240523230747.45703-51-npiggin@gmail.com>
+Subject: [PULL 39/72] target/ppc: Remove unused struct 'mmu_ctx_hash32'
+Date: Fri, 24 May 2024 09:07:12 +1000
+Message-ID: <20240523230747.45703-40-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12c;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,79 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-The real mode handling is identical in the remaining switch cases.
-Split off these common real mode cases into a separate conditional to
-leave only the else branches in the switch that are different.
+I think it's use was removed by
+Commit 5883d8b296 ("mmu-hash*: Don't use full ppc_hash{32,
+64}_translate() path for get_phys_page_debug()")
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 34 +++++++++-------------------------
- 1 file changed, 9 insertions(+), 25 deletions(-)
+ target/ppc/mmu-hash32.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 9f177b6976..b13150ce23 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -1172,7 +1172,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-                                      MMUAccessType access_type, int type,
-                                      int mmu_idx)
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 6dfedab11d..da6e8b293c 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -37,12 +37,6 @@
+ #  define LOG_BATS(...) do { } while (0)
+ #endif
+ 
+-struct mmu_ctx_hash32 {
+-    hwaddr raddr;      /* Real address              */
+-    int prot;                      /* Protection bits           */
+-    int key;                       /* Access key                */
+-};
+-
+ static int ppc_hash32_pp_prot(int key, int pp, int nx)
  {
--    int ret = -1;
-     bool real_mode;
- 
-     if (env->mmu_model == POWERPC_MMU_BOOKE) {
-@@ -1184,38 +1183,23 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
- 
-     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
-                                       : !FIELD_EX64(env->msr, MSR, DR);
-+    if (real_mode && (env->mmu_model == POWERPC_MMU_SOFT_6xx ||
-+                      env->mmu_model == POWERPC_MMU_SOFT_4xx ||
-+                      env->mmu_model == POWERPC_MMU_REAL)) {
-+        return check_physical(env, ctx, eaddr, access_type);
-+    }
- 
-     switch (env->mmu_model) {
-     case POWERPC_MMU_SOFT_6xx:
--        if (real_mode) {
--            ret = check_physical(env, ctx, eaddr, access_type);
--        } else {
--            ret = mmu6xx_get_physical_address(env, ctx, eaddr, access_type,
--                                              type);
--        }
--        break;
--
-+        return mmu6xx_get_physical_address(env, ctx, eaddr, access_type, type);
-     case POWERPC_MMU_SOFT_4xx:
--        if (real_mode) {
--            ret = check_physical(env, ctx, eaddr, access_type);
--        } else {
--            ret = mmu40x_get_physical_address(env, ctx, eaddr, access_type);
--        }
--        break;
-+        return mmu40x_get_physical_address(env, ctx, eaddr, access_type);
-     case POWERPC_MMU_REAL:
--        if (real_mode) {
--            ret = check_physical(env, ctx, eaddr, access_type);
--        } else {
--            cpu_abort(env_cpu(env),
--                      "PowerPC in real mode do not do any translation\n");
--        }
--        return -1;
-+        cpu_abort(env_cpu(env),
-+                  "PowerPC in real mode do not do any translation\n");
-     default:
-         cpu_abort(env_cpu(env), "Unknown or invalid MMU model\n");
--        return -1;
-     }
--
--    return ret;
- }
- 
- static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
+     int prot;
 -- 
 2.43.0
 
