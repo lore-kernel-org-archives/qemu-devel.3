@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C2CC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297F8C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9w9-0005eS-UY; Thu, 23 May 2024 11:00:58 -0400
+	id 1sA9w0-0004sJ-7H; Thu, 23 May 2024 11:00:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9w8-0005QM-56
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sA9vx-0004iJ-JD
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9w6-0004pM-9n
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:55 -0400
+ id 1sA9vv-0004me-Ng
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476453;
+ s=mimecast20190719; t=1716476443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VjC9jCKLkNDsyMvB5gIqtNiqr/gW7pKk6sCvaBJmOQo=;
- b=FijmG45uHnipUJ+jYa2pSFgJjxBV0Yt8GCIKNzleg8VuYGfgSeXD0mNvOZkfvV/5K/34z+
- 2uXQA8RcygO9Awaa4yIFcg3TGc2TS8DHr+Q2hiQ5LvJHn6Se5CcbxXcF4FO1FtIJTMsBu3
- Bmgm7WUQKh8f059AFti9tzTpekaTHA4=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+cz7/A2Vd7WnBcData+m1wJymCreFQbA7KiqEEru/k8=;
+ b=hZtOARx/91xuFcNmGnNr3JYS7ZSaewLwtobl2BSxBD2NUna4MQWowQF0hzD9KdPEBmupuD
+ AS5wK04TMeOZbE2xzfNPBR6SV50JbfJhrEBL6xjv0VLwy+o3/lm3vUiUmN7NvUxHWUggPv
+ jXBTpHarEH6rS0e1BFV5D1Sa7lyyq/E=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-RCDOEWv5OQyN3xQzqLPrpw-1; Thu, 23 May 2024 11:00:52 -0400
-X-MC-Unique: RCDOEWv5OQyN3xQzqLPrpw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2e952e85d80so7063411fa.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:52 -0700 (PDT)
+ us-mta-645-AJN56AajOtWgsKTs7Ft6fQ-1; Thu, 23 May 2024 11:00:40 -0400
+X-MC-Unique: AJN56AajOtWgsKTs7Ft6fQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a59eea00cafso147553166b.1
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476450; x=1717081250;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VjC9jCKLkNDsyMvB5gIqtNiqr/gW7pKk6sCvaBJmOQo=;
- b=g1UA+1qKmdp9t9jIk9RwDJVVMXosKoAYPWy0/4s1hc819Rncd3ZE4E8uM8BHmIqelj
- tepiL3ZL/fUg42qlQ6RX1DgeHwFct8IhAEGXAnpuo6BTPPWOdhaS+jOmqBbUL76G7IMA
- woZ2eLtoRCiKy4Yuvy+Xw8F8dHsX0jvSxhxpyCSgsiENRH1EhHRgsz3k9jkZLc1KQsoA
- BUFZM5l62dHE1x0Ubuoy2DxAFxWmSZkwIFbTpo1tjIqiQsEdVN4vwILBc62DdMw39Ytl
- CbOXXvO55l/MuAyEGfycUotXBmv9ILTUw0ZmgZppJCGCUw9sQ6Yz7R5pSeHY5pWJ043i
- v2fw==
-X-Gm-Message-State: AOJu0YzqGcZGAQQZ0YQ2VewolrTgP5LP1hmtv1VPk3CAujrHWazXf56m
- AJgOBF2lsp8jxjYQvG0U26csl5GCRbBzifrfSofBbnEjY1uieYt39i/hNYr9Lfruj1zBh0ROzGm
- 5iEqTLLmn2IzhViHOhHiDJedQshUrlMc4dwq39k7cRFlofAR1GW58JjjVREbS/DWfDNZZJTaLAV
- gxyIIb4PhCyXZ8T0GKQGy6ACUzGyQnlLlLvLil
-X-Received: by 2002:ac2:4154:0:b0:523:97ee:c1f4 with SMTP id
- 2adb3069b0e04-526bf545f4dmr3424933e87.56.1716476450172; 
- Thu, 23 May 2024 08:00:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFm1M09VvNVArFCumNveWJtkXO3dKW0qJg/6a/ry97/O/Nziuf/a/Shg89WXuDgWHcOGfykiQ==
-X-Received: by 2002:ac2:4154:0:b0:523:97ee:c1f4 with SMTP id
- 2adb3069b0e04-526bf545f4dmr3424907e87.56.1716476449667; 
- Thu, 23 May 2024 08:00:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716476438; x=1717081238;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+cz7/A2Vd7WnBcData+m1wJymCreFQbA7KiqEEru/k8=;
+ b=VsHNxuggvlRrFsydiMu+i7guZqHO1RgtkUnJMPd8HlWTWaV8ZcCt8BdXOm0lUdnAHf
+ Oc7e+CDVOc666bE+CDdYU/05t6jAQcnFz6ew8EDsZ88AP2GWnyMrUoctSrwWyXGt+XS3
+ lpYK8f1L0vzYO4RZn2EomjqsaQM2/Gvn5UGpAMRvT/SL24rUjpfyHeFFY3+AkQYqzIqs
+ yye3rnvqVIRrrN2kX9Stn2IUUMo03c0btySMTQD7qJf8H3Rpw2Hn0FSsVqMk/asgfiOR
+ U/2vbf1lSWttVOMyEYJYBoFvKHymDM4j0nb2pT1ecaq/UqJv/MvEuSrhJwRDx5SZsegr
+ qP+A==
+X-Gm-Message-State: AOJu0YypboClEcFr+ra1L6S8JrFXViupYeMMfauAYYxPGBUVCZfe4h7A
+ 7ROdnMEEogDJgWZQCtTPkFHTbh/4u1xqffmjJCTihmHPtoShEe5ujDK2iypVAxUGn0ecA2PT9ML
+ u3YuyW5TkGlyl1ZO2V9WVpS3ZV7R8TncQo9lPw0g8U0tBPn9HrnPZ9I3blyC9hXb7rHnPRT9cxe
+ KNwGECXpQS4JY//WPDphhT4sJQ43n4EKcToa5G
+X-Received: by 2002:a17:906:b887:b0:a5a:1a:b0e6 with SMTP id
+ a640c23a62f3a-a62280b2e16mr478656366b.9.1716476438633; 
+ Thu, 23 May 2024 08:00:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWVLHd61+4NF3uxgdUWkhnHgiVbR2XGKGNk1v2h6XY72LHzeKOHAH3QvHx9SN17DU88AIC8Q==
+X-Received: by 2002:a17:906:b887:b0:a5a:1a:b0e6 with SMTP id
+ a640c23a62f3a-a62280b2e16mr478653766b.9.1716476437959; 
+ Thu, 23 May 2024 08:00:37 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a8a55f2e8sm1262018866b.126.2024.05.23.08.00.48
+ a640c23a62f3a-a5a1787c6b1sm1951952666b.57.2024.05.23.08.00.37
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:00:48 -0700 (PDT)
+ Thu, 23 May 2024 08:00:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Binbin Wu <binbin.wu@linux.intel.com>, Xuelian Guo <xuelian.guo@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/23] target/i386: add control bits support for LAM
-Date: Thu, 23 May 2024 17:00:18 +0200
-Message-ID: <20240523150036.1050011-6-pbonzini@redhat.com>
+Subject: [PULL 00/23] i386 changes for 2024-05-23
+Date: Thu, 23 May 2024 17:00:13 +0200
+Message-ID: <20240523150036.1050011-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
-References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,91 +99,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Binbin Wu <binbin.wu@linux.intel.com>
+The following changes since commit 01782d6b294f95bcde334386f0aaac593cd28c0d:
 
-LAM uses CR3[61] and CR3[62] to configure/enable LAM on user pointers.
-LAM uses CR4[28] to configure/enable LAM on supervisor pointers.
+  Merge tag 'hw-misc-20240517' of https://github.com/philmd/qemu into staging (2024-05-18 11:49:01 +0200)
 
-For CR3 LAM bits, no additional handling needed:
-- TCG
-  LAM is not supported for TCG of target-i386.  helper_write_crN() and
-  helper_vmrun() check max physical address bits before calling
-  cpu_x86_update_cr3(), no change needed, i.e. CR3 LAM bits are not allowed
-  to be set in TCG.
-- gdbstub
-  x86_cpu_gdb_write_register() will call cpu_x86_update_cr3() to update cr3.
-  Allow gdb to set the LAM bit(s) to CR3, if vcpu doesn't support LAM,
-  KVM_SET_SREGS will fail as other reserved bits.
+are available in the Git repository at:
 
-For CR4 LAM bit, its reservation depends on vcpu supporting LAM feature or
-not.
-- TCG
-  LAM is not supported for TCG of target-i386.  helper_write_crN() and
-  helper_vmrun() check CR4 reserved bit before calling cpu_x86_update_cr4(),
-  i.e. CR4 LAM bit is not allowed to be set in TCG.
-- gdbstub
-  x86_cpu_gdb_write_register() will call cpu_x86_update_cr4() to update cr4.
-  Mask out LAM bit on CR4 if vcpu doesn't support LAM.
-- x86_cpu_reset_hold() doesn't need special handling.
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
-Tested-by: Xuelian Guo <xuelian.guo@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240112060042.19925-3-binbin.wu@linux.intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.h    | 7 ++++++-
- target/i386/helper.c | 4 ++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+for you to fetch changes up to 84d4b72854869821eb89813c195927fdd3078c12:
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 107f263429a..ccf6811794e 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -258,6 +258,7 @@ typedef enum X86Seg {
- #define CR4_SMAP_MASK   (1U << 21)
- #define CR4_PKE_MASK   (1U << 22)
- #define CR4_PKS_MASK   (1U << 24)
-+#define CR4_LAM_SUP_MASK (1U << 28)
- 
- #define CR4_RESERVED_MASK \
- (~(target_ulong)(CR4_VME_MASK | CR4_PVI_MASK | CR4_TSD_MASK \
-@@ -266,7 +267,8 @@ typedef enum X86Seg {
-                 | CR4_OSFXSR_MASK | CR4_OSXMMEXCPT_MASK | CR4_UMIP_MASK \
-                 | CR4_LA57_MASK \
-                 | CR4_FSGSBASE_MASK | CR4_PCIDE_MASK | CR4_OSXSAVE_MASK \
--                | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK))
-+                | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK \
-+                | CR4_LAM_SUP_MASK))
- 
- #define DR6_BD          (1 << 13)
- #define DR6_BS          (1 << 14)
-@@ -2563,6 +2565,9 @@ static inline uint64_t cr4_reserved_bits(CPUX86State *env)
-     if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS)) {
-         reserved_bits |= CR4_PKS_MASK;
-     }
-+    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-+        reserved_bits |= CR4_LAM_SUP_MASK;
-+    }
-     return reserved_bits;
- }
- 
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 48d1513a35a..f9d1381f90b 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -219,6 +219,10 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
-         new_cr4 &= ~CR4_PKS_MASK;
-     }
- 
-+    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-+        new_cr4 &= ~CR4_LAM_SUP_MASK;
-+    }
-+
-     env->cr[4] = new_cr4;
-     env->hflags = hflags;
- 
+  target-i386: hyper-v: Correct kvm_hv_handle_exit return value (2024-05-22 19:56:28 +0200)
+
+----------------------------------------------------------------
+* hw/i386/pc_sysfw: Alias rather than copy isa-bios region
+* target/i386: add control bits support for LAM
+* target/i386: tweaks to new translator
+* target/i386: add support for LAM in CPUID enumeration
+* hw/i386/pc: Support smp.modules for x86 PC machine
+* target-i386: hyper-v: Correct kvm_hv_handle_exit return value
+
+----------------------------------------------------------------
+Bernhard Beschow (1):
+      hw/i386/pc_sysfw: Alias rather than copy isa-bios region
+
+Binbin Wu (1):
+      target/i386: add control bits support for LAM
+
+Paolo Bonzini (2):
+      target/i386: generate simpler code for ROL/ROR with immediate count
+      target/i386: clean up AAM/AAD
+
+Robert Hoo (1):
+      target/i386: add support for LAM in CPUID enumeration
+
+Zhao Liu (16):
+      i386/cpu: Fix i/d-cache topology to core level for Intel CPU
+      i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]
+      i386/cpu: Use APIC ID info get NumSharingCache for CPUID[0x8000001D].EAX[bits 25:14]
+      i386/cpu: Consolidate the use of topo_info in cpu_x86_cpuid()
+      i386/cpu: Introduce bitmap to cache available CPU topology levels
+      i386: Split topology types of CPUID[0x1F] from the definitions of CPUID[0xB]
+      i386/cpu: Decouple CPUID[0x1F] subleaf with specific topology level
+      i386: Introduce module level cpu topology to CPUX86State
+      i386: Support modules_per_die in X86CPUTopoInfo
+      i386: Expose module level in CPUID[0x1F]
+      i386: Support module_id in X86CPUTopoIDs
+      i386/cpu: Introduce module-id to X86CPU
+      hw/i386/pc: Support smp.modules for x86 PC machine
+      i386: Add cache topology info in CPUCacheInfo
+      i386/cpu: Use CPUCacheInfo.share_level to encode CPUID[4]
+      i386/cpu: Use CPUCacheInfo.share_level to encode CPUID[0x8000001D].EAX[bits 25:14]
+
+Zhuocheng Ding (1):
+      tests: Add test case of APIC ID for module level parsing
+
+donsheng (1):
+      target-i386: hyper-v: Correct kvm_hv_handle_exit return value
+
+ include/hw/i386/pc.h             |   1 +
+ include/hw/i386/topology.h       |  60 +++++++-
+ target/i386/cpu.h                |  43 +++++-
+ target/i386/helper.h             |   4 +-
+ hw/i386/pc.c                     |   3 +
+ hw/i386/pc_piix.c                |   3 +
+ hw/i386/pc_q35.c                 |   2 +
+ hw/i386/pc_sysfw.c               |   8 +-
+ hw/i386/x86-common.c             |  54 +++++--
+ hw/i386/x86.c                    |  13 +-
+ target/i386/cpu.c                | 310 +++++++++++++++++++++++++++++++--------
+ target/i386/helper.c             |   4 +
+ target/i386/kvm/hyperv.c         |   2 +-
+ target/i386/kvm/kvm.c            |   3 +-
+ target/i386/tcg/int_helper.c     |  19 +--
+ tests/unit/test-x86-topo.c       |  56 ++++---
+ target/i386/tcg/decode-new.c.inc |   4 +-
+ target/i386/tcg/emit.c.inc       |  34 +++--
+ qemu-options.hx                  |  18 ++-
+ 19 files changed, 491 insertions(+), 150 deletions(-)
 -- 
 2.45.1
 
