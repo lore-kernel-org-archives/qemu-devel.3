@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2710C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C818C25B7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9wX-0006nX-Of; Thu, 23 May 2024 11:01:22 -0400
+	id 1sA9wC-0005zh-QW; Thu, 23 May 2024 11:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wO-0006UV-FM
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sA9wB-0005tG-C3
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wK-0004r1-E7
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:11 -0400
+ id 1sA9w9-0004pb-F7
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476465;
+ s=mimecast20190719; t=1716476456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LmBfNyyXoE9mPmJvBFS5RdjaGUbXqRaJo1Z4d57ylYE=;
- b=CFZrqoxMbWXb4BAquYxbEXiig52KrhWu+ZkbzP0an1tDtxnHEFBcmpvN/YbI9QFn43TFpK
- HVqc5D0NrRk6PkU6fhxz31SG4DyvVhtdr7XKT7Ls2lfOdBrptG/qVR4vFKH+AFnz5P83bX
- 2UIlY5/nkXVEPiZNZxuY9hBEsqhHAr8=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RRwx+emp8z1T3Io0QQVZ2C4uYnikwD6/IsL4K09fAzM=;
+ b=hN6OH75dmEyya9ewZZ90m7sX9WsMSQjs5WuSNaeKsmjhURQcY40330RVJuddg7bBvW8Ohp
+ QTTszXJJAueic14ZYbM7dftr8jLdEsCCr1KZsLc7PLyHBILZgTfGXDyYfg0p7JAEuz1SvB
+ 1Q6GdypzwYofSLSZZP/NNhUYUoO2u00=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-CZEAV-9MO8qsb031_kKxpg-1; Thu, 23 May 2024 11:01:04 -0400
-X-MC-Unique: CZEAV-9MO8qsb031_kKxpg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59cbb6f266so145771466b.3
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:04 -0700 (PDT)
+ us-mta-656-tmkbCu87NIe5C6VZlRXXkg-1; Thu, 23 May 2024 11:00:54 -0400
+X-MC-Unique: tmkbCu87NIe5C6VZlRXXkg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a62471564a0so36928466b.3
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476462; x=1717081262;
+ d=1e100.net; s=20230601; t=1716476452; x=1717081252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LmBfNyyXoE9mPmJvBFS5RdjaGUbXqRaJo1Z4d57ylYE=;
- b=uzgwblDJUszhD61+Kt/xitmWo0R/LWwvTiIGje1lj8+VLfgtB8AQVUNvKYTv0CsKcI
- CzZC8kWvLDv+Xc5EiyfoSeRX/ZWe90KUyaN63PLb0wg5J5kJoHD480mMlPuA4cAscl9w
- 2KCrncR5/7VMYbVMewsP/zhDZipNv2BluOA/fWs/C+QAvV2Ax3d864tNjKeo2n1/5/GQ
- WV3pajyN3TrOraeiSpUEg1nQl8648ek8KcmcHmDJ2udeH5v1iiKb7v7ov+m9eIHdqbbc
- yajoDvWtCgbgNDJ5raUOC7AFvxAPQAVHZvsRDIHhnUZZyRWgserPIZz2v+UE4L3zjdMQ
- QwVg==
-X-Gm-Message-State: AOJu0Yw1RtUjBKAovPN3tFZozAAyurhXC+DTFv/rTfH07Qkvl0SkrAuV
- sOQ5bBjRtPg1Xd6JCfhnt/cYp1BBvQjGfscMkgU5jaAUponiCndOWfFLB0d5+IOHkC0PQQF4G/B
- KO1zjwGgMtG8xRH4PfMvyuXn96k7XtbovyomYtKigxddxN79Pc48Sl2WaDj/6jXDgpF+S9l/gPC
- oxDXPBso6OdNiTvEg2jDBRtOd6FGxqDeZ9wavp
-X-Received: by 2002:a17:906:a1d4:b0:a59:a033:3e2 with SMTP id
- a640c23a62f3a-a622820b853mr492905866b.74.1716476462625; 
- Thu, 23 May 2024 08:01:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3yK90brmvquuNyKtI4pE51gWv7k6JKRubOEDQzN2Ma4zAumw8u1yib6lH4YBnDleNSyEwmw==
-X-Received: by 2002:a17:906:a1d4:b0:a59:a033:3e2 with SMTP id
- a640c23a62f3a-a622820b853mr492903166b.74.1716476462152; 
- Thu, 23 May 2024 08:01:02 -0700 (PDT)
+ bh=RRwx+emp8z1T3Io0QQVZ2C4uYnikwD6/IsL4K09fAzM=;
+ b=qJsMh9hFD58nr4KbrRPh8mEVku55Hd0jDHactr2vwKnoYw7HfiZT7lO5yTazAXIcs3
+ H4s31vkbVT4XAw2cTTolUWYFxTN0Yo6w95uUss2Y+KZakOGIhXlYkBtkuPSqNWogLiY2
+ K8mTUvrqUOnN4a4PeTFwkbGTQNDt4W9svftHRIvUjcwZ3dzLEV0E8Iv9YrEFFayPvSfi
+ aZyb9zjhDvDQIvv50qtWj/CbYtMtnL5ywJL4bqDZtU8ATmHkonnvPCOzAuMhhSRSE+RL
+ 8Vl/GA8OAg4gnf1lNYkYzzYAEXSB6Qh3Dr0ipYkjq6aXueVLZczGKie0qWFVd+j9U0ag
+ yfNw==
+X-Gm-Message-State: AOJu0YzBy0KpdHqLZZdw6dUGo/iUITbO7gZiza2aXnH//cH10t/QM/Y8
+ v5IWO1n9A/MhG7gTlqPSagxKNx3PExaSLpJVusP6Qpdvmg6BtWyTOO4iBU1owUA44NMHqJ29l0H
+ Do2AtT3nCtSR1ubfLSxOtwRzeWue2N5+kqLtZ411aGU9yU8khcWubWpRO7sIRCuyWq/239HcOxz
+ aG/ofAeRhYsSIzErdTytFlNyHM07bTXkKSfUda
+X-Received: by 2002:a17:906:1854:b0:a62:2b65:1dd5 with SMTP id
+ a640c23a62f3a-a622b65233cmr319045066b.58.1716476452520; 
+ Thu, 23 May 2024 08:00:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESRppVHw6OSjrP8Qr8czZVtfHjhw7DkxPSJYwN9zh+MHrd1dc/Jhz8C9J9feD7SDDHUGnkpA==
+X-Received: by 2002:a17:906:1854:b0:a62:2b65:1dd5 with SMTP id
+ a640c23a62f3a-a622b65233cmr319042866b.58.1716476452207; 
+ Thu, 23 May 2024 08:00:52 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5cedda22acsm1019491466b.137.2024.05.23.08.01.00
+ a640c23a62f3a-a5a25f0d2a9sm1923665866b.60.2024.05.23.08.00.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:01:00 -0700 (PDT)
+ Thu, 23 May 2024 08:00:50 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Babu Moger <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 10/23] i386/cpu: Introduce bitmap to cache available CPU
- topology levels
-Date: Thu, 23 May 2024 17:00:23 +0200
-Message-ID: <20240523150036.1050011-11-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Babu Moger <babu.moger@amd.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PULL 06/23] i386/cpu: Fix i/d-cache topology to core level for Intel
+ CPU
+Date: Thu, 23 May 2024 17:00:19 +0200
+Message-ID: <20240523150036.1050011-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
 References: <20240523150036.1050011-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,177 +107,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Currently, QEMU checks the specify number of topology domains to detect
-if there's extended topology levels (e.g., checking nr_dies).
+For i-cache and d-cache, current QEMU hardcodes the maximum IDs for CPUs
+sharing cache (CPUID.04H.00H:EAX[bits 25:14] and CPUID.04H.01H:EAX[bits
+25:14]) to 0, and this means i-cache and d-cache are shared in the SMT
+level.
 
-With this bitmap, the extended CPU topology (the levels other than SMT,
-core and package) could be easier to detect without touching the
-topology details.
+This is correct if there's single thread per core, but is wrong for the
+hyper threading case (one core contains multiple threads) since the
+i-cache and d-cache are shared in the core level other than SMT level.
 
-This is also in preparation for the follow-up to decouple CPUID[0x1F]
-subleaf with specific topology level.
+For AMD CPU, commit 8f4202fb1080 ("i386: Populate AMD Processor Cache
+Information for cpuid 0x8000001D") has already introduced i/d cache
+topology as core level by default.
 
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Therefore, in order to be compatible with both multi-threaded and
+single-threaded situations, we should set i-cache and d-cache be shared
+at the core level by default.
+
+This fix changes the default i/d cache topology from per-thread to
+per-core. Potentially, this change in L1 cache topology may affect the
+performance of the VM if the user does not specifically specify the
+topology or bind the vCPU. However, the way to achieve optimal
+performance should be to create a reasonable topology and set the
+appropriate vCPU affinity without relying on QEMU's default topology
+structure.
+
+Fixes: 7e3482f82480 ("i386: Helpers to encode cache information consistently")
+Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20240424154929.1487382-10-zhao1.liu@intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20240424154929.1487382-6-zhao1.liu@intel.com>
+[Add compat property. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/i386/topology.h | 23 +++++++++++++++++++++++
- target/i386/cpu.h          |  4 ++++
- hw/i386/x86-common.c       |  5 ++++-
- target/i386/cpu.c          | 18 +++++++++++++++---
- target/i386/kvm/kvm.c      |  3 ++-
- 5 files changed, 48 insertions(+), 5 deletions(-)
+ hw/i386/pc.c      | 1 +
+ target/i386/cpu.c | 6 ++++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-index d4eeb7ab829..befeb92b0b1 100644
---- a/include/hw/i386/topology.h
-+++ b/include/hw/i386/topology.h
-@@ -60,6 +60,21 @@ typedef struct X86CPUTopoInfo {
-     unsigned threads_per_core;
- } X86CPUTopoInfo;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4a2d6f5a97f..6126bfdd2a7 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -79,6 +79,7 @@
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
  
-+/*
-+ * CPUTopoLevel is the general i386 topology hierarchical representation,
-+ * ordered by increasing hierarchical relationship.
-+ * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-+ * or AMD (CPUID[0x80000026]).
-+ */
-+enum CPUTopoLevel {
-+    CPU_TOPO_LEVEL_INVALID,
-+    CPU_TOPO_LEVEL_SMT,
-+    CPU_TOPO_LEVEL_CORE,
-+    CPU_TOPO_LEVEL_DIE,
-+    CPU_TOPO_LEVEL_PACKAGE,
-+    CPU_TOPO_LEVEL_MAX,
-+};
-+
- /* Return the bit width needed for 'count' IDs */
- static unsigned apicid_bitwidth_for_count(unsigned count)
- {
-@@ -168,4 +183,12 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
-     return x86_apicid_from_topo_ids(topo_info, &topo_ids);
- }
- 
-+/*
-+ * Check whether there's extended topology level (die)?
-+ */
-+static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
-+{
-+    return test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-+}
-+
- #endif /* HW_I386_TOPOLOGY_H */
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index ccf6811794e..9e7b9e918e9 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -24,6 +24,7 @@
- #include "cpu-qom.h"
- #include "kvm/hyperv-proto.h"
- #include "exec/cpu-defs.h"
-+#include "hw/i386/topology.h"
- #include "qapi/qapi-types-common.h"
- #include "qemu/cpu-float.h"
- #include "qemu/timer.h"
-@@ -1891,6 +1892,9 @@ typedef struct CPUArchState {
- 
-     /* Number of dies within this CPU package. */
-     unsigned nr_dies;
-+
-+    /* Bitmap of available CPU topology levels for this CPU. */
-+    DECLARE_BITMAP(avail_cpu_topo, CPU_TOPO_LEVEL_MAX);
- } CPUX86State;
- 
- struct kvm_msrs;
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 67b03c913a5..7d4f9b20f23 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -271,7 +271,10 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
- 
-     init_topo_info(&topo_info, x86ms);
- 
--    env->nr_dies = ms->smp.dies;
-+    if (ms->smp.dies > 1) {
-+        env->nr_dies = ms->smp.dies;
-+        set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
-+    }
- 
-     /*
-      * If APIC ID is not set,
+ GlobalProperty pc_compat_9_0[] = {
++    { TYPE_X86_CPU, "x-l1-cache-per-thread", "false" },
+     { TYPE_X86_CPU, "guest-phys-bits", "0" },
+     { "sev-guest", "legacy-vm-type", "true" },
+     { TYPE_X86_CPU, "legacy-multi-node", "on" },
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 363f5ee4bec..8419055006c 100644
+index de1ad7270cf..3c66242f6d3 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6442,7 +6442,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0x1F:
-         /* V2 Extended Topology Enumeration Leaf */
--        if (topo_info.dies_per_pkg < 2) {
-+        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
+@@ -6258,15 +6258,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
              *eax = *ebx = *ecx = *edx = 0;
-             break;
-         }
-@@ -7275,7 +7275,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-          * cpu->vendor_cpuid_only has been unset for compatibility with older
-          * machine types.
-          */
--        if ((env->nr_dies > 1) &&
-+        if (x86_has_extended_topo(env->avail_cpu_topo) &&
-             (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
-             x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
-         }
-@@ -7798,13 +7798,25 @@ static void x86_cpu_post_initfn(Object *obj)
-     accel_cpu_instance_init(CPU(obj));
- }
- 
-+static void x86_cpu_init_default_topo(X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    env->nr_dies = 1;
-+
-+    /* SMT, core and package levels are set by default. */
-+    set_bit(CPU_TOPO_LEVEL_SMT, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_CORE, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_PACKAGE, env->avail_cpu_topo);
-+}
-+
- static void x86_cpu_initfn(Object *obj)
- {
-     X86CPU *cpu = X86_CPU(obj);
-     X86CPUClass *xcc = X86_CPU_GET_CLASS(obj);
-     CPUX86State *env = &cpu->env;
- 
--    env->nr_dies = 1;
-+    x86_cpu_init_default_topo(cpu);
- 
-     object_property_add(obj, "feature-words", "X86CPUFeatureWordInfo",
-                         x86_cpu_get_feature_words,
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index c5943605ee3..6c864e4611f 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -51,6 +51,7 @@
- #include "hw/i386/apic_internal.h"
- #include "hw/i386/apic-msidef.h"
- #include "hw/i386/intel_iommu.h"
-+#include "hw/i386/topology.h"
- #include "hw/i386/x86-iommu.h"
- #include "hw/i386/e820_memory_layout.h"
- 
-@@ -1791,7 +1792,7 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
-             break;
-         }
-         case 0x1f:
--            if (env->nr_dies < 2) {
-+            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-                 cpuid_i--;
+         } else {
+             *eax = 0;
++            int apic_ids_sharing_l1 = cpu->l1_cache_per_core ? cs->nr_threads : 1;
+             switch (count) {
+             case 0: /* L1 dcache info */
+                 encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
+-                                    1, cs->nr_cores,
++                                    apic_ids_sharing_l1, cs->nr_cores,
+                                     eax, ebx, ecx, edx);
                  break;
-             }
+             case 1: /* L1 icache info */
+                 encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
+-                                    1, cs->nr_cores,
++                                    apic_ids_sharing_l1, cs->nr_cores,
+                                     eax, ebx, ecx, edx);
+                 break;
+             case 2: /* L2 cache info */
+@@ -8105,6 +8106,7 @@ static Property x86_cpu_properties[] = {
+                      false),
+     DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
+                      true),
++    DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
+     DEFINE_PROP_END_OF_LIST()
+ };
+ 
 -- 
 2.45.1
 
