@@ -4,76 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF34C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 12:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A34C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 12:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA7TG-00077G-OT; Thu, 23 May 2024 08:22:58 -0400
+	id 1sA7hi-000451-Sf; Thu, 23 May 2024 08:37:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sA7TF-00076n-IH
- for qemu-devel@nongnu.org; Thu, 23 May 2024 08:22:57 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sA7TD-0006Lf-BB
- for qemu-devel@nongnu.org; Thu, 23 May 2024 08:22:56 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56e69888a36so12714530a12.3
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 05:22:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716466974; x=1717071774; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DyVhdIbQLAcGTVeFpbhFp2SdJOB8dGJIsYLEV94Ho1w=;
- b=fR/HJpXL4AAD1qwRkDjprFPSHj3UD2VPzo8DPSkY48wvKM75Bau14JLmqCp2HhmNxz
- lIW7eJmmlrUorGAkwc080qMT2OjD8SpXMN7FkYLaywh8p3ppNyM+QXZsbwp890mdRgT8
- 3rWfOppp1CsxuhXnmLT57gT8GM1r7xPF5uZZhvbAt+rcX9vJWvqZYftNKEIqRpHyw3Sj
- 5Cxnw1X/Etp5hx688YyPKsWguT7opRxj6/cyGoJu8mZmPNyvxDjnC5hXZxS4OJbcJDHu
- 7DSwBPq8ok0Gnc36H4Os8riep7Sbx2RObHR105qPW7RSZnWYYDQwXpoj9k3/tTWaAwAw
- NlEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716466974; x=1717071774;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DyVhdIbQLAcGTVeFpbhFp2SdJOB8dGJIsYLEV94Ho1w=;
- b=bhw621NBtMYr75e7oWN5Rxmy/YFSfUei/CXtUyfXfHqL0e46ezosgJh92DVqmMYC1K
- mzxfVEMgDKZOwmB6pldCTnY0tJyHsiVTwGQx0sR8wusJJ3FR49mP45Q/tcBzGyx/oGM7
- u1ug4YV1tRyfmxAW10r9gPipu8FZyuJE4r1vf/6H8ZaDan1IFba6UKs5agIThYcz/LQQ
- 8adzWoM7H9RflepZ0gmb2iXCZ4jAr9kepuSWbVdzoVH6kFLpnuQUuh/mYMi6KbpIbM5I
- xKo8qmj6XInh/nFDsUg+UH/KqOsUcaR18YWBe8v9VD/gJLUYeOnoZAef0C6cukBGFJWS
- f5mg==
-X-Gm-Message-State: AOJu0YwgNYIRrUF7FzX5c9ioXnA1t8OX/IwA7f3RMJC01rB6/ITAujuN
- /mzSR1FQ4srbcCl1E+Q7unUDwQEF7sH6NfNmRYoONrEVuiiz6npU5KHRnvZe0Ik7HX8eeGpAIqx
- 7p9b4dJZlnk6LI/WIsXRXbm/Veb9JdAUE2x0Txw==
-X-Google-Smtp-Source: AGHT+IH0PTgafeRNMBJjCi3hMtDZ3IpqFBbOJuC39FqvTb44+DFs5NpgEjOgS9Tr/UhN9IOWDhticp6GrxRya0PfjJA=
-X-Received: by 2002:a50:9b08:0:b0:573:5c1c:4f5e with SMTP id
- 4fb4d7f45d1cf-57832854af3mr3229702a12.0.1716466973755; Thu, 23 May 2024
- 05:22:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhibin.li@intel.com>)
+ id 1sA3s0-0003wn-Gp
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 04:32:16 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhibin.li@intel.com>)
+ id 1sA3ry-0004Nm-2t
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 04:32:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716453134; x=1747989134;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=nT8UVHoVMPvOayZ++Vv/EwsYJ0iAXVuVzWJs/feu1dY=;
+ b=j3qAXNJz34GNOAsUR169SNVq9j0z6sH3okvF05LNmcPbOdiChhHfOaoX
+ 7pY2ptIRMzFZux5/990OxVaGxf8mY7SG2MQnc6xdGI7FIgIBOIaIMDL9h
+ McJxm4spKMC1W/KjZnMePsFZ2dErF3hykJFf2etEc9EhOKFqomaVwk1bj
+ W5w99Ztx+IeQP/r8y3DLikuKiV+JxlbUIosbq7WQtM7ULTp+GZ5ncPL26
+ Re21/7EFBgfIprO31vP8punyrKwkcJn+DNbwoebMvimeK9OPsUYIuZlIo
+ wjKE9i5XVPleKmsP0o2wjK3HrcLofUK8+bu+EfGj42Cm/KPWR6pae0c8y g==;
+X-CSE-ConnectionGUID: dklwAa1aRTu1k2cb/xhXNA==
+X-CSE-MsgGUID: YorTke9FQCaIUGlmPqnC0w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11080"; a="38134070"
+X-IronPort-AV: E=Sophos;i="6.08,182,1712646000"; d="scan'208,223";a="38134070"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 May 2024 01:32:08 -0700
+X-CSE-ConnectionGUID: Y89ueP43S+mcdK6iGBOhcw==
+X-CSE-MsgGUID: DB2JQ678TGqKyH7Ul9wdaw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,182,1712646000"; d="scan'208,223";a="34193705"
+Received: from flexbp2.sh.intel.com (HELO localhost) ([10.239.82.162])
+ by orviesa007.jf.intel.com with ESMTP; 23 May 2024 01:32:06 -0700
+From: Zhibin Li <zhibin.li@intel.com>
+To: qemu-devel@nongnu.org
+Cc: zhibin.li@intel.com
+Subject: [PATCH] dump: use 10 base for phys_base
+Date: Thu, 23 May 2024 16:32:05 +0800
+Message-ID: <20240523083205.2248593-1-zhibin.li@intel.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-References: <20240506010403.6204-1-richard.henderson@linaro.org>
- <20240506010403.6204-22-richard.henderson@linaro.org>
-In-Reply-To: <20240506010403.6204-22-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 23 May 2024 13:22:42 +0100
-Message-ID: <CAFEAcA9UMnt61ZW_AjoLD4UYB-vUusbOGaB_E0toH38_5Ojgfg@mail.gmail.com>
-Subject: Re: [PATCH 21/57] target/arm: Convert FADDP to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhibin.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 23 May 2024 08:37:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,22 +79,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 May 2024 at 02:07, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This fixes a bug in which scalar half-precision did not
-> diagnose sz == 1 as UNDEFINED.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/helper.h            |  4 ++
->  target/arm/tcg/a64.decode      | 12 +++++
->  target/arm/tcg/translate-a64.c | 87 ++++++++++++++++++++++++++--------
->  target/arm/tcg/vec_helper.c    | 23 +++++++++
->  4 files changed, 105 insertions(+), 21 deletions(-)
+From vmcoreinfo 'phys_base' is a decimal instead a hexadecimal so use base of
+10 instead of 16 when converting this string.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Zhibin Li <zhibin.li@intel.com>
+---
+Hi everyone. I'm trying to use 'dump-guest-memory' QMP command to generate a kdump-compressed vmcore file which can be consumed by makedumpfile tool (the command I used is: `dump-guest-memory -l -R test.bin`).
 
-thanks
--- PMM
+I found that the generated vmcore cannot be parsed correctly by 'makedumpfile' and I noticed that the 'phys_base' is incorrect with KASLR enabled. This is just a quick fix and please let me know if you have any comments.
+
+By the way, with this fix 'makedumpfile' can proceed to handle the generated vmcore but later on some other issues were found. I'm still trying to debug this. If you have any BKMs about using 'makedumpfile' with QEMU please let me know. Thanks!
+
+ dump/dump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dump/dump.c b/dump/dump.c
+index 84064d890d..e42ab3ccac 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -1760,7 +1760,7 @@ static void vmcoreinfo_update_phys_base(DumpState *s)
+         }
+ 
+         if (prefix && g_str_has_prefix(lines[i], prefix)) {
+-            if (qemu_strtou64(lines[i] + strlen(prefix), NULL, 16,
++            if (qemu_strtou64(lines[i] + strlen(prefix), NULL, 10,
+                               &phys_base) < 0) {
+                 warn_report("Failed to read %s", prefix);
+             } else {
+-- 
+2.43.2
+
 
