@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28286C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5A9C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 15:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA9wt-00083k-Dl; Thu, 23 May 2024 11:01:43 -0400
+	id 1sA9w1-0004v0-13; Thu, 23 May 2024 11:00:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wh-00073B-Db
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:35 -0400
+ id 1sA9vz-0004r3-OJ
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sA9wf-0004tg-CR
- for qemu-devel@nongnu.org; Thu, 23 May 2024 11:01:31 -0400
+ id 1sA9vx-0004mu-VK
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 11:00:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716476487;
+ s=mimecast20190719; t=1716476445;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iN659yH09n/hdzOY/L+ozt0Io3bES4P00+IzSZFQwVs=;
- b=Ui8FY+rZQDHunnbxVJAX6txfbz4S0KL1tp4bQ7M4F+MYk/BTjSUXgCFGQi6U85sgkYds9b
- K+rETibc91dZhDCHSzNcOUB4EsjDt2gw1ClADSfcef/a7axPmzbRWbSRq7Y5xDHs6003W4
- k4c4MKApoSc2IzPiOYj6f5UA5mgCP1k=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PA8Yx9dDcVAjLfl4bPdHEZllpwb4CCTSG4hRdz+6q9M=;
+ b=BLHx8wFK5TIeZogYYjx+3FWhmDKK/JP0b1taatHMDA3Yn22p6vSwox+blyPAK5c01UfPE+
+ /8tUn2sGj7L4RrQhc40QHiU5Urdb8rSVlcCDgOJZ/xShK3VbrbbNhfsV3+6QDYtLY1WI9S
+ bulp1i/k8hFFjpxBXIiVMepTL0HhqQs=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-ITCodQUfMRmEklpA3Qygbg-1; Thu, 23 May 2024 11:01:26 -0400
-X-MC-Unique: ITCodQUfMRmEklpA3Qygbg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a592c35ac06so236264666b.0
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:01:26 -0700 (PDT)
+ us-mta-628-b6g3wj06MqmtCOwIjYYCpg-1; Thu, 23 May 2024 11:00:43 -0400
+X-MC-Unique: b6g3wj06MqmtCOwIjYYCpg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a621c9a65f4so82658066b.2
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 08:00:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716476484; x=1717081284;
+ d=1e100.net; s=20230601; t=1716476442; x=1717081242;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iN659yH09n/hdzOY/L+ozt0Io3bES4P00+IzSZFQwVs=;
- b=qApHr08acf2dXq84KDY17D9m1mnk4hgKzUp+rN3Gut+2H6wjnAhrxNBMHw1rIx/GkB
- deLD7ppu2OBKSWRcI9aM2521UK7dPdlUZoneqvocZcLAr5w0NtYmc++XtHKqKzGMTB/l
- EWt2333qpTF7iJW2mNTwcfLo1taBqlkiVUPeRbs9RNUcQAAs1ypRIQkW7afpOZuJcL3T
- iAWwbdqk42DUYADKxOwhAJKAyXe0QjDx5IoM+Ge1b8KhVtpkjqvq+zAKk3LjJ3Eq1OJ/
- maejZ8rMUfZQcyTR9/YxRCGbdmOF2inZKP0ply0U1S3vTN8MkN/SX40QRRF2+M49AYDy
- H0hw==
-X-Gm-Message-State: AOJu0YySXFbuuIkFtLg45bF16TiGFAp8yYVW65r8SexpSnxe5rUksgZq
- M/uMbu8nRWW2zSA8MJlODFy6kowNDA11gFoAupVsNPJpy/JpTgGcpGpXYCBoS/TTApXg9UjSGwM
- TJwI2a+ROZqS2DDkU3sjR9t/QesjrTLJ4Hc4VmCoe/y83j8Ijhr9kgW4kKaE6QIZaODwRhr20Nw
- mbEbHOmN27LhVeqUc2iK/AV1r27/0j2iY2wFPx
-X-Received: by 2002:a17:906:3893:b0:a59:c345:17fb with SMTP id
- a640c23a62f3a-a623e6d52f1mr207773566b.5.1716476484726; 
- Thu, 23 May 2024 08:01:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfSB4TvWhr7kjL24Jog1Ht8TnS7hwBpxo9qw35Rx5Kd12/dhjfyQJw2D4Nj3qoOhHlZi6bYQ==
-X-Received: by 2002:a17:906:3893:b0:a59:c345:17fb with SMTP id
- a640c23a62f3a-a623e6d52f1mr207771066b.5.1716476484356; 
- Thu, 23 May 2024 08:01:24 -0700 (PDT)
+ bh=PA8Yx9dDcVAjLfl4bPdHEZllpwb4CCTSG4hRdz+6q9M=;
+ b=jseq/oRqSgfFKHAFpoZV0HBY0UpOS6I1MmAWoUvBTx+PqDzqo9mlpfZi18q28ATc5W
+ dNyLqLKaXw8dZppCFmnojunI9Jdt9vpGmZphs9cmYciMNMfKIkUjOZoPMkZ6VFsLYTfJ
+ 9mmB5N6jebIqXDAZJ5YEIV4D/znQfkjeUnZR4yZVNw30qR+yRfX7JDxQkawSIo7pdry3
+ wufjU+B7CzkSCklvN5tLqlZ2WCMDbF4r+BFAcFZrPFEc+V/9m4VdOT4EdowqYWkotXyW
+ xVMqUe2tfFAuqYwDMghf4EHaAm90rlnNGE4K3kPGzyip/KCyb6/fKc4axlpeM36E7/SW
+ SvuQ==
+X-Gm-Message-State: AOJu0YyB8VOsdOAD2pQTJ8HEcFsQkT22UAridZxUCopCggxC7r/Xt9ID
+ OZwq9FkRTHsFbOMM23Mph+ewzOBIX/nFYHZsONKVry17w/DRvJsKrLSL7aWx3FmiOUjh9o5veb5
+ 867N2o6fQ7M+BXSHWiHODZEID/TkqNW2uLAHhUh5qRlk5eY24uJy6IlxwvIhRwPtNQj6kHk3pMX
+ QIz+JdBw/Lnan/goW68FkckkTjshJWGmaUrdJK
+X-Received: by 2002:a17:906:a0c9:b0:a59:9d4c:eb09 with SMTP id
+ a640c23a62f3a-a6228069286mr362107366b.27.1716476442051; 
+ Thu, 23 May 2024 08:00:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWQ0oj7QicNW+oP0A0wU0SLQE9fa7b8SN+jww+F0zv6DF6SPaCOrJu9nVkoPq/UmiASPKLsA==
+X-Received: by 2002:a17:906:a0c9:b0:a59:9d4c:eb09 with SMTP id
+ a640c23a62f3a-a6228069286mr362105866b.27.1716476441660; 
+ Thu, 23 May 2024 08:00:41 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17b17814sm1935303966b.206.2024.05.23.08.01.21
+ a640c23a62f3a-a5a179c823dsm1942307666b.100.2024.05.23.08.00.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 08:01:23 -0700 (PDT)
+ Thu, 23 May 2024 08:00:39 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhuocheng Ding <zhuocheng.ding@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Babu Moger <babu.moger@amd.com>,
- Yongwei Ma <yongwei.ma@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 18/23] tests: Add test case of APIC ID for module level parsing
-Date: Thu, 23 May 2024 17:00:31 +0200
-Message-ID: <20240523150036.1050011-19-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 02/23] target/i386: clean up AAM/AAD
+Date: Thu, 23 May 2024 17:00:15 +0200
+Message-ID: <20240523150036.1050011-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523150036.1050011-1-pbonzini@redhat.com>
 References: <20240523150036.1050011-1-pbonzini@redhat.com>
@@ -104,70 +102,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhuocheng Ding <zhuocheng.ding@intel.com>
+The 32-bit AAM/AAD opcodes are using helpers that read and write flags and
+env->regs[R_EAX].  Clean them up so that the table correctly includes AX
+as a 16-bit input and output.
 
-After i386 supports module level, it's time to add the test for module
-level's parsing.
+No real reason to do it to be honest, but they are nice one-output helpers
+and it removes the masking of env->regs[R_EAX] that generic load/writeback
+code already does.
 
-Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
-Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Yanan Wang <wangyanan55@huawei.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20240424154929.1487382-18-zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240522123912.608497-1-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/unit/test-x86-topo.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ target/i386/helper.h             |  4 ++--
+ target/i386/tcg/int_helper.c     | 19 ++++++++-----------
+ target/i386/tcg/decode-new.c.inc |  4 ++--
+ target/i386/tcg/emit.c.inc       |  8 ++++----
+ 4 files changed, 16 insertions(+), 19 deletions(-)
 
-diff --git a/tests/unit/test-x86-topo.c b/tests/unit/test-x86-topo.c
-index f21b8a5d95c..55b731ccae5 100644
---- a/tests/unit/test-x86-topo.c
-+++ b/tests/unit/test-x86-topo.c
-@@ -37,6 +37,7 @@ static void test_topo_bits(void)
-     topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
-     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 0);
-     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 0);
-+    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 0);
-     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
+diff --git a/target/i386/helper.h b/target/i386/helper.h
+index 3c207ac62d6..a52a1bf0f21 100644
+--- a/target/i386/helper.h
++++ b/target/i386/helper.h
+@@ -22,8 +22,8 @@ DEF_HELPER_FLAGS_5(bndstx32, TCG_CALL_NO_WG, void, env, tl, tl, i64, i64)
+ DEF_HELPER_FLAGS_5(bndstx64, TCG_CALL_NO_WG, void, env, tl, tl, i64, i64)
+ DEF_HELPER_1(bnd_jmp, void, env)
  
-     topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
-@@ -74,13 +75,22 @@ static void test_topo_bits(void)
-     topo_info = (X86CPUTopoInfo) {1, 1, 33, 2};
-     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 6);
+-DEF_HELPER_2(aam, void, env, int)
+-DEF_HELPER_2(aad, void, env, int)
++DEF_HELPER_FLAGS_2(aam, TCG_CALL_NO_RWG_SE, tl, tl, tl)
++DEF_HELPER_FLAGS_2(aad, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+ DEF_HELPER_1(aaa, void, env)
+ DEF_HELPER_1(aas, void, env)
+ DEF_HELPER_1(daa, void, env)
+diff --git a/target/i386/tcg/int_helper.c b/target/i386/tcg/int_helper.c
+index df16130f5df..4cc59f15203 100644
+--- a/target/i386/tcg/int_helper.c
++++ b/target/i386/tcg/int_helper.c
+@@ -145,27 +145,24 @@ void helper_idivl_EAX(CPUX86State *env, target_ulong t0)
  
--    topo_info = (X86CPUTopoInfo) {1, 1, 30, 2};
-+    topo_info = (X86CPUTopoInfo) {1, 6, 30, 2};
-+    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
-+    topo_info = (X86CPUTopoInfo) {1, 7, 30, 2};
-+    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
-+    topo_info = (X86CPUTopoInfo) {1, 8, 30, 2};
-+    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
-+    topo_info = (X86CPUTopoInfo) {1, 9, 30, 2};
-+    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 4);
-+
-+    topo_info = (X86CPUTopoInfo) {1, 6, 30, 2};
-     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
--    topo_info = (X86CPUTopoInfo) {2, 1, 30, 2};
-+    topo_info = (X86CPUTopoInfo) {2, 6, 30, 2};
-     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 1);
--    topo_info = (X86CPUTopoInfo) {3, 1, 30, 2};
-+    topo_info = (X86CPUTopoInfo) {3, 6, 30, 2};
-     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
--    topo_info = (X86CPUTopoInfo) {4, 1, 30, 2};
-+    topo_info = (X86CPUTopoInfo) {4, 6, 30, 2};
-     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
+ /* bcd */
  
-     /* build a weird topology and see if IDs are calculated correctly
-@@ -91,6 +101,7 @@ static void test_topo_bits(void)
-     topo_info = (X86CPUTopoInfo) {1, 1, 6, 3};
-     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 2);
-     g_assert_cmpuint(apicid_core_offset(&topo_info), ==, 2);
-+    g_assert_cmpuint(apicid_module_offset(&topo_info), ==, 5);
-     g_assert_cmpuint(apicid_die_offset(&topo_info), ==, 5);
-     g_assert_cmpuint(apicid_pkg_offset(&topo_info), ==, 5);
+-/* XXX: exception */
+-void helper_aam(CPUX86State *env, int base)
++target_ulong helper_aam(target_ulong al, target_ulong base)
+ {
+-    int al, ah;
++    int ah;
+ 
+-    al = env->regs[R_EAX] & 0xff;
++    al &= 0xff;
+     ah = al / base;
+     al = al % base;
+-    env->regs[R_EAX] = (env->regs[R_EAX] & ~0xffff) | al | (ah << 8);
+-    CC_DST = al;
++    return al | (ah << 8);
+ }
+ 
+-void helper_aad(CPUX86State *env, int base)
++target_ulong helper_aad(target_ulong ax, target_ulong base)
+ {
+     int al, ah;
+ 
+-    al = env->regs[R_EAX] & 0xff;
+-    ah = (env->regs[R_EAX] >> 8) & 0xff;
++    al = ax & 0xff;
++    ah = (ax >> 8) & 0xff;
+     al = ((ah * base) + al) & 0xff;
+-    env->regs[R_EAX] = (env->regs[R_EAX] & ~0xffff) | al;
+-    CC_DST = al;
++    return al;
+ }
+ 
+ void helper_aaa(CPUX86State *env)
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 141ab2bc560..27dc1bb146b 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1480,8 +1480,8 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xD1] = X86_OP_GROUP1(group2, E,v),
+     [0xD2] = X86_OP_GROUP2(group2, E,b, 1,b), /* CL */
+     [0xD3] = X86_OP_GROUP2(group2, E,v, 1,b), /* CL */
+-    [0xD4] = X86_OP_ENTRYr(AAM, I,b),
+-    [0xD5] = X86_OP_ENTRYr(AAD, I,b),
++    [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b),
++    [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b),
+     [0xD6] = X86_OP_ENTRYw(SALC, 0,b),
+     [0xD7] = X86_OP_ENTRY1(XLAT, 0,b, zextT0), /* AL read/written */
+ 
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 33cb59e54b8..c78e35b1e28 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1084,8 +1084,8 @@ static void gen_AAA(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ 
+ static void gen_AAD(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+-    gen_helper_aad(tcg_env, tcg_constant_i32(decode->immediate));
+-    set_cc_op(s, CC_OP_LOGICB);
++    gen_helper_aad(s->T0, s->T0, s->T1);
++    prepare_update1_cc(decode, s, CC_OP_LOGICB);
+ }
+ 
+ static void gen_AAM(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+@@ -1093,8 +1093,8 @@ static void gen_AAM(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+     if (decode->immediate == 0) {
+         gen_exception(s, EXCP00_DIVZ);
+     } else {
+-        gen_helper_aam(tcg_env, tcg_constant_i32(decode->immediate));
+-        set_cc_op(s, CC_OP_LOGICB);
++        gen_helper_aam(s->T0, s->T0, s->T1);
++        prepare_update1_cc(decode, s, CC_OP_LOGICB);
+     }
+ }
  
 -- 
 2.45.1
