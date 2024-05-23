@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C12BC25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AE6C41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHae-0006yy-5Y; Thu, 23 May 2024 19:11:16 -0400
+	id 1sAHXs-0007H1-Q5; Thu, 23 May 2024 19:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHa2-0004oX-Fa; Thu, 23 May 2024 19:10:38 -0400
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
+ id 1sAHXl-0007Eo-EK; Thu, 23 May 2024 19:08:18 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHa0-0006EW-M9; Thu, 23 May 2024 19:10:38 -0400
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-36db3304053so35722235ab.2; 
- Thu, 23 May 2024 16:10:35 -0700 (PDT)
+ id 1sAHXj-0005f6-QG; Thu, 23 May 2024 19:08:17 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-681bc7f50d0so151382a12.0; 
+ Thu, 23 May 2024 16:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505834; x=1717110634; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505694; x=1717110494; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cSy1rTzhnBd69DOyzNO/phkY+jMKCnUg19aFikdmjao=;
- b=cUkxjSCUIXATiSi2Rf3xR42IgLDeVXdP9IKVVirTLeMucwHHVkV7DsNRC0bPE1yp0D
- bpjb90azFCNXkgLS24GdAj88mozuEsBq+wNzjNb3opKQEGgEUkVwwxrMaeop4SyfewJi
- 0Pr7+x9S+mnodmw7ukyjmpfCdMHepjV1ZXK9GKfJVvIhNUMUV8hs1J2q81qiKW7+VZqw
- I8MOu7ZuaOXvEaIHV28xoRSs8xGxMPn8gOmtWEEMBUDmXpxAp/wu4tQJNTOt4AoM7kHA
- KdNQGWoTYzJLfH2ckOHoK0BFON6HulUxQhoHw4TNymiTf51cxKzM123njRoUQARVA9wR
- ZY9g==
+ bh=rTU3YRtFQJnscRLORpazwzFhMRi8nDXQ8CTx8TmsNlc=;
+ b=NJchB7+h52jMrRLLZ0J0dX0GdgFtGXxEpO3BxidVDzCdh97zWTxZe0pyU3Yov4Jd6y
+ A7+TR5z4IZTrkOrfmrQ0wMY0eSNEg35qCslM3AhbyEKxG8HBPtsCVFR3Gy+vqrG6Hzav
+ Fjc7Cvg90mRGdT+laQ9/2xBo5ZIFJYyBCCBNWrFNZgqRzF37YQCPVa8AvJ4chS2g3sWl
+ Z0r0NkPxNdzwQY1JXT2qIZJC7aGiT6OQhCul9VRQ9CucRujfzHceDUoTVOdXXd/abKeK
+ OOm/T43UGpzq4pd9sxl/Ch9OhBEQES4hGgbWAO/cUVWhgJoMAQ5V2dMN0MkMpgK17881
+ Q4JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505834; x=1717110634;
+ d=1e100.net; s=20230601; t=1716505694; x=1717110494;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cSy1rTzhnBd69DOyzNO/phkY+jMKCnUg19aFikdmjao=;
- b=Xairt6ILb60e8/AN/3Ouv3MxL5PE7o2r5RymFoiD79cG7M52BMcAWHP+UBInutWHYE
- 74A5nYLqpsU98yc51CUZ6zu1LJ7qYRivHPpwUAHLfodATqtIN8lp4kUf7b2EWdZmlTS4
- UFozMAZtc0aAws2Nm/PtUyrAz2Klxp+kJIcd8jJzcm1aZursr0dhl74xjhf4PbdweUHl
- +9mDED6F7cgt9blWqtzHaj1Ze0Sx//Oj3+feSC8gSVbrAbsRA+hiNpKuxoYuMssID34x
- 8Un6ildlpwLEtvZMLV4rOAMHUh8Sw4nfGKqfBRB9CyCFJxF/VWuleNWLh98zCrZ8Azv2
- vw1Q==
+ bh=rTU3YRtFQJnscRLORpazwzFhMRi8nDXQ8CTx8TmsNlc=;
+ b=gz4bahGKkeUdzG9DcEXBx3i0ClRnF7t5ZUjp9t6nkjyV7kqcRjKokgmD9scrsJPw81
+ Mef4uVvexKbluYxrfDNdw91N81KRceX/r+pEmXGTATGCetSohxu1fopf9qNxAcaPw6Jm
+ aQpaWfIkXzn7nCV0Cjwyhz+KBOy2TuxNMBKzapqvN+juNHXdkdmTlH3uUqDVPeygcvnE
+ IGHVvJ2Db/YBKoox5/U8TZ/mWThwmr/wVKMzXTHNFgKa7I2oSF8pyGQBmjuGNKM3FL6I
+ 5h8hpN+Xn2z2ePHvTvWET3x6uGR+BiiC4Si1I4XTrIXdiVF0K3mwSJIl6TlSGbhdvCCv
+ wKkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLx0jEUoskYLkRgx2kB8b00uJd8kMaKyRNAhGCFEk7STp1FvEbiqbc/r5yDjSbdTIx492nMkg+mGDnm8KCm7CIY95v
-X-Gm-Message-State: AOJu0YxN1HInhK481BqyDpTZHvZbY7Pp2z6YAIExTiOp13jCEXsRVeC+
- 7MNTqZMwX/ed1hxaHCWVAj7pV5hrMsoNZg8wmO0d66Q7vb2MfrfU0GCrJA==
-X-Google-Smtp-Source: AGHT+IEuMvTa9pN/5dsDFQEm32F/msXuT8jtHdfGK4BXWvm+TmQuRbp8aDt7F/4GFjcPHYGCGvc04A==
-X-Received: by 2002:a05:6e02:1fec:b0:36a:1725:e123 with SMTP id
- e9e14a558f8ab-3737b301dcdmr8237845ab.14.1716505833740; 
- Thu, 23 May 2024 16:10:33 -0700 (PDT)
+ AJvYcCV3ptJcnrYz1Ad1ciVHXxELLOnEGTClQd79WDTsfqDKMsY0f4eQ8O57r7WEKIYs7UnylvQkqAZi/Xr/KXbX3/eqIphw
+X-Gm-Message-State: AOJu0YzgUUKFRRlle09r4n497nmthBEfvIgujSlzDNKY+hXvKkHwnS97
+ C2jZ6LCe2CE+IAr98raxZatfKUtGmYvldR7IHjVILhRKeur62Wy/k9aNyQ==
+X-Google-Smtp-Source: AGHT+IHezfNCx1LOEUiX1pZzgMb7iVoIvqNedfoP+VW1cjtWhC1geLVycnvGcbcSYqf0JSvMVu9dGQ==
+X-Received: by 2002:a17:90a:c08d:b0:2bd:faa4:e075 with SMTP id
+ 98e67ed59e1d1-2bdfaa4e0a1mr2538006a91.6.1716505693595; 
+ Thu, 23 May 2024 16:08:13 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.10.31
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:10:33 -0700 (PDT)
+ Thu, 23 May 2024 16:08:13 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 51/72] target/ppc/mmu_common.c: Inline and remove
- check_physical()
-Date: Fri, 24 May 2024 09:07:24 +1000
-Message-ID: <20240523230747.45703-52-npiggin@gmail.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 05/72] tcg/cputlb: remove other-cpu capability from TLB flushing
+Date: Fri, 24 May 2024 09:06:38 +1000
+Message-ID: <20240523230747.45703-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,62 +94,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+Some TLB flush operations can flush other CPUs. The problem with this
+is they used non-synced variants of flushes (i.e., that return
+before the destination has completed the flush). Since all TLB flush
+users need the _synced variants, and that last user (ppc) of the
+non-synced flush was buggy, this is a footgun waiting to go off. There
+do not seem to be any callers that flush other CPUs, so remove the
+capability.
 
-This function just does two assignments and and unnecessary check that
-is always true so inline it in the only caller left and remove it.
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 26 +++-----------------------
- 1 file changed, 3 insertions(+), 23 deletions(-)
+ accel/tcg/cputlb.c | 42 +++++++++---------------------------------
+ 1 file changed, 9 insertions(+), 33 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index b13150ce23..2f412dd7c5 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -1145,28 +1145,6 @@ void dump_mmu(CPUPPCState *env)
-     }
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 45799869eb..117b516739 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -418,12 +418,9 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
+ {
+     tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+ 
+-    if (cpu->created && !qemu_cpu_is_self(cpu)) {
+-        async_run_on_cpu(cpu, tlb_flush_by_mmuidx_async_work,
+-                         RUN_ON_CPU_HOST_INT(idxmap));
+-    } else {
+-        tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
+-    }
++    assert_cpu_is_self(cpu);
++
++    tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
  }
  
--static int check_physical(CPUPPCState *env, mmu_ctx_t *ctx, target_ulong eaddr,
--                          MMUAccessType access_type)
--{
--    ctx->raddr = eaddr;
--    ctx->prot = PAGE_READ | PAGE_EXEC;
--
--    switch (env->mmu_model) {
--    case POWERPC_MMU_SOFT_6xx:
--    case POWERPC_MMU_SOFT_4xx:
--    case POWERPC_MMU_REAL:
--    case POWERPC_MMU_BOOKE:
--        ctx->prot |= PAGE_WRITE;
--        break;
--
--    default:
--        /* Caller's checks mean we should never get here for other models */
--        g_assert_not_reached();
--    }
--
--    return 0;
--}
--
- int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-                                      target_ulong eaddr,
-                                      MMUAccessType access_type, int type,
-@@ -1186,7 +1164,9 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     if (real_mode && (env->mmu_model == POWERPC_MMU_SOFT_6xx ||
-                       env->mmu_model == POWERPC_MMU_SOFT_4xx ||
-                       env->mmu_model == POWERPC_MMU_REAL)) {
--        return check_physical(env, ctx, eaddr, access_type);
-+        ctx->raddr = eaddr;
-+        ctx->prot = PAGE_RWX;
-+        return 0;
-     }
+ void tlb_flush(CPUState *cpu)
+@@ -612,28 +609,12 @@ void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr, uint16_t idxmap)
+ {
+     tlb_debug("addr: %016" VADDR_PRIx " mmu_idx:%" PRIx16 "\n", addr, idxmap);
  
-     switch (env->mmu_model) {
++    assert_cpu_is_self(cpu);
++
+     /* This should already be page aligned */
+     addr &= TARGET_PAGE_MASK;
+ 
+-    if (qemu_cpu_is_self(cpu)) {
+-        tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
+-    } else if (idxmap < TARGET_PAGE_SIZE) {
+-        /*
+-         * Most targets have only a few mmu_idx.  In the case where
+-         * we can stuff idxmap into the low TARGET_PAGE_BITS, avoid
+-         * allocating memory for this operation.
+-         */
+-        async_run_on_cpu(cpu, tlb_flush_page_by_mmuidx_async_1,
+-                         RUN_ON_CPU_TARGET_PTR(addr | idxmap));
+-    } else {
+-        TLBFlushPageByMMUIdxData *d = g_new(TLBFlushPageByMMUIdxData, 1);
+-
+-        /* Otherwise allocate a structure, freed by the worker.  */
+-        d->addr = addr;
+-        d->idxmap = idxmap;
+-        async_run_on_cpu(cpu, tlb_flush_page_by_mmuidx_async_2,
+-                         RUN_ON_CPU_HOST_PTR(d));
+-    }
++    tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
+ }
+ 
+ void tlb_flush_page(CPUState *cpu, vaddr addr)
+@@ -796,6 +777,8 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+ {
+     TLBFlushRangeData d;
+ 
++    assert_cpu_is_self(cpu);
++
+     /*
+      * If all bits are significant, and len is small,
+      * this devolves to tlb_flush_page.
+@@ -816,14 +799,7 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+     d.idxmap = idxmap;
+     d.bits = bits;
+ 
+-    if (qemu_cpu_is_self(cpu)) {
+-        tlb_flush_range_by_mmuidx_async_0(cpu, d);
+-    } else {
+-        /* Otherwise allocate a structure, freed by the worker.  */
+-        TLBFlushRangeData *p = g_memdup(&d, sizeof(d));
+-        async_run_on_cpu(cpu, tlb_flush_range_by_mmuidx_async_1,
+-                         RUN_ON_CPU_HOST_PTR(p));
+-    }
++    tlb_flush_range_by_mmuidx_async_0(cpu, d);
+ }
+ 
+ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
 -- 
 2.43.0
 
