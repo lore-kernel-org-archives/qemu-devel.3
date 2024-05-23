@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 493D9C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751ADC25B7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHYd-0008GH-IT; Thu, 23 May 2024 19:09:11 -0400
+	id 1sAHZF-0001Gh-VP; Thu, 23 May 2024 19:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYV-0007mK-Ry; Thu, 23 May 2024 19:09:04 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1sAHYr-0000Ff-Jp; Thu, 23 May 2024 19:09:33 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHYR-0005k6-29; Thu, 23 May 2024 19:09:02 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2bf59b781d6so324707a91.0; 
- Thu, 23 May 2024 16:08:56 -0700 (PDT)
+ id 1sAHYh-0005m6-3K; Thu, 23 May 2024 19:09:23 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6f8e98784b3so291208b3a.1; 
+ Thu, 23 May 2024 16:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505736; x=1717110536; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716505751; x=1717110551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s7fZq26l6pjkQ7IRyCpAZUv1ZJG9ZbGqdimGa0p3/Zk=;
- b=GQEE/7TARL4XKKSkwsvO5WaIIM50LrisgOmhhA36S1fFQRXViZcVvRC8D+FIHxWOlU
- 0brwUC26z2frHciKL+wF37F7nhOqrh/N6sNrqooCs6Xjcbox8y2YaA8Q365DsbZB1m+N
- 5IvjENxsBnTAvGMc+4gRaooLOa3/fKEZwp42PMCov7vXPDtlFN/knBxP8w2mLb1tjM/C
- 6tGmKDYlXMpDKA1zQsU9vFDLZuD8ABuaUXemAou6Ibw3Gg/7Sco53eU7XKCaJq/cOyGz
- oG95YFTXxN4V1nYLWkmN26btpLRNrpkEFZ1eB9faEzqSeB8nIBDv3bCWxVgIVweLUxB5
- FZ5w==
+ bh=Ot11TpVpbkasVokRcxJIe/oLFQV+xcPxI0fDUvpSNfw=;
+ b=FVAW6kxVds6kYuMsB36/1W4qwbx3mPvyasYltEOi+epKYD30gSnTLDenhZN8F+IlA2
+ uHyIEOHOZQOM+nVXxOB+bXvKJJz52SDjwPeIQP+ZCjtQidUphHJDFET8QKmH7ABUPxIx
+ rilRFW6dHykBZlIsUGSNswFwlwXRTv55D5wlmi2g1Ib70SNxxoQJ5luUaspRU8yLe0pr
+ DSQOBHXpeurPR8VhuhU88zIkt5pTrLfMTkMB4kGVFcHbTp8n9P0S2y+Y6HAPlVNfOJpc
+ e15gewEwhP+Z5CxffF/Z43PuL3lIOXaLhjMXJcR8WxkkaGEcCli2Xf58BMbRm84lCSyd
+ jvuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505736; x=1717110536;
+ d=1e100.net; s=20230601; t=1716505751; x=1717110551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s7fZq26l6pjkQ7IRyCpAZUv1ZJG9ZbGqdimGa0p3/Zk=;
- b=xC9U0o+1QF43NcM+mdhuMumUSHyh1GPV+sSthgDvHWpu8Uz/7rxjiRls/bMwvs7YkO
- S8Xy4SbFp5CIrOIjLK/CEhJf1y4NSGy9IyfzUByOkZnLLIpUAq+BMIXB4oH5ZciGg5Kq
- ZIu5lrTurUPZcD9bd8SFvkCaPwzvrD4mSy9iR3fASY/no7+l5cZHUBV0DHV2BNPDjRbN
- 8v7cAvannQtshkuAbaENEwK91jcZXIOF9cLJNDZrBDjSpeKytX3z3+G1md94sQkreQm2
- Hhg2tNwfRDaxkUXpTDehVUPxaQqP76S/mdQv9dCoA2JNU9z3mYny97OWR+omcWnGMFrk
- iAhw==
+ bh=Ot11TpVpbkasVokRcxJIe/oLFQV+xcPxI0fDUvpSNfw=;
+ b=ccspooubvp7dHjy1hClG782+JaPQMbRzDkVCk7blx/0+gEgnsSFeF6GSTeTdlAKuqr
+ BEmVDbHF7yP+5fTfiLBHeyU+ZWSAp5udw/s2C04B4j+jXGwLCeux7X0x2eHDTGeCSYW/
+ SD6az6ZPGfXpd4Xp4K+9rnvTRiOVISRuTlW4t5IWkGO40aM9o09VGClZixnfQS0terhG
+ M8Kh79gG3upRaFIBm6T2iu/E65ZoObzWkeVbznLfGfi3buuyQxEEyXFODOwDoo2jCFqY
+ lqpd0tuYo9PtFQ8n66vpKuIPc7g1dxgKWcJLFfhc2kdc0r6M/1Eq79OW5isAIaeRHYZT
+ wWyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4102cNZbM+N9exsVP2dfBcEPC4y3bO2Or0SduA+Q6AlXcxQinYu3odaMwPZDrp/CaPaQy0Sd7ogo88Qf2a52bJdnp
-X-Gm-Message-State: AOJu0YwtyC9DjdIurPmsNwf03XkoQh7sy+KHimgSZvGwZEWaVLBwIRcy
- /jG2roKIbMib2LsUSV482QTWKawV7DzlMCgkrdwvGlTP71LDMOjQ0JfcYQ==
-X-Google-Smtp-Source: AGHT+IGvMCmbpifOAK0XlOAdVIUamw/TuU7x5fS/4yUlU9we72Rgx1rYmkBXScul3E2hSXdj/Rfv2g==
-X-Received: by 2002:a17:90a:ba91:b0:2bf:5bb0:1625 with SMTP id
- 98e67ed59e1d1-2bf5ee16fc3mr664063a91.34.1716505735424; 
- Thu, 23 May 2024 16:08:55 -0700 (PDT)
+ AJvYcCXUQexhgqvHRBoElMn8phxwUe12wK6qS8FKXyUpvbddnfMdNZw3CjOoyHYQV3ppREBz9w2aZU2I2AGRMw2YPVB5E37T
+X-Gm-Message-State: AOJu0YwyglecSkLdXIm85Cew8+sTQHoWg+4lD76JEmEneax7breclwGf
+ 3+ZMWUPpQTppKo/h5S6kdCinkPZxbPBi0ljQYST8Nnj4/0ctbU9BJ0Wt3A==
+X-Google-Smtp-Source: AGHT+IHk7L0X9lRKIwSJzDSnT0N3jiSy3dNYd74R9tOkGpeEFKsHLVO1ma+7PidWR/EM/2OhwkNfMg==
+X-Received: by 2002:a05:6a20:96d3:b0:1ad:3d93:b71e with SMTP id
+ adf61e73a8af0-1b212f873b6mr868780637.59.1716505750965; 
+ Thu, 23 May 2024 16:09:10 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.52
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.09.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:08:54 -0700 (PDT)
+ Thu, 23 May 2024 16:09:10 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 18/72] target/ppc: Move logical fixed-point instructions to
- decodetree.
-Date: Fri, 24 May 2024 09:06:51 +1000
-Message-ID: <20240523230747.45703-19-npiggin@gmail.com>
+ Glenn Miles <milesg@linux.vnet.ibm.com>
+Subject: [PULL 23/72] This commit continues adding support for the Branch
+ History Rolling Buffer (BHRB) as is provided starting with the P8 processor
+ and continuing with its successors. This commit is limited to the recording
+ and filtering of taken branches.
+Date: Fri, 24 May 2024 09:06:56 +1000
+Message-ID: <20240523230747.45703-24-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
 References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,890 +96,454 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-Moving the below instructions to decodetree specification :
+The following changes were made:
 
-	andi[s]., {ori, xori}[s]			: D-form
+  - Enabled functionality on P10 processors only due to
+    performance impact seen with P8 and P9 where it is not
+    disabled for non problem state branches.
+  - Added a BHRB buffer for storing branch instruction and
+    target addresses for taken branches
+  - Renamed gen_update_cfar to gen_update_branch_history and
+    added a 'target' parameter to hold the branch target
+    address and 'inst_type' parameter to use for filtering
+  - Added TCG code to gen_update_branch_history that stores
+    data to the BHRB and updates the BHRB offset.
+  - Added BHRB resource initialization and reset functions
 
-	{and, andc, nand, or, orc, nor, xor, eqv}[.],
-	exts{b, h, w}[.],  cnt{l, t}z{w, d}[.],
-	popcnt{b, w, d},  prty{w, d}, cmp, bpermd	: X-form
-
-With this patch, all the fixed-point logical instructions have been
-moved to decodetree.
-The changes were verified by validating that the tcg ops generated by those
-instructions remain the same, which were captured with the '-d in_asm,op' flag.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-[np: 32-bit compile fix]
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/helper.h                        |   8 +-
- target/ppc/insn32.decode                   |  38 +++
- target/ppc/int_helper.c                    |  10 +-
- target/ppc/translate.c                     | 359 ---------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 300 +++++++++++++++++
- 5 files changed, 347 insertions(+), 368 deletions(-)
+ target/ppc/cpu.h                       | 17 +++++
+ target/ppc/cpu_init.c                  | 37 +++++++++-
+ target/ppc/power8-pmu.c                | 33 +++++++++
+ target/ppc/power8-pmu.h                |  7 ++
+ target/ppc/translate.c                 | 97 ++++++++++++++++++++++++--
+ target/ppc/translate/branch-impl.c.inc |  2 +-
+ 6 files changed, 185 insertions(+), 8 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index b8af2cf878..4267917615 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -58,8 +58,8 @@ DEF_HELPER_4(DIVDE, i64, env, i64, i64, i32)
- DEF_HELPER_4(DIVWEU, tl, env, tl, tl, i32)
- DEF_HELPER_4(DIVWE, tl, env, tl, tl, i32)
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 195d4be2b7..2f91d7dc33 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -548,6 +548,8 @@ FIELD(MSR, LE, MSR_LE, 1)
+                          MMCR2_FC4P0 | MMCR2_FC5P0 | MMCR2_FC6P0)
  
--DEF_HELPER_FLAGS_1(popcntb, TCG_CALL_NO_RWG_SE, tl, tl)
--DEF_HELPER_FLAGS_2(cmpb, TCG_CALL_NO_RWG_SE, tl, tl, tl)
-+DEF_HELPER_FLAGS_1(POPCNTB, TCG_CALL_NO_RWG_SE, tl, tl)
-+DEF_HELPER_FLAGS_2(CMPB, TCG_CALL_NO_RWG_SE, tl, tl, tl)
- DEF_HELPER_3(sraw, tl, env, tl, tl)
- DEF_HELPER_FLAGS_2(CFUGED, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(PDEPD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-@@ -68,8 +68,8 @@ DEF_HELPER_FLAGS_1(CDTBCD, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_1(CBCDTD, TCG_CALL_NO_RWG_SE, tl, tl)
- #if defined(TARGET_PPC64)
- DEF_HELPER_FLAGS_2(CMPEQB, TCG_CALL_NO_RWG_SE, i32, tl, tl)
--DEF_HELPER_FLAGS_1(popcntw, TCG_CALL_NO_RWG_SE, tl, tl)
--DEF_HELPER_FLAGS_2(bpermd, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-+DEF_HELPER_FLAGS_1(POPCNTW, TCG_CALL_NO_RWG_SE, tl, tl)
-+DEF_HELPER_FLAGS_2(BPERMD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_3(srad, tl, env, tl, tl)
- DEF_HELPER_FLAGS_0(DARN32, TCG_CALL_NO_RWG, tl)
- DEF_HELPER_FLAGS_0(DARN64, TCG_CALL_NO_RWG, tl)
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index cb1e4bd307..dc62bc90aa 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -35,6 +35,9 @@
- &D              rt ra si:int64_t
- @D              ...... rt:5 ra:5 si:s16                         &D
+ #define MMCRA_BHRBRD    PPC_BIT(26)         /* BHRB Recording Disable */
++#define MMCRA_IFM_MASK  PPC_BITMASK(32, 33) /* BHRB Instruction Filtering */
++#define MMCRA_IFM_SHIFT PPC_BIT_NR(33)
  
-+&D_ui           rt ra ui:uint64_t
-+@D_ui           ...... rt:5 ra:5 ui:16                         &D_ui
-+
- &D_bf           bf l:bool ra imm
- @D_bfs          ...... bf:3 . l:1 ra:5 imm:s16                  &D_bf
- @D_bfu          ...... bf:3 . l:1 ra:5 imm:16                   &D_bf
-@@ -102,6 +105,9 @@
- &X_sa           rs ra
- @X_sa           ...... rs:5 ra:5 ..... .......... .             &X_sa
+ #define MMCR1_EVT_SIZE 8
+ /* extract64() does a right shift before extracting */
+@@ -774,6 +776,8 @@ enum {
+     POWERPC_FLAG_SMT      = 0x00400000,
+     /* Using "LPAR per core" mode  (as opposed to per-thread)                */
+     POWERPC_FLAG_SMT_1LPAR = 0x00800000,
++    /* Has BHRB */
++    POWERPC_FLAG_BHRB      = 0x01000000,
+ };
  
-+&X_sa_rc        rs ra rc
-+@X_sa_rc        ...... rs:5 ra:5 ..... .......... rc:1          &X_sa_rc
-+
- %x_frtp         22:4 !function=times_2
- %x_frap         17:4 !function=times_2
- %x_frbp         12:4 !function=times_2
-@@ -419,6 +425,38 @@ MODUD           011111 ..... ..... ..... 0100001001 -   @X
+ /*
+@@ -1215,6 +1219,9 @@ struct pnv_tod_tbst {
+ #define PPC_CPU_OPCODES_LEN          0x40
+ #define PPC_CPU_INDIRECT_OPCODES_LEN 0x20
  
- ## Fixed-Point Logical Instructions
++#define BHRB_MAX_NUM_ENTRIES_LOG2 (5)
++#define BHRB_MAX_NUM_ENTRIES      (1 << BHRB_MAX_NUM_ENTRIES_LOG2)
++
+ struct CPUArchState {
+     /* Most commonly used resources during translated code execution first */
+     target_ulong gpr[32];  /* general purpose registers */
+@@ -1311,6 +1318,16 @@ struct CPUArchState {
+     int dcache_line_size;
+     int icache_line_size;
  
-+ANDI_           011100 ..... ..... ................     @D_ui
-+ANDIS_          011101 ..... ..... ................     @D_ui
-+ORI             011000 ..... ..... ................     @D_ui
-+ORIS            011001 ..... ..... ................     @D_ui
-+XORI            011010 ..... ..... ................     @D_ui
-+XORIS           011011 ..... ..... ................     @D_ui
++#ifdef TARGET_PPC64
++    /* Branch History Rolling Buffer (BHRB) resources */
++    target_ulong bhrb_num_entries;
++    intptr_t     bhrb_base;
++    target_ulong bhrb_filter;
++    target_ulong bhrb_offset;
++    target_ulong bhrb_offset_mask;
++    uint64_t bhrb[BHRB_MAX_NUM_ENTRIES];
++#endif
 +
-+AND             011111 ..... ..... ..... 0000011100 .   @X_rc
-+ANDC            011111 ..... ..... ..... 0000111100 .   @X_rc
-+NAND            011111 ..... ..... ..... 0111011100 .   @X_rc
-+OR              011111 ..... ..... ..... 0110111100 .   @X_rc
-+ORC             011111 ..... ..... ..... 0110011100 .   @X_rc
-+NOR             011111 ..... ..... ..... 0001111100 .   @X_rc
-+XOR             011111 ..... ..... ..... 0100111100 .   @X_rc
-+EQV             011111 ..... ..... ..... 0100011100 .   @X_rc
-+CMPB            011111 ..... ..... ..... 0111111100 .   @X_rc
-+
-+EXTSB           011111 ..... ..... ----- 1110111010 .   @X_sa_rc
-+EXTSH           011111 ..... ..... ----- 1110011010 .   @X_sa_rc
-+EXTSW           011111 ..... ..... ----- 1111011010 .   @X_sa_rc
-+CNTLZW          011111 ..... ..... ----- 0000011010 .   @X_sa_rc
-+CNTTZW          011111 ..... ..... ----- 1000011010 .   @X_sa_rc
-+CNTLZD          011111 ..... ..... ----- 0000111010 .   @X_sa_rc
-+CNTTZD          011111 ..... ..... ----- 1000111010 .   @X_sa_rc
-+POPCNTB         011111 ..... ..... ----- 0001111010 .   @X_sa_rc
-+
-+POPCNTW         011111 ..... ..... ----- 0101111010 -   @X_sa
-+POPCNTD         011111 ..... ..... ----- 0111111010 -   @X_sa
-+PRTYW           011111 ..... ..... ----- 0010011010 -   @X_sa
-+PRTYD           011111 ..... ..... ----- 0010111010 -   @X_sa
-+
-+BPERMD          011111 ..... ..... ..... 0011111100 -   @X
- CFUGED          011111 ..... ..... ..... 0011011100 -   @X
- CNTLZDM         011111 ..... ..... ..... 0000111011 -   @X
- CNTTZDM         011111 ..... ..... ..... 1000111011 -   @X
-diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-index d12dcc28e1..2c6b633d65 100644
---- a/target/ppc/int_helper.c
-+++ b/target/ppc/int_helper.c
-@@ -201,7 +201,7 @@ uint64_t helper_DARN64(void)
-     return ret;
+     /* These resources are used during exception processing */
+     /* CPU model definition */
+     target_ulong msr_mask;
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 366ea8568b..1ec84b5ddc 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6142,6 +6142,28 @@ POWERPC_FAMILY(POWER7)(ObjectClass *oc, void *data)
+     pcc->l1_icache_size = 0x8000;
  }
  
--uint64_t helper_bpermd(uint64_t rs, uint64_t rb)
-+uint64_t helper_BPERMD(uint64_t rs, uint64_t rb)
++static void bhrb_init_state(CPUPPCState *env, target_long num_entries_log2)
++{
++    if (env->flags & POWERPC_FLAG_BHRB) {
++        if (num_entries_log2 > BHRB_MAX_NUM_ENTRIES_LOG2) {
++            num_entries_log2 = BHRB_MAX_NUM_ENTRIES_LOG2;
++        }
++        env->bhrb_num_entries = 1 << num_entries_log2;
++        env->bhrb_base = (intptr_t)&env->bhrb[0];
++        env->bhrb_offset_mask = (env->bhrb_num_entries * sizeof(uint64_t)) - 1;
++    }
++}
++
++static void bhrb_reset_state(CPUPPCState *env)
++{
++    if (env->flags & POWERPC_FLAG_BHRB) {
++        env->bhrb_offset = 0;
++        env->bhrb_filter = 0;
++        memset(env->bhrb, 0, sizeof(env->bhrb));
++    }
++}
++
++#define POWER8_BHRB_ENTRIES_LOG2 5
+ static void init_proc_POWER8(CPUPPCState *env)
  {
-     int i;
-     uint64_t ra = 0;
-@@ -219,7 +219,7 @@ uint64_t helper_bpermd(uint64_t rs, uint64_t rb)
+     /* Common Registers */
+@@ -6183,6 +6205,8 @@ static void init_proc_POWER8(CPUPPCState *env)
+     env->dcache_line_size = 128;
+     env->icache_line_size = 128;
  
- #endif
++    bhrb_init_state(env, POWER8_BHRB_ENTRIES_LOG2);
++
+     /* Allocate hardware IRQ controller */
+     init_excp_POWER8(env);
+     ppcPOWER7_irq_init(env_archcpu(env));
+@@ -6307,6 +6331,7 @@ static struct ppc_radix_page_info POWER9_radix_page_info = {
+ };
+ #endif /* CONFIG_USER_ONLY */
  
--target_ulong helper_cmpb(target_ulong rs, target_ulong rb)
-+target_ulong helper_CMPB(target_ulong rs, target_ulong rb)
++#define POWER9_BHRB_ENTRIES_LOG2 5
+ static void init_proc_POWER9(CPUPPCState *env)
  {
-     target_ulong mask = 0xff;
-     target_ulong ra = 0;
-@@ -288,7 +288,7 @@ target_ulong helper_srad(CPUPPCState *env, target_ulong value,
- #endif
+     /* Common Registers */
+@@ -6357,6 +6382,8 @@ static void init_proc_POWER9(CPUPPCState *env)
+     env->dcache_line_size = 128;
+     env->icache_line_size = 128;
  
- #if defined(TARGET_PPC64)
--target_ulong helper_popcntb(target_ulong val)
-+target_ulong helper_POPCNTB(target_ulong val)
++    bhrb_init_state(env, POWER9_BHRB_ENTRIES_LOG2);
++
+     /* Allocate hardware IRQ controller */
+     init_excp_POWER9(env);
+     ppcPOWER9_irq_init(env_archcpu(env));
+@@ -6497,6 +6524,7 @@ static struct ppc_radix_page_info POWER10_radix_page_info = {
+ };
+ #endif /* !CONFIG_USER_ONLY */
+ 
++#define POWER10_BHRB_ENTRIES_LOG2 5
+ static void init_proc_POWER10(CPUPPCState *env)
  {
-     /* Note that we don't fold past bytes */
-     val = (val & 0x5555555555555555ULL) + ((val >>  1) &
-@@ -300,7 +300,7 @@ target_ulong helper_popcntb(target_ulong val)
-     return val;
+     /* Common Registers */
+@@ -6546,6 +6574,8 @@ static void init_proc_POWER10(CPUPPCState *env)
+     env->dcache_line_size = 128;
+     env->icache_line_size = 128;
+ 
++    bhrb_init_state(env, POWER10_BHRB_ENTRIES_LOG2);
++
+     /* Allocate hardware IRQ controller */
+     init_excp_POWER10(env);
+     ppcPOWER9_irq_init(env_archcpu(env));
+@@ -6650,7 +6680,8 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
+     pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
+                  POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
+                  POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
+-                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV;
++                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV |
++                 POWERPC_FLAG_BHRB;
+     pcc->l1_dcache_size = 0x8000;
+     pcc->l1_icache_size = 0x8000;
+ }
+@@ -7222,6 +7253,10 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
+         }
+         env->spr[i] = spr->default_value;
+     }
++
++#if defined(TARGET_PPC64)
++    bhrb_reset_state(env);
++#endif
  }
  
--target_ulong helper_popcntw(target_ulong val)
-+target_ulong helper_POPCNTW(target_ulong val)
- {
-     /* Note that we don't fold past words.  */
-     val = (val & 0x5555555555555555ULL) + ((val >>  1) &
-@@ -316,7 +316,7 @@ target_ulong helper_popcntw(target_ulong val)
-     return val;
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/ppc/power8-pmu.c b/target/ppc/power8-pmu.c
+index 6f5d4e1256..db9ee8e96b 100644
+--- a/target/ppc/power8-pmu.c
++++ b/target/ppc/power8-pmu.c
+@@ -82,6 +82,37 @@ static void pmu_update_summaries(CPUPPCState *env)
+     env->pmc_cyc_cnt = cyc_cnt;
  }
- #else
--target_ulong helper_popcntb(target_ulong val)
-+target_ulong helper_POPCNTB(target_ulong val)
+ 
++static void hreg_bhrb_filter_update(CPUPPCState *env)
++{
++    target_long ifm;
++
++    if (!(env->spr[SPR_POWER_MMCR0] & MMCR0_PMAE)) {
++        /* disable recording to BHRB */
++        env->bhrb_filter = BHRB_TYPE_NORECORD;
++        return;
++    }
++
++    ifm = (env->spr[SPR_POWER_MMCRA] & MMCRA_IFM_MASK) >> MMCRA_IFM_SHIFT;
++    switch (ifm) {
++    case 0:
++        /* record all branches */
++        env->bhrb_filter = -1;
++        break;
++    case 1:
++        /* only record calls (LK = 1) */
++        env->bhrb_filter = BHRB_TYPE_CALL;
++        break;
++    case 2:
++        /* only record indirect branches */
++        env->bhrb_filter = BHRB_TYPE_INDIRECT;
++        break;
++    case 3:
++        /* only record conditional branches */
++        env->bhrb_filter = BHRB_TYPE_COND;
++        break;
++    }
++}
++
+ void pmu_mmcr01a_updated(CPUPPCState *env)
  {
-     /* Note that we don't fold past bytes */
-     val = (val & 0x55555555) + ((val >>  1) & 0x55555555);
+     PowerPCCPU *cpu = env_archcpu(env);
+@@ -95,6 +126,8 @@ void pmu_mmcr01a_updated(CPUPPCState *env)
+         ppc_set_irq(cpu, PPC_INTERRUPT_PERFM, 0);
+     }
+ 
++    hreg_bhrb_filter_update(env);
++
+     /*
+      * Should this update overflow timers (if mmcr0 is updated) so they
+      * get set in cpu_post_load?
+diff --git a/target/ppc/power8-pmu.h b/target/ppc/power8-pmu.h
+index 87fa8c9334..3f79cfc45b 100644
+--- a/target/ppc/power8-pmu.h
++++ b/target/ppc/power8-pmu.h
+@@ -13,6 +13,13 @@
+ #ifndef POWER8_PMU_H
+ #define POWER8_PMU_H
+ 
++#define BHRB_TYPE_NORECORD      0x00
++#define BHRB_TYPE_CALL          0x01
++#define BHRB_TYPE_INDIRECT      0x02
++#define BHRB_TYPE_COND          0x04
++#define BHRB_TYPE_OTHER         0x08
++#define BHRB_TYPE_XL_FORM       0x10
++
+ #if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
+ 
+ #define PMC_COUNTER_NEGATIVE_VAL 0x80000000UL
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index e1ccb82f10..2cfa7d37ee 100644
+index a85f596d65..8aa2439700 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -1563,13 +1563,6 @@ static inline void gen_set_Rc0(DisasContext *ctx, TCGv reg)
-     }
- }
- 
--/* cmpb: PowerPC 2.05 specification */
--static void gen_cmpb(DisasContext *ctx)
--{
--    gen_helper_cmpb(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],
--                    cpu_gpr[rB(ctx->opcode)]);
--}
--
- /***                           Integer arithmetic                          ***/
- 
- static inline void gen_op_arith_compute_ov(DisasContext *ctx, TCGv arg0,
-@@ -1888,82 +1881,6 @@ static inline void gen_op_arith_subf(DisasContext *ctx, TCGv ret, TCGv arg1,
- }
- 
- /***                            Integer logical                            ***/
--#define GEN_LOGICAL2(name, tcg_op, opc, type)                                 \
--static void glue(gen_, name)(DisasContext *ctx)                               \
--{                                                                             \
--    tcg_op(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],                \
--       cpu_gpr[rB(ctx->opcode)]);                                             \
--    if (unlikely(Rc(ctx->opcode) != 0))                                       \
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);                           \
--}
--
--#define GEN_LOGICAL1(name, tcg_op, opc, type)                                 \
--static void glue(gen_, name)(DisasContext *ctx)                               \
--{                                                                             \
--    tcg_op(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);               \
--    if (unlikely(Rc(ctx->opcode) != 0))                                       \
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);                           \
--}
--
--/* and & and. */
--GEN_LOGICAL2(and, tcg_gen_and_tl, 0x00, PPC_INTEGER);
--/* andc & andc. */
--GEN_LOGICAL2(andc, tcg_gen_andc_tl, 0x01, PPC_INTEGER);
--
--/* andi. */
--static void gen_andi_(DisasContext *ctx)
--{
--    tcg_gen_andi_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],
--                    UIMM(ctx->opcode));
--    gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--}
--
--/* andis. */
--static void gen_andis_(DisasContext *ctx)
--{
--    tcg_gen_andi_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],
--                    UIMM(ctx->opcode) << 16);
--    gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--}
--
--/* cntlzw */
--static void gen_cntlzw(DisasContext *ctx)
--{
--    TCGv_i32 t = tcg_temp_new_i32();
--
--    tcg_gen_trunc_tl_i32(t, cpu_gpr[rS(ctx->opcode)]);
--    tcg_gen_clzi_i32(t, t, 32);
--    tcg_gen_extu_i32_tl(cpu_gpr[rA(ctx->opcode)], t);
--
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
--
--/* cnttzw */
--static void gen_cnttzw(DisasContext *ctx)
--{
--    TCGv_i32 t = tcg_temp_new_i32();
--
--    tcg_gen_trunc_tl_i32(t, cpu_gpr[rS(ctx->opcode)]);
--    tcg_gen_ctzi_i32(t, t, 32);
--    tcg_gen_extu_i32_tl(cpu_gpr[rA(ctx->opcode)], t);
--
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
--
--/* eqv & eqv. */
--GEN_LOGICAL2(eqv, tcg_gen_eqv_tl, 0x08, PPC_INTEGER);
--/* extsb & extsb. */
--GEN_LOGICAL1(extsb, tcg_gen_ext8s_tl, 0x1D, PPC_INTEGER);
--/* extsh & extsh. */
--GEN_LOGICAL1(extsh, tcg_gen_ext16s_tl, 0x1C, PPC_INTEGER);
--/* nand & nand. */
--GEN_LOGICAL2(nand, tcg_gen_nand_tl, 0x0E, PPC_INTEGER);
--/* nor & nor. */
--GEN_LOGICAL2(nor, tcg_gen_nor_tl, 0x03, PPC_INTEGER);
- 
- #if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
- static void gen_pause(DisasContext *ctx)
-@@ -1977,243 +1894,6 @@ static void gen_pause(DisasContext *ctx)
- }
- #endif /* defined(TARGET_PPC64) */
- 
--/* or & or. */
--static void gen_or(DisasContext *ctx)
--{
--    int rs, ra, rb;
--
--    rs = rS(ctx->opcode);
--    ra = rA(ctx->opcode);
--    rb = rB(ctx->opcode);
--    /* Optimisation for mr. ri case */
--    if (rs != ra || rs != rb) {
--        if (rs != rb) {
--            tcg_gen_or_tl(cpu_gpr[ra], cpu_gpr[rs], cpu_gpr[rb]);
--        } else {
--            tcg_gen_mov_tl(cpu_gpr[ra], cpu_gpr[rs]);
--        }
--        if (unlikely(Rc(ctx->opcode) != 0)) {
--            gen_set_Rc0(ctx, cpu_gpr[ra]);
--        }
--    } else if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rs]);
--#if defined(TARGET_PPC64)
--    } else if (rs != 0) { /* 0 is nop */
--        int prio = 0;
--
--        switch (rs) {
--        case 1:
--            /* Set process priority to low */
--            prio = 2;
--            break;
--        case 6:
--            /* Set process priority to medium-low */
--            prio = 3;
--            break;
--        case 2:
--            /* Set process priority to normal */
--            prio = 4;
--            break;
--#if !defined(CONFIG_USER_ONLY)
--        case 31:
--            if (!ctx->pr) {
--                /* Set process priority to very low */
--                prio = 1;
--            }
--            break;
--        case 5:
--            if (!ctx->pr) {
--                /* Set process priority to medium-hight */
--                prio = 5;
--            }
--            break;
--        case 3:
--            if (!ctx->pr) {
--                /* Set process priority to high */
--                prio = 6;
--            }
--            break;
--        case 7:
--            if (ctx->hv && !ctx->pr) {
--                /* Set process priority to very high */
--                prio = 7;
--            }
--            break;
--#endif
--        default:
--            break;
--        }
--        if (prio) {
--            TCGv t0 = tcg_temp_new();
--            gen_load_spr(t0, SPR_PPR);
--            tcg_gen_andi_tl(t0, t0, ~0x001C000000000000ULL);
--            tcg_gen_ori_tl(t0, t0, ((uint64_t)prio) << 50);
--            gen_store_spr(SPR_PPR, t0);
--        }
--#if !defined(CONFIG_USER_ONLY)
--        /*
--         * Pause out of TCG otherwise spin loops with smt_low eat too
--         * much CPU and the kernel hangs.  This applies to all
--         * encodings other than no-op, e.g., miso(rs=26), yield(27),
--         * mdoio(29), mdoom(30), and all currently undefined.
--         */
--        gen_pause(ctx);
--#endif
--#endif
--    }
--}
--/* orc & orc. */
--GEN_LOGICAL2(orc, tcg_gen_orc_tl, 0x0C, PPC_INTEGER);
--
--/* xor & xor. */
--static void gen_xor(DisasContext *ctx)
--{
--    /* Optimisation for "set to zero" case */
--    if (rS(ctx->opcode) != rB(ctx->opcode)) {
--        tcg_gen_xor_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],
--                       cpu_gpr[rB(ctx->opcode)]);
--    } else {
--        tcg_gen_movi_tl(cpu_gpr[rA(ctx->opcode)], 0);
--    }
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
--
--/* ori */
--static void gen_ori(DisasContext *ctx)
--{
--    target_ulong uimm = UIMM(ctx->opcode);
--
--    if (rS(ctx->opcode) == rA(ctx->opcode) && uimm == 0) {
--        return;
--    }
--    tcg_gen_ori_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)], uimm);
--}
--
--/* oris */
--static void gen_oris(DisasContext *ctx)
--{
--    target_ulong uimm = UIMM(ctx->opcode);
--
--    if (rS(ctx->opcode) == rA(ctx->opcode) && uimm == 0) {
--        /* NOP */
--        return;
--    }
--    tcg_gen_ori_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],
--                   uimm << 16);
--}
--
--/* xori */
--static void gen_xori(DisasContext *ctx)
--{
--    target_ulong uimm = UIMM(ctx->opcode);
--
--    if (rS(ctx->opcode) == rA(ctx->opcode) && uimm == 0) {
--        /* NOP */
--        return;
--    }
--    tcg_gen_xori_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)], uimm);
--}
--
--/* xoris */
--static void gen_xoris(DisasContext *ctx)
--{
--    target_ulong uimm = UIMM(ctx->opcode);
--
--    if (rS(ctx->opcode) == rA(ctx->opcode) && uimm == 0) {
--        /* NOP */
--        return;
--    }
--    tcg_gen_xori_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)],
--                    uimm << 16);
--}
--
--/* popcntb : PowerPC 2.03 specification */
--static void gen_popcntb(DisasContext *ctx)
--{
--    gen_helper_popcntb(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);
--}
--
--static void gen_popcntw(DisasContext *ctx)
--{
--#if defined(TARGET_PPC64)
--    gen_helper_popcntw(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);
--#else
--    tcg_gen_ctpop_i32(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);
--#endif
--}
--
--#if defined(TARGET_PPC64)
--/* popcntd: PowerPC 2.06 specification */
--static void gen_popcntd(DisasContext *ctx)
--{
--    tcg_gen_ctpop_i64(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);
--}
--#endif
--
--/* prtyw: PowerPC 2.05 specification */
--static void gen_prtyw(DisasContext *ctx)
--{
--    TCGv ra = cpu_gpr[rA(ctx->opcode)];
--    TCGv rs = cpu_gpr[rS(ctx->opcode)];
--    TCGv t0 = tcg_temp_new();
--    tcg_gen_shri_tl(t0, rs, 16);
--    tcg_gen_xor_tl(ra, rs, t0);
--    tcg_gen_shri_tl(t0, ra, 8);
--    tcg_gen_xor_tl(ra, ra, t0);
--    tcg_gen_andi_tl(ra, ra, (target_ulong)0x100000001ULL);
--}
--
--#if defined(TARGET_PPC64)
--/* prtyd: PowerPC 2.05 specification */
--static void gen_prtyd(DisasContext *ctx)
--{
--    TCGv ra = cpu_gpr[rA(ctx->opcode)];
--    TCGv rs = cpu_gpr[rS(ctx->opcode)];
--    TCGv t0 = tcg_temp_new();
--    tcg_gen_shri_tl(t0, rs, 32);
--    tcg_gen_xor_tl(ra, rs, t0);
--    tcg_gen_shri_tl(t0, ra, 16);
--    tcg_gen_xor_tl(ra, ra, t0);
--    tcg_gen_shri_tl(t0, ra, 8);
--    tcg_gen_xor_tl(ra, ra, t0);
--    tcg_gen_andi_tl(ra, ra, 1);
--}
--#endif
--
--#if defined(TARGET_PPC64)
--/* bpermd */
--static void gen_bpermd(DisasContext *ctx)
--{
--    gen_helper_bpermd(cpu_gpr[rA(ctx->opcode)],
--                      cpu_gpr[rS(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
--}
--#endif
--
--#if defined(TARGET_PPC64)
--/* extsw & extsw. */
--GEN_LOGICAL1(extsw, tcg_gen_ext32s_tl, 0x1E, PPC_64B);
--
--/* cntlzd */
--static void gen_cntlzd(DisasContext *ctx)
--{
--    tcg_gen_clzi_i64(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)], 64);
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
--
--/* cnttzd */
--static void gen_cnttzd(DisasContext *ctx)
--{
--    tcg_gen_ctzi_i64(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)], 64);
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
--#endif
--
- /***                             Integer rotate                            ***/
- 
- /* rlwimi & rlwimi. */
-@@ -5942,30 +5622,9 @@ GEN_HANDLER_E(brw, 0x1F, 0x1B, 0x04, 0x0000F801, PPC_NONE, PPC2_ISA310),
- GEN_HANDLER_E(brh, 0x1F, 0x1B, 0x06, 0x0000F801, PPC_NONE, PPC2_ISA310),
- #endif
- GEN_HANDLER(invalid, 0x00, 0x00, 0x00, 0xFFFFFFFF, PPC_NONE),
--GEN_HANDLER_E(cmpb, 0x1F, 0x1C, 0x0F, 0x00000001, PPC_NONE, PPC2_ISA205),
--GEN_HANDLER2(andi_, "andi.", 0x1C, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER2(andis_, "andis.", 0x1D, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(cntlzw, 0x1F, 0x1A, 0x00, 0x00000000, PPC_INTEGER),
--GEN_HANDLER_E(cnttzw, 0x1F, 0x1A, 0x10, 0x00000000, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(copy, 0x1F, 0x06, 0x18, 0x03C00001, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(cp_abort, 0x1F, 0x06, 0x1A, 0x03FFF801, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER(or, 0x1F, 0x1C, 0x0D, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(xor, 0x1F, 0x1C, 0x09, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(ori, 0x18, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(oris, 0x19, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(xori, 0x1A, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(xoris, 0x1B, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(popcntb, 0x1F, 0x1A, 0x03, 0x0000F801, PPC_POPCNTB),
--GEN_HANDLER(popcntw, 0x1F, 0x1A, 0x0b, 0x0000F801, PPC_POPCNTWD),
--GEN_HANDLER_E(prtyw, 0x1F, 0x1A, 0x04, 0x0000F801, PPC_NONE, PPC2_ISA205),
--#if defined(TARGET_PPC64)
--GEN_HANDLER(popcntd, 0x1F, 0x1A, 0x0F, 0x0000F801, PPC_POPCNTWD),
--GEN_HANDLER(cntlzd, 0x1F, 0x1A, 0x01, 0x00000000, PPC_64B),
--GEN_HANDLER_E(cnttzd, 0x1F, 0x1A, 0x11, 0x00000000, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(prtyd, 0x1F, 0x1A, 0x05, 0x0000F801, PPC_NONE, PPC2_ISA205),
--GEN_HANDLER_E(bpermd, 0x1F, 0x1C, 0x07, 0x00000001, PPC_NONE, PPC2_PERM_ISA206),
--#endif
- GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
-@@ -6136,24 +5795,6 @@ GEN_HANDLER(lvsr, 0x1f, 0x06, 0x01, 0x00000001, PPC_ALTIVEC),
- GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
- GEN_HANDLER(mtvscr, 0x04, 0x2, 0x19, 0x03ff0000, PPC_ALTIVEC),
- 
--#undef GEN_LOGICAL1
--#undef GEN_LOGICAL2
--#define GEN_LOGICAL2(name, tcg_op, opc, type)                                 \
--GEN_HANDLER(name, 0x1F, 0x1C, opc, 0x00000000, type)
--#define GEN_LOGICAL1(name, tcg_op, opc, type)                                 \
--GEN_HANDLER(name, 0x1F, 0x1A, opc, 0x00000000, type)
--GEN_LOGICAL2(and, tcg_gen_and_tl, 0x00, PPC_INTEGER),
--GEN_LOGICAL2(andc, tcg_gen_andc_tl, 0x01, PPC_INTEGER),
--GEN_LOGICAL2(eqv, tcg_gen_eqv_tl, 0x08, PPC_INTEGER),
--GEN_LOGICAL1(extsb, tcg_gen_ext8s_tl, 0x1D, PPC_INTEGER),
--GEN_LOGICAL1(extsh, tcg_gen_ext16s_tl, 0x1C, PPC_INTEGER),
--GEN_LOGICAL2(nand, tcg_gen_nand_tl, 0x0E, PPC_INTEGER),
--GEN_LOGICAL2(nor, tcg_gen_nor_tl, 0x03, PPC_INTEGER),
--GEN_LOGICAL2(orc, tcg_gen_orc_tl, 0x0C, PPC_INTEGER),
--#if defined(TARGET_PPC64)
--GEN_LOGICAL1(extsw, tcg_gen_ext32s_tl, 0x1E, PPC_64B),
--#endif
--
+@@ -180,6 +180,7 @@ struct DisasContext {
  #if defined(TARGET_PPC64)
- #undef GEN_PPC64_R2
- #undef GEN_PPC64_R4
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 872fed664d..fa0191e866 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -856,6 +856,285 @@ TRANS(SETBCR, do_set_bool_cond, false, true)
- TRANS(SETNBC, do_set_bool_cond, true, false)
- TRANS(SETNBCR, do_set_bool_cond, true, true)
+     bool sf_mode;
+     bool has_cfar;
++    bool has_bhrb;
+ #endif
+     bool fpu_enabled;
+     bool altivec_enabled;
+@@ -3371,14 +3372,85 @@ static void gen_rvwinkle(DisasContext *ctx)
+     gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+ #endif /* defined(CONFIG_USER_ONLY) */
+ }
++
++static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv mask, TCGv value)
++{
++    TCGv_ptr tmp = tcg_temp_new_ptr();
++
++    /* add base and offset to get address of bhrb entry */
++    tcg_gen_add_ptr(tmp, base, (TCGv_ptr)offset);
++
++    /* store value into bhrb at bhrb_offset */
++    tcg_gen_st_i64(value, tmp, 0);
++
++    /* add 8 to current bhrb_offset */
++    tcg_gen_addi_tl(offset, offset, 8);
++
++    /* apply offset mask */
++    tcg_gen_and_tl(offset, offset, mask);
++
++    return offset;
++}
+ #endif /* #if defined(TARGET_PPC64) */
  
-+/*
-+ * Fixed-Point Logical Instructions
-+ */
-+
-+static bool do_addi_(DisasContext *ctx, arg_D_ui *a, bool shift)
-+{
-+    tcg_gen_andi_tl(cpu_gpr[a->ra], cpu_gpr[a->rt], shift ? a->ui << 16 : a->ui);
-+    gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    return true;
-+}
-+
-+static bool do_ori(DisasContext *ctx, arg_D_ui *a, bool shift)
-+{
-+    if (a->rt == a->ra && a->ui == 0) {
-+        /* NOP */
-+        return true;
-+    }
-+    tcg_gen_ori_tl(cpu_gpr[a->ra], cpu_gpr[a->rt], shift ? a->ui << 16 : a->ui);
-+    return true;
-+}
-+
-+static bool do_xori(DisasContext *ctx, arg_D_ui *a, bool shift)
-+{
-+    if (a->rt == a->ra && a->ui == 0) {
-+        /* NOP */
-+        return true;
-+    }
-+    tcg_gen_xori_tl(cpu_gpr[a->ra], cpu_gpr[a->rt], shift ? a->ui << 16 : a->ui);
-+    return true;
-+}
-+
-+static bool do_logical1(DisasContext *ctx, arg_X_sa_rc *a,
-+                        void (*helper)(TCGv, TCGv))
-+{
-+    helper(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
-+
-+static bool do_logical2(DisasContext *ctx, arg_X_rc *a,
-+                        void (*helper)(TCGv, TCGv, TCGv))
-+{
-+    helper(cpu_gpr[a->ra], cpu_gpr[a->rt], cpu_gpr[a->rb]);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
-+
-+static bool trans_OR(DisasContext *ctx, arg_OR *a)
-+{
-+    /* Optimisation for mr. ri case */
-+    if (a->rt != a->ra || a->rt != a->rb) {
-+        if (a->rt != a->rb) {
-+            tcg_gen_or_tl(cpu_gpr[a->ra], cpu_gpr[a->rt], cpu_gpr[a->rb]);
-+        } else {
-+            tcg_gen_mov_tl(cpu_gpr[a->ra], cpu_gpr[a->rt]);
-+        }
-+        if (unlikely(a->rc)) {
-+            gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+        }
-+    } else if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
-+#if defined(TARGET_PPC64)
-+    } else if (a->rt != 0) { /* 0 is nop */
-+        int prio = 0;
-+
-+        switch (a->rt) {
-+        case 1:
-+            /* Set process priority to low */
-+            prio = 2;
-+            break;
-+        case 6:
-+            /* Set process priority to medium-low */
-+            prio = 3;
-+            break;
-+        case 2:
-+            /* Set process priority to normal */
-+            prio = 4;
-+            break;
-+#if !defined(CONFIG_USER_ONLY)
-+        case 31:
-+            if (!ctx->pr) {
-+                /* Set process priority to very low */
-+                prio = 1;
-+            }
-+            break;
-+        case 5:
-+            if (!ctx->pr) {
-+                /* Set process priority to medium-hight */
-+                prio = 5;
-+            }
-+            break;
-+        case 3:
-+            if (!ctx->pr) {
-+                /* Set process priority to high */
-+                prio = 6;
-+            }
-+            break;
-+        case 7:
-+            if (ctx->hv && !ctx->pr) {
-+                /* Set process priority to very high */
-+                prio = 7;
-+            }
-+            break;
-+#endif
-+        default:
-+            break;
-+        }
-+        if (prio) {
-+            TCGv t0 = tcg_temp_new();
-+            gen_load_spr(t0, SPR_PPR);
-+            tcg_gen_andi_tl(t0, t0, ~0x001C000000000000ULL);
-+            tcg_gen_ori_tl(t0, t0, ((uint64_t)prio) << 50);
-+            gen_store_spr(SPR_PPR, t0);
-+        }
-+#if !defined(CONFIG_USER_ONLY)
-+        /*
-+         * Pause out of TCG otherwise spin loops with smt_low eat too
-+         * much CPU and the kernel hangs.  This applies to all
-+         * encodings other than no-op, e.g., miso(rs=26), yield(27),
-+         * mdoio(29), mdoom(30), and all currently undefined.
-+         */
-+        gen_pause(ctx);
-+#endif
-+#endif
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_XOR(DisasContext *ctx, arg_XOR *a)
-+{
-+    /* Optimisation for "set to zero" case */
-+    if (a->rt != a->rb) {
-+        tcg_gen_xor_tl(cpu_gpr[a->ra], cpu_gpr[a->rt], cpu_gpr[a->rb]);
-+    } else {
-+        tcg_gen_movi_tl(cpu_gpr[a->ra], 0);
-+    }
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
-+
-+static bool trans_CMPB(DisasContext *ctx, arg_CMPB *a)
-+{
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-+    gen_helper_CMPB(cpu_gpr[a->ra], cpu_gpr[a->rt], cpu_gpr[a->rb]);
-+    return true;
-+}
-+
-+static bool do_cntzw(DisasContext *ctx, arg_X_sa_rc *a,
-+                    void (*helper)(TCGv_i32, TCGv_i32, uint32_t))
-+{
-+    TCGv_i32 t = tcg_temp_new_i32();
-+
-+    tcg_gen_trunc_tl_i32(t, cpu_gpr[a->rs]);
-+    helper(t, t, 32);
-+    tcg_gen_extu_i32_tl(cpu_gpr[a->ra], t);
-+
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
-+
-+#if defined(TARGET_PPC64)
-+static bool do_cntzd(DisasContext *ctx, arg_X_sa_rc *a,
-+                    void (*helper)(TCGv_i64, TCGv_i64, uint64_t))
-+{
-+    helper(cpu_gpr[a->ra], cpu_gpr[a->rs], 64);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
-+#endif
-+
-+static bool trans_CNTLZD(DisasContext *ctx, arg_CNTLZD *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+#if defined(TARGET_PPC64)
-+    do_cntzd(ctx, a, tcg_gen_clzi_i64);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_CNTTZD(DisasContext *ctx, arg_CNTTZD *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+#if defined(TARGET_PPC64)
-+    do_cntzd(ctx, a, tcg_gen_ctzi_i64);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_POPCNTB(DisasContext *ctx, arg_POPCNTB *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, POPCNTB);
-+    gen_helper_POPCNTB(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-+    return true;
-+}
-+
-+static bool trans_POPCNTW(DisasContext *ctx, arg_POPCNTW *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, POPCNTWD);
-+#if defined(TARGET_PPC64)
-+    gen_helper_POPCNTW(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-+#else
-+    tcg_gen_ctpop_i32(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-+#endif
-+    return true;
-+}
-+
-+static bool trans_POPCNTD(DisasContext *ctx, arg_POPCNTD *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS(ctx, POPCNTWD);
-+#if defined(TARGET_PPC64)
-+    tcg_gen_ctpop_i64(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_PRTYW(DisasContext *ctx, arg_PRTYW *a)
-+{
-+    TCGv ra = cpu_gpr[a->ra];
-+    TCGv rs = cpu_gpr[a->rs];
-+    TCGv t0 = tcg_temp_new();
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-+    tcg_gen_shri_tl(t0, rs, 16);
-+    tcg_gen_xor_tl(ra, rs, t0);
-+    tcg_gen_shri_tl(t0, ra, 8);
-+    tcg_gen_xor_tl(ra, ra, t0);
-+    tcg_gen_andi_tl(ra, ra, (target_ulong)0x100000001ULL);
-+    return true;
-+}
-+
-+static bool trans_PRTYD(DisasContext *ctx, arg_PRTYD *a)
-+{
-+    TCGv ra = cpu_gpr[a->ra];
-+    TCGv rs = cpu_gpr[a->rs];
-+    TCGv t0 = tcg_temp_new();
-+
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-+    tcg_gen_shri_tl(t0, rs, 32);
-+    tcg_gen_xor_tl(ra, rs, t0);
-+    tcg_gen_shri_tl(t0, ra, 16);
-+    tcg_gen_xor_tl(ra, ra, t0);
-+    tcg_gen_shri_tl(t0, ra, 8);
-+    tcg_gen_xor_tl(ra, ra, t0);
-+    tcg_gen_andi_tl(ra, ra, 1);
-+    return true;
-+}
-+
-+static bool trans_BPERMD(DisasContext *ctx, arg_BPERMD *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, PERM_ISA206);
-+#if defined(TARGET_PPC64)
-+    gen_helper_BPERMD(cpu_gpr[a->ra], cpu_gpr[a->rt], cpu_gpr[a->rb]);
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
- static bool trans_CFUGED(DisasContext *ctx, arg_X *a)
+-static inline void gen_update_cfar(DisasContext *ctx, target_ulong nip)
++static inline void gen_update_branch_history(DisasContext *ctx,
++                                             target_ulong nip,
++                                             TCGv target,
++                                             target_long inst_type)
  {
-     REQUIRE_64BIT(ctx);
-@@ -944,6 +1223,27 @@ static bool trans_PEXTD(DisasContext *ctx, arg_X *a)
-     return true;
+ #if defined(TARGET_PPC64)
++    TCGv_ptr base;
++    TCGv tmp;
++    TCGv offset;
++    TCGv mask;
++    TCGLabel *no_update;
++
+     if (ctx->has_cfar) {
+         tcg_gen_movi_tl(cpu_cfar, nip);
+     }
++
++    if (!ctx->has_bhrb ||
++        !ctx->bhrb_enable ||
++        inst_type == BHRB_TYPE_NORECORD) {
++        return;
++    }
++
++    tmp = tcg_temp_new();
++    no_update = gen_new_label();
++
++    /* check for bhrb filtering */
++    tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPUPPCState, bhrb_filter));
++    tcg_gen_andi_tl(tmp, tmp, inst_type);
++    tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, 0, no_update);
++
++    base = tcg_temp_new_ptr();
++    offset = tcg_temp_new();
++    mask = tcg_temp_new();
++
++    /* load bhrb base address */
++    tcg_gen_ld_ptr(base, tcg_env, offsetof(CPUPPCState, bhrb_base));
++
++    /* load current bhrb_offset */
++    tcg_gen_ld_tl(offset, tcg_env, offsetof(CPUPPCState, bhrb_offset));
++
++    /* load a BHRB offset mask */
++    tcg_gen_ld_tl(mask, tcg_env, offsetof(CPUPPCState, bhrb_offset_mask));
++
++    offset = gen_write_bhrb(base, offset, mask, tcg_constant_i64(nip));
++
++    /* Also record the target address for XL-Form branches */
++    if (inst_type & BHRB_TYPE_XL_FORM) {
++
++        /* Set the 'T' bit for target entries */
++        tcg_gen_ori_tl(tmp, target, 0x2);
++
++        offset = gen_write_bhrb(base, offset, mask, tmp);
++    }
++
++    /* save updated bhrb_offset for next time */
++    tcg_gen_st_tl(offset, tcg_env, offsetof(CPUPPCState, bhrb_offset));
++
++    gen_set_label(no_update);
+ #endif
  }
  
-+TRANS(ANDI_, do_addi_, false);
-+TRANS(ANDIS_, do_addi_, true);
-+TRANS(ORI, do_ori, false);
-+TRANS(ORIS, do_ori, true);
-+TRANS(XORI, do_xori, false);
-+TRANS(XORIS, do_xori, true);
+@@ -3508,8 +3580,10 @@ static void gen_b(DisasContext *ctx)
+     }
+     if (LK(ctx->opcode)) {
+         gen_setlr(ctx, ctx->base.pc_next);
++        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_CALL);
++    } else {
++        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_OTHER);
+     }
+-    gen_update_cfar(ctx, ctx->cia);
+     gen_goto_tb(ctx, 0, target);
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+@@ -3524,6 +3598,7 @@ static void gen_bcond(DisasContext *ctx, int type)
+     uint32_t bo = BO(ctx->opcode);
+     TCGLabel *l1;
+     TCGv target;
++    target_long bhrb_type = BHRB_TYPE_OTHER;
+ 
+     if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+         target = tcg_temp_new();
+@@ -3534,11 +3609,16 @@ static void gen_bcond(DisasContext *ctx, int type)
+         } else {
+             tcg_gen_mov_tl(target, cpu_lr);
+         }
++        if (!LK(ctx->opcode)) {
++            bhrb_type |= BHRB_TYPE_INDIRECT;
++        }
++        bhrb_type |= BHRB_TYPE_XL_FORM;
+     } else {
+         target = NULL;
+     }
+     if (LK(ctx->opcode)) {
+         gen_setlr(ctx, ctx->base.pc_next);
++        bhrb_type |= BHRB_TYPE_CALL;
+     }
+     l1 = gen_new_label();
+     if ((bo & 0x4) == 0) {
+@@ -3589,6 +3669,7 @@ static void gen_bcond(DisasContext *ctx, int type)
+                 tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+             }
+         }
++        bhrb_type |= BHRB_TYPE_COND;
+     }
+     if ((bo & 0x10) == 0) {
+         /* Test CR */
+@@ -3603,8 +3684,11 @@ static void gen_bcond(DisasContext *ctx, int type)
+             tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+             tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+         }
++        bhrb_type |= BHRB_TYPE_COND;
+     }
+-    gen_update_cfar(ctx, ctx->cia);
 +
-+TRANS(AND, do_logical2, tcg_gen_and_tl);
-+TRANS(ANDC, do_logical2, tcg_gen_andc_tl);
-+TRANS(NAND, do_logical2, tcg_gen_nand_tl);
-+TRANS(ORC, do_logical2, tcg_gen_orc_tl);
-+TRANS(NOR, do_logical2, tcg_gen_nor_tl);
-+TRANS(EQV, do_logical2, tcg_gen_eqv_tl);
-+TRANS(EXTSB, do_logical1, tcg_gen_ext8s_tl);
-+TRANS(EXTSH, do_logical1, tcg_gen_ext16s_tl);
++    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
 +
-+TRANS(CNTLZW, do_cntzw, tcg_gen_clzi_i32);
-+TRANS_FLAGS2(ISA300, CNTTZW, do_cntzw, tcg_gen_ctzi_i32);
-+
-+TRANS64(EXTSW, do_logical1, tcg_gen_ext32s_tl);
-+
- static bool trans_ADDG6S(DisasContext *ctx, arg_X *a)
- {
-     const target_ulong carry_bits = (target_ulong)-1 / 0xf;
+     if (type == BCOND_IM) {
+         target_ulong li = (target_long)((int16_t)(BD(ctx->opcode)));
+         if (likely(AA(ctx->opcode) == 0)) {
+@@ -3720,7 +3804,7 @@ static void gen_rfi(DisasContext *ctx)
+     /* Restore CPU state */
+     CHK_SV(ctx);
+     translator_io_start(&ctx->base);
+-    gen_update_cfar(ctx, ctx->cia);
++    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+     gen_helper_rfi(tcg_env);
+     ctx->base.is_jmp = DISAS_EXIT;
+ #endif
+@@ -3735,7 +3819,7 @@ static void gen_rfid(DisasContext *ctx)
+     /* Restore CPU state */
+     CHK_SV(ctx);
+     translator_io_start(&ctx->base);
+-    gen_update_cfar(ctx, ctx->cia);
++    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+     gen_helper_rfid(tcg_env);
+     ctx->base.is_jmp = DISAS_EXIT;
+ #endif
+@@ -3750,7 +3834,7 @@ static void gen_rfscv(DisasContext *ctx)
+     /* Restore CPU state */
+     CHK_SV(ctx);
+     translator_io_start(&ctx->base);
+-    gen_update_cfar(ctx, ctx->cia);
++    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+     gen_helper_rfscv(tcg_env);
+     ctx->base.is_jmp = DISAS_EXIT;
+ #endif
+@@ -6330,6 +6414,7 @@ static void ppc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ #if defined(TARGET_PPC64)
+     ctx->sf_mode = (hflags >> HFLAGS_64) & 1;
+     ctx->has_cfar = !!(env->flags & POWERPC_FLAG_CFAR);
++    ctx->has_bhrb = !!(env->flags & POWERPC_FLAG_BHRB);
+ #endif
+     ctx->lazy_tlb_flush = env->mmu_model == POWERPC_MMU_32B
+         || env->mmu_model & POWERPC_MMU_64;
+diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
+index fb0fcf30cc..9ade0c659a 100644
+--- a/target/ppc/translate/branch-impl.c.inc
++++ b/target/ppc/translate/branch-impl.c.inc
+@@ -17,7 +17,7 @@ static bool trans_RFEBB(DisasContext *ctx, arg_XL_s *arg)
+     REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
+ 
+     translator_io_start(&ctx->base);
+-    gen_update_cfar(ctx, ctx->cia);
++    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+     gen_helper_rfebb(tcg_env, cpu_gpr[arg->s]);
+ 
+     ctx->base.is_jmp = DISAS_CHAIN;
 -- 
 2.43.0
 
