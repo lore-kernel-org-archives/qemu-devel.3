@@ -4,54 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA20C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 18:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21AD0C25B7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 18:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sADLx-0005MN-Rv; Thu, 23 May 2024 14:39:49 -0400
+	id 1sADTc-0001Z3-2t; Thu, 23 May 2024 14:47:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1sADLw-0005M5-5z; Thu, 23 May 2024 14:39:48 -0400
-Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ id 1sADTZ-0001Vh-Gj
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 14:47:41 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1sADLu-0006U4-9D; Thu, 23 May 2024 14:39:47 -0400
-Received: from localhost (localhost [127.0.0.1])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 90335260CC8;
- Thu, 23 May 2024 20:39:41 +0200 (CEST)
-X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
-Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
- by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
- with ESMTP id DPU9NPduMJWQ; Thu, 23 May 2024 20:39:39 +0200 (CEST)
-Received: from applejack.lan (83.11.37.15.ipv4.supernova.orange.pl
- [83.11.37.15])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 1D0C326073E;
- Thu, 23 May 2024 20:39:38 +0200 (CEST)
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Subject: [PATCH 1/1] tests/avocado: sbsa-ref: switch from OpenBSD to FreeBSD
-Date: Thu, 23 May 2024 20:39:28 +0200
-Message-ID: <20240523183928.37809-1-marcin.juszkiewicz@linaro.org>
-X-Mailer: git-send-email 2.45.1
+ id 1sADTO-0008LP-Ag
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 14:47:41 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2e95a7622cfso867181fa.2
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 11:47:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716490047; x=1717094847; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=noqMMMOXkPmANYFZCV5EWRSHO24/boBHs6HDsbfjlbM=;
+ b=BJ1Z8yK31ZjRSpvDS4GQEykehg9zRDacBH+ul4Jx3TZsr25zlYhz7pWKRxteFYbhFW
+ GYp9RMrHxMsCpEh1eUMx8lohL/e78xOrAwx9E8CCNdkCnU2Ttmhedy8NT9YcrIWSMuBW
+ bsJ0D1XFn7s2r21yFC7xwXE743uD+dbvsNqQbxnXC93yLvBytpkYyEQTbMOITfRZivnl
+ puC2aEwjo4ffuKnFmtRx60wkrZnNKVO2fg7KMrmcBcpOb/+fE7yVP8Sz2OTk91S14sjM
+ XahfJCQMCz9tT4etxth6mASw7uUjovbEoH+Vudke/iu/a3zip1itqNFKAguUKOhSx10e
+ flyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716490047; x=1717094847;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=noqMMMOXkPmANYFZCV5EWRSHO24/boBHs6HDsbfjlbM=;
+ b=Q/hC/Xls3qOEph7V4++QLBTO51OZwOHxvCZf6QatZMgFvZ20MWle8d0e2GEBupmKhq
+ eWLucjIMreYjCgPdiYYL3fJu0F33bERDQ4pWO9SJxTJEoL6LEqG7j06ePuwpLQtPiCMV
+ RshsEyIdD157wc1n28heRGM5YqypozDRGXuBG47fLxbdlyuKfnOlJea3soBzi+KOdzgM
+ LkoZPOG8jM4C47ft1DfctCRYlOI93/+55Y9VW28Vwm3+wNUOYbcnnkEe3Measdvmxfto
+ koQp8cxAj+1mE9drPxxZP/aQvQbrIojRUGDcxaik2Gtrfe8SlHVeIr0Cmu0cPj7GVOWk
+ oILA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVir9hP/xutSky8yQjdmqw24uEnEmYOcqsyBCuhNqWC0jePPQbg6AZOXiVbuM5sP4eFGjmCDB3h6hZXl5XhdNaxGJN6r6U=
+X-Gm-Message-State: AOJu0Yysk8PnaO7wi1rDRa1no12U/Z6EWQT+G2KUiItCOce4vlYD9QyY
+ JEbv+QpOKweyS5KTvEWaTq9O5iAfyH/OETXZlOeNp93uKNzOfp/z7j7G9V92Crk=
+X-Google-Smtp-Source: AGHT+IHHsh29Wv9iFC+Z7vof7DAiEAqH4lwv3Us6zH0OmOLgTeRiTquvkVYqb8LQwKCjZW3HjDRtMA==
+X-Received: by 2002:a2e:bc24:0:b0:2e1:a0d1:2c0 with SMTP id
+ 38308e7fff4ca-2e95b0bd79emr205501fa.28.1716490046812; 
+ Thu, 23 May 2024 11:47:26 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.37.15.ipv4.supernova.orange.pl.
+ [83.11.37.15]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-578366176e9sm2858894a12.74.2024.05.23.11.47.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 May 2024 11:47:26 -0700 (PDT)
+Message-ID: <456d4233-a1b3-41fb-9fd9-e89a4fbb5c18@linaro.org>
+Date: Thu, 23 May 2024 20:47:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=true
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/1] hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa
+ machine
+To: Xiong Yining <xiongyining1480@phytium.com.cn>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com
+References: <20240426073553.326946-1-xiongyining1480@phytium.com.cn>
+ <20240426073553.326946-2-xiongyining1480@phytium.com.cn>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Organization: Linaro
+In-Reply-To: <20240426073553.326946-2-xiongyining1480@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=213.251.184.221;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=muminek.juszkiewicz.com.pl
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,130 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FreeBSD has longer support cycle for stable release (14.x EoL in 2028)
-than OpenBSD (7.3 we used is already EoL). Also bugfixes are backported
-so we can stay on 14.x for longer.
+W dniu 26.04.2024 o 09:35, Xiong Yining pisze:
+> From: xiongyining1480<xiongyining1480@phytium.com.cn>
+> 
+> Enable CPU cluster support on SbsaQemu platform, so that users can
+> specify a 4-level CPU hierarchy sockets/clusters/cores/threads. And
+> this topology can be passed to the firmware through DT cpu-map.
+> 
+> Signed-off-by: Xiong Yining<xiongyining1480@phytium.com.cn>
+> tested-by: Marcin Juszkiewicz<marcin.juszkiewicz@linaro.org>
 
-Planned to upgrade to newer OpenBSD but we would have to wait for 7.6
-release to get Neoverse-V1/N2 support.
+I had some thinking about it recently. This patch exported whole 
+/cpus/cpu-map/ tree which we then parse in TF-A to get amount of 
+sockets/clusters/cores/threads.
 
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
----
- tests/avocado/machine_aarch64_sbsaref.py | 65 ++++++++++++++++--------
- 1 file changed, 43 insertions(+), 22 deletions(-)
+Why not export them directly? Kind of:
 
-diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-index 98c76c1ff7..c3c7c0e639 100644
---- a/tests/avocado/machine_aarch64_sbsaref.py
-+++ b/tests/avocado/machine_aarch64_sbsaref.py
-@@ -1,4 +1,4 @@
--# Functional test that boots a Linux kernel and checks the console
-+# Functional test that boots a kernel and checks the console
- #
- # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
- # SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
-@@ -177,14 +177,14 @@ def test_sbsaref_alpine_linux_max(self):
-     # This tests the whole boot chain from EFI to Userspace
-     # We only boot a whole OS for the current top level CPU and GIC
-     # Other test profiles should use more minimal boots
--    def boot_openbsd73(self, cpu):
-+    def boot_freebsd14(self, cpu):
-         self.fetch_firmware()
- 
-         img_url = (
--            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img"
-+            "https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/14.0/FreeBSD-14.0-RELEASE-arm64-aarch64-bootonly.iso"
-         )
- 
--        img_hash = "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
-+        img_hash = "2f3ceb0ef6b1de53553abb9979a6d65f51b006dbfa985798b282812ecb758c1b"
-         img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
- 
-         self.vm.set_console()
-@@ -196,43 +196,64 @@ def boot_openbsd73(self, cpu):
-         )
- 
-         self.vm.launch()
--        wait_for_console_pattern(self,
--                                 "Welcome to the OpenBSD/arm64"
--                                 " 7.3 installation program.")
-+        wait_for_console_pattern(self, "Welcome to FreeBSD!")
- 
--    def test_sbsaref_openbsd73_cortex_a57(self):
-+    def test_sbsaref_freebsd14_cortex_a57(self):
-         """
-         :avocado: tags=cpu:cortex-a57
--        :avocado: tags=os:openbsd
-+        :avocado: tags=os:freebsd
-         """
--        self.boot_openbsd73("cortex-a57")
-+        self.boot_freebsd14("cortex-a57")
- 
--    def test_sbsaref_openbsd73_neoverse_n1(self):
-+    def test_sbsaref_freebsd14_neoverse_n1(self):
-         """
-         :avocado: tags=cpu:neoverse-n1
--        :avocado: tags=os:openbsd
-+        :avocado: tags=os:freebsd
-         """
--        self.boot_openbsd73("neoverse-n1")
-+        self.boot_freebsd14("neoverse-n1")
- 
--    def test_sbsaref_openbsd73_max_pauth_off(self):
-+    def test_sbsaref_freebsd14_neoverse_n2_pauth_off(self):
-+        """
-+        :avocado: tags=cpu:neoverse-n2
-+        :avocado: tags=os:freebsd
-+        """
-+        self.boot_freebsd14("neoverse-n2,pauth=off")
-+
-+    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-+    def test_sbsaref_freebsd14_neoverse_n2_pauth_impdef(self):
-+        """
-+        :avocado: tags=cpu:neoverse-n2
-+        :avocado: tags=os:freebsd
-+        """
-+        self.boot_freebsd14("neoverse-n2,pauth-impdef=on")
-+
-+    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-+    def test_sbsaref_freebsd14_neoverse_n2(self):
-+        """
-+        :avocado: tags=cpu:neoverse-n2
-+        :avocado: tags=os:freebsd
-+        """
-+        self.boot_freebsd14("neoverse-n2")
-+
-+    def test_sbsaref_freebsd14_max_pauth_off(self):
-         """
-         :avocado: tags=cpu:max
--        :avocado: tags=os:openbsd
-+        :avocado: tags=os:freebsd
-         """
--        self.boot_openbsd73("max,pauth=off")
-+        self.boot_freebsd14("max,pauth=off")
- 
-     @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
--    def test_sbsaref_openbsd73_max_pauth_impdef(self):
-+    def test_sbsaref_freebsd14_max_pauth_impdef(self):
-         """
-         :avocado: tags=cpu:max
--        :avocado: tags=os:openbsd
-+        :avocado: tags=os:freebsd
-         """
--        self.boot_openbsd73("max,pauth-impdef=on")
-+        self.boot_freebsd14("max,pauth-impdef=on")
- 
-     @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
--    def test_sbsaref_openbsd73_max(self):
-+    def test_sbsaref_freebsd14_max(self):
-         """
-         :avocado: tags=cpu:max
--        :avocado: tags=os:openbsd
-+        :avocado: tags=os:freebsd
-         """
--        self.boot_openbsd73("max")
-+        self.boot_freebsd14("max")
--- 
-2.45.1
+         cpus {
+                 topology {
+                         threads = <0x01>;
+                         cores = <0x04>;
+                         clusters = <0x01>;
+                         sockets = <0x01>;
+                 };
 
+It gives everything we need.
+
+Had some thinking about exporting amount of cores per cluster (8 now, 
+virt uses 16 which is architecture maximum now) in case we would use it 
+in generation of PPTT in EDK2.
 
