@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE923C25B79
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 05:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EE0C25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 05:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA0n4-0002VL-Vq; Thu, 23 May 2024 01:14:59 -0400
+	id 1sA0n3-0002To-3z; Thu, 23 May 2024 01:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sA0mx-0002Pc-Nz; Thu, 23 May 2024 01:14:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1sA0mv-0002OI-Em; Thu, 23 May 2024 01:14:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sA0mt-0000qB-A3; Thu, 23 May 2024 01:14:50 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ id 1sA0mo-0000pZ-58; Thu, 23 May 2024 01:14:45 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44N3HKx5001091; Thu, 23 May 2024 05:14:35 GMT
+ 44N42a6C014066; Thu, 23 May 2024 05:14:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=tQXpvB/s4QtmZroqzmXZWEFJAg4CyxgeNjGw46b7bH0=;
- b=KMRrFoUgzwHwc9vmubtiGgX89C1z4NWbRZdIM/+MM2bM0CfMuRXcIme+7V35b53ae0i5
- QWuXfMQ+lT1UFKTbjy8vXuIy3/0vl0wy/y7hafVDLQYsRwv3Jr92TFk+x124lssNNEzn
- HNdapw4RCqJz4HCsU9gysPgVGS+p3yyTCy9ZLVB5AyT33lnYE8oQhDB097VG8Os7Jb8g
- wUoMIImHk8U44m+ptkx38Y/CuvqjDKCBbAVhsC4LWF7OgBI1a3n4RZzKh/4eVHoj5Ayn
- reg9b2Sjjk8M8++MplIifJtQh3PNnPlFeaizvpFIBLdPGTWCbN+dcGoN4h1vrsLn+DlR vw== 
+ bh=9lpa27T+UbgauvHsMP28ueUlm80/+afxzo4gvJYBkms=;
+ b=mTGZ79Un/NHW7sX6X4MmspGGsfs3041twkMnOrHZnC0vQXqSC01LAvI8Un3vh4qnvsHj
+ W2Gv+hBAckf+ZPdGPW1d8UcBtF8XBxELEfsFC9HhWQ0LFYvMqpoEW1Dk2thqzD7fd4B1
+ +ASdpo7yt4QbGf1GtCFSHITXNEikCPjhYFFRqEn97s7sm8A/TRo+OFY3t+ATGLkyw4oj
+ kVvQmwWDBL6RpnZTOv4mh9XEUlzH4jfrBrP3nr/GQkD1iN7Uipw9vXvEq1LQbNWSPjTr
+ wDq0NotfnWfCDRnqeLLaqJLoZXC+FfX8fIGyOBoJhmnZqF4XwVQqqclhGNCp4JV2U8dn 7g== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9wrrr896-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9xe484v1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 May 2024 05:14:36 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44N5EZnm019021;
+ Thu, 23 May 2024 05:14:35 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9xe484uy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 23 May 2024 05:14:35 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44N5EYou022198;
- Thu, 23 May 2024 05:14:34 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y9wrrr894-1
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44N2O4Vx007384; Thu, 23 May 2024 05:14:34 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y79c37p44-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 23 May 2024 05:14:34 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44N2LrJu008123; Thu, 23 May 2024 05:14:33 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y78vm7ptp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2024 05:14:33 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44N5ETg026411426
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44N5EVwP47710504
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 May 2024 05:14:32 GMT
+ Thu, 23 May 2024 05:14:33 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFAC820040;
- Thu, 23 May 2024 05:14:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3F5DA2004B;
+ Thu, 23 May 2024 05:14:31 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B6A3020043;
- Thu, 23 May 2024 05:14:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2614020043;
+ Thu, 23 May 2024 05:14:30 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
  [9.109.242.165])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 May 2024 05:14:28 +0000 (GMT)
+ Thu, 23 May 2024 05:14:29 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: npiggin@gmail.com, balaton@eik.bme.hu, danielhb413@gmail.com
-Subject: [PATCH v2 5/7] target/ppc: optimize p9 exception handling routines
- for lpcr
-Date: Thu, 23 May 2024 10:44:10 +0530
-Message-Id: <20240523051412.226970-6-harshpb@linux.ibm.com>
+Subject: [PATCH v2 6/7] target/ppc: reduce duplicate code between
+ init_proc_POWER{9, 10}
+Date: Thu, 23 May 2024 10:44:11 +0530
+Message-Id: <20240523051412.226970-7-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240523051412.226970-1-harshpb@linux.ibm.com>
 References: <20240523051412.226970-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: xOq0x2Lu8HIJe8MAXrC8Bo90xzbzoJqz
-X-Proofpoint-GUID: 4sVqMyJyP4_q4q8u1AHfmZyhQS4KImTo
+X-Proofpoint-ORIG-GUID: llwnVAsosvPN_zT1oCd7lmrwthU4mwPE
+X-Proofpoint-GUID: ieCouRTGRTHUi34ZvoBpqpk_rIGaXNBZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-23_02,2024-05-22_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 mlxlogscore=783 adultscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405230033
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ priorityscore=1501
+ impostorscore=0 suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ adultscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=644 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405230033
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -114,130 +114,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like pending_interrupts, env->spr[SPR_LPCR] is being used at multiple
-places across p9 exception handlers. Pass the value during entry and
-avoid multiple indirect accesses.
+Historically, the registration of sprs have been inherited alongwith
+every new Power arch support being added leading to a lot of code
+duplication. It's time to do necessary cleanups now to avoid further
+duplication with newer arch support being added.
 
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Harsh Prateek Bora <harshb@linux.ibm.com>
 ---
- target/ppc/excp_helper.c | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ target/ppc/cpu_init.c | 43 +++++++++----------------------------------
+ 1 file changed, 9 insertions(+), 34 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 704eddac63..d3db81e6ae 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1843,13 +1843,14 @@ static int p8_next_unmasked_interrupt(CPUPPCState *env)
-      PPC_INTERRUPT_PIT | PPC_INTERRUPT_THERM)
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 6d82f24c87..5fb9a0583e 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6307,7 +6307,7 @@ static struct ppc_radix_page_info POWER9_radix_page_info = {
+ };
+ #endif /* CONFIG_USER_ONLY */
  
- static int p9_interrupt_powersave(CPUPPCState *env,
--                                  uint32_t pending_interrupts)
-+                                  uint32_t pending_interrupts,
-+                                  target_ulong lpcr)
+-static void init_proc_POWER9(CPUPPCState *env)
++static void register_power9_common_sprs(CPUPPCState *env)
  {
+     /* Common Registers */
+     init_proc_book3s_common(env);
+@@ -6326,7 +6326,6 @@ static void init_proc_POWER9(CPUPPCState *env)
+     register_power5p_ear_sprs(env);
+     register_power5p_tb_sprs(env);
+     register_power6_common_sprs(env);
+-    register_HEIR32_spr(env);
+     register_power6_dbg_sprs(env);
+     register_power8_tce_address_control_sprs(env);
+     register_power8_ids_sprs(env);
+@@ -6342,6 +6341,12 @@ static void init_proc_POWER9(CPUPPCState *env)
+     register_power9_book4_sprs(env);
+     register_power8_rpr_sprs(env);
+     register_power9_mmu_sprs(env);
++}
++
++static void init_proc_POWER9(CPUPPCState *env)
++{
++    register_power9_common_sprs(env);
++    register_HEIR32_spr(env);
  
-     /* External Exception */
-     if ((pending_interrupts & PPC_INTERRUPT_EXT) &&
--        (env->spr[SPR_LPCR] & LPCR_EEE)) {
--        bool heic = !!(env->spr[SPR_LPCR] & LPCR_HEIC);
-+        (lpcr & LPCR_EEE)) {
-+        bool heic = !!(lpcr & LPCR_HEIC);
-         if (!heic || !FIELD_EX64_HV(env->msr) ||
-             FIELD_EX64(env->msr, MSR, PR)) {
-             return PPC_INTERRUPT_EXT;
-@@ -1857,11 +1858,11 @@ static int p9_interrupt_powersave(CPUPPCState *env,
-     }
-     /* Decrementer Exception */
-     if ((pending_interrupts & PPC_INTERRUPT_DECR) &&
--        (env->spr[SPR_LPCR] & LPCR_DEE)) {
-+        (lpcr & LPCR_DEE)) {
-         return PPC_INTERRUPT_DECR;
-     }
-     /* Machine Check or Hypervisor Maintenance Exception */
--    if (env->spr[SPR_LPCR] & LPCR_OEE) {
-+    if (lpcr & LPCR_OEE) {
-         if (pending_interrupts & PPC_INTERRUPT_MCK) {
-             return PPC_INTERRUPT_MCK;
-         }
-@@ -1871,17 +1872,17 @@ static int p9_interrupt_powersave(CPUPPCState *env,
-     }
-     /* Privileged Doorbell Exception */
-     if ((pending_interrupts & PPC_INTERRUPT_DOORBELL) &&
--        (env->spr[SPR_LPCR] & LPCR_PDEE)) {
-+        (lpcr & LPCR_PDEE)) {
-         return PPC_INTERRUPT_DOORBELL;
-     }
-     /* Hypervisor Doorbell Exception */
-     if ((pending_interrupts & PPC_INTERRUPT_HDOORBELL) &&
--        (env->spr[SPR_LPCR] & LPCR_HDEE)) {
-+        (lpcr & LPCR_HDEE)) {
-         return PPC_INTERRUPT_HDOORBELL;
-     }
-     /* Hypervisor virtualization exception */
-     if ((pending_interrupts & PPC_INTERRUPT_HVIRT) &&
--        (env->spr[SPR_LPCR] & LPCR_HVEE)) {
-+        (lpcr & LPCR_HVEE)) {
-         return PPC_INTERRUPT_HVIRT;
-     }
-     if (pending_interrupts & PPC_INTERRUPT_RESET) {
-@@ -1891,7 +1892,8 @@ static int p9_interrupt_powersave(CPUPPCState *env,
- }
+     /* POWER9 Specific registers */
+     spr_register_kvm(env, SPR_TIDR, "TIDR", NULL, NULL,
+@@ -6499,39 +6504,9 @@ static struct ppc_radix_page_info POWER10_radix_page_info = {
  
- static int p9_next_unmasked_interrupt(CPUPPCState *env,
--                                      uint32_t pending_interrupts)
-+                                      uint32_t pending_interrupts,
-+                                      target_ulong lpcr)
+ static void init_proc_POWER10(CPUPPCState *env)
  {
-     CPUState *cs = env_cpu(env);
- 
-@@ -1906,7 +1908,7 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
-              * When PSSCR[EC] is set, LPCR[PECE] controls which interrupts can
-              * wakeup the processor
-              */
--            return p9_interrupt_powersave(env, pending_interrupts);
-+            return p9_interrupt_powersave(env, pending_interrupts, lpcr);
-         } else {
-             /*
-              * When it's clear, any system-caused exception exits power-saving
-@@ -1924,7 +1926,7 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
-     /* Hypervisor decrementer exception */
-     if (pending_interrupts & PPC_INTERRUPT_HDECR) {
-         /* LPCR will be clear when not supported so this will work */
--        bool hdice = !!(env->spr[SPR_LPCR] & LPCR_HDICE);
-+        bool hdice = !!(lpcr & LPCR_HDICE);
-         if ((msr_ee || !FIELD_EX64_HV(env->msr)) && hdice) {
-             /* HDEC clears on delivery */
-             return PPC_INTERRUPT_HDECR;
-@@ -1934,7 +1936,7 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
-     /* Hypervisor virtualization interrupt */
-     if (pending_interrupts & PPC_INTERRUPT_HVIRT) {
-         /* LPCR will be clear when not supported so this will work */
--        bool hvice = !!(env->spr[SPR_LPCR] & LPCR_HVICE);
-+        bool hvice = !!(lpcr & LPCR_HVICE);
-         if ((msr_ee || !FIELD_EX64_HV(env->msr)) && hvice) {
-             return PPC_INTERRUPT_HVIRT;
-         }
-@@ -1942,8 +1944,8 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
- 
-     /* External interrupt can ignore MSR:EE under some circumstances */
-     if (pending_interrupts & PPC_INTERRUPT_EXT) {
--        bool lpes0 = !!(env->spr[SPR_LPCR] & LPCR_LPES0);
--        bool heic = !!(env->spr[SPR_LPCR] & LPCR_HEIC);
-+        bool lpes0 = !!(lpcr & LPCR_LPES0);
-+        bool heic = !!(lpcr & LPCR_HEIC);
-         /* HEIC blocks delivery to the hypervisor */
-         if ((msr_ee && !(heic && FIELD_EX64_HV(env->msr) &&
-             !FIELD_EX64(env->msr, MSR, PR))) ||
-@@ -1992,7 +1994,8 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
-         return p8_next_unmasked_interrupt(env);
-     case POWERPC_EXCP_POWER9:
-     case POWERPC_EXCP_POWER10:
--        return p9_next_unmasked_interrupt(env, env->pending_interrupts);
-+        return p9_next_unmasked_interrupt(env, env->pending_interrupts,
-+                                          env->spr[SPR_LPCR]);
-     default:
-         break;
-     }
+-    /* Common Registers */
+-    init_proc_book3s_common(env);
+-    register_book3s_207_dbg_sprs(env);
+-
+-    /* Common TCG PMU */
+-    init_tcg_pmu_power8(env);
+-
+-    /* POWER8 Specific Registers */
+-    register_book3s_ids_sprs(env);
+-    register_amr_sprs(env);
+-    register_iamr_sprs(env);
+-    register_book3s_purr_sprs(env);
+-    register_power5p_common_sprs(env);
+-    register_power5p_lpar_sprs(env);
+-    register_power5p_ear_sprs(env);
+-    register_power5p_tb_sprs(env);
+-    register_power6_common_sprs(env);
++    register_power9_common_sprs(env);
+     register_HEIR64_spr(env);
+-    register_power6_dbg_sprs(env);
+-    register_power8_tce_address_control_sprs(env);
+-    register_power8_ids_sprs(env);
+-    register_power8_ebb_sprs(env);
+-    register_power8_fscr_sprs(env);
+-    register_power8_pmu_sup_sprs(env);
+-    register_power8_pmu_user_sprs(env);
+-    register_power8_tm_sprs(env);
+-    register_power8_pspb_sprs(env);
+-    register_power8_dpdes_sprs(env);
+-    register_vtb_sprs(env);
+-    register_power8_ic_sprs(env);
+-    register_power9_book4_sprs(env);
+-    register_power8_rpr_sprs(env);
+-    register_power9_mmu_sprs(env);
++
+     register_power10_hash_sprs(env);
+     register_power10_dexcr_sprs(env);
+     register_power10_pmu_sup_sprs(env);
 -- 
 2.39.3
 
