@@ -4,108 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41FEC25B7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B21C25B7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 19:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sADlR-00025F-8R; Thu, 23 May 2024 15:06:10 -0400
+	id 1sADlv-0002G9-Hj; Thu, 23 May 2024 15:06:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlO-00023p-V7
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:06 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlp-0002Ek-44
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:34 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlN-0004GT-8J
- for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:06 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sADlb-0004JP-RY
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 15:06:32 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D14BE22B73;
- Thu, 23 May 2024 19:06:03 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5C1E722B79;
+ Thu, 23 May 2024 19:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491164; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1716491178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
- b=SG0YyFYY7dFSGX9mjIcSrycgRi/QGXIT4kP8VWTx4bekMH3nCFxELK3ijxkMolN7LmdVGW
- 83otzAadOodyWSkolFk4orv4SuPlBWkDzmjdt21YTCc2jaxKtsbjSlLcojl/EBJw9D4oWu
- BiGSZzyvDlDTiTCbpFVcE+j8jJ4kStQ=
+ bh=4Pp89Cnn3FmnMv8zeYpnAlQzcELRXERoRwrQNWr+s7A=;
+ b=zkoIySyhgtL8/x9NZcIqlYwb2U5XcBmG/J0gSP9NPuofAgYN1mVV4PB4KD15rgMnUCfSKp
+ fYD0hXap9Zqvgic2u0MlIPW7V55/wSEW2Gaza8E31nWqZGYJ0r9JwNq/QZNwWtnWEDjwk0
+ il0dc6yUmUBs31eGYCxnpc6HcvsCAr4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491164;
+ s=susede2_ed25519; t=1716491178;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
- b=/U36flAp6HWTV1BkmFgFX7Hyoh/vZdp0amFZYFjKoKOu5/wE96Sk95yJvKzeKm2KsJDuic
- NHoIneetTes0RqBw==
+ bh=4Pp89Cnn3FmnMv8zeYpnAlQzcELRXERoRwrQNWr+s7A=;
+ b=9qZleLagIKj7W3mZTX3KeeZsYi7pBVe9tyJJwFEItcXiYl/Ez82VjQLYaKl24Ff0ksvTaO
+ A1DkXW/S3uhTSUDg==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zkoIySyh;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9qZleLag
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716491163; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1716491178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
- b=RQ6HTyDpatvmR7GI6EZREr6OCjNKb8tp0Flj6E7EN7kilVcRlKjNbFE3uzD8xDzn73MJ2O
- kImLrsoijjmM7Jtz81NfIUHKuhuS6lnmg+n+5Wxs+ZwVns/M4zQAQ+pHmq8bvc3amBQH6F
- JaWzl2Wyv5dvaLlPJgiTAY60vSAig7A=
+ bh=4Pp89Cnn3FmnMv8zeYpnAlQzcELRXERoRwrQNWr+s7A=;
+ b=zkoIySyhgtL8/x9NZcIqlYwb2U5XcBmG/J0gSP9NPuofAgYN1mVV4PB4KD15rgMnUCfSKp
+ fYD0hXap9Zqvgic2u0MlIPW7V55/wSEW2Gaza8E31nWqZGYJ0r9JwNq/QZNwWtnWEDjwk0
+ il0dc6yUmUBs31eGYCxnpc6HcvsCAr4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716491163;
+ s=susede2_ed25519; t=1716491178;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JHN+EgKe2ZmfVVqlpa/J85xjZ9uaHa7RSXl4aXKQzw0=;
- b=Rex4bWw+3bwFzlgJjReAztETL9VaMoDotDiQxjy4Fz98egWT5SHtU6HGx5frDhgcPw0INs
- EhFHM5X3D7/3uFCg==
+ bh=4Pp89Cnn3FmnMv8zeYpnAlQzcELRXERoRwrQNWr+s7A=;
+ b=9qZleLagIKj7W3mZTX3KeeZsYi7pBVe9tyJJwFEItcXiYl/Ez82VjQLYaKl24Ff0ksvTaO
+ A1DkXW/S3uhTSUDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 519C813A6B;
- Thu, 23 May 2024 19:06:01 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4C57A13A6B;
+ Thu, 23 May 2024 19:06:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id oMuNBpmTT2bUEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:01 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iP8OBaiTT2bUEQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 May 2024 19:06:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
  Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 04/18] monitor: Drop monitor_fdset_dup_fd_add()
-Date: Thu, 23 May 2024 16:05:34 -0300
-Message-Id: <20240523190548.23977-5-farosas@suse.de>
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH v2 10/18] migration: Add direct-io parameter
+Date: Thu, 23 May 2024 16:05:40 -0300
+Message-Id: <20240523190548.23977-11-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240523190548.23977-1-farosas@suse.de>
 References: <20240523190548.23977-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 5C1E722B79
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[9];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; TO_DN_SOME(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,135 +127,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+Add the direct-io migration parameter that tells the migration code to
+use O_DIRECT when opening the migration stream file whenever possible.
 
-This function is not needed, one remove function should already work.
-Clean it up.
+This is currently only used with the mapped-ram migration that has a
+clear window guaranteed to perform aligned writes.
 
-Here the code doesn't really care about whether we need to keep that dupfd
-around if close() failed: when that happens something got very wrong,
-keeping the dup_fd around the fdsets may not help that situation so far.
-
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-[add missing return statement, removal during traversal is not safe]
+Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/monitor/monitor.h |  1 -
- monitor/fds.c             | 28 ++++++----------------------
- stubs/fdset.c             |  5 -----
- util/osdep.c              | 15 +--------------
- 4 files changed, 7 insertions(+), 42 deletions(-)
+ include/qemu/osdep.h           |  2 ++
+ migration/migration-hmp-cmds.c | 11 +++++++++++
+ migration/options.c            | 28 ++++++++++++++++++++++++++++
+ migration/options.h            |  1 +
+ qapi/migration.json            | 21 ++++++++++++++++++---
+ util/osdep.c                   |  9 +++++++++
+ 6 files changed, 69 insertions(+), 3 deletions(-)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 965f5d5450..fd9b3f538c 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -53,7 +53,6 @@ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fdset_id, int64_t fdset_id,
-                                 const char *opaque, Error **errp);
- int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags);
- void monitor_fdset_dup_fd_remove(int dup_fd);
--int64_t monitor_fdset_dup_fd_find(int dup_fd);
- 
- void monitor_register_hmp(const char *name, bool info,
-                           void (*cmd)(Monitor *mon, const QDict *qdict));
-diff --git a/monitor/fds.c b/monitor/fds.c
-index d86c2c674c..fb9f58c056 100644
---- a/monitor/fds.c
-+++ b/monitor/fds.c
-@@ -458,7 +458,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index f61edcfdc2..191916f38e 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -612,6 +612,8 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+ bool qemu_has_ofd_lock(void);
  #endif
- }
  
--static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
-+void monitor_fdset_dup_fd_remove(int dup_fd)
- {
-     MonFdset *mon_fdset;
-     MonFdsetFd *mon_fdset_fd_dup;
-@@ -467,31 +467,15 @@ static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
-     QLIST_FOREACH(mon_fdset, &mon_fdsets, next) {
-         QLIST_FOREACH(mon_fdset_fd_dup, &mon_fdset->dup_fds, next) {
-             if (mon_fdset_fd_dup->fd == dup_fd) {
--                if (remove) {
--                    QLIST_REMOVE(mon_fdset_fd_dup, next);
--                    g_free(mon_fdset_fd_dup);
--                    if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
--                        monitor_fdset_cleanup(mon_fdset);
--                    }
--                    return -1;
--                } else {
--                    return mon_fdset->id;
-+                QLIST_REMOVE(mon_fdset_fd_dup, next);
-+                g_free(mon_fdset_fd_dup);
-+                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
-+                    monitor_fdset_cleanup(mon_fdset);
-                 }
-+                return;
-             }
-         }
++bool qemu_has_direct_io(void);
++
+ #if defined(__HAIKU__) && defined(__i386__)
+ #define FMT_pid "%ld"
+ #elif defined(WIN64)
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 9f0e8029e0..7d608d26e1 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -351,6 +351,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "%s: %s\n",
+             MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+             qapi_enum_lookup(&MigMode_lookup, params->mode));
++
++        if (params->has_direct_io) {
++            monitor_printf(mon, "%s: %s\n",
++                           MigrationParameter_str(
++                               MIGRATION_PARAMETER_DIRECT_IO),
++                           params->direct_io ? "on" : "off");
++        }
      }
--
--    return -1;
--}
--
--int64_t monitor_fdset_dup_fd_find(int dup_fd)
--{
--    return monitor_fdset_dup_fd_find_remove(dup_fd, false);
--}
--
--void monitor_fdset_dup_fd_remove(int dup_fd)
--{
--    monitor_fdset_dup_fd_find_remove(dup_fd, true);
+ 
+     qapi_free_MigrationParameters(params);
+@@ -624,6 +631,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+         p->has_mode = true;
+         visit_type_MigMode(v, param, &p->mode, &err);
+         break;
++    case MIGRATION_PARAMETER_DIRECT_IO:
++        p->has_direct_io = true;
++        visit_type_bool(v, param, &p->direct_io, &err);
++        break;
+     default:
+         assert(0);
+     }
+diff --git a/migration/options.c b/migration/options.c
+index 5ab5b6d85d..6f614761b8 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -702,6 +702,18 @@ bool migrate_cpu_throttle_tailslow(void)
+     return s->parameters.cpu_throttle_tailslow;
  }
  
- int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
-diff --git a/stubs/fdset.c b/stubs/fdset.c
-index d7c39a28ac..389e368a29 100644
---- a/stubs/fdset.c
-+++ b/stubs/fdset.c
-@@ -9,11 +9,6 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
-     return -1;
- }
- 
--int64_t monitor_fdset_dup_fd_find(int dup_fd)
--{
--    return -1;
--}
--
- void monitor_fdset_dup_fd_remove(int dupfd)
++bool migrate_direct_io(void)
++{
++    MigrationState *s = migrate_get_current();
++
++    /* For now O_DIRECT is only supported with mapped-ram */
++    if (!s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM]) {
++        return false;
++    }
++
++    return s->parameters.direct_io;
++}
++
+ uint64_t migrate_downtime_limit(void)
  {
+     MigrationState *s = migrate_get_current();
+@@ -905,6 +917,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+     params->mode = s->parameters.mode;
+     params->has_zero_page_detection = true;
+     params->zero_page_detection = s->parameters.zero_page_detection;
++    params->has_direct_io = true;
++    params->direct_io = s->parameters.direct_io;
+ 
+     return params;
  }
+@@ -937,6 +951,7 @@ void migrate_params_init(MigrationParameters *params)
+     params->has_vcpu_dirty_limit = true;
+     params->has_mode = true;
+     params->has_zero_page_detection = true;
++    params->has_direct_io = true;
+ }
+ 
+ /*
+@@ -1110,6 +1125,11 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+         return false;
+     }
+ 
++    if (params->has_direct_io && params->direct_io && !qemu_has_direct_io()) {
++        error_setg(errp, "No build-time support for direct-io");
++        return false;
++    }
++
+     return true;
+ }
+ 
+@@ -1216,6 +1236,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+     if (params->has_zero_page_detection) {
+         dest->zero_page_detection = params->zero_page_detection;
+     }
++
++    if (params->has_direct_io) {
++        dest->direct_io = params->direct_io;
++    }
+ }
+ 
+ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+@@ -1341,6 +1365,10 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+     if (params->has_zero_page_detection) {
+         s->parameters.zero_page_detection = params->zero_page_detection;
+     }
++
++    if (params->has_direct_io) {
++        s->parameters.direct_io = params->direct_io;
++    }
+ }
+ 
+ void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+diff --git a/migration/options.h b/migration/options.h
+index 4b21cc2669..a2397026db 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -69,6 +69,7 @@ uint32_t migrate_checkpoint_delay(void);
+ uint8_t migrate_cpu_throttle_increment(void);
+ uint8_t migrate_cpu_throttle_initial(void);
+ bool migrate_cpu_throttle_tailslow(void);
++bool migrate_direct_io(void);
+ uint64_t migrate_downtime_limit(void);
+ uint8_t migrate_max_cpu_throttle(void);
+ uint64_t migrate_max_bandwidth(void);
+diff --git a/qapi/migration.json b/qapi/migration.json
+index a351fd3714..7efbaf1e25 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -812,6 +812,10 @@
+ #     See description in @ZeroPageDetection.  Default is 'multifd'.
+ #     (since 9.0)
+ #
++# @direct-io: Open migration files with O_DIRECT when possible.  This
++#     only has effect if the @mapped-ram capability is enabled. (since
++#     9.1)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -836,7 +840,8 @@
+            { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstable'] },
+            'vcpu-dirty-limit',
+            'mode',
+-           'zero-page-detection'] }
++           'zero-page-detection',
++           'direct-io'] }
+ 
+ ##
+ # @MigrateSetParameters:
+@@ -982,6 +987,10 @@
+ #     See description in @ZeroPageDetection.  Default is 'multifd'.
+ #     (since 9.0)
+ #
++# @direct-io: Open migration files with O_DIRECT when possible.  This
++#     only has effect if the @mapped-ram capability is enabled. (since
++#     9.1)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -1021,7 +1030,8 @@
+                                             'features': [ 'unstable' ] },
+             '*vcpu-dirty-limit': 'uint64',
+             '*mode': 'MigMode',
+-            '*zero-page-detection': 'ZeroPageDetection'} }
++            '*zero-page-detection': 'ZeroPageDetection',
++            '*direct-io': 'bool' } }
+ 
+ ##
+ # @migrate-set-parameters:
+@@ -1181,6 +1191,10 @@
+ #     See description in @ZeroPageDetection.  Default is 'multifd'.
+ #     (since 9.0)
+ #
++# @direct-io: Open migration files with O_DIRECT when possible.  This
++#     only has effect if the @mapped-ram capability is enabled. (since
++#     9.1)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -1217,7 +1231,8 @@
+                                             'features': [ 'unstable' ] },
+             '*vcpu-dirty-limit': 'uint64',
+             '*mode': 'MigMode',
+-            '*zero-page-detection': 'ZeroPageDetection'} }
++            '*zero-page-detection': 'ZeroPageDetection',
++            '*direct-io': 'bool' } }
+ 
+ ##
+ # @query-migrate-parameters:
 diff --git a/util/osdep.c b/util/osdep.c
-index e996c4744a..2d9749d060 100644
+index 0cb8f98bf6..4900251d2e 100644
 --- a/util/osdep.c
 +++ b/util/osdep.c
-@@ -393,21 +393,8 @@ int qemu_open_old(const char *name, int flags, ...)
- 
- int qemu_close(int fd)
- {
--    int64_t fdset_id;
--
-     /* Close fd that was dup'd from an fdset */
--    fdset_id = monitor_fdset_dup_fd_find(fd);
--    if (fdset_id != -1) {
--        int ret;
--
--        ret = close(fd);
--        if (ret == 0) {
--            monitor_fdset_dup_fd_remove(fd);
--        }
--
--        return ret;
--    }
--
-+    monitor_fdset_dup_fd_remove(fd);
-     return close(fd);
+@@ -277,6 +277,15 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive)
  }
+ #endif
  
++bool qemu_has_direct_io(void)
++{
++#ifdef O_DIRECT
++    return true;
++#else
++    return false;
++#endif
++}
++
+ static int qemu_open_cloexec(const char *name, int flags, mode_t mode)
+ {
+     int ret;
 -- 
 2.35.3
 
