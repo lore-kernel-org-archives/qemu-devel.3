@@ -4,91 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B80DC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 10:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5DEC25B79
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 11:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sA600-0007nb-Vk; Thu, 23 May 2024 06:48:41 -0400
+	id 1sA6CD-0003nf-P6; Thu, 23 May 2024 07:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sA5zz-0007mr-96
- for qemu-devel@nongnu.org; Thu, 23 May 2024 06:48:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sA5zx-0004gp-9x
- for qemu-devel@nongnu.org; Thu, 23 May 2024 06:48:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716461316;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LsKlGJYohu5RsJn846NAapVIb9h8a0Dbbqc6cKw84wI=;
- b=bUnfkJYLO227j8OyLYqkm3YnUpbmy2xfT0g0dzmWilInO5jGqBS8V8SnYUlAEUOftvUsYN
- TsEcdUf92bvN8WaMoI/7YZDfzx76vEXwuGesot3j56K6FCfqMtF9aW08hiFa/zbMZRtG/W
- 1B1g0++WxMxgIGU33o5f1HzEbodOhNk=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-TXZI56uGM8SFYHUmeRX9kA-1; Thu, 23 May 2024 06:48:35 -0400
-X-MC-Unique: TXZI56uGM8SFYHUmeRX9kA-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-df4e7854de8so2518663276.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 03:48:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ross.lagerwall@cloud.com>)
+ id 1sA6CA-0003mY-B3
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 07:01:15 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ross.lagerwall@cloud.com>)
+ id 1sA6C7-0006vR-P4
+ for qemu-devel@nongnu.org; Thu, 23 May 2024 07:01:14 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2bdb57f496eso896276a91.2
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 04:01:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=citrix.com; s=google; t=1716462068; x=1717066868; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=91U11pUevJarFFJNYMAR2AcdGvDfJkQNRP9NpdObBVA=;
+ b=sFNTd+J/T2VX2EizzoogaeEr0kwd58AowWtBSoaDRd7CuDSWpP9+iwRbAOf1io5gHd
+ 7PmoB8lffwYHsW68NtXYk1syir6j9yQU5jpfAI9d2dMurW2O//GTxWyAd985RWHncDKO
+ Rj1wBSbl6l/R3DTYEpQV04SQ0mlzQC7NOUONc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716461314; x=1717066114;
+ d=1e100.net; s=20230601; t=1716462068; x=1717066868;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LsKlGJYohu5RsJn846NAapVIb9h8a0Dbbqc6cKw84wI=;
- b=Sy10UBv9GIruyVwGCkAYc94pgGghC/+WT1N1RDxvlK1mk9s3ij37VnZwTxWkargnIQ
- shW9fz2gmUSvHkia3m9mhD01bb4WmPdSkRes3hYVeqcb/A9ghttzpIdUbFKoQFuLuHPF
- uJhyjPwLvOAWrIUuhSZtjNf1oURucFAVKwoWF33r5aY9UpTF4xSKMd3IiAXwgOT1Zbnn
- vcHsdYJvgpInxtFL2QSu6xDC6IyA3gVwb8Gl5VbR0hzDcmQme7BYqs9x54xWhX/sh3Jx
- k2qUiyAzM/Vuj9r5Gj8ChRHz3FzWA/FNJzT/VuhMXyOMhDU7zQQ974AbqHl9aBi1uzMQ
- 8mXw==
-X-Gm-Message-State: AOJu0YxxmmObnvDEl7GBhmGneCnPcjWXSCoZ4dYixHaYc+3qSkjGceks
- Mc/MesX6wzFnHComwpzy0Xx8qijRFWe4BIgmi1pgPPew03VOLTLD1FpG/1SIQasQqO+tgiHV+ym
- foZb7HHxtJrD993GtoKxZvaV280a/NbyB7Zp/qEyyrfNJfiwMhpOh+BoWLNnbHRYalLg0uJ0zaZ
- hkQo6dj/ZpO0crnWz/ny0xuVsOuMg=
-X-Received: by 2002:a25:b285:0:b0:df4:db71:c666 with SMTP id
- 3f1490d57ef6-df4e0d31cc6mr5276837276.38.1716461314659; 
- Thu, 23 May 2024 03:48:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/68hVrVD2BM9Yb1HLGkfr7uikTT5HtvWhioQpaVyU14Ct4yXIqFd5ViowehU+j3JqsmHPEsRzrumUBsYOvzM=
-X-Received: by 2002:a25:b285:0:b0:df4:db71:c666 with SMTP id
- 3f1490d57ef6-df4e0d31cc6mr5276823276.38.1716461314333; Thu, 23 May 2024
- 03:48:34 -0700 (PDT)
+ bh=91U11pUevJarFFJNYMAR2AcdGvDfJkQNRP9NpdObBVA=;
+ b=gQ1C6Xut8rWl/4WHhLVdgclVdp8i8G9a71u4k3TYyP9EvuurQA1G19KBNfEuvbQSZy
+ tz7oNrCFP3x3BVEwCaxqwtyCCtUV5PduxifIp0fASi1XeC8wP9L131PU8FzIvKKUL4UP
+ 7lI39BL40CQa69l1E9zGutvgfSa1VDuKxj1j/OmQF62eUILO6JkNp+nqpVSvBrFZRAX2
+ x0l63JgULFtMS0TS/b9HfzfsC2FrASingtk5IOIE0Dd/jAH3NMrH9PgcuO2zbHxLACIh
+ VviTIZVYhKdM3XdNIMkYXK3rE+n6QF80Kecdg3rZVkx2E2SG6uxMxSoNPgXTfXU6DgNU
+ aUJQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXw8EI6jOLKiKogUZRGjszhJZG7b1Xr8TJRxTORENbnvDyqtZeZaERFcG1y9g+qUxto2JLVlJFoWQOwJO045eak9gRMUl8=
+X-Gm-Message-State: AOJu0YwTG1oF5ZqEkvvGri0Pb+7Miprt8wUbncP77iYyhly7FRAS7ZY0
+ IwFOqIIy8tpGvi9Vi+wdwxnK0ZDCIfMf0Yv3LNc7XeokQyKrLR7V5DNZv0PwIbCAmhtTdeVppZe
+ LRB/nVIzrWJbBW/VB5RqIrFrKyoTNIdSXeW97
+X-Google-Smtp-Source: AGHT+IGvuyeyuzWjiUToY5J16n8njwnJeOg1DbjbIwk+JKoOUqhMoTuOFFBMO1x/lFU8L5/TrbpAdDsGw6w6Iw9iSQY=
+X-Received: by 2002:a17:90b:1003:b0:2b3:79ad:856d with SMTP id
+ 98e67ed59e1d1-2bd9f5d6291mr5469546a91.48.1716462067785; Thu, 23 May 2024
+ 04:01:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240520130048.1483177-1-jonah.palmer@oracle.com>
- <20240520130048.1483177-4-jonah.palmer@oracle.com>
- <CAJaqyWdxt+cPNR=unm6P1cGCKV=LwhuMYdVeQLbWF6wYLBLWKg@mail.gmail.com>
- <5469bc3f-7fb5-4fcf-ad9c-6467aba635b9@oracle.com>
-In-Reply-To: <5469bc3f-7fb5-4fcf-ad9c-6467aba635b9@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 23 May 2024 12:47:58 +0200
-Message-ID: <CAJaqyWe1ozf867a7tnSKjkijnHtT+5i7y8p9zvtTXqgZNk74aA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
- support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+References: <20240404140833.1557953-1-ross.lagerwall@citrix.com>
+ <90f07634-1600-4654-8e36-7ac9e2f457e8@perard>
+ <CAG7k0EqJvVZJUNaf31Jd1ZfwvOon8saNbtHofon=VvB6gpj9qw@mail.gmail.com>
+In-Reply-To: <CAG7k0EqJvVZJUNaf31Jd1ZfwvOon8saNbtHofon=VvB6gpj9qw@mail.gmail.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
+Date: Thu, 23 May 2024 12:00:56 +0100
+Message-ID: <CAG7k0Eo29eoZc+vgH+uDYe=YKiHM0a3jm6hoW5j+Wyc5kEh8tg@mail.gmail.com>
+Subject: Re: [PATCH] xen-hvm: Avoid livelock while handling buffered ioreqs
+To: Anthony PERARD <anthony.perard@cloud.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ xen-devel@lists.xenproject.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=ross.lagerwall@cloud.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,155 +91,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 23, 2024 at 12:30=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.=
-com> wrote:
+On Tue, Apr 9, 2024 at 3:19=E2=80=AFPM Ross Lagerwall <ross.lagerwall@citri=
+x.com> wrote:
 >
->
->
-> On 5/22/24 12:07 PM, Eugenio Perez Martin wrote:
-> > On Mon, May 20, 2024 at 3:01=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >> Add VIRTIO_F_IN_ORDER feature support for the virtqueue_fill operation=
-.
-> >>
-> >> The goal of the virtqueue_ordered_fill operation when the
-> >> VIRTIO_F_IN_ORDER feature has been negotiated is to search for this
-> >> now-used element, set its length, and mark the element as filled in
-> >> the VirtQueue's used_elems array.
-> >>
-> >> By marking the element as filled, it will indicate that this element h=
-as
-> >> been processed and is ready to be flushed, so long as the element is
-> >> in-order.
-> >>
-> >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >> ---
-> >>   hw/virtio/virtio.c | 36 +++++++++++++++++++++++++++++++++++-
-> >>   1 file changed, 35 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> >> index 7456d61bc8..01b6b32460 100644
-> >> --- a/hw/virtio/virtio.c
-> >> +++ b/hw/virtio/virtio.c
-> >> @@ -873,6 +873,38 @@ static void virtqueue_packed_fill(VirtQueue *vq, =
-const VirtQueueElement *elem,
-> >>       vq->used_elems[idx].ndescs =3D elem->ndescs;
-> >>   }
-> >>
-> >> +static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElem=
-ent *elem,
-> >> +                                   unsigned int len)
-> >> +{
-> >> +    unsigned int i, steps, max_steps;
-> >> +
-> >> +    i =3D vq->used_idx;
-> >> +    steps =3D 0;
-> >> +    /*
-> >> +     * We shouldn't need to increase 'i' by more than the distance
-> >> +     * between used_idx and last_avail_idx.
-> >> +     */
-> >> +    max_steps =3D (vq->last_avail_idx + vq->vring.num - vq->used_idx)
-> >> +                % vq->vring.num;
+> On Tue, Apr 9, 2024 at 11:20=E2=80=AFAM Anthony PERARD <anthony.perard@cl=
+oud.com> wrote:
 > >
-> > I may be missing something, but (+vq->vring.num) is redundant if we (%
-> > vq->vring.num), isn't it?
+> > On Thu, Apr 04, 2024 at 03:08:33PM +0100, Ross Lagerwall wrote:
+> > > diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+> > > index 1627da739822..1116b3978938 100644
+> > > --- a/hw/xen/xen-hvm-common.c
+> > > +++ b/hw/xen/xen-hvm-common.c
+> > > @@ -521,22 +521,30 @@ static bool handle_buffered_iopage(XenIOState *=
+state)
+> > [...]
+> > >
+> > >  static void handle_buffered_io(void *opaque)
+> > >  {
+> > > +    unsigned int handled;
+> > >      XenIOState *state =3D opaque;
+> > >
+> > > -    if (handle_buffered_iopage(state)) {
+> > > +    handled =3D handle_buffered_iopage(state);
+> > > +    if (handled >=3D IOREQ_BUFFER_SLOT_NUM) {
+> > > +        /* We handled a full page of ioreqs. Schedule a timer to con=
+tinue
+> > > +         * processing while giving other stuff a chance to run.
+> > > +         */
+> >
+> > ./scripts/checkpatch.pl report a style issue here:
+> >     WARNING: Block comments use a leading /* on a separate line
+> >
+> > I can try to remember to fix that on commit.
+>
+> I copied the comment style from a few lines above but I guess it was
+> wrong.
+>
+> >
+> > >          timer_mod(state->buffered_io_timer,
+> > > -                BUFFER_IO_MAX_DELAY + qemu_clock_get_ms(QEMU_CLOCK_R=
+EALTIME));
+> > > -    } else {
+> > > +                qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
+> > > +    } else if (handled =3D=3D 0) {
+> >
+> > Just curious, why did you check for `handled =3D=3D 0` here instead of
+> > `handled !=3D 0`? That would have avoided to invert the last 2 cases, a=
+nd
+> > the patch would just have introduce a new case without changing the
+> > order of the existing ones. But not that important I guess.
 > >
 >
-> It ensures the result is always non-negative (e.g. when
-> vq->last_avail_idx < vq->used_idx).
->
-> I wasn't sure how different platforms or compilers would handle
-> something like -5 % 10, so to be safe I included the '+ vq->vring.num'.
->
-> For example, on my system, in test.c;
->
->     #include <stdio.h>
->
->     int main() {
->         unsigned int result =3D -5 % 10;
->         printf("Result of -5 %% 10 is: %d\n", result);
->         return 0;
->     }
->
-> # gcc -o test test.c
->
-> # ./test
-> Result of -5 % 10 is: -5
->
+> In general I try to use conditionals with the least amount of negation
+> since I think it is easier to read. I can change it if you would prefer?
 
-I think the modulo is being done in signed ints in your test, and then
-converting a signed int to an unsigned int. Like result =3D (-5 % 10).
+It looks like this hasn't been committed anywhere. Were you expecting
+an updated version with the style issue fixed or has it fallen through
+the cracks?
 
-The unsigned wrap is always defined in C, and vq->last_avail_idx and
-vq->used_idx are both unsigned. Here is a closer test:
-int main(void) {
-    unsigned int a =3D -5, b =3D 2;
-    unsigned int result =3D (b-a) % 10;
-    printf("Result of -5 %% 10 is: %u\n", result);
-    return 0;
-}
-
-But it is a good catch for signed ints for sure :).
-
-Thanks!
-
-> >> +
-> >> +    /* Search for element in vq->used_elems */
-> >> +    while (steps <=3D max_steps) {
-> >> +        /* Found element, set length and mark as filled */
-> >> +        if (vq->used_elems[i].index =3D=3D elem->index) {
-> >> +            vq->used_elems[i].len =3D len;
-> >> +            vq->used_elems[i].in_order_filled =3D true;
-> >> +            break;
-> >> +        }
-> >> +
-> >> +        i +=3D vq->used_elems[i].ndescs;
-> >> +        steps +=3D vq->used_elems[i].ndescs;
-> >> +
-> >> +        if (i >=3D vq->vring.num) {
-> >> +            i -=3D vq->vring.num;
-> >> +        }
-> >> +    }
-> >> +}
-> >> +
-> >
-> > Let's report an error if we finish the loop. I think:
-> > qemu_log_mask(LOG_GUEST_ERROR,
-> >                "%s: %s cannot fill buffer id %u\n",
-> >                __func__, vdev->name, elem->index);
-> >
-> > (or similar) should do.
-> >
-> > apart form that,
-> >
-> > Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >
->
-> Gotcha. Will add this in v3.
->
-> Thank you Eugenio!
->
-> >>   static void virtqueue_packed_fill_desc(VirtQueue *vq,
-> >>                                          const VirtQueueElement *elem,
-> >>                                          unsigned int idx,
-> >> @@ -923,7 +955,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueue=
-Element *elem,
-> >>           return;
-> >>       }
-> >>
-> >> -    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-> >> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
-> >> +        virtqueue_ordered_fill(vq, elem, len);
-> >> +    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED=
-)) {
-> >>           virtqueue_packed_fill(vq, elem, len, idx);
-> >>       } else {
-> >>           virtqueue_split_fill(vq, elem, len, idx);
-> >> --
-> >> 2.39.3
-> >>
-> >
->
-
+Thanks,
+Ross
 
