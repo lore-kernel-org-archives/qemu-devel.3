@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE00C3DA40
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D81C25B7C
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 May 2024 23:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAHXa-00078S-6S; Thu, 23 May 2024 19:08:06 -0400
+	id 1sAHXg-0007BU-Io; Thu, 23 May 2024 19:08:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHXX-00077a-Ls; Thu, 23 May 2024 19:08:03 -0400
-Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
+ id 1sAHXe-0007Az-PS; Thu, 23 May 2024 19:08:10 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sAHXV-0005cc-84; Thu, 23 May 2024 19:08:03 -0400
-Received: by mail-il1-x12d.google.com with SMTP id
- e9e14a558f8ab-3737b412ad6so1518155ab.2; 
- Thu, 23 May 2024 16:08:00 -0700 (PDT)
+ id 1sAHXd-0005dz-2d; Thu, 23 May 2024 19:08:10 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6f6765226d0so2763207b3a.3; 
+ Thu, 23 May 2024 16:08:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716505678; x=1717110478; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zAb6RBluknRBVY2rNEMcQze/Vl8XVQNfTHmRXjnRii0=;
- b=HfajOEFzSu7VYqO0lhTeAeUyQobwoDSh0uwgRZxr+zRcwldaGnLo60awkVuNt6k+w+
- y6zy8LL5Vx9TO9e3XA3HznhgZPMWi9pNle0lcdZeRdBydzuv1vh7qToV+BFUWYNU4KWo
- fKvY0fCKRwuJWV1v/kfbZcY1Es96bSKKBGsK+wDD/Lgw7F7iq9Z2JeSD2/7N8nUV2p0q
- RxKbNBsAqjeaWlwtzfjSosEgeinZtf2iv40Vhted+MZNuNFAypNRpNM10k9s28eMwE/g
- MpZONMrmf0pm5IxDXlqS2tF3sIhkvpt4r/+ZaVBfdh9ETtePxDIUavIVICaTnfX4BJ8W
- vqBw==
+ d=gmail.com; s=20230601; t=1716505687; x=1717110487; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hRTmiW2cASA3rhl7leKTOZhlCbikObGe8oO9U2Jgdu0=;
+ b=BQoMg4JN0EcXCFiIYWSnBXd6cGO94XB+VKHK9GBhfMTeUxplExDmUiF+ZyW/6SzDoo
+ B3sFwnjyQ9omsITzsOLhGK9+t8IbsOSDtSH8qT8itEwYODs+wSsYtAn3Qg4+PXLnewc7
+ vXAgxpp3X6v+Y1g3Q0RnsSq5Yk4FZjpofaXv4G7VUV+VeqmvTHSilZjKDx9NFepw0nhk
+ fiwsqwvaR4Ae0G5w7BuMuqeUzQnOCe1DUp3She3zdNCdbPAWNETThKkcNPngbw4fRjle
+ i8ulst8etbpLsOXw8PGYmDif/3zEH6HPb/I5FGiLowAMhjfR+65YplSa21bJjTaYu4XS
+ OmUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716505678; x=1717110478;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zAb6RBluknRBVY2rNEMcQze/Vl8XVQNfTHmRXjnRii0=;
- b=Mz8MbELe8z9gojfA/Xk9JD7g0s/s9EByW+b8SRd3si3BPVpLoqDS5NaMVxiNOqe9j0
- q9/qMcDIFXeGcOISFMCl14NKK0GMqTHMnC3TvqXoLZVbrtr6hnmmd9ht16heXjg6EY2E
- wY+dKdoOGKvtA6HYfFzvVMo7ohyXOw0cnxPGj8UvoDd4jSSvNRrKzyatjn+TWKSPMTve
- niFq0bZ1G3xvAxrY3uEtmhDPLDtlpDCi+gvtDCYDyxp7xZptuxlZinzp2/rRjiRnGcqs
- 7RIWqWAm7ICUMdMWmmKJXfp0vxFxAOl1xJmKjUkuWgNiChS1nPQaysbhgOtgH7kZBxAA
- qcXw==
+ d=1e100.net; s=20230601; t=1716505687; x=1717110487;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hRTmiW2cASA3rhl7leKTOZhlCbikObGe8oO9U2Jgdu0=;
+ b=eBgmUtZZ1dwN/NKtl3AhYg76SyqiYAwJ6hSKU2iDZSopxBJi/Nzl9CRSf+Hz6kPkth
+ 2O/p0CU4BC6BOaYZnQC+MXllwhiIkJBF1eDoI3/oHwtF7qHtmRIA5WxDWJE0vi5yA+It
+ rqa+BOxboVebQCnCCzb387dNNH05pmh2MgT15JhxkOq8txX2GhRq0iinauYd1yq5Fufp
+ fJ4X67XWHhdiDieaEqshRfDrme773k1guK4ji2yb/QmTtA0DrkxtlYmrRDXKM+qtX2Gx
+ ZZYfcSytApNCSIt6faAWY07ericxr2Zbzdn+qaU1Kh1I+8Qn6ndKRGhmHnyXTwVzAJBu
+ 7AbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRaYSVOdDpWDfyqXS4Cy1TAB6dquUjXrsqjHCvgLIjoltEeoWKOjhjjM6hjSPJNhAFQ0iTsXOdV6Ppluze5bxT5f3j
-X-Gm-Message-State: AOJu0Yw8MjnVGHaBNWuXsorEvQGp+5i5DjCDFOTCBjyLvijk42HKYNO+
- BZBq3OGDM71Lr9PTyIBZHA7g6s30KS2ih+ARUNeS1eeXNqwcSyZFSM0Gkw==
-X-Google-Smtp-Source: AGHT+IEpqFE0rjC5+k+n2hRe8b3E4DfEk+NoseFGEKKvo/2i3hXAAmPlolvr/xHQ+d20Jlfx4umvMQ==
-X-Received: by 2002:a92:c26d:0:b0:36b:3b10:7419 with SMTP id
- e9e14a558f8ab-3737b302a5cmr7193945ab.32.1716505678067; 
- Thu, 23 May 2024 16:07:58 -0700 (PDT)
+ AJvYcCX+fTwJCIyYqDiPusFpOis1RLl3ss4TdN6LxFAKtMA11OjVNKg2DKQA12ClaX3LtdsNj06q4bzCXBpxsjrkXyHI1XIn
+X-Gm-Message-State: AOJu0YxOBuQVuFcPMupuJ9BqJiJpSzQ0zOlocaX8YpwCea4OkUoAhQph
+ W/QsDC6RsawezqMVbRdHhpBQEg2KucY/mbq3PL0y3an6ram6SH6oMasatA==
+X-Google-Smtp-Source: AGHT+IH0bejOIu18l+bF/y/C0RBJdiEVo2fPMxaPP1vnBNEH3JdUkDvs6xf5NhwmUndut4XlLERYAg==
+X-Received: by 2002:aa7:9a84:0:b0:6ec:e726:b6f5 with SMTP id
+ d2e1a72fcca58-6f8f3d6bfcbmr517650b3a.26.1716505687067; 
+ Thu, 23 May 2024 16:08:07 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.07.55
+ 41be03b00d2f7-682227f1838sm87041a12.46.2024.05.23.16.08.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 16:07:57 -0700 (PDT)
+ Thu, 23 May 2024 16:08:06 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-ppc@nongnu.org
-Subject: [PULL 00/72] ppc-for-9.1-1 queue
-Date: Fri, 24 May 2024 09:06:33 +1000
-Message-ID: <20240523230747.45703-1-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 03/72] target/ppc: Fix broadcast tlbie synchronisation
+Date: Fri, 24 May 2024 09:06:36 +1000
+Message-ID: <20240523230747.45703-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240523230747.45703-1-npiggin@gmail.com>
+References: <20240523230747.45703-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,154 +95,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 70581940cabcc51b329652becddfbc6a261b1b83:
+With mttcg, broadcast tlbie instructions do not wait until other vCPUs
+have been kicked out of TCG execution before they complete (including
+necessary subsequent tlbsync, etc., instructions). This is contrary to
+the ISA, and it permits other vCPUs to use translations after the TLB
+flush. For example:
 
-  Merge tag 'pull-tcg-20240523' of https://gitlab.com/rth7680/qemu into staging (2024-05-23 09:47:40 -0700)
+   CPU0
+   // *memP is initially 0, memV maps to memP with *pte
+   *pte = 0;
+   ptesync ; tlbie ; eieio ; tlbsync ; ptesync
+   *memP = 1;
 
-are available in the Git repository at:
+   CPU1
+   assert(*memV == 0);
 
-  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.1-1-20240524
+It is possible for the assertion to fail because CPU1 translates memV
+using the TLB after CPU0 has stored 1 to the underlying memory. This
+race was observed with a careful test case where CPU1 checks run in a
+very large expensive TB so it can run for the entire CPU0 period between
+clearing the pte and storing the memory, but host vCPU thread preemption
+could cause the race to hit anywhere.
 
-for you to fetch changes up to 4e0e22a2de927ec827e3464f7aedd47ed22268d2:
+As explained in commit 4ddc104689b ("target/ppc: Fix tlbie"), it is not
+enough to just use tlb_flush_all_cpus_synced(), because that does not
+execute until the calling CPU has finished its TB. It is also required
+that the TB is ended at the point where the TLB flush must subsequently
+take effect.
 
-  target/ppc: Remove pp_check() and reuse ppc_hash32_pp_prot() (2024-05-24 08:57:51 +1000)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/helper_regs.c                     | 2 +-
+ target/ppc/mmu_helper.c                      | 2 +-
+ target/ppc/translate.c                       | 7 +++++++
+ target/ppc/translate/storage-ctrl-impl.c.inc | 7 +++++++
+ 4 files changed, 16 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-* Fix an interesting TLB invalidate race
-* Implement more instructions with decodetree
-* Add the POWER8/9/10 BHRB facility
-* Add missing instructions, registers, SMT support
-* First round of a big MMU xlate cleanup
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 25258986e3..9094ae5004 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -334,7 +334,7 @@ void check_tlb_flush(CPUPPCState *env, bool global)
+     if (global && (env->tlb_need_flush & TLB_NEED_GLOBAL_FLUSH)) {
+         env->tlb_need_flush &= ~TLB_NEED_GLOBAL_FLUSH;
+         env->tlb_need_flush &= ~TLB_NEED_LOCAL_FLUSH;
+-        tlb_flush_all_cpus(cs);
++        tlb_flush_all_cpus_synced(cs);
+         return;
+     }
+ 
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index b35a93c198..d9d950e220 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -534,7 +534,7 @@ void helper_tlbie_isa300(CPUPPCState *env, target_ulong rb, target_ulong rs,
+     if (local) {
+         tlb_flush_page(env_cpu(env), addr);
+     } else {
+-        tlb_flush_page_all_cpus(env_cpu(env), addr);
++        tlb_flush_page_all_cpus_synced(env_cpu(env), addr);
+     }
+     return;
+ 
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 49dee6cab0..24461c2d1b 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -3494,6 +3494,13 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
+         gen_helper_check_tlb_flush_local(tcg_env);
+     }
+     gen_set_label(l);
++    if (global) {
++        /*
++         * Global TLB flush uses async-work which must run before the
++         * next instruction, so this must be the last in the TB.
++         */
++        ctx->base.is_jmp = DISAS_EXIT_UPDATE;
++    }
+ }
+ #else
+ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
+diff --git a/target/ppc/translate/storage-ctrl-impl.c.inc b/target/ppc/translate/storage-ctrl-impl.c.inc
+index 74c23a4191..b8b4454663 100644
+--- a/target/ppc/translate/storage-ctrl-impl.c.inc
++++ b/target/ppc/translate/storage-ctrl-impl.c.inc
+@@ -224,6 +224,13 @@ static bool do_tlbie(DisasContext *ctx, arg_X_tlbie *a, bool local)
+                                  a->prs << TLBIE_F_PRS_SHIFT |
+                                  a->r << TLBIE_F_R_SHIFT |
+                                  local << TLBIE_F_LOCAL_SHIFT));
++        if (!local) {
++            /*
++             * Global TLB flush uses async-work which must run before the
++             * next instruction, so this must be the last in the TB.
++             */
++            ctx->base.is_jmp = DISAS_EXIT_UPDATE;
++        }
+         return true;
+ #endif
+ 
+-- 
+2.43.0
 
-----------------------------------------------------------------
-BALATON Zoltan (33):
-      target/ppc: Remove unused helper
-      target/ppc/mmu_common.c: Move calculation of a value closer to its usage
-      target/ppc/mmu_common.c: Remove unneeded local variable
-      target/ppc/mmu_common.c: Simplify checking for real mode
-      target/ppc/mmu_common.c: Drop cases for unimplemented MPC8xx MMU
-      target/ppc/mmu_common.c: Introduce mmu6xx_get_physical_address()
-      target/ppc/mmu_common.c: Move else branch to avoid large if block
-      target/ppc/mmu_common.c: Move some debug logging
-      target/ppc/mmu_common.c: Eliminate ret from mmu6xx_get_physical_address()
-      target/ppc/mmu_common.c: Split out BookE cases before checking real mode
-      target/ppc/mmu_common.c: Split off real mode cases in get_physical_address_wtlb()
-      target/ppc/mmu_common.c: Inline and remove check_physical()
-      target/ppc/mmu_common.c: Fix misindented qemu_log_mask() calls
-      target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
-      target/ppc/mmu_common.c: Replace hard coded constants in ppc_jumbo_xlate()
-      target/ppc/mmu_common.c: Don't use mmu_ctx_t for mmu40x_get_physical_address()
-      target/ppc/mmu_common.c: Don't use mmu_ctx_t in mmubooke_get_physical_address()
-      target/ppc/mmu_common.c: Don't use mmu_ctx_t in mmubooke206_get_physical_address()
-      target/ppc/mmu_common.c: Remove BookE from direct store handling
-      target/ppc/mmu_common.c: Split off BookE handling from ppc_jumbo_xlate()
-      target/ppc/mmu_common.c: Simplify ppc_booke_xlate() part 1
-      target/ppc/mmu_common.c: Simplify ppc_booke_xlate() part 2
-      target/ppc/mmu_common.c: Split off real mode handling from get_physical_address_wtlb()
-      target/ppc/mmu_common.c: Split off 40x cases from ppc_jumbo_xlate()
-      target/ppc/mmu_common.c: Transform ppc_jumbo_xlate() into ppc_6xx_xlate()
-      target/ppc/mmu_common.c: Move mmu_ctx_t type to mmu_common.c
-      target/ppc: Remove id_tlbs flag from CPU env
-      target/ppc: Split off common embedded TLB init
-      target/ppc/mmu-hash32.c: Drop a local variable
-      target/ppc/mmu-radix64.c: Drop a local variable
-      target/ppc: Add a function to check for page protection bit
-      target/ppc: Move out BookE and related MMU functions from mmu_common.c
-      target/ppc: Remove pp_check() and reuse ppc_hash32_pp_prot()
-
-Chinmay Rath (13):
-      target/ppc: Merge various fpu helpers
-      target/ppc: Move floating-point arithmetic instructions to decodetree.
-      target/ppc: Move mul{li, lw, lwo, hw, hwu} instructions to decodetree.
-      target/ppc: Make divw[u] handler method decodetree compatible.
-      target/ppc: Move divw[u, e, eu] instructions to decodetree.
-      target/ppc: Move neg, darn, mod{sw, uw} to decodetree.
-      target/ppc: Move multiply fixed-point insns (64-bit operands) to decodetree.
-      target/ppc: Move div/mod fixed-point insns (64 bits operands) to decodetree.
-      target/ppc: Move cmp{rb, eqb}, tw[i], td[i], isel instructions to decodetree.
-      target/ppc: Move logical fixed-point instructions to decodetree.
-      target/ppc: Move VMX storage access instructions to decodetree
-      target/ppc: Move VMX integer logical instructions to decodetree.
-      target/ppc: Move VMX integer max/min instructions to decodetree.
-
-Dr. David Alan Gilbert (1):
-      target/ppc: Remove unused struct 'mmu_ctx_hash32'
-
-Glenn Miles (4):
-      This commit is preparatory to the addition of Branch History Rolling Buffer (BHRB) functionality, which is being provided today starting with the P8 processor.
-      This commit continues adding support for the Branch History Rolling Buffer (BHRB) as is provided starting with the P8 processor and continuing with its successors.  This commit is limited to the recording and filtering of taken branches.
-      Add support for the clrbhrb and mfbhrbe instructions.
-      Adds migration support for Branch History Rolling Buffer (BHRB) internal state.
-
-Nicholas Piggin (21):
-      spapr: avoid overhead of finding vhyp class in critical operations
-      ppc/spapr: Add ibm,pi-features
-      target/ppc: Fix broadcast tlbie synchronisation
-      tcg/cputlb: Remove non-synced variants of global TLB flushes
-      tcg/cputlb: remove other-cpu capability from TLB flushing
-      target/ppc: Move sync instructions to decodetree
-      target/ppc: Fix embedded memory barriers
-      target/ppc: Add ISA v3.1 variants of sync instruction
-      target/ppc: larx/stcx generation need only apply DEF_MEMOP() once
-      target/ppc: Remove redundant MEMOP_GET_SIZE macro
-      target/ppc: Make checkstop actually stop the system
-      target/ppc: improve checkstop logging
-      target/ppc: Implement attn instruction on BookS 64-bit processors
-      target/ppc: BookE DECAR SPR is 32-bit
-      target/ppc: Add PPR32 SPR
-      target/ppc: add helper to write per-LPAR SPRs
-      target/ppc: Add SMT support to simple SPRs
-      target/ppc: Add SMT support to PTCR SPR
-      target/ppc: Implement LDBAR, TTR SPRs
-      target/ppc: Implement SPRC/SPRD SPRs
-      target/ppc: add SMT support to msgsnd broadcast
-
- accel/tcg/cputlb.c                             |  145 +--
- docs/devel/multi-thread-tcg.rst                |   13 +-
- hw/ppc/pegasos2.c                              |    3 +-
- hw/ppc/spapr.c                                 |   28 +
- include/exec/exec-all.h                        |   97 +-
- target/ppc/cpu.h                               |   64 +-
- target/ppc/cpu_init.c                          |  235 +++--
- target/ppc/excp_helper.c                       |  134 ++-
- target/ppc/fpu_helper.c                        |  235 ++---
- target/ppc/helper.h                            |   98 +-
- target/ppc/helper_regs.c                       |   40 +-
- target/ppc/insn32.decode                       |  204 ++++
- target/ppc/int_helper.c                        |   24 +-
- target/ppc/internal.h                          |   40 +-
- target/ppc/kvm.c                               |    4 +-
- target/ppc/machine.c                           |   23 +-
- target/ppc/mem_helper.c                        |   12 +-
- target/ppc/meson.build                         |    1 +
- target/ppc/misc_helper.c                       |  132 ++-
- target/ppc/mmu-book3s-v3.h                     |    4 +-
- target/ppc/mmu-booke.c                         |  531 +++++++++++
- target/ppc/mmu-booke.h                         |   17 +
- target/ppc/mmu-hash32.c                        |   60 +-
- target/ppc/mmu-hash32.h                        |   45 +
- target/ppc/mmu-hash64.c                        |   18 +-
- target/ppc/mmu-radix64.c                       |    9 +-
- target/ppc/mmu_common.c                        | 1197 ++++++------------------
- target/ppc/mmu_helper.c                        |   39 +-
- target/ppc/power8-pmu-regs.c.inc               |    5 +
- target/ppc/power8-pmu.c                        |   48 +-
- target/ppc/power8-pmu.h                        |   11 +-
- target/ppc/spr_common.h                        |    8 +
- target/ppc/translate.c                         | 1151 ++++-------------------
- target/ppc/translate/bhrb-impl.c.inc           |   43 +
- target/ppc/translate/branch-impl.c.inc         |    2 +-
- target/ppc/translate/fixedpoint-impl.c.inc     |  727 ++++++++++++++
- target/ppc/translate/fp-impl.c.inc             |  285 +++---
- target/ppc/translate/fp-ops.c.inc              |   31 -
- target/ppc/translate/misc-impl.c.inc           |  157 ++++
- target/ppc/translate/processor-ctrl-impl.c.inc |    2 +-
- target/ppc/translate/storage-ctrl-impl.c.inc   |    7 +
- target/ppc/translate/vmx-impl.c.inc            |  280 +++---
- target/ppc/translate/vmx-ops.c.inc             |   50 -
- 43 files changed, 3267 insertions(+), 2992 deletions(-)
- create mode 100644 target/ppc/mmu-booke.c
- create mode 100644 target/ppc/mmu-booke.h
- create mode 100644 target/ppc/translate/bhrb-impl.c.inc
- create mode 100644 target/ppc/translate/misc-impl.c.inc
 
