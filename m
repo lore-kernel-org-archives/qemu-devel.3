@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B638CC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 05:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D939C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 05:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sANbQ-0008Bj-EH; Fri, 24 May 2024 01:36:28 -0400
+	id 1sANbV-0008Cz-KT; Fri, 24 May 2024 01:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sANbO-0008BH-FA
- for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:26 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1sANbS-0008CG-TA
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:30 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sANbM-00014N-PK
- for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:26 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5b3241373adso4518698eaf.2
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 22:36:23 -0700 (PDT)
+ id 1sANbQ-00015A-Ne
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:30 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6f8ea3e9543so449059b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 22:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716528983; x=1717133783;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716528987; x=1717133787;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CxG2P76G/OTNBVGMvRYEe0TWmwUTzdWD9903oTGfTEk=;
- b=W+FCOAoFxxhMUFcfboQG62XZcBAcTe0Fkldy2VZSatsziKj2oVcGjOWbcdwoJ/t39j
- 4mIg7bcNGVwRLRUx1upToSciJSWIFzOEDz4AyMmCtiVpa0YIswZ0GC9YFJkpsj2Ynbc7
- OF/54caG10Hq0OhLg/PCHbHHQFiWCX9HCVdWEtp2ai0b+1o0uUTavOPk2zdSq+9w4mJd
- 9BkSTsJPsqiBcBhvyzvRaATL7HDUZ+rytQKX6DmxfBTDTBKaO9skEvfJ/qGesepmJqBZ
- OOVnUjolfRS6w4UvuONhzLm07hnkltUPOjWz38zcctEaezzmLvBuVroLK0eKgxPdEhcj
- 8mLQ==
+ :reply-to; bh=AfvWh15VwJ7bsi1zE22Wn8t3fv0MNqUE1xgb1xRqaAQ=;
+ b=mHfKrR1cXZMm2ZZ3ds1WlsFsSYyg0w1Pjv3uzXH45J0EN75t9ReqsmTy6PfyO5S2sC
+ 4h9zWltjnc/SDcLWqNN7EaWqW2aLxN2HLK2Wd0eVGjK4VhrmRyEKOw8zHxmbNCnF7u0x
+ RJVFHu+Mpa8BrJCLQK1h9qMIkoc82BXH1nhnlLmA3CENeh4HB3XZirdWLOfp08cKOyT5
+ kWn3MnNwOerQT8obMgUU21t18ooUyb2m8dzVIBl6K9jTkzI72W3on2J1qjNYiM6xQw0P
+ oNrXxAA2eI8sIBTFfiJ1ABKbiuOytDxRXjUd6DIiy2xTyc8lRycZKTrvoWYJUyfY1wgQ
+ 5gQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716528983; x=1717133783;
+ d=1e100.net; s=20230601; t=1716528987; x=1717133787;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CxG2P76G/OTNBVGMvRYEe0TWmwUTzdWD9903oTGfTEk=;
- b=t7PkyznetgexpKAu2qFWFBeuUFWAnC4AmA+m76h76BsT+jy0WPl+vxGXaci+JVdldV
- gm/aJ8ii4uIR6hKka3eNWCj+4uvuPAlmkWZgHDNLGGWI+FZ4ggNeJHrYPdA5dOjOW27l
- XDlK35HHZXO3uOQGKfCtNRfNrLNxRGOCVL3hq69IVbjJTSru+uOXrybAOxSactTjV4pl
- LVHlZQ9rXUvVdQ67vLOheYOSj4BlnSM+8ArUl/61zH5h43ov9tNyna+bDQdc1/X+Z8n5
- RyX1y+6scYmDzqJBR8EAWvegf1hlk+ZXyO68Hjec2QU0ZjqYkZe0Pv4tor7PqzOc2GuQ
- atfA==
-X-Gm-Message-State: AOJu0Yw3eQWji5SrMoAoF0b4CGtxrPukVzbz4B3NVlWcOPqP/zV8aIy3
- iQojjThO+9CvrBrmG7jlciGmKt+myRvkmSrrJ0OkCEGuBD0rz4S2Iiza/Drd8S8=
-X-Google-Smtp-Source: AGHT+IFsw4QyiPf3QWmoQjeuyrwFeeTtZc8mctLSqR0Z0OD+5fjSM0qBmgC05URQNg012oPnQNcaBQ==
-X-Received: by 2002:a05:6359:4c12:b0:189:9aa2:c25d with SMTP id
- e5c5f4694b2df-197e565ff65mr179330355d.20.1716528982658; 
- Thu, 23 May 2024 22:36:22 -0700 (PDT)
+ bh=AfvWh15VwJ7bsi1zE22Wn8t3fv0MNqUE1xgb1xRqaAQ=;
+ b=inn1bmMEWFdSAtLq0a8kELn2MCEhQi3WRUQDhfGQyuUfeIV0EXlXrFRC+lNsQS/Jkr
+ ikBcTc1LRtNfDxn7MVo5FBnolVlWLUdgp6VZR5LuAbGCLGkUWH0iKbep9H8T1DzZCeHR
+ lytQA8zvtHg9JIJEbZyEC8fRQaYvcitBc4/ap4fuUwJlgR5T50uFC7sLUfSmPogxdLhW
+ fUme4CXwm+auMlq5uSV15BIrzqyPfke52L62gNBVFj5aDPjBzSFTQw+Abr6hJHYcUDxV
+ BshePkcta1Yz0Zct7yZM74p6Iug4fkKVAuPYK4I90YTnogfEde9LmQzyJumZNGUDzAAF
+ hHAQ==
+X-Gm-Message-State: AOJu0YwDJrjUrel7EPQDSssQ3vaAAmLFRwQM2sCq7a30HKWKQGgVtwJY
+ jdpNvPsktU939NZJkIGCMXK+7hWATvQiVcD7jMN0A7A7mVHHF8xbFNKWnEcs++w=
+X-Google-Smtp-Source: AGHT+IFG3fAGmsAARtFqlWWNC2/jCc7tD//SUhB73tK0XCnUrtlh0XI/XihPvDzmS0liqvJzastt7w==
+X-Received: by 2002:a05:6a00:8c11:b0:6f0:b53c:dfb4 with SMTP id
+ d2e1a72fcca58-6f8f3e7d47emr1398064b3a.22.1716528987279; 
+ Thu, 23 May 2024 22:36:27 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-682274bbd96sm427042a12.87.2024.05.23.22.36.19
+ d2e1a72fcca58-6f8fd4d58easm457201b3a.198.2024.05.23.22.36.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 May 2024 22:36:22 -0700 (PDT)
+ Thu, 23 May 2024 22:36:27 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 24 May 2024 14:35:48 +0900
-Subject: [PATCH v4 2/4] lockable: Do not cast function pointers
+Date: Fri, 24 May 2024 14:35:49 +0900
+Subject: [PATCH v4 3/4] qapi: Do not cast function pointers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240524-xkb-v4-2-2de564e5c859@daynix.com>
+Message-Id: <20240524-xkb-v4-3-2de564e5c859@daynix.com>
 References: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
 In-Reply-To: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
 To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
@@ -80,8 +80,8 @@ To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-01a33
-Received-SPF: none client-ip=2607:f8b0:4864:20::c31;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc31.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::434;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,51 +107,129 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 also prevents enabling teh strict mode of CFI which is currently
 disabled with -fsanitize-cfi-icall-generalize-pointers.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2345
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2346
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/qemu/lockable.h | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ include/qapi/clone-visitor.h | 37 ++++++++++++++++++++++++-------------
+ qapi/qapi-clone-visitor.c    | 30 ++++--------------------------
+ 2 files changed, 28 insertions(+), 39 deletions(-)
 
-diff --git a/include/qemu/lockable.h b/include/qemu/lockable.h
-index 9823220446d9..c1b097c44879 100644
---- a/include/qemu/lockable.h
-+++ b/include/qemu/lockable.h
-@@ -43,15 +43,30 @@ qemu_null_lockable(void *x)
-     return NULL;
+diff --git a/include/qapi/clone-visitor.h b/include/qapi/clone-visitor.h
+index adf9a788e232..ebc182b034d7 100644
+--- a/include/qapi/clone-visitor.h
++++ b/include/qapi/clone-visitor.h
+@@ -11,6 +11,7 @@
+ #ifndef QAPI_CLONE_VISITOR_H
+ #define QAPI_CLONE_VISITOR_H
+ 
++#include "qapi/error.h"
+ #include "qapi/visitor.h"
+ 
+ /*
+@@ -20,11 +21,8 @@
+  */
+ typedef struct QapiCloneVisitor QapiCloneVisitor;
+ 
+-void *qapi_clone(const void *src, bool (*visit_type)(Visitor *, const char *,
+-                                                     void **, Error **));
+-void qapi_clone_members(void *dst, const void *src, size_t sz,
+-                        bool (*visit_type_members)(Visitor *, void *,
+-                                                   Error **));
++Visitor *qapi_clone_visitor_new(void);
++Visitor *qapi_clone_members_visitor_new(void);
+ 
+ /*
+  * Deep-clone QAPI object @src of the given @type, and return the result.
+@@ -32,10 +30,18 @@ void qapi_clone_members(void *dst, const void *src, size_t sz,
+  * Not usable on QAPI scalars (integers, strings, enums), nor on a
+  * QAPI object that references the 'any' type.  Safe when @src is NULL.
+  */
+-#define QAPI_CLONE(type, src)                                           \
+-    ((type *)qapi_clone(src,                                            \
+-                        (bool (*)(Visitor *, const char *, void **,     \
+-                                  Error **))visit_type_ ## type))
++#define QAPI_CLONE(type, src)                                   \
++    ({                                                          \
++        Visitor *v_;                                            \
++        type *dst_ = (type *) (src); /* Cast away const */      \
++                                                                \
++        if (dst_) {                                             \
++            v_ = qapi_clone_visitor_new();                      \
++            visit_type_ ## type(v_, NULL, &dst_, &error_abort); \
++            visit_free(v_);                                     \
++        }                                                       \
++        dst_;                                                   \
++    })
+ 
+ /*
+  * Copy deep clones of @type members from @src to @dst.
+@@ -43,9 +49,14 @@ void qapi_clone_members(void *dst, const void *src, size_t sz,
+  * Not usable on QAPI scalars (integers, strings, enums), nor on a
+  * QAPI object that references the 'any' type.
+  */
+-#define QAPI_CLONE_MEMBERS(type, dst, src)                              \
+-    qapi_clone_members(dst, src, sizeof(type),                          \
+-                       (bool (*)(Visitor *, void *,                     \
+-                                 Error **))visit_type_ ## type ## _members)
++#define QAPI_CLONE_MEMBERS(type, dst, src)                                \
++    ({                                                                    \
++        Visitor *v_;                                                      \
++                                                                          \
++        v_ = qapi_clone_members_visitor_new();                            \
++        *(type *)(dst) = *(src);                                          \
++        visit_type_ ## type ## _members(v_, (type *)(dst), &error_abort); \
++        visit_free(v_);                                                   \
++    })
+ 
+ #endif
+diff --git a/qapi/qapi-clone-visitor.c b/qapi/qapi-clone-visitor.c
+index c45c5caa3b89..bbf953698f38 100644
+--- a/qapi/qapi-clone-visitor.c
++++ b/qapi/qapi-clone-visitor.c
+@@ -149,7 +149,7 @@ static void qapi_clone_free(Visitor *v)
+     g_free(v);
  }
  
-+#define QML_FUNC_(name)                                           \
-+    static inline void qemu_lockable_ ## name ## _lock(void *x)   \
-+    {                                                             \
-+        qemu_ ## name ## _lock(x);                                \
-+    }                                                             \
-+    static inline void qemu_lockable_ ## name ## _unlock(void *x) \
-+    {                                                             \
-+        qemu_ ## name ## _unlock(x);                              \
-+    }
-+
-+QML_FUNC_(mutex)
-+QML_FUNC_(rec_mutex)
-+QML_FUNC_(co_mutex)
-+QML_FUNC_(spin)
-+
- /*
-  * In C, compound literals have the lifetime of an automatic variable.
-  * In C++ it would be different, but then C++ wouldn't need QemuLockable
-  * either...
-  */
--#define QML_OBJ_(x, name) (&(QemuLockable) {                            \
--        .object = (x),                                                  \
--        .lock = (QemuLockUnlockFunc *) qemu_ ## name ## _lock,          \
--        .unlock = (QemuLockUnlockFunc *) qemu_ ## name ## _unlock       \
-+#define QML_OBJ_(x, name) (&(QemuLockable) {        \
-+        .object = (x),                              \
-+        .lock = qemu_lockable_ ## name ## _lock,    \
-+        .unlock = qemu_lockable_ ## name ## _unlock \
-     })
+-static Visitor *qapi_clone_visitor_new(void)
++Visitor *qapi_clone_visitor_new(void)
+ {
+     QapiCloneVisitor *v;
  
- /**
+@@ -174,31 +174,9 @@ static Visitor *qapi_clone_visitor_new(void)
+     return &v->visitor;
+ }
+ 
+-void *qapi_clone(const void *src, bool (*visit_type)(Visitor *, const char *,
+-                                                     void **, Error **))
++Visitor *qapi_clone_members_visitor_new(void)
+ {
+-    Visitor *v;
+-    void *dst = (void *) src; /* Cast away const */
+-
+-    if (!src) {
+-        return NULL;
+-    }
+-
+-    v = qapi_clone_visitor_new();
+-    visit_type(v, NULL, &dst, &error_abort);
+-    visit_free(v);
+-    return dst;
+-}
+-
+-void qapi_clone_members(void *dst, const void *src, size_t sz,
+-                        bool (*visit_type_members)(Visitor *, void *,
+-                                                   Error **))
+-{
+-    Visitor *v;
+-
+-    v = qapi_clone_visitor_new();
+-    memcpy(dst, src, sz);
++    Visitor *v = qapi_clone_visitor_new();
+     to_qcv(v)->depth++;
+-    visit_type_members(v, dst, &error_abort);
+-    visit_free(v);
++    return v;
+ }
 
 -- 
 2.45.1
