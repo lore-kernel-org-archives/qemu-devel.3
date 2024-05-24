@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443ADC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E68CC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAQ0d-00054y-69; Fri, 24 May 2024 04:10:39 -0400
+	id 1sAQ0u-0005Tc-Ok; Fri, 24 May 2024 04:10:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAQ0Z-00052Z-9I
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sAQ0t-0005Sa-S1
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAQ0X-0000NK-MS
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:34 -0400
+ id 1sAQ0s-0000db-7F
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716538233;
+ s=mimecast20190719; t=1716538253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pzMu4bGplTJ0/IjTAQY/99ej8JAgWkuVwj+4BdBCfyk=;
- b=ZEBbRjIITJuZTw5WKWKXwq4oQ63WOnzJqc9xKuo1TyAA5qPoKYhPNFrmlljQuASN0BVHPM
- UpFL+i2rK6UaXPkfxZ0e2ZbuTvJi4dm8HVMO/K2iae5zgRWxSm3Bg+ly+FGqHIl5YM9E8g
- JEBcO15a4zwR8Yoo5du8eEDQBuRdHqg=
+ bh=CNB7yIXWrmDB/iISbVm985kavI7s1g592wuWZJrSyvA=;
+ b=KIyHtUgYqpqgJpjssLP3PwDbVpvBSvqvCFClk9CYNdTaGC3pp/4HepWNCddmJv/vtXo5ZO
+ NUr6ryKhaujQgigPjo7FYMi7JNAyAXkFawhVBNArm7drSlWPlzU9iiJYSdM6zK3UyGR3TR
+ 308afpgl4J11txSNgRkwWsRUGm9lu8Y=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-2IZSzd3LMQu8OLb9wXZErA-1; Fri, 24 May 2024 04:10:31 -0400
-X-MC-Unique: 2IZSzd3LMQu8OLb9wXZErA-1
+ us-mta-70-UOdBZUoRM22mVpN8fnNj4w-1; Fri, 24 May 2024 04:10:51 -0400
+X-MC-Unique: UOdBZUoRM22mVpN8fnNj4w-1
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a6265d3cb78so26097566b.0
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:10:30 -0700 (PDT)
+ a640c23a62f3a-a6269ad800aso27595166b.2
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:10:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716538229; x=1717143029;
+ d=1e100.net; s=20230601; t=1716538250; x=1717143050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pzMu4bGplTJ0/IjTAQY/99ej8JAgWkuVwj+4BdBCfyk=;
- b=csfUmlTAQzoTjGgWUO1xg/lUCRzi36WMjZ1yHh4wfgqI08StTE70vEWvTroSeECtaS
- mMFTo3QGkp1AJeugwQX5qcMoajD43fYNBOcgbp4vIuUaRVn49PvoWnBsMtJSSOIA+VNb
- 23MMijmJHOVGZ/verpoZNAi2Ost8USzoC02BigUdjH10MOk79FLEFMCxDSuveVGxgzBz
- /RtnF/0c2HLfZOQHgsCGxKakKV9VyVQlHETKVCnIN7jn6vcm+nPuCwIVS32oNvQbfY4U
- OoOicFLng3CUrcQjKkLZsTh5bZRPc4xg7IR9OJHci7DFZjCJa5FQmb544EoQ/UpG0hMn
- nJmw==
-X-Gm-Message-State: AOJu0YzlT7u9095MO53k7Ns1eqd+PW0zJ1UkT9iX2wwXeH9AFeoS/UGo
- IbMZzhHELZwxCroDznAjHE7iDiXmUk+Es4U4lBqfQZi2w1vQCAYpyn0AuQoFNfHzUyD7sRUwJOU
- /VtVK0OGx/1mOES3RrUzjo5dOlQMeJ1rGBGf/2yIakyBK2ov5/ZpPMUdAhYO1nlimLH1Br6gpB1
- 7ntokuN7u9jdbCXZY5KS3WO/KqNuCGevHnGfgG
-X-Received: by 2002:a17:906:a252:b0:a58:eba0:6716 with SMTP id
- a640c23a62f3a-a6265128466mr82816566b.60.1716538228977; 
- Fri, 24 May 2024 01:10:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOJqWx8aoDtHqY04Lf8yWJPeTups4VdBXnAWuLIWQ4AUiqeldEcWzwOOqd3yDr8gcyO3RoAA==
-X-Received: by 2002:a17:906:a252:b0:a58:eba0:6716 with SMTP id
- a640c23a62f3a-a6265128466mr82815166b.60.1716538228550; 
- Fri, 24 May 2024 01:10:28 -0700 (PDT)
+ bh=CNB7yIXWrmDB/iISbVm985kavI7s1g592wuWZJrSyvA=;
+ b=TMY6228aQtXLp7lb0gOVZq1vblUwrvwcBjvM+MAQ2vyW7hOOFkGH3KCjvdmkVtEQvI
+ i6ws84BA728i9ZCqgMK584/sOoy2flbRCnWdlEoenZ8GX+CR7KzBDmdxOMmNkjxHVi9Y
+ GTXbHCDKjabPiGAw0KzAsz/NXGm2udE8LZCEIM3IiGL/ayCiSGNLOyHONuoXyRwQd5NK
+ Xhn85iLej2u8YZVVjJ6/sAPP+kCkBRxD4N+si1CZ2Z4hKt6IiY11Q6zMXWqEe5AwxzfZ
+ WEKDSzPpkTNdUnQ0Uku21Zi22oyaxedVqfdUoeyQVJm/8cgLVwZ/4MQtqt8Hh+6QcXdZ
+ gPTA==
+X-Gm-Message-State: AOJu0YzB54pxz7qyK8B9x/4B6usjYFivxykMJNV/GtyiqG2zE9bZ5WSu
+ blNlRiqcd0nMsFBJHZsW+Yd7kkgJyigWMqpfjpWqybbWebLw9uNsdll03W22O9QvAZC/BtkbDXp
+ F2JJmlvsr1Vr3ZIZAAHP53hRcRw9xOCXYmXlEG33o40maFXxT7NExm0aMBC97lta14Pdzb3guhm
+ sgjTQPJU4jEQg3l0/yCFIbfIwIjkSPKOdT4FP7
+X-Received: by 2002:a17:906:1287:b0:a59:c577:c5c3 with SMTP id
+ a640c23a62f3a-a62642e8fe1mr148924366b.29.1716538250008; 
+ Fri, 24 May 2024 01:10:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdmh7MnYoVpwU0QmVSmUfTcwCNf1NZkkhwkdKAMDWXwzenfR+9isccp9puJH80N8gYHca4EA==
+X-Received: by 2002:a17:906:1287:b0:a59:c577:c5c3 with SMTP id
+ a640c23a62f3a-a62642e8fe1mr148921166b.29.1716538249445; 
+ Fri, 24 May 2024 01:10:49 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c817a98sm91542866b.37.2024.05.24.01.10.27
+ a640c23a62f3a-a627623c38bsm60924066b.23.2024.05.24.01.10.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 01:10:27 -0700 (PDT)
+ Fri, 24 May 2024 01:10:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 04/16] target/i386: avoid calling gen_eob_syscall before
- tb_stop
-Date: Fri, 24 May 2024 10:10:07 +0200
-Message-ID: <20240524081019.1141359-5-pbonzini@redhat.com>
+Subject: [PATCH 13/16] target/i386: clean up repeated string operations
+Date: Fri, 24 May 2024 10:10:16 +0200
+Message-ID: <20240524081019.1141359-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240524081019.1141359-1-pbonzini@redhat.com>
 References: <20240524081019.1141359-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,60 +102,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-syscall and sysret only have one exit, so they do not need to
-generate the end-of-translation code inline.  It can be
-deferred to tb_stop.
+Do not bother generating inline wrappers for gen_repz and gen_repz2;
+use s->prefix to separate REPZ from REPNZ in the case of SCAS and
+CMPS.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ target/i386/tcg/translate.c | 22 ++++------------------
+ target/i386/tcg/emit.c.inc  | 22 +++++++++-------------
+ 2 files changed, 13 insertions(+), 31 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 52d758a224b..24e83c1af84 100644
+index 8354209b037..18d8c0de674 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -168,6 +168,12 @@ typedef struct DisasContext {
-  */
- #define DISAS_JUMP             DISAS_TARGET_3
+@@ -1320,14 +1320,12 @@ static void gen_repz(DisasContext *s, MemOp ot,
+     gen_jmp_rel_csize(s, -cur_insn_len(s), 0);
+ }
  
-+/*
-+ * EIP has already been updated.  Use updated value of
-+ * EFLAGS.TF to determine singlestep trap (SYSCALL/SYSRET).
-+ */
-+#define DISAS_EOB_RECHECK_TF   DISAS_TARGET_4
+-#define GEN_REPZ(op) \
+-    static inline void gen_repz_ ## op(DisasContext *s, MemOp ot) \
+-    { gen_repz(s, ot, gen_##op); }
+-
+-static void gen_repz2(DisasContext *s, MemOp ot, int nz,
+-                      void (*fn)(DisasContext *s, MemOp ot))
++static void gen_repz_nz(DisasContext *s, MemOp ot,
++                        void (*fn)(DisasContext *s, MemOp ot))
+ {
+     TCGLabel *l2;
++    int nz = (s->prefix & PREFIX_REPNZ) ? 1 : 0;
 +
- /* The environment in which user-only runs is constrained. */
- #ifdef CONFIG_USER_ONLY
- #define PE(S)     true
-@@ -3576,7 +3582,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         /* TF handling for the syscall insn is different. The TF bit is  checked
-            after the syscall insn completes. This allows #DB to not be
-            generated after one has entered CPL0 if TF is set in FMASK.  */
--        gen_eob_syscall(s);
-+        s->base.is_jmp = DISAS_EOB_RECHECK_TF;
-         break;
-     case 0x107: /* sysret */
-         /* For Intel SYSRET is only valid in long mode */
-@@ -3595,7 +3601,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-                checked after the sysret insn completes. This allows #DB to be
-                generated "as if" the syscall insn in userspace has just
-                completed.  */
--            gen_eob_syscall(s);
-+            s->base.is_jmp = DISAS_EOB_RECHECK_TF;
-         }
-         break;
-     case 0x1a2: /* cpuid */
-@@ -4799,6 +4805,9 @@ static void i386_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-     case DISAS_EOB_ONLY:
-         gen_eob(dc);
-         break;
-+    case DISAS_EOB_RECHECK_TF:
-+        gen_eob_syscall(dc);
-+        break;
-     case DISAS_EOB_INHIBIT_IRQ:
-         gen_update_eip_cur(dc);
-         gen_eob_inhibit_irq(dc);
+     l2 = gen_jz_ecx_string(s);
+     fn(s, ot);
+     gen_op_add_reg_im(s, s->aflag, R_ECX, -1);
+@@ -1343,18 +1341,6 @@ static void gen_repz2(DisasContext *s, MemOp ot, int nz,
+     gen_jmp_rel_csize(s, -cur_insn_len(s), 0);
+ }
+ 
+-#define GEN_REPZ2(op) \
+-    static inline void gen_repz_ ## op(DisasContext *s, MemOp ot, int nz) \
+-    { gen_repz2(s, ot, nz, gen_##op); }
+-
+-GEN_REPZ(movs)
+-GEN_REPZ(stos)
+-GEN_REPZ(lods)
+-GEN_REPZ(ins)
+-GEN_REPZ(outs)
+-GEN_REPZ2(scas)
+-GEN_REPZ2(cmps)
+-
+ static void gen_helper_fp_arith_ST0_FT0(int op)
+ {
+     switch (op) {
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 83fa745fd8a..bc96735f61d 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1508,10 +1508,8 @@ static void gen_CMPccXADD(DisasContext *s, CPUX86State *env, X86DecodedInsn *dec
+ static void gen_CMPS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[2].ot;
+-    if (s->prefix & PREFIX_REPNZ) {
+-        gen_repz_cmps(s, ot, 1);
+-    } else if (s->prefix & PREFIX_REPZ) {
+-        gen_repz_cmps(s, ot, 0);
++    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
++        gen_repz_nz(s, ot, gen_cmps);
+     } else {
+         gen_cmps(s, ot);
+     }
+@@ -1834,7 +1832,7 @@ static void gen_INS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ 
+     translator_io_start(&s->base);
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        gen_repz_ins(s, ot);
++        gen_repz(s, ot, gen_ins);
+     } else {
+         gen_ins(s, ot);
+     }
+@@ -1993,7 +1991,7 @@ static void gen_LODS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[2].ot;
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        gen_repz_lods(s, ot);
++        gen_repz(s, ot, gen_lods);
+     } else {
+         gen_lods(s, ot);
+     }
+@@ -2155,7 +2153,7 @@ static void gen_MOVS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[2].ot;
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        gen_repz_movs(s, ot);
++        gen_repz(s, ot, gen_movs);
+     } else {
+         gen_movs(s, ot);
+     }
+@@ -2321,7 +2319,7 @@ static void gen_OUTS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ 
+     translator_io_start(&s->base);
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        gen_repz_outs(s, ot);
++        gen_repz(s, ot, gen_outs);
+     } else {
+         gen_outs(s, ot);
+     }
+@@ -3329,10 +3327,8 @@ static void gen_SBB(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ static void gen_SCAS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[2].ot;
+-    if (s->prefix & PREFIX_REPNZ) {
+-        gen_repz_scas(s, ot, 1);
+-    } else if (s->prefix & PREFIX_REPZ) {
+-        gen_repz_scas(s, ot, 0);
++    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
++        gen_repz_nz(s, ot, gen_scas);
+     } else {
+         gen_scas(s, ot);
+     }
+@@ -3495,7 +3491,7 @@ static void gen_STOS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[1].ot;
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        gen_repz_stos(s, ot);
++        gen_repz(s, ot, gen_stos);
+     } else {
+         gen_stos(s, ot);
+     }
 -- 
 2.45.1
 
