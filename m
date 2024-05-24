@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A29BC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 06:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDFBC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 06:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAODd-0003P4-UJ; Fri, 24 May 2024 02:15:57 -0400
+	id 1sAOCS-0001zq-II; Fri, 24 May 2024 02:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sAODW-00032J-Lw
- for qemu-devel@nongnu.org; Fri, 24 May 2024 02:15:52 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
+ id 1sAOCQ-0001yI-Uh
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 02:14:42 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sAODO-0001U7-1w
- for qemu-devel@nongnu.org; Fri, 24 May 2024 02:15:50 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-24ca0876a83so292799fac.2
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 23:15:40 -0700 (PDT)
+ id 1sAOCL-0001A5-VX
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 02:14:42 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6f8ec7e054dso374816b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 23:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716531339; x=1717136139; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1716531276; x=1717136076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0BD/3bkbfti/sxehilpLJYRZElpAI3Ovze0/5RgjFlY=;
- b=eYWTorw32CmdIEEmzufpMx2LllFUwoK6j6F1NL961e/EbdfDwmsnR0YoFE6tdxxeqf
- BmGfiogNCzMBNQEITCxHJZDnaAGKlrb862tExJhFk2f9ba1lYfD/rC7Br6Zh0F/REHD5
- dS4SnFYXhdtq+R1fbinD8exd/tZLoGcxl349JhFa789302xq+QhsekszJ3OVVQK5RzCd
- hMCejFEhFevWIK9XEQ0sgSIFiIKBgSuZkBa+QfszaefW4XflvFkBu/U7VCiIOpt17nKn
- xOM3FFKWx+DHrqZCpw9CWtfrArU202WCQd5YZEl5f+rm/dnmzjmgQ51WUS2+S1Ms4wSz
- /V9A==
+ bh=pvZbx7Qhc09keL1vmWRUuQcCdr8TgH4NHpQR9QL+77M=;
+ b=an/m6vxEgS/i7AaLVIH3xDtOgKuzKgWnhYNvIoantypgBXGomjZSUXKMPq31YBEG0J
+ Dg/W5Z7Am9bb5pQcp1KDYA8R9xrK9k5XMoPhdK07NKk50VKYK/9R2+98mdMK35pbJYWj
+ +GKY6gIIsCkrz4+NnTWfx5t8EsQgPfqAwkTV97Dq2u2knoKrkerb+bSYiWFUoxRbvJJv
+ vPO6JrNvM/EzpY+5jk2Fp8v2sCovqgZd02Fcf+XGoH/jaxgvM0Ei0KnGMwspj3M6S1El
+ 9k9uf9mM1DqQvYrmfFVVxXo18PV6mzYxsQTA175tiEwy65TKXy1hkaoMKsHKfHGzAwqC
+ 2yLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716531339; x=1717136139;
+ d=1e100.net; s=20230601; t=1716531276; x=1717136076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0BD/3bkbfti/sxehilpLJYRZElpAI3Ovze0/5RgjFlY=;
- b=Gduvmp/yymCXrOhrTXo1Qos2LF0uZ7c60eOAfKhb6dggT9es8epu1CD6meZxHAdH8D
- pWjNWTInPTF8wkQbsoeTkkpjwtPBnf11u726XhzW2zaOxkIUJbSFxK/RUS7KdY+U19MO
- 2bFLztGDFuAJbJrW8iSuMFhJJiADRDbPCPGMch8dVtdM5tbDBWC5N8zYcy1um7sIjduG
- n3FLkqXMnsTjPFWr4bYpAiIkN8qmnPmzwEpLUd31jBeMmQEXdqon5sOD7ivvG2bvVt5k
- m9hiG2nmZmM8yPKM6UWfYeAe7EXPbEvmp86lWGgwObPFCKVlj6eTTnFx7ktkph6rsCWi
- FGtw==
-X-Gm-Message-State: AOJu0Yx/n2VBS02uF8Sosj0asD7KXBaSbGesTDyCrhgzse3DhzdxIkj9
- 22PEbzM7ZeViVlHKzvujw7FTsLybVjnbEf1BxMfXzjyG+I2s/5Rtz5f5/3uBKY6fy7fP9YYjvpj
- XVEA=
-X-Google-Smtp-Source: AGHT+IG67OY2VscXOoo4si6QvsZohVhT+dLw5NF1CMa40glisTJpmqbX9JO8mHELJgvc13Mj3fdm0A==
-X-Received: by 2002:a05:6870:a70e:b0:24c:59f7:e840 with SMTP id
- 586e51a60fabf-24ca12039a1mr1413445fac.17.1716531338655; 
- Thu, 23 May 2024 23:15:38 -0700 (PDT)
+ bh=pvZbx7Qhc09keL1vmWRUuQcCdr8TgH4NHpQR9QL+77M=;
+ b=CiFJqdQb1xeoF/HhVu7gNduNvzdmHY8EC8bs9XUWFOqMZ9LyksynVM85B1tcXilmQL
+ D9e6kmug6jctShYmva6Ll9UeDmoM0xgM/B3mJ/5s0/vIPbzpApDobG2NesNifnu5V/2m
+ 2x0z0Uv4z7BWviONPZxdSz5Sbua5hJLKr9blikdr/hSj6x7s2VOnH5e8/S9RwERD5w4H
+ RkpA7a0GaV0VDPFM+zCo4Aum6zK/PYrgvmkiOhMn2mWOyknSayOG6woXAjawG9d50XRD
+ gbQrwCp7RXYWIQxl9kOe8LpSfb4R7dv7gNasxwoENgM5T1izaVJpv6NmHmwctD21FLaR
+ 0DIQ==
+X-Gm-Message-State: AOJu0Yx8BacyFyMXkHiCiZUhv9RxRZH9NdVnV9y3zH+ka9LULTGPlAAJ
+ K3xnCyjGHBXqFsI6sVeCwzStLb7sdWSzztN3rJ8793RGAeX1UDnbb47QEMuMG75RLtZ9Usxfkfq
+ eY9I=
+X-Google-Smtp-Source: AGHT+IE0VtEQHAXXltI1LnNBbMSVq9ysw24hlBqNXrWEtwVuuVlX69Z3K62gkYO1lVdLIRCRe8gE8g==
+X-Received: by 2002:a05:6a00:301c:b0:6ec:f712:8a69 with SMTP id
+ d2e1a72fcca58-6f8f3d6e6b3mr1647997b3a.29.1716531275758; 
+ Thu, 23 May 2024 23:14:35 -0700 (PDT)
 Received: from sunil-pc.Dlink ([106.51.188.31])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fcbea487sm516106b3a.107.2024.05.23.23.15.32
+ d2e1a72fcca58-6f8fcbea487sm516106b3a.107.2024.05.23.23.14.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 23:15:38 -0700 (PDT)
+ Thu, 23 May 2024 23:14:35 -0700 (PDT)
 From: Sunil V L <sunilvl@ventanamicro.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
@@ -80,24 +80,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Sunil V L <sunilvl@ventanamicro.com>
-Subject: [PATCH v2 11/12] tests/qtest/bios-tables-test.c: Enable basic testing
- for RISC-V
-Date: Fri, 24 May 2024 11:44:10 +0530
-Message-Id: <20240524061411.341599-12-sunilvl@ventanamicro.com>
+Subject: [PATCH v2 02/12] uefi-test-tools: Add support for python based build
+ script
+Date: Fri, 24 May 2024 11:44:01 +0530
+Message-Id: <20240524061411.341599-3-sunilvl@ventanamicro.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240524061411.341599-1-sunilvl@ventanamicro.com>
 References: <20240524061411.341599-1-sunilvl@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-oa1-x34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,58 +113,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add basic ACPI table test case for RISC-V.
+edk2-funcs.sh which is used in this Makefile, was removed in the commit
+c28a2891f3 ("edk2: update build script"). It is replaced with a python
+based script. So, update the Makefile and add the configuration file as
+required to support the python based build script.
 
 Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 ---
- tests/qtest/bios-tables-test.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ tests/uefi-test-tools/Makefile               | 19 +++----
+ tests/uefi-test-tools/uefi-test-build.config | 52 ++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 12 deletions(-)
+ create mode 100644 tests/uefi-test-tools/uefi-test-build.config
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index c73174ad00..880435a5fa 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1935,6 +1935,29 @@ static void test_acpi_microvm_acpi_erst(void)
- }
- #endif /* CONFIG_POSIX */
+diff --git a/tests/uefi-test-tools/Makefile b/tests/uefi-test-tools/Makefile
+index 0c003f2877..f4eaebd8ff 100644
+--- a/tests/uefi-test-tools/Makefile
++++ b/tests/uefi-test-tools/Makefile
+@@ -12,7 +12,7 @@
  
-+static void test_acpi_riscv64_virt_tcg(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "riscv64",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
-+        .ram_start = 0x80000000ULL,
-+        .scan_len = 128ULL * 1024 * 1024,
-+    };
+ edk2_dir              := ../../roms/edk2
+ images_dir            := ../data/uefi-boot-images
+-emulation_targets     := arm aarch64 i386 x86_64
++emulation_targets     := arm aarch64 i386 x86_64 riscv64
+ uefi_binaries         := bios-tables-test
+ intermediate_suffixes := .efi .fat .iso.raw
+ 
+@@ -56,7 +56,8 @@ Build/%.iso.raw: Build/%.fat
+ # stripped from, the argument.
+ map_arm_to_uefi     = $(subst arm,ARM,$(1))
+ map_aarch64_to_uefi = $(subst aarch64,AA64,$(call map_arm_to_uefi,$(1)))
+-map_i386_to_uefi    = $(subst i386,IA32,$(call map_aarch64_to_uefi,$(1)))
++map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_aarch64_to_uefi,$(1)))
++map_i386_to_uefi    = $(subst i386,IA32,$(call map_riscv64_to_uefi,$(1)))
+ map_x86_64_to_uefi  = $(subst x86_64,X64,$(call map_i386_to_uefi,$(1)))
+ map_to_uefi         = $(subst .,,$(call map_x86_64_to_uefi,$(1)))
+ 
+@@ -70,7 +71,7 @@ Build/%.fat: Build/%.efi
+ 	uefi_bin_b=$$(stat --format=%s -- $<) && \
+ 		uefi_fat_kb=$$(( (uefi_bin_b * 11 / 10 + 1023) / 1024 )) && \
+ 		uefi_fat_kb=$$(( uefi_fat_kb >= 64 ? uefi_fat_kb : 64 )) && \
+-		mkdosfs -C $@ -n $(basename $(@F)) -- $$uefi_fat_kb
++		mkdosfs -C $@ -n "bios-test" -- $$uefi_fat_kb
+ 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI
+ 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI/BOOT
+ 	MTOOLS_SKIP_CHECK=1 mcopy -i $@ -- $< \
+@@ -95,15 +96,9 @@ Build/%.fat: Build/%.efi
+ # we must mark the recipe manually as recursive, by using the "+" indicator.
+ # This way, when the inner "make" starts a parallel build of the target edk2
+ # module, it can communicate with the outer "make"'s job server.
+-Build/bios-tables-test.%.efi: build-edk2-tools
+-	+./build.sh $(edk2_dir) BiosTablesTest $* $@
+-
+-build-edk2-tools:
+-	cd $(edk2_dir)/BaseTools && git submodule update --init --force
+-	$(MAKE) -C $(edk2_dir)/BaseTools \
+-		PYTHON_COMMAND=$${EDK2_PYTHON_COMMAND:-python3} \
+-		EXTRA_OPTFLAGS='$(EDK2_BASETOOLS_OPTFLAGS)' \
+-		EXTRA_LDFLAGS='$(EDK2_BASETOOLS_LDFLAGS)'
++Build/bios-tables-test.%.efi:
++	$(PYTHON) ../../roms/edk2-build.py --config uefi-test-build.config \
++		--match $*
+ 
+ clean:
+ 	rm -rf Build Conf log
+diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
+new file mode 100644
+index 0000000000..1f389ae541
+--- /dev/null
++++ b/tests/uefi-test-tools/uefi-test-build.config
+@@ -0,0 +1,52 @@
++[global]
++core = ../../roms/edk2
 +
-+    /*
-+     * RHCT will have ISA string encoded. To reduce the effort
-+     * of updating expected AML file for any new default ISA extension,
-+     * use the profile rva22s64.
-+     */
-+    test_acpi_one("-cpu rva22s64 -device virtio-blk-device,drive=hd0 "
-+                  "-drive file=tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2,id=hd0",
-+                  &data);
-+    free_test_data(&data);
-+}
++####################################################################################
++# arm
 +
- static void test_acpi_aarch64_virt_tcg(void)
- {
-     test_data data = {
-@@ -2404,6 +2427,10 @@ int main(int argc, char *argv[])
-                 qtest_add_func("acpi/virt/viot", test_acpi_aarch64_virt_viot);
-             }
-         }
-+    } else if (strcmp(arch, "riscv64") == 0) {
-+        if (has_tcg && qtest_has_device("virtio-blk-pci")) {
-+            qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
-+        }
-     }
-     ret = g_test_run();
-     boot_sector_cleanup(disk);
++[build.arm]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = ARM
++cpy1 = ARM/BiosTablesTest.efi  bios-tables-test.arm.efi
++
++####################################################################################
++# aarch64
++
++[build.aarch64]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = AARCH64
++cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
++
++####################################################################################
++# riscv64
++
++[build.riscv]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = RISCV64
++cpy1 = RISCV64/BiosTablesTest.efi  bios-tables-test.riscv64.efi
++
++####################################################################################
++# ia32
++
++[build.ia32]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = IA32
++cpy1 = IA32/BiosTablesTest.efi  bios-tables-test.i386.efi
++
++####################################################################################
++# x64
++
++[build.x64]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = X64
++cpy1 = X64/BiosTablesTest.efi  bios-tables-test.x86_64.efi
 -- 
 2.40.1
 
