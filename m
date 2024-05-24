@@ -4,65 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FE3C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 11:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2940C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 11:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sATAh-00083D-S3; Fri, 24 May 2024 07:33:15 -0400
+	id 1sATFX-0002rE-Ar; Fri, 24 May 2024 07:38:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAd-00080s-Eu; Fri, 24 May 2024 07:33:12 -0400
-Received: from dedi548.your-server.de ([85.10.215.148])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAZ-000860-NQ; Fri, 24 May 2024 07:33:10 -0400
-Received: from sslproxy02.your-server.de ([78.47.166.47])
- by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAT-000HaL-1q; Fri, 24 May 2024 13:33:01 +0200
-Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
- by sslproxy02.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAU-000A8R-0p; Fri, 24 May 2024 13:33:01 +0200
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 214D74801F5;
- Fri, 24 May 2024 13:33:01 +0200 (CEST)
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id DQ-hZ0HYiCjT; Fri, 24 May 2024 13:33:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id D2251480049;
- Fri, 24 May 2024 13:33:00 +0200 (CEST)
-X-Virus-Scanned: amavis at zimbra.eb.localhost
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id Mpm92T11SG3j; Fri, 24 May 2024 13:33:00 +0200 (CEST)
-Received: from zimbra.eb.localhost (unknown [192.168.96.242])
- by mail.embedded-brains.de (Postfix) with ESMTPSA id ABCBB4801E3;
- Fri, 24 May 2024 13:33:00 +0200 (CEST)
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Luc Michel <luc@lmichel.fr>
-Subject: [PATCH v2 2/2] hw/intc/arm_gic: Fix writes to GICD_ITARGETSRn
-Date: Fri, 24 May 2024 13:32:56 +0200
-Message-Id: <20240524113256.8102-3-sebastian.huber@embedded-brains.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240524113256.8102-1-sebastian.huber@embedded-brains.de>
-References: <20240524113256.8102-1-sebastian.huber@embedded-brains.de>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sATFV-0002qJ-3A
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 07:38:13 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sATFS-0000bg-EV
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 07:38:12 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-681907af6a8so640299a12.1
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 04:38:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1716550689; x=1717155489; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eHPNtf/9KE2zXS08pwcc/KMZf+/Pjc5+PlR1+CFrP0o=;
+ b=hCRm6Tfn5rBgyEbDe4U9KGsV/WYCEwcoQ2nazNMXn+iY68bqE2hwA8kKIOWdgtu4rY
+ Uzx/kWkxlJ8bG2L4vHwV9wWIG1/tWJ07YrZ1CeVcYRWusCHXd7XnJRYFDK43mpqF37/F
+ BN3ZFYJJQbXrvU0bcFpi60YNu3GyfsWKGFQ9yihhWMGkzrZVq2dz+66IASz84OLMEcTf
+ Ely+jetPLfTrxlJs1HQCJpVAAhYWB82leDenGDI8u72QxvzW4xMjRVBGfpWOnxgriF0K
+ PSAwNSX8w/A+ahgnNe7467e2t1LTzQSavMPE1oVJeqOO3wLbl0rrcV3xlPsUBAQLRyki
+ Fedw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716550689; x=1717155489;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eHPNtf/9KE2zXS08pwcc/KMZf+/Pjc5+PlR1+CFrP0o=;
+ b=PyLcYre7YoKS8PStWjChQNPdJSRKTLI3wXfPy+Ng9hFF5+eAGAU4UQLK1zuF/tPKDO
+ k/+2s5dDZFto2C3yMMUap9LBLFTI0g6TcqWGscPKGFIyHRtjIssONwcMKYETQJ/3TvKU
+ piPrxPwkhFj2WTDM5o3cBc3XNS/+xVUIZplVZtZGuOZgoHRPO9ErV5f03heC1wXZKtOI
+ xGnfBabDt7kcYohbz/MxFPbArR52hyoe2I0YzIl3Uv+z7bDiifItrcE4RD+eDOhWjCdA
+ whoVUZxr+uG2jGw554zJEf1iwcUv0uhot/T0SU/vEoo61NMglOIP6zF83tilvelzRFfe
+ fGaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQPnqxulAWH8dlav2qJNzhZwItY36DLMYhjIxL/eCTXV8erKSvjhZ6+aLHlzOMBPhwdKILf+Xyd38pz+OHCml/zdI5XZs=
+X-Gm-Message-State: AOJu0YzUt24+IPZ6/AGP1+rj/0CXCVBl/K1UmjqmFRQnrRAfimRioa1/
+ 7+GtahgrwmocneKDFYjLBp29J5JeTSpFaWiNNllZOAHb9bpx1OBGuBAMy42/kL6poUptOrl0pRR
+ V
+X-Google-Smtp-Source: AGHT+IGhVLSLHmViFvfbSO4jM2d1/9T+mbsOFmIFzG/j/w7ViFRVkRlku9umVTGX7JKDm02P63vVJw==
+X-Received: by 2002:a05:6a20:d42a:b0:1af:d153:b76a with SMTP id
+ adf61e73a8af0-1b212d1e0a4mr2065573637.18.1716550688806; 
+ Fri, 24 May 2024 04:38:08 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.42.4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f44c9a5388sm12023195ad.220.2024.05.24.04.38.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 May 2024 04:38:08 -0700 (PDT)
+Message-ID: <0b1e0da4-647f-40cc-918b-e1a549e0cc58@ventanamicro.com>
+Date: Fri, 24 May 2024 08:38:04 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Authenticated-Sender: smtp-embedded@poldi-networks.de
-X-Virus-Scanned: Clear (ClamAV 1.0.3/27285/Fri May 24 10:30:55 2024)
-Received-SPF: pass client-ip=85.10.215.148;
- envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/6] target/riscv: Enable zabha for max cpu
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
+ bmeng.cn@gmail.com, liwei1518@gmail.com
+References: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
+ <20240523124045.1964-6-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240523124045.1964-6-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,43 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the GICv2 specification section 4.3.12, "Interrupt Processor
-Targets Registers, GICD_ITARGETSRn":
 
-"Any change to a CPU targets field value:
-[...]
-* Has an effect on any pending interrupts. This means:
-  - adding a CPU interface to the target list of a pending interrupt make=
-s that
-    interrupt pending on that CPU interface
-  - removing a CPU interface from the target list of a pending interrupt
-    removes the pending state of that interrupt on that CPU interface."
 
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
----
- hw/intc/arm_gic.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+On 5/23/24 09:40, LIU Zhiwei wrote:
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+>   target/riscv/cpu.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 21d4e36405..9ec03a1edc 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -118,6 +118,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+>       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>       ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_12_0, ext_zama16b),
+> +    ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_12_0, ext_zabha),
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index 241255081d..1f9bffc88c 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -1410,6 +1410,13 @@ static void gic_dist_writeb(void *opaque, hwaddr o=
-ffset,
-                 value =3D ALL_CPU_MASK;
-             }
-             s->irq_target[irq] =3D value & ALL_CPU_MASK;
-+            if (irq >=3D GIC_INTERNAL && s->irq_state[irq].pending) {
-+                /*
-+                 * Changing the target of an interrupt that is currently
-+                 * pending updates the set of CPUs it is pending on.
-+                 */
-+                s->irq_state[irq].pending =3D value & ALL_CPU_MASK;
-+            }
-         }
-     } else if (offset < 0xf00) {
-         /* Interrupt Configuration.  */
---=20
-2.35.3
+I think this should be place right after zaamo. Thanks,
 
+
+Daniel
+
+>       ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+>       ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+>       ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+> @@ -1470,6 +1471,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>       MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
+>       MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+>       MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
+> +    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
+>       MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+>       MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+>       MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
 
