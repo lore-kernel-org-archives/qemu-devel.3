@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2940C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 11:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3615DC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 11:45:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sATFX-0002rE-Ar; Fri, 24 May 2024 07:38:15 -0400
+	id 1sATMH-0004xc-6d; Fri, 24 May 2024 07:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sATFV-0002qJ-3A
- for qemu-devel@nongnu.org; Fri, 24 May 2024 07:38:13 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1sATMB-0004vn-F4
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 07:45:09 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sATFS-0000bg-EV
- for qemu-devel@nongnu.org; Fri, 24 May 2024 07:38:12 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-681907af6a8so640299a12.1
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 04:38:10 -0700 (PDT)
+ id 1sATM8-0001iE-2v
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 07:45:07 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6f8ec7e054bso721595b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 04:45:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716550689; x=1717155489; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1716551100; x=1717155900; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eHPNtf/9KE2zXS08pwcc/KMZf+/Pjc5+PlR1+CFrP0o=;
- b=hCRm6Tfn5rBgyEbDe4U9KGsV/WYCEwcoQ2nazNMXn+iY68bqE2hwA8kKIOWdgtu4rY
- Uzx/kWkxlJ8bG2L4vHwV9wWIG1/tWJ07YrZ1CeVcYRWusCHXd7XnJRYFDK43mpqF37/F
- BN3ZFYJJQbXrvU0bcFpi60YNu3GyfsWKGFQ9yihhWMGkzrZVq2dz+66IASz84OLMEcTf
- Ely+jetPLfTrxlJs1HQCJpVAAhYWB82leDenGDI8u72QxvzW4xMjRVBGfpWOnxgriF0K
- PSAwNSX8w/A+ahgnNe7467e2t1LTzQSavMPE1oVJeqOO3wLbl0rrcV3xlPsUBAQLRyki
- Fedw==
+ bh=a5tlHD8Yz3P5Pg+gzt5QRldJ3RVCiwb9EinU6f4f46w=;
+ b=HJlQDoNbOkjCrKnxzMBG0f/YmT1IzOJsi9pZwyC0uekCO5h/neZ6bdbPajf5CzXgIl
+ xTyzyFggezncXSDIOgFJiyD29Oxheu5nHoF7u3IS/KM5JcvfapiEG3fr43VAQDaZlksb
+ 49SRky0+PoGvOKZ3lAsI+vJR98p9/e3b+hhmKlp0CDMMwO9dVOoFDiq3MotXAbqI4K7u
+ RXLkl4qKG49Dafvrv33aDN0vvi7ao9pRNkdcn3uAAKzirFsGNdQKG1jjxENqKdRj+g3M
+ Ndmmtk/SjYtfqtnIHa1elVqbjK3KYczPriOUWBRVlEwQcapbgU1EeNkRTgX9qTdGqqkG
+ DQkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716550689; x=1717155489;
+ d=1e100.net; s=20230601; t=1716551100; x=1717155900;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eHPNtf/9KE2zXS08pwcc/KMZf+/Pjc5+PlR1+CFrP0o=;
- b=PyLcYre7YoKS8PStWjChQNPdJSRKTLI3wXfPy+Ng9hFF5+eAGAU4UQLK1zuF/tPKDO
- k/+2s5dDZFto2C3yMMUap9LBLFTI0g6TcqWGscPKGFIyHRtjIssONwcMKYETQJ/3TvKU
- piPrxPwkhFj2WTDM5o3cBc3XNS/+xVUIZplVZtZGuOZgoHRPO9ErV5f03heC1wXZKtOI
- xGnfBabDt7kcYohbz/MxFPbArR52hyoe2I0YzIl3Uv+z7bDiifItrcE4RD+eDOhWjCdA
- whoVUZxr+uG2jGw554zJEf1iwcUv0uhot/T0SU/vEoo61NMglOIP6zF83tilvelzRFfe
- fGaw==
+ bh=a5tlHD8Yz3P5Pg+gzt5QRldJ3RVCiwb9EinU6f4f46w=;
+ b=B1dlOD1YkEQPfxAuO9zRXr1iSayzJeDfj5aO62iSGEKs6vjNcsIkV7oann+LKFHqVv
+ cTubdP0wNA4x9NiPE/QjGJYiRebmASGkhv3iculrhyca0h3HG+OlB9RkCoT/j97lXh4k
+ 6uRb5O6nUDRC326W2SoypWIUa2oHDaDpl0ssKSoXClW8nQbPV4Tq8CPgBQ0qzUHxBss9
+ pcEDeDOkFt4ZG9OMlb5Zd4PnrBh8TO24+RS+UbzApfA+ysJi5YWbmuw3x5oPc3Jz5pnU
+ 9SuezX/k7Xx82MtszXSRxDB5OsZ2QZ69VUwvFj6BfmKoDwh9JvAo0nezHSRhYRIU1Ehg
+ 0lJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQPnqxulAWH8dlav2qJNzhZwItY36DLMYhjIxL/eCTXV8erKSvjhZ6+aLHlzOMBPhwdKILf+Xyd38pz+OHCml/zdI5XZs=
-X-Gm-Message-State: AOJu0YzUt24+IPZ6/AGP1+rj/0CXCVBl/K1UmjqmFRQnrRAfimRioa1/
- 7+GtahgrwmocneKDFYjLBp29J5JeTSpFaWiNNllZOAHb9bpx1OBGuBAMy42/kL6poUptOrl0pRR
- V
-X-Google-Smtp-Source: AGHT+IGhVLSLHmViFvfbSO4jM2d1/9T+mbsOFmIFzG/j/w7ViFRVkRlku9umVTGX7JKDm02P63vVJw==
-X-Received: by 2002:a05:6a20:d42a:b0:1af:d153:b76a with SMTP id
- adf61e73a8af0-1b212d1e0a4mr2065573637.18.1716550688806; 
- Fri, 24 May 2024 04:38:08 -0700 (PDT)
+ AJvYcCVwsSOTqbTzOtL3l8dg+ljPQen5++wjDYnLxhc3SZ5M34J/O5FZCxw4UQDG7etEPjyCs0kkc/0uNfdnoWYKSq1S+4o39bw=
+X-Gm-Message-State: AOJu0YytKf3/WX/T1/3vbO/HkWWxh3nrn9Q/8YhZdMafAGFT1TXVSUmu
+ cSviiar9MtfG0DxIWwNnp6k2j5vITXu8tYIywcFii5qym0+o3TwjWDRRbXyb3fw=
+X-Google-Smtp-Source: AGHT+IF4K7A9sWr9/okEqrf1h6PN56PFTbwwE869AqJsBoO+ahB3YB+ydpPuPsts+5Pd+cPqfM0Xzg==
+X-Received: by 2002:a05:6a21:6da3:b0:1b0:180b:218a with SMTP id
+ adf61e73a8af0-1b212ccf871mr2666930637.13.1716551100505; 
+ Fri, 24 May 2024 04:45:00 -0700 (PDT)
 Received: from [192.168.68.110] ([177.94.42.4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c9a5388sm12023195ad.220.2024.05.24.04.38.06
+ d2e1a72fcca58-6f8fbd3eaeesm950027b3a.43.2024.05.24.04.44.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 May 2024 04:38:08 -0700 (PDT)
-Message-ID: <0b1e0da4-647f-40cc-918b-e1a549e0cc58@ventanamicro.com>
-Date: Fri, 24 May 2024 08:38:04 -0300
+ Fri, 24 May 2024 04:45:00 -0700 (PDT)
+Message-ID: <8cc80b22-d159-4c8a-8860-30d229bae8d6@ventanamicro.com>
+Date: Fri, 24 May 2024 08:44:56 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] target/riscv: Enable zabha for max cpu
+Subject: Re: [PATCH 0/6] target/riscv: Support Zabha extension
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
  bmeng.cn@gmail.com, liwei1518@gmail.com
 References: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
- <20240523124045.1964-6-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240523124045.1964-6-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,38 +98,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhiwei!
+
 
 
 On 5/23/24 09:40, LIU Zhiwei wrote:
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
->   target/riscv/cpu.c | 2 ++
->   1 file changed, 2 insertions(+)
+> Zabha adds support AMO operations for byte and half word. If zacas has been implemented,
+> zabha also adds support amocas.b and amocas.h.
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 21d4e36405..9ec03a1edc 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -118,6 +118,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
->       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
->       ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_12_0, ext_zama16b),
-> +    ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_12_0, ext_zabha),
+> More details is on the specification here:
+> https://github.com/riscv/riscv-zabha
+> 
+> The implemenation of zabha follows the way of AMOs and zacas.
+> 
+> This patch set is based on these two patch set:
+> 1. https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00207.html
+> 2. https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00212.html
 
-I think this should be place right after zaamo. Thanks,
+These 2 series doesn't seem to apply on top of each other, doesn't matter which
+order I try. Applying zimop/zcmop first, then zama16b:
 
+$ git am \[PATCH\ 1_1\]\ target_riscv\:\ Support\ Zama16b\ extension\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0613.eml
+Applying: target/riscv: Support Zama16b extension
+error: patch failed: target/riscv/cpu.c:1464
+error: target/riscv/cpu.c: patch does not apply
+Patch failed at 0001 target/riscv: Support Zama16b extension
+hint: Use 'git am --show-current-patch=diff' to see the failed patch
+
+
+Applying zama16b first, then zimop/zcmop:
+
+$ git am \[PATCH\ 1_1\]\ target_riscv\:\ Support\ Zama16b\ extension\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0613.eml
+Applying: target/riscv: Support Zama16b extension
+$
+$ git am \[PATCH\ 1_4\]\ target_riscv\:\ Add\ zimop\ extension\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0329.eml \[PATCH\ 2_4\]\ disas_riscv\:\ Support\ zimop\ disassemble\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0329.eml
+Applying: target/riscv: Add zimop extension
+error: patch failed: target/riscv/cpu.c:1463
+error: target/riscv/cpu.c: patch does not apply
+Patch failed at 0001 target/riscv: Add zimop extension
+
+
+If the series are dependent on each other perhaps it's easier to send everything
+in a single 11 patches series.
+
+
+Thanks,
 
 Daniel
 
->       ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
->       ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
->       ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-> @@ -1470,6 +1471,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
->       MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
->       MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
-> +    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
->       MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
->       MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
->       MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
+> 
+> 
+> LIU Zhiwei (6):
+>    target/riscv: Move gen_amo before implement Zabha
+>    target/riscv: Add AMO instructions for Zabha
+>    target/riscv: Move gen_cmpxchg before adding amocas.[b|h]
+>    target/riscv: Add amocas.[b|h] for Zabha
+>    target/riscv: Enable zabha for max cpu
+>    disas/riscv: Support zabha disassemble
+> 
+>   disas/riscv.c                               |  60 ++++++++
+>   target/riscv/cpu.c                          |   2 +
+>   target/riscv/cpu_cfg.h                      |   1 +
+>   target/riscv/insn32.decode                  |  22 +++
+>   target/riscv/insn_trans/trans_rva.c.inc     |  21 ---
+>   target/riscv/insn_trans/trans_rvzabha.c.inc | 145 ++++++++++++++++++++
+>   target/riscv/insn_trans/trans_rvzacas.c.inc |  13 --
+>   target/riscv/translate.c                    |  36 +++++
+>   8 files changed, 266 insertions(+), 34 deletions(-)
+>   create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
+> 
 
