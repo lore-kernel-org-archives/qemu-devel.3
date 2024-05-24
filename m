@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8876EC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 17:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B58DAC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 17:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAYPF-0008De-Iu; Fri, 24 May 2024 13:08:38 -0400
+	id 1sAYPJ-0008EO-4D; Fri, 24 May 2024 13:08:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYPD-0008Au-Pp
- for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:35 -0400
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYPF-0008Dh-VG
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:38 -0400
+Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYP0-0007ZJ-9M
- for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:34 -0400
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5b970e90ab8so545702eaf.3
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 10:08:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYP1-0007ZY-8c
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:37 -0400
+Received: by mail-qk1-x72d.google.com with SMTP id
+ af79cd13be357-792ce7a1febso302876585a.1
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 10:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=cs.unc.edu; s=google; t=1716570500; x=1717175300; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vZ8Olop5o69sFhCXF1Pjbx8bqbvvoRclKjZlHZw/Olk=;
- b=Nofx2K8eVtVzcMPdZKlblefuEWoHwpxljcm7mQdHjRbSwDlN2hzUZbj0QdSvK5Rqf+
- 54PAybrbQ0FBKnDJTQ6eyrMupTggAZRyuQS6nRUpUL5LPjlxtjFzAX9+ntwtEmfXFxv2
- qkfYpVvlKhV5eq051WnJQ8AEuZGUGHAureG9kHKQLZZb6J3Xsoql8nhVMCmWAjsxXcjd
- MZ1vn8cX4L8gcidyZGQvc8wSjXHAD0S6cYbjL02B5rKmVmS00evWgXqvBaHM1v6uua7r
- XeIkzgvFaPQLpjN/ffp1bUFsAsjAhAzS5jkteXWKWT5bhp85/dyRtVD0migMwZ0QkmZu
- xLOQ==
+ bh=m81ihihXbX3dByguU9U1kCLKTPvRq+pYAv8JMDaNtfI=;
+ b=lDjHxtdo37VGpiRGcxZTiKY2H6/IIovmSt5z5j5THJN5ZRdIZjIfuu3VWm4DvC22Cs
+ CaG1INUdqKDfA5L417PpEhcBX9KdhOjkfl3v2wQ2AjmSvdz8oYLjuLMpVrVfPxTgfi/e
+ oDypGmyY5wu1rbtlX0csTPRIiOctYkOCLaz+hpP7fCPf6nyFJCViQyjFIcsz3PMDPJKx
+ 0HBzHImcpgbzNjmadMVN7EV4gdNsQ7QzU6DSqbJ+tg96TeWx2IvgUI3MKEw52RyEcZK6
+ AqsrLWD2r3+MmIavmE3AkKHz32SDdXXb8K/+OXvz7Bd6EugpSIHwDd+W3KAyx5/GwyJG
+ VPvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1716570500; x=1717175300;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vZ8Olop5o69sFhCXF1Pjbx8bqbvvoRclKjZlHZw/Olk=;
- b=AXSKn083DrY4HTi+zd3kjNM2oz0cJQzcNCtR3XHul2FBtR5ER1pD3U+H/+B7k2uCay
- mMbidHZUpU/sY9nhsDCKwQUZAkAshSXPM4YMRYi37OFqVxRqezAjQ5ngMRwOu3Id9mA7
- jEdG9r58mBbaG2yR2l/gY6/rP+94EsdvogYM8NhsC8uV6TFOOfs5t54KwUBhJdf2butZ
- uisIczCzRGbC5CVc/Fhedg3w4pgKvMzVQgvzDuBHThWKRYVsnflmUI//2aZh1x3n6zfe
- Zt8LYayrG/30eDLZdr/TQFgRw9IjrG+UjyckFt+QHYI8IQUKYgdEDfBYsvUSjPaI3B1A
- ro6g==
-X-Gm-Message-State: AOJu0YzjUXuSE7oZgpOjwYlbuQvetL82pCajNSZx5CMJiZ5rPD5lCkS3
- 0jiyUszzMbGkYiAIX+5q6xkfnp3hQYv9wLjB2vamKJrg67HQ/Mbu79tAHS03qoy496U917envBY
- i9NcHErXekeAo4lkZ66FwE2s73amiOBKONld8fmnJSCHMkVoW8RlsCkVBgjyTTuLj4foxjXTDxj
- yAawNMajt27c/7Sp6AydYxYAyLW2pt
-X-Google-Smtp-Source: AGHT+IFpZbYWaGtT8DCg7Sxrq7kn4BgI01hLZGnadnHCOMddJqfq4RD1tOyGvmh5PLIOOaR40kxV0A==
-X-Received: by 2002:a05:6359:684:b0:17f:7206:fd81 with SMTP id
- e5c5f4694b2df-197e545496bmr341488055d.20.1716570499125; 
- Fri, 24 May 2024 10:08:19 -0700 (PDT)
+ bh=m81ihihXbX3dByguU9U1kCLKTPvRq+pYAv8JMDaNtfI=;
+ b=oCRcwvEjs6DbPiIj/kvEI+Fwwkr2Ly4xLosj1HvUjB8H3+jHyZGCbMJAWnwKJd9XR7
+ lezk7abNa5QidEt7CMfzIb0Y9rPT6kqj2pNuWeKd7nWcoCAfGv1kXs3i9DBqouywtSAV
+ Larz1J1xlvm05jBbcJcQhGh4Y+FDa+cT1rQtShuuqGazjVsa5WReE+Zkno3Xk66l+aon
+ wKWwUfHtvV+0rMyvuulHklF0lhXysprBEpe9ReQjFzBBD4ZVblfm2wbFfF5VxgbVqm+z
+ dkiW4QaerHeKhb/gr/tcjzmaI07p3Ht6ZP0uMLdFuaaPcANZZhhd8T2I6kFqhbiewj/j
+ c/Vg==
+X-Gm-Message-State: AOJu0Ywuun+U6Zn+TM/SY7VNrNAA+7qedPSpLcNbSN5vV+ohFNgGUsWE
+ /1GdB5z2vm53MShfdQpUHAJIMWUUb+LeR2W+jmap4L0Iv6uErFIl5Ow9Ok3ugtoSoIbhZAK673m
+ QfGfdYEuLV+1FMrAfe87/uN0plCfuDOPg3mhmHvlAwKVmvGsGS/kCJ7Rhkk17/G6QdTSSKdo4mu
+ vwMZCSRH/hECedwyEm/re/jvONjlXP
+X-Google-Smtp-Source: AGHT+IGLBU+ZWY5gA2oRUcMCo7SpAXOG50Pz6Zevh0sIkShivp2aubSlilcR3VNwqmfbon9kwtjfYg==
+X-Received: by 2002:a05:620a:c4b:b0:792:c2b7:5fd6 with SMTP id
+ af79cd13be357-794ab110c21mr339397885a.50.1716570500099; 
+ Fri, 24 May 2024 10:08:20 -0700 (PDT)
 Received: from kermit.cs.unc.edu (kermit.cs.unc.edu. [152.2.133.133])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794abcc0f0fsm79816585a.38.2024.05.24.10.08.18
+ af79cd13be357-794abcc0f0fsm79816585a.38.2024.05.24.10.08.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 10:08:18 -0700 (PDT)
+ Fri, 24 May 2024 10:08:19 -0700 (PDT)
 From: Don Porter <porter@cs.unc.edu>
 To: qemu-devel@nongnu.org
 Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
  richard.henderson@linaro.org, Don Porter <porter@cs.unc.edu>
-Subject: [PATCH v2 5/6] Move tcg implementation of x86 get_physical_address
- into common helper code.
-Date: Fri, 24 May 2024 13:07:47 -0400
-Message-Id: <20240524170748.1842030-6-porter@cs.unc.edu>
+Subject: [PATCH v2 6/6] Convert x86_mmu_translate() to use common code.
+Date: Fri, 24 May 2024 13:07:48 -0400
+Message-Id: <20240524170748.1842030-7-porter@cs.unc.edu>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240524170748.1842030-1-porter@cs.unc.edu>
 References: <ZiKkWCjreGOMFX5p@gallifrey>
  <20240524170748.1842030-1-porter@cs.unc.edu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=porter@cs.unc.edu; helo=mail-oo1-xc2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
+ envelope-from=porter@cs.unc.edu; helo=mail-qk1-x72d.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,745 +96,154 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Don Porter <porter@cs.unc.edu>
 ---
- target/i386/cpu.h                    |  41 ++
- target/i386/helper.c                 | 515 +++++++++++++++++++++++++
- target/i386/tcg/sysemu/excp_helper.c | 555 +--------------------------
- 3 files changed, 561 insertions(+), 550 deletions(-)
+ target/i386/arch_memory_mapping.c    |  37 ++-
+ target/i386/cpu.h                    |  11 +-
+ target/i386/helper.c                 | 371 ++++++---------------------
+ target/i386/tcg/sysemu/excp_helper.c |   2 +-
+ 4 files changed, 128 insertions(+), 293 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index fc3ae55213..39ce49e61f 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2094,6 +2094,42 @@ struct X86CPUClass {
-     ResettablePhases parent_phases;
- };
- 
-+typedef struct X86TranslateParams {
-+    target_ulong addr;
-+    target_ulong cr3;
-+    int pg_mode;
-+    int mmu_idx;
-+    int ptw_idx;
-+    MMUAccessType access_type;
-+} X86TranslateParams;
-+
-+typedef struct X86TranslateResult {
-+    hwaddr paddr;
-+    int prot;
-+    int page_size;
-+} X86TranslateResult;
-+
-+typedef enum X86TranslateFaultStage2 {
-+    S2_NONE,
-+    S2_GPA,
-+    S2_GPT,
-+} X86TranslateFaultStage2;
-+
-+typedef struct X86TranslateFault {
-+    int exception_index;
-+    int error_code;
-+    target_ulong cr2;
-+    X86TranslateFaultStage2 stage2;
-+} X86TranslateFault;
-+
-+typedef struct X86PTETranslate {
-+    CPUX86State *env;
-+    X86TranslateFault *err;
-+    int ptw_idx;
-+    void *haddr;
-+    hwaddr gaddr;
-+} X86PTETranslate;
-+
- /* Intended to become a generic PTE type */
- typedef union PTE {
-     uint64_t pte64_t;
-@@ -2137,6 +2173,11 @@ void x86_cpu_list(void);
- int cpu_x86_support_mca_broadcast(CPUX86State *env);
- 
- #ifndef CONFIG_USER_ONLY
-+bool x86_cpu_get_physical_address(CPUX86State *env, vaddr addr,
-+                                  MMUAccessType access_type, int mmu_idx,
-+                                  X86TranslateResult *out,
-+                                  X86TranslateFault *err, uint64_t ra);
-+
- hwaddr x86_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-                                          MemTxAttrs *attrs);
- int cpu_get_pic_interrupt(CPUX86State *s);
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 48d1513a35..21445e84b2 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -26,6 +26,7 @@
- #include "sysemu/hw_accel.h"
- #include "monitor/monitor.h"
- #include "kvm/kvm_i386.h"
-+#include "exec/cpu_ldst.h"
- #endif
- #include "qemu/log.h"
- #ifdef CONFIG_TCG
-@@ -227,6 +228,520 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
+diff --git a/target/i386/arch_memory_mapping.c b/target/i386/arch_memory_mapping.c
+index 040464dd34..9ea5aeff16 100644
+--- a/target/i386/arch_memory_mapping.c
++++ b/target/i386/arch_memory_mapping.c
+@@ -33,7 +33,7 @@
+  * Returns a hardware address on success.  Should not fail (i.e., caller is
+  * responsible to ensure that a page table is actually present).
+  */
+-static hwaddr mmu_page_table_root(CPUState *cs, int *height)
++hwaddr mmu_page_table_root(CPUState *cs, int *height)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+@@ -228,6 +228,35 @@ static void _mmu_decode_va_parameters(CPUState *cs, int height,
+     }
  }
  
- #if !defined(CONFIG_USER_ONLY)
-+
-+static inline uint32_t ptw_ldl(const X86PTETranslate *in, uint64_t ra)
-+{
-+    if (likely(in->haddr)) {
-+        return ldl_p(in->haddr);
-+    }
-+    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
-+}
-+
-+static inline uint64_t ptw_ldq(const X86PTETranslate *in, uint64_t ra)
-+{
-+    if (likely(in->haddr)) {
-+        return ldq_p(in->haddr);
-+    }
-+    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
-+}
-+/*
-+ * Note that we can use a 32-bit cmpxchg for all page table entries,
-+ * even 64-bit ones, because PG_PRESENT_MASK, PG_ACCESSED_MASK and
-+ * PG_DIRTY_MASK are all in the low 32 bits.
++/**
++ * mmu_virtual_to_pte_index - Given a virtual address and height in the
++ *       page table radix tree, return the index that should be used
++ *       to look up the next page table entry (pte) in translating an
++ *       address.
++ *
++ * @cs - CPU state
++ * @vaddr - The virtual address to translate
++ * @height - height of node within the tree (leaves are 1, not 0).
++ *
++ * Example: In 32-bit x86 page tables, the virtual address is split
++ * into 10 bits at height 2, 10 bits at height 1, and 12 offset bits.
++ * So a call with VA and height 2 would return the first 10 bits of va,
++ * right shifted by 22.
 + */
-+static bool ptw_setl_slow(const X86PTETranslate *in, uint32_t old, uint32_t new)
-+{
-+    uint32_t cmp;
 +
-+    /* Does x86 really perform a rmw cycle on mmio for ptw? */
-+    start_exclusive();
-+    cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
-+    if (cmp == old) {
-+        cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
-+    }
-+    end_exclusive();
-+    return cmp == old;
++int mmu_virtual_to_pte_index(CPUState *cs, target_ulong vaddr, int height)
++{
++    int shift = 0;
++    int width = 0;
++    int mask = 0;
++
++    _mmu_decode_va_parameters(cs, height, &shift, &width);
++
++    mask = (1 << width) - 1;
++
++    return (vaddr >> shift) & mask;
 +}
 +
-+static inline bool ptw_setl(const X86PTETranslate *in, uint32_t old,
-+                            uint32_t set)
-+{
-+    if (set & ~old) {
-+        uint32_t new = old | set;
-+        if (likely(in->haddr)) {
-+            old = cpu_to_le32(old);
-+            new = cpu_to_le32(new);
-+            return qatomic_cmpxchg((uint32_t *)in->haddr, old, new) == old;
-+        }
-+        return ptw_setl_slow(in, old, new);
-+    }
-+    return true;
-+}
-+
-+
-+static bool ptw_translate(X86PTETranslate *inout, hwaddr addr, uint64_t ra)
-+{
-+    CPUTLBEntryFull *full;
-+    int flags;
-+
-+    inout->gaddr = addr;
-+    flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
-+                              inout->ptw_idx, true, &inout->haddr, &full, ra);
-+
-+    if (unlikely(flags & TLB_INVALID_MASK)) {
-+        X86TranslateFault *err = inout->err;
-+
-+        assert(inout->ptw_idx == MMU_NESTED_IDX);
-+        *err = (X86TranslateFault){
-+            .error_code = inout->env->error_code,
-+            .cr2 = addr,
-+            .stage2 = S2_GPT,
-+        };
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static bool x86_mmu_translate(CPUX86State *env, const X86TranslateParams *in,
-+                              X86TranslateResult *out,
-+                              X86TranslateFault *err, uint64_t ra)
-+{
-+    const target_ulong addr = in->addr;
-+    const int pg_mode = in->pg_mode;
-+    const bool is_user = is_mmu_index_user(in->mmu_idx);
-+    const MMUAccessType access_type = in->access_type;
-+    uint64_t ptep, pte, rsvd_mask;
-+    X86PTETranslate pte_trans = {
-+        .env = env,
-+        .err = err,
-+        .ptw_idx = in->ptw_idx,
-+    };
-+    hwaddr pte_addr, paddr;
-+    uint32_t pkr;
-+    int page_size;
-+    int error_code;
-+
-+ restart_all:
-+    rsvd_mask = ~MAKE_64BIT_MASK(0, env_archcpu(env)->phys_bits);
-+    rsvd_mask &= PG_ADDRESS_MASK;
-+    if (!(pg_mode & PG_MODE_NXE)) {
-+        rsvd_mask |= PG_NX_MASK;
-+    }
-+
-+    if (pg_mode & PG_MODE_PAE) {
-+#ifdef TARGET_X86_64
-+        if (pg_mode & PG_MODE_LMA) {
-+            if (pg_mode & PG_MODE_LA57) {
-+                /*
-+                 * Page table level 5
-+                 */
-+                pte_addr = (in->cr3 & ~0xfff) + (((addr >> 48) & 0x1ff) << 3);
-+                if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+                    return false;
-+                }
-+            restart_5:
-+                pte = ptw_ldq(&pte_trans, ra);
-+                if (!(pte & PG_PRESENT_MASK)) {
-+                    goto do_fault;
-+                }
-+                if (pte & (rsvd_mask | PG_PSE_MASK)) {
-+                    goto do_fault_rsvd;
-+                }
-+                if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
-+                    goto restart_5;
-+                }
-+                ptep = pte ^ PG_NX_MASK;
-+            } else {
-+                pte = in->cr3;
-+                ptep = PG_NX_MASK | PG_USER_MASK | PG_RW_MASK;
-+            }
-+
-+            /*
-+             * Page table level 4
-+             */
-+            pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 39) & 0x1ff) << 3);
-+            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+                return false;
-+            }
-+        restart_4:
-+            pte = ptw_ldq(&pte_trans, ra);
-+            if (!(pte & PG_PRESENT_MASK)) {
-+                goto do_fault;
-+            }
-+            if (pte & (rsvd_mask | PG_PSE_MASK)) {
-+                goto do_fault_rsvd;
-+            }
-+            if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
-+                goto restart_4;
-+            }
-+            ptep &= pte ^ PG_NX_MASK;
-+
-+            /*
-+             * Page table level 3
-+             */
-+            pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 30) & 0x1ff) << 3);
-+            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+                return false;
-+            }
-+        restart_3_lma:
-+            pte = ptw_ldq(&pte_trans, ra);
-+            if (!(pte & PG_PRESENT_MASK)) {
-+                goto do_fault;
-+            }
-+            if (pte & rsvd_mask) {
-+                goto do_fault_rsvd;
-+            }
-+            if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
-+                goto restart_3_lma;
-+            }
-+            ptep &= pte ^ PG_NX_MASK;
-+            if (pte & PG_PSE_MASK) {
-+                /* 1 GB page */
-+                page_size = 1024 * 1024 * 1024;
-+                goto do_check_protect;
-+            }
-+        } else
-+#endif
-+        {
-+            /*
-+             * Page table level 3
-+             */
-+            pte_addr = (in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18);
-+            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+                return false;
-+            }
-+            rsvd_mask |= PG_HI_USER_MASK;
-+        restart_3_nolma:
-+            pte = ptw_ldq(&pte_trans, ra);
-+            if (!(pte & PG_PRESENT_MASK)) {
-+                goto do_fault;
-+            }
-+            if (pte & (rsvd_mask | PG_NX_MASK)) {
-+                goto do_fault_rsvd;
-+            }
-+            if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
-+                goto restart_3_nolma;
-+            }
-+            ptep = PG_NX_MASK | PG_USER_MASK | PG_RW_MASK;
-+        }
-+
-+        /*
-+         * Page table level 2
-+         */
-+        pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 21) & 0x1ff) << 3);
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            return false;
-+        }
-+    restart_2_pae:
-+        pte = ptw_ldq(&pte_trans, ra);
-+        if (!(pte & PG_PRESENT_MASK)) {
-+            goto do_fault;
-+        }
-+        if (pte & rsvd_mask) {
-+            goto do_fault_rsvd;
-+        }
-+        if (pte & PG_PSE_MASK) {
-+            /* 2 MB page */
-+            page_size = 2048 * 1024;
-+            ptep &= pte ^ PG_NX_MASK;
-+            goto do_check_protect;
-+        }
-+        if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
-+            goto restart_2_pae;
-+        }
-+        ptep &= pte ^ PG_NX_MASK;
-+
-+        /*
-+         * Page table level 1
-+         */
-+        pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 12) & 0x1ff) << 3);
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            return false;
-+        }
-+        pte = ptw_ldq(&pte_trans, ra);
-+        if (!(pte & PG_PRESENT_MASK)) {
-+            goto do_fault;
-+        }
-+        if (pte & rsvd_mask) {
-+            goto do_fault_rsvd;
-+        }
-+        /* combine pde and pte nx, user and rw protections */
-+        ptep &= pte ^ PG_NX_MASK;
-+        page_size = 4096;
-+    } else {
-+        /*
-+         * Page table level 2
-+         */
-+        pte_addr = (in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc);
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            return false;
-+        }
-+    restart_2_nopae:
-+        pte = ptw_ldl(&pte_trans, ra);
-+        if (!(pte & PG_PRESENT_MASK)) {
-+            goto do_fault;
-+        }
-+        ptep = pte | PG_NX_MASK;
-+
-+        /* if PSE bit is set, then we use a 4MB page */
-+        if ((pte & PG_PSE_MASK) && (pg_mode & PG_MODE_PSE)) {
-+            page_size = 4096 * 1024;
-+            /*
-+             * Bits 20-13 provide bits 39-32 of the address, bit 21 is reserved.
-+             * Leave bits 20-13 in place for setting accessed/dirty bits below.
-+             */
-+            pte = (uint32_t)pte | ((pte & 0x1fe000LL) << (32 - 13));
-+            rsvd_mask = 0x200000;
-+            goto do_check_protect_pse36;
-+        }
-+        if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
-+            goto restart_2_nopae;
-+        }
-+
-+        /*
-+         * Page table level 1
-+         */
-+        pte_addr = (pte & ~0xfffu) + ((addr >> 10) & 0xffc);
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            return false;
-+        }
-+        pte = ptw_ldl(&pte_trans, ra);
-+        if (!(pte & PG_PRESENT_MASK)) {
-+            goto do_fault;
-+        }
-+        /* combine pde and pte user and rw protections */
-+        ptep &= pte | PG_NX_MASK;
-+        page_size = 4096;
-+        rsvd_mask = 0;
-+    }
-+
-+do_check_protect:
-+    rsvd_mask |= (page_size - 1) & PG_ADDRESS_MASK & ~PG_PSE_PAT_MASK;
-+do_check_protect_pse36:
-+    if (pte & rsvd_mask) {
-+        goto do_fault_rsvd;
-+    }
-+    ptep ^= PG_NX_MASK;
-+
-+    /* can the page can be put in the TLB?  prot will tell us */
-+    if (is_user && !(ptep & PG_USER_MASK)) {
-+        goto do_fault_protect;
-+    }
-+
-+    int prot = 0;
-+    if (!is_mmu_index_smap(in->mmu_idx) || !(ptep & PG_USER_MASK)) {
-+        prot |= PAGE_READ;
-+        if ((ptep & PG_RW_MASK) || !(is_user || (pg_mode & PG_MODE_WP))) {
-+            prot |= PAGE_WRITE;
-+        }
-+    }
-+    if (!(ptep & PG_NX_MASK) &&
-+        (is_user ||
-+         !((pg_mode & PG_MODE_SMEP) && (ptep & PG_USER_MASK)))) {
-+        prot |= PAGE_EXEC;
-+    }
-+
-+    if (ptep & PG_USER_MASK) {
-+        pkr = pg_mode & PG_MODE_PKE ? env->pkru : 0;
-+    } else {
-+        pkr = pg_mode & PG_MODE_PKS ? env->pkrs : 0;
-+    }
-+    if (pkr) {
-+        uint32_t pk = (pte & PG_PKRU_MASK) >> PG_PKRU_BIT;
-+        uint32_t pkr_ad = (pkr >> pk * 2) & 1;
-+        uint32_t pkr_wd = (pkr >> pk * 2) & 2;
-+        uint32_t pkr_prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+
-+        if (pkr_ad) {
-+            pkr_prot &= ~(PAGE_READ | PAGE_WRITE);
-+        } else if (pkr_wd && (is_user || (pg_mode & PG_MODE_WP))) {
-+            pkr_prot &= ~PAGE_WRITE;
-+        }
-+        if ((pkr_prot & (1 << access_type)) == 0) {
-+            goto do_fault_pk_protect;
-+        }
-+        prot &= pkr_prot;
-+    }
-+
-+    if ((prot & (1 << access_type)) == 0) {
-+        goto do_fault_protect;
-+    }
-+
-+    /* yes, it can! */
-+    {
-+        uint32_t set = PG_ACCESSED_MASK;
-+        if (access_type == MMU_DATA_STORE) {
-+            set |= PG_DIRTY_MASK;
-+        } else if (!(pte & PG_DIRTY_MASK)) {
-+            /*
-+             * Only set write access if already dirty...
-+             * otherwise wait for dirty access.
-+             */
-+            prot &= ~PAGE_WRITE;
-+        }
-+        if (!ptw_setl(&pte_trans, pte, set)) {
-+            /*
-+             * We can arrive here from any of 3 levels and 2 formats.
-+             * The only safe thing is to restart the entire lookup.
-+             */
-+            goto restart_all;
-+        }
-+    }
-+
-+    /* merge offset within page */
-+    paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) |
-+        (addr & (page_size - 1));
-+
-+    /*
-+     * Note that NPT is walked (for both paging structures and final guest
-+     * addresses) using the address with the A20 bit set.
-+     */
-+    if (in->ptw_idx == MMU_NESTED_IDX) {
-+        CPUTLBEntryFull *full;
-+        int flags, nested_page_size;
-+
-+        flags = probe_access_full(env, paddr, 0, access_type,
-+                                  MMU_NESTED_IDX, true,
-+                                  &pte_trans.haddr, &full, 0);
-+        if (unlikely(flags & TLB_INVALID_MASK)) {
-+            *err = (X86TranslateFault){
-+                .error_code = env->error_code,
-+                .cr2 = paddr,
-+                .stage2 = S2_GPA,
-+            };
-+            return false;
-+        }
-+
-+        /* Merge stage1 & stage2 protection bits. */
-+        prot &= full->prot;
-+
-+        /* Re-verify resulting protection. */
-+        if ((prot & (1 << access_type)) == 0) {
-+            goto do_fault_protect;
-+        }
-+
-+        /* Merge stage1 & stage2 addresses to final physical address. */
-+        nested_page_size = 1 << full->lg_page_size;
-+        paddr = (full->phys_addr & ~(nested_page_size - 1))
-+              | (paddr & (nested_page_size - 1));
-+
-+        /*
-+         * Use the larger of stage1 & stage2 page sizes, so that
-+         * invalidation works.
-+         */
-+        if (nested_page_size > page_size) {
-+            page_size = nested_page_size;
-+        }
-+    }
-+
-+    out->paddr = paddr & x86_get_a20_mask(env);
-+    out->prot = prot;
-+    out->page_size = page_size;
-+    return true;
-+
-+ do_fault_rsvd:
-+    error_code = PG_ERROR_RSVD_MASK;
-+    goto do_fault_cont;
-+ do_fault_protect:
-+    error_code = PG_ERROR_P_MASK;
-+    goto do_fault_cont;
-+ do_fault_pk_protect:
-+    assert(access_type != MMU_INST_FETCH);
-+    error_code = PG_ERROR_PK_MASK | PG_ERROR_P_MASK;
-+    goto do_fault_cont;
-+ do_fault:
-+    error_code = 0;
-+ do_fault_cont:
-+    if (is_user) {
-+        error_code |= PG_ERROR_U_MASK;
-+    }
-+    switch (access_type) {
-+    case MMU_DATA_LOAD:
-+        break;
-+    case MMU_DATA_STORE:
-+        error_code |= PG_ERROR_W_MASK;
-+        break;
-+    case MMU_INST_FETCH:
-+        if (pg_mode & (PG_MODE_NXE | PG_MODE_SMEP)) {
-+            error_code |= PG_ERROR_I_D_MASK;
-+        }
-+        break;
-+    }
-+    *err = (X86TranslateFault){
-+        .exception_index = EXCP0E_PAGE,
-+        .error_code = error_code,
-+        .cr2 = addr,
-+    };
-+    return false;
-+}
-+
-+bool x86_cpu_get_physical_address(CPUX86State *env, vaddr addr,
-+                                  MMUAccessType access_type, int mmu_idx,
-+                                  X86TranslateResult *out,
-+                                  X86TranslateFault *err, uint64_t ra)
-+{
-+    X86TranslateParams in;
-+    bool use_stage2 = env->hflags2 & HF2_NPT_MASK;
-+
-+    in.addr = addr;
-+    in.access_type = access_type;
-+
-+    switch (mmu_idx) {
-+    case MMU_PHYS_IDX:
-+        break;
-+
-+    case MMU_NESTED_IDX:
-+        if (likely(use_stage2)) {
-+            in.cr3 = env->nested_cr3;
-+            in.pg_mode = env->nested_pg_mode;
-+            in.mmu_idx =
-+                env->nested_pg_mode & PG_MODE_LMA ?
-+                MMU_USER64_IDX : MMU_USER32_IDX;
-+            in.ptw_idx = MMU_PHYS_IDX;
-+
-+            if (!x86_mmu_translate(env, &in, out, err, ra)) {
-+                err->stage2 = S2_GPA;
-+                return false;
-+            }
-+            return true;
-+        }
-+        break;
-+
-+    default:
-+        if (is_mmu_index_32(mmu_idx)) {
-+            addr = (uint32_t)addr;
-+        }
-+
-+        if (likely(env->cr[0] & CR0_PG_MASK)) {
-+            in.cr3 = env->cr[3];
-+            in.mmu_idx = mmu_idx;
-+            in.ptw_idx = use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX;
-+            in.pg_mode = get_pg_mode(env);
-+
-+            if (in.pg_mode & PG_MODE_LMA) {
-+                /* test virtual address sign extension */
-+                int shift = in.pg_mode & PG_MODE_LA57 ? 56 : 47;
-+                int64_t sext = (int64_t)addr >> shift;
-+                if (sext != 0 && sext != -1) {
-+                    *err = (X86TranslateFault){
-+                        .exception_index = EXCP0D_GPF,
-+                        .cr2 = addr,
-+                    };
-+                    return false;
-+                }
-+            }
-+            return x86_mmu_translate(env, &in, out, err, ra);
-+        }
-+        break;
-+    }
-+
-+    /* No translation needed. */
-+    out->paddr = addr & x86_get_a20_mask(env);
-+    out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+    out->page_size = TARGET_PAGE_SIZE;
-+    return true;
-+}
-+
- hwaddr x86_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-                                          MemTxAttrs *attrs)
- {
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 8fb05b1f53..4c48e5a68b 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -24,487 +24,7 @@
- #include "exec/page-protection.h"
- #include "tcg/helper-tcg.h"
+ /**
+  * get_pte - Copy the contents of the page table entry at node[i] into pt_entry.
+  *           Optionally, add the relevant bits to the virtual address in
+@@ -247,7 +276,7 @@ static void _mmu_decode_va_parameters(CPUState *cs, int height,
+  *              Optional parameter.
+  */
  
--typedef struct TranslateParams {
--    target_ulong addr;
--    target_ulong cr3;
--    int pg_mode;
--    int mmu_idx;
--    int ptw_idx;
--    MMUAccessType access_type;
--} TranslateParams;
--
--typedef struct TranslateResult {
--    hwaddr paddr;
--    int prot;
--    int page_size;
--} TranslateResult;
--
--typedef enum TranslateFaultStage2 {
--    S2_NONE,
--    S2_GPA,
--    S2_GPT,
--} TranslateFaultStage2;
--
--typedef struct TranslateFault {
--    int exception_index;
--    int error_code;
--    target_ulong cr2;
--    TranslateFaultStage2 stage2;
--} TranslateFault;
--
--typedef struct PTETranslate {
--    CPUX86State *env;
--    TranslateFault *err;
--    int ptw_idx;
--    void *haddr;
--    hwaddr gaddr;
--} PTETranslate;
--
--static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
--{
--    CPUTLBEntryFull *full;
--    int flags;
--
--    inout->gaddr = addr;
--    flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
--                              inout->ptw_idx, true, &inout->haddr, &full, ra);
--
--    if (unlikely(flags & TLB_INVALID_MASK)) {
--        TranslateFault *err = inout->err;
--
--        assert(inout->ptw_idx == MMU_NESTED_IDX);
--        *err = (TranslateFault){
--            .error_code = inout->env->error_code,
--            .cr2 = addr,
--            .stage2 = S2_GPT,
--        };
--        return false;
--    }
--    return true;
--}
--
--static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
--{
--    if (likely(in->haddr)) {
--        return ldl_p(in->haddr);
--    }
--    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
--}
--
--static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
--{
--    if (likely(in->haddr)) {
--        return ldq_p(in->haddr);
--    }
--    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
--}
--
--/*
-- * Note that we can use a 32-bit cmpxchg for all page table entries,
-- * even 64-bit ones, because PG_PRESENT_MASK, PG_ACCESSED_MASK and
-- * PG_DIRTY_MASK are all in the low 32 bits.
-- */
--static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
--{
--    uint32_t cmp;
--
--    /* Does x86 really perform a rmw cycle on mmio for ptw? */
--    start_exclusive();
--    cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
--    if (cmp == old) {
--        cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
--    }
--    end_exclusive();
--    return cmp == old;
--}
--
--static inline bool ptw_setl(const PTETranslate *in, uint32_t old, uint32_t set)
--{
--    if (set & ~old) {
--        uint32_t new = old | set;
--        if (likely(in->haddr)) {
--            old = cpu_to_le32(old);
--            new = cpu_to_le32(new);
--            return qatomic_cmpxchg((uint32_t *)in->haddr, old, new) == old;
--        }
--        return ptw_setl_slow(in, old, new);
--    }
--    return true;
--}
--
--static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
--                          TranslateResult *out, TranslateFault *err,
--                          uint64_t ra)
--{
--    const target_ulong addr = in->addr;
--    const int pg_mode = in->pg_mode;
--    const bool is_user = is_mmu_index_user(in->mmu_idx);
--    const MMUAccessType access_type = in->access_type;
--    uint64_t ptep, pte, rsvd_mask;
--    PTETranslate pte_trans = {
--        .env = env,
--        .err = err,
--        .ptw_idx = in->ptw_idx,
--    };
--    hwaddr pte_addr, paddr;
--    uint32_t pkr;
--    int page_size;
--    int error_code;
--
-- restart_all:
--    rsvd_mask = ~MAKE_64BIT_MASK(0, env_archcpu(env)->phys_bits);
--    rsvd_mask &= PG_ADDRESS_MASK;
--    if (!(pg_mode & PG_MODE_NXE)) {
--        rsvd_mask |= PG_NX_MASK;
--    }
--
+-static void
++void
+ get_pte(CPUState *cs, hwaddr node, int i, int height,
+         PTE_t *pt_entry, target_ulong vaddr_parent, target_ulong *vaddr_pte,
+         hwaddr *pte_paddr)
+@@ -284,7 +313,7 @@ get_pte(CPUState *cs, hwaddr node, int i, int height,
+ }
+ 
+ 
+-static bool
++bool
+ mmu_pte_check_bits(CPUState *cs, PTE_t *pte, int64_t mask)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+@@ -300,7 +329,7 @@ mmu_pte_check_bits(CPUState *cs, PTE_t *pte, int64_t mask)
+  * mmu_pte_presetn - Return true if the pte is
+  *                   marked 'present'
+  */
+-static bool
++bool
+ mmu_pte_present(CPUState *cs, PTE_t *pte)
+ {
+     return mmu_pte_check_bits(cs, pte, PG_PRESENT_MASK);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 39ce49e61f..51d4a55e6b 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2151,15 +2151,23 @@ int x86_cpu_write_elf64_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
+ int x86_cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
+                                  DumpState *s);
+ 
++hwaddr mmu_page_table_root(CPUState *cs, int *height);
++bool mmu_pte_check_bits(CPUState *cs, PTE_t *pte, int64_t mask);
++bool mmu_pte_present(CPUState *cs, PTE_t *pte);
+ bool mmu_pte_leaf(CPUState *cs, int height, PTE_t *pte);
+ target_ulong mmu_pte_leaf_page_size(CPUState *cs, int height);
+ hwaddr mmu_pte_child(CPUState *cs, PTE_t *pte, int height);
+ int mmu_page_table_entries_per_node(CPUState *cs, int height);
++int mmu_virtual_to_pte_index(CPUState *cs, target_ulong vaddr, int height);
+ bool for_each_pte(CPUState *cs,
+                   int (*fn)(CPUState *cs, void *data, PTE_t *pte,
+                             target_ulong vaddr, int height, int offset),
+                   void *data, bool visit_interior_nodes,
+                   bool visit_not_present);
++void get_pte(CPUState *cs, hwaddr node, int i, int height, PTE_t *pt_entry,
++             target_ulong vaddr_parent, target_ulong *vaddr_pte,
++             hwaddr *pte_paddr);
++
+ 
+ bool x86_cpu_get_memory_mapping(CPUState *cpu, MemoryMappingList *list,
+                                 Error **errp);
+@@ -2176,7 +2184,8 @@ int cpu_x86_support_mca_broadcast(CPUX86State *env);
+ bool x86_cpu_get_physical_address(CPUX86State *env, vaddr addr,
+                                   MMUAccessType access_type, int mmu_idx,
+                                   X86TranslateResult *out,
+-                                  X86TranslateFault *err, uint64_t ra);
++                                  X86TranslateFault *err, uint64_t ra,
++                                  bool read_only);
+ 
+ hwaddr x86_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
+                                          MemTxAttrs *attrs);
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 21445e84b2..17ffba200d 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -304,7 +304,8 @@ static bool ptw_translate(X86PTETranslate *inout, hwaddr addr, uint64_t ra)
+ 
+ static bool x86_mmu_translate(CPUX86State *env, const X86TranslateParams *in,
+                               X86TranslateResult *out,
+-                              X86TranslateFault *err, uint64_t ra)
++                              X86TranslateFault *err, uint64_t ra,
++                              bool read_only)
+ {
+     const target_ulong addr = in->addr;
+     const int pg_mode = in->pg_mode;
+@@ -320,6 +321,9 @@ static bool x86_mmu_translate(CPUX86State *env, const X86TranslateParams *in,
+     uint32_t pkr;
+     int page_size;
+     int error_code;
++    CPUState *cs = env_cpu(env);
++    int height;
++    bool pae_enabled = env->cr[4] & CR4_PAE_MASK;
+ 
+  restart_all:
+     rsvd_mask = ~MAKE_64BIT_MASK(0, env_archcpu(env)->phys_bits);
+@@ -328,194 +332,85 @@ static bool x86_mmu_translate(CPUX86State *env, const X86TranslateParams *in,
+         rsvd_mask |= PG_NX_MASK;
+     }
+ 
 -    if (pg_mode & PG_MODE_PAE) {
 -#ifdef TARGET_X86_64
 -        if (pg_mode & PG_MODE_LMA) {
@@ -863,7 +271,8 @@ index 8fb05b1f53..4c48e5a68b 100644
 -                pte = in->cr3;
 -                ptep = PG_NX_MASK | PG_USER_MASK | PG_RW_MASK;
 -            }
--
++    /* Get the root of the page table */
+ 
 -            /*
 -             * Page table level 4
 -             */
@@ -883,7 +292,14 @@ index 8fb05b1f53..4c48e5a68b 100644
 -                goto restart_4;
 -            }
 -            ptep &= pte ^ PG_NX_MASK;
--
++    /*
++     * ptep is really an accumulator for the permission bits.
++     * Thus, the xor-ing totally trashes the high bits, and that is
++     * ok - we only care about the low ones.
++     */
++    ptep = PG_NX_MASK | PG_USER_MASK | PG_RW_MASK;
++    hwaddr pt_node = mmu_page_table_root(cs, &height);
+ 
 -            /*
 -             * Page table level 3
 -             */
@@ -932,19 +348,34 @@ index 8fb05b1f53..4c48e5a68b 100644
 -            }
 -            ptep = PG_NX_MASK | PG_USER_MASK | PG_RW_MASK;
 -        }
--
++    /* Special case for PAE paging */
++    if (height == 3 && pg_mode & PG_MODE_PAE) {
++        rsvd_mask |= PG_HI_USER_MASK;
++    }
+ 
 -        /*
 -         * Page table level 2
 -         */
 -        pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 21) & 0x1ff) << 3);
--        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
--            return false;
--        }
++    int i = height;
++    do {
++        int index = mmu_virtual_to_pte_index(cs, addr, i);
++        PTE_t pt_entry;
++        uint64_t my_rsvd_mask = rsvd_mask;
++
++        get_pte(cs, pt_node, index, i, &pt_entry, 0, NULL, &pte_addr);
++        /* Check that we can access the page table entry */
+         if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+             return false;
+         }
 -    restart_2_pae:
 -        pte = ptw_ldq(&pte_trans, ra);
 -        if (!(pte & PG_PRESENT_MASK)) {
--            goto do_fault;
--        }
++
++    restart:
++        if (!mmu_pte_present(cs, &pt_entry)) {
+             goto do_fault;
+         }
 -        if (pte & rsvd_mask) {
 -            goto do_fault_rsvd;
 -        }
@@ -958,7 +389,7 @@ index 8fb05b1f53..4c48e5a68b 100644
 -            goto restart_2_pae;
 -        }
 -        ptep &= pte ^ PG_NX_MASK;
--
+ 
 -        /*
 -         * Page table level 1
 -         */
@@ -969,10 +400,15 @@ index 8fb05b1f53..4c48e5a68b 100644
 -        pte = ptw_ldq(&pte_trans, ra);
 -        if (!(pte & PG_PRESENT_MASK)) {
 -            goto do_fault;
--        }
++        /* For height > 3, check and reject PSE mask */
++        if (i > 3) {
++            my_rsvd_mask |= PG_PSE_MASK;
+         }
 -        if (pte & rsvd_mask) {
--            goto do_fault_rsvd;
--        }
++
++        if (mmu_pte_check_bits(cs, &pt_entry, my_rsvd_mask)) {
+             goto do_fault_rsvd;
+         }
 -        /* combine pde and pte nx, user and rw protections */
 -        ptep &= pte ^ PG_NX_MASK;
 -        page_size = 4096;
@@ -990,7 +426,7 @@ index 8fb05b1f53..4c48e5a68b 100644
 -            goto do_fault;
 -        }
 -        ptep = pte | PG_NX_MASK;
--
+ 
 -        /* if PSE bit is set, then we use a 4MB page */
 -        if ((pte & PG_PSE_MASK) && (pg_mode & PG_MODE_PSE)) {
 -            page_size = 4096 * 1024;
@@ -1005,272 +441,240 @@ index 8fb05b1f53..4c48e5a68b 100644
 -        if (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK)) {
 -            goto restart_2_nopae;
 -        }
--
++        pte = pt_entry.pte64_t;
+ 
 -        /*
 -         * Page table level 1
 -         */
 -        pte_addr = (pte & ~0xfffu) + ((addr >> 10) & 0xffc);
 -        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
 -            return false;
--        }
++        /* Check if we have hit a leaf.  Won't happen (yet) at heights > 3. */
++        if (mmu_pte_leaf(cs, i, &pt_entry)) {
++            assert(i < 4);
++            page_size = mmu_pte_leaf_page_size(cs, i);
++            ptep &= pte ^ PG_NX_MASK;
++
++            if (!pae_enabled) {
++                if (i == 2) {
++                    /*
++                     * Bits 20-13 provide bits 39-32 of the address,
++                     * bit 21 is reserved.  Leave bits 20-13 in place
++                     * for setting accessed/dirty bits below.
++                     */
++                    pte = (uint32_t)pte | ((pte & 0x1fe000LL) << (32 - 13));
++                    rsvd_mask = 0x200000;
++                    goto do_check_protect_pse36;
++                } else if (i == 1) {
++                    rsvd_mask = 0;
++                }
++            }
++            break; /* goto do_check_protect; */
+         }
 -        pte = ptw_ldl(&pte_trans, ra);
 -        if (!(pte & PG_PRESENT_MASK)) {
 -            goto do_fault;
--        }
++
++        if ((!read_only) &&
++            (!ptw_setl(&pte_trans, pte, PG_ACCESSED_MASK))) {
++            goto restart;
+         }
 -        /* combine pde and pte user and rw protections */
 -        ptep &= pte | PG_NX_MASK;
 -        page_size = 4096;
 -        rsvd_mask = 0;
 -    }
--
+ 
 -do_check_protect:
--    rsvd_mask |= (page_size - 1) & PG_ADDRESS_MASK & ~PG_PSE_PAT_MASK;
--do_check_protect_pse36:
--    if (pte & rsvd_mask) {
--        goto do_fault_rsvd;
--    }
--    ptep ^= PG_NX_MASK;
--
--    /* can the page can be put in the TLB?  prot will tell us */
--    if (is_user && !(ptep & PG_USER_MASK)) {
--        goto do_fault_protect;
--    }
--
--    int prot = 0;
--    if (!is_mmu_index_smap(in->mmu_idx) || !(ptep & PG_USER_MASK)) {
--        prot |= PAGE_READ;
--        if ((ptep & PG_RW_MASK) || !(is_user || (pg_mode & PG_MODE_WP))) {
--            prot |= PAGE_WRITE;
--        }
--    }
--    if (!(ptep & PG_NX_MASK) &&
--        (is_user ||
--         !((pg_mode & PG_MODE_SMEP) && (ptep & PG_USER_MASK)))) {
--        prot |= PAGE_EXEC;
--    }
--
--    if (ptep & PG_USER_MASK) {
--        pkr = pg_mode & PG_MODE_PKE ? env->pkru : 0;
--    } else {
--        pkr = pg_mode & PG_MODE_PKS ? env->pkrs : 0;
--    }
--    if (pkr) {
--        uint32_t pk = (pte & PG_PKRU_MASK) >> PG_PKRU_BIT;
--        uint32_t pkr_ad = (pkr >> pk * 2) & 1;
--        uint32_t pkr_wd = (pkr >> pk * 2) & 2;
--        uint32_t pkr_prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
--
--        if (pkr_ad) {
--            pkr_prot &= ~(PAGE_READ | PAGE_WRITE);
--        } else if (pkr_wd && (is_user || (pg_mode & PG_MODE_WP))) {
--            pkr_prot &= ~PAGE_WRITE;
--        }
--        if ((pkr_prot & (1 << access_type)) == 0) {
--            goto do_fault_pk_protect;
--        }
--        prot &= pkr_prot;
--    }
--
--    if ((prot & (1 << access_type)) == 0) {
--        goto do_fault_protect;
--    }
--
--    /* yes, it can! */
--    {
--        uint32_t set = PG_ACCESSED_MASK;
--        if (access_type == MMU_DATA_STORE) {
--            set |= PG_DIRTY_MASK;
--        } else if (!(pte & PG_DIRTY_MASK)) {
--            /*
--             * Only set write access if already dirty...
--             * otherwise wait for dirty access.
--             */
--            prot &= ~PAGE_WRITE;
--        }
--        if (!ptw_setl(&pte_trans, pte, set)) {
--            /*
--             * We can arrive here from any of 3 levels and 2 formats.
--             * The only safe thing is to restart the entire lookup.
--             */
--            goto restart_all;
--        }
--    }
--
--    /* merge offset within page */
--    paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
--
--    /*
--     * Note that NPT is walked (for both paging structures and final guest
--     * addresses) using the address with the A20 bit set.
--     */
--    if (in->ptw_idx == MMU_NESTED_IDX) {
--        CPUTLBEntryFull *full;
--        int flags, nested_page_size;
--
--        flags = probe_access_full(env, paddr, 0, access_type,
--                                  MMU_NESTED_IDX, true,
--                                  &pte_trans.haddr, &full, 0);
--        if (unlikely(flags & TLB_INVALID_MASK)) {
--            *err = (TranslateFault){
--                .error_code = env->error_code,
--                .cr2 = paddr,
--                .stage2 = S2_GPA,
--            };
--            return false;
--        }
--
--        /* Merge stage1 & stage2 protection bits. */
--        prot &= full->prot;
--
--        /* Re-verify resulting protection. */
--        if ((prot & (1 << access_type)) == 0) {
--            goto do_fault_protect;
--        }
--
--        /* Merge stage1 & stage2 addresses to final physical address. */
--        nested_page_size = 1 << full->lg_page_size;
--        paddr = (full->phys_addr & ~(nested_page_size - 1))
--              | (paddr & (nested_page_size - 1));
--
--        /*
--         * Use the larger of stage1 & stage2 page sizes, so that
--         * invalidation works.
--         */
--        if (nested_page_size > page_size) {
--            page_size = nested_page_size;
--        }
--    }
--
--    out->paddr = paddr & x86_get_a20_mask(env);
--    out->prot = prot;
--    out->page_size = page_size;
--    return true;
--
-- do_fault_rsvd:
--    error_code = PG_ERROR_RSVD_MASK;
--    goto do_fault_cont;
-- do_fault_protect:
--    error_code = PG_ERROR_P_MASK;
--    goto do_fault_cont;
-- do_fault_pk_protect:
--    assert(access_type != MMU_INST_FETCH);
--    error_code = PG_ERROR_PK_MASK | PG_ERROR_P_MASK;
--    goto do_fault_cont;
-- do_fault:
--    error_code = 0;
-- do_fault_cont:
--    if (is_user) {
--        error_code |= PG_ERROR_U_MASK;
--    }
--    switch (access_type) {
--    case MMU_DATA_LOAD:
--        break;
--    case MMU_DATA_STORE:
--        error_code |= PG_ERROR_W_MASK;
--        break;
--    case MMU_INST_FETCH:
--        if (pg_mode & (PG_MODE_NXE | PG_MODE_SMEP)) {
--            error_code |= PG_ERROR_I_D_MASK;
--        }
--        break;
--    }
--    *err = (TranslateFault){
--        .exception_index = EXCP0E_PAGE,
--        .error_code = error_code,
--        .cr2 = addr,
--    };
--    return false;
--}
--
--static G_NORETURN void raise_stage2(CPUX86State *env, TranslateFault *err,
-+static G_NORETURN void raise_stage2(CPUX86State *env, X86TranslateFault *err,
-                                     uintptr_t retaddr)
- {
-     uint64_t exit_info_1 = err->error_code;
-@@ -526,82 +46,17 @@ static G_NORETURN void raise_stage2(CPUX86State *env, TranslateFault *err,
-     cpu_vmexit(env, SVM_EXIT_NPF, exit_info_1, retaddr);
++        ptep &= pte ^ PG_NX_MASK;
++
++        /* Move to the child node */
++        assert(i > 1);
++        pt_node = mmu_pte_child(cs, &pt_entry, i - 1);
++        i--;
++    } while (i > 0);
++
+     rsvd_mask |= (page_size - 1) & PG_ADDRESS_MASK & ~PG_PSE_PAT_MASK;
+ do_check_protect_pse36:
+     if (pte & rsvd_mask) {
+@@ -675,10 +570,16 @@ do_check_protect_pse36:
+     return false;
  }
  
--static bool get_physical_address(CPUX86State *env, vaddr addr,
--                                 MMUAccessType access_type, int mmu_idx,
--                                 TranslateResult *out, TranslateFault *err,
--                                 uint64_t ra)
--{
--    TranslateParams in;
--    bool use_stage2 = env->hflags2 & HF2_NPT_MASK;
--
--    in.addr = addr;
--    in.access_type = access_type;
--
--    switch (mmu_idx) {
--    case MMU_PHYS_IDX:
--        break;
--
--    case MMU_NESTED_IDX:
--        if (likely(use_stage2)) {
--            in.cr3 = env->nested_cr3;
--            in.pg_mode = env->nested_pg_mode;
--            in.mmu_idx =
--                env->nested_pg_mode & PG_MODE_LMA ? MMU_USER64_IDX : MMU_USER32_IDX;
--            in.ptw_idx = MMU_PHYS_IDX;
--
--            if (!mmu_translate(env, &in, out, err, ra)) {
--                err->stage2 = S2_GPA;
--                return false;
--            }
--            return true;
--        }
--        break;
--
--    default:
--        if (is_mmu_index_32(mmu_idx)) {
--            addr = (uint32_t)addr;
--        }
--
--        if (likely(env->cr[0] & CR0_PG_MASK)) {
--            in.cr3 = env->cr[3];
--            in.mmu_idx = mmu_idx;
--            in.ptw_idx = use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX;
--            in.pg_mode = get_pg_mode(env);
--
--            if (in.pg_mode & PG_MODE_LMA) {
--                /* test virtual address sign extension */
--                int shift = in.pg_mode & PG_MODE_LA57 ? 56 : 47;
--                int64_t sext = (int64_t)addr >> shift;
--                if (sext != 0 && sext != -1) {
--                    *err = (TranslateFault){
--                        .exception_index = EXCP0D_GPF,
--                        .cr2 = addr,
--                    };
--                    return false;
--                }
--            }
--            return mmu_translate(env, &in, out, err, ra);
--        }
--        break;
--    }
--
--    /* No translation needed. */
--    out->paddr = addr & x86_get_a20_mask(env);
--    out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
--    out->page_size = TARGET_PAGE_SIZE;
--    return true;
--}
- 
- bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-                       MMUAccessType access_type, int mmu_idx,
-                       bool probe, uintptr_t retaddr)
++/**
++ * The read-only argument indicates whether this access should
++ * trigger exceptions or otherwise disrupt TLB/MMU state.
++ * It should be true for monitor access, and false for tcg access.
++ */
+ bool x86_cpu_get_physical_address(CPUX86State *env, vaddr addr,
+                                   MMUAccessType access_type, int mmu_idx,
+                                   X86TranslateResult *out,
+-                                  X86TranslateFault *err, uint64_t ra)
++                                  X86TranslateFault *err, uint64_t ra,
++                                  bool read_only)
  {
-     CPUX86State *env = cpu_env(cs);
--    TranslateResult out;
--    TranslateFault err;
+     X86TranslateParams in;
+     bool use_stage2 = env->hflags2 & HF2_NPT_MASK;
+@@ -699,7 +600,7 @@ bool x86_cpu_get_physical_address(CPUX86State *env, vaddr addr,
+                 MMU_USER64_IDX : MMU_USER32_IDX;
+             in.ptw_idx = MMU_PHYS_IDX;
+ 
+-            if (!x86_mmu_translate(env, &in, out, err, ra)) {
++            if (!x86_mmu_translate(env, &in, out, err, ra, read_only)) {
+                 err->stage2 = S2_GPA;
+                 return false;
+             }
+@@ -730,7 +631,7 @@ bool x86_cpu_get_physical_address(CPUX86State *env, vaddr addr,
+                     return false;
+                 }
+             }
+-            return x86_mmu_translate(env, &in, out, err, ra);
++            return x86_mmu_translate(env, &in, out, err, ra, read_only);
+         }
+         break;
+     }
+@@ -747,123 +648,19 @@ hwaddr x86_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+ {
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+-    target_ulong pde_addr, pte_addr;
+-    uint64_t pte;
+-    int32_t a20_mask;
+-    uint32_t page_offset;
+-    int page_size;
 +    X86TranslateResult out;
 +    X86TranslateFault err;
  
--    if (get_physical_address(env, addr, access_type, mmu_idx, &out, &err,
--                             retaddr)) {
-+    if (x86_cpu_get_physical_address(env, addr, access_type, mmu_idx, &out,
-+                                     &err, retaddr)) {
+     *attrs = cpu_get_mem_attrs(env);
+ 
+-    a20_mask = x86_get_a20_mask(env);
+-    if (!(env->cr[0] & CR0_PG_MASK)) {
+-        pte = addr & a20_mask;
+-        page_size = 4096;
+-    } else if (env->cr[4] & CR4_PAE_MASK) {
+-        target_ulong pdpe_addr;
+-        uint64_t pde, pdpe;
+-
+-#ifdef TARGET_X86_64
+-        if (env->hflags & HF_LMA_MASK) {
+-            bool la57 = env->cr[4] & CR4_LA57_MASK;
+-            uint64_t pml5e_addr, pml5e;
+-            uint64_t pml4e_addr, pml4e;
+-            int32_t sext;
+-
+-            /* test virtual address sign extension */
+-            sext = la57 ? (int64_t)addr >> 56 : (int64_t)addr >> 47;
+-            if (sext != 0 && sext != -1) {
+-                return -1;
+-            }
+-
+-            if (la57) {
+-                pml5e_addr = ((env->cr[3] & ~0xfff) +
+-                        (((addr >> 48) & 0x1ff) << 3)) & a20_mask;
+-                pml5e = x86_ldq_phys(cs, pml5e_addr);
+-                if (!(pml5e & PG_PRESENT_MASK)) {
+-                    return -1;
+-                }
+-            } else {
+-                pml5e = env->cr[3];
+-            }
+-
+-            pml4e_addr = ((pml5e & PG_ADDRESS_MASK) +
+-                    (((addr >> 39) & 0x1ff) << 3)) & a20_mask;
+-            pml4e = x86_ldq_phys(cs, pml4e_addr);
+-            if (!(pml4e & PG_PRESENT_MASK)) {
+-                return -1;
+-            }
+-            pdpe_addr = ((pml4e & PG_ADDRESS_MASK) +
+-                         (((addr >> 30) & 0x1ff) << 3)) & a20_mask;
+-            pdpe = x86_ldq_phys(cs, pdpe_addr);
+-            if (!(pdpe & PG_PRESENT_MASK)) {
+-                return -1;
+-            }
+-            if (pdpe & PG_PSE_MASK) {
+-                page_size = 1024 * 1024 * 1024;
+-                pte = pdpe;
+-                goto out;
+-            }
+-
+-        } else
+-#endif
+-        {
+-            pdpe_addr = ((env->cr[3] & ~0x1f) + ((addr >> 27) & 0x18)) &
+-                a20_mask;
+-            pdpe = x86_ldq_phys(cs, pdpe_addr);
+-            if (!(pdpe & PG_PRESENT_MASK))
+-                return -1;
+-        }
+-
+-        pde_addr = ((pdpe & PG_ADDRESS_MASK) +
+-                    (((addr >> 21) & 0x1ff) << 3)) & a20_mask;
+-        pde = x86_ldq_phys(cs, pde_addr);
+-        if (!(pde & PG_PRESENT_MASK)) {
+-            return -1;
+-        }
+-        if (pde & PG_PSE_MASK) {
+-            /* 2 MB page */
+-            page_size = 2048 * 1024;
+-            pte = pde;
+-        } else {
+-            /* 4 KB page */
+-            pte_addr = ((pde & PG_ADDRESS_MASK) +
+-                        (((addr >> 12) & 0x1ff) << 3)) & a20_mask;
+-            page_size = 4096;
+-            pte = x86_ldq_phys(cs, pte_addr);
+-        }
+-        if (!(pte & PG_PRESENT_MASK)) {
+-            return -1;
+-        }
+-    } else {
+-        uint32_t pde;
+-
+-        /* page directory entry */
+-        pde_addr = ((env->cr[3] & ~0xfff) + ((addr >> 20) & 0xffc)) & a20_mask;
+-        pde = x86_ldl_phys(cs, pde_addr);
+-        if (!(pde & PG_PRESENT_MASK))
+-            return -1;
+-        if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
+-            pte = pde | ((pde & 0x1fe000LL) << (32 - 13));
+-            page_size = 4096 * 1024;
+-        } else {
+-            /* page directory entry */
+-            pte_addr = ((pde & ~0xfff) + ((addr >> 10) & 0xffc)) & a20_mask;
+-            pte = x86_ldl_phys(cs, pte_addr);
+-            if (!(pte & PG_PRESENT_MASK)) {
+-                return -1;
+-            }
+-            page_size = 4096;
+-        }
+-        pte = pte & a20_mask;
++    /* This function merges the offset bits for us */
++    if (!x86_cpu_get_physical_address(env, addr, MMU_DATA_LOAD,
++                                      cpu_mmu_index(cs, false),
++                                      &out, &err, 0, true)) {
++        return -1;
+     }
+ 
+-#ifdef TARGET_X86_64
+-out:
+-#endif
+-    pte &= PG_ADDRESS_MASK & ~(page_size - 1);
+-    page_offset = (addr & TARGET_PAGE_MASK) & (page_size - 1);
+-    return pte | page_offset;
++    return out.paddr;
+ }
+ 
+ typedef struct MCEInjectionParams {
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 4c48e5a68b..c85db11f05 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -56,7 +56,7 @@ bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+     X86TranslateFault err;
+ 
+     if (x86_cpu_get_physical_address(env, addr, access_type, mmu_idx, &out,
+-                                     &err, retaddr)) {
++                                     &err, retaddr, false)) {
          /*
           * Even if 4MB pages, we map only one 4KB page in the cache to
           * avoid filling it too fast.
