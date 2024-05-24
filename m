@@ -4,61 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A07C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 17:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C92C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 20:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAYcf-0001MG-Bq; Fri, 24 May 2024 13:22:29 -0400
+	id 1sAb6J-0002Ij-Dy; Fri, 24 May 2024 16:01:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <julien@xen.org>)
- id 1sAYcb-0001Kt-Nl; Fri, 24 May 2024 13:22:26 -0400
-Received: from mail.xenproject.org ([104.130.215.37])
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sAb63-000260-2W; Fri, 24 May 2024 16:01:04 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <julien@xen.org>)
- id 1sAYcX-0001bN-Ah; Fri, 24 May 2024 13:22:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
- s=20200302mail; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
- References:Cc:To:Subject:MIME-Version:Date:Message-ID;
- bh=p+cSGY0JtnJyEyyDIOldXHvk2CiVm4l7H2fIuwcCo6I=; b=Dts3otviMrYN5n5Bx9niYxPt6+
- coOU8MRVCysjtZkkoKTFds26H1DhBleim6dxjZdgXCfvIYRlVwC6B4nONm4QBCLW5jYKJLYi6OzSP
- 9/2KApw+XGA5WmJeQOKdpvDUgcP7/mrl1YMh4TijH/uJIEDdgqinS9TYrSX5JnzDcjzY=;
-Received: from xenbits.xenproject.org ([104.239.192.120])
- by mail.xenproject.org with esmtp (Exim 4.92)
- (envelope-from <julien@xen.org>)
- id 1sAYcR-00009l-6i; Fri, 24 May 2024 17:22:15 +0000
-Received: from gw1.octic.net ([88.97.20.152] helo=[10.0.0.211])
- by xenbits.xenproject.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <julien@xen.org>)
- id 1sAYcQ-0004oz-Vf; Fri, 24 May 2024 17:22:15 +0000
-Message-ID: <0b40423d-cf19-46a0-a86f-aefc5c7b02b1@xen.org>
-Date: Fri, 24 May 2024 18:22:12 +0100
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sAb5v-00050y-BG; Fri, 24 May 2024 16:00:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716580851; x=1748116851;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=vwKH01rzlWx9561/Am/sOOt9A88NKrbQ8rGO8mBibgg=;
+ b=lGf4b18MXA1tXMmEYjm6qBZWrtW14NIALMVXSW7eL/n3WqwzG/UWScPb
+ VzzHX2myQUn8Y/fXhXfU4MmnEP9KQoEeoQBuJ8RpFcKCF2MWwQK7W+Qwd
+ KueeKiANdcE5fAGHK8EP0x2wSqt1kd0aBPyBlCQe+DHzoWcnhFV5TPdO6
+ XPSOEkMO4gDVbIBRiMluihKNk3v7/qpEq25pPvapMMl1FsFBCN8wTUl2I
+ sHS6NMdHo/CGxC74fvbMQU7E8MRhO7mEEeMAtHkTa2UsDmRJXNDCEoq6m
+ 79gnOTLN1/ERanl24WlJ+kOygC0rMSLc00OggWP/Hp5wOnU+cAwPh6Mhm Q==;
+X-CSE-ConnectionGUID: tPiOFDYWQ8CEKWuz7m8h1Q==
+X-CSE-MsgGUID: gUtLtME2Q7Wa3rtMlXL6Bg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11082"; a="15918258"
+X-IronPort-AV: E=Sophos;i="6.08,186,1712646000"; d="scan'208";a="15918258"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 May 2024 13:00:44 -0700
+X-CSE-ConnectionGUID: JXLt8lESQquj1gja9uLb2Q==
+X-CSE-MsgGUID: pcBJnSG3Rly2zhL9xGHkpQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,186,1712646000"; d="scan'208";a="39108900"
+Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.100])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 May 2024 13:00:45 -0700
+From: Zide Chen <zide.chen@intel.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mst@redhat.com, thuth@redhat.com, cfontana@suse.de,
+ xiaoyao.li@intel.com, qemu-trivial@nongnu.org,
+ Zide Chen <zide.chen@intel.com>
+Subject: [PATCH V2 0/3] improve -overcommit cpu-pm=on|off
+Date: Fri, 24 May 2024 13:00:14 -0700
+Message-Id: <20240524200017.150339-1-zide.chen@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 18/18] hw/arm/virt: Set SMMU OAS based on CPU
- PARANGE
-Content-Language: en-GB
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- eric.auger@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240429032403.74910-1-smostafa@google.com>
- <20240429032403.74910-19-smostafa@google.com>
-From: Julien Grall <julien@xen.org>
-In-Reply-To: <20240429032403.74910-19-smostafa@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=104.130.215.37; envelope-from=julien@xen.org;
- helo=mail.xenproject.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,41 +79,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+Currently, if running "-overcommit cpu-pm=on" on hosts that don't
+have MWAIT support, the MWAIT/MONITOR feature is advertised to the
+guest and executing MWAIT/MONITOR on the guest triggers #UD.
 
-On 29/04/2024 04:24, Mostafa Saleh wrote:
-> Use the new SMMU property to make the SMMU OAS match the CPU PARANGE.
-> That's according to SMMU manual ARM IHI 0070F.b: >      6.3.6 SMMU_IDR5, OAS must match the system physical address size.
+V2:
+- [PATCH 1]: took Thomas' suggestion for more generic fix
+- [PATCH 2/3]: no changes
 
-> 
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> ---
->   hw/arm/virt.c      | 14 ++++++++++++--
->   target/arm/cpu.h   |  2 ++
->   target/arm/cpu64.c |  5 +++++
+Zide Chen (3):
+  vl: Allow multiple -overcommit commands
+  target/i386: call cpu_exec_realizefn before x86_cpu_filter_features
+  target/i386: Move host_cpu_enable_cpu_pm into kvm_cpu_realizefn()
 
-When trying to build qemu-system-arm, I get the following error:
-
-[1/3028] Generating subprojects/dtc/version_gen.h with a custom command
-[2/3028] Generating qemu-version.h with a custom command (wrapped by 
-meson to capture output)
-[3/3021] Linking target qemu-system-aarch64
-[4/3021] Linking target qemu-system-arm
-FAILED: qemu-system-arm
-clang -m64 -mcx16 @qemu-system-arm.rsp
-libqemu-arm-softmmu.fa.p/hw_arm_virt.c.o: In function `get_system_oas':
-/home/jgrall/works/oss/qemu/build/../hw/arm/virt.c:259: undefined 
-reference to `cpu_arm_get_oas'
-clang-11: error: linker command failed with exit code 1 (use -v to see 
-invocation)
-ninja: build stopped: subcommand failed.
-make: *** [run-ninja] Error 1
-
-I think you need to provide cpu_arm_get_oas() also for 32-bit arm (I 
-guess it is implemented in target/arm/cpu.c).
-
-Cheers,
+ system/vl.c               |  4 ++--
+ target/i386/cpu.c         | 24 ++++++++++++------------
+ target/i386/host-cpu.c    | 12 ------------
+ target/i386/kvm/kvm-cpu.c | 12 +++++++++---
+ 4 files changed, 23 insertions(+), 29 deletions(-)
 
 -- 
-Julien Grall
+2.34.1
+
 
