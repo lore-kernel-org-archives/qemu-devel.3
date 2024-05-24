@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E19B9C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5FBFC25B7A
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 23:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAeEV-0006g1-5f; Fri, 24 May 2024 19:21:55 -0400
+	id 1sAeEH-0006Tb-CL; Fri, 24 May 2024 19:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAeEK-0006WB-5d
- for qemu-devel@nongnu.org; Fri, 24 May 2024 19:21:44 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sAeEC-0006SW-8K
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 19:21:36 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAeEF-0005mY-Ej
- for qemu-devel@nongnu.org; Fri, 24 May 2024 19:21:42 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f3310a21d8so24797425ad.1
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 16:21:37 -0700 (PDT)
+ id 1sAeE8-0005jo-7g
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 19:21:36 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1f46418820dso2900025ad.0
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 16:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716592897; x=1717197697; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716592890; x=1717197690; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fODOcCWj61ck2RRtz0vPUUYcMqJTXdEitBsSudVvQlM=;
- b=zckZDexIZnIMhteJHeMv6SXcThm+k4R05hytQHjIJJ81z5BAkBohV7H3qbypxnzv6e
- uZtUkahl7P9fYxS0eckxt/T2QFBRoLMF81whubiQ4qPURia3umCGUbnHcr3k60tqt99U
- 99gCzx/LgMFTfkDukC9cCVC87RIhTO3FRlHIriWDyThxHXDnu3daRKk6pNaFCG6y0kYh
- x8hltqzk/44j16jlJxK6AUMcpLiIyM6UQiyaiYRJ1k8DNfygH61aA+K4EPnuJsWrjTr/
- R1+lvQXvFgeC99z6Aw4Pv9Ji3RHZqVtDhFwpZb03d6mmv5Szr3laR6GWc1juoEnZ266L
- I1TQ==
+ bh=hKzExuS78evw1+jkab3GaKK0wmUSLT9rJpAkd6pvgss=;
+ b=t8tO5RgVtBNx7Qtc+RvifEM2t1/nDqPJjFpSw7vYAYLMD4cFLAw/CBxVNsG/owcpfA
+ hn4z+nI2IZu7UC1158zFXJYa3bLiIC8JOK/dJHDU5oZWg1FDf2kkS6TUljv22RhoQ/TV
+ 54LJSTLRQjH6oZQHtJ/8hrd2zrPf/FEk3p02ufsvAgVrmCEWp42cG5/RkQMK4tNtSmoH
+ rAeWXm5yLGjLyuPjj4W4DwKtjMCRHI9QyfLy/7wsk/fiaU8Z1SNjG5fJSwj1NwMAWzwj
+ G7J3q5SoRiTbB24X0HLr1MQm5dNRIQKtZZ5jLpd0c4xSQkOpQxXYupBnZGkgx+mfBdGF
+ Qiiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716592897; x=1717197697;
+ d=1e100.net; s=20230601; t=1716592890; x=1717197690;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fODOcCWj61ck2RRtz0vPUUYcMqJTXdEitBsSudVvQlM=;
- b=poTKG6MLe0ezQflL0Sw0RtX6yot2gHqpDJVWAeTV4ZGsvpjdRi6IgFg8JipaV8GAHc
- G3kVO8EEHKF++/LDFRWRTvfRjq0/m0OpPet5xlNjD90xtau9a/MZW50/7MezTy8VtT68
- cKqSIxHyxCxnl8IDXuIB2jLM6NCw+1x0OKJU275otlrPgCNljKDXFEhv8g9m5q7LZmov
- eKSfuWY+Esepd9AFGyMCEbqPpOqZnEnB2mwjsONiuRYLDCEipzNR6N6oOBMtdE8/Pc96
- kM/a4bBl99RsaC9ag+1mhnNX3i2aXYQiiT2N0AfQ+KVM6XIsDnv53qk3UDUjrBWAppge
- ZIcQ==
-X-Gm-Message-State: AOJu0YxBsrBa2se+NRDWILbkpTKXGgrCQmQ0AMOFfgDpHmVLUBropcfh
- mb2W808wfK1VjZckKM4oAAtNJ+sgM2f3I0HeU1ZZMnjtGreKZ5jZ8GMz0JaDDd9kOgDgT6jyGP8
- h
-X-Google-Smtp-Source: AGHT+IFivj0xz3vXxVxFdEk8rIgXYw3qZtsQi8t8zU42Wj9tlABp730jHDdfyGlBMwoINmCeScJu7w==
-X-Received: by 2002:a17:902:d486:b0:1f3:1cb9:47a0 with SMTP id
- d9443c01a7336-1f44870a07cmr44675365ad.27.1716592896932; 
- Fri, 24 May 2024 16:21:36 -0700 (PDT)
+ bh=hKzExuS78evw1+jkab3GaKK0wmUSLT9rJpAkd6pvgss=;
+ b=nkGfA2MXBwWOFiDQVT6azaX7O1oke7hq61bM/gBlF3RIC512ubg6XPoCx9SLi5eNdH
+ bWglFKGXT5YEPbLU/KOsQhn4M4PwAFo/UBSqRrQnSc5tj3wQSKLtuHjcFK7CVWf6loeT
+ TPsBOp2IeK6POIZ9EAPySkW76jh8yOtI5yoWx0MZw+LJPPthZlz1SrBXHC7DMbY6QRzH
+ pv0PqcOnGbY5pErsX2nqQvEm6bYrVma4R5N2f2EjaoWyx7noObckwFnY/+Zz/pF6b+2N
+ qE9FflNaBriBIzphnrbIndqwP3nVhfHhblvkzcJ9pa4HnM2MoBjb3EPkN0fl7eh/2ZwV
+ mffw==
+X-Gm-Message-State: AOJu0Yzmi9rmWEOu8vCyIx6scmUs/9VWHes8EX7DVhOG2xY6bZBTuBCY
+ undjypEbEPbgeY+8NjedUP5qDZrnTum/MCY2K4UaCxsGwpWMB1YpA5zt9IGooIz5vUA77VllH+3
+ o
+X-Google-Smtp-Source: AGHT+IF37zh6gfKMe4udt57/K7vxUlUHRSkmKN+XNoP44jUgLLnANJJI79+9PIHILkFUvv++6d20nA==
+X-Received: by 2002:a17:902:e88e:b0:1f2:f4e7:f880 with SMTP id
+ d9443c01a7336-1f44815b9ccmr51311765ad.13.1716592889741; 
+ Fri, 24 May 2024 16:21:29 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c759ceesm19178305ad.10.2024.05.24.16.21.36
+ d9443c01a7336-1f44c759ceesm19178305ad.10.2024.05.24.16.21.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 16:21:36 -0700 (PDT)
+ Fri, 24 May 2024 16:21:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 16/67] target/arm: Convert XAR to decodetree
-Date: Fri, 24 May 2024 16:20:30 -0700
-Message-Id: <20240524232121.284515-17-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 08/67] target/arm: Split out gengvec64.c
+Date: Fri, 24 May 2024 16:20:22 -0700
+Message-Id: <20240524232121.284515-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240524232121.284515-1-richard.henderson@linaro.org>
 References: <20240524232121.284515-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,93 +96,444 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Split some routines out of translate-a64.c and translate-sve.c
+that are used by both.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  4 ++++
- target/arm/tcg/translate-a64.c | 43 +++++++++++-----------------------
- 2 files changed, 18 insertions(+), 29 deletions(-)
+ target/arm/tcg/translate-a64.h |   4 +
+ target/arm/tcg/gengvec64.c     | 190 +++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-a64.c |  26 -----
+ target/arm/tcg/translate-sve.c | 145 +------------------------
+ target/arm/tcg/meson.build     |   1 +
+ 5 files changed, 197 insertions(+), 169 deletions(-)
+ create mode 100644 target/arm/tcg/gengvec64.c
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 1292312a7f..7f354af25d 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -654,3 +654,7 @@ SM3TT1A         11001110 010 ..... 10 .. 00 ..... ..... @crypto3i
- SM3TT1B         11001110 010 ..... 10 .. 01 ..... ..... @crypto3i
- SM3TT2A         11001110 010 ..... 10 .. 10 ..... ..... @crypto3i
- SM3TT2B         11001110 010 ..... 10 .. 11 ..... ..... @crypto3i
-+
-+### Cryptographic XAR
-+
-+XAR             1100 1110 100 rm:5 imm:6 rn:5 rd:5
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index cf3a7dfa99..75f1e6a7b9 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4688,6 +4688,20 @@ TRANS_FEAT(SM3TT1B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt1b)
- TRANS_FEAT(SM3TT2A, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2a)
- TRANS_FEAT(SM3TT2B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2b)
+diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
+index 7b811b8ac5..91750f0ca9 100644
+--- a/target/arm/tcg/translate-a64.h
++++ b/target/arm/tcg/translate-a64.h
+@@ -193,6 +193,10 @@ void gen_gvec_rax1(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+ void gen_gvec_xar(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+                   uint32_t rm_ofs, int64_t shift,
+                   uint32_t opr_sz, uint32_t max_sz);
++void gen_gvec_eor3(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
++                   uint32_t a, uint32_t oprsz, uint32_t maxsz);
++void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
++                   uint32_t a, uint32_t oprsz, uint32_t maxsz);
  
-+static bool trans_XAR(DisasContext *s, arg_XAR *a)
+ void gen_sve_ldr(DisasContext *s, TCGv_ptr, int vofs, int len, int rn, int imm);
+ void gen_sve_str(DisasContext *s, TCGv_ptr, int vofs, int len, int rn, int imm);
+diff --git a/target/arm/tcg/gengvec64.c b/target/arm/tcg/gengvec64.c
+new file mode 100644
+index 0000000000..093b498b13
+--- /dev/null
++++ b/target/arm/tcg/gengvec64.c
+@@ -0,0 +1,190 @@
++/*
++ *  AArch64 generic vector expansion
++ *
++ *  Copyright (c) 2013 Alexander Graf <agraf@suse.de>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "qemu/osdep.h"
++#include "translate.h"
++#include "translate-a64.h"
++
++
++static void gen_rax1_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
 +{
-+    if (!dc_isar_feature(aa64_sha3, s)) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        gen_gvec_xar(MO_64, vec_full_reg_offset(s, a->rd),
-+                     vec_full_reg_offset(s, a->rn),
-+                     vec_full_reg_offset(s, a->rm), a->imm, 16,
-+                     vec_full_reg_size(s));
-+    }
-+    return true;
++    tcg_gen_rotli_i64(d, m, 1);
++    tcg_gen_xor_i64(d, d, n);
 +}
 +
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -13588,34 +13602,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     }
++static void gen_rax1_vec(unsigned vece, TCGv_vec d, TCGv_vec n, TCGv_vec m)
++{
++    tcg_gen_rotli_vec(vece, d, m, 1);
++    tcg_gen_xor_vec(vece, d, d, n);
++}
++
++void gen_gvec_rax1(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                   uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz)
++{
++    static const TCGOpcode vecop_list[] = { INDEX_op_rotli_vec, 0 };
++    static const GVecGen3 op = {
++        .fni8 = gen_rax1_i64,
++        .fniv = gen_rax1_vec,
++        .opt_opc = vecop_list,
++        .fno = gen_helper_crypto_rax1,
++        .vece = MO_64,
++    };
++    tcg_gen_gvec_3(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, &op);
++}
++
++static void gen_xar8_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, int64_t sh)
++{
++    TCGv_i64 t = tcg_temp_new_i64();
++    uint64_t mask = dup_const(MO_8, 0xff >> sh);
++
++    tcg_gen_xor_i64(t, n, m);
++    tcg_gen_shri_i64(d, t, sh);
++    tcg_gen_shli_i64(t, t, 8 - sh);
++    tcg_gen_andi_i64(d, d, mask);
++    tcg_gen_andi_i64(t, t, ~mask);
++    tcg_gen_or_i64(d, d, t);
++}
++
++static void gen_xar16_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, int64_t sh)
++{
++    TCGv_i64 t = tcg_temp_new_i64();
++    uint64_t mask = dup_const(MO_16, 0xffff >> sh);
++
++    tcg_gen_xor_i64(t, n, m);
++    tcg_gen_shri_i64(d, t, sh);
++    tcg_gen_shli_i64(t, t, 16 - sh);
++    tcg_gen_andi_i64(d, d, mask);
++    tcg_gen_andi_i64(t, t, ~mask);
++    tcg_gen_or_i64(d, d, t);
++}
++
++static void gen_xar_i32(TCGv_i32 d, TCGv_i32 n, TCGv_i32 m, int32_t sh)
++{
++    tcg_gen_xor_i32(d, n, m);
++    tcg_gen_rotri_i32(d, d, sh);
++}
++
++static void gen_xar_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, int64_t sh)
++{
++    tcg_gen_xor_i64(d, n, m);
++    tcg_gen_rotri_i64(d, d, sh);
++}
++
++static void gen_xar_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
++                        TCGv_vec m, int64_t sh)
++{
++    tcg_gen_xor_vec(vece, d, n, m);
++    tcg_gen_rotri_vec(vece, d, d, sh);
++}
++
++void gen_gvec_xar(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                  uint32_t rm_ofs, int64_t shift,
++                  uint32_t opr_sz, uint32_t max_sz)
++{
++    static const TCGOpcode vecop[] = { INDEX_op_rotli_vec, 0 };
++    static const GVecGen3i ops[4] = {
++        { .fni8 = gen_xar8_i64,
++          .fniv = gen_xar_vec,
++          .fno = gen_helper_sve2_xar_b,
++          .opt_opc = vecop,
++          .vece = MO_8 },
++        { .fni8 = gen_xar16_i64,
++          .fniv = gen_xar_vec,
++          .fno = gen_helper_sve2_xar_h,
++          .opt_opc = vecop,
++          .vece = MO_16 },
++        { .fni4 = gen_xar_i32,
++          .fniv = gen_xar_vec,
++          .fno = gen_helper_sve2_xar_s,
++          .opt_opc = vecop,
++          .vece = MO_32 },
++        { .fni8 = gen_xar_i64,
++          .fniv = gen_xar_vec,
++          .fno = gen_helper_gvec_xar_d,
++          .opt_opc = vecop,
++          .vece = MO_64 }
++    };
++    int esize = 8 << vece;
++
++    /* The SVE2 range is 1 .. esize; the AdvSIMD range is 0 .. esize-1. */
++    tcg_debug_assert(shift >= 0);
++    tcg_debug_assert(shift <= esize);
++    shift &= esize - 1;
++
++    if (shift == 0) {
++        /* xar with no rotate devolves to xor. */
++        tcg_gen_gvec_xor(vece, rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz);
++    } else {
++        tcg_gen_gvec_3i(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz,
++                        shift, &ops[vece]);
++    }
++}
++
++static void gen_eor3_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, TCGv_i64 k)
++{
++    tcg_gen_xor_i64(d, n, m);
++    tcg_gen_xor_i64(d, d, k);
++}
++
++static void gen_eor3_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
++                         TCGv_vec m, TCGv_vec k)
++{
++    tcg_gen_xor_vec(vece, d, n, m);
++    tcg_gen_xor_vec(vece, d, d, k);
++}
++
++void gen_gvec_eor3(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
++                   uint32_t a, uint32_t oprsz, uint32_t maxsz)
++{
++    static const GVecGen4 op = {
++        .fni8 = gen_eor3_i64,
++        .fniv = gen_eor3_vec,
++        .fno = gen_helper_sve2_eor3,
++        .vece = MO_64,
++        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
++    };
++    tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
++}
++
++static void gen_bcax_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, TCGv_i64 k)
++{
++    tcg_gen_andc_i64(d, m, k);
++    tcg_gen_xor_i64(d, d, n);
++}
++
++static void gen_bcax_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
++                         TCGv_vec m, TCGv_vec k)
++{
++    tcg_gen_andc_vec(vece, d, m, k);
++    tcg_gen_xor_vec(vece, d, d, n);
++}
++
++void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
++                   uint32_t a, uint32_t oprsz, uint32_t maxsz)
++{
++    static const GVecGen4 op = {
++        .fni8 = gen_bcax_i64,
++        .fniv = gen_bcax_vec,
++        .fno = gen_helper_sve2_bcax,
++        .vece = MO_64,
++        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
++    };
++    tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
++}
++
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 0bdddb8517..8842ff634d 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -13623,32 +13623,6 @@ static void disas_crypto_two_reg_sha(DisasContext *s, uint32_t insn)
+     gen_gvec_op2_ool(s, true, rd, rn, 0, genfn);
  }
  
--/* Crypto XAR
-- *  31                   21 20  16 15    10 9    5 4    0
-- * +-----------------------+------+--------+------+------+
-- * | 1 1 0 0 1 1 1 0 1 0 0 |  Rm  |  imm6  |  Rn  |  Rd  |
-- * +-----------------------+------+--------+------+------+
-- */
--static void disas_crypto_xar(DisasContext *s, uint32_t insn)
+-static void gen_rax1_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
 -{
--    int rm = extract32(insn, 16, 5);
--    int imm6 = extract32(insn, 10, 6);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--
--    if (!dc_isar_feature(aa64_sha3, s)) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    gen_gvec_xar(MO_64, vec_full_reg_offset(s, rd),
--                 vec_full_reg_offset(s, rn),
--                 vec_full_reg_offset(s, rm), imm6, 16,
--                 vec_full_reg_size(s));
+-    tcg_gen_rotli_i64(d, m, 1);
+-    tcg_gen_xor_i64(d, d, n);
 -}
 -
- /* C3.6 Data processing - SIMD, inc Crypto
-  *
-  * As the decode gets a little complex we are using a table based
-@@ -13644,7 +13630,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
-     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
--    { 0xce800000, 0xffe00000, disas_crypto_xar },
-     { 0x0e400400, 0x9f60c400, disas_simd_three_reg_same_fp16 },
-     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
-     { 0x5e400400, 0xdf60c400, disas_simd_scalar_three_reg_same_fp16 },
+-static void gen_rax1_vec(unsigned vece, TCGv_vec d, TCGv_vec n, TCGv_vec m)
+-{
+-    tcg_gen_rotli_vec(vece, d, m, 1);
+-    tcg_gen_xor_vec(vece, d, d, n);
+-}
+-
+-void gen_gvec_rax1(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+-                   uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz)
+-{
+-    static const TCGOpcode vecop_list[] = { INDEX_op_rotli_vec, 0 };
+-    static const GVecGen3 op = {
+-        .fni8 = gen_rax1_i64,
+-        .fniv = gen_rax1_vec,
+-        .opt_opc = vecop_list,
+-        .fno = gen_helper_crypto_rax1,
+-        .vece = MO_64,
+-    };
+-    tcg_gen_gvec_3(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, &op);
+-}
+-
+ /* Crypto three-reg SHA512
+  *  31                   21 20  16 15  14  13 12  11  10  9    5 4    0
+  * +-----------------------+------+---+---+-----+--------+------+------+
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index ada05aa530..798ab2bfb1 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -527,94 +527,6 @@ TRANS_FEAT(ORR_zzz, aa64_sve, gen_gvec_fn_arg_zzz, tcg_gen_gvec_or, a)
+ TRANS_FEAT(EOR_zzz, aa64_sve, gen_gvec_fn_arg_zzz, tcg_gen_gvec_xor, a)
+ TRANS_FEAT(BIC_zzz, aa64_sve, gen_gvec_fn_arg_zzz, tcg_gen_gvec_andc, a)
+ 
+-static void gen_xar8_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, int64_t sh)
+-{
+-    TCGv_i64 t = tcg_temp_new_i64();
+-    uint64_t mask = dup_const(MO_8, 0xff >> sh);
+-
+-    tcg_gen_xor_i64(t, n, m);
+-    tcg_gen_shri_i64(d, t, sh);
+-    tcg_gen_shli_i64(t, t, 8 - sh);
+-    tcg_gen_andi_i64(d, d, mask);
+-    tcg_gen_andi_i64(t, t, ~mask);
+-    tcg_gen_or_i64(d, d, t);
+-}
+-
+-static void gen_xar16_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, int64_t sh)
+-{
+-    TCGv_i64 t = tcg_temp_new_i64();
+-    uint64_t mask = dup_const(MO_16, 0xffff >> sh);
+-
+-    tcg_gen_xor_i64(t, n, m);
+-    tcg_gen_shri_i64(d, t, sh);
+-    tcg_gen_shli_i64(t, t, 16 - sh);
+-    tcg_gen_andi_i64(d, d, mask);
+-    tcg_gen_andi_i64(t, t, ~mask);
+-    tcg_gen_or_i64(d, d, t);
+-}
+-
+-static void gen_xar_i32(TCGv_i32 d, TCGv_i32 n, TCGv_i32 m, int32_t sh)
+-{
+-    tcg_gen_xor_i32(d, n, m);
+-    tcg_gen_rotri_i32(d, d, sh);
+-}
+-
+-static void gen_xar_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, int64_t sh)
+-{
+-    tcg_gen_xor_i64(d, n, m);
+-    tcg_gen_rotri_i64(d, d, sh);
+-}
+-
+-static void gen_xar_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
+-                        TCGv_vec m, int64_t sh)
+-{
+-    tcg_gen_xor_vec(vece, d, n, m);
+-    tcg_gen_rotri_vec(vece, d, d, sh);
+-}
+-
+-void gen_gvec_xar(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+-                  uint32_t rm_ofs, int64_t shift,
+-                  uint32_t opr_sz, uint32_t max_sz)
+-{
+-    static const TCGOpcode vecop[] = { INDEX_op_rotli_vec, 0 };
+-    static const GVecGen3i ops[4] = {
+-        { .fni8 = gen_xar8_i64,
+-          .fniv = gen_xar_vec,
+-          .fno = gen_helper_sve2_xar_b,
+-          .opt_opc = vecop,
+-          .vece = MO_8 },
+-        { .fni8 = gen_xar16_i64,
+-          .fniv = gen_xar_vec,
+-          .fno = gen_helper_sve2_xar_h,
+-          .opt_opc = vecop,
+-          .vece = MO_16 },
+-        { .fni4 = gen_xar_i32,
+-          .fniv = gen_xar_vec,
+-          .fno = gen_helper_sve2_xar_s,
+-          .opt_opc = vecop,
+-          .vece = MO_32 },
+-        { .fni8 = gen_xar_i64,
+-          .fniv = gen_xar_vec,
+-          .fno = gen_helper_gvec_xar_d,
+-          .opt_opc = vecop,
+-          .vece = MO_64 }
+-    };
+-    int esize = 8 << vece;
+-
+-    /* The SVE2 range is 1 .. esize; the AdvSIMD range is 0 .. esize-1. */
+-    tcg_debug_assert(shift >= 0);
+-    tcg_debug_assert(shift <= esize);
+-    shift &= esize - 1;
+-
+-    if (shift == 0) {
+-        /* xar with no rotate devolves to xor. */
+-        tcg_gen_gvec_xor(vece, rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz);
+-    } else {
+-        tcg_gen_gvec_3i(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz,
+-                        shift, &ops[vece]);
+-    }
+-}
+-
+ static bool trans_XAR(DisasContext *s, arg_rrri_esz *a)
+ {
+     if (a->esz < 0 || !dc_isar_feature(aa64_sve2, s)) {
+@@ -629,61 +541,8 @@ static bool trans_XAR(DisasContext *s, arg_rrri_esz *a)
+     return true;
+ }
+ 
+-static void gen_eor3_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, TCGv_i64 k)
+-{
+-    tcg_gen_xor_i64(d, n, m);
+-    tcg_gen_xor_i64(d, d, k);
+-}
+-
+-static void gen_eor3_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
+-                         TCGv_vec m, TCGv_vec k)
+-{
+-    tcg_gen_xor_vec(vece, d, n, m);
+-    tcg_gen_xor_vec(vece, d, d, k);
+-}
+-
+-static void gen_eor3(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+-                     uint32_t a, uint32_t oprsz, uint32_t maxsz)
+-{
+-    static const GVecGen4 op = {
+-        .fni8 = gen_eor3_i64,
+-        .fniv = gen_eor3_vec,
+-        .fno = gen_helper_sve2_eor3,
+-        .vece = MO_64,
+-        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
+-    };
+-    tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
+-}
+-
+-TRANS_FEAT(EOR3, aa64_sve2, gen_gvec_fn_arg_zzzz, gen_eor3, a)
+-
+-static void gen_bcax_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, TCGv_i64 k)
+-{
+-    tcg_gen_andc_i64(d, m, k);
+-    tcg_gen_xor_i64(d, d, n);
+-}
+-
+-static void gen_bcax_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
+-                         TCGv_vec m, TCGv_vec k)
+-{
+-    tcg_gen_andc_vec(vece, d, m, k);
+-    tcg_gen_xor_vec(vece, d, d, n);
+-}
+-
+-static void gen_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+-                     uint32_t a, uint32_t oprsz, uint32_t maxsz)
+-{
+-    static const GVecGen4 op = {
+-        .fni8 = gen_bcax_i64,
+-        .fniv = gen_bcax_vec,
+-        .fno = gen_helper_sve2_bcax,
+-        .vece = MO_64,
+-        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
+-    };
+-    tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
+-}
+-
+-TRANS_FEAT(BCAX, aa64_sve2, gen_gvec_fn_arg_zzzz, gen_bcax, a)
++TRANS_FEAT(EOR3, aa64_sve2, gen_gvec_fn_arg_zzzz, gen_gvec_eor3, a)
++TRANS_FEAT(BCAX, aa64_sve2, gen_gvec_fn_arg_zzzz, gen_gvec_bcax, a)
+ 
+ static void gen_bsl(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+                     uint32_t a, uint32_t oprsz, uint32_t maxsz)
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index bdb5c7352f..508932a249 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -43,6 +43,7 @@ arm_ss.add(files(
+ 
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'cpu64.c',
++  'gengvec64.c',
+   'translate-a64.c',
+   'translate-sve.c',
+   'translate-sme.c',
 -- 
 2.34.1
 
