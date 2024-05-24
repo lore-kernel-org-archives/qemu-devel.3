@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD570C25B79
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F74C25B7D
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAPrH-0007LW-Bg; Fri, 24 May 2024 04:00:59 -0400
+	id 1sAPrC-0007F9-TT; Fri, 24 May 2024 04:00:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sAPrC-0007F0-Mz
+ id 1sAPr9-0007C4-Qq
  for qemu-devel@nongnu.org; Fri, 24 May 2024 04:00:54 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sAPr9-0006yF-9m
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:00:54 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2bdf11888a5so1046376a91.0
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:00:49 -0700 (PDT)
+ id 1sAPqy-0006xi-Qc
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:00:43 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-68194ee2174so478612a12.3
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716537648; x=1717142448;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716537639; x=1717142439;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pCyAlcRJxBXr8WBNFU9VvAlTC1A+jWOc3+UmKJXMUEc=;
- b=ZV46rBFtSfXBfrWlf8UvqBv5go70DfGrvUVCtb+k3Tc2FLXUnQ9KboOnX/7zkoGAmf
- nscNHOJXBpQRO52ER+O0cYn78BgNXE3JzEPv8bu9ipGfe4WRjARhSEAXVHUo0NGqgnDq
- ccVcseXdSPbpqim35MNy4nyWvkXL3XsVB1RuTw6g23chgT5IaGJv/PVl5C8wZkoOEf/J
- Tkh8066foAqHsAbu/rtDX3RG9fsE8KMG8ONzh83NqMwNlroJ1shcFpVVpKggQLA27Kgb
- g91VtIaaQ+KRT/Lwds3IrzZRhkSDYJH1oDg7uVoIRrh46wJ5GajM7ppHWEyqqh/uskBj
- MNNg==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jrghs866eeKjtAq7SYzsGMP/6e+gx3kxu9bBYPhSOJI=;
+ b=L3gYbz7+zoxSiChoI/sYWXKKEwIouQimxg8A4hquTVucxAHnrGTfmMJhTnWaD3egeh
+ eFxV4+57VWjx2V1y3LglVUFkQLk9d+exZN5KR3eMb+PRgjMLDby9z2GMJlHIvxolk+x6
+ bXFufH+AGBmdeuhwqjF1oxg16HFXpnOuqav8tywJqQm129qMJdpr3Cih13E6hfgd7TGy
+ 9PYI7VoQ78JtXJCpBfWb7H3ZjZD2aArFzBnAM61XIoTLcIIldAiXbp1JHqkd1V2sBpFj
+ vL1WbWr44G3KyxEPvZgI5uu68a2eDWQCEH74xZdJFPVf6qHYkiD3b+ffiUzginjSofZq
+ rgLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716537648; x=1717142448;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pCyAlcRJxBXr8WBNFU9VvAlTC1A+jWOc3+UmKJXMUEc=;
- b=t0zAs+CkQ5mOUmhMyZ6ihjhc2vQabhBQ3pYz+4e9Eg+wXSildzTKAlGXyeOalTN0uS
- 5axVXPCTec/kYUv+lRSIFnCaoZ2VfZf3FQ47KbQMAawteNt4W2U10YMcihWaDihYiGX5
- XYj1ubyGeoqJSUWhBaKeX1d9g8psaW5dbO9HEMqPCkPb0+Sajx23k7HV9Y6Wk6xxaDqj
- BXgX8/csCL77Wt4QKdEEdslv43gu/AUCgaj4G75ILZVN/0KENzxRxNC8u8Q3cPxy7xZ8
- 7dX7PoQ1gC0x57w1AB0gipd7Rxejffuv66jti5E5rofNIJeJm0pHwWEbUcK+IR2NL8H9
- Z0Ow==
-X-Gm-Message-State: AOJu0YzjmKn/dlu2n5vjXgTvCmSMqH/DA0NiGkhHd9L247jz1OcV2/xp
- 7FLIiIUMP7mNLgI+9Esh7cfgLO3/RsOZqUI1ibSxSwaOAYgWoOdAJajP0fiCbcZZMucZYa7sgWq
- xDVI=
-X-Google-Smtp-Source: AGHT+IGBzXhsz59zLKanqwcxaXfKyJqLnPS5mqVuvp80KVjZpLChckGRyWEngY1SDJssQMxD7i2c8Q==
-X-Received: by 2002:a17:90a:e2d2:b0:2bd:e68c:b0c0 with SMTP id
- 98e67ed59e1d1-2bf5e170f33mr1453691a91.20.1716537648255; 
- Fri, 24 May 2024 01:00:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716537639; x=1717142439;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jrghs866eeKjtAq7SYzsGMP/6e+gx3kxu9bBYPhSOJI=;
+ b=VXm9i1YnQr9Kxtkw81Unm/B0S1kAoiS44WSWQp0eXh/zTDCrXButgeYk5e6Cf6lVGt
+ yIHuNQ+k+5w6JwQPSLDi4BGwqZ4DIXrw7vJZy2MxZGk5zvQxJHEEmybF1x9fzrRjTcCw
+ K0bAVPrBToAWUF5J2XrDNBRWMxPRwdnTzG6e9HPe/o4YPEIE3ywltdyclu1AGb7j911y
+ C15tNj9m4SxgwuWDtizqGWqINOJDZNKQ9I6rwtPJSfG3EL+cFcKzA3Kx6v+4hH+EDJeV
+ CX5KXoTsumPWRitmLpYfhUZM+CLkOEUkUkmqcMn/npVOJjcP9NFf1zWcnrD+vjAPLr/R
+ DQgg==
+X-Gm-Message-State: AOJu0YwqmZsrLHrl3PBdOkVZfjCGxXRh6n34ZAkGZ24iOZzSVIQP0hip
+ Kl5qTPR36FymST7nKBsnxlKwDSaYprJFM1hTEvMAOpetVpHozS+H7SRKI26EoCs=
+X-Google-Smtp-Source: AGHT+IFVj9Jk9D0ZKpyk05256iTXkAgk3RxdM/iRIw0uT35kYOTZO4/P9nOlmHmLJ+emQrVDo8qxOA==
+X-Received: by 2002:a17:90b:b11:b0:2bd:f690:67c8 with SMTP id
+ 98e67ed59e1d1-2bf5f106605mr1307214a91.27.1716537638973; 
+ Fri, 24 May 2024 01:00:38 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2bf5e13b6acsm846398a91.0.2024.05.24.01.00.45
+ 98e67ed59e1d1-2bdd9ed90c6sm2771083a91.8.2024.05.24.01.00.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 May 2024 01:00:47 -0700 (PDT)
+ Fri, 24 May 2024 01:00:38 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 24 May 2024 17:00:23 +0900
-Subject: [PATCH RFC 2/2] Revert "meson: Propagate gnutls dependency"
+Subject: [PATCH RFC 0/2] meson: Pass objects to declare_dependency()
+Date: Fri, 24 May 2024 17:00:21 +0900
+Message-Id: <20240524-objects-v1-0-07cbbe96166b@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240524-objects-v1-2-07cbbe96166b@daynix.com>
-References: <20240524-objects-v1-0-07cbbe96166b@daynix.com>
-In-Reply-To: <20240524-objects-v1-0-07cbbe96166b@daynix.com>
+X-B4-Tracking: v=1; b=H4sIABVJUGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUyMT3fykrNTkkmJd45RkA/NUEwvTJPM0JaDqgqLUtMwKsEnRSkFuzkq
+ xtbUAZjVOi14AAAA=
 To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
@@ -81,8 +81,8 @@ To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-2c6f2
-Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::529;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,89 +104,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 3eacf70bb5a83e4775ad8003cbca63a40f70c8c2.
+Based-on: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
+("[PATCH v4 0/4] Fix sanitizer errors with clang 18.1.1")
+
+This is changes suggested by Paolo Bonzini at:
+https://lore.kernel.org/all/CABgObfYoEFZsW-H4WJ7xW0B85OqFi932d3-DmNAb6zTohFn=Og@mail.gmail.com/
+
+Unfortunately it broke builds on my system. Below are the errors I
+observed:
+
+clang  -o qemu-img libauthz.a.p/authz_base.c.o libauthz.a.p/authz_list.c.o libauthz.a.p/authz_listfile.c.o libauthz.a.p/authz_simple.c.o libauthz.a.p/authz_pamacct.c.o libqom.a.p/qom_container.c.o libqom.a.p/qom_object.c.o libqom.a.p/qom_object_interfaces.c.o libqom.a.p/qom_qom-qobject.c.o libblock.a.p/block.c.o libblock.a.p/blockjob.c.o libblock.a.p/job.c.o libblock.a.p/qemu-io-cmds.c.o libblock.a.p/replication.c.o libblock.a.p/nbd_client.c.o libblock.a.p/nbd_client-connection.c.o libblock.a.p/nbd_common.c.o libblock.a.p/scsi_utils.c.o libblock.a.p/scsi_pr-manager.c.o libblock.a.p/scsi_pr-manager-helper.c.o libblock.a.p/block_accounting.c.o libblock.a.p/block_aio_task.c.o libblock.a.p/block_amend.c.o libblock.a.p/block_backup.c.o libblock.a.p/block_blkdebug.c.o libblock.a.p/block_blklogwrites.c.o libblock.a.p/block_blkverify.c.o libblock.a.p/block_block-backend.c.o libblock.a.p/block_block-copy.c.o libblock.a.p/block_commit.c.o libblock.a.p/block_copy-before-write.c.o libblock.a.p/block_copy-on-read.c.o libblock.a.p/block_create.c.o libblock.a.p/block_crypto.c.o libblock.a.p/block_dirty-bitmap.c.o libblock.a.p/block_filter-compress.c.o libblock.a.p/block_graph-lock.c.o libblock.a.p/block_io.c.o libblock.a.p/block_mirror.c.o libblock.a.p/block_nbd.c.o libblock.a.p/block_null.c.o libblock.a.p/block_preallocate.c.o libblock.a.p/block_progress_meter.c.o libblock.a.p/block_qapi.c.o libblock.a.p/block_qcow2.c.o libblock.a.p/block_qcow2-bitmap.c.o libblock.a.p/block_qcow2-cache.c.o libblock.a.p/block_qcow2-cluster.c.o libblock.a.p/block_qcow2-refcount.c.o libblock.a.p/block_qcow2-snapshot.c.o libblock.a.p/block_qcow2-threads.c.o libblock.a.p/block_quorum.c.o libblock.a.p/block_raw-format.c.o libblock.a.p/block_reqlist.c.o libblock.a.p/block_snapshot.c.o libblock.a.p/block_snapshot-access.c.o libblock.a.p/block_throttle.c.o libblock.a.p/block_throttle-groups.c.o libblock.a.p/block_write-threshold.c.o libblock.a.p/block_qcow.c.o libblock.a.p/block_vdi.c.o libblock.a.p/block_vhdx-endian.c.o libblock.a.p/block_vhdx-log.c.o libblock.a.p/block_vhdx.c.o libblock.a.p/block_vmdk.c.o libblock.a.p/block_vpc.c.o libblock.a.p/block_cloop.c.o libblock.a.p/block_bochs.c.o libblock.a.p/block_vvfat.c.o libblock.a.p/block_dmg.c.o libblock.a.p/block_qed-check.c.o libblock.a.p/block_qed-cluster.c.o libblock.a.p/block_qed-l2-cache.c.o libblock.a.p/block_qed-table.c.o libblock.a.p/block_qed.c.o libblock.a.p/block_parallels.c.o libblock.a.p/block_parallels-ext.c.o libblock.a.p/block_file-posix.c.o libblock.a.p/block_nvme.c.o libblock.a.p/block_replication.c.o libblock.a.p/block_stream.c.o libblock.a.p/block_monitor_bitmap-qmp-cmds.c.o libblock.a.p/block_curl.c.o libblock.a.p/block_ssh.c.o libblock.a.p/block_dmg-bz2.c.o libblock.a.p/meson-generated_.._block_block-gen.c.o libcrypto.a.p/crypto_afsplit.c.o libcrypto.a.p/crypto_akcipher.c.o libcrypto.a.p/crypto_block-luks.c.o libcrypto.a.p/crypto_block-qcow.c.o libcrypto.a.p/crypto_block.c.o libcrypto.a.p/crypto_cipher.c.o libcrypto.a.p/crypto_der.c.o libcrypto.a.p/crypto_hash.c.o libcrypto.a.p/crypto_hmac.c.o libcrypto.a.p/crypto_ivgen-essiv.c.o libcrypto.a.p/crypto_ivgen-plain.c.o libcrypto.a.p/crypto_ivgen-plain64.c.o libcrypto.a.p/crypto_ivgen.c.o libcrypto.a.p/crypto_pbkdf.c.o libcrypto.a.p/crypto_secret_common.c.o libcrypto.a.p/crypto_secret.c.o libcrypto.a.p/crypto_tlscreds.c.o libcrypto.a.p/crypto_tlscredsanon.c.o libcrypto.a.p/crypto_tlscredspsk.c.o libcrypto.a.p/crypto_tlscredsx509.c.o libcrypto.a.p/crypto_tlssession.c.o libcrypto.a.p/crypto_rsakey.c.o libcrypto.a.p/crypto_hash-gnutls.c.o libcrypto.a.p/crypto_hmac-gnutls.c.o libcrypto.a.p/crypto_pbkdf-gnutls.c.o libcrypto.a.p/crypto_secret_keyring.c.o libio.a.p/io_channel-buffer.c.o libio.a.p/io_channel-command.c.o libio.a.p/io_channel-file.c.o libio.a.p/io_channel-null.c.o libio.a.p/io_channel-socket.c.o libio.a.p/io_channel-tls.c.o libio.a.p/io_channel-util.c.o libio.a.p/io_channel-watch.c.o libio.a.p/io_channel-websock.c.o libio.a.p/io_channel.c.o libio.a.p/io_dns-resolver.c.o libio.a.p/io_net-listener.c.o libio.a.p/io_task.c.o libevent-loop-base.a.p/event-loop-base.c.o qemu-img.p/qemu-img.c.o -Werror -flto -Wl,--as-needed -Wl,--no-undefined -pie -fsanitize=cfi-icall -fsanitize-cfi-icall-generalize-pointers -fsanitize=undefined -fsanitize=address -fstack-protector-strong -Wl,-z,relro -Wl,-z,now -fuse-ld=lld -Wl,--start-group libqemuutil.a subprojects/libvhost-user/libvhost-user-glib.a subprojects/libvhost-user/libvhost-user.a @block.syms /usr/lib64/libgio-2.0.so /usr/lib64/libgobject-2.0.so /usr/lib64/libglib-2.0.so /usr/lib64/libgmodule-2.0.so -pthread /usr/lib64/libgnutls.so -lm /usr/lib64/libpixman-1.so -Wl,--end-group
+ld.lld: error: undefined symbol: pam_start
+>>> referenced by pamacct.c:40 (/home/me/q/var/qemu/build/../authz/pamacct.c:40)
+>>>               qemu-img.lto.o:(qauthz_pam_is_allowed.cfi)
+
+ld.lld: error: undefined symbol: pam_strerror
+>>> referenced by pamacct.c:45 (/home/me/q/var/qemu/build/../authz/pamacct.c:45)
+>>>               qemu-img.lto.o:(qauthz_pam_is_allowed.cfi)
+>>> referenced by pamacct.c:53 (/home/me/q/var/qemu/build/../authz/pamacct.c:53)
+>>>               qemu-img.lto.o:(qauthz_pam_is_allowed.cfi)
+
+ld.lld: error: undefined symbol: pam_acct_mgmt
+>>> referenced by pamacct.c:50 (/home/me/q/var/qemu/build/../authz/pamacct.c:50)
+>>>               qemu-img.lto.o:(qauthz_pam_is_allowed.cfi)
+
+ld.lld: error: undefined symbol: pam_end
+>>> referenced by pamacct.c:51 (/home/me/q/var/qemu/build/../authz/pamacct.c:51)
+>>>               qemu-img.lto.o:(qauthz_pam_is_allowed.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_createCCtx
+>>> referenced by qcow2-threads.c:203 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:203)
+>>>               qemu-img.lto.o:(qcow2_zstd_compress.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_compressStream2
+>>> referenced by qcow2-threads.c:225 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:225)
+>>>               qemu-img.lto.o:(qcow2_zstd_compress.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_freeCCtx
+>>> referenced by qcow2-threads.c:240 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:240)
+>>>               qemu-img.lto.o:(qcow2_zstd_compress.cfi)
+
+ld.lld: error: undefined symbol: deflateInit2_
+>>> referenced by qcow2-threads.c:101 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:101)
+>>>               qemu-img.lto.o:(qcow2_zlib_compress.cfi)
+>>> referenced by qcow.c:1081 (/home/me/q/var/qemu/build/../block/qcow.c:1081)
+>>>               qemu-img.lto.o:(qcow_co_pwritev_compressed.cfi)
+
+ld.lld: error: undefined symbol: deflate
+>>> referenced by qcow2-threads.c:116 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:116)
+>>>               qemu-img.lto.o:(qcow2_zlib_compress.cfi)
+>>> referenced by qcow.c:1094 (/home/me/q/var/qemu/build/../block/qcow.c:1094)
+>>>               qemu-img.lto.o:(qcow_co_pwritev_compressed.cfi)
+
+ld.lld: error: undefined symbol: deflateEnd
+>>> referenced by qcow2-threads.c:123 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:123)
+>>>               qemu-img.lto.o:(qcow2_zlib_compress.cfi)
+>>> referenced by qcow.c:1102 (/home/me/q/var/qemu/build/../block/qcow.c:1102)
+>>>               qemu-img.lto.o:(qcow_co_pwritev_compressed.cfi)
+>>> referenced by qcow.c:1096 (/home/me/q/var/qemu/build/../block/qcow.c:1096)
+>>>               qemu-img.lto.o:(qcow_co_pwritev_compressed.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_createDCtx
+>>> referenced by qcow2-threads.c:271 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:271)
+>>>               qemu-img.lto.o:(qcow2_zstd_decompress.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_decompressStream
+>>> referenced by qcow2-threads.c:291 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:291)
+>>>               qemu-img.lto.o:(qcow2_zstd_decompress.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_isError
+>>> referenced by qcow2-threads.c:293 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:293)
+>>>               qemu-img.lto.o:(qcow2_zstd_decompress.cfi)
+
+ld.lld: error: undefined symbol: ZSTD_freeDCtx
+>>> referenced by qcow2-threads.c:322 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:322)
+>>>               qemu-img.lto.o:(qcow2_zstd_decompress.cfi)
+>>> referenced by qcow2-threads.c:322 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:322)
+>>>               qemu-img.lto.o:(qcow2_zstd_decompress.cfi)
+
+ld.lld: error: undefined symbol: inflateInit2_
+>>> referenced by qcow2-threads.c:152 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:152)
+>>>               qemu-img.lto.o:(qcow2_zlib_decompress.cfi)
+>>> referenced by qcow.c:581 (/home/me/q/var/qemu/build/../block/qcow.c:581)
+>>>               qemu-img.lto.o:(decompress_cluster)
+
+ld.lld: error: undefined symbol: inflate
+>>> referenced by qcow2-threads.c:157 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:157)
+>>>               qemu-img.lto.o:(qcow2_zlib_decompress.cfi)
+>>> referenced by qcow.c:584 (/home/me/q/var/qemu/build/../block/qcow.c:584)
+>>>               qemu-img.lto.o:(decompress_cluster)
+>>> referenced by cloop.c:244 (/home/me/q/var/qemu/build/../block/cloop.c:244)
+>>>               qemu-img.lto.o:(cloop_read_block)
+>>> referenced 3 more times
+
+ld.lld: error: undefined symbol: inflateEnd
+>>> referenced by qcow2-threads.c:169 (/home/me/q/var/qemu/build/../block/qcow2-threads.c:169)
+>>>               qemu-img.lto.o:(qcow2_zlib_decompress.cfi)
+>>> referenced by qcow.c:0 (/home/me/q/var/qemu/build/../block/qcow.c:0)
+>>>               qemu-img.lto.o:(decompress_cluster)
+>>> referenced by qcow.c:0 (/home/me/q/var/qemu/build/../block/qcow.c:0)
+>>>               qemu-img.lto.o:(decompress_cluster)
+>>> referenced 2 more times
+
+ld.lld: error: undefined symbol: uncompress
+>>> referenced by vmdk.c:1958 (/home/me/q/var/qemu/build/../block/vmdk.c:1958)
+>>>               qemu-img.lto.o:(vmdk_read_extent)
+
+ld.lld: error: undefined symbol: compress
+>>> referenced by vmdk.c:1865 (/home/me/q/var/qemu/build/../block/vmdk.c:1865)
+>>>               qemu-img.lto.o:(vmdk_write_extent)
+
+ld.lld: error: undefined symbol: inflateReset
+>>> referenced by cloop.c:240 (/home/me/q/var/qemu/build/../block/cloop.c:240)
+>>>               qemu-img.lto.o:(cloop_read_block)
+>>> referenced by cloop.c:240 (/home/me/q/var/qemu/build/../block/cloop.c:240)
+>>>               qemu-img.lto.o:(cloop_read_block)
+>>> referenced by dmg.c:658 (/home/me/q/var/qemu/build/../block/dmg.c:658)
+>>>               qemu-img.lto.o:(dmg_read_chunk)
+>>> referenced 1 more times
+
+ld.lld: error: too many errors emitted, stopping now (use --error-limit=0 to see all errors)
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+ninja: build stopped: subcommand failed.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- meson.build                | 4 ++--
- block/meson.build          | 2 +-
- io/meson.build             | 2 +-
- storage-daemon/meson.build | 2 +-
- ui/meson.build             | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+Akihiko Odaki (2):
+      meson: Pass objects to declare_dependency()
+      Revert "meson: Propagate gnutls dependency"
 
-diff --git a/meson.build b/meson.build
-index 0e6fa2e4b777..cd5a24807ec8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3518,7 +3518,7 @@ if have_block
-     'blockdev-nbd.c',
-     'iothread.c',
-     'job-qmp.c',
--  ), gnutls)
-+  ))
- 
-   # os-posix.c contains POSIX-specific functions used by qemu-storage-daemon,
-   # os-win32.c does not
-@@ -4008,7 +4008,7 @@ if have_tools
-   qemu_io = executable('qemu-io', files('qemu-io.c'),
-              dependencies: [block, qemuutil], install: true)
-   qemu_nbd = executable('qemu-nbd', files('qemu-nbd.c'),
--               dependencies: [blockdev, qemuutil, gnutls, selinux],
-+               dependencies: [blockdev, qemuutil, selinux],
-                install: true)
- 
-   subdir('storage-daemon')
-diff --git a/block/meson.build b/block/meson.build
-index e1f03fd773e9..0165ac178370 100644
---- a/block/meson.build
-+++ b/block/meson.build
-@@ -39,7 +39,7 @@ block_ss.add(files(
-   'throttle.c',
-   'throttle-groups.c',
-   'write-threshold.c',
--), zstd, zlib, gnutls)
-+), zstd, zlib)
- 
- system_ss.add(when: 'CONFIG_TCG', if_true: files('blkreplay.c'))
- system_ss.add(files('block-ram-registrar.c'))
-diff --git a/io/meson.build b/io/meson.build
-index 283b9b2bdbdf..1164812f9126 100644
---- a/io/meson.build
-+++ b/io/meson.build
-@@ -13,4 +13,4 @@ io_ss.add(files(
-   'dns-resolver.c',
-   'net-listener.c',
-   'task.c',
--), gnutls)
-+))
-diff --git a/storage-daemon/meson.build b/storage-daemon/meson.build
-index 46267b63e72b..b955949fd6f3 100644
---- a/storage-daemon/meson.build
-+++ b/storage-daemon/meson.build
-@@ -1,6 +1,6 @@
- qsd_ss = ss.source_set()
- qsd_ss.add(files('qemu-storage-daemon.c'))
--qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil, gnutls)
-+qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil)
- 
- subdir('qapi')
- 
-diff --git a/ui/meson.build b/ui/meson.build
-index a5ce22a678ba..9358439ceeed 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -43,7 +43,7 @@ vnc_ss.add(files(
-   'vnc-jobs.c',
-   'vnc-clipboard.c',
- ))
--vnc_ss.add(zlib, jpeg, gnutls)
-+vnc_ss.add(zlib, jpeg)
- vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
- system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
- system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
+ docs/devel/build-system.rst           |  2 +-
+ meson.build                           | 31 ++++++++++++++++---------------
+ block/meson.build                     |  2 +-
+ gdbstub/meson.build                   |  4 ++--
+ io/meson.build                        |  2 +-
+ storage-daemon/meson.build            |  2 +-
+ subprojects/libvhost-user/meson.build |  2 +-
+ tests/qtest/libqos/meson.build        |  2 +-
+ ui/meson.build                        |  2 +-
+ 9 files changed, 25 insertions(+), 24 deletions(-)
+---
+base-commit: 4a207ef32de97bc785ced1987eacab7665b49420
+change-id: 20240524-objects-3dc07e485b7f
 
+Best regards,
 -- 
-2.45.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
