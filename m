@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16171C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 14:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7131C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 14:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAW2J-0008UC-56; Fri, 24 May 2024 10:36:47 -0400
+	id 1sAWIM-0005EM-47; Fri, 24 May 2024 10:53:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAW2G-0008Tj-EX
- for qemu-devel@nongnu.org; Fri, 24 May 2024 10:36:44 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1sAWIK-0005Dp-4t
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 10:53:20 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAW2E-0004iJ-UE
- for qemu-devel@nongnu.org; Fri, 24 May 2024 10:36:44 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6f8e9555eabso867120b3a.1
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 07:36:42 -0700 (PDT)
+ id 1sAWII-0007vR-7g
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 10:53:19 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f05b669b6cso29539735ad.3
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 07:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716561401; x=1717166201; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716562396; x=1717167196; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=powyWBBudBVY056ewWAOQUXFnuqlXpFSVxrNAEkTMoE=;
- b=M/Nzh0tFEPxLdF5NrrJ9AdbwtGlWVSDgM3+2xCd4se6F1EZF4n0/VjurekHqJLQEZu
- s0xP7OtUTsJSvJAeXW5QqtDwdGVhN7ld05mLS85RYJQVAyd7ebd3kwxTuup1fXzTmYmd
- VjPyAnTxAlvvbUz4bXMflbq7lntoE1LinkbL3g9cLmt5e4Kcv2siGQvWnHBWxk2cSOHq
- 3BP+a4BR9bDfoj8AxHoHzZfiNIU0HCg1dBhb/ZbxMMBIeZr7N3EEqkOCEnjxHMuZnMmp
- Z0gGUYBHzvjDLHSOTfXWzCGkryMlUxCzNysI9LaliNS16+U7GM3y7wHZSdotL+kS69VA
- qrTQ==
+ bh=FNzWPCsvDdoOgTpeCtVFRWTW0vragVslvl1m8hftdZo=;
+ b=DhKlMbpIIm7+y2sCGGarPlocLcmgODFu9i6BcH+223NJciZ1+Vwf1c1Kfev0+LyvF6
+ o7ElKLrXTU/JFIW/bHRFzgtZ9ND+gAXrXz1mmVcCPSECIwZl2cAUoxEz4xSmbDWKg3Nl
+ ucnTUZPeOn7USmts1EOX/MG7LGl9ngc8TNNamP5ImxAhjcQmgYg9Z4oS1/NwozLewGPC
+ qDK7oYCKFBgP5LMlt7ykAYbm4xq6vi16sBYc8PsbdS9yWpDTdGIvPJhBvJS5bzCMB/ZW
+ ueV4UuA0x3vofHkTSzy3upd5hWV26Wp0tHHO08fSle3EyI2FQR7YDS7kITMqMCJhZytY
+ Tvww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716561401; x=1717166201;
+ d=1e100.net; s=20230601; t=1716562396; x=1717167196;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=powyWBBudBVY056ewWAOQUXFnuqlXpFSVxrNAEkTMoE=;
- b=ub4WNRicm05UCU2CwAIBbS/ptKhy00gktyf8TNtn6nR3D+moyAmuR9erWcVS4/kyRs
- Y4fexxWkM3Yd9ovXiZoj6u1BWrfk2t0gTEYvjhqYldY29dasOVRjH8u1oOCyvyKxNhUD
- wQ6yMNREOHspDXIDRCEcW2QF+eXVVlB4mIWVXHGzcXpJD3LsJzKkB7aIHtVThKhiFFII
- iNaXfrHUo6iKJejsbqRhGgvfS0uVU8pZ6A500Y8quunDwDgAquG7l6ZPOoxzYt5u/Vpg
- 9ET9hkEgbr6Q49TuJbGX4WTSuRsx+8deWWZhmnMr+GJcOGbuSUAepfQVpBrjqRczpZGl
- sMwA==
+ bh=FNzWPCsvDdoOgTpeCtVFRWTW0vragVslvl1m8hftdZo=;
+ b=jpQDEwltYaoeInSw40jt6tTMU8ajgrL2gt7Set5I31g8y6+rVNYO4AeQede0twDzMF
+ MhwABphS3/ygXK/cSiFuzZa5U4KOUwrRbU9dT6E2OElH4WLlX0kNYZN4QhOL8Tt5b1OT
+ IJcvp/ndBZBdJUa1IhkKqLDRsnlocP0xOFJXt2aH4k8fVfBskePK/m1INjGl3/Es/Yig
+ xKZwGhPPs8Aju+ttDO4Nskr0tVSBIbpzQYCJ9G3c73m/7D2ahAE6V271e1JxcLHYchge
+ AaTBnynMNmxYgDOSeMwdbBoIt06HXKkMSvDJ0RpaqVmvjD2IE7WWW1s8foyMN74RA7jE
+ WzRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsSEXrmNLHkjXhQ3DsrsY0S01Of/CLNA5L1mTESmf0KCdPDK4pajoIq5nQcLGNbQ9/GL682a+FEWzGthAmW/AGcGngo0E=
-X-Gm-Message-State: AOJu0Yx78lkuFzN5X9kImefLG+yzmIeZHlWrq7nKgE3ElOq6WxyX3SJL
- ym3bVomhJksEQB5rrenX9Y58Xurjdyjzv3NrO+6dO0qc1rgiLD6InC5CMirLd4w=
-X-Google-Smtp-Source: AGHT+IG8MRRIIWQjqbxEZs9jmDoNKiik8DCa8rPcEhYHUachc87x63Y4otQ0xkm33LLLy+imN2LlNg==
-X-Received: by 2002:a05:6a00:6c87:b0:6f8:bae3:37b4 with SMTP id
- d2e1a72fcca58-6f8f2c7041emr2627742b3a.5.1716561395622; 
- Fri, 24 May 2024 07:36:35 -0700 (PDT)
+ AJvYcCWUV8iPjgO546YUtz3KGDeearfYeNJ4GP70lQY1HJmqrzXIVg4UKcBK/z0JrzmNTNNxMErzMZAF4T2eUxaVeYWkM2/5EWs=
+X-Gm-Message-State: AOJu0YxsHTNFbkMWBOY+R7TGmAjLs65S7O7jWezp3BrEmX4hKYDEkF7m
+ eoIKXMxIGCI8dvBDC5ghJjcjEx+IxFpWVES+gTgSg8rDFEpCZfyJ4Rqzu9xr4Zy/Ze4B3l8EVRd
+ v
+X-Google-Smtp-Source: AGHT+IGQBGrI3Z+FJExVG5PRrcsoPoLeV9w7SSTxPfvU6TXfGBEui2XyWRFh/oxSVLkMuSPsDRZHzQ==
+X-Received: by 2002:a17:902:f68a:b0:1ea:cb6f:ee5b with SMTP id
+ d9443c01a7336-1f44883876dmr30868385ad.38.1716562396506; 
+ Fri, 24 May 2024 07:53:16 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682229dc57dsm1062349a12.52.2024.05.24.07.36.34
+ d9443c01a7336-1f44c971d24sm14814365ad.129.2024.05.24.07.53.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 May 2024 07:36:35 -0700 (PDT)
-Message-ID: <15be1cfc-816c-4df4-81aa-c18171c256d2@linaro.org>
-Date: Fri, 24 May 2024 07:36:33 -0700
+ Fri, 24 May 2024 07:53:16 -0700 (PDT)
+Message-ID: <b8ccb39a-c52c-4926-9d04-654ceb582cb3@linaro.org>
+Date: Fri, 24 May 2024 07:53:14 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/16] target/i386: use mo_stacksize more
+Subject: Re: [PATCH 12/16] target/i386: introduce gen_lea_ss_ofs
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240524081019.1141359-1-pbonzini@redhat.com>
- <20240524081019.1141359-12-pbonzini@redhat.com>
+ <20240524081019.1141359-13-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240524081019.1141359-12-pbonzini@redhat.com>
+In-Reply-To: <20240524081019.1141359-13-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,14 +99,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/24/24 01:10, Paolo Bonzini wrote:
-> Use mo_stacksize for all stack accesses, including when
-> a 64-bit code segment is impossible and the code is
-> therefore checking only for SS32(s).
+> Generalize gen_stack_A0() to include an initial add and to use an arbitrary
+> destination.  This is a common pattern and it is not a huge burden to
+> add the extra arguments to the only caller of gen_stack_A0().
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   target/i386/tcg/translate.c | 51 +++++++++++++++----------------------
+>   target/i386/tcg/emit.c.inc  |  2 +-
+>   2 files changed, 22 insertions(+), 31 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
