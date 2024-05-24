@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBB5C25B79
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5586C25B79
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAQ0b-000546-0w; Fri, 24 May 2024 04:10:37 -0400
+	id 1sAQ0f-00055f-D3; Fri, 24 May 2024 04:10:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAQ0X-00050z-Fg
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:34 -0400
+ id 1sAQ0c-00054g-JZ
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAQ0V-0000Ma-VS
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:33 -0400
+ id 1sAQ0b-0000PX-4c
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716538231;
+ s=mimecast20190719; t=1716538236;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wbTLiCeUvWkQ0K+ApblZWP5HmsgfyWXFWN9Nk07xfSw=;
- b=basF5e5V8UWOheFy5oMI3uy5hyr5EnkA4biGDi6D3+OySYq93zyaBg6IQweYz/XUhhjeKL
- k1+0On+AX2T1A0sHPxSxJD0R/nibzkL2ZreyVg2JR/k4sEAZK/96koLfdASwf6cyxxT6VU
- fOqlLxMLf3uqC5bvdY84cfVttQPW8Do=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Br6UNVLB3xRS4K0FimCnEwOTUqULB678+ykTuEHd9fM=;
+ b=FZU/bS68pIfS/BbL59QY3bRRtEOHWL7j73Qy7TM5HC5QQKQWj64NFYK65MzAGXhUCqCAS0
+ 7hR5zRcAZ0D6lyY8pYBPgS5oZzSRaxxRttdGzgvs3Ape3ktoPzt6qKR7A8vTFvDsjE9OE9
+ M1sq2E0nT/uUlFy37AR398SAf27oM2Q=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-397-2SVnUSDuMEaYdcbK-RlgCQ-1; Fri, 24 May 2024 04:10:28 -0400
-X-MC-Unique: 2SVnUSDuMEaYdcbK-RlgCQ-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2e95a1f049aso5523911fa.0
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:10:28 -0700 (PDT)
+ us-mta-671-YHkBLedSOImK0rJhMm3S9A-1; Fri, 24 May 2024 04:10:34 -0400
+X-MC-Unique: YHkBLedSOImK0rJhMm3S9A-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a6269ad800aso27581866b.2
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:10:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716538227; x=1717143027;
+ d=1e100.net; s=20230601; t=1716538232; x=1717143032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wbTLiCeUvWkQ0K+ApblZWP5HmsgfyWXFWN9Nk07xfSw=;
- b=pMbzYGV/3xK1OPdnr82o5aB7N3vvJ5qibCg1+8FkRkF00f18T9+NIQOVlenmbDUH/j
- jHdSVvAUsVpb587IOFkMoIJAALDBTo6cN05bhjYrxvVZ8M3S6F7orKegsYeg+7ge9bYT
- pVM1QeF6WU8ngFejPpvrKbAmc1sU5fhkv8E2AvsDK87NHKRH8xmkqo2ClLJazaLXGSvd
- j7+yaBh2MGogM8Chxn6PYsW+lyZvbxSTZ0V8zBIvdOjrxzf9iknbjoiingiWtfvnQXoE
- hF/Huu2Muixbd2w36cVAJoyU0DxYtx6YEm7XYW8Kn57DRS71OY/x9eQL9BWa1oSpp16r
- R48Q==
-X-Gm-Message-State: AOJu0YzwelvuNAi6sIUZDOLXXcpC8wgbTSTiF0Jjl875R0NJDoR802xn
- YXLHXVHNmsTi5dOTyv+xWve/5Ey7NQSQ+vcC4hvnwzStSJ5t3xxSWY72ByaIOChArZmRHnzM1uN
- b7WQo76DJwj9vrsACRAkROibhMhVKU02P0iRGZlxNFIjrRTy714aBsDm5SKQlMIPFzhOoERYW1I
- vZnZ36bsVEKyxJM3mQnMzHSmdzyIglcf94zmDG
-X-Received: by 2002:a2e:9f4a:0:b0:2e7:1e4a:31e0 with SMTP id
- 38308e7fff4ca-2e95b096f07mr13619991fa.18.1716538226973; 
- Fri, 24 May 2024 01:10:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhOFQEAsml9prPJCio1TD8WXvfG6LQdmw1+r3T3yGeaVrojs7m52NNJD1Ii/nJcT2DOVm63g==
-X-Received: by 2002:a2e:9f4a:0:b0:2e7:1e4a:31e0 with SMTP id
- 38308e7fff4ca-2e95b096f07mr13619741fa.18.1716538226456; 
- Fri, 24 May 2024 01:10:26 -0700 (PDT)
+ bh=Br6UNVLB3xRS4K0FimCnEwOTUqULB678+ykTuEHd9fM=;
+ b=l6exJlvDj8C7IhpOuMcWLXafAR6kcnTAZUfka4COsklAotom0h42uWQTxYyjsJ+8vs
+ ZiMyBirdiBearmm8zo3NKE12/IbO5LX5ohvNu08lUNKoWGhYNksDXJiyHAQ69KOIgTYK
+ FBvrPA9/xyfEwB1BkTeyWtg40BbHjd7RkyYabKoK6XLICfXe112c67TkfxYy5JlmQapZ
+ DXLlP8kzZGFg+pdoksGDUXu7RRcC/POHrkr1AglEjQ6eGxbPcq0TNqjqGgdHvIb4PRyQ
+ RorcqnxHTJfiXwcEHWsWfC/MiWZ6hY+3LKbHIST939eelndmY0N4P5rGNSPeRaZ2brz3
+ cL3w==
+X-Gm-Message-State: AOJu0YwkVLGbb3lp9ZY5SthSSaMDxXpdqSNRfaqh8NcQnjhP+7bNEfvr
+ vyjPo8IC8wJK45je+GslQel343z3UUJ0Si++s+DFwrTZFQa93AJz70EfMc3ya2HE7TozGymACHD
+ Xr0e62hhaL9bGqqLMZUsRcGYk20IMF1OBveQMz5nQC06TkeCEMLVWd0N851iz/LDO67qfM5dkPE
+ 3OY4mGQipYxPeLkTdgwZVOnw/kMkNYiPGlXGgT
+X-Received: by 2002:a17:906:478c:b0:a59:d0be:dba4 with SMTP id
+ a640c23a62f3a-a62641c2e07mr180444066b.13.1716538232356; 
+ Fri, 24 May 2024 01:10:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZ+Rd2AlsD38sd8fJKKklm8D1CVNI39r41Mz4JRJFcz9gdHbvuLGnCfjFGcvCihT23KqamUQ==
+X-Received: by 2002:a17:906:478c:b0:a59:d0be:dba4 with SMTP id
+ a640c23a62f3a-a62641c2e07mr180441766b.13.1716538231974; 
+ Fri, 24 May 2024 01:10:31 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c97a1fbsm90994066b.92.2024.05.24.01.10.24
+ a640c23a62f3a-a626cd9fed2sm90000466b.187.2024.05.24.01.10.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 01:10:24 -0700 (PDT)
+ Fri, 24 May 2024 01:10:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 03/16] target/i386: document and group DISAS_* constants
-Date: Fri, 24 May 2024 10:10:06 +0200
-Message-ID: <20240524081019.1141359-4-pbonzini@redhat.com>
+Subject: [PATCH 05/16] target/i386: avoid calling gen_eob_inhibit_irq before
+ tb_stop
+Date: Fri, 24 May 2024 10:10:08 +0200
+Message-ID: <20240524081019.1141359-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240524081019.1141359-1-pbonzini@redhat.com>
 References: <20240524081019.1141359-1-pbonzini@redhat.com>
@@ -102,51 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Place DISAS_* constants that update cpu_eip first, and
-the "jump" ones last.  Add comments explaining the differences
-and usage.
+sti only has one exit, so it does not need to generate the
+end-of-translation code inline.  It can be deferred to tb_stop.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ target/i386/tcg/translate.c | 13 -------------
+ target/i386/tcg/emit.c.inc  |  4 +---
+ 2 files changed, 1 insertion(+), 16 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 3c7d8d72144..52d758a224b 100644
+index 24e83c1af84..5dae890d2b6 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -144,9 +144,28 @@ typedef struct DisasContext {
-     TCGOp *prev_insn_end;
- } DisasContext;
+@@ -557,19 +557,6 @@ static void gen_update_eip_cur(DisasContext *s)
+     s->pc_save = s->base.pc_next;
+ }
  
--#define DISAS_EOB_ONLY         DISAS_TARGET_0
--#define DISAS_EOB_NEXT         DISAS_TARGET_1
--#define DISAS_EOB_INHIBIT_IRQ  DISAS_TARGET_2
-+/*
-+ * Point EIP to next instruction before ending translation.
-+ * For instructions that can change hflags.
-+ */
-+#define DISAS_EOB_NEXT         DISAS_TARGET_0
-+
-+/*
-+ * Point EIP to next instruction and set HF_INHIBIT_IRQ if not
-+ * already set.  For instructions that activate interrupt shadow.
-+ */
-+#define DISAS_EOB_INHIBIT_IRQ  DISAS_TARGET_1
-+
-+/*
-+ * EIP has already been updated.  For jumps that do not use
-+ * lookup_and_goto_ptr()
-+ */
-+#define DISAS_EOB_ONLY         DISAS_TARGET_2
-+
-+/*
-+ * EIP has already been updated.  For jumps that wish to use
-+ * lookup_and_goto_ptr()
-+ */
- #define DISAS_JUMP             DISAS_TARGET_3
+-static void gen_update_eip_next(DisasContext *s)
+-{
+-    assert(s->pc_save != -1);
+-    if (tb_cflags(s->base.tb) & CF_PCREL) {
+-        tcg_gen_addi_tl(cpu_eip, cpu_eip, s->pc - s->pc_save);
+-    } else if (CODE64(s)) {
+-        tcg_gen_movi_tl(cpu_eip, s->pc);
+-    } else {
+-        tcg_gen_movi_tl(cpu_eip, (uint32_t)(s->pc - s->cs_base));
+-    }
+-    s->pc_save = s->pc;
+-}
+-
+ static int cur_insn_len(DisasContext *s)
+ {
+     return s->pc - s->base.pc_next;
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index c78e35b1e28..8e311b6d213 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -3475,9 +3475,7 @@ static void gen_STD(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ static void gen_STI(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     gen_set_eflags(s, IF_MASK);
+-    /* interruptions are enabled only the first insn after sti */
+-    gen_update_eip_next(s);
+-    gen_eob_inhibit_irq(s);
++    s->base.is_jmp = DISAS_EOB_INHIBIT_IRQ;
+ }
  
- /* The environment in which user-only runs is constrained. */
+ static void gen_VAESKEYGEN(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
 -- 
 2.45.1
 
