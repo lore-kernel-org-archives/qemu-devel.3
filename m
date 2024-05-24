@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9697C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD570C25B79
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAPrE-0007Ft-ST; Fri, 24 May 2024 04:00:56 -0400
+	id 1sAPrH-0007LW-Bg; Fri, 24 May 2024 04:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sAPrD-0007FK-3h
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:00:55 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1sAPrC-0007F0-Mz
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:00:54 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sAPr9-0006xz-Jg
+ id 1sAPr9-0006yF-9m
  for qemu-devel@nongnu.org; Fri, 24 May 2024 04:00:54 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-6818eea9c3aso504235a12.1
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:00:44 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2bdf11888a5so1046376a91.0
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716537644; x=1717142444;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716537648; x=1717142448;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sEnQjjS9flUUpyphQx6EbDRyE52dRZj9hwN6qC25u2c=;
- b=qGvBWkTkQFZnk7lxux505g39egQwHwvgQOBJ96Lfr2nR6WiAPOqYxcqsznilJy6VvK
- NQroSudPYSkdpBGXIPum9YrPkc5+PRlAlO4k2slcwDFnkmKfqM4kWsjXvNXGlpwKn6CZ
- VQ5N/cV0q8oLAqGxop2TUE3fmU/b+sslHYsWHRLCdB6RP1WiWRgOLPc8NmqjWgvVWjQO
- QYQ9pQzSXjzflskAySG2cJKzN2YPwwhtpSnRBsk0OAJVmvC1TfiBrdXXAcZRZnTqR66b
- NBKxYCKKE041zgrutAekoN+2KVBQ6gFMK1Y2cSBR+dCAie+ebbUXnZFnP7xU6FxadKAp
- a+TA==
+ :reply-to; bh=pCyAlcRJxBXr8WBNFU9VvAlTC1A+jWOc3+UmKJXMUEc=;
+ b=ZV46rBFtSfXBfrWlf8UvqBv5go70DfGrvUVCtb+k3Tc2FLXUnQ9KboOnX/7zkoGAmf
+ nscNHOJXBpQRO52ER+O0cYn78BgNXE3JzEPv8bu9ipGfe4WRjARhSEAXVHUo0NGqgnDq
+ ccVcseXdSPbpqim35MNy4nyWvkXL3XsVB1RuTw6g23chgT5IaGJv/PVl5C8wZkoOEf/J
+ Tkh8066foAqHsAbu/rtDX3RG9fsE8KMG8ONzh83NqMwNlroJ1shcFpVVpKggQLA27Kgb
+ g91VtIaaQ+KRT/Lwds3IrzZRhkSDYJH1oDg7uVoIRrh46wJ5GajM7ppHWEyqqh/uskBj
+ MNNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716537644; x=1717142444;
+ d=1e100.net; s=20230601; t=1716537648; x=1717142448;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sEnQjjS9flUUpyphQx6EbDRyE52dRZj9hwN6qC25u2c=;
- b=vlfmV8fkdStXy3xrkyeqfGvk8wx2bF9kL32NLUZTg09uUM38NN9y9+I8mFuHxLTbic
- uhWHNhjN3CeFKFbxGv250mCrLNgV5n7WVM/m3Gv4MBNG3ZEu/qAkXs0he5e2kLCFMu31
- 7nG5RHhtpwzq+86fAOOWwp2s/I0QJxoeUowkTwmYit/Gr9rB8F8zFpc7dA59fqGlbX3u
- y3ExRk0hkj7EVicQ9MbAUEFyVcSkXQXk5fpWjPlR6+7ILkqmnoa93gNNRmbz1OHPMk3Z
- U6KpnfRHIykB1E0UUjQa/x/0lMzOgrFbCdWKEmZYvSHyNYvGljLn4lf93t29FxnW1Qp2
- tZlg==
-X-Gm-Message-State: AOJu0Yxi7WHGvxkjqZjiGwJLgj5eOC1bJ0KqaEsGtmmpBdFWmkQuC0Iw
- NWQhI8+4/RP8UgGj62l6OofnKehiDzVfYUG1py7hwe+SCqWgaGWlwY3lMXnyJJM=
-X-Google-Smtp-Source: AGHT+IGAUC19dxRHDHb24DZDVMAkBXScVQif3ENAfflfjk/3dJ+jbqCdmmqLuocvvjyyEEbbzAxbyw==
-X-Received: by 2002:a05:6a21:3417:b0:1af:d1f0:b350 with SMTP id
- adf61e73a8af0-1b212dc14d2mr1560629637.22.1716537643806; 
- Fri, 24 May 2024 01:00:43 -0700 (PDT)
+ bh=pCyAlcRJxBXr8WBNFU9VvAlTC1A+jWOc3+UmKJXMUEc=;
+ b=t0zAs+CkQ5mOUmhMyZ6ihjhc2vQabhBQ3pYz+4e9Eg+wXSildzTKAlGXyeOalTN0uS
+ 5axVXPCTec/kYUv+lRSIFnCaoZ2VfZf3FQ47KbQMAawteNt4W2U10YMcihWaDihYiGX5
+ XYj1ubyGeoqJSUWhBaKeX1d9g8psaW5dbO9HEMqPCkPb0+Sajx23k7HV9Y6Wk6xxaDqj
+ BXgX8/csCL77Wt4QKdEEdslv43gu/AUCgaj4G75ILZVN/0KENzxRxNC8u8Q3cPxy7xZ8
+ 7dX7PoQ1gC0x57w1AB0gipd7Rxejffuv66jti5E5rofNIJeJm0pHwWEbUcK+IR2NL8H9
+ Z0Ow==
+X-Gm-Message-State: AOJu0YzjmKn/dlu2n5vjXgTvCmSMqH/DA0NiGkhHd9L247jz1OcV2/xp
+ 7FLIiIUMP7mNLgI+9Esh7cfgLO3/RsOZqUI1ibSxSwaOAYgWoOdAJajP0fiCbcZZMucZYa7sgWq
+ xDVI=
+X-Google-Smtp-Source: AGHT+IGBzXhsz59zLKanqwcxaXfKyJqLnPS5mqVuvp80KVjZpLChckGRyWEngY1SDJssQMxD7i2c8Q==
+X-Received: by 2002:a17:90a:e2d2:b0:2bd:e68c:b0c0 with SMTP id
+ 98e67ed59e1d1-2bf5e170f33mr1453691a91.20.1716537648255; 
+ Fri, 24 May 2024 01:00:48 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-6f8fc0598f5sm664732b3a.46.2024.05.24.01.00.40
+ 98e67ed59e1d1-2bf5e13b6acsm846398a91.0.2024.05.24.01.00.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 May 2024 01:00:43 -0700 (PDT)
+ Fri, 24 May 2024 01:00:47 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 24 May 2024 17:00:22 +0900
-Subject: [PATCH RFC 1/2] meson: Pass objects to declare_dependency()
+Date: Fri, 24 May 2024 17:00:23 +0900
+Subject: [PATCH RFC 2/2] Revert "meson: Propagate gnutls dependency"
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240524-objects-v1-1-07cbbe96166b@daynix.com>
+Message-Id: <20240524-objects-v1-2-07cbbe96166b@daynix.com>
 References: <20240524-objects-v1-0-07cbbe96166b@daynix.com>
 In-Reply-To: <20240524-objects-v1-0-07cbbe96166b@daynix.com>
 To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
@@ -80,8 +81,8 @@ To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-2c6f2
-Received-SPF: none client-ip=2607:f8b0:4864:20::52a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,192 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We used to request declare_dependency() to link_whole static libraries.
-If a static library is a thin archive, GNU ld needs to open all object
-files referenced by the archieve, and sometimes reaches to the open
-file limit.
-
-Another problem with link_whole is that it does not propagate
-dependencies. In particular, gnutls, a dependency of crypto, is not
-propagated to its users, and we currently workaround the issue by
-declaring gnutls as a dependency for each crypto user.
-
-Instead of using link_whole, extract objects included in static
-libraries and pass them to declare_dependency(). This requires Meson
-1.1.0 or later.
+This reverts commit 3eacf70bb5a83e4775ad8003cbca63a40f70c8c2.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- docs/devel/build-system.rst           |  2 +-
- meson.build                           | 27 ++++++++++++++-------------
- gdbstub/meson.build                   |  4 ++--
- subprojects/libvhost-user/meson.build |  2 +-
- tests/qtest/libqos/meson.build        |  2 +-
- 5 files changed, 19 insertions(+), 18 deletions(-)
+ meson.build                | 4 ++--
+ block/meson.build          | 2 +-
+ io/meson.build             | 2 +-
+ storage-daemon/meson.build | 2 +-
+ ui/meson.build             | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index 5baf027b7614..36ad40c76d2a 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -238,7 +238,7 @@ Subsystem sourcesets:
-     libchardev = static_library('chardev', chardev_ss.sources(),
-                                 build_by_default: false)
- 
--    chardev = declare_dependency(link_whole: libchardev)
-+    chardev = declare_dependency(objects: libchardev.extract_all_objects(recursive: false))
- 
- Target-independent emulator sourcesets:
-   Various general purpose helper code is compiled only once and
 diff --git a/meson.build b/meson.build
-index d6549722b50d..0e6fa2e4b777 100644
+index 0e6fa2e4b777..cd5a24807ec8 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1,4 +1,4 @@
--project('qemu', ['c'], meson_version: '>=0.63.0',
-+project('qemu', ['c'], meson_version: '>=1.1.0',
-         default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++11', 'b_colorout=auto',
-                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
-         version: files('VERSION'))
-@@ -3456,20 +3456,20 @@ subdir('gdbstub')
+@@ -3518,7 +3518,7 @@ if have_block
+     'blockdev-nbd.c',
+     'iothread.c',
+     'job-qmp.c',
+-  ), gnutls)
++  ))
  
- if enable_modules
-   libmodulecommon = static_library('module-common', files('module-common.c') + genh, pic: true, c_args: '-DBUILD_DSO')
--  modulecommon = declare_dependency(link_whole: libmodulecommon, compile_args: '-DBUILD_DSO')
-+  modulecommon = declare_dependency(objects: libmodulecommon.extract_all_objects(recursive: false), compile_args: '-DBUILD_DSO')
- endif
+   # os-posix.c contains POSIX-specific functions used by qemu-storage-daemon,
+   # os-win32.c does not
+@@ -4008,7 +4008,7 @@ if have_tools
+   qemu_io = executable('qemu-io', files('qemu-io.c'),
+              dependencies: [block, qemuutil], install: true)
+   qemu_nbd = executable('qemu-nbd', files('qemu-nbd.c'),
+-               dependencies: [blockdev, qemuutil, gnutls, selinux],
++               dependencies: [blockdev, qemuutil, selinux],
+                install: true)
  
- qom_ss = qom_ss.apply({})
- libqom = static_library('qom', qom_ss.sources() + genh,
-                         dependencies: [qom_ss.dependencies()],
-                         build_by_default: false)
--qom = declare_dependency(link_whole: libqom)
-+qom = declare_dependency(objects: libqom.extract_all_objects(recursive: false))
+   subdir('storage-daemon')
+diff --git a/block/meson.build b/block/meson.build
+index e1f03fd773e9..0165ac178370 100644
+--- a/block/meson.build
++++ b/block/meson.build
+@@ -39,7 +39,7 @@ block_ss.add(files(
+   'throttle.c',
+   'throttle-groups.c',
+   'write-threshold.c',
+-), zstd, zlib, gnutls)
++), zstd, zlib)
  
- event_loop_base = files('event-loop-base.c')
- event_loop_base = static_library('event-loop-base',
-                                  sources: event_loop_base + genh,
-                                  build_by_default: false)
--event_loop_base = declare_dependency(link_whole: event_loop_base,
-+event_loop_base = declare_dependency(objects: event_loop_base.extract_all_objects(recursive: false),
-                                      dependencies: [qom])
+ system_ss.add(when: 'CONFIG_TCG', if_true: files('blkreplay.c'))
+ system_ss.add(files('block-ram-registrar.c'))
+diff --git a/io/meson.build b/io/meson.build
+index 283b9b2bdbdf..1164812f9126 100644
+--- a/io/meson.build
++++ b/io/meson.build
+@@ -13,4 +13,4 @@ io_ss.add(files(
+   'dns-resolver.c',
+   'net-listener.c',
+   'task.c',
+-), gnutls)
++))
+diff --git a/storage-daemon/meson.build b/storage-daemon/meson.build
+index 46267b63e72b..b955949fd6f3 100644
+--- a/storage-daemon/meson.build
++++ b/storage-daemon/meson.build
+@@ -1,6 +1,6 @@
+ qsd_ss = ss.source_set()
+ qsd_ss.add(files('qemu-storage-daemon.c'))
+-qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil, gnutls)
++qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil)
  
- stub_ss = stub_ss.apply({})
-@@ -3703,7 +3703,7 @@ libauthz = static_library('authz', authz_ss.sources() + genh,
-                           dependencies: [authz_ss.dependencies()],
-                           build_by_default: false)
+ subdir('qapi')
  
--authz = declare_dependency(link_whole: libauthz,
-+authz = declare_dependency(objects: libauthz.extract_all_objects(recursive: false),
-                            dependencies: qom)
- 
- crypto_ss = crypto_ss.apply({})
-@@ -3711,7 +3711,7 @@ libcrypto = static_library('crypto', crypto_ss.sources() + genh,
-                            dependencies: [crypto_ss.dependencies()],
-                            build_by_default: false)
- 
--crypto = declare_dependency(link_whole: libcrypto,
-+crypto = declare_dependency(objects: libcrypto.extract_all_objects(recursive: false),
-                             dependencies: [authz, qom])
- 
- io_ss = io_ss.apply({})
-@@ -3720,7 +3720,8 @@ libio = static_library('io', io_ss.sources() + genh,
-                        link_with: libqemuutil,
-                        build_by_default: false)
- 
--io = declare_dependency(link_whole: libio, dependencies: [crypto, qom])
-+io = declare_dependency(objects: libio.extract_all_objects(recursive: false),
-+                        dependencies: [crypto, qom])
- 
- libmigration = static_library('migration', sources: migration_files + genh,
-                               build_by_default: false)
-@@ -3734,7 +3735,7 @@ libblock = static_library('block', block_ss.sources() + genh,
-                           link_depends: block_syms,
-                           build_by_default: false)
- 
--block = declare_dependency(link_whole: [libblock],
-+block = declare_dependency(objects: libblock.extract_all_objects(recursive: false),
-                            link_args: '@block.syms',
-                            dependencies: [crypto, io])
- 
-@@ -3743,7 +3744,7 @@ libblockdev = static_library('blockdev', blockdev_ss.sources() + genh,
-                              dependencies: blockdev_ss.dependencies(),
-                              build_by_default: false)
- 
--blockdev = declare_dependency(link_whole: [libblockdev],
-+blockdev = declare_dependency(objects: libblockdev.extract_all_objects(recursive: false),
-                               dependencies: [block, event_loop_base])
- 
- qmp_ss = qmp_ss.apply({})
-@@ -3751,18 +3752,18 @@ libqmp = static_library('qmp', qmp_ss.sources() + genh,
-                         dependencies: qmp_ss.dependencies(),
-                         build_by_default: false)
- 
--qmp = declare_dependency(link_whole: [libqmp])
-+qmp = declare_dependency(objects: libqmp.extract_all_objects(recursive: false))
- 
- libchardev = static_library('chardev', chardev_ss.sources() + genh,
-                             dependencies: chardev_ss.dependencies(),
-                             build_by_default: false)
- 
--chardev = declare_dependency(link_whole: libchardev)
-+chardev = declare_dependency(objects: libchardev.extract_all_objects(recursive: false))
- 
- hwcore_ss = hwcore_ss.apply({})
- libhwcore = static_library('hwcore', sources: hwcore_ss.sources() + genh,
-                            build_by_default: false)
--hwcore = declare_dependency(link_whole: libhwcore)
-+hwcore = declare_dependency(objects: libhwcore.extract_all_objects(recursive: false))
- common_ss.add(hwcore)
- 
- ###########
-@@ -3774,7 +3775,7 @@ foreach m : block_mods + system_mods
-   emulator_modules += shared_module(m.name(),
-                 build_by_default: true,
-                 name_prefix: '',
--                link_whole: m,
-+                objects: m.extract_all_objects(recursive: false),
-                 install: true,
-                 install_dir: qemu_moddir)
- endforeach
-diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index c91e398ae726..dff741ddd4d7 100644
---- a/gdbstub/meson.build
-+++ b/gdbstub/meson.build
-@@ -26,9 +26,9 @@ libgdb_system = static_library('gdb_system',
-                                 gdb_system_ss.sources() + genh,
-                                 build_by_default: false)
- 
--gdb_user = declare_dependency(link_whole: libgdb_user)
-+gdb_user = declare_dependency(objects: libgdb_user.extract_all_objects(recursive: false))
- user_ss.add(gdb_user)
--gdb_system = declare_dependency(link_whole: libgdb_system)
-+gdb_system = declare_dependency(objects: libgdb_system.extract_all_objects(recursive: false))
- system_ss.add(gdb_system)
- 
- common_ss.add(files('syscalls.c'))
-diff --git a/subprojects/libvhost-user/meson.build b/subprojects/libvhost-user/meson.build
-index a18014e7f26f..b3a2a3abf6be 100644
---- a/subprojects/libvhost-user/meson.build
-+++ b/subprojects/libvhost-user/meson.build
-@@ -17,7 +17,7 @@ vhost_user = static_library('vhost-user',
-                             c_args: '-D_GNU_SOURCE')
- 
- executable('link-test', files('link-test.c'),
--           link_whole: vhost_user)
-+           objects: vhost_user.extract_all_objects(recursive: false))
- 
- vhost_user_glib = static_library('vhost-user-glib',
-                                  files('libvhost-user-glib.c'),
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 45b81c83ade3..5b18aa4eaeb9 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -70,4 +70,4 @@ endif
- libqos = static_library('qos', libqos_srcs + genh,
-                         build_by_default: false)
- 
--qos = declare_dependency(link_whole: libqos)
-+qos = declare_dependency(objects: libqos.extract_all_objects(recursive: false))
+diff --git a/ui/meson.build b/ui/meson.build
+index a5ce22a678ba..9358439ceeed 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -43,7 +43,7 @@ vnc_ss.add(files(
+   'vnc-jobs.c',
+   'vnc-clipboard.c',
+ ))
+-vnc_ss.add(zlib, jpeg, gnutls)
++vnc_ss.add(zlib, jpeg)
+ vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
+ system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
+ system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
 
 -- 
 2.45.1
