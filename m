@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D4AC25B7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 15:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C151C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 16:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAWvH-0000H4-DT; Fri, 24 May 2024 11:33:35 -0400
+	id 1sAXWV-00010k-IK; Fri, 24 May 2024 12:12:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAWvF-0000Dz-TG
- for qemu-devel@nongnu.org; Fri, 24 May 2024 11:33:33 -0400
+ id 1sAXWU-00010H-24
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 12:12:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAWvE-0007A6-5Q
- for qemu-devel@nongnu.org; Fri, 24 May 2024 11:33:33 -0400
+ id 1sAXWS-0005QV-GD
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 12:12:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716564811;
+ s=mimecast20190719; t=1716567119;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=RzX5wbk9gUXB2ZJUJy9nWcoexSItSBHOEDA2O9r8g6E=;
- b=RyWsX2TcFDcnHnQg0Oc5S09mgWrgx1TlNk+CekKeVKDpAuVpmXlRZiQa4hAjZHPIVo8myK
- TYTIEnRC4wR+Oro/qoAsK1Ie5peMOQE3yOHsdtFJ+Fj+TCMpP/i23vnSvS5zB/Eu4cwyz2
- Hz+TQ0V9KAANL12buctjuiV0fZUMh00=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eZs06456MpZWCEfJBvTpJcfRIZ64fwVcyCyhJwXD55E=;
+ b=E/ahelQlYX43AHdNpHfcQ6OZzvwSLYa7mUd2PvNvRRXCEPzczrRq8cAZCOhllwOCtQRtvC
+ 03DuIXSn0xrusWkNx6LzTOFUlHpglYkv/3MEQYWpXnBpAu4aClRtCB6ap2omoaX3gIOAIM
+ bSYVnmJ18YboBCY26Oevu+c+GYOY5q4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-REnDr3vzNgSIrlhUHBnV4Q-1; Fri, 24 May 2024 11:33:30 -0400
-X-MC-Unique: REnDr3vzNgSIrlhUHBnV4Q-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a626ac4d29aso52439266b.3
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 08:33:29 -0700 (PDT)
+ us-mta-533-ENb_JdRAPFi-mYUJ4669WQ-1; Fri, 24 May 2024 12:11:57 -0400
+X-MC-Unique: ENb_JdRAPFi-mYUJ4669WQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4201248bcd4so2265945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 09:11:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716564808; x=1717169608;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RzX5wbk9gUXB2ZJUJy9nWcoexSItSBHOEDA2O9r8g6E=;
- b=fUBtU4aAW6GIfAWt9dX8noB/MUZm1Em0Dpv0gvR1k67VhWv5H+IQqD/rgwHyNJNAU4
- cGkAqZOlqUviyzG0tkJqwHE7KSUtK9Nm0itgFyE5nbdb4U4N1CIIjMxOim4YZJPmely5
- ycUYH/nxFzN1yQ6huNJ060UMNckn+Yv4jIppSLR00TeE/buQKMJus2HbB4tu+L6GE+TO
- +T9qTHtbtlfVScd/U3rJxUxXuaXALtCDTHeJib/A+CRj/93up+dng0/jzH8w9IcL+39h
- oc37E2irTPWg5SYBrGefDRQ7quC9Dk4mQjgjYl4NG5ztGH5XXGneuqTsm1wP4thD8NZC
- LyvQ==
-X-Gm-Message-State: AOJu0Yz3530FjxhHkE32AN30UsQtBwaZTn+AhTuAssEKGELkKsDIV6j1
- lSpZXBW4rDk6S89mzAurkv6RFREp6w2c6qrBXjbyJbWJIP+thmMunLhbHKFVOcUXDikVDHuxs1Q
- y6uta5iFrtzjM+mSLbqltwf3H8jYibkAOfDeHGlo2Sgv0xFGDxxMRDKf3/A2QurmoVO/DJScL+r
- OnnyCQ9GgyAWN0efnF96P1/J9DmI7+hzMMLrLJ
-X-Received: by 2002:a17:906:564c:b0:a59:bdb7:73f5 with SMTP id
- a640c23a62f3a-a6265148ba0mr187412966b.52.1716564807963; 
- Fri, 24 May 2024 08:33:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7wcoPW/Tlc1FQvxrnZAkznSgT7Ckg5i2MXkFkaQGEOYdVdsScFXFPchp6NS0MmZWhJ0vrmA==
-X-Received: by 2002:a17:906:564c:b0:a59:bdb7:73f5 with SMTP id
- a640c23a62f3a-a6265148ba0mr187411266b.52.1716564807620; 
- Fri, 24 May 2024 08:33:27 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c817c52sm146543766b.1.2024.05.24.08.33.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 08:33:25 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	qemu-stable@nongnu.org
-Subject: [PATCH] target/i386: always go through gen_eob*()
-Date: Fri, 24 May 2024 17:33:23 +0200
-Message-ID: <20240524153323.1267511-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
+ d=1e100.net; s=20230601; t=1716567116; x=1717171916;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eZs06456MpZWCEfJBvTpJcfRIZ64fwVcyCyhJwXD55E=;
+ b=IbnxIVUfnf4CJaY0//PVleQQyOyKYlOIUJbaR/jy489GA1SWGnaZAReAshVT7OPRVI
+ Zk4pnm/x7uUwHOyh0rPgvpItWei6V+VNIuoGTLCaI/Le0K6+W7qnj3/f8pN4EmQWFseo
+ Nsy82CRsKJG0281kAIjGK2jmz+4LI40cukKS0MdTQhuyLC0KXRpJLCszT3/YnszvZR7B
+ 5rdKoGcrDSPN1obaaM+QulLT7XZYRSsBCMRBD/uWEUN/UHexWVJUZMWq6TyXt7ugTeql
+ rLxOhnG8QFlULGyr7MmEvPGm35emHvxgRMCsvC4ce2xmq0UGfUlT19TBs2XqfZa5NyPl
+ 9jnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXesvejb6fuYXpW+4EYrcmGY6vcPu7QQ2jcFvTArIXJhDOIuFGGheLYUPJZkbov4G8CPhOMLwJN/dI3SrrNboLCTczsqSs=
+X-Gm-Message-State: AOJu0YxCL2zBcGI+B9SZC+6p39iIRxp/CYgm8uZFraNS6HNqs1xowGtq
+ w01k1hrGQmHus2SJp/PUtEAPbkpSbo7lkjw412gcnJTcjkvrjIMy2Bg1zahTuBLo2kmkKB5m7rd
+ jgOI0RhNNlyDc0OB+eyximMIBzW5jueVDuT9atQgqEmISqvAzMyG7dCJm6P9d9Z8lWAO/n90kbL
+ MCY0yB76f8k6G13DjsY7WTzgtYn6w=
+X-Received: by 2002:a05:600c:1d9e:b0:41a:3868:d222 with SMTP id
+ 5b1f17b1804b1-42108994047mr20117595e9.0.1716567116091; 
+ Fri, 24 May 2024 09:11:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGU4nHinG5UwWYfIzzaP4TB6q5N8h7uK09ZIRPsfyGS+poyVFItA8joQq8EIDF7CBO3B42QpM4Casm7ZYe8n8s=
+X-Received: by 2002:a05:600c:1d9e:b0:41a:3868:d222 with SMTP id
+ 5b1f17b1804b1-42108994047mr20117365e9.0.1716567115718; Fri, 24 May 2024
+ 09:11:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20231221094923.7349-1-duchao@eswincomputing.com>
+ <20231221094923.7349-2-duchao@eswincomputing.com>
+ <ada42503-dab4-474f-a61a-a9fe3fa63afa@ventanamicro.com>
+In-Reply-To: <ada42503-dab4-474f-a61a-a9fe3fa63afa@ventanamicro.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 24 May 2024 18:11:43 +0200
+Message-ID: <CABgObfYA3Er1y3R9v0Huf3w43n7oD83UhkqdRk-oBYzyM6O_ow@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/4] target/riscv/kvm: add software breakpoints support
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Chao Du <duchao@eswincomputing.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, anup@brainfault.org, 
+ atishp@atishpatra.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -100,118 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using DISAS_NORETURN does not process any of HF_INHIBIT_IRQ_MASK,
-HF_RF_MASK or HF_TF_MASK.  Never use it, instead there is
-DISAS_EOB_ONLY.
+On Tue, Apr 16, 2024 at 11:23=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+> > +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoi=
+nt *bp,
+> > +                                  vaddr len)
+> > +{
+> > +    if (len !=3D 4 && len !=3D 2) {
+> > +        return -EINVAL;
+> > +    }
+>
+> I wonder if this verification should be moved to kvm_insert_breakpoint().=
+ Is
+> there any known reason why other archs would use 'len' other than 2 or 4?=
+ The
+> parent function can throw the EINVAL in this case. Otherwise all callers =
+from
+> all archs will need a similar EINVAL check.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/translate.c | 18 ++++++++++++------
- target/i386/tcg/emit.c.inc  |  4 ++--
- 2 files changed, 14 insertions(+), 8 deletions(-)
+I'm not sure how len is defined in the gdb protocol, but x86 has a
+breakpoint length of 1 and an instruction length that can be any value
+between 1 and 15.
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index ebcff8766cf..df10e7d8a6a 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1406,7 +1406,7 @@ static void gen_exception(DisasContext *s, int trapno)
-     gen_update_cc_op(s);
-     gen_update_eip_cur(s);
-     gen_helper_raise_exception(tcg_env, tcg_constant_i32(trapno));
--    s->base.is_jmp = DISAS_NORETURN;
-+    s->base.is_jmp = DISAS_EOB_ONLY;
- }
- 
- /* Generate #UD for the current instruction.  The assumption here is that
-@@ -2191,7 +2191,7 @@ static void gen_interrupt(DisasContext *s, uint8_t intno)
-     gen_update_eip_cur(s);
-     gen_helper_raise_interrupt(tcg_env, tcg_constant_i32(intno),
-                                cur_insn_len_i32(s));
--    s->base.is_jmp = DISAS_NORETURN;
-+    s->base.is_jmp = DISAS_EOB_ONLY;
- }
- 
- static void gen_set_hflag(DisasContext *s, uint32_t mask)
-@@ -2354,7 +2354,7 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
-             tcg_gen_movi_tl(cpu_eip, new_eip);
-         }
-         tcg_gen_exit_tb(s->base.tb, tb_num);
--        s->base.is_jmp = DISAS_NORETURN;
-+        s->base.is_jmp = DISAS_EOB_ONLY;
-     } else {
-         if (!(tb_cflags(s->base.tb) & CF_PCREL)) {
-             tcg_gen_movi_tl(cpu_eip, new_eip);
-@@ -3520,7 +3520,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         gen_update_cc_op(s);
-         gen_update_eip_cur(s);
-         gen_helper_rdpmc(tcg_env);
--        s->base.is_jmp = DISAS_NORETURN;
-+        s->base.is_jmp = DISAS_EOB_ONLY;
-         break;
-     case 0x134: /* sysenter */
-         /* For AMD SYSENTER is not valid in long mode */
-@@ -3690,7 +3690,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-             gen_update_cc_op(s);
-             gen_update_eip_cur(s);
-             gen_helper_mwait(tcg_env, cur_insn_len_i32(s));
--            s->base.is_jmp = DISAS_NORETURN;
-+            s->base.is_jmp = DISAS_EOB_ONLY;
-             break;
- 
-         case 0xca: /* clac */
-@@ -3769,7 +3769,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-             gen_helper_vmrun(tcg_env, tcg_constant_i32(s->aflag - 1),
-                              cur_insn_len_i32(s));
-             tcg_gen_exit_tb(NULL, 0);
--            s->base.is_jmp = DISAS_NORETURN;
-+            s->base.is_jmp = DISAS_EOB_ONLY;
-             break;
- 
-         case 0xd9: /* VMMCALL */
-@@ -4770,6 +4770,11 @@ static void i386_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
- 
-     switch (dc->base.is_jmp) {
-     case DISAS_NORETURN:
-+	/*
-+	 * Nothing to do, gen_eob*() was already called.  DISAS_NORETURN is
-+	 * never set explicitly except in gen_eob_worker(), because that is
-+	 * where HF_INHIBIT_IRQ_MASK, HF_RF_MASK and HF_TF_MASK are handled.
-+	 */
-         break;
-     case DISAS_TOO_MANY:
-         gen_update_cc_op(dc);
-@@ -4793,6 +4798,7 @@ static void i386_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-     default:
-         g_assert_not_reached();
-     }
-+    assert(dc->base.is_jmp == DISAS_NORETURN);
- }
- 
- static const TranslatorOps i386_tr_ops = {
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index c78e35b1e28..14464074d5a 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1642,7 +1642,7 @@ static void gen_HLT(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-     gen_update_cc_op(s);
-     gen_update_eip_cur(s);
-     gen_helper_hlt(tcg_env, cur_insn_len_i32(s));
--    s->base.is_jmp = DISAS_NORETURN;
-+    s->base.is_jmp = DISAS_EOB_ONLY;
- #endif
- }
- 
-@@ -4022,7 +4022,7 @@ static void gen_XCHG(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-             gen_update_cc_op(s);
-             gen_update_eip_cur(s);
-             gen_helper_pause(tcg_env, cur_insn_len_i32(s));
--            s->base.is_jmp = DISAS_NORETURN;
-+            s->base.is_jmp = DISAS_EOB_ONLY;
-         }
-         /* No writeback.  */
-         decode->op[0].unit = X86_OP_SKIP;
--- 
-2.45.1
+Most architectures could assume that it's always one value, i.e. just
+not care about checking len in kvm_arch_insert_sw_breakpoint.
+
+The patches look good, feel free to take them through the RISC-V tree.
+
+One thing that I was wondering is: could RISC-V just use always
+c.ebreak if C instructions are supported, and ebreak if they're not?
+But if for example that would that mess up the synchronization of the
+disassembly in gdb, it's a good reason to add the len argument as you
+did here.
+
+Paolo
 
 
