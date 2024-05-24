@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CE0C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 13:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938F2C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 13:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAUlD-0006xv-AU; Fri, 24 May 2024 09:15:04 -0400
+	id 1sAUlB-0006tU-8Y; Fri, 24 May 2024 09:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1sAUl9-0006sA-67; Fri, 24 May 2024 09:15:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1sAUl7-0006nF-9w; Fri, 24 May 2024 09:14:57 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1sAUl6-0004Wd-R1; Fri, 24 May 2024 09:14:58 -0400
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ id 1sAUl1-0004V1-Mw; Fri, 24 May 2024 09:14:54 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44OCbB0t010335; Fri, 24 May 2024 13:14:54 GMT
+ 44OD9iE4009005; Fri, 24 May 2024 13:14:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : date :
  mime-version : from : subject : to : cc : references : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=+ixvUAj6sN/MG6rhFsZTOvHqyr8xvnY9g6DE3YnyWl4=;
- b=Zn/E3s0wldOErgPEjnyq6hk9GK7WoAExzr2f+To2oip8gvazoNlGYhZobSKydrDFymmD
- tvK703u4O7L/nJVt8+HxUHvKwfwMIRGqFOpOHMyW+sFf4gJNw2wCWxysucs1WzYQxN30
- okloD0RICbbaX4msPJW5OmshAEkjBN5wSeyoTLuZfRf226yRiQWt7HHbBwDEpS8raDie
- FgQJfXsdjRii2z9oib/wuPF3A4kx00v27scFAtWttviyrdBMTzv8+4bLUo0SIjiwgnd1
- YoyDMaKx4VjrX55zkdzkdKtZ7p0xIvb4xtNM3VhHYfSqWgRnu0939HHgs8GqHUNZafvN qg== 
+ bh=3tDl5jkJ6lh+sH3GsIiU2nTqcp2aY7dUJnSW10fzWvU=;
+ b=qt13UiT76vSs1M5ecZA5gjJPSSl/W4RdZVZq0JmCYlG1DVFRLJ5zQk+Y53yT1zrpLPs8
+ bUBl1mLuYcPfLaIxInwbePjEAAPj1xcfXPmCNJ0vNJCAum4vbwDRmNqQh128vuQx7lP4
+ 4aoSvDA6JWYox7ctKbcxWphzp9jy0uiizp1rh1XmxLHc9ZAKBJbMRyncxszVBw4ihPI+
+ KJ1rUYm//KYFSAnaop63UVfumeZfGRJ4aoY382B5Co3JkuhXqmSM0pHsufWUERYiV90G
+ tgh+HH0meeLeNHLb0n9hXd1iQghEwWq80NSz0nFKDvy1N4TNF0CEVoLFPHho/hHwiIO/ Iw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yau25r3bx-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yaugq80fk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 May 2024 13:14:53 +0000
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44ODEr50010715;
- Fri, 24 May 2024 13:14:53 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yau25r3bt-1
+ Fri, 24 May 2024 13:14:47 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44ODElqp016274;
+ Fri, 24 May 2024 13:14:47 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yaugq80ff-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 May 2024 13:14:53 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44OC31Zd000923; Fri, 24 May 2024 13:14:52 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y7720rxrc-1
+ Fri, 24 May 2024 13:14:47 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44OBUHc9022087; Fri, 24 May 2024 13:14:46 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3y76nu90ga-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 May 2024 13:14:52 +0000
+ Fri, 24 May 2024 13:14:46 +0000
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44ODEn1X6881906
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44ODEhIn22479402
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 May 2024 13:14:51 GMT
+ Fri, 24 May 2024 13:14:45 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E062058068;
- Fri, 24 May 2024 13:14:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 992BE5805D;
+ Fri, 24 May 2024 13:14:43 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 68C8258063;
- Fri, 24 May 2024 13:14:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 19D2058066;
+ Fri, 24 May 2024 13:14:43 +0000 (GMT)
 Received: from [9.61.26.241] (unknown [9.61.26.241])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 May 2024 13:14:48 +0000 (GMT)
-Message-ID: <4cbe27d0-ee4c-4a8f-8a3e-76578f90c651@linux.ibm.com>
-Date: Fri, 24 May 2024 09:14:48 -0400
+ Fri, 24 May 2024 13:14:42 +0000 (GMT)
+Message-ID: <8b8407de-4db3-45a6-be02-8a74df5cd9cd@linux.ibm.com>
+Date: Fri, 24 May 2024 09:14:42 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Anthony Krowiak <akrowiak@linux.ibm.com>
-Subject: Re: [PATCH 5/7] vfio/ccw: Use the 'Error **errp' argument of
- vfio_ccw_realize()
+Subject: Re: [PATCH 4/7] s390x/css: Make S390CCWDeviceClass::realize return
+ bool
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
 References: <20240522170107.289532-1-clg@redhat.com>
- <20240522170107.289532-6-clg@redhat.com>
+ <20240522170107.289532-5-clg@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20240522170107.289532-6-clg@redhat.com>
+In-Reply-To: <20240522170107.289532-5-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0WxaFHuCWWxulae69TAPFeTueXu2zI_Y
-X-Proofpoint-ORIG-GUID: IaKSrfSRBJ_DNOLJcU3JwzEztALPV_K-
+X-Proofpoint-GUID: 5jTXbSTWL0DUIkwYeZpxR3R-SkfoS8RI
+X-Proofpoint-ORIG-GUID: RGjda59_a0hcWv4uGKydHM564TeJIlNs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-24_04,2024-05-24_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 mlxscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=999 spamscore=0 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405240091
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ impostorscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ clxscore=1015 spamscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999
+ adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2405010000 definitions=main-2405240091
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -120,13 +120,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/22/24 1:01 PM, Cédric Le Goater wrote:
-> The local error variable is kept for vfio_ccw_register_irq_notifier()
-> because it is not considered as a failing condition. We will change
-> how error reporting is done in following changes.
+> Since the realize() handler of S390CCWDeviceClass takes an 'Error **'
+> argument, best practices suggest to return a bool. See the api/error.h
+> Rules section. While at it, modify the call in vfio_ccw_realize().
 >
-> Remove the error_propagate() call.
->
-> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
 
@@ -134,52 +131,75 @@ Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
 
 
 > ---
->   hw/vfio/ccw.c | 12 +++++-------
->   1 file changed, 5 insertions(+), 7 deletions(-)
+>   include/hw/s390x/s390-ccw.h | 2 +-
+>   hw/s390x/s390-ccw.c         | 7 ++++---
+>   hw/vfio/ccw.c               | 3 +--
+>   3 files changed, 6 insertions(+), 6 deletions(-)
 >
+> diff --git a/include/hw/s390x/s390-ccw.h b/include/hw/s390x/s390-ccw.h
+> index 2c807ee3a1ae8d85460fe65be8a62c64f212fe4b..2e0a70998132070996d6b0d083b8ddba5b9b87dc 100644
+> --- a/include/hw/s390x/s390-ccw.h
+> +++ b/include/hw/s390x/s390-ccw.h
+> @@ -31,7 +31,7 @@ struct S390CCWDevice {
+>   
+>   struct S390CCWDeviceClass {
+>       CCWDeviceClass parent_class;
+> -    void (*realize)(S390CCWDevice *dev, char *sysfsdev, Error **errp);
+> +    bool (*realize)(S390CCWDevice *dev, char *sysfsdev, Error **errp);
+>       void (*unrealize)(S390CCWDevice *dev);
+>       IOInstEnding (*handle_request) (SubchDev *sch);
+>       int (*handle_halt) (SubchDev *sch);
+> diff --git a/hw/s390x/s390-ccw.c b/hw/s390x/s390-ccw.c
+> index b3d14c61d732880a651edcf28a040ca723cb9f5b..3c0975055089c3629dd76ce2e1484a4ef66d8d41 100644
+> --- a/hw/s390x/s390-ccw.c
+> +++ b/hw/s390x/s390-ccw.c
+> @@ -108,7 +108,7 @@ static bool s390_ccw_get_dev_info(S390CCWDevice *cdev,
+>       return true;
+>   }
+>   
+> -static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+> +static bool s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+>   {
+>       CcwDevice *ccw_dev = CCW_DEVICE(cdev);
+>       CCWDeviceClass *ck = CCW_DEVICE_GET_CLASS(ccw_dev);
+> @@ -117,7 +117,7 @@ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+>       int ret;
+>   
+>       if (!s390_ccw_get_dev_info(cdev, sysfsdev, errp)) {
+> -        return;
+> +        return false;
+>       }
+>   
+>       sch = css_create_sch(ccw_dev->devno, errp);
+> @@ -142,7 +142,7 @@ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+>   
+>       css_generate_sch_crws(sch->cssid, sch->ssid, sch->schid,
+>                             parent->hotplugged, 1);
+> -    return;
+> +    return true;
+>   
+>   out_err:
+>       css_subch_assign(sch->cssid, sch->ssid, sch->schid, sch->devno, NULL);
+> @@ -150,6 +150,7 @@ out_err:
+>       g_free(sch);
+>   out_mdevid_free:
+>       g_free(cdev->mdevid);
+> +    return false;
+>   }
+>   
+>   static void s390_ccw_unrealize(S390CCWDevice *cdev)
 > diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 9a8e052711fe2f7c067c52808b2af30d0ebfee0c..a468fa2342b97e0ee36bd5fb8443025cc90a0453 100644
+> index 2600e62e37238779800dc2b3a0bd315d7633017b..9a8e052711fe2f7c067c52808b2af30d0ebfee0c 100644
 > --- a/hw/vfio/ccw.c
 > +++ b/hw/vfio/ccw.c
-> @@ -582,8 +582,8 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
+> @@ -582,8 +582,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
 >   
 >       /* Call the class init function for subchannel. */
 >       if (cdc->realize) {
-> -        if (!cdc->realize(cdev, vcdev->vdev.sysfsdev, &err)) {
-> -            goto out_err_propagate;
-> +        if (!cdc->realize(cdev, vcdev->vdev.sysfsdev, errp)) {
-> +            return;
+> -        cdc->realize(cdev, vcdev->vdev.sysfsdev, &err);
+> -        if (err) {
+> +        if (!cdc->realize(cdev, vcdev->vdev.sysfsdev, &err)) {
+>               goto out_err_propagate;
 >           }
 >       }
->   
-> @@ -596,17 +596,17 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
->           goto out_attach_dev_err;
->       }
->   
-> -    if (!vfio_ccw_get_region(vcdev, &err)) {
-> +    if (!vfio_ccw_get_region(vcdev, errp)) {
->           goto out_region_err;
->       }
->   
-> -    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err)) {
-> +    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, errp)) {
->           goto out_io_notifier_err;
->       }
->   
->       if (vcdev->crw_region) {
->           if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX,
-> -                                            &err)) {
-> +                                            errp)) {
->               goto out_irq_notifier_err;
->           }
->       }
-> @@ -634,8 +634,6 @@ out_attach_dev_err:
->       if (cdc->unrealize) {
->           cdc->unrealize(cdev);
->       }
-> -out_err_propagate:
-> -    error_propagate(errp, err);
->   }
->   
->   static void vfio_ccw_unrealize(DeviceState *dev)
 
