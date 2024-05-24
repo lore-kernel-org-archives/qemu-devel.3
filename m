@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4FDC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 14:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F7EC25B7A
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 14:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAVvt-0003op-98; Fri, 24 May 2024 10:30:09 -0400
+	id 1sAVy3-0005Fs-8c; Fri, 24 May 2024 10:32:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAVvr-0003no-Pf
- for qemu-devel@nongnu.org; Fri, 24 May 2024 10:30:07 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1sAVxs-0005Cm-RC
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 10:32:17 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sAVvp-0002oc-3R
- for qemu-devel@nongnu.org; Fri, 24 May 2024 10:30:07 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2bf57909b4fso924571a91.2
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 07:30:04 -0700 (PDT)
+ id 1sAVxr-0003di-5f
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 10:32:12 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-60585faa69fso2164150a12.1
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 07:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716561002; x=1717165802; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716561129; x=1717165929; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DucGVR+ydMxVth2cHN+YZ3JcGCRj8Olyw5LqtZJXpxc=;
- b=mjcfna1JufVdH/uNIZ7Jt1Wz853s73xyzvbQkEqVvv3jQtDLxhSHoMtK3N6duqb//G
- hG1iAEsCgYjUW9/pA4kSNWccmVhp/FIo/ulN/7U3U+Wk0oaOTFkw1bLFqIxuDyAjURmm
- ZMHOuhVGdgyuJNOT3db+TK6xzU9KZH5rt+vqoVUQOgHYyIbrqGhCIvThDKUQGKWaxJNG
- GXyumm2Ok+bcpwIpFj7QFaq9OyaDbBm8oR2KWs9zNhPlF1gsp0hk02iYooiD0NUfm/d6
- /zrlEK9UB8FYBq4myWiTveudUAxiwSkOWYBQjiQ6zXfE5bMyusf48zarwyaX2SGzX3o3
- bcHw==
+ bh=O5ZSCjiBtlTZKUUcTHYMRt+4hXXZamOOLUTb9HTXEQM=;
+ b=Cwj03OZ9/8jBS/U1Obxh+XET2EtV9PB13DV4jNAZGv/xKcyAzc8tOGNkMCgbMzkCQS
+ 2LiLvLIpynk2HzYtTOyqPhxoO7/jKx85KVM3ZxAwnVuddHKjOEhZiSLkrl0Iv8OG/qCp
+ eH40SWFmmWZM7DvRNb6Bhu3VmYxk2m1InMX5KBymy/le2++S45zmvb7HQFanMf3I7IMO
+ KcHas28B0sP3j3wDIlapnS8zWQcjFkmGUlaEvnyLHCY2DEaT3HU69pNXDCYeFKngC0yQ
+ zAx0LCGO8XHeLovWN/zBygsKxQ3ngLEECAFiVN0g9Y3miFQfGotVMj6JhajN5tlcndDu
+ op5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716561002; x=1717165802;
+ d=1e100.net; s=20230601; t=1716561129; x=1717165929;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DucGVR+ydMxVth2cHN+YZ3JcGCRj8Olyw5LqtZJXpxc=;
- b=DKu8jfoFg7l5/pC9OWs956iO3aQOqmpQOJ6OpuiModOsSJs6SWVNb81T20iixE8PNF
- cCta9xBESwn3ouc/1EeAazRr/rfZcfZG0+VFk2GneTrmsdS/rc/oyZhyGiZlHLeAGyYA
- XcbYPzTmZAx+2a1wJUcB54jB0m7bX0QMD0WJcGcP8ToArbJ1H/YmjqEkcmgKrZOuO0LG
- t9SToTGPcexrzOuKSWS1A8bED0kHuWMvkaCCCR2tO7ypBSzKIpU7DIBPT1uU1l45ubSv
- D+6TdFwd58NuhIpBBmObafkIOcjqwOASvrBBtMGrCrR+O2YGWkP3bcUJoyoWd2t7QFBq
- DvjA==
+ bh=O5ZSCjiBtlTZKUUcTHYMRt+4hXXZamOOLUTb9HTXEQM=;
+ b=hHXcsvQkLKu3ttgyhs3aT9wHpUWlKzffPhFIOugyrbTs78u2hzfUA00agp7rII79+B
+ gOT4OMenW0xt6qeJ4gYBXYEe8+UaOiHqvaaM7bAW7Rs3eraqyGCjYf+Op7Y19738QjU7
+ l/D2CeQPUmFkn9o8rpFzq/T90J8iBcdqE1Udni47bTF4y8EbwiyAUPM6IUli9lyhbGKy
+ ROZSkSxHXnfzzuQaUeTDnUpEZ3n+/R74X+/ISmddjJ2eeubtUVEwPX+T9G1kGa57txL6
+ 8hVrQSO9cP46g5ig538bghPCra39E6Gn+NIyzpRN5wtfHyB1274d3ahNM2J9JYh3ZX+V
+ MhIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2BLF1TTBz4SRjxQv/cGTKRapbGBrmsR/WrCFXTHRhiZtlradTkhtABHaOlbw3C1fSD2OaNrxfAMLkTaM5X4unvgxRSQs=
-X-Gm-Message-State: AOJu0YzuSEZnGL8r89JtOvvy7x+oH7T78iIBoS/AoVSRv+EwXv5khSqe
- oWoWk43d3As28IvrVbeWzLUGcjk87wzdBmX5JSm1WqvudYgNfzYU+l81KPEYOqn0DeEdov153fa
- H
-X-Google-Smtp-Source: AGHT+IH6+6dl7PlPjPm4EIEgQt3Aoon0Doc342oFvyiNe0wLuV58ifLMcHk3fjCPdSrWUrj7Fhy5DA==
-X-Received: by 2002:a17:90b:1196:b0:2b2:7e94:c5e0 with SMTP id
- 98e67ed59e1d1-2bf5eb32de6mr2384263a91.20.1716561002473; 
- Fri, 24 May 2024 07:30:02 -0700 (PDT)
+ AJvYcCX5pveXWDhFxtRSizHa6xGBh3qnZWx/aAf6kwyhWOSopRNrNobbWlQhTjjKSHi80vIVzONyaTzuxsFqPIdoOBL/ovkulF8=
+X-Gm-Message-State: AOJu0YyvIwli0KLzZwV6zyjH1kKo+Zlx93mf+HQ5ZwMtzNmD/j1ui2ik
+ Hhr0H0bclFB15I9DJfnnpzuD9Drhdh5pPvEhmXTLY0zAk1TDiPSa99KbxKX5F6DTOJxrz17eWsi
+ v
+X-Google-Smtp-Source: AGHT+IHJyugLSVrt7esyO+VY64uhccoA7S9LKReNr3zffn2jMt6khRzXHsi0k/EjQzyEa0s5tvPzXQ==
+X-Received: by 2002:a17:90a:888:b0:2bd:efc4:a9b with SMTP id
+ 98e67ed59e1d1-2bdefc40ad6mr5772952a91.8.1716561129116; 
+ Fri, 24 May 2024 07:32:09 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f310044sm1431446a91.9.2024.05.24.07.30.01
+ 98e67ed59e1d1-2bf5f6126fasm1454229a91.26.2024.05.24.07.32.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 May 2024 07:30:02 -0700 (PDT)
-Message-ID: <9a3f718b-9501-4718-ab4c-bb7731b5aa0f@linaro.org>
-Date: Fri, 24 May 2024 07:30:00 -0700
+ Fri, 24 May 2024 07:32:08 -0700 (PDT)
+Message-ID: <26a7be0b-6bc3-4c0d-b986-13fd0295e642@linaro.org>
+Date: Fri, 24 May 2024 07:32:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/16] target/i386: assert that gen_update_eip_cur and
- gen_update_eip_next are the same in tb_stop
+Subject: Re: [PATCH 07/16] target/i386: raze the gen_eob* jungle
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240524081019.1141359-1-pbonzini@redhat.com>
- <20240524081019.1141359-7-pbonzini@redhat.com>
+ <20240524081019.1141359-8-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240524081019.1141359-7-pbonzini@redhat.com>
+In-Reply-To: <20240524081019.1141359-8-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +99,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/24/24 01:10, Paolo Bonzini wrote:
-> This is an invariant, since these cases of tb_stop() should only
-> be reached through the "instruction decoding completed" path of
-> i386_tr_translate_insn().
+> Make gen_eob take the DISAS_* constant as an argument, so that
+> it is not necessary to have wrappers around it.
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   target/i386/tcg/translate.c | 60 +++++++++----------------------------
+>   1 file changed, 14 insertions(+), 46 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
