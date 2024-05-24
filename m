@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29290C41513
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 05:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D26C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 05:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sANbZ-0008Dh-VP; Fri, 24 May 2024 01:36:37 -0400
+	id 1sANbK-00089t-Q7; Fri, 24 May 2024 01:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sANbY-0008DH-2i
- for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:36 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sANbI-00089b-O9
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:20 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sANbV-00015t-8z
- for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:35 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6f693306b7cso3493501b3a.1
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 22:36:32 -0700 (PDT)
+ id 1sANbH-00013w-6O
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 01:36:20 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1f44b45d6abso4001515ad.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 22:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716528992; x=1717133792;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1716528978; x=1717133778;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=10rXCiXiyOJFrRF1ZmnZJe2ca8m+9/pLyEiZ68FqHXk=;
- b=fX8MIogSvhIWtKcXGW2PRN6Vdp57QslwG0+gxJAifJur6ePnJQqKmy9wUZbZrZQqS0
- XnMsaXcGimx2J+VCV1QSndsOzBZcBU4Lu74j7nBuu6x7O3TxWmH9tbAPJggpXztBwRme
- 3VpOmBHgSXO9brYtvuHY51vt55yiqF0QxaGyr7bypseSSMYJLdJ1Z47Gr3syfickHnFw
- 8r2j2gZ6c9Y7IuwVgBKBY6os7hk5mlS/dqFk0ry6UaD9x3jMQuLmrjR3gjy+D0CWUD3o
- a7YbvDT/BEOkw1o04iBFdv1pwHzJvI5Vtip0Unr7plAAxsFuWzoVzDRr+9cvT1XswS17
- hPOA==
+ :reply-to; bh=ktjQT4R7pKWFtbxj3xSZ2/NJzr1LvAGm2r7cio2ONHQ=;
+ b=rlJKdLW2cU2UfE6g76HOCF8HkidZSG2rfVmvQ8uTgNXi4k8tq+jekuouxVreyoWE7/
+ lkldnr9wOhH10VnztlLWbCR7b8NFhNPOmPpmw0R1NYH8pa0gkmsxMVerHE0AF+Ty5Bdi
+ xVvEPusiTT4NlCiHxye//uZl9w5AYz7cYStk2KHGtsGVs8A3AXza0OwK52Tp4Z7W3hpk
+ 2Q6pKH0j4Th5TJLUH0u12CInw3OA+BZ4jVRuT6SaZInHSrDYBhjq+rYr2RUhhe5ChVws
+ ElgVuDNzU5041miSKX2cE9pIS7nX6eE92Nk+jifiQaYvhjjRbKSFXJtMBWQM3ly80PBG
+ Ddow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716528992; x=1717133792;
+ d=1e100.net; s=20230601; t=1716528978; x=1717133778;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=10rXCiXiyOJFrRF1ZmnZJe2ca8m+9/pLyEiZ68FqHXk=;
- b=EVyK4ljLdZWgQzQjODXGpx5J6tNW88R0EF4ZqwE52c0PaoUvjIX4VxiMB+RxuoSTi/
- yPw+0EAVJ3c5Bap3dSHmIbgCJ21XuQW7WyidVPj3CwHeLWyK03jRxfYmp9g7xX/qd1v/
- HI+dq1+qjDZGJ8uJTaPLttCyQuglETOs9DT4OcaHVLojJ6NDUElsHt33ziXQXLLTjpb/
- SWEhez3QCdiOV3gLjFdtwRRiAWhvfT2reUL6mpUF5oFRXHHVOrUKfP99uhxYqSoldUu7
- uPm3yJ+WPIlddS1LIZNk59obomQjtfTlg/FOlBYs9C+JID1wKdG7042T3jICN27wd4Q8
- VnUA==
-X-Gm-Message-State: AOJu0Yy3fjr2feslCCabXiBlMDChdeA90zelAMKipC8zUkoHYYn5WTnp
- h+xCaDuyzBjw5MLxEwvJRDKvwb/VO3uvEXOdZku8vz/yW5LaqP7VYgYJErtUcG0=
-X-Google-Smtp-Source: AGHT+IHAFcUbocCo763YSNdClc19cPCcfPF+H3v6wUIl8GaDdbSfIKestKwYt2bgjdQbhsRIWIP+Rg==
-X-Received: by 2002:a05:6a20:3208:b0:1b0:2826:9e2 with SMTP id
- adf61e73a8af0-1b212d49917mr1383594637.31.1716528991766; 
- Thu, 23 May 2024 22:36:31 -0700 (PDT)
+ bh=ktjQT4R7pKWFtbxj3xSZ2/NJzr1LvAGm2r7cio2ONHQ=;
+ b=turtUu1J6v7MemSdg80W05/s6zhXm4GsgrNgsqxodkzMA+lWGKeOHds1IfU8M7ilfl
+ MDIfCRso/7Qt7w1g48JeERtkTCW+rK3ng4j8XrbF/bYKH41YuwVnwG7I8u7TAx9wbW3t
+ ir2ltNgYB3T7KxiJEVOdrpabgQ/9peBMQQN4lR331E76khCpLq9rOinuD2NJZkNwDQWB
+ qAWILnrzbbQkq3/8Wd5LGdHfbT5o3OocO9Q3A286WpfrrpJNnQ1PMZUqCHCB1PJSErK2
+ jPh2BMx32r9Nt+bvPYi8SJN0l2fJqwhiDYZB68WB/d4XZSQASSQtoLPkVeNd97QbQoVJ
+ NrJg==
+X-Gm-Message-State: AOJu0YwEBlx9Uqg/VCpdrXpA+3sP3kT/wxYW4QPv8gMCUfrv8d1Zwy/Y
+ 8YVl2PAf/iaQQpD89aaBcgywLOi3IBte7sdBOL3EIz2IHIWcZOY7ziaaXM6+8xw=
+X-Google-Smtp-Source: AGHT+IEFZ+jesRSDpf/pppvd2SVpWqc0Szr2Uz9/jVsqRlDjjtNUrDEY0kJClmvpyIRc2rOKUG4/Kg==
+X-Received: by 2002:a17:903:41ce:b0:1f4:5477:4bfe with SMTP id
+ d9443c01a7336-1f454774e3cmr2458085ad.69.1716528977932; 
+ Thu, 23 May 2024 22:36:17 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1f44c9a9e1esm5162565ad.239.2024.05.23.22.36.28
+ d9443c01a7336-1f44c75697bsm5260235ad.34.2024.05.23.22.36.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 May 2024 22:36:31 -0700 (PDT)
+ Thu, 23 May 2024 22:36:17 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 24 May 2024 14:35:50 +0900
-Subject: [PATCH v4 4/4] meson: Drop the .fa library suffix
+Date: Fri, 24 May 2024 14:35:47 +0900
+Subject: [PATCH v4 1/4] qemu-keymap: Make references to allocations static
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240524-xkb-v4-4-2de564e5c859@daynix.com>
+Message-Id: <20240524-xkb-v4-1-2de564e5c859@daynix.com>
 References: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
 In-Reply-To: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
 To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
@@ -80,8 +80,8 @@ To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-01a33
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,269 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The non-standard .fa library suffix breaks the link source
-de-duplication done by Meson so drop it.
-
-The lack of link source de-duplication causes AddressSanitizer to
-complain ODR violations, and makes GNU ld abort when combined with
-clang's LTO.
-
-Previously, the non-standard suffix was necessary for fork-fuzzing.
-Meson wraps all standard-suffixed libraries with --start-group and
---end-group. This made a fork-fuzz.ld linker script wrapped as well and
-broke builds. Commit d2e6f9272d33 ("fuzz: remove fork-fuzzing
-scaffolding") dropped fork-fuzzing so we can now restore the standard
-suffix.
-
-The occurences of the suffix were detected and removed by performing
-a tree-wide search with 'fa' and .fa (note the quotes and dot).
+LeakSanitizer complains about allocations whose references are held
+only by automatic variables. It is possible to free them to suppress
+the complaints, but it is a chore to make sure they are freed in all
+exit paths so make them static instead.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- docs/devel/build-system.rst         |  5 -----
- meson.build                         | 17 ++---------------
- stubs/blk-exp-close-all.c           |  2 +-
- .gitlab-ci.d/buildtest-template.yml |  2 --
- .gitlab-ci.d/buildtest.yml          |  2 --
- gdbstub/meson.build                 |  2 --
- tcg/meson.build                     |  2 --
- tests/Makefile.include              |  2 +-
- tests/qtest/libqos/meson.build      |  1 -
- 9 files changed, 4 insertions(+), 31 deletions(-)
+ qemu-keymap.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index 09caf2f8e199..5baf027b7614 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -236,15 +236,10 @@ Subsystem sourcesets:
-   are then turned into static libraries as follows::
+diff --git a/qemu-keymap.c b/qemu-keymap.c
+index 8c80f7a4ed65..701e4332af87 100644
+--- a/qemu-keymap.c
++++ b/qemu-keymap.c
+@@ -154,9 +154,9 @@ static xkb_mod_mask_t get_mod(struct xkb_keymap *map, const char *name)
  
-     libchardev = static_library('chardev', chardev_ss.sources(),
--                                name_suffix: 'fa',
-                                 build_by_default: false)
- 
-     chardev = declare_dependency(link_whole: libchardev)
- 
--  As of Meson 0.55.1, the special ``.fa`` suffix should be used for everything
--  that is used with ``link_whole``, to ensure that the link flags are placed
--  correctly in the command line.
--
- Target-independent emulator sourcesets:
-   Various general purpose helper code is compiled only once and
-   the .o files are linked into all output binaries that need it.
-diff --git a/meson.build b/meson.build
-index 91a0aa64c640..d6549722b50d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3462,14 +3462,12 @@ endif
- qom_ss = qom_ss.apply({})
- libqom = static_library('qom', qom_ss.sources() + genh,
-                         dependencies: [qom_ss.dependencies()],
--                        name_suffix: 'fa',
-                         build_by_default: false)
- qom = declare_dependency(link_whole: libqom)
- 
- event_loop_base = files('event-loop-base.c')
- event_loop_base = static_library('event-loop-base',
-                                  sources: event_loop_base + genh,
--                                 name_suffix: 'fa',
-                                  build_by_default: false)
- event_loop_base = declare_dependency(link_whole: event_loop_base,
-                                      dependencies: [qom])
-@@ -3703,7 +3701,6 @@ qemu_syms = custom_target('qemu.syms', output: 'qemu.syms',
- authz_ss = authz_ss.apply({})
- libauthz = static_library('authz', authz_ss.sources() + genh,
-                           dependencies: [authz_ss.dependencies()],
--                          name_suffix: 'fa',
-                           build_by_default: false)
- 
- authz = declare_dependency(link_whole: libauthz,
-@@ -3712,7 +3709,6 @@ authz = declare_dependency(link_whole: libauthz,
- crypto_ss = crypto_ss.apply({})
- libcrypto = static_library('crypto', crypto_ss.sources() + genh,
-                            dependencies: [crypto_ss.dependencies()],
--                           name_suffix: 'fa',
-                            build_by_default: false)
- 
- crypto = declare_dependency(link_whole: libcrypto,
-@@ -3722,13 +3718,11 @@ io_ss = io_ss.apply({})
- libio = static_library('io', io_ss.sources() + genh,
-                        dependencies: [io_ss.dependencies()],
-                        link_with: libqemuutil,
--                       name_suffix: 'fa',
-                        build_by_default: false)
- 
- io = declare_dependency(link_whole: libio, dependencies: [crypto, qom])
- 
- libmigration = static_library('migration', sources: migration_files + genh,
--                              name_suffix: 'fa',
-                               build_by_default: false)
- migration = declare_dependency(link_with: libmigration,
-                                dependencies: [zlib, qom, io])
-@@ -3738,7 +3732,6 @@ block_ss = block_ss.apply({})
- libblock = static_library('block', block_ss.sources() + genh,
-                           dependencies: block_ss.dependencies(),
-                           link_depends: block_syms,
--                          name_suffix: 'fa',
-                           build_by_default: false)
- 
- block = declare_dependency(link_whole: [libblock],
-@@ -3748,7 +3741,6 @@ block = declare_dependency(link_whole: [libblock],
- blockdev_ss = blockdev_ss.apply({})
- libblockdev = static_library('blockdev', blockdev_ss.sources() + genh,
-                              dependencies: blockdev_ss.dependencies(),
--                             name_suffix: 'fa',
-                              build_by_default: false)
- 
- blockdev = declare_dependency(link_whole: [libblockdev],
-@@ -3757,13 +3749,11 @@ blockdev = declare_dependency(link_whole: [libblockdev],
- qmp_ss = qmp_ss.apply({})
- libqmp = static_library('qmp', qmp_ss.sources() + genh,
-                         dependencies: qmp_ss.dependencies(),
--                        name_suffix: 'fa',
-                         build_by_default: false)
- 
- qmp = declare_dependency(link_whole: [libqmp])
- 
- libchardev = static_library('chardev', chardev_ss.sources() + genh,
--                            name_suffix: 'fa',
-                             dependencies: chardev_ss.dependencies(),
-                             build_by_default: false)
- 
-@@ -3771,7 +3761,6 @@ chardev = declare_dependency(link_whole: libchardev)
- 
- hwcore_ss = hwcore_ss.apply({})
- libhwcore = static_library('hwcore', sources: hwcore_ss.sources() + genh,
--                           name_suffix: 'fa',
-                            build_by_default: false)
- hwcore = declare_dependency(link_whole: libhwcore)
- common_ss.add(hwcore)
-@@ -3807,8 +3796,7 @@ common_all = static_library('common',
-                             sources: common_ss.all_sources() + genh,
-                             include_directories: common_user_inc,
-                             implicit_include_directories: false,
--                            dependencies: common_ss.all_dependencies(),
--                            name_suffix: 'fa')
-+                            dependencies: common_ss.all_dependencies())
- 
- feature_to_c = find_program('scripts/feature_to_c.py')
- 
-@@ -3909,8 +3897,7 @@ foreach target : target_dirs
-                  objects: objects,
-                  include_directories: target_inc,
-                  c_args: c_args,
--                 build_by_default: false,
--                 name_suffix: 'fa')
-+                 build_by_default: false)
- 
-   if target.endswith('-softmmu')
-     execs = [{
-diff --git a/stubs/blk-exp-close-all.c b/stubs/blk-exp-close-all.c
-index 1c7131676392..2f68e06d7d05 100644
---- a/stubs/blk-exp-close-all.c
-+++ b/stubs/blk-exp-close-all.c
-@@ -1,7 +1,7 @@
- #include "qemu/osdep.h"
- #include "block/export.h"
- 
--/* Only used in programs that support block exports (libblockdev.fa) */
-+/* Only used in programs that support block exports (libblockdev.a) */
- void blk_exp_close_all(void)
+ int main(int argc, char *argv[])
  {
- }
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 22045add8064..69e468a576ba 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -45,10 +45,8 @@
-     exclude:
-       - build/**/*.p
-       - build/**/*.a.p
--      - build/**/*.fa.p
-       - build/**/*.c.o
-       - build/**/*.c.o.d
--      - build/**/*.fa
+-    struct xkb_context *ctx;
+-    struct xkb_keymap *map;
+-    struct xkb_state *state;
++    static struct xkb_context *ctx;
++    static struct xkb_keymap *map;
++    static struct xkb_state *state;
+     xkb_mod_index_t mod, mods;
+     int rc;
  
- .common_test_job_template:
-   extends: .base_job_template
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index cfdff175c389..c156e6f1d90e 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -178,10 +178,8 @@ build-previous-qemu:
-     exclude:
-       - build-previous/**/*.p
-       - build-previous/**/*.a.p
--      - build-previous/**/*.fa.p
-       - build-previous/**/*.c.o
-       - build-previous/**/*.c.o.d
--      - build-previous/**/*.fa
-   needs:
-     job: amd64-opensuse-leap-container
-   variables:
-diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index da5721d8452b..c91e398ae726 100644
---- a/gdbstub/meson.build
-+++ b/gdbstub/meson.build
-@@ -19,13 +19,11 @@ gdb_system_ss = gdb_system_ss.apply({})
+@@ -234,8 +234,6 @@ int main(int argc, char *argv[])
  
- libgdb_user = static_library('gdb_user',
-                              gdb_user_ss.sources() + genh,
--                             name_suffix: 'fa',
-                              c_args: '-DCONFIG_USER_ONLY',
-                              build_by_default: false)
+     state = xkb_state_new(map);
+     xkb_keymap_key_for_each(map, walk_map, state);
+-    xkb_state_unref(state);
+-    state = NULL;
  
- libgdb_system = static_library('gdb_system',
-                                 gdb_system_ss.sources() + genh,
--                                name_suffix: 'fa',
-                                 build_by_default: false)
- 
- gdb_user = declare_dependency(link_whole: libgdb_user)
-diff --git a/tcg/meson.build b/tcg/meson.build
-index 8251589fd4e9..f941413d5801 100644
---- a/tcg/meson.build
-+++ b/tcg/meson.build
-@@ -31,7 +31,6 @@ tcg_ss = tcg_ss.apply({})
- 
- libtcg_user = static_library('tcg_user',
-                              tcg_ss.sources() + genh,
--                             name_suffix: 'fa',
-                              c_args: '-DCONFIG_USER_ONLY',
-                              build_by_default: false)
- 
-@@ -41,7 +40,6 @@ user_ss.add(tcg_user)
- 
- libtcg_system = static_library('tcg_system',
-                                 tcg_ss.sources() + genh,
--                                name_suffix: 'fa',
-                                 c_args: '-DCONFIG_SOFTMMU',
-                                 build_by_default: false)
- 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index c9d1674bd070..d39d5dd6a43e 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -87,7 +87,7 @@ distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
- .PHONY: check-venv check-avocado check-acceptance check-acceptance-deprecated-warning
- 
- # Build up our target list from the filtered list of ninja targets
--TARGETS=$(patsubst libqemu-%.fa, %, $(filter libqemu-%.fa, $(ninja-targets)))
-+TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
- 
- TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
- TESTS_RESULTS_DIR=$(BUILD_DIR)/tests/results
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 3aed6efcb8d1..45b81c83ade3 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -68,7 +68,6 @@ if have_virtfs
- endif
- 
- libqos = static_library('qos', libqos_srcs + genh,
--                        name_suffix: 'fa',
-                         build_by_default: false)
- 
- qos = declare_dependency(link_whole: libqos)
+     /* add quirks */
+     fprintf(outfile,
 
 -- 
 2.45.1
