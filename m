@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F5C3C25B7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 06:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3228EC25B79
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 06:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAOSx-0005wx-VQ; Fri, 24 May 2024 02:31:48 -0400
+	id 1sAOSx-0005x0-VF; Fri, 24 May 2024 02:31:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sAOSk-0005vR-F6
+ id 1sAOSi-0005vK-GN
  for qemu-devel@nongnu.org; Fri, 24 May 2024 02:31:41 -0400
-Received: from mail-io1-xd31.google.com ([2607:f8b0:4864:20::d31])
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sAOSd-0004MM-Hn
- for qemu-devel@nongnu.org; Fri, 24 May 2024 02:31:33 -0400
-Received: by mail-io1-xd31.google.com with SMTP id
- ca18e2360f4ac-7e21742025aso387318139f.2
- for <qemu-devel@nongnu.org>; Thu, 23 May 2024 23:29:27 -0700 (PDT)
+ id 1sAOSc-0004Li-0M
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 02:31:32 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6f8e85a0a5bso516399b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 23 May 2024 23:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1716532166; x=1717136966;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1716532162; x=1717136962;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zLSi8jNb6aLJgWzZ+IgVUOGD8rbT/z95MGmZBAD1j5Y=;
- b=o5uMRViOiLGOEzAOlLdmmTyLqjEhAgSEmUwWh4iyBJQZp75vH8Q4uxRz/1Io1iee99
- ezwLjcrTCLdrQMrN85DKnQc7vLURo35G8FmoZrEZ/npfcqqE9tfiT5Vh/locu6i7k6/o
- U5/owv5wPnaKjXmOdaZKZt/OIwyeKcHJUjEqUbhQl0YPol0RVMk77yY9XlmD668wiexn
- 61S7W4u4SXbvAzHNLojd9GbW9OieZc/QhcSPezmVS1lnDXcqesJlFsunuu33MRDo3M3O
- gC8yTweoaegzBDgJYphFOus21Qb3aCSQlxmCGDH8aDb7AjdTSsOh5tq3g7eoALHaFbb+
- n3iQ==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EIjSEoWVH4esNJv6IvTXy07mt2zfK64u9q9SYI0qCnY=;
+ b=E1Dewc4o/ajv5NKv69Zw2St54r8QNJ/X9bZH/ejuyNfWO6z+qXH6o9zX0TOStL5b31
+ Onw9xWwnIHjv/oYE/2ec71hzI1Q+K6xRu7XwnwxAX12zOTuJiND0vE/81BlVEo7L0iiY
+ Dr5FfWopJRtfZc6NMZkA/Hfh16jqdxJls1Liueor+WS8F38BfJqt2sIWa3WqHnVNaDge
+ copu1tHfpdN8RyplMiFO19rlurwQXY2A3Ckvq/aGmbQgA5c58ODg/QAfZqL7HuNQ/bdQ
+ 5lyfj+7SH9XmIc9X1Ob8+Y0wOnkLPd4VDDrMU6m1T1AEA6w75aHcn/8XammoVFbJk56z
+ s/sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716532166; x=1717136966;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zLSi8jNb6aLJgWzZ+IgVUOGD8rbT/z95MGmZBAD1j5Y=;
- b=sqzttzyD9NSDXM/090MXvscOyu/HJb1SI206eLKCGYm06BAHzWYhSacnqDnr44sAVC
- TX1ew2Isp69p6GNeQnSO6u84d5HrzhFqTHeINbfFF2AGXSDuCqKIBO+lZXGkmDp1pP7K
- z6NvQ3T3zQWb5CbbHpoJTTVqqn3YLYHcJprxuSD5dqb0TQQ9sYChBh8/r9kYRo+pBosX
- oCJwRRW+AAw+I0E9LgPUjrVl8V/SBsiKPW5JANKXTMrh/iGmaVD5bbtveo13UGo87HqA
- c68uwSnXwjaL5DWiyQYFaCTQmdaUEpcseARe6gxq/2hyeCMNTjEJzL2PzLbO8M4URyVd
- Q9zA==
-X-Gm-Message-State: AOJu0YzavwNV1nRy633aNp2uK+nx/pKV8UK2cpDfbtyyfNVyItC4+PrJ
- qYCB5zXAqpPAWwvWPEJhCseypZNZxKk4ARfW0Ck0Wbi+ObfSVDAoVH05mSsPAVKd4LxvUPar4w9
- 7ew4c2w==
-X-Google-Smtp-Source: AGHT+IHGjSf7eLL9s3gdKJrzMUlYptjopazfFjwToMpPPgNMFdXZ/pqdYU1i24sSXqw+P1ZuPdaNUw==
-X-Received: by 2002:a05:6e02:2190:b0:371:3085:4345 with SMTP id
- e9e14a558f8ab-3737b2bc880mr17088015ab.14.1716532165276; 
- Thu, 23 May 2024 23:29:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716532162; x=1717136962;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EIjSEoWVH4esNJv6IvTXy07mt2zfK64u9q9SYI0qCnY=;
+ b=Kpt5eWMjjWuQWyJe+4cyryovaQN7g0mUF2G2rmufgyn3OQVlFJtzxg2fHrQPWfRTMx
+ /gHDcgrLiqcodAmuqkQUKHkXpNbeeheNJ1B6Rez//RRNm2SAblXS554EOeQtv9wgAcBR
+ QMbLhaMFbVlRoVrFw18TseIu28Xv95EBf+H7rSc0nhDIcoA+G8No9uhq8bdfAMQX0CE7
+ orOIReFs1OeUo/PtzVfvySFnK2BZfVX3f18CoJeFMvlAZR7ITIOxJOdiPMPXva0gESSi
+ mugzEKoozKTp5DjQIegUgm5nFFIkooxD8B7yjRG/ne3bua1zNhUbLVz1edmQOOwOvwaR
+ a6yg==
+X-Gm-Message-State: AOJu0YzGpyGYzJ2KlqTT0HHS2X6QAn+UzbsyI7NbPz0y2993nylpKJAr
+ VRqYGe7MbVgyyeKbYzSAqjGxGAGyupDq7GnypwDqB4q+i4yU6ZyPkhkH7lJhqU7gMI3L8rOLvJt
+ Ba0Oniw==
+X-Google-Smtp-Source: AGHT+IF4zz2k2A90S6uwhwRK86ykXBWuUT/FdDvOYnRepWwO+aIdU28gD7MszU3IBmtXjkKTE4C3mQ==
+X-Received: by 2002:a05:6a00:2a07:b0:6f3:34c0:13c9 with SMTP id
+ d2e1a72fcca58-6f8f42af798mr1211822b3a.29.1716532161373; 
+ Thu, 23 May 2024 23:29:21 -0700 (PDT)
 Received: from anolis-dev.zelin.local ([221.122.98.162])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682274bbbe8sm497918a12.93.2024.05.23.23.29.23
+ 41be03b00d2f7-682274bbbe8sm497918a12.93.2024.05.23.23.29.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 May 2024 23:29:24 -0700 (PDT)
+ Thu, 23 May 2024 23:29:20 -0700 (PDT)
 From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
  yong.huang@smartx.com
-Subject: [PATCH 2/2] scsi-disk: Fix crash for VM configured with USB CDROM
- after live migration
-Date: Fri, 24 May 2024 14:29:16 +0800
-Message-Id: <878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com>
+Subject: [PATCH 0/2] migrate inflight emulated SCSI request for the scsi disk
+ device 
+Date: Fri, 24 May 2024 14:29:14 +0800
+Message-Id: <cover.1716531409.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <cover.1716531409.git.yong.huang@smartx.com>
-References: <cover.1716531409.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d31;
- envelope-from=yong.huang@smartx.com; helo=mail-io1-xd31.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,92 +93,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For VMs configured with the USB CDROM device:
+This patchset refine the comment of ther previous series:
+https://patchew.org/QEMU/cover.1712577715.git.yong.huang@smartx.com/
 
--drive file=/path/to/local/file,id=drive-usb-disk0,media=cdrom,readonly=on...
--device usb-storage,drive=drive-usb-disk0,id=usb-disk0...
-
-QEMU process may crash after live migration, to reproduce the issue,
-configure VM (Guest OS ubuntu 20.04 or 21.10) with the following XML:
-
-<disk type='file' device='cdrom'>
-  <driver name='qemu' type='raw'/>
-  <source file='/path/to/share_fs/cdrom.iso'/>
-  <target dev='sda' bus='usb'/>
-  <readonly/>
-  <address type='usb' bus='0' port='2'/>
-</disk>
-<controller type='usb' index='0' model='piix3-uhci'/>
-
-Do the live migration repeatedly, crash may happen after live migratoin,
-trace log at the source before live migration is as follows:
-
-324808@1711972823.521945:usb_uhci_frame_start nr 319
-324808@1711972823.521978:usb_uhci_qh_load qh 0x35cb5400
-324808@1711972823.521989:usb_uhci_qh_load qh 0x35cb5480
-324808@1711972823.521997:usb_uhci_td_load qh 0x35cb5480, td 0x35cbe000, ctrl 0x0, token 0xffe07f69
-324808@1711972823.522010:usb_uhci_td_nextqh qh 0x35cb5480, td 0x35cbe000
-324808@1711972823.522022:usb_uhci_qh_load qh 0x35cb5680
-324808@1711972823.522030:usb_uhci_td_load qh 0x35cb5680, td 0x75ac5180, ctrl 0x19800000, token 0x3c903e1
-324808@1711972823.522045:usb_uhci_packet_add token 0x103e1, td 0x75ac5180
-324808@1711972823.522056:usb_packet_state_change bus 0, port 2, ep 2, packet 0x559f9ba14b00, state undef -> setup
-324808@1711972823.522079:usb_msd_cmd_submit lun 0, tag 0x472, flags 0x00000080, len 10, data-len 8
-324808@1711972823.522107:scsi_req_parsed target 0 lun 0 tag 1138 command 74 dir 1 length 8
-324808@1711972823.522124:scsi_req_parsed_lba target 0 lun 0 tag 1138 command 74 lba 4096
-324808@1711972823.522139:scsi_req_alloc target 0 lun 0 tag 1138
-324808@1711972823.522169:scsi_req_continue target 0 lun 0 tag 1138
-324808@1711972823.522181:scsi_req_data target 0 lun 0 tag 1138 len 8
-324808@1711972823.522194:usb_packet_state_change bus 0, port 2, ep 2, packet 0x559f9ba14b00, state setup -> complete
-324808@1711972823.522209:usb_uhci_packet_complete_success token 0x103e1, td 0x75ac5180
-324808@1711972823.522219:usb_uhci_packet_del token 0x103e1, td 0x75ac5180
-324808@1711972823.522232:usb_uhci_td_complete qh 0x35cb5680, td 0x75ac5180
-
-trace log at the destination after live migration is as follows:
-
-3286206@1711972823.951646:usb_uhci_frame_start nr 320
-3286206@1711972823.951663:usb_uhci_qh_load qh 0x35cb5100
-3286206@1711972823.951671:usb_uhci_qh_load qh 0x35cb5480
-3286206@1711972823.951680:usb_uhci_td_load qh 0x35cb5480, td 0x35cbe000, ctrl 0x1000000, token 0xffe07f69
-3286206@1711972823.951693:usb_uhci_td_nextqh qh 0x35cb5480, td 0x35cbe000
-3286206@1711972823.951702:usb_uhci_qh_load qh 0x35cb5700
-3286206@1711972823.951709:usb_uhci_td_load qh 0x35cb5700, td 0x75ac5240, ctrl 0x39800000, token 0xe08369
-3286206@1711972823.951727:usb_uhci_queue_add token 0x8369
-3286206@1711972823.951735:usb_uhci_packet_add token 0x8369, td 0x75ac5240
-3286206@1711972823.951746:usb_packet_state_change bus 0, port 2, ep 1, packet 0x56066b2fb5a0, state undef -> setup
-3286206@1711972823.951766:usb_msd_data_in 8/8 (scsi 8)
-2024-04-01 12:00:24.665+0000: shutting down, reason=crashed
-
-The backtrace reveals the following:
-
-Program terminated with signal SIGSEGV, Segmentation fault.
-0  __memmove_sse2_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:312
-312        movq    -8(%rsi,%rdx), %rcx
-[Current thread is 1 (Thread 0x7f0a9025fc00 (LWP 3286206))]
-(gdb) bt
-0  __memmove_sse2_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:312
-1  memcpy (__len=8, __src=<optimized out>, __dest=<optimized out>) at /usr/include/bits/string_fortified.h:34
-2  iov_from_buf_full (iov=<optimized out>, iov_cnt=<optimized out>, offset=<optimized out>, buf=0x0, bytes=bytes@entry=8) at ../util/iov.c:33
-3  iov_from_buf (bytes=8, buf=<optimized out>, offset=<optimized out>, iov_cnt=<optimized out>, iov=<optimized out>)
-   at /usr/src/debug/qemu-6-6.2.0-75.7.oe1.smartx.git.40.x86_64/include/qemu/iov.h:49
-4  usb_packet_copy (p=p@entry=0x56066b2fb5a0, ptr=<optimized out>, bytes=bytes@entry=8) at ../hw/usb/core.c:636
-5  usb_msd_copy_data (s=s@entry=0x56066c62c770, p=p@entry=0x56066b2fb5a0) at ../hw/usb/dev-storage.c:186
-6  usb_msd_handle_data (dev=0x56066c62c770, p=0x56066b2fb5a0) at ../hw/usb/dev-storage.c:496
-7  usb_handle_packet (dev=0x56066c62c770, p=p@entry=0x56066b2fb5a0) at ../hw/usb/core.c:455
-8  uhci_handle_td (s=s@entry=0x56066bd5f210, q=0x56066bb7fbd0, q@entry=0x0, qh_addr=qh_addr@entry=902518530, td=td@entry=0x7fffe6e788f0, td_addr=<optimized out>,
-   int_mask=int_mask@entry=0x7fffe6e788e4) at ../hw/usb/hcd-uhci.c:885
-9  uhci_process_frame (s=s@entry=0x56066bd5f210) at ../hw/usb/hcd-uhci.c:1061
-10 uhci_frame_timer (opaque=opaque@entry=0x56066bd5f210) at ../hw/usb/hcd-uhci.c:1159
-11 timerlist_run_timers (timer_list=0x56066af26bd0) at ../util/qemu-timer.c:642
-12 qemu_clock_run_timers (type=QEMU_CLOCK_VIRTUAL) at ../util/qemu-timer.c:656
-13 qemu_clock_run_all_timers () at ../util/qemu-timer.c:738
-14 main_loop_wait (nonblocking=nonblocking@entry=0) at ../util/main-loop.c:542
-15 qemu_main_loop () at ../softmmu/runstate.c:739
-16 main (argc=<optimized out>, argv=<optimized out>, envp=<optimized out>) at ../softmmu/main.c:52
-(gdb) frame 5
-(gdb) p ((SCSIDiskReq *)s->req)->iov
-$1 = {iov_base = 0x0, iov_len = 0}
-(gdb) p/x s->req->tag
-$2 = 0x472
+Aiming to make the review easier, please review, thanks.
+Yong 
 
 When designing the USB mass storage device model, QEMU places SCSI disk
 device as the backend of USB mass storage device. In addition, USB mass
@@ -244,67 +160,14 @@ affected by this issue. In this case, it is the USB CDROM.
 To fix it, inflight emulated SCSI request be migrated during live migration,
 similar to the DMA SCSI request.
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- hw/scsi/scsi-disk.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+Hyman Huang (2):
+  scsi-disk: Introduce the migrate_emulate_scsi_request field
+  scsi-disk: Fix crash for VM configured with USB CDROM after live
+    migration
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 0985676f73..d6e9d9e8d4 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -160,6 +160,16 @@ static void scsi_disk_save_request(QEMUFile *f, SCSIRequest *req)
-     }
- }
- 
-+static void scsi_disk_emulate_save_request(QEMUFile *f, SCSIRequest *req)
-+{
-+    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
-+    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-+
-+    if (s->migrate_emulate_scsi_request) {
-+        scsi_disk_save_request(f, req);
-+    }
-+}
-+
- static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
- {
-     SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
-@@ -183,6 +193,16 @@ static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
-     qemu_iovec_init_external(&r->qiov, &r->iov, 1);
- }
- 
-+static void scsi_disk_emulate_load_request(QEMUFile *f, SCSIRequest *req)
-+{
-+    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
-+    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-+
-+    if (s->migrate_emulate_scsi_request) {
-+        scsi_disk_load_request(f, req);
-+    }
-+}
-+
- /*
-  * scsi_handle_rw_error has two return values.  False means that the error
-  * must be ignored, true means that the error has been processed and the
-@@ -2593,6 +2613,8 @@ static const SCSIReqOps scsi_disk_emulate_reqops = {
-     .read_data    = scsi_disk_emulate_read_data,
-     .write_data   = scsi_disk_emulate_write_data,
-     .get_buf      = scsi_get_buf,
-+    .load_request = scsi_disk_emulate_load_request,
-+    .save_request = scsi_disk_emulate_save_request,
- };
- 
- static const SCSIReqOps scsi_disk_dma_reqops = {
-@@ -3137,7 +3159,7 @@ static Property scsi_hd_properties[] = {
- static int scsi_disk_pre_save(void *opaque)
- {
-     SCSIDiskState *dev = opaque;
--    dev->migrate_emulate_scsi_request = false;
-+    dev->migrate_emulate_scsi_request = true;
- 
-     return 0;
- }
+ hw/scsi/scsi-disk.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+
 -- 
 2.39.3
 
