@@ -4,84 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5BAFC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 10:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C42C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 10:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sARkM-0005gg-Rf; Fri, 24 May 2024 06:01:58 -0400
+	id 1sARnc-0006za-9n; Fri, 24 May 2024 06:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sARkK-0005fs-W6
- for qemu-devel@nongnu.org; Fri, 24 May 2024 06:01:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sARnY-0006yk-Uu
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 06:05:16 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sARkJ-0006Db-48
- for qemu-devel@nongnu.org; Fri, 24 May 2024 06:01:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716544913;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u1qR3XsZSarc+I1sNe5g3Bu3oEruxkZoMhxo7cL72AY=;
- b=e1j81tgoEvRM9Nk4oB9UQnlnAvnoS8+BFuisoQrriD7WWnHG9nZoXgztj/3j8vWEv8X2lU
- evoqRr+LwtpxV4TmtW7RYuCRfFR0RN1NylQtVjsNe4x0zk1PS98wSSo/DWY2syN7Utfj7/
- CfYrq6G6rhdZwJ9wOZE3rdBwqcZPPZQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-FetDi6ydNEOnf9Ikv3p4aQ-1; Fri, 24 May 2024 06:01:52 -0400
-X-MC-Unique: FetDi6ydNEOnf9Ikv3p4aQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-354e0805ef3so54777f8f.3
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 03:01:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716544911; x=1717149711;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u1qR3XsZSarc+I1sNe5g3Bu3oEruxkZoMhxo7cL72AY=;
- b=RsgA+RND/SirtYZeNmm872cKRd5QR1Sdvg2ne9eKIG7HHVmD8T+U4gRRxBwbUH4rza
- X70n+ECDzy9+cDgtHqrOIZfQOOfpJIDgfo5tZL5AEX2lHFG1aOf/UBJaFCFnUtKE8t/D
- /nZ5bMCRDuGdA0E0u9nhUxYZ0bQL84jFTs5WlMZ2Ij1pbpzmTTlkePfyyv1AbHZZQInx
- LF0UW4zbJG/T56apEogB8HTN+twswLjnATSN8gISBAxOHy6Rsopj+hTvNsab4VI0m/9h
- DIfwbnJ7x9c96MJHGf91KM/GjaX1vSWut7/M08Ez9ve/H+A9YMuAD1TKgmtTYlUGTI+5
- XgSw==
-X-Gm-Message-State: AOJu0YxONv5JJw1PniZELoXoEm391uL6SqBRF9/7jBzZc1czzYXuLs3p
- rZWGF1G0xuWsDMq6suLe72NogWZsH29XcooIV51teEbbVdDwyFVUClWAUUt47aFOfrUX/fmUqkp
- FZbXjaLt9jjWgQitLWdlf5nw8PQGSEhzoBXscJsp6GXP3gVNft61I39B9iMJUZZDodjQWaaRqSD
- TXK6BZTD8R9JASyeA5lALlBsT5ugI=
-X-Received: by 2002:a5d:65c7:0:b0:354:f1b7:7469 with SMTP id
- ffacd0b85a97d-3552fdc8280mr1715380f8f.51.1716544910447; 
- Fri, 24 May 2024 03:01:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHerhH4vTEAVFl/wAtyhpYfOvEdEDBLAyFHHL4JD4xKHGo9EhsGf9XF9dhB5HOYpfxtjQNXEQpPFbjBm854ctY=
-X-Received: by 2002:a5d:65c7:0:b0:354:f1b7:7469 with SMTP id
- ffacd0b85a97d-3552fdc8280mr1715342f8f.51.1716544909735; Fri, 24 May 2024
- 03:01:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sARnV-00070X-Ax
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 06:05:16 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vm0tW5h79z6JBVy;
+ Fri, 24 May 2024 18:01:23 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6A274140B54;
+ Fri, 24 May 2024 18:05:08 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 24 May 2024 11:05:07 +0100
+To: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>
+CC: Dave Jiang <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, <eduardo@habkost.net>,
+ <imammedo@redhat.com>, <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH v2 qemu 0/6] acpi: NUMA nodes for CXL HB as GP + complex NUMA
+ test.
+Date: Fri, 24 May 2024 11:05:01 +0100
+Message-ID: <20240524100507.32106-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <cover.1716531409.git.yong.huang@smartx.com>
- <878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com>
-In-Reply-To: <878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Fri, 24 May 2024 15:31:33 +0530
-Message-ID: <CAE8KmOyXhvYHOw2MOSbwSetC7jyFNFsf0E81O0wQ1WEGGXY-TQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] scsi-disk: Fix crash for VM configured with USB CDROM
- after live migration
-To: Hyman Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,88 +68,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Hyman,
+v2: Improve (mostly add detail) the qmp documentatation (thanks Markus!)
 
-* Is this the same patch series as sent before..?
-  -> https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00816.html
+ACPI 6.5 introduced Generic Port Affinity Structures to close a system
+description gap that was a problem for CXL memory systems.
+It defines an new SRAT Affinity structure (and hence allows creation of an
+ACPI Proximity Node which can only be defined via an SRAT structure)
+for the boundary between a discoverable fabric and a non discoverable
+system interconnects etc.
 
-On Fri, 24 May 2024 at 12:02, Hyman Huang <yong.huang@smartx.com> wrote:
-> For VMs configured with the USB CDROM device:
->
-> -drive file=/path/to/local/file,id=drive-usb-disk0,media=cdrom,readonly=on...
-> -device usb-storage,drive=drive-usb-disk0,id=usb-disk0...
->
-> QEMU process may crash after live migration,
-> Do the live migration repeatedly, crash may happen after live migratoin,
+The HMAT data on latency and bandwidth is combined with discoverable
+information from the CXL bus (link speeds, lane counts) and CXL devices
+(switch port to port characteristics and USP to memory, via CDAT tables
+read from the device).  QEMU has supported the rest of the elements
+of this chain for a while but now the kernel has caught up and we need
+the missing element of Generic Ports (this code has been used extensively
+in testing and debugging that kernel support, some resulting fixes
+currently under review).
 
-* Does live migration work many times before QEMU crashes on the
-destination side? OR QEMU crashes at the very first migration?
+Generic Port Affinity Structures are very similar to the recently
+added Generic Initiator Affinity Structures (GI) so this series
+factors out and reuses much of that infrastructure for reuse
+There are subtle differences (beyond the obvious structure ID change).
 
->    at /usr/src/debug/qemu-6-6.2.0-75.7.oe1.smartx.git.40.x86_64/include/qemu/iov.h:49
+- The ACPI spec example (and linux kernel support) has a Generic
+  Port not as associated with the CXL root port, but rather with
+  the CXL Host bridge. As a result, an ACPI handle is used (rather
+  than the PCI SBDF option for GIs). In QEMU the easiest way
+  to get to this is to target the root bridge PCI Bus, and
+  conveniently the root bridge bus number is used for the UID allowing
+  us to construct an appropriate entry.
 
-* This qemu version looks quite old. Is the issue reproducible with
-the latest QEMU version 9.0?
+A key addition of this series is a complex NUMA topology example that
+stretches the QEMU emulation code for GI, GP and nodes with just
+CPUS, just memory, just hot pluggable memory, mixture of memory and CPUs.
 
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> +static void scsi_disk_emulate_save_request(QEMUFile *f, SCSIRequest *req)
-> +{
-> +    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
-> +    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-> +
-> +    if (s->migrate_emulate_scsi_request) {
-> +        scsi_disk_save_request(f, req);
-> +    }
-> +}
-> +
->  static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
->  {
->      SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
-> @@ -183,6 +193,16 @@ static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
->      qemu_iovec_init_external(&r->qiov, &r->iov, 1);
->  }
->
-> +static void scsi_disk_emulate_load_request(QEMUFile *f, SCSIRequest *req)
-> +{
-> +    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
-> +    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-> +
-> +    if (s->migrate_emulate_scsi_request) {
-> +        scsi_disk_load_request(f, req);
-> +    }
-> +}
-> +
->  /*
->   * scsi_handle_rw_error has two return values.  False means that the error
->   * must be ignored, true means that the error has been processed and the
-> @@ -2593,6 +2613,8 @@ static const SCSIReqOps scsi_disk_emulate_reqops = {
->      .read_data    = scsi_disk_emulate_read_data,
->      .write_data   = scsi_disk_emulate_write_data,
->      .get_buf      = scsi_get_buf,
-> +    .load_request = scsi_disk_emulate_load_request,
-> +    .save_request = scsi_disk_emulate_save_request,
->  };
->
->  static const SCSIReqOps scsi_disk_dma_reqops = {
-> @@ -3137,7 +3159,7 @@ static Property scsi_hd_properties[] = {
->  static int scsi_disk_pre_save(void *opaque)
->  {
->      SCSIDiskState *dev = opaque;
-> -    dev->migrate_emulate_scsi_request = false;
-> +    dev->migrate_emulate_scsi_request = true;
->
+A similar test showed up a few NUMA related bugs with fixes applied for
+9.0 (note that one of these needs linux booted to identify that it
+rejects the HMAT table and this test is a regression test for the
+table generation only).
 
-* This patch seems to add support for migrating SCSI requests. While
-it looks okay, not sure if it is required, how likely is someone to
-configure a VM to use CDROM?
+https://lore.kernel.org/qemu-devel/2eb6672cfdaea7dacd8e9bb0523887f13b9f85ce.1710282274.git.mst@redhat.com/
+https://lore.kernel.org/qemu-devel/74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com/
 
-*  Should the CDROM device be reset on the destination if no requests
-are found? ie. if (scsi_req_get_buf -> scsi_get_buf() returns NULL)?
+Jonathan Cameron (6):
+  hw/acpi/GI: Fix trivial parameter alignment issue.
+  hw/acpi: Insert an acpi-generic-node base under acpi-generic-initiator
+  hw/acpi: Generic Port Affinity Structure support
+  bios-tables-test: Allow for new acpihmat-generic-x test data.
+  bios-tables-test: Add complex SRAT / HMAT test for GI GP
+  bios-tables-test: Add data for complex numa test (GI, GP etc)
 
-Thank you.
----
-  - Prasad
+ qapi/qom.json                               |  35 ++++
+ include/hw/acpi/acpi_generic_initiator.h    |  33 +++-
+ include/hw/pci/pci_bridge.h                 |   1 +
+ hw/acpi/acpi_generic_initiator.c            | 199 ++++++++++++++------
+ hw/pci-bridge/pci_expander_bridge.c         |   1 -
+ tests/qtest/bios-tables-test.c              |  92 +++++++++
+ tests/data/acpi/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
+ tests/data/acpi/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
+ tests/data/acpi/q35/DSDT.acpihmat-generic-x | Bin 0 -> 10400 bytes
+ tests/data/acpi/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
+ tests/data/acpi/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
+ 11 files changed, 302 insertions(+), 59 deletions(-)
+ create mode 100644 tests/data/acpi/q35/APIC.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/q35/CEDT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/q35/DSDT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/q35/HMAT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/q35/SRAT.acpihmat-generic-x
+
+-- 
+2.39.2
 
 
