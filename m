@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443B8C25B7A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892EDC25B7C
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 12:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sATj9-0002lQ-PA; Fri, 24 May 2024 08:08:51 -0400
+	id 1sATjB-0002my-5s; Fri, 24 May 2024 08:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATj7-0002kh-AF; Fri, 24 May 2024 08:08:49 -0400
+ id 1sATj9-0002m4-Tc; Fri, 24 May 2024 08:08:51 -0400
 Received: from dedi548.your-server.de ([85.10.215.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATj4-0006ZQ-LZ; Fri, 24 May 2024 08:08:49 -0400
+ id 1sATj5-0006ZP-2H; Fri, 24 May 2024 08:08:51 -0400
 Received: from sslproxy02.your-server.de ([78.47.166.47])
  by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATj0-000J11-03; Fri, 24 May 2024 14:08:42 +0200
+ id 1sATiz-000J0z-31; Fri, 24 May 2024 14:08:42 +0200
 Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
  by sslproxy02.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATj0-000C5h-2H; Fri, 24 May 2024 14:08:42 +0200
+ id 1sATj0-000C57-23; Fri, 24 May 2024 14:08:42 +0200
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 974D54801F2;
+ by mail.embedded-brains.de (Postfix) with ESMTP id 80037480197;
  Fri, 24 May 2024 14:08:41 +0200 (CEST)
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id vWXQ3figPuJE; Fri, 24 May 2024 14:08:41 +0200 (CEST)
+ with ESMTP id Nzh4xmLX5WVd; Fri, 24 May 2024 14:08:41 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 4DD474801F8;
+ by mail.embedded-brains.de (Postfix) with ESMTP id 3C5FE4801F2;
  Fri, 24 May 2024 14:08:41 +0200 (CEST)
 X-Virus-Scanned: amavis at zimbra.eb.localhost
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id oY3qNgFyYF-h; Fri, 24 May 2024 14:08:41 +0200 (CEST)
+ with ESMTP id u8OEPFcMl9Xp; Fri, 24 May 2024 14:08:41 +0200 (CEST)
 Received: from zimbra.eb.localhost (unknown [192.168.96.242])
- by mail.embedded-brains.de (Postfix) with ESMTPSA id 123E3480197;
- Fri, 24 May 2024 14:08:41 +0200 (CEST)
+ by mail.embedded-brains.de (Postfix) with ESMTPSA id 019974800E9;
+ Fri, 24 May 2024 14:08:40 +0200 (CEST)
 From: Sebastian Huber <sebastian.huber@embedded-brains.de>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/2] hw/arm/xilinx_zynq: Add cache controller
-Date: Fri, 24 May 2024 14:08:36 +0200
-Message-Id: <20240524120837.10057-2-sebastian.huber@embedded-brains.de>
+Subject: [PATCH v2 0/2] Zynq 7000 Improvements
+Date: Fri, 24 May 2024 14:08:35 +0200
+Message-Id: <20240524120837.10057-1-sebastian.huber@embedded-brains.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240524120837.10057-1-sebastian.huber@embedded-brains.de>
-References: <20240524120837.10057-1-sebastian.huber@embedded-brains.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Authenticated-Sender: smtp-embedded@poldi-networks.de
@@ -78,39 +76,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Zynq 7000 SoCs contain a CoreLink L2C-310 cache controller.  Add the
-corresponding Qemu device to the xilinx-zynq-a9 machine.
+v2:
 
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
----
- hw/arm/Kconfig       | 1 +
- hw/arm/xilinx_zynq.c | 1 +
- 2 files changed, 2 insertions(+)
+* Add Kconfig support
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 8b97683a45..1ad60da7aa 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -370,6 +370,7 @@ config ZYNQ
-     select A9MPCORE
-     select CADENCE # UART
-     select PFLASH_CFI02
-+    select PL310 # cache controller
-     select PL330
-     select SDHCI
-     select SSI_M25P80
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index fc3abcbe88..0abb62f131 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -241,6 +241,7 @@ static void zynq_init(MachineState *machine)
-     busdev =3D SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
-+    sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
-     sysbus_connect_irq(busdev, 0,
-                        qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ));
-     sysbus_connect_irq(busdev, 1,
+* Add array of CPUs to ZynqMachineState
+
+* Add FIQ support
+
+Sebastian Huber (2):
+  hw/arm/xilinx_zynq: Add cache controller
+  hw/arm/xilinx_zynq: Support up to two CPU cores
+
+ hw/arm/Kconfig       |  1 +
+ hw/arm/xilinx_zynq.c | 55 +++++++++++++++++++++++++++-----------------
+ 2 files changed, 35 insertions(+), 21 deletions(-)
+
 --=20
 2.35.3
 
