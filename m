@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074E3C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 17:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E26C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 17:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAYP1-00086S-3G; Fri, 24 May 2024 13:08:23 -0400
+	id 1sAYPD-00089s-Qr; Fri, 24 May 2024 13:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYOz-00086C-QI
- for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:21 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYP9-00089B-12
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:31 -0400
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYOw-0007Z3-4U
- for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:20 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5b2a2ef4e4cso4826788eaf.0
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 10:08:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sAYOt-0007Yu-Ef
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 13:08:29 -0400
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-792d65cd7a8so380449285a.1
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 10:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cs.unc.edu; s=google; t=1716570496; x=1717175296; darn=nongnu.org;
+ d=cs.unc.edu; s=google; t=1716570494; x=1717175294; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gAABzHvK46FYs1GzXkwiwwoFqpPX7zi34euYwr4q6m0=;
- b=mNSBbqhy6V/K0uaCsAMNYIr/E1lvcAC86jnAoV7e4+yMrROdlyhYmtS9UzeOGzDj7+
- jFABZQfqSd4Yxwinj5M/IBNJC6Bvye8GhoTZJoaoRVhLhlUTmNP6oSn9BXxNsqJ2zV8e
- zfvt7GBSNQLsjk9KyOwf2/qDCnywMW/oyASmW1HlXnwa0L/RMwJHS2OD0Gw2KFerGqDQ
- yOjUZQ/ZS+cKSBZtGJ8OHR77q+UiZJDKo55jQz1ejVhwLt6a6QOtwyJ/xSFAnP5QLxk2
- YdMVtmnwPVtFCFfPybH8h7ibrRfBd7RvKWoitZgPeLsb40/lKbnZ5lGiHcu5O7ktfDRd
- SRbg==
+ bh=QRwvTY+4XhYfL9PJXxknJUGay/i87It9LQZF1nGxs/4=;
+ b=Hg80qQqG67dsyRBxV/lf7GsXMQwykBP0qTxRPW/cHkf9DNg9rOBmsmbmv4ewLS47ND
+ +3QH0PqH7clsgtLxJZw+GnZHZf6NOdNhO7N/wYYcW43QNegBiarD0WMnYhOp7zhofnTl
+ S8iCKgFGBfRFME0BBdU4Vmnxoxqsn+pPUQmVb9E7+iiFAxOC3eTLtwB42oRFNRCfrLSe
+ 86HtMTx4EuCx8+IYz+q1Hys+vkmUsNr7FZFqdRZYCvDdBcPnRsfeE220KIOD+GW5pdc2
+ lUATNXskiXvFrUvFaBQevaY+lMO2sJvvR9lS81mMa/JXtWC4Z5BU/IGjEaRhAhHKenge
+ Hilg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716570496; x=1717175296;
+ d=1e100.net; s=20230601; t=1716570494; x=1717175294;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gAABzHvK46FYs1GzXkwiwwoFqpPX7zi34euYwr4q6m0=;
- b=V5U1fEq4d9RcLb+suivWfvjP4lepr/AcVMw1yn678vfi/Tuj0GEmJukvUwqx8QKbvp
- 2pATwnxv5aKtsVx9jLSu96KJVSFDxCI4JjTkLiLcQTZXHIqA2zKkWs8As/X9utmOYioH
- s+khVHt4rQTDmVgcvd6CDkpEHHrxrcAk6dJ00o/3AokN9jPSS5ntJ/lsw9q3W/KZio7o
- hmfbdVSvKV99eZTok95BvT8RVw8M/AaOGmmWYnQg2FgZAlhdYwPtW73fUda+braKwaXH
- C/Ma6SP5oyMuvDgHqKyh/jez5j+CbkyDJ8/wiAFxPDkTZHkBfdqBwyy3/DxhxH+ApVjE
- yaKQ==
-X-Gm-Message-State: AOJu0YzQgtXG9SWsT/gxQa6aOzRNsj0cYGUTQHrfR4rrv6fHkst3i/8t
- gerLP+Adi1s6VIRa6wtViV71B5LvPlJ+aBf39y/V9G9Yp/8z0r6dQeeF5VJj9KtgkaBgSJaeho5
- RBPw1Wc0LDiPCn1C0+ZAhH+Zd0eV99M3rmmi5IPVCZAmKcia/KU4G2Z3EwgP+CakM3XHUcRb9X+
- zvQv/Xb4CsstCB0ZvC1UobI23MHFlF
-X-Google-Smtp-Source: AGHT+IF82b90CUA9aSZH7RNh5p58p/P8iyNpAhjK+HRb6ErKhnIQtrsV/7s56wUl9P3xBhj0NsaV2Q==
-X-Received: by 2002:a05:6359:c29:b0:18d:8cdc:13ce with SMTP id
- e5c5f4694b2df-197e50c8c88mr299929755d.2.1716570495455; 
- Fri, 24 May 2024 10:08:15 -0700 (PDT)
+ bh=QRwvTY+4XhYfL9PJXxknJUGay/i87It9LQZF1nGxs/4=;
+ b=w1kIStM7FPZk621DpIfALxNaTJ5WEOB76sRzCHEAISYXI/UFUtm6fBPSRcMRvJXe56
+ xBqzTQRXVSDyFeGe4986SzfY53QAx+K+5pP3bk9KZ9i/UVKEIGum38krPkeZyeIyy4pB
+ BcQeGGkwlOknUvjSghCM9eQlus8Hz70hazsJ+f7jss947N3fvaFeW2uYeI5n/tplD5DT
+ ZkVJK0dcVyJUSbK1WraGjBxqNMcdUnKZCeVbblmLqN4NtAE+eDGNsAMg/QyYWpVVBBJn
+ xaIjTio3ju+KZuiDl5MFLijRUdaisT2f/ViBDm3UIoFzM3pqFpIB7eEqjAChHUsgdIjv
+ oIXQ==
+X-Gm-Message-State: AOJu0Yz1s4/uo1YUsQWYD2EBegR7adq6FDf37kA0UnE0xEysMQlHNCDU
+ /fqyd3oy56z2dCoCRaTRSznBFy6BilDZBFmHAUJGBsvHgTo/Sx3O3zqHlLfbQi6c85b8WMNyLXu
+ KJkhbtb6qc76LFOXCDjmP3uLJ3qSHEiSuBVgOtamOwgdywqs9WmM4m0tWny/RHpvoXY/qcQfK8/
+ bRjdgiVAXKRRxLDb7dooUwh+ZgFzOC
+X-Google-Smtp-Source: AGHT+IFY6hIDYWYldWjie0/4Tks4TyE+9UgFA29j6DigoUyS9kq5piLySzanGCRQDH0icKdsLVAmQw==
+X-Received: by 2002:a05:620a:460e:b0:790:f696:2eb0 with SMTP id
+ af79cd13be357-794ab1125ccmr339374285a.75.1716570493738; 
+ Fri, 24 May 2024 10:08:13 -0700 (PDT)
 Received: from kermit.cs.unc.edu (kermit.cs.unc.edu. [152.2.133.133])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794abcc0f0fsm79816585a.38.2024.05.24.10.08.13
+ af79cd13be357-794abcc0f0fsm79816585a.38.2024.05.24.10.08.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 10:08:14 -0700 (PDT)
+ Fri, 24 May 2024 10:08:13 -0700 (PDT)
 From: Don Porter <porter@cs.unc.edu>
 To: qemu-devel@nongnu.org
 Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
  richard.henderson@linaro.org, Don Porter <porter@cs.unc.edu>
-Subject: [PATCH v2 3/6] Convert 'info mem' to use generic iterator
-Date: Fri, 24 May 2024 13:07:45 -0400
-Message-Id: <20240524170748.1842030-4-porter@cs.unc.edu>
+Subject: [PATCH v2 2/6] Convert 'info tlb' to use generic iterator
+Date: Fri, 24 May 2024 13:07:44 -0400
+Message-Id: <20240524170748.1842030-3-porter@cs.unc.edu>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240524170748.1842030-1-porter@cs.unc.edu>
 References: <ZiKkWCjreGOMFX5p@gallifrey>
  <20240524170748.1842030-1-porter@cs.unc.edu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=porter@cs.unc.edu; helo=mail-oo1-xc34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=porter@cs.unc.edu; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,381 +96,243 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Don Porter <porter@cs.unc.edu>
 ---
- target/i386/monitor.c | 344 +++++-------------------------------------
- 1 file changed, 35 insertions(+), 309 deletions(-)
+ target/i386/monitor.c | 203 ++++++------------------------------------
+ 1 file changed, 28 insertions(+), 175 deletions(-)
 
 diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index adf95edfb4..147743392d 100644
+index d7aae99c73..adf95edfb4 100644
 --- a/target/i386/monitor.c
 +++ b/target/i386/monitor.c
-@@ -480,332 +480,58 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-     for_each_pte(cs, &mem_print_tlb, &state, false, false);
+@@ -430,201 +430,54 @@ void hmp_info_pg(Monitor *mon, const QDict *qdict)
  }
  
--static void mem_print(Monitor *mon, CPUArchState *env,
--                      hwaddr *pstart, int *plast_prot,
--                      hwaddr end, int prot)
--{
--    int prot1;
--    prot1 = *plast_prot;
--    if (prot != prot1) {
--        if (*pstart != -1) {
--            monitor_printf(mon, HWADDR_FMT_plx "-" HWADDR_FMT_plx " "
--                           HWADDR_FMT_plx " %c%c%c\n",
--                           addr_canonical(env, *pstart),
--                           addr_canonical(env, end),
--                           addr_canonical(env, end - *pstart),
--                           prot1 & PG_USER_MASK ? 'u' : '-',
--                           'r',
--                           prot1 & PG_RW_MASK ? 'w' : '-');
--        }
--        if (prot != 0)
--            *pstart = end;
--        else
--            *pstart = -1;
--        *plast_prot = prot;
--    }
--}
--
--static void mem_info_32(Monitor *mon, CPUArchState *env)
-+static
-+bool mem_print(CPUState *cs, struct mem_print_state *state)
+ static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+-                      hwaddr pte, hwaddr mask)
++                      hwaddr pte)
  {
--    unsigned int l1, l2;
--    int prot, last_prot;
--    uint32_t pgd, pde, pte;
--    hwaddr start, end;
+-    addr = addr_canonical(env, addr);
 -
+-    monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
+-                   " %c%c%c%c%c%c%c%c%c\n",
+-                   addr,
+-                   pte & mask,
+-                   pte & PG_NX_MASK ? 'X' : '-',
+-                   pte & PG_GLOBAL_MASK ? 'G' : '-',
+-                   pte & PG_PSE_MASK ? 'P' : '-',
+-                   pte & PG_DIRTY_MASK ? 'D' : '-',
+-                   pte & PG_ACCESSED_MASK ? 'A' : '-',
+-                   pte & PG_PCD_MASK ? 'C' : '-',
+-                   pte & PG_PWT_MASK ? 'T' : '-',
+-                   pte & PG_USER_MASK ? 'U' : '-',
+-                   pte & PG_RW_MASK ? 'W' : '-');
+-}
++    char buf[128];
++    char *pos = buf;
+ 
+-static void tlb_info_32(Monitor *mon, CPUArchState *env)
+-{
+-    unsigned int l1, l2;
+-    uint32_t pgd, pde, pte;
++    addr = addr_canonical(env, addr);
+ 
 -    pgd = env->cr[3] & ~0xfff;
--    last_prot = 0;
--    start = -1;
 -    for(l1 = 0; l1 < 1024; l1++) {
 -        cpu_physical_memory_read(pgd + l1 * 4, &pde, 4);
 -        pde = le32_to_cpu(pde);
--        end = l1 << 22;
 -        if (pde & PG_PRESENT_MASK) {
 -            if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
--                prot = pde & (PG_USER_MASK | PG_RW_MASK | PG_PRESENT_MASK);
--                mem_print(mon, env, &start, &last_prot, end, prot);
+-                /* 4M pages */
+-                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
 -            } else {
 -                for(l2 = 0; l2 < 1024; l2++) {
 -                    cpu_physical_memory_read((pde & ~0xfff) + l2 * 4, &pte, 4);
 -                    pte = le32_to_cpu(pte);
--                    end = (l1 << 22) + (l2 << 12);
 -                    if (pte & PG_PRESENT_MASK) {
--                        prot = pte & pde &
--                            (PG_USER_MASK | PG_RW_MASK | PG_PRESENT_MASK);
--                    } else {
--                        prot = 0;
+-                        print_pte(mon, env, (l1 << 22) + (l2 << 12),
+-                                  pte & ~PG_PSE_MASK,
+-                                  ~0xfff);
 -                    }
--                    mem_print(mon, env, &start, &last_prot, end, prot);
 -                }
 -            }
--        } else {
--            prot = 0;
--            mem_print(mon, env, &start, &last_prot, end, prot);
 -        }
 -    }
--    /* Flush last range */
--    mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 32, 0);
 -}
-+    CPUArchState *env = state->env;
-+    int i = 0;
++    pos += sprintf(pos, HWADDR_FMT_plx ": " HWADDR_FMT_plx " ", addr,
++                   (hwaddr) (pte & PG_ADDRESS_MASK));
  
--static void mem_info_pae32(Monitor *mon, CPUArchState *env)
+-static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
 -{
 -    unsigned int l1, l2, l3;
--    int prot, last_prot;
 -    uint64_t pdpe, pde, pte;
 -    uint64_t pdp_addr, pd_addr, pt_addr;
--    hwaddr start, end;
--
++    pos += sprintf(pos, " %s", pg_bits(pte));
+ 
 -    pdp_addr = env->cr[3] & ~0x1f;
--    last_prot = 0;
--    start = -1;
 -    for (l1 = 0; l1 < 4; l1++) {
 -        cpu_physical_memory_read(pdp_addr + l1 * 8, &pdpe, 8);
 -        pdpe = le64_to_cpu(pdpe);
--        end = l1 << 30;
 -        if (pdpe & PG_PRESENT_MASK) {
 -            pd_addr = pdpe & 0x3fffffffff000ULL;
 -            for (l2 = 0; l2 < 512; l2++) {
 -                cpu_physical_memory_read(pd_addr + l2 * 8, &pde, 8);
 -                pde = le64_to_cpu(pde);
--                end = (l1 << 30) + (l2 << 21);
 -                if (pde & PG_PRESENT_MASK) {
 -                    if (pde & PG_PSE_MASK) {
--                        prot = pde & (PG_USER_MASK | PG_RW_MASK |
--                                      PG_PRESENT_MASK);
--                        mem_print(mon, env, &start, &last_prot, end, prot);
+-                        /* 2M pages with PAE, CR4.PSE is ignored */
+-                        print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
+-                                  ~((hwaddr)(1 << 20) - 1));
 -                    } else {
 -                        pt_addr = pde & 0x3fffffffff000ULL;
 -                        for (l3 = 0; l3 < 512; l3++) {
 -                            cpu_physical_memory_read(pt_addr + l3 * 8, &pte, 8);
 -                            pte = le64_to_cpu(pte);
--                            end = (l1 << 30) + (l2 << 21) + (l3 << 12);
 -                            if (pte & PG_PRESENT_MASK) {
--                                prot = pte & pde & (PG_USER_MASK | PG_RW_MASK |
--                                                    PG_PRESENT_MASK);
--                            } else {
--                                prot = 0;
+-                                print_pte(mon, env, (l1 << 30) + (l2 << 21)
+-                                          + (l3 << 12),
+-                                          pte & ~PG_PSE_MASK,
+-                                          ~(hwaddr)0xfff);
 -                            }
--                            mem_print(mon, env, &start, &last_prot, end, prot);
 -                        }
 -                    }
--                } else {
--                    prot = 0;
--                    mem_print(mon, env, &start, &last_prot, end, prot);
 -                }
 -            }
--        } else {
--            prot = 0;
--            mem_print(mon, env, &start, &last_prot, end, prot);
 -        }
--    }
--    /* Flush last range */
--    mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 32, 0);
++    /* Trim line to fit screen */
++    if (pos - buf > 79) {
++        strcpy(buf + 77, "..");
+     }
 -}
--
--
+ 
 -#ifdef TARGET_X86_64
--static void mem_info_la48(Monitor *mon, CPUArchState *env)
+-static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+-        uint64_t l0, uint64_t pml4_addr)
 -{
--    int prot, last_prot;
 -    uint64_t l1, l2, l3, l4;
 -    uint64_t pml4e, pdpe, pde, pte;
--    uint64_t pml4_addr, pdp_addr, pd_addr, pt_addr, start, end;
+-    uint64_t pdp_addr, pd_addr, pt_addr;
 -
--    pml4_addr = env->cr[3] & 0x3fffffffff000ULL;
--    last_prot = 0;
--    start = -1;
 -    for (l1 = 0; l1 < 512; l1++) {
 -        cpu_physical_memory_read(pml4_addr + l1 * 8, &pml4e, 8);
 -        pml4e = le64_to_cpu(pml4e);
--        end = l1 << 39;
--        if (pml4e & PG_PRESENT_MASK) {
--            pdp_addr = pml4e & 0x3fffffffff000ULL;
--            for (l2 = 0; l2 < 512; l2++) {
--                cpu_physical_memory_read(pdp_addr + l2 * 8, &pdpe, 8);
--                pdpe = le64_to_cpu(pdpe);
--                end = (l1 << 39) + (l2 << 30);
--                if (pdpe & PG_PRESENT_MASK) {
--                    if (pdpe & PG_PSE_MASK) {
--                        prot = pdpe & (PG_USER_MASK | PG_RW_MASK |
--                                       PG_PRESENT_MASK);
--                        prot &= pml4e;
--                        mem_print(mon, env, &start, &last_prot, end, prot);
--                    } else {
--                        pd_addr = pdpe & 0x3fffffffff000ULL;
--                        for (l3 = 0; l3 < 512; l3++) {
--                            cpu_physical_memory_read(pd_addr + l3 * 8, &pde, 8);
--                            pde = le64_to_cpu(pde);
--                            end = (l1 << 39) + (l2 << 30) + (l3 << 21);
--                            if (pde & PG_PRESENT_MASK) {
--                                if (pde & PG_PSE_MASK) {
--                                    prot = pde & (PG_USER_MASK | PG_RW_MASK |
--                                                  PG_PRESENT_MASK);
--                                    prot &= pml4e & pdpe;
--                                    mem_print(mon, env, &start,
--                                              &last_prot, end, prot);
--                                } else {
--                                    pt_addr = pde & 0x3fffffffff000ULL;
--                                    for (l4 = 0; l4 < 512; l4++) {
--                                        cpu_physical_memory_read(pt_addr
--                                                                 + l4 * 8,
--                                                                 &pte, 8);
--                                        pte = le64_to_cpu(pte);
--                                        end = (l1 << 39) + (l2 << 30) +
--                                            (l3 << 21) + (l4 << 12);
--                                        if (pte & PG_PRESENT_MASK) {
--                                            prot = pte & (PG_USER_MASK | PG_RW_MASK |
--                                                          PG_PRESENT_MASK);
--                                            prot &= pml4e & pdpe & pde;
--                                        } else {
--                                            prot = 0;
--                                        }
--                                        mem_print(mon, env, &start,
--                                                  &last_prot, end, prot);
--                                    }
--                                }
--                            } else {
--                                prot = 0;
--                                mem_print(mon, env, &start,
--                                          &last_prot, end, prot);
--                            }
--                        }
--                    }
--                } else {
--                    prot = 0;
--                    mem_print(mon, env, &start, &last_prot, end, prot);
--                }
--            }
--        } else {
--            prot = 0;
--            mem_print(mon, env, &start, &last_prot, end, prot);
-+    /* We need to figure out the lowest populated level */
-+    for ( ; i < state->max_height; i++) {
-+        if (state->vstart[i] != -1) {
-+            break;
-         }
-     }
--    /* Flush last range */
--    mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 48, 0);
--}
- 
--static void mem_info_la57(Monitor *mon, CPUArchState *env)
--{
--    int prot, last_prot;
--    uint64_t l0, l1, l2, l3, l4;
--    uint64_t pml5e, pml4e, pdpe, pde, pte;
--    uint64_t pml5_addr, pml4_addr, pdp_addr, pd_addr, pt_addr, start, end;
--
--    pml5_addr = env->cr[3] & 0x3fffffffff000ULL;
--    last_prot = 0;
--    start = -1;
--    for (l0 = 0; l0 < 512; l0++) {
--        cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
--        pml5e = le64_to_cpu(pml5e);
--        end = l0 << 48;
--        if (!(pml5e & PG_PRESENT_MASK)) {
--            prot = 0;
--            mem_print(mon, env, &start, &last_prot, end, prot);
+-        if (!(pml4e & PG_PRESENT_MASK)) {
 -            continue;
 -        }
-+    hwaddr vstart = state->vstart[i];
-+    hwaddr end = state->vend[i] + mmu_pte_leaf_page_size(cs, i);
-+    int prot = ent2prot(state->ent[i]);
- 
--        pml4_addr = pml5e & 0x3fffffffff000ULL;
--        for (l1 = 0; l1 < 512; l1++) {
--            cpu_physical_memory_read(pml4_addr + l1 * 8, &pml4e, 8);
--            pml4e = le64_to_cpu(pml4e);
--            end = (l0 << 48) + (l1 << 39);
--            if (!(pml4e & PG_PRESENT_MASK)) {
--                prot = 0;
--                mem_print(mon, env, &start, &last_prot, end, prot);
+-
+-        pdp_addr = pml4e & 0x3fffffffff000ULL;
+-        for (l2 = 0; l2 < 512; l2++) {
+-            cpu_physical_memory_read(pdp_addr + l2 * 8, &pdpe, 8);
+-            pdpe = le64_to_cpu(pdpe);
+-            if (!(pdpe & PG_PRESENT_MASK)) {
 -                continue;
 -            }
 -
--            pdp_addr = pml4e & 0x3fffffffff000ULL;
--            for (l2 = 0; l2 < 512; l2++) {
--                cpu_physical_memory_read(pdp_addr + l2 * 8, &pdpe, 8);
--                pdpe = le64_to_cpu(pdpe);
--                end = (l0 << 48) + (l1 << 39) + (l2 << 30);
--                if (pdpe & PG_PRESENT_MASK) {
--                    prot = 0;
--                    mem_print(mon, env, &start, &last_prot, end, prot);
+-            if (pdpe & PG_PSE_MASK) {
+-                /* 1G pages, CR4.PSE is ignored */
+-                print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
+-                        pdpe, 0x3ffffc0000000ULL);
+-                continue;
+-            }
+-
+-            pd_addr = pdpe & 0x3fffffffff000ULL;
+-            for (l3 = 0; l3 < 512; l3++) {
+-                cpu_physical_memory_read(pd_addr + l3 * 8, &pde, 8);
+-                pde = le64_to_cpu(pde);
+-                if (!(pde & PG_PRESENT_MASK)) {
 -                    continue;
 -                }
 -
--                if (pdpe & PG_PSE_MASK) {
--                    prot = pdpe & (PG_USER_MASK | PG_RW_MASK |
--                            PG_PRESENT_MASK);
--                    prot &= pml5e & pml4e;
--                    mem_print(mon, env, &start, &last_prot, end, prot);
+-                if (pde & PG_PSE_MASK) {
+-                    /* 2M pages, CR4.PSE is ignored */
+-                    print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
+-                            (l3 << 21), pde, 0x3ffffffe00000ULL);
 -                    continue;
 -                }
- 
--                pd_addr = pdpe & 0x3fffffffff000ULL;
--                for (l3 = 0; l3 < 512; l3++) {
--                    cpu_physical_memory_read(pd_addr + l3 * 8, &pde, 8);
--                    pde = le64_to_cpu(pde);
--                    end = (l0 << 48) + (l1 << 39) + (l2 << 30) + (l3 << 21);
--                    if (pde & PG_PRESENT_MASK) {
--                        prot = 0;
--                        mem_print(mon, env, &start, &last_prot, end, prot);
--                        continue;
--                    }
 -
--                    if (pde & PG_PSE_MASK) {
--                        prot = pde & (PG_USER_MASK | PG_RW_MASK |
--                                PG_PRESENT_MASK);
--                        prot &= pml5e & pml4e & pdpe;
--                        mem_print(mon, env, &start, &last_prot, end, prot);
--                        continue;
--                    }
--
--                    pt_addr = pde & 0x3fffffffff000ULL;
--                    for (l4 = 0; l4 < 512; l4++) {
--                        cpu_physical_memory_read(pt_addr + l4 * 8, &pte, 8);
--                        pte = le64_to_cpu(pte);
--                        end = (l0 << 48) + (l1 << 39) + (l2 << 30) +
--                            (l3 << 21) + (l4 << 12);
--                        if (pte & PG_PRESENT_MASK) {
--                            prot = pte & (PG_USER_MASK | PG_RW_MASK |
--                                    PG_PRESENT_MASK);
--                            prot &= pml5e & pml4e & pdpe & pde;
--                        } else {
--                            prot = 0;
--                        }
--                        mem_print(mon, env, &start, &last_prot, end, prot);
+-                pt_addr = pde & 0x3fffffffff000ULL;
+-                for (l4 = 0; l4 < 512; l4++) {
+-                    cpu_physical_memory_read(pt_addr
+-                            + l4 * 8,
+-                            &pte, 8);
+-                    pte = le64_to_cpu(pte);
+-                    if (pte & PG_PRESENT_MASK) {
+-                        print_pte(mon, env, (l0 << 48) + (l1 << 39) +
+-                                (l2 << 30) + (l3 << 21) + (l4 << 12),
+-                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
 -                    }
 -                }
 -            }
 -        }
 -    }
--    /* Flush last range */
--    mem_print(mon, env, &start, &last_prot, (hwaddr)1 << 57, 0);
-+    monitor_printf(state->mon, HWADDR_FMT_plx "-" HWADDR_FMT_plx " "
-+                   HWADDR_FMT_plx " %c%c%c\n",
-+                   addr_canonical(env, vstart),
-+                   addr_canonical(env, end),
-+                   addr_canonical(env, end - vstart),
-+                   prot & PG_USER_MASK ? 'u' : '-',
-+                   'r',
-+                   prot & PG_RW_MASK ? 'w' : '-');
-+    return true;
++    monitor_printf(mon, "%s\n", buf);
+ }
+ 
+-static void tlb_info_la57(Monitor *mon, CPUArchState *env)
++static
++int mem_print_tlb(CPUState *cs, void *data, PTE_t *pte,
++                  target_ulong vaddr, int height, int offset)
+ {
+-    uint64_t l0;
+-    uint64_t pml5e;
+-    uint64_t pml5_addr;
+-
+-    pml5_addr = env->cr[3] & 0x3fffffffff000ULL;
+-    for (l0 = 0; l0 < 512; l0++) {
+-        cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
+-        pml5e = le64_to_cpu(pml5e);
+-        if (pml5e & PG_PRESENT_MASK) {
+-            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
+-        }
+-    }
++    struct mem_print_state *state = (struct mem_print_state *) data;
++    print_pte(state->mon, state->env, vaddr, pte->pte64_t);
++    return 0;
  }
 -#endif /* TARGET_X86_64 */
  
- void hmp_info_mem(Monitor *mon, const QDict *qdict)
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
  {
 -    CPUArchState *env;
-+    CPUState *cs;
 +    struct mem_print_state state;
  
 -    env = mon_get_cpu_env(mon);
 -    if (!env) {
 -        monitor_printf(mon, "No CPU available\n");
-+    if (!init_iterator(mon, &state)) {
++    CPUState *cs = mon_get_cpu(mon);
++    if (!cs) {
++        monitor_printf(mon, "Unable to get CPUState.  Internal error\n");
          return;
      }
-+    state.flusher = mem_print;
  
 -    if (!(env->cr[0] & CR0_PG_MASK)) {
 -        monitor_printf(mon, "PG disabled\n");
-+    cs = mon_get_cpu(mon);
-+    if (!cs) {
-+        monitor_printf(mon, "Unable to get CPUState.  Internal error\n");
++    if (!init_iterator(mon, &state)) {
          return;
      }
 -    if (env->cr[4] & CR4_PAE_MASK) {
 -#ifdef TARGET_X86_64
 -        if (env->hflags & HF_LMA_MASK) {
 -            if (env->cr[4] & CR4_LA57_MASK) {
--                mem_info_la57(mon, env);
+-                tlb_info_la57(mon, env);
 -            } else {
--                mem_info_la48(mon, env);
+-                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
 -            }
 -        } else
 -#endif
 -        {
--            mem_info_pae32(mon, env);
+-            tlb_info_pae32(mon, env);
 -        }
 -    } else {
--        mem_info_32(mon, env);
+-        tlb_info_32(mon, env);
 -    }
 +
 +    /**
-+     * We must visit interior entries to update prot
++     * 'info tlb' visits only leaf PTEs marked present.
++     * It does not check other protection bits.
 +     */
-+    for_each_pte(cs, &compressing_iterator, &state, true, false);
-+
-+    /* Flush the last entry, if needed */
-+    mem_print(cs, &state);
++    for_each_pte(cs, &mem_print_tlb, &state, false, false);
  }
  
- void hmp_mce(Monitor *mon, const QDict *qdict)
+ static void mem_print(Monitor *mon, CPUArchState *env,
 -- 
 2.34.1
 
