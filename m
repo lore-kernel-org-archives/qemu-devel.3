@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBACC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 10:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5BAFC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 10:02:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sARiv-0004d3-Dk; Fri, 24 May 2024 06:00:29 -0400
+	id 1sARkM-0005gg-Rf; Fri, 24 May 2024 06:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sARit-0004cg-DY; Fri, 24 May 2024 06:00:27 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sARkK-0005fs-W6
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 06:01:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sARio-0005Dh-1c; Fri, 24 May 2024 06:00:27 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E52769A20;
- Fri, 24 May 2024 13:00:36 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BE635D6484;
- Fri, 24 May 2024 13:00:07 +0300 (MSK)
-Message-ID: <78c5abe1-546d-4ced-a160-a087ff3326ce@tls.msk.ru>
-Date: Fri, 24 May 2024 13:00:07 +0300
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sARkJ-0006Db-48
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 06:01:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716544913;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=u1qR3XsZSarc+I1sNe5g3Bu3oEruxkZoMhxo7cL72AY=;
+ b=e1j81tgoEvRM9Nk4oB9UQnlnAvnoS8+BFuisoQrriD7WWnHG9nZoXgztj/3j8vWEv8X2lU
+ evoqRr+LwtpxV4TmtW7RYuCRfFR0RN1NylQtVjsNe4x0zk1PS98wSSo/DWY2syN7Utfj7/
+ CfYrq6G6rhdZwJ9wOZE3rdBwqcZPPZQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-FetDi6ydNEOnf9Ikv3p4aQ-1; Fri, 24 May 2024 06:01:52 -0400
+X-MC-Unique: FetDi6ydNEOnf9Ikv3p4aQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-354e0805ef3so54777f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 03:01:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716544911; x=1717149711;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u1qR3XsZSarc+I1sNe5g3Bu3oEruxkZoMhxo7cL72AY=;
+ b=RsgA+RND/SirtYZeNmm872cKRd5QR1Sdvg2ne9eKIG7HHVmD8T+U4gRRxBwbUH4rza
+ X70n+ECDzy9+cDgtHqrOIZfQOOfpJIDgfo5tZL5AEX2lHFG1aOf/UBJaFCFnUtKE8t/D
+ /nZ5bMCRDuGdA0E0u9nhUxYZ0bQL84jFTs5WlMZ2Ij1pbpzmTTlkePfyyv1AbHZZQInx
+ LF0UW4zbJG/T56apEogB8HTN+twswLjnATSN8gISBAxOHy6Rsopj+hTvNsab4VI0m/9h
+ DIfwbnJ7x9c96MJHGf91KM/GjaX1vSWut7/M08Ez9ve/H+A9YMuAD1TKgmtTYlUGTI+5
+ XgSw==
+X-Gm-Message-State: AOJu0YxONv5JJw1PniZELoXoEm391uL6SqBRF9/7jBzZc1czzYXuLs3p
+ rZWGF1G0xuWsDMq6suLe72NogWZsH29XcooIV51teEbbVdDwyFVUClWAUUt47aFOfrUX/fmUqkp
+ FZbXjaLt9jjWgQitLWdlf5nw8PQGSEhzoBXscJsp6GXP3gVNft61I39B9iMJUZZDodjQWaaRqSD
+ TXK6BZTD8R9JASyeA5lALlBsT5ugI=
+X-Received: by 2002:a5d:65c7:0:b0:354:f1b7:7469 with SMTP id
+ ffacd0b85a97d-3552fdc8280mr1715380f8f.51.1716544910447; 
+ Fri, 24 May 2024 03:01:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHerhH4vTEAVFl/wAtyhpYfOvEdEDBLAyFHHL4JD4xKHGo9EhsGf9XF9dhB5HOYpfxtjQNXEQpPFbjBm854ctY=
+X-Received: by 2002:a5d:65c7:0:b0:354:f1b7:7469 with SMTP id
+ ffacd0b85a97d-3552fdc8280mr1715342f8f.51.1716544909735; Fri, 24 May 2024
+ 03:01:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 01/10] target/loongarch/kvm: Fix VM recovery from disk
- failures
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, qemu-stable@nongnu.org,
- Peter Xu <peterx@redhat.com>
-References: <20240523014637.614872-1-gaosong@loongson.cn>
- <20240523014637.614872-2-gaosong@loongson.cn>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240523014637.614872-2-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+References: <cover.1716531409.git.yong.huang@smartx.com>
+ <878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com>
+In-Reply-To: <878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 24 May 2024 15:31:33 +0530
+Message-ID: <CAE8KmOyXhvYHOw2MOSbwSetC7jyFNFsf0E81O0wQ1WEGGXY-TQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] scsi-disk: Fix crash for VM configured with USB CDROM
+ after live migration
+To: Hyman Huang <yong.huang@smartx.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,54 +97,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.05.2024 04:46, Song Gao wrote:
-> vmstate does not save kvm_state_conter,
-> which can cause VM recovery from disk to fail.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Acked-by: Peter Xu <peterx@redhat.com>
-> Message-Id: <20240508024732.3127792-1-gaosong@loongson.cn>
-> ---
->   target/loongarch/machine.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-> index 9cd9e848d6..08a7fa5370 100644
-> --- a/target/loongarch/machine.c
-> +++ b/target/loongarch/machine.c
-> @@ -145,8 +145,8 @@ static const VMStateDescription vmstate_tlb = {
->   /* LoongArch CPU state */
->   const VMStateDescription vmstate_loongarch_cpu = {
->       .name = "cpu",
-> -    .version_id = 1,
-> -    .minimum_version_id = 1,
-> +    .version_id = 2,
-> +    .minimum_version_id = 2,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
->           VMSTATE_UINTTL(env.pc, LoongArchCPU),
-> @@ -208,6 +208,8 @@ const VMStateDescription vmstate_loongarch_cpu = {
->           VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
->           VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
->   
-> +        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+Hello Hyman,
+
+* Is this the same patch series as sent before..?
+  -> https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00816.html
+
+On Fri, 24 May 2024 at 12:02, Hyman Huang <yong.huang@smartx.com> wrote:
+> For VMs configured with the USB CDROM device:
+>
+> -drive file=/path/to/local/file,id=drive-usb-disk0,media=cdrom,readonly=on...
+> -device usb-storage,drive=drive-usb-disk0,id=usb-disk0...
+>
+> QEMU process may crash after live migration,
+> Do the live migration repeatedly, crash may happen after live migratoin,
+
+* Does live migration work many times before QEMU crashes on the
+destination side? OR QEMU crashes at the very first migration?
+
+>    at /usr/src/debug/qemu-6-6.2.0-75.7.oe1.smartx.git.40.x86_64/include/qemu/iov.h:49
+
+* This qemu version looks quite old. Is the issue reproducible with
+the latest QEMU version 9.0?
+
+> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+> +static void scsi_disk_emulate_save_request(QEMUFile *f, SCSIRequest *req)
+> +{
+> +    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
+> +    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
 > +
->           VMSTATE_END_OF_LIST()
->       },
->       .subsections = (const VMStateDescription * const []) {
+> +    if (s->migrate_emulate_scsi_request) {
+> +        scsi_disk_save_request(f, req);
+> +    }
+> +}
+> +
+>  static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
+>  {
+>      SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
+> @@ -183,6 +193,16 @@ static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
+>      qemu_iovec_init_external(&r->qiov, &r->iov, 1);
+>  }
+>
+> +static void scsi_disk_emulate_load_request(QEMUFile *f, SCSIRequest *req)
+> +{
+> +    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
+> +    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
+> +
+> +    if (s->migrate_emulate_scsi_request) {
+> +        scsi_disk_load_request(f, req);
+> +    }
+> +}
+> +
+>  /*
+>   * scsi_handle_rw_error has two return values.  False means that the error
+>   * must be ignored, true means that the error has been processed and the
+> @@ -2593,6 +2613,8 @@ static const SCSIReqOps scsi_disk_emulate_reqops = {
+>      .read_data    = scsi_disk_emulate_read_data,
+>      .write_data   = scsi_disk_emulate_write_data,
+>      .get_buf      = scsi_get_buf,
+> +    .load_request = scsi_disk_emulate_load_request,
+> +    .save_request = scsi_disk_emulate_save_request,
+>  };
+>
+>  static const SCSIReqOps scsi_disk_dma_reqops = {
+> @@ -3137,7 +3159,7 @@ static Property scsi_hd_properties[] = {
+>  static int scsi_disk_pre_save(void *opaque)
+>  {
+>      SCSIDiskState *dev = opaque;
+> -    dev->migrate_emulate_scsi_request = false;
+> +    dev->migrate_emulate_scsi_request = true;
+>
 
-Should this really be part of any stable releases?
-Wouldn't it break migration between, say, 8.2 with this change
-and without?
+* This patch seems to add support for migrating SCSI requests. While
+it looks okay, not sure if it is required, how likely is someone to
+configure a VM to use CDROM?
 
-Thanks,
+*  Should the CDROM device be reset on the destination if no requests
+are found? ie. if (scsi_req_get_buf -> scsi_get_buf() returns NULL)?
 
-/mjt
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+Thank you.
+---
+  - Prasad
 
 
