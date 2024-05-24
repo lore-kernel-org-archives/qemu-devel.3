@@ -4,108 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9047FC25B7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 14:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F592C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 15:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAWNo-0000Sn-6f; Fri, 24 May 2024 10:59:00 -0400
+	id 1sAWRG-0003XP-Mz; Fri, 24 May 2024 11:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAWNm-0000Ph-JT
- for qemu-devel@nongnu.org; Fri, 24 May 2024 10:58:58 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sAWNj-0000j4-0G
- for qemu-devel@nongnu.org; Fri, 24 May 2024 10:58:58 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7622822C56;
- Fri, 24 May 2024 14:58:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716562730; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xp0mGA7cKaBGi+5NV5oUMOG4oB9HQ5KF63ePHsak2u8=;
- b=otZk0xd9J4zVsBx2wd42uCLdqm0da72XbYa372/E+aCBpB7jZfpdkp7wUSz4j7zzOWycbo
- luoxlUnnrx89DefuTdCMkWT30cDydnEsWHPx9DkYWsaayNkF5O5T9n9bmAd//LXPffUtYi
- Y5AIrtYNZm9vzlqBGdvW6NkrtMfpZH8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716562730;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xp0mGA7cKaBGi+5NV5oUMOG4oB9HQ5KF63ePHsak2u8=;
- b=hFLgLtWLDmeGDt7hi5L1jdCYwTH2U4bduEHuOxsa/+ERVV6PP4EVDb4J5itX3qlZ0R7Cn6
- mPTc8oBADU3/KuDA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716562729; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xp0mGA7cKaBGi+5NV5oUMOG4oB9HQ5KF63ePHsak2u8=;
- b=GE+9slGxElb6g5GhrQ1/cduVJNxCJmZzobI6DbMhZ1bez5j2scoyYrSn+spAY9/k63YUAB
- HBXK1gLKemKoVEqtEuqH2AJiN2x988o3EwksQ0xzhJSalHTrCLgwzBYsvZn7E6R2I3csbp
- tVkgHOQ6VIzW3psWs/MmrVZN/ORr9Lg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716562729;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xp0mGA7cKaBGi+5NV5oUMOG4oB9HQ5KF63ePHsak2u8=;
- b=vbjk8ic+6eRaJRQFfSeZ7MMITdr426LKQ/NK3lCKMW1oBgV5RXjLHHm9EiT3oEDfNS5hqn
- kg34S+VjCj+HGpBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EB33C13A6B;
- Fri, 24 May 2024 14:58:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id l/8fLCirUGbPLAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 24 May 2024 14:58:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daude
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V1 20/26] migration: cpr-exec mode
-In-Reply-To: <1714406135-451286-21-git-send-email-steven.sistare@oracle.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-21-git-send-email-steven.sistare@oracle.com>
-Date: Fri, 24 May 2024 11:58:46 -0300
-Message-ID: <87fru7gst5.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sAWRE-0003Wk-RM
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 11:02:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sAWRC-0001b8-Dz
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 11:02:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716562949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=gPb1G/LuipKDJagieX/8SWiRsr6wtaG00z4ndQJw86M=;
+ b=aa1uSM2ooGjddAbjl3qVdQ304CRV1YxxbaxhZsdcaSDDIXpc0QxlWS/s1+X0SxJrLDhuef
+ 9bP369TQ78KhUQu7kmHnzfUWr/gQIspayeEYUnKto3nOVVO7olOqpyjlPa+vfKt6M+lr/V
+ Kkgec0YybGxhpSMvhI9T4HjRC2BsIA4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-134-ra7nve1NM7a8jMXKry66kw-1; Fri, 24 May 2024 11:02:27 -0400
+X-MC-Unique: ra7nve1NM7a8jMXKry66kw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-355b9d2477bso209472f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 08:02:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716562946; x=1717167746;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=gPb1G/LuipKDJagieX/8SWiRsr6wtaG00z4ndQJw86M=;
+ b=g2yfwpxFZCPA1iC5t1w2ZFRo1YbKfdzrLj16cu7v6AQfqPij7aM4uq7VSDPB3Q0V56
+ sDEZfrNFnVJARFmo6vrNNFSucpZeS7/0kikt/CLc+bYrP17Vam1kKpuwEo4waOVTMWr+
+ M5rMa3n4BnbV6ZmxIGCIbYzHvzFUINbjKH0jmIRDrjD+DsazUd2A8tlfComAKiVCfLv8
+ DP8Ew9yLjnQzONqELjRwCP+mhEEa8n9D6Vn8pfIOFTImq9gVxm/t1lIS9v84J5FvNu3j
+ KlR/sqiguJSRdWXyOIPkYw9fCYrkDZLbXR13bQtvJtMQbZFlMsq5haOMAgHVLYxEhbf2
+ vn3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqN1OISml4We5GXhRdX1JRGfyV9OY7dZyRD38/W/dEiMzGF/ogQVTGo+h5EX7M6AxPxgWMe2T6Tb5PHchjkgYDlMr4VOs=
+X-Gm-Message-State: AOJu0YxR2d9QtxFqZYCHfUkDetHRc6a+ge3kHBUVMuUG8Y0OqAZmLBna
+ 8owfo2G0nv39DsCgbOF21kZXV4TkcQ406Lr99CKwXaUouuTAepAzYKgJZ1PfRFYdi8t5+DKifvb
+ MhyRw79jZYj7ZGEz0UnCcuCW1vCwVPY4blCAKAiUElm/JUshBz8+x
+X-Received: by 2002:a5d:58f1:0:b0:34c:65ba:5d43 with SMTP id
+ ffacd0b85a97d-3552fde04c5mr2007815f8f.46.1716562946375; 
+ Fri, 24 May 2024 08:02:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQr8RFgVeA+BaNoFjnttCagwM+5slhaHdZ6nYvg4Sx21ZKLYAm/kpLMkp/M0N02nrCw99hsg==
+X-Received: by 2002:a5d:58f1:0:b0:34c:65ba:5d43 with SMTP id
+ ffacd0b85a97d-3552fde04c5mr2007733f8f.46.1716562945407; 
+ Fri, 24 May 2024 08:02:25 -0700 (PDT)
+Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
+ ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35579d7d963sm1824715f8f.21.2024.05.24.08.02.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 May 2024 08:02:24 -0700 (PDT)
+Message-ID: <51ef570c-da63-4e25-9c48-dbdf8a40a34d@redhat.com>
+Date: Fri, 24 May 2024 17:02:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,oracle.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] hw/riscv/virt: Add memory hotplugging and
+ virtio-md-pci support
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Atish Patra <atishp@atishpatra.org>, Atish Patra <atishp@rivosinc.com>
+Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Santosh Mamila <santosh.mamila@catalinasystems.io>,
+ Chethan Seshadri <Chethan.Seshadri@catalinasystems.io>,
+ Sivakumar Munnangi <siva.munnangi@catalinasystems.io>
+References: <20240521105635.795211-1-bjorn@kernel.org>
+ <20240521105635.795211-2-bjorn@kernel.org>
+ <55810d52-0360-40ad-a8d2-3b6a8aa220ae@ventanamicro.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <55810d52-0360-40ad-a8d2-3b6a8aa220ae@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,465 +162,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+On 24.05.24 15:14, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 5/21/24 07:56, Björn Töpel wrote:
+>> From: Björn Töpel <bjorn@rivosinc.com>
+>>
+>> Virtio-based memory devices (virtio-mem/virtio-pmem) allows for
+>> dynamic resizing of virtual machine memory, and requires proper
+>> hotplugging (add/remove) support to work.
+>>
+>> Add device memory support for RISC-V "virt" machine, and enable
+>> virtio-md-pci with the corresponding missing hotplugging callbacks.
+>>
+>> Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+>> ---
+>>    hw/riscv/Kconfig       |  2 +
+>>    hw/riscv/virt.c        | 83 +++++++++++++++++++++++++++++++++++++++++-
+>>    hw/virtio/virtio-mem.c |  5 ++-
+>>    3 files changed, 87 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+>> index a2030e3a6ff0..08f82dbb681a 100644
+>> --- a/hw/riscv/Kconfig
+>> +++ b/hw/riscv/Kconfig
+>> @@ -56,6 +56,8 @@ config RISCV_VIRT
+>>        select PLATFORM_BUS
+>>        select ACPI
+>>        select ACPI_PCI
+>> +    select VIRTIO_MEM_SUPPORTED
+>> +    select VIRTIO_PMEM_SUPPORTED
+>>    
+>>    config SHAKTI_C
+>>        bool
+>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+>> index 4fdb66052587..443902f919d2 100644
+>> --- a/hw/riscv/virt.c
+>> +++ b/hw/riscv/virt.c
+>> @@ -53,6 +53,8 @@
+>>    #include "hw/pci-host/gpex.h"
+>>    #include "hw/display/ramfb.h"
+>>    #include "hw/acpi/aml-build.h"
+>> +#include "hw/mem/memory-device.h"
+>> +#include "hw/virtio/virtio-mem-pci.h"
+>>    #include "qapi/qapi-visit-common.h"
+>>    #include "hw/virtio/virtio-iommu.h"
+>>    
+>> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machine)
+>>        DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+>>        int i, base_hartid, hart_count;
+>>        int socket_count = riscv_socket_count(machine);
+>> +    hwaddr device_memory_base, device_memory_size;
+>>    
+>>        /* Check socket count limit */
+>>        if (VIRT_SOCKETS_MAX < socket_count) {
+>> @@ -1420,6 +1423,12 @@ static void virt_machine_init(MachineState *machine)
+>>            exit(1);
+>>        }
+>>    
+>> +    if (machine->ram_slots > ACPI_MAX_RAM_SLOTS) {
+>> +        error_report("unsupported amount of memory slots: %"PRIu64,
+>> +                     machine->ram_slots);
+>> +        exit(EXIT_FAILURE);
+>> +    }
+>> +
+>>        /* Initialize sockets */
+>>        mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
+>>        for (i = 0; i < socket_count; i++) {
+>> @@ -1553,6 +1562,37 @@ static void virt_machine_init(MachineState *machine)
+>>        memory_region_add_subregion(system_memory, memmap[VIRT_MROM].base,
+>>                                    mask_rom);
+>>    
+>> +    /* device memory */
+>> +    device_memory_base = ROUND_UP(s->memmap[VIRT_DRAM].base + machine->ram_size,
+>> +                                  GiB);
+>> +    device_memory_size = machine->maxram_size - machine->ram_size;
+>> +    if (device_memory_size > 0) {
+>> +        /*
+>> +         * Each DIMM is aligned based on the backend's alignment value.
+>> +         * Assume max 1G hugepage alignment per slot.
+>> +         */
+>> +        device_memory_size += machine->ram_slots * GiB;
+> 
+> We don't need to align to 1GiB. This calc can use 2MiB instead (or 4MiB if we're
+> running 32 bits).
+> 
+>> +
+>> +        if (riscv_is_32bit(&s->soc[0])) {
+>> +            hwaddr memtop = device_memory_base + ROUND_UP(device_memory_size,
+>> +                                                          GiB);
+> 
+> Same here - alignment is 2/4 MiB.
+> 
+>> +
+>> +            if (memtop > UINT32_MAX) {
+>> +                error_report("memory exceeds 32-bit limit by %lu bytes",
+>> +                             memtop - UINT32_MAX);
+>> +                exit(EXIT_FAILURE);
+>> +            }
+>> +        }
+>> +
+>> +        if (device_memory_base + device_memory_size < device_memory_size) {
+>> +            error_report("unsupported amount of device memory");
+>> +            exit(EXIT_FAILURE);
+>> +        }
+> 
+> Took another look and found this a bit strange. These are all unsigned vars, so
+> if (unsigned a + unsigned b < unsigned b) will always be 'false'. The compiler is
+> probably cropping this out.
 
-> Add the cpr-exec migration mode.  Usage:
->   qemu-system-$arch -machine memfd-alloc=on ...
->   migrate_set_parameter mode cpr-exec
->   migrate_set_parameter cpr-exec-args \
->     <arg1> <arg2> ... -incoming <uri>
->   migrate -d <uri>
->
-> The migrate command stops the VM, saves state to the URI,
-> directly exec's a new version of QEMU on the same host,
-> replacing the original process while retaining its PID, and
-> loads state from the URI.  Guest RAM is preserved in place,
-> albeit with new virtual addresses.
->
-> Arguments for the new QEMU process are taken from the
-> @cpr-exec-args parameter.  The first argument should be the
-> path of a new QEMU binary, or a prefix command that exec's the
-> new QEMU binary.
->
-> Because old QEMU terminates when new QEMU starts, one cannot
-> stream data between the two, so the URI must be a type, such as
-> a file, that reads all data before old QEMU exits.
->
-> Memory backend objects must have the share=on attribute, and
-> must be mmap'able in the new QEMU process.  For example,
-> memory-backend-file is acceptable, but memory-backend-ram is
-> not.
->
-> The VM must be started with the '-machine memfd-alloc=on'
-> option.  This causes implicit ram blocks (those not explicitly
-> described by a memory-backend object) to be allocated by
-> mmap'ing a memfd.  Examples include VGA, ROM, and even guest
-> RAM when it is specified without a memory-backend object.
->
-> The implementation saves precreate vmstate at the end of normal
-> migration in migrate_fd_cleanup, and tells the main loop to call
-> cpr_exec.  Incoming qemu loads preceate state early, before objects
-> are created.  The memfds are kept open across exec by clearing the
-> close-on-exec flag, their values are saved in precreate vmstate,
-> and they are mmap'd in new qemu.
->
-> Note that the memfd-alloc option is not related to memory-backend-memfd.
-> Later patches add support for memory-backend-memfd, and for additional
-> devices, including vfio, chardev, and more.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  include/migration/cpr.h  |  14 +++++
->  include/migration/misc.h |   3 ++
->  migration/cpr.c          | 131 +++++++++++++++++++++++++++++++++++++++++++++++
->  migration/meson.build    |   1 +
->  migration/migration.c    |  21 ++++++++
->  migration/migration.h    |   5 +-
->  migration/ram.c          |   1 +
->  qapi/migration.json      |  30 ++++++++++-
->  system/physmem.c         |   2 +
->  system/vl.c              |   4 ++
->  10 files changed, 210 insertions(+), 2 deletions(-)
->  create mode 100644 include/migration/cpr.h
->  create mode 100644 migration/cpr.c
->
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> new file mode 100644
-> index 0000000..aa8316d
-> --- /dev/null
-> +++ b/include/migration/cpr.h
-> @@ -0,0 +1,14 @@
-> +/*
-> + * Copyright (c) 2021, 2024 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#ifndef MIGRATION_CPR_H
-> +#define MIGRATION_CPR_H
-> +
-> +bool cpr_needed_for_exec(void *opaque);
-> +void cpr_unpreserve_fds(void);
-> +
-> +#endif
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index cf30351..5b963ba 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -122,4 +122,7 @@ bool migration_in_bg_snapshot(void);
->  /* migration/block-dirty-bitmap.c */
->  void dirty_bitmap_mig_init(void);
->  
-> +/* migration/cpr.c */
-> +void cpr_exec(char **argv);
-> +
->  #endif
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> new file mode 100644
-> index 0000000..d4703e1
-> --- /dev/null
-> +++ b/migration/cpr.c
-> @@ -0,0 +1,131 @@
-> +/*
-> + * Copyright (c) 2021-2024 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "exec/ramblock.h"
-> +#include "migration/cpr.h"
-> +#include "migration/migration.h"
-> +#include "migration/misc.h"
-> +#include "migration/vmstate.h"
-> +#include "sysemu/runstate.h"
-> +#include "trace.h"
-> +
-> +/*************************************************************************/
-> +#define CPR_STATE "CprState"
-> +
-> +typedef struct CprState {
-> +    MigMode mode;
-> +} CprState;
-> +
-> +static CprState cpr_state = {
-> +    .mode = MIG_MODE_NORMAL,
-> +};
-> +
-> +static int cpr_state_presave(void *opaque)
-> +{
-> +    cpr_state.mode = migrate_mode();
-> +    return 0;
-> +}
-> +
-> +bool cpr_needed_for_exec(void *opaque)
-> +{
-> +    return migrate_mode() == MIG_MODE_CPR_EXEC;
-> +}
-> +
-> +static const VMStateDescription vmstate_cpr_state = {
-> +    .name = CPR_STATE,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = cpr_needed_for_exec,
-> +    .pre_save = cpr_state_presave,
-> +    .precreate = true,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT32(mode, CprState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +vmstate_register_init(NULL, 0, vmstate_cpr_state, &cpr_state);
-> +
-> +/*************************************************************************/
-> +
-> +typedef int (*cpr_walk_fd_cb)(int fd);
-> +
-> +static int walk_ramblock(FactoryObject *obj, void *opaque)
-> +{
-> +    RAMBlock *rb = obj->opaque;
-> +    cpr_walk_fd_cb cb = opaque;
-> +    return cb(rb->fd);
-> +}
-> +
-> +static int cpr_walk_fd(cpr_walk_fd_cb cb)
-> +{
-> +    int ret = vmstate_walk_factory_outgoing(RAM_BLOCK, walk_ramblock, cb);
-> +    return ret;
-> +}
-> +
-> +static int preserve_fd(int fd)
-> +{
-> +    qemu_clear_cloexec(fd);
-> +    return 0;
-> +}
-> +
-> +static int unpreserve_fd(int fd)
-> +{
-> +    qemu_set_cloexec(fd);
-> +    return 0;
-> +}
-> +
-> +static void cpr_preserve_fds(void)
-> +{
-> +    cpr_walk_fd(preserve_fd);
-> +}
-> +
-> +void cpr_unpreserve_fds(void)
-> +{
-> +    cpr_walk_fd(unpreserve_fd);
-> +}
-> +
-> +static int cpr_fd_notifier_func(NotifierWithReturn *notifier,
-> +                                 MigrationEvent *e, Error **errp)
-> +{
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC &&
-> +        e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +        cpr_unpreserve_fds();
-> +    }
-> +    return 0;
-> +}
-> +
-> +void cpr_mig_init(void)
-> +{
-> +    static NotifierWithReturn cpr_fd_notifier;
-> +
-> +    migrate_get_current()->parameters.mode = cpr_state.mode;
-> +    migration_add_notifier(&cpr_fd_notifier, cpr_fd_notifier_func);
-> +}
-> +
-> +void cpr_exec(char **argv)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    Error *err = NULL;
-> +
-> +    /*
-> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
-> +     * earlier because they should not persist across miscellaneous fork and
-> +     * exec calls that are performed during normal operation.
-> +     */
-> +    cpr_preserve_fds();
-> +
-> +    execvp(argv[0], argv);
-> +
-> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
-> +    error_report_err(err);
-> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> +    migrate_set_error(s, err);
-> +    migration_precreate_unsave();
-> +}
-> diff --git a/migration/meson.build b/migration/meson.build
-> index e667b40..d9e9c60 100644
-> --- a/migration/meson.build
-> +++ b/migration/meson.build
-> @@ -14,6 +14,7 @@ system_ss.add(files(
->    'block-dirty-bitmap.c',
->    'channel.c',
->    'channel-block.c',
-> +  'cpr.c',
->    'dirtyrate.c',
->    'exec.c',
->    'fd.c',
-> diff --git a/migration/migration.c b/migration/migration.c
-> index b5af6b5..0d91531 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -239,6 +239,7 @@ void migration_object_init(void)
->      blk_mig_init();
->      ram_mig_init();
->      dirty_bitmap_mig_init();
-> +    cpr_mig_init();
->  }
->  
->  typedef struct {
-> @@ -1395,6 +1396,15 @@ static void migrate_fd_cleanup(MigrationState *s)
->          qemu_fclose(tmp);
->      }
->  
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-> +        Error *err = NULL;
-> +        if (migration_precreate_save(&err)) {
-> +            migrate_set_error(s, err);
-> +            error_report_err(err);
+No. Unsigned interger overflow is defined behavior and this is a common 
+check to detect such overflow. tI's consistent with what we do for other 
+architectures.
 
-There's an error_report_err() call already a few lines down.
+> 
+> The calc we need to do is to ensure that the extra ram_slots * alignment will fit into
+> the VIRT_DRAM block, i.e. maxram_size + (ram_slots * alignment) < memmap[VIRT_DRAM].size.
+> 
+> 
+> TBH I'm starting to have second thoughts about letting users hotplug whatever they want.
+> It seems cleaner to just force the 2/4 Mb alignment in pre_plug() and be done with it,
+> no need to allocate ram_slots * alignment and doing all these extra checks.
 
-> +            migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> +        }
-> +    }
+It's worth noting that if user space decides to specify addresses 
+manually, it can mess up everything already. There are other events that 
+can result in fragmentation of the memory device area (repeated 
+hot(un)plug of differing DIMMs).
 
-Not a fan of saving state in the middle of the cleanup function. This
-adds extra restrictions to migrate_fd_cleanup() which already tends to
-be the source of a bunch of bugs.
+Assume you have 1 GiB range and hotplug a 512 MiB DIMM at offset 256 
+MiB. You won't be able to hotplug another 512 MiB DIMM even though we 
+reserved space.
 
-Can this be done either entirely before or after migrate_fd_cleanup()?
-There's only one callsite from which you actually want to do cpr-exec,
-migration_iteration_finish(). It's no big deal if we have to play a bit
-with the notifier call placement.
+My take so far is: if the user wants to do such stuff it should size the 
+area (maxmem) much larger or deal with the concequences (not being able 
+to hotplug memory).
 
-static void migration_iteration_finish(MigrationState *s)
-{
-...
-    migration_bh_schedule(migrate_cpr_exec_bh, s);
-    migration_bh_schedule(migrate_fd_cleanup_bh, s);
-    bql_unlock();
-}
+It usually does not happen in practice ...
 
-IIUC, the BQL ensures the ordering here, but if that doesn't work we
-could just call the cpr function right at the end of
-migrate_fd_cleanup(). That would already be better than interleaving.
+> 
+> As I sent in an earlier email, users must already comply to the alignment of the host
+> memory when plugging pc-dimms, so I'm not sure our value/proposition with all this
+> extra code is worth it - the alignment will most likely be forced by the host memory
+> backend, so might as well force ourselves in pre_plug().
 
-static void migrate_cpr_exec_bh(void *opaque)
-{
-    MigrationState *s = opaque;
-    Error *err = NULL;    
+At least on x86-64, the 2 MiB alignment requirement is handled 
+automatically. QEMU_VMALLOC_ALIGN implicitly enforces that.
 
-    if (migration_has_failed(s) || migrate_mode() != MIG_MODE_CPR_EXEC) {
-        return;
-    }
+Maybe RISCV also wants to set QEMU_VMALLOC_ALIGN?
 
-    assert(s->state == MIGRATION_STATUS_COMPLETED);
+-- 
+Cheers,
 
-    if (migration_precreate_save(&err)) {
-        migrate_set_error(s, err);
-        error_report_err(err);
-        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+David / dhildenb
 
-        return;
-    }
-
-    qemu_system_exec_request(cpr_exec, s->parameters.cpr_exec_args);
-}
-
-> +
->      assert(!migration_is_active());
->  
->      if (s->state == MIGRATION_STATUS_CANCELLING) {
-> @@ -1410,6 +1420,11 @@ static void migrate_fd_cleanup(MigrationState *s)
->                                       MIG_EVENT_PRECOPY_DONE;
->      migration_call_notifiers(s, type, NULL);
->      block_cleanup_parameters();
-> +
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC && !migration_has_failed(s)) {
-> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
-> +        qemu_system_exec_request(cpr_exec, s->parameters.cpr_exec_args);
-> +    }
->      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
->  }
->  
-> @@ -1977,6 +1992,12 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
->          return false;
->      }
->  
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC &&
-> +        !s->parameters.has_cpr_exec_args) {
-> +        error_setg(errp, "cpr-exec mode requires setting cpr-exec-args");
-> +        return false;
-> +    }
-> +
->      if (migration_is_blocked(errp)) {
->          return false;
->      }
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 8045e39..2ad2163 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -490,7 +490,6 @@ bool migration_in_postcopy(void);
->  bool migration_postcopy_is_alive(int state);
->  MigrationState *migrate_get_current(void);
->  bool migration_has_failed(MigrationState *);
-> -bool migrate_mode_is_cpr(MigrationState *);
->  
->  uint64_t ram_get_total_transferred_pages(void);
->  
-> @@ -544,4 +543,8 @@ int migration_rp_wait(MigrationState *s);
->   */
->  void migration_rp_kick(MigrationState *s);
->  
-> +/* CPR */
-> +bool migrate_mode_is_cpr(MigrationState *);
-> +void cpr_mig_init(void);
-> +
->  #endif
-> diff --git a/migration/ram.c b/migration/ram.c
-> index a975c5a..add285b 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -219,6 +219,7 @@ static bool postcopy_preempt_active(void)
->  bool migrate_ram_is_ignored(RAMBlock *block)
->  {
->      return !qemu_ram_is_migratable(block) ||
-> +           migrate_mode() == MIG_MODE_CPR_EXEC ||
->             (migrate_ignore_shared() && qemu_ram_is_shared(block)
->                                      && qemu_ram_is_named_file(block));
->  }
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 49710e7..7c5f45f 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -665,9 +665,37 @@
->  #     or COLO.
->  #
->  #     (since 8.2)
-> +#
-> +# @cpr-exec: The migrate command stops the VM, saves state to the URI,
-> +#     directly exec's a new version of QEMU on the same host,
-> +#     replacing the original process while retaining its PID, and
-> +#     loads state from the URI.  Guest RAM is preserved in place,
-> +#     albeit with new virtual addresses.
-> +#
-> +#     Arguments for the new QEMU process are taken from the
-> +#     @cpr-exec-args parameter.  The first argument should be the
-> +#     path of a new QEMU binary, or a prefix command that exec's the
-> +#     new QEMU binary.
-> +#
-> +#     Because old QEMU terminates when new QEMU starts, one cannot
-> +#     stream data between the two, so the URI must be a type, such as
-> +#     a file, that reads all data before old QEMU exits.
-> +#
-> +#     Memory backend objects must have the share=on attribute, and
-> +#     must be mmap'able in the new QEMU process.  For example,
-> +#     memory-backend-file is acceptable, but memory-backend-ram is
-> +#     not.
-> +#
-> +#     The VM must be started with the '-machine memfd-alloc=on'
-> +#     option.  This causes implicit ram blocks -- those not explicitly
-> +#     described by a memory-backend object -- to be allocated by
-> +#     mmap'ing a memfd.  Examples include VGA, ROM, and even guest
-> +#     RAM when it is specified without a memory-backend object.
-> +#
-> +#     (since 9.1)
->  ##
->  { 'enum': 'MigMode',
-> -  'data': [ 'normal', 'cpr-reboot' ] }
-> +  'data': [ 'normal', 'cpr-reboot', 'cpr-exec' ] }
->  
->  ##
->  # @ZeroPageDetection:
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 3019284..87ad441 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -69,6 +69,7 @@
->  
->  #include "qemu/pmem.h"
->  
-> +#include "migration/cpr.h"
->  #include "migration/vmstate.h"
->  
->  #include "qemu/range.h"
-> @@ -2069,6 +2070,7 @@ const VMStateDescription vmstate_ram_block = {
->      .minimum_version_id = 1,
->      .precreate = true,
->      .factory = true,
-> +    .needed = cpr_needed_for_exec,
->      .fields = (VMStateField[]) {
->          VMSTATE_UINT64(align, RAMBlock),
->          VMSTATE_VOID_PTR(host, RAMBlock),
-> diff --git a/system/vl.c b/system/vl.c
-> index 7797206..7252100 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -76,6 +76,7 @@
->  #include "hw/block/block.h"
->  #include "hw/i386/x86.h"
->  #include "hw/i386/pc.h"
-> +#include "migration/cpr.h"
->  #include "migration/misc.h"
->  #include "migration/snapshot.h"
->  #include "migration/vmstate.h"
-> @@ -3665,6 +3666,9 @@ void qemu_init(int argc, char **argv)
->      qemu_create_machine(machine_opts_dict);
->  
->      vmstate_register_init_all();
-> +    migration_precreate_load(&error_fatal);
-> +    /* Set cloexec to prevent fd leaks from fork until the next cpr-exec */
-> +    cpr_unpreserve_fds();
->  
->      suspend_mux_open();
 
