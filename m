@@ -4,108 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A918C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 13:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65831C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 13:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAUpP-0006aO-F4; Fri, 24 May 2024 09:19:25 -0400
+	id 1sAV5g-0007AU-KB; Fri, 24 May 2024 09:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1sAUpG-0006ZZ-OT; Fri, 24 May 2024 09:19:14 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1sAUpE-0005XZ-AB; Fri, 24 May 2024 09:19:14 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44ODI0wT018623; Fri, 24 May 2024 13:19:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=sivt8qjnhVDlURqyFbjQ8KPRzLPwHctYobT+6qN5WZU=;
- b=IYWGzLDAzhQ32SWAxnD8fjvnW5cXyUOE+Bxz1g807yyxOuYeb7AR5gfrrmDh8Ib+Qmmg
- yBOxPGOFrBWOgLPnDx0X4PvtV80re53ye2JaxyBI+2jeDhYOOVak11aHoYEwMij0M3H9
- Ck86CbKVZlvh3XjxqBOC3Lpf4JFD29BHls4IFiLvPqleM+VHDd3xeHOKIBBk7NOEQzJB
- 9PHNgV4D3hDPs5umAvZNA0emv5mE7GA7IFWyeaLrbKeOsJzOJVabZQz6pRNaXzewr3hF
- VMTJQgjlnZSzuMletq0FNiRcit3u/RTr4EttPVY8K0rIiaCyM6xHhXEDxBwuG0kWEwSq Nw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yaun300a4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 May 2024 13:19:09 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44ODJ884021174;
- Fri, 24 May 2024 13:19:08 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yaun300a0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 May 2024 13:19:08 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44OAD0as026462; Fri, 24 May 2024 13:16:22 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y785n0p1h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 May 2024 13:16:22 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44ODGIEh12124864
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 May 2024 13:16:21 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D3F4C5805D;
- Fri, 24 May 2024 13:16:18 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0BB1758059;
- Fri, 24 May 2024 13:16:18 +0000 (GMT)
-Received: from [9.61.26.241] (unknown [9.61.26.241])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 May 2024 13:16:17 +0000 (GMT)
-Message-ID: <bd9bffde-8df2-46c9-974d-172979bbe517@linux.ibm.com>
-Date: Fri, 24 May 2024 09:16:17 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sAV5e-00079b-5S
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 09:36:10 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sAV5c-0000ae-Fo
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 09:36:09 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-681a48efe77so703388a12.2
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 06:36:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716557766; x=1717162566; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NKExTAqj07lQDqP0uFgd/kJWbBOJXXVoNJaA3FR8d54=;
+ b=TwGi556s27K8wyjpLRc9raeWxcdKNzdXHWvZUaNWC7S2HDIOqh19zt3AIjtp09Lq/G
+ YYxLTUj6qR5cIQv0yObnQF6Cbo0r42VSpS390+r8kBEHH7Zm+eEslctfztN/HUCcPG76
+ phNSE0kDlevjU/EjEaeRMt0nSIStcYJnAel0ARb+y1JIWzSgj/qkeClCLPs6VfGqh+E5
+ vMjdswC7/OCdGqoEMLXT2hrJV5Jr09DTOXSK9Q8BpcS7nMeFZX2N33zJnV0ehiYKUPDl
+ xFbenaMV1qc1ppDRMv8fDImozS+skLDcTcVg7VfPlWYACGteVV/BZ7mD/lZ4b0AXccRN
+ gY7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716557766; x=1717162566;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NKExTAqj07lQDqP0uFgd/kJWbBOJXXVoNJaA3FR8d54=;
+ b=KAlY+9LXo8Isg29O264UBcOjFWgKL+k6ZGIyvRt8ZkYTVr2Mjf63ieHe5WMTEDbMFS
+ EWKp0fyonLGS+5vq7KVLO/4+n7b2DLV6llEvrfs/gtdKLjFTOWwICFffSw8g4ZaqcefO
+ 8K2Z3vOew6ua04iq1jdygQzkUpVX5dOTRmFLD0eDrdy2usCYb0kr7Ho8CHoelCR3s3qJ
+ 4R469n950SuKDDDqSHVDtdiFPbhvh6UF5dRJv965XGYhaL8wZfZRvqrUTll7EEUFUlyC
+ 01ZMmcBsjcTjm+B0JyMuf013UkNPHFdwxasaW58X1wNNZM/iTgVxeaLkLX3muLSky+2u
+ 3pJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhrJ2oUXFYPO/BoVIzM6Eq27fSo2YiG+iWC7ouy2u7id/wNhNQPFRwwqSRL/sC/2KN7UY0ERf6wVjzKLZT00HlPBTL7VY=
+X-Gm-Message-State: AOJu0YzQUI2AbGFe02V2OEB8kOtvTif8bHLMej/Jh3oIGhgS04I9mL4M
+ SsfXt3aIalvQsBFtfrJSXwZlpRYz84DLTu1kWHp3nT+OTYJztnSyU5O/EhliWY8=
+X-Google-Smtp-Source: AGHT+IGVsYsGLC6hJEd3BCCFbuq3MO5ehSJn33yJAvgWmbcy2LoeLvlMozkgel6M+JHddH4lB+443w==
+X-Received: by 2002:a17:90a:e007:b0:2bd:e8d3:8808 with SMTP id
+ 98e67ed59e1d1-2bf5f10aa16mr2012924a91.49.1716557765921; 
+ Fri, 24 May 2024 06:36:05 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2bf5f989871sm1353558a91.40.2024.05.24.06.36.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 May 2024 06:36:05 -0700 (PDT)
+Message-ID: <747545de-de3d-4f55-aee8-a8dc7b2c970a@linaro.org>
+Date: Fri, 24 May 2024 06:36:03 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-Subject: Re: [PATCH 05/16] vfio/helpers: Make vfio_device_get_name() return
- bool
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Thomas Huth <thuth@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- "open list:S390 general arch..." <qemu-s390x@nongnu.org>
-References: <20240515082041.556571-1-zhenzhong.duan@intel.com>
- <20240515082041.556571-6-zhenzhong.duan@intel.com>
+Subject: Re: [PULL 00/72] ppc-for-9.1-1 queue
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
+References: <20240523235319.56568-1-npiggin@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20240515082041.556571-6-zhenzhong.duan@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240523235319.56568-1-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 8ippjkKBCopuAQgn0NSMacPbH3PC_k2i
-X-Proofpoint-ORIG-GUID: J1OqUyBcv9DH-TZCBD3r_RvCEx2UF2uV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-24_04,2024-05-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405240092
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,102 +97,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/23/24 16:53, Nicholas Piggin wrote:
+> This replaces the previous PR for tags/pull-ppc-for-9.1-1-20240524 note
+> this tag is tags/pull-ppc-for-9.1-1-20240524-1 (added -1 suffix). The
+> changelog and code are unchanged. Subject for BHRB patches are fixed
+> and trimmed for some MMU cleanup patches. So I won't re-send individual
+> patches to lists.
+> 
+> Thanks,
+> Nick
+> 
+> The following changes since commit 70581940cabcc51b329652becddfbc6a261b1b83:
+> 
+>    Merge tag 'pull-tcg-20240523' ofhttps://gitlab.com/rth7680/qemu  into staging (2024-05-23 09:47:40 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/npiggin/qemu.git  tags/pull-ppc-for-9.1-1-20240524-1
+> 
+> for you to fetch changes up to e48fb4c590a23d81ee1d2f09ee9bcf5dd5f98e43:
+> 
+>    target/ppc: Remove pp_check() and reuse ppc_hash32_pp_prot() (2024-05-24 09:43:14 +1000)
+> 
+> ----------------------------------------------------------------
+> 
+> * Fix an interesting TLB invalidate race
+> * Implement more instructions with decodetree
+> * Add the POWER8/9/10 BHRB facility
+> * Add missing instructions, registers, SMT support
+> * First round of a big MMU xlate cleanup
 
-On 5/15/24 4:20 AM, Zhenzhong Duan wrote:
-> This is to follow the coding standand in qapi/error.h to return bool
-> for bool-valued functions.
->
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/hw/vfio/vfio-common.h | 2 +-
->   hw/vfio/ap.c                  | 2 +-
->   hw/vfio/ccw.c                 | 2 +-
->   hw/vfio/helpers.c             | 8 ++++----
->   hw/vfio/pci.c                 | 2 +-
->   hw/vfio/platform.c            | 5 ++---
->   6 files changed, 10 insertions(+), 11 deletions(-)
->
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index fdce13f0f2..d9891c796f 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -280,7 +280,7 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->                             uint64_t size, ram_addr_t ram_addr, Error **errp);
->   
->   /* Returns 0 on success, or a negative errno. */
-> -int vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-> +bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
->   void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
->   void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
->                         DeviceState *dev, bool ram_discard);
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index d8a9615fee..c12531a788 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -158,7 +158,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->       VFIODevice *vbasedev = &vapdev->vdev;
->   
-> -    if (vfio_device_get_name(vbasedev, errp) < 0) {
-> +    if (!vfio_device_get_name(vbasedev, errp)) {
->           return;
->       }
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 
-snip ...
-
-
->   
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index 93e6fef6de..a69b4411e5 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -605,7 +605,7 @@ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
->       return ret;
->   }
->   
-> -int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-> +bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
->   {
->       ERRP_GUARD();
->       struct stat st;
-> @@ -614,7 +614,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
->           if (stat(vbasedev->sysfsdev, &st) < 0) {
->               error_setg_errno(errp, errno, "no such host device");
->               error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->sysfsdev);
-> -            return -errno;
-> +            return false;
->           }
->           /* User may specify a name, e.g: VFIO platform device */
->           if (!vbasedev->name) {
-> @@ -623,7 +623,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
->       } else {
->           if (!vbasedev->iommufd) {
->               error_setg(errp, "Use FD passing only with iommufd backend");
-> -            return -EINVAL;
-> +            return false;
->           }
->           /*
->            * Give a name with fd so any function printing out vbasedev->name
-> @@ -634,7 +634,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
->           }
->       }
->   
-> -    return 0;
-> +    return true;
->   }
-
-
-For the two functions above:
-
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-
-
->   
-
-
-snip ...
-
+r~
 
 
