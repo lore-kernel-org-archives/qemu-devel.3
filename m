@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B02BC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443ADC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 08:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAQ0v-0005XU-F5; Fri, 24 May 2024 04:10:57 -0400
+	id 1sAQ0d-00054y-69; Fri, 24 May 2024 04:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAQ0t-0005SM-I4
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:55 -0400
+ id 1sAQ0Z-00052Z-9I
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sAQ0r-0000dV-Sz
- for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:55 -0400
+ id 1sAQ0X-0000NK-MS
+ for qemu-devel@nongnu.org; Fri, 24 May 2024 04:10:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716538253;
+ s=mimecast20190719; t=1716538233;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v+JQIOco7Z7DojAja/MONveF1DDSe6+yvz+MIJpJggo=;
- b=d6Mt7nkvElSuCc0ZBRg1p6yBigdi+7DmxtrtH98xUkK90lgQ+QyIreNAF8HA3+6dGdBhFH
- u1pod2hwgQqaaAjNwEBjxZ0ZnXNjaQrVrgbKhcGE19SL8V45M80uZSW8BClR3nnb7eM8k5
- bcOSGFY68w38xYXH92WFKvhdzruWKxE=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pzMu4bGplTJ0/IjTAQY/99ej8JAgWkuVwj+4BdBCfyk=;
+ b=ZEBbRjIITJuZTw5WKWKXwq4oQ63WOnzJqc9xKuo1TyAA5qPoKYhPNFrmlljQuASN0BVHPM
+ UpFL+i2rK6UaXPkfxZ0e2ZbuTvJi4dm8HVMO/K2iae5zgRWxSm3Bg+ly+FGqHIl5YM9E8g
+ JEBcO15a4zwR8Yoo5du8eEDQBuRdHqg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-495-SGgKG310OFa5Z_3SFDbBsA-1; Fri, 24 May 2024 04:10:51 -0400
-X-MC-Unique: SGgKG310OFa5Z_3SFDbBsA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a626ac4d29aso27520066b.3
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:10:51 -0700 (PDT)
+ us-mta-197-2IZSzd3LMQu8OLb9wXZErA-1; Fri, 24 May 2024 04:10:31 -0400
+X-MC-Unique: 2IZSzd3LMQu8OLb9wXZErA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6265d3cb78so26097566b.0
+ for <qemu-devel@nongnu.org>; Fri, 24 May 2024 01:10:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716538249; x=1717143049;
+ d=1e100.net; s=20230601; t=1716538229; x=1717143029;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=v+JQIOco7Z7DojAja/MONveF1DDSe6+yvz+MIJpJggo=;
- b=FQVkTq7maEKNfflLW0kK979eUaeI6Up6aJpDU/vDE7qnXigf6foS27EGUoFLHCcpMM
- rWlukTNg7grgUcCpBegIR4iefYuuG9lg1HNIP4p3YFPbe8rqKav4OSzO7+Yz3UoQ5SSu
- pExJLHtfMXseZz2jGWjXGUYO5IEqL5NwvJrxyfBDJvQ+JgZlAfvtekGpsbSdOmRiablF
- Go/N3XFJDsltNTcESpM1GFZwLIV+X11qkApY9qfzpo3+9MfRwMQiwGIP9hH+Wx6SwGsZ
- y77v+xYn2d8ZoWeui7kiHzqL0lmGFK8lShffbDgYSRzL3EMfertgj5WcMlrM29TSZG4I
- yisQ==
-X-Gm-Message-State: AOJu0YxOxtwMLybz7kewHj1wEQe9K6xhbz6r+MVGWXm2IVxy2yHe7Wvz
- j636qYq/3uQkZSm9fI16DRY6LYs2P5YdISc/AjPHUhrxrmG4JnkEVF03ii70/zdEHOFgWldoD2K
- ONmFM6zJ7AbHEu2zACG5kzE5YDUoJBY9clbzJes1xDK7iUOw8sKVxUI/b9/YeVX4kFdUMYmNIYe
- YQqcjUvlb2Vnp6EBC/kYO8cbKI4VH3N5RkPj+W
-X-Received: by 2002:a17:907:c920:b0:a59:9eab:1622 with SMTP id
- a640c23a62f3a-a6265148b95mr81871566b.56.1716538248912; 
- Fri, 24 May 2024 01:10:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfqPp+E3FmJ09/n96pWtgy++tCnSYydhkmraAZIQOClCPCghH01tigBff4TChBJe4cQdeTCQ==
-X-Received: by 2002:a17:907:c920:b0:a59:9eab:1622 with SMTP id
- a640c23a62f3a-a6265148b95mr81870766b.56.1716538248461; 
- Fri, 24 May 2024 01:10:48 -0700 (PDT)
+ bh=pzMu4bGplTJ0/IjTAQY/99ej8JAgWkuVwj+4BdBCfyk=;
+ b=csfUmlTAQzoTjGgWUO1xg/lUCRzi36WMjZ1yHh4wfgqI08StTE70vEWvTroSeECtaS
+ mMFTo3QGkp1AJeugwQX5qcMoajD43fYNBOcgbp4vIuUaRVn49PvoWnBsMtJSSOIA+VNb
+ 23MMijmJHOVGZ/verpoZNAi2Ost8USzoC02BigUdjH10MOk79FLEFMCxDSuveVGxgzBz
+ /RtnF/0c2HLfZOQHgsCGxKakKV9VyVQlHETKVCnIN7jn6vcm+nPuCwIVS32oNvQbfY4U
+ OoOicFLng3CUrcQjKkLZsTh5bZRPc4xg7IR9OJHci7DFZjCJa5FQmb544EoQ/UpG0hMn
+ nJmw==
+X-Gm-Message-State: AOJu0YzlT7u9095MO53k7Ns1eqd+PW0zJ1UkT9iX2wwXeH9AFeoS/UGo
+ IbMZzhHELZwxCroDznAjHE7iDiXmUk+Es4U4lBqfQZi2w1vQCAYpyn0AuQoFNfHzUyD7sRUwJOU
+ /VtVK0OGx/1mOES3RrUzjo5dOlQMeJ1rGBGf/2yIakyBK2ov5/ZpPMUdAhYO1nlimLH1Br6gpB1
+ 7ntokuN7u9jdbCXZY5KS3WO/KqNuCGevHnGfgG
+X-Received: by 2002:a17:906:a252:b0:a58:eba0:6716 with SMTP id
+ a640c23a62f3a-a6265128466mr82816566b.60.1716538228977; 
+ Fri, 24 May 2024 01:10:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOJqWx8aoDtHqY04Lf8yWJPeTups4VdBXnAWuLIWQ4AUiqeldEcWzwOOqd3yDr8gcyO3RoAA==
+X-Received: by 2002:a17:906:a252:b0:a58:eba0:6716 with SMTP id
+ a640c23a62f3a-a6265128466mr82815166b.60.1716538228550; 
+ Fri, 24 May 2024 01:10:28 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c93b538sm91628766b.71.2024.05.24.01.10.46
+ a640c23a62f3a-a626c817a98sm91542866b.37.2024.05.24.01.10.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 May 2024 01:10:46 -0700 (PDT)
+ Fri, 24 May 2024 01:10:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 12/16] target/i386: introduce gen_lea_ss_ofs
-Date: Fri, 24 May 2024 10:10:15 +0200
-Message-ID: <20240524081019.1141359-13-pbonzini@redhat.com>
+Subject: [PATCH 04/16] target/i386: avoid calling gen_eob_syscall before
+ tb_stop
+Date: Fri, 24 May 2024 10:10:07 +0200
+Message-ID: <20240524081019.1141359-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240524081019.1141359-1-pbonzini@redhat.com>
 References: <20240524081019.1141359-1-pbonzini@redhat.com>
@@ -102,161 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generalize gen_stack_A0() to include an initial add and to use an arbitrary
-destination.  This is a common pattern and it is not a huge burden to
-add the extra arguments to the only caller of gen_stack_A0().
+syscall and sysret only have one exit, so they do not need to
+generate the end-of-translation code inline.  It can be
+deferred to tb_stop.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 51 +++++++++++++++----------------------
- target/i386/tcg/emit.c.inc  |  2 +-
- 2 files changed, 22 insertions(+), 31 deletions(-)
+ target/i386/tcg/translate.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 7b6bc486a63..8354209b037 100644
+index 52d758a224b..24e83c1af84 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -2028,24 +2028,27 @@ static inline void gen_stack_update(DisasContext *s, int addend)
-     gen_op_add_reg_im(s, mo_stacksize(s), R_ESP, addend);
- }
+@@ -168,6 +168,12 @@ typedef struct DisasContext {
+  */
+ #define DISAS_JUMP             DISAS_TARGET_3
  
-+static void gen_lea_ss_ofs(DisasContext *s, TCGv dest, TCGv src, target_ulong offset)
-+{
-+    if (offset) {
-+        tcg_gen_addi_tl(dest, src, offset);
-+        src = dest;
-+    }
-+    gen_lea_v_seg_dest(s, mo_stacksize(s), dest, src, R_SS, -1);
-+}
++/*
++ * EIP has already been updated.  Use updated value of
++ * EFLAGS.TF to determine singlestep trap (SYSCALL/SYSRET).
++ */
++#define DISAS_EOB_RECHECK_TF   DISAS_TARGET_4
 +
- /* Generate a push. It depends on ss32, addseg and dflag.  */
- static void gen_push_v(DisasContext *s, TCGv val)
- {
-     MemOp d_ot = mo_pushpop(s, s->dflag);
-     MemOp a_ot = mo_stacksize(s);
-     int size = 1 << d_ot;
--    TCGv new_esp = s->A0;
-+    TCGv new_esp = tcg_temp_new();
- 
--    tcg_gen_subi_tl(s->A0, cpu_regs[R_ESP], size);
--
--    if (!CODE64(s)) {
--        if (ADDSEG(s)) {
--            new_esp = tcg_temp_new();
--            tcg_gen_mov_tl(new_esp, s->A0);
--        }
--        gen_lea_v_seg(s, a_ot, s->A0, R_SS, -1);
--    }
-+    tcg_gen_subi_tl(new_esp, cpu_regs[R_ESP], size);
- 
-+    /* Now reduce the value to the address size and apply SS base.  */
-+    gen_lea_ss_ofs(s, s->A0, new_esp, 0);
-     gen_op_st_v(s, d_ot, val, s->A0);
-     gen_op_mov_reg_v(s, a_ot, R_ESP, new_esp);
- }
-@@ -2055,7 +2058,7 @@ static MemOp gen_pop_T0(DisasContext *s)
- {
-     MemOp d_ot = mo_pushpop(s, s->dflag);
- 
--    gen_lea_v_seg_dest(s, mo_stacksize(s), s->T0, cpu_regs[R_ESP], R_SS, -1);
-+    gen_lea_ss_ofs(s, s->T0, cpu_regs[R_ESP], 0);
-     gen_op_ld_v(s, d_ot, s->T0, s->T0);
- 
-     return d_ot;
-@@ -2066,21 +2069,14 @@ static inline void gen_pop_update(DisasContext *s, MemOp ot)
-     gen_stack_update(s, 1 << ot);
- }
- 
--static inline void gen_stack_A0(DisasContext *s)
--{
--    gen_lea_v_seg(s, mo_stacksize(s), cpu_regs[R_ESP], R_SS, -1);
--}
--
- static void gen_pusha(DisasContext *s)
- {
--    MemOp s_ot = mo_stacksize(s);
-     MemOp d_ot = s->dflag;
-     int size = 1 << d_ot;
-     int i;
- 
-     for (i = 0; i < 8; i++) {
--        tcg_gen_addi_tl(s->A0, cpu_regs[R_ESP], (i - 8) * size);
--        gen_lea_v_seg(s, s_ot, s->A0, R_SS, -1);
-+        gen_lea_ss_ofs(s, s->A0, cpu_regs[R_ESP], (i - 8) * size);
-         gen_op_st_v(s, d_ot, cpu_regs[7 - i], s->A0);
-     }
- 
-@@ -2089,7 +2085,6 @@ static void gen_pusha(DisasContext *s)
- 
- static void gen_popa(DisasContext *s)
- {
--    MemOp s_ot = mo_stacksize(s);
-     MemOp d_ot = s->dflag;
-     int size = 1 << d_ot;
-     int i;
-@@ -2099,8 +2094,7 @@ static void gen_popa(DisasContext *s)
-         if (7 - i == R_ESP) {
-             continue;
+ /* The environment in which user-only runs is constrained. */
+ #ifdef CONFIG_USER_ONLY
+ #define PE(S)     true
+@@ -3576,7 +3582,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
+         /* TF handling for the syscall insn is different. The TF bit is  checked
+            after the syscall insn completes. This allows #DB to not be
+            generated after one has entered CPL0 if TF is set in FMASK.  */
+-        gen_eob_syscall(s);
++        s->base.is_jmp = DISAS_EOB_RECHECK_TF;
+         break;
+     case 0x107: /* sysret */
+         /* For Intel SYSRET is only valid in long mode */
+@@ -3595,7 +3601,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
+                checked after the sysret insn completes. This allows #DB to be
+                generated "as if" the syscall insn in userspace has just
+                completed.  */
+-            gen_eob_syscall(s);
++            s->base.is_jmp = DISAS_EOB_RECHECK_TF;
          }
--        tcg_gen_addi_tl(s->A0, cpu_regs[R_ESP], i * size);
--        gen_lea_v_seg(s, s_ot, s->A0, R_SS, -1);
-+        gen_lea_ss_ofs(s, s->A0, cpu_regs[R_ESP], i * size);
-         gen_op_ld_v(s, d_ot, s->T0, s->A0);
-         gen_op_mov_reg_v(s, d_ot, 7 - i, s->T0);
-     }
-@@ -2116,7 +2110,7 @@ static void gen_enter(DisasContext *s, int esp_addend, int level)
- 
-     /* Push BP; compute FrameTemp into T1.  */
-     tcg_gen_subi_tl(s->T1, cpu_regs[R_ESP], size);
--    gen_lea_v_seg(s, a_ot, s->T1, R_SS, -1);
-+    gen_lea_ss_ofs(s, s->A0, s->T1, 0);
-     gen_op_st_v(s, d_ot, cpu_regs[R_EBP], s->A0);
- 
-     level &= 31;
-@@ -2125,18 +2119,15 @@ static void gen_enter(DisasContext *s, int esp_addend, int level)
- 
-         /* Copy level-1 pointers from the previous frame.  */
-         for (i = 1; i < level; ++i) {
--            tcg_gen_subi_tl(s->A0, cpu_regs[R_EBP], size * i);
--            gen_lea_v_seg(s, a_ot, s->A0, R_SS, -1);
-+            gen_lea_ss_ofs(s, s->A0, cpu_regs[R_EBP], -size * i);
-             gen_op_ld_v(s, d_ot, s->tmp0, s->A0);
- 
--            tcg_gen_subi_tl(s->A0, s->T1, size * i);
--            gen_lea_v_seg(s, a_ot, s->A0, R_SS, -1);
-+            gen_lea_ss_ofs(s, s->A0, s->T1, -size * i);
-             gen_op_st_v(s, d_ot, s->tmp0, s->A0);
-         }
- 
-         /* Push the current FrameTemp as the last level.  */
--        tcg_gen_subi_tl(s->A0, s->T1, size * level);
--        gen_lea_v_seg(s, a_ot, s->A0, R_SS, -1);
-+        gen_lea_ss_ofs(s, s->A0, s->T1, -size * level);
-         gen_op_st_v(s, d_ot, s->T1, s->A0);
-     }
- 
-@@ -2153,7 +2144,7 @@ static void gen_leave(DisasContext *s)
-     MemOp d_ot = mo_pushpop(s, s->dflag);
-     MemOp a_ot = mo_stacksize(s);
- 
--    gen_lea_v_seg(s, a_ot, cpu_regs[R_EBP], R_SS, -1);
-+    gen_lea_ss_ofs(s, s->A0, cpu_regs[R_EBP], 0);
-     gen_op_ld_v(s, d_ot, s->T0, s->A0);
- 
-     tcg_gen_addi_tl(s->T1, cpu_regs[R_EBP], 1 << d_ot);
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index f293db01b5c..83fa745fd8a 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3077,7 +3077,7 @@ static void gen_RETF(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-     int16_t adjust = decode->e.op2 == X86_TYPE_I ? decode->immediate : 0;
- 
-     if (!PE(s) || VM86(s)) {
--        gen_stack_A0(s);
-+        gen_lea_ss_ofs(s, s->A0, cpu_regs[R_ESP], 0);
-         /* pop offset */
-         gen_op_ld_v(s, s->dflag, s->T0, s->A0);
-         /* NOTE: keeping EIP updated is not a problem in case of
+         break;
+     case 0x1a2: /* cpuid */
+@@ -4799,6 +4805,9 @@ static void i386_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+     case DISAS_EOB_ONLY:
+         gen_eob(dc);
+         break;
++    case DISAS_EOB_RECHECK_TF:
++        gen_eob_syscall(dc);
++        break;
+     case DISAS_EOB_INHIBIT_IRQ:
+         gen_update_eip_cur(dc);
+         gen_eob_inhibit_irq(dc);
 -- 
 2.45.1
 
