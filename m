@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A900EC25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 11:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AACC25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 May 2024 11:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sATAe-00080t-HC; Fri, 24 May 2024 07:33:12 -0400
+	id 1sATAf-00081k-83; Fri, 24 May 2024 07:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAb-00080C-4y; Fri, 24 May 2024 07:33:09 -0400
+ id 1sATAb-00080E-85; Fri, 24 May 2024 07:33:09 -0400
 Received: from dedi548.your-server.de ([85.10.215.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAZ-000861-Bk; Fri, 24 May 2024 07:33:08 -0400
+ id 1sATAZ-00085z-Mv; Fri, 24 May 2024 07:33:08 -0400
 Received: from sslproxy02.your-server.de ([78.47.166.47])
  by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAT-000HaM-1y; Fri, 24 May 2024 13:33:01 +0200
+ id 1sATAT-000HaK-1i; Fri, 24 May 2024 13:33:01 +0200
 Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
  by sslproxy02.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sATAU-000A8r-0x; Fri, 24 May 2024 13:33:01 +0200
+ id 1sATAU-000A7y-0h; Fri, 24 May 2024 13:33:01 +0200
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 32901480049;
+ by mail.embedded-brains.de (Postfix) with ESMTP id 18937480197;
  Fri, 24 May 2024 13:33:01 +0200 (CEST)
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id f9yf7b3Hvxuh; Fri, 24 May 2024 13:33:00 +0200 (CEST)
+ with ESMTP id m3kjKpI6PHYS; Fri, 24 May 2024 13:33:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id CE0834801F6;
+ by mail.embedded-brains.de (Postfix) with ESMTP id C07674801F0;
  Fri, 24 May 2024 13:33:00 +0200 (CEST)
 X-Virus-Scanned: amavis at zimbra.eb.localhost
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id VrTqsqfEdEzm; Fri, 24 May 2024 13:33:00 +0200 (CEST)
+ with ESMTP id FWfNSfQ2wmVS; Fri, 24 May 2024 13:33:00 +0200 (CEST)
 Received: from zimbra.eb.localhost (unknown [192.168.96.242])
- by mail.embedded-brains.de (Postfix) with ESMTPSA id 9E5DF480197;
+ by mail.embedded-brains.de (Postfix) with ESMTPSA id 8DC43480049;
  Fri, 24 May 2024 13:33:00 +0200 (CEST)
 From: Sebastian Huber <sebastian.huber@embedded-brains.de>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Luc Michel <luc@lmichel.fr>
-Subject: [PATCH v2 1/2] hw/intc/arm_gic: Fix set pending of PPIs
-Date: Fri, 24 May 2024 13:32:55 +0200
-Message-Id: <20240524113256.8102-2-sebastian.huber@embedded-brains.de>
+Subject: [PATCH v2 0/2] Fix GICv2 handling of pending interrupts
+Date: Fri, 24 May 2024 13:32:54 +0200
+Message-Id: <20240524113256.8102-1-sebastian.huber@embedded-brains.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240524113256.8102-1-sebastian.huber@embedded-brains.de>
-References: <20240524113256.8102-1-sebastian.huber@embedded-brains.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Authenticated-Sender: smtp-embedded@poldi-networks.de
@@ -78,43 +76,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the GICv2 specification section 4.3.7, "Interrupt Set-Pendin=
-g
-Registers, GICD_ISPENDRn":
+v2:
 
-"In a multiprocessor implementation, GICD_ISPENDR0 is banked for each con=
-nected
-processor. This register holds the Set-pending bits for interrupts 0-31."
+* Fix handling of SPIs.
 
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
----
- hw/intc/arm_gic.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+* Remove pending state if not in new target list.
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index 074cf50af2..241255081d 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -1308,12 +1308,15 @@ static void gic_dist_writeb(void *opaque, hwaddr =
-offset,
-=20
-         for (i =3D 0; i < 8; i++) {
-             if (value & (1 << i)) {
-+                int mask =3D (irq < GIC_INTERNAL) ? (1 << cpu)
-+                                                : GIC_DIST_TARGET(irq + =
-i);
-+
-                 if (s->security_extn && !attrs.secure &&
-                     !GIC_DIST_TEST_GROUP(irq + i, 1 << cpu)) {
-                     continue; /* Ignore Non-secure access of Group0 IRQ =
-*/
-                 }
-=20
--                GIC_DIST_SET_PENDING(irq + i, GIC_DIST_TARGET(irq + i));
-+                GIC_DIST_SET_PENDING(irq + i, mask);
-             }
-         }
-     } else if (offset < 0x300) {
+Sebastian Huber (2):
+  hw/intc/arm_gic: Fix set pending of PPIs
+  hw/intc/arm_gic: Fix writes to GICD_ITARGETSRn
+
+ hw/intc/arm_gic.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
 --=20
 2.35.3
 
