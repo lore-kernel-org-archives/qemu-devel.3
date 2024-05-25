@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B797BC25B7A
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 11:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CABC25B78
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 11:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sApf0-0002Lh-FJ; Sat, 25 May 2024 07:34:03 -0400
+	id 1sApf2-0002MI-7p; Sat, 25 May 2024 07:34:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sApey-0002Kl-Jg
- for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:00 -0400
+ id 1sApf0-0002Lb-A1
+ for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sApew-00042a-5h
- for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:00 -0400
+ id 1sApey-00042y-8b
+ for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716636837;
+ s=mimecast20190719; t=1716636839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BSJN/i12F1p262vXEsjh5CJqJbwGkeoetfhWIy9cGpY=;
- b=Jij5ubEPjKWrp0sLJtrrGC5VUr/lyoLWbLuNDx34ZC3Geg1k9bLeeU79vxZe9plyj78uV4
- s8isiGsWIj7NoMGJ9agHVpYM2SHfd9GYlbEGWPtgptuSxzfYoFiPPw/jMiaHB7eaqU4/H3
- s76sTxxeBUWm13o6mG0CHurCPlcnp6g=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6AzBA78pbflNThNfuRdbt+YMVvZA2AmBw1wMegaaFwc=;
+ b=Cct9YdkX2GUSxbQp/Nr8/L3o8EhlejrGj6eCLlYf+ndNxJii9JMK1OglrUKq2mb1uM1Hvg
+ HVyVGC7RZq6+6xyzUhRsHuIJoR287nNrJ1qcJY78Ob0SDruPeiVEn/Fq8a2c6s0ZKsyw53
+ 4/ZNd68EggB+EZSCCYwqAabjfhlZDKU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586--bJB4RD0NriukFOMU5qeUQ-1; Sat, 25 May 2024 07:33:55 -0400
-X-MC-Unique: -bJB4RD0NriukFOMU5qeUQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52348f2e47cso2794156e87.1
- for <qemu-devel@nongnu.org>; Sat, 25 May 2024 04:33:55 -0700 (PDT)
+ us-mta-602-6SAIdBPFPkKycWEMrolMZg-1; Sat, 25 May 2024 07:33:58 -0400
+X-MC-Unique: 6SAIdBPFPkKycWEMrolMZg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a6267bcfb5fso32435066b.2
+ for <qemu-devel@nongnu.org>; Sat, 25 May 2024 04:33:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716636833; x=1717241633;
+ d=1e100.net; s=20230601; t=1716636836; x=1717241636;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BSJN/i12F1p262vXEsjh5CJqJbwGkeoetfhWIy9cGpY=;
- b=iLULbw5ZKfdQPGjpQ8QVnYOQmNBMxVHWOyvccLrUCLLsOHEdnVAXMc8noXHfQfgTYC
- Y6s/a8kjKu3gw2Ni2NKX4QgBswI1UGL/T0ByQUihVlZaofENj0xg7QPwwNCHENoLfoyd
- ZnP7gsu57QSGuOqHcYyNZ0VKJXxu9oeevHPToaO4zKP90/ZNqHaDrNfoBM2d7I0tVC0r
- rPpu9Cr4SJ4GJqdYDdoZ4gn4D8tm4PcJ372WwMdIZnjbIZgmQPJQd2pPip4+bovMCZdS
- ACEZXr7na/xYUmuPoZRsQCbBHX9v97yT0WVOBqjwzGk2Ro2/7eetrBVU8s5/XJEHFDFo
- i4Vw==
-X-Gm-Message-State: AOJu0Yx/g2vS6VXw56YVwMzyeyGYY8xG6dYfL42lmqoUcx80Nl2l5e7o
- koVpPCAyhXcKzPJoU2iHhVMvXPuOGc3O9mTboGONoiDP75EMNgmW6gWf+txkeenH1pOgtblyvyu
- FF9xqmCFmSnWCjnyfegNmkH37Wh9busaZoaliZlidVHZknkuXLgmWJRuQUXaJxhdlWdBNbKaT7Z
- aRiApiwq+oyN3p3jCS2F9FPQIOZOKV4bAEoUsQ
-X-Received: by 2002:a19:6407:0:b0:51d:a78e:9036 with SMTP id
- 2adb3069b0e04-52966f8f8acmr2598443e87.69.1716636833043; 
- Sat, 25 May 2024 04:33:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7wHGBDJ+C5Ne70cP08PmoEifhihkNlHj5Pm+XmsD5MZqAH2TdGsMRu38fkt7Ow1/8T5Mv5A==
-X-Received: by 2002:a19:6407:0:b0:51d:a78e:9036 with SMTP id
- 2adb3069b0e04-52966f8f8acmr2598431e87.69.1716636832554; 
- Sat, 25 May 2024 04:33:52 -0700 (PDT)
-Received: from [192.168.10.117] ([151.95.155.52])
+ bh=6AzBA78pbflNThNfuRdbt+YMVvZA2AmBw1wMegaaFwc=;
+ b=B8Ayz9+0b5IcYPeLXjacF7MqROcKe7ZFCBEONIrRzS1Jp/J1hq1tp7PzEYl5A+xJgF
+ Pq+BfdDT6Pu7G9CVL0xph2s8RgBzr0KZQPebQs9oBlil7HtazY2M0VtwoyjG1cSoj5Tw
+ 4025Qyy2mrg7YGRZ4HlGH3h+XC337aIR77licMIKR+OUlQ60GwsHGKt7ikmPn6THXsNF
+ vDzkpTr9jnlh0jkWdr4oIkDKQO7JqeGSLJctISvMF+n4lfAWIhCPH/rT8ulI1woekrZK
+ IJ234aANFP4zNiiqm+qbXSWmeypYgmQ/gcv2be4CaUukZP/+DpOBq7OJJrBtG/4YL2/7
+ RDmw==
+X-Gm-Message-State: AOJu0YwEXpNqLJEwNKs5J3bQTP+KNFL8ikx14HXAQ0hU68Lyrv46VCMX
+ zTEeX89/r9RdLOU83CC2I9A2Q6gt9vTHFD9HGKZZ0JiVDcOaTLktM8S+6kfVQIzoZ2dsgqOko+6
+ Ou3ZoSZIBaBb3r4wteL4on7rtlliggrFWGGIXftWb3yLTVwZEkEwWLZNuI5k5qbMGEoY39BSbOz
+ HDxFXwl2vKQ5v2lLgw44fdWQLU7u9HXOKcB2Oc
+X-Received: by 2002:a50:cd5d:0:b0:578:881e:7b77 with SMTP id
+ 4fb4d7f45d1cf-578884c43e8mr1093196a12.34.1716636836081; 
+ Sat, 25 May 2024 04:33:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEckXUv7UbucwIzjAjV+uRTkRUTm3bavUmfopiYM+TacbJFz5QQ7IBC007pcLbANOM8tN7tjA==
+X-Received: by 2002:a50:cd5d:0:b0:578:881e:7b77 with SMTP id
+ 4fb4d7f45d1cf-578884c43e8mr1093175a12.34.1716636835566; 
+ Sat, 25 May 2024 04:33:55 -0700 (PDT)
+Received: from [192.168.10.116] ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626cda63dbsm243609966b.210.2024.05.25.04.33.51
+ 4fb4d7f45d1cf-579c004108esm348864a12.23.2024.05.25.04.33.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 May 2024 04:33:52 -0700 (PDT)
+ Sat, 25 May 2024 04:33:55 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/24] target/i386: remove unnecessary gen_update_cc_op before
- gen_eob*
-Date: Sat, 25 May 2024 13:33:13 +0200
-Message-ID: <20240525113332.1404158-6-pbonzini@redhat.com>
+Subject: [PULL 06/24] target/i386: cpu_load_eflags already sets cc_op
+Date: Sat, 25 May 2024 13:33:14 +0200
+Message-ID: <20240525113332.1404158-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240525113332.1404158-1-pbonzini@redhat.com>
 References: <20240525113332.1404158-1-pbonzini@redhat.com>
@@ -103,34 +102,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is already handled in gen_eob().  Before adding another DISAS_*
-case, remove the double calls.
+No need to set it again at the end of the translation block, cc_op_dirty
+can be set to false.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 2 --
- 1 file changed, 2 deletions(-)
+ target/i386/tcg/translate.c | 37 ++++++++++++++++++++++++-------------
+ target/i386/tcg/emit.c.inc  |  2 +-
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 849864d1aa2..920d854c2b5 100644
+index 920d854c2b5..25c973e20c6 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -4775,14 +4775,12 @@ static void i386_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-         gen_jmp_rel_csize(dc, 0, 0);
+@@ -309,7 +309,7 @@ static const uint8_t cc_op_live[CC_OP_NB] = {
+     [CC_OP_POPCNT] = USES_CC_SRC,
+ };
+ 
+-static void set_cc_op(DisasContext *s, CCOp op)
++static void set_cc_op_1(DisasContext *s, CCOp op, bool dirty)
+ {
+     int dead;
+ 
+@@ -332,20 +332,27 @@ static void set_cc_op(DisasContext *s, CCOp op)
+         tcg_gen_discard_tl(s->cc_srcT);
+     }
+ 
+-    if (op == CC_OP_DYNAMIC) {
+-        /* The DYNAMIC setting is translator only, and should never be
+-           stored.  Thus we always consider it clean.  */
+-        s->cc_op_dirty = false;
+-    } else {
+-        /* Discard any computed CC_OP value (see shifts).  */
+-        if (s->cc_op == CC_OP_DYNAMIC) {
+-            tcg_gen_discard_i32(cpu_cc_op);
+-        }
+-        s->cc_op_dirty = true;
++    if (dirty && s->cc_op == CC_OP_DYNAMIC) {
++        tcg_gen_discard_i32(cpu_cc_op);
+     }
++    s->cc_op_dirty = dirty;
+     s->cc_op = op;
+ }
+ 
++static void set_cc_op(DisasContext *s, CCOp op)
++{
++    /*
++     * The DYNAMIC setting is translator only, everything else
++     * will be spilled later.
++     */
++    set_cc_op_1(s, op, op != CC_OP_DYNAMIC);
++}
++
++static void assume_cc_op(DisasContext *s, CCOp op)
++{
++    set_cc_op_1(s, op, false);
++}
++
+ static void gen_update_cc_op(DisasContext *s)
+ {
+     if (s->cc_op_dirty) {
+@@ -3554,6 +3561,10 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
+         gen_update_cc_op(s);
+         gen_update_eip_cur(s);
+         gen_helper_syscall(tcg_env, cur_insn_len_i32(s));
++        /* condition codes are modified only in long mode */
++        if (LMA(s)) {
++            assume_cc_op(s, CC_OP_EFLAGS);
++        }
+         /* TF handling for the syscall insn is different. The TF bit is  checked
+            after the syscall insn completes. This allows #DB to not be
+            generated after one has entered CPL0 if TF is set in FMASK.  */
+@@ -3570,7 +3581,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
+             gen_helper_sysret(tcg_env, tcg_constant_i32(dflag - 1));
+             /* condition codes are modified only in long mode */
+             if (LMA(s)) {
+-                set_cc_op(s, CC_OP_EFLAGS);
++                assume_cc_op(s, CC_OP_EFLAGS);
+             }
+             /* TF handling for the sysret insn is different. The TF bit is
+                checked after the sysret insn completes. This allows #DB to be
+@@ -4489,7 +4500,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
+         g_assert_not_reached();
+ #else
+         gen_helper_rsm(tcg_env);
+-        set_cc_op(s, CC_OP_EFLAGS);
++        assume_cc_op(s, CC_OP_EFLAGS);
+ #endif /* CONFIG_USER_ONLY */
+         s->base.is_jmp = DISAS_EOB_ONLY;
          break;
-     case DISAS_EOB_NEXT:
--        gen_update_cc_op(dc);
-         gen_update_eip_cur(dc);
-         /* fall through */
-     case DISAS_EOB_ONLY:
-         gen_eob(dc);
-         break;
-     case DISAS_EOB_INHIBIT_IRQ:
--        gen_update_cc_op(dc);
-         gen_update_eip_cur(dc);
-         gen_eob_inhibit_irq(dc);
-         break;
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index c78e35b1e28..3f2ae0aa7e7 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1883,7 +1883,7 @@ static void gen_IRET(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+         gen_helper_iret_protected(tcg_env, tcg_constant_i32(s->dflag - 1),
+                                   eip_next_i32(s));
+     }
+-    set_cc_op(s, CC_OP_EFLAGS);
++    assume_cc_op(s, CC_OP_EFLAGS);
+     s->base.is_jmp = DISAS_EOB_ONLY;
+ }
+ 
 -- 
 2.45.1
 
