@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC62C25B7A
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 11:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3E96C25B78
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 13:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sApev-0002Jx-6K; Sat, 25 May 2024 07:33:57 -0400
+	id 1sArCp-00013V-Me; Sat, 25 May 2024 09:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sApet-0002JV-N9
- for qemu-devel@nongnu.org; Sat, 25 May 2024 07:33:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sApes-00040J-5P
- for qemu-devel@nongnu.org; Sat, 25 May 2024 07:33:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716636833;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3xGlyA/FI5OW5CcwO6tDBjZeAqJPAIk1z3SFIw+wSBU=;
- b=NyHNDQ2fQ0vQaeh89O6yAHtKGZk99btgJYPNlxiJ6dCvcwAahENTYlmMqegirkArNCORPc
- RWrlED2TcFi2r3xVmki6URhJcr8AoV6nQVUkZVnlwtIVbl+4GYmGk3jSvm0ZmyntmptfWB
- A/bs/p134lE+oD8PoP1wqDTf7gJ2QoY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-BUXMfdYhOPGBNk1POMpYGw-1; Sat, 25 May 2024 07:33:52 -0400
-X-MC-Unique: BUXMfdYhOPGBNk1POMpYGw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a6265d3cb71so72914466b.0
- for <qemu-devel@nongnu.org>; Sat, 25 May 2024 04:33:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sArCm-00012S-DX; Sat, 25 May 2024 09:13:00 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sArCk-0007DU-QQ; Sat, 25 May 2024 09:13:00 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1f44b5b9de6so13246975ad.3; 
+ Sat, 25 May 2024 06:12:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716642775; x=1717247575; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0D+PK4/V4lEjUiaigwaSzrNATEloiDqoARfAOKB7zAg=;
+ b=Od0FdJW4MvnZa2+lErCvAArP5MJQho9VsJav7h/5WVuMBiXifEC7sPbzqaN0IGz6D+
+ adxE0vtbdFQ+QnEGfjQBgqVoRReW9o/sDrMcq4Js1vECr+NRk96G54s3n7UVN174vABp
+ I09bnJEoFU4ft/XU1RXxiBps+erSHOHsa5x5viQjgrUeWLp7e3Wfb19qqNJXIRFrqfB9
+ dcD1YgfA5DxpU1/JqR9feyPO9z4/u/kgdk310I46zZxhfCj5KkN7kuUB2hT2l+4UyhnQ
+ o7wdls5HyEO1SOnIuuVcx+8arAHu6gZ9JSWyWnCZ6EIr8z7vyzFKvw4udSzw3caxoTil
+ lj0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716636830; x=1717241630;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3xGlyA/FI5OW5CcwO6tDBjZeAqJPAIk1z3SFIw+wSBU=;
- b=U8q8w5r5gRUuu0vU/jKQzh49PRdfjKacsWbjgMDfwcPZTEy/mgVtaahrLsTnbUTAk/
- +/RSJ5VSN5ipoM61eJXMWoUa6RR9f0I9oJGm2dAoGnpprqqPPq/J+FhrK9e8BiaA0OIX
- e3dat84d1Wx9zUeHSzE6BiD2iDvuWof4ckdGA38UEt9JuJ+Q4zaeiDlIGpZfC3SKxYIN
- E6rmLnL+wANw66fE3B+Mae6TaxwClotdz1z8CkcuEoAoEfj+tCVRzwN0/q9PYu/FbFj8
- FyGS2zJGSFUZcSp0OnDMTKC16nVJD5GwhiD5p6m+JOIwgmnn2EcBZoqmSNAyyEJa65mu
- NWEQ==
-X-Gm-Message-State: AOJu0Ywbj9gmfo6WKDV6C3x6jxeFMHqN8b/m1VPYjd7nlo5oLBoH3GOB
- GDt3sKbUN1mAaUoZalqO8HZyF0Z9boldg/iZ13yhx+iXZmrmMCvuhg0h4yB2owK3qcsitxtxFAH
- +zrS+X1v5Wl4rAakiw+Vfpa8yovRkMu49waLIZeLUlxUM5Pol8VVbR2+lD4Ds2u8mvAnaTVAYrR
- B1gL1RggAuNK7FQE4ZWY+tjdX/1dvMz/AlzIz1
-X-Received: by 2002:a17:907:82a5:b0:a5a:3da6:7712 with SMTP id
- a640c23a62f3a-a6265134c8fmr262099866b.71.1716636830210; 
- Sat, 25 May 2024 04:33:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IECDFvnDg2OHd4yByoyYyCz2OQVGN6bni20WVtP/R+6pam4keYJEp8lByhIon+9DWzPprApBA==
-X-Received: by 2002:a17:907:82a5:b0:a5a:3da6:7712 with SMTP id
- a640c23a62f3a-a6265134c8fmr262098666b.71.1716636829769; 
- Sat, 25 May 2024 04:33:49 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.155.52])
+ d=1e100.net; s=20230601; t=1716642775; x=1717247575;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0D+PK4/V4lEjUiaigwaSzrNATEloiDqoARfAOKB7zAg=;
+ b=Oo066HXDYfE9SUJ2OAQY2/1RFiwkyCPES5bSvZ6e0HLQLZq5k4Xpn/HrJCv7IpGftR
+ D6aLxg9BflWTMaqiNWubGQCGb3WUqRrckA+U3byytU4fTua1qr1mKZnXjPCiWz/FuufL
+ xOJ1vipTNuC2A1PDhCjNLHKqpJ27VcOIEkpzGjbeChM69h8sxjoLFtLzWyjT/1PBGs/+
+ 1InqO/RyDq9vpEXoxaxFCY1s8UqyS323UKWWrxgYZA+QhHceUPY3gspr2Z1mjcTuVtTo
+ WXQGjFHNULnCCxgqZlP5baC/ggYEjVMah1ZB3Iyg9P+XqSSX6L0WZa6s1JQ4wuOX+HS7
+ 0Y5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNX4OK/FP7+OJrT382ve5eOm5+H9eUXX+UQH3zokoZ0cIFz2Lt6i7btJoBp52w37ELZnF6XB9vHEfg8GdpWmrHtPb39rw=
+X-Gm-Message-State: AOJu0YwNncuWE5ju6OuzyTjDBI3xjZQ0CUE8+08WFwjPxPpnLsn9GSIv
+ uQvMxJs6e9QRoYF2R+V21RYMvY87x4JZJCq5p4DTMzywWWEK7bIHZG+5kA==
+X-Google-Smtp-Source: AGHT+IFwmVMbIzDCVT7Zr2+qT8t5uL1ZQcSHBR8vI6nA3P1bvR4AUM1CxJhYnOkVEzAgjea7ZdeMMg==
+X-Received: by 2002:a17:902:ce82:b0:1f4:6f3a:a133 with SMTP id
+ d9443c01a7336-1f46f3aa6a8mr10278525ad.3.1716642774899; 
+ Sat, 25 May 2024 06:12:54 -0700 (PDT)
+Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626cc5147dsm243608666b.124.2024.05.25.04.33.47
+ d9443c01a7336-1f44c9dd1efsm29653525ad.291.2024.05.25.06.12.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 May 2024 04:33:47 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 04/24] target/i386: cleanup eob handling of RSM
-Date: Sat, 25 May 2024 13:33:12 +0200
-Message-ID: <20240525113332.1404158-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240525113332.1404158-1-pbonzini@redhat.com>
-References: <20240525113332.1404158-1-pbonzini@redhat.com>
+ Sat, 25 May 2024 06:12:54 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-s390x@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [RFC PATCH 0/3] Fix s390x flic migration and add some more qtests
+Date: Sat, 25 May 2024 23:12:37 +1000
+Message-ID: <20240525131241.378473-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +95,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gen_helper_rsm cannot generate an exception, and reloads the flags.
-So there's no need to spill cc_op and update cpu_eip, but on the
-other hand cc_op must be reset to CC_OP_EFLAGS before returning.
+I don't know s390x enough to know if this is the right fix, but I
+could debug the migration hangs this far at least (and the patch
+fixes the condition that would previously result in a hang on the
+qtest).
 
-It all works by chance, because by spilling cc_op before the call
-to the helper, it becomes non-dirty and gen_eob will not overwrite
-the CC_OP_EFLAGS value that is placed there by the helper.  But
-let's clean it up.
+Also we could enable the test_ignore_shared test that seems to work
+on s390x and ppc64 at least.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Thanks,
+Nick
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 9782250b20b..849864d1aa2 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -4488,9 +4488,8 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         /* we should not be in SMM mode */
-         g_assert_not_reached();
- #else
--        gen_update_cc_op(s);
--        gen_update_eip_next(s);
-         gen_helper_rsm(tcg_env);
-+        set_cc_op(s, CC_OP_EFLAGS);
- #endif /* CONFIG_USER_ONLY */
-         s->base.is_jmp = DISAS_EOB_ONLY;
-         break;
+Nicholas Piggin (3):
+  hw/intc/s390_flic: Migrate pending state
+  tests/qtest/migration-test: enable on s390x
+  tests/qtest/migration-test: Enable test_ignore_shared
+
+ hw/intc/s390_flic.c          |  1 +
+ tests/qtest/migration-test.c | 25 ++++++++-----------------
+ 2 files changed, 9 insertions(+), 17 deletions(-)
+
 -- 
-2.45.1
+2.43.0
 
 
