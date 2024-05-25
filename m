@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB99C25B78
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 06:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C26AC25B78
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 08:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAl53-0001VS-5g; Sat, 25 May 2024 02:40:37 -0400
+	id 1sAnEI-0000Mr-QH; Sat, 25 May 2024 04:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sAl4z-0001Ur-V9
- for qemu-devel@nongnu.org; Sat, 25 May 2024 02:40:34 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sAnEH-0000MX-4H
+ for qemu-devel@nongnu.org; Sat, 25 May 2024 04:58:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sAl4x-00026l-V3
- for qemu-devel@nongnu.org; Sat, 25 May 2024 02:40:33 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sAnEC-0005Xx-IN
+ for qemu-devel@nongnu.org; Sat, 25 May 2024 04:58:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716619230;
+ s=mimecast20190719; t=1716627491;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PWz0VPKivQgYMOAOLNnJBTfKryZ+OVimvV8uZMjbeiM=;
- b=eHhuYmw3FEVZ6SzFpBaMHozU+JzheQbLO0v0rtqDXQlHnxlrA8IRBPQKgobMeQS4n5wqYF
- j/w/ND53f2xXOX38g1Dg+RYMrLYVEDb0o4GwRXYbQxvse0h9+1WB8xaAbdmuVdMXCo/vRl
- 1AibQETEvZsGgw4WnA0Hw3EIHd9oHPw=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P0KOB3BGeetd+o8EFfMEcK22xRhv5FamBeHGBUaN+T8=;
+ b=idO4JTbTSw+wysUrDpvdDdVLZaWRCAGH8AxFJ70rXFxADdr4Mtsr3qC4Hi73WMCWQcH8Ph
+ +fdBBbfjgQXYVVhQo9qkM6d+YtWFry4ewnLP2z0x1b9CLhs++26JWfVFFHwj6s7sxSspOh
+ jJmRiMBTTaVyP8LWTUNGRK22DXLD1nU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-6piba_jIOSCb2eRrinON9Q-1; Sat, 25 May 2024 02:40:28 -0400
-X-MC-Unique: 6piba_jIOSCb2eRrinON9Q-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2e7bbbd9926so30282341fa.3
- for <qemu-devel@nongnu.org>; Fri, 24 May 2024 23:40:28 -0700 (PDT)
+ us-mta-578-m_LReziNOUiJfZjYJNgSQw-1; Sat, 25 May 2024 04:58:09 -0400
+X-MC-Unique: m_LReziNOUiJfZjYJNgSQw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-355045ed552so691112f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 25 May 2024 01:58:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716619227; x=1717224027;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PWz0VPKivQgYMOAOLNnJBTfKryZ+OVimvV8uZMjbeiM=;
- b=iLDnT50255VKtmA4iLwmvt6C/IjkKxSJOtZd/N3vqyFnFSQE+viHwwnDPvEewX3o/j
- IkIM32cGT9KIOHlbk+tNZ6Fud8PEAUKLc3CMQidaN9h4h9dnax9dk5tE1WokUs962rq7
- jl4WFiEtV/etiZea61Q+WAU7EC2jBk5tuGEqhwO+NFNfNnOnIsqZzKQXMiqeeofvZ6g2
- MwX4QXzHlIvDwxYqrpZe8IpplWX0yF5Wg+BvA6jmpYi+UmNVve0SWmQHDBd+lghAWlVu
- quA0sLsEApPMas0kI1sT7TqYTrJnzCV8KRl4i/jF3H2DTdczYB1QQG2TYJEC+EqCpw35
- xWQA==
-X-Gm-Message-State: AOJu0YwvaStF3IeRoTm3acurhardtPTHLwrTBgoj16UP3aiuxCqrCmPm
- ie4+nYkx/GbLpbhTBwWG+F5i/VH3gND4nls8OAOn1L0ihSMF9ykRZVDqp6QD8h7ZMEtDjxaZfut
- MGVZSwRusXh/hoKVH0ZtzN6KZEbSRyhNophcfml7ejm1Ftzjs8tTwgVMTelJ/81OjbzxXSt81PI
- 05Btmfsa7wT/aimVGRY/RRzTnUWNA=
-X-Received: by 2002:a2e:9899:0:b0:2e6:d1fb:4470 with SMTP id
- 38308e7fff4ca-2e95b256316mr36599521fa.42.1716619227328; 
- Fri, 24 May 2024 23:40:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElIJ6fBMOmQxWryInng6jEBxkqBzY9fr2GkqEzJlJPZq+0fnMeXtU1r2xhnCWiWNpCXysTbSxElMrtL+thMWY=
-X-Received: by 2002:a2e:9899:0:b0:2e6:d1fb:4470 with SMTP id
- 38308e7fff4ca-2e95b256316mr36599391fa.42.1716619226840; Fri, 24 May 2024
- 23:40:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716627487; x=1717232287;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P0KOB3BGeetd+o8EFfMEcK22xRhv5FamBeHGBUaN+T8=;
+ b=KbIVXV7gGy2/MKv2iWmCPvDoHyILGsMVplU30lQXLWc2ByoWen8FfBeLsiARlZwbG6
+ syw08GpkZ1xSMs0K4s7n8PckMPoe3a3yeSrfYOGCYUBiGH1tda+a2Il2Sq5YcOxbRKgE
+ E/NUktT8rBV69zLz/bMEKxBJXMWkZvN9TBjwDsvcC+EpaUVLl8eJqLBkHY87W9Am4+HC
+ kaa9Zy7BCmpBHip2m3a1sq6eh1rvROVNpvcU34eVJbYaIn4q0ERnX6JZwdtK1RfOOiYf
+ IfaRVyauelsfqxzMFGxTZ/teLjS4fbcHdX2RNdPVbVIgQ+SGCE64q42tiJ1YWRh/wIA+
+ oEZA==
+X-Gm-Message-State: AOJu0YyTSdoSde2tovqoaP/pRXoo8jWFp5ITlNjMsENkZqLHSBZMQRrZ
+ WnSXO47i1iUfgO6L6nPDTmgDm+XKKIsQq7PUD8tI3z9ggR6oqmQKYVCIM+779+i2zf2aw4bbaba
+ rM4uthODBlVRjC2wfL2wAIgQ+9CM7w61rgXNl68wfvnTNbjhXKNHkgvan8xoH+sc+CFzH/sJ4TF
+ 8AUiOiCfc85NXReWmMYGplnZisPKpmK1vNwRmsPQ==
+X-Received: by 2002:a05:6000:4010:b0:356:4bfc:75cb with SMTP id
+ ffacd0b85a97d-3564bfc76aamr2715108f8f.50.1716627487355; 
+ Sat, 25 May 2024 01:58:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0o/VaiHUI69AR0WE40mELmJy3bA83iF/3U9M2n+sCWPFNBuoq9thmPIeEBRLB9bedyYMkAkgIJ9gXyqJOKr4=
+X-Received: by 2002:a05:6000:4010:b0:356:4bfc:75cb with SMTP id
+ ffacd0b85a97d-3564bfc76aamr2715094f8f.50.1716627486907; Sat, 25 May 2024
+ 01:58:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1716531409.git.yong.huang@smartx.com>
- <878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com>
- <CAE8KmOyXhvYHOw2MOSbwSetC7jyFNFsf0E81O0wQ1WEGGXY-TQ@mail.gmail.com>
- <CAK9dgmZOSTQhhJjXN32MupjW9o+3HTPnwNgYhx4Z-mY6kVYGHg@mail.gmail.com>
-In-Reply-To: <CAK9dgmZOSTQhhJjXN32MupjW9o+3HTPnwNgYhx4Z-mY6kVYGHg@mail.gmail.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Sat, 25 May 2024 12:10:10 +0530
-Message-ID: <CAE8KmOyro4Bd3HWH=aNAZxnY3-x_Hd1tx+Chy+FrrdMJx96_nA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] scsi-disk: Fix crash for VM configured with USB CDROM
- after live migration
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
+References: <20240524153323.1267511-2-pbonzini@redhat.com>
+ <d41e0504-aa75-4d88-93c4-a30843ea3942@linaro.org>
+In-Reply-To: <d41e0504-aa75-4d88-93c4-a30843ea3942@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sat, 25 May 2024 10:57:55 +0200
+Message-ID: <CABgObfZSt9HT+1ogJaa48=FWYNHM3bES8DFZVypN8e06Qo4oxA@mail.gmail.com>
+Subject: Re: [PATCH] target/i386: always go through gen_eob*()
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,7 +81,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,37 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On Fri, 24 May 2024 at 16:23, Yong Huang <yong.huang@smartx.com> wrote:
-> I'm not testing the latest QEMU version while theoretically it is
-> reproducible, I'll check it and give a conclusion.
-
-* Yes, that'll help. Thank you.
-
-> I'm not sure this usage is common but in our production environment, it is used.
-
-* I see. If it's being used in a production environment and the crash
-occurs there, then it's a reasonable change.
-
- > IMHO, resetting the CDROM device may be a work around because
-> the request SHOULD not be lost. No requests are found may be
-> caused by other reasons, resetting the CD ROM seems crude.
-> The path that executes the scsi_get_buf() is in a USB mass storage
-> device,  and it called by the UHCI controller originally, which just
-> handles the Frame List blindly, reset solution is kind of complicated
-> in implementation
+On Fri, May 24, 2024 at 6:51=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+> >   static void gen_set_hflag(DisasContext *s, uint32_t mask)
+> > @@ -2354,7 +2354,7 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot=
+, int diff, int tb_num)
+> >               tcg_gen_movi_tl(cpu_eip, new_eip);
+> >           }
+> >           tcg_gen_exit_tb(s->base.tb, tb_num);
+> > -        s->base.is_jmp =3D DISAS_NORETURN;
+> > +        s->base.is_jmp =3D DISAS_EOB_ONLY;
 >
-> Migrating the requests may be a graceful solution.
+> This is wrong because exit_tb exits, and anything you add after is unreac=
+hable.
+> I think you simply want to remove the exit_tb call as well, but there may=
+ be more cleanup
+> possible in the wider context; I haven't checked.
 
-* Yes, true. Migration should migrate guest's devices along with their
-state and data. Resetting was suggested for the case if CDROM is not
-used in production and so the migration was not required. But you are
-using it in a production environment so migrating SCSI requests makes
-sense.
+Ok, I'll check this one more closely.
 
-Thank you.
----
-  - Prasad
+> > @@ -3769,7 +3769,7 @@ static void disas_insn_old(DisasContext *s, CPUSt=
+ate *cpu, int b)
+> >               gen_helper_vmrun(tcg_env, tcg_constant_i32(s->aflag - 1),
+> >                                cur_insn_len_i32(s));
+> >               tcg_gen_exit_tb(NULL, 0);
+> > -            s->base.is_jmp =3D DISAS_NORETURN;
+> > +            s->base.is_jmp =3D DISAS_EOB_ONLY;
+>
+> Calls exit_tb, which is probably bogus here and EOB_ONLY is correct.
+> But I'd need to look deeper into what vmrun does.
+
+This is correct, but do_vmexit() needs to clear RF and handle
+singlestep, and the helper needs to clear HF_INHIBIT_IRQ_MASK. In this
+respect VMRUN/vmexit are is not unlike SYSRET/SYSCALL respectively,
+except that EFLAGS.TF is never set right after VMRUN. That is, the
+guest EFLAGS value has its effect only after the first instruction in
+the guest, while the SYSCALL EFLAGS value interrupts before the first
+instruction in CPL0.
+
+> > @@ -1642,7 +1642,7 @@ static void gen_HLT(DisasContext *s, CPUX86State =
+*env, X86DecodedInsn *decode)
+> >       gen_update_cc_op(s);
+> >       gen_update_eip_cur(s);
+> >       gen_helper_hlt(tcg_env, cur_insn_len_i32(s));
+> > -    s->base.is_jmp =3D DISAS_NORETURN;
+> > +    s->base.is_jmp =3D DISAS_EOB_ONLY;
+>
+> noreturn.
+>
+> > @@ -4022,7 +4022,7 @@ static void gen_XCHG(DisasContext *s, CPUX86State=
+ *env, X86DecodedInsn *decode)
+> >               gen_update_cc_op(s);
+> >               gen_update_eip_cur(s);
+> >               gen_helper_pause(tcg_env, cur_insn_len_i32(s));
+> > -            s->base.is_jmp =3D DISAS_NORETURN;
+> > +            s->base.is_jmp =3D DISAS_EOB_ONLY;
+>
+> noreturn.
+
+But these should handle HF_INHIBIT_IRQ_MASK/RF/TF and they don't
+(except for HLT clearing HF_INHIBIT_IRQ_MASK). So there is a bug but
+it's in the helpers.
+
+Paolo
 
 
