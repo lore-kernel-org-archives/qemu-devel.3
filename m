@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707DBC25B78
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 11:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D4A8C25B78
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 11:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sApfC-0002OE-MH; Sat, 25 May 2024 07:34:14 -0400
+	id 1sApfi-0003WV-NF; Sat, 25 May 2024 07:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sApf8-0002NZ-V1
- for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:11 -0400
+ id 1sApfg-0003PK-Ur
+ for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sApf7-00044R-BT
- for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:10 -0400
+ id 1sApff-0004BS-Fg
+ for qemu-devel@nongnu.org; Sat, 25 May 2024 07:34:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716636847;
+ s=mimecast20190719; t=1716636882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wbd4E/05WUdNKIkx4SA2xBZKuCnPUAlJCLsAjzirtJc=;
- b=SPhgDbopNKy5JWe3t00VAEeEy7CuWtqwHsa2xEHv9IJI+XlGM2KKuJlUtgfm3VXytpfgWT
- ciSrDDrEtTEg+ANelaXzu7zchP6qS3yyTNaDs3+fpgicWEPq3PKnVMOidZ1mnhAJAOxzIC
- iS9JA+5eXZTbrfI1i9WI3D9D6UymgP0=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k9B/mifen37RkDdPX/cKKRcV68jn85LxP2cbyY6xOFI=;
+ b=YPV8XdNgqgGG0Gd0FKLalhEgQJnugE2U2qEddqDb2XwtNoAUc660MrDuuwKMwp2q78TAG+
+ DQN4YLpVIG2xvsDoIO6iCgysAf6V4ryTWNTPVSm2Uq8mG/H1+pz1mikWhAorcAXV8pNG5S
+ zlA9FmxQLjea2jEO3MH8uIdmr7seegc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-rcazl4BtPTa1s6qLYGbQUQ-1; Sat, 25 May 2024 07:34:06 -0400
-X-MC-Unique: rcazl4BtPTa1s6qLYGbQUQ-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5785fc97facso816621a12.0
- for <qemu-devel@nongnu.org>; Sat, 25 May 2024 04:34:06 -0700 (PDT)
+ us-mta-237-vzhl6wPBMCWcxVTGljyMww-1; Sat, 25 May 2024 07:34:41 -0400
+X-MC-Unique: vzhl6wPBMCWcxVTGljyMww-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6266ffd2fcso76780666b.1
+ for <qemu-devel@nongnu.org>; Sat, 25 May 2024 04:34:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716636844; x=1717241644;
+ d=1e100.net; s=20230601; t=1716636880; x=1717241680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wbd4E/05WUdNKIkx4SA2xBZKuCnPUAlJCLsAjzirtJc=;
- b=uN42sLBYac1LnmtnU53tjpviWBkreI4nd8/tknQ3wURvWKTu0hnLjH4EPAmyJ2+4uU
- 9uW01us7nFjKy0/nL/jzKRriRK6hcVO9I/VjjyAd5JOyEvHlAPwd2glaY5KZotKpjrcR
- FwimbJ5Xie4sz6N1M0nS0tBHqOUUCdKAnY+nldJiwSmELYlK6GRVIZ9NQ8aEnRIFQPBi
- Ro418jqQesQrK+k25Biispp03mS6fAlqhrSPu2Hw8s43oRo1gjBJwyVv6O5muOL09NjH
- z8X7w6g4qRWkT/eqzAhuxI/9iv+aFPOCDHwu7QRR0fb08mO8xLLjITE5Ss8SEinaWDhf
- B4Yg==
-X-Gm-Message-State: AOJu0YxdtqeaQ+H3/KdMLGODAHYQ9SfN3TByVQYItVFsbOacqmDVSvOT
- TGD9rtZgYgGYmtruklcJQZOKPXjzCk2llnBa1u0z/U/a6E9ku6GlUi1SrXbK8r/CTaH5do1X/wL
- LFwHW2CT7hQBqnD/cu/qaAomBgUu6up6zMV2dYgoGlqpV1KcjonvTkvPv8jqd10X04NmKM5G9st
- hRCLrYs4xkvp90801f9fR5495+r4JdcVYYZ/Og
-X-Received: by 2002:a50:d74e:0:b0:572:9d24:257a with SMTP id
- 4fb4d7f45d1cf-578519a91f8mr3195122a12.23.1716636844358; 
- Sat, 25 May 2024 04:34:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHF2kXKoTrhP2nx6akXDfxYyKZOkgqRo1xIIJwTrQd2L7hUIAf3Ao534/uB+6bobAZ8VUcaDw==
-X-Received: by 2002:a50:d74e:0:b0:572:9d24:257a with SMTP id
- 4fb4d7f45d1cf-578519a91f8mr3195107a12.23.1716636843874; 
- Sat, 25 May 2024 04:34:03 -0700 (PDT)
-Received: from [192.168.10.117] ([151.95.155.52])
+ bh=k9B/mifen37RkDdPX/cKKRcV68jn85LxP2cbyY6xOFI=;
+ b=fsQPG+LXESysr7BhK1Jp7Eo+CEpj1VB8m8wqlZmh9kIc7zmAv7rQcygNrPncDdPOjX
+ HOCKJO2y76P/Z4yzr700j4aRgoocEHOBFzjR6S/0pkPzXTLjR29R3rwaI8uryu9ofpY9
+ 8Pvg/nsj7sFUabcJ5o3uCVxmBdco/U7t1QH3oeeqWNFgs4QzU42YyoociKp/leD00MUY
+ 1ugfC+IVI7DonW4eLP0dQO+NDF3vjgjxXyhO0Odm+OQM3Y2lB81s09YEzgrP3w94/8uZ
+ vCKquC9wxFX++exHB+MPAC+I3RUqpcz5MhLPw9UKHP39umk2FNfuaP7nIdAzZdjCTEFx
+ VwlQ==
+X-Gm-Message-State: AOJu0YzTVaibYUQ80axDMN8ZhYB41pO5kRtc1M1cEt/WwEEvNL/d6cWG
+ zkq/kxJUwSUdmLR/a1vOZR29RnjKNO7nzoH6u40fGAV+/dRqja1Ijo/RSudEUe9Llp5r38v/85Q
+ eyTCXm3AtJ018GtoLD2OTkIoX/Sot4nEpJ5TYPsA3HR3ebRF2VcLE5pgwawn2lC9s5xAIn56H35
+ L5KoehMi26qolkCPo4O22fFvE49NF2FJ6erfKF
+X-Received: by 2002:a17:906:4bd8:b0:a59:aae5:b0bc with SMTP id
+ a640c23a62f3a-a62646d7f53mr295625066b.42.1716636879906; 
+ Sat, 25 May 2024 04:34:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsCn+IOtYJifazZo7o49GJuGWVIT+Af3gjJR/6CMDuUbB3fmFUcLa887X/kCSUX+tKq/22qw==
+X-Received: by 2002:a17:906:4bd8:b0:a59:aae5:b0bc with SMTP id
+ a640c23a62f3a-a62646d7f53mr295624666b.42.1716636879558; 
+ Sat, 25 May 2024 04:34:39 -0700 (PDT)
+Received: from [192.168.10.116] ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-578523d58afsm3058889a12.44.2024.05.25.04.34.03
+ a640c23a62f3a-a626cda1c32sm243947366b.190.2024.05.25.04.34.38
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 May 2024 04:34:03 -0700 (PDT)
+ Sat, 25 May 2024 04:34:39 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/24] target/i386: avoid calling gen_eob_syscall before tb_stop
-Date: Sat, 25 May 2024 13:33:17 +0200
-Message-ID: <20240525113332.1404158-10-pbonzini@redhat.com>
+Subject: [PULL 22/24] tcg: include dependencies in static_library()
+Date: Sat, 25 May 2024 13:33:30 +0200
+Message-ID: <20240525113332.1404158-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240525113332.1404158-1-pbonzini@redhat.com>
 References: <20240525113332.1404158-1-pbonzini@redhat.com>
@@ -102,61 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-syscall and sysret only have one exit, so they do not need to
-generate the end-of-translation code inline.  It can be
-deferred to tb_stop.
+This ensures that for example libffi can be reached even if it is not
+in /usr/include.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tcg/meson.build | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 1246118e42b..06aaaa00b43 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -168,6 +168,12 @@ typedef struct DisasContext {
-  */
- #define DISAS_JUMP             DISAS_TARGET_3
+diff --git a/tcg/meson.build b/tcg/meson.build
+index 8251589fd4e..ffbe754d8b3 100644
+--- a/tcg/meson.build
++++ b/tcg/meson.build
+@@ -32,19 +32,19 @@ tcg_ss = tcg_ss.apply({})
+ libtcg_user = static_library('tcg_user',
+                              tcg_ss.sources() + genh,
+                              name_suffix: 'fa',
++                             dependencies: tcg_ss.dependencies(),
+                              c_args: '-DCONFIG_USER_ONLY',
+                              build_by_default: false)
  
-+/*
-+ * EIP has already been updated.  Use updated value of
-+ * EFLAGS.TF to determine singlestep trap (SYSCALL/SYSRET).
-+ */
-+#define DISAS_EOB_RECHECK_TF   DISAS_TARGET_4
-+
- /* The environment in which user-only runs is constrained. */
- #ifdef CONFIG_USER_ONLY
- #define PE(S)     true
-@@ -3587,7 +3593,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         /* TF handling for the syscall insn is different. The TF bit is  checked
-            after the syscall insn completes. This allows #DB to not be
-            generated after one has entered CPL0 if TF is set in FMASK.  */
--        gen_eob_syscall(s);
-+        s->base.is_jmp = DISAS_EOB_RECHECK_TF;
-         break;
-     case 0x107: /* sysret */
-         /* For Intel SYSRET is only valid in long mode */
-@@ -3606,7 +3612,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-                checked after the sysret insn completes. This allows #DB to be
-                generated "as if" the syscall insn in userspace has just
-                completed.  */
--            gen_eob_syscall(s);
-+            s->base.is_jmp = DISAS_EOB_RECHECK_TF;
-         }
-         break;
-     case 0x1a2: /* cpuid */
-@@ -4810,6 +4816,9 @@ static void i386_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-     case DISAS_EOB_ONLY:
-         gen_eob(dc);
-         break;
-+    case DISAS_EOB_RECHECK_TF:
-+        gen_eob_syscall(dc);
-+        break;
-     case DISAS_EOB_INHIBIT_IRQ:
-         gen_update_eip_cur(dc);
-         gen_eob_inhibit_irq(dc);
+-tcg_user = declare_dependency(link_with: libtcg_user,
+-                              dependencies: tcg_ss.dependencies())
++tcg_user = declare_dependency(link_with: libtcg_user)
+ user_ss.add(tcg_user)
+ 
+ libtcg_system = static_library('tcg_system',
+                                 tcg_ss.sources() + genh,
+                                 name_suffix: 'fa',
++                                dependencies: tcg_ss.dependencies(),
+                                 c_args: '-DCONFIG_SOFTMMU',
+                                 build_by_default: false)
+ 
+-tcg_system = declare_dependency(link_with: libtcg_system,
+-                                 dependencies: tcg_ss.dependencies())
++tcg_system = declare_dependency(link_with: libtcg_system)
+ system_ss.add(tcg_system)
 -- 
 2.45.1
 
