@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5976AC25B7D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E083C27C42
 	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJmO-0000kO-Pq; Sun, 26 May 2024 15:43:41 -0400
+	id 1sBJlr-0008DG-8J; Sun, 26 May 2024 15:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJmB-0000Or-Dt
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:29 -0400
+ id 1sBJlo-0008CC-8q
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:04 -0400
 Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJm7-0007lK-F1
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:27 -0400
+ id 1sBJll-0007dU-Fy
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:04 -0400
 Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1f480624d04so6904295ad.2
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:21 -0700 (PDT)
+ d9443c01a7336-1f4a0050b9aso1325105ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752600; x=1717357400; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752580; x=1717357380; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JS2sXItrx1lQjyr/YyxaEv+gYLkHZMhSUN20mnS6HsM=;
- b=TkijZ/gpevzlTaRaWcFlLkXj096vGh7YGKKojRLviull7Pw0iKW4vnG5Pw9maN33PT
- H/hv9qXBFDjSTD4BXUCZlK3rg9q54ZJufTdOm0SnMBOM0Fyhn6YJy5vPkIlCs4QDA5e1
- 6AbPx944PlGiGFqCMue//Pv4kwIZXJM2g+m+IKwqoTW5b0gwa2eop/j7IuuImpGXln7f
- +SyulvxWwxQefXsLQxoFgNu3k6B/tnFj6UZrVK3HvEpxtuDzMd7RMylVVzNsw494zg7D
- e0TYHK2MPtBZMRcsFJJFel0X6zRPOZ77eBhOldrKvJHiKo+HFExee0S0ESP/DUzgF1gP
- Dr+Q==
+ bh=L/Kek+OpRexEIhDigfP9w9ns/xyOmoQXE9H2AlFSUfI=;
+ b=RgA8aguVq5sdD+K0mym2BGJuazTgrNq+btYogslKQ7Eo57MwuRpkTVG7pKPl9FDZHI
+ MK/D86uO0uv6PTX1eze/qm9DP0Yca5lOKb9C5dxAi5yg/cRoTC7G4tsSDIHlB53eoOxD
+ F/Ci/IGSZsZnO7gSd/iGCZXMN+FUvzoxa10afHRFCUTR8glWc7iBkeW4Y1QhZ4gqgXI8
+ jJVdmuaOLmV47oSuxnVfcIqa+b1YUIupHsxRv2mx7Umxhk6dG10JIFAH0HtBNKQRKByI
+ mg+XcEvYtNGcS/GzFOQm2jEyY+6Zv+rFCzMnAI+wkdAgszBBUCInBsvCVRPz9OP/0rZ8
+ gVBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752600; x=1717357400;
+ d=1e100.net; s=20230601; t=1716752580; x=1717357380;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JS2sXItrx1lQjyr/YyxaEv+gYLkHZMhSUN20mnS6HsM=;
- b=PPvUhxFfeyNQfAwB9pL0oZl6J10Sfk9PxK1pXnDQCBSLa4thMQqizbM7f7BhPTVNqg
- Ri7I8tulhdNxEi3j+hUOgEuAeJ7pADEAA8FJaBcdjs+KVdL7PQ9YQDDcJ3jEdJLJ5bTB
- G+FOpNh8J/lHcMF11T698GJrhmZhi+LVv4W7R1NIg9ArXgUCecxX40X9CGZnre9yry3/
- jrYqg5ufSOf0BNMzf/q9pGZwUF/+KdDW6PadmzbYDzGYI14E/5pSiH7bgiCHjfWJfLnK
- 75NeD9Iuq/Szr9bLiGcLgcBD1xLUmKZnGWe0sq/E7C64PHtJZLtNYrSKoy4pmMyld2vg
- q1tg==
-X-Gm-Message-State: AOJu0YxkXX6pgBMqrBrRyD6rjh7wlksFgFwbn2JUPhN7tHLylzqIeLd9
- uMLVJmXX03Tc381ZUb7wnf0s3+2ClMTRCUNkcLMwQz6gUgv7GBCQWklLbys0J5C6YNgn2rNbe3H
- P
-X-Google-Smtp-Source: AGHT+IFgKxTXj1JiORd0n72dTdfd4bjRQLXmrX7cHURUy+5ekMZeDQPsldrbU+1quHC37smRTEYPUQ==
-X-Received: by 2002:a17:902:ec85:b0:1f2:fcc3:5b5 with SMTP id
- d9443c01a7336-1f44870df72mr85720225ad.20.1716752600381; 
- Sun, 26 May 2024 12:43:20 -0700 (PDT)
+ bh=L/Kek+OpRexEIhDigfP9w9ns/xyOmoQXE9H2AlFSUfI=;
+ b=AszVaS+21I1uDM08+rM6rSFNYbnzfJooyRvghoNSoBvtDjUeoVTZM1h1w3j9dhMSGj
+ zYZy6KEmmK+habqYnwD4tPP0wLcLVxP+8Jg7HUlN/oChFodzm0OMv7gnrIUR3R1nTTTM
+ NEIXqRY+bzPbbAMsX2ziB4FK1Ufv8F1lv4rh1UzTP0cVWA+mzlg3pJDmyrjXBEZapQDp
+ vcE3pfmRtLb9J0EC5glC2vdUAhhRdTfe6Dl3Y/SWOGy/PQA1UhbPyuqmqiJdB640znW7
+ fdhYtn1pPYNEVhYlMhYlJdzsK9QiXSz0u0L4EzIp2qLp4P4MYKbuaVuFToXVVduifPAC
+ 5JWQ==
+X-Gm-Message-State: AOJu0Yx4icED33AMcZkUn8hOPSPuJwdwvGUxyaNj+sX8XagqfXH9fIY3
+ tB9a6Oosyww/C7cvsCo/E39IGK0U/QpyZcjenVBq2YlOEv0rSfyt/tPsIjJQs63Jz2CajBTp0TA
+ O
+X-Google-Smtp-Source: AGHT+IF9XTda19mDevpvl+aBScAEbnuucSQmAwRDCA8vnm6w4oFrXx7GHxMIkzkFGjB/EdD1Yfc5Dg==
+X-Received: by 2002:a17:903:2447:b0:1f2:f8b7:60d4 with SMTP id
+ d9443c01a7336-1f4497daf6cmr87578305ad.52.1716752579740; 
+ Sun, 26 May 2024 12:42:59 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.19
+ d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.42.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:43:20 -0700 (PDT)
+ Sun, 26 May 2024 12:42:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 32/37] target/sparc: Implement VIS4 comparisons
-Date: Sun, 26 May 2024 12:42:49 -0700
-Message-Id: <20240526194254.459395-33-richard.henderson@linaro.org>
+Cc: mark.cave-ayland@ilande.co.uk,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 05/37] target/sparc: Perform DFPREG/QFPREG in decodetree
+Date: Sun, 26 May 2024 12:42:22 -0700
+Message-Id: <20240526194254.459395-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
 References: <20240526194254.459395-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
  envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
@@ -94,329 +96,436 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIS4 completes the set, adding missing signed 8-bit ops
-and missing unsigned 16 and 32-bit ops.
+Form the proper register decoding from the start.
 
+Because we're removing the translation from the inner-most
+gen_load_fpr_* and gen_store_fpr_* routines, this must be
+done for all insns at once.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/helper.h     |  12 +--
- target/sparc/insns.decode |   6 ++
- target/sparc/translate.c  |  12 +++
- target/sparc/vis_helper.c | 170 +++++++++++++++++++++++++++++---------
- 4 files changed, 153 insertions(+), 47 deletions(-)
+ target/sparc/insns.decode | 220 +++++++++++++++++++++++---------------
+ target/sparc/translate.c  |  39 +++----
+ 2 files changed, 148 insertions(+), 111 deletions(-)
 
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index fe0d8bc593..134e519a37 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -122,19 +122,19 @@ DEF_HELPER_FLAGS_2(fchksm16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmean16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fslas16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fslas32, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--#define VIS_CMPHELPER(name)                                              \
-+#define VIS_CMPHELPER(name)                                  \
-+    DEF_HELPER_FLAGS_2(f##name##8, TCG_CALL_NO_RWG_SE,       \
-+                       i64, i64, i64)                        \
-     DEF_HELPER_FLAGS_2(f##name##16, TCG_CALL_NO_RWG_SE,      \
--                       i64, i64, i64)                                    \
-+                       i64, i64, i64)                        \
-     DEF_HELPER_FLAGS_2(f##name##32, TCG_CALL_NO_RWG_SE,      \
-                        i64, i64, i64)
- VIS_CMPHELPER(cmpgt)
- VIS_CMPHELPER(cmpeq)
- VIS_CMPHELPER(cmple)
- VIS_CMPHELPER(cmpne)
--DEF_HELPER_FLAGS_2(fcmpeq8, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(fcmpne8, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(fcmpule8, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(fcmpugt8, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-+VIS_CMPHELPER(cmpugt)
-+VIS_CMPHELPER(cmpule)
- DEF_HELPER_FLAGS_2(xmulx, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(xmulxhi, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- #endif
 diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 80579642d1..be591171ad 100644
+index e2d8a07dc4..02fa505b49 100644
 --- a/target/sparc/insns.decode
 +++ b/target/sparc/insns.decode
-@@ -425,6 +425,12 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
-     FPCMPUGT8   10 ..... 110110 ..... 1 0010 1000 .....    @r_d_d
-     FPCMPNE8    10 ..... 110110 ..... 1 0010 0010 .....    @r_d_d
-     FPCMPEQ8    10 ..... 110110 ..... 1 0010 1010 .....    @r_d_d
-+    FPCMPLE8    10 ..... 110110 ..... 0 0011 0100 .....    @r_d_d
-+    FPCMPGT8    10 ..... 110110 ..... 0 0011 1100 .....    @r_d_d
-+    FPCMPULE16  10 ..... 110110 ..... 1 0010 1110 .....    @r_d_d
-+    FPCMPUGT16  10 ..... 110110 ..... 1 0010 1011 .....    @r_d_d
-+    FPCMPULE32  10 ..... 110110 ..... 1 0010 1111 .....    @r_d_d
-+    FPCMPUGT32  10 ..... 110110 ..... 1 0010 1100 .....    @r_d_d
+@@ -26,6 +26,14 @@ CALL    01 i:s30
+ ## Major Opcode 10 -- integer, floating-point, vis, and system insns.
+ ##
  
-     FMUL8x16    10 ..... 110110 ..... 0 0011 0001 .....    @d_r_d
-     FMUL8x16AU  10 ..... 110110 ..... 0 0011 0011 .....    @d_r_r
++%dfp_rd     25:5 !function=extract_dfpreg
++%dfp_rs1    14:5 !function=extract_dfpreg
++%dfp_rs2     0:5 !function=extract_dfpreg
++
++%qfp_rd     25:5 !function=extract_qfpreg
++%qfp_rs1    14:5 !function=extract_qfpreg
++%qfp_rs2     0:5 !function=extract_qfpreg
++
+ &r_r_ri     rd rs1 rs2_or_imm imm:bool
+ @n_r_ri     .. ..... ...... rs1:5 imm:1 rs2_or_imm:s13     &r_r_ri rd=0
+ @r_r_ri     .. rd:5  ...... rs1:5 imm:1 rs2_or_imm:s13     &r_r_ri
+@@ -37,11 +45,40 @@ CALL    01 i:s30
+ 
+ &r_r_r      rd rs1 rs2
+ @r_r_r      .. rd:5  ...... rs1:5 . ........ rs2:5         &r_r_r
++@d_r_r      .. ..... ...... rs1:5 . ........ rs2:5         \
++            &r_r_r rd=%dfp_rd
++@r_d_d      .. rd:5  ...... ..... . ........ .....         \
++            &r_r_r rs1=%dfp_rs1 rs2=%dfp_rs2
++@d_r_d      .. ..... ...... rs1:5 . ........ .....         \
++            &r_r_r rd=%dfp_rd rs2=%dfp_rs2
++@d_d_d      .. ..... ...... ..... . ........ .....         \
++            &r_r_r rd=%dfp_rd rs1=%dfp_rs1 rs2=%dfp_rs2
++@q_q_q      .. ..... ...... ..... . ........ .....         \
++            &r_r_r rd=%qfp_rd rs1=%qfp_rs1 rs2=%qfp_rs2
++@q_d_d      .. ..... ...... ..... . ........ .....         \
++            &r_r_r rd=%qfp_rd rs1=%dfp_rs1 rs2=%dfp_rs2
++
+ @r_r_r_swap .. rd:5  ...... rs2:5 . ........ rs1:5         &r_r_r
++@d_d_d_swap .. ..... ...... ..... . ........ .....         \
++            &r_r_r rd=%dfp_rd rs1=%dfp_rs2 rs2=%dfp_rs1
+ 
+ &r_r        rd rs
+ @r_r1       .. rd:5  ...... rs:5  . ........ .....         &r_r
+ @r_r2       .. rd:5  ...... ..... . ........ rs:5          &r_r
++@r_d2       .. rd:5  ...... ..... . ........ .....         &r_r rs=%dfp_rs2
++@r_q2       .. rd:5  ...... ..... . ........ .....         &r_r rs=%qfp_rs2
++@d_r2       .. ..... ...... ..... . ........ rs:5          &r_r rd=%dfp_rd
++@q_r2       .. ..... ...... ..... . ........ rs:5          &r_r rd=%qfp_rd
++@d_d1       .. ..... ...... ..... . ........ .....         \
++            &r_r rd=%dfp_rd rs=%dfp_rs1
++@d_d2       .. ..... ...... ..... . ........ .....         \
++            &r_r rd=%dfp_rd rs=%dfp_rs2
++@d_q2       .. ..... ...... ..... . ........ .....         \
++            &r_r rd=%dfp_rd rs=%qfp_rs2
++@q_q2       .. ..... ...... ..... . ........ .....         \
++            &r_r rd=%qfp_rd rs=%qfp_rs2
++@q_d2       .. ..... ...... ..... . ........ .....         \
++            &r_r rd=%qfp_rd rs=%dfp_rs2
+ 
+ {
+   [
+@@ -241,68 +278,78 @@ DONE        10 00000 111110 00000 0 0000000000000
+ RETRY       10 00001 111110 00000 0 0000000000000
+ 
+ FMOVs       10 ..... 110100 00000 0 0000 0001 .....        @r_r2
+-FMOVd       10 ..... 110100 00000 0 0000 0010 .....        @r_r2
+-FMOVq       10 ..... 110100 00000 0 0000 0011 .....        @r_r2
++FMOVd       10 ..... 110100 00000 0 0000 0010 .....        @d_d2
++FMOVq       10 ..... 110100 00000 0 0000 0011 .....        @q_q2
+ FNEGs       10 ..... 110100 00000 0 0000 0101 .....        @r_r2
+-FNEGd       10 ..... 110100 00000 0 0000 0110 .....        @r_r2
+-FNEGq       10 ..... 110100 00000 0 0000 0111 .....        @r_r2
++FNEGd       10 ..... 110100 00000 0 0000 0110 .....        @d_d2
++FNEGq       10 ..... 110100 00000 0 0000 0111 .....        @q_q2
+ FABSs       10 ..... 110100 00000 0 0000 1001 .....        @r_r2
+-FABSd       10 ..... 110100 00000 0 0000 1010 .....        @r_r2
+-FABSq       10 ..... 110100 00000 0 0000 1011 .....        @r_r2
++FABSd       10 ..... 110100 00000 0 0000 1010 .....        @d_d2
++FABSq       10 ..... 110100 00000 0 0000 1011 .....        @q_q2
+ FSQRTs      10 ..... 110100 00000 0 0010 1001 .....        @r_r2
+-FSQRTd      10 ..... 110100 00000 0 0010 1010 .....        @r_r2
+-FSQRTq      10 ..... 110100 00000 0 0010 1011 .....        @r_r2
++FSQRTd      10 ..... 110100 00000 0 0010 1010 .....        @d_d2
++FSQRTq      10 ..... 110100 00000 0 0010 1011 .....        @q_q2
+ FADDs       10 ..... 110100 ..... 0 0100 0001 .....        @r_r_r
+-FADDd       10 ..... 110100 ..... 0 0100 0010 .....        @r_r_r
+-FADDq       10 ..... 110100 ..... 0 0100 0011 .....        @r_r_r
++FADDd       10 ..... 110100 ..... 0 0100 0010 .....        @d_d_d
++FADDq       10 ..... 110100 ..... 0 0100 0011 .....        @q_q_q
+ FSUBs       10 ..... 110100 ..... 0 0100 0101 .....        @r_r_r
+-FSUBd       10 ..... 110100 ..... 0 0100 0110 .....        @r_r_r
+-FSUBq       10 ..... 110100 ..... 0 0100 0111 .....        @r_r_r
++FSUBd       10 ..... 110100 ..... 0 0100 0110 .....        @d_d_d
++FSUBq       10 ..... 110100 ..... 0 0100 0111 .....        @q_q_q
+ FMULs       10 ..... 110100 ..... 0 0100 1001 .....        @r_r_r
+-FMULd       10 ..... 110100 ..... 0 0100 1010 .....        @r_r_r
+-FMULq       10 ..... 110100 ..... 0 0100 1011 .....        @r_r_r
++FMULd       10 ..... 110100 ..... 0 0100 1010 .....        @d_d_d
++FMULq       10 ..... 110100 ..... 0 0100 1011 .....        @q_q_q
+ FDIVs       10 ..... 110100 ..... 0 0100 1101 .....        @r_r_r
+-FDIVd       10 ..... 110100 ..... 0 0100 1110 .....        @r_r_r
+-FDIVq       10 ..... 110100 ..... 0 0100 1111 .....        @r_r_r
+-FsMULd      10 ..... 110100 ..... 0 0110 1001 .....        @r_r_r
+-FdMULq      10 ..... 110100 ..... 0 0110 1110 .....        @r_r_r
++FDIVd       10 ..... 110100 ..... 0 0100 1110 .....        @d_d_d
++FDIVq       10 ..... 110100 ..... 0 0100 1111 .....        @q_q_q
++FsMULd      10 ..... 110100 ..... 0 0110 1001 .....        @d_r_r
++FdMULq      10 ..... 110100 ..... 0 0110 1110 .....        @q_d_d
+ FsTOx       10 ..... 110100 00000 0 1000 0001 .....        @r_r2
+-FdTOx       10 ..... 110100 00000 0 1000 0010 .....        @r_r2
+-FqTOx       10 ..... 110100 00000 0 1000 0011 .....        @r_r2
++FdTOx       10 ..... 110100 00000 0 1000 0010 .....        @r_d2
++FqTOx       10 ..... 110100 00000 0 1000 0011 .....        @r_q2
+ FxTOs       10 ..... 110100 00000 0 1000 0100 .....        @r_r2
+-FxTOd       10 ..... 110100 00000 0 1000 1000 .....        @r_r2
+-FxTOq       10 ..... 110100 00000 0 1000 1100 .....        @r_r2
++FxTOd       10 ..... 110100 00000 0 1000 1000 .....        @d_r2
++FxTOq       10 ..... 110100 00000 0 1000 1100 .....        @q_r2
+ FiTOs       10 ..... 110100 00000 0 1100 0100 .....        @r_r2
+-FdTOs       10 ..... 110100 00000 0 1100 0110 .....        @r_r2
+-FqTOs       10 ..... 110100 00000 0 1100 0111 .....        @r_r2
+-FiTOd       10 ..... 110100 00000 0 1100 1000 .....        @r_r2
+-FsTOd       10 ..... 110100 00000 0 1100 1001 .....        @r_r2
+-FqTOd       10 ..... 110100 00000 0 1100 1011 .....        @r_r2
+-FiTOq       10 ..... 110100 00000 0 1100 1100 .....        @r_r2
+-FsTOq       10 ..... 110100 00000 0 1100 1101 .....        @r_r2
+-FdTOq       10 ..... 110100 00000 0 1100 1110 .....        @r_r2
++FdTOs       10 ..... 110100 00000 0 1100 0110 .....        @r_d2
++FqTOs       10 ..... 110100 00000 0 1100 0111 .....        @r_q2
++FiTOd       10 ..... 110100 00000 0 1100 1000 .....        @d_r2
++FsTOd       10 ..... 110100 00000 0 1100 1001 .....        @d_r2
++FqTOd       10 ..... 110100 00000 0 1100 1011 .....        @d_q2
++FiTOq       10 ..... 110100 00000 0 1100 1100 .....        @q_r2
++FsTOq       10 ..... 110100 00000 0 1100 1101 .....        @q_r2
++FdTOq       10 ..... 110100 00000 0 1100 1110 .....        @q_d2
+ FsTOi       10 ..... 110100 00000 0 1101 0001 .....        @r_r2
+-FdTOi       10 ..... 110100 00000 0 1101 0010 .....        @r_r2
+-FqTOi       10 ..... 110100 00000 0 1101 0011 .....        @r_r2
++FdTOi       10 ..... 110100 00000 0 1101 0010 .....        @r_d2
++FqTOi       10 ..... 110100 00000 0 1101 0011 .....        @r_q2
+ 
+ FMOVscc     10 rd:5  110101 0 cond:4 1 cc:1 0 000001 rs2:5
+-FMOVdcc     10 rd:5  110101 0 cond:4 1 cc:1 0 000010 rs2:5
+-FMOVqcc     10 rd:5  110101 0 cond:4 1 cc:1 0 000011 rs2:5
++FMOVdcc     10 ..... 110101 0 cond:4 1 cc:1 0 000010 ..... \
++            rd=%dfp_rd rs2=%dfp_rs2
++FMOVqcc     10 ..... 110101 0 cond:4 1 cc:1 0 000011 ..... \
++            rd=%qfp_rd rs2=%qfp_rs2
+ 
+ FMOVsfcc    10 rd:5  110101 0 cond:4 0 cc:2   000001 rs2:5
+-FMOVdfcc    10 rd:5  110101 0 cond:4 0 cc:2   000010 rs2:5
+-FMOVqfcc    10 rd:5  110101 0 cond:4 0 cc:2   000011 rs2:5
++FMOVdfcc    10 ..... 110101 0 cond:4 0 cc:2   000010 ..... \
++            rd=%dfp_rd rs2=%dfp_rs2
++FMOVqfcc    10 ..... 110101 0 cond:4 0 cc:2   000011 ..... \
++            rd=%qfp_rd rs2=%qfp_rs2
+ 
+ FMOVRs      10 rd:5  110101 rs1:5    0 cond:3  00101 rs2:5
+-FMOVRd      10 rd:5  110101 rs1:5    0 cond:3  00110 rs2:5
+-FMOVRq      10 rd:5  110101 rs1:5    0 cond:3  00111 rs2:5
++FMOVRd      10 ..... 110101 rs1:5    0 cond:3  00110 ..... \
++            rd=%dfp_rd rs2=%dfp_rs2
++FMOVRq      10 ..... 110101 rs1:5    0 cond:3  00111 ..... \
++            rd=%qfp_rd rs2=%qfp_rs2
+ 
+ FCMPs       10 000 cc:2 110101 rs1:5  0 0101 0001 rs2:5
+-FCMPd       10 000 cc:2 110101 rs1:5  0 0101 0010 rs2:5
+-FCMPq       10 000 cc:2 110101 rs1:5  0 0101 0011 rs2:5
++FCMPd       10 000 cc:2 110101 .....  0 0101 0010 .....    \
++            rs1=%dfp_rs1 rs2=%dfp_rs2
++FCMPq       10 000 cc:2 110101 .....  0 0101 0011 .....    \
++            rs1=%qfp_rs1 rs2=%qfp_rs2
+ FCMPEs      10 000 cc:2 110101 rs1:5  0 0101 0101 rs2:5
+-FCMPEd      10 000 cc:2 110101 rs1:5  0 0101 0110 rs2:5
+-FCMPEq      10 000 cc:2 110101 rs1:5  0 0101 0111 rs2:5
++FCMPEd      10 000 cc:2 110101 .....  0 0101 0110 .....    \
++            rs1=%dfp_rs1 rs2=%dfp_rs2
++FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
++            rs1=%qfp_rs1 rs2=%qfp_rs2
+ 
+ {
+   [
+@@ -328,74 +375,74 @@ FCMPEq      10 000 cc:2 110101 rs1:5  0 0101 0111 rs2:5
+ 
+     BMASK       10 ..... 110110 ..... 0 0001 1001 .....    @r_r_r
+ 
+-    FPCMPLE16   10 ..... 110110 ..... 0 0010 0000 .....    @r_r_r
+-    FPCMPNE16   10 ..... 110110 ..... 0 0010 0010 .....    @r_r_r
+-    FPCMPGT16   10 ..... 110110 ..... 0 0010 1000 .....    @r_r_r
+-    FPCMPEQ16   10 ..... 110110 ..... 0 0010 1010 .....    @r_r_r
+-    FPCMPLE32   10 ..... 110110 ..... 0 0010 0100 .....    @r_r_r
+-    FPCMPNE32   10 ..... 110110 ..... 0 0010 0110 .....    @r_r_r
+-    FPCMPGT32   10 ..... 110110 ..... 0 0010 1100 .....    @r_r_r
+-    FPCMPEQ32   10 ..... 110110 ..... 0 0010 1110 .....    @r_r_r
++    FPCMPLE16   10 ..... 110110 ..... 0 0010 0000 .....    @r_d_d
++    FPCMPNE16   10 ..... 110110 ..... 0 0010 0010 .....    @r_d_d
++    FPCMPGT16   10 ..... 110110 ..... 0 0010 1000 .....    @r_d_d
++    FPCMPEQ16   10 ..... 110110 ..... 0 0010 1010 .....    @r_d_d
++    FPCMPLE32   10 ..... 110110 ..... 0 0010 0100 .....    @r_d_d
++    FPCMPNE32   10 ..... 110110 ..... 0 0010 0110 .....    @r_d_d
++    FPCMPGT32   10 ..... 110110 ..... 0 0010 1100 .....    @r_d_d
++    FPCMPEQ32   10 ..... 110110 ..... 0 0010 1110 .....    @r_d_d
+ 
+-    FMUL8x16    10 ..... 110110 ..... 0 0011 0001 .....    @r_r_r
+-    FMUL8x16AU  10 ..... 110110 ..... 0 0011 0011 .....    @r_r_r
+-    FMUL8x16AL  10 ..... 110110 ..... 0 0011 0101 .....    @r_r_r
+-    FMUL8SUx16  10 ..... 110110 ..... 0 0011 0110 .....    @r_r_r
+-    FMUL8ULx16  10 ..... 110110 ..... 0 0011 0111 .....    @r_r_r
+-    FMULD8SUx16 10 ..... 110110 ..... 0 0011 1000 .....    @r_r_r
+-    FMULD8ULx16 10 ..... 110110 ..... 0 0011 1001 .....    @r_r_r
+-    FPACK32     10 ..... 110110 ..... 0 0011 1010 .....    @r_r_r
+-    FPACK16     10 ..... 110110 00000 0 0011 1011 .....    @r_r2
+-    FPACKFIX    10 ..... 110110 00000 0 0011 1101 .....    @r_r2
+-    PDIST       10 ..... 110110 ..... 0 0011 1110 .....    @r_r_r
++    FMUL8x16    10 ..... 110110 ..... 0 0011 0001 .....    @d_r_d
++    FMUL8x16AU  10 ..... 110110 ..... 0 0011 0011 .....    @d_r_r
++    FMUL8x16AL  10 ..... 110110 ..... 0 0011 0101 .....    @d_r_r
++    FMUL8SUx16  10 ..... 110110 ..... 0 0011 0110 .....    @d_d_d
++    FMUL8ULx16  10 ..... 110110 ..... 0 0011 0111 .....    @d_d_d
++    FMULD8SUx16 10 ..... 110110 ..... 0 0011 1000 .....    @d_r_r
++    FMULD8ULx16 10 ..... 110110 ..... 0 0011 1001 .....    @d_r_r
++    FPACK32     10 ..... 110110 ..... 0 0011 1010 .....    @d_d_d
++    FPACK16     10 ..... 110110 00000 0 0011 1011 .....    @r_d2
++    FPACKFIX    10 ..... 110110 00000 0 0011 1101 .....    @r_d2
++    PDIST       10 ..... 110110 ..... 0 0011 1110 .....    @d_d_d
+ 
+-    FALIGNDATAg 10 ..... 110110 ..... 0 0100 1000 .....    @r_r_r
+-    FPMERGE     10 ..... 110110 ..... 0 0100 1011 .....    @r_r_r
+-    BSHUFFLE    10 ..... 110110 ..... 0 0100 1100 .....    @r_r_r
+-    FEXPAND     10 ..... 110110 00000 0 0100 1101 .....    @r_r2
++    FALIGNDATAg 10 ..... 110110 ..... 0 0100 1000 .....    @d_d_d
++    FPMERGE     10 ..... 110110 ..... 0 0100 1011 .....    @d_r_r
++    BSHUFFLE    10 ..... 110110 ..... 0 0100 1100 .....    @d_d_d
++    FEXPAND     10 ..... 110110 00000 0 0100 1101 .....    @d_r2
+ 
+-    FSRCd       10 ..... 110110 ..... 0 0111 0100 00000    @r_r1  # FSRC1d
++    FSRCd       10 ..... 110110 ..... 0 0111 0100 00000    @d_d1  # FSRC1d
+     FSRCs       10 ..... 110110 ..... 0 0111 0101 00000    @r_r1  # FSRC1s
+-    FSRCd       10 ..... 110110 00000 0 0111 1000 .....    @r_r2  # FSRC2d
++    FSRCd       10 ..... 110110 00000 0 0111 1000 .....    @d_d2  # FSRC2d
+     FSRCs       10 ..... 110110 00000 0 0111 1001 .....    @r_r2  # FSRC2s
+-    FNOTd       10 ..... 110110 ..... 0 0110 1010 00000    @r_r1  # FNOT1d
++    FNOTd       10 ..... 110110 ..... 0 0110 1010 00000    @d_d1  # FNOT1d
+     FNOTs       10 ..... 110110 ..... 0 0110 1011 00000    @r_r1  # FNOT1s
+-    FNOTd       10 ..... 110110 00000 0 0110 0110 .....    @r_r2  # FNOT2d
++    FNOTd       10 ..... 110110 00000 0 0110 0110 .....    @d_d2  # FNOT2d
+     FNOTs       10 ..... 110110 00000 0 0110 0111 .....    @r_r2  # FNOT2s
+ 
+-    FPADD16     10 ..... 110110 ..... 0 0101 0000 .....    @r_r_r
++    FPADD16     10 ..... 110110 ..... 0 0101 0000 .....    @d_d_d
+     FPADD16s    10 ..... 110110 ..... 0 0101 0001 .....    @r_r_r
+-    FPADD32     10 ..... 110110 ..... 0 0101 0010 .....    @r_r_r
++    FPADD32     10 ..... 110110 ..... 0 0101 0010 .....    @d_d_d
+     FPADD32s    10 ..... 110110 ..... 0 0101 0011 .....    @r_r_r
+-    FPSUB16     10 ..... 110110 ..... 0 0101 0100 .....    @r_r_r
++    FPSUB16     10 ..... 110110 ..... 0 0101 0100 .....    @d_d_d
+     FPSUB16s    10 ..... 110110 ..... 0 0101 0101 .....    @r_r_r
+-    FPSUB32     10 ..... 110110 ..... 0 0101 0110 .....    @r_r_r
++    FPSUB32     10 ..... 110110 ..... 0 0101 0110 .....    @d_d_d
+     FPSUB32s    10 ..... 110110 ..... 0 0101 0111 .....    @r_r_r
+ 
+-    FNORd       10 ..... 110110 ..... 0 0110 0010 .....    @r_r_r
++    FNORd       10 ..... 110110 ..... 0 0110 0010 .....    @d_d_d
+     FNORs       10 ..... 110110 ..... 0 0110 0011 .....    @r_r_r
+-    FANDNOTd    10 ..... 110110 ..... 0 0110 0100 .....    @r_r_r   # FANDNOT2d
++    FANDNOTd    10 ..... 110110 ..... 0 0110 0100 .....    @d_d_d   # FANDNOT2d
+     FANDNOTs    10 ..... 110110 ..... 0 0110 0101 .....    @r_r_r   # FANDNOT2s
+-    FANDNOTd    10 ..... 110110 ..... 0 0110 1000 .....    @r_r_r_swap # ... 1d
++    FANDNOTd    10 ..... 110110 ..... 0 0110 1000 .....    @d_d_d_swap # ... 1d
+     FANDNOTs    10 ..... 110110 ..... 0 0110 1001 .....    @r_r_r_swap # ... 1s
+-    FXORd       10 ..... 110110 ..... 0 0110 1100 .....    @r_r_r
++    FXORd       10 ..... 110110 ..... 0 0110 1100 .....    @d_d_d
+     FXORs       10 ..... 110110 ..... 0 0110 1101 .....    @r_r_r
+-    FNANDd      10 ..... 110110 ..... 0 0110 1110 .....    @r_r_r
++    FNANDd      10 ..... 110110 ..... 0 0110 1110 .....    @d_d_d
+     FNANDs      10 ..... 110110 ..... 0 0110 1111 .....    @r_r_r
+-    FANDd       10 ..... 110110 ..... 0 0111 0000 .....    @r_r_r
++    FANDd       10 ..... 110110 ..... 0 0111 0000 .....    @d_d_d
+     FANDs       10 ..... 110110 ..... 0 0111 0001 .....    @r_r_r
+-    FXNORd      10 ..... 110110 ..... 0 0111 0010 .....    @r_r_r
++    FXNORd      10 ..... 110110 ..... 0 0111 0010 .....    @d_d_d
+     FXNORs      10 ..... 110110 ..... 0 0111 0011 .....    @r_r_r
+-    FORNOTd     10 ..... 110110 ..... 0 0111 0110 .....    @r_r_r    # FORNOT2d
++    FORNOTd     10 ..... 110110 ..... 0 0111 0110 .....    @d_d_d    # FORNOT2d
+     FORNOTs     10 ..... 110110 ..... 0 0111 0111 .....    @r_r_r    # FORNOT2s
+-    FORNOTd     10 ..... 110110 ..... 0 0111 1010 .....    @r_r_r_swap # ... 1d
++    FORNOTd     10 ..... 110110 ..... 0 0111 1010 .....    @d_d_d_swap # ... 1d
+     FORNOTs     10 ..... 110110 ..... 0 0111 1011 .....    @r_r_r_swap # ... 1s
+-    FORd        10 ..... 110110 ..... 0 0111 1100 .....    @r_r_r
++    FORd        10 ..... 110110 ..... 0 0111 1100 .....    @d_d_d
+     FORs        10 ..... 110110 ..... 0 0111 1101 .....    @r_r_r
+ 
+-    FZEROd      10 rd:5  110110 00000 0 0110 0000 00000
++    FZEROd      10 ..... 110110 00000 0 0110 0000 00000    rd=%dfp_rd
+     FZEROs      10 rd:5  110110 00000 0 0110 0001 00000
+-    FONEd       10 rd:5  110110 00000 0 0111 1110 00000
++    FONEd       10 ..... 110110 00000 0 0111 1110 00000    rd=%dfp_rd
+     FONEs       10 rd:5  110110 00000 0 0111 1111 00000
+   ]
+   NCP           10 ----- 110110 ----- --------- -----      # v8 CPop1
+@@ -407,9 +454,6 @@ NCP         10 ----- 110111 ----- --------- -----          # v8 CPop2
+ ## Major Opcode 11 -- load and store instructions
+ ##
+ 
+-%dfp_rd     25:5 !function=extract_dfpreg
+-%qfp_rd     25:5 !function=extract_qfpreg
+-
+ &r_r_ri_asi rd rs1 rs2_or_imm asi imm:bool
+ @r_r_ri_na  .. rd:5  ...... rs1:5 imm:1 rs2_or_imm:s13     &r_r_ri_asi asi=-1
+ @d_r_ri_na  .. ..... ...... rs1:5 imm:1 rs2_or_imm:s13     \
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 0f7f0260c4..a952a990cc 100644
+index 1eb1a6decf..f3c52c7c48 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -67,15 +67,21 @@
- # define gen_helper_fcmpeq8              ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpeq16             ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpeq32             ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_fcmpgt8              ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpgt16             ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpgt32             ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_fcmple8              ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmple16             ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmple32             ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpne8              ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpne16             ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpne32             ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpule8             ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_fcmpule16            ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_fcmpule32            ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fcmpugt8             ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_fcmpugt16            ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_fcmpugt32            ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fdtox                ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fexpand              ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fmul8sux16           ({ qemu_build_not_reached(); NULL; })
-@@ -5115,16 +5121,22 @@ TRANS(FPCMPLE16, VIS1, do_rdd, a, gen_helper_fcmple16)
- TRANS(FPCMPNE16, VIS1, do_rdd, a, gen_helper_fcmpne16)
- TRANS(FPCMPGT16, VIS1, do_rdd, a, gen_helper_fcmpgt16)
- TRANS(FPCMPEQ16, VIS1, do_rdd, a, gen_helper_fcmpeq16)
-+TRANS(FPCMPULE16, VIS4, do_rdd, a, gen_helper_fcmpule16)
-+TRANS(FPCMPUGT16, VIS4, do_rdd, a, gen_helper_fcmpugt16)
+@@ -190,14 +190,6 @@ typedef struct DisasContext {
+ #define GET_FIELDs(x,a,b) sign_extend (GET_FIELD(x,a,b), (b) - (a) + 1)
+ #define GET_FIELD_SPs(x,a,b) sign_extend (GET_FIELD_SP(x,a,b), ((b) - (a) + 1))
  
- TRANS(FPCMPLE32, VIS1, do_rdd, a, gen_helper_fcmple32)
- TRANS(FPCMPNE32, VIS1, do_rdd, a, gen_helper_fcmpne32)
- TRANS(FPCMPGT32, VIS1, do_rdd, a, gen_helper_fcmpgt32)
- TRANS(FPCMPEQ32, VIS1, do_rdd, a, gen_helper_fcmpeq32)
-+TRANS(FPCMPULE32, VIS4, do_rdd, a, gen_helper_fcmpule32)
-+TRANS(FPCMPUGT32, VIS4, do_rdd, a, gen_helper_fcmpugt32)
+-#ifdef TARGET_SPARC64
+-#define DFPREG(r) (((r & 1) << 5) | (r & 0x1e))
+-#define QFPREG(r) (((r & 1) << 5) | (r & 0x1c))
+-#else
+-#define DFPREG(r) (r & 0x1e)
+-#define QFPREG(r) (r & 0x1c)
+-#endif
+-
+ #define UA2005_HTRAP_MASK 0xff
+ #define V8_TRAP_MASK 0x7f
  
- TRANS(FPCMPEQ8, VIS3B, do_rdd, a, gen_helper_fcmpeq8)
- TRANS(FPCMPNE8, VIS3B, do_rdd, a, gen_helper_fcmpne8)
- TRANS(FPCMPULE8, VIS3B, do_rdd, a, gen_helper_fcmpule8)
- TRANS(FPCMPUGT8, VIS3B, do_rdd, a, gen_helper_fcmpugt8)
-+TRANS(FPCMPLE8, VIS4, do_rdd, a, gen_helper_fcmple8)
-+TRANS(FPCMPGT8, VIS4, do_rdd, a, gen_helper_fcmpgt8)
+@@ -240,34 +232,30 @@ static void gen_store_fpr_F(DisasContext *dc, unsigned int dst, TCGv_i32 v)
  
- TRANS(PDISTN, VIS3, do_rdd, a, gen_op_pdistn)
- TRANS(XMULX, VIS3, do_rrr, a, gen_helper_xmulx)
-diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
-index c927a054b8..371f5445a1 100644
---- a/target/sparc/vis_helper.c
-+++ b/target/sparc/vis_helper.c
-@@ -66,6 +66,7 @@ target_ulong helper_array8(target_ulong rs1, target_ulong rs2)
- #define VIS_W64(n) w[3 - (n)]
- #define VIS_SW64(n) sw[3 - (n)]
- #define VIS_L64(n) l[1 - (n)]
-+#define VIS_SL64(n) sl[1 - (n)]
- #define VIS_B32(n) b[3 - (n)]
- #define VIS_W32(n) w[1 - (n)]
+ static TCGv_i64 gen_load_fpr_D(DisasContext *dc, unsigned int src)
+ {
+-    src = DFPREG(src);
+     return cpu_fpr[src / 2];
+ }
+ 
+ static void gen_store_fpr_D(DisasContext *dc, unsigned int dst, TCGv_i64 v)
+ {
+-    dst = DFPREG(dst);
+     tcg_gen_mov_i64(cpu_fpr[dst / 2], v);
+     gen_update_fprs_dirty(dc, dst);
+ }
+ 
+ static TCGv_i64 gen_dest_fpr_D(DisasContext *dc, unsigned int dst)
+ {
+-    return cpu_fpr[DFPREG(dst) / 2];
++    return cpu_fpr[dst / 2];
+ }
+ 
+ static TCGv_i128 gen_load_fpr_Q(DisasContext *dc, unsigned int src)
+ {
+     TCGv_i128 ret = tcg_temp_new_i128();
+ 
+-    src = QFPREG(src);
+     tcg_gen_concat_i64_i128(ret, cpu_fpr[src / 2 + 1], cpu_fpr[src / 2]);
+     return ret;
+ }
+ 
+ static void gen_store_fpr_Q(DisasContext *dc, unsigned int dst, TCGv_i128 v)
+ {
+-    dst = DFPREG(dst);
+     tcg_gen_extr_i128_i64(cpu_fpr[dst / 2 + 1], cpu_fpr[dst / 2], v);
+     gen_update_fprs_dirty(dc, dst);
+ }
+@@ -2045,16 +2033,14 @@ static void gen_fmovd(DisasContext *dc, DisasCompare *cmp, int rd, int rs)
+ static void gen_fmovq(DisasContext *dc, DisasCompare *cmp, int rd, int rs)
+ {
+ #ifdef TARGET_SPARC64
+-    int qd = QFPREG(rd);
+-    int qs = QFPREG(rs);
+     TCGv c2 = tcg_constant_tl(cmp->c2);
+ 
+-    tcg_gen_movcond_i64(cmp->cond, cpu_fpr[qd / 2], cmp->c1, c2,
+-                        cpu_fpr[qs / 2], cpu_fpr[qd / 2]);
+-    tcg_gen_movcond_i64(cmp->cond, cpu_fpr[qd / 2 + 1], cmp->c1, c2,
+-                        cpu_fpr[qs / 2 + 1], cpu_fpr[qd / 2 + 1]);
++    tcg_gen_movcond_i64(cmp->cond, cpu_fpr[rd / 2], cmp->c1, c2,
++                        cpu_fpr[rs / 2], cpu_fpr[rd / 2]);
++    tcg_gen_movcond_i64(cmp->cond, cpu_fpr[rd / 2 + 1], cmp->c1, c2,
++                        cpu_fpr[rs / 2 + 1], cpu_fpr[rd / 2 + 1]);
+ 
+-    gen_update_fprs_dirty(dc, qd);
++    gen_update_fprs_dirty(dc, rd);
  #else
-@@ -74,6 +75,7 @@ target_ulong helper_array8(target_ulong rs1, target_ulong rs2)
- #define VIS_W64(n) w[n]
- #define VIS_SW64(n) sw[n]
- #define VIS_L64(n) l[n]
-+#define VIS_SL64(n) sl[n]
- #define VIS_B32(n) b[n]
- #define VIS_W32(n) w[n]
+     qemu_build_not_reached();
  #endif
-@@ -84,6 +86,7 @@ typedef union {
-     uint16_t w[4];
-     int16_t sw[4];
-     uint32_t l[2];
-+    int32_t sl[2];
-     uint64_t ll;
-     float64 d;
- } VIS64;
-@@ -198,47 +201,6 @@ uint64_t helper_fexpand(uint32_t src2)
-     return d.ll;
+@@ -2086,12 +2072,20 @@ static void gen_load_trap_state_at_tl(TCGv_ptr r_tsptr)
+ 
+ static int extract_dfpreg(DisasContext *dc, int x)
+ {
+-    return DFPREG(x);
++    int r = x & 0x1e;
++#ifdef TARGET_SPARC64
++    r |= (x & 1) << 5;
++#endif
++    return r;
  }
  
--#define VIS_CMPHELPER(name, F)                                    \
--    uint64_t name##16(uint64_t src1, uint64_t src2)               \
--    {                                                             \
--        VIS64 s, d;                                               \
--                                                                  \
--        s.ll = src1;                                              \
--        d.ll = src2;                                              \
--                                                                  \
--        d.VIS_W64(0) = F(s.VIS_W64(0), d.VIS_W64(0)) ? 1 : 0;     \
--        d.VIS_W64(0) |= F(s.VIS_W64(1), d.VIS_W64(1)) ? 2 : 0;    \
--        d.VIS_W64(0) |= F(s.VIS_W64(2), d.VIS_W64(2)) ? 4 : 0;    \
--        d.VIS_W64(0) |= F(s.VIS_W64(3), d.VIS_W64(3)) ? 8 : 0;    \
--        d.VIS_W64(1) = d.VIS_W64(2) = d.VIS_W64(3) = 0;           \
--                                                                  \
--        return d.ll;                                              \
--    }                                                             \
--                                                                  \
--    uint64_t name##32(uint64_t src1, uint64_t src2)               \
--    {                                                             \
--        VIS64 s, d;                                               \
--                                                                  \
--        s.ll = src1;                                              \
--        d.ll = src2;                                              \
--                                                                  \
--        d.VIS_L64(0) = F(s.VIS_L64(0), d.VIS_L64(0)) ? 1 : 0;     \
--        d.VIS_L64(0) |= F(s.VIS_L64(1), d.VIS_L64(1)) ? 2 : 0;    \
--        d.VIS_L64(1) = 0;                                         \
--                                                                  \
--        return d.ll;                                              \
--    }
--
--#define FCMPGT(a, b) ((a) > (b))
--#define FCMPEQ(a, b) ((a) == (b))
--#define FCMPLE(a, b) ((a) <= (b))
--#define FCMPNE(a, b) ((a) != (b))
--
--VIS_CMPHELPER(helper_fcmpgt, FCMPGT)
--VIS_CMPHELPER(helper_fcmpeq, FCMPEQ)
--VIS_CMPHELPER(helper_fcmple, FCMPLE)
--VIS_CMPHELPER(helper_fcmpne, FCMPNE)
--
- uint64_t helper_fcmpeq8(uint64_t src1, uint64_t src2)
+ static int extract_qfpreg(DisasContext *dc, int x)
  {
-     uint64_t a = src1 ^ src2;
-@@ -260,6 +222,25 @@ uint64_t helper_fcmpne8(uint64_t src1, uint64_t src2)
-     return helper_fcmpeq8(src1, src2) ^ 0xff;
+-    return QFPREG(x);
++    int r = x & 0x1c;
++#ifdef TARGET_SPARC64
++    r |= (x & 1) << 5;
++#endif
++    return r;
  }
  
-+uint64_t helper_fcmple8(uint64_t src1, uint64_t src2)
-+{
-+    VIS64 s1, s2;
-+    uint64_t r = 0;
-+
-+    s1.ll = src1;
-+    s2.ll = src2;
-+
-+    for (int i = 0; i < 8; ++i) {
-+        r |= (s1.VIS_SB64(i) <= s2.VIS_SB64(i)) << i;
-+    }
-+    return r;
-+}
-+
-+uint64_t helper_fcmpgt8(uint64_t src1, uint64_t src2)
-+{
-+    return helper_fcmple8(src1, src2) ^ 0xff;
-+}
-+
- uint64_t helper_fcmpule8(uint64_t src1, uint64_t src2)
- {
-     VIS64 s1, s2;
-@@ -279,6 +260,113 @@ uint64_t helper_fcmpugt8(uint64_t src1, uint64_t src2)
-     return helper_fcmpule8(src1, src2) ^ 0xff;
- }
+ /* Include the auto-generated decoder.  */
+@@ -4253,7 +4247,6 @@ static bool do_dc(DisasContext *dc, int rd, int64_t c)
+         return true;
+     }
  
-+uint64_t helper_fcmpeq16(uint64_t src1, uint64_t src2)
-+{
-+    uint64_t a = src1 ^ src2;
-+    uint64_t m = 0x7fff7fff7fff7fffULL;
-+    uint64_t c = ~(((a & m) + m) | a | m);
-+
-+    /* a...............b...............c...............d............... */
-+    c |= c << 15;
-+    /* ab..............bc..............cd..............d............... */
-+    c |= c << 30;
-+    /* abcd............bcd.............cd..............d............... */
-+    return c >> 60;
-+}
-+
-+uint64_t helper_fcmpne16(uint64_t src1, uint64_t src2)
-+{
-+    return helper_fcmpeq16(src1, src2) ^ 0xf;
-+}
-+
-+uint64_t helper_fcmple16(uint64_t src1, uint64_t src2)
-+{
-+    VIS64 s1, s2;
-+    uint64_t r = 0;
-+
-+    s1.ll = src1;
-+    s2.ll = src2;
-+
-+    for (int i = 0; i < 4; ++i) {
-+        r |= (s1.VIS_SW64(i) <= s2.VIS_SW64(i)) << i;
-+    }
-+    return r;
-+}
-+
-+uint64_t helper_fcmpgt16(uint64_t src1, uint64_t src2)
-+{
-+    return helper_fcmple16(src1, src2) ^ 0xf;
-+}
-+
-+uint64_t helper_fcmpule16(uint64_t src1, uint64_t src2)
-+{
-+    VIS64 s1, s2;
-+    uint64_t r = 0;
-+
-+    s1.ll = src1;
-+    s2.ll = src2;
-+
-+    for (int i = 0; i < 4; ++i) {
-+        r |= (s1.VIS_W64(i) <= s2.VIS_W64(i)) << i;
-+    }
-+    return r;
-+}
-+
-+uint64_t helper_fcmpugt16(uint64_t src1, uint64_t src2)
-+{
-+    return helper_fcmpule16(src1, src2) ^ 0xf;
-+}
-+
-+uint64_t helper_fcmpeq32(uint64_t src1, uint64_t src2)
-+{
-+    uint64_t a = src1 ^ src2;
-+    return ((uint32_t)a == 0) | (a >> 32 ? 0 : 2);
-+}
-+
-+uint64_t helper_fcmpne32(uint64_t src1, uint64_t src2)
-+{
-+    uint64_t a = src1 ^ src2;
-+    return ((uint32_t)a != 0) | (a >> 32 ? 2 : 0);
-+}
-+
-+uint64_t helper_fcmple32(uint64_t src1, uint64_t src2)
-+{
-+    VIS64 s1, s2;
-+    uint64_t r = 0;
-+
-+    s1.ll = src1;
-+    s2.ll = src2;
-+
-+    for (int i = 0; i < 2; ++i) {
-+        r |= (s1.VIS_SL64(i) <= s2.VIS_SL64(i)) << i;
-+    }
-+    return r;
-+}
-+
-+uint64_t helper_fcmpgt32(uint64_t src1, uint64_t src2)
-+{
-+    return helper_fcmple32(src1, src2) ^ 3;
-+}
-+
-+uint64_t helper_fcmpule32(uint64_t src1, uint64_t src2)
-+{
-+    VIS64 s1, s2;
-+    uint64_t r = 0;
-+
-+    s1.ll = src1;
-+    s2.ll = src2;
-+
-+    for (int i = 0; i < 2; ++i) {
-+        r |= (s1.VIS_L64(i) <= s2.VIS_L64(i)) << i;
-+    }
-+    return r;
-+}
-+
-+uint64_t helper_fcmpugt32(uint64_t src1, uint64_t src2)
-+{
-+    return helper_fcmpule32(src1, src2) ^ 3;
-+}
-+
- uint64_t helper_pdist(uint64_t sum, uint64_t src1, uint64_t src2)
- {
-     int i;
+-    rd = DFPREG(rd);
+     tcg_gen_movi_i64(cpu_fpr[rd / 2], c);
+     gen_update_fprs_dirty(dc, rd);
+     return advance_pc(dc);
 -- 
 2.34.1
 
