@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A43EC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 12:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA3CC25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 15:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBCxs-0006Pb-40; Sun, 26 May 2024 08:27:04 -0400
+	id 1sBGBz-0001ZT-SD; Sun, 26 May 2024 11:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBCxn-0006Na-Pk; Sun, 26 May 2024 08:26:59 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBCxl-0001QQ-PT; Sun, 26 May 2024 08:26:59 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-36db3304053so43676885ab.2; 
- Sun, 26 May 2024 05:26:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716726416; x=1717331216; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sJs8mNerfby91Jg60eM1BlVbn1gYksWnaaJHBA5aado=;
- b=eqYF71ftc9vmL0WS2SvQNZWJYy2CXb/KVhmcOTLQ78gUq5rerBCUaYzApWRhaxTio1
- vSFoTysRatYZYfvpNwc15xQbhzHxWQy3+a+QqhP8QIzhOqOP9xYHrvB7+Y4XojUSqlYk
- u1GaFthDSdlD6opBKVGuLXxyTDlXSXaFiPPsMui3Gr3SskKtjdxQx0jqVMGD/mDifzmu
- nGFov5kLsRU6SHjdIlroGx7AcEY7Fwio+GzaXlmsou8o/t7EkyP0ehVBz2nRlX7Dd8o/
- RKxUf9q9XIiFuudLep0aPKfiUX2vk6nJuUWnQzSvZ6UXyqNqB11UhtJhHLiQ7fVXBFPj
- 6L6w==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sBGBy-0001Yp-5F
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 11:53:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sBGBw-0007mM-HB
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 11:53:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716738827;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=03ppgue1ufvN1p0s4VRe0ecv8sXC54JScjHDwel6KEY=;
+ b=B/eF2svukqjrveN8ctGHK77kuelcQNLseN+7Ke3ebK5mmftCjTD96ZeCmHiXFfcnqf1pQq
+ pEcCXsFkK+K2U5innyzQcd1wnoCDHXzF1SwtcZu9lQhcjXgmn3dMAzuWlph0kZ/NSWGbW0
+ yTsIhCT5nU26j3b26lzzpIjRnYOCnPY=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-135-cD8C78-PMkiIg_VALOlC-w-1; Sun, 26 May 2024 11:53:45 -0400
+X-MC-Unique: cD8C78-PMkiIg_VALOlC-w-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5785f7b847cso2159482a12.0
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 08:53:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716726416; x=1717331216;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sJs8mNerfby91Jg60eM1BlVbn1gYksWnaaJHBA5aado=;
- b=DJ3wnH1Puq/09t9bgL+VgK5+huyFMXUOihmKLxTSbYojrQVhKnPLdT5qYFejeTOSAm
- LiWxefO7T5KR0ACfncHMnNYNepCOxvU0mN+5JYVLUVx9dDAk4fjompCffynJvMIsk1S2
- vxHZVrFtntTctXcMP8quF0m3WR7mT8d9nMMn1toUlwYC0wLkAEIFz+pOdUeM57oXA1f0
- OCpHAgSYzSIzWfwub3RnVzHDpT1lNje7zw0nfx0DJ8xawnzuV+31x6P7A8cOYvbGUBSt
- yoj5qjcwxZkN2llpaU2QwpUTuTX4tKllQVTQrwTG0KAS/QwpO31rcnu/q94OEWLm9TR3
- mGhw==
+ d=1e100.net; s=20230601; t=1716738824; x=1717343624;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=03ppgue1ufvN1p0s4VRe0ecv8sXC54JScjHDwel6KEY=;
+ b=DIGeGEOuoSsR7poTUxpcAvew8LNpV/DCUqfCb96B2ce8DJxh8oQYHjGwE86KGX0EDh
+ t+lrhRAjfgctpxSqlYchP+57rXmKZUIQszP7XSSq7e2KgXdoofFp48Hz5f5azijXSk8d
+ j347ugJuQh4C1c04jjcwX6Q8aowCepfAOroXib81sliOkLzfzRuInGMwR7cFG82KEHAr
+ lR+/0g4FeclDK+tTklhTgNMyK3ttVpg87kyVTrcXrsCr0DzdCZXqPbATjKQnl4JKTJ6v
+ Gzkts3P8N2mafNKUcClbo+IP1E3llK0h9F9/6SfYEn3zEi1xNnhKuYczzndH9PEzDk/+
+ RY7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBgXaznLjimgHyBeOma3TgMpWTOvYzsKBN78i+WwH6OYRDCQV+FXod132TKrf1HyAyiJlQs0UqsS9YAgHIuq9bNYF6Rlo=
-X-Gm-Message-State: AOJu0YwPqa35cpp/fCAogZKW4EL1IfGLf6C20Lbh+pTAKK3bPq61a3Z6
- S2is9VZeL8ecv35b4fHm+2/E/9JcZjkGAMRRh53uKwsIRCMh9DNhxvfeQg==
-X-Google-Smtp-Source: AGHT+IG41vKOIlqozmh0U3aCQffMHMxm41VY/Wwlku25LyM0uCAfFDQyVEZ7fPBOChhGtLBy7+boPw==
-X-Received: by 2002:a05:6e02:1aa3:b0:36b:2438:8805 with SMTP id
- e9e14a558f8ab-3737b2f77aamr82611255ab.12.1716726415739; 
- Sun, 26 May 2024 05:26:55 -0700 (PDT)
-Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
+ AJvYcCUetadoc0oB4dOVdCFFRwjR67hmyPVj20GQEGNlvynlEF5LxCfbGIz9kxx5okLBDZ4rqzdu0doj00qD8xlLnWNP10NFJnI=
+X-Gm-Message-State: AOJu0YwW0AfakkRjyJ4M1oRiujIuLzz3+L+/FaodjyxE5zbvDR52VwrX
+ HbkvGpWJ5vKvLYE3uyLR/KsXWXyxcEW1b52G4DC0FD4Q1SbRjAvVF/Mh7SzvCSSvp5XvjxfG78Y
+ XuHm3yOSvrdK9YqoO4iJ/3fHKOc90mVhSbkdaPWujtGu4p/rs/+wq
+X-Received: by 2002:a50:96c3:0:b0:578:2474:8e2b with SMTP id
+ 4fb4d7f45d1cf-57843d8fd26mr7228022a12.10.1716738824381; 
+ Sun, 26 May 2024 08:53:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6/JiZo4UxLNO1p3hK/pbANZZPizzojSJ6CuOErlUwxNOx9+fg9e8BFmeEPImm2MhDQ8vhpg==
+X-Received: by 2002:a50:96c3:0:b0:578:2474:8e2b with SMTP id
+ 4fb4d7f45d1cf-57843d8fd26mr7228005a12.10.1716738823876; 
+ Sun, 26 May 2024 08:53:43 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f28:4600:d3a7:6c26:54cf:e01e?
+ (p200300d82f284600d3a76c2654cfe01e.dip0.t-ipconnect.de.
+ [2003:d8:2f28:4600:d3a7:6c26:54cf:e01e])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fcfe648bsm3457182b3a.168.2024.05.26.05.26.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 05:26:55 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-Subject: [RFC PATCH 09/10] ppc/pnv: Implement POWER10 PC xscom registers for
- direct controls
-Date: Sun, 26 May 2024 22:26:10 +1000
-Message-ID: <20240526122612.473476-10-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240526122612.473476-1-npiggin@gmail.com>
-References: <20240526122612.473476-1-npiggin@gmail.com>
+ 4fb4d7f45d1cf-579d0d5aba4sm725967a12.71.2024.05.26.08.53.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 May 2024 08:53:43 -0700 (PDT)
+Message-ID: <3bf1025b-021a-42fa-a4cc-d3cd9ea90676@redhat.com>
+Date: Sun, 26 May 2024 17:53:41 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/3] hw/intc/s390_flic: Migrate pending state
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-s390x@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240525131241.378473-1-npiggin@gmail.com>
+ <20240525131241.378473-2-npiggin@gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20240525131241.378473-2-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,259 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PC unit in the processor core contains xscom registers that provide
-low level status and control of the CPU.
+Am 25.05.24 um 15:12 schrieb Nicholas Piggin:
+> The flic pending state is not migrated, so if the machine is migrated
+> while an interrupt is pending, it can be lost. This shows up in
+> qtest migration test, an extint is pending (due to console writes?)
+> and the CPU waits via s390_cpu_set_psw and expects the interrupt to
+> wake it. However when the flic pending state is lost, s390_cpu_has_int
+> returns false, so s390_cpu_exec_interrupt falls through to halting
+> again.
+> 
+> Fix this by migrating pending. This prevents the qtest from hanging.
+> Does service_param need to be migrated? Or the IO lists?
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   hw/intc/s390_flic.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+> index 6771645699..b70cf2295a 100644
+> --- a/hw/intc/s390_flic.c
+> +++ b/hw/intc/s390_flic.c
+> @@ -369,6 +369,7 @@ static const VMStateDescription qemu_s390_flic_vmstate = {
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT8(simm, QEMUS390FLICState),
+>           VMSTATE_UINT8(nimm, QEMUS390FLICState),
+> +        VMSTATE_UINT32(pending, QEMUS390FLICState),
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
 
-This implements "direct controls" sufficient for OPAL (skiboot) firmware
-use, which is to stop threads and send them non-maskable IPIs in the
-form of SRESET interrupts.
+Likely you have to handle this using QEMU compat machines.
 
-POWER10 is sufficiently different (particularly QME and special wakeup)
-from POWER9 that it is not trivial to implement by reusing the code.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- include/hw/core/cpu.h     |  8 ++++
- include/hw/ppc/pnv.h      |  2 +
- include/hw/ppc/pnv_core.h |  3 ++
- hw/ppc/pnv.c              |  7 +++-
- hw/ppc/pnv_core.c         | 88 ++++++++++++++++++++++++++++++++++++---
- system/cpus.c             | 10 +++++
- 6 files changed, 112 insertions(+), 6 deletions(-)
-
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index bb398e8237..52a8fc65cb 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -974,6 +974,14 @@ void cpu_reset_interrupt(CPUState *cpu, int mask);
-  */
- void cpu_exit(CPUState *cpu);
- 
-+/**
-+ * cpu_pause:
-+ * @cpu: The CPU to pause.
-+ *
-+ * Resumes CPU, i.e. puts CPU into stopped state.
-+ */
-+void cpu_pause(CPUState *cpu);
-+
- /**
-  * cpu_resume:
-  * @cpu: The CPU to resume.
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 93ecb062b4..bec603f1a8 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -111,6 +111,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb);
- #define PNV_FDT_ADDR          0x01000000
- #define PNV_TIMEBASE_FREQ     512000000ULL
- 
-+void pnv_cpu_do_nmi(CPUState *cs);
-+
- /*
-  * BMC helpers
-  */
-diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-index 39f8f33e6c..9599da15ea 100644
---- a/include/hw/ppc/pnv_core.h
-+++ b/include/hw/ppc/pnv_core.h
-@@ -109,6 +109,9 @@ OBJECT_DECLARE_TYPE(PnvQuad, PnvQuadClass, PNV_QUAD)
- struct PnvQuad {
-     DeviceState parent_obj;
- 
-+    bool special_wakeup_done;
-+    bool special_wakeup[4];
-+
-     uint32_t quad_id;
-     MemoryRegion xscom_regs;
-     MemoryRegion xscom_qme_regs;
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 5364c55bbb..765142965f 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2700,12 +2700,17 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
-     }
- }
- 
-+void pnv_cpu_do_nmi(CPUState *cs)
-+{
-+    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
-+}
-+
- static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
- {
-     CPUState *cs;
- 
-     CPU_FOREACH(cs) {
--        async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
-+        pnv_cpu_do_nmi(cs);
-     }
- }
- 
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 10417d92ae..835c35d90b 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -184,16 +184,40 @@ static const MemoryRegionOps pnv_core_power9_xscom_ops = {
-  */
- 
- #define PNV10_XSCOM_EC_CORE_THREAD_STATE    0x412
-+#define PNV10_XSCOM_EC_CORE_THREAD_INFO     0x413
-+#define PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS 0x449
-+#define PNV10_XSCOM_EC_CORE_RAS_STATUS      0x454
- 
- static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
-                                            unsigned int width)
- {
-+    PnvCore *pc = PNV_CORE(opaque);
-+    int nr_threads = CPU_CORE(pc)->nr_threads;
-+    int i;
-     uint32_t offset = addr >> 3;
-     uint64_t val = 0;
- 
-     switch (offset) {
-     case PNV10_XSCOM_EC_CORE_THREAD_STATE:
--        val = 0;
-+        for (i = 0; i < nr_threads; i++) {
-+            PowerPCCPU *cpu = pc->threads[i];
-+            CPUState *cs = CPU(cpu);
-+
-+            if (cs->halted) {
-+                val |= PPC_BIT(56 + i);
-+            }
-+        }
-+        break;
-+    case PNV10_XSCOM_EC_CORE_THREAD_INFO:
-+        break;
-+    case PNV10_XSCOM_EC_CORE_RAS_STATUS:
-+        for (i = 0; i < nr_threads; i++) {
-+            PowerPCCPU *cpu = pc->threads[i];
-+            CPUState *cs = CPU(cpu);
-+            if (cs->stopped) {
-+                val |= PPC_BIT(0 + 8*i) | PPC_BIT(1 + 8*i);
-+            }
-+        }
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
-@@ -206,9 +230,45 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
- static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
-                                          uint64_t val, unsigned int width)
- {
-+    PnvCore *pc = PNV_CORE(opaque);
-+    int nr_threads = CPU_CORE(pc)->nr_threads;
-+    int i;
-     uint32_t offset = addr >> 3;
- 
-     switch (offset) {
-+    case PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS:
-+        for (i = 0; i < nr_threads; i++) {
-+            PowerPCCPU *cpu = pc->threads[i];
-+            CPUState *cs = CPU(cpu);
-+
-+            if (val & PPC_BIT(7 + 8*i)) { /* stop */
-+                val &= ~PPC_BIT(7 + 8*i);
-+                cpu_pause(cs);
-+            }
-+            if (val & PPC_BIT(6 + 8*i)) { /* start */
-+                val &= ~PPC_BIT(6 + 8*i);
-+                cpu_resume(cs);
-+            }
-+            if (val & PPC_BIT(4 + 8*i)) { /* sreset */
-+                val &= ~PPC_BIT(4 + 8*i);
-+                pnv_cpu_do_nmi(cs);
-+            }
-+            if (val & PPC_BIT(3 + 8*i)) { /* clear maint */
-+                /*
-+                 * Hardware has very particular cases for where clear maint
-+                 * must be used and where start must be used to resume a
-+                 * thread. These are not modelled exactly, just treat
-+                 * this and start the same.
-+                 */
-+                val &= ~PPC_BIT(3 + 8*i);
-+                cpu_resume(cs);
-+            }
-+        }
-+        if (val) {
-+            qemu_log_mask(LOG_UNIMP, "%s: unimp bits in DIRECT_CONTROLS 0x%016lx\n", __func__, val);
-+        }
-+        break;
-+
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
-                       offset);
-@@ -525,6 +585,7 @@ static const MemoryRegionOps pnv_quad_power10_xscom_ops = {
- static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
-                                             unsigned int width)
- {
-+    PnvQuad *eq = PNV_QUAD(opaque);
-     uint32_t offset = addr >> 3;
-     uint64_t val = -1;
- 
-@@ -532,10 +593,14 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
-      * Forth nibble selects the core within a quad, mask it to process read
-      * for any core.
-      */
--    switch (offset & ~0xf000) {
--    case P10_QME_SPWU_HYP:
-+    switch (offset & ~PPC_BITMASK32(16, 19)) {
-     case P10_QME_SSH_HYP:
--        return 0;
-+        val = 0;
-+        if (eq->special_wakeup_done) {
-+            val |= PPC_BIT(1); /* SPWU DONE */
-+            val |= PPC_BIT(4); /* SSH SPWU DONE */
-+        }
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
-                       offset);
-@@ -547,9 +612,22 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
- static void pnv_qme_power10_xscom_write(void *opaque, hwaddr addr,
-                                          uint64_t val, unsigned int width)
- {
-+    PnvQuad *eq = PNV_QUAD(opaque);
-     uint32_t offset = addr >> 3;
-+    bool set;
-+    int i;
- 
--    switch (offset) {
-+    switch (offset & ~PPC_BITMASK32(16, 19)) {
-+    case P10_QME_SPWU_HYP:
-+        set = !!(val & PPC_BIT(0));
-+        eq->special_wakeup_done = set;
-+        for (i = 0; i < 4; i++) {
-+            /* These bits select cores in the quad */
-+            if (offset & PPC_BIT32(16 + i)) {
-+                eq->special_wakeup[i] = set;
-+            }
-+        }
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
-                       offset);
-diff --git a/system/cpus.c b/system/cpus.c
-index 68d161d96b..1ca18ae7ea 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -602,6 +602,16 @@ void pause_all_vcpus(void)
-     bql_lock();
- }
- 
-+void cpu_pause(CPUState *cpu)
-+{
-+    if (qemu_cpu_is_self(cpu)) {
-+        qemu_cpu_stop(cpu, true);
-+    } else {
-+        cpu->stop = true;
-+        qemu_cpu_kick(cpu);
-+    }
-+}
-+
- void cpu_resume(CPUState *cpu)
- {
-     cpu->stop = false;
 -- 
-2.43.0
+Thanks,
+
+David / dhildenb
 
 
