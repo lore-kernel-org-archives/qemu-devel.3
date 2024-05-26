@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3D6C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D8DC25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN4B-000436-5v; Sun, 26 May 2024 19:14:15 -0400
+	id 1sBN3s-0003uc-HI; Sun, 26 May 2024 19:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN49-00040p-Mo; Sun, 26 May 2024 19:14:13 -0400
+ id 1sBN3r-0003sX-5D; Sun, 26 May 2024 19:13:55 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN46-0003Uv-SX; Sun, 26 May 2024 19:14:12 -0400
+ id 1sBN3n-0003ar-Ux; Sun, 26 May 2024 19:13:53 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 377F44E6000;
- Mon, 27 May 2024 01:12:38 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 72A504E602D;
+ Mon, 27 May 2024 01:12:43 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id aD5tb5RZVQPE; Mon, 27 May 2024 01:12:36 +0200 (CEST)
+ with ESMTP id AGui8gWkR2J5; Mon, 27 May 2024 01:12:41 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3DB594E6001; Mon, 27 May 2024 01:12:36 +0200 (CEST)
-Message-Id: <3e66168f9d3d1667b5a1d81f74cf019ecfdd9c62.1716763435.git.balaton@eik.bme.hu>
+ id 7BEC84E602E; Mon, 27 May 2024 01:12:41 +0200 (CEST)
+Message-Id: <baae5a07e11fe460f315e6ae4a1126c14b8988e2.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 01/43] target/ppc: Reorganise and rename ppc_hash32_pp_prot()
+Subject: [PATCH 06/43] target/ppc/mmu_common.c: Remove yet another single use
+ local variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:12:36 +0200 (CEST)
+Date: Mon, 27 May 2024 01:12:41 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,107 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reorganise ppc_hash32_pp_prot() swapping the if legs so it does not
-test for negative first and clean up to make it shorter. Also rename
-it to ppc_hash32_prot().
+In ppc6xx_tlb_pte_check() the pp variable is used only once to pass it
+to a function parameter with the same name. Remove the local and
+inline the value. Also use named constant for the hex value to make it
+clearer.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu-hash32.c |  2 +-
- target/ppc/mmu-hash32.h | 35 +++++++++++++----------------------
- target/ppc/mmu_common.c |  2 +-
- 3 files changed, 15 insertions(+), 24 deletions(-)
+ target/ppc/mmu_common.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index d5f2057eb1..8a446c8a7d 100644
---- a/target/ppc/mmu-hash32.c
-+++ b/target/ppc/mmu-hash32.c
-@@ -45,7 +45,7 @@ static int ppc_hash32_pte_prot(int mmu_idx,
-     key = !!(mmuidx_pr(mmu_idx) ? (sr & SR32_KP) : (sr & SR32_KS));
-     pp = pte.pte1 & HPTE32_R_PP;
- 
--    return ppc_hash32_pp_prot(key, pp, !!(sr & SR32_NX));
-+    return ppc_hash32_prot(key, pp, !!(sr & SR32_NX));
- }
- 
- static target_ulong hash32_bat_size(int mmu_idx,
-diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
-index f0ce6951b4..bc4eedbecc 100644
---- a/target/ppc/mmu-hash32.h
-+++ b/target/ppc/mmu-hash32.h
-@@ -102,49 +102,40 @@ static inline void ppc_hash32_store_hpte1(PowerPCCPU *cpu,
-     stl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2, pte1);
- }
- 
--static inline int ppc_hash32_pp_prot(bool key, int pp, bool nx)
-+static inline int ppc_hash32_prot(bool key, int pp, bool nx)
- {
-     int prot;
- 
--    if (key == 0) {
-+    if (key) {
-         switch (pp) {
-         case 0x0:
--        case 0x1:
--        case 0x2:
--            prot = PAGE_READ | PAGE_WRITE;
-+            prot = 0;
-             break;
--
-+        case 0x1:
-         case 0x3:
-             prot = PAGE_READ;
-             break;
--
-+        case 0x2:
-+            prot = PAGE_READ | PAGE_WRITE;
-+            break;
-         default:
--            abort();
-+            g_assert_not_reached();
-         }
-     } else {
-         switch (pp) {
-         case 0x0:
--            prot = 0;
--            break;
--
-         case 0x1:
--        case 0x3:
--            prot = PAGE_READ;
--            break;
--
-         case 0x2:
-             prot = PAGE_READ | PAGE_WRITE;
-             break;
--
-+        case 0x3:
-+            prot = PAGE_READ;
-+            break;
-         default:
--            abort();
-+            g_assert_not_reached();
-         }
-     }
--    if (nx == 0) {
--        prot |= PAGE_EXEC;
--    }
--
--    return prot;
-+    return nx ? prot : prot | PAGE_EXEC;
- }
- 
- typedef struct {
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index e2542694f0..08c5b61f76 100644
+index b21f52290f..799d2ced9b 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -120,7 +120,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+@@ -98,13 +98,12 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                                 target_ulong pte1, int pteh,
+                                 MMUAccessType access_type)
+ {
+-    int ret, pp;
++    int ret;
+ 
+     ret = -1;
+     /* Check validity and table match */
+     if (pte_is_valid(pte0) && ((pte0 >> 6) & 1) == pteh) {
+         /* Check vsid & api */
+-        pp = pte1 & 0x00000003;
+         if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
+             if (ctx->raddr != (hwaddr)-1ULL) {
+                 /* all matches should have equal RPN, WIMG & PP */
+@@ -115,7 +114,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
              }
              /* Keep the matching PTE information */
              ctx->raddr = pte1;
--            ctx->prot = ppc_hash32_pp_prot(ctx->key, pp, ctx->nx);
-+            ctx->prot = ppc_hash32_prot(ctx->key, pp, ctx->nx);
+-            ctx->prot = ppc_hash32_prot(ctx->key, pp, ctx->nx);
++            ctx->prot = ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, ctx->nx);
              if (check_prot_access_type(ctx->prot, access_type)) {
                  /* Access granted */
                  qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
