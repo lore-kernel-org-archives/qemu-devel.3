@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1480AC25B78
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3D6C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN4Q-0004Bq-UZ; Sun, 26 May 2024 19:14:31 -0400
+	id 1sBN4B-000436-5v; Sun, 26 May 2024 19:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4I-000470-2G; Sun, 26 May 2024 19:14:22 -0400
+ id 1sBN49-00040p-Mo; Sun, 26 May 2024 19:14:13 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4D-0003f3-Jg; Sun, 26 May 2024 19:14:20 -0400
+ id 1sBN46-0003Uv-SX; Sun, 26 May 2024 19:14:12 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0D9594E61E9;
- Mon, 27 May 2024 01:12:55 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 377F44E6000;
+ Mon, 27 May 2024 01:12:38 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Co3m3HprP7vu; Mon, 27 May 2024 01:12:53 +0200 (CEST)
+ with ESMTP id aD5tb5RZVQPE; Mon, 27 May 2024 01:12:36 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0DC344E61D4; Mon, 27 May 2024 01:12:53 +0200 (CEST)
-Message-Id: <9673b851e2644f7d808fb034ec6cbd1470540381.1716763435.git.balaton@eik.bme.hu>
+ id 3DB594E6001; Mon, 27 May 2024 01:12:36 +0200 (CEST)
+Message-Id: <3e66168f9d3d1667b5a1d81f74cf019ecfdd9c62.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 17/43] target/ppc/mmu_common.c: Remove ptem field from
- mmu_ctx_t
+Subject: [PATCH 01/43] target/ppc: Reorganise and rename ppc_hash32_pp_prot()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +39,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:12:53 +0200 (CEST)
+Date: Mon, 27 May 2024 01:12:36 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,112 +62,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of passing around ptem in context use it once in the same
-function so it can be removed from mmu_ctx_t.
+Reorganise ppc_hash32_pp_prot() swapping the if legs so it does not
+test for negative first and clean up to make it shorter. Also rename
+it to ppc_hash32_prot().
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ target/ppc/mmu-hash32.c |  2 +-
+ target/ppc/mmu-hash32.h | 35 +++++++++++++----------------------
+ target/ppc/mmu_common.c |  2 +-
+ 3 files changed, 15 insertions(+), 24 deletions(-)
 
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index d5f2057eb1..8a446c8a7d 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -45,7 +45,7 @@ static int ppc_hash32_pte_prot(int mmu_idx,
+     key = !!(mmuidx_pr(mmu_idx) ? (sr & SR32_KP) : (sr & SR32_KS));
+     pp = pte.pte1 & HPTE32_R_PP;
+ 
+-    return ppc_hash32_pp_prot(key, pp, !!(sr & SR32_NX));
++    return ppc_hash32_prot(key, pp, !!(sr & SR32_NX));
+ }
+ 
+ static target_ulong hash32_bat_size(int mmu_idx,
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index f0ce6951b4..bc4eedbecc 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -102,49 +102,40 @@ static inline void ppc_hash32_store_hpte1(PowerPCCPU *cpu,
+     stl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2, pte1);
+ }
+ 
+-static inline int ppc_hash32_pp_prot(bool key, int pp, bool nx)
++static inline int ppc_hash32_prot(bool key, int pp, bool nx)
+ {
+     int prot;
+ 
+-    if (key == 0) {
++    if (key) {
+         switch (pp) {
+         case 0x0:
+-        case 0x1:
+-        case 0x2:
+-            prot = PAGE_READ | PAGE_WRITE;
++            prot = 0;
+             break;
+-
++        case 0x1:
+         case 0x3:
+             prot = PAGE_READ;
+             break;
+-
++        case 0x2:
++            prot = PAGE_READ | PAGE_WRITE;
++            break;
+         default:
+-            abort();
++            g_assert_not_reached();
+         }
+     } else {
+         switch (pp) {
+         case 0x0:
+-            prot = 0;
+-            break;
+-
+         case 0x1:
+-        case 0x3:
+-            prot = PAGE_READ;
+-            break;
+-
+         case 0x2:
+             prot = PAGE_READ | PAGE_WRITE;
+             break;
+-
++        case 0x3:
++            prot = PAGE_READ;
++            break;
+         default:
+-            abort();
++            g_assert_not_reached();
+         }
+     }
+-    if (nx == 0) {
+-        prot |= PAGE_EXEC;
+-    }
+-
+-    return prot;
++    return nx ? prot : prot | PAGE_EXEC;
+ }
+ 
+ typedef struct {
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 784e833ff2..339df377e8 100644
+index e2542694f0..08c5b61f76 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -41,7 +41,6 @@
- typedef struct {
-     hwaddr raddr;      /* Real address             */
-     int prot;          /* Protection bits          */
--    target_ulong ptem; /* Virtual segment ID | API */
-     int key;           /* Access key               */
- } mmu_ctx_t;
- 
-@@ -95,16 +94,18 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
- 
- static int ppc6xx_tlb_check(CPUPPCState *env,
-                             mmu_ctx_t *ctx, target_ulong eaddr,
--                            MMUAccessType access_type, bool nx)
-+                            MMUAccessType access_type, target_ulong ptem,
-+                            bool nx)
- {
-     ppc6xx_tlb_t *tlb;
-     target_ulong *pte1p;
-     int nr, best, way, ret;
-+    bool is_code = (access_type == MMU_INST_FETCH);
- 
-     best = -1;
-     ret = -1; /* No TLB found */
-     for (way = 0; way < env->nb_ways; way++) {
--        nr = ppc6xx_tlb_getnum(env, eaddr, way, access_type == MMU_INST_FETCH);
-+        nr = ppc6xx_tlb_getnum(env, eaddr, way, is_code);
-         tlb = &env->tlb.tlb6[nr];
-         /* This test "emulates" the PTE index match for hardware TLBs */
-         if ((eaddr & TARGET_PAGE_MASK) != tlb->EPN) {
-@@ -124,7 +125,7 @@ static int ppc6xx_tlb_check(CPUPPCState *env,
-                       access_type == MMU_INST_FETCH ? 'I' : 'D');
-         /* Check validity and table match */
-         if (!pte_is_valid(tlb->pte0) || ((tlb->pte0 >> 6) & 1) != 0 ||
--            (tlb->pte0 & PTE_PTEM_MASK) != ctx->ptem) {
-+            (tlb->pte0 & PTE_PTEM_MASK) != ptem) {
-             continue;
-         }
-         /* all matches should have equal RPN, WIMG & PP */
-@@ -164,6 +165,10 @@ static int ppc6xx_tlb_check(CPUPPCState *env,
+@@ -120,7 +120,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
              }
-         }
-     }
-+    if (ret == -1) {
-+        int r = is_code ? SPR_ICMP : SPR_DCMP;
-+        env->spr[r] = ptem;
-+    }
- #if defined(DUMP_PAGE_TABLES)
-     if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-         CPUState *cs = env_cpu(env);
-@@ -293,7 +298,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
- {
-     PowerPCCPU *cpu = env_archcpu(env);
-     hwaddr hash;
--    target_ulong vsid, sr, pgidx;
-+    target_ulong vsid, sr, pgidx, ptem;
-     bool pr, ds, nx;
- 
-     /* First try to find a BAT entry if there are any */
-@@ -320,7 +325,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-                   access_type == MMU_DATA_STORE, type);
-     pgidx = (eaddr & ~SEGMENT_MASK_256M) >> TARGET_PAGE_BITS;
-     hash = vsid ^ pgidx;
--    ctx->ptem = (vsid << 7) | (pgidx >> 10);
-+    ptem = (vsid << 7) | (pgidx >> 10); /* Virtual segment ID | API */
- 
-     qemu_log_mask(CPU_LOG_MMU, "pte segment: key=%d ds %d nx %d vsid "
-                   TARGET_FMT_lx "\n", ctx->key, ds, nx, vsid);
-@@ -339,7 +344,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-         /* Initialize real address with an invalid value */
-         ctx->raddr = (hwaddr)-1ULL;
-         /* Software TLB search */
--        return ppc6xx_tlb_check(env, ctx, eaddr, access_type, nx);
-+        return ppc6xx_tlb_check(env, ctx, eaddr, access_type, ptem, nx);
-     }
- 
-     /* Direct-store segment : absolutely *BUGGY* for now */
-@@ -741,7 +746,7 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
-             cs->exception_index = POWERPC_EXCP_IFTLB;
-             env->error_code = 1 << 18;
-             env->spr[SPR_IMISS] = eaddr;
--            env->spr[SPR_ICMP] = 0x80000000 | ctx.ptem;
-+            env->spr[SPR_ICMP] |= 0x80000000;
-             goto tlb_miss;
-         case -2:
-             /* Access rights violation */
-@@ -772,7 +777,7 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
-                 env->error_code = 0;
-             }
-             env->spr[SPR_DMISS] = eaddr;
--            env->spr[SPR_DCMP] = 0x80000000 | ctx.ptem;
-+            env->spr[SPR_DCMP] |= 0x80000000;
- tlb_miss:
-             env->error_code |= ctx.key << 19;
-             env->spr[SPR_HASH1] = ppc_hash32_hpt_base(cpu) +
+             /* Keep the matching PTE information */
+             ctx->raddr = pte1;
+-            ctx->prot = ppc_hash32_pp_prot(ctx->key, pp, ctx->nx);
++            ctx->prot = ppc_hash32_prot(ctx->key, pp, ctx->nx);
+             if (check_prot_access_type(ctx->prot, access_type)) {
+                 /* Access granted */
+                 qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
 -- 
 2.30.9
 
