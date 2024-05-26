@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52456C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FF9C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJfx-00083G-NW; Sun, 26 May 2024 15:37:01 -0400
+	id 1sBJlw-0008GX-UA; Sun, 26 May 2024 15:43:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfs-00080m-Oh
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:56 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1sBJlv-0008FZ-MX
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:11 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfn-0006Un-Vu
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:56 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2bd816ecaf5so3887774a91.2
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:47 -0700 (PDT)
+ id 1sBJlt-0007fY-Ax
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:11 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1f4851f7c28so4783165ad.3
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752207; x=1717357007; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752588; x=1717357388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GEBoMRZh+rveSplqLYLI6+ctFatZbLOW7sw1XZCiSUU=;
- b=UM4wH2byL0p20Re2t/ND9+zNxjWVF2m8wwDoKnXV7RJGqcG4FQ37EEVpXPbNkvMsL5
- GO5xiX/mQmVqtokMv6SF7DtVRhkYpNQ8ZHGQIfnBRkYf4JKBqqltsi4WBeqm58P1q+YZ
- 5A96xcwDMgzNed3/dmIZ5/pZU6HwkX6BHmX18mAJivXGEm4ZtSeiz1bF7QIP3B9nSZVB
- Dw8zT7EcxXkzF9tGSCxWwX94Sjc02UNZwiaiZjjoZDJwRGXmfjDKya5osmCgJamI4XkU
- m3yWxi5G0AaK5MP6U9O3K9+wF83moVkL1IaFMKXV7uT3u20Lq2p343+YC77q5p0Sj6uv
- KHBQ==
+ bh=+8xBT7IiPvp81EhYtYRGvxaJotuyLb9Fd+MeDDxA5Lc=;
+ b=ek37G2b5JnQRM9aQCw2/Q7oxmYLCdT1PiZPho4hrHU9FyUgf35t7bjxJ9Sjq1JvKad
+ uygS2hNfhovb4M0WikNRo1d/mlk08vOyWtzwry/UxSg7cDPNJJeiCgOdmz6Fw+Xrhvxw
+ cb+Md9EKr2soI8gVMZy6RViiw8EWW+tiO1mV+5O0di4aIMuOhDGKX0ozkKyMQr6IQtkk
+ wBIzixkjcb8x7cy3+3B5RWXCJpdsbJpuCKwFiv7U0Hzt8ici5x2ryJqT96oZhD7ft3JP
+ kLCzJaUsmmWdgg4CFby/Kv6FGfT7eYejlZdy+/YBJTnFDyYz6NoM/fILcCl2LfGg3G0c
+ X4Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752207; x=1717357007;
+ d=1e100.net; s=20230601; t=1716752588; x=1717357388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GEBoMRZh+rveSplqLYLI6+ctFatZbLOW7sw1XZCiSUU=;
- b=Bt1udPzwZmZC9BJYuqPXWklxVExGhASfnqumkT9kZzBKZ7QRYTj1nQqw9xx9PhPjGB
- vXBfABkFMnvodNKhGjVhwow4IHaQ/p0u994rqjSUW1a841y+QQzabaO2kOPIbW/tVSPv
- V/ygTUg+KUwKb3lXm7b+oFyxxkTrKk7DQi+sfQUln2f08RyLds72iUvQHetbNKXyHaHD
- Ok/PyyAExUTf/++qTyCQRvNU67CT5qdHEWsUgKc4ErZrKA5uE13ldYCFdXS4RrTOEG7j
- bIT4ej5jv1Rt6nLA7IJCGzrccCn30AskY7WYdILhfyeZ2sMmQxulMGNIS7VIeHLvwRXh
- AF8g==
-X-Gm-Message-State: AOJu0YxvlfCrmsoUsFYoTYufi4shSurIOe4Z1ldY7wN/WtGp6IRnDiTA
- Sn2azFrlwyozyfaA+E6e8useQMlT4LnMc0rvL1sm55s1ti8fJUSyxZix2N4QE1S7LZEiCxe3xXh
- w
-X-Google-Smtp-Source: AGHT+IFaBMiGQR/FqIIB0AMESRc6w8CGBO54oGIjC7Lkp4b3ppaj6xX0zIHNLGqt5Nmg5oD6cX+MwA==
-X-Received: by 2002:a17:90a:bc92:b0:2bd:f1d5:8e3f with SMTP id
- 98e67ed59e1d1-2bf5f4073bcmr5977013a91.41.1716752207086; 
- Sun, 26 May 2024 12:36:47 -0700 (PDT)
+ bh=+8xBT7IiPvp81EhYtYRGvxaJotuyLb9Fd+MeDDxA5Lc=;
+ b=dOfQmu6/xnqBClLHkfR9t+hmpI7Wq27/bi+wAmc1NZg/t/eQJNTADdiwOBzlGAHGOl
+ iDAe5RMxlxSNehKjBG9FX5rTl90MhcXOfc0BOShfldUANFhEDNorSAGgS2bO+E2aANUE
+ 92KfBBhx/6KlSREbUUtmSyMxABL7mu540u+MhmL8AsYwOAj1vTtKu7pLt/mWRM0q6aj4
+ 3ThRV0piVnRdQa8HPOMxG8yX0Mt0uZmHOm73yvmEZJT04isS8a9qEc+k4eb5INeOS9A7
+ sRvfo8I+Fef24xVYlaOz0YfMMwS+BJ3wRIZRT4oPioztKjaPaEz2SRtoSkO0/1MNKSVV
+ lo7Q==
+X-Gm-Message-State: AOJu0YzFu66i+MDApPemu2MTuOIrVraOs7TsNuKC+0ehNdhnlNoWbxEF
+ U9XJe8e2/58vFw6GVARYIr9Hm/D4kDqmAJo9MDh7lX4/wdPbDxPr/tDKmq7VFoUVVmm2uTPreoX
+ k
+X-Google-Smtp-Source: AGHT+IEBhZ9CrbJLpB6zWX4muJhPbgpBLUmxLPZ3GtF+kwbr9zju/0NAhbjXsysY2fTMOUisAjICdQ==
+X-Received: by 2002:a17:903:8c3:b0:1e5:3d8a:75fd with SMTP id
+ d9443c01a7336-1f4498f1757mr81443365ad.69.1716752587834; 
+ Sun, 26 May 2024 12:43:07 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.46
+ d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:36:46 -0700 (PDT)
+ Sun, 26 May 2024 12:43:06 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH RISU v2 10/13] sparc64: Add VIS2 and FMAF insns
-Date: Sun, 26 May 2024 12:36:34 -0700
-Message-Id: <20240526193637.459064-11-richard.henderson@linaro.org>
+Subject: [PATCH v2 15/37] target/sparc: Implement FLCMP
+Date: Sun, 26 May 2024 12:42:32 -0700
+Message-Id: <20240526194254.459395-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240526193637.459064-1-richard.henderson@linaro.org>
-References: <20240526193637.459064-1-richard.henderson@linaro.org>
+In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
+References: <20240526194254.459395-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,53 +96,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- sparc64.risu | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ target/sparc/helper.h     |  2 ++
+ target/sparc/insns.decode |  4 ++++
+ target/sparc/fop_helper.c | 46 +++++++++++++++++++++++++++++++++++++++
+ target/sparc/translate.c  | 34 +++++++++++++++++++++++++++++
+ 4 files changed, 86 insertions(+)
 
-diff --git a/sparc64.risu b/sparc64.risu
-index 10a8510..5b90b70 100644
---- a/sparc64.risu
-+++ b/sparc64.risu
-@@ -119,3 +119,39 @@ FEXPAND         VIS1 10 rd:5 110110 00000 0 0100 1101 rs2:5
- # ALIGNADDRL    VIS1 10 rd:5 110110 rs1:5 0 0001 1010 rs2:5 \
- #     !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
- # FALIGNDATAg   VIS1 10 rd:5 110110 rs1:5 0 0100 1000 rs2:5
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 15f0907a1b..ab79954bb5 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -50,6 +50,8 @@ DEF_HELPER_FLAGS_3(fcmpd, TCG_CALL_NO_WG, i32, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmped, TCG_CALL_NO_WG, i32, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmpq, TCG_CALL_NO_WG, i32, env, i128, i128)
+ DEF_HELPER_FLAGS_3(fcmpeq, TCG_CALL_NO_WG, i32, env, i128, i128)
++DEF_HELPER_FLAGS_2(flcmps, TCG_CALL_NO_RWG_SE, i32, f32, f32)
++DEF_HELPER_FLAGS_2(flcmpd, TCG_CALL_NO_RWG_SE, i32, f64, f64)
+ DEF_HELPER_2(raise_exception, noreturn, env, int)
+ 
+ DEF_HELPER_FLAGS_3(faddd, TCG_CALL_NO_WG, f64, env, f64, f64)
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index 6ec3838865..de29996304 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -470,6 +470,10 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
+     FZEROs      10 rd:5  110110 00000 0 0110 0001 00000
+     FONEd       10 ..... 110110 00000 0 0111 1110 00000    rd=%dfp_rd
+     FONEs       10 rd:5  110110 00000 0 0111 1111 00000
 +
-+#
-+# VIS2
-+#
++    FLCMPs      10 000 cc:2 110110 rs1:5 1 0101 0001 rs2:5
++    FLCMPd      10 000 cc:2 110110 ..... 1 0101 0010 ..... \
++                rs1=%dfp_rs1 rs2=%dfp_rs2
+   ]
+   NCP           10 ----- 110110 ----- --------- -----      # v8 CPop1
+ }
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index 08b5f96f95..1b524c6d3c 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -490,6 +490,52 @@ uint32_t helper_fcmpeq(CPUSPARCState *env, Int128 src1, Int128 src2)
+     return finish_fcmp(env, r, GETPC());
+ }
+ 
++uint32_t helper_flcmps(float32 src1, float32 src2)
++{
++    /*
++     * FLCMP never raises an exception nor modifies any FSR fields.
++     * Perform the comparison with a dummy fp environment.
++     */
++    float_status discard = { };
++    FloatRelation r = float32_compare_quiet(src1, src2, &discard);
 +
-+EDGE8N          VIS2 10 rd:5 110110 rs1:5 0 0000 0001 rs2:5 \
-+    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
-+EDGE8LN         VIS2 10 rd:5 110110 rs1:5 0 0000 0011 rs2:5 \
-+    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
-+EDGE16N         VIS2 10 rd:5 110110 rs1:5 0 0000 0101 rs2:5 \
-+    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
-+EDGE16LN        VIS2 10 rd:5 110110 rs1:5 0 0000 0111 rs2:5 \
-+    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
-+EDGE32N         VIS2 10 rd:5 110110 rs1:5 0 0000 1001 rs2:5 \
-+    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
-+EDGE32LN        VIS2 10 rd:5 110110 rs1:5 0 0000 1011 rs2:5 \
-+    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++    switch (r) {
++    case float_relation_equal:
++        if (src2 == float32_zero && src1 != float32_zero) {
++            return 1;  /* -0.0 < +0.0 */
++        }
++        return 0;
++    case float_relation_less:
++        return 1;
++    case float_relation_greater:
++        return 0;
++    case float_relation_unordered:
++        return float32_is_any_nan(src2) ? 3 : 2;
++    }
++    g_assert_not_reached();
++}
 +
-+# %gsr not handled by risu
-+# BMASK         VIS2 10 rd:5 110110 rs1:5 0 0001 1001 rs2:5 \
-+#     !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
-+# BSHUFFLE      VIS2 10 rd:5 110110 rs1:5 0 0100 1100 rs2:5
-+# SIAM          VIS2 10 00000 110110 00000 010000001 00 mode:3
++uint32_t helper_flcmpd(float64 src1, float64 src2)
++{
++    float_status discard = { };
++    FloatRelation r = float64_compare_quiet(src1, src2, &discard);
 +
-+#
-+# FMAF
-+#
++    switch (r) {
++    case float_relation_equal:
++        if (src2 == float64_zero && src1 != float64_zero) {
++            return 1;  /* -0.0 < +0.0 */
++        }
++        return 0;
++    case float_relation_less:
++        return 1;
++    case float_relation_greater:
++        return 0;
++    case float_relation_unordered:
++        return float64_is_any_nan(src2) ? 3 : 2;
++    }
++    g_assert_not_reached();
++}
 +
-+FMADDs          FMAF 10 rd:5 110111 rs1:5 rs3:5 0001 rs2:5
-+FMADDd          FMAF 10 rd:5 110111 rs1:5 rs3:5 0010 rs2:5
-+FMSUBs          FMAF 10 rd:5 110111 rs1:5 rs3:5 0101 rs2:5
-+FMSUBd          FMAF 10 rd:5 110111 rs1:5 rs3:5 0110 rs2:5
-+FNMSUBs         FMAF 10 rd:5 110111 rs1:5 rs3:5 1001 rs2:5
-+FNMSUBd         FMAF 10 rd:5 110111 rs1:5 rs3:5 1010 rs2:5
-+FNMADDs         FMAF 10 rd:5 110111 rs1:5 rs3:5 1101 rs2:5
-+FNMADDd         FMAF 10 rd:5 110111 rs1:5 rs3:5 1110 rs2:5
+ target_ulong cpu_get_fsr(CPUSPARCState *env)
+ {
+     target_ulong fsr = env->fsr | env->fsr_cexc_ftt;
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 4515886590..f53ecf7c41 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5203,6 +5203,40 @@ static bool do_fcmpq(DisasContext *dc, arg_FCMPq *a, bool e)
+ TRANS(FCMPq, ALL, do_fcmpq, a, false)
+ TRANS(FCMPEq, ALL, do_fcmpq, a, true)
+ 
++static bool trans_FLCMPs(DisasContext *dc, arg_FLCMPs *a)
++{
++    TCGv_i32 src1, src2;
++
++    if (!avail_VIS3(dc)) {
++        return false;
++    }
++    if (gen_trap_ifnofpu(dc)) {
++        return true;
++    }
++
++    src1 = gen_load_fpr_F(dc, a->rs1);
++    src2 = gen_load_fpr_F(dc, a->rs2);
++    gen_helper_flcmps(cpu_fcc[a->cc], src1, src2);
++    return advance_pc(dc);
++}
++
++static bool trans_FLCMPd(DisasContext *dc, arg_FLCMPd *a)
++{
++    TCGv_i64 src1, src2;
++
++    if (!avail_VIS3(dc)) {
++        return false;
++    }
++    if (gen_trap_ifnofpu(dc)) {
++        return true;
++    }
++
++    src1 = gen_load_fpr_D(dc, a->rs1);
++    src2 = gen_load_fpr_D(dc, a->rs2);
++    gen_helper_flcmpd(cpu_fcc[a->cc], src1, src2);
++    return advance_pc(dc);
++}
++
+ static void sparc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
 -- 
 2.34.1
 
