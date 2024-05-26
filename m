@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7123CC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB47C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN4l-0004PV-SW; Sun, 26 May 2024 19:14:51 -0400
+	id 1sBN4q-0004h3-Rx; Sun, 26 May 2024 19:14:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4j-0004Ln-Ba; Sun, 26 May 2024 19:14:49 -0400
+ id 1sBN4l-0004PD-Lu; Sun, 26 May 2024 19:14:51 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4h-0003iP-Cf; Sun, 26 May 2024 19:14:49 -0400
+ id 1sBN4h-0003hz-Aj; Sun, 26 May 2024 19:14:51 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D73454E6543;
- Mon, 27 May 2024 01:13:12 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 89B654E61D4;
+ Mon, 27 May 2024 01:13:06 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id uHS7dTEC5Kfy; Mon, 27 May 2024 01:13:10 +0200 (CEST)
+ with ESMTP id WIZrveXvOzGl; Mon, 27 May 2024 01:13:04 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DECF14E6503; Mon, 27 May 2024 01:13:10 +0200 (CEST)
-Message-Id: <db36621d9dd2a7d354ffac78e28e332cd0d70735.1716763435.git.balaton@eik.bme.hu>
+ id A4AE24E6076; Mon, 27 May 2024 01:13:04 +0200 (CEST)
+Message-Id: <33549d905b47111a94389f07d676b311c4ffef4f.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 34/43] target/ppc/internal.h: Consolidate ifndef
- CONFIG_USER_ONLY blocks
+Subject: [PATCH 28/43] target/ppc/mmu-hash32.c: Inline and remove
+ ppc_hash32_pte_raddr()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:13:10 +0200 (CEST)
+Date: Mon, 27 May 2024 01:13:04 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,77 +63,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few pte related definitions are between two ifndef CONFIG_USER_ONLY
-blocks but these are not needed for user only and should also be
-within these blocks. Consolidate the ifndef blocks so all user only and
-not user only definitions are in one #ifdef #else at the end of the file.
+This function is used only once and does not add more clarity than
+doing it inline.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/internal.h | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ target/ppc/mmu-hash32.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 8e5a241f74..66ce22bbe9 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -224,6 +224,10 @@ void helper_compute_fprf_float16(CPUPPCState *env, float16 arg);
- void helper_compute_fprf_float32(CPUPPCState *env, float32 arg);
- void helper_compute_fprf_float128(CPUPPCState *env, float128 arg);
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 6f0f0bbb00..c4de1647e2 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -298,15 +298,6 @@ static hwaddr ppc_hash32_htab_lookup(PowerPCCPU *cpu,
+     return pte_offset;
+ }
  
-+FIELD(GER_MSK, XMSK, 0, 4)
-+FIELD(GER_MSK, YMSK, 4, 4)
-+FIELD(GER_MSK, PMSK, 8, 8)
-+
- /* translate.c */
- 
- int ppc_fixup_cpu(PowerPCCPU *cpu);
-@@ -234,8 +238,11 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
- void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
- const gchar *ppc_gdb_arch_name(CPUState *cs);
- 
--#ifndef CONFIG_USER_ONLY
+-static hwaddr ppc_hash32_pte_raddr(target_ulong sr, ppc_hash_pte32_t pte,
+-                                   target_ulong eaddr)
+-{
+-    hwaddr rpn = pte.pte1 & HPTE32_R_RPN;
+-    hwaddr mask = ~TARGET_PAGE_MASK;
 -
-+#ifdef CONFIG_USER_ONLY
-+void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
-+                            MMUAccessType access_type,
-+                            bool maperr, uintptr_t ra);
-+#else
- /* Check if permission bit required for the access_type is set in prot */
- static inline int check_prot_access_type(int prot, MMUAccessType access_type)
- {
-@@ -252,7 +259,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
- int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-                                     int way, int is_code);
- 
--#endif /* !CONFIG_USER_ONLY */
- 
- /* Common routines used by software and hardware TLBs emulation */
- static inline int pte_is_valid(target_ulong pte0)
-@@ -268,11 +274,6 @@ static inline void pte_invalidate(target_ulong *pte0)
- #define PTE_PTEM_MASK 0x7FFFFFBF
- #define PTE_CHECK_MASK (TARGET_PAGE_MASK | 0x7B)
- 
--#ifdef CONFIG_USER_ONLY
--void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
--                            MMUAccessType access_type,
--                            bool maperr, uintptr_t ra);
--#else
- bool ppc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                       MMUAccessType access_type, int mmu_idx,
-                       bool probe, uintptr_t retaddr);
-@@ -287,10 +288,6 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
- void ppc_cpu_debug_excp_handler(CPUState *cs);
- bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
- bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
--#endif
+-    return (rpn & ~mask) | (eaddr & mask);
+-}
 -
--FIELD(GER_MSK, XMSK, 0, 4)
--FIELD(GER_MSK, YMSK, 4, 4)
--FIELD(GER_MSK, PMSK, 8, 8)
-+#endif /* !CONFIG_USER_ONLY */
+ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+                       hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
+                       bool guest_visible)
+@@ -440,11 +431,12 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+              */
+             prot &= ~PAGE_WRITE;
+         }
+-     }
++    }
++    *protp = prot;
  
- #endif /* PPC_INTERNAL_H */
+     /* 9. Determine the real address from the PTE */
+-
+-    *raddrp = ppc_hash32_pte_raddr(sr, pte, eaddr);
+-    *protp = prot;
++    *raddrp = pte.pte1 & HPTE32_R_RPN;
++    *raddrp &= TARGET_PAGE_MASK;
++    *raddrp |= eaddr & ~TARGET_PAGE_MASK;
+     return true;
+ }
 -- 
 2.30.9
 
