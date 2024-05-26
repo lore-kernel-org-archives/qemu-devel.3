@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FF56C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBE4CC25B7C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJlk-0008A4-Oe; Sun, 26 May 2024 15:43:00 -0400
+	id 1sBJmF-0000Tg-0Z; Sun, 26 May 2024 15:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJlj-00089h-Lg
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:42:59 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sBJm5-0000D7-Kb
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:21 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJlh-0007cX-Ry
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:42:59 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f4a0050b9aso1324795ad.2
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:42:57 -0700 (PDT)
+ id 1sBJm4-0007kp-1U
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:21 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1f48b825d8cso3469145ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752576; x=1717357376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752598; x=1717357398; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QyfYhcDz9GxZwfZD6zLLHvsedkNWvuKT9dIKJJP5Q0E=;
- b=NW5SmKS+mx3nr8EF/p2dXGCHrz7oyxF+p/XM5q1XAkwpmTeAEI2AmISN2WmGc10YBe
- uOna6uh7HjN0B95zIylg0AbJLIJYdoMudwR6TWzN+NKc/QIUnnhIqsP6JkF5mIu1HryG
- kw7NPxrPPSwwnSn9m/OGEP4RrFm+iS3pHxMmR2ZCoqZE7WFWo/IYRDO2F2WAmdsvra8N
- CG7qHTNn4jFJYIHDTFf80by6Rpgy5yoWQrPPh0YXCnKbE2FWqV0IQ1gqzZP2fXBjmUTF
- pTMPV+NpWZ1Dl/Xm2mKX7N/ulWhyZ5U1epHlphOlg79KEpoyu1q+BohKZmHK6JrqOSGj
- 8ifg==
+ bh=+2jVhYHBRn12F1/nF34lAzP9rRGex3+gOE8jz3RmZzU=;
+ b=Whc4Bn6kkZBEU2E6k2IECguXOmzTILRQDdKm8LbV/zZoQVp39OsJ0rtLXaigv9uKyb
+ B1lXEVjA4KVfYCbIqn94QNHGGvw6iAxLCnFR40n3cnQoI3oGcN9w3fbrgx5W91OD1g4C
+ JiCxfn8SAywcRD4FGHvGAFba3THifO6GQK3TmKFjXCTpad3Q/PQx+hCAnMUPVB0ny1Lg
+ eupxm5Ze4y3PhWIkRrhqeFqCvmUX6Xwod0KjFI457HuucSBDkeEF0o6lsrJb+0zo1cv3
+ qtkvJPKTpdoA8SKx4oU/vNynf7olSaDFLPf1IseB0nwNi97VVYB6Vsm1IvDdROKyepGp
+ VwCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752576; x=1717357376;
+ d=1e100.net; s=20230601; t=1716752598; x=1717357398;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QyfYhcDz9GxZwfZD6zLLHvsedkNWvuKT9dIKJJP5Q0E=;
- b=bhPlh3uUVa6/AnysUXPJa/tvuVDE0srvzdUNN8050HBSGeLyVpxP84hkOwMzoQs/2s
- b7VNbDrwtlTdoC/RkGfxwNYLcPBEYTxAcFC8HOhMbs9nC7kWOLl529NulNyzLS7wV3Mn
- t4Sxm+7id3vWCPoW5R4uhc/cY2eVK6er4gHElJC7tayfG0PBy8EtQLTyoMPDaRKf55Oe
- e2W3N0P4Anma2uElXjmdYcgChgGKKjB05+OFc598ZHfpc68SpaFn0plxrFFDyqS2P7hT
- yRhwJAj/agqynbQfi9CohfU50BAFR/a0WjXD1+IeSDOBZKg41kccg0R1LsE8rkC8NKk/
- ElAA==
-X-Gm-Message-State: AOJu0YxWhI3ap21EDj4wAi0iCZy6k3WXwDZWiJAu5NT363YpE1XKXnGZ
- EHtcVN8ok2Ocx+iCUiUsYKurxL3txUUBB77YNjH1l1RBu69fApyM4o9pDGLdz1DSiWyWAf/s83J
- H
-X-Google-Smtp-Source: AGHT+IFP3t4op3u6JPOrG8yYwAm3/CBbeGyR1hIM4RlvTxWv53PnT4hMaUZeyJJq+dk8YdxjpqbmRw==
-X-Received: by 2002:a17:903:245:b0:1f3:903:5c9a with SMTP id
- d9443c01a7336-1f4497e5d05mr85622535ad.58.1716752576243; 
- Sun, 26 May 2024 12:42:56 -0700 (PDT)
+ bh=+2jVhYHBRn12F1/nF34lAzP9rRGex3+gOE8jz3RmZzU=;
+ b=TikxcsDzU9VmlDg9wvDvomvB9vt3O6a7jZfajUYKLkSwZBtxCbzY6ScB/gSFmb5sS8
+ SAtb0E3/N3WRVpdnVwYdfgDPA6Rme08RyHs4SWU0nI4VclS7wpu5eR4zu1Nc+Pdr7Ltw
+ TT0FW8rAwiZPSix3DM/skhw8LXj1hlJogJyvOhkocs6dnCKPAV762PCR0Jvqt1tsjs8r
+ esk1lJS1JhhcR8z3AD2VmYhx45iI0DxP7w+7AmHV4UKIsziAbxYWSZHB01YySjioHN6J
+ ol5zoVb7OKTBLIB+VuWSfHyVn6cnKu5aCy+FLi7yl/XBquz+iaezxe/CR47hr7bbbQRU
+ eahg==
+X-Gm-Message-State: AOJu0YxE3Ue9Ba0Hh+cWbWCw5UMYbJj9upvbZCZZFbIhcNTgm/5sD4yv
+ P+AqJJfb6P/JRHsu2OgTipObHAkGPU9R2KZqv55T3ji89Ke7ItqWYmtsM1vgH6Amtw9yNm2TL/t
+ o
+X-Google-Smtp-Source: AGHT+IFB2whW/rhWYTsZP+TVXgPsOGXpkX2tEh57xv9+/xpztgfP90w1mELPkPcockLQHoXyEY7XaA==
+X-Received: by 2002:a17:903:32c9:b0:1f4:8bb9:9ab8 with SMTP id
+ d9443c01a7336-1f48bb99ea6mr25263295ad.14.1716752598279; 
+ Sun, 26 May 2024 12:43:18 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.42.55
+ d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:42:55 -0700 (PDT)
+ Sun, 26 May 2024 12:43:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 01/37] target/sparc: Fix ARRAY8
-Date: Sun, 26 May 2024 12:42:18 -0700
-Message-Id: <20240526194254.459395-2-richard.henderson@linaro.org>
+Cc: mark.cave-ayland@ilande.co.uk,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 29/37] target/sparc: Add feature bit for VIS4
+Date: Sun, 26 May 2024 12:42:46 -0700
+Message-Id: <20240526194254.459395-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
 References: <20240526194254.459395-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,81 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow the Oracle Sparc 2015 implementation note and bound
-the input value of N to 5 from the lower 3 bits of rs2.
-Spell out all of the intermediate values, matching the diagram
-in the manual.  Fix extraction of upper_x and upper_y for N=0.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/vis_helper.c | 53 ++++++++++++++++++++++++++-------------
- 1 file changed, 35 insertions(+), 18 deletions(-)
+ target/sparc/cpu-feature.h.inc | 1 +
+ target/sparc/translate.c       | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
-index e15c6bb34e..f46fcf1f6a 100644
---- a/target/sparc/vis_helper.c
-+++ b/target/sparc/vis_helper.c
-@@ -21,25 +21,42 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
+diff --git a/target/sparc/cpu-feature.h.inc b/target/sparc/cpu-feature.h.inc
+index e2e6de9144..be81005237 100644
+--- a/target/sparc/cpu-feature.h.inc
++++ b/target/sparc/cpu-feature.h.inc
+@@ -15,3 +15,4 @@ FEATURE(CASA)
+ FEATURE(FMAF)
+ FEATURE(VIS3)
+ FEATURE(IMA)
++FEATURE(VIS4)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index d47e1defc1..88e6da4f8b 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -2430,6 +2430,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS2(C)    ((C)->def->features & CPU_FEATURE_VIS2)
+ # define avail_VIS3(C)    ((C)->def->features & CPU_FEATURE_VIS3)
+ # define avail_VIS3B(C)   avail_VIS3(C)
++# define avail_VIS4(C)    ((C)->def->features & CPU_FEATURE_VIS4)
+ #else
+ # define avail_32(C)      true
+ # define avail_ASR17(C)   ((C)->def->features & CPU_FEATURE_ASR17)
+@@ -2446,6 +2447,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS2(C)    false
+ # define avail_VIS3(C)    false
+ # define avail_VIS3B(C)   false
++# define avail_VIS4(C)    false
+ #endif
  
--/* This function uses non-native bit order */
--#define GET_FIELD(X, FROM, TO)                                  \
--    ((X) >> (63 - (TO)) & ((1ULL << ((TO) - (FROM) + 1)) - 1))
--
--/* This function uses the order in the manuals, i.e. bit 0 is 2^0 */
--#define GET_FIELD_SP(X, FROM, TO)               \
--    GET_FIELD(X, 63 - (TO), 63 - (FROM))
--
--target_ulong helper_array8(target_ulong pixel_addr, target_ulong cubesize)
-+target_ulong helper_array8(target_ulong rs1, target_ulong rs2)
- {
--    return (GET_FIELD_SP(pixel_addr, 60, 63) << (17 + 2 * cubesize)) |
--        (GET_FIELD_SP(pixel_addr, 39, 39 + cubesize - 1) << (17 + cubesize)) |
--        (GET_FIELD_SP(pixel_addr, 17 + cubesize - 1, 17) << 17) |
--        (GET_FIELD_SP(pixel_addr, 56, 59) << 13) |
--        (GET_FIELD_SP(pixel_addr, 35, 38) << 9) |
--        (GET_FIELD_SP(pixel_addr, 13, 16) << 5) |
--        (((pixel_addr >> 55) & 1) << 4) |
--        (GET_FIELD_SP(pixel_addr, 33, 34) << 2) |
--        GET_FIELD_SP(pixel_addr, 11, 12);
-+    /*
-+     * From Oracle SPARC Architecture 2015:
-+     * Architecturally, an illegal R[rs2] value (>5) causes the array
-+     * instructions to produce undefined results. For historic reference,
-+     * past implementations of these instructions have ignored R[rs2]{63:3}
-+     * and have treated R[rs2] values of 6 and 7 as if they were 5.
-+     */
-+    target_ulong n = MIN(rs2 & 7, 5);
-+
-+    target_ulong x_int = (rs1 >> 11) & 0x7ff;
-+    target_ulong y_int = (rs1 >> 33) & 0x7ff;
-+    target_ulong z_int = rs1 >> 55;
-+
-+    target_ulong lower_x = x_int & 3;
-+    target_ulong lower_y = y_int & 3;
-+    target_ulong lower_z = z_int & 1;
-+
-+    target_ulong middle_x = (x_int >> 2) & 15;
-+    target_ulong middle_y = (y_int >> 2) & 15;
-+    target_ulong middle_z = (z_int >> 1) & 15;
-+
-+    target_ulong upper_x = (x_int >> 6) & ((1 << n) - 1);
-+    target_ulong upper_y = (y_int >> 6) & ((1 << n) - 1);
-+    target_ulong upper_z = z_int >> 5;
-+
-+    return (upper_z << (17 + 2 * n))
-+         | (upper_y << (17 + n))
-+         | (upper_x << 17)
-+         | (middle_z << 13)
-+         | (middle_y << 9)
-+         | (middle_x << 5)
-+         | (lower_z << 4)
-+         | (lower_y << 2)
-+         | lower_x;
- }
- 
- #if HOST_BIG_ENDIAN
+ /* Default case for non jump instructions. */
 -- 
 2.34.1
 
