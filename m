@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81267C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91671C41513
 	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN4I-000471-3l; Sun, 26 May 2024 19:14:22 -0400
+	id 1sBN4o-0004Vx-OV; Sun, 26 May 2024 19:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4F-00045c-7F; Sun, 26 May 2024 19:14:19 -0400
+ id 1sBN4j-0004M7-Fu; Sun, 26 May 2024 19:14:49 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4C-0003eo-4g; Sun, 26 May 2024 19:14:17 -0400
+ id 1sBN4h-0003iW-Fa; Sun, 26 May 2024 19:14:49 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E011B4E61D6;
- Mon, 27 May 2024 01:12:53 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C1BEA4E6031;
+ Mon, 27 May 2024 01:12:47 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 81b-xXlvFses; Mon, 27 May 2024 01:12:51 +0200 (CEST)
+ with ESMTP id EzAQBxkwEsWt; Mon, 27 May 2024 01:12:45 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EF16C4E610B; Mon, 27 May 2024 01:12:51 +0200 (CEST)
-Message-Id: <67350d0b2e2773d02536ba9cce812361ff1b5a16.1716763435.git.balaton@eik.bme.hu>
+ id A4DD54E6036; Mon, 27 May 2024 01:12:45 +0200 (CEST)
+Message-Id: <21fb0a89458b7d245d688abfdcf77492f674610a.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 16/43] target/ppc/mmu_common.c: Inline and remove
- ppc6xx_tlb_pte_check()
+Subject: [PATCH 10/43] target/ppc/mmu_common.c: Remove hash field from
+ mmu_ctx_t
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:12:51 +0200 (CEST)
+Date: Mon, 27 May 2024 01:12:45 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,107 +63,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is only called once and we can make the caller simpler
-by inlining it.
+Return hash value via a parameter and remove it from mmu_ctx.t.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 71 +++++++++++++----------------------------
- 1 file changed, 22 insertions(+), 49 deletions(-)
+ target/ppc/mmu_common.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index b2993e8563..784e833ff2 100644
+index 0a07023f48..e3537c63c0 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -91,33 +91,6 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-     return nr;
+@@ -41,7 +41,6 @@
+ typedef struct {
+     hwaddr raddr;      /* Real address             */
+     int prot;          /* Protection bits          */
+-    hwaddr hash[2];    /* Pagetable hash values    */
+     target_ulong ptem; /* Virtual segment ID | API */
+     int key;           /* Access key               */
+     int nx;            /* Non-execute area         */
+@@ -331,7 +330,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
  }
  
--static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
--                                target_ulong pte1, int pteh,
--                                MMUAccessType access_type, bool nx)
--{
--    /* Check validity and table match */
--    if (!pte_is_valid(pte0) || ((pte0 >> 6) & 1) != pteh ||
--        (pte0 & PTE_PTEM_MASK) != ctx->ptem) {
--        return -1;
--    }
--    /* all matches should have equal RPN, WIMG & PP */
--    if (ctx->raddr != (hwaddr)-1ULL &&
--        (ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
--        qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
--        return -3;
--    }
--    /* Keep the matching PTE information */
--    ctx->raddr = pte1;
--    ctx->prot = ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, nx);
--    if (check_prot_access_type(ctx->prot, access_type)) {
--        qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
--        return 0;
--    } else {
--        qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
--        return -2;
--    }
--}
--
- /* Software driven TLB helpers */
+ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+-                                       target_ulong eaddr,
++                                       target_ulong eaddr, hwaddr *hashp,
+                                        MMUAccessType access_type, int type)
+ {
+     PowerPCCPU *cpu = env_archcpu(env);
+@@ -379,8 +378,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+         qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx " htab_mask "
+                       HWADDR_FMT_plx " hash " HWADDR_FMT_plx "\n",
+                       ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
+-        ctx->hash[0] = hash;
+-        ctx->hash[1] = ~hash;
++        *hashp = hash;
  
- static int ppc6xx_tlb_check(CPUPPCState *env,
-@@ -149,32 +122,32 @@ static int ppc6xx_tlb_check(CPUPPCState *env,
-                       tlb->EPN, eaddr, tlb->pte1,
-                       access_type == MMU_DATA_STORE ? 'S' : 'L',
-                       access_type == MMU_INST_FETCH ? 'I' : 'D');
--        switch (ppc6xx_tlb_pte_check(ctx, tlb->pte0, tlb->pte1,
--                                     0, access_type, nx)) {
--        case -2:
--            /* Access violation */
--            ret = -2;
--            best = nr;
--            break;
--        case -1: /* No match */
--        case -3: /* TLB inconsistency */
--        default:
--            break;
--        case 0:
--            /* access granted */
--            /*
--             * XXX: we should go on looping to check all TLBs
--             *      consistency but we can speed-up the whole thing as
--             *      the result would be undefined if TLBs are not
--             *      consistent.
--             */
-+        /* Check validity and table match */
-+        if (!pte_is_valid(tlb->pte0) || ((tlb->pte0 >> 6) & 1) != 0 ||
-+            (tlb->pte0 & PTE_PTEM_MASK) != ctx->ptem) {
-+            continue;
-+        }
-+        /* all matches should have equal RPN, WIMG & PP */
-+        if (ctx->raddr != (hwaddr)-1ULL &&
-+            (ctx->raddr & PTE_CHECK_MASK) != (tlb->pte1 & PTE_CHECK_MASK)) {
-+            qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
-+            /* TLB inconsistency */
-+            continue;
-+        }
-+        /* Keep the matching PTE information */
-+        best = nr;
-+        ctx->raddr = tlb->pte1;
-+        ctx->prot = ppc_hash32_prot(ctx->key, tlb->pte1 & HPTE32_R_PP, nx);
-+        if (check_prot_access_type(ctx->prot, access_type)) {
-+            qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
-             ret = 0;
--            best = nr;
--            goto done;
-+            break;
-+        } else {
-+            qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
-+            ret = -2;
-         }
+         /* Initialize real address with an invalid value */
+         ctx->raddr = (hwaddr)-1ULL;
+@@ -761,8 +759,8 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
+     CPUState *cs = CPU(cpu);
+     CPUPPCState *env = &cpu->env;
+     mmu_ctx_t ctx;
+-    int type;
+-    int ret;
++    hwaddr hash = 0; /* init to 0 to avoid used uninit warning */
++    int type, ret;
+ 
+     if (ppc_real_mode_xlate(cpu, eaddr, access_type, raddrp, psizep, protp)) {
+         return true;
+@@ -779,9 +777,8 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
      }
-     if (best != -1) {
--done:
-         qemu_log_mask(CPU_LOG_MMU, "found TLB at addr " HWADDR_FMT_plx
-                       " prot=%01x ret=%d\n",
-                       ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
+ 
+     ctx.prot = 0;
+-    ctx.hash[0] = 0;
+-    ctx.hash[1] = 0;
+-    ret = mmu6xx_get_physical_address(env, &ctx, eaddr, access_type, type);
++    ret = mmu6xx_get_physical_address(env, &ctx, eaddr, &hash,
++                                      access_type, type);
+     if (ret == 0) {
+         *raddrp = ctx.raddr;
+         *protp = ctx.prot;
+@@ -834,9 +831,9 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
+ tlb_miss:
+             env->error_code |= ctx.key << 19;
+             env->spr[SPR_HASH1] = ppc_hash32_hpt_base(cpu) +
+-                                  get_pteg_offset32(cpu, ctx.hash[0]);
++                                  get_pteg_offset32(cpu, hash);
+             env->spr[SPR_HASH2] = ppc_hash32_hpt_base(cpu) +
+-                                  get_pteg_offset32(cpu, ctx.hash[1]);
++                                  get_pteg_offset32(cpu, ~hash);
+             break;
+         case -2:
+             /* Access rights violation */
 -- 
 2.30.9
 
