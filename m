@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43075C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6018C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:15:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN3p-0003rt-5u; Sun, 26 May 2024 19:13:53 -0400
+	id 1sBN4k-0004Nv-Lf; Sun, 26 May 2024 19:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN3n-0003rK-SG; Sun, 26 May 2024 19:13:51 -0400
+ id 1sBN4j-0004MA-GH; Sun, 26 May 2024 19:14:49 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN3j-0003R1-9U; Sun, 26 May 2024 19:13:50 -0400
+ id 1sBN4h-0003iO-Ed; Sun, 26 May 2024 19:14:49 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4F7894E600E;
- Mon, 27 May 2024 01:12:40 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C9AD44E6509;
+ Mon, 27 May 2024 01:13:11 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id SmSWYFJ89rlk; Mon, 27 May 2024 01:12:38 +0200 (CEST)
+ with ESMTP id 0VGhghv0XU5O; Mon, 27 May 2024 01:13:09 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 5AFBD4E6013; Mon, 27 May 2024 01:12:38 +0200 (CEST)
-Message-Id: <9a0cc672e293a803a47c06375e6ca9781c90fbdb.1716763435.git.balaton@eik.bme.hu>
+ id D51774E64C1; Mon, 27 May 2024 01:13:09 +0200 (CEST)
+Message-Id: <c30ddd4f433bbe60629d2be66c5214076f677fa9.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 03/43] target/ppc/mmu_common.c: Remove single use local
- variable
+Subject: [PATCH 33/43] target/ppc: Remove single use static inline function
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +39,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:12:38 +0200 (CEST)
+Date: Mon, 27 May 2024 01:13:09 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,38 +62,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ptem variable in ppc6xx_tlb_pte_check() is used only once,
-simplify by removing it as the value is already clear itself without
-adding a local name for it.
+The ger_pack_masks() function is only used once and the inverse of
+this operation is already inlined so it can be inlined too in the only
+caller and removed from the header.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/ppc/internal.h               | 9 ---------
+ target/ppc/translate/vsx-impl.c.inc | 6 ++++--
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 2618cdec6a..371ec24485 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -98,7 +98,6 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-                                 target_ulong pte1, int h,
-                                 MMUAccessType access_type)
- {
--    target_ulong ptem;
-     int ret, pteh, ptev, pp;
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 20fb2ec593..8e5a241f74 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -293,13 +293,4 @@ FIELD(GER_MSK, XMSK, 0, 4)
+ FIELD(GER_MSK, YMSK, 4, 4)
+ FIELD(GER_MSK, PMSK, 8, 8)
  
-     ret = -1;
-@@ -107,9 +106,8 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-     pteh = (pte0 >> 6) & 1;
-     if (ptev && h == pteh) {
-         /* Check vsid & api */
--        ptem = pte0 & PTE_PTEM_MASK;
-         pp = pte1 & 0x00000003;
--        if (ptem == ctx->ptem) {
-+        if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
-             if (ctx->raddr != (hwaddr)-1ULL) {
-                 /* all matches should have equal RPN, WIMG & PP */
-                 if ((ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
+-static inline int ger_pack_masks(int pmsk, int ymsk, int xmsk)
+-{
+-    int msk = 0;
+-    msk = FIELD_DP32(msk, GER_MSK, XMSK, xmsk);
+-    msk = FIELD_DP32(msk, GER_MSK, YMSK, ymsk);
+-    msk = FIELD_DP32(msk, GER_MSK, PMSK, pmsk);
+-    return msk;
+-}
+-
+ #endif /* PPC_INTERNAL_H */
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index 0266f09119..62950d348a 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -2819,7 +2819,7 @@ static bool trans_XXSETACCZ(DisasContext *ctx, arg_X_a *a)
+ static bool do_ger(DisasContext *ctx, arg_MMIRR_XX3 *a,
+     void (*helper)(TCGv_env, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_i32))
+ {
+-    uint32_t mask;
++    uint32_t mask = 0;
+     TCGv_ptr xt, xa, xb;
+     REQUIRE_INSNS_FLAGS2(ctx, ISA310);
+     REQUIRE_VSX(ctx);
+@@ -2832,7 +2832,9 @@ static bool do_ger(DisasContext *ctx, arg_MMIRR_XX3 *a,
+     xa = gen_vsr_ptr(a->xa);
+     xb = gen_vsr_ptr(a->xb);
+ 
+-    mask = ger_pack_masks(a->pmsk, a->ymsk, a->xmsk);
++    mask = FIELD_DP32(mask, GER_MSK, XMSK, a->xmsk);
++    mask = FIELD_DP32(mask, GER_MSK, YMSK, a->ymsk);
++    mask = FIELD_DP32(mask, GER_MSK, PMSK, a->pmsk);
+     helper(tcg_env, xa, xb, xt, tcg_constant_i32(mask));
+     return true;
+ }
 -- 
 2.30.9
 
