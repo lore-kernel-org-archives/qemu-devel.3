@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E7AEC25B78
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C57CBC25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN5F-0005xA-HW; Sun, 26 May 2024 19:15:21 -0400
+	id 1sBN4j-0004Lv-F8; Sun, 26 May 2024 19:14:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN5B-0005la-S1; Sun, 26 May 2024 19:15:18 -0400
+ id 1sBN4h-0004JY-Vx; Sun, 26 May 2024 19:14:48 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN55-0003oL-L5; Sun, 26 May 2024 19:15:16 -0400
+ id 1sBN4g-0003iX-Gg; Sun, 26 May 2024 19:14:47 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 203B54E62BE;
- Mon, 27 May 2024 01:12:57 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8725B4E6030;
+ Mon, 27 May 2024 01:12:46 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id OutTmP2czJcl; Mon, 27 May 2024 01:12:55 +0200 (CEST)
+ with ESMTP id XEr43UqyxjHs; Mon, 27 May 2024 01:12:44 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 30A964E62BB; Mon, 27 May 2024 01:12:55 +0200 (CEST)
-Message-Id: <6b845babbcee896afca10204f43ce0990dac43ff.1716763435.git.balaton@eik.bme.hu>
+ id 99C5B4E6031; Mon, 27 May 2024 01:12:44 +0200 (CEST)
+Message-Id: <889571de5f25b4abdff5df829706286367b59cc9.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 19/43] target/ppc/mmu-hash32.c: Inline and remove
- ppc_hash32_pte_prot()
+Subject: [PATCH 09/43] target/ppc/mmu_common.c: Remove unused field from
+ mmu_ctx_t
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:12:55 +0200 (CEST)
+Date: Mon, 27 May 2024 01:12:44 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,59 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is used only once and can be inlined.
+The eaddr field of mmu_ctx_t is set once but never used so can be
+removed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu-hash32.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ target/ppc/mmu_common.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index 93559447ff..160311de87 100644
---- a/target/ppc/mmu-hash32.c
-+++ b/target/ppc/mmu-hash32.c
-@@ -37,17 +37,6 @@
- #  define LOG_BATS(...) do { } while (0)
- #endif
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 28adb3ca10..0a07023f48 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -40,7 +40,6 @@
+ /* Context used internally during MMU translations */
+ typedef struct {
+     hwaddr raddr;      /* Real address             */
+-    hwaddr eaddr;      /* Effective address        */
+     int prot;          /* Protection bits          */
+     hwaddr hash[2];    /* Pagetable hash values    */
+     target_ulong ptem; /* Virtual segment ID | API */
+@@ -348,7 +347,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
  
--static int ppc_hash32_pte_prot(int mmu_idx,
--                               target_ulong sr, ppc_hash_pte32_t pte)
--{
--    unsigned pp, key;
--
--    key = ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
--    pp = pte.pte1 & HPTE32_R_PP;
--
--    return ppc_hash32_prot(key, pp, !!(sr & SR32_NX));
--}
--
- static target_ulong hash32_bat_size(int mmu_idx,
-                                     target_ulong batu, target_ulong batl)
- {
-@@ -341,10 +330,10 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong sr;
--    hwaddr pte_offset;
-+    hwaddr pte_offset, raddr;
-     ppc_hash_pte32_t pte;
-+    bool key;
-     int prot;
--    hwaddr raddr;
+     /* Perform segment based translation when no BATs matched */
+     pr = FIELD_EX64(env->msr, MSR, PR);
+-    ctx->eaddr = eaddr;
  
-     /* There are no hash32 large pages. */
-     *psizep = TARGET_PAGE_BITS;
-@@ -426,8 +415,8 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-                 "found PTE at offset %08" HWADDR_PRIx "\n", pte_offset);
- 
-     /* 7. Check access permissions */
--
--    prot = ppc_hash32_pte_prot(mmu_idx, sr, pte);
-+    key = ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
-+    prot = ppc_hash32_prot(key, pte.pte1 & HPTE32_R_PP, sr & SR32_NX);
- 
-     if (!check_prot_access_type(prot, access_type)) {
-         /* Access right violation */
+     sr = env->sr[eaddr >> 28];
+     ctx->key = (((sr & 0x20000000) && pr) ||
 -- 
 2.30.9
 
