@@ -4,49 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133B7C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35C9C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN4m-0004Py-C4; Sun, 26 May 2024 19:14:52 -0400
+	id 1sBNZL-0007nl-U6; Sun, 26 May 2024 19:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4k-0004Nt-J7; Sun, 26 May 2024 19:14:50 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sBNZI-0007nN-3c
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 19:46:24 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4h-0003iR-Cu; Sun, 26 May 2024 19:14:50 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AC7B44E64EC;
- Mon, 27 May 2024 01:13:09 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id PUPOatP-xNB6; Mon, 27 May 2024 01:13:07 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C06844E62C1; Mon, 27 May 2024 01:13:07 +0200 (CEST)
-Message-Id: <3eccbbc40175cbf8e592fb62c0544202052c571c.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
-References: <cover.1716763435.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 31/43] target/ppc/mmu-radix64: Remove externally unused parts
- from header
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sBNZF-00010a-UG
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 19:46:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1716767174;
+ bh=bqG1UbtbsMJTc3c6hqa2SBFfZSdcsmH9xVmrsE+arOo=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=t1E5ei8EFuvhufOKSiICWISFL/sJMUHtagyRp0fvqM6YjiCGiarLyqm1PHSSOmqPF
+ pC2lhAW3gWO44YiCHsIODVbKZOj0wyD9/hAzpBL9hfWYLFIzq0jVUYo9y+dqTgfS8m
+ p/OZ2MSrxInXy0zAeUGvQwQ3nzexZraxfYmeeiZ9U4L2FNvPngwnh+pQf4161FvkF+
+ 0rs1AGFLvozP24xKuyn/NxM/l7hAobQED3C6xP0ZqFGiFBnBVFNBoDRPZ/XFTOh1Ss
+ px2eeaod7BSiv9LqKx+aCCScuFbF8jFIeixrNyFYcIPxuyqAvBVLfG4RKbi7y6Yax3
+ 3gq2qeyjSEb3Q==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id B2CC03780C1F;
+ Sun, 26 May 2024 23:46:12 +0000 (UTC)
+Message-ID: <6bc5a3fc-8fbc-4449-a5e6-cd654655be35@collabora.com>
+Date: Mon, 27 May 2024 02:46:09 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 00/13] Support blob memory and venus on qemu
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, ernunes@redhat.com,
+ Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Roger_Pau_Monn=C3=A9?=
+ <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
+ <87o78zi9wb.fsf@draig.linaro.org> <87jzjni569.fsf@draig.linaro.org>
+ <f7b1d066-4636-49b0-b921-ea01b20b2c00@collabora.com>
+ <874jaqi5m0.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <874jaqi5m0.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:13:07 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,172 +93,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the parts not needed outside of mmu-radix64.c from the header to
-the C file to leave only parts in the header that need to be exported.
-Also drop unneded include of this header.
+On 5/22/24 12:00, Alex Bennée wrote:
+> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+> 
+>> On 5/21/24 17:57, Alex Bennée wrote:
+>>> Alex Bennée <alex.bennee@linaro.org> writes:
+>>>
+>>>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>>>
+>>>>> Hello,
+>>>>>
+>>>>> This series enables Vulkan Venus context support on virtio-gpu.
+>>>>>
+>>>>> All virglrender and almost all Linux kernel prerequisite changes
+>>>>> needed by Venus are already in upstream. For kernel there is a pending
+>>>>> KVM patchset that fixes mapping of compound pages needed for DRM drivers
+>>>>> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
+>>>>> from Qemu.
+>>>>>
+>>>>> [1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
+>>>>>
+>>>>> You'll need to use recent Mesa version containing patch that removes
+>>>>> dependency on cross-device feature from Venus that isn't supported by
+>>>>> Qemu [2].
+>>>>>
+>>>>> [2] https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e26987befae78b6ccbb7ae242b
+>>>>>
+>>>>> Example Qemu cmdline that enables Venus:
+>>>>>
+>>>>>   qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,venus=true \
+>>>>>       -machine q35,accel=kvm,memory-backend=mem1 \
+>>>>>       -object memory-backend-memfd,id=mem1,size=8G -m 8G
+>>>>
+>>>> What is the correct device for non-x86 guests? We have virtio-gpu-gl-pci
+>>>> but when doing that I get:
+>>>>
+>>>>   -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true
+>>>>   qemu-system-aarch64: -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true: opengl is not available
+>>>>
+>>>> According to 37f86af087 (virtio-gpu: move virgl realize + properties):
+>>>>
+>>>>   Drop the virgl property, the virtio-gpu-gl-device has virgl enabled no
+>>>>   matter what.  Just use virtio-gpu-device instead if you don't want
+>>>>   enable virgl and opengl.  This simplifies the logic and reduces the test
+>>>>   matrix.
+>>>>
+>>>> but that's not a good solution because that needs virtio-mmio and there
+>>>> are reasons to have a PCI device (for one thing no ambiguity about
+>>>> discovery).
+>>>
+>>> Oops my mistake forgetting:
+>>>
+>>>   --display gtk,gl=on
+>>>
+>>> Although I do see a lot of eglMakeContext failures.
+>>
+>> Please post the full Qemu cmdline you're using
+> 
+> With:
+> 
+>   ./qemu-system-aarch64 \
+>            -machine type=virt,virtualization=on,pflash0=rom,pflash1=efivars \
+>            -cpu neoverse-n1 \
+>            -smp 4 \
+>            -accel tcg \
+>            -device virtio-net-pci,netdev=unet \
+>            -device virtio-scsi-pci \
+>            -device scsi-hd,drive=hd \
+>            -netdev user,id=unet,hostfwd=tcp::2222-:22 \
+>            -blockdev driver=raw,node-name=hd,file.driver=host_device,file.filename=/dev/zen-ssd2/trixie-arm64,discard=unmap \
+>            -serial mon:stdio \
+>            -blockdev node-name=rom,driver=file,filename=(pwd)/pc-bios/edk2-aarch64-code.fd,read-only=true \
+>            -blockdev node-name=efivars,driver=file,filename=$HOME/images/qemu-arm64-efivars \
+>            -m 8192 \
+>            -object memory-backend-memfd,id=mem,size=8G,share=on \
+>            -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true \
+>            -display gtk,gl=on,show-cursor=on -vga none \
+>            -device qemu-xhci -device usb-kbd -device usb-tablet
+> 
+> I get a boot up with a lot of:
+> 
+>                                                                                                                                                                              
+>   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed                                                                                                          
+> 
+>   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed                                                                                                          
+> 
+>   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed                                                                                                          
+> 
+>   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed               
+> 
+> In the guest I run:
+> 
+>   meson devenv -C /root/lsrc/graphics/mesa.git/build fish
+> 
+> to bring in the latest Mesa (with virtio enabled). Running vulkaninfo
+> reports two cards:
+> 
+>   ==========                                                                            
+>   VULKANINFO                        
+>   ==========                                                                            
+> 
+>   Vulkan Instance Version: 1.3.280                                                      
+> 
+> 
+>   Instance Extensions: count = 14
+>   -------------------------------
+>   VK_EXT_debug_report                    : extension revision 10
+>   VK_EXT_debug_utils                     : extension revision 2
+>   VK_EXT_headless_surface                : extension revision 1
+>   VK_KHR_device_group_creation           : extension revision 1
+>   VK_KHR_external_fence_capabilities     : extension revision 1
+>   VK_KHR_external_memory_capabilities    : extension revision 1
+>   VK_KHR_external_semaphore_capabilities : extension revision 1
+>   VK_KHR_get_physical_device_properties2 : extension revision 2
+>   VK_KHR_get_surface_capabilities2       : extension revision 1
+>   VK_KHR_portability_enumeration         : extension revision 1
+>   VK_KHR_surface                         : extension revision 25
+>   VK_KHR_surface_protected_capabilities  : extension revision 1
+>   VK_KHR_wayland_surface                 : extension revision 6
+>   VK_LUNARG_direct_driver_loading        : extension revision 1
+> 
+>   Instance Layers: count = 2
+>   --------------------------
+>   VK_LAYER_MESA_device_select Linux device selection layer 1.3.211  version 1
+>   VK_LAYER_MESA_overlay       Mesa Overlay layer           1.3.211
+>   version 1
+> 
+>   Devices:
+>   ========
+>   GPU0:
+>           apiVersion         = 1.3.230
+>           driverVersion      = 24.1.99
+>           vendorID           = 0x8086
+>           deviceID           = 0xa780
+>           deviceType         = PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
+>           deviceName         = Virtio-GPU Venus (Intel(R) Graphics (RPL-S))
+>           driverID           = DRIVER_ID_MESA_VENUS
+>           driverName         = venus
+>           driverInfo         = Mesa 24.2.0-devel (git-0b582449f0)
+>           conformanceVersion = 1.3.0.0
+>           deviceUUID         = 29d2e940-a1a0-3054-0f9a-9f7dec52a084
+>           driverUUID         = 3694c390-f245-612a-12ce-7d3a99127622
+>   GPU1:
+>           apiVersion         = 1.2.0
+>           driverVersion      = 24.1.99
+>           vendorID           = 0x10005
+>           deviceID           = 0x0000
+>           deviceType         = PHYSICAL_DEVICE_TYPE_CPU
+>           deviceName         = Virtio-GPU Venus (llvmpipe (LLVM 15.0.6, 256 bits))
+>           driverID           = DRIVER_ID_MESA_VENUS
+>           driverName         = venus
+>           driverInfo         = Mesa 24.2.0-devel (git-0b582449f0)
+>           conformanceVersion = 1.3.0.0
+>           deviceUUID         = 5fb5c03f-c537-f0fe-a7e6-9cd5866acb8d
+>           driverUUID         = 3694c390-f245-612a-12ce-7d3a99127622
+> 
+> Running weston and then vkcube-wayland reports its selecting "GPU 0:
+> Virtio-GPU Venus (Intel(R) Graphics (RPL-S))" but otherwise produces no
+> output.
+> 
+> If I run with "-display sdl,gl=on,show-cursor=on" and the same other
+> command line options the results for vulkaninfo are the same. However
+> vkcube-wayland gets a little further and draws the initial cube on the
+> screen before locking up with:
+> 
+>  MESA-VIRTIO: debug: stuck in fence wait with iter at xxxx
+> 
+> where xxxx grows each time it prints. On shutting down I see some virgl
+> errors interspersed with the systemd logs:
+> 
+>   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+>   [  OK  ] Stopped systemd-logind.service - User Login Management.
+>   virtio_gpu_virgl_process_cmd: ctrl 0x209, error 0x1200
+>   [  475.257111] [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+>   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+>   [  OK  ] Stopped target network-online.target - Network is Online.
+>   [  OK  ] Stopped target remote-fs.target - Remote File Systems.
+>   [  OK  ] Stopped NetworkManager-wait-online…vice - Network Manager Wait Online.
+>            Stopping avahi-daemon.service - Avahi mDNS/DNS-SD Stack...
+>            Stopping cups.service - CUPS Scheduler...
+>            Stopping user-runtime-dir@0.servic…er Runtime Directory /run/user/0...
+>   [  OK  ] Stopped avahi-daemon.service - Avahi mDNS/DNS-SD Stack.
+>   [  OK  ] Stopped cups.service - CUPS Scheduler.
+>   virtio_gpu_virgl_process_cmd: ctrl 0x209, error 0x1200
+>   [  475.357543] [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+>   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+>   [  OK  ] Stopped target network.target - Network.
+>   [  OK  ] Stopped target nss-user-lookup.target - User and Group Name Lookups.
+>            Stopping NetworkManager.service - Network Manager...
+>            Stopping networking.service - Raise network interfaces...
+>            Stopping wpa_supplicant.service - WPA supplicant...
+>   [  OK  ] Stopped wpa_supplicant.service - WPA supplicant.
+>   virtio_gpu_virgl_process_cmd: ctrl 0x209, error 0x1200
+>   [  493.585261] [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+>   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
+> 
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- target/ppc/mmu-book3s-v3.c |  1 -
- target/ppc/mmu-radix64.c   | 49 +++++++++++++++++++++++++++++++++++
- target/ppc/mmu-radix64.h   | 53 +-------------------------------------
- 3 files changed, 50 insertions(+), 53 deletions(-)
+I've reproduced this with qemu-system-aarch64. Vkcube works for a second
+and then stops, Qemu compeltely gets frozen after closing and re-running
+vkcube. Doesn't feel like this is a problem with venus, but with arm64.
+For now don't know where is the bug, will take a closer look.
 
-diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
-index c8f69b3df9..a812cb5113 100644
---- a/target/ppc/mmu-book3s-v3.c
-+++ b/target/ppc/mmu-book3s-v3.c
-@@ -21,7 +21,6 @@
- #include "cpu.h"
- #include "mmu-hash64.h"
- #include "mmu-book3s-v3.h"
--#include "mmu-radix64.h"
- 
- bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
- {
-diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-index 5a02e4963b..cf9619e847 100644
---- a/target/ppc/mmu-radix64.c
-+++ b/target/ppc/mmu-radix64.c
-@@ -29,6 +29,37 @@
- #include "mmu-radix64.h"
- #include "mmu-book3s-v3.h"
- 
-+/* Radix Partition Table Entry Fields */
-+#define PATE1_R_PRTB           0x0FFFFFFFFFFFF000
-+#define PATE1_R_PRTS           0x000000000000001F
-+
-+/* Radix Process Table Entry Fields */
-+#define PRTBE_R_GET_RTS(rts) \
-+    ((((rts >> 58) & 0x18) | ((rts >> 5) & 0x7)) + 31)
-+#define PRTBE_R_RPDB            0x0FFFFFFFFFFFFF00
-+#define PRTBE_R_RPDS            0x000000000000001F
-+
-+/* Radix Page Directory/Table Entry Fields */
-+#define R_PTE_VALID             0x8000000000000000
-+#define R_PTE_LEAF              0x4000000000000000
-+#define R_PTE_SW0               0x2000000000000000
-+#define R_PTE_RPN               0x01FFFFFFFFFFF000
-+#define R_PTE_SW1               0x0000000000000E00
-+#define R_GET_SW(sw)            (((sw >> 58) & 0x8) | ((sw >> 9) & 0x7))
-+#define R_PTE_R                 0x0000000000000100
-+#define R_PTE_C                 0x0000000000000080
-+#define R_PTE_ATT               0x0000000000000030
-+#define R_PTE_ATT_NORMAL        0x0000000000000000
-+#define R_PTE_ATT_SAO           0x0000000000000010
-+#define R_PTE_ATT_NI_IO         0x0000000000000020
-+#define R_PTE_ATT_TOLERANT_IO   0x0000000000000030
-+#define R_PTE_EAA_PRIV          0x0000000000000008
-+#define R_PTE_EAA_R             0x0000000000000004
-+#define R_PTE_EAA_RW            0x0000000000000002
-+#define R_PTE_EAA_X             0x0000000000000001
-+#define R_PDE_NLB               PRTBE_R_RPDB
-+#define R_PDE_NLS               PRTBE_R_RPDS
-+
- static bool ppc_radix64_get_fully_qualified_addr(const CPUPPCState *env,
-                                                  vaddr eaddr,
-                                                  uint64_t *lpid, uint64_t *pid)
-@@ -180,6 +211,24 @@ static void ppc_radix64_raise_hsi(PowerPCCPU *cpu, MMUAccessType access_type,
-     }
- }
- 
-+static int ppc_radix64_get_prot_eaa(uint64_t pte)
-+{
-+    return (pte & R_PTE_EAA_R ? PAGE_READ : 0) |
-+           (pte & R_PTE_EAA_RW ? PAGE_READ | PAGE_WRITE : 0) |
-+           (pte & R_PTE_EAA_X ? PAGE_EXEC : 0);
-+}
-+
-+static int ppc_radix64_get_prot_amr(const PowerPCCPU *cpu)
-+{
-+    const CPUPPCState *env = &cpu->env;
-+    int amr = env->spr[SPR_AMR] >> 62; /* We only care about key0 AMR63:62 */
-+    int iamr = env->spr[SPR_IAMR] >> 62; /* We only care about key0 IAMR63:62 */
-+
-+    return (amr & 0x2 ? 0 : PAGE_WRITE) | /* Access denied if bit is set */
-+           (amr & 0x1 ? 0 : PAGE_READ) |
-+           (iamr & 0x1 ? 0 : PAGE_EXEC);
-+}
-+
- static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
-                                    uint64_t pte, int *fault_cause, int *prot,
-                                    int mmu_idx, bool partition_scoped)
-diff --git a/target/ppc/mmu-radix64.h b/target/ppc/mmu-radix64.h
-index c5c04a1527..6620b3d648 100644
---- a/target/ppc/mmu-radix64.h
-+++ b/target/ppc/mmu-radix64.h
-@@ -3,7 +3,7 @@
- 
- #ifndef CONFIG_USER_ONLY
- 
--#include "exec/page-protection.h"
-+#ifdef TARGET_PPC64
- 
- /* Radix Quadrants */
- #define R_EADDR_MASK            0x3FFFFFFFFFFFFFFF
-@@ -14,61 +14,10 @@
- #define R_EADDR_QUADRANT2       0x8000000000000000
- #define R_EADDR_QUADRANT3       0xC000000000000000
- 
--/* Radix Partition Table Entry Fields */
--#define PATE1_R_PRTB           0x0FFFFFFFFFFFF000
--#define PATE1_R_PRTS           0x000000000000001F
--
--/* Radix Process Table Entry Fields */
--#define PRTBE_R_GET_RTS(rts) \
--    ((((rts >> 58) & 0x18) | ((rts >> 5) & 0x7)) + 31)
--#define PRTBE_R_RPDB            0x0FFFFFFFFFFFFF00
--#define PRTBE_R_RPDS            0x000000000000001F
--
--/* Radix Page Directory/Table Entry Fields */
--#define R_PTE_VALID             0x8000000000000000
--#define R_PTE_LEAF              0x4000000000000000
--#define R_PTE_SW0               0x2000000000000000
--#define R_PTE_RPN               0x01FFFFFFFFFFF000
--#define R_PTE_SW1               0x0000000000000E00
--#define R_GET_SW(sw)            (((sw >> 58) & 0x8) | ((sw >> 9) & 0x7))
--#define R_PTE_R                 0x0000000000000100
--#define R_PTE_C                 0x0000000000000080
--#define R_PTE_ATT               0x0000000000000030
--#define R_PTE_ATT_NORMAL        0x0000000000000000
--#define R_PTE_ATT_SAO           0x0000000000000010
--#define R_PTE_ATT_NI_IO         0x0000000000000020
--#define R_PTE_ATT_TOLERANT_IO   0x0000000000000030
--#define R_PTE_EAA_PRIV          0x0000000000000008
--#define R_PTE_EAA_R             0x0000000000000004
--#define R_PTE_EAA_RW            0x0000000000000002
--#define R_PTE_EAA_X             0x0000000000000001
--#define R_PDE_NLB               PRTBE_R_RPDB
--#define R_PDE_NLS               PRTBE_R_RPDS
--
--#ifdef TARGET_PPC64
--
- bool ppc_radix64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-                        hwaddr *raddr, int *psizep, int *protp, int mmu_idx,
-                        bool guest_visible);
- 
--static inline int ppc_radix64_get_prot_eaa(uint64_t pte)
--{
--    return (pte & R_PTE_EAA_R ? PAGE_READ : 0) |
--           (pte & R_PTE_EAA_RW ? PAGE_READ | PAGE_WRITE : 0) |
--           (pte & R_PTE_EAA_X ? PAGE_EXEC : 0);
--}
--
--static inline int ppc_radix64_get_prot_amr(const PowerPCCPU *cpu)
--{
--    const CPUPPCState *env = &cpu->env;
--    int amr = env->spr[SPR_AMR] >> 62; /* We only care about key0 AMR63:62 */
--    int iamr = env->spr[SPR_IAMR] >> 62; /* We only care about key0 IAMR63:62 */
--
--    return (amr & 0x2 ? 0 : PAGE_WRITE) | /* Access denied if bit is set */
--           (amr & 0x1 ? 0 : PAGE_READ) |
--           (iamr & 0x1 ? 0 : PAGE_EXEC);
--}
--
- #endif /* TARGET_PPC64 */
- 
- #endif /* CONFIG_USER_ONLY */
 -- 
-2.30.9
+Best regards,
+Dmitry
 
 
