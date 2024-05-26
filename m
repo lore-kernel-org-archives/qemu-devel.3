@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF77AC25B7D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C762C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJmS-000140-33; Sun, 26 May 2024 15:43:44 -0400
+	id 1sBJlk-00089t-C4; Sun, 26 May 2024 15:43:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJmF-0000X6-4L
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:32 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sBJli-00089P-Mm
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:42:58 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJmB-0007mQ-8D
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:30 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f48e9414e9so2727955ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:25 -0700 (PDT)
+ id 1sBJlh-0007cC-0c
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:42:58 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-657a07878easo4409689a12.0
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:42:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752605; x=1717357405; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2xkTnIJzxFSsgLxwFEGJgc9RCPD2wi0PV4sGMffGtxM=;
- b=O98WC+38BpZpX+/HWyUgf7DHEDIzcTW6/R24wqlAE9yrOxNvbceNmH459jBh3a/ERE
- GUGonLc5wCwo8oz/A5AaWLx9nHWR3XmiD7J4pKvxABRMrMVjbl34Dito+lwtR6QxEQrA
- YAFSoSFGCEU00rTAIjF+84rDW3Ofj/He/FhuXhSvA7ozBjxoPqXd9GbO2/qRO1IigQ9d
- t+SN+N609Lh6XBHsiyFN46MWQOz2c6Ign10fX/4F5a2+Rw468/rKnq45GZUFW0jSekIG
- Js+G6Tjw7faWvWhdRkGaC5UfRaFezGi+YVv8w75lfguN/8CwqZ7u6gr9CnbttZl68l6F
- w7lA==
+ d=linaro.org; s=google; t=1716752575; x=1717357375; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9SNqljo3EmReP7kE8ervWQw2DryAJUAsy1lq7rpCZJ4=;
+ b=UIdtRpJyhacwbP96/+MeMYLG0HkAwNLLO/wzP/qNjXm5ee+1HHRwYHo55wG/Ndm7Z7
+ Yq1qxmLt7ftOoGwp3Tkf1wkgJsqHhLRIHLE1DY12EmX+5nlR05B+FGilHK/E7d9DkBj5
+ MSSqzQ3lmLRKrk094C/nl2HfsJYALCkRvwm78PWZCyRKFJG06mpDP8AVzEkMsd6b+RKW
+ hJ+kp6UJvjKd6tCq0Ah92W4UpRBZiDXTMMQyB0SMq8p2nWzfvdsp/u4vGlYHiPwO1kf3
+ F/YZcN/i7JQwESBv/Axq6K+Erq+zAx6RNRfeDPqX1TCGAPEzfz2OS1E6oVqAetdQUgCn
+ MWMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752605; x=1717357405;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2xkTnIJzxFSsgLxwFEGJgc9RCPD2wi0PV4sGMffGtxM=;
- b=sB4KmWuMpZ2ccnho/9HXRfoZKcoB8jRR3Sw69bbPz5uB1114ND5MljlSJi94vuJ+z8
- ZwaROh41Sa30j2CCOI9FDTQ/U7FuOGvOg6MoJvUN8GKBc8Inr7MJQNRxsQbcMbhAFReT
- BlSKWhF/sq5nz0QSql3h6TdS/BcLScHBASWpVsWQO8v+d4jvL8+71ptOuzUqwzutGGhp
- 6y0ATjZifj8FO6BQirzWb2LZcL0XZkS3e6aUGK7/q9lSEYtZ4ZfOAr0CzZCK5xKlKbh6
- TSAUUcU3JFygwKn6kFivBRPhcYz9XKp62w2p0OZo2t5Yx8eO3BiSN5v0X7p7ODh2E4is
- 9PtA==
-X-Gm-Message-State: AOJu0Yw16p+2m27PQWTyxWjMj/aRHTIT76v1Awcag8xLem61PW6SWcBk
- oVhYPoVP/c284jUlRFt+FmR4y6FfjgeigCc15aCtI+xsnE8PqEiefSRilR6qNzRgqTd75yWfMyO
- q
-X-Google-Smtp-Source: AGHT+IGoGAFNbMYjr5ZS0AH7vYGoE2K6yt6BnQMFWTgoR97D+6JwHPnjeUjVBfc2v7Xv09WUhVlztA==
-X-Received: by 2002:a17:902:ea03:b0:1f3:81c:c17 with SMTP id
- d9443c01a7336-1f4481f22cfmr109993785ad.23.1716752604691; 
- Sun, 26 May 2024 12:43:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716752575; x=1717357375;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9SNqljo3EmReP7kE8ervWQw2DryAJUAsy1lq7rpCZJ4=;
+ b=tgA9Awilf9mXSOJI6bPLmN/bYUHeOTqDDnYpcI/YYedVlFvCqQ56BlQpUQhm7kHWhz
+ nkF8M26NeEfttVBqMf2TvlWFP2Jd4KQbFDIs6tJq+clRMF9tSUYS9eZWQlGzZr72KXGE
+ VKpwlDblUy/SBqZFUBn4lbuE/Fu4U9erOm8TVT+yLxY130feKmjBsfvPlEHJ8SPVSLcT
+ i09lBPwbvLLo81Qoq4EsksKECi7/yjKlDnRTMlPLMumEBuFoLynMgBsEhiLLOiRE4jnM
+ s9Ol8X5U202iQTIBbXJ0M146REgTsDxiygMrZmvmgOK24Xcz0+xcFme5r6GIpSMEuVR7
+ Xqyw==
+X-Gm-Message-State: AOJu0Yw4gxpgVXK+S/E0OCUOfY1eL4ocnURqrkAZHRkHRypjGg6Gcs3z
+ Abf+++JGHsxUkirx9V0++uQap6uEU5o1WUjlgz4msBn5GKBr8zXKelElbYiGi0edTlrIKP3U2HU
+ v
+X-Google-Smtp-Source: AGHT+IE4EYiyaowuah0egb1XtgL+kYwsqS5HSNR6OS6pPF5LVrI0xKJL9u5JMFx1SDoAESHANTGrIQ==
+X-Received: by 2002:a17:902:eb85:b0:1f4:698b:7a0b with SMTP id
+ d9443c01a7336-1f4698b7cbdmr62507955ad.8.1716752575283; 
+ Sun, 26 May 2024 12:42:55 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.24
+ d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.42.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:43:24 -0700 (PDT)
+ Sun, 26 May 2024 12:42:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 37/37] target/sparc: Enable VIS4 feature bit
-Date: Sun, 26 May 2024 12:42:54 -0700
-Message-Id: <20240526194254.459395-38-richard.henderson@linaro.org>
+Cc: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH v2 00/37] target/sparc: Implement VIS4
+Date: Sun, 26 May 2024 12:42:17 -0700
+Message-Id: <20240526194254.459395-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
-References: <20240526194254.459395-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,33 +92,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/sparc/cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+Now tested with RISU, using a Solaris M8 host as reference.
+This exposed a few bugs in the existing VIS1 support as well,
+so fix those before anything else.  It also exposed a few bugs
+in the implementation of VIS3, so fixes squashed there as well.
 
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 88da5254e8..9bacfb68cb 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -552,6 +552,7 @@ static const char * const feature_name[] = {
-     [CPU_FEATURE_BIT_FMAF] = "fmaf",
-     [CPU_FEATURE_BIT_VIS3] = "vis3",
-     [CPU_FEATURE_BIT_IMA] = "ima",
-+    [CPU_FEATURE_BIT_VIS4] = "vis4",
- #else
-     [CPU_FEATURE_BIT_MUL] = "mul",
-     [CPU_FEATURE_BIT_DIV] = "div",
-@@ -886,6 +887,8 @@ static Property sparc_cpu_properties[] = {
-                     CPU_FEATURE_BIT_VIS3, false),
-     DEFINE_PROP_BIT("ima",      SPARCCPU, env.def.features,
-                     CPU_FEATURE_BIT_IMA, false),
-+    DEFINE_PROP_BIT("vis4",     SPARCCPU, env.def.features,
-+                    CPU_FEATURE_BIT_VIS4, false),
- #else
-     DEFINE_PROP_BIT("mul",      SPARCCPU, env.def.features,
-                     CPU_FEATURE_BIT_MUL, false),
+
+r~
+
+
+Richard Henderson (37):
+  target/sparc: Fix ARRAY8
+  target/sparc: Rewrite gen_edge
+  target/sparc: Fix do_dc
+  target/sparc: Fix helper_fmul8ulx16
+  target/sparc: Perform DFPREG/QFPREG in decodetree
+  target/sparc: Remove gen_dest_fpr_D
+  target/sparc: Remove cpu_fpr[]
+  target/sparc: Use gvec for VIS1 parallel add/sub
+  target/sparc: Implement FMAf extension
+  target/sparc: Add feature bits for VIS 3
+  target/sparc: Implement ADDXC, ADDXCcc
+  target/sparc: Implement CMASK instructions
+  target/sparc: Implement FCHKSM16
+  target/sparc: Implement FHADD, FHSUB, FNHADD, FNADD, FNMUL
+  target/sparc: Implement FLCMP
+  target/sparc: Implement FMEAN16
+  target/sparc: Implement FPADD64, FPSUB64
+  target/sparc: Implement FPADDS, FPSUBS
+  target/sparc: Implement FPCMPEQ8, FPCMPNE8, FPCMPULE8, FPCMPUGT8
+  target/sparc: Implement FSLL, FSRL, FSRA, FSLAS
+  target/sparc: Implement LDXEFSR
+  target/sparc: Implement LZCNT
+  target/sparc: Implement MOVsTOw, MOVdTOx, MOVwTOs, MOVxTOd
+  target/sparc: Implement PDISTN
+  target/sparc: Implement UMULXHI
+  target/sparc: Implement XMULX
+  target/sparc: Enable VIS3 feature bit
+  target/sparc: Implement IMA extension
+  target/sparc: Add feature bit for VIS4
+  target/sparc: Implement FALIGNDATAi
+  target/sparc: Implement 8-bit FPADD, FPADDS, and FPADDUS
+  target/sparc: Implement VIS4 comparisons
+  target/sparc: Implement FPMIN, FPMAX
+  target/sparc: Implement SUBXC, SUBXCcc
+  target/sparc: Implement MWAIT
+  target/sparc: Implement monitor ASIs
+  target/sparc: Enable VIS4 feature bit
+
+ target/sparc/asi.h             |   4 +
+ target/sparc/helper.h          |  27 +-
+ target/sparc/cpu-feature.h.inc |   4 +
+ target/sparc/insns.decode      | 338 ++++++++----
+ linux-user/elfload.c           |   3 +
+ target/sparc/cpu.c             |  12 +
+ target/sparc/fop_helper.c      | 136 +++++
+ target/sparc/ldst_helper.c     |   4 +
+ target/sparc/translate.c       | 938 ++++++++++++++++++++++++++-------
+ target/sparc/vis_helper.c      | 392 +++++++++++---
+ fpu/softfloat-specialize.c.inc |  31 ++
+ 11 files changed, 1558 insertions(+), 331 deletions(-)
+
 -- 
 2.34.1
 
