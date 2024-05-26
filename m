@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122C3C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDAEC25B7C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJfx-00082V-10; Sun, 26 May 2024 15:37:01 -0400
+	id 1sBJfu-000821-Gu; Sun, 26 May 2024 15:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfr-000802-Eo
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:55 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1sBJft-000818-1i
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:57 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfl-0006UF-Mq
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:55 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2bf5e177ebdso2095946a91.1
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:45 -0700 (PDT)
+ id 1sBJfn-0006Ty-Uc
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:56 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2bf5baa2773so2203220a91.0
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752204; x=1717357004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752203; x=1717357003; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MCy66KKepWlHqXyVaIB/ACSSH0v8RsXCcqK/IUUC3fY=;
- b=D6Kxh3PNvStWvdIF1Uwmdal0jzLgBgNr7BzfvZv/FBTVqDsk0dAVI7NE7NbpiQgnmL
- Ki0/s8cUITn9ltHkBPFA3eb+uoDSwtQOwdTYyfDJMLAvuYGw7FBpkFlB8ocEFaoIFEI2
- BPasuMkY5hT354aBPdM781iWSB3X7guk7G1l8t3Uo3oKMabl68xBLic+Yz3OdLrjdI6/
- BBEh8R5MLaTfQDCgZ4vtqDlXJ73d+N3Iu4iJvk6jpI6PdiTWiOZrzivcIw4x0ktfwbrJ
- XIBvCNOigTi7NW0jgulRlccUUj0ZX3lziEjCCfw1HVSVf5oTuoGuq8gbwmvSYv1Avhay
- Eyhg==
+ bh=VQc6zsisJMaVnI573tc7E5e7k10EWW0D4y87pSLLi8M=;
+ b=Tpy2KJ8x53C0fBWWB/YWldxYj1ASx3dkVyZz5nMrixrLoPTXXSi8scUFWipSTkOCN4
+ X3z1wRoN9TEHdxTslgBhYgONBRbqIIhdFrycUT5vhBNkAMQGBdbDJ0JscDKC3zn79SZ1
+ m4QIpD+abZRL6wuGLcZf+ZCrIaZ7wcgoiubJigkNibrYumCJd9cTacFgzP3zmesMrKyY
+ dE6vC3qgIDbRiUJtL+PywX8BRTdvBwKVAx1EchJcLgearZN9BnzQC8PUVJ6xAyLY37Z7
+ HX79YFujqod8TOGR/Xhhldo8IRe1eWMH7t+kkw1D4qROU6I/t02KPOXaTIYAhUwWByS6
+ tVpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752204; x=1717357004;
+ d=1e100.net; s=20230601; t=1716752203; x=1717357003;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MCy66KKepWlHqXyVaIB/ACSSH0v8RsXCcqK/IUUC3fY=;
- b=d2opU/KtLMD8Wl6/4K9nh/8jL5c6gnnSIWKbuaQdcFLTJhzQErP/833LKKDREt9owm
- HtkP7eOU8SUPwGue2J6MEKZnBysXtwagph52P9/pWmSndqmeuj/vgEI/CJyE2Dr7BOYz
- dSuVjFN0Q6uE/vvmAY9MYbT82X4dVtQhPxTZQaEVZka1gXAt3q+4SO4u22/VWztHz9bT
- /ndHdsw5p1D2ILm2PNjdv/HHPBnsCXu8SbpItRaH6vTOUT0abGpFHJGU1QBUkk3SgR5D
- IXF+8Yvo+GeoeBIiCIgPLoZb7tHiMRFpgUWTlFr9J6GJcGTr30zLpK+ef0U5wj3bKnbC
- RaTA==
-X-Gm-Message-State: AOJu0YxXLZvLTOQ1vM5bCkk06hAWi2KEJ+j66Z/VIJtV+aVbfvsKfvqU
- Z4i4CzPvZSqmQyoiqhMBtr9axQC76zgfn2ViuXfxkQQnbbeZDBqZYzpmVAsVRZcMgq8OxqKDHHn
- B
-X-Google-Smtp-Source: AGHT+IHu0Hm01icjL+LtRk7j5ELkhLGgxJqq4i5B/ZVSxYbB9W7qmuzwzdF2znM/YY72RUoQVCbZ4g==
-X-Received: by 2002:a17:90b:d98:b0:2bd:8cf6:107d with SMTP id
- 98e67ed59e1d1-2bf5e84ace6mr7449859a91.7.1716752204058; 
- Sun, 26 May 2024 12:36:44 -0700 (PDT)
+ bh=VQc6zsisJMaVnI573tc7E5e7k10EWW0D4y87pSLLi8M=;
+ b=e6cU9cwiTWesc9d7FdguSD83iFGDVED10YR4OQMwukJWxtLEsXCR0bIoH8FR4J/zfF
+ hnWS+JrrfVDI4G9JSFZ/qrnFL3CP38o23Skj5LVcSR1+hcRwD1wpEeUSSacldyOvK1rM
+ Q+d54hh9+jU/rtMf5NN0kevllN461q66WIW4YdtBxUes4vjPAOpV2zzv/IvfMtHMPlVj
+ sken6lres98FRiPcnKFOkr42b8gxHVSs4nRDkW8UF6Tk7hkesdVswLZYFB07kAzoPhSu
+ VwzHWK29Y8IPndy0qNCE72GgeztVGHcwC+GQhG81isbKd576EG1c5VMSZahEqYflag1l
+ bmxA==
+X-Gm-Message-State: AOJu0Yz1BsFz4oOuPQDb3FN7TQjYRwy1xxTgkErjCuVyxezlN1Z8xIow
+ IpiI3gax1aImtX4Kf1oaQCcFMSA3xpk7MKKQUJ02S0KU+R3vKmNDdBogIkC1X44wQ4wi671EbIb
+ o
+X-Google-Smtp-Source: AGHT+IFN0VpHqSkQfz6kRwUt6/8P2s+fKxF7okGMfuzwgindp8awjhfKZ7INgVdSGHL1713XUpGlXg==
+X-Received: by 2002:a17:90b:400a:b0:2bd:5c9c:b080 with SMTP id
+ 98e67ed59e1d1-2bf5ed1e3b6mr7382005a91.12.1716752202447; 
+ Sun, 26 May 2024 12:36:42 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.43
+ 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:36:43 -0700 (PDT)
+ Sun, 26 May 2024 12:36:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH RISU v2 06/13] risugen: Add sparc64 support
-Date: Sun, 26 May 2024 12:36:30 -0700
-Message-Id: <20240526193637.459064-7-richard.henderson@linaro.org>
+Subject: [PATCH RISU v2 04/13] risu: Add initial sparc64 support
+Date: Sun, 26 May 2024 12:36:28 -0700
+Message-Id: <20240526193637.459064-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240526193637.459064-1-richard.henderson@linaro.org>
 References: <20240526193637.459064-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,515 +94,503 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Best effort for both Linux and Solaris as a host, since the
+gcc compile farm has more working Sparc Solaris hosts than
+Sparc Linux hosts.
+
+What's missing is a value for %gsr from Solaris.
+This could complicate comparison of VIS instructions.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- risugen            |  10 +-
- risugen_common.pm  |  50 +++++-
- risugen_sparc64.pm | 385 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 443 insertions(+), 2 deletions(-)
- create mode 100644 risugen_sparc64.pm
+ Makefile               |   3 +
+ risu_reginfo_sparc64.h |  36 ++++++++
+ risu.c                 |   2 +
+ risu_reginfo_sparc64.c | 186 +++++++++++++++++++++++++++++++++++++++++
+ risu_sparc64.c         |  52 ++++++++++++
+ configure              |   2 +
+ test_sparc64.s         | 137 ++++++++++++++++++++++++++++++
+ 7 files changed, 418 insertions(+)
+ create mode 100644 risu_reginfo_sparc64.h
+ create mode 100644 risu_reginfo_sparc64.c
+ create mode 100644 risu_sparc64.c
+ create mode 100644 test_sparc64.s
 
-diff --git a/risugen b/risugen
-index 2800b8b..830dfd3 100755
---- a/risugen
-+++ b/risugen
-@@ -310,6 +310,8 @@ Valid options:
-                    Useful to test before support for FP is available.
-     --sve        : enable sve floating point
-     --be         : generate instructions in Big-Endian byte order (ppc64 only).
-+    --cross prefix : prefix for the assembler and linker
-+    --keep       : do not remove intermediate files
-     --help       : print this message
- EOT
- }
-@@ -322,6 +324,8 @@ sub main()
-     my $fp_enabled = 1;
-     my $sve_enabled = 0;
-     my $big_endian = 0;
-+    my $cross_prefix = "";
-+    my $keep = 0;
-     my ($infile, $outfile);
+diff --git a/Makefile b/Makefile
+index 2bd08aa..f503499 100644
+--- a/Makefile
++++ b/Makefile
+@@ -53,6 +53,9 @@ $(PROG): $(OBJS)
+ %_$(ARCH).elf: test.ld %_$(ARCH).o
+ 	$(LD) -o $@ -T $^
  
-     GetOptions( "help" => sub { usage(); exit(0); },
-@@ -339,6 +343,8 @@ sub main()
-                 "be" => sub { $big_endian = 1; },
-                 "no-fp" => sub { $fp_enabled = 0; },
-                 "sve" => sub { $sve_enabled = 1; },
-+                "cross-prefix=s" => \$cross_prefix,
-+                "keep" => sub { $keep = 1; },
-         ) or return 1;
-     # allow "--pattern re,re" and "--pattern re --pattern re"
-     @pattern_re = split(/,/,join(',',@pattern_re));
-@@ -372,7 +378,9 @@ sub main()
-         'keys' => \@insn_keys,
-         'arch' => $full_arch[0],
-         'subarch' => $full_arch[1] || '',
--        'bigendian' => $big_endian
-+        'bigendian' => $big_endian,
-+        'cross_prefix' => $cross_prefix,
-+        'keep' => $keep,
-     );
++test_sparc64.o: test_sparc64.s
++	$(AS) -Av9a -o $@ $<
++
+ clean:
+ 	rm -f $(PROG) $(OBJS) $(BINO) $(BINE)
  
-     write_test_code(\%params);
-diff --git a/risugen_common.pm b/risugen_common.pm
-index 5207c0e..228082f 100644
---- a/risugen_common.pm
-+++ b/risugen_common.pm
-@@ -26,7 +26,8 @@ BEGIN {
-     our @EXPORT = qw(open_bin close_bin set_endian insn32 insn16 $bytecount
-                    progress_start progress_update progress_end
-                    eval_with_fields is_pow_of_2 sextract ctz
--                   dump_insn_details);
-+                   dump_insn_details
-+                   open_asm close_asm assemble_and_link);
- }
- 
- our $bytecount;
-@@ -66,6 +67,53 @@ sub insn16($)
-     $bytecount += 2;
- }
- 
-+sub open_asm($)
-+{
-+    my ($basename) = @_;
-+    my $fname = $basename . ".s";
-+    open(ASM, ">", $fname) or die "can't open $fname: $!";
-+    select ASM;
-+}
-+
-+sub close_asm
-+{
-+    close(ASM) or die "can't close asm file: $!";
-+    select STDOUT;
-+}
-+
-+sub assemble_and_link($$$@)
-+{
-+    my ($basename, $cross_prefix, $keep, @asflags) = @_;
-+    my $asmfile = $basename . ".s";
-+    my $ldfile = $basename . ".ld";
-+    my $objfile = $basename . ".o";
-+
-+    open(LD, ">", $ldfile) or die "can't open $ldfile: $!";
-+    print LD '
-+        ENTRY(start)
-+        PHDRS { text PT_LOAD FILEHDR PHDRS; }
-+        SECTIONS {
-+            . = SIZEOF_HEADERS;
-+            PROVIDE(start = .);
-+            .text : { *(.text) } :text
-+            .data : { *(.data) } :text
-+        }
-+    ';
-+    close(LD);
-+
-+    my @as = ($cross_prefix . "as", @asflags, "-o", $objfile, $asmfile);
-+    system(@as) == 0 or die "system @as failed: $?";
-+
-+    my @ld = ($cross_prefix . "ld", "-o", $basename, "-T", $ldfile, $objfile);
-+    system(@ld) == 0 or die "system @ld failed: $?";
-+
-+    if (!$keep) {
-+        unlink $asmfile;
-+        unlink $ldfile;
-+        unlink $objfile;
-+    }
-+}
-+
- # Progress bar implementation
- my $lastprog;
- my $proglen;
-diff --git a/risugen_sparc64.pm b/risugen_sparc64.pm
+diff --git a/risu_reginfo_sparc64.h b/risu_reginfo_sparc64.h
 new file mode 100644
-index 0000000..c9f2ede
+index 0000000..b1d5341
 --- /dev/null
-+++ b/risugen_sparc64.pm
-@@ -0,0 +1,385 @@
-+#!/usr/bin/perl -w
-+###############################################################################
-+# Copyright (c) 2024 Linaro Limited
-+# All rights reserved. This program and the accompanying materials
-+# are made available under the terms of the Eclipse Public License v1.0
-+# which accompanies this distribution, and is available at
-+# http://www.eclipse.org/legal/epl-v10.html
-+###############################################################################
++++ b/risu_reginfo_sparc64.h
+@@ -0,0 +1,36 @@
++/******************************************************************************
++ * Copyright (c) 2024 Linaro Limited
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *****************************************************************************/
 +
-+# risugen -- generate a test binary file for use with risu
-+# See 'risugen --help' for usage information.
-+package risugen_sparc64;
++#ifndef RISU_REGINFO_SPARC64_H
++#define RISU_REGINFO_SPARC64_H
 +
-+use strict;
-+use warnings;
++#ifdef __linux__
++typedef struct sigcontext host_context_t;
++#else
++typedef ucontext_t host_context_t;
++#endif
 +
-+use risugen_common;
++struct reginfo {
++    uint32_t faulting_insn;
++    uint32_t ccr;
 +
-+require Exporter;
++    uint64_t pc;
++    uint64_t npc;
 +
-+our @ISA    = qw(Exporter);
-+our @EXPORT = qw(write_test_code);
++    uint64_t g[8];
++    uint64_t o[8];
++    uint64_t l[8];
++    uint64_t i[8];
 +
-+my $periodic_reg_random = 1;
++    uint64_t y;
++    uint64_t fsr;
 +
-+# Maximum alignment restriction permitted for a memory op.
-+my $MAXALIGN = 64;
-+my $MAXBLOCK = 2048;
-+my $PARAMREG = 15;         # %o7
++    uint64_t fregs[32];
++};
 +
-+my $OP_COMPARE = 0;        # compare registers
-+my $OP_TESTEND = 1;        # end of test, stop
-+my $OP_SETMEMBLOCK = 2;    # g1 is address of memory block (8192 bytes)
-+my $OP_GETMEMBLOCK = 3;    # add the address of memory block to g1
-+my $OP_COMPAREMEM = 4;     # compare memory block
++#endif /* RISU_REGINFO_SPARC64_H */
+diff --git a/risu.c b/risu.c
+index c9c3a38..422b32e 100644
+--- a/risu.c
++++ b/risu.c
+@@ -30,6 +30,8 @@
+ #ifdef __linux__
+ #include <endian.h>
+ #define HOST_BIG_ENDIAN  (__BYTE_ORDER == __BIG_ENDIAN)
++#elif defined(__sparc__)
++#define HOST_BIG_ENDIAN  1
+ #else
+ #error Need HOST_BIG_ENDIAN
+ #endif
+diff --git a/risu_reginfo_sparc64.c b/risu_reginfo_sparc64.c
+new file mode 100644
+index 0000000..be002e3
+--- /dev/null
++++ b/risu_reginfo_sparc64.c
+@@ -0,0 +1,186 @@
++/******************************************************************************
++ * Copyright (c) 2024 Linaro Limited
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *****************************************************************************/
 +
-+my @GREGS = ( "%g0", "%g1", "%g2", "%g3", "%g4", "%g5", "%g6", "%g7",
-+              "%o0", "%o1", "%o2", "%o3", "%o4", "%o5", "%o6", "%o7",
-+              "%l0", "%l1", "%l2", "%l3", "%l4", "%l5", "%l6", "%l7",
-+              "%i0", "%i1", "%i2", "%i3", "%i4", "%i5", "%i6", "%i7" );
++#include <stdio.h>
++#include <ucontext.h>
++#include <string.h>
++#include <signal.h>
++#include <stdlib.h>
 +
-+sub write_data32($)
++#include "risu.h"
++#include "risu_reginfo_sparc64.h"
++
++#define STACK_BIAS 2047
++
++const struct option * const arch_long_opts;
++const char * const arch_extra_help;
++
++void process_arch_opt(int opt, const char *arg)
 +{
-+    my ($val) = @_;
-+    printf "\t.word\t%#x\n", $val;
++    abort();
 +}
 +
-+sub write_data64($)
++void arch_init(void)
 +{
-+    my ($val) = @_;
-+    printf "\t.quad\t%#x\n", $val;
 +}
 +
-+sub write_risuop($)
++int reginfo_size(struct reginfo *ri)
 +{
-+    my ($op) = @_;
-+    printf "\tilltrap\t%#x\n", 0xdead0 + $op;
++    return sizeof(*ri);
 +}
 +
-+sub write_mov_rr($$)
++/* reginfo_init: initialize with a ucontext */
++void reginfo_init(struct reginfo *ri, host_context_t *hc, void *siaddr)
 +{
-+    my ($rd, $rs) = @_;
-+    printf "\tmov\t%s,%s\n", $GREGS[$rs], $GREGS[$rd];
++    memset(ri, 0, sizeof(*ri));
++
++#ifdef __linux__
++    ri->pc = hc->sigc_regs.tpc;
++    ri->npc = hc->sigc_regs.tnpc;
++    ri->ccr = (hc->sigc_regs.tstate >> 32) & 0xff;
++    ri->y = hc->sigc_regs.y;
++
++    /* g + o */
++    memcpy(&ri->g, hc->sigc_regs.u_regs, 16 * 8);
++    /* l + i are just before sc */
++    memcpy(&ri->l, (void *)hc - 8 * 8 * 3, 16 * 8);
++
++    if (hc->sigc_fpu_save) {
++        ri->fsr = hc->sigc_fpu_save->si_fsr;
++        /* TODO: ri->gsr = hc->sigc_fpu_save->si_gsr; */
++        memcpy(ri->fregs, hc->sigc_fpu_save->si_float_regs, 32 * 8);
++    }
++#elif defined(__sun__)
++    ri->pc = hc->uc_mcontext.gregs[REG_PC];
++    ri->npc = hc->uc_mcontext.gregs[REG_nPC];
++    ri->ccr = hc->uc_mcontext.gregs[REG_CCR];
++
++    /* G and O are in the signal frame. */
++    memcpy(&ri->g[1], &hc->uc_mcontext.gregs[REG_G1], 7 * sizeof(greg_t));
++    memcpy(&ri->o[0], &hc->uc_mcontext.gregs[REG_O0], 8 * sizeof(greg_t));
++
++    /* L and I are flushed to the regular stack frame. */
++    memcpy(&ri->l[0], (void *)(ri->o[6] + STACK_BIAS), 16 * sizeof(greg_t));
++
++    ri->y = hc->uc_mcontext.gregs[REG_Y];
++    ri->fsr = hc->uc_mcontext.fpregs.fpu_fsr;
++    /* ??? Despite %gsr being asr19, uc->mc.asrs[19-16] is not populated. */
++
++    memcpy(&ri->fregs[0], &hc->uc_mcontext.fpregs.fpu_fr,
++           32 * sizeof(uint64_t));
++#endif
++
++    ri->g[7] = 0xdeadbeefdeadbeeful;  /* tp */
++    ri->o[6] = 0xdeadbeefdeadbeeful;  /* sp */
++    ri->i[6] = 0xdeadbeefdeadbeeful;  /* fp */
++
++    ri->faulting_insn = *(uint32_t *)ri->pc;
++
++    ri->pc -= image_start_address;
++    ri->npc -= image_start_address;
 +}
 +
-+sub write_mov_ri($$)
++/* reginfo_is_eq: compare the reginfo structs, returns nonzero if equal */
++bool reginfo_is_eq(struct reginfo *r1, struct reginfo *r2)
 +{
-+    my ($rd, $imm) = @_;
++    return memcmp(r1, r2, reginfo_size(r1)) == 0;
++}
 +
-+    if (-0x1000 <= $imm < 0x1000) {
-+        printf "\tmov\t%d,%s\n", $imm, $GREGS[$rd];
-+    } else {
-+        my $immhi = $imm & 0xfffff000;
-+        my $immlo = $imm & 0x00000fff;
++/* reginfo_dump: print state to a stream, returns nonzero on success */
++void reginfo_dump(struct reginfo *ri, FILE * f)
++{
++    int i;
 +
-+        if ($imm < 0) {
-+            $immhi ^= 0xfffff000;
-+            $immlo |= -0x1000;
++    fprintf(f, "  insn   : %08x\n", ri->faulting_insn);
++    fprintf(f, "  ccr    : %02x\n", ri->ccr);
++    fprintf(f, "  pc     : %016" PRIx64 "\n", ri->pc);
++    fprintf(f, "  npc    : %016" PRIx64 "\n", ri->npc);
++
++    for (i = 1; i < 8; i++) {
++        fprintf(f, "  G%d     : %016" PRIx64 "\n", i, ri->g[i]);
++    }
++    for (i = 0; i < 8; i++) {
++        fprintf(f, "  O%d     : %016" PRIx64 "\n", i, ri->o[i]);
++    }
++    for (i = 0; i < 8; i++) {
++        fprintf(f, "  L%d     : %016" PRIx64 "\n", i, ri->l[i]);
++    }
++    for (i = 0; i < 8; i++) {
++        fprintf(f, "  I%d     : %016" PRIx64 "\n", i, ri->i[i]);
++    }
++
++    fprintf(f, "  y      : %016" PRIx64 "\n", ri->y);
++    fprintf(f, "  fsr    : %016" PRIx64 "\n", ri->fsr);
++
++    for (i = 0; i < 32; i++) {
++        fprintf(f, "  F%-2d    : %016" PRIx64 "\n", i * 2, ri->fregs[i]);
++    }
++}
++
++/* reginfo_dump_mismatch: print mismatch details to a stream, ret nonzero=ok */
++void reginfo_dump_mismatch(struct reginfo *m, struct reginfo *a, FILE * f)
++{
++    int i;
++
++    if (m->faulting_insn != a->faulting_insn) {
++        fprintf(f, "  insn   : %08x vs %08x\n",
++                m->faulting_insn, a->faulting_insn);
++    }
++    if (m->ccr != a->ccr) {
++        fprintf(f, "  ccr    : %02x vs %02x\n", m->ccr, a->ccr);
++    }
++    if (m->pc != a->pc) {
++        fprintf(f, "  pc     : %016" PRIx64 " vs %016" PRIx64 "\n",
++                m->pc, a->pc);
++    }
++    if (m->npc != a->npc) {
++        fprintf(f, "  npc    : %016" PRIx64 " vs %016" PRIx64 "\n",
++                m->npc, a->npc);
++    }
++
++    for (i = 1; i < 8; i++) {
++        if (m->g[i] != a->g[i]) {
++            fprintf(f, "  G%d     : %016" PRIx64 " vs %016" PRIx64 "\n",
++                    i, m->g[i], a->g[i]);
 +        }
-+        printf "\tsethi\t%%hi(%d),%s\n", $immhi, $GREGS[$rd];
-+        if ($immlo != 0) {
-+            printf "\txor\t%s,%d,%s\n", $GREGS[$rd], $immlo, $GREGS[$rd];
++    }
++    for (i = 0; i < 8; i++) {
++        if (m->o[i] != a->o[i]) {
++            fprintf(f, "  O%d     : %016" PRIx64 " vs %016" PRIx64 "\n",
++                    i, m->o[i], a->o[i]);
 +        }
 +    }
-+}
-+
-+sub write_add_rri($$$)
-+{
-+    my ($rd, $rs, $imm) = @_;
-+    die "bad imm!" if ($imm < -0x1000 || $imm >= 0x1000);
-+
-+    printf "\txor\t%s,%d,%s\n", $GREGS[$rs], $imm, $GREGS[$rd];
-+}
-+
-+sub write_sub_rrr($$$)
-+{
-+    my ($rd, $rs1, $rs2) = @_;
-+
-+    printf "\tsub\t%s,%s,%s\n", $GREGS[$rs1], $GREGS[$rs2], $GREGS[$rd];
-+}
-+
-+sub begin_datablock($$)
-+{
-+    my ($align, $label) = @_;
-+    die "bad align!" if ($align < 4 || $align > 255 || !is_pow_of_2($align));
-+
-+    printf ".data\n";
-+    printf "\t.balign %d\n", $align;
-+    printf "%s:\n", $label;
-+}
-+
-+sub end_datablock()
-+{
-+    printf ".text\n"
-+}
-+
-+sub write_ref_datablock($$$$)
-+{
-+    my ($rd, $offset, $scratch, $label) = @_;
-+
-+    printf "\trd\t%%pc,%s\n", $GREGS[$rd];
-+    printf "\tsethi\t%%pc22(%s+%d),%s\n",
-+           $label, $offset + 4, $GREGS[$scratch];
-+    printf "\tor\t%s,%%pc10(%s+%d),%s\n",
-+           $GREGS[$scratch], $label, $offset + 8, $GREGS[$scratch];
-+    printf "\tadd\t%s,%s,%s\n", $GREGS[$scratch], $GREGS[$rd], $GREGS[$rd];
-+}
-+
-+sub write_random_register_data($$)
-+{
-+    my ($fp_enabled, $fsr) = @_;
-+    my $size = 32 * 8;
-+
-+    if ($fp_enabled) {
-+        # random data for 32 double-precision regs plus %gsr
-+        $size += $fp_enabled ? 33 * 8 : 0;
-+    }
-+
-+    begin_datablock(8, "1");
-+    for (my $i = 0; $i < $size; $i += 4) {
-+        write_data32(rand(0xffffffff));
-+    }
-+    if ($fp_enabled) {
-+        # %fsr gets constant data
-+        write_data64($fsr);
-+    }
-+    end_datablock();
-+
-+    write_ref_datablock(1, 0, 2, "1b");
-+
-+    # Load floating point / SIMD registers
-+    if ($fp_enabled) {
-+        for (my $rt = 0; $rt < 64; $rt += 2) {
-+            printf "\tldd\t[%s+%d],%%f%d\n", $GREGS[1], 32 * 8 + $rt * 4, $rt;
++    for (i = 0; i < 8; i++) {
++        if (m->l[i] != a->l[i]) {
++            fprintf(f, "  L%d     : %016" PRIx64 " vs %016" PRIx64 "\n",
++                    i, m->l[i], a->l[i]);
 +        }
-+        printf "\tldx\t[%s+%d],%s\n", $GREGS[1], 64 * 8, $GREGS[2];
-+        printf "\twr\t%s,0,%%gsr\n", $GREGS[2];
-+        printf "\tldx\t[%s+%d],%%fsr\n", $GREGS[1], 65 * 8;
 +    }
-+
-+    # Load Y
-+    printf "\tldx\t[%s],%s\n", $GREGS[1], $GREGS[2];
-+    printf "\twr\t%s,0,%%y\n", $GREGS[2];
-+
-+    # Clear flags
-+    printf "\twr\t%%g0,0,%%ccr\n";
-+
-+    # Load general purpose registers
-+    for (my $i = 31; $i >= 1; --$i) {
-+        if (reg_ok($i)) {
-+            printf "\tldx\t[%s+%d],%s\n", $GREGS[1], $i * 8, $GREGS[$i];
++    for (i = 0; i < 8; i++) {
++        if (m->i[i] != a->i[i]) {
++            fprintf(f, "  I%d     : %016" PRIx64 " vs %016" PRIx64 "\n",
++                    i, m->i[i], a->i[i]);
 +        }
 +    }
 +
-+    write_risuop($OP_COMPARE);
-+}
-+
-+sub write_memblock_setup()
-+{
-+    begin_datablock($MAXALIGN, "2");
-+
-+    for (my $i = 0; $i < $MAXBLOCK; $i += 4) {
-+        write_data32(rand(0xffffffff));
++    if (m->y != a->y) {
++        fprintf(f, "  y      : %016" PRIx64 " vs %016" PRIx64 "\n",
++                m->y, a->y);
++    }
++    if (m->fsr != a->fsr) {
++        fprintf(f, "  fsr    : %016" PRIx64 " vs %016" PRIx64 "\n",
++                m->fsr, a->fsr);
 +    }
 +
-+    end_datablock();
-+    write_ref_datablock($PARAMREG, 0, 1, "2b");
-+    write_risuop($OP_SETMEMBLOCK);
-+}
-+
-+# Functions used in memory blocks to handle addressing modes.
-+# These all have the same basic API: they get called with parameters
-+# corresponding to the interesting fields of the instruction,
-+# and should generate code to set up the base register to be
-+# valid. They must return the register number of the base register.
-+# The last (array) parameter lists the registers which are trashed
-+# by the instruction (ie which are the targets of the load).
-+# This is used to avoid problems when the base reg is a load target.
-+
-+# Global used to communicate between align(x) and reg() etc.
-+my $alignment_restriction;
-+
-+sub align($)
-+{
-+    my ($a) = @_;
-+    if (!is_pow_of_2($a) || !(0 < $a <= $MAXALIGN)) {
-+        die "bad align() value $a\n";
-+    }
-+    $alignment_restriction = $a;
-+}
-+
-+sub gen_memblock_offset()
-+{
-+    # Generate a random offset within the memory block, of the correct
-+    # alignment. We require the offset to not be within 16 bytes of either
-+    # end, to (more than) allow for the worst case data transfer.
-+    return (rand($MAXBLOCK - 32) + 16) & ~($alignment_restriction - 1);
-+}
-+
-+sub reg_ok($)
-+{
-+    my ($r) = @_;
-+
-+    # Avoid special registers %g7 (tp), %o6 (sp), %i6 (fp).
-+    return $r != 7 && $r != 14 && $r != 30;
-+}
-+
-+sub reg_plus_imm($$@)
-+{
-+    # Handle reg + immediate addressing mode
-+    my ($base, $imm, @trashed) = @_;
-+    my $offset = gen_memblock_offset();
-+    my $scratch = $base != 1 ? 1 : 2;
-+
-+    write_ref_datablock($base, $offset - $imm, $scratch, "2b");
-+    write_mov_ri($scratch, 0);
-+
-+    if (grep $_ == $base, @trashed) {
-+        return -1;
-+    }
-+    return $base;
-+}
-+
-+sub reg($@)
-+{
-+    my ($base, @trashed) = @_;
-+    return reg_plus_imm($base, 0, @trashed);
-+}
-+
-+sub reg_plus_reg($$@)
-+{
-+    # Handle reg + reg addressing mode
-+    my ($base, $idx, @trashed) = @_;
-+    my $offset = gen_memblock_offset();
-+    my $scratch = 1;
-+
-+    if ($base == $idx) {
-+        return -1;
-+    }
-+
-+    while ($base == $scratch || $idx == $scratch) {
-+        ++$scratch;
-+    }
-+
-+    write_ref_datablock($base, $offset, $scratch, "2b");
-+    write_mov_ri($scratch, 0);
-+    write_sub_rrr($base, $base, $idx);
-+
-+    if (grep $_ == $base, @trashed) {
-+        return -1;
-+    }
-+    return $base;
-+}
-+
-+sub gen_one_insn($)
-+{
-+    my ($rec) = @_;
-+    my $insnname = $rec->{name};
-+    my $insnwidth = $rec->{width};
-+    my $fixedbits = $rec->{fixedbits};
-+    my $fixedbitmask = $rec->{fixedbitmask};
-+    my $constraint = $rec->{blocks}{"constraints"};
-+    my $memblock = $rec->{blocks}{"memory"};
-+
-+    # Given an instruction-details array, generate an instruction
-+    my $constraintfailures = 0;
-+
-+    INSN: while(1) {
-+        my $insn = int(rand(0xffffffff));
-+
-+        $insn &= ~$fixedbitmask;
-+        $insn |= $fixedbits;
-+
-+        if (defined $constraint) {
-+            # User-specified constraint: evaluate in an environment
-+            # with variables set corresponding to the variable fields.
-+            my $v = eval_with_fields($insnname, $insn, $rec, "constraints", $constraint);
-+            if (!$v) {
-+                $constraintfailures++;
-+                if ($constraintfailures > 10000) {
-+                    print "10000 consecutive constraint failures for $insnname constraints string:\n$constraint\n";
-+                    exit (1);
-+                }
-+                next INSN;
-+            }
++    for (i = 0; i < 32; i++) {
++        if (m->fregs[i] != a->fregs[i]) {
++            fprintf(f, "  F%-2d    : %016" PRIx64 " vs %016" PRIx64 "\n",
++                    i * 2, m->fregs[i], a->fregs[i]);
 +        }
-+
-+        # OK, we got a good one
-+        $constraintfailures = 0;
-+
-+        my $basereg;
-+
-+        if (defined $memblock) {
-+            # This is a load or store. We simply evaluate the block,
-+            # which is expected to be a call to a function which emits
-+            # the code to set up the base register and returns the
-+            # number of the base register.
-+            align(16);
-+            $basereg = eval_with_fields($insnname, $insn, $rec, "memory", $memblock);
-+        }
-+
-+	write_data32($insn);
-+
-+        if (defined $memblock) {
-+            # Clean up following a memory access instruction:
-+            # we need to turn the (possibly written-back) basereg
-+            # into an offset from the base of the memory block,
-+            # to avoid making register values depend on memory layout.
-+            # $basereg -1 means the basereg was a target of a load
-+            # (and so it doesn't contain a memory address after the op)
-+            if ($basereg != -1) {
-+                write_mov_ri($basereg, 0);
-+            }
-+            write_risuop($OP_COMPAREMEM);
-+        }
-+        return;
 +    }
 +}
+diff --git a/risu_sparc64.c b/risu_sparc64.c
+new file mode 100644
+index 0000000..48b5cfe
+--- /dev/null
++++ b/risu_sparc64.c
+@@ -0,0 +1,52 @@
++/******************************************************************************
++ * Copyright (c) 2024 Linaro Limited
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *****************************************************************************/
 +
-+sub write_test_code($)
++#include <signal.h>
++#include "risu.h"
++
++void advance_pc(host_context_t *hc)
 +{
-+    my ($params) = @_;
-+
-+    my $fp_enabled = $params->{ 'fp_enabled' };
-+    my $fsr = $params->{ 'fpscr' };
-+    my $numinsns = $params->{ 'numinsns' };
-+    my $outfile = $params->{ 'outfile' };
-+
-+    my %insn_details = %{ $params->{ 'details' } };
-+    my @keys = @{ $params->{ 'keys' } };
-+
-+    open_asm($outfile);
-+
-+    # TODO better random number generator?
-+    srand(0);
-+
-+    print STDOUT "Generating code using patterns: @keys...\n";
-+    progress_start(78, $numinsns);
-+
-+    if (grep { defined($insn_details{$_}->{blocks}->{"memory"}) } @keys) {
-+        write_memblock_setup();
-+    }
-+
-+    # memblock setup doesn't clean its registers, so this must come afterwards.
-+    write_random_register_data($fp_enabled, $fsr);
-+
-+    for my $i (1..$numinsns) {
-+        my $insn_enc = $keys[int rand (@keys)];
-+        gen_one_insn($insn_details{$insn_enc});
-+        write_risuop($OP_COMPARE);
-+        # Rewrite the registers periodically.
-+        if ($periodic_reg_random && ($i % 100) == 0) {
-+            write_random_register_data($fp_enabled, $fsr);
-+        }
-+        progress_update($i);
-+    }
-+    write_risuop($OP_TESTEND);
-+    progress_end();
-+
-+    close_asm();
-+    assemble_and_link($outfile, $params->{ 'cross_prefix' },
-+                      $params->{ 'keep' }, "-Av9a");
++#ifdef __linux__
++    hc->sigc_regs.tpc = hc->sigc_regs.tnpc;
++    hc->sigc_regs.tnpc += 4;
++#else
++    hc->uc_mcontext.gregs[REG_PC] = hc->uc_mcontext.gregs[REG_nPC];
++    hc->uc_mcontext.gregs[REG_nPC] += 4;
++#endif
 +}
 +
-+1;
++void set_ucontext_paramreg(host_context_t *hc, uint64_t value)
++{
++#ifdef __linux__
++    hc->sigc_regs.u_regs[15] = value;
++#else
++    hc->uc_mcontext.gregs[REG_O7] = value;
++#endif
++}
++
++uint64_t get_reginfo_paramreg(struct reginfo *ri)
++{
++    return ri->o[7];
++}
++
++RisuOp get_risuop(struct reginfo *ri)
++{
++    /* Return the risuop we have been asked to do
++     * (or OP_SIGILL if this was a SIGILL for a non-risuop insn)
++     */
++    uint32_t insn = ri->faulting_insn;
++    uint32_t op = insn & 0xf;
++    uint32_t key = insn & ~0xf;
++    uint32_t risukey = 0x000dead0;
++    return (key != risukey) ? OP_SIGILL : op;
++}
++
++uintptr_t get_pc(struct reginfo *ri)
++{
++   return ri->pc;
++}
+diff --git a/configure b/configure
+index 39275a2..965f338 100755
+--- a/configure
++++ b/configure
+@@ -62,6 +62,8 @@ guess_arch() {
+         ARCH="ppc64"
+     elif check_define __s390x__ ; then
+         ARCH="s390x"
++    elif check_define __sparc__ && check_define __arch64__ ; then
++        ARCH="sparc64"
+     else
+         echo "This cpu is not supported by risu. Try -h. " >&2
+         exit 1
+diff --git a/test_sparc64.s b/test_sparc64.s
+new file mode 100644
+index 0000000..c131d81
+--- /dev/null
++++ b/test_sparc64.s
+@@ -0,0 +1,137 @@
++/*****************************************************************************
++ * Copyright (c) 2024 Linaro Limited
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *****************************************************************************/
++
++/* Initialise the fp regs */
++
++	.register %g2, #ignore
++	.register %g3, #ignore
++	.register %g6, #ignore
++
++.text
++	rd	%pc, %g1
++	sethi	%pc22(.Ldata+4), %g2
++	or	%g2, %pc10(.Ldata+8), %g2
++	add	%g2, %g1, %g1
++
++	ldd	[%g1 + 4 * 0], %f0
++	ldd	[%g1 + 4 * 2], %f2
++	ldd	[%g1 + 4 * 4], %f4
++	ldd	[%g1 + 4 * 6], %f6
++	ldd	[%g1 + 4 * 8], %f8
++	ldd	[%g1 + 4 * 10], %f10
++	ldd	[%g1 + 4 * 12], %f12
++	ldd	[%g1 + 4 * 14], %f14
++	ldd	[%g1 + 4 * 16], %f16
++	ldd	[%g1 + 4 * 18], %f18
++	ldd	[%g1 + 4 * 20], %f20
++	ldd	[%g1 + 4 * 22], %f22
++	ldd	[%g1 + 4 * 24], %f24
++	ldd	[%g1 + 4 * 26], %f26
++	ldd	[%g1 + 4 * 28], %f28
++	ldd	[%g1 + 4 * 30], %f30
++	ldd	[%g1 + 4 * 32], %f32
++	ldd	[%g1 + 4 * 34], %f34
++	ldd	[%g1 + 4 * 36], %f36
++	ldd	[%g1 + 4 * 38], %f38
++	ldd	[%g1 + 4 * 40], %f40
++	ldd	[%g1 + 4 * 42], %f42
++	ldd	[%g1 + 4 * 44], %f44
++	ldd	[%g1 + 4 * 46], %f46
++	ldd	[%g1 + 4 * 48], %f48
++	ldd	[%g1 + 4 * 50], %f50
++	ldd	[%g1 + 4 * 52], %f52
++	ldd	[%g1 + 4 * 54], %f54
++	ldd	[%g1 + 4 * 56], %f56
++	ldd	[%g1 + 4 * 58], %f58
++	ldd	[%g1 + 4 * 60], %f60
++	ldd	[%g1 + 4 * 62], %f62
++
++/* Initialize the special regs */
++
++	wr	%g0, 0x100, %y
++	wr	%g0, 0x200, %gsr
++	cmp	%g0, %g0
++
++/* Initialise the gp regs */
++
++	mov	1, %g1
++	mov	2, %g2
++	mov	3, %g3
++	mov	4, %g4
++	mov	5, %g5
++	mov	6, %g6
++	/* g7 is the thread pointer */
++
++	mov	8, %o0
++	mov	9, %o1
++	mov	10, %o2
++	mov	11, %o3
++	mov	12, %o4
++	mov	13, %o5
++	/* o6 is the stack pointer */
++	mov	15, %o7
++
++	mov	16, %l0
++	mov	17, %l1
++	mov	18, %l2
++	mov	19, %l3
++	mov	20, %l4
++	mov	21, %l5
++	mov	22, %l6
++	mov	23, %l7
++
++	mov	24, %i0
++	mov	25, %i1
++	mov	26, %i2
++	mov	27, %i3
++	mov	28, %i4
++	mov	29, %i5
++	/* i6 is the frame pointer */
++	mov	31, %i7
++
++/* Do compare. */
++
++	illtrap	0xdead0
++	illtrap	0xdead1
++
++.data
++	.align	8
++.Ldata:
++	.double 1
++	.double 2
++	.double 3
++	.double 4
++	.double 5
++	.double 6
++	.double 7
++	.double 8
++	.double 9
++	.double 10
++	.double 11
++	.double 12
++	.double 13
++	.double 14
++	.double 15
++	.double 16
++	.double 17
++	.double 18
++	.double 19
++	.double 20
++	.double 21
++	.double 22
++	.double 23
++	.double 24
++	.double 25
++	.double 26
++	.double 27
++	.double 28
++	.double 29
++	.double 30
++	.double 31
++	.double 32
++
 -- 
 2.34.1
 
