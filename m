@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFDDC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 09:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC787C41513
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 12:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBAcN-0006CH-BO; Sun, 26 May 2024 05:56:43 -0400
+	id 1sBCxa-0006Gw-5C; Sun, 26 May 2024 08:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sBAcM-0006BE-93; Sun, 26 May 2024 05:56:42 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBCxY-0006GF-Mo; Sun, 26 May 2024 08:26:44 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sBAcK-0003ob-Q4; Sun, 26 May 2024 05:56:41 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-6f8d688ba3cso1032770a34.3; 
- Sun, 26 May 2024 02:56:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBCxR-0001MC-ME; Sun, 26 May 2024 08:26:44 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6f8ecafd28cso1930560b3a.3; 
+ Sun, 26 May 2024 05:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716717398; x=1717322198; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716726396; x=1717331196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ln+3lJy+RB8fW9LtHsTAOIqoDd/xm29GUGTXmizOcVk=;
- b=De7WgquOQme9n5mY2cIH6cs67HrgrgnncZ5CIoGpjPYv9fY3CsZIbTu4euV7Yi/Ya7
- nF0jl9QzuK18W+5Ba+TyMjxgQ2SQMHT3g3iUUeh5e2lTHt8oG+AiWyg4ebJlOHAELwQc
- qYTfmOd+Vv1GPV46/b6jpYbZ384qnGyvXxPai6SQ9b9zT0CPxK+5jl4DDed1SozLScea
- Z8Gk0Wn9BfIB4QLpSfhlzSQlgyQuBXOCaHmTW4w0L21oWlobNOLKc8K73qEtZLl170k2
- 6FUpjR9fe3QWzBa0SPtnpHgYxUUtc16cm6rjH9xprLs5Ng9yfDyY67z8lBPFFJoSXAVv
- LLkQ==
+ bh=wRRb5/JxNrhV4ZEJTCiySwcdnt6Whmnu6aunQADWVXs=;
+ b=mMaa3LUoNb7RBTs4Pj+POdHnYf6K7hSJFWEQBf7YvoKWfPO43RMD3YLwkHfHRYMKu1
+ BVeA3vjWkt6OYOXqRisuNZRRWci+gSkRGPe1BcdsIxCiKKoWRLvAIRIigUrIZRJUUdrR
+ XB/N7RAknmz7ljblHG64+nr3YmyLI1z6W8fgjtRaa+KM+UY2b1RCjcM1YJuPAF1l3cFr
+ gD41asLkFzpKjbLiGGQgzpkjCJ056JyQQY7Z3MkEU1g3yJCTnfGzAHNldYwJdn2+i4mH
+ Lu6Z83lx+mw7fwPKb8+v1q2Ei7ElCFr7q9AvKszvQ4/R+sHzYYbxwYz4emMYnzCyivJI
+ zOLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716717398; x=1717322198;
+ d=1e100.net; s=20230601; t=1716726396; x=1717331196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ln+3lJy+RB8fW9LtHsTAOIqoDd/xm29GUGTXmizOcVk=;
- b=af6IAhtBQh1MymwakGecUFbKPj5JsieJg5wZu69b5jjXxnmLF81C2ieqNU95wUHHbl
- jOIxS1oj9Yd1NKOHI4I8zkP0HOXlb6G7DEF3wrfPZnYn/nC55E9gr1ZUQN/ZSrLZ8+l/
- 6rJrT5EPixVwvfUMHIUFUqYUvbIZyPo4GwTaSaS2OsDr2b30bMsNwDeIfUuWKUThyBg+
- xNZguzWuSrhP0VKXx/xiT/MstHUcs31jHDvZypstqsSZfN7Ow4+bQh+00qsGgQw/6wYq
- 1WSCUkHZ1cB5uHg20zB/n1HRCs9Q+gWw1NFlD4v7hEZv5VNLxxYQGY6sssu13Eix6CN7
- ivWA==
+ bh=wRRb5/JxNrhV4ZEJTCiySwcdnt6Whmnu6aunQADWVXs=;
+ b=auilnrGAcszbG6OnYX+WuRJPMyjariohuc3yNdloLrtJuiRM4RhvhmUg94BAdfdpBG
+ SccZY4LBPjkRzuidVnPO5b/WqDw/TMT+hzX6XfJ4ij+225cYLdrNiI7PE7lThMCCvqB/
+ XoyYJF+1Sh0IRTaXOPr8m++d7ZHMjWWb5u/xumeONFMooHOWhcasx/9ogOqmIfIEwfcC
+ KrOwjiuXoWPPrEJoj9ytCCIdAfeUhTrh/oKzAwHusBhmisndx97o3GIe2r4snIcb/JNp
+ evY5tGJ47t0tsxWwKYtz/hr7YuqEtRks7lLeN1rpQtS1dpCs5rFKuZyfuafrly4E02OP
+ Rjow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDyVpDMYC0WWZZxmxFCM943d4lw9k+qIjYuu+wbaptqzWyEctB42cnl0P4JkkWxuxk7CyqIHqgNolXgysnmUPae5ALlRw=
-X-Gm-Message-State: AOJu0YxcECYl6BjfSCR6sdWVapgJryRoHd4qBHsAGsGrBRvxR7B1l1sZ
- KY30Oi3aAaVmCbF1ri2RHvJkmHu8bT2vBRGSUhBQaM9uFgQ8Fmt0ueG7AeZV
-X-Google-Smtp-Source: AGHT+IGZDp16L8jUPuHhauGGkhx5LYLcMz1nEySgT9nKoAM/gdwxCcuyps1XFHPM1A+TV4XSacQzhQ==
-X-Received: by 2002:a05:6830:110d:b0:6f0:6170:3762 with SMTP id
- 46e09a7af769-6f8d0ba95f4mr6596480a34.38.1716717398697; 
- Sun, 26 May 2024 02:56:38 -0700 (PDT)
-Received: from amjad-pc.. ([192.228.203.229]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682227f1838sm4021368a12.46.2024.05.26.02.56.36
+ AJvYcCX0JiFdMnPn5zy5V9SzGAhukmLiu1lI3KXwlmneLNEgz3qMr6yk9KykcJz/KXu3HHD2VG9ZOwVqDcLKjijXjjSGw0aQ1/I=
+X-Gm-Message-State: AOJu0YzP0KYmTCikk94shbAaN9AmFR9Rtjv60RESRrkhY2S6N6VKtOLN
+ TFjAI+3hsJZ4drN+t2SR7Lgrc3qpzvz4aSwCgHM+I9duyf61QhNwWZuoqw==
+X-Google-Smtp-Source: AGHT+IEd/tZf903RLyQdycmWpkG8E7bkjvT6eZzOxyRO20HpxULx453WiJvDG8xaeb1wlIhKT7z2wA==
+X-Received: by 2002:a05:6a21:3981:b0:1af:f514:97cb with SMTP id
+ adf61e73a8af0-1b212d5b19emr8111912637.8.1716726395678; 
+ Sun, 26 May 2024 05:26:35 -0700 (PDT)
+Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f8fcfe648bsm3457182b3a.168.2024.05.26.05.26.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 02:56:38 -0700 (PDT)
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "open list:vvfat" <qemu-block@nongnu.org>,
- Amjad Alsharafi <amjadsharafi10@gmail.com>
-Subject: [PATCH v3 1/6] vvfat: Fix bug in writing to middle of file
-Date: Sun, 26 May 2024 17:56:01 +0800
-Message-ID: <2871281d8ea41fb4d7ef8f9beeaba017a1717019.1716717181.git.amjadsharafi10@gmail.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <cover.1716717181.git.amjadsharafi10@gmail.com>
-References: <cover.1716717181.git.amjadsharafi10@gmail.com>
+ Sun, 26 May 2024 05:26:35 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Caleb Schlossin <calebs@linux.vnet.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+Subject: [RFC PATCH 04/10] ppc/pnv: specialise init for powernv8/9/10 machines
+Date: Sun, 26 May 2024 22:26:05 +1000
+Message-ID: <20240526122612.473476-5-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240526122612.473476-1-npiggin@gmail.com>
+References: <20240526122612.473476-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=amjadsharafi10@gmail.com; helo=mail-ot1-x32b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,33 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before this commit, the behavior when calling `commit_one_file` for
-example with `offset=0x2000` (second cluster), what will happen is that
-we won't fetch the next cluster from the fat, and instead use the first
-cluster for the read operation.
+This will allow different settings and checks for different
+machine types with later changes.
 
-This is due to off-by-one error here, where `i=0x2000 !< offset=0x2000`,
-thus not fetching the next cluster.
-
-Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- block/vvfat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/pnv.c | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 9d050ba3ae..ab342f0743 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -2525,7 +2525,7 @@ commit_one_file(BDRVVVFATState* s, int dir_index, uint32_t offset)
-         return -1;
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 6e3a5ccdec..a706de2e36 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -976,11 +976,6 @@ static void pnv_init(MachineState *machine)
+     pnv->num_chips =
+         machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
+ 
+-    if (machine->smp.threads > 8) {
+-        error_report("Cannot support more than 8 threads/core "
+-                     "on a powernv machine");
+-        exit(1);
+-    }
+     if (!is_power_of_2(machine->smp.threads)) {
+         error_report("Cannot support %d threads/core on a powernv"
+                      "machine because it must be a power of 2",
+@@ -1076,6 +1071,33 @@ static void pnv_init(MachineState *machine)
      }
+ }
  
--    for (i = s->cluster_size; i < offset; i += s->cluster_size)
-+    for (i = s->cluster_size; i <= offset; i += s->cluster_size)
-         c = modified_fat_get(s, c);
++static void pnv_power8_init(MachineState *machine)
++{
++    if (machine->smp.threads > 8) {
++        error_report("Cannot support more than 8 threads/core "
++                     "on a powernv POWER8 machine");
++        exit(1);
++    }
++
++    pnv_init(machine);
++}
++
++static void pnv_power9_init(MachineState *machine)
++{
++    if (machine->smp.threads > 8) {
++        error_report("Cannot support more than 8 threads/core "
++                     "on a powernv9/10 machine");
++        exit(1);
++    }
++
++    pnv_init(machine);
++}
++
++static void pnv_power10_init(MachineState *machine)
++{
++    pnv_power9_init(machine);
++}
++
+ /*
+  *    0:21  Reserved - Read as zeros
+  *   22:24  Chip ID
+@@ -2423,6 +2445,7 @@ static void pnv_machine_power8_class_init(ObjectClass *oc, void *data)
+     };
  
-     fd = qemu_open_old(mapping->path, O_RDWR | O_CREAT | O_BINARY, 0666);
+     mc->desc = "IBM PowerNV (Non-Virtualized) POWER8";
++    mc->init = pnv_power8_init;
+     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power8_v2.0");
+     compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+ 
+@@ -2449,6 +2472,7 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
+     };
+ 
+     mc->desc = "IBM PowerNV (Non-Virtualized) POWER9";
++    mc->init = pnv_power9_init;
+     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
+     compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+ 
+@@ -2473,6 +2497,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+         { TYPE_PNV_PHB_ROOT_PORT, "version", "5" },
+     };
+ 
++    mc->init = pnv_power10_init;
+     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
+     compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+ 
 -- 
-2.45.0
+2.43.0
 
 
