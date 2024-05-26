@@ -4,82 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B60C25B7C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5EB9C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 20:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJm2-0008Va-UG; Sun, 26 May 2024 15:43:18 -0400
+	id 1sBKUF-00057m-Ff; Sun, 26 May 2024 16:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJlz-0008K7-BG
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:15 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJlx-0007h0-DM
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:15 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f44b45d6abso20630405ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752592; x=1717357392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B9yuYs5gPe1MnBfUW016Au7c2/dj70+dfKpSeivnHWo=;
- b=Y4jki3U82u1Mi+dZfBoP3j+4Ygzisv4+uxujTk/ygU9RBa+qvffEf/sx39plexf5WJ
- Llrb3wbxNWCjQZST0sPSp7tNmi9oibwbJa59uwo66yp+w1h6ktXnCitHMYmQs2THUnsm
- pM3COJjzZ69OaPB3o2UCc2oYb18C/1OeV2aamPhsdd47bIlKS8gMc/RwWFeU3SJXvhXh
- lg2uWv8BD+CtOwypJh1rbKpHdcoan5wTsEN+sACYGKU8FZywtcCV6IiozIylnAXtJtk7
- jhICdyIhPycnCyu7jZSfBBlS9gKYu3LmMikdqIgFrN3WGbDxvXvPEcyOAv+x/53rB7b5
- V0sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752592; x=1717357392;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=B9yuYs5gPe1MnBfUW016Au7c2/dj70+dfKpSeivnHWo=;
- b=vVfEFWV0gp8tRLf7KEB2QESecsiBhA8HCghuE1E80nj5Z1zZ+uMYbmc8aU9U3Hz++Y
- r3Ut0URIxOgVjUp18npi0BWexFYvmUcPOhgZagStMNUJrKmbPinFGwUXfC8had8IxWiM
- HMqBk5BttPfJCw+KQCT2/f/4YiB/gvycd41pHGGwLbaNDwZwgrisbNF96DHwa/w0vSHA
- 383qdcTMIw5iTwuF0/R/6QfCZML2a8FoD77yJWCRlakhGJmhV5xGD6AYqYYJbL7tp7Fo
- 0sG22Q5dMG+XVaL3Srj09Ue0Y+0h0mjKIWH3SRrDeRpCZ6VE3ILQsbpymy5cd1SrUWRX
- tj5Q==
-X-Gm-Message-State: AOJu0YyMH/srYwYB+d+WL5gVn8Zd8GpgpblbILIcz4er5Ub6FUg6kaje
- 4K+6FT/ySW4BEs8VSaKHum8IPVPmm4/48GsFpKKUqv/g5epLsIqYxOK/YaeHMEL8Jt/Sb20s/aL
- x
-X-Google-Smtp-Source: AGHT+IE0RH/HhrONTSr0cICOO8NxcWSJalykKqfniOVfI6TS9jWWptOHiqWUXZwqrDDwGcj9yjsxZQ==
-X-Received: by 2002:a17:902:e2d3:b0:1f3:11a4:b67 with SMTP id
- d9443c01a7336-1f4494f1d00mr53772125ad.43.1716752592192; 
- Sun, 26 May 2024 12:43:12 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:43:11 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
+ id 1sBJZF-0007Cp-Rf; Sun, 26 May 2024 15:30:06 -0400
+Received: from icts-p-cavuit-4.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
+ id 1sBJZB-0004iB-KB; Sun, 26 May 2024 15:30:04 -0400
+X-KULeuven-Envelope-From: libvirt-e6954efa@volkihar.be
+X-KULeuven-Scanned: Found to be clean
+X-KULeuven-ID: 7810BE8.ABFA7
+X-KULeuven-Information: Katholieke Universiteit Leuven
+Received: from icts-p-ceifnet-smtps-0.kuleuven.be
+ (icts-p-ceifnet-smtps.service.icts.svcd
+ [IPv6:2a02:2c40:0:51:139:242:ac11:3b])
+ by icts-p-cavuit-4.kulnet.kuleuven.be (Postfix) with ESMTP id 7810BE8;
+ Sun, 26 May 2024 21:29:55 +0200 (CEST)
+BCmilterd-Mark-Subject: no
+BCmilterd-Errors: 
+BCmilterd-Report: 
+X-CAV-Cluster: smtps
+Received: from flutterbat.volkihar.be (unknown
+ [IPv6:2a02:a03f:8ada:7900:dd0a:a068:3e21:22de])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by icts-p-ceifnet-smtps-0.kuleuven.be (Postfix) with ESMTPSA id 535E1D4E628CF; 
+ Sun, 26 May 2024 21:29:55 +0200 (CEST)
+Received: by flutterbat.volkihar.be (Postfix, from userid 1000)
+ id 1A04328217A; Sun, 26 May 2024 21:29:55 +0200 (CEST)
+X-Kuleuven: This mail passed the K.U.Leuven mailcluster
+From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 21/37] target/sparc: Implement LDXEFSR
-Date: Sun, 26 May 2024 12:42:38 -0700
-Message-Id: <20240526194254.459395-22-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
-References: <20240526194254.459395-1-richard.henderson@linaro.org>
+Cc: John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>,
+ Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+Subject: [PATCH 2/2] block: add test non-active commit with zeroed data
+Date: Sun, 26 May 2024 21:29:17 +0200
+Message-ID: <20240526192918.3503128-3-libvirt-e6954efa@volkihar.be>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20240526192918.3503128-1-libvirt-e6954efa@volkihar.be>
+References: <20240526192918.3503128-1-libvirt-e6954efa@volkihar.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a02:2c40:0:c0::25:134;
+ envelope-from=libvirt-e6954efa@volkihar.be;
+ helo=icts-p-cavuit-4.kulnet.kuleuven.be
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 26 May 2024 16:28:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,88 +80,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 ---
- target/sparc/helper.h     |  1 +
- target/sparc/insns.decode |  1 +
- target/sparc/fop_helper.c |  6 ++++++
- target/sparc/translate.c  | 11 +++++++++--
- 4 files changed, 17 insertions(+), 2 deletions(-)
+ tests/qemu-iotests/315     | 95 ++++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/315.out | 54 ++++++++++++++++++++++
+ 2 files changed, 149 insertions(+)
+ create mode 100755 tests/qemu-iotests/315
+ create mode 100644 tests/qemu-iotests/315.out
 
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 219f0e04c7..4ae97866af 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -40,6 +40,7 @@ DEF_HELPER_FLAGS_4(ld_asi, TCG_CALL_NO_WG, i64, env, tl, int, i32)
- DEF_HELPER_FLAGS_5(st_asi, TCG_CALL_NO_WG, void, env, tl, i64, int, i32)
- #endif
- DEF_HELPER_FLAGS_1(get_fsr, TCG_CALL_NO_WG_SE, tl, env)
-+DEF_HELPER_FLAGS_2(set_fsr_nofcc, TCG_CALL_NO_RWG, void, env, i32)
- DEF_HELPER_FLAGS_2(set_fsr_nofcc_noftt, TCG_CALL_NO_RWG, void, env, i32)
- DEF_HELPER_FLAGS_2(fsqrts, TCG_CALL_NO_WG, f32, env, f32)
- DEF_HELPER_FLAGS_2(fsqrtd, TCG_CALL_NO_WG, f64, env, f64)
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index a5eefebfbc..fec055910e 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -589,6 +589,7 @@ STX         11 ..... 011110 ..... . .............          @r_r_i_asi # STXA
- LDF         11 ..... 100000 ..... . .............          @r_r_ri_na
- LDFSR       11 00000 100001 ..... . .............          @n_r_ri
- LDXFSR      11 00001 100001 ..... . .............          @n_r_ri
-+LDXEFSR     11 00011 100001 ..... . .............          @n_r_ri
- LDQF        11 ..... 100010 ..... . .............          @q_r_ri_na
- LDDF        11 ..... 100011 ..... . .............          @d_r_ri_na
- 
-diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 1b524c6d3c..0b30665b51 100644
---- a/target/sparc/fop_helper.c
-+++ b/target/sparc/fop_helper.c
-@@ -602,3 +602,9 @@ void helper_set_fsr_nofcc_noftt(CPUSPARCState *env, uint32_t fsr)
-     env->fsr_cexc_ftt |= fsr & FSR_CEXC_MASK;
-     set_fsr_nonsplit(env, fsr);
- }
+diff --git a/tests/qemu-iotests/315 b/tests/qemu-iotests/315
+new file mode 100755
+index 0000000000..84865f8001
+--- /dev/null
++++ b/tests/qemu-iotests/315
+@@ -0,0 +1,95 @@
++#!/usr/bin/env bash
++# group: rw quick
++#
++# Test for commit of discarded blocks
++#
++# This tests committing a live snapshot where some of the blocks that
++# are present in the base image are discarded in the intermediate image.
++# This intends to check that these blocks are also discarded in the base
++# image after the commit.
++#
++# Copyright (C) 2024 Vincent Vanlaer.
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
++# creator
++owner=libvirt-e6954efa@volkihar.be
 +
-+void helper_set_fsr_nofcc(CPUSPARCState *env, uint32_t fsr)
++seq=`basename $0`
++echo "QA output created by $seq"
++
++status=1	# failure is the default!
++
++_cleanup()
 +{
-+    env->fsr_cexc_ftt = fsr & (FSR_CEXC_MASK | FSR_FTT_MASK);
-+    set_fsr_nonsplit(env, fsr);
++    _cleanup_qemu
++    _rm_test_img "${TEST_IMG}.base"
++    _rm_test_img "${TEST_IMG}.mid"
++    _cleanup_test_img
 +}
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index ade9df3960..e3059f32bb 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -4458,7 +4458,7 @@ static bool trans_LDFSR(DisasContext *dc, arg_r_r_ri *a)
-     return advance_pc(dc);
- }
- 
--static bool trans_LDXFSR(DisasContext *dc, arg_r_r_ri *a)
-+static bool do_ldxfsr(DisasContext *dc, arg_r_r_ri *a, bool entire)
- {
- #ifdef TARGET_SPARC64
-     TCGv addr = gen_ldst_addr(dc, a->rs1, a->imm, a->rs2_or_imm);
-@@ -4483,13 +4483,20 @@ static bool trans_LDXFSR(DisasContext *dc, arg_r_r_ri *a)
-     tcg_gen_extract_i32(cpu_fcc[2], hi, FSR_FCC2_SHIFT - 32, 2);
-     tcg_gen_extract_i32(cpu_fcc[3], hi, FSR_FCC3_SHIFT - 32, 2);
- 
--    gen_helper_set_fsr_nofcc_noftt(tcg_env, lo);
-+    if (entire) {
-+        gen_helper_set_fsr_nofcc(tcg_env, lo);
-+    } else {
-+        gen_helper_set_fsr_nofcc_noftt(tcg_env, lo);
-+    }
-     return advance_pc(dc);
- #else
-     return false;
- #endif
- }
- 
-+TRANS(LDXFSR, 64, do_ldxfsr, a, false)
-+TRANS(LDXEFSR, VIS3B, do_ldxfsr, a, true)
++trap "_cleanup; exit \$status" 0 1 2 3 15
 +
- static bool do_stfsr(DisasContext *dc, arg_r_r_ri *a, MemOp mop)
- {
-     TCGv addr = gen_ldst_addr(dc, a->rs1, a->imm, a->rs2_or_imm);
++# get standard environment, filters and checks
++. ./common.rc
++. ./common.filter
++. ./common.qemu
++
++_supported_fmt qcow2
++_supported_proto file
++
++size="1M"
++
++TEST_IMG="$TEST_IMG.base" _make_test_img $size
++TEST_IMG="$TEST_IMG.mid" _make_test_img -b "$TEST_IMG.base" -F $IMGFMT $size
++_make_test_img -b "${TEST_IMG}.mid" -F $IMGFMT $size
++
++$QEMU_IO -c "write -P 0x01 64k 128k" "$TEST_IMG.base" | _filter_qemu_io
++$QEMU_IO -c "discard 64k 64k" "$TEST_IMG.mid" | _filter_qemu_io
++
++echo
++echo "=== Base image info before commit ==="
++TEST_IMG="${TEST_IMG}.base" _img_info | _filter_img_info
++$QEMU_IMG map --output=json "$TEST_IMG.base" | _filter_qemu_img_map
++
++echo
++echo "=== Middle image info before commit ==="
++TEST_IMG="${TEST_IMG}.mid" _img_info | _filter_img_info
++$QEMU_IMG map --output=json "$TEST_IMG.mid" | _filter_qemu_img_map
++
++echo
++echo === Running QEMU Live Commit Test ===
++echo
++
++qemu_comm_method="qmp"
++_launch_qemu -drive file="${TEST_IMG}",if=virtio,id=test
++h=$QEMU_HANDLE
++
++_send_qemu_cmd $h "{ 'execute': 'qmp_capabilities' }" "return"
++
++_send_qemu_cmd $h "{ 'execute': 'block-commit',
++                                 'arguments': { 'device': 'test',
++                                 'top': '"${TEST_IMG}.mid"',
++                                 'base': '"${TEST_IMG}.base"'} }" '"status": "null"'
++
++_cleanup_qemu
++
++echo
++echo "=== Base image info after commit ==="
++TEST_IMG="${TEST_IMG}.base" _img_info | _filter_img_info
++$QEMU_IMG map --output=json "$TEST_IMG.base" | _filter_qemu_img_map
++
++# success, all done
++echo "*** done"
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/315.out b/tests/qemu-iotests/315.out
+new file mode 100644
+index 0000000000..146ec117fb
+--- /dev/null
++++ b/tests/qemu-iotests/315.out
+@@ -0,0 +1,54 @@
++QA output created by 315
++Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=1048576
++Formatting 'TEST_DIR/t.IMGFMT.mid', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT.mid backing_fmt=IMGFMT
++wrote 131072/131072 bytes at offset 65536
++128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discard 65536/65536 bytes at offset 65536
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Base image info before commit ===
++image: TEST_DIR/t.IMGFMT.base
++file format: IMGFMT
++virtual size: 1 MiB (1048576 bytes)
++[{ "start": 0, "length": 65536, "depth": 0, "present": false, "zero": true, "data": false, "compressed": false},
++{ "start": 65536, "length": 131072, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 196608, "length": 851968, "depth": 0, "present": false, "zero": true, "data": false, "compressed": false}]
++
++=== Middle image info before commit ===
++image: TEST_DIR/t.IMGFMT.mid
++file format: IMGFMT
++virtual size: 1 MiB (1048576 bytes)
++backing file: TEST_DIR/t.IMGFMT.base
++backing file format: IMGFMT
++[{ "start": 0, "length": 65536, "depth": 1, "present": false, "zero": true, "data": false, "compressed": false},
++{ "start": 65536, "length": 65536, "depth": 0, "present": true, "zero": true, "data": false, "compressed": false},
++{ "start": 131072, "length": 65536, "depth": 1, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 196608, "length": 851968, "depth": 1, "present": false, "zero": true, "data": false, "compressed": false}]
++
++=== Running QEMU Live Commit Test ===
++
++{ 'execute': 'qmp_capabilities' }
++{"return": {}}
++{ 'execute': 'block-commit',
++                                 'arguments': { 'device': 'test',
++                                 'top': 'TEST_DIR/t.IMGFMT.mid',
++                                 'base': 'TEST_DIR/t.IMGFMT.base'} }
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "test"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "test"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "test"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "test"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "test", "len": 1048576, "offset": 1048576, "speed": 0, "type": "commit"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "test"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "test"}}
++
++=== Base image info after commit ===
++image: TEST_DIR/t.IMGFMT.base
++file format: IMGFMT
++virtual size: 1 MiB (1048576 bytes)
++[{ "start": 0, "length": 65536, "depth": 0, "present": false, "zero": true, "data": false, "compressed": false},
++{ "start": 65536, "length": 65536, "depth": 0, "present": true, "zero": true, "data": false, "compressed": false},
++{ "start": 131072, "length": 65536, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": OFFSET},
++{ "start": 196608, "length": 851968, "depth": 0, "present": false, "zero": true, "data": false, "compressed": false}]
++*** done
 -- 
-2.34.1
+2.42.0
 
 
