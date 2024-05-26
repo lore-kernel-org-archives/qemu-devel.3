@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4347CC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD206C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN5r-0007zf-Uu; Sun, 26 May 2024 19:16:00 -0400
+	id 1sBN5r-0007qo-W5; Sun, 26 May 2024 19:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN5M-0006Ne-FV; Sun, 26 May 2024 19:15:30 -0400
+ id 1sBN5d-0006vJ-DC; Sun, 26 May 2024 19:15:49 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN54-0003oE-R7; Sun, 26 May 2024 19:15:26 -0400
+ id 1sBN5Z-00045j-OL; Sun, 26 May 2024 19:15:44 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E788F4E654D;
- Mon, 27 May 2024 01:13:15 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id F08934E654E;
+ Mon, 27 May 2024 01:13:16 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id YMI36CiXv3rD; Mon, 27 May 2024 01:13:14 +0200 (CEST)
+ with ESMTP id RrLNxIXFc22e; Mon, 27 May 2024 01:13:15 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 071B24E654E; Mon, 27 May 2024 01:13:14 +0200 (CEST)
-Message-Id: <4aaf949d46cae9fa8e1a20b29492262d874897af.1716763435.git.balaton@eik.bme.hu>
+ id 0F2B94E654F; Mon, 27 May 2024 01:13:15 +0200 (CEST)
+Message-Id: <c2365f41612f7898ab57a4a85e1028eba3a5244b.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 37/43] target/ppc/mmu-hash32.c: Return and use pte address
- instead of base + offset
+Subject: [PATCH 38/43] target/ppc/mmu-hash32.c: Use pte address as parameter
+ instead of offset
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:13:14 +0200 (CEST)
+Date: Mon, 27 May 2024 01:13:15 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,156 +63,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change ppc_hash32_pteg_search() to return pte address instead of an
-offset to avoid needing to get the base and add offset to it when we
-already have the address we need.
+Instead of getting base and adding an offset to it pass pte address to
+ppc_hash32_pteg_search() that the only caller of this function already
+has and can easily pass it. Also add a local variable in the caller to
+avoid getting base multiple times.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu-hash32.c | 51 ++++++++++++++++-------------------------
- 1 file changed, 20 insertions(+), 31 deletions(-)
+ target/ppc/mmu-hash32.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
 diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index 7a6a674f8a..cc1e790d0e 100644
+index cc1e790d0e..6d0adf3357 100644
 --- a/target/ppc/mmu-hash32.c
 +++ b/target/ppc/mmu-hash32.c
-@@ -204,58 +204,48 @@ static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pteg_off,
+@@ -200,11 +200,10 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, target_ulong sr,
+     return false;
+ }
+ 
+-static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pteg_off,
++static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pte_addr,
                                       bool secondary, target_ulong ptem,
                                       ppc_hash_pte32_t *pte)
  {
--    hwaddr pte_offset = pteg_off;
-+    hwaddr pte_addr = ppc_hash32_hpt_base(cpu) + pteg_off;
+-    hwaddr pte_addr = ppc_hash32_hpt_base(cpu) + pteg_off;
      target_ulong pte0, pte1;
--    hwaddr base = ppc_hash32_hpt_base(cpu);
      int i;
  
--    for (i = 0; i < HPTES_PER_GROUP; i++) {
--        pte0 = ldl_phys(CPU(cpu)->as, base + pte_offset);
-+    for (i = 0; i < HPTES_PER_GROUP; i++, pte_addr += HASH_PTE_SIZE_32) {
-+        pte0 = ldl_phys(CPU(cpu)->as, pte_addr);
-         /*
-          * pte0 contains the valid bit and must be read before pte1,
-          * otherwise we might see an old pte1 with a new valid bit and
-          * thus an inconsistent hpte value
-          */
-         smp_rmb();
--        pte1 = ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
-+        pte1 = ldl_phys(CPU(cpu)->as, pte_addr + HASH_PTE_SIZE_32 / 2);
- 
-         if ((pte0 & HPTE32_V_VALID)
-             && (secondary == !!(pte0 & HPTE32_V_SECONDARY))
-             && HPTE32_V_COMPARE(pte0, ptem)) {
-             pte->pte0 = pte0;
-             pte->pte1 = pte1;
--            return pte_offset;
-+            return pte_addr;
-         }
--
--        pte_offset += HASH_PTE_SIZE_32;
-     }
--
-     return -1;
- }
- 
--static void ppc_hash32_set_r(PowerPCCPU *cpu, hwaddr pte_offset, uint32_t pte1)
-+static void ppc_hash32_set_r(PowerPCCPU *cpu, hwaddr pte_addr, uint32_t pte1)
- {
--    target_ulong base = ppc_hash32_hpt_base(cpu);
--    hwaddr offset = pte_offset + 6;
--
-     /* The HW performs a non-atomic byte update */
--    stb_phys(CPU(cpu)->as, base + offset, ((pte1 >> 8) & 0xff) | 0x01);
-+    stb_phys(CPU(cpu)->as, pte_addr + 6, ((pte1 >> 8) & 0xff) | 0x01);
- }
- 
--static void ppc_hash32_set_c(PowerPCCPU *cpu, hwaddr pte_offset, uint64_t pte1)
-+static void ppc_hash32_set_c(PowerPCCPU *cpu, hwaddr pte_addr, uint64_t pte1)
- {
--    target_ulong base = ppc_hash32_hpt_base(cpu);
--    hwaddr offset = pte_offset + 7;
--
-     /* The HW performs a non-atomic byte update */
--    stb_phys(CPU(cpu)->as, base + offset, (pte1 & 0xff) | 0x80);
-+    stb_phys(CPU(cpu)->as, pte_addr + 7, (pte1 & 0xff) | 0x80);
- }
- 
- static hwaddr ppc_hash32_htab_lookup(PowerPCCPU *cpu,
+@@ -245,37 +244,35 @@ static hwaddr ppc_hash32_htab_lookup(PowerPCCPU *cpu,
                                       target_ulong sr, target_ulong eaddr,
                                       ppc_hash_pte32_t *pte)
  {
--    hwaddr pteg_off, pte_offset;
-+    hwaddr pteg_off, pte_addr;
-     hwaddr hash;
+-    hwaddr pteg_off, pte_addr;
+-    hwaddr hash;
++    hwaddr hpt_base, pteg_off, pte_addr, hash;
      uint32_t vsid, pgidx, ptem;
  
-@@ -277,18 +267,18 @@ static hwaddr ppc_hash32_htab_lookup(PowerPCCPU *cpu,
-             ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu),
-             vsid, ptem, hash);
++    hpt_base = ppc_hash32_hpt_base(cpu);
+     vsid = sr & SR32_VSID;
+     pgidx = (eaddr & ~SEGMENT_MASK_256M) >> TARGET_PAGE_BITS;
+     hash = vsid ^ pgidx;
+     ptem = (vsid << 7) | (pgidx >> 10);
+ 
+     /* Page address translation */
+-    qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx
+-            " htab_mask " HWADDR_FMT_plx
+-            " hash " HWADDR_FMT_plx "\n",
+-            ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
++    qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx " htab_mask "
++                  HWADDR_FMT_plx " hash " HWADDR_FMT_plx "\n",
++                  hpt_base, ppc_hash32_hpt_mask(cpu), hash);
+ 
+     /* Primary PTEG lookup */
+     qemu_log_mask(CPU_LOG_MMU, "0 htab=" HWADDR_FMT_plx "/" HWADDR_FMT_plx
+-            " vsid=%" PRIx32 " ptem=%" PRIx32
+-            " hash=" HWADDR_FMT_plx "\n",
+-            ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu),
+-            vsid, ptem, hash);
++                  " vsid=%" PRIx32 " ptem=%" PRIx32 " hash=" HWADDR_FMT_plx
++                  "\n", hpt_base, ppc_hash32_hpt_mask(cpu), vsid, ptem, hash);
      pteg_off = get_pteg_offset32(cpu, hash);
--    pte_offset = ppc_hash32_pteg_search(cpu, pteg_off, 0, ptem, pte);
--    if (pte_offset == -1) {
-+    pte_addr = ppc_hash32_pteg_search(cpu, pteg_off, 0, ptem, pte);
-+    if (pte_addr == -1) {
+-    pte_addr = ppc_hash32_pteg_search(cpu, pteg_off, 0, ptem, pte);
++    pte_addr = ppc_hash32_pteg_search(cpu, hpt_base + pteg_off, 0, ptem, pte);
+     if (pte_addr == -1) {
          /* Secondary PTEG lookup */
          qemu_log_mask(CPU_LOG_MMU, "1 htab=" HWADDR_FMT_plx "/" HWADDR_FMT_plx
-                 " vsid=%" PRIx32 " api=%" PRIx32
-                 " hash=" HWADDR_FMT_plx "\n", ppc_hash32_hpt_base(cpu),
-                 ppc_hash32_hpt_mask(cpu), vsid, ptem, ~hash);
+-                " vsid=%" PRIx32 " api=%" PRIx32
+-                " hash=" HWADDR_FMT_plx "\n", ppc_hash32_hpt_base(cpu),
+-                ppc_hash32_hpt_mask(cpu), vsid, ptem, ~hash);
++                      " vsid=%" PRIx32 " api=%" PRIx32 " hash=" HWADDR_FMT_plx
++                      "\n", hpt_base, ppc_hash32_hpt_mask(cpu), vsid, ptem,
++                      ~hash);
          pteg_off = get_pteg_offset32(cpu, ~hash);
--        pte_offset = ppc_hash32_pteg_search(cpu, pteg_off, 1, ptem, pte);
-+        pte_addr = ppc_hash32_pteg_search(cpu, pteg_off, 1, ptem, pte);
+-        pte_addr = ppc_hash32_pteg_search(cpu, pteg_off, 1, ptem, pte);
++        pte_addr = ppc_hash32_pteg_search(cpu, hpt_base + pteg_off, 1, ptem,
++                                          pte);
      }
  
--    return pte_offset;
-+    return pte_addr;
- }
- 
- bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-@@ -298,7 +288,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong sr;
--    hwaddr pte_offset, raddr;
-+    hwaddr pte_addr, raddr;
-     ppc_hash_pte32_t pte;
-     bool key;
-     int prot;
-@@ -360,8 +350,8 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     }
- 
-     /* 6. Locate the PTE in the hash table */
--    pte_offset = ppc_hash32_htab_lookup(cpu, sr, eaddr, &pte);
--    if (pte_offset == -1) {
-+    pte_addr = ppc_hash32_htab_lookup(cpu, sr, eaddr, &pte);
-+    if (pte_addr == -1) {
-         if (guest_visible) {
-             if (access_type == MMU_INST_FETCH) {
-                 cs->exception_index = POWERPC_EXCP_ISI;
-@@ -380,7 +370,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-         return false;
-     }
-     qemu_log_mask(CPU_LOG_MMU,
--                "found PTE at offset %08" HWADDR_PRIx "\n", pte_offset);
-+                  "found PTE at address %08" HWADDR_PRIx "\n", pte_addr);
- 
-     /* 7. Check access permissions */
-     key = ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
-@@ -410,13 +400,12 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
- 
-     /* 8. Update PTE referenced and changed bits if necessary */
--
-     if (!(pte.pte1 & HPTE32_R_R)) {
--        ppc_hash32_set_r(cpu, pte_offset, pte.pte1);
-+        ppc_hash32_set_r(cpu, pte_addr, pte.pte1);
-     }
-     if (!(pte.pte1 & HPTE32_R_C)) {
-         if (access_type == MMU_DATA_STORE) {
--            ppc_hash32_set_c(cpu, pte_offset, pte.pte1);
-+            ppc_hash32_set_c(cpu, pte_addr, pte.pte1);
-         } else {
-             /*
-              * Treat the page as read-only for now, so that a later write
+     return pte_addr;
 -- 
 2.30.9
 
