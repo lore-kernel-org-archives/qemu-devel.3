@@ -4,81 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFAF2C25B78
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 May 2024 21:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8970FC25B7C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 00:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sAz5e-0004zV-7M; Sat, 25 May 2024 17:38:10 -0400
+	id 1sB1p8-0002BP-7I; Sat, 25 May 2024 20:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1sAz5c-0004zK-Td
- for qemu-devel@nongnu.org; Sat, 25 May 2024 17:38:08 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1sAz5a-00081B-VH
- for qemu-devel@nongnu.org; Sat, 25 May 2024 17:38:08 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2e72b8931caso80587281fa.0
- for <qemu-devel@nongnu.org>; Sat, 25 May 2024 14:38:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sB1p6-0002AY-0i; Sat, 25 May 2024 20:33:16 -0400
+Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sB1p2-0004N2-LK; Sat, 25 May 2024 20:33:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716673084; x=1717277884; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
- :reply-to; bh=Vo4mOElxSUPWi2Nc1pNYDJmddqDfN+/8nfsq5hNgnQY=;
- b=m2MpSrCK34RDeBI2rrbl63+Y5xqjlJ2wmxxbiFsDSPG/BwZ91B6+vpQDW2eB89YWI8
- PrvMUVA80xUShQqoJZ2eAgGwYRvfBp2F2vkngIA2nyLXtkEnjPqxBbOe10QocRg56jvO
- 6ydiH32qcexCQlqtK3AoyPXtNz6FLX9o3eGf2RD6+TVDvotk4ja2PyO3R9e4Y3B7v+rY
- oS5MbvMg+OZkXgEk0dr5zwP7FkS9honoIbzbyyEjegVEU1GiGzBiOxS9lwxoCy6kr8hf
- Zp5KOfVZLO5+qClqMjWYXPHJYtkvQ4qkWjzksEEwTyfLkYFkTKgvvSMnFv0ENdRpCno5
- sY1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716673084; x=1717277884;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Vo4mOElxSUPWi2Nc1pNYDJmddqDfN+/8nfsq5hNgnQY=;
- b=kLV6XSQzENjvs/nyEMHg9Mbuu+d34mGQZdWRxl2gkwEIVlACN9ZWwSo53RytLiL2pO
- RwSiTIRIcIvoAOyD9zxAjrHtIKiKQuTWTTUUn4BalUwc7C6SPT8votqFWZxVIIJecjCX
- OlmzLst5JWzR9u4t31gc+Vl00P8PEOAT3fvd2Gv04xrUSvvmG4O7aCCUVGt7LRxC3715
- tDElTVAez56Xo2ZsVn1xzseY4TIcoZqX7mmfptnsQWrcJPgInZ7YHa6cBEGt77Pbd3C+
- 4Ro0Y5P/EDn4U1JEVddj/ON9Jd31/PntkymUcbqUzxsG2t55Y6QXm2kvABuuJmIGgFpR
- 13Jg==
-X-Gm-Message-State: AOJu0YxSqtoLw4cmlHt4VpeLtZ3yu+B/CEWCADuwnFVhSCm8vUm2Jfx6
- flFAmCFisIWuHwQ517YvqJiYvxVYlul9wAUC4CgBRGbRN6NhfhRQKWFDPw==
-X-Google-Smtp-Source: AGHT+IG4S3R8uW9fWQJ066O+aJfaIlCg1rXb845Lkn1ssUNNk9XFgWKjD+/OHC05ruI+n9Y9zWek/Q==
-X-Received: by 2002:a2e:2e10:0:b0:2e5:87c1:e845 with SMTP id
- 38308e7fff4ca-2e95b278a70mr32523041fa.48.1716673083803; 
- Sat, 25 May 2024 14:38:03 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-191-050-204.77.191.pool.telefonica.de.
- [77.191.50.204]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-579c81b5eb4sm209874a12.11.2024.05.25.14.38.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 May 2024 14:38:03 -0700 (PDT)
-Date: Sat, 25 May 2024 20:50:32 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPULL_17/20=5D_target/arm=3A_Do_memory_typ?=
- =?US-ASCII?Q?e_alignment_check_when_translation_disabled?=
-In-Reply-To: <C875173E-4B5B-4F71-8CF4-4325F7AB7629@gmail.com>
-References: <20240305135237.3111642-1-peter.maydell@linaro.org>
- <20240305135237.3111642-18-peter.maydell@linaro.org>
- <C875173E-4B5B-4F71-8CF4-4325F7AB7629@gmail.com>
-Message-ID: <72ED7A80-9EA7-4FF6-BE29-9583587985C7@gmail.com>
+ d=linux.alibaba.com; s=default;
+ t=1716683580; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=zQrRmhSVDMG1V4H3XyWgmgU+COspTlCL1bOfElyhxNI=;
+ b=dfSb4syuaHZq0FP/WYp5bl+OWhY+nTjz5NtlOV4gloFG4MCNiyd9HlIQgXn4EHa+4BHo4D9R0wfC1UsNKZWFnFNba4pYNSwaIRXYJysKAGZA8etcsEOsWIsk28WChXQBgxUbSVSkRkyl9tHwHrJnwG5Vw8hOXEWEoLseL97/bDg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033022160150;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
+ TI=SMTPD_---0W7AMxiH_1716683578; 
+Received: from 192.168.3.95(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W7AMxiH_1716683578) by smtp.aliyun-inc.com;
+ Sun, 26 May 2024 08:32:59 +0800
+Message-ID: <7681a3ac-64c0-4c74-a246-4be342dd738d@linux.alibaba.com>
+Date: Sun, 26 May 2024 08:32:06 +0800
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=shentey@gmail.com; helo=mail-lj1-x236.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/riscv: Add zimop extension
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
+ bmeng.cn@gmail.com, iwei1518@gmail.com
+References: <20240522062905.1799-1-zhiwei_liu@linux.alibaba.com>
+ <20240522062905.1799-2-zhiwei_liu@linux.alibaba.com>
+ <05cbd3c7-cf62-4a17-91a6-b73e3ff3ad04@ventanamicro.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <05cbd3c7-cf62-4a17-91a6-b73e3ff3ad04@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,150 +72,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Daniel,
 
-
-Am 25=2E Mai 2024 13:41:54 UTC schrieb Bernhard Beschow <shentey@gmail=2Ec=
-om>:
+On 2024/5/24 17:46, Daniel Henrique Barboza wrote:
 >
 >
->Am 5=2E M=C3=A4rz 2024 13:52:34 UTC schrieb Peter Maydell <peter=2Emaydel=
-l@linaro=2Eorg>:
->>From: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
+> On 5/22/24 03:29, LIU Zhiwei wrote:
+>> Zimop extension defines an encoding space for 40 MOPs.The Zimop
+>> extension defines 32 MOP instructions named MOP.R.n, where n is
+>> an integer between 0 and 31, inclusive. The Zimop extension
+>> additionally defines 8 MOP instructions named MOP.RR.n, where n
+>> is an integer between 0 and 7.
 >>
->>If translation is disabled, the default memory type is Device, which
->>requires alignment checking=2E  This is more optimally done early via
->>the MemOp given to the TCG memory operation=2E
+>> These 40 MOPs initially are defined to simply write zero to x[rd],
+>> but are designed to be redefined by later extensions to perform some
+>> other action.
 >>
->>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->>Reported-by: Idan Horowitz <idan=2Ehorowitz@gmail=2Ecom>
->>Signed-off-by: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
->>Message-id: 20240301204110=2E656742-6-richard=2Ehenderson@linaro=2Eorg
->>Resolves: https://gitlab=2Ecom/qemu-project/qemu/-/issues/1204
->>Signed-off-by: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
->>Signed-off-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->
->Hi,
->
->This change causes an old 4=2E14=2E40 Linux kernel to panic on boot using=
- the sabrelite machine:
->
->[snip]
->Alignment trap: init (1) PC=3D0x76f1e3d4 Instr=3D0x14913004 Address=3D0x7=
-6f34f3e FSR 0x001
->Alignment trap: init (1) PC=3D0x76f1e3d8 Instr=3D0x148c3004 Address=3D0x7=
-e8492bd FSR 0x801
->Alignment trap: init (1) PC=3D0x76f0dab0 Instr=3D0x6823 Address=3D0x7e849=
-fbb FSR 0x001
->Alignment trap: init (1) PC=3D0x76f0dab2 Instr=3D0x6864 Address=3D0x7e849=
-fbf FSR 0x001
->scsi 0:0:0:0: Direct-Access     QEMU     QEMU HARDDISK    2=2E5+ PQ: 0 AN=
-SI: 5
->fsl-asoc-card sound: ASoC: CODEC DAI sgtl5000 not registered
->imx-sgtl5000 sound: ASoC: CODEC DAI sgtl5000 not registered
->imx-sgtl5000 sound: snd_soc_register_card failed (-517)
->Alignment trap: init (1) PC=3D0x76eac95a Instr=3D0xf8dd5015 Address=3D0x7=
-e849b05 FSR 0x001
->Alignment trap: not handling instruction f8dd5015 at [<76eac95a>]
->Unhandled fault: alignment exception (0x001) at 0x7e849b05
->pgd =3D 9c59c000
->[7e849b05] *pgd=3D2c552831, *pte=3D109eb34f, *ppte=3D109eb83f
->Kernel panic - not syncing: Attempted to kill init! exitcode=3D0x00000007
->
->---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=3D0=
-x00000007
->
->As you can see, some alignment exceptions are handled by the kernel, the =
-last one isn't=2E I added some additional printk()'s and traced it down to =
-this location in the kernel: <https://github=2Ecom/torvalds/linux/blob/v4=
-=2E14/arch/arm/mm/alignment=2Ec#L762> which claims that ARMv6++ CPUs can ha=
-ndle up to word-sized unaligned accesses, thus no fixup is needed=2E
->
->I hope that this will be sufficient for a fix=2E Let me know if you need =
-any additional information=2E
-
-I'm performing a direct kernel boot=2E On real hardware, a bootloader is i=
-nvolved which probably enables unaligned access=2E This may explain why it =
-works there but not in QEMU any longer=2E
-
-To fix direct kernel boot, it seems as if the "built-in bootloader" would =
-need to be adapted/extended [1]=2E Any ideas?
-
-Best regards,
-Bernhard
-
- [1] https://stackoverflow=2Ecom/questions/68949890/how-does-qemu-emulate-=
-a-kernel-without-a-bootloader
-
->
->Best regards,
->Bernhard
->
->>---
->> target/arm/tcg/hflags=2Ec | 34 ++++++++++++++++++++++++++++++++--
->> 1 file changed, 32 insertions(+), 2 deletions(-)
+>> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+>> ---
+>>   target/riscv/cpu.c                          |  2 ++
+>>   target/riscv/cpu_cfg.h                      |  1 +
+>>   target/riscv/insn32.decode                  | 11 ++++++
+>>   target/riscv/insn_trans/trans_rvzimop.c.inc | 37 +++++++++++++++++++++
+>>   target/riscv/translate.c                    |  1 +
+>>   5 files changed, 52 insertions(+)
+>>   create mode 100644 target/riscv/insn_trans/trans_rvzimop.c.inc
 >>
->>diff --git a/target/arm/tcg/hflags=2Ec b/target/arm/tcg/hflags=2Ec
->>index 8e5d35d9227=2E=2E5da1b0fc1d4 100644
->>--- a/target/arm/tcg/hflags=2Ec
->>+++ b/target/arm/tcg/hflags=2Ec
->>@@ -26,6 +26,35 @@ static inline bool fgt_svc(CPUARMState *env, int el)
->>         FIELD_EX64(env->cp15=2Efgt_exec[FGTREG_HFGITR], HFGITR_EL2, SVC=
-_EL1);
->> }
->>=20
->>+/* Return true if memory alignment should be enforced=2E */
->>+static bool aprofile_require_alignment(CPUARMState *env, int el, uint64=
-_t sctlr)
->>+{
->>+#ifdef CONFIG_USER_ONLY
->>+    return false;
->>+#else
->>+    /* Check the alignment enable bit=2E */
->>+    if (sctlr & SCTLR_A) {
->>+        return true;
->>+    }
->>+
->>+    /*
->>+     * If translation is disabled, then the default memory type is
->>+     * Device(-nGnRnE) instead of Normal, which requires that alignment
->>+     * be enforced=2E  Since this affects all ram, it is most efficient
->>+     * to handle this during translation=2E
->>+     */
->>+    if (sctlr & SCTLR_M) {
->>+        /* Translation enabled: memory type in PTE via MAIR_ELx=2E */
->>+        return false;
->>+    }
->>+    if (el < 2 && (arm_hcr_el2_eff(env) & (HCR_DC | HCR_VM))) {
->>+        /* Stage 2 translation enabled: memory type in PTE=2E */
->>+        return false;
->>+    }
->>+    return true;
->>+#endif
->>+}
->>+
->> static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
->>                                            ARMMMUIdx mmu_idx,
->>                                            CPUARMTBFlags flags)
->>@@ -121,8 +150,9 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState =
-*env, int fp_el,
->> {
->>     CPUARMTBFlags flags =3D {};
->>     int el =3D arm_current_el(env);
->>+    uint64_t sctlr =3D arm_sctlr(env, el);
->>=20
->>-    if (arm_sctlr(env, el) & SCTLR_A) {
->>+    if (aprofile_require_alignment(env, el, sctlr)) {
->>         DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
->>     }
->>=20
->>@@ -223,7 +253,7 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState =
-*env, int el, int fp_el,
->>=20
->>     sctlr =3D regime_sctlr(env, stage1);
->>=20
->>-    if (sctlr & SCTLR_A) {
->>+    if (aprofile_require_alignment(env, el, sctlr)) {
->>         DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
->>     }
->>=20
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index eb1a2e7d6d..c1ac521142 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -175,6 +175,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>       ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+>>       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>>       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+>> +    ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_12_0, ext_zimop),
+>
+> Shouldn't this be placed right after zihpm?
+
+Yes. Thanks.
+
+I didn't notice the strict order between extensions. And will fix this 
+and other similar comments in other patches.
+
+Zhiwei
+
+>
+>     ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, 
+> ext_zihintpause),
+>     ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+>> +    ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_12_0, ext_zimop),
+>     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>
+>
+> Thanks,
+>
+> Daniel
+>
+>
+>>       ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+>>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>> @@ -1463,6 +1464,7 @@ const RISCVCPUMultiExtConfig 
+>> riscv_cpu_extensions[] = {
+>>       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+>>       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+>>       MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
+>> +    MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
+>>       MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+>>       MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+>>       MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+>> index cb750154bd..b547fbba9d 100644
+>> --- a/target/riscv/cpu_cfg.h
+>> +++ b/target/riscv/cpu_cfg.h
+>> @@ -71,6 +71,7 @@ struct RISCVCPUConfig {
+>>       bool ext_zihintntl;
+>>       bool ext_zihintpause;
+>>       bool ext_zihpm;
+>> +    bool ext_zimop;
+>>       bool ext_ztso;
+>>       bool ext_smstateen;
+>>       bool ext_sstc;
+>> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+>> index f22df04cfd..972a1e8fd1 100644
+>> --- a/target/riscv/insn32.decode
+>> +++ b/target/riscv/insn32.decode
+>> @@ -38,6 +38,8 @@
+>>   %imm_bs   30:2                   !function=ex_shift_3
+>>   %imm_rnum 20:4
+>>   %imm_z6   26:1 15:5
+>> +%imm_mop5 30:1 26:2 20:2
+>> +%imm_mop3 30:1 26:2
+>>     # Argument sets:
+>>   &empty
+>> @@ -56,6 +58,8 @@
+>>   &r2nfvm    vm rd rs1 nf
+>>   &rnfvm     vm rd rs1 rs2 nf
+>>   &k_aes     shamt rs2 rs1 rd
+>> +&mop5 imm rd rs1
+>> +&mop3 imm rd rs1 rs2
+>>     # Formats 32:
+>>   @r       .......   ..... ..... ... ..... ....... &r                
+>> %rs2 %rs1 %rd
+>> @@ -98,6 +102,9 @@
+>>   @k_aes   .. ..... ..... .....  ... ..... ....... &k_aes 
+>> shamt=%imm_bs   %rs2 %rs1 %rd
+>>   @i_aes   .. ..... ..... .....  ... ..... ....... &i 
+>> imm=%imm_rnum        %rs1 %rd
+>>   +@mop5 . . .. .. .... .. ..... ... ..... ....... &mop5 
+>> imm=%imm_mop5 %rd %rs1
+>> +@mop3 . . .. .. . ..... ..... ... ..... ....... &mop3 imm=%imm_mop3 
+>> %rd %rs1 %rs2
+>> +
+>>   # Formats 64:
+>>   @sh5     .......  ..... .....  ... ..... ....... &shift 
+>> shamt=%sh5      %rs1 %rd
+>>   @@ -1010,3 +1017,7 @@ amocas_w    00101 . . ..... ..... 010 ..... 
+>> 0101111 @atom_st
+>>   amocas_d    00101 . . ..... ..... 011 ..... 0101111 @atom_st
+>>   # *** RV64 Zacas Standard Extension ***
+>>   amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
+>> +
+>> +# *** Zimop may-be-operation extension ***
+>> +mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 0111011 @mop5
+>> +mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 0111011 @mop3
+>> diff --git a/target/riscv/insn_trans/trans_rvzimop.c.inc 
+>> b/target/riscv/insn_trans/trans_rvzimop.c.inc
+>> new file mode 100644
+>> index 0000000000..165aacd2b6
+>> --- /dev/null
+>> +++ b/target/riscv/insn_trans/trans_rvzimop.c.inc
+>> @@ -0,0 +1,37 @@
+>> +/*
+>> + * RISC-V translation routines for May-Be-Operation(zimop).
+>> + *
+>> + * Copyright (c) 2024 Alibaba Group.
+>> + *
+>> + * This program is free software; you can redistribute it and/or 
+>> modify it
+>> + * under the terms and conditions of the GNU General Public License,
+>> + * version 2 or later, as published by the Free Software Foundation.
+>> + *
+>> + * This program is distributed in the hope it will be useful, but 
+>> WITHOUT
+>> + * ANY WARRANTY; without even the implied warranty of 
+>> MERCHANTABILITY or
+>> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public 
+>> License for
+>> + * more details.
+>> + *
+>> + * You should have received a copy of the GNU General Public License 
+>> along with
+>> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+>> + */
+>> +
+>> +#define REQUIRE_ZIMOP(ctx) do {           \
+>> +    if (!ctx->cfg_ptr->ext_zimop) {       \
+>> +        return false;                     \
+>> +    }                                     \
+>> +} while (0)
+>> +
+>> +static bool trans_mop_r_n(DisasContext *ctx, arg_mop_r_n *a)
+>> +{
+>> +    REQUIRE_ZIMOP(ctx);
+>> +    gen_set_gpr(ctx, a->rd, ctx->zero);
+>> +    return true;
+>> +}
+>> +
+>> +static bool trans_mop_rr_n(DisasContext *ctx, arg_mop_rr_n *a)
+>> +{
+>> +    REQUIRE_ZIMOP(ctx);
+>> +    gen_set_gpr(ctx, a->rd, ctx->zero);
+>> +    return true;
+>> +}
+>> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+>> index 2c27fd4ce1..77c6564834 100644
+>> --- a/target/riscv/translate.c
+>> +++ b/target/riscv/translate.c
+>> @@ -1097,6 +1097,7 @@ static uint32_t opcode_at(DisasContextBase 
+>> *dcbase, target_ulong pc)
+>>   #include "insn_trans/trans_rvzacas.c.inc"
+>>   #include "insn_trans/trans_rvzawrs.c.inc"
+>>   #include "insn_trans/trans_rvzicbo.c.inc"
+>> +#include "insn_trans/trans_rvzimop.c.inc"
+>>   #include "insn_trans/trans_rvzfa.c.inc"
+>>   #include "insn_trans/trans_rvzfh.c.inc"
+>>   #include "insn_trans/trans_rvk.c.inc"
 
