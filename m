@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7AAC25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 12:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A43EC25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 12:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBCxa-0006H6-Dk; Sun, 26 May 2024 08:26:46 -0400
+	id 1sBCxs-0006Pb-40; Sun, 26 May 2024 08:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBCxY-0006Fn-3T; Sun, 26 May 2024 08:26:44 -0400
-Received: from mail-il1-x135.google.com ([2607:f8b0:4864:20::135])
+ id 1sBCxn-0006Na-Pk; Sun, 26 May 2024 08:26:59 -0400
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBCxV-0001Ma-RI; Sun, 26 May 2024 08:26:43 -0400
-Received: by mail-il1-x135.google.com with SMTP id
- e9e14a558f8ab-3737b3c56d7so9593585ab.2; 
- Sun, 26 May 2024 05:26:41 -0700 (PDT)
+ id 1sBCxl-0001QQ-PT; Sun, 26 May 2024 08:26:59 -0400
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-36db3304053so43676885ab.2; 
+ Sun, 26 May 2024 05:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716726399; x=1717331199; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716726416; x=1717331216; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qaa1CJNZBddwryvQGk2blXK8TkhlUvCCGTcuF5Y8qHE=;
- b=N72bm8eJ1QicayRbRR17N+/XrP8TXrm+X7oTzq+/lwBCOjrRWDPlF030zogWuk+Oh3
- uoobrocubhPdegCrvqA8L+Gr+FwcRezkgC4/Mdgat+1Mv3DgO6YPOD1Va0Sy7t3dPPL7
- K++C+ufaooh5eyjds1RvWV+sP3ao9tG+S9QLdnZ1Aqi8mgQbBvcYpAPymLdltsGoRocU
- i+iHMpVHe+KolWe1oZljTZ/QvU/XNTABD3XN4Olu8c5UnqZmWV5iu9C1HWfrJOVL5zTU
- TWkvsRn9hpBwpIWiNf4dA4bt7k6YeNZasUL3WMZExnNryH8c4D+Z46HX+kx8Movil39V
- bLfQ==
+ bh=sJs8mNerfby91Jg60eM1BlVbn1gYksWnaaJHBA5aado=;
+ b=eqYF71ftc9vmL0WS2SvQNZWJYy2CXb/KVhmcOTLQ78gUq5rerBCUaYzApWRhaxTio1
+ vSFoTysRatYZYfvpNwc15xQbhzHxWQy3+a+QqhP8QIzhOqOP9xYHrvB7+Y4XojUSqlYk
+ u1GaFthDSdlD6opBKVGuLXxyTDlXSXaFiPPsMui3Gr3SskKtjdxQx0jqVMGD/mDifzmu
+ nGFov5kLsRU6SHjdIlroGx7AcEY7Fwio+GzaXlmsou8o/t7EkyP0ehVBz2nRlX7Dd8o/
+ RKxUf9q9XIiFuudLep0aPKfiUX2vk6nJuUWnQzSvZ6UXyqNqB11UhtJhHLiQ7fVXBFPj
+ 6L6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716726399; x=1717331199;
+ d=1e100.net; s=20230601; t=1716726416; x=1717331216;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qaa1CJNZBddwryvQGk2blXK8TkhlUvCCGTcuF5Y8qHE=;
- b=AJlZp7oahb+/32bT2/XrqJ6ehRWWwsgINphxJYy4PPacLLAzKgERCclZ4LGZMMCHdN
- DlqHdW70z2zSAQR13AJHBPa1BuYNkw4bvE10+KNAO+EbpXwyGbZSp2CZRI179pUczPQp
- 6w2k2wvY/XLKcs/yjB/1ekwmpz5hWgUUNvquS2hLMdM8iA7IkfzO8FaHlxj+61Y8JptZ
- sPzi6E9F1XnEE+DDD0hwSN9EBqDybO7peb2zdNcW7CDz19WWuCa6aX4wTCAV+SwERPfi
- 3my1phcgUOrZKuzSviQ+ytnqrPlm74DRA26nsAbh8hQuW0Vs2WHXiF0ZUWScsV0/YW0T
- 6E5g==
+ bh=sJs8mNerfby91Jg60eM1BlVbn1gYksWnaaJHBA5aado=;
+ b=DJ3wnH1Puq/09t9bgL+VgK5+huyFMXUOihmKLxTSbYojrQVhKnPLdT5qYFejeTOSAm
+ LiWxefO7T5KR0ACfncHMnNYNepCOxvU0mN+5JYVLUVx9dDAk4fjompCffynJvMIsk1S2
+ vxHZVrFtntTctXcMP8quF0m3WR7mT8d9nMMn1toUlwYC0wLkAEIFz+pOdUeM57oXA1f0
+ OCpHAgSYzSIzWfwub3RnVzHDpT1lNje7zw0nfx0DJ8xawnzuV+31x6P7A8cOYvbGUBSt
+ yoj5qjcwxZkN2llpaU2QwpUTuTX4tKllQVTQrwTG0KAS/QwpO31rcnu/q94OEWLm9TR3
+ mGhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDPOQu9dCsYE/uz55htxKhQTjpb098y8Xsp2u/2YkkfMBY9l0IDBzF3LpBMEsZm/EStq+eaqO2PA+gN4u05S1GKq973P8=
-X-Gm-Message-State: AOJu0YyTEZMOLlDE67s49sEejaPMIcG78YM/OvtxUT03Oz1rGPQL8ani
- ZLBZ/Mrf7Sd+AGuKFmRukh8W8fJpn5xQqz0iKOplorEjfHa6bpI64jnlWw==
-X-Google-Smtp-Source: AGHT+IG07y+vZ4y0eyZICzLbhhBq+op1D5zAMbEM2+NtNNNX1DvXXhdCb3sEYW41PVDgAv2rQMUe4w==
-X-Received: by 2002:a92:cda6:0:b0:36d:b4b0:9c8e with SMTP id
- e9e14a558f8ab-3737b2f0d8bmr74180845ab.8.1716726399561; 
- Sun, 26 May 2024 05:26:39 -0700 (PDT)
+ AJvYcCXBgXaznLjimgHyBeOma3TgMpWTOvYzsKBN78i+WwH6OYRDCQV+FXod132TKrf1HyAyiJlQs0UqsS9YAgHIuq9bNYF6Rlo=
+X-Gm-Message-State: AOJu0YwPqa35cpp/fCAogZKW4EL1IfGLf6C20Lbh+pTAKK3bPq61a3Z6
+ S2is9VZeL8ecv35b4fHm+2/E/9JcZjkGAMRRh53uKwsIRCMh9DNhxvfeQg==
+X-Google-Smtp-Source: AGHT+IG41vKOIlqozmh0U3aCQffMHMxm41VY/Wwlku25LyM0uCAfFDQyVEZ7fPBOChhGtLBy7+boPw==
+X-Received: by 2002:a05:6e02:1aa3:b0:36b:2438:8805 with SMTP id
+ e9e14a558f8ab-3737b2f77aamr82611255ab.12.1716726415739; 
+ Sun, 26 May 2024 05:26:55 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fcfe648bsm3457182b3a.168.2024.05.26.05.26.36
+ d2e1a72fcca58-6f8fcfe648bsm3457182b3a.168.2024.05.26.05.26.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 05:26:39 -0700 (PDT)
+ Sun, 26 May 2024 05:26:55 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -65,16 +65,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-Subject: [RFC PATCH 05/10] ppc/pnv: Extend chip_pir class method to TIR as well
-Date: Sun, 26 May 2024 22:26:06 +1000
-Message-ID: <20240526122612.473476-6-npiggin@gmail.com>
+Subject: [RFC PATCH 09/10] ppc/pnv: Implement POWER10 PC xscom registers for
+ direct controls
+Date: Sun, 26 May 2024 22:26:10 +1000
+Message-ID: <20240526122612.473476-10-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240526122612.473476-1-npiggin@gmail.com>
 References: <20240526122612.473476-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::135;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,233 +98,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The chip_pir chip class method allows the platform to set the PIR
-processor identification register. Extend this to a more general
-ID function which also allows the TIR to be set. This is in
-preparation for "big core", which is a more complicated topology
-of cores and threads.
+The PC unit in the processor core contains xscom registers that provide
+low level status and control of the CPU.
+
+This implements "direct controls" sufficient for OPAL (skiboot) firmware
+use, which is to stop threads and send them non-maskable IPIs in the
+form of SRESET interrupts.
+
+POWER10 is sufficiently different (particularly QME and special wakeup)
+from POWER9 that it is not trivial to implement by reusing the code.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/ppc/pnv_chip.h |  3 +-
- hw/ppc/pnv.c              | 61 ++++++++++++++++++++++++---------------
- hw/ppc/pnv_core.c         | 10 ++++---
- 3 files changed, 45 insertions(+), 29 deletions(-)
+ include/hw/core/cpu.h     |  8 ++++
+ include/hw/ppc/pnv.h      |  2 +
+ include/hw/ppc/pnv_core.h |  3 ++
+ hw/ppc/pnv.c              |  7 +++-
+ hw/ppc/pnv_core.c         | 88 ++++++++++++++++++++++++++++++++++++---
+ system/cpus.c             | 10 +++++
+ 6 files changed, 112 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-index 8589f3291e..679723926a 100644
---- a/include/hw/ppc/pnv_chip.h
-+++ b/include/hw/ppc/pnv_chip.h
-@@ -147,7 +147,8 @@ struct PnvChipClass {
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index bb398e8237..52a8fc65cb 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -974,6 +974,14 @@ void cpu_reset_interrupt(CPUState *cpu, int mask);
+  */
+ void cpu_exit(CPUState *cpu);
  
-     DeviceRealize parent_realize;
++/**
++ * cpu_pause:
++ * @cpu: The CPU to pause.
++ *
++ * Resumes CPU, i.e. puts CPU into stopped state.
++ */
++void cpu_pause(CPUState *cpu);
++
+ /**
+  * cpu_resume:
+  * @cpu: The CPU to resume.
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 93ecb062b4..bec603f1a8 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -111,6 +111,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb);
+ #define PNV_FDT_ADDR          0x01000000
+ #define PNV_TIMEBASE_FREQ     512000000ULL
  
--    uint32_t (*chip_pir)(PnvChip *chip, uint32_t core_id, uint32_t thread_id);
-+    void (*processor_id)(PnvChip *chip, uint32_t core_id, uint32_t thread_id,
-+                         uint32_t *pir, uint32_t *tir);
-     void (*intc_create)(PnvChip *chip, PowerPCCPU *cpu, Error **errp);
-     void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
-     void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
++void pnv_cpu_do_nmi(CPUState *cs);
++
+ /*
+  * BMC helpers
+  */
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index 39f8f33e6c..9599da15ea 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -109,6 +109,9 @@ OBJECT_DECLARE_TYPE(PnvQuad, PnvQuadClass, PNV_QUAD)
+ struct PnvQuad {
+     DeviceState parent_obj;
+ 
++    bool special_wakeup_done;
++    bool special_wakeup[4];
++
+     uint32_t quad_id;
+     MemoryRegion xscom_regs;
+     MemoryRegion xscom_qme_regs;
 diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index a706de2e36..7d062ec16c 100644
+index 5364c55bbb..765142965f 100644
 --- a/hw/ppc/pnv.c
 +++ b/hw/ppc/pnv.c
-@@ -144,7 +144,7 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
-     PnvChipClass *pnv_cc = PNV_CHIP_GET_CLASS(chip);
-     g_autofree uint32_t *servers_prop = g_new(uint32_t, smt_threads);
-     int i;
--    uint32_t pir;
-+    uint32_t pir, tir;
-     uint32_t segs[] = {cpu_to_be32(28), cpu_to_be32(40),
-                        0xffffffff, 0xffffffff};
-     uint32_t tbfreq = PNV_TIMEBASE_FREQ;
-@@ -155,7 +155,7 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
-     char *nodename;
-     int cpus_offset = get_cpus_node(fdt);
- 
--    pir = pnv_cc->chip_pir(chip, pc->hwid, 0);
-+    pnv_cc->processor_id(chip, pc->hwid, 0, &pir, &tir);
- 
-     nodename = g_strdup_printf("%s@%x", dc->fw_name, pir);
-     offset = fdt_add_subnode(fdt, cpus_offset, nodename);
-@@ -237,7 +237,8 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
- 
-     /* Build interrupt servers properties */
-     for (i = 0; i < smt_threads; i++) {
--        servers_prop[i] = cpu_to_be32(pnv_cc->chip_pir(chip, pc->hwid, i));
-+        pnv_cc->processor_id(chip, pc->hwid, i, &pir, &tir);
-+        servers_prop[i] = cpu_to_be32(pir);
+@@ -2700,12 +2700,17 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
      }
-     _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
-                        servers_prop, sizeof(*servers_prop) * smt_threads)));
-@@ -249,14 +250,17 @@ static void pnv_dt_icp(PnvChip *chip, void *fdt, uint32_t hwid,
-                        uint32_t nr_threads)
- {
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
--    uint32_t pir = pcc->chip_pir(chip, hwid, 0);
--    uint64_t addr = PNV_ICP_BASE(chip) | (pir << 12);
-+    uint32_t pir, tir;
-+    uint64_t addr;
-     char *name;
-     const char compat[] = "IBM,power8-icp\0IBM,ppc-xicp";
-     uint32_t irange[2], i, rsize;
-     uint64_t *reg;
-     int offset;
+ }
  
-+    pcc->processor_id(chip, hwid, 0, &pir, &tir);
-+    addr = PNV_ICP_BASE(chip) | (pir << 12);
++void pnv_cpu_do_nmi(CPUState *cs)
++{
++    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
++}
 +
-     irange[0] = cpu_to_be32(pir);
-     irange[1] = cpu_to_be32(nr_threads);
- 
-@@ -1104,10 +1108,12 @@ static void pnv_power10_init(MachineState *machine)
-  *   25:28  Core number
-  *   29:31  Thread ID
-  */
--static uint32_t pnv_chip_pir_p8(PnvChip *chip, uint32_t core_id,
--                                uint32_t thread_id)
-+static void pnv_processor_id_p8(PnvChip *chip,
-+                                uint32_t core_id, uint32_t thread_id,
-+                                uint32_t *pir, uint32_t *tir)
+ static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
  {
--    return (chip->chip_id << 7) | (core_id << 3) | thread_id;
-+    *pir = (chip->chip_id << 7) | (core_id << 3) | thread_id;
-+    *tir = thread_id;
- }
+     CPUState *cs;
  
- static void pnv_chip_power8_intc_create(PnvChip *chip, PowerPCCPU *cpu,
-@@ -1159,15 +1165,17 @@ static void pnv_chip_power8_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
-  *
-  * We only care about the lower bits. uint32_t is fine for the moment.
-  */
--static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
--                                uint32_t thread_id)
-+static void pnv_processor_id_p9(PnvChip *chip,
-+                                uint32_t core_id, uint32_t thread_id,
-+                                uint32_t *pir, uint32_t *tir)
- {
-     if (chip->nr_threads == 8) {
--        return (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
-+        *pir = (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
-                (thread_id >> 1);
-     } else {
--        return (chip->chip_id << 8) | (core_id << 2) | thread_id;
-+        *pir = (chip->chip_id << 8) | (core_id << 2) | thread_id;
+     CPU_FOREACH(cs) {
+-        async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
++        pnv_cpu_do_nmi(cs);
      }
-+    *tir = thread_id;
  }
  
- /*
-@@ -1181,15 +1189,17 @@ static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
-  *
-  * We only care about the lower bits. uint32_t is fine for the moment.
-  */
--static uint32_t pnv_chip_pir_p10(PnvChip *chip, uint32_t core_id,
--                                 uint32_t thread_id)
-+static void pnv_processor_id_p10(PnvChip *chip,
-+                                uint32_t core_id, uint32_t thread_id,
-+                                uint32_t *pir, uint32_t *tir)
- {
-     if (chip->nr_threads == 8) {
--        return (chip->chip_id << 8) | ((core_id / 4) << 4) |
--               ((core_id % 2) << 3) | thread_id;
-+        *pir = (chip->chip_id << 8) | ((core_id / 4) << 4) |
-+                ((core_id % 2) << 3) | thread_id;
-     } else {
--        return (chip->chip_id << 8) | (core_id << 2) | thread_id;
-+        *pir = (chip->chip_id << 8) | (core_id << 2) | thread_id;
-     }
-+    *tir = thread_id;
- }
- 
- static void pnv_chip_power9_intc_create(PnvChip *chip, PowerPCCPU *cpu,
-@@ -1368,8 +1378,11 @@ static void pnv_chip_icp_realize(Pnv8Chip *chip8, Error **errp)
-         int core_hwid = CPU_CORE(pnv_core)->core_id;
- 
-         for (j = 0; j < CPU_CORE(pnv_core)->nr_threads; j++) {
--            uint32_t pir = pcc->chip_pir(chip, core_hwid, j);
--            PnvICPState *icp = PNV_ICP(xics_icp_get(chip8->xics, pir));
-+            uint32_t pir, tir;
-+            PnvICPState *icp;
-+
-+            pcc->processor_id(chip, core_hwid, j, &pir, &tir);
-+            icp = PNV_ICP(xics_icp_get(chip8->xics, pir));
- 
-             memory_region_add_subregion(&chip8->icp_mmio, pir << 12,
-                                         &icp->mmio);
-@@ -1481,7 +1494,7 @@ static void pnv_chip_power8e_class_init(ObjectClass *klass, void *data)
-     k->chip_cfam_id = 0x221ef04980000000ull;  /* P8 Murano DD2.1 */
-     k->cores_mask = POWER8E_CORE_MASK;
-     k->num_phbs = 3;
--    k->chip_pir = pnv_chip_pir_p8;
-+    k->processor_id = pnv_processor_id_p8;
-     k->intc_create = pnv_chip_power8_intc_create;
-     k->intc_reset = pnv_chip_power8_intc_reset;
-     k->intc_destroy = pnv_chip_power8_intc_destroy;
-@@ -1505,7 +1518,7 @@ static void pnv_chip_power8_class_init(ObjectClass *klass, void *data)
-     k->chip_cfam_id = 0x220ea04980000000ull; /* P8 Venice DD2.0 */
-     k->cores_mask = POWER8_CORE_MASK;
-     k->num_phbs = 3;
--    k->chip_pir = pnv_chip_pir_p8;
-+    k->processor_id = pnv_processor_id_p8;
-     k->intc_create = pnv_chip_power8_intc_create;
-     k->intc_reset = pnv_chip_power8_intc_reset;
-     k->intc_destroy = pnv_chip_power8_intc_destroy;
-@@ -1529,7 +1542,7 @@ static void pnv_chip_power8nvl_class_init(ObjectClass *klass, void *data)
-     k->chip_cfam_id = 0x120d304980000000ull;  /* P8 Naples DD1.0 */
-     k->cores_mask = POWER8_CORE_MASK;
-     k->num_phbs = 4;
--    k->chip_pir = pnv_chip_pir_p8;
-+    k->processor_id = pnv_processor_id_p8;
-     k->intc_create = pnv_chip_power8_intc_create;
-     k->intc_reset = pnv_chip_power8_intc_reset;
-     k->intc_destroy = pnv_chip_power8_intc_destroy;
-@@ -1802,7 +1815,7 @@ static void pnv_chip_power9_class_init(ObjectClass *klass, void *data)
- 
-     k->chip_cfam_id = 0x220d104900008000ull; /* P9 Nimbus DD2.0 */
-     k->cores_mask = POWER9_CORE_MASK;
--    k->chip_pir = pnv_chip_pir_p9;
-+    k->processor_id = pnv_processor_id_p9;
-     k->intc_create = pnv_chip_power9_intc_create;
-     k->intc_reset = pnv_chip_power9_intc_reset;
-     k->intc_destroy = pnv_chip_power9_intc_destroy;
-@@ -2114,7 +2127,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
- 
-     k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
-     k->cores_mask = POWER10_CORE_MASK;
--    k->chip_pir = pnv_chip_pir_p10;
-+    k->processor_id = pnv_processor_id_p10;
-     k->intc_create = pnv_chip_power10_intc_create;
-     k->intc_reset = pnv_chip_power10_intc_reset;
-     k->intc_destroy = pnv_chip_power10_intc_destroy;
 diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 7b0ea7812b..9b5edd9e48 100644
+index 10417d92ae..835c35d90b 100644
 --- a/hw/ppc/pnv_core.c
 +++ b/hw/ppc/pnv_core.c
-@@ -228,8 +228,9 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
-     PnvCPUState *pnv_cpu = pnv_cpu_state(cpu);
-     CPUPPCState *env = &cpu->env;
-     int core_hwid;
--    ppc_spr_t *pir = &env->spr_cb[SPR_PIR];
--    ppc_spr_t *tir = &env->spr_cb[SPR_TIR];
-+    ppc_spr_t *pir_spr = &env->spr_cb[SPR_PIR];
-+    ppc_spr_t *tir_spr = &env->spr_cb[SPR_TIR];
-+    uint32_t pir, tir;
-     Error *local_err = NULL;
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(pc->chip);
+@@ -184,16 +184,40 @@ static const MemoryRegionOps pnv_core_power9_xscom_ops = {
+  */
  
-@@ -247,8 +248,9 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
+ #define PNV10_XSCOM_EC_CORE_THREAD_STATE    0x412
++#define PNV10_XSCOM_EC_CORE_THREAD_INFO     0x413
++#define PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS 0x449
++#define PNV10_XSCOM_EC_CORE_RAS_STATUS      0x454
  
-     core_hwid = object_property_get_uint(OBJECT(pc), "hwid", &error_abort);
+ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+                                            unsigned int width)
+ {
++    PnvCore *pc = PNV_CORE(opaque);
++    int nr_threads = CPU_CORE(pc)->nr_threads;
++    int i;
+     uint32_t offset = addr >> 3;
+     uint64_t val = 0;
  
--    tir->default_value = thread_index;
--    pir->default_value = pcc->chip_pir(pc->chip, core_hwid, thread_index);
-+    pcc->processor_id(pc->chip, core_hwid, thread_index, &pir, &tir);
-+    pir_spr->default_value = pir;
-+    tir_spr->default_value = tir;
+     switch (offset) {
+     case PNV10_XSCOM_EC_CORE_THREAD_STATE:
+-        val = 0;
++        for (i = 0; i < nr_threads; i++) {
++            PowerPCCPU *cpu = pc->threads[i];
++            CPUState *cs = CPU(cpu);
++
++            if (cs->halted) {
++                val |= PPC_BIT(56 + i);
++            }
++        }
++        break;
++    case PNV10_XSCOM_EC_CORE_THREAD_INFO:
++        break;
++    case PNV10_XSCOM_EC_CORE_RAS_STATUS:
++        for (i = 0; i < nr_threads; i++) {
++            PowerPCCPU *cpu = pc->threads[i];
++            CPUState *cs = CPU(cpu);
++            if (cs->stopped) {
++                val |= PPC_BIT(0 + 8*i) | PPC_BIT(1 + 8*i);
++            }
++        }
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+@@ -206,9 +230,45 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+                                          uint64_t val, unsigned int width)
+ {
++    PnvCore *pc = PNV_CORE(opaque);
++    int nr_threads = CPU_CORE(pc)->nr_threads;
++    int i;
+     uint32_t offset = addr >> 3;
  
-     /* Set time-base frequency to 512 MHz */
-     cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
+     switch (offset) {
++    case PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS:
++        for (i = 0; i < nr_threads; i++) {
++            PowerPCCPU *cpu = pc->threads[i];
++            CPUState *cs = CPU(cpu);
++
++            if (val & PPC_BIT(7 + 8*i)) { /* stop */
++                val &= ~PPC_BIT(7 + 8*i);
++                cpu_pause(cs);
++            }
++            if (val & PPC_BIT(6 + 8*i)) { /* start */
++                val &= ~PPC_BIT(6 + 8*i);
++                cpu_resume(cs);
++            }
++            if (val & PPC_BIT(4 + 8*i)) { /* sreset */
++                val &= ~PPC_BIT(4 + 8*i);
++                pnv_cpu_do_nmi(cs);
++            }
++            if (val & PPC_BIT(3 + 8*i)) { /* clear maint */
++                /*
++                 * Hardware has very particular cases for where clear maint
++                 * must be used and where start must be used to resume a
++                 * thread. These are not modelled exactly, just treat
++                 * this and start the same.
++                 */
++                val &= ~PPC_BIT(3 + 8*i);
++                cpu_resume(cs);
++            }
++        }
++        if (val) {
++            qemu_log_mask(LOG_UNIMP, "%s: unimp bits in DIRECT_CONTROLS 0x%016lx\n", __func__, val);
++        }
++        break;
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+                       offset);
+@@ -525,6 +585,7 @@ static const MemoryRegionOps pnv_quad_power10_xscom_ops = {
+ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+                                             unsigned int width)
+ {
++    PnvQuad *eq = PNV_QUAD(opaque);
+     uint32_t offset = addr >> 3;
+     uint64_t val = -1;
+ 
+@@ -532,10 +593,14 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+      * Forth nibble selects the core within a quad, mask it to process read
+      * for any core.
+      */
+-    switch (offset & ~0xf000) {
+-    case P10_QME_SPWU_HYP:
++    switch (offset & ~PPC_BITMASK32(16, 19)) {
+     case P10_QME_SSH_HYP:
+-        return 0;
++        val = 0;
++        if (eq->special_wakeup_done) {
++            val |= PPC_BIT(1); /* SPWU DONE */
++            val |= PPC_BIT(4); /* SSH SPWU DONE */
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+                       offset);
+@@ -547,9 +612,22 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+ static void pnv_qme_power10_xscom_write(void *opaque, hwaddr addr,
+                                          uint64_t val, unsigned int width)
+ {
++    PnvQuad *eq = PNV_QUAD(opaque);
+     uint32_t offset = addr >> 3;
++    bool set;
++    int i;
+ 
+-    switch (offset) {
++    switch (offset & ~PPC_BITMASK32(16, 19)) {
++    case P10_QME_SPWU_HYP:
++        set = !!(val & PPC_BIT(0));
++        eq->special_wakeup_done = set;
++        for (i = 0; i < 4; i++) {
++            /* These bits select cores in the quad */
++            if (offset & PPC_BIT32(16 + i)) {
++                eq->special_wakeup[i] = set;
++            }
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+                       offset);
+diff --git a/system/cpus.c b/system/cpus.c
+index 68d161d96b..1ca18ae7ea 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -602,6 +602,16 @@ void pause_all_vcpus(void)
+     bql_lock();
+ }
+ 
++void cpu_pause(CPUState *cpu)
++{
++    if (qemu_cpu_is_self(cpu)) {
++        qemu_cpu_stop(cpu, true);
++    } else {
++        cpu->stop = true;
++        qemu_cpu_kick(cpu);
++    }
++}
++
+ void cpu_resume(CPUState *cpu)
+ {
+     cpu->stop = false;
 -- 
 2.43.0
 
