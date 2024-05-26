@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35C9C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33658C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBNZL-0007nl-U6; Sun, 26 May 2024 19:46:28 -0400
+	id 1sBNkb-0004wI-75; Sun, 26 May 2024 19:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sBNZI-0007nN-3c
- for qemu-devel@nongnu.org; Sun, 26 May 2024 19:46:24 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ id 1sBNka-0004w9-1y
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 19:58:04 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sBNZF-00010a-UG
- for qemu-devel@nongnu.org; Sun, 26 May 2024 19:46:23 -0400
+ id 1sBNkY-0002lg-HL
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 19:58:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1716767174;
- bh=bqG1UbtbsMJTc3c6hqa2SBFfZSdcsmH9xVmrsE+arOo=;
+ s=mail; t=1716767880;
+ bh=aoIrv7jRFNoYKVsU2vRxz8J+M3+4v4YDJXWFm0Qbor4=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=t1E5ei8EFuvhufOKSiICWISFL/sJMUHtagyRp0fvqM6YjiCGiarLyqm1PHSSOmqPF
- pC2lhAW3gWO44YiCHsIODVbKZOj0wyD9/hAzpBL9hfWYLFIzq0jVUYo9y+dqTgfS8m
- p/OZ2MSrxInXy0zAeUGvQwQ3nzexZraxfYmeeiZ9U4L2FNvPngwnh+pQf4161FvkF+
- 0rs1AGFLvozP24xKuyn/NxM/l7hAobQED3C6xP0ZqFGiFBnBVFNBoDRPZ/XFTOh1Ss
- px2eeaod7BSiv9LqKx+aCCScuFbF8jFIeixrNyFYcIPxuyqAvBVLfG4RKbi7y6Yax3
- 3gq2qeyjSEb3Q==
+ b=YAjK/wqcM9aYtI4S8KGDfsAqlGLMyNMk5YxoXfDk5gd5FgN8+pCXAbB+F0hZI5MNf
+ q6MrcxBrdngW2B+G1r+5lRX0JjW0Q57pe83xdJ40A7BRHEX5/XoeHKuH8Vl3rrzU3E
+ uCTrD3KL/jxpTARctdd2WBV+bwu826Lpx3LzQKmVv+KL0aIFWFOn4BCpEPaP+RnVjG
+ xpAPJt9qrrCuRaDo6Y83GgibrRlhgTJqYO9gTmt1FT0cSDPTe7F59TEkYF4Wc2k2Rw
+ zKOuhB7pUdkVrPt82J/Oq65Fz9bC3V9hMEfvoJl11KCXD76MpSJxeWQBHMDHueHQ04
+ 9WGWVhR/1d/Vw==
 Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id B2CC03780C1F;
- Sun, 26 May 2024 23:46:12 +0000 (UTC)
-Message-ID: <6bc5a3fc-8fbc-4449-a5e6-cd654655be35@collabora.com>
-Date: Mon, 27 May 2024 02:46:09 +0300
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 5C4ED3780C1F;
+ Sun, 26 May 2024 23:57:58 +0000 (UTC)
+Message-ID: <7c5f87d8-dc2a-4e34-93d0-c4bf1800a953@collabora.com>
+Date: Mon, 27 May 2024 02:57:55 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 00/13] Support blob memory and venus on qemu
+Subject: Re: [PATCH v12 03/13] virtio-gpu: Use pkgconfig version to decide
+ which virgl features are available
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
@@ -62,15 +63,14 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
- <87o78zi9wb.fsf@draig.linaro.org> <87jzjni569.fsf@draig.linaro.org>
- <f7b1d066-4636-49b0-b921-ea01b20b2c00@collabora.com>
- <874jaqi5m0.fsf@draig.linaro.org>
+ <20240519212712.2605419-4-dmitry.osipenko@collabora.com>
+ <87r0duggh8.fsf@draig.linaro.org>
 Content-Language: en-US
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <874jaqi5m0.fsf@draig.linaro.org>
+In-Reply-To: <87r0duggh8.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,206 +93,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/22/24 12:00, Alex Bennée wrote:
-> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-> 
->> On 5/21/24 17:57, Alex Bennée wrote:
->>> Alex Bennée <alex.bennee@linaro.org> writes:
->>>
->>>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->>>>
->>>>> Hello,
->>>>>
->>>>> This series enables Vulkan Venus context support on virtio-gpu.
->>>>>
->>>>> All virglrender and almost all Linux kernel prerequisite changes
->>>>> needed by Venus are already in upstream. For kernel there is a pending
->>>>> KVM patchset that fixes mapping of compound pages needed for DRM drivers
->>>>> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
->>>>> from Qemu.
->>>>>
->>>>> [1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
->>>>>
->>>>> You'll need to use recent Mesa version containing patch that removes
->>>>> dependency on cross-device feature from Venus that isn't supported by
->>>>> Qemu [2].
->>>>>
->>>>> [2] https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e26987befae78b6ccbb7ae242b
->>>>>
->>>>> Example Qemu cmdline that enables Venus:
->>>>>
->>>>>   qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,venus=true \
->>>>>       -machine q35,accel=kvm,memory-backend=mem1 \
->>>>>       -object memory-backend-memfd,id=mem1,size=8G -m 8G
->>>>
->>>> What is the correct device for non-x86 guests? We have virtio-gpu-gl-pci
->>>> but when doing that I get:
->>>>
->>>>   -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true
->>>>   qemu-system-aarch64: -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true: opengl is not available
->>>>
->>>> According to 37f86af087 (virtio-gpu: move virgl realize + properties):
->>>>
->>>>   Drop the virgl property, the virtio-gpu-gl-device has virgl enabled no
->>>>   matter what.  Just use virtio-gpu-device instead if you don't want
->>>>   enable virgl and opengl.  This simplifies the logic and reduces the test
->>>>   matrix.
->>>>
->>>> but that's not a good solution because that needs virtio-mmio and there
->>>> are reasons to have a PCI device (for one thing no ambiguity about
->>>> discovery).
->>>
->>> Oops my mistake forgetting:
->>>
->>>   --display gtk,gl=on
->>>
->>> Although I do see a lot of eglMakeContext failures.
->>
->> Please post the full Qemu cmdline you're using
-> 
-> With:
-> 
->   ./qemu-system-aarch64 \
->            -machine type=virt,virtualization=on,pflash0=rom,pflash1=efivars \
->            -cpu neoverse-n1 \
->            -smp 4 \
->            -accel tcg \
->            -device virtio-net-pci,netdev=unet \
->            -device virtio-scsi-pci \
->            -device scsi-hd,drive=hd \
->            -netdev user,id=unet,hostfwd=tcp::2222-:22 \
->            -blockdev driver=raw,node-name=hd,file.driver=host_device,file.filename=/dev/zen-ssd2/trixie-arm64,discard=unmap \
->            -serial mon:stdio \
->            -blockdev node-name=rom,driver=file,filename=(pwd)/pc-bios/edk2-aarch64-code.fd,read-only=true \
->            -blockdev node-name=efivars,driver=file,filename=$HOME/images/qemu-arm64-efivars \
->            -m 8192 \
->            -object memory-backend-memfd,id=mem,size=8G,share=on \
->            -device virtio-gpu-gl-pci,hostmem=4G,blob=true,venus=true \
->            -display gtk,gl=on,show-cursor=on -vga none \
->            -device qemu-xhci -device usb-kbd -device usb-tablet
-> 
-> I get a boot up with a lot of:
-> 
->                                                                                                                                                                              
->   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed                                                                                                          
-> 
->   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed                                                                                                          
-> 
->   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed                                                                                                          
-> 
->   (qemu:1545322): Gdk-WARNING **: 09:26:09.470: eglMakeCurrent failed               
-> 
-> In the guest I run:
-> 
->   meson devenv -C /root/lsrc/graphics/mesa.git/build fish
-> 
-> to bring in the latest Mesa (with virtio enabled). Running vulkaninfo
-> reports two cards:
-> 
->   ==========                                                                            
->   VULKANINFO                        
->   ==========                                                                            
-> 
->   Vulkan Instance Version: 1.3.280                                                      
-> 
-> 
->   Instance Extensions: count = 14
->   -------------------------------
->   VK_EXT_debug_report                    : extension revision 10
->   VK_EXT_debug_utils                     : extension revision 2
->   VK_EXT_headless_surface                : extension revision 1
->   VK_KHR_device_group_creation           : extension revision 1
->   VK_KHR_external_fence_capabilities     : extension revision 1
->   VK_KHR_external_memory_capabilities    : extension revision 1
->   VK_KHR_external_semaphore_capabilities : extension revision 1
->   VK_KHR_get_physical_device_properties2 : extension revision 2
->   VK_KHR_get_surface_capabilities2       : extension revision 1
->   VK_KHR_portability_enumeration         : extension revision 1
->   VK_KHR_surface                         : extension revision 25
->   VK_KHR_surface_protected_capabilities  : extension revision 1
->   VK_KHR_wayland_surface                 : extension revision 6
->   VK_LUNARG_direct_driver_loading        : extension revision 1
-> 
->   Instance Layers: count = 2
->   --------------------------
->   VK_LAYER_MESA_device_select Linux device selection layer 1.3.211  version 1
->   VK_LAYER_MESA_overlay       Mesa Overlay layer           1.3.211
->   version 1
-> 
->   Devices:
->   ========
->   GPU0:
->           apiVersion         = 1.3.230
->           driverVersion      = 24.1.99
->           vendorID           = 0x8086
->           deviceID           = 0xa780
->           deviceType         = PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
->           deviceName         = Virtio-GPU Venus (Intel(R) Graphics (RPL-S))
->           driverID           = DRIVER_ID_MESA_VENUS
->           driverName         = venus
->           driverInfo         = Mesa 24.2.0-devel (git-0b582449f0)
->           conformanceVersion = 1.3.0.0
->           deviceUUID         = 29d2e940-a1a0-3054-0f9a-9f7dec52a084
->           driverUUID         = 3694c390-f245-612a-12ce-7d3a99127622
->   GPU1:
->           apiVersion         = 1.2.0
->           driverVersion      = 24.1.99
->           vendorID           = 0x10005
->           deviceID           = 0x0000
->           deviceType         = PHYSICAL_DEVICE_TYPE_CPU
->           deviceName         = Virtio-GPU Venus (llvmpipe (LLVM 15.0.6, 256 bits))
->           driverID           = DRIVER_ID_MESA_VENUS
->           driverName         = venus
->           driverInfo         = Mesa 24.2.0-devel (git-0b582449f0)
->           conformanceVersion = 1.3.0.0
->           deviceUUID         = 5fb5c03f-c537-f0fe-a7e6-9cd5866acb8d
->           driverUUID         = 3694c390-f245-612a-12ce-7d3a99127622
-> 
-> Running weston and then vkcube-wayland reports its selecting "GPU 0:
-> Virtio-GPU Venus (Intel(R) Graphics (RPL-S))" but otherwise produces no
-> output.
-> 
-> If I run with "-display sdl,gl=on,show-cursor=on" and the same other
-> command line options the results for vulkaninfo are the same. However
-> vkcube-wayland gets a little further and draws the initial cube on the
-> screen before locking up with:
-> 
->  MESA-VIRTIO: debug: stuck in fence wait with iter at xxxx
-> 
-> where xxxx grows each time it prints. On shutting down I see some virgl
-> errors interspersed with the systemd logs:
-> 
->   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
->   [  OK  ] Stopped systemd-logind.service - User Login Management.
->   virtio_gpu_virgl_process_cmd: ctrl 0x209, error 0x1200
->   [  475.257111] [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
->   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
->   [  OK  ] Stopped target network-online.target - Network is Online.
->   [  OK  ] Stopped target remote-fs.target - Remote File Systems.
->   [  OK  ] Stopped NetworkManager-wait-online…vice - Network Manager Wait Online.
->            Stopping avahi-daemon.service - Avahi mDNS/DNS-SD Stack...
->            Stopping cups.service - CUPS Scheduler...
->            Stopping user-runtime-dir@0.servic…er Runtime Directory /run/user/0...
->   [  OK  ] Stopped avahi-daemon.service - Avahi mDNS/DNS-SD Stack.
->   [  OK  ] Stopped cups.service - CUPS Scheduler.
->   virtio_gpu_virgl_process_cmd: ctrl 0x209, error 0x1200
->   [  475.357543] [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
->   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
->   [  OK  ] Stopped target network.target - Network.
->   [  OK  ] Stopped target nss-user-lookup.target - User and Group Name Lookups.
->            Stopping NetworkManager.service - Network Manager...
->            Stopping networking.service - Raise network interfaces...
->            Stopping wpa_supplicant.service - WPA supplicant...
->   [  OK  ] Stopped wpa_supplicant.service - WPA supplicant.
->   virtio_gpu_virgl_process_cmd: ctrl 0x209, error 0x1200
->   [  493.585261] [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
->   [drm:virtio_gpu_dequeue_ctrl_func [virtio_gpu]] *ERROR* response 0x1200 (command 0x209)
-> 
+On 5/22/24 15:48, Alex Bennée wrote:
+>> New virglrerenderer features were stabilized with release of v1.0.0.
+>> Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibility
+>> with pre-release development versions of libvirglerender. Use virglrenderer
+>> version to decide reliably which virgl features are available.
+> Is the requirement for 087e9a96d13 (venus: make cross-device optional)
+> on the host or guest side? Because I can't see its in a tagged version.
 
-I've reproduced this with qemu-system-aarch64. Vkcube works for a second
-and then stops, Qemu compeltely gets frozen after closing and re-running
-vkcube. Doesn't feel like this is a problem with venus, but with arm64.
-For now don't know where is the bug, will take a closer look.
+It's required only on guest side. Mesa 24.2 hasn't been tagged yet.
 
 -- 
 Best regards,
