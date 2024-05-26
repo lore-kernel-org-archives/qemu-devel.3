@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8844C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52456C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJfu-000822-KQ; Sun, 26 May 2024 15:36:58 -0400
+	id 1sBJfx-00083G-NW; Sun, 26 May 2024 15:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfr-00080G-Tf
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:55 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1sBJfs-00080m-Oh
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:56 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfn-0006VD-V9
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:55 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2be00b445c2so2095070a91.2
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:50 -0700 (PDT)
+ id 1sBJfn-0006Un-Vu
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:56 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2bd816ecaf5so3887774a91.2
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752209; x=1717357009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752207; x=1717357007; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7Xai2dJ7NIiywU5ZF+ip85hjqEz8wylB31BnzX8bi+0=;
- b=nWRHgUnbFjzbI9OLKDjCcR5YedLUtjE8MKMWQWM5C0VVgSIKFs8rDMvj0orMhpewKL
- hQOyaHtwJEXI4Vo1oeaf7kbulxkjH4vem6VOGnfEoQ4ekKmHaOt+UoDyVM0PEZlRNpQl
- qd9L2j3KqJzyji9VZZqhSoKwMvVAJG0JqkXSi8pjvvFUkLanqM7cGXewuODZf2PvQT7M
- mLjN8/RD8l54hgNzidKO8mgUD7DMF5RpXTNOxQESk1lrTV0ntU3oYsApfHP0PrsGrjeZ
- NbRoF5j+K0m0O/mYe/48X7tnA2JqAKjs5EiqBc9QiT+EjhryvQ+E17buLFO3YsxMvvFR
- PFTA==
+ bh=GEBoMRZh+rveSplqLYLI6+ctFatZbLOW7sw1XZCiSUU=;
+ b=UM4wH2byL0p20Re2t/ND9+zNxjWVF2m8wwDoKnXV7RJGqcG4FQ37EEVpXPbNkvMsL5
+ GO5xiX/mQmVqtokMv6SF7DtVRhkYpNQ8ZHGQIfnBRkYf4JKBqqltsi4WBeqm58P1q+YZ
+ 5A96xcwDMgzNed3/dmIZ5/pZU6HwkX6BHmX18mAJivXGEm4ZtSeiz1bF7QIP3B9nSZVB
+ Dw8zT7EcxXkzF9tGSCxWwX94Sjc02UNZwiaiZjjoZDJwRGXmfjDKya5osmCgJamI4XkU
+ m3yWxi5G0AaK5MP6U9O3K9+wF83moVkL1IaFMKXV7uT3u20Lq2p343+YC77q5p0Sj6uv
+ KHBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752209; x=1717357009;
+ d=1e100.net; s=20230601; t=1716752207; x=1717357007;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7Xai2dJ7NIiywU5ZF+ip85hjqEz8wylB31BnzX8bi+0=;
- b=SkDGN4QgNUS5Il71ldA0Sg66roaNHsCuvLNO+AVWHcK0dDekqnoT2NoemOt/+mZpmu
- niwP8jX+goNe7NxKgkEIGp3wzibpS92Tn4wK6g3mNtFoiYL55RbzM3GoAPSrdde+Z1dm
- pR2zomguYruXNI/4QoThEiw/r8rjqvMUbM9Sj/L6xup3lXZ8JRq769hUZwNCk8kHRMkJ
- 4C6oGWvlONmK2mXdIVD95Bz0FKreWNFgyj6lflPD5jnruO5EdLuWSJir/DN5Hq+p3UI6
- KIhsCpujOWJ6N0TbyzqicQgsEMi3g2FsqJjaR8FzgOCE2wb5cpEa7XnaRK4ogZ53wqrF
- PD8Q==
-X-Gm-Message-State: AOJu0YyopNb4y3Ueq9NgGErCcAHHEvREn8H1VyptGFigv4URezmIHegs
- tgUdJz+3SQY2k1TwouV1A8mQjXgylcJp+GHuXlRFfC9VccgbLyN5U1d1HBpnKvIRdviOXwcsqAs
- n
-X-Google-Smtp-Source: AGHT+IGym4tVqERWgdedJ9r4/oCMaT3YE3gouQ+JQmjhxRGN5vieiuArEvaHcusynjjibduyRLblVQ==
-X-Received: by 2002:a17:90a:cb0e:b0:2a7:455d:82db with SMTP id
- 98e67ed59e1d1-2bf5f74e103mr6874718a91.36.1716752209338; 
- Sun, 26 May 2024 12:36:49 -0700 (PDT)
+ bh=GEBoMRZh+rveSplqLYLI6+ctFatZbLOW7sw1XZCiSUU=;
+ b=Bt1udPzwZmZC9BJYuqPXWklxVExGhASfnqumkT9kZzBKZ7QRYTj1nQqw9xx9PhPjGB
+ vXBfABkFMnvodNKhGjVhwow4IHaQ/p0u994rqjSUW1a841y+QQzabaO2kOPIbW/tVSPv
+ V/ygTUg+KUwKb3lXm7b+oFyxxkTrKk7DQi+sfQUln2f08RyLds72iUvQHetbNKXyHaHD
+ Ok/PyyAExUTf/++qTyCQRvNU67CT5qdHEWsUgKc4ErZrKA5uE13ldYCFdXS4RrTOEG7j
+ bIT4ej5jv1Rt6nLA7IJCGzrccCn30AskY7WYdILhfyeZ2sMmQxulMGNIS7VIeHLvwRXh
+ AF8g==
+X-Gm-Message-State: AOJu0YxvlfCrmsoUsFYoTYufi4shSurIOe4Z1ldY7wN/WtGp6IRnDiTA
+ Sn2azFrlwyozyfaA+E6e8useQMlT4LnMc0rvL1sm55s1ti8fJUSyxZix2N4QE1S7LZEiCxe3xXh
+ w
+X-Google-Smtp-Source: AGHT+IFaBMiGQR/FqIIB0AMESRc6w8CGBO54oGIjC7Lkp4b3ppaj6xX0zIHNLGqt5Nmg5oD6cX+MwA==
+X-Received: by 2002:a17:90a:bc92:b0:2bd:f1d5:8e3f with SMTP id
+ 98e67ed59e1d1-2bf5f4073bcmr5977013a91.41.1716752207086; 
+ Sun, 26 May 2024 12:36:47 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.48
+ 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:36:48 -0700 (PDT)
+ Sun, 26 May 2024 12:36:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH RISU v2 13/13] sparc64: Add VIS4 instructions
-Date: Sun, 26 May 2024 12:36:37 -0700
-Message-Id: <20240526193637.459064-14-richard.henderson@linaro.org>
+Subject: [PATCH RISU v2 10/13] sparc64: Add VIS2 and FMAF insns
+Date: Sun, 26 May 2024 12:36:34 -0700
+Message-Id: <20240526193637.459064-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240526193637.459064-1-richard.henderson@linaro.org>
 References: <20240526193637.459064-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,63 +96,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- sparc64.risu | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ sparc64.risu | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/sparc64.risu b/sparc64.risu
-index 271fee0..1022a62 100644
+index 10a8510..5b90b70 100644
 --- a/sparc64.risu
 +++ b/sparc64.risu
-@@ -250,3 +250,49 @@ MOVxTOd         VIS3 10 rd:5 110110 00000 1 0001 1000 rs2:5 \
- 
- FPMADDX         IMA 10 rd:5 110111 rs1:5 rs3:5 0000 rs2:5
- FPMADDXHI       IMA 10 rd:5 110111 rs1:5 rs3:5 0100 rs2:5
+@@ -119,3 +119,39 @@ FEXPAND         VIS1 10 rd:5 110110 00000 0 0100 1101 rs2:5
+ # ALIGNADDRL    VIS1 10 rd:5 110110 rs1:5 0 0001 1010 rs2:5 \
+ #     !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
+ # FALIGNDATAg   VIS1 10 rd:5 110110 rs1:5 0 0100 1000 rs2:5
 +
 +#
-+# VIS4
++# VIS2
 +#
 +
-+SUBXC           VIS4 10 rd:5 110110 rs1:5 0 0100 00 cc 1 rs2:5 \
++EDGE8N          VIS2 10 rd:5 110110 rs1:5 0 0000 0001 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++EDGE8LN         VIS2 10 rd:5 110110 rs1:5 0 0000 0011 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++EDGE16N         VIS2 10 rd:5 110110 rs1:5 0 0000 0101 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++EDGE16LN        VIS2 10 rd:5 110110 rs1:5 0 0000 0111 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++EDGE32N         VIS2 10 rd:5 110110 rs1:5 0 0000 1001 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++EDGE32LN        VIS2 10 rd:5 110110 rs1:5 0 0000 1011 rs2:5 \
 +    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
 +
-+FPADD8          VIS4 10 rd:5 110110 rs1:5 1 0010 0100 rs2:5
-+FPADDS8         VIS4 10 rd:5 110110 rs1:5 1 0010 0110 rs2:5
-+FPADDUS8        VIS4 10 rd:5 110110 rs1:5 1 0010 0111 rs2:5
-+FPADDUS16       VIS4 10 rd:5 110110 rs1:5 1 0010 0011 rs2:5
-+FPSUB8          VIS4 10 rd:5 110110 rs1:5 1 0101 0100 rs2:5
-+FPSUBS8         VIS4 10 rd:5 110110 rs1:5 1 0101 0110 rs2:5
-+FPSUBUS8        VIS4 10 rd:5 110110 rs1:5 1 0101 0111 rs2:5
-+FPSUBUS16       VIS4 10 rd:5 110110 rs1:5 1 0101 0011 rs2:5
++# %gsr not handled by risu
++# BMASK         VIS2 10 rd:5 110110 rs1:5 0 0001 1001 rs2:5 \
++#     !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++# BSHUFFLE      VIS2 10 rd:5 110110 rs1:5 0 0100 1100 rs2:5
++# SIAM          VIS2 10 00000 110110 00000 010000001 00 mode:3
 +
-+FPMIN8          VIS4 10 rd:5 110110 rs1:5 1 0001 1010 rs2:5
-+FPMIN16         VIS4 10 rd:5 110110 rs1:5 1 0001 1011 rs2:5
-+FPMIN32         VIS4 10 rd:5 110110 rs1:5 1 0001 1100 rs2:5
-+FPMINU8         VIS4 10 rd:5 110110 rs1:5 1 0101 1010 rs2:5
-+FPMINU16        VIS4 10 rd:5 110110 rs1:5 1 0101 1011 rs2:5
-+FPMINU32        VIS4 10 rd:5 110110 rs1:5 1 0101 1100 rs2:5
++#
++# FMAF
++#
 +
-+FPMAX8          VIS4 10 rd:5 110110 rs1:5 1 0001 1101 rs2:5
-+FPMAX16         VIS4 10 rd:5 110110 rs1:5 1 0001 1110 rs2:5
-+FPMAX32         VIS4 10 rd:5 110110 rs1:5 1 0001 1111 rs2:5
-+FPMAXU8         VIS4 10 rd:5 110110 rs1:5 1 0101 1101 rs2:5
-+FPMAXU16        VIS4 10 rd:5 110110 rs1:5 1 0101 1110 rs2:5
-+FPMAXU32        VIS4 10 rd:5 110110 rs1:5 1 0101 1111 rs2:5
-+
-+FPCMPLE8        VIS4 10 rd:5 110110 rs1:5 0 0011 0100 rs2:5 \
-+    !constraints { reg_ok($rd) }
-+FPCMPGT8        VIS4 10 rd:5 110110 rs1:5 0 0011 1100 rs2:5 \
-+    !constraints { reg_ok($rd) }
-+FPCMPULE16      VIS4 10 rd:5 110110 rs1:5 1 0010 1110 rs2:5 \
-+    !constraints { reg_ok($rd) }
-+FPCMPUGT16      VIS4 10 rd:5 110110 rs1:5 1 0010 1011 rs2:5 \
-+    !constraints { reg_ok($rd) }
-+FPCMPULE32      VIS4 10 rd:5 110110 rs1:5 1 0010 1111 rs2:5 \
-+    !constraints { reg_ok($rd) }
-+FPCMPUGT32      VIS4 10 rd:5 110110 rs1:5 1 0010 1100 rs2:5 \
-+    !constraints { reg_ok($rd) }
-+
-+FALIGNDATAi     VIS4 10 rd:5 110110 rs1:5 0 0100 1001 rs2:5 \
-+    !constraints { reg_ok($rs1); }
++FMADDs          FMAF 10 rd:5 110111 rs1:5 rs3:5 0001 rs2:5
++FMADDd          FMAF 10 rd:5 110111 rs1:5 rs3:5 0010 rs2:5
++FMSUBs          FMAF 10 rd:5 110111 rs1:5 rs3:5 0101 rs2:5
++FMSUBd          FMAF 10 rd:5 110111 rs1:5 rs3:5 0110 rs2:5
++FNMSUBs         FMAF 10 rd:5 110111 rs1:5 rs3:5 1001 rs2:5
++FNMSUBd         FMAF 10 rd:5 110111 rs1:5 rs3:5 1010 rs2:5
++FNMADDs         FMAF 10 rd:5 110111 rs1:5 rs3:5 1101 rs2:5
++FNMADDd         FMAF 10 rd:5 110111 rs1:5 rs3:5 1110 rs2:5
 -- 
 2.34.1
 
