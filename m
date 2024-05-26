@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BB0C41513
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9BEC25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJfs-00080i-Sy; Sun, 26 May 2024 15:36:56 -0400
+	id 1sBJfs-00080R-S8; Sun, 26 May 2024 15:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfo-0007ys-5u
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:52 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1sBJfq-0007zi-Ol
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:54 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJfd-0006TW-P8
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:44 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2bfdae0b0e0so39388a91.0
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:41 -0700 (PDT)
+ id 1sBJfn-0006Uy-Uc
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:54 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1f4a52d2688so562455ad.3
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752200; x=1717357000; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752208; x=1717357008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ClmjZOy3QQNiKciKtrEnKHv+DzIwPzBDEJYBBNDBr+E=;
- b=IJbOoxe/czAzduaMEWaFs0lGyKWq0RAo4+sJ0O8gSd3d/KRSdZibjSYWxeIMnIis5D
- +S28EyL7mIjEZy8Rt2/uNcn95ixyvcN0g8argrxXQrL7OBUNBCmvVi4RrOMFzb4gVnS6
- 3q2Gsx5PKW9xdufMx4OwAyXlSUE2WHBCa8UaWCx2E01ZeMLLRu9LHQJkrwYYSWkUT7TJ
- gF9nq2GGH5feqkkzHjLNt8i4MuHlRZi7Jcfiik7V2GjeUedk7GG9oJMVXptiQLfnzau8
- MkPgy6erLjSihADwZvXP4qFYHocg05pr7p9i8PgZ0rGE7t9IMD+tgLeh2LnuDFWJS/jx
- dh2Q==
+ bh=7YqEh5l5SoncvQ/EKacHXAyZWnb/WEBe8rCSOYFprhk=;
+ b=IbjXQGadOJRoLbZxCQ4SzBn4NE8jmE7k2ANEJmsU8GR5C5qOYT8FeP+a9luiUY38Fp
+ fdC6GQzm61jCj5InSZlHTZJfZXnDMBzIM468ziD1wkabfrJpOW7YQzBWd36rbWeUsBkQ
+ mqjVAXyaATFWiIOykpobGqpludt3bEjzwFjJGMbaoVxdNGsFc5ukA7LdFkqNSp9G5HaP
+ xOsFd/b/UHXxtw1r6ihn+FpfcsHOVABXqDiXJPZ4TYQMR+1Uk0IwOzZsIDucn/hbDRkP
+ L5MdekvNuszZnYRCf4bbC86AmjS5qBxIlCzCOp/77Dc3WWz6NNsAi1XJwbQpP5Hibual
+ 8Udg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752200; x=1717357000;
+ d=1e100.net; s=20230601; t=1716752208; x=1717357008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ClmjZOy3QQNiKciKtrEnKHv+DzIwPzBDEJYBBNDBr+E=;
- b=SI7vfR+1APst4SLldCw7ybYhBvGsaU4CNVOxvO6BIWa9yw4RnCQZCmhu3siedXUuZA
- 79ppURjr8gjLEkNf0KAs8via3U1nMawabmkyYtkLVIcDRoxl9Cz8G+eE8mZyKgglQNSm
- d3iDplLfsAWB9mm0Sb6Ms3jfCdZW0Rcj3h0l52bLYVAI2m43t5435FUn8Ee0Lg3TEww0
- /6ftzUFEM7Y3f4vUdZdirJ6LPR8sTA0lDPPa8Esw9EmHKj+6JaloidOSLTzsc2UHt87K
- 1Wp7FJW1a0s6FRxw3fQDfBTSHoyZXZn4VeEC+hekdjQdTTC9KIkUx2mw98ipxhHFLxTn
- uNug==
-X-Gm-Message-State: AOJu0Yxlb8O1YqTomLNW2xwqeHWQLKRDEY1a/EM1fdFyXRfNIxWpnoKS
- W37AKK5rOKHKmDlLKlmIFVLe89+tesF/IVYSz4DI8VF1syXQiGXGzRTBvRSejTPnW6trNexQL7E
- D
-X-Google-Smtp-Source: AGHT+IFieMRRiC/FrMuy+Am3GtBHjQKaPDgDDUiALMlnBJ+hysStfFhvRBv5cxES7iGCTxPwYC6jWw==
-X-Received: by 2002:a17:90a:296:b0:2bd:d2f9:fa18 with SMTP id
- 98e67ed59e1d1-2bf5f85ddcdmr6502183a91.48.1716752199933; 
- Sun, 26 May 2024 12:36:39 -0700 (PDT)
+ bh=7YqEh5l5SoncvQ/EKacHXAyZWnb/WEBe8rCSOYFprhk=;
+ b=koJsqV6/E5Nj9zuvs1oTxya4lPLGeNSZ37RsotLM+g+zwooXC+auA2wpBl5gUEl/zo
+ nb0OjeoLrAtIH+OtoY6IbaMJhXdUH0A/AbqZe8Oxi0EQApvdsYjoORP22R9pkxeZuV3m
+ hS+UCgvBBMSL8tj6NXIkniVPjTkIIy3JkdyMBX0fdvGDsPnENauHg+nl9VY2EjDr7sQL
+ gyAI7aDhFUqkvnvQaaZ6b+waxSuYppV6W9iu6qHdEMeihy8Wu/Mak4REgLKYaVv6yJ3Q
+ /JM867xaG+AD+Mrbe6rLPk0frn8tfvrPO780AiSSSpqyrh5z3pPxCCMV8fp2v8YlPehc
+ M75Q==
+X-Gm-Message-State: AOJu0Yw09OVseNeuap/KCs2LQ5wpVf3qK9/WgBbq1BkM6qJGl0MT70px
+ 4xD3n++ccBOkB8LOE+cpvcNRCDo5pN9PchML1q2q9GwZGaMc0x8dikDUuUH+wQDPkhgqdczE1o0
+ C
+X-Google-Smtp-Source: AGHT+IGzYLrB6jns3b9jCHSJIkkHZfMd94QgZWvC/YXqs9J1/qwSJlSWc5Lj5/p377gXI8+V5Qph7Q==
+X-Received: by 2002:a17:902:ecd2:b0:1f3:38e2:3f51 with SMTP id
+ d9443c01a7336-1f4499017a7mr126168665ad.68.1716752207777; 
+ Sun, 26 May 2024 12:36:47 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.39
+ 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:36:39 -0700 (PDT)
+ Sun, 26 May 2024 12:36:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH RISU v2 01/13] risu: Allow use of ELF test files
-Date: Sun, 26 May 2024 12:36:25 -0700
-Message-Id: <20240526193637.459064-2-richard.henderson@linaro.org>
+Subject: [PATCH RISU v2 11/13] sparc64: Add VIS3 instructions
+Date: Sun, 26 May 2024 12:36:35 -0700
+Message-Id: <20240526193637.459064-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240526193637.459064-1-richard.henderson@linaro.org>
 References: <20240526193637.459064-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,107 +94,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By using elf files, we make it easier to disassemble
-the test file, to match comparison failures to code.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- risu.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 52 insertions(+), 5 deletions(-)
+ sparc64.risu | 88 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
-diff --git a/risu.c b/risu.c
-index c28b4a5..c9c3a38 100644
---- a/risu.c
-+++ b/risu.c
-@@ -24,6 +24,15 @@
- #include <sys/mman.h>
- #include <fcntl.h>
- #include <string.h>
-+#include <elf.h>
+diff --git a/sparc64.risu b/sparc64.risu
+index 5b90b70..ca7ed35 100644
+--- a/sparc64.risu
++++ b/sparc64.risu
+@@ -155,3 +155,91 @@ FNMSUBs         FMAF 10 rd:5 110111 rs1:5 rs3:5 1001 rs2:5
+ FNMSUBd         FMAF 10 rd:5 110111 rs1:5 rs3:5 1010 rs2:5
+ FNMADDs         FMAF 10 rd:5 110111 rs1:5 rs3:5 1101 rs2:5
+ FNMADDd         FMAF 10 rd:5 110111 rs1:5 rs3:5 1110 rs2:5
 +
-+/* TODO: Improve configure. */
-+#ifdef __linux__
-+#include <endian.h>
-+#define HOST_BIG_ENDIAN  (__BYTE_ORDER == __BIG_ENDIAN)
-+#else
-+#error Need HOST_BIG_ENDIAN
-+#endif
- 
- #include "config.h"
- #include "risu.h"
-@@ -346,8 +355,11 @@ static void load_image(const char *imgfile)
- {
-     /* Load image file into memory as executable */
-     struct stat st;
-+    void *addr;
-+    int fd;
++#
++# VIS3
++#
 +
-     fprintf(stderr, "loading test image %s...\n", imgfile);
--    int fd = open(imgfile, O_RDONLY);
-+    fd = open(imgfile, O_RDONLY);
-     if (fd < 0) {
-         fprintf(stderr, "failed to open image file %s\n", imgfile);
-         exit(EXIT_FAILURE);
-@@ -356,20 +368,55 @@ static void load_image(const char *imgfile)
-         perror("fstat");
-         exit(EXIT_FAILURE);
-     }
--    size_t len = st.st_size;
--    void *addr;
- 
-     /* Map writable because we include the memory area for store
-      * testing in the image.
-      */
--    addr = mmap(0, len, PROT_READ | PROT_WRITE | PROT_EXEC,
-+    addr = mmap(0, st.st_size, PROT_READ | PROT_WRITE | PROT_EXEC,
-                 MAP_PRIVATE, fd, 0);
-     if (addr == MAP_FAILED) {
-         perror("mmap");
-         exit(EXIT_FAILURE);
-     }
-     close(fd);
--    image_start = addr;
++ADDXC           VIS3 10 rd:5 110110 rs1:5 0 0001 00 cc 1 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
 +
-+    if (memcmp(addr, ELFMAG, SELFMAG) == 0) {
-+        union {
-+            unsigned char ident[EI_NIDENT];
-+            Elf32_Ehdr h32;
-+            Elf64_Ehdr h64;
-+        } *e = addr;
-+        size_t entry;
++FCHKSM16        VIS3 10 rd:5 110110 rs1:5 0 0100 0100 rs2:5
++FMEAN16         VIS3 10 rd:5 110110 rs1:5 0 0100 0000 rs2:5
 +
-+        /*
-+         * TODO: More complete parsing of ELF file, verify assumtion, namely:
-+         * Single PT_LOAD covering the ELF header, code and data.
-+         * For now, simply update image_start from the elf header.
-+         */
-+        if (e->ident[EI_DATA] !=
-+            (HOST_BIG_ENDIAN ? ELFDATA2MSB : ELFDATA2LSB)) {
-+            fprintf(stderr, "%s: Endian mismatch: EI_DATA = %x\n",
-+                    imgfile, e->ident[EI_DATA]);
-+            exit(1);
-+        }
++FHADDs          VIS3 10 rd:5 110100 rs1:5 0 0110 0001 rs2:5
++FHADDd          VIS3 10 rd:5 110100 rs1:5 0 0110 0010 rs2:5
++FHSUBs          VIS3 10 rd:5 110100 rs1:5 0 0110 0101 rs2:5
++FHSUBd          VIS3 10 rd:5 110100 rs1:5 0 0110 0110 rs2:5
++FNHADDs         VIS3 10 rd:5 110100 rs1:5 0 0111 0001 rs2:5
++FNHADDd         VIS3 10 rd:5 110100 rs1:5 0 0111 0010 rs2:5
 +
-+        switch (e->ident[EI_CLASS]) {
-+        case ELFCLASS32:
-+            entry = e->h32.e_entry;
-+            break;
-+        case ELFCLASS64:
-+            entry = e->h64.e_entry;
-+            break;
-+        default:
-+            fprintf(stderr, "%s: Bad elf header: EI_CLASS = %x\n",
-+                    imgfile, e->ident[EI_CLASS]);
-+            exit(1);
-+        }
-+        image_start = addr + entry;
-+    } else {
-+        /* Raw binary image. */
-+        image_start = addr;
-+    }
-     image_start_address = (uintptr_t) addr;
- }
- 
++FNADDs          VIS3 10 rd:5 110100 rs1:5 0 0101 0001 rs2:5
++FNADDd          VIS3 10 rd:5 110100 rs1:5 0 0101 0010 rs2:5
++FNMULs          VIS3 10 rd:5 110100 rs1:5 0 0101 1001 rs2:5
++FNMULd          VIS3 10 rd:5 110100 rs1:5 0 0101 1010 rs2:5
++
++FPADD64         VIS3 10 rd:5 110110 rs1:5 0 0100 0010 rs2:5
++FPSUB64         VIS3 10 rd:5 110110 rs1:5 0 0100 0110 rs2:5
++
++FPADDS16        VIS3 10 rd:5 110110 rs1:5 0 0101 1000 rs2:5
++FPADDS16s       VIS3 10 rd:5 110110 rs1:5 0 0101 1001 rs2:5
++FPADDS32        VIS3 10 rd:5 110110 rs1:5 0 0101 1010 rs2:5
++FPADDS32s       VIS3 10 rd:5 110110 rs1:5 0 0101 1011 rs2:5
++FPSUBS16        VIS3 10 rd:5 110110 rs1:5 0 0101 1100 rs2:5
++FPSUBS16s       VIS3 10 rd:5 110110 rs1:5 0 0101 1101 rs2:5
++FPSUBS32        VIS3 10 rd:5 110110 rs1:5 0 0101 1110 rs2:5
++FPSUBS32s       VIS3 10 rd:5 110110 rs1:5 0 0101 1111 rs2:5
++
++FPCMPULE8       VIS3 10 rd:5 110110 rs1:5 1 0010 0000 rs2:5 \
++    !constraints { reg_ok($rd) }
++FPCMPUGT8       VIS3 10 rd:5 110110 rs1:5 1 0010 1000 rs2:5 \
++    !constraints { reg_ok($rd) }
++FPCMPEQ8        VIS3 10 rd:5 110110 rs1:5 1 0010 0010 rs2:5 \
++    !constraints { reg_ok($rd) }
++FPCMPNE8        VIS3 10 rd:5 110110 rs1:5 1 0010 1010 rs2:5 \
++    !constraints { reg_ok($rd) }
++
++FSLL16          VIS3 10 rd:5 110110 rs1:5 0 0010 0001 rs2:5
++FSRL16          VIS3 10 rd:5 110110 rs1:5 0 0010 0011 rs2:5
++FSLAS16         VIS3 10 rd:5 110110 rs1:5 0 0010 1001 rs2:5
++FSRA16          VIS3 10 rd:5 110110 rs1:5 0 0010 1011 rs2:5
++FSLL32          VIS3 10 rd:5 110110 rs1:5 0 0010 0101 rs2:5
++FSRL32          VIS3 10 rd:5 110110 rs1:5 0 0010 0111 rs2:5
++FSLAS32         VIS3 10 rd:5 110110 rs1:5 0 0010 1101 rs2:5
++FSRA32          VIS3 10 rd:5 110110 rs1:5 0 0010 1111 rs2:5
++
++LZCNT           VIS3 10 rd:5 110110 00000 0 0001 0111 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs2); }
++
++PDISTN          VIS3 10 rd:5 110110 rs1:5 0 0011 1111 rs2:5 \
++    !constraints { reg_ok($rd) }
++
++UMULXHI         VIS3 10 rd:5 110110 rs1:5 0 0001 0110 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++XMULX           VIS3 10 rd:5 110110 rs1:5 1 0001 0101 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++XMULXHI         VIS3 10 rd:5 110110 rs1:5 1 0001 0110 rs2:5 \
++    !constraints { reg_ok($rd) && reg_ok($rs1) && reg_ok($rs2); }
++
++MOVsTOuw        VIS3 10 rd:5 110110 00000 1 0001 0001 rs2:5 \
++    !constraints { reg_ok($rd) }
++MOVsTOsw        VIS3 10 rd:5 110110 00000 1 0001 0011 rs2:5 \
++    !constraints { reg_ok($rd) }
++MOVwTOs         VIS3 10 rd:5 110110 00000 1 0001 1001 rs2:5 \
++    !constraints { reg_ok($rs2) }
++MOVdTOx         VIS3 10 rd:5 110110 00000 1 0001 0000 rs2:5 \
++    !constraints { reg_ok($rd) }
++MOVxTOd         VIS3 10 rd:5 110110 00000 1 0001 1000 rs2:5 \
++    !constraints { reg_ok($rs2) }
++
++# Defer
++# LDXEFSR_r     VIS3 11 00011 100001 rs1:5 0 00000000 rs2:5
++# LDXEFSR_i     VIS3 11 00011 100001 rs1:5 1 simm:13
++
++# %gsr not handled by risu
++# CMASK8          VIS3 10 00000 110110 00000 0 0001 1011 rs2:5 \
++#     !constraints { reg_ok($rs2); }
++# CMASK16         VIS3 10 00000 110110 00000 0 0001 1101 rs2:5 \
++#     !constraints { reg_ok($rs2); }
++# CMASK32         VIS3 10 00000 110110 00000 0 0001 1111 rs2:5 \
++#     !constraints { reg_ok($rs2); }
 -- 
 2.34.1
 
