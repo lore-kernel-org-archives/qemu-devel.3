@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B748C25B78
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7123CC25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN4I-00046w-22; Sun, 26 May 2024 19:14:22 -0400
+	id 1sBN4l-0004PV-SW; Sun, 26 May 2024 19:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4F-000460-NB; Sun, 26 May 2024 19:14:19 -0400
+ id 1sBN4j-0004Ln-Ba; Sun, 26 May 2024 19:14:49 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN4C-0003ep-DX; Sun, 26 May 2024 19:14:18 -0400
+ id 1sBN4h-0003iP-Cf; Sun, 26 May 2024 19:14:49 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D34474E6179;
- Mon, 27 May 2024 01:12:52 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D73454E6543;
+ Mon, 27 May 2024 01:13:12 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id DfhUkZ2tRhDC; Mon, 27 May 2024 01:12:50 +0200 (CEST)
+ with ESMTP id uHS7dTEC5Kfy; Mon, 27 May 2024 01:13:10 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E1DF94E60F5; Mon, 27 May 2024 01:12:50 +0200 (CEST)
-Message-Id: <7328ddc0644c3eb1023b90d2c654cac62888bde6.1716763435.git.balaton@eik.bme.hu>
+ id DECF14E6503; Mon, 27 May 2024 01:13:10 +0200 (CEST)
+Message-Id: <db36621d9dd2a7d354ffac78e28e332cd0d70735.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 15/43] target/ppc/mmu_common.c: Simplify a switch statement
+Subject: [PATCH 34/43] target/ppc/internal.h: Consolidate ifndef
+ CONFIG_USER_ONLY blocks
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:12:50 +0200 (CEST)
+Date: Mon, 27 May 2024 01:13:10 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,52 +63,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mmu6xx_get_physical_address() the switch handles all cases so the
-default is never reached and can be dropped. Also group together cases
-which just return -4.
+A few pte related definitions are between two ifndef CONFIG_USER_ONLY
+blocks but these are not needed for user only and should also be
+within these blocks. Consolidate the ifndef blocks so all user only and
+not user only definitions are in one #ifdef #else at the end of the file.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ target/ppc/internal.h | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 0152e8d875..b2993e8563 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -375,15 +375,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     case ACCESS_INT:
-         /* Integer load/store : only access allowed */
-         break;
--    case ACCESS_CODE:
--        /* No code fetch is allowed in direct-store areas */
--        return -4;
--    case ACCESS_FLOAT:
--        /* Floating point load/store */
--        return -4;
--    case ACCESS_RES:
--        /* lwarx, ldarx or srwcx. */
--        return -4;
-     case ACCESS_CACHE:
-         /*
-          * dcba, dcbt, dcbtst, dcbf, dcbi, dcbst, dcbz, or icbi
-@@ -393,12 +384,10 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-          */
-         ctx->raddr = eaddr;
-         return 0;
--    case ACCESS_EXT:
--        /* eciwx or ecowx */
--        return -4;
--    default:
--        qemu_log_mask(CPU_LOG_MMU, "ERROR: instruction should not need address"
--                                   " translation\n");
-+    case ACCESS_CODE: /* No code fetch is allowed in direct-store areas */
-+    case ACCESS_FLOAT: /* Floating point load/store */
-+    case ACCESS_RES: /* lwarx, ldarx or srwcx. */
-+    case ACCESS_EXT: /* eciwx or ecowx */
-         return -4;
-     }
-     if ((access_type == MMU_DATA_STORE || ctx->key != 1) &&
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 8e5a241f74..66ce22bbe9 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -224,6 +224,10 @@ void helper_compute_fprf_float16(CPUPPCState *env, float16 arg);
+ void helper_compute_fprf_float32(CPUPPCState *env, float32 arg);
+ void helper_compute_fprf_float128(CPUPPCState *env, float128 arg);
+ 
++FIELD(GER_MSK, XMSK, 0, 4)
++FIELD(GER_MSK, YMSK, 4, 4)
++FIELD(GER_MSK, PMSK, 8, 8)
++
+ /* translate.c */
+ 
+ int ppc_fixup_cpu(PowerPCCPU *cpu);
+@@ -234,8 +238,11 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
+ void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
+ const gchar *ppc_gdb_arch_name(CPUState *cs);
+ 
+-#ifndef CONFIG_USER_ONLY
+-
++#ifdef CONFIG_USER_ONLY
++void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
++                            MMUAccessType access_type,
++                            bool maperr, uintptr_t ra);
++#else
+ /* Check if permission bit required for the access_type is set in prot */
+ static inline int check_prot_access_type(int prot, MMUAccessType access_type)
+ {
+@@ -252,7 +259,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+                                     int way, int is_code);
+ 
+-#endif /* !CONFIG_USER_ONLY */
+ 
+ /* Common routines used by software and hardware TLBs emulation */
+ static inline int pte_is_valid(target_ulong pte0)
+@@ -268,11 +274,6 @@ static inline void pte_invalidate(target_ulong *pte0)
+ #define PTE_PTEM_MASK 0x7FFFFFBF
+ #define PTE_CHECK_MASK (TARGET_PAGE_MASK | 0x7B)
+ 
+-#ifdef CONFIG_USER_ONLY
+-void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+-                            MMUAccessType access_type,
+-                            bool maperr, uintptr_t ra);
+-#else
+ bool ppc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                       MMUAccessType access_type, int mmu_idx,
+                       bool probe, uintptr_t retaddr);
+@@ -287,10 +288,6 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ void ppc_cpu_debug_excp_handler(CPUState *cs);
+ bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
+ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
+-#endif
+-
+-FIELD(GER_MSK, XMSK, 0, 4)
+-FIELD(GER_MSK, YMSK, 4, 4)
+-FIELD(GER_MSK, PMSK, 8, 8)
++#endif /* !CONFIG_USER_ONLY */
+ 
+ #endif /* PPC_INTERNAL_H */
 -- 
 2.30.9
 
