@@ -4,80 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A35C25B7A
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 17:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66701C25B75
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBHTh-0006Vu-Vz; Sun, 26 May 2024 13:16:14 -0400
+	id 1sBJfg-0007yd-Dl; Sun, 26 May 2024 15:36:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sBHTf-0006VN-6S
- for qemu-devel@nongnu.org; Sun, 26 May 2024 13:16:12 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sBJfe-0007yB-Ie
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:42 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sBHTb-0005U8-Op
- for qemu-devel@nongnu.org; Sun, 26 May 2024 13:16:10 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6f4603237e0so3184777b3a.0
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 10:16:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sBJfc-0006TO-Tc
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:36:42 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2bf59381a11so2096778a91.1
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716743766; x=1717348566; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lxBTDxzOkpKcHWc+oV7moh6IE1OfEOSm934E6mbjuyM=;
- b=nZ5gT+ZF5eRO0cNAtLIC3MoUFq2Sij8zWesRqVS2TrwTUNzzNA4iC+H2GLXkPxbuUS
- /seUoSjP9v+Z0jPAC9GKLqAqx1mfGQxanXiZPh8pi3gnXkhBMpnHYTx2KtVdh3rcOlTA
- juflBh/JL4mMYYdDOzIOpo3d7EdlAbepAG77+gt6tL1NaO1hTzoX9bs5RqnGEVoHHpin
- 5c6F1D8ZX0MBSzwjugV/1enb7EDo8d+ku+2iPedH57JY+CF5OMCj0slVPMFfV7EvSkQO
- TRFtAWSwlYmgONxmwU+yyIvkZx/TqTT4cD/L7jZ53YX13nlpM1hCMbLExChK82ZNIp6z
- lmyg==
+ d=linaro.org; s=google; t=1716752199; x=1717356999; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZA42/hNYVPC57TtkdZ/JbMJ+HoEJ+TWNqQHDSStfx9s=;
+ b=uTHAI+JgIpkkiCZIRFiVvnrrcXcBdqUhI5std+TTY6jRdHQxtuInZgbT5BVUztMp8h
+ gt9QLRdftEM6P/P2b/3oT02qaxk5qk5q3U0XmkLXpf87nxlTM4zjGFkMCu2/HZfDd4nz
+ 5LkoHpcUGiExOhGupc0ZzgjjxVKc0DrXjbQ6JIUs6bKlpZtelYLO8uB6x/wwwETQlg4l
+ 1XAjejqbUeetZHdElTDx9A7T7cYjwPS7g8Iaot/GytAaTzCtZYNjMMuIyHCcWeLH6Jx5
+ nL6mbsQsUabm5HfQLDnE1rieJ7RvGkso7liv5YRYxHu4gDf2x1f+1Kk2KID2AysRDWbd
+ VH2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716743766; x=1717348566;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lxBTDxzOkpKcHWc+oV7moh6IE1OfEOSm934E6mbjuyM=;
- b=lytJ9EmVW4IEvDxKPcWX0N3F9nuG9IgLwui1amyqk4VRhS09es3hEa9QwxIZ2StIsI
- T0hS3/ckpsqGZ49BVappi/kPuyMyReelupRiL02K3fCcpFoaEaTtAqyqzRLJA8fit1Ji
- t4zhGIyfmPCbjA5znuNYkf6FmpjMtliLsUoSrqJU4nkfZynYDtZUVWNpcMWZrBHfDTyb
- 3SHftkThDryOr8Qj9wuPvR0mRQL8rc3fj69KQ0V0yNCLCWP4uWQ4dk+H6AxqVvd/bcy7
- bLjoDh5sWeGY8GXNc7/cbMfaZT5+66U+hp3WxMzGpSBayRekAbwI7xDskihlahymwFv9
- 3OsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXI1kXdxnEopBiostgeliHKZj+ZlkGtan6k5cXW7xsQoZ+AofiyWNTXh1foFpC/a1th2NrEZwCT95MMMFhIyh0gdx7DrLA=
-X-Gm-Message-State: AOJu0YxnCi/K44DqKTFhyUt7OCkPFFMSp0Y5cKENgmwF5KpiOlenjt2S
- 2zXF5rJFF0vL7L37lear4Ryy/8NeE/0evsKhURd6FCAgidKcp9lFP2xB4avNRfQ=
-X-Google-Smtp-Source: AGHT+IEI5kkIa7ixlOGNYU63Xm5t0WhSGCnMpc4CdKriNPM1/y4ht4f6YWc6EanJ85MqtHRNIk8WUQ==
-X-Received: by 2002:a05:6a20:2453:b0:1aa:965d:1332 with SMTP id
- adf61e73a8af0-1b212e135b8mr10134746637.26.1716743765752; 
- Sun, 26 May 2024 10:16:05 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.4])
+ d=1e100.net; s=20230601; t=1716752199; x=1717356999;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZA42/hNYVPC57TtkdZ/JbMJ+HoEJ+TWNqQHDSStfx9s=;
+ b=Cy1aNeYsugMkXVMLFVTVxGlLE3ojzqE+VRrkPNdoAdalkl9NWzCLG9MfjMWhO1ae0W
+ Rv+amXVL3unZQVDmU9aDKdERQBmZqlXxtrZ/S42uftC2G1VBPZeD6A49r0bF3jb1Zkvc
+ AaQWw0kLa33/9nk9CEQ8UzZ6S7/zfnX3NUqjETdfD9xr673WRq/KaKX1uw8WlPSWC6Ky
+ fueqauhhsonRm1ApeUTHnPK5bqPg6ktriZBxPjqGia+92eJwo5VIFJ76L8mpkF+tVSkH
+ 4nZuylTpdE/EyVBKfF0I5SBTlTi9CCYkNhXWGIEKpqaUedFdFlf4ihAXFo3UUdxx6G9z
+ bQaQ==
+X-Gm-Message-State: AOJu0YwVllgRQ59ISMNj2FuVDYfx9b9TNLkCJUTexjVPa9pd071tgEeV
+ 7hsMFdrxxbtlKkqGDcHXGErp+PPfXDlInCVBI2Ts933HvFkWz9g/82zrULpyhu5x2xKJA7rZ+/k
+ l
+X-Google-Smtp-Source: AGHT+IFVy8gYGXH2YyVNgn2gR+xPRZIoCbtrRLUQ3OtUa2zzyMMogpY/t65SeQteQnTNhivVr4Tg4w==
+X-Received: by 2002:a17:90a:8a0f:b0:2bd:fa57:b360 with SMTP id
+ 98e67ed59e1d1-2bf5f75125bmr5891986a91.49.1716752199119; 
+ Sun, 26 May 2024 12:36:39 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fd4da8f6sm3690973b3a.210.2024.05.26.10.16.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 May 2024 10:16:05 -0700 (PDT)
-Message-ID: <c0b7bc36-35dd-4bab-a83e-7246c2c57473@ventanamicro.com>
-Date: Sun, 26 May 2024 14:16:00 -0300
+ 98e67ed59e1d1-2bf5f6155b6sm4943761a91.29.2024.05.26.12.36.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 26 May 2024 12:36:38 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH RISU v2 00/13] ELF and Sparc64 support
+Date: Sun, 26 May 2024 12:36:24 -0700
+Message-Id: <20240526193637.459064-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] target/riscv: Support Zabha extension
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
- bmeng.cn@gmail.com, liwei1518@gmail.com
-References: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
- <8cc80b22-d159-4c8a-8860-30d229bae8d6@ventanamicro.com>
- <fed99165-58da-458c-b68f-a9717fc15034@linux.alibaba.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <fed99165-58da-458c-b68f-a9717fc15034@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,104 +92,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Let risu accept elf test files, adjusted from v1.
+Adjust risugen to invoke the assembler and linker,
+with a cross-compiler prefix if needed.
+Add some sparc64 testing which utilizes this.
+
+Changes for v2:
+  - Implement VIS2 through VIS4.
+
+There's something odd going on with the Sparc M8 Solaris host where
+the values recorded via RISU for some floating-point operations are
+incorrectly rounded, but performing the same operations with the
+same inputs in a standalone test program produces correct results.
+
+I wonder if there's some unfinished_FPop exception being generated
+and the operating system emulation is producing incorrect results.
+I'd be much happier if I could test this on Linux...
 
 
-On 5/25/24 21:37, LIU Zhiwei wrote:
-> 
-> On 2024/5/24 19:44, Daniel Henrique Barboza wrote:
->> Hi Zhiwei!
->>
->>
->>
->> On 5/23/24 09:40, LIU Zhiwei wrote:
->>> Zabha adds support AMO operations for byte and half word. If zacas has been implemented,
->>> zabha also adds support amocas.b and amocas.h.
->>>
->>> More details is on the specification here:
->>> https://github.com/riscv/riscv-zabha
->>>
->>> The implemenation of zabha follows the way of AMOs and zacas.
->>>
->>> This patch set is based on these two patch set:
->>> 1. https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00207.html
->>> 2. https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00212.html
->>
->> These 2 series doesn't seem to apply on top of each other, doesn't matter which
->> order I try. Applying zimop/zcmop first, then zama16b:
->>
->> $ git am \[PATCH\ 1_1\]\ target_riscv\:\ Support\ Zama16b\ extension\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0613.eml
->> Applying: target/riscv: Support Zama16b extension
->> error: patch failed: target/riscv/cpu.c:1464
->> error: target/riscv/cpu.c: patch does not apply
->> Patch failed at 0001 target/riscv: Support Zama16b extension
->> hint: Use 'git am --show-current-patch=diff' to see the failed patch
->>
->>
->> Applying zama16b first, then zimop/zcmop:
->>
->> $ git am \[PATCH\ 1_1\]\ target_riscv\:\ Support\ Zama16b\ extension\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0613.eml
->> Applying: target/riscv: Support Zama16b extension
->> $
->> $ git am \[PATCH\ 1_4\]\ target_riscv\:\ Add\ zimop\ extension\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0329.eml \[PATCH\ 2_4\]\ disas_riscv\:\ Support\ zimop\ disassemble\ -\ LIU\ Zhiwei\ \<zhiwei_liu@linux.alibaba.com\>\ -\ 2024-05-22\ 0329.eml
->> Applying: target/riscv: Add zimop extension
->> error: patch failed: target/riscv/cpu.c:1463
->> error: target/riscv/cpu.c: patch does not apply
->> Patch failed at 0001 target/riscv: Add zimop extension
->>
->>
->> If the series are dependent on each other perhaps it's easier to send everything
->> in a single 11 patches series.
-> 
-> They don't have dependency on each other. But if we both rebase them to the master branch, they
-> couldn't be merged at the time, as them both modify cpu.h and cpu.c in the same place.
-> 
-> 
-> I will send them as a whole patch set(RVA23 patch set) after I fix other issues on implementing the RVA23 profile.
+r~
 
 
-Be aware that we have some RVA23 extensions that are implemented in the ML
-but not merged no master yet. E.g. sstvala ended up being implemented after some
-changes I did w.r.t tval and EBREAK. These patches are on riscv-to-apply.next.
+Richard Henderson (13):
+  risu: Allow use of ELF test files
+  Build elf test cases instead of raw binaries
+  Introduce host_context_t
+  risu: Add initial sparc64 support
+  risugen: Be explicit about print destinations
+  risugen: Add sparc64 support
+  contrib/generate_all: Do not rely on ag
+  sparc64: Add a few logical insns
+  sparc64: Add VIS1 instructions
+  sparc64: Add VIS2 and FMAF insns
+  sparc64: Add VIS3 instructions
+  sparc64: Add IMA instructions
+  sparc64: Add VIS4 instructions
 
-Also, I took another look at RVA23 mandatory exts and what we have. I think we're
-not that far off after these extensions you're adding. What we really seems to be
-missing is supm and ssnpm.
+ Makefile                   |  22 ++-
+ risu.h                     |  16 +-
+ risu_reginfo_aarch64.h     |   2 +
+ risu_reginfo_arm.h         |   2 +
+ risu_reginfo_i386.h        |   2 +
+ risu_reginfo_loongarch64.h |   3 +
+ risu_reginfo_m68k.h        |   2 +
+ risu_reginfo_ppc64.h       |   2 +
+ risu_reginfo_s390x.h       |   2 +
+ risu_reginfo_sparc64.h     |  36 ++++
+ risu.c                     |  59 +++++-
+ risu_aarch64.c             |   6 +-
+ risu_arm.c                 |   7 +-
+ risu_i386.c                |   7 +-
+ risu_loongarch64.c         |   6 +-
+ risu_m68k.c                |   6 +-
+ risu_ppc64.c               |   6 +-
+ risu_reginfo_loongarch64.c |   3 +-
+ risu_reginfo_sparc64.c     | 186 ++++++++++++++++++
+ risu_s390x.c               |   5 +-
+ risu_sparc64.c             |  52 +++++
+ configure                  |   2 +
+ contrib/generate_all.sh    |   4 +-
+ risugen                    |  10 +-
+ risugen_common.pm          |  68 ++++++-
+ risugen_sparc64.pm         | 385 +++++++++++++++++++++++++++++++++++++
+ sparc64.risu               | 298 ++++++++++++++++++++++++++++
+ test.ld                    |  12 ++
+ test_aarch64.s             |   4 +-
+ test_arm.s                 |  16 +-
+ test_i386.S                |   4 +-
+ test_sparc64.s             | 137 +++++++++++++
+ 32 files changed, 1298 insertions(+), 74 deletions(-)
+ create mode 100644 risu_reginfo_sparc64.h
+ create mode 100644 risu_reginfo_sparc64.c
+ create mode 100644 risu_sparc64.c
+ create mode 100644 risugen_sparc64.pm
+ create mode 100644 sparc64.risu
+ create mode 100644 test.ld
+ create mode 100644 test_sparc64.s
 
+-- 
+2.34.1
 
-Thanks,
-
-Daniel
-
-> 
-> Thanks,
-> 
-> Zhiwei
-> 
->>
->>
->> Thanks,
->>
->> Daniel
->>
->>>
->>>
->>> LIU Zhiwei (6):
->>>    target/riscv: Move gen_amo before implement Zabha
->>>    target/riscv: Add AMO instructions for Zabha
->>>    target/riscv: Move gen_cmpxchg before adding amocas.[b|h]
->>>    target/riscv: Add amocas.[b|h] for Zabha
->>>    target/riscv: Enable zabha for max cpu
->>>    disas/riscv: Support zabha disassemble
->>>
->>>   disas/riscv.c                               |  60 ++++++++
->>>   target/riscv/cpu.c                          |   2 +
->>>   target/riscv/cpu_cfg.h                      |   1 +
->>>   target/riscv/insn32.decode                  |  22 +++
->>>   target/riscv/insn_trans/trans_rva.c.inc     |  21 ---
->>>   target/riscv/insn_trans/trans_rvzabha.c.inc | 145 ++++++++++++++++++++
->>>   target/riscv/insn_trans/trans_rvzacas.c.inc |  13 --
->>>   target/riscv/translate.c                    |  36 +++++
->>>   8 files changed, 266 insertions(+), 34 deletions(-)
->>>   create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
->>>
 
