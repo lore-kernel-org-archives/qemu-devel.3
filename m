@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE9EC25B7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA07C25B7C
 	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 19:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBJmR-0000xe-1u; Sun, 26 May 2024 15:43:43 -0400
+	id 1sBJm4-00006z-SM; Sun, 26 May 2024 15:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJmB-0000Oq-Dm
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:29 -0400
+ id 1sBJm1-0008TX-Fn
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:17 -0400
 Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBJm7-0007la-FU
- for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:26 -0400
+ id 1sBJlz-0007jL-To
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 15:43:17 -0400
 Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f4a52d2688so584765ad.3
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:22 -0700 (PDT)
+ d9443c01a7336-1f44b441b08so18562635ad.0
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 12:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716752601; x=1717357401; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716752594; x=1717357394; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lNo8B9DGkaJhGkOedZ7a2bnlQzU20oM7B1vBH25Gpp8=;
- b=oQT3OlghfluM4uzbuKk3HjkQRBpxzIkrvJWeL2sF7sv5Gzn2wdxondUGRRRPW7ZqEf
- NPML3jlw+Zoil2ALGI+LUJgm44DDb6t1zQbVtDwC0pnFfe0yevRwqnaatgAvvYE0rbRF
- ydRJ9vmGwAhTCALkyRVynxk+gwL3t0MqnjA72bA47T21CIfIn+t/+damXdLxRYXsWbCi
- t5c+0m0l62JrI0743KBMoN4u6VllwjBGk8b8CA9dTQ+hAFkoPjDx5XqmVVxpiBkzzJt4
- ag27Y9OpHcS0T413aoXb/ONAeDQhRQHuOuoDFBXq8uw/QmWSLKPUhBBzat2E4R55xaX9
- 1xZw==
+ bh=ugmNTqEcbc+4V4tkmecPzyQ/Hi7IU9jDHpaQmAFPBps=;
+ b=gPG6HcUiZzeY2VItFIJeJR9bzwbvgD8lExH1Tq3OiehkdZz3CY8TWy+rKRekKC1af4
+ iFFAZmPSxPemi1sG3CtPW5URxnflKpZ2ivlSeNDuF7xETBlg7tybqz0p5yisjHLrvwjQ
+ ZNEBBFFlihHd3n6vmYfw8cbrkAtbdquhLpDk43XuHh1i65AHt/i0gyt1NyAzKE7EbJEW
+ WWZormBS8aLHZFyusEnCvGdto7pf9q6yESEW+5ku9NaZOQwZAQfjEUigM2kA91uAnrjg
+ TUcMIi6nF4aP4lZxDTOWRCMaMzeEHjpSs4fOg7n2ZQ8Up3pO6s7iK/EIzfZQqYTEzuoc
+ v9Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716752601; x=1717357401;
+ d=1e100.net; s=20230601; t=1716752594; x=1717357394;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lNo8B9DGkaJhGkOedZ7a2bnlQzU20oM7B1vBH25Gpp8=;
- b=CB/u5iY3yCND4gWhrC+pqH+ygCj0I+AGu7JpgB/s0wIAuUrJrgOgIp7sZSpDkh7bVv
- Uz+ZFYxjwsmx8zBD0EqbduLO3KmIMJ2nLlxj8itc1+KfpReIfkjULdJbVvFEJcl6nR0Y
- vYn2ehwDiesXPn7Cc26rsd3w36wpqEt1XWjnx2+tmmn2O/DoiNluCynMojKJjj4eAppJ
- CRYlATMkgP03GDK5TbJZjydrnNhUjhzU4aX6RaV7SjjMajacWwwdMthG7fR5xAauxQki
- DvhhNsm8feOUEvMRYt8fnLm8RCBVxlvnaqGOr+xsRIT8Bd1LRfwKz9ubR3EEiHEziJ3j
- OKqw==
-X-Gm-Message-State: AOJu0YzZMl25vDpvYWWXsZKPT7T4kGW0IMMiNwYSM4jB32gKEWN4IJxE
- AxkbBFR+VRkp1QocWieluuPSpoKd9u3ZA8wknhhHqZaVi5GhxRoyUFHRycztgynU/oanEU6/yWh
- Z
-X-Google-Smtp-Source: AGHT+IF6pSdiu9Ew9ll2cJMHEGby5fzdMVF6gYxeoOZr92RMMyZf/CbkKtqTjXQivrxRkiqSmtQ3FQ==
-X-Received: by 2002:a17:902:f546:b0:1f4:7ee6:af17 with SMTP id
- d9443c01a7336-1f47ee6b327mr62572395ad.64.1716752601413; 
- Sun, 26 May 2024 12:43:21 -0700 (PDT)
+ bh=ugmNTqEcbc+4V4tkmecPzyQ/Hi7IU9jDHpaQmAFPBps=;
+ b=B/Q1Pf4VtSAb2HQEq8RRnOJ4UTB2Slzv4zp0hLeSzw8DagZu1uNpgEQuTDExdlZ0Jc
+ SkWbyqdMeRznZ35I/l+bxE17v+/CefzVBM8pSu7ilYdLJBbyPWazAWs7XIk0RAlM3M1L
+ ptyGK0pUUUiohmhntuwqTRQ8VQk/qHfBsvDHUFEv2fI1M6iz6xTlqm7ffDpu2f/7aRdp
+ DVJRPRBvVeOPmOunFdq7MiARMyjsRvfMwOY16eivc26v6xak57FzciAnZJIUhKUQhEBR
+ TqZIVp6q+Ru0vRC3R7nYi5vYoxwljc2oxi/k8/gzelixrpOV+5Ay4zYKm23APXIxsax+
+ bgnw==
+X-Gm-Message-State: AOJu0YzLPxSzQrJLlVaPMVhJy5JSxhzzTlX/oKLDntsI+tUt0WVfuHWa
+ 8slvlXTLv4fMI4zDxtkx5fc9NQWLCIXLS3ViFQ68FgK73CYqCmm3H5ERQth3ZxOvMA+la3Snzf+
+ w
+X-Google-Smtp-Source: AGHT+IEdoc0n0tMwiCObK2mnp6D6kNTbqLIMacC/HgwVSuHEPtK62hPqP6MxS2jhbH+wAKU/qNi1Zg==
+X-Received: by 2002:a17:903:2451:b0:1f3:c58:f4ea with SMTP id
+ d9443c01a7336-1f448940177mr90264325ad.32.1716752594526; 
+ Sun, 26 May 2024 12:43:14 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.20
+ d9443c01a7336-1f46ad93c2esm28165935ad.263.2024.05.26.12.43.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 12:43:20 -0700 (PDT)
+ Sun, 26 May 2024 12:43:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 33/37] target/sparc: Implement FPMIN, FPMAX
-Date: Sun, 26 May 2024 12:42:50 -0700
-Message-Id: <20240526194254.459395-34-richard.henderson@linaro.org>
+Subject: [PATCH v2 24/37] target/sparc: Implement PDISTN
+Date: Sun, 26 May 2024 12:42:41 -0700
+Message-Id: <20240526194254.459395-25-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
 References: <20240526194254.459395-1-richard.henderson@linaro.org>
@@ -99,59 +99,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/insns.decode | 14 ++++++++++++++
- target/sparc/translate.c  | 14 ++++++++++++++
- 2 files changed, 28 insertions(+)
+ target/sparc/insns.decode |  1 +
+ target/sparc/translate.c  | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
 diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index be591171ad..2ebee5a1ca 100644
+index e0e9248982..09c8adca37 100644
 --- a/target/sparc/insns.decode
 +++ b/target/sparc/insns.decode
-@@ -524,6 +524,20 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
-     FPSUBUS8    10 ..... 110110 ..... 1 0101 0111 .....    @d_d_d
-     FPSUBUS16   10 ..... 110110 ..... 1 0101 0011 .....    @d_d_d
+@@ -435,6 +435,7 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
+     FPACKFIX    10 ..... 110110 00000 0 0011 1101 .....    @r_d2
+     PDIST       10 ..... 110110 ..... 0 0011 1110 .....    \
+                 &r_r_r_r rd=%dfp_rd rs1=%dfp_rd rs2=%dfp_rs1 rs3=%dfp_rs2
++    PDISTN      10 ..... 110110 ..... 0 0011 1111 .....    @r_d_d
  
-+    FPMIN8      10 ..... 110110 ..... 1 0001 1010 .....    @d_d_d
-+    FPMIN16     10 ..... 110110 ..... 1 0001 1011 .....    @d_d_d
-+    FPMIN32     10 ..... 110110 ..... 1 0001 1100 .....    @d_d_d
-+    FPMINU8     10 ..... 110110 ..... 1 0101 1010 .....    @d_d_d
-+    FPMINU16    10 ..... 110110 ..... 1 0101 1011 .....    @d_d_d
-+    FPMINU32    10 ..... 110110 ..... 1 0101 1100 .....    @d_d_d
-+
-+    FPMAX8      10 ..... 110110 ..... 1 0001 1101 .....    @d_d_d
-+    FPMAX16     10 ..... 110110 ..... 1 0001 1110 .....    @d_d_d
-+    FPMAX32     10 ..... 110110 ..... 1 0001 1111 .....    @d_d_d
-+    FPMAXU8     10 ..... 110110 ..... 1 0101 1101 .....    @d_d_d
-+    FPMAXU16    10 ..... 110110 ..... 1 0101 1110 .....    @d_d_d
-+    FPMAXU32    10 ..... 110110 ..... 1 0101 1111 .....    @d_d_d
-+
-     FLCMPs      10 000 cc:2 110110 rs1:5 1 0101 0001 rs2:5
-     FLCMPd      10 000 cc:2 110110 ..... 1 0101 0010 ..... \
-                 rs1=%dfp_rs1 rs2=%dfp_rs2
+     FMEAN16     10 ..... 110110 ..... 0 0100 0000 .....    @d_d_d
+     FCHKSM16    10 ..... 110110 ..... 0 0100 0100 .....    @d_d_d
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index a952a990cc..242f483fd2 100644
+index d8707326ff..313adcd95b 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -5057,6 +5057,20 @@ TRANS(FSRL32, VIS3, do_gvec_ddd, a, MO_32, tcg_gen_gvec_shrv)
- TRANS(FSRA16, VIS3, do_gvec_ddd, a, MO_16, tcg_gen_gvec_sarv)
- TRANS(FSRA32, VIS3, do_gvec_ddd, a, MO_32, tcg_gen_gvec_sarv)
+@@ -817,6 +817,15 @@ static void gen_op_bshuffle(TCGv_i64 dst, TCGv_i64 src1, TCGv_i64 src2)
+ #endif
+ }
  
-+TRANS(FPMIN8, VIS4, do_gvec_ddd, a, MO_8, tcg_gen_gvec_smin)
-+TRANS(FPMIN16, VIS4, do_gvec_ddd, a, MO_16, tcg_gen_gvec_smin)
-+TRANS(FPMIN32, VIS4, do_gvec_ddd, a, MO_32, tcg_gen_gvec_smin)
-+TRANS(FPMINU8, VIS4, do_gvec_ddd, a, MO_8, tcg_gen_gvec_umin)
-+TRANS(FPMINU16, VIS4, do_gvec_ddd, a, MO_16, tcg_gen_gvec_umin)
-+TRANS(FPMINU32, VIS4, do_gvec_ddd, a, MO_32, tcg_gen_gvec_umin)
++static void gen_op_pdistn(TCGv dst, TCGv_i64 src1, TCGv_i64 src2)
++{
++#ifdef TARGET_SPARC64
++    gen_helper_pdist(dst, tcg_constant_i64(0), src1, src2);
++#else
++    g_assert_not_reached();
++#endif
++}
 +
-+TRANS(FPMAX8, VIS4, do_gvec_ddd, a, MO_8, tcg_gen_gvec_smax)
-+TRANS(FPMAX16, VIS4, do_gvec_ddd, a, MO_16, tcg_gen_gvec_smax)
-+TRANS(FPMAX32, VIS4, do_gvec_ddd, a, MO_32, tcg_gen_gvec_smax)
-+TRANS(FPMAXU8, VIS4, do_gvec_ddd, a, MO_8, tcg_gen_gvec_umax)
-+TRANS(FPMAXU16, VIS4, do_gvec_ddd, a, MO_16, tcg_gen_gvec_umax)
-+TRANS(FPMAXU32, VIS4, do_gvec_ddd, a, MO_32, tcg_gen_gvec_umax)
+ static void gen_op_fmul8x16al(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
+ {
+     tcg_gen_ext16s_i32(src2, src2);
+@@ -5066,6 +5075,8 @@ TRANS(FPCMPNE8, VIS3B, do_rdd, a, gen_helper_fcmpne8)
+ TRANS(FPCMPULE8, VIS3B, do_rdd, a, gen_helper_fcmpule8)
+ TRANS(FPCMPUGT8, VIS3B, do_rdd, a, gen_helper_fcmpugt8)
+ 
++TRANS(PDISTN, VIS3, do_rdd, a, gen_op_pdistn)
 +
- static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
-                    void (*func)(TCGv_i64, TCGv_i64, TCGv_i64))
+ static bool do_env_ddd(DisasContext *dc, arg_r_r_r *a,
+                        void (*func)(TCGv_i64, TCGv_env, TCGv_i64, TCGv_i64))
  {
 -- 
 2.34.1
