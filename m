@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71771C25B75
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB06C25B78
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 23:19:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBN5x-0000JC-UK; Sun, 26 May 2024 19:16:06 -0400
+	id 1sBN5o-0007dh-U5; Sun, 26 May 2024 19:15:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN5g-0006zp-DR; Sun, 26 May 2024 19:15:51 -0400
+ id 1sBN5F-0005xW-ET; Sun, 26 May 2024 19:15:21 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sBN5a-00045v-8M; Sun, 26 May 2024 19:15:48 -0400
+ id 1sBN5B-0003pS-1W; Sun, 26 May 2024 19:15:21 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1417C4E6550;
- Mon, 27 May 2024 01:13:19 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6DBE74E64CB;
+ Mon, 27 May 2024 01:13:03 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id zbROn7g7TIro; Mon, 27 May 2024 01:13:17 +0200 (CEST)
+ with ESMTP id 5ZEV8h3ATVhg; Mon, 27 May 2024 01:13:01 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2482E4E6551; Mon, 27 May 2024 01:13:17 +0200 (CEST)
-Message-Id: <4cdbb66fc918f00f51e6fb6266e1b0714496b266.1716763435.git.balaton@eik.bme.hu>
+ id 7F7B94E642D; Mon, 27 May 2024 01:13:01 +0200 (CEST)
+Message-Id: <bdb79c79ec33b22071f1ffc641dcfefe9f90ec84.1716763435.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1716763435.git.balaton@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 40/43] target/ppc: Change parameter type of ppc64_v3_radix()
+Subject: [PATCH 25/43] target/ppc: Remove bat_size_prot()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,15 +39,14 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 27 May 2024 01:13:17 +0200 (CEST)
+Date: Mon, 27 May 2024 01:13:01 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,67 +62,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function takes PowerPCCPU but only needs the env from it. Change
-its parameter to CPUPPCState *env.
+There is already a hash32_bat_prot() function that does most if this
+and the rest can be inlined. Export hash32_bat_prot() and rename it to
+ppc_hash32_bat_prot() to match other functions and use it in
+get_bat_6xx_tlb().
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/spapr_rtas.c        | 2 +-
- target/ppc/mmu-book3s-v3.h | 4 ++--
- target/ppc/mmu_common.c    | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ target/ppc/mmu-hash32.c | 18 +-------------
+ target/ppc/mmu-hash32.h | 14 +++++++++++
+ target/ppc/mmu_common.c | 52 ++++++++++-------------------------------
+ 3 files changed, 27 insertions(+), 57 deletions(-)
 
-diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-index f329693c55..38e94fc0d7 100644
---- a/hw/ppc/spapr_rtas.c
-+++ b/hw/ppc/spapr_rtas.c
-@@ -177,7 +177,7 @@ static void rtas_start_cpu(PowerPCCPU *callcpu, SpaprMachineState *spapr,
-          * New cpus are expected to start in the same radix/hash mode
-          * as the existing CPUs
-          */
--        if (ppc64_v3_radix(callcpu)) {
-+        if (ppc64_v3_radix(&callcpu->env)) {
-             lpcr |= LPCR_UPRT | LPCR_GTSE | LPCR_HR;
-         } else {
-             lpcr &= ~(LPCR_UPRT | LPCR_GTSE | LPCR_HR);
-diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
-index be66e26604..e52129ff7f 100644
---- a/target/ppc/mmu-book3s-v3.h
-+++ b/target/ppc/mmu-book3s-v3.h
-@@ -75,9 +75,9 @@ bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid,
-  * dig out the partition table in the fast path. This is
-  * also how the HW uses it.
-  */
--static inline bool ppc64_v3_radix(PowerPCCPU *cpu)
-+static inline bool ppc64_v3_radix(CPUPPCState *env)
- {
--    return !!(cpu->env.spr[SPR_LPCR] & LPCR_HR);
-+    return !!(env->spr[SPR_LPCR] & LPCR_HR);
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 160311de87..6f0f0bbb00 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -48,22 +48,6 @@ static target_ulong hash32_bat_size(int mmu_idx,
+     return BATU32_BEPI & ~((batu & BATU32_BL) << 15);
  }
  
- #endif /* TARGET_PPC64 */
+-static int hash32_bat_prot(PowerPCCPU *cpu,
+-                           target_ulong batu, target_ulong batl)
+-{
+-    int pp, prot;
+-
+-    prot = 0;
+-    pp = batl & BATL32_PP;
+-    if (pp != 0) {
+-        prot = PAGE_READ | PAGE_EXEC;
+-        if (pp == 0x2) {
+-            prot |= PAGE_WRITE;
+-        }
+-    }
+-    return prot;
+-}
+-
+ static hwaddr ppc_hash32_bat_lookup(PowerPCCPU *cpu, target_ulong ea,
+                                     MMUAccessType access_type, int *prot,
+                                     int mmu_idx)
+@@ -95,7 +79,7 @@ static hwaddr ppc_hash32_bat_lookup(PowerPCCPU *cpu, target_ulong ea,
+         if (mask && ((ea & mask) == (batu & BATU32_BEPI))) {
+             hwaddr raddr = (batl & mask) | (ea & ~mask);
+ 
+-            *prot = hash32_bat_prot(cpu, batu, batl);
++            *prot = ppc_hash32_bat_prot(batu, batl);
+ 
+             return raddr & TARGET_PAGE_MASK;
+         }
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index 5902cf8333..bd75f7d647 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -143,6 +143,20 @@ static inline int ppc_hash32_prot(bool key, int pp, bool nx)
+     return nx ? prot : prot | PAGE_EXEC;
+ }
+ 
++static inline int ppc_hash32_bat_prot(target_ulong batu, target_ulong batl)
++{
++    int prot = 0;
++    int pp = batl & BATL32_PP;
++
++    if (pp) {
++        prot = PAGE_READ | PAGE_EXEC;
++        if (pp == 0x2) {
++            prot |= PAGE_WRITE;
++        }
++    }
++    return prot;
++}
++
+ typedef struct {
+     uint32_t pte0, pte1;
+ } ppc_hash_pte32_t;
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index b45eb64f6e..ab055ca96b 100644
+index aa002bba35..624ed51a92 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -565,7 +565,7 @@ void dump_mmu(CPUPPCState *env)
-         dump_slb(env_archcpu(env));
-         break;
-     case POWERPC_MMU_3_00:
--        if (ppc64_v3_radix(env_archcpu(env))) {
-+        if (ppc64_v3_radix(env)) {
-             qemu_log_mask(LOG_UNIMP, "%s: the PPC64 MMU is unsupported\n",
-                           __func__);
-         } else {
-@@ -810,7 +810,7 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     switch (cpu->env.mmu_model) {
- #if defined(TARGET_PPC64)
-     case POWERPC_MMU_3_00:
--        if (ppc64_v3_radix(cpu)) {
-+        if (ppc64_v3_radix(&cpu->env)) {
-             return ppc_radix64_xlate(cpu, eaddr, access_type, raddrp,
-                                      psizep, protp, mmu_idx, guest_visible);
-         }
+@@ -193,40 +193,13 @@ static int ppc6xx_tlb_check(CPUPPCState *env, hwaddr *raddr, int *prot,
+     return ret;
+ }
+ 
+-/* Perform BAT hit & translation */
+-static inline void bat_size_prot(CPUPPCState *env, target_ulong *blp,
+-                                 int *validp, int *protp, target_ulong *BATu,
+-                                 target_ulong *BATl)
+-{
+-    target_ulong bl;
+-    int pp, valid, prot;
+-
+-    bl = (*BATu & BATU32_BL) << 15;
+-    valid = 0;
+-    prot = 0;
+-    if ((!FIELD_EX64(env->msr, MSR, PR) && (*BATu & 0x00000002)) ||
+-        (FIELD_EX64(env->msr, MSR, PR) && (*BATu & 0x00000001))) {
+-        valid = 1;
+-        pp = *BATl & 0x00000003;
+-        if (pp != 0) {
+-            prot = PAGE_READ | PAGE_EXEC;
+-            if (pp == 0x2) {
+-                prot |= PAGE_WRITE;
+-            }
+-        }
+-    }
+-    *blp = bl;
+-    *validp = valid;
+-    *protp = prot;
+-}
+-
+ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+-                           target_ulong eaddr, MMUAccessType access_type)
++                           target_ulong eaddr, MMUAccessType access_type,
++                           bool pr)
+ {
+     target_ulong *BATlt, *BATut, *BATu, *BATl;
+     target_ulong BEPIl, BEPIu, bl;
+-    int i, valid, prot;
+-    int ret = -1;
++    int i, ret = -1;
+     bool ifetch = access_type == MMU_INST_FETCH;
+ 
+     qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT v " TARGET_FMT_lx "\n", __func__,
+@@ -243,20 +216,19 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+         BATl = &BATlt[i];
+         BEPIu = *BATu & BATU32_BEPIU;
+         BEPIl = *BATu & BATU32_BEPIL;
+-        bat_size_prot(env, &bl, &valid, &prot, BATu, BATl);
+         qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu "
+                       TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func__,
+                       ifetch ? 'I' : 'D', i, eaddr, *BATu, *BATl);
+-        if ((eaddr & BATU32_BEPIU) == BEPIu &&
+-            ((eaddr & BATU32_BEPIL) & ~bl) == BEPIl) {
+-            /* BAT matches */
+-            if (valid != 0) {
++        bl = (*BATu & BATU32_BL) << 15;
++        if ((!pr && (*BATu & BATU32_VS)) || (pr && (*BATu & BATU32_VP))) {
++            if ((eaddr & BATU32_BEPIU) == BEPIu &&
++                ((eaddr & BATU32_BEPIL) & ~bl) == BEPIl) {
+                 /* Get physical address */
+                 ctx->raddr = (*BATl & BATU32_BEPIU) |
+                     ((eaddr & BATU32_BEPIL & bl) | (*BATl & BATU32_BEPIL)) |
+                     (eaddr & 0x0001F000);
+                 /* Compute access rights */
+-                ctx->prot = prot;
++                ctx->prot = ppc_hash32_bat_prot(*BATu, *BATl);
+                 if (check_prot_access_type(ctx->prot, access_type)) {
+                     qemu_log_mask(CPU_LOG_MMU, "BAT %d match: r " HWADDR_FMT_plx
+                                   " prot=%c%c\n", i, ctx->raddr,
+@@ -300,16 +272,16 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+     PowerPCCPU *cpu = env_archcpu(env);
+     hwaddr hash;
+     target_ulong vsid, sr, pgidx, ptem;
+-    bool key, pr, ds, nx;
++    bool key, ds, nx;
++    bool pr = FIELD_EX64(env->msr, MSR, PR);
+ 
+     /* First try to find a BAT entry if there are any */
+-    if (env->nb_BATs && get_bat_6xx_tlb(env, ctx, eaddr, access_type) == 0) {
++    if (env->nb_BATs &&
++        get_bat_6xx_tlb(env, ctx, eaddr, access_type, pr) == 0) {
+         return 0;
+     }
+ 
+     /* Perform segment based translation when no BATs matched */
+-    pr = FIELD_EX64(env->msr, MSR, PR);
+-
+     sr = env->sr[eaddr >> 28];
+     key = ppc_hash32_key(pr, sr);
+     *keyp = key;
 -- 
 2.30.9
 
