@@ -4,79 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E50C25B78
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 20:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3780C25B78
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 May 2024 21:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBKkg-0002yh-Vm; Sun, 26 May 2024 16:45:59 -0400
+	id 1sBL4j-0001hA-UM; Sun, 26 May 2024 17:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBKkf-0002xx-0r
- for qemu-devel@nongnu.org; Sun, 26 May 2024 16:45:57 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sBL4i-0001gn-Ah
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 17:06:40 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBKkc-0003fr-Kp
- for qemu-devel@nongnu.org; Sun, 26 May 2024 16:45:56 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6f850ff30c0so2901517b3a.0
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 13:45:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sBL4g-0007Q6-Nq
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 17:06:40 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a62ef52e837so41975666b.3
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 14:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716756353; x=1717361153; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DsMIKy/L5erl56a6I+mGWGQ4rNvzDGnzn+CAnzypzwo=;
- b=tihjwXC6kHqYCCXuT0HsByeg4m7T2bPeldiUZqyXF3i+qgzuk+HYTnVpDgHoHTPUMf
- +2UW9EHnYSmOvjSfd2cun/Xy0+0yAJrhwOnmdqv6b/D2Zct7UQTvBxMUWwys64lU0BC7
- Tke91JNsEFYn1SJ0tHt4UKmBcGBdAmSbvhiBZaBPvjdCRtV2bSCjLqFCoNvzY1Eq2FnZ
- SuxWQaY5rnJxQpzGMQx7IjCwOL7l5YUzpUJSGtsPF0Ibn/vkAtN+joOPZiqGvNFIJZCl
- F4VZN4MUuxnBtbS5QtCQO3FWim5Zl6+LDPXlftqNLQuuTKvv0eS65aIf4J3JYqrnwcat
- xeuw==
+ d=linaro.org; s=google; t=1716757596; x=1717362396; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=g2aQCQwfrtawqB9moo8kRrwj5sfAZylhYQmBOCSoINs=;
+ b=PA8WsOSNxSg4KbUPA1gawRbC61AEEzzdBokpdtaKDerL6FNH5Ve/wld+vpuorNohUZ
+ wNGRf5dn5FXpnxwe0q44JzkD9srT+LnLbvWjekgsjxZGbduSnV2kc8SqmWpgCqMDVJox
+ QQ611VSR+N/aat9woMsYE8O/kDbuaJHdEMHA2/KeAScYlqOx2/WR+FKVqGIMXpVmXuWF
+ Y6bCn7Nm7pdgxxzUMhkxpASq/SMJKOMURgnl2dlKVydmCcloAojvFhRh3tmhgAjo4tDx
+ Xf+Kjqa4BWux887lnFVBnWDmjfNKKJqPRZ4VjxRxj0MYXllBkXqWoy5mE5rSdfTuVFgM
+ 33HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716756353; x=1717361153;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1716757596; x=1717362396;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DsMIKy/L5erl56a6I+mGWGQ4rNvzDGnzn+CAnzypzwo=;
- b=Dwka33alOIMSGOPxkvHdhoA876DPQ+ScI9H8JxSJO8Ib+MhNN7bpg68r/DXpJhr41n
- Jo/hFSa52/usXtwz8AXbM0WZw/knWmsWMBnsnqpr/4PMMi5s/bGdgKovXMf/AYPCMaka
- gWqnwqJi8n3+yU6WYv5iUy2tRIubOdXqRApqAPdYBCbbPA5YfeO4jxSebddiGblzGpW9
- jT9eNExzHQAMOPSvvtJ3I2oDCWqiQoSM3N9QnN/lvFD4LzIX0MBZJmip6luqAYWuWI0l
- 6zM1s9vcKNpKmo5ui0gySiesdvaeNiyFaknu6T8tGIfwUv/egLd+3kK9GXE/KFX1DKZV
- h4Hw==
-X-Gm-Message-State: AOJu0YwsCOftQ9khztXVJcn7lIoiXPs5+HSNELDC3b6mSzRZ6QxlxwH/
- V+8uMVaPigNa/n2Mj+0LEnQ6eVVW0ZHxo2uagK2gGe5Fng7jv06hOHsLfvvHsuCKYvO5gdAH1wy
- o
-X-Google-Smtp-Source: AGHT+IEkVANMJbJhPg/CKMsdet/lgahht2iOiXSQf0TVFjjeGQ2uKJDDkpEDavd4VNbcoxyEgslYGw==
-X-Received: by 2002:a05:6a00:1d8f:b0:6ed:21bc:ed8c with SMTP id
- d2e1a72fcca58-6f8f36f6f75mr9368156b3a.18.1716756352599; 
- Sun, 26 May 2024 13:45:52 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-682226fc4bbsm4658843a12.41.2024.05.26.13.45.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 13:45:52 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH] target/arm: Disable SVE extensions when SVE is disabled
-Date: Sun, 26 May 2024 13:45:51 -0700
-Message-Id: <20240526204551.553282-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ bh=g2aQCQwfrtawqB9moo8kRrwj5sfAZylhYQmBOCSoINs=;
+ b=IlVZMgb3eQf/QRPvkb6YySp1FayTneedgtMmLdz2ii5tTOEzHd+mnh1ztB0McwiPcQ
+ 71i2P3mewFvX+tDTGg5kLcvVONuwugbIUXinUl9ujGPuI9NFtlLkHH1qw/jD3YBJl431
+ KT+4dwEkt+Hh2D+ne+yVw4FEr1dBycGmAbiE784SFc2mt1WrKEPpya8+aLdMTP8F+PV2
+ MQAeIyPXojoDgVQ30GZrNe2KmGJZe9ebBXSlh/P1l5JbtrzF4rWM5jdeNBQHlSj6X4XH
+ jCiuY9rmqwa28Nu3DyxxhWhbouThpoPMx8+sFPq0QZ8mhQmIC4lty3b8IGJiKldqRHCz
+ KOqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZ+XALB7RLy/yVVJzPgdlPc9BHDlvR9mOXtb0gCt2x3Uc8lCcL36hMYR7AH7sXbrPgUiLbfPLoyk6RxeDxwwCuurAjIXc=
+X-Gm-Message-State: AOJu0YzX4oXJCuDXeArjox33D6p/4USR8zvLVfZVMgNpUEgwb4Ua6CqW
+ ZGol2UILayiwfOtGHkC6fLDlVQtiz8DqCsGt2dvBeS0ifcJE+kpr54ZbbsISNvVF1i8552Jl0G8
+ /zeY=
+X-Google-Smtp-Source: AGHT+IGvvrVzqsX+zcZXJGgF31Ficzyvrh7aPIKonYAgzbFoHP3lNqn1SUP3AZAD7JNK1EMKQj78pQ==
+X-Received: by 2002:a17:906:f85b:b0:a62:821d:5df0 with SMTP id
+ a640c23a62f3a-a62821d5f60mr460106866b.26.1716757596410; 
+ Sun, 26 May 2024 14:06:36 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.37.15.ipv4.supernova.orange.pl.
+ [83.11.37.15]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a62b5d80ff0sm220452466b.95.2024.05.26.14.06.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 May 2024 14:06:36 -0700 (PDT)
+Message-ID: <63ff94b6-98df-4e5e-9c53-7a03c7309cd3@linaro.org>
+Date: Sun, 26 May 2024 23:06:35 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Disable SVE extensions when SVE is disabled
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-stable@nongnu.org
+References: <20240526204551.553282-1-richard.henderson@linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Organization: Linaro
+In-Reply-To: <20240526204551.553282-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,42 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+W dniu 26.05.2024 o 22:45, Richard Henderson pisze:
+> From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2304
+> Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2304
-Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
+Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 
-Marcin added the correct patch to the issue 3 weeks ago, so I'm giving
-him authorship here.  I only updated the comment a bit.
-Marcin, if you'd reply to this with your s-o-b, that would be helpful.
+> ---
+> 
+> Marcin added the correct patch to the issue 3 weeks ago, so I'm giving
+> him authorship here.  I only updated the comment a bit.
 
-r~
+I am not fully sure is it everything needed to be honest.
 
----
- target/arm/cpu64.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Value 0x0000 in [3:0] means "The SVE instructions are implemented".
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index c15d086049..862d2b92fa 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -109,7 +109,11 @@ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
-          * No explicit bits enabled, and no implicit bits from sve-max-vq.
-          */
-         if (!cpu_isar_feature(aa64_sve, cpu)) {
--            /* SVE is disabled and so are all vector lengths.  Good. */
-+            /*
-+             * SVE is disabled and so are all vector lengths.  Good.
-+             * Disable all SVE extensions as well.
-+             */
-+            cpu->isar.id_aa64zfr0 = 0;
-             return;
-         }
- 
--- 
-2.34.1
+The way why it works is probably because QEMU keeps "there is no SVE" 
+information separately and do not emulate them.
+
+> Marcin, if you'd reply to this with your s-o-b, that would be helpful.
+
+done
+
+
+> r~
+> 
+> ---
+>   target/arm/cpu64.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index c15d086049..862d2b92fa 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -109,7 +109,11 @@ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
+>            * No explicit bits enabled, and no implicit bits from sve-max-vq.
+>            */
+>           if (!cpu_isar_feature(aa64_sve, cpu)) {
+> -            /* SVE is disabled and so are all vector lengths.  Good. */
+> +            /*
+> +             * SVE is disabled and so are all vector lengths.  Good.
+> +             * Disable all SVE extensions as well.
+> +             */
+> +            cpu->isar.id_aa64zfr0 = 0;
+>               return;
+>           }
+>   
 
 
