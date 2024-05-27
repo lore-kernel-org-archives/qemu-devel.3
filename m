@@ -4,27 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E714FC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79EB1C25B7D
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVKk-0001fe-F9; Mon, 27 May 2024 04:03:54 -0400
+	id 1sBVKZ-0001TU-3t; Mon, 27 May 2024 04:03:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sBVKO-0001Kc-1b; Mon, 27 May 2024 04:03:32 -0400
+ id 1sBVJr-0000JC-36; Mon, 27 May 2024 04:03:09 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sBVKM-0005H2-Ia; Mon, 27 May 2024 04:03:31 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ id 1sBVJo-0005H2-7t; Mon, 27 May 2024 04:02:57 -0400
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 27 May
- 2024 16:02:38 +0800
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Mon, 27 May
+ 2024 16:02:33 +0800
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 27 May
+ 2024 16:02:34 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 27 May 2024 16:02:38 +0800
+ Transport; Mon, 27 May 2024 16:02:33 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -35,15 +38,19 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v4 13/16] aspeed: Add an AST2700 eval board
-Date: Mon, 27 May 2024 16:02:27 +0800
-Message-ID: <20240527080231.1576609-14-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 03/16] aspeed/sdmc: remove redundant macros
+Date: Mon, 27 May 2024 16:02:17 +0800
+Message-ID: <20240527080231.1576609-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
 References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
+ does not designate 192.168.10.10 as permitted sender)
+ receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
+ helo=localhost.localdomain;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,81 +75,48 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 CPU is ARM Cortex-A35 which is 64 bits.
-Add TARGET_AARCH64 to build this machine.
-
-According to the design of ast2700, it has a bootmcu(riscv-32) which
-is used for executing SPL.
-Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
-
-Currently, qemu not support emulate two CPU architectures
-at the same machine. Therefore, qemu will only support
-to emulate CPU(cortex-a35) side for ast2700
+These macros are no longer used for ASPEED SOCs, so removes them.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
- hw/arm/aspeed.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/misc/aspeed_sdmc.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 93ca87fda2..40dc0e4c76 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -178,6 +178,12 @@ struct AspeedMachineState {
- #define AST2600_EVB_HW_STRAP1 0x000000C0
- #define AST2600_EVB_HW_STRAP2 0x00000003
+diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
+index 64cd1a81dc..74279bbe8e 100644
+--- a/hw/misc/aspeed_sdmc.c
++++ b/hw/misc/aspeed_sdmc.c
+@@ -76,10 +76,6 @@
+ #define     ASPEED_SDMC_VGA_32MB            0x2
+ #define     ASPEED_SDMC_VGA_64MB            0x3
+ #define ASPEED_SDMC_DRAM_SIZE(x)        (x & 0x3)
+-#define     ASPEED_SDMC_DRAM_64MB           0x0
+-#define     ASPEED_SDMC_DRAM_128MB          0x1
+-#define     ASPEED_SDMC_DRAM_256MB          0x2
+-#define     ASPEED_SDMC_DRAM_512MB          0x3
  
-+#ifdef TARGET_AARCH64
-+/* AST2700 evb hardware value */
-+#define AST2700_EVB_HW_STRAP1 0x000000C0
-+#define AST2700_EVB_HW_STRAP2 0x00000003
-+#endif
-+
- /* Tacoma hardware value */
- #define TACOMA_BMC_HW_STRAP1  0x00000000
- #define TACOMA_BMC_HW_STRAP2  0x00000040
-@@ -1588,6 +1594,26 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
+ #define ASPEED_SDMC_READONLY_MASK                       \
+     (ASPEED_SDMC_RESERVED | ASPEED_SDMC_VGA_COMPAT |    \
+@@ -100,17 +96,6 @@
+ #define ASPEED_SDMC_CACHE_ENABLE        (1 << 10) /* differs from AST2400 */
+ #define ASPEED_SDMC_DRAM_TYPE           (1 << 4)  /* differs from AST2400 */
  
-+#ifdef TARGET_AARCH64
-+static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-+
-+    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
-+    amc->soc_name  = "ast2700-a0";
-+    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-+    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-+    amc->fmc_model = "w25q01jvq";
-+    amc->spi_model = "w25q512jv";
-+    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-+    amc->uart_default = ASPEED_DEV_UART12;
-+    mc->default_ram_size = 1 * GiB;
-+    aspeed_machine_class_init_cpus_defaults(mc);
-+}
-+#endif
-+
- static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-                                                      void *data)
- {
-@@ -1711,6 +1737,12 @@ static const TypeInfo aspeed_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("ast1030-evb"),
-         .parent         = TYPE_ASPEED_MACHINE,
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
-+#ifdef TARGET_AARCH64
-+    }, {
-+        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
-+        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_ast2700_evb_class_init,
-+#endif
-     }, {
-         .name          = TYPE_ASPEED_MACHINE,
-         .parent        = TYPE_MACHINE,
+-/* DRAM size definitions differs */
+-#define     ASPEED_SDMC_AST2500_128MB       0x0
+-#define     ASPEED_SDMC_AST2500_256MB       0x1
+-#define     ASPEED_SDMC_AST2500_512MB       0x2
+-#define     ASPEED_SDMC_AST2500_1024MB      0x3
+-
+-#define     ASPEED_SDMC_AST2600_256MB       0x0
+-#define     ASPEED_SDMC_AST2600_512MB       0x1
+-#define     ASPEED_SDMC_AST2600_1024MB      0x2
+-#define     ASPEED_SDMC_AST2600_2048MB      0x3
+-
+ #define ASPEED_SDMC_AST2500_READONLY_MASK                               \
+     (ASPEED_SDMC_HW_VERSION(0xf) | ASPEED_SDMC_CACHE_INITIAL_DONE |     \
+      ASPEED_SDMC_AST2500_RESERVED | ASPEED_SDMC_VGA_COMPAT |            \
 -- 
 2.25.1
 
