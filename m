@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7140C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 20:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1800C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 20:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBhCh-0002un-Gp; Mon, 27 May 2024 16:44:23 -0400
+	id 1sBhJB-0004oP-07; Mon, 27 May 2024 16:51:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sBhCb-0002ty-FG
- for qemu-devel@nongnu.org; Mon, 27 May 2024 16:44:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBhJ9-0004oG-IA
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 16:51:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sBhCY-0006mr-JF
- for qemu-devel@nongnu.org; Mon, 27 May 2024 16:44:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBhJ7-0007yO-Cm
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 16:51:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716842653;
+ s=mimecast20190719; t=1716843060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CDa/Wv0imbqv+r6bLlBZTwDJNFoQ5/dajvre0QNFrVc=;
- b=hh7u7cf1TlUK1/YxspuqwU1KCQtqWejk42ma4cpqci6bLwS7zfmEET73UtmIEl4uPQVNym
- Nqr9DuM1LuIem/jmEyj7xx3TYAy03xwD4UcbgxZSUz73LGta08Oo7HHNg3BKjEDET/oWXs
- Yy+vBq9i3lBwocehFlS3bZvNgJwqBWs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ajf4u0txmh4j/zmp2TyFtJysYzehrfivsWnTj1vvqbA=;
+ b=CaLXfCgVypB6VBgCSTSlCiS21amhvxM3OukZ6SnaKr3Gj1E4kPVhEJFzmeueiyOqYhsoGK
+ B6IvvcV17zZKkQ2MzOS4AHCkdo5FFFHUtK7bzm9bHA9Tf/EAUZQdSXZOgXVhDVLNAmrVxH
+ 6q+pGFAeOWyy0OvdbdC3cbAG0HOFTjk=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-0C1n2SboNumNrKOF1YNlBw-1; Mon, 27 May 2024 16:44:09 -0400
-X-MC-Unique: 0C1n2SboNumNrKOF1YNlBw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 699E9101A525;
- Mon, 27 May 2024 20:44:09 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.38])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9235EC15BED;
- Mon, 27 May 2024 20:44:08 +0000 (UTC)
-Date: Mon, 27 May 2024 16:44:06 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC 4/6] scripts/simpletrace-rust: Parse and check trace recode
- file
-Message-ID: <20240527204406.GE913874@fedora.redhat.com>
-References: <20240527081421.2258624-1-zhao1.liu@intel.com>
- <20240527081421.2258624-5-zhao1.liu@intel.com>
+ us-mta-226-pXTeBaprNViIEGQmJ0cdkQ-1; Mon, 27 May 2024 16:50:59 -0400
+X-MC-Unique: pXTeBaprNViIEGQmJ0cdkQ-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-43fb05ee915so9931cf.2
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 13:50:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716843058; x=1717447858;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ajf4u0txmh4j/zmp2TyFtJysYzehrfivsWnTj1vvqbA=;
+ b=Mk40yf80+Al4l3449QJVvkZ1LTKWZqPvfiDyOtI1KDffuMqznS5BLOjiOSVA7d95es
+ RX97UMogmcGPenTcW65z/J5a273la8wO/xwOhmsP3sll7WMV1YggBztlURwFGy6SvCfB
+ SKZEphI1dER9uI6EuOz4J6w8lnnaR9OO32DtLsuwVrh8QGv3VolsWToXAmE3KW4bPSoh
+ 76CbCWS8EKp2DS/Y+JkEFbpgXXzfyi0I2GDLC91qhAaV9CaFzw4w7zL7PvPwObgbZYz5
+ MaUw7/1hCiccI0Ao29Yqp+BBxAVD6W3S0i/ZNGjZDPzsr1+1QprO6yTE3lVHDFqZpZDh
+ DmXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUb+PDRU92HKE2GJZgFjdIVFxu4PF0BdM+aT9M+V2+uosZKcBgEVb9RW0GyQjrCav7Ko75cB9iWmuzDBda5KzNMBSPjNc8=
+X-Gm-Message-State: AOJu0Yygjk/fH030gZyRV5thuVH4VRQXvkk1WxvZpLcbl9djpyPnJYxo
+ qy0QaSPnZcdEci6oP0tu4lVsqdM29B3+UiFhKKVv7xTlmT7u53tsQcJzq1zFZV1dSqHo9UzDxFO
+ QWxw1D8cv4sRS5QsVI86zSsndgl8V8C1fWO2+GRPgLe3pYgmNgmJs
+X-Received: by 2002:ac8:590c:0:b0:439:a36f:eaeb with SMTP id
+ d75a77b69052e-43fb0d79eefmr103798471cf.0.1716843058107; 
+ Mon, 27 May 2024 13:50:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9/xmoV51LNJT9cDY4XsfvW8h908ZeKOddHPFXXkXWLjeZIl2hLDSqdpPiwVDHkBw/2WP6VA==
+X-Received: by 2002:ac8:590c:0:b0:439:a36f:eaeb with SMTP id
+ d75a77b69052e-43fb0d79eefmr103798231cf.0.1716843057325; 
+ Mon, 27 May 2024 13:50:57 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43fb18b0cc9sm36888651cf.69.2024.05.27.13.50.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 May 2024 13:50:56 -0700 (PDT)
+Date: Mon, 27 May 2024 16:50:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yuan Liu <yuan1.liu@intel.com>
+Cc: farosas@suse.de, qemu-devel@nongnu.org, nanhai.zou@intel.com
+Subject: Re: [PATCH v6 2/7] migration/multifd: put IOV initialization into
+ compression method
+Message-ID: <ZlTyLrRrSYkHjutG@x1n>
+References: <20240505165751.2392198-1-yuan1.liu@intel.com>
+ <20240505165751.2392198-3-yuan1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="mcc/3NXhJlZJglzb"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240527081421.2258624-5-zhao1.liu@intel.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20240505165751.2392198-3-yuan1.liu@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,550 +102,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---mcc/3NXhJlZJglzb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, May 27, 2024 at 04:14:19PM +0800, Zhao Liu wrote:
-> Refer to scripts/simpletrace.py, parse and check the simple trace
-> backend binary trace file.
->=20
-> Note, in order to keep certain backtrace information to get frame,
-> adjust the cargo debug level for release version to "line-tables-only",
-> which slows down the program, but is necessary.
->=20
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+On Mon, May 06, 2024 at 12:57:46AM +0800, Yuan Liu wrote:
+> Different compression methods may require different numbers of IOVs.
+> Based on streaming compression of zlib and zstd, all pages will be
+> compressed to a data block, so two IOVs are needed for packet header
+> and compressed data block.
+> 
+> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 > ---
->  scripts/simpletrace-rust/Cargo.lock  |  79 +++++++++
->  scripts/simpletrace-rust/Cargo.toml  |   4 +
->  scripts/simpletrace-rust/src/main.rs | 253 ++++++++++++++++++++++++++-
->  3 files changed, 329 insertions(+), 7 deletions(-)
->=20
-> diff --git a/scripts/simpletrace-rust/Cargo.lock b/scripts/simpletrace-ru=
-st/Cargo.lock
-> index 3d815014eb44..37d80974ffe7 100644
-> --- a/scripts/simpletrace-rust/Cargo.lock
-> +++ b/scripts/simpletrace-rust/Cargo.lock
-> @@ -2,6 +2,21 @@
->  # It is not intended for manual editing.
->  version =3D 3
-> =20
-> +[[package]]
-> +name =3D "addr2line"
-> +version =3D "0.21.0"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "8a30b2e23b9e17a9f90641c7ab1549cd9b44f296d3ccbf309d2863cfe3=
-98a0cb"
-> +dependencies =3D [
-> + "gimli",
-> +]
-> +
-> +[[package]]
-> +name =3D "adler"
-> +version =3D "1.0.2"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "f26201604c87b1e01bd3d98f8d5d9a8fcbb815e8cedb41ffccbeb4bf59=
-3a35fe"
-> +
->  [[package]]
->  name =3D "aho-corasick"
->  version =3D "1.1.3"
-> @@ -60,6 +75,33 @@ dependencies =3D [
->   "windows-sys",
->  ]
-> =20
-> +[[package]]
-> +name =3D "backtrace"
-> +version =3D "0.3.71"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "26b05800d2e817c8b3b4b54abd461726265fa9789ae34330622f2db9ee=
-696f9d"
-> +dependencies =3D [
-> + "addr2line",
-> + "cc",
-> + "cfg-if",
-> + "libc",
-> + "miniz_oxide",
-> + "object",
-> + "rustc-demangle",
-> +]
-> +
-> +[[package]]
-> +name =3D "cc"
-> +version =3D "1.0.98"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "41c270e7540d725e65ac7f1b212ac8ce349719624d7bcff99f8e2e488e=
-8cf03f"
-> +
-> +[[package]]
-> +name =3D "cfg-if"
-> +version =3D "1.0.0"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2=
-da40fd"
-> +
->  [[package]]
->  name =3D "clap"
->  version =3D "4.5.4"
-> @@ -93,18 +135,48 @@ version =3D "1.0.1"
->  source =3D "registry+https://github.com/rust-lang/crates.io-index"
->  checksum =3D "0b6a852b24ab71dffc585bcb46eaf7959d175cb865a7152e35b348d1b2=
-960422"
-> =20
-> +[[package]]
-> +name =3D "gimli"
-> +version =3D "0.28.1"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "4271d37baee1b8c7e4b708028c57d816cf9d2434acb33a549475f78c18=
-1f6253"
-> +
->  [[package]]
->  name =3D "is_terminal_polyfill"
->  version =3D "1.70.0"
->  source =3D "registry+https://github.com/rust-lang/crates.io-index"
->  checksum =3D "f8478577c03552c21db0e2724ffb8986a5ce7af88107e6be5d2ee6e158=
-c12800"
-> =20
-> +[[package]]
-> +name =3D "libc"
-> +version =3D "0.2.155"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "97b3888a4aecf77e811145cadf6eef5901f4782c53886191b2f693f247=
-61847c"
-> +
->  [[package]]
->  name =3D "memchr"
->  version =3D "2.7.2"
->  source =3D "registry+https://github.com/rust-lang/crates.io-index"
->  checksum =3D "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56=
-c76c1d"
-> =20
-> +[[package]]
-> +name =3D "miniz_oxide"
-> +version =3D "0.7.3"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "87dfd01fe195c66b572b37921ad8803d010623c0aca821bea2302239d1=
-55cdae"
-> +dependencies =3D [
-> + "adler",
-> +]
-> +
-> +[[package]]
-> +name =3D "object"
-> +version =3D "0.32.2"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "a6a622008b6e321afc04970976f62ee297fdbaa6f95318ca343e3eebb9=
-648441"
-> +dependencies =3D [
-> + "memchr",
-> +]
-> +
->  [[package]]
->  name =3D "once_cell"
->  version =3D "1.19.0"
-> @@ -158,10 +230,17 @@ version =3D "0.8.3"
->  source =3D "registry+https://github.com/rust-lang/crates.io-index"
->  checksum =3D "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e17943=
-9d1f56"
-> =20
-> +[[package]]
-> +name =3D "rustc-demangle"
-> +version =3D "0.1.24"
-> +source =3D "registry+https://github.com/rust-lang/crates.io-index"
-> +checksum =3D "719b953e2095829ee67db738b3bfa9fa368c94900df327b3f07fe6e794=
-d2fe1f"
-> +
->  [[package]]
->  name =3D "simpletrace-rust"
->  version =3D "0.1.0"
->  dependencies =3D [
-> + "backtrace",
->   "clap",
->   "once_cell",
->   "regex",
-> diff --git a/scripts/simpletrace-rust/Cargo.toml b/scripts/simpletrace-ru=
-st/Cargo.toml
-> index 24a79d04e566..23a3179de01c 100644
-> --- a/scripts/simpletrace-rust/Cargo.toml
-> +++ b/scripts/simpletrace-rust/Cargo.toml
-> @@ -7,7 +7,11 @@ authors =3D ["Zhao Liu <zhao1.liu@intel.com>"]
->  license =3D "GPL-2.0-or-later"
-> =20
->  [dependencies]
-> +backtrace =3D "0.3"
->  clap =3D "4.5.4"
->  once_cell =3D "1.19.0"
->  regex =3D "1.10.4"
->  thiserror =3D "1.0.20"
-> +
-> +[profile.release]
-> +debug =3D "line-tables-only"
-> diff --git a/scripts/simpletrace-rust/src/main.rs b/scripts/simpletrace-r=
-ust/src/main.rs
-> index b3b8baee7c66..f9a71d8dc243 100644
-> --- a/scripts/simpletrace-rust/src/main.rs
-> +++ b/scripts/simpletrace-rust/src/main.rs
-> @@ -13,17 +13,24 @@
-> =20
->  mod trace;
-> =20
-> +use std::collections::HashMap;
->  use std::env;
->  use std::fs::File;
->  use std::io::Error as IOError;
->  use std::io::ErrorKind;
->  use std::io::Read;
-> +use std::mem::size_of;
-> =20
-> +use backtrace::Backtrace;
->  use clap::Arg;
->  use clap::Command;
->  use thiserror::Error;
->  use trace::Event;
-> =20
-> +const DROPPED_EVENT_ID: u64 =3D 0xfffffffffffffffe;
-> +const HEADER_MAGIC: u64 =3D 0xf2b177cb0aa429b4;
-> +const HEADER_EVENT_ID: u64 =3D 0xffffffffffffffff;
-> +
->  const RECORD_TYPE_MAPPING: u64 =3D 0;
->  const RECORD_TYPE_EVENT: u64 =3D 1;
-> =20
-> @@ -32,10 +39,25 @@ pub enum Error
->  {
->      #[error("usage: {0} [--no-header] <trace-events> <trace-file>")]
->      CliOptionUnmatch(String),
-> +    #[error("Invalid event name ({0})")]
-> +    InvalidEventName(String),
-> +    #[error("Not a valid trace file, header id {0} !=3D {1}")]
-> +    InvalidHeaderId(u64, u64),
-> +    #[error("Not a valid trace file, header magic {0} !=3D {1}")]
-> +    InvalidHeaderMagic(u64, u64),
->      #[error("Failed to read file: {0}")]
->      ReadFile(IOError),
-> +    #[error(
-> +        "event {0} is logged but is not declared in the trace events \
-> +        file, try using trace-events-all instead."
-> +    )]
-> +    UnknownEvent(String),
->      #[error("Unknown record type ({0})")]
->      UnknownRecType(u64),
-> +    #[error("Unknown version {0} of tracelog format!")]
-> +    UnknownVersion(u64),
-> +    #[error("Log format {0} not supported with this QEMU release!")]
-> +    UnsupportedVersion(u64),
->  }
-> =20
->  pub type Result<T> =3D std::result::Result<T, Error>;
-> @@ -98,19 +120,22 @@ struct LogHeader
->      version: u64,
->  }
-> =20
-> +const LOG_HDR_LEN: usize =3D size_of::<LogHeader>();
-> +
->  impl ReadHeader for LogHeader
->  {
->      fn read_header(mut fobj: &File) -> Result<Self>
->      {
-> -        let mut raw_hdr =3D [0u8; 24];
-> +        let mut raw_hdr =3D [0u8; LOG_HDR_LEN];
->          fobj.read_exact(&mut raw_hdr).map_err(Error::ReadFile)?;
-> =20
->          /*
->           * Safe because the size of log header (struct LogHeader)
->           * is 24 bytes, which is ensured by simple trace backend.
->           */
-> -        let hdr =3D
-> -            unsafe { std::mem::transmute::<[u8; 24], LogHeader>(raw_hdr)=
- };
-> +        let hdr =3D unsafe {
-> +            std::mem::transmute::<[u8; LOG_HDR_LEN], LogHeader>(raw_hdr)
-> +        };
->          Ok(hdr)
+>  migration/multifd-zlib.c |  7 +++++++
+>  migration/multifd-zstd.c |  8 +++++++-
+>  migration/multifd.c      | 22 ++++++++++++----------
+>  3 files changed, 26 insertions(+), 11 deletions(-)
+> 
+> diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+> index 737a9645d2..2ced69487e 100644
+> --- a/migration/multifd-zlib.c
+> +++ b/migration/multifd-zlib.c
+> @@ -70,6 +70,10 @@ static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
+>          goto err_free_zbuff;
 >      }
->  }
-> @@ -142,6 +167,8 @@ struct RecordHeader
->      record_pid: u32,
->  }
-> =20
-> +const REC_HDR_LEN: usize =3D size_of::<RecordHeader>();
+>      p->compress_data = z;
 > +
->  impl RecordHeader
->  {
->      fn extract_record(&self, mut fobj: &File) -> Result<RecordInfo>
-> @@ -167,20 +194,232 @@ impl ReadHeader for RecordHeader
->  {
->      fn read_header(mut fobj: &File) -> Result<Self>
->      {
-> -        let mut raw_hdr =3D [0u8; 24];
-> +        let mut raw_hdr =3D [0u8; REC_HDR_LEN];
->          fobj.read_exact(&mut raw_hdr).map_err(Error::ReadFile)?;
-> =20
->          /*
->           * Safe because the size of record header (struct RecordHeader)
->           * is 24 bytes, which is ensured by simple trace backend.
->           */
-> -        let hdr: RecordHeader =3D
-> -            unsafe { std::mem::transmute::<[u8; 24], RecordHeader>(raw_h=
-dr) };
-> +        let hdr: RecordHeader =3D unsafe {
-> +            std::mem::transmute::<[u8; REC_HDR_LEN], RecordHeader>(raw_h=
-dr)
-> +        };
->          Ok(hdr)
+> +    /* Needs 2 IOVs, one for packet header and one for compressed data */
+> +    p->iov = g_new0(struct iovec, 2);
+> +
+>      return 0;
+>  
+>  err_free_zbuff:
+> @@ -101,6 +105,9 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
+>      z->buf = NULL;
+>      g_free(p->compress_data);
+>      p->compress_data = NULL;
+> +
+> +    g_free(p->iov);
+> +    p->iov = NULL;
+>  }
+>  
+>  /**
+> diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+> index 256858df0a..ca17b7e310 100644
+> --- a/migration/multifd-zstd.c
+> +++ b/migration/multifd-zstd.c
+> @@ -52,7 +52,6 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+>      struct zstd_data *z = g_new0(struct zstd_data, 1);
+>      int res;
+>  
+> -    p->compress_data = z;
+>      z->zcs = ZSTD_createCStream();
+>      if (!z->zcs) {
+>          g_free(z);
+> @@ -77,6 +76,10 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+>          error_setg(errp, "multifd %u: out of memory for zbuff", p->id);
+>          return -1;
 >      }
+> +    p->compress_data = z;
+> +
+> +    /* Needs 2 IOVs, one for packet header and one for compressed data */
+> +    p->iov = g_new0(struct iovec, 2);
+>      return 0;
 >  }
-> =20
-> -pub struct EventArgPayload {}
-> +#[derive(Clone)]
-> +pub struct EventArgPayload
-> +{
-> +    raw_val: Option<u64>,
-> +    raw_str: Option<String>,
-> +}
+>  
+> @@ -98,6 +101,9 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
+>      z->zbuff = NULL;
+>      g_free(p->compress_data);
+>      p->compress_data = NULL;
 > +
-> +impl EventArgPayload
-> +{
-> +    fn new(raw_val: Option<u64>, raw_str: Option<String>) -> Self
-> +    {
-> +        EventArgPayload { raw_val, raw_str }
+> +    g_free(p->iov);
+> +    p->iov = NULL;
+>  }
+>  
+>  /**
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index f317bff077..d82885fdbb 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -137,6 +137,13 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+>          p->write_flags |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
+>      }
+>  
+> +    if (multifd_use_packets()) {
+> +        /* We need one extra place for the packet header */
+> +        p->iov = g_new0(struct iovec, p->page_count + 1);
+> +    } else {
+> +        p->iov = g_new0(struct iovec, p->page_count);
 > +    }
 > +
-> +    fn get_payload_str(
-> +        offset: &mut usize,
-> +        args_payload: &[u8],
-> +    ) -> Result<EventArgPayload>
-> +    {
-> +        let length =3D u32::from_le_bytes(
-> +            args_payload[*offset..(*offset + 4)].try_into().unwrap(),
-> +        );
-> +        *offset +=3D 4;
-> +        let raw_str: &[u8] =3D args_payload
-> +            .get(*offset..(*offset + length as usize))
-> +            .unwrap();
-> +        *offset +=3D length as usize;
-> +        Ok(EventArgPayload::new(
-> +            None,
-> +            Some(String::from_utf8_lossy(raw_str).into_owned()),
-> +        ))
-> +    }
-> +
-> +    fn get_payload_val(
-> +        offset: &mut usize,
-> +        args_payload: &[u8],
-> +    ) -> Result<EventArgPayload>
-> +    {
-> +        let raw_val =3D u64::from_le_bytes(
-> +            args_payload[*offset..(*offset + 8)].try_into().unwrap(),
-> +        );
-> +        *offset +=3D 8;
-> +        Ok(EventArgPayload::new(Some(raw_val), None))
-> +    }
-> +}
-> +
-> +#[derive(Clone)]
-> +struct EventEntry
-> +{
-> +    event: Event,
-> +    event_id: u64,
-> +    timestamp_ns: u64,
-> +    record_pid: u32,
-> +    rec_args: Vec<EventArgPayload>,
-> +}
-> +
-> +impl EventEntry
-> +{
-> +    fn new(
-> +        event: &Event,
-> +        event_id: u64,
-> +        timestamp_ns: u64,
-> +        record_pid: u32,
-> +    ) -> Self
-> +    {
-> +        EventEntry {
-> +            event: event.clone(),
-> +            event_id,
-> +            timestamp_ns,
-> +            record_pid,
-> +            rec_args: Vec::new(),
-> +        }
-> +    }
-> +}
-> +
-> +fn get_mapping(mut fobj: &File) -> Result<(u64, String)>
-> +{
-> +    let mut event_id_buf =3D [0u8; 8];
-> +    fobj.read_exact(&mut event_id_buf)
-> +        .map_err(Error::ReadFile)?;
-> +    let event_id =3D u64::from_le_bytes(event_id_buf);
-> +
-> +    let mut len_buf =3D [0u8; 4];
-> +    fobj.read_exact(&mut len_buf).map_err(Error::ReadFile)?;
-> +
-> +    let len =3D u32::from_le_bytes(len_buf);
-> +    let mut name_buf =3D vec![0u8; len as usize];
-> +    fobj.read_exact(&mut name_buf).map_err(Error::ReadFile)?;
-> +    let name =3D String::from_utf8(name_buf.clone())
-> +        .map_err(|_| Error::InvalidEventName(format!("{:?}", name_buf)))=
-?;
-> +
-> +    Ok((event_id, name))
-> +}
-> +
-> +fn read_record(fobj: &File) -> Result<RecordInfo>
-> +{
-> +    let hdr =3D RecordHeader::read_header(fobj)?;
-> +    let info =3D hdr.extract_record(fobj)?;
-> +    Ok(info)
-> +}
-> +
-> +fn read_trace_header(fobj: &File) -> Result<()>
-> +{
-> +    let log_hdr =3D LogHeader::read_header(fobj)?;
-> +    if log_hdr.event_id !=3D HEADER_EVENT_ID {
-> +        return Err(Error::InvalidHeaderId(log_hdr.event_id, HEADER_EVENT=
-_ID));
-> +    }
-> +    if log_hdr.magic !=3D HEADER_MAGIC {
-> +        return Err(Error::InvalidHeaderMagic(log_hdr.magic, HEADER_MAGIC=
-));
-> +    }
-> +    if ![0, 2, 3, 4].contains(&(log_hdr.version as i64)) {
-> +        return Err(Error::UnknownVersion(log_hdr.version));
-> +    }
-> +    if log_hdr.version !=3D 4 {
-> +        return Err(Error::UnsupportedVersion(log_hdr.version));
-> +    }
-> +    Ok(())
-> +}
-> +
-> +fn read_trace_records(
-> +    events: &Vec<Event>,
-> +    fobj: &File,
-> +    analyzer: &mut Formatter,
-> +    read_header: bool,
-> +) -> Result<Vec<String>>
-> +{
-> +    /* backtrace::Backtrace needs this env variable. */
-> +    env::set_var("RUST_BACKTRACE", "1");
-> +    let bt =3D Backtrace::new();
-> +    let raw_frame =3D bt.frames().first().unwrap();
-> +    let frameinfo =3D raw_frame.symbols().first().unwrap();
-> +
-> +    let dropped_event =3D Event::build(
-> +        "Dropped_Event(uint64_t num_events_dropped)",
-> +        frameinfo.lineno().unwrap() + 1,
-> +        frameinfo.filename().unwrap().to_str().unwrap(),
-> +    )
-> +    .unwrap();
-
-Is the backtrace necessary? This trick was used in Python where it's
-part of the standard library, but I don't think there is any need for
-Dropped_Event to refer to this line in the source code.
-
-Maybe Rust has a way to do this at compile-time or you can hardcode
-values instead.
-
-> +
-> +    let mut event_mapping =3D HashMap::new();
-> +    for e in events {
-> +        event_mapping.insert(e.name.clone(), e.clone());
-> +    }
-> +
-> +    let drop_str =3D "dropped".to_string();
-> +    event_mapping.insert(drop_str.clone(), dropped_event.clone());
-> +    let mut event_id_to_name: HashMap<u64, String> =3D HashMap::new();
-> +    event_id_to_name.insert(DROPPED_EVENT_ID, drop_str.clone());
-> +
-> +    if !read_header {
-> +        for (event_id, event) in events.iter().enumerate() {
-> +            event_id_to_name.insert(event_id as u64, event.name.clone());
-> +        }
-> +    }
-> +
-> +    let mut fmt_strs =3D Vec::new();
-> +    loop {
-> +        let rtype =3D RecordType::read_type(fobj)?;
-> +        match rtype {
-> +            RecordType::Empty =3D> {
-> +                break;
-> +            }
-> +            RecordType::Mapping =3D> {
-> +                let (event_id, event_name) =3D
-> +                    get_mapping(fobj).expect("Error reading mapping");
-> +                event_id_to_name.insert(event_id, event_name);
-> +                continue;
-> +            }
-> +            RecordType::Event =3D> {
-> +                let rec =3D read_record(fobj).expect("Error reading reco=
-rd");
-> +                let event_name =3D
-> +                    event_id_to_name.get(&rec.event_id).unwrap().to_stri=
-ng();
-> +                let event =3D event_mapping
-> +                    .get(&event_name)
-> +                    .ok_or(Error::UnknownEvent(event_name))?;
-> +
-> +                let mut entry =3D EventEntry::new(
-> +                    event,
-> +                    rec.event_id,
-> +                    rec.timestamp_ns,
-> +                    rec.record_pid,
-> +                );
-> +                let mut offset =3D 0;
-> +
-> +                for arg in &event.args.props {
-> +                    let payload =3D if arg.is_string() {
-> +                        EventArgPayload::get_payload_str(
-> +                            &mut offset,
-> +                            &rec.args_payload,
-> +                        )?
-> +                    } else {
-> +                        EventArgPayload::get_payload_val(
-> +                            &mut offset,
-> +                            &rec.args_payload,
-> +                        )?
-> +                    };
-> +                    entry.rec_args.push(payload);
-> +                }
-> +
-> +                let fmt =3D analyzer.process_event(
-> +                    &entry.rec_args,
-> +                    &entry.event,
-> +                    entry.event_id,
-> +                    entry.timestamp_ns,
-> +                    entry.record_pid,
-> +                )?;
-> +                fmt_strs.push(fmt);
-> +            }
-> +        }
-> +    }
-> +    Ok(fmt_strs)
-> +}
-> =20
->  trait Analyzer
+>      return 0;
+>  }
+>  
+> @@ -150,6 +157,8 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+>   */
+>  static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
 >  {
-> --=20
-> 2.34.1
->=20
+> +    g_free(p->iov);
+> +    p->iov = NULL;
+>      return;
+>  }
+>  
+> @@ -228,6 +237,7 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+>   */
+>  static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+>  {
+> +    p->iov = g_new0(struct iovec, p->page_count);
+>      return 0;
+>  }
+>  
+> @@ -240,6 +250,8 @@ static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+>   */
+>  static void nocomp_recv_cleanup(MultiFDRecvParams *p)
+>  {
+> +    g_free(p->iov);
+> +    p->iov = NULL;
+>  }
 
---mcc/3NXhJlZJglzb
-Content-Type: application/pgp-signature; name="signature.asc"
+Are recv_setup()/recv_cleanup() for zstd/zlib missing?
 
------BEGIN PGP SIGNATURE-----
+If the iov will be managed by the compressors, I'm wondering whether we
+should start assert(p->iov) after send|recv_setup(), and assert(!p->iov)
+after send|recv_cleanup().  That'll guard all these.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZU8JYACgkQnKSrs4Gr
-c8gwngf/ZxDjs/1rtZDsUue0bRz45a0Qrte34ToZGCefX/voqqoLYOVHoBy9+H3H
-Sf3i8g28ploK4Ptgqda27aPZb2psKVwgtIFLuZjUKHI4/4okSGamo3h5Ny47sQ0s
-CBce8tsUrmosuakw3Y/2+f8gYlN//aNq37kqb1KCLIPZ3PbdMWPFqxSvK9Os5wR2
-zCXXSSkGzxEeX2lUHrkIJ3/0aEYu5djsnO2z4jhTWLWDZGFmvIpdZmAZ1Qa5QUBl
-R2A+3eGSgfblTZDZMrozUMoDsfpQaWhrvjQ0Ze2PBFziLMfYZSttCxJQUC7hAlGx
-eadl6Qt0W0ODphmk3v4lWcnMLMBpCQ==
-=hrf0
------END PGP SIGNATURE-----
+>  
+>  /**
+> @@ -783,8 +795,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+>      p->packet_len = 0;
+>      g_free(p->packet);
+>      p->packet = NULL;
+> -    g_free(p->iov);
+> -    p->iov = NULL;
+>      multifd_send_state->ops->send_cleanup(p, errp);
+>  
+>      return *errp == NULL;
+> @@ -1179,11 +1189,6 @@ bool multifd_send_setup(void)
+>              p->packet = g_malloc0(p->packet_len);
+>              p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+>              p->packet->version = cpu_to_be32(MULTIFD_VERSION);
+> -
+> -            /* We need one extra place for the packet header */
+> -            p->iov = g_new0(struct iovec, page_count + 1);
+> -        } else {
+> -            p->iov = g_new0(struct iovec, page_count);
+>          }
+>          p->name = g_strdup_printf("multifdsend_%d", i);
+>          p->page_size = qemu_target_page_size();
+> @@ -1353,8 +1358,6 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+>      p->packet_len = 0;
+>      g_free(p->packet);
+>      p->packet = NULL;
+> -    g_free(p->iov);
+> -    p->iov = NULL;
+>      g_free(p->normal);
+>      p->normal = NULL;
+>      g_free(p->zero);
+> @@ -1602,7 +1605,6 @@ int multifd_recv_setup(Error **errp)
+>              p->packet = g_malloc0(p->packet_len);
+>          }
+>          p->name = g_strdup_printf("multifdrecv_%d", i);
+> -        p->iov = g_new0(struct iovec, page_count);
+>          p->normal = g_new0(ram_addr_t, page_count);
+>          p->zero = g_new0(ram_addr_t, page_count);
+>          p->page_count = page_count;
+> -- 
+> 2.39.3
+> 
 
---mcc/3NXhJlZJglzb--
+-- 
+Peter Xu
 
 
