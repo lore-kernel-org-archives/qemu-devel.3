@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C44C6C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B402C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:10:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcu9-0004OQ-9a; Mon, 27 May 2024 12:08:58 -0400
+	id 1sBcvh-00058B-4w; Mon, 27 May 2024 12:10:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBctz-0004O4-TY
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:08:48 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcvg-00057y-CT
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:10:32 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcty-0001HK-An
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:08:47 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5295bcb9bc1so3036025e87.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:08:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcvQ-0001bx-LS
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:10:32 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42102c51524so24723495e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716826124; x=1717430924; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716826215; x=1717431015; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GamG97Ux0/L8hKMwuXcu1HfzEduv2jBbwd0nNTWbW0U=;
- b=MudH6EVQGwEaFVpltzjShNdIlWz4nQxqtpE3yRpGRjGmGQzdT7aRl+K3GsT7G649et
- Vy4HbOqWhuE+4bSF0ccPUlXuCy6sU+xPbw4eENbEg0FlKJiL0IPKe++Bv6aW5sZ3nhk7
- hRt41CWPFaPYxAvF5XxUqCAlDEvoiavGE17WqzTl9thfizGfbjfgh5wSjxkEIy+XboNJ
- yJXAr3vUXEaIZphSjec4MDuikOtdYcBanxsvx/i2E1Ex+LaHmymkynCe4MuVgK1qbyhR
- CB4A7Qkyhv6YM1reGwTGrsoquPnpMqRenggqEKmxYN3MBuaO8Jzui6aZY47RKWNdKSDk
- 02kQ==
+ bh=R9qSmOdrCVnRR6Mk4dZsp5uLeuOZ6apDqnW//et28CY=;
+ b=KprlFfGvgUOMXuMQvUfTs/ch/kDLdtI61lWvvJ1ZFVP6vZ7bFx5vJoAryT48PnPNWm
+ EMH3bGIU7LSC8mcYrQWepX3qrgIRTGsmn3neeqZdFGi40ySKXFspOJhtKfNk89CiBqP3
+ 0smB7iZTVlVOy1/06vU+dinCYlBAgd08xZhuJJzv6Y8yO7ObJLNpTsKY8hXuAzFJBpfg
+ ek/dAhLKopNcCiBIwouFXW5uZt+EDr9IzJgpSRRbGwb7DJuPsMfTU4gUevs4wnGkfYDM
+ iXmVbn1Cup0LmSqgLqVgPYtKXQUH8+KDJR87nb5rvswrHnpBpvmU21pkztgynj8CqT1M
+ tM0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716826124; x=1717430924;
+ d=1e100.net; s=20230601; t=1716826215; x=1717431015;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GamG97Ux0/L8hKMwuXcu1HfzEduv2jBbwd0nNTWbW0U=;
- b=m3oHqr5aRejBiq7EuoClpoieMjrE3nE2Vf7WAs2s50cqPl2DVkW8YBfhuXCF6xiYTS
- 4OcfazXx+WyYdcWRAR88ZP0F66weI72QfeB9r0TGaq2c9tlk6b+CFmXTJEPH23Hs9PM+
- /TBnEq1j8P7L8zJ+XT8MKc/4P3unm7dj4/dBT36bpGTlWc0k3DM8OiDjnWaWoRoThiXF
- N/WAy3aw0/zo/sCAa9y1myj28SfI0CXSzpysZWtDKrRA2ISWc7Yn89lISLgbt2lbgZDR
- f5B7Svjf6l+3eM2zkkfbh2mqgFVenzz25YPgS3EYo1es6VRLS2qV9CUdYe14xzEkcLem
- +SFQ==
+ bh=R9qSmOdrCVnRR6Mk4dZsp5uLeuOZ6apDqnW//et28CY=;
+ b=RnYB4R6NhPBaEBNpA6KwuuF7LIybu+hSYgqeseWh62u/nJS8HwEkwJCNhuuH0nJWMs
+ /LrbctGfkI9/aoMw4EUHFLFPMkT1wY/laOIbOcpC1udJLUh01Eq2znk8/Z6W1PSQa+lw
+ iO35ALQQNx3dvnicfKdPmuobHSXGnA0dQ7iGS+CJB6h976yHZhWGXAxmj9AalUBkleiB
+ rOWLaR40NiKESukozYRaBRUZk7eex3cYMDW0cJwCqxpIcsm0gCr+tljCphJVaSL28aOZ
+ Aj371t3Utu5uBlS+iKAqXSs7EPNv3W5ZA4J/Nm4YADbeA5+h7rP83xjZojW4LqlWSJsa
+ Zcjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUI+yFGE0RHgznLNVpHrHfQ9+/NWBjbQFP5YJlVg8GMc0eOr8DKVL4M6LesKw5KsuoSJC5vDf0rk6g+vYPilSYvb++b36Y=
-X-Gm-Message-State: AOJu0Yz3w44GLwX9vteUL6YlxZ1Ki1BWkffvcAirRjN6P5sVFb0ktRTu
- hVKwTNsM5aY7DZ0ozXpPjK2y/bNya5C0sjJrxkG6HwSl9BIH81VAsCdBVCJxnno=
-X-Google-Smtp-Source: AGHT+IGiou8RF1n1FREU0cX7jVJ/fobZZnDxb8Okou3cYV9Lz/zlnriEvI6GKF6ryhhLYc/Zo8cbMg==
-X-Received: by 2002:ac2:5f46:0:b0:51e:e8c9:f639 with SMTP id
- 2adb3069b0e04-52964d9f70dmr5223166e87.15.1716826124037; 
- Mon, 27 May 2024 09:08:44 -0700 (PDT)
+ AJvYcCUOpBuVPSJwsVJns8Bum9YS5nrIGwaTnZVyWio1gcl0lxmhoX5cQQF3AgGD7HpR8yiAtjUAHl2fiXSCrFzXWiB+7e6S5x0=
+X-Gm-Message-State: AOJu0Yy2DysoYopfFkP4yas8aaxnvNZ3naNWFB+SssZvnDjgDeAiqrf9
+ MbTg4EelcHUq4JdwcqMK6BpGE2n6nNQZsSfOxaWX9ma0eXEzbDiRiyLUYSgq02A=
+X-Google-Smtp-Source: AGHT+IH0J+a7Uq+ZMw+hXeLyApfdhVWMU2QpApI3DSam8AE7bf15zO64/zBOzVYFhlcMleXuk0ZMRw==
+X-Received: by 2002:a05:600c:1386:b0:41c:66:18c2 with SMTP id
+ 5b1f17b1804b1-421015a6086mr105678435e9.4.1716826214964; 
+ Mon, 27 May 2024 09:10:14 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.152.134])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a631d1c6538sm43435166b.17.2024.05.27.09.08.42
+ 5b1f17b1804b1-421089afcfdsm113725695e9.36.2024.05.27.09.10.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 09:08:43 -0700 (PDT)
-Message-ID: <61fc8861-9ea2-4d85-a727-37b1cb5e818b@linaro.org>
-Date: Mon, 27 May 2024 18:08:41 +0200
+ Mon, 27 May 2024 09:10:14 -0700 (PDT)
+Message-ID: <f8ef776b-3ae8-416f-ba73-bf141bbd33b8@linaro.org>
+Date: Mon, 27 May 2024 18:10:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fuzz: disable leak-detection for oss-fuzz builds
-To: Alexander Bulekov <alxndr@bu.edu>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
-References: <20240527150001.325565-1-alxndr@bu.edu>
+Subject: Re: [PATCH] aspeed/smc: Reintroduce "dram-base" property for AST2700
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+References: <20240527124315.35356-1-clg@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240527150001.325565-1-alxndr@bu.edu>
+In-Reply-To: <20240527124315.35356-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,28 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/5/24 16:59, Alexander Bulekov wrote:
-> When we are building for OSS-Fuzz, we want to ensure that the fuzzer
-> targets are actually created, regardless of leaks. Leaks will be
-> detected by the subsequent tests of the individual fuzz-targets.
+On 27/5/24 14:43, Cédric Le Goater wrote:
+> The Aspeed SMC device model use to have a 'sdram_base' property. It
+> was removed by commit d177892d4a48 ("aspeed/smc: Remove unused
+> "sdram-base" property") because previous changes simplified the DMA
+> transaction model to use an offset in RAM and not the physical
+> address.
 > 
-> Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+> The AST2700 SoC has larger address space (64-bit) and a new register
+> DMA DRAM Side Address High Part (0x7C) is introduced to deal with the
+> high bits of the DMA address. To be able to compute the offset of the
+> DMA transaction, as done on the other SoCs, we will need to know where
+> the DRAM is mapped in the address space. Re-introduce a "dram-base"
+> property to hold this value.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   scripts/oss-fuzz/build.sh | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
-> index 5238f83343..7398298173 100755
-> --- a/scripts/oss-fuzz/build.sh
-> +++ b/scripts/oss-fuzz/build.sh
-> @@ -92,6 +92,7 @@ make install DESTDIR=$DEST_DIR/qemu-bundle
->   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/bin
->   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/libexec
->   
-> +export ASAN_OPTIONS=detect_leaks=0
->   targets=$(./qemu-fuzz-i386 | grep generic-fuzz | awk '$1 ~ /\*/  {print $2}')
->   base_copy="$DEST_DIR/qemu-fuzz-i386-target-$(echo "$targets" | head -n 1)"
->   
+>   include/hw/ssi/aspeed_smc.h | 1 +
+>   hw/ssi/aspeed_smc.c         | 1 +
+>   2 files changed, 2 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
