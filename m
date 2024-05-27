@@ -4,108 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672C8C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332F7C25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUVp-0003jg-0j; Mon, 27 May 2024 03:11:17 -0400
+	id 1sBUWh-0005H5-JT; Mon, 27 May 2024 03:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sBUVn-0003hO-Hk; Mon, 27 May 2024 03:11:15 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sBUVl-0003RT-NI; Mon, 27 May 2024 03:11:15 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44R77cnv008956; Mon, 27 May 2024 07:11:01 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Dibm.com; _h=3Dcc?=
- =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
- =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3DFmY?=
- =?UTF-8?Q?1ucFdc4dSpXgtu0sK2/aASJ5FxS+98Ial1bXooSg=3D;_b=3DWPcTfS/JdtDJqK?=
- =?UTF-8?Q?6nYW70eboTjuhrAobVSw7s9OPdZdrMoIh5z7XnF6Qfzlupka4k0NUD_tV/N6j84?=
- =?UTF-8?Q?NNua5QCeuLsSOus0VrGi/FZ2cFo6RRwEnKV7cwYNOx6EEPR6OjnyYVlZd8kJ_na?=
- =?UTF-8?Q?yG+1rhsfEI/zpGhdzlT79FLbjjD+yPaS7zooUFK/OUPKnW55ca8UpLc54qGpQkj?=
- =?UTF-8?Q?mOX_JH+5+5iUqV2hJQGJmV/ujlHDW/6/QKu1WYncuo/4wJfUWtLd5i8nPnCw5aI?=
- =?UTF-8?Q?EXn3CAp72_JIJksEMEPKrjGFLq9KcpPzY7aMKLnlXb6xYOa8vUIGkx/TBCWN50m?=
- =?UTF-8?Q?totu9e0QKGjb6fr_xw=3D=3D_?=
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ycngng0an-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 May 2024 07:11:00 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44R7B0mQ013995;
- Mon, 27 May 2024 07:11:00 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ycngng0ak-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 May 2024 07:10:59 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44R4t5oQ004501; Mon, 27 May 2024 07:10:58 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ybuanqhdc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 May 2024 07:10:58 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44R7AqEl19530038
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 May 2024 07:10:55 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C6AF420040;
- Mon, 27 May 2024 07:10:52 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E360720043;
- Mon, 27 May 2024 07:10:49 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
- [9.179.2.64]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 May 2024 07:10:49 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH v3 02/11] ppc/pseries: Add Power11 cpu type
-Date: Mon, 27 May 2024 12:40:33 +0530
-Message-ID: <20240527071042.489540-3-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240527071042.489540-1-adityag@linux.ibm.com>
-References: <20240527071042.489540-1-adityag@linux.ibm.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBUWa-00056L-Fo; Mon, 27 May 2024 03:12:04 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBUWY-0003bE-GB; Mon, 27 May 2024 03:12:04 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-681a4427816so2203126a12.3; 
+ Mon, 27 May 2024 00:12:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716793920; x=1717398720; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xcPXDt1IIr0L6J8Lr6Ks0hJ2mvxtTwgEMt3GLruiSyE=;
+ b=IofJtuwHm0iBMJW9WwJ8IkXPVGH76jUc8WuQgAfKhYGCGInMMIi7sTusMRsW0VDTLE
+ 0YiLhViOZk7/8KP+iuoRY/R/Nq82MnomywhHCJcl0UWW+sbfdgoNzxrQNm9qwJdXKnbE
+ xz1othBv0XMPYXgiq33ciDftNL6hJzkixsHYrvGGqBgQeKxSQKbNLetkRt24stFC3qOE
+ zuqcEPV0ZQnA3GnsVm2m5OrV5ogaLaDVBJlDM3I6kjCXwKv3U69v0P8VQfbRwKA85C8f
+ ND/mt3I0/4AXfMx4be/XXme2+Ya6ylXtRxP2iTyTwuRgKcP72eAF4D/Ivt1Hj79jI3Pm
+ uKDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716793920; x=1717398720;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=xcPXDt1IIr0L6J8Lr6Ks0hJ2mvxtTwgEMt3GLruiSyE=;
+ b=MM+pKvaZ1p+RnULAbfk09rwJxSiogPJgyF3FX3EWI1Lb4TQTgB/M8msWLXcwh8vFjY
+ lX7d/xIip2lAk+Cacb12wbdNML+39V4evkmwld3L8bU6+sG3/nbDTc80nj1XYG9Vd9An
+ izUDCa9BXmk3vYXdwKlyNMAwCRkQ7OAmLHIDL1N73i2t7Jvg9q0P/B6hyKzQfqgCciCT
+ Bykayn8JHl9HQDLnDYC9M3b5K+u1kxv/6BxBDwwUMaQL3UfDler2V9fuVWcajxlsL6UA
+ 4fPqBJ3/cxjvDZ/PjadWLUJogdercXXIHHZZDbUYcgi4QOXbd5VArCijakZLQeNCWIPw
+ IYcQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWP/Xu4yyXJWZmPnxKmoJpp9JxeSafTDI1pKhHWtjFcP9R97WH6+s7/+4zDPlvSjjO5AYWjYEI0n631410t7YgWPSy2MFbW+VBzM5ELac7tn5cJyl+U6w+Q3/gOQ==
+X-Gm-Message-State: AOJu0YyMS80XA0xGhvxIXKnTRCO/kBDX/mOSBZeJSZO2uR0BbjuZZqgk
+ aMFifzrL9pIianytrps3A3MpDYotkgNNBNAbJ8hw+x1aYQEBBwyF2+fXKrbu
+X-Google-Smtp-Source: AGHT+IFXCSkPaBM6RMQj5mW/HWFBC4CDt/Fas9cry7oYwaRrzgu9lDjsV3bOVmkr5i30A2S00pm55A==
+X-Received: by 2002:a17:90a:1fc9:b0:2bd:f45e:6105 with SMTP id
+ 98e67ed59e1d1-2bf5ee1be4cmr7417746a91.22.1716793920351; 
+ Mon, 27 May 2024 00:12:00 -0700 (PDT)
+Received: from localhost ([1.146.73.168]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2bf5f987248sm5068992a91.44.2024.05.27.00.11.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 00:12:00 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: R3tBAOtRWtK-HNfNLbTUs-2f1Sn4tmgo
-X-Proofpoint-GUID: zpFc5fNTfZMthXZd2prOHq9ucJMmd51t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-26_09,2024-05-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 mlxscore=0 impostorscore=0 phishscore=0
- clxscore=1011 mlxlogscore=730 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2405010000 definitions=main-2405270057
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Date: Mon, 27 May 2024 17:11:52 +1000
+Message-Id: <D1K8NFHIMZHH.3BK3UEC8IV6YF@gmail.com>
+Cc: "Halil Pasic" <pasic@linux.ibm.com>, "Christian Borntraeger"
+ <borntraeger@linux.ibm.com>, "Peter Xu" <peterx@redhat.com>, "Fabiano
+ Rosas" <farosas@suse.de>, "Laurent Vivier" <lvivier@redhat.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH 1/3] hw/intc/s390_flic: Migrate pending state
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Thomas Huth" <thuth@redhat.com>, "David Hildenbrand"
+ <david@redhat.com>, "Richard Henderson" <richard.henderson@linaro.org>,
+ <qemu-s390x@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240525131241.378473-1-npiggin@gmail.com>
+ <20240525131241.378473-2-npiggin@gmail.com>
+ <3bf1025b-021a-42fa-a4cc-d3cd9ea90676@redhat.com>
+ <10e876de-b973-4016-9155-960383d46297@linaro.org>
+ <22e05fc7-6256-41b3-9f0d-f983f169b08c@redhat.com>
+ <88f79ea3-8b83-45c2-bd15-cdf16ffeac9a@redhat.com>
+In-Reply-To: <88f79ea3-8b83-45c2-bd15-cdf16ffeac9a@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,52 +103,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add sPAPR CPU Core definition for Power11
+On Mon May 27, 2024 at 3:51 PM AEST, Thomas Huth wrote:
+> On 26/05/2024 22.33, David Hildenbrand wrote:
+> > Am 26.05.24 um 21:44 schrieb Richard Henderson:
+> >> On 5/26/24 08:53, David Hildenbrand wrote:
+> >>> Am 25.05.24 um 15:12 schrieb Nicholas Piggin:
+> >>>> The flic pending state is not migrated, so if the machine is migrate=
+d
+> >>>> while an interrupt is pending, it can be lost. This shows up in
+> >>>> qtest migration test, an extint is pending (due to console writes?)
+> >>>> and the CPU waits via s390_cpu_set_psw and expects the interrupt to
+> >>>> wake it. However when the flic pending state is lost, s390_cpu_has_i=
+nt
+> >>>> returns false, so s390_cpu_exec_interrupt falls through to halting
+> >>>> again.
+> >>>>
+> >>>> Fix this by migrating pending. This prevents the qtest from hanging.
+> >>>> Does service_param need to be migrated? Or the IO lists?
+> >>>>
+> >>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> >>>> ---
+> >>>> =C2=A0 hw/intc/s390_flic.c | 1 +
+> >>>> =C2=A0 1 file changed, 1 insertion(+)
+> >>>>
+> >>>> diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+> >>>> index 6771645699..b70cf2295a 100644
+> >>>> --- a/hw/intc/s390_flic.c
+> >>>> +++ b/hw/intc/s390_flic.c
+> >>>> @@ -369,6 +369,7 @@ static const VMStateDescription=20
+> >>>> qemu_s390_flic_vmstate =3D {
+> >>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .fields =3D (const VMStateField[]) {
+> >>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT8=
+(simm, QEMUS390FLICState),
+> >>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT8=
+(nimm, QEMUS390FLICState),
+> >>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32(pending, =
+QEMUS390FLICState),
+> >>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_END_O=
+F_LIST()
+> >>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> >>>> =C2=A0 };
+> >>>
+> >>> Likely you have to handle this using QEMU compat machines.
+> >>
+> >> Well, since existing migration is broken, I don't think you have to pr=
+eserve=20
+> >=20
+> > Migration is broken only in some case "while an interrupt is pending, i=
+t can=20
+> > be lost".
+> >=20
+> >> compatibility.=C2=A0 But you do have to bump the version number.
+> >=20
+> > Looking at it, this is TCG only, so likely we don't care that much abou=
+t=20
+> > migration compatibility. But I have no idea what level of compatibility=
+ we=20
+> > want to support there.
+>
+> Yes, this seems to only affect the TCG-only flic device, where migration =
+has=20
+> never been working very reliably. So I think we don't really need the who=
+le=20
+> compat-machine dance here. But I think we should at least bump the=20
+> version_id to 2 now and then use
+>
+>     VMSTATE_UINT32_V(pending, QEMUS390FLICState, 2);
+>
+> for the new field. That way we would at least support forward migrations=
+=20
+> without too much hassle.
 
-Cc: David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
-Cc: Cédric Le Goater <clg@kaod.org>
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- docs/system/ppc/pseries.rst | 6 +++---
- hw/ppc/spapr_cpu_core.c     | 1 +
- 2 files changed, 4 insertions(+), 3 deletions(-)
+Well if you could rebuild this state by checking sources or something
+it might be possible to avoid. Or if you could always mark pending and
+software can tolerate superflous. But that also seems like a lot of
+headache for something that was always flaky.
 
-diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
-index a876d897b6e4..3277564b34c2 100644
---- a/docs/system/ppc/pseries.rst
-+++ b/docs/system/ppc/pseries.rst
-@@ -15,9 +15,9 @@ Supported devices
- =================
- 
-  * Multi processor support for many Power processors generations: POWER7,
--   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
--   but its state is unknown.
-- * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
-+   POWER7+, POWER8, POWER8NVL, POWER9, Power10 and Power11. Support for POWER5+
-+   exists, but its state is unknown.
-+ * Interrupt Controller, XICS (POWER8) and XIVE (POWER9, Power10, Power11)
-  * vPHB PCIe Host bridge.
-  * vscsi and vnet devices, compatible with the same devices available on a
-    PowerVM hypervisor with VIOS managing LPARs.
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index e7c9edd033c8..62416b7e0a7e 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -401,6 +401,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
-+    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
- #ifdef CONFIG_KVM
-     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
- #endif
--- 
-2.45.1
-
+Thanks,
+Nick
 
