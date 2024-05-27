@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECB6C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F153C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVhL-0001XT-90; Mon, 27 May 2024 04:27:16 -0400
+	id 1sBVhp-0002le-6M; Mon, 27 May 2024 04:27:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVfc-0005cS-PX; Mon, 27 May 2024 04:25:31 -0400
+ id 1sBVee-0004hq-E2; Mon, 27 May 2024 04:24:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVfa-0001Sx-Mn; Mon, 27 May 2024 04:25:27 -0400
+ id 1sBVeb-00016T-Jz; Mon, 27 May 2024 04:24:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 88D426A587;
- Mon, 27 May 2024 11:22:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C6B8F6A57C;
+ Mon, 27 May 2024 11:22:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B5BDED8524;
- Mon, 27 May 2024 11:21:41 +0300 (MSK)
-Received: (nullmailer pid 66480 invoked by uid 1000);
- Mon, 27 May 2024 08:21:39 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id F351ED8519;
+ Mon, 27 May 2024 11:21:40 +0300 (MSK)
+Received: (nullmailer pid 66446 invoked by uid 1000);
+ Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 42/44] target/i386: disable jmp_opt if EFLAGS.RF is 1
-Date: Mon, 27 May 2024 11:21:33 +0300
-Message-Id: <20240527082138.66217-42-mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 31/44] configure: Fix error message when C compiler is
+ not working
+Date: Mon, 27 May 2024 11:21:22 +0300
+Message-Id: <20240527082138.66217-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,31 +64,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-If EFLAGS.RF is 1, special processing in gen_eob_worker() is needed and
-therefore goto_tb cannot be used.
+If you try to run the configure script on a system without a working
+C compiler, you get a very misleading error message:
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8225bff7c5db504f50e54ef66b079854635dba70)
+ ERROR: Unrecognized host OS (uname -s reports 'Linux')
+
+Some people already opened bug tickets because of this problem:
+
+ https://gitlab.com/qemu-project/qemu/-/issues/2057
+ https://gitlab.com/qemu-project/qemu/-/issues/2288
+
+We should rather tell the user that we were not able to use the C
+compiler instead, otherwise they will have a hard time to figure
+out what was going wrong.
+
+While we're at it, let's also suppress the "unrecognized host CPU"
+message in this case since it is rather misleading than helpful.
+
+Fixes: 264b803721 ("configure: remove compiler sanity check")
+Message-ID: <20240513114010.51608-1-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 371d60dfdb47dd18d163a7759968ba138089371e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index b5ebff2c89..c2c5e73b3f 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -6971,7 +6971,7 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-     dc->cpuid_7_1_eax_features = env->features[FEAT_7_1_EAX];
-     dc->cpuid_xsave_features = env->features[FEAT_XSAVE];
-     dc->jmp_opt = !((cflags & CF_NO_GOTO_TB) ||
--                    (flags & (HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
-+                    (flags & (HF_RF_MASK | HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
-     /*
-      * If jmp_opt, we want to handle each string instruction individually.
-      * For icount also disable repz optimization so that each iteration
+diff --git a/configure b/configure
+index b8680df1b0..0aea9b113b 100755
+--- a/configure
++++ b/configure
+@@ -411,7 +411,9 @@ else
+   # Using uname is really broken, but it is just a fallback for architectures
+   # that are going to use TCI anyway
+   cpu=$(uname -m)
+-  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  if test "$host_os" != "bogus"; then
++    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  fi
+ fi
+ 
+ # Normalise host CPU name to the values used by Meson cross files and in source
+@@ -894,6 +896,13 @@ EOF
+ exit 0
+ fi
+ 
++# Now that we are sure that the user did not only want to print the --help
++# information, we should double-check that the C compiler really works:
++write_c_skeleton
++if ! compile_object ; then
++    error_exit "C compiler \"$cc\" either does not exist or does not work."
++fi
++
+ # Remove old dependency files to make sure that they get properly regenerated
+ rm -f ./*/config-devices.mak.d
+ 
 -- 
 2.39.2
 
