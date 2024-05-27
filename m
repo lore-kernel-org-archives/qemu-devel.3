@@ -4,89 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4415C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D69BC25B74
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 10:50:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBXvS-0000yO-AG; Mon, 27 May 2024 06:49:58 -0400
+	id 1sBXvK-0000sC-HV; Mon, 27 May 2024 06:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sBXvL-0000tB-5H
- for qemu-devel@nongnu.org; Mon, 27 May 2024 06:49:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sBXvH-0000rg-Vz
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 06:49:48 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sBXvG-0001Cw-Qv
- for qemu-devel@nongnu.org; Mon, 27 May 2024 06:49:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716806986;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1tM29WfhfyEOTzjt/XNRBsoe6DlIh4rkAE5ygZhRbqM=;
- b=hjp0V8LZd3GmUmoD1ISa29yxaHHBknoQwB5WtyZfRJmY/MZXLL753Mdh28R31aPLk/3d/s
- 4sQS1c/f7O4uZkb6eL+w1fPSZ/zwhEJJkbL9v1ecyXjbLfLSN07ChoMb1wapp2BDXcxy1s
- zHKL2MRtalpIwUCKFytlzSWrdxPweDk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-CXVpgVGgOPOIXMByqgRTTQ-1; Mon, 27 May 2024 06:49:44 -0400
-X-MC-Unique: CXVpgVGgOPOIXMByqgRTTQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a629e32f5fdso81242066b.2
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 03:49:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716806982; x=1717411782;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1tM29WfhfyEOTzjt/XNRBsoe6DlIh4rkAE5ygZhRbqM=;
- b=s0saa30u66kUZyeIjxr7S/zv4x18D81tC00jp6wqCwNPF/vShXVcSJdQugb24ij0NI
- aZZuuKDGV97gkl6EoH4jpe0yxZOlLURRWgbvVK5NIx198+NEBmCCtE9IsKhEHdBERlhT
- pOxfx9zSyHaPdCxQCfuWKlAjHcmWzpT5uUkr3bMn8bmN5RaCGcBprXiZQMoCI58D5ogy
- eUixXdTwH9xpRC9UjbY5u3hQqZb+zbiFHWyFmBTW24GlZWBJ14W84PxBX89AENwLbwkZ
- Wv3R3QFSPpzSm199ABy7GdAyPymweYQYRFxWUlunHF4NBQXIGvnxRv63qRFBWCyUITiH
- PcNA==
-X-Gm-Message-State: AOJu0Yytv1WF1Y27KQJyj1HkqYWAytEL1aAM2Q3mpVD7ojqvd28Ya1S1
- rT/Ez/nnpSH75VFnVchd7MlsXK6Ro2YK5GhHnBadx7LVCBq8ngqAFFcHjUpcsTjmVmf39H0wDgn
- DFnrv+CECFzPoixC5LU2+LjbOLgeNz6iVxe/RBCSRSBLEB7oxtotQZ4QCQ9P6u9EMDSRWQsP2DC
- Co/grBSYADqf8zDgIMmh5U/T6YzD9/WDTy/Z4Q
-X-Received: by 2002:a17:906:2a02:b0:a62:187b:e7f5 with SMTP id
- a640c23a62f3a-a62651287femr558469466b.57.1716806982681; 
- Mon, 27 May 2024 03:49:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtQFTWTPxzajdvMgPY68bN+7LR3G78mAVzfqt+oZOvKtTwXzsVQM61ZQss11Z//DpM7FZbig==
-X-Received: by 2002:a17:906:2a02:b0:a62:187b:e7f5 with SMTP id
- a640c23a62f3a-a62651287femr558468066b.57.1716806982159; 
- Mon, 27 May 2024 03:49:42 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c93842csm477217966b.74.2024.05.27.03.49.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 03:49:39 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@daynix.com
-Subject: [RFC PATCH v2 1/5] meson: move shared_module() calls where modules
- are already walked
-Date: Mon, 27 May 2024 12:49:33 +0200
-Message-ID: <20240527104937.30443-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240527104937.30443-1-pbonzini@redhat.com>
-References: <20240527104937.30443-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sBXvF-0001CG-Vs
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 06:49:47 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F9AD6A6A1;
+ Mon, 27 May 2024 13:50:15 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7A67FD86FF;
+ Mon, 27 May 2024 13:49:41 +0300 (MSK)
+Message-ID: <4ccbaa65-41cf-4317-9dfb-2c9ab17296d0@tls.msk.ru>
+Date: Mon, 27 May 2024 13:49:41 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: QEMU Developers <qemu-devel@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: qemu CI & ccache: cache size is too small
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,103 +82,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- meson.build | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+Hi!
 
-diff --git a/meson.build b/meson.build
-index 63866071445..92ddbd17c32 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3562,21 +3562,28 @@ modinfo_files = []
- 
- block_mods = []
- system_mods = []
-+emulator_modules = []
- foreach d, list : modules
-   if not (d == 'block' ? have_block : have_system)
-     continue
-   endif
- 
-   foreach m, module_ss : list
-+    module_ss.add(modulecommon)
-     if enable_modules
-       module_ss = module_ss.apply(config_all_devices, strict: false)
-       sl = static_library(d + '-' + m, [genh, module_ss.sources()],
--                          dependencies: [modulecommon, module_ss.dependencies()], pic: true)
-+                          dependencies: module_ss.dependencies(), pic: true)
-       if d == 'block'
-         block_mods += sl
-       else
-         system_mods += sl
-       endif
-+      emulator_modules += shared_module(sl.name(),
-+                    name_prefix: '',
-+                    link_whole: sl,
-+                    install: true,
-+                    install_dir: qemu_moddir)
-       if module_ss.sources() != []
-         # FIXME: Should use sl.extract_all_objects(recursive: true) as
-         # input. Sources can be used multiple times but objects are
-@@ -3601,6 +3608,7 @@ endforeach
- 
- foreach d, list : target_modules
-   foreach m, module_ss : list
-+    module_ss.add(modulecommon)
-     if enable_modules
-       foreach target : target_dirs
-         if target.endswith('-softmmu')
-@@ -3614,11 +3622,16 @@ foreach d, list : target_modules
-             module_name = d + '-' + m + '-' + config_target['TARGET_NAME']
-             sl = static_library(module_name,
-                                 [genh, target_module_ss.sources()],
--                                dependencies: [modulecommon, target_module_ss.dependencies()],
-+                                dependencies: target_module_ss.dependencies(),
-                                 include_directories: target_inc,
-                                 c_args: c_args,
-                                 pic: true)
-             system_mods += sl
-+            emulator_modules += shared_module(sl.name(),
-+                    name_prefix: '',
-+                    link_whole: sl,
-+                    install: true,
-+                    install_dir: qemu_moddir)
-             # FIXME: Should use sl.extract_all_objects(recursive: true) too.
-             modinfo_files += custom_target(module_name + '.modinfo',
-                                            output: module_name + '.modinfo',
-@@ -3652,6 +3665,10 @@ if enable_modules
-       hw_arch[arch].add(modinfo_dep)
-     endif
-   endforeach
-+
-+  if emulator_modules.length() > 0
-+    alias_target('modules', emulator_modules)
-+  endif
- endif
- 
- nm = find_program('nm')
-@@ -3745,19 +3762,6 @@ common_ss.add(hwcore)
- # Targets #
- ###########
- 
--emulator_modules = []
--foreach m : block_mods + system_mods
--  emulator_modules += shared_module(m.name(),
--                build_by_default: true,
--                name_prefix: '',
--                link_whole: m,
--                install: true,
--                install_dir: qemu_moddir)
--endforeach
--if emulator_modules.length() > 0
--  alias_target('modules', emulator_modules)
--endif
--
- system_ss.add(authz, blockdev, chardev, crypto, io, qmp)
- common_ss.add(qom, qemuutil)
- 
+Noticed today that a rebuild of basically the same tree (a few commits apart)
+in CI result in just 11% hit rate of ccache:
+
+https://gitlab.com/mjt0k/qemu/-/jobs/6947445337#L5054
+
+while it should be near 100%.  What's interesting in there is:
+
+1) cache size is close to max cache size,
+and more important,
+2) cleanups performed 78
+
+so it has to remove old entries before it finished the build.
+
+So effectively, our ccache usage is an extra burden, not help.
+
+I should be increased at least, I think.  But it's actually difficult
+to say really, - is the cache shared between all builds or is it unique
+for each build config?  Because if it the former, it shouldn't even
+work since different ccache versions use different format of the files
+in cache.
+
+What's unique in my pipeline run - I ran just a single build job
+in two pipelines, nothing more.
+
+Thanks,
+
+/mjt
 -- 
-2.45.1
-
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
