@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB2A2C25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC72C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUj2-0007mY-69; Mon, 27 May 2024 03:24:56 -0400
+	id 1sBUju-0000DP-Jl; Mon, 27 May 2024 03:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUiz-0007kJ-G0; Mon, 27 May 2024 03:24:53 -0400
+ id 1sBUj1-0007mP-WC; Mon, 27 May 2024 03:24:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUix-0006Dc-RZ; Mon, 27 May 2024 03:24:53 -0400
+ id 1sBUiz-0006Dt-AI; Mon, 27 May 2024 03:24:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5C2DA6A4C4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6B1886A4C5;
  Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9ACBFD8461;
+ by tsrv.corpit.ru (Postfix) with SMTP id AA30DD8462;
  Mon, 27 May 2024 10:24:35 +0300 (MSK)
-Received: (nullmailer pid 52890 invoked by uid 1000);
+Received: (nullmailer pid 52893 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 07/21] target/i386: rdpkru/wrpkru are no-prefix
- instructions
-Date: Mon, 27 May 2024 10:24:17 +0300
-Message-Id: <20240527072435.52812-7-mjt@tls.msk.ru>
+ Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 08/21] target/i386: fix feature dependency for WAITPKG
+Date: Mon, 27 May 2024 10:24:18 +0300
+Message-Id: <20240527072435.52812-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
@@ -65,38 +63,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-Reject 0x66/0xf3/0xf2 in front of them.
+The VMX feature bit depends on general availability of WAITPKG,
+not the other way round.
 
+Fixes: 33cc88261c3 ("target/i386: add support for VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE", 2023-08-28)
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 40a3ec7b5ffde500789d016660a171057d6b467c)
+(cherry picked from commit fe01af5d47d4cf7fdf90c54d43f784e5068c8d72)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 47d2d1bb16..b8c648a756 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -6054,7 +6054,8 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-             gen_ldst_modrm(env, s, modrm, ot, OR_TMP0, 1);
-             break;
-         case 0xee: /* rdpkru */
--            if (prefixes & PREFIX_LOCK) {
-+            if (s->prefix & (PREFIX_LOCK | PREFIX_DATA
-+                             | PREFIX_REPZ | PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             tcg_gen_trunc_tl_i32(s->tmp2_i32, cpu_regs[R_ECX]);
-@@ -6062,7 +6063,8 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-             tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], s->tmp1_i64);
-             break;
-         case 0xef: /* wrpkru */
--            if (prefixes & PREFIX_LOCK) {
-+            if (s->prefix & (PREFIX_LOCK | PREFIX_DATA
-+                             | PREFIX_REPZ | PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             tcg_gen_concat_tl_i64(s->tmp1_i64, cpu_regs[R_EAX],
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index a66e5a357b..4dbfbfbd65 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1549,8 +1549,8 @@ static FeatureDep feature_dependencies[] = {
+         .to = { FEAT_SVM,                   ~0ull },
+     },
+     {
+-        .from = { FEAT_VMX_SECONDARY_CTLS,  VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
+-        .to = { FEAT_7_0_ECX,               CPUID_7_0_ECX_WAITPKG },
++        .from = { FEAT_7_0_ECX,             CPUID_7_0_ECX_WAITPKG },
++        .to = { FEAT_VMX_SECONDARY_CTLS,    VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
+     },
+ };
+ 
 -- 
 2.39.2
 
