@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B770C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982D3C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBYzr-0004ft-PZ; Mon, 27 May 2024 07:58:36 -0400
+	id 1sBZ1h-0005lo-6U; Mon, 27 May 2024 08:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBYzo-0004fB-LO
- for qemu-devel@nongnu.org; Mon, 27 May 2024 07:58:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBYzZ-0006dL-RB
- for qemu-devel@nongnu.org; Mon, 27 May 2024 07:58:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716811095;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Rw48Zu3zaZ8J5FSSO587eaRFLGioJH0nJNpiD5d9ip8=;
- b=SINzZ6YAAfv60vAz4QRtRwvu6HJ0nObYp8hwIjoJunH4vR6WeyeRSz5EP473eSbiJgNHzM
- J1PiPnxDVmRPIixbWnHyTFqFV+c+Z2VxOgpl5bAUrcyYtwZoSv210mo1QovWomxmpSjF0d
- Vog8YKpD3gyAV1S3n6Uz24qDUo+pHgA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-9zweu99VOMCmSeWc52iEsQ-1; Mon,
- 27 May 2024 07:58:12 -0400
-X-MC-Unique: 9zweu99VOMCmSeWc52iEsQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4A64929AA39D;
- Mon, 27 May 2024 11:58:11 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1739B40C6DAF;
- Mon, 27 May 2024 11:58:10 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0CFF221E681D; Mon, 27 May 2024 13:58:09 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Peter Xu <peterx@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Pavel Dovgalyuk
- <pavel.dovgaluk@ispras.ru>,  Ani Sinha <anisinha@redhat.com>,  Michael
- Roth <michael.roth@amd.com>,  Kevin Wolf <kwolf@redhat.com>,  Jiri Pirko
- <jiri@resnulli.us>,  Mads Ynddal <mads@ynddal.dk>,  Jason Wang
- <jasowang@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  "Michael
- S. Tsirkin" <mst@redhat.com>,  Qemu-block <qemu-block@nongnu.org>,  Stefan
- Berger <stefanb@linux.vnet.ibm.com>,  Victor Toso de Carvalho
- <victortoso@redhat.com>,  Eric Blake <eblake@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Konstantin Kostiuk
- <kkostiuk@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 05/20] qapi/parser: adjust info location for doc body
- section
-In-Reply-To: <CAFn=p-abjRbSvcHPSUorp80SZaf5Xwi89WtvhebXK_SRw3Cg4w@mail.gmail.com>
- (John Snow's message of "Thu, 16 May 2024 10:30:32 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-6-jsnow@redhat.com>
- <87a5kqpaaw.fsf@pond.sub.org>
- <CAFn=p-abjRbSvcHPSUorp80SZaf5Xwi89WtvhebXK_SRw3Cg4w@mail.gmail.com>
-Date: Mon, 27 May 2024 13:58:09 +0200
-Message-ID: <87a5kbcvqm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sBZ1c-0005j5-4D
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 08:00:24 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sBZ1V-0006xq-Oj
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 08:00:23 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f4851f7c28so9491835ad.3
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 05:00:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1716811214; x=1717416014; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bUMELmB0AYitfjmLpnYSQijz+Wxrl9Ft/d8gLORCOVE=;
+ b=bRCTbptirckjHeThpmalbFXuwv0vJ5UVhU5rW0mqMlT6kdbnLWevIMPolWTH0ZkNVr
+ dncBVN0rnFdPmuQS4VHdHtVC6T6zcy99+N+vL+xdpdiG2d+OrqshVmIUgx3t7w3Wd9bm
+ ZTecOC7njLd5/rOGDsElisLgFu11ThMRNCYvbk1RiuHp+4p1azwjpLKSHXrVUGjYZRGV
+ ump/eor1lqUXZZUIkI58w7rlaFIPLZfWJS7NQkDdGmdeZfZuHxut6vVQvDSNPecMkt7D
+ eX63voxkumUe2jisS9C85HlRxQNobT6Sxj/CuZ7eFoRVu3VtVU2EM3MS0WZheqCicBAw
+ zY3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716811214; x=1717416014;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bUMELmB0AYitfjmLpnYSQijz+Wxrl9Ft/d8gLORCOVE=;
+ b=iuc+sxx/hXWzRxK2XbmQ/6gvVAgt8PqBX3K77uPZu26/GEJTN4BiPqhP4XqIrL2rsQ
+ Dx1UrUyJ5s7Gy08kzGa4FrJo8jvOZJqdUbuA6sTse6/sFTDvRze5MCCsOS5wz8j/RhRD
+ 0PVYmB41L4wcSDrEfKqd0lIFu+YJFUgiFS+zar+v5iEI3fRRa1bL77edVpkcAvaHunSz
+ KFfryj9Eblruy9TzYCJ7gCeouXmYkIzmqOxGNTE0AsqDy50Ld2AJkp9UirEa0t1JTR6n
+ tyj90JFD43SpnTWh017UIrrvKQWQDXbrbzPerlUb7BjaFZt8iTN3sAZ23/OYT14EedF+
+ DmVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVJjcVYECaFyGYnzyYYBoG43kP2kwfZWhPr4ZJM4e2wM4phMAHPgtU5e7NrAe8m2ZT+8+a6qNEvT9ig2c0flDCN6bPOcI=
+X-Gm-Message-State: AOJu0Ywpc96mNGFhU6cjhi/ESIv3q80gUGYu5IryXVXuZocwEH3tcGPM
+ SP6oDV0Ut4EcRnPcb6PKqgwvztBnz4gN7xJ4kXm+m7F7RmyelGlwFaz9mk/BGCg=
+X-Google-Smtp-Source: AGHT+IGF/eFkUpfio/mKSJV/DfREeUqqEIrL3K+TY+D4xse1CXFuvHGjgoGdv6vDGoFX3VO7UTow/g==
+X-Received: by 2002:a17:902:cecd:b0:1f3:35e8:d309 with SMTP id
+ d9443c01a7336-1f4486d9f35mr101016925ad.20.1716811213906; 
+ Mon, 27 May 2024 05:00:13 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:bdcd:fb00:6501:2693:db52:c621?
+ ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f44c75e691sm59418335ad.42.2024.05.27.05.00.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 05:00:13 -0700 (PDT)
+Message-ID: <610baa0c-1416-420b-8a89-4f233f5667ad@ventanamicro.com>
+Date: Mon, 27 May 2024 09:00:09 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/4] target/riscv/kvm: add software breakpoints support
+To: Chao Du <duchao@eswincomputing.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, pbonzini@redhat.com, alistair23@gmail.com,
+ bin.meng@windriver.com, liweiwei@iscas.ac.cn, zhiwei_liu@linux.alibaba.com,
+ palmer@dabbelt.com, anup@brainfault.org, duchao713@qq.com
+References: <20240527021916.12953-1-duchao@eswincomputing.com>
+ <20240527021916.12953-2-duchao@eswincomputing.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240527021916.12953-2-duchao@eswincomputing.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,136 +101,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
 
-> On Thu, May 16, 2024, 1:58=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > Instead of using the info object for the doc block as a whole, update
->> > the info pointer for each call to ensure_untagged_section when the
->> > existing section is otherwise empty. This way, Sphinx error information
->> > will match precisely to where the text actually starts.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  scripts/qapi/parser.py | 9 +++++++--
->> >  1 file changed, 7 insertions(+), 2 deletions(-)
->> >
->> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> > index 8cdd5334ec6..41b9319e5cb 100644
->> > --- a/scripts/qapi/parser.py
->> > +++ b/scripts/qapi/parser.py
->> > @@ -662,8 +662,13 @@ def end(self) -> None:
->> >
->> >      def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
->> >          if self.all_sections and not self.all_sections[-1].tag:
->> > -            # extend current section
->> > -            self.all_sections[-1].text +=3D '\n'
->>
->> Before, we always append a newline.
->>
->> > +            section =3D self.all_sections[-1]
->> > +            # Section is empty so far; update info to start *here*.
->> > +            if not section.text:
->> > +                section.info =3D info
->> > +            else:
->> > +                # extend current section
->> > +                self.all_sections[-1].text +=3D '\n'
->>
->> Afterwards, we append it only when the section already has some text.
->>
->> The commit message claims the patch only adjusts section.info.  That's a
->> lie :)
->>
->
-> Well. It wasn't intentional, so it wasn't a lie... it was just wrong :)
->
->
->> I believe the change makes no difference because .end() strips leading
->> and trailing newline.
->>
->> >              return
->> >          # start new section
->> >          section =3D self.Section(info)
->>
->> You could fix the commit message, but I think backing out the
->> no-difference change is easier.  The appended patch works in my testing.
->>
->> Next one.  Your patch changes the meaning of section.info.  Here's its
->> initialization:
->>
->>     class Section:
->>         # pylint: disable=3Dtoo-few-public-methods
->>         def __init__(self, info: QAPISourceInfo,
->>                      tag: Optional[str] =3D None):
->> --->        # section source info, i.e. where it begins
->>             self.info =3D info
->>             # section tag, if any ('Returns', '@name', ...)
->>             self.tag =3D tag
->>             # section text without tag
->>             self.text =3D ''
->>
->> The comment is now wrong.  Calls for a thorough review of .info's uses.
->>
->
-> Hmm... Did I really change its meaning? I guess it's debatable what "where
-> it begins" means. Does the tagless section start...
->
-> ## <-- Here?
-> # Hello! <-- Or here?
-> ##
->
-> I assert the *section* starts wherever the first line of text it contains
-> starts. Nothing else makes any sense.
->
-> There is value in recording where the doc block starts, but that's not a
-> task for the *section* info.
->
-> I don't think I understand your feedback.
 
-This was before my vacation, and my memory is foggy, ...  I may have
-gotten confused back then.  Let me have a fresh look now.
+On 5/26/24 23:19, Chao Du wrote:
+> This patch implements insert/remove software breakpoint process:
+> 
+> Add an input parameter for kvm_arch_insert_sw_breakpoint() and
+> kvm_arch_remove_sw_breakpoint() to pass the length information,
+> which helps us to know whether it is a RVC instruction.
+> For some remove cases, we do not have the length info, so we need
+> to judge by ourselves.
+> 
+> For RISC-V, GDB treats single-step similarly to breakpoint: add a
+> breakpoint at the next step address, then continue. So this also
+> works for single-step debugging.
+> 
+> Add some stubs which are necessary for building, and will be
+> implemented later.
+> 
+> Signed-off-by: Chao Du <duchao@eswincomputing.com>
+> ---
 
-self.info gets initialized in Section.__init__() to whatever info it
-gets passed.
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Your patch makes .ensure_untagged_section() overwrite this Section.info
-when it extends an untagged section that is still empty.  Hmmm.  I'd
-prefer .info to remain constant after initialization.
 
-I figure this overwrite can happen only when extenting the body section
-QAPIDoc.__init__() creates.  In that case, it adjusts .info from
-beginning of doc comment to first non-blank line.
-
-Thoughts?
-
->> The alternative to changing .info's meaning is to add another member
->> with the meaning you need.  Then we have to review .info's uses to find
->> out which ones to switch to the new one.
->
->
->> Left for later.
->>
->>
->> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> index 8cdd5334ec..abeae1ca77 100644
->> --- a/scripts/qapi/parser.py
->> +++ b/scripts/qapi/parser.py
->> @@ -663,7 +663,10 @@ def end(self) -> None:
->>      def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
->>          if self.all_sections and not self.all_sections[-1].tag:
->>              # extend current section
->> -            self.all_sections[-1].text +=3D '\n'
->> +            section =3D self.all_sections[-1]
->> +            if not section.text:
->> +                section.info =3D info
->> +            section.text +=3D '\n'
->>              return
->>          # start new section
->>          section =3D self.Section(info)
->>
->>
-
+>   accel/kvm/kvm-all.c        |  8 ++--
+>   include/sysemu/kvm.h       |  6 ++-
+>   target/arm/kvm.c           |  6 ++-
+>   target/i386/kvm/kvm.c      |  6 ++-
+>   target/mips/kvm.c          |  6 ++-
+>   target/ppc/kvm.c           |  6 ++-
+>   target/riscv/kvm/kvm-cpu.c | 79 ++++++++++++++++++++++++++++++++++++++
+>   target/s390x/kvm/kvm.c     |  6 ++-
+>   8 files changed, 107 insertions(+), 16 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index c0be9f5eed..d27e77dbb2 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3357,7 +3357,7 @@ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+>           bp = g_new(struct kvm_sw_breakpoint, 1);
+>           bp->pc = addr;
+>           bp->use_count = 1;
+> -        err = kvm_arch_insert_sw_breakpoint(cpu, bp);
+> +        err = kvm_arch_insert_sw_breakpoint(cpu, bp, len);
+>           if (err) {
+>               g_free(bp);
+>               return err;
+> @@ -3396,7 +3396,7 @@ int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+>               return 0;
+>           }
+>   
+> -        err = kvm_arch_remove_sw_breakpoint(cpu, bp);
+> +        err = kvm_arch_remove_sw_breakpoint(cpu, bp, len);
+>           if (err) {
+>               return err;
+>           }
+> @@ -3426,10 +3426,10 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
+>       CPUState *tmpcpu;
+>   
+>       QTAILQ_FOREACH_SAFE(bp, &s->kvm_sw_breakpoints, entry, next) {
+> -        if (kvm_arch_remove_sw_breakpoint(cpu, bp) != 0) {
+> +        if (kvm_arch_remove_sw_breakpoint(cpu, bp, 0) != 0) {
+>               /* Try harder to find a CPU that currently sees the breakpoint. */
+>               CPU_FOREACH(tmpcpu) {
+> -                if (kvm_arch_remove_sw_breakpoint(tmpcpu, bp) == 0) {
+> +                if (kvm_arch_remove_sw_breakpoint(tmpcpu, bp, 0) == 0) {
+>                       break;
+>                   }
+>               }
+> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> index c31d9c7356..340e094ffb 100644
+> --- a/include/sysemu/kvm.h
+> +++ b/include/sysemu/kvm.h
+> @@ -391,9 +391,11 @@ struct kvm_sw_breakpoint *kvm_find_sw_breakpoint(CPUState *cpu,
+>   int kvm_sw_breakpoints_active(CPUState *cpu);
+>   
+>   int kvm_arch_insert_sw_breakpoint(CPUState *cpu,
+> -                                  struct kvm_sw_breakpoint *bp);
+> +                                  struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len);
+>   int kvm_arch_remove_sw_breakpoint(CPUState *cpu,
+> -                                  struct kvm_sw_breakpoint *bp);
+> +                                  struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len);
+>   int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type);
+>   int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type);
+>   void kvm_arch_remove_all_hw_breakpoints(void);
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 7cf5cf31de..84593db544 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -2402,7 +2402,8 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>   /* C6.6.29 BRK instruction */
+>   static const uint32_t brk_insn = 0xd4200000;
+>   
+> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 0) ||
+>           cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk_insn, 4, 1)) {
+> @@ -2411,7 +2412,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+>       return 0;
+>   }
+>   
+> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       static uint32_t brk;
+>   
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index c5943605ee..6449f796d0 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -4992,7 +4992,8 @@ static int kvm_handle_tpr_access(X86CPU *cpu)
+>       return 1;
+>   }
+>   
+> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       static const uint8_t int3 = 0xcc;
+>   
+> @@ -5003,7 +5004,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+>       return 0;
+>   }
+>   
+> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       uint8_t int3;
+>   
+> diff --git a/target/mips/kvm.c b/target/mips/kvm.c
+> index a631ab544f..129964cf6d 100644
+> --- a/target/mips/kvm.c
+> +++ b/target/mips/kvm.c
+> @@ -111,13 +111,15 @@ void kvm_mips_reset_vcpu(MIPSCPU *cpu)
+>       DPRINTF("%s\n", __func__);
+>   }
+>   
+> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       DPRINTF("%s\n", __func__);
+>       return 0;
+>   }
+>   
+> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       DPRINTF("%s\n", __func__);
+>       return 0;
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index 46fccff786..9b76bdaa05 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -1378,7 +1378,8 @@ static int kvmppc_handle_dcr_write(CPUPPCState *env,
+>       return 0;
+>   }
+>   
+> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       /* Mixed endian case is not handled */
+>       uint32_t sc = debug_inst_opcode;
+> @@ -1392,7 +1393,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+>       return 0;
+>   }
+>   
+> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       uint32_t sc;
+>   
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 473416649f..cba55c552d 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1962,3 +1962,82 @@ static const TypeInfo riscv_kvm_cpu_type_infos[] = {
+>   };
+>   
+>   DEFINE_TYPES(riscv_kvm_cpu_type_infos)
+> +
+> +static const uint32_t ebreak_insn = 0x00100073;
+> +static const uint16_t c_ebreak_insn = 0x9002;
+> +
+> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+> +{
+> +    if (len != 4 && len != 2) {
+> +        return -EINVAL;
+> +    }
+> +
+> +    uint8_t * insn = (len == 4) ? (uint8_t *)&ebreak_insn :
+> +                                  (uint8_t *)&c_ebreak_insn;
+> +
+> +    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, len, 0) ||
+> +        cpu_memory_rw_debug(cs, bp->pc, insn, len, 1)) {
+> +        return -EINVAL;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+> +{
+> +    uint8_t length;
+> +
+> +    if (len == 4 || len == 2) {
+> +        length = (uint8_t)len;
+> +    } else if (len == 0) {
+> +        /* Need to decide the instruction length in this case. */
+> +        uint32_t read_4_bytes;
+> +        uint16_t read_2_bytes;
+> +
+> +        if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&read_4_bytes, 4, 0) ||
+> +            cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&read_2_bytes, 2, 0)) {
+> +            return -EINVAL;
+> +        }
+> +
+> +        if (read_4_bytes == ebreak_insn) {
+> +            length = 4;
+> +        } else if (read_2_bytes == c_ebreak_insn) {
+> +            length = 2;
+> +        } else {
+> +            return -EINVAL;
+> +        }
+> +    } else {
+> +        return -EINVAL;
+> +    }
+> +
+> +    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn,
+> +                            length, 1)) {
+> +        return -EINVAL;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type)
+> +{
+> +    /* TODO; To be implemented later. */
+> +    return -EINVAL;
+> +}
+> +
+> +int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type)
+> +{
+> +    /* TODO; To be implemented later. */
+> +    return -EINVAL;
+> +}
+> +
+> +void kvm_arch_remove_all_hw_breakpoints(void)
+> +{
+> +    /* TODO; To be implemented later. */
+> +}
+> +
+> +void kvm_arch_update_guest_debug(CPUState *cs, struct kvm_guest_debug *dbg)
+> +{
+> +    /* TODO; To be implemented later. */
+> +}
+> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+> index 1b494ecc20..132952cc84 100644
+> --- a/target/s390x/kvm/kvm.c
+> +++ b/target/s390x/kvm/kvm.c
+> @@ -865,7 +865,8 @@ static void determine_sw_breakpoint_instr(void)
+>           }
+>   }
+>   
+> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       determine_sw_breakpoint_instr();
+>   
+> @@ -877,7 +878,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+>       return 0;
+>   }
+>   
+> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
+> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
+> +                                  vaddr len)
+>   {
+>       uint8_t t[MAX_ILEN];
+>   
 
