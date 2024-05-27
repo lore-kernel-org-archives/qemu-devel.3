@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 018C2C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EABC41513
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUkW-0002dK-9q; Mon, 27 May 2024 03:26:29 -0400
+	id 1sBUj0-0007ld-NA; Mon, 27 May 2024 03:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUk9-0000qc-Cx; Mon, 27 May 2024 03:26:05 -0400
+ id 1sBUiu-0007hD-Jj; Mon, 27 May 2024 03:24:51 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUk7-0006hU-Sm; Mon, 27 May 2024 03:26:05 -0400
+ id 1sBUis-0006Bh-ML; Mon, 27 May 2024 03:24:48 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3606E6A4D1;
- Mon, 27 May 2024 10:25:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B42D6A4C1;
+ Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 75027D846E;
- Mon, 27 May 2024 10:24:36 +0300 (MSK)
-Received: (nullmailer pid 52931 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 68186D845E;
+ Mon, 27 May 2024 10:24:35 +0300 (MSK)
+Received: (nullmailer pid 52881 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 20/21] target/i386: disable jmp_opt if EFLAGS.RF is 1
-Date: Mon, 27 May 2024 10:24:30 +0300
-Message-Id: <20240527072435.52812-20-mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 04/21] hw/loongarch/virt: Fix memory leak
+Date: Mon, 27 May 2024 10:24:14 +0300
+Message-Id: <20240527072435.52812-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,31 +64,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Song Gao <gaosong@loongson.cn>
 
-If EFLAGS.RF is 1, special processing in gen_eob_worker() is needed and
-therefore goto_tb cannot be used.
+The char pointer 'ramName' point to a block of memory,
+but never free it. Use 'g_autofree' to automatically free it.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8225bff7c5db504f50e54ef66b079854635dba70)
+Resolves: Coverity CID 1544773
+
+Fixes: 0cf1478d6 ("hw/loongarch: Add numa support")
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240507022239.3113987-1-gaosong@loongson.cn>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 54c52ec719fb8c83bbde54cb87b58688ab27c166)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixup in hw/loongarch/virt.c due to missing-in-8.2
+      v9.0.0-266-gd771ca1c10 "hw/loongarch: Move boot functions to boot.c")
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index b8c648a756..cbf69a64e4 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -6935,7 +6935,7 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-     dc->cpuid_7_0_ecx_features = env->features[FEAT_7_0_ECX];
-     dc->cpuid_xsave_features = env->features[FEAT_XSAVE];
-     dc->jmp_opt = !((cflags & CF_NO_GOTO_TB) ||
--                    (flags & (HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
-+                    (flags & (HF_RF_MASK | HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
-     /*
-      * If jmp_opt, we want to handle each string instruction individually.
-      * For icount also disable repz optimization so that each iteration
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 4b7dc67a2d..713ba26dff 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -749,7 +749,6 @@ static void loongarch_init(MachineState *machine)
+     const CPUArchIdList *possible_cpus;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     CPUState *cpu;
+-    char *ramName = NULL;
+     struct loaderparams loaderparams = { };
+ 
+     if (!cpu_model) {
+@@ -800,7 +799,7 @@ static void loongarch_init(MachineState *machine)
+ 
+     for (i = 1; i < nb_numa_nodes; i++) {
+         MemoryRegion *nodemem = g_new(MemoryRegion, 1);
+-        ramName = g_strdup_printf("loongarch.node%d.ram", i);
++        g_autofree char *ramName = g_strdup_printf("loongarch.node%d.ram", i);
+         memory_region_init_alias(nodemem, NULL, ramName, machine->ram,
+                                  offset,  numa_info[i].node_mem);
+         memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
 -- 
 2.39.2
 
