@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0C6C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56835C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcyS-0006yB-Vd; Mon, 27 May 2024 12:13:24 -0400
+	id 1sBd5i-0002Z2-IB; Mon, 27 May 2024 12:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcyR-0006wa-JG
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:13:23 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sBd5e-0002Yd-FF
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:20:50 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcyP-000247-Vz
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:13:23 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4202dd90dcfso47818245e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:13:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sBd5c-0003s3-TJ
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:20:50 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1f44b5d0c50so22046875ad.2
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716826400; x=1717431200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716826847; x=1717431647; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mfmM0j3HF+vLiXdV40d+v8fDYCHro8ZxhgNASHgkLhU=;
- b=dujwixOeDD2yvYkrZPp9VWilbjU8pgZiDYKB0GSc8ijJjLq3vZU3S0W38W7PK5xF4c
- ykJpE+5tfDKYnS0WwvKQtqfOPeaJTvHJKsMztnaufr01ZqP80ZB5FgCrpftHE6dpJEXS
- wdsREcZtvhZZUJnjMSVqMGkzKxG1gBZcKxLvTyelC37ayHunMM7h02KbgHnCeaca+sNF
- iGWUB5UudLTTxgURUwWZVWfDwMeRYgKkun04hQpeeSkbrOFCIwfCHPm7E/7IKTFTHe7Q
- n7uWN7aEhd497sE3lsmS9tsFvCtKzwFrEFbDB+d0J/i293TzDXkFjDrXjr6bc1ULkwnK
- ZWjw==
+ bh=UFoTAkMYsbDmtp0/E0RWsLpmiwwxgq4OtjtnxBpYSnE=;
+ b=ev4LmlyZXUWcZ4zPtwo0YWjGO+K80PweImdLRVLvP/2m1nJ3vKmUToQNAaV4Q7m5R9
+ 2o6eqH14Sio0CYC3CoqqG3yCJOLZfyFdZf0+jm1ZBz+FQbtch86SSvGuhQIlo0oxDWe0
+ /TQPfMhEbwXe1R+QaNae1Lj+x7XUan7fh+8t80vllvSrvrS2s1JayF61rEYwC2iqU3PY
+ rNtobvVWArbK0IB4uuhg720M1V7wo00sxseTMEARGkSUF+RsxicSL28H/ngFy+8k4nHC
+ K9hP0Q4IcWKhfwptZbvvV+a6EmymxhzC4XUMUSTLaBFdwInxnvK/eIGMcIhbPpcZqu/V
+ +Pxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716826400; x=1717431200;
+ d=1e100.net; s=20230601; t=1716826847; x=1717431647;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mfmM0j3HF+vLiXdV40d+v8fDYCHro8ZxhgNASHgkLhU=;
- b=LNqKIL8LQk61Jd8V1pDuwU/3EjcdluG1rMpR9k4OZiq46UDKd/e5dcFmc8dPHmxAcF
- HqGQWMANWJuVSJmNkw68tts1NER5cjp9pEI00Y3Q8uZlkc6U/iXjllvlQK++va+Gb2iI
- UoNLFkvYztkEKRXGcrs5aT5IUipvtHBLOaNaUPQgl+VjTYCqnQmRO5+plocDEtpMseKL
- Mo0r6iXfmi8kZ+7eiXiYMdPg9FOXD3sjvSJI4Eqn8Z3Kax/YP9gc/UCoA9MYf/tH4pGn
- rjuvYzgxFpdeG8qOMlNFJ7SBw3QNYDvOAVD4HTqjQXOAzLGYkEjy4S1Vp1sPNt7rFgIF
- iGqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBjy48LfcIPU7DhK2V/ZAdM1mSppvWdhk7etDX7PLVkUod7sxUaLOmrxSwQcrqytVl1Dbx7kcJiHS8iHr7QInD+16qPiM=
-X-Gm-Message-State: AOJu0YySME/LrMbU7A8VPOqPxsf3LgnGSb0C2BqRUv334PUmzHUO6EMI
- vglZiRYEoYqyqLdrq6GBz0mHuG6dpeyroeMnE+p2zl4KeLUA39ZPlZb215W1hmg=
-X-Google-Smtp-Source: AGHT+IFPUBbJ4AV9nNMW5an0kxmRJqDQYgV9r0unWjNl5K2YvpMuoRlLjuLz+k0jRnurcN/gTOehvQ==
-X-Received: by 2002:adf:dd89:0:b0:354:e021:51ce with SMTP id
- ffacd0b85a97d-35526c27950mr6660105f8f.12.1716826399989; 
- Mon, 27 May 2024 09:13:19 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.152.134])
+ bh=UFoTAkMYsbDmtp0/E0RWsLpmiwwxgq4OtjtnxBpYSnE=;
+ b=EeFxKi9Hc39IqjTf4E6rLKrUtTW8EHz8BvrRYBtDf7euj7vTBrO53Unv4PzSZotvNI
+ 4e6I1yDrXTCWyG8cOpxMFIi6ftyx9n5QfMQNNcuprf29YwoAqSnbqlwT4IQDo60YBkpR
+ Umj4vVRb8K+33NZcfSEL0TKKyaFkeslW+BJgWz+cXbWKetqcdDVMEhDuh0L8ietwApnb
+ at6xU0PhbcyoYxz3brae9Wkgyb5A3T3qwz3tpK33azNGtD5qqjRGoYsm/HnGEq5gReNc
+ GlFf0x81jHgFJErEwwYIZyqDHcrXs0tPfOOGtihastyhefHdhi1OaHiLveeqcHPhVBp8
+ uu7w==
+X-Gm-Message-State: AOJu0YylDD/nQD2wrbbz0AUFaLSJbDkQVX9ZjA6kFTa0DnJil5iXRCp5
+ ptM55kzGFPJca2ePyD5EAYlgj/zy8dFldyIzopYHNKbzSWlYvzF8tD7lo54xTvk=
+X-Google-Smtp-Source: AGHT+IHoDU4y3JJUAe96xyj+x0mXHKW96ObHDR6eqMRn1Pbr9Z+lVox6kqisVAKHJZWvtBS0LPgwDA==
+X-Received: by 2002:a17:902:6547:b0:1f3:2457:f82a with SMTP id
+ d9443c01a7336-1f44872bbe0mr100296925ad.30.1716826847406; 
+ Mon, 27 May 2024 09:20:47 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557a0908e4sm9460093f8f.63.2024.05.27.09.13.18
+ d9443c01a7336-1f44c759e56sm64673085ad.7.2024.05.27.09.20.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 09:13:19 -0700 (PDT)
-Message-ID: <f4918050-11f4-4610-bcf3-2cca4ac0f3e4@linaro.org>
-Date: Mon, 27 May 2024 18:13:17 +0200
+ Mon, 27 May 2024 09:20:47 -0700 (PDT)
+Message-ID: <b871bf81-ed1a-4720-ae70-9dbc517f155e@linaro.org>
+Date: Mon, 27 May 2024 09:20:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/8] xen: mapcache: Pass the ram_addr offset to
- xen_map_cache()
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- David Hildenbrand <david@redhat.com>, Anthony PERARD
- <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- xen-devel@lists.xenproject.org
-References: <20240524105152.1301842-1-edgar.iglesias@gmail.com>
- <20240524105152.1301842-7-edgar.iglesias@gmail.com>
+Subject: Re: [PULL 17/20] target/arm: Do memory type alignment check when
+ translation disabled
+To: Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240305135237.3111642-1-peter.maydell@linaro.org>
+ <20240305135237.3111642-18-peter.maydell@linaro.org>
+ <C875173E-4B5B-4F71-8CF4-4325F7AB7629@gmail.com>
+ <72ED7A80-9EA7-4FF6-BE29-9583587985C7@gmail.com>
+ <f6976b40-e3d5-4157-8597-ce7db6ceb068@linaro.org>
+ <CAFEAcA-BD1TmaBB_5ephnRoNsOCWsS4w3C_oj0P_182+fOLPUQ@mail.gmail.com>
+ <C27AC9E0-AB61-483E-BF07-B435AABE3D13@gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240524105152.1301842-7-edgar.iglesias@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <C27AC9E0-AB61-483E-BF07-B435AABE3D13@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,24 +103,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/5/24 12:51, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On 5/27/24 08:29, Bernhard Beschow wrote:
+> I think the kernel's output indicates that the MMU is active:
 > 
-> Pass the ram_addr offset to xen_map_cache.
-> This is in preparation for adding grant mappings that need
-> to compute the address within the RAMBlock.
+>    [7e849b05] *pgd=2c552831, *pte=109eb34f, *ppte=109eb83f
 > 
-> No functional changes.
+> AFAIU, the value in brackets is a virtual address while the pte's are physical ones. Furthermore, the `info mtree` QMP command tells that the physical addresses are RAM addresses:
 > 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-> ---
->   hw/xen/xen-mapcache.c         | 16 +++++++++++-----
->   include/sysemu/xen-mapcache.h |  2 ++
->   system/physmem.c              |  9 +++++----
->   3 files changed, 18 insertions(+), 9 deletions(-)
+>    0000000010000000-000000002fffffff (prio 0, ram): sabrelite.ram
+> 
+> So I think we can conclude this to be "normal memory" to speak in ARM terms.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Normal and Device are attributes on the page table entry.
+See section G5.7 Memory region attributes in the Arm ARM.
 
+But it's unlikely that the Linux kernel has messed this up, even back in 4.x days.
+
+If you want to make any progress, you'll have to share a test case.
+
+
+r~
 
