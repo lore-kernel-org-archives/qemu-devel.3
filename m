@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49C3C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 02:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2351FC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 02:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBPsk-0005a4-Vt; Sun, 26 May 2024 22:14:39 -0400
+	id 1sBQ1z-0000rv-C9; Sun, 26 May 2024 22:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
- id 1sBPsi-0005Z6-1K; Sun, 26 May 2024 22:14:36 -0400
-Received: from azure-sdnproxy.icoremail.net ([207.46.229.174])
+ id 1sBQ1u-0000pM-QS; Sun, 26 May 2024 22:24:06 -0400
+Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net ([206.189.21.223])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <duchao@eswincomputing.com>)
- id 1sBPsf-0001my-Id; Sun, 26 May 2024 22:14:35 -0400
-Received: from duchao$eswincomputing.com ( [10.64.112.210] ) by
- ajax-webmail-app1 (Coremail) ; Mon, 27 May 2024 10:12:03 +0800 (GMT+08:00)
-X-Originating-IP: [10.64.112.210]
-Date: Mon, 27 May 2024 10:12:03 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Chao Du" <duchao@eswincomputing.com>
-To: "Paolo Bonzini" <pbonzini@redhat.com>
-Cc: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair23@gmail.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- anup@brainfault.org, atishp@atishpatra.org
-Subject: Re: [RFC PATCH 1/4] target/riscv/kvm: add software breakpoints support
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20220420(169d3f8c)
- Copyright (c) 2002-2024 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <CABgObfYA3Er1y3R9v0Huf3w43n7oD83UhkqdRk-oBYzyM6O_ow@mail.gmail.com>
-References: <20231221094923.7349-1-duchao@eswincomputing.com>
- <20231221094923.7349-2-duchao@eswincomputing.com>
- <ada42503-dab4-474f-a61a-a9fe3fa63afa@ventanamicro.com>
- <CABgObfYA3Er1y3R9v0Huf3w43n7oD83UhkqdRk-oBYzyM6O_ow@mail.gmail.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
-Message-ID: <1deff797.ed0.18fb7d1ae25.Coremail.duchao@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: TAJkCgDHaOXz61NmXgANAA--.4628W
-X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/1tbiAQEKDGZTAc0YowABsF
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
- CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
- daVFxhVjvjDU=
-Received-SPF: pass client-ip=207.46.229.174;
- envelope-from=duchao@eswincomputing.com; helo=azure-sdnproxy.icoremail.net
-X-Spam_score_int: -12
-X-Spam_score: -1.3
+ id 1sBQ1t-0003mk-67; Sun, 26 May 2024 22:24:06 -0400
+Received: from localhost.localdomain (unknown [10.12.130.31])
+ by app1 (Coremail) with SMTP id TAJkCgAXrOM07lNmsQANAA--.24375S8;
+ Mon, 27 May 2024 10:21:46 +0800 (CST)
+From: Chao Du <duchao@eswincomputing.com>
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
+ alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ palmer@dabbelt.com, anup@brainfault.org, duchao713@qq.com
+Subject: [PATCH v1 4/4] target/riscv/kvm: define TARGET_KVM_HAVE_GUEST_DEBUG
+Date: Mon, 27 May 2024 02:19:16 +0000
+Message-Id: <20240527021916.12953-5-duchao@eswincomputing.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20240527021916.12953-1-duchao@eswincomputing.com>
+References: <20240527021916.12953-1-duchao@eswincomputing.com>
+X-CM-TRANSID: TAJkCgAXrOM07lNmsQANAA--.24375S8
+X-Coremail-Antispam: 1UD129KBjvdXoWrKFyrJr1UXF48XFWxCrWfKrg_yoW3GFb_Ga
+ y5Jr4I9rW5Xa4vkFy8ZrZ5uryUJayrAF1xGanrKrZ0gr4jgF1UAw10ga1kAFyUuw4xAr4x
+ urWrZFyxCw13JjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbg8YjsxI4VWxJwAYFVCjjxCrM7AC8VAFwI0_Wr0E3s1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7
+ IE14v26r126s0DM28IrcIa0xkI8VCY1x0267AKxVW5JVCq3wA2ocxC64kIII0Yj41l84x0
+ c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2
+ IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2
+ jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4
+ CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvj
+ eVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACI402YVCY1x02628vn2kIc2xKxw
+ CY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
+ x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r
+ 43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF
+ 7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI
+ 0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7I
+ U87l1PUUUUU==
+X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/
+Received-SPF: pass client-ip=206.189.21.223;
+ envelope-from=duchao@eswincomputing.com;
+ helo=zg8tmja2lje4os4yms4ymjma.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL=1.31, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,33 +75,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMjAyNC0wNS0yNSAwMDoxMSwgUGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT4g
-d3JvdGU6Cj4gCj4gT24gVHVlLCBBcHIgMTYsIDIwMjQgYXQgMTE6MjPigK9BTSBEYW5pZWwgSGVu
-cmlxdWUgQmFyYm96YQo+IDxkYmFyYm96YUB2ZW50YW5hbWljcm8uY29tPiB3cm90ZToKPiA+ID4g
-K2ludCBrdm1fYXJjaF9pbnNlcnRfc3dfYnJlYWtwb2ludChDUFVTdGF0ZSAqY3MsIHN0cnVjdCBr
-dm1fc3dfYnJlYWtwb2ludCAqYnAsCj4gPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgdmFkZHIgbGVuKQo+ID4gPiArewo+ID4gPiArICAgIGlmIChsZW4gIT0gNCAmJiBsZW4g
-IT0gMikgewo+ID4gPiArICAgICAgICByZXR1cm4gLUVJTlZBTDsKPiA+ID4gKyAgICB9Cj4gPgo+
-ID4gSSB3b25kZXIgaWYgdGhpcyB2ZXJpZmljYXRpb24gc2hvdWxkIGJlIG1vdmVkIHRvIGt2bV9p
-bnNlcnRfYnJlYWtwb2ludCgpLiBJcwo+ID4gdGhlcmUgYW55IGtub3duIHJlYXNvbiB3aHkgb3Ro
-ZXIgYXJjaHMgd291bGQgdXNlICdsZW4nIG90aGVyIHRoYW4gMiBvciA0PyBUaGUKPiA+IHBhcmVu
-dCBmdW5jdGlvbiBjYW4gdGhyb3cgdGhlIEVJTlZBTCBpbiB0aGlzIGNhc2UuIE90aGVyd2lzZSBh
-bGwgY2FsbGVycyBmcm9tCj4gPiBhbGwgYXJjaHMgd2lsbCBuZWVkIGEgc2ltaWxhciBFSU5WQUwg
-Y2hlY2suCj4gCj4gSSdtIG5vdCBzdXJlIGhvdyBsZW4gaXMgZGVmaW5lZCBpbiB0aGUgZ2RiIHBy
-b3RvY29sLCBidXQgeDg2IGhhcyBhCj4gYnJlYWtwb2ludCBsZW5ndGggb2YgMSBhbmQgYW4gaW5z
-dHJ1Y3Rpb24gbGVuZ3RoIHRoYXQgY2FuIGJlIGFueSB2YWx1ZQo+IGJldHdlZW4gMSBhbmQgMTUu
-Cj4gCj4gTW9zdCBhcmNoaXRlY3R1cmVzIGNvdWxkIGFzc3VtZSB0aGF0IGl0J3MgYWx3YXlzIG9u
-ZSB2YWx1ZSwgaS5lLiBqdXN0Cj4gbm90IGNhcmUgYWJvdXQgY2hlY2tpbmcgbGVuIGluIGt2bV9h
-cmNoX2luc2VydF9zd19icmVha3BvaW50Lgo+IAo+IFRoZSBwYXRjaGVzIGxvb2sgZ29vZCwgZmVl
-bCBmcmVlIHRvIHRha2UgdGhlbSB0aHJvdWdoIHRoZSBSSVNDLVYgdHJlZS4KPiAKPiBPbmUgdGhp
-bmcgdGhhdCBJIHdhcyB3b25kZXJpbmcgaXM6IGNvdWxkIFJJU0MtViBqdXN0IHVzZSBhbHdheXMK
-PiBjLmVicmVhayBpZiBDIGluc3RydWN0aW9ucyBhcmUgc3VwcG9ydGVkLCBhbmQgZWJyZWFrIGlm
-IHRoZXkncmUgbm90Pwo+IEJ1dCBpZiBmb3IgZXhhbXBsZSB0aGF0IHdvdWxkIHRoYXQgbWVzcyB1
-cCB0aGUgc3luY2hyb25pemF0aW9uIG9mIHRoZQo+IGRpc2Fzc2VtYmx5IGluIGdkYiwgaXQncyBh
-IGdvb2QgcmVhc29uIHRvIGFkZCB0aGUgbGVuIGFyZ3VtZW50IGFzIHlvdQo+IGRpZCBoZXJlLgoK
-WWVzLCB5b3UgYXJlIHJpZ2h0LiBJZiB3ZSBpbnNlcnQgYW4gZWJyZWFrIGluc3RydWN0aW9uIHdo
-b3NlIGxlbmd0aCBpcwpkaWZmZXJlbnQgZnJvbSB0aGUgb3JpZ2luYWwgb25lLCB0aGVuIHRoZSBk
-aXNhc3NlbWJseSBpbiBnZGIgbWF5IGVuY291bnRlcgpzb21lIHByb2JsZW1zLgoKVGhhbmtzIGZv
-ciB0aGUgcmV2aWV3LCBJIHdpbGwgcmViYXNlIHRoaXMgc2VyaWVzIGFuZCBzZW5kIGl0IG91dC4K
-CkNoYW8KCj4gCj4gUGFvbG8K
+To enable the KVM GUEST DEBUG for RISC-V at QEMU side.
+
+Signed-off-by: Chao Du <duchao@eswincomputing.com>
+---
+ configs/targets/riscv64-softmmu.mak | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
+index 7c0e7eeb42..f938cc1ee6 100644
+--- a/configs/targets/riscv64-softmmu.mak
++++ b/configs/targets/riscv64-softmmu.mak
+@@ -1,5 +1,6 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_SUPPORTS_MTTCG=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
+ TARGET_NEED_FDT=y
+-- 
+2.17.1
+
 
