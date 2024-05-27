@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7119C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 03:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7E1C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 03:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBQdq-0005EW-C0; Sun, 26 May 2024 23:03:18 -0400
+	id 1sBQdy-0005Gr-Mz; Sun, 26 May 2024 23:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sBQdo-0005Dn-L8
- for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:16 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ id 1sBQdw-0005G5-BF
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:24 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sBQdm-0002Jz-UN
- for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:16 -0400
+ id 1sBQdt-0002Kk-H8
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1716778994;
- bh=grW6d4a3PdABO0i0iuI90b4jkhubAqvLHCR9gny1K0Y=;
+ s=mail; t=1716779000;
+ bh=Tu5TyqlElu/HvuCfmVVnw9v01yYT6ST81FTLbyCFI1k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Qgk9NnjRh1D+2SJEEjgSnoD2FyJLPLgf3dwelj6xO93h82jTwOR0ukaGMup6DjOyE
- GtX6x3YldIcn7s2o4zKKAwcnrSWlvCE4LUfVV4OJ+lgpn+A6g7qPfY5nAlldoIURbY
- Z+gZK01euHzcNtHYOIGwSNdPw0R4SGo2NFsn06gUkaO99CTYkLEQA+i4Puk/tYjtOq
- av2BW7ag21naCyt5ebngo0NAUbIeATHJmFmkTAVkKs1eq2GNXWX6q6O/5HNcZFH5aA
- Lmq+hsKjPrU3mXs+RQ0dOzX+1i4hJvFCrA7YDQJ49oTNfN7hzTQkAyZqYb8JHlOao1
- LCpavuyoq36Lg==
+ b=khSKciHuz5Qu0unlrnf+RI3+GLNIFgcBx6ZvOcQ6R0Fmil7QOgB3W+vWZjbAKjsdv
+ Wa+EW2cuw6qa5hNHpU8VEKRiB9hUuL5JbdPdebBlYusjw5nKbTUArzIVHRf7qKhILm
+ WvBPTmVlNxx+V/qF/Kz9hTK8mN3Q7szIBQtUmCPKBvPwgksyXtLWBUaaREynCfJ+AQ
+ YV4/I9f+p9rhboIwduhTJnThXWTas1MDkXyk7MkVmWw3uBbvdQDUtEZLTxAUwOyl4j
+ MT31TQ1u/5vEAMLLgJBgycbcqfn3D37V7FF3Ps7J2uZW5LVhkr44x3zIsKJv8nTFgU
+ LL1sH4qrB6edA==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 208E33780627;
- Mon, 27 May 2024 03:03:12 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 7F81E3780627;
+ Mon, 27 May 2024 03:03:18 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -58,17 +58,16 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v13 07/13] virtio-gpu: Don't require udmabuf when blobs and
- virgl are enabled
-Date: Mon, 27 May 2024 06:02:27 +0300
-Message-ID: <20240527030233.3775514-8-dmitry.osipenko@collabora.com>
+Subject: [PATCH v13 10/13] virtio-gpu: Support suspension of commands
+ processing
+Date: Mon, 27 May 2024 06:02:30 +0300
+Message-ID: <20240527030233.3775514-11-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
 References: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,35 +90,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The udmabuf usage is mandatory when virgl is disabled and blobs feature
-enabled in the Qemu machine configuration. If virgl and blobs are enabled,
-then udmabuf requirement is optional. Since udmabuf isn't widely supported
-by a popular Linux distros today, let's relax the udmabuf requirement for
-blobs=on,virgl=on. Now, a full-featured virtio-gpu acceleration is
-available to Qemu users without a need to have udmabuf available in the
-system.
+Check whether command processing has been finished; otherwise, stop
+processing commands and retry the command again next time. This allows
+us to support asynchronous execution of non-fenced commands needed for
+unmapping host blobs safely.
 
-Reviewed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-Signed-off-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/display/virtio-gpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index d60b1b2973af..672279e57f3f 100644
+index f3d2def9a49f..8e05a2d0c7c5 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -1485,6 +1485,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+@@ -1054,6 +1054,11 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+         /* process command */
+         vgc->process_cmd(g, cmd);
  
-     if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
-         if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
-+            !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
-             !virtio_gpu_have_udmabuf()) {
-             error_setg(errp, "need rutabaga or udmabuf for blob resources");
-             return;
++        /* command suspended */
++        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
++            break;
++        }
++
+         QTAILQ_REMOVE(&g->cmdq, cmd, next);
+         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+             g->stats.requests++;
 -- 
 2.44.0
 
