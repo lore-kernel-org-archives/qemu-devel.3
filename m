@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCFCEC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1494C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUkJ-0001Jm-R1; Mon, 27 May 2024 03:26:17 -0400
+	id 1sBUjs-0008QB-OD; Mon, 27 May 2024 03:25:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUji-0008NH-1e; Mon, 27 May 2024 03:25:42 -0400
+ id 1sBUix-0007iJ-QA; Mon, 27 May 2024 03:24:51 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUjb-0006Nr-8p; Mon, 27 May 2024 03:25:35 -0400
+ id 1sBUiv-0006DE-Up; Mon, 27 May 2024 03:24:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EB6BD6A4CD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4CE286A4C3;
  Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 365BCD846A;
- Mon, 27 May 2024 10:24:36 +0300 (MSK)
-Received: (nullmailer pid 52918 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 8A7F3D8460;
+ Mon, 27 May 2024 10:24:35 +0300 (MSK)
+Received: (nullmailer pid 52887 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 16/21] target/loongarch/kvm: Fix VM recovery from disk
- failures
-Date: Mon, 27 May 2024 10:24:26 +0300
-Message-Id: <20240527072435.52812-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 06/21] target/i386: fix operand size for DATA16 REX.W
+ POPCNT
+Date: Mon, 27 May 2024 10:24:16 +0300
+Message-Id: <20240527072435.52812-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
@@ -62,44 +64,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Song Gao <gaosong@loongson.cn>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-vmstate does not save kvm_state_conter,
-which can cause VM recovery from disk to fail.
+According to the manual, 32-bit vs 64-bit is governed by REX.W
+and REX ignores the 0x66 prefix.  This can be confirmed with this
+program:
+
+    #include <stdio.h>
+    int main()
+    {
+       int x = 0x12340000;
+       int y;
+       asm("popcntl %1, %0" : "=r" (y) : "r" (x)); printf("%x\n", y);
+       asm("mov $-1, %0; .byte 0x66; popcntl %1, %0" : "+r" (y) : "r" (x)); printf("%x\n", y);
+       asm("mov $-1, %0; .byte 0x66; popcntq %q1, %q0" : "+r" (y) : "r" (x)); printf("%x\n", y);
+    }
+
+which prints 5/ffff0000/5 on real hardware and 5/ffff0000/ffff0000
+on QEMU.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Acked-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20240508024732.3127792-1-gaosong@loongson.cn>
-(cherry picked from commit 0eb285c3627b5406dd91bfa3b47402e5de92123f)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 41c685dc59bb611096f3bb6a663cfa82e4cba97b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: adjust context for v8.2.0-205-g2d23bb1a3805
-  "target/loongarch: Constify VMState in machine.c")
 
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 1c4e01d076..5a7df713e2 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -125,8 +125,8 @@ const VMStateDescription vmstate_tlb = {
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
-         VMSTATE_UINTTL(env.pc, LoongArchCPU),
-@@ -191,6 +191,8 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
-                              0, vmstate_tlb, LoongArchTLB),
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 6ca4d791ab..47d2d1bb16 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -420,16 +420,6 @@ static inline MemOp mo_stacksize(DisasContext *s)
+     return CODE64(s) ? MO_64 : SS32(s) ? MO_32 : MO_16;
+ }
  
-+        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
-+
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription*[]) {
+-/* Select only size 64 else 32.  Used for SSE operand sizes.  */
+-static inline MemOp mo_64_32(MemOp ot)
+-{
+-#ifdef TARGET_X86_64
+-    return ot == MO_64 ? MO_64 : MO_32;
+-#else
+-    return MO_32;
+-#endif
+-}
+-
+ /* Select size 8 if lsb of B is clear, else OT.  Used for decoding
+    byte vs word opcodes.  */
+ static inline MemOp mo_b_d(int b, MemOp ot)
+@@ -6780,12 +6770,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+         modrm = x86_ldub_code(env, s);
+         reg = ((modrm >> 3) & 7) | REX_R(s);
+ 
+-        if (s->prefix & PREFIX_DATA) {
+-            ot = MO_16;
+-        } else {
+-            ot = mo_64_32(dflag);
+-        }
+-
++        ot = dflag;
+         gen_ldst_modrm(env, s, modrm, ot, OR_TMP0, 0);
+         gen_extu(ot, s->T0);
+         tcg_gen_mov_tl(cpu_cc_src, s->T0);
 -- 
 2.39.2
 
