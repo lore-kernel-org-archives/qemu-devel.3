@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9412BC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F82C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVhq-0002pe-Ov; Mon, 27 May 2024 04:27:47 -0400
+	id 1sBVhS-0001tO-Tu; Mon, 27 May 2024 04:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVee-0004hz-P4; Mon, 27 May 2024 04:24:31 -0400
+ id 1sBVei-0004o9-45; Mon, 27 May 2024 04:24:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVec-00016e-Uv; Mon, 27 May 2024 04:24:28 -0400
+ id 1sBVeg-00019h-9C; Mon, 27 May 2024 04:24:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D791A6A57D;
- Mon, 27 May 2024 11:22:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 06D546A57F;
+ Mon, 27 May 2024 11:22:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 0EBBFD851A;
+ by tsrv.corpit.ru (Postfix) with SMTP id 323EBD851C;
  Mon, 27 May 2024 11:21:41 +0300 (MSK)
-Received: (nullmailer pid 66449 invoked by uid 1000);
+Received: (nullmailer pid 66455 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, hikalium <hikalium@hikalium.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 32/44] ui/gtk: Fix mouse/motion event scaling issue
- with GTK display backend
-Date: Mon, 27 May 2024 11:21:23 +0300
-Message-Id: <20240527082138.66217-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 34/44] tcg/loongarch64: Fill out tcg_out_{ld,
+ st} for vector regs
+Date: Mon, 27 May 2024 11:21:25 +0300
+Message-Id: <20240527082138.66217-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,77 +62,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hikalium <hikalium@hikalium.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Remove gtk_widget_get_scale_factor() usage from the calculation of
-the motion events in the GTK backend to make it work correctly on
-environments that have `gtk_widget_get_scale_factor() != 1`.
+TCG register spill/fill uses tcg_out_ld/st with all types,
+not necessarily going through INDEX_op_{ld,st}_vec.
 
-This scale factor usage had been introduced in the commit f14aab420c and
-at that time the window size was used for calculating the things and it
-was working correctly. However, in the commit 2f31663ed4 the logic
-switched to use the widget size instead of window size and because of
-the change the usage of scale factor becomes invalid (since widgets use
-`vc->gfx.scale_{x, y}` for scaling).
-
-Tested on Crostini on ChromeOS (15823.51.0) with an external display.
-
-Fixes: 2f31663ed4 ("ui/gtk: use widget size for cursor motion event")
-Fixes: f14aab420c ("ui: fix incorrect pointer position on highdpi with
-gtk")
-
-Signed-off-by: hikalium <hikalium@hikalium.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240512111435.30121-3-hikalium@hikalium.com>
-(cherry picked from commit 37e91415018db3656b46cdea8f9e4d47b3ff130d)
+Cc: qemu-stable@nongnu.org
+Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2336
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Tested-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit c9290dfebfdba5c13baa5e1f10e13a1c876b0643)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 810d7fc796..c4a9662085 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -887,7 +887,7 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
-     int x, y;
-     int mx, my;
-     int fbh, fbw;
--    int ww, wh, ws;
-+    int ww, wh;
- 
-     if (!vc->gfx.ds) {
-         return TRUE;
-@@ -895,11 +895,15 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
- 
-     fbw = surface_width(vc->gfx.ds) * vc->gfx.scale_x;
-     fbh = surface_height(vc->gfx.ds) * vc->gfx.scale_y;
--
-     ww = gtk_widget_get_allocated_width(widget);
-     wh = gtk_widget_get_allocated_height(widget);
--    ws = gtk_widget_get_scale_factor(widget);
- 
-+    /*
-+     * `widget` may not have the same size with the frame buffer.
-+     * In such cases, some paddings are needed around the `vc`.
-+     * To achieve that, `vc` will be displayed at (mx, my)
-+     * so that it is displayed at the center of the widget.
-+     */
-     mx = my = 0;
-     if (ww > fbw) {
-         mx = (ww - fbw) / 2;
-@@ -908,8 +912,12 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
-         my = (wh - fbh) / 2;
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 69c5b8ac4f..06ca1ab11c 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -808,18 +808,88 @@ static void tcg_out_ldst(TCGContext *s, LoongArchInsn opc, TCGReg data,
      }
+ }
  
--    x = (motion->x - mx) / vc->gfx.scale_x * ws;
--    y = (motion->y - my) / vc->gfx.scale_y * ws;
-+    /*
-+     * `motion` is reported in `widget` coordinates
-+     * so translating it to the coordinates in `vc`.
-+     */
-+    x = (motion->x - mx) / vc->gfx.scale_x;
-+    y = (motion->y - my) / vc->gfx.scale_y;
+-static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+-                       TCGReg arg1, intptr_t arg2)
++static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
++                       TCGReg base, intptr_t offset)
+ {
+-    bool is_32bit = type == TCG_TYPE_I32;
+-    tcg_out_ldst(s, is_32bit ? OPC_LD_W : OPC_LD_D, arg, arg1, arg2);
++    switch (type) {
++    case TCG_TYPE_I32:
++        if (dest < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_LD_W, dest, base, offset);
++        } else {
++            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_32, dest, base, offset);
++        }
++        break;
++    case TCG_TYPE_I64:
++        if (dest < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
++        } else {
++            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_64, dest, base, offset);
++        }
++        break;
++    case TCG_TYPE_V128:
++        if (-0x800 <= offset && offset <= 0x7ff) {
++            tcg_out_opc_vld(s, dest, base, offset);
++        } else {
++            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++            tcg_out_opc_vldx(s, dest, base, TCG_REG_TMP0);
++        }
++        break;
++    default:
++        g_assert_not_reached();
++    }
+ }
  
-     if (qemu_input_is_absolute(vc->gfx.dcl.con)) {
-         if (x < 0 || y < 0 ||
+-static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
+-                       TCGReg arg1, intptr_t arg2)
++static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
++                       TCGReg base, intptr_t offset)
+ {
+-    bool is_32bit = type == TCG_TYPE_I32;
+-    tcg_out_ldst(s, is_32bit ? OPC_ST_W : OPC_ST_D, arg, arg1, arg2);
++    switch (type) {
++    case TCG_TYPE_I32:
++        if (src < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_ST_W, src, base, offset);
++        } else {
++            /* TODO: Could use fst_s, fstx_s */
++            if (offset < -0x100 || offset > 0xff || (offset & 3)) {
++                if (-0x800 <= offset && offset <= 0x7ff) {
++                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
++                } else {
++                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
++                }
++                base = TCG_REG_TMP0;
++                offset = 0;
++            }
++            tcg_out_opc_vstelm_w(s, src, base, offset, 0);
++        }
++        break;
++    case TCG_TYPE_I64:
++        if (src < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_ST_D, src, base, offset);
++        } else {
++            /* TODO: Could use fst_d, fstx_d */
++            if (offset < -0x100 || offset > 0xff || (offset & 7)) {
++                if (-0x800 <= offset && offset <= 0x7ff) {
++                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
++                } else {
++                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
++                }
++                base = TCG_REG_TMP0;
++                offset = 0;
++            }
++            tcg_out_opc_vstelm_d(s, src, base, offset, 0);
++        }
++        break;
++    case TCG_TYPE_V128:
++        if (-0x800 <= offset && offset <= 0x7ff) {
++            tcg_out_opc_vst(s, src, base, offset);
++        } else {
++            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++            tcg_out_opc_vstx(s, src, base, TCG_REG_TMP0);
++        }
++        break;
++    default:
++        g_assert_not_reached();
++    }
+ }
+ 
+ static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
+@@ -1740,7 +1810,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+ {
+     TCGType type = vecl + TCG_TYPE_V64;
+     TCGArg a0, a1, a2, a3;
+-    TCGReg temp = TCG_REG_TMP0;
+     TCGReg temp_vec = TCG_VEC_TMP0;
+ 
+     static const LoongArchInsn cmp_vec_insn[16][4] = {
+@@ -1820,22 +1889,10 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+ 
+     switch (opc) {
+     case INDEX_op_st_vec:
+-        /* Try to fit vst imm */
+-        if (-0x800 <= a2 && a2 <= 0x7ff) {
+-            tcg_out_opc_vst(s, a0, a1, a2);
+-        } else {
+-            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
+-            tcg_out_opc_vstx(s, a0, a1, temp);
+-        }
++        tcg_out_st(s, type, a0, a1, a2);
+         break;
+     case INDEX_op_ld_vec:
+-        /* Try to fit vld imm */
+-        if (-0x800 <= a2 && a2 <= 0x7ff) {
+-            tcg_out_opc_vld(s, a0, a1, a2);
+-        } else {
+-            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
+-            tcg_out_opc_vldx(s, a0, a1, temp);
+-        }
++        tcg_out_ld(s, type, a0, a1, a2);
+         break;
+     case INDEX_op_and_vec:
+         tcg_out_opc_vand_v(s, a0, a1, a2);
 -- 
 2.39.2
 
