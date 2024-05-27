@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B176EC25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8830C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVdo-0001ph-0O; Mon, 27 May 2024 04:23:36 -0400
+	id 1sBViu-0005ON-V5; Mon, 27 May 2024 04:28:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVci-00018K-9F; Mon, 27 May 2024 04:22:31 -0400
+ id 1sBVdl-0001gA-Jb; Mon, 27 May 2024 04:23:33 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVcg-0000kE-A3; Mon, 27 May 2024 04:22:27 -0400
+ id 1sBVdj-0000wj-4n; Mon, 27 May 2024 04:23:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6470F6A569;
- Mon, 27 May 2024 11:22:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A6BB6A574;
+ Mon, 27 May 2024 11:22:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 90CABD8506;
- Mon, 27 May 2024 11:21:39 +0300 (MSK)
-Received: (nullmailer pid 66387 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 690F4D8511;
+ Mon, 27 May 2024 11:21:40 +0300 (MSK)
+Received: (nullmailer pid 66421 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>,
- Zheyu Ma <zheyuma97@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 12/44] hw/ufs: Fix buffer overflow bug
-Date: Mon, 27 May 2024 11:21:03 +0300
-Message-Id: <20240527082138.66217-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 23/44] target/sparc: Fix FPMERGE
+Date: Mon, 27 May 2024 11:21:14 +0300
+Message-Id: <20240527082138.66217-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,59 +64,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-It fixes the buffer overflow vulnerability in the ufs device.
-The bug was detected by sanitizers.
+This instruction has f32 inputs, which changes the decode
+of the register numbers.
 
-You can reproduce it by:
-
-cat << EOF |\
-qemu-system-x86_64 \
--display none -machine accel=qtest -m 512M -M q35 -nodefaults -drive \
-file=null-co://,if=none,id=disk0 -device ufs,id=ufs_bus -device \
-ufs-lu,drive=disk0,bus=ufs_bus -qtest stdio
-outl 0xcf8 0x80000810
-outl 0xcfc 0xe0000000
-outl 0xcf8 0x80000804
-outw 0xcfc 0x06
-write 0xe0000058 0x1 0xa7
-write 0xa 0x1 0x50
-EOF
-
-Resolves: #2299
-Fixes: 329f16624499 ("hw/ufs: Support for Query Transfer Requests")
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit f2c8aeb1afefcda92054c448b21fc59cdd99db30)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240502165528.244004-7-richard.henderson@linaro.org>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+(cherry picked from commit d3ef26afde77fbdedd5b30282134ff99d0fe5cc5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index eccdb852a0..bac78a32bb 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -126,6 +126,10 @@ static MemTxResult ufs_dma_read_req_upiu(UfsRequest *req)
-     copy_size = sizeof(UtpUpiuHeader) + UFS_TRANSACTION_SPECIFIC_FIELD_SIZE +
-                 data_segment_length;
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index fcb9c617b7..97fbf6f66c 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -94,7 +94,7 @@ DEF_HELPER_FLAGS_2(fstox, TCG_CALL_NO_WG, s64, env, f32)
+ DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_WG, s64, env, f64)
+ DEF_HELPER_FLAGS_2(fqtox, TCG_CALL_NO_WG, s64, env, i128)
  
-+    if (copy_size > sizeof(req->req_upiu)) {
-+        copy_size = sizeof(req->req_upiu);
-+    }
-+
-     ret = ufs_addr_read(u, req_upiu_base_addr, &req->req_upiu, copy_size);
-     if (ret) {
-         trace_ufs_err_dma_read_req_upiu(req->slot, req_upiu_base_addr);
-@@ -225,6 +229,10 @@ static MemTxResult ufs_dma_write_rsp_upiu(UfsRequest *req)
-         copy_size = rsp_upiu_byte_len;
-     }
+-DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
++DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i32, i32)
+ DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i32, i64)
+ DEF_HELPER_FLAGS_2(fmul8x16a, TCG_CALL_NO_RWG_SE, i64, i32, s32)
+ DEF_HELPER_FLAGS_2(fmul8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 8a2894bb9f..99c6f3cc72 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -4656,6 +4656,7 @@ TRANS(FMUL8x16AU, VIS1, do_dff, a, gen_op_fmul8x16au)
+ TRANS(FMUL8x16AL, VIS1, do_dff, a, gen_op_fmul8x16al)
+ TRANS(FMULD8SUx16, VIS1, do_dff, a, gen_op_fmuld8sux16)
+ TRANS(FMULD8ULx16, VIS1, do_dff, a, gen_op_fmuld8ulx16)
++TRANS(FPMERGE, VIS1, do_dff, a, gen_helper_fpmerge)
  
-+    if (copy_size > sizeof(req->rsp_upiu)) {
-+        copy_size = sizeof(req->rsp_upiu);
-+    }
-+
-     ret = ufs_addr_write(u, rsp_upiu_base_addr, &req->rsp_upiu, copy_size);
-     if (ret) {
-         trace_ufs_err_dma_write_rsp_upiu(req->slot, rsp_upiu_base_addr);
+ static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
+                    void (*func)(TCGv_i64, TCGv_i32, TCGv_i64))
+@@ -4696,7 +4697,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
+ 
+ TRANS(FMUL8SUx16, VIS1, do_ddd, a, gen_helper_fmul8sux16)
+ TRANS(FMUL8ULx16, VIS1, do_ddd, a, gen_helper_fmul8ulx16)
+-TRANS(FPMERGE, VIS1, do_ddd, a, gen_helper_fpmerge)
+ 
+ TRANS(FPADD16, VIS1, do_ddd, a, tcg_gen_vec_add16_i64)
+ TRANS(FPADD32, VIS1, do_ddd, a, tcg_gen_vec_add32_i64)
+diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
+index 61c61c7fea..14c665cad6 100644
+--- a/target/sparc/vis_helper.c
++++ b/target/sparc/vis_helper.c
+@@ -74,22 +74,23 @@ typedef union {
+     float32 f;
+ } VIS32;
+ 
+-uint64_t helper_fpmerge(uint64_t src1, uint64_t src2)
++uint64_t helper_fpmerge(uint32_t src1, uint32_t src2)
+ {
+-    VIS64 s, d;
++    VIS32 s1, s2;
++    VIS64 d;
+ 
+-    s.ll = src1;
+-    d.ll = src2;
++    s1.l = src1;
++    s2.l = src2;
++    d.ll = 0;
+ 
+-    /* Reverse calculation order to handle overlap */
+-    d.VIS_B64(7) = s.VIS_B64(3);
+-    d.VIS_B64(6) = d.VIS_B64(3);
+-    d.VIS_B64(5) = s.VIS_B64(2);
+-    d.VIS_B64(4) = d.VIS_B64(2);
+-    d.VIS_B64(3) = s.VIS_B64(1);
+-    d.VIS_B64(2) = d.VIS_B64(1);
+-    d.VIS_B64(1) = s.VIS_B64(0);
+-    /* d.VIS_B64(0) = d.VIS_B64(0); */
++    d.VIS_B64(7) = s1.VIS_B32(3);
++    d.VIS_B64(6) = s2.VIS_B32(3);
++    d.VIS_B64(5) = s1.VIS_B32(2);
++    d.VIS_B64(4) = s2.VIS_B32(2);
++    d.VIS_B64(3) = s1.VIS_B32(1);
++    d.VIS_B64(2) = s2.VIS_B32(1);
++    d.VIS_B64(1) = s1.VIS_B32(0);
++    d.VIS_B64(0) = s2.VIS_B32(0);
+ 
+     return d.ll;
+ }
 -- 
 2.39.2
 
