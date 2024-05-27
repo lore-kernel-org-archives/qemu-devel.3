@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F82C25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B5CC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVhS-0001tO-Tu; Mon, 27 May 2024 04:27:26 -0400
+	id 1sBVeN-0003ul-Cc; Mon, 27 May 2024 04:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVei-0004o9-45; Mon, 27 May 2024 04:24:35 -0400
+ id 1sBVdG-0001LL-0d; Mon, 27 May 2024 04:23:03 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVeg-00019h-9C; Mon, 27 May 2024 04:24:31 -0400
+ id 1sBVdE-0000sV-9N; Mon, 27 May 2024 04:23:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 06D546A57F;
- Mon, 27 May 2024 11:22:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C64476A56F;
+ Mon, 27 May 2024 11:22:13 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 323EBD851C;
- Mon, 27 May 2024 11:21:41 +0300 (MSK)
-Received: (nullmailer pid 66455 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id F170CD850C;
+ Mon, 27 May 2024 11:21:39 +0300 (MSK)
+Received: (nullmailer pid 66406 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 34/44] tcg/loongarch64: Fill out tcg_out_{ld,
- st} for vector regs
-Date: Mon, 27 May 2024 11:21:25 +0300
-Message-Id: <20240527082138.66217-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ruihan Li <lrh2000@pku.edu.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 18/44] target/i386: Give IRQs a chance when resetting
+ HF_INHIBIT_IRQ_MASK
+Date: Mon, 27 May 2024 11:21:09 +0300
+Message-Id: <20240527082138.66217-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
@@ -62,154 +63,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-TCG register spill/fill uses tcg_out_ld/st with all types,
-not necessarily going through INDEX_op_{ld,st}_vec.
+When emulated with QEMU, interrupts will never come in the following
+loop. However, if the NOP instruction is uncommented, interrupts will
+fire as normal.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2336
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Tested-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit c9290dfebfdba5c13baa5e1f10e13a1c876b0643)
+	loop:
+		cli
+    		call do_sti
+		jmp loop
+
+	do_sti:
+		sti
+		# nop
+		ret
+
+This behavior is different from that of a real processor. For example,
+if KVM is enabled, interrupts will always fire regardless of whether the
+NOP instruction is commented or not. Also, the Intel Software Developer
+Manual states that after the STI instruction is executed, the interrupt
+inhibit should end as soon as the next instruction (e.g., the RET
+instruction if the NOP instruction is commented) is executed.
+
+This problem is caused because the previous code may choose not to end
+the TB even if the HF_INHIBIT_IRQ_MASK has just been reset (e.g., in the
+case where the STI instruction is immediately followed by the RET
+instruction), so that IRQs may not have a change to trigger. This commit
+fixes the problem by always terminating the current TB to give IRQs a
+chance to trigger when HF_INHIBIT_IRQ_MASK is reset.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <20240415064518.4951-4-lrh2000@pku.edu.cn>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 6a5a63f74ba5c5355b7a8468d3d814bfffe928fb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 69c5b8ac4f..06ca1ab11c 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -808,18 +808,88 @@ static void tcg_out_ldst(TCGContext *s, LoongArchInsn opc, TCGReg data,
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 76a42c679c..c84196c00b 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2798,13 +2798,17 @@ static void gen_bnd_jmp(DisasContext *s)
+ static void
+ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
+ {
++    bool inhibit_reset;
++
+     gen_update_cc_op(s);
+ 
+     /* If several instructions disable interrupts, only the first does it.  */
+-    if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
+-        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
+-    } else {
++    inhibit_reset = false;
++    if (s->flags & HF_INHIBIT_IRQ_MASK) {
+         gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
++        inhibit_reset = true;
++    } else if (inhibit) {
++        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
      }
- }
  
--static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
--                       TCGReg arg1, intptr_t arg2)
-+static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
-+                       TCGReg base, intptr_t offset)
- {
--    bool is_32bit = type == TCG_TYPE_I32;
--    tcg_out_ldst(s, is_32bit ? OPC_LD_W : OPC_LD_D, arg, arg1, arg2);
-+    switch (type) {
-+    case TCG_TYPE_I32:
-+        if (dest < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_LD_W, dest, base, offset);
-+        } else {
-+            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_32, dest, base, offset);
-+        }
-+        break;
-+    case TCG_TYPE_I64:
-+        if (dest < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
-+        } else {
-+            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_64, dest, base, offset);
-+        }
-+        break;
-+    case TCG_TYPE_V128:
-+        if (-0x800 <= offset && offset <= 0x7ff) {
-+            tcg_out_opc_vld(s, dest, base, offset);
-+        } else {
-+            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+            tcg_out_opc_vldx(s, dest, base, TCG_REG_TMP0);
-+        }
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- }
- 
--static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
--                       TCGReg arg1, intptr_t arg2)
-+static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
-+                       TCGReg base, intptr_t offset)
- {
--    bool is_32bit = type == TCG_TYPE_I32;
--    tcg_out_ldst(s, is_32bit ? OPC_ST_W : OPC_ST_D, arg, arg1, arg2);
-+    switch (type) {
-+    case TCG_TYPE_I32:
-+        if (src < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_ST_W, src, base, offset);
-+        } else {
-+            /* TODO: Could use fst_s, fstx_s */
-+            if (offset < -0x100 || offset > 0xff || (offset & 3)) {
-+                if (-0x800 <= offset && offset <= 0x7ff) {
-+                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-+                } else {
-+                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-+                }
-+                base = TCG_REG_TMP0;
-+                offset = 0;
-+            }
-+            tcg_out_opc_vstelm_w(s, src, base, offset, 0);
-+        }
-+        break;
-+    case TCG_TYPE_I64:
-+        if (src < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_ST_D, src, base, offset);
-+        } else {
-+            /* TODO: Could use fst_d, fstx_d */
-+            if (offset < -0x100 || offset > 0xff || (offset & 7)) {
-+                if (-0x800 <= offset && offset <= 0x7ff) {
-+                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-+                } else {
-+                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-+                }
-+                base = TCG_REG_TMP0;
-+                offset = 0;
-+            }
-+            tcg_out_opc_vstelm_d(s, src, base, offset, 0);
-+        }
-+        break;
-+    case TCG_TYPE_V128:
-+        if (-0x800 <= offset && offset <= 0x7ff) {
-+            tcg_out_opc_vst(s, src, base, offset);
-+        } else {
-+            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+            tcg_out_opc_vstx(s, src, base, TCG_REG_TMP0);
-+        }
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- }
- 
- static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
-@@ -1740,7 +1810,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
- {
-     TCGType type = vecl + TCG_TYPE_V64;
-     TCGArg a0, a1, a2, a3;
--    TCGReg temp = TCG_REG_TMP0;
-     TCGReg temp_vec = TCG_VEC_TMP0;
- 
-     static const LoongArchInsn cmp_vec_insn[16][4] = {
-@@ -1820,22 +1889,10 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
- 
-     switch (opc) {
-     case INDEX_op_st_vec:
--        /* Try to fit vst imm */
--        if (-0x800 <= a2 && a2 <= 0x7ff) {
--            tcg_out_opc_vst(s, a0, a1, a2);
--        } else {
--            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
--            tcg_out_opc_vstx(s, a0, a1, temp);
--        }
-+        tcg_out_st(s, type, a0, a1, a2);
-         break;
-     case INDEX_op_ld_vec:
--        /* Try to fit vld imm */
--        if (-0x800 <= a2 && a2 <= 0x7ff) {
--            tcg_out_opc_vld(s, a0, a1, a2);
--        } else {
--            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
--            tcg_out_opc_vldx(s, a0, a1, temp);
--        }
-+        tcg_out_ld(s, type, a0, a1, a2);
-         break;
-     case INDEX_op_and_vec:
-         tcg_out_opc_vand_v(s, a0, a1, a2);
+     if (s->base.tb->flags & HF_RF_MASK) {
+@@ -2815,7 +2819,9 @@ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
+         tcg_gen_exit_tb(NULL, 0);
+     } else if (s->flags & HF_TF_MASK) {
+         gen_helper_single_step(tcg_env);
+-    } else if (jr) {
++    } else if (jr &&
++               /* give irqs a chance to happen */
++               !inhibit_reset) {
+         tcg_gen_lookup_and_goto_ptr();
+     } else {
+         tcg_gen_exit_tb(NULL, 0);
 -- 
 2.39.2
 
