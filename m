@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2929AC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA25AC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:43:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU49-0004FV-Sj; Mon, 27 May 2024 02:42:42 -0400
+	id 1sBU4A-0004HW-41; Mon, 27 May 2024 02:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU33-0003Cw-Lo; Mon, 27 May 2024 02:41:33 -0400
+ id 1sBU3p-0003mD-Qd; Mon, 27 May 2024 02:42:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU31-0007NB-WF; Mon, 27 May 2024 02:41:33 -0400
+ id 1sBU3k-0007RE-Kg; Mon, 27 May 2024 02:42:21 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DE8B36A3F6;
- Mon, 27 May 2024 09:41:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E2FF6A3FF;
+ Mon, 27 May 2024 09:41:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 386A7D83EE;
+ by tsrv.corpit.ru (Postfix) with SMTP id C9240D83F7;
  Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50282 invoked by uid 1000);
+Received: (nullmailer pid 50310 invoked by uid 1000);
  Mon, 27 May 2024 06:40:56 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, donsheng <dongsheng.x.zhang@intel.com>,
+ Chao Gao <chao.gao@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 08/19] .gitlab-ci.d/cirrus.yml: Shorten the runtime of
- the macOS and FreeBSD jobs
-Date: Mon, 27 May 2024 09:40:39 +0300
-Message-Id: <20240527064056.50205-8-mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 17/19] target-i386: hyper-v: Correct
+ kvm_hv_handle_exit return value
+Date: Mon, 27 May 2024 09:40:48 +0300
+Message-Id: <20240527064056.50205-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -45,8 +47,8 @@ X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,40 +64,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: donsheng <dongsheng.x.zhang@intel.com>
 
-Cirrus-CI introduced limitations to the free CI minutes. To avoid that
-we are consuming them too fast, let's drop the usual targets that are
-not that important since they are either a subset of another target
-(like i386 or ppc being a subset of x86_64 or ppc64 respectively), or
-since there is still a similar target with the opposite endianness
-(like xtensa/xtensael, microblaze/microblazeel etc.).
+This bug fix addresses the incorrect return value of kvm_hv_handle_exit for
+KVM_EXIT_HYPERV_SYNIC, which should be EXCP_INTERRUPT.
 
-Message-ID: <20240429100113.53357-1-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit a88a04906b966ffdcda23a5a456abe10aa8c826e)
+Handling of KVM_EXIT_HYPERV_SYNIC in QEMU needs to be synchronous.
+This means that async_synic_update should run in the current QEMU vCPU
+thread before returning to KVM, returning EXCP_INTERRUPT to guarantee this.
+Returning 0 can cause async_synic_update to run asynchronously.
+
+One problem (kvm-unit-tests's hyperv_synic test fails with timeout error)
+caused by this bug:
+
+When a guest VM writes to the HV_X64_MSR_SCONTROL MSR to enable Hyper-V SynIC,
+a VM exit is triggered and processed by the kvm_hv_handle_exit function of the
+QEMU vCPU. This function then calls the async_synic_update function to set
+synic->sctl_enabled to true. A true value of synic->sctl_enabled is required
+before creating SINT routes using the hyperv_sint_route_new() function.
+
+If kvm_hv_handle_exit returns 0 for KVM_EXIT_HYPERV_SYNIC, the current QEMU
+vCPU thread may return to KVM and enter the guest VM before running
+async_synic_update. In such case, the hyperv_synic test’s subsequent call to
+synic_ctl(HV_TEST_DEV_SINT_ROUTE_CREATE, ...) immediately after writing to
+HV_X64_MSR_SCONTROL can cause QEMU’s hyperv_sint_route_new() function to return
+prematurely (because synic->sctl_enabled is false).
+
+If the SINT route is not created successfully, the SINT interrupt will not be
+fired, resulting in a timeout error in the hyperv_synic test.
+
+Fixes: 267e071bd6d6 (“hyperv: make overlay pages for SynIC”)
+Suggested-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Dongsheng Zhang <dongsheng.x.zhang@intel.com>
+Message-ID: <20240521200114.11588-1-dongsheng.x.zhang@intel.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 84d4b72854869821eb89813c195927fdd3078c12)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index c86487da5b..f6e97c47f1 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -68,6 +68,7 @@ x64-freebsd-13-build:
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update
-     INSTALL_COMMAND: pkg install -y
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
-     TEST_TARGETS: check
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index e3ac978648..0a2e2a07e9 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -81,7 +81,7 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
+          */
+         async_safe_run_on_cpu(CPU(cpu), async_synic_update, RUN_ON_CPU_NULL);
  
- aarch64-macos-12-base-build:
-@@ -83,6 +84,7 @@ aarch64-macos-12-base-build:
-     INSTALL_COMMAND: brew install
-     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
-     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
- 
- 
+-        return 0;
++        return EXCP_INTERRUPT;
+     case KVM_EXIT_HYPERV_HCALL: {
+         uint16_t code = exit->u.hcall.input & 0xffff;
+         bool fast = exit->u.hcall.input & HV_HYPERCALL_FAST;
 -- 
 2.39.2
 
