@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E75C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79EA8C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBYZq-0004tO-J7; Mon, 27 May 2024 07:31:42 -0400
+	id 1sBYZr-0004uL-Jz; Mon, 27 May 2024 07:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBYZm-0004rQ-2H
- for qemu-devel@nongnu.org; Mon, 27 May 2024 07:31:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBYZo-0004s5-K7
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 07:31:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBYZk-0001OQ-0W
- for qemu-devel@nongnu.org; Mon, 27 May 2024 07:31:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBYZm-0001Oq-0L
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 07:31:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716809494;
+ s=mimecast20190719; t=1716809497;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QMe3xoRfhlbrn7+cU2DEI0M9zVaVux7lPHRkOkmjutQ=;
- b=J1ukr/e4P7tEpYpehKIQcfqX5koP1nxgcPHdhld9577M4iUgPeGXnlrBG60P5nnjathKbq
- ma8wT2Xd79USx/3XUME71eMl/XG/O4sWOS1+2RWxc5EBoaSD9ymI+lF4nMIbjHZktTzyba
- BLhQkFVxUt6/t5zCC/utMjbT5GQHYUo=
+ bh=ZnzXyt0cmnHw8rN/o3Hoy8TS+O/qAabN70CVCwHfMJo=;
+ b=iCQCUmnTBOKzOdCZhmQ67hrC/0v04a0Ul3tul0DqVSc1HXvOpLb4GsxH4IC69/o0ITGaSY
+ YfQRaF5AsogJiXl8ojyCj1ryothNsH+zY7TiA9wccI0lLKpDv8JDfl8IVwB3hnm/RKITed
+ MRVs77RFWZwyP7ivLYBcaqo/i8in3ls=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-0h2tdGpjMnSy4_V6r6cx7A-1; Mon, 27 May 2024 07:31:33 -0400
-X-MC-Unique: 0h2tdGpjMnSy4_V6r6cx7A-1
+ us-mta-630-Ub8ZMoziOQ60daeLloew-w-1; Mon, 27 May 2024 07:31:33 -0400
+X-MC-Unique: Ub8ZMoziOQ60daeLloew-w-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1FA71812296;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1FA6381227E;
  Mon, 27 May 2024 11:31:33 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id EA3112026D6E;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id EA2F52026D68;
  Mon, 27 May 2024 11:31:32 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ECA9E21E6692; Mon, 27 May 2024 13:31:31 +0200 (CEST)
+ id E3D3221E6757; Mon, 27 May 2024 13:31:31 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 4/9] cpus: Improve error messages on memsave,
- pmemsave write error
-Date: Mon, 27 May 2024 13:31:26 +0200
-Message-ID: <20240527113131.2054486-5-armbru@redhat.com>
+Subject: [PULL 1/9] block: Improve error message when external snapshot can't
+ flush
+Date: Mon, 27 May 2024 13:31:23 +0200
+Message-ID: <20240527113131.2054486-2-armbru@redhat.com>
 In-Reply-To: <20240527113131.2054486-1-armbru@redhat.com>
 References: <20240527113131.2054486-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -84,45 +84,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qmp_memsave() and qmp_pmemsave() report fwrite() error as
+external_snapshot_action() reports bdrv_flush() failure to its caller
+as
 
     An IO error has occurred
 
+The errno code returned by bdrv_flush() is lost.
+
 Improve this to
 
-    writing memory to '<filename>' failed
+    Write to node '<device or node name>' failed: <description of errno>
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240513141703.549874-5-armbru@redhat.com>
+Message-ID: <20240513141703.549874-2-armbru@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/cpus.c | 6 ++++--
+ blockdev.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/system/cpus.c b/system/cpus.c
-index 68d161d96b..f8fa78f33d 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -813,7 +813,8 @@ void qmp_memsave(int64_t addr, int64_t size, const char *filename,
-             goto exit;
-         }
-         if (fwrite(buf, 1, l, f) != l) {
+diff --git a/blockdev.c b/blockdev.c
+index 08eccc9052..528db3452f 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1406,8 +1406,10 @@ static void external_snapshot_action(TransactionAction *action,
+     }
+ 
+     if (!bdrv_is_read_only(state->old_bs)) {
+-        if (bdrv_flush(state->old_bs)) {
 -            error_setg(errp, QERR_IO_ERROR);
-+            error_setg(errp, "writing memory to '%s' failed",
-+                       filename);
-             goto exit;
++        ret = bdrv_flush(state->old_bs);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret, "Write to node '%s' failed",
++                             bdrv_get_device_or_node_name(state->old_bs));
+             return;
          }
-         addr += l;
-@@ -843,7 +844,8 @@ void qmp_pmemsave(int64_t addr, int64_t size, const char *filename,
-             l = size;
-         cpu_physical_memory_read(addr, buf, l);
-         if (fwrite(buf, 1, l, f) != l) {
--            error_setg(errp, QERR_IO_ERROR);
-+            error_setg(errp, "writing memory to '%s' failed",
-+                       filename);
-             goto exit;
-         }
-         addr += l;
+     }
 -- 
 2.45.0
 
