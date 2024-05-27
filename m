@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E943C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2729BC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVKb-0001Zy-Io; Mon, 27 May 2024 04:03:45 -0400
+	id 1sBVLP-0003uZ-He; Mon, 27 May 2024 04:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sBVK5-0000kI-8b; Mon, 27 May 2024 04:03:13 -0400
+ id 1sBVKk-0001fg-Mk; Mon, 27 May 2024 04:03:54 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sBVK3-0005H2-Ar; Mon, 27 May 2024 04:03:12 -0400
+ id 1sBVKi-0005H2-W2; Mon, 27 May 2024 04:03:54 -0400
 Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Mon, 27 May
- 2024 16:02:35 +0800
+ 2024 16:02:39 +0800
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 27 May
- 2024 16:02:36 +0800
+ 2024 16:02:40 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 27 May 2024 16:02:35 +0800
+ Transport; Mon, 27 May 2024 16:02:38 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -38,10 +38,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v4 07/16] aspeed/smc: support dma start length and 1 byte
- length unit
-Date: Mon, 27 May 2024 16:02:21 +0800
-Message-ID: <20240527080231.1576609-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 14/16] aspeed/soc: fix incorrect dram size for AST2700
+Date: Mon, 27 May 2024 16:02:28 +0800
+Message-ID: <20240527080231.1576609-15-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
 References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
@@ -76,198 +75,159 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DMA length is from 1 byte to 32MB for AST2600 and AST10x0
-and DMA length is from 4 bytes to 32MB for AST2500.
+AST2700 dram size calculation is not back compatible AST2600.
+According to the DDR capacity hardware behavior,
+if users write the data to address which is beyond the ram size,
+it would write the data to address 0.
+For example:
+a. sdram base address "0x4 00000000"
+b. sdram size is 1 GiB
+The available address range is from "0x4 00000000" to "0x4 40000000".
+If users write 0xdeadbeef to address "0x6 00000000",
+the value of DRAM address 0 (base address 0x4 00000000) should be 0xdeadbeef.
 
-In other words, if "R_DMA_LEN" is 0, it should move at least 1 byte
-data for AST2600 and AST10x0 and 4 bytes data for AST2500.
-To support all ASPEED SOCs, adds dma_start_length parameter to store
-the start length, add helper routines function to compute the dma length
-and update DMA_LENGTH mask to "1FFFFFF" to support dma 1 byte
-length unit for AST2600 and AST1030.
-Currently, only supports dma length 4 bytes aligned.
+Add aspeed_soc_ast2700_dram_init to calculate the dram size and add
+memory I/O whose address range is from max_ram_size - ram_size to max_ram_size
+and its read/write handler to emulate DDR capacity hardware behavior.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/ssi/aspeed_smc.c         | 43 ++++++++++++++++++++++++++++++-------
- include/hw/ssi/aspeed_smc.h |  1 +
- 2 files changed, 36 insertions(+), 8 deletions(-)
+ hw/arm/aspeed_ast27x0.c     | 94 ++++++++++++++++++++++++++++++++++++-
+ include/hw/arm/aspeed_soc.h |  1 +
+ 2 files changed, 94 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 8a8d77b480..ffb13a12e8 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -178,13 +178,17 @@
-  * DMA flash addresses should be 4 bytes aligned and the valid address
-  * range is 0x20000000 - 0x2FFFFFFF.
-  *
-- * DMA length is from 4 bytes to 32MB
-+ * DMA length is from 4 bytes to 32MB (AST2500)
-  *   0: 4 bytes
-- *   0x7FFFFF: 32M bytes
-+ *   0x1FFFFFC: 32M bytes
-+ *
-+ * DMA length is from 1 byte to 32MB (AST2600, AST10x0)
-+ *   0: 1 byte
-+ *   0x1FFFFFF: 32M bytes
-  */
- #define DMA_DRAM_ADDR(asc, val)   ((val) & (asc)->dma_dram_mask)
- #define DMA_FLASH_ADDR(asc, val)  ((val) & (asc)->dma_flash_mask)
--#define DMA_LENGTH(val)         ((val) & 0x01FFFFFC)
-+#define DMA_LENGTH(val)         ((val) & 0x01FFFFFF)
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index a3a03fc1ca..19380087fa 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -20,6 +20,7 @@
+ #include "sysemu/sysemu.h"
+ #include "hw/intc/arm_gicv3.h"
+ #include "qapi/qmp/qlist.h"
++#include "qemu/log.h"
  
- /* Flash opcodes. */
- #define SPI_OP_READ       0x03    /* Read data bytes (low frequency) */
-@@ -843,6 +847,13 @@ static bool aspeed_smc_inject_read_failure(AspeedSMCState *s)
-     }
+ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_SPI_BOOT]  =  0x400000000,
+@@ -191,6 +192,97 @@ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
+     return qdev_get_gpio_in(a->intc.gic, sc->irqmap[dev]);
  }
  
-+static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
++static uint64_t aspeed_ram_capacity_read(void *opaque, hwaddr addr,
++                                                    unsigned int size)
 +{
-+    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
-+
-+    return QEMU_ALIGN_UP(s->regs[R_DMA_LEN] + asc->dma_start_length, 4);
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "%s: read @%" PRIx64 " out of ram size\n",
++                   __func__, addr);
++    return 0;
 +}
 +
- /*
-  * Accumulate the result of the reads to provide a checksum that will
-  * be used to validate the read timing settings.
-@@ -850,6 +861,7 @@ static bool aspeed_smc_inject_read_failure(AspeedSMCState *s)
- static void aspeed_smc_dma_checksum(AspeedSMCState *s)
- {
-     MemTxResult result;
-+    uint32_t dma_len;
-     uint32_t data;
- 
-     if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
-@@ -861,7 +873,9 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
-         aspeed_smc_dma_calibration(s);
-     }
- 
--    while (s->regs[R_DMA_LEN]) {
-+    dma_len = aspeed_smc_dma_len(s);
++static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
++                                                unsigned int size)
++{
++    AspeedSoCState *s = ASPEED_SOC(opaque);
++    uint32_t test_pattern = 0xdeadbeef;
++    bool invalid_pattern = true;
++    uint32_t *ram_ptr;
++    int sz;
 +
-+    while (dma_len) {
-         data = address_space_ldl_le(&s->flash_as, s->regs[R_DMA_FLASH_ADDR],
-                                     MEMTXATTRS_UNSPECIFIED, &result);
-         if (result != MEMTX_OK) {
-@@ -877,7 +891,8 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
-          */
-         s->regs[R_DMA_CHECKSUM] += data;
-         s->regs[R_DMA_FLASH_ADDR] += 4;
--        s->regs[R_DMA_LEN] -= 4;
-+        dma_len -= 4;
-+        s->regs[R_DMA_LEN] = dma_len;
-     }
- 
-     if (s->inject_failure && aspeed_smc_inject_read_failure(s)) {
-@@ -889,14 +904,17 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
- static void aspeed_smc_dma_rw(AspeedSMCState *s)
- {
-     MemTxResult result;
-+    uint32_t dma_len;
-     uint32_t data;
- 
-+    dma_len = aspeed_smc_dma_len(s);
++    ram_ptr = memory_region_get_ram_ptr(s->dram_mr);
 +
-     trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
-                             "write" : "read",
-                             s->regs[R_DMA_FLASH_ADDR],
-                             s->regs[R_DMA_DRAM_ADDR],
--                            s->regs[R_DMA_LEN]);
--    while (s->regs[R_DMA_LEN]) {
-+                            dma_len);
-+    while (dma_len) {
-         if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
-             data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
-                                         MEMTXATTRS_UNSPECIFIED, &result);
-@@ -937,7 +955,8 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
-          */
-         s->regs[R_DMA_FLASH_ADDR] += 4;
-         s->regs[R_DMA_DRAM_ADDR] += 4;
--        s->regs[R_DMA_LEN] -= 4;
-+        dma_len -= 4;
-+        s->regs[R_DMA_LEN] = dma_len;
-         s->regs[R_DMA_CHECKSUM] += data;
++   /*
++    * Emulate ddr capacity hardware behavior.
++    * If writes the test_pattern to address which is beyond the ram size,
++    * it would write the test_pattern to address 0.
++    */
++    for (sz = 4; sz > 0 ; sz--) {
++        test_pattern = (test_pattern << 4) + sz;
++        if (data == test_pattern) {
++            ram_ptr[0] = test_pattern;
++            invalid_pattern = false;
++            break;
++        }
++    }
++
++    if (invalid_pattern) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: write invalid pattern @%" PRIx64
++                      " to addr @%" HWADDR_PRIx "]\n",
++                      __func__, data, addr);
++    }
++}
++
++static const MemoryRegionOps aspeed_ram_capacity_ops = {
++    .read = aspeed_ram_capacity_read,
++    .write = aspeed_ram_capacity_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
++/*
++ * SDMC should be realized first to get correct RAM size and max size
++ * values
++ */
++static bool aspeed_soc_ast2700_dram_init(DeviceState *dev, Error **errp)
++{
++    ram_addr_t ram_size, max_ram_size;
++    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
++    AspeedSoCState *s = ASPEED_SOC(dev);
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++
++    ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
++                                        &error_abort);
++    max_ram_size = object_property_get_uint(OBJECT(&s->sdmc), "max-ram-size",
++                                            &error_abort);
++
++    memory_region_init(&s->dram_container, OBJECT(s), "ram-container",
++                       ram_size);
++    memory_region_add_subregion(&s->dram_container, 0, s->dram_mr);
++
++    /*
++     * Add a memory region beyond the RAM region to emulate
++     * ddr capacity hardware behavior.
++     */
++    if (ram_size < max_ram_size) {
++        memory_region_init_io(&a->dram_empty, OBJECT(s),
++                              &aspeed_ram_capacity_ops, s,
++                              "ram-empty", max_ram_size - ram_size);
++
++        memory_region_add_subregion(s->memory,
++                                    sc->memmap[ASPEED_DEV_SDRAM] + ram_size,
++                                    &a->dram_empty);
++    }
++
++    memory_region_add_subregion(s->memory,
++                      sc->memmap[ASPEED_DEV_SDRAM], &s->dram_container);
++    return true;
++}
++
+ static void aspeed_soc_ast2700_init(Object *obj)
+ {
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(obj);
+@@ -461,7 +553,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                     sc->memmap[ASPEED_DEV_SDMC]);
+ 
+     /* RAM */
+-    if (!aspeed_soc_dram_init(s, errp)) {
++    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
+         return;
      }
- }
-@@ -1381,6 +1400,7 @@ static void aspeed_2400_fmc_class_init(ObjectClass *klass, void *data)
-     asc->features          = ASPEED_SMC_FEATURE_DMA;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x1FFFFFFC;
-+    asc->dma_start_length  = 4;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_smc_reg_to_segment;
-@@ -1464,6 +1484,7 @@ static void aspeed_2500_fmc_class_init(ObjectClass *klass, void *data)
-     asc->features          = ASPEED_SMC_FEATURE_DMA;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x3FFFFFFC;
-+    asc->dma_start_length  = 4;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_smc_reg_to_segment;
-@@ -1620,6 +1641,7 @@ static void aspeed_2600_fmc_class_init(ObjectClass *klass, void *data)
-                              ASPEED_SMC_FEATURE_WDT_CONTROL;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x3FFFFFFC;
-+    asc->dma_start_length  = 1;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-@@ -1658,6 +1680,7 @@ static void aspeed_2600_spi1_class_init(ObjectClass *klass, void *data)
-                              ASPEED_SMC_FEATURE_DMA_GRANT;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x3FFFFFFC;
-+    asc->dma_start_length  = 1;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-@@ -1697,6 +1720,7 @@ static void aspeed_2600_spi2_class_init(ObjectClass *klass, void *data)
-                              ASPEED_SMC_FEATURE_DMA_GRANT;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x3FFFFFFC;
-+    asc->dma_start_length  = 1;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-@@ -1778,6 +1802,7 @@ static void aspeed_1030_fmc_class_init(ObjectClass *klass, void *data)
-     asc->features          = ASPEED_SMC_FEATURE_DMA;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x000BFFFC;
-+    asc->dma_start_length  = 1;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_1030_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_1030_smc_reg_to_segment;
-@@ -1815,6 +1840,7 @@ static void aspeed_1030_spi1_class_init(ObjectClass *klass, void *data)
-     asc->features          = ASPEED_SMC_FEATURE_DMA;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x000BFFFC;
-+    asc->dma_start_length  = 1;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-@@ -1851,6 +1877,7 @@ static void aspeed_1030_spi2_class_init(ObjectClass *klass, void *data)
-     asc->features          = ASPEED_SMC_FEATURE_DMA;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x000BFFFC;
-+    asc->dma_start_length  = 1;
-     asc->nregs             = ASPEED_SMC_R_MAX;
-     asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
-     asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-index 8e1dda556b..f359ed22cc 100644
---- a/include/hw/ssi/aspeed_smc.h
-+++ b/include/hw/ssi/aspeed_smc.h
-@@ -106,6 +106,7 @@ struct AspeedSMCClass {
-     uint32_t features;
-     hwaddr dma_flash_mask;
-     hwaddr dma_dram_mask;
-+    uint32_t dma_start_length;
-     uint32_t nregs;
-     uint32_t (*segment_to_reg)(const AspeedSMCState *s,
-                                const AspeedSegments *seg);
+ 
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 9f177b6037..9dbf48f873 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -127,6 +127,7 @@ struct Aspeed27x0SoCState {
+ 
+     ARMCPU cpu[ASPEED_CPUS_NUM];
+     AspeedINTCState intc;
++    MemoryRegion dram_empty;
+ };
+ 
+ #define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
 -- 
 2.25.1
 
