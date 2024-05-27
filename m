@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53908C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF473C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUj6-0007ol-Jl; Mon, 27 May 2024 03:25:01 -0400
+	id 1sBUjK-0007y7-35; Mon, 27 May 2024 03:25:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUj4-0007nZ-4G; Mon, 27 May 2024 03:24:58 -0400
+ id 1sBUj8-0007pl-LP; Mon, 27 May 2024 03:25:02 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUj2-0006Eh-CG; Mon, 27 May 2024 03:24:57 -0400
+ id 1sBUj4-0006FB-VJ; Mon, 27 May 2024 03:25:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 890CA6A4C7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 988806A4C8;
  Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C7E05D8464;
+ by tsrv.corpit.ru (Postfix) with SMTP id D696AD8465;
  Mon, 27 May 2024 10:24:35 +0300 (MSK)
-Received: (nullmailer pid 52900 invoked by uid 1000);
+Received: (nullmailer pid 52903 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, hikalium <hikalium@hikalium.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 10/21] configure: Fix error message when C compiler is
- not working
-Date: Mon, 27 May 2024 10:24:20 +0300
-Message-Id: <20240527072435.52812-10-mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 11/21] ui/gtk: Fix mouse/motion event scaling issue
+ with GTK display backend
+Date: Mon, 27 May 2024 10:24:21 +0300
+Message-Id: <20240527072435.52812-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
@@ -64,61 +64,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: hikalium <hikalium@hikalium.com>
 
-If you try to run the configure script on a system without a working
-C compiler, you get a very misleading error message:
+Remove gtk_widget_get_scale_factor() usage from the calculation of
+the motion events in the GTK backend to make it work correctly on
+environments that have `gtk_widget_get_scale_factor() != 1`.
 
- ERROR: Unrecognized host OS (uname -s reports 'Linux')
+This scale factor usage had been introduced in the commit f14aab420c and
+at that time the window size was used for calculating the things and it
+was working correctly. However, in the commit 2f31663ed4 the logic
+switched to use the widget size instead of window size and because of
+the change the usage of scale factor becomes invalid (since widgets use
+`vc->gfx.scale_{x, y}` for scaling).
 
-Some people already opened bug tickets because of this problem:
+Tested on Crostini on ChromeOS (15823.51.0) with an external display.
 
- https://gitlab.com/qemu-project/qemu/-/issues/2057
- https://gitlab.com/qemu-project/qemu/-/issues/2288
+Fixes: 2f31663ed4 ("ui/gtk: use widget size for cursor motion event")
+Fixes: f14aab420c ("ui: fix incorrect pointer position on highdpi with
+gtk")
 
-We should rather tell the user that we were not able to use the C
-compiler instead, otherwise they will have a hard time to figure
-out what was going wrong.
-
-While we're at it, let's also suppress the "unrecognized host CPU"
-message in this case since it is rather misleading than helpful.
-
-Fixes: 264b803721 ("configure: remove compiler sanity check")
-Message-ID: <20240513114010.51608-1-thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 371d60dfdb47dd18d163a7759968ba138089371e)
+Signed-off-by: hikalium <hikalium@hikalium.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20240512111435.30121-3-hikalium@hikalium.com>
+(cherry picked from commit 37e91415018db3656b46cdea8f9e4d47b3ff130d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/configure b/configure
-index 66ca736621..c1e03801f1 100755
---- a/configure
-+++ b/configure
-@@ -411,7 +411,9 @@ else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-   cpu=$(uname -m)
--  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  if test "$host_os" != "bogus"; then
-+    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  fi
- fi
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 810d7fc796..c4a9662085 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -887,7 +887,7 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
+     int x, y;
+     int mx, my;
+     int fbh, fbw;
+-    int ww, wh, ws;
++    int ww, wh;
  
- # Normalise host CPU name to the values used by Meson cross files and in source
-@@ -893,6 +895,13 @@ EOF
- exit 0
- fi
+     if (!vc->gfx.ds) {
+         return TRUE;
+@@ -895,11 +895,15 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
  
-+# Now that we are sure that the user did not only want to print the --help
-+# information, we should double-check that the C compiler really works:
-+write_c_skeleton
-+if ! compile_object ; then
-+    error_exit "C compiler \"$cc\" either does not exist or does not work."
-+fi
-+
- # Remove old dependency files to make sure that they get properly regenerated
- rm -f ./*/config-devices.mak.d
+     fbw = surface_width(vc->gfx.ds) * vc->gfx.scale_x;
+     fbh = surface_height(vc->gfx.ds) * vc->gfx.scale_y;
+-
+     ww = gtk_widget_get_allocated_width(widget);
+     wh = gtk_widget_get_allocated_height(widget);
+-    ws = gtk_widget_get_scale_factor(widget);
  
++    /*
++     * `widget` may not have the same size with the frame buffer.
++     * In such cases, some paddings are needed around the `vc`.
++     * To achieve that, `vc` will be displayed at (mx, my)
++     * so that it is displayed at the center of the widget.
++     */
+     mx = my = 0;
+     if (ww > fbw) {
+         mx = (ww - fbw) / 2;
+@@ -908,8 +912,12 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
+         my = (wh - fbh) / 2;
+     }
+ 
+-    x = (motion->x - mx) / vc->gfx.scale_x * ws;
+-    y = (motion->y - my) / vc->gfx.scale_y * ws;
++    /*
++     * `motion` is reported in `widget` coordinates
++     * so translating it to the coordinates in `vc`.
++     */
++    x = (motion->x - mx) / vc->gfx.scale_x;
++    y = (motion->y - my) / vc->gfx.scale_y;
+ 
+     if (qemu_input_is_absolute(vc->gfx.dcl.con)) {
+         if (x < 0 || y < 0 ||
 -- 
 2.39.2
 
