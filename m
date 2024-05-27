@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F5BCC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53EF8C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcpk-0002Zy-2C; Mon, 27 May 2024 12:04:24 -0400
+	id 1sBcs7-0003Wp-AY; Mon, 27 May 2024 12:06:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sBcpi-0002Zb-IH
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:04:22 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcs3-0003Vk-Ao
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:06:47 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sBcpd-0000Gc-W5
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:04:22 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2e95a7622cfso39255691fa.2
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:04:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcs1-00011k-IF
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:06:47 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-357d533b744so1787045f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716825852; x=1717430652; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lxVdkFRKMhvmVq3j8qkX0mPoC07s61lZohcTdmqZTbQ=;
- b=m+cEXViAG1UakjqCqFo47pjdDKo8AbBCTXLl1NyztMnymuBwd2QWEf8ZXm1FNa8d/t
- maEmxv+ljoV5ric9xvDhPhfjWhfeYC/fDVg+v2JBIlRRiIiL+8Q6sQZUimj/yhQp1sfE
- NWJQX+e95valq+Vj8ZrjHbMMyB/DHSpYojb0g3D6QLoa0veIvmrboSLThmrb/EmNs7L+
- 2PYhrqoTEHlcJqq4uuMZox/3H1egQQ+FeIaZQrL6klGYxgUjDwFZR1HdLzanN1U49Cig
- cskBnAwzcz0z1O1nwoHo1HayrRgc9h7KB+tKkPbMcV7dAhsXJNcLLjqUKk3vnYm9vEV6
- 0S9w==
+ d=linaro.org; s=google; t=1716826004; x=1717430804; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C6lwrpKu21HlYZ5GMXTKDszlEcE4hsmHXDZWcHi8bvI=;
+ b=PFsAopfUuK4mYaERJMHYAbRJP95qCalWhmY8u/JOENUfGcZve+sM00u88PXhP05utD
+ kYV842dnmRpK5Jb7+l8JIruBUFP/TbNJdbA4EefUPsRtGsh0I0U23IghZwUhQc0FPEVm
+ RFsK04DaaVIVdaqAQjvWmjulBhkjJCYKzW9PSKDhe1b6bOPoSpRbRPcvbM5Sb+XUp5si
+ PYuXsdclevdF+RrCAzttByvPGrsF3Icw5rqTiBPo+xPkk2Zw8fyZmrvOlVczuKHYKeFF
+ mHevlyjgItS0bXU6TV+usCtfJExIEcyQzVS3I5p08QI7uHlh1MJVf+KADsAm/8im4000
+ Qehw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716825852; x=1717430652;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lxVdkFRKMhvmVq3j8qkX0mPoC07s61lZohcTdmqZTbQ=;
- b=m9L/9DPuc49qWmpKL6exFN3GSJqy3Qs+blQ/DAWY/Df71U9+HabS8i812C3Rn6QNug
- MsC0vBpolNwdtxYyrHb5zzM/2gfPjPLNPnj2AAnC6zRJwt6SXBe3GT5OCBMt6u8SEgds
- fe+zPcZ1JodmwYgVKQTqqwe4j3xNwIGHpMmDFcJLOvAuWkxTajHEgZBJld9l13Le5KI5
- ooFSfNGsbpDNwsLPmm9xWggcbb0I7wNOnmODW6Y3QaFZmbpyhQo93W9krGKlmZCpoPxV
- XSVo9sUqZ6OVUCNG5p16pIGmlvePOcbQ1LiPmt8ueV45YXzVhnUZE/Epg0q6sb/fFdc6
- RBDA==
+ d=1e100.net; s=20230601; t=1716826004; x=1717430804;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C6lwrpKu21HlYZ5GMXTKDszlEcE4hsmHXDZWcHi8bvI=;
+ b=Kk+ORCNlGrFKKnjSi3is6Rbu8c6/VQb0X5JZ6Pgi/uEa/WeMu52xW5Gso+grg9H3mm
+ 0nz3fB6Rngikwd29HS9DLMyKO2ErtmrvQ0wXVbQppMmRNE2Vpkb+qrv6TISv3lk0+isZ
+ I7Kny9f9zrK3KVO2XJ23CWYdegR77+rOs4espmkCtbW8SxLklyPx0htUfb1ndUpAEdGX
+ lP6/+ZMMJC31wjpvtKFYLU0RLwDHNU/XlDt3/JIq/hXvYlNDpLZh7EGkmRh/i1x18s2i
+ ubES4f1i5HNRk3YgPGs+a5u8BYQ5SIvmiQu5mgC+Qcec7TloKENkaDegGuJ3UpZH6BuW
+ NXiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6ZHbmy9HDy7rWzCJfn7RJ8RlMKP8sP7Uj8ZTRKONhDu1smE6xjESz4h+NUPwmnXxuO/HBU0nJ4Gl51++ufpCGcWY0MO0=
-X-Gm-Message-State: AOJu0YxHeUAubJLU/AeVDw/ekISH7/9asTKU1gwApTd31MHvsH//bDWA
- 20dzrX7hCl05UzYN+ft4Hcm992bqKVTzrzOzyr+2Vqw3v1Z/rCCQUmHVRu/ftbIEMXjv0D9cXfa
- 2ZYGHH3AgoDowQD6c9KuKgJfkBH4=
-X-Google-Smtp-Source: AGHT+IGk3c5hLwzWxhjMKdKpNcwdJPWXjqNHEVT/5Y5htj37OgklUPn81c7vIbXz3htxUVfa6XIMEqAUQLkLzmQYNRc=
-X-Received: by 2002:a2e:8796:0:b0:2e9:5263:36e9 with SMTP id
- 38308e7fff4ca-2e95b276558mr62130331fa.43.1716825851899; Mon, 27 May 2024
- 09:04:11 -0700 (PDT)
+ AJvYcCUsash7xjpOBxEb58qUyt/G26AAXHABJ7WrT2DaHR91WmsD4OwmRJwrrE5zpQNOl3+NVsU0IENd+szzuBl0ZQtxrCYG3nQ=
+X-Gm-Message-State: AOJu0Yw4NrYPn9Lrcf3Us/Fk+hzlFnsS25CUvi6FXukvtiF2Ee+IUGWo
+ Q1AKryZwexRI0cBHh6J/V+bIkmXXM+iKy5fcWfkz7Q24G02hJkqqT75gm3+MZ+6bWtZQK3m/5B6
+ X
+X-Google-Smtp-Source: AGHT+IFNHs+BD4ooQKOJwYkAQD2URSmLbJHHuMazXmPyZuZSKrJrHLspyCxiXaf93qumc4UVqnzlBg==
+X-Received: by 2002:a05:6000:1541:b0:359:733c:c8d6 with SMTP id
+ ffacd0b85a97d-359733cc9fbmr2436007f8f.67.1716826003749; 
+ Mon, 27 May 2024 09:06:43 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.152.134])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3557dcf06dcsm9461164f8f.106.2024.05.27.09.06.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 09:06:43 -0700 (PDT)
+Message-ID: <2d64463d-0694-4d6e-a8c4-5bfad2cf801d@linaro.org>
+Date: Mon, 27 May 2024 18:06:41 +0200
 MIME-Version: 1.0
-References: <20240518080753.7083-1-dorjoychy111@gmail.com>
- <20240518080753.7083-2-dorjoychy111@gmail.com>
- <bf9dc551-49e4-4ed9-941d-c095bab5755a@linaro.org>
- <CAFfO_h7_V13k9WizTYrY-UsjUhvWFeY4Fn7a_8_c4qEz4=hYFg@mail.gmail.com>
- <919e6b8c-2f9b-4f91-97e2-20146bf18263@amazon.com>
-In-Reply-To: <919e6b8c-2f9b-4f91-97e2-20146bf18263@amazon.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Mon, 27 May 2024 22:04:00 +0600
-Message-ID: <CAFfO_h7hrR+cZk17LFY8iun3xE2ygkFrKXoibTXwZ2+UZRmQdw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] machine/microvm: support for loading EIF image
-To: Alexander Graf <graf@amazon.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, agraf@csgraf.de, stefanha@redhat.com, 
- pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/16] aspeed/smc: support 64 bits dma dram address
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-9-jamin_lin@aspeedtech.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240527080231.1576609-9-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,79 +104,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Alex,
+Hi Jamin,
 
-On Mon, May 27, 2024 at 9:51=E2=80=AFPM Alexander Graf <graf@amazon.com> wr=
-ote:
->
->
-> On 27.05.24 16:52, Dorjoy Chowdhury wrote:
-> > Hi Philippe,
-> > Thank you for reviewing.
-> >
-> > On Mon, May 27, 2024 at 4:47=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> > <philmd@linaro.org> wrote:
-> >> Hi Dorjoy,
-> >>
-> >> On 18/5/24 10:07, Dorjoy Chowdhury wrote:
-> >>> An EIF (Enclave Image Format)[1] image is used to boot an AWS nitro
-> >>> enclave[2] virtual machine. The EIF file contains the necessary
-> >>> kernel, cmdline, ramdisk(s) sections to boot.
-> >>>
-> >>> This commit adds support for loading EIF image using the microvm
-> >>> machine code. For microvm to boot from an EIF file, the kernel and
-> >>> ramdisk(s) are extracted into a temporary kernel and a temporary
-> >>> initrd file which are then hooked into the regular x86 boot mechanism
-> >>> along with the extracted cmdline.
-> >>>
-> >>> Although not useful for the microvm machine itself, this is needed
-> >>> as the following commit adds support for a new machine type
-> >>> 'nitro-enclave' which uses the microvm machine type as parent. The
-> >>> code for checking and loading EIF will be put inside a 'nitro-enclave=
-'
-> >>> machine type check in the following commit so that microvm cannot loa=
-d
-> >>> EIF because it shouldn't.
-> >>>
-> >>> [1] https://github.com/aws/aws-nitro-enclaves-image-format
-> >> The documentation is rather scarse...
-> >>
-> > Do you mean documentation about EIF file format?  If so, yes, right
-> > now there is no specification other than the github repo for EIF.
-> >
-> >>> [2] https://aws.amazon.com/ec2/nitro/nitro-enclaves/
-> >>>
-> >>> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> >>> ---
-> >>>    hw/i386/eif.c       | 486 ++++++++++++++++++++++++++++++++++++++++=
-++++
-> >>>    hw/i386/eif.h       |  20 ++
-> >>>    hw/i386/meson.build |   2 +-
-> >> ... still it seems a generic loader, not restricted to x86.
-> >>
-> >> Maybe better add it as hw/core/loader-eif.[ch]?
-> >>
-> > Yes, the code in eif.c is architecture agnostic. So it could make
-> > sense to move the files to hw/core. But I don't think the names should
-> > have "loader" prefix as there is no loading logic in eif.c. There is
-> > only logic for parsing and extracting kernel, intird, cmdline etc.
-> > Because nitro-enclave machine type is based on microvm which only
-> > supports x86 now, I think it also makes sense to keep the files inside
-> > hw/i386 for now as we can only really load x86 kernel using it. Maybe
-> > if we, in the future, add support for other architectures, then we can
-> > move them to hw/core. What do you think?
->
->
-> I think it makes sense to put EIF parsing into generic code from the
-> start. Nitro Enclaves supports Aarch64 with the same EIF semantics. In
-> fact, it would be pretty simple to do a sub-machine-class similar to the
-> x86 NE one for arm based on -M virt as a follow-up and by making the EIF
-> logic x86 only we're only making our lives harder for that future.
->
+On 27/5/24 10:02, Jamin Lin wrote:
+> AST2700 support the maximum dram size is 8GiB
+> and has a "DMA DRAM Side Address High Part(0x7C)"
+> register to support 64 bits dma dram address.
+> Add helper routines functions to compute the dma dram
+> address, new features and update trace-event
+> to support 64 bits dram address.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/ssi/aspeed_smc.c         | 52 +++++++++++++++++++++++++++++++------
+>   hw/ssi/trace-events         |  2 +-
+>   include/hw/ssi/aspeed_smc.h |  1 +
+>   3 files changed, 46 insertions(+), 9 deletions(-)
 
-Understood. I will move the eif.c and eif.h files to the hw/core
-directory. Thanks.
 
-Regards,
-Dorjoy
+> +static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
+> +{
+> +    return s->regs[R_DMA_DRAM_ADDR] |
+> +        ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32);
+> +}
+> +
+>   static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
+>   {
+>       AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+> @@ -903,24 +921,34 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
+>   
+>   static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>   {
+> +    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+> +    uint64_t dma_dram_offset;
+> +    uint64_t dma_dram_addr;
+>       MemTxResult result;
+>       uint32_t dma_len;
+>       uint32_t data;
+>   
+>       dma_len = aspeed_smc_dma_len(s);
+> +    dma_dram_addr = aspeed_smc_dma_dram_addr(s);
+> +
+> +    if (aspeed_smc_has_dma64(asc)) {
+> +        dma_dram_offset = dma_dram_addr - s->dram_base;
+> +    } else {
+> +        dma_dram_offset = dma_dram_addr;
+
+Here s->dram_base is 0x0. Do we really need to check
+aspeed_smc_has_dma64?
+
+> +    }
+
+Maybe simplify improving aspeed_smc_dma_dram_addr() as:
+
+   static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
+   {
+       return (s->regs[R_DMA_DRAM_ADDR]
+               | ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32))
+               - s->dram_base;
+   }
+
+Then no need for dma_dram_offset, dma_dram_addr is enough.
+
+>   
+>       trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
+>                               "write" : "read",
+>                               s->regs[R_DMA_FLASH_ADDR],
+> -                            s->regs[R_DMA_DRAM_ADDR],
+> +                            dma_dram_offset,
+>                               dma_len);
+>       while (dma_len) {
+>           if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
+> -            data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
+> +            data = address_space_ldl_le(&s->dram_as, dma_dram_offset,
+>                                           MEMTXATTRS_UNSPECIFIED, &result);
+>               if (result != MEMTX_OK) {
+> -                aspeed_smc_error("DRAM read failed @%08x",
+> -                                 s->regs[R_DMA_DRAM_ADDR]);
+> +                aspeed_smc_error("DRAM read failed @%" PRIx64,
+> +                                 dma_dram_offset);
+>                   return;
+>               }
+>   
+> @@ -940,11 +968,11 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>                   return;
+>               }
+>   
+> -            address_space_stl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
+> +            address_space_stl_le(&s->dram_as, dma_dram_offset,
+>                                    data, MEMTXATTRS_UNSPECIFIED, &result);
+>               if (result != MEMTX_OK) {
+> -                aspeed_smc_error("DRAM write failed @%08x",
+> -                                 s->regs[R_DMA_DRAM_ADDR]);
+> +                aspeed_smc_error("DRAM write failed @%" PRIx64,
+> +                                 dma_dram_offset);
+>                   return;
+>               }
+>           }
+> @@ -953,8 +981,12 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>            * When the DMA is on-going, the DMA registers are updated
+>            * with the current working addresses and length.
+>            */
+> +        dma_dram_offset += 4;
+> +        dma_dram_addr += 4;
+> +
+> +        s->regs[R_DMA_DRAM_ADDR_HIGH] = dma_dram_addr >> 32;
+> +        s->regs[R_DMA_DRAM_ADDR] = dma_dram_addr & 0xffffffff;
+>           s->regs[R_DMA_FLASH_ADDR] += 4;
+> -        s->regs[R_DMA_DRAM_ADDR] += 4;
+>           dma_len -= 4;
+>           s->regs[R_DMA_LEN] = dma_len;
+>           s->regs[R_DMA_CHECKSUM] += data;
+> @@ -1107,6 +1139,9 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+>       } else if (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN &&
+>                  aspeed_smc_dma_granted(s)) {
+>           s->regs[addr] = DMA_LENGTH(value);
+> +    } else if (aspeed_smc_has_dma(asc) && aspeed_smc_has_dma64(asc) &&
+> +               addr == R_DMA_DRAM_ADDR_HIGH) {
+> +        s->regs[addr] = DMA_DRAM_ADDR_HIGH(value);
+>       } else {
+>           qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+>                         __func__, addr);
+> @@ -1239,6 +1274,7 @@ static const VMStateDescription vmstate_aspeed_smc = {
+>   
+>   static Property aspeed_smc_properties[] = {
+>       DEFINE_PROP_BOOL("inject-failure", AspeedSMCState, inject_failure, false),
+> +    DEFINE_PROP_UINT64("dram-base", AspeedSMCState, dram_base, 0),
+>       DEFINE_PROP_LINK("dram", AspeedSMCState, dram_mr,
+>                        TYPE_MEMORY_REGION, MemoryRegion *),
+>       DEFINE_PROP_END_OF_LIST(),
+
 
