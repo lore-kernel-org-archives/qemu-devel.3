@@ -4,48 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277B0C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF62C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUkN-0001gI-0V; Mon, 27 May 2024 03:26:19 -0400
+	id 1sBUr9-0007Pw-Kr; Mon, 27 May 2024 03:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUjX-00087S-8t; Mon, 27 May 2024 03:25:34 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUjT-0006Fa-Pf; Mon, 27 May 2024 03:25:26 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BB1BB6A4CA;
- Mon, 27 May 2024 10:25:09 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 0474CD8467;
- Mon, 27 May 2024 10:24:36 +0300 (MSK)
-Received: (nullmailer pid 52909 invoked by uid 1000);
- Mon, 27 May 2024 07:24:35 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 13/21] tcg/loongarch64: Fill out tcg_out_{ld,
- st} for vector regs
-Date: Mon, 27 May 2024 10:24:23 +0300
-Message-Id: <20240527072435.52812-13-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBUqP-00078K-JT; Mon, 27 May 2024 03:32:33 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBUqN-0007tL-Uk; Mon, 27 May 2024 03:32:33 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-65b4d0a7391so5303512a12.2; 
+ Mon, 27 May 2024 00:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716795150; x=1717399950; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FXJIyZ9Om05O3Mew//oQ/ybUA0XciHhO8eLbeRreUmY=;
+ b=FuvQtRdf0ZAONA8xXoHBghNay8PFfDMmiumwuZmuFFT6sve7IOTGnqo/dFmaQV7IZF
+ xBgISzCYKO8QQy3vFeboPbeyzfSh9FRf1rmGcGMxbppwPNvPwXAn4ixwEmiUKexDiX5t
+ cUiFgAgUzZrf3MMMYha04nT3TF7frnrphj1/urV/Zi1/+YgaQr5Etp7GUaubHdWB/KzZ
+ Yi4aae8xpI2MlnwyAiNxjTPuQOSJOMcF+ExA4OXDBBC7wzXymw08sywVwpxzZwH/HC1F
+ BSyQCZiAHzus3YYJh/74sn9M9Y4UR0xnCVVbXjE9WIwwZND3lGmf1KUwzgh9abGSczWD
+ 3TjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716795150; x=1717399950;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=FXJIyZ9Om05O3Mew//oQ/ybUA0XciHhO8eLbeRreUmY=;
+ b=L1GIxMnn/RG3LxX3EBE4lD7A7s0u+D4IVWQVO2Ffvx4sAwnZCyd2FeticdjQdblH5T
+ X3dui+ZvZJUVkZqe0+w5jCj0T+EgPnThLUTgJ+N8tmucPgyV7GJIZVq7iQSuIl5tdsb2
+ WgNbESyJNJ7y1bYKQbeDUzOZwNjsYGzTf93Tvs7mK/D/kiR7ms3iU27FYpUCb6gP+5nx
+ 8TACyH4GJh87wcGje0KL+5Oo701JY3k1trvmrMyU8VB5S6orczUN9HuJv0wlIlFknPDP
+ gx7vttZKXSHmYq8vRg5q6/nJdBckMuxrfAGffxJYpZo4HfPcHBe+Xk9FbeFqaJuZ5/Gg
+ OjHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWb4ApFbXBTyZCuyGzb0gtIOimspbWm1xyiQBFUHT9WMVdrSdEX2LIt2yAxQyvnW7E1/I/Bwvbx9xAcCClTDMoThiMkunN0sFyUsAbOqcmvR1dy/yMR/9F4cPY=
+X-Gm-Message-State: AOJu0YxtY11hFoNUoot6N6GK1dCANCNklKP6i6gLiQUSOFYbb8R+Qabu
+ 1AiAVTNA0q7Ne1rmIipn1/DI7opahYZDY9PnGqe52gsG+GGQQczOoYoe9yoX
+X-Google-Smtp-Source: AGHT+IEylBrdTX1SXuIKcxK6C9gXIUYoF1wxphcgwnv/exlj23P7GpjTZaVjWyY7XetLNReqTnRmSg==
+X-Received: by 2002:a17:90a:ea0a:b0:2bd:6536:9abd with SMTP id
+ 98e67ed59e1d1-2bf5e15648dmr7866294a91.2.1716795150136; 
+ Mon, 27 May 2024 00:32:30 -0700 (PDT)
+Received: from localhost ([1.146.73.168]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2bf5f30c770sm5102597a91.11.2024.05.27.00.32.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 00:32:29 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 27 May 2024 17:32:24 +1000
+Message-Id: <D1K935B9TYYV.3GMTXCVHSWP0G@gmail.com>
+Cc: "Caleb Schlossin" <calebs@linux.vnet.ibm.com>,
+ =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
+ Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH 00/10] ppc/pnv: Better big-core model,
+ lpar-per-core, PC unit
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240526122612.473476-1-npiggin@gmail.com>
+ <66c95ef6-8f94-4661-bc4c-8f5f7abcce1f@kaod.org>
+In-Reply-To: <66c95ef6-8f94-4661-bc4c-8f5f7abcce1f@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,155 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Mon May 27, 2024 at 4:25 PM AEST, C=C3=A9dric Le Goater wrote:
+> On 5/26/24 14:26, Nicholas Piggin wrote:
+> > Primary motivation for this series is to improve big-core support.
+> > Other things like SPR indirect, timebase state, PC xscom, are required
+> > for minimal big core support.
+> >=20
+> > I'm still not 100% happy with the big-core topology model after this.
+> > Maybe one day we add pnv big core and pnv small core structures. But
+>
+> I haven't look at the proposal yet, but indeed, we could introduce
+> a new TYPE_PNV_CORE type for big cores only.
 
-TCG register spill/fill uses tcg_out_ld/st with all types,
-not necessarily going through INDEX_op_{ld,st}_vec.
+Yeah. It's still tricky because big-core structure contains the CPUs
+if you are running in small core mode. So it would really have to be
+a PnvCPUCore and PnvPervasiveCore or something, where the former is
+either SMT4 and 1:1 with the latter or SMT8 and 1:2 depending on mode.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2336
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Tested-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit c9290dfebfdba5c13baa5e1f10e13a1c876b0643)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+And some of the "CPU" type operations in big core mode still need to
+operate on the small core.
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index dcf0205458..abdc8b7f4d 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -807,18 +807,88 @@ static void tcg_out_ldst(TCGContext *s, LoongArchInsn opc, TCGReg data,
-     }
- }
- 
--static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
--                       TCGReg arg1, intptr_t arg2)
-+static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
-+                       TCGReg base, intptr_t offset)
- {
--    bool is_32bit = type == TCG_TYPE_I32;
--    tcg_out_ldst(s, is_32bit ? OPC_LD_W : OPC_LD_D, arg, arg1, arg2);
-+    switch (type) {
-+    case TCG_TYPE_I32:
-+        if (dest < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_LD_W, dest, base, offset);
-+        } else {
-+            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_32, dest, base, offset);
-+        }
-+        break;
-+    case TCG_TYPE_I64:
-+        if (dest < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
-+        } else {
-+            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_64, dest, base, offset);
-+        }
-+        break;
-+    case TCG_TYPE_V128:
-+        if (-0x800 <= offset && offset <= 0x7ff) {
-+            tcg_out_opc_vld(s, dest, base, offset);
-+        } else {
-+            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+            tcg_out_opc_vldx(s, dest, base, TCG_REG_TMP0);
-+        }
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- }
- 
--static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
--                       TCGReg arg1, intptr_t arg2)
-+static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
-+                       TCGReg base, intptr_t offset)
- {
--    bool is_32bit = type == TCG_TYPE_I32;
--    tcg_out_ldst(s, is_32bit ? OPC_ST_W : OPC_ST_D, arg, arg1, arg2);
-+    switch (type) {
-+    case TCG_TYPE_I32:
-+        if (src < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_ST_W, src, base, offset);
-+        } else {
-+            /* TODO: Could use fst_s, fstx_s */
-+            if (offset < -0x100 || offset > 0xff || (offset & 3)) {
-+                if (-0x800 <= offset && offset <= 0x7ff) {
-+                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-+                } else {
-+                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-+                }
-+                base = TCG_REG_TMP0;
-+                offset = 0;
-+            }
-+            tcg_out_opc_vstelm_w(s, src, base, offset, 0);
-+        }
-+        break;
-+    case TCG_TYPE_I64:
-+        if (src < TCG_REG_V0) {
-+            tcg_out_ldst(s, OPC_ST_D, src, base, offset);
-+        } else {
-+            /* TODO: Could use fst_d, fstx_d */
-+            if (offset < -0x100 || offset > 0xff || (offset & 7)) {
-+                if (-0x800 <= offset && offset <= 0x7ff) {
-+                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-+                } else {
-+                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-+                }
-+                base = TCG_REG_TMP0;
-+                offset = 0;
-+            }
-+            tcg_out_opc_vstelm_d(s, src, base, offset, 0);
-+        }
-+        break;
-+    case TCG_TYPE_V128:
-+        if (-0x800 <= offset && offset <= 0x7ff) {
-+            tcg_out_opc_vst(s, src, base, offset);
-+        } else {
-+            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-+            tcg_out_opc_vstx(s, src, base, TCG_REG_TMP0);
-+        }
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- }
- 
- static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
-@@ -1739,7 +1809,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
- {
-     TCGType type = vecl + TCG_TYPE_V64;
-     TCGArg a0, a1, a2, a3;
--    TCGReg temp = TCG_REG_TMP0;
-     TCGReg temp_vec = TCG_VEC_TMP0;
- 
-     static const LoongArchInsn cmp_vec_insn[16][4] = {
-@@ -1819,22 +1888,10 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
- 
-     switch (opc) {
-     case INDEX_op_st_vec:
--        /* Try to fit vst imm */
--        if (-0x800 <= a2 && a2 <= 0x7ff) {
--            tcg_out_opc_vst(s, a0, a1, a2);
--        } else {
--            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
--            tcg_out_opc_vstx(s, a0, a1, temp);
--        }
-+        tcg_out_st(s, type, a0, a1, a2);
-         break;
-     case INDEX_op_ld_vec:
--        /* Try to fit vld imm */
--        if (-0x800 <= a2 && a2 <= 0x7ff) {
--            tcg_out_opc_vld(s, a0, a1, a2);
--        } else {
--            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
--            tcg_out_opc_vldx(s, a0, a1, temp);
--        }
-+        tcg_out_ld(s, type, a0, a1, a2);
-         break;
-     case INDEX_op_and_vec:
-         tcg_out_opc_vand_v(s, a0, a1, a2);
--- 
-2.39.2
+For now, the accessors and helpers seem to be not too bad.
 
+> > nothing is completely clean because big core mode still has certain
+> > small core restrictions. I think for now we take a bit of mostly
+> > abstracted ugliness in TCG code for the benefit of not spreading
+> > hacks through pervasive (xscom) core addressing.
+> >=20
+> > After this series, power9 and power10 get through skiboot/Linux boot
+> s
+>
+> Have you tried SMT8 on powernv8 ? I remember seeing a hang if I am correc=
+t.
+> I don't think POWER8 deserves much attention anymore, we could deprecate
+> POWER8E and POWER8NVL. However, we should at least report an error if we
+> know a setup is broken.
+
+Yeah it does have some problem. Maybe should just disable SMT unless
+someone finds time to work it out.
+
+Thanks,
+Nick
 
