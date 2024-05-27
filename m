@@ -4,87 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EABDC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 17:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FBEC25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 17:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBdip-0006yU-Tj; Mon, 27 May 2024 13:01:19 -0400
+	id 1sBdwQ-0002zB-1K; Mon, 27 May 2024 13:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBdim-0006xI-5B
- for qemu-devel@nongnu.org; Mon, 27 May 2024 13:01:17 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBdih-0002KD-9M
- for qemu-devel@nongnu.org; Mon, 27 May 2024 13:01:15 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-354fb2d9026so4032604f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 10:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716829268; x=1717434068; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TaDTkn9X7EzAM/xcmIyhmWytkn48PFBowMu7OydxW1U=;
- b=PevrROFHFRtJF3suy1HlrpYQsu9pVBTuHmDl4BbM2bs2T9SvPUWkHd3RTKy+o/JJK8
- Unc3B4qzS/FM/dgd5sNhH6tZ3cRN1NZx1xo1s2y1xaYkbnef19pWHRGO3YMUcknCI25+
- 5+yEDpL5jz/P4U/qZljls83jFrXmNz+aP41eBFLe+73lFcsoVyhWCtyVCPcrZExyYmHB
- JflTVZle545wpI2mcf8uCrodMipwrNsdTPWK/FvbvNJzrPJswZhN6rSmg3BAl0ZXszYv
- 5BxxzvQr+JoQ728XRTGeUMmQ4JqLew91T02POc5b6wauzCDWGsUZYZlkOPJuQCP4jFNP
- nWHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716829268; x=1717434068;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TaDTkn9X7EzAM/xcmIyhmWytkn48PFBowMu7OydxW1U=;
- b=W11VNUXY9IvLfn6+aaQj04yB1Zaod4LOA8BYCQLI8tbpAe+bz9i7q/UKBJ9hKVvq6S
- yw4eLujqt2/De+7j6a7I9ShanzSfRgiDDcNNIbJnBb1Bgwbo0a4DXjuBVUojn5Y7jsRT
- cD3jyzkuTJyZX6YtJtNiknXwPJvo49wv4UUFmdBbsHGJA17wSqf63MYBTF7fzPR0IFRo
- SHNd4lT1K96CmCWxeU/0XMAfkybyDaxCRaXiimGpa1R87+lIKuvHp7xPQRsOGAD0L257
- dayux062ZIzlMPdjtxGSEnqyXpCMNOCLy5tosrgNpveK2nQ2sOXtn9JMvMvGVwr6bwT2
- Cu+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3ME+vqhuV6EqfgZDAsfGQY1wp5aHGrD9WBE6q22+/jkCSo4Q9a8ondh4cEmyAZ3oWGiwO1kkZYPtWF8B2lQLa45vj7dI=
-X-Gm-Message-State: AOJu0Yw9xZIwgaJbdtN4/fYIZTpbLkPgLiMckrubz4u6jjm3k2qW55bj
- +MQJxen6/6gOG00Rl/OiktlciTTjHyVjqXp0Qqvj6jOOEg1oo3zYRw9Ys441dkc=
-X-Google-Smtp-Source: AGHT+IFfq/JwbtmR0mwtS375LzEyKAWBqNyMLN6x6zP39BcsxIMeCXG+OyCSLhWSVdBSEwl2w46y9Q==
-X-Received: by 2002:adf:a183:0:b0:354:f9b5:dc6d with SMTP id
- ffacd0b85a97d-35526c2ba03mr6284384f8f.24.1716829267924; 
- Mon, 27 May 2024 10:01:07 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.152.134])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7dd73sm9437481f8f.18.2024.05.27.10.01.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 10:01:07 -0700 (PDT)
-Message-ID: <e7492475-94db-4408-8d25-175b18fefec2@linaro.org>
-Date: Mon, 27 May 2024 19:01:05 +0200
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sBdwK-0002xl-Nm
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:18 -0400
+Received: from wfout8-smtp.messagingengine.com ([64.147.123.151])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sBdwI-0004eM-Qv
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:16 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailfout.west.internal (Postfix) with ESMTP id 516791C00101;
+ Mon, 27 May 2024 13:15:13 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute1.internal (MEProxy); Mon, 27 May 2024 13:15:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1716830112;
+ x=1716916512; bh=PDOlHUdSMFMmwhGnB9Nfy+pD/I3z/lyl57D5tIw/ew8=; b=
+ FcGHxfH+NkoUyFqYRP9CfD109luutqb74qYMdsoE6y7p4wi3e5n5iH+cReM5WJ6c
+ oKswXt1b95o67ZmZ/7TZ7exD24kN1zHFVrYaoUv9CYehUdEtQAcEC+M16Bq/JgzF
+ 8ATRmoLU/wD8tXcNTQiQWc6rPlrs0btUoJrIJZX5kwANFxDh92m4BuK8/mS322U8
+ mS1qLjr3fZUPxhtvEHaelyQxuWL7sG0BopPfhvHuFVoqkr/chwVnFOx+7y5NKYUa
+ KFeQdEhx0c8p8BOvV6cnKABfDZ1RTV0EtG32IoU8tqJOc6QOmZA5vHXrqmIXA1bv
+ BZ0Mqh9Uni3AoXDhnK1Kdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1716830112; x=
+ 1716916512; bh=PDOlHUdSMFMmwhGnB9Nfy+pD/I3z/lyl57D5tIw/ew8=; b=f
+ rPTprox4nwPPx6CcMMH50eWoaBnfdIJ9QfQ2a4BgxPbybsimHVpVB8lKycxA0ttM
+ 9nKYKiZFjCHxClfGzm5VmSzgXAhrecZDgeGzJiESsoJDR3zXQ0Wvouq87pMuhrMe
+ rRSeYVO5LqwuCFZ8WKhy8s/h07tcOd6LTS+aqIjhDThwBlclov9KTRa2eyrm1924
+ +ivopHIwpqk4OvLnQls+jI0wan/boQsFDFGbxoe2pcdWaTjTmqVgpLM4bzJYFrvB
+ dGk1duLjKFQ6KxxxqpCb10dJzvo1qjHRhwn7SNTCzcF9G2n4wdw5CFO+NHV2h3Iz
+ nH3UFiVEI3CFqFK7g6y1g==
+X-ME-Sender: <xms:oL9UZvU-0c3Ax7ZecZ1_4KkENAV5nEF6pW-b1JYaxI5qsRmqJQ0y4Q>
+ <xme:oL9UZnkIemgAzHPwPsXptlnbbw9vKcUJT43daZp6memEruLiD7sbZNRy6tJInOL-3
+ sl4uqRSc43_xlai9ng>
+X-ME-Received: <xmr:oL9UZrapftTEjOSU4LvaMMv8a6FR6EH4uznFq5-Ls6etEr0ZBBZuU-k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejgedguddtkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheplfhi
+ rgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqe
+ enucggtffrrghtthgvrhhnpedvkeeihfefveekueevteefleffkeegudeghfdtuddugefh
+ ueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+ hlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:oL9UZqUyE9O4e5EOgKtuICc0mc7Rpd3j_xrkKMTTRcO_tQPI_9mzxg>
+ <xmx:oL9UZpmSDCHm9CDOJ_NcDQqsmNDmzHx98fHXmmgBMATJ0ilX0OUcOw>
+ <xmx:oL9UZnd9ArI4w9pTOdthSO6MMC6LLfFUPJWogUpg7SmjGP0wx8sANA>
+ <xmx:oL9UZjHnGVZkR8NFXCV5yOTrOFpDLxpgXmOS7hYKcHH3MSPnG25HRQ>
+ <xmx:oL9UZnZLEPfFzy8xsPcwNMS0E4nYZSyf2L071Lk-7g1pBuy6H4v0y-hQ>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 May 2024 13:15:11 -0400 (EDT)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Mon, 27 May 2024 18:15:06 +0100
+Subject: [PATCH 3/4] hw/m68k/virt: Add a pflash controller for BIOS
+ firmware
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] mc146818rtc: add a way to generate RTC interrupts via
- QMP
-To: Daniil Tatianin <d-tatianin@yandex-team.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20240506083420.557726-1-d-tatianin@yandex-team.ru>
- <123481715669864@mail.yandex-team.ru>
- <42ad8fe7-0de8-4284-9d37-ff6b5f66acdf@yandex-team.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <42ad8fe7-0de8-4284-9d37-ff6b5f66acdf@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240527-m68k-bios-v1-3-6de26552fa77@flygoat.com>
+References: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
+In-Reply-To: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4712;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=2B4K90KB5IO8QrMlToSRMNmgqJiaPI2aG2lLp41ikuY=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrSQ/TPnSvVwLhSfJSe+5/zDe6z1jjM1rk+xZp6wT0BNy
+ 5fnkL9NRykLgxgXg6yYIkuIgFLfhsaLC64/yPoDM4eVCWQIAxenAExklxfD/+ITwiGnSuKTWaxX
+ BV5LX9i5wY4hu2Tt9IwNX3nq5tfrHWD4XxT/VNXv2tPNkXfUV93dKMrH+W7qH1/jby8mmC6y3C1
+ twwIA
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=64.147.123.151;
+ envelope-from=jiaxun.yang@flygoat.com; helo=wfout8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,158 +117,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniil,
+Add a 8 MiB pflash controller for BIOS firmware, and boot
+from it if possible.
 
-On 21/5/24 10:08, Daniil Tatianin wrote:
-> Could you please take a look at this revision? I think I've taken 
-> everyone's feedback into account.
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+---
+ hw/m68k/Kconfig                                   |  1 +
+ hw/m68k/virt.c                                    | 44 +++++++++++++++++++++++
+ include/standard-headers/asm-m68k/bootinfo-virt.h |  1 +
+ 3 files changed, 46 insertions(+)
 
-Sorry for the delay, I missed your patch since you didn't Cc me
-(Markus asked me to look at this).
+diff --git a/hw/m68k/Kconfig b/hw/m68k/Kconfig
+index 4501da56ff6d..f233a5948f19 100644
+--- a/hw/m68k/Kconfig
++++ b/hw/m68k/Kconfig
+@@ -42,6 +42,7 @@ config M68K_VIRT
+     select M68K_IRQC
+     select FW_CFG_DMA
+     select VIRT_CTRL
++    select PFLASH_CFI01
+     select GOLDFISH_PIC
+     select GOLDFISH_TTY
+     select GOLDFISH_RTC
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index 7590e6515ac3..a2eebc0f2243 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/datadir.h"
+ #include "qemu/units.h"
+ #include "qemu/guest-random.h"
+ #include "sysemu/sysemu.h"
+@@ -28,6 +29,7 @@
+ #include "sysemu/runstate.h"
+ #include "sysemu/reset.h"
+ 
++#include "hw/block/flash.h"
+ #include "hw/intc/m68k_irqc.h"
+ #include "hw/misc/virt_ctrl.h"
+ #include "hw/char/goldfish_tty.h"
+@@ -97,6 +99,10 @@
+ #define VIRT_XHCI_MMIO_BASE 0xff020000    /* MMIO: 0xff020000 - 0xff023fff */
+ #define VIRT_XHCI_IRQ_BASE  PIC_IRQ(1, 2) /* PIC: #1, IRQ: #2 */
+ 
++#define VIRT_PFLASH_MMIO_BASE 0xff800000      /* MMIO: 0xff800000 - 0xffffffff */
++#define VIRT_PFLASH_SIZE      0x800000        /* 8 MiB */
++#define VIRT_PFLASH_SECTOR_SIZE (128 * KiB)   /* 64 KiB */
++
+ typedef struct {
+     M68kCPU *cpu;
+     hwaddr initial_pc;
+@@ -139,6 +145,7 @@ static void virt_init(MachineState *machine)
+     const char *initrd_filename = machine->initrd_filename;
+     const char *kernel_cmdline = machine->kernel_cmdline;
+     hwaddr parameters_base;
++    DriveInfo *dinfo;
+     DeviceState *dev;
+     DeviceState *irqc_dev;
+     DeviceState *pic_dev[VIRT_GF_PIC_NB];
+@@ -165,6 +172,8 @@ static void virt_init(MachineState *machine)
+     cpu = M68K_CPU(cpu_create(machine->cpu_type));
+ 
+     reset_info->cpu = cpu;
++    reset_info->initial_pc = VIRT_PFLASH_MMIO_BASE;
++    reset_info->initial_stack = ram_size;
+     qemu_register_reset(main_cpu_reset, reset_info);
+ 
+     /* RAM */
+@@ -253,6 +262,39 @@ static void virt_init(MachineState *machine)
+                         PIC_GPIO(VIRT_XHCI_IRQ_BASE));
+     }
+ 
++    /* pflash */
++    dinfo = drive_get(IF_PFLASH, 0, 0);
++    pflash_cfi01_register(VIRT_PFLASH_MMIO_BASE,
++                          "virt.pflash0",
++                           VIRT_PFLASH_SIZE,
++                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
++                           VIRT_PFLASH_SECTOR_SIZE, 4,
++                           0x89, 0x18, 0, 0, 1);
++
++    if (machine->firmware) {
++        char *fn;
++        int image_size;
++
++        if (drive_get(IF_PFLASH, 0, 0)) {
++            error_report("The contents of the first flash device may be "
++                         "specified with -bios or with -drive if=pflash... "
++                         "but you cannot use both options at once");
++            exit(1);
++        }
++        fn = qemu_find_file(QEMU_FILE_TYPE_BIOS, machine->firmware);
++        if (!fn) {
++            error_report("Could not find ROM image '%s'", machine->firmware);
++            exit(1);
++        }
++        image_size = load_image_targphys(fn, VIRT_PFLASH_MMIO_BASE,
++                                         VIRT_PFLASH_SIZE);
++        g_free(fn);
++        if (image_size < 0) {
++            error_report("Could not load ROM image '%s'", machine->firmware);
++            exit(1);
++        }
++    }
++
+     if (kernel_filename) {
+         CPUState *cs = CPU(cpu);
+         uint64_t high;
+@@ -311,6 +353,8 @@ static void virt_init(MachineState *machine)
+         }
+         BOOTINFO2(param_ptr, BI_VIRT_FW_CFG_BASE,
+                   VIRT_FW_CFG_MMIO_BASE, VIRT_FW_CFG_IRQ_BASE);
++        BOOTINFO2(param_ptr, BI_VIRT_PFLASH_BASE,
++                    VIRT_PFLASH_MMIO_BASE, 0);
+ 
+         if (kernel_cmdline) {
+             BOOTINFOSTR(param_ptr, BI_COMMAND_LINE,
+diff --git a/include/standard-headers/asm-m68k/bootinfo-virt.h b/include/standard-headers/asm-m68k/bootinfo-virt.h
+index 7f90be1aa7bd..21c9a98d2912 100644
+--- a/include/standard-headers/asm-m68k/bootinfo-virt.h
++++ b/include/standard-headers/asm-m68k/bootinfo-virt.h
+@@ -18,6 +18,7 @@
+ 
+ #define BI_VIRT_XHCI_BASE	0x8007
+ #define BI_VIRT_FW_CFG_BASE	0x8008
++#define BI_VIRT_PFLASH_BASE	0x8009
+ 
+ #define VIRT_BOOTI_VERSION	MK_BI_VERSION(2, 0)
+ 
 
-Thanks for addressing the previous requests.
-
-> Thank you!
-> 
-> On 5/14/24 9:57 AM, Daniil Tatianin wrote:
->> ping :)
->> 06.05.2024, 11:34, "Daniil Tatianin" <d-tatianin@yandex-team.ru>:
->>
->>     This can be used to force-synchronize the time in guest after a long
->>     stop-cont pause, which can be useful for serverless-type workload.
->>
->>     Also add a comment to highlight the fact that this (and one other QMP
->>     command) only works for the MC146818 RTC controller.
->>
->>     Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>     ---
->>
->>     Changes since v0:
->>     - Rename to rtc-inject-irq to match other similar API
->>     - Add a comment to highlight that this only works for the I386 RTC
->>
->>     Changes since v1:
->>     - Added a description below the QMP command to explain how it can be
->>       used and what it does.
->>
->>     Changes since v2:
->>     - Add a 'broadcast' suffix.
->>     - Change the comments to explain the flags we're setting.
->>     - Change the command description to fix styling & explain that
->>     it's a broadcast command.
->>
->>     ---
->>      hw/rtc/mc146818rtc.c | 20 ++++++++++++++++++++
->>      include/hw/rtc/mc146818rtc.h | 1 +
->>      qapi/misc-target.json | 19 +++++++++++++++++++
->>      3 files changed, 40 insertions(+)
->>
->>     diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
->>     index 3379f92748..2b3754f5c6 100644
->>     --- a/hw/rtc/mc146818rtc.c
->>     +++ b/hw/rtc/mc146818rtc.c
->>     @@ -107,6 +107,11 @@ static void
->>     rtc_coalesced_timer_update(MC146818RtcState *s)
->>      static QLIST_HEAD(, MC146818RtcState) rtc_devices =
->>          QLIST_HEAD_INITIALIZER(rtc_devices);
->>
->>     +/*
->>     + * NOTE:
->>     + * The two QMP functions below are _only_ implemented for the
->>     MC146818.
->>     + * All other RTC devices ignore this.
->>     + */
->>      void qmp_rtc_reset_reinjection(Error **errp)
->>      {
->>          MC146818RtcState *s;
->>     @@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->>          }
->>      }
->>
->>     +void qmp_rtc_inject_irq_broadcast(Error **errp)
->>     +{
->>     + MC146818RtcState *s;
->>     +
->>     + QLIST_FOREACH(s, &rtc_devices, link) {
->>     + // Update-ended interrupt enable
-
-This doesn't pass the checkpatch script because it isn't QEMU coding
-style:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#use-the-qemu-coding-style
-
->>     + s->cmos_data[RTC_REG_B] |= REG_B_UIE;
->>     +
->>     + // Interrupt request flag | update interrupt flag
->>     + s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
->>     +
->>     + qemu_irq_raise(s->irq);
->>     + }
->>     +}
->>     +
->>      static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
->>      {
->>          kvm_reset_irq_delivered();
->>     diff --git a/include/hw/rtc/mc146818rtc.h
->>     b/include/hw/rtc/mc146818rtc.h
->>     index 97cec0b3e8..e9dd0f9c72 100644
->>     --- a/include/hw/rtc/mc146818rtc.h
->>     +++ b/include/hw/rtc/mc146818rtc.h
->>     @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus,
->>     int base_year,
->>      void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int
->>     val);
->>      int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
->>      void qmp_rtc_reset_reinjection(Error **errp);
->>     +void qmp_rtc_inject_irq_broadcast(Error **errp);
->>
->>      #endif /* HW_RTC_MC146818RTC_H */
->>     diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->>     index 4e0a6492a9..7d388a3753 100644
->>     --- a/qapi/misc-target.json
->>     +++ b/qapi/misc-target.json
->>     @@ -19,6 +19,25 @@
->>      { 'command': 'rtc-reset-reinjection',
->>        'if': 'TARGET_I386' }
->>
-
-Your new command doesn't make my life harder than the current
-'rtc-reset-reinjection' command, so if this is useful to you,
-I'm OK to:
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(assuming the comment style is fixed).
-
-I'll see later how to deal with that with heterogeneous
-emulation.
-
-Regards,
-
-Phil.
-
->>     +##
->>     +# @rtc-inject-irq-broadcast:
->>     +#
->>     +# Inject an RTC interrupt for all existing RTCs on the system.
->>     +# The interrupt forces the guest to synchronize the time with RTC.
->>     +# This is useful after a long stop-cont pause, which is common for
->>     +# serverless-type workload.
->>     +#
->>     +# Since: 9.1
->>     +#
->>     +# Example:
->>     +#
->>     +# -> { "execute": "rtc-inject-irq-broadcast" }
->>     +# <- { "return": {} }
->>     +#
->>     +##
->>     +{ 'command': 'rtc-inject-irq-broadcast',
->>     + 'if': 'TARGET_I386' }
->>     +
->>      ##
->>      # @SevState:
->>      #
->>
->>     --
->>     2.34.1
->>
+-- 
+2.43.0
 
 
