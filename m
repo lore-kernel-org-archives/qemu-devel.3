@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E7EC25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 17:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A32C25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 17:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBdwV-00030S-58; Mon, 27 May 2024 13:15:27 -0400
+	id 1sBeQn-0001GU-Hn; Mon, 27 May 2024 13:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sBdwO-0002yd-3W
- for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:20 -0400
-Received: from wfhigh3-smtp.messagingengine.com ([64.147.123.154])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBeQH-0001BA-2Z
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 13:46:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sBdwM-0004gT-2S
- for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:19 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.west.internal (Postfix) with ESMTP id 77A281800139;
- Mon, 27 May 2024 13:15:15 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Mon, 27 May 2024 13:15:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1716830115;
- x=1716916515; bh=TpF+LHkA27GmX2zM44+D/InSAryVrJfrT0+bWhayZYQ=; b=
- pR7brity8sNFDTvaixsYjmsSCcf6aeW+o05fcxeeMRbxx4UlLtVZUthoiHKOzMb+
- v0qM9qNfPbqEomq6ooDr7FgBTHbf21qCiCOnz2zESj01AV+t0zI2eLSuHW3Deo6o
- UJyz+FtuQmRntbe5NDticsNy6q2P1StdSRZLphxQC0iOIKmmMnnbRS92cF1LLuuL
- 4wJ27WceFGRdGZhkJkcUManQLjD8QiBe/BfOtelLyw2ii99r8NqBO3ktn8Z1UowV
- bwHjkPbtxVrm3S6RoH7zKxhLPT5SbMRlFNb45B6y0TFo9MZXvnpXi9CJMopZBeTW
- xnfGSSNlkR1I+s6Mi48VfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1716830115; x=
- 1716916515; bh=TpF+LHkA27GmX2zM44+D/InSAryVrJfrT0+bWhayZYQ=; b=S
- TiHhqxmg3bFxyDKw2yXUGc7Tc2/VhAksbJD2A/xRZJDo76ZNWxsWlw1zgQLJeuyD
- 7GeBxKHGP2c6Y/euFIYsS1xO+54T6ts1+2JIpS6XVcC3yW96DP4Qgcc2WKgvQHr1
- gqrXB/B9ZTDg/o1KdVkNYmhi9iGg/3Yw1yWk/86Aj3NPUfSZXBHmaAxm0f6lTajc
- HKFcUZun73UHVUqEOlIxkGmPzl5kUFyAh9SJFGbxYeYS+AXn2Z+zGj01TN+BDItg
- HkbmarY8A/ARLP5vOaDR3bn5WB22PCBiz+hGraSq3bpVoB7uYwazv2ngmQAiMcK7
- 2d6FYBOP9qi0hGjdB+WVg==
-X-ME-Sender: <xms:or9UZteKJdFeDzDKqGQuXNDZOYLj7y8yajH-iqbMP89c8gTDnsK_2g>
- <xme:or9UZrNj4396PRaK6GchEThMM9z9O0fYlXiG7Ead1KAU0zlbtOqn4JLK4N1VM9HKa
- 0jq12PVtmP1NmVdTcs>
-X-ME-Received: <xmr:or9UZmidyNkrjNIGdEi0cVXltotwOiWl3LVrV22_Uwrz9OaxInVYCMc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejgedguddtlecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheplfhi
- rgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqe
- enucggtffrrghtthgvrhhnpedvkeeihfefveekueevteefleffkeegudeghfdtuddugefh
- ueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
- hlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:or9UZm_hmYio0d6X1_uF4DzWT0tftD2O4wL0juRYH-EAeN8UAka6kA>
- <xmx:or9UZpt6prrff0NIvs8ZmPZ6rM7W5rWylvSGRLJBlta1MUqRmQ5yAg>
- <xmx:or9UZlES1Pza2VoIW06XUvWnkBMHEdmlstbjaiJfov5eiHj1Kk8k8Q>
- <xmx:or9UZgMkCsJ4QhRMeYGbb0nu1c0_sjIhaPgD_yGBEkAFi3GHcpnx8w>
- <xmx:o79UZthTd5orlOyYvQTD9KpYYQxggEkFdqq53mudHUi3c_i9ziSaNHJe>
-Feedback-ID: ifd894703:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 May 2024 13:15:13 -0400 (EDT)
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Mon, 27 May 2024 18:15:07 +0100
-Subject: [PATCH 4/4] hw/m68k/virt: Supply bootinfo for BIOS
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBeQB-0000rp-ND
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 13:46:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716831966;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ovQNHAJpn6LpGW/4JqPR2iBAOvAXH6nZmCfX8iN8xJA=;
+ b=I0/WM9Y1xVOevJFqZhljhI0d166/x7SEduMc/d7SdzGcFR2HhOLYbzX9FGGYMV5CS88caJ
+ Cgas3TWqjWLDs/9Yl4XG6hEDA6b6e7GXP9Id0aZtI51uVciPRb4Ccdzyvgk2Y0aYXGWrVo
+ 9K8PIMf/HHkMGfdxQ7/Yzroufw4fOmU=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-14-BWM__r9pPBCgWvZxEcPp0A-1; Mon, 27 May 2024 13:46:04 -0400
+X-MC-Unique: BWM__r9pPBCgWvZxEcPp0A-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6ab89f69cd8so39446d6.0
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 10:46:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716831964; x=1717436764;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ovQNHAJpn6LpGW/4JqPR2iBAOvAXH6nZmCfX8iN8xJA=;
+ b=DV0jaixAqMXFTIwEV1q9RAMpR3R9fLYsW3MKYTNW4T8EvClr4GnD89PTtWq3E1e8rS
+ Ae3r0JpC6eYh7EbUCZem3xIsEsWl8msfGG5vwTgZDu8fnoovQMP9ylT+YDGoMsIc2s2v
+ 6iHfpd+KFOlcSi9r/M03lio12Cjca7oj5htKJj9XCDT9Mw8Gs2kezcme4FL18pZ+fts0
+ oeAR4jyYkPL7oidAEJwDPZQjVPWS72xvqk90PaCrw+F8AvfLYnXLlu5Z4T8h6zsdz03q
+ vyarrMgObZsXTnSHfsZq4AQaDylUIcus2Fu58dlWU6VRiH7qY1+2D1EFOmfIcxMXzKR1
+ NY6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDPXQLM8qbMsvcuCyIhI0KjWmVnuDMwnjkjfdGFGXyYPV52PV9M3m/MGWA/m0GLYF/WK5lnq56LjmMmP0p/u5yNTjef+k=
+X-Gm-Message-State: AOJu0YwGYtvRGT3HXlyo6PLYby/cbRJcs7yCn8Pd8x83hPthlG6iU+MO
+ ORqZRGyVxBny0o9OUOzBf5V/S3eS4Km8yPtOVs4tp6XWjfkM2xqpGQ/YKz1o4SHcFKVskWPhM0x
+ oYFSdpAEIQtviO66lu2V56VuO0L38eprufuhflYmka8fa/xN0in3j
+X-Received: by 2002:a05:6214:c2e:b0:6a3:3ea4:7156 with SMTP id
+ 6a1803df08f44-6abbbcc044fmr105327846d6.1.1716831963575; 
+ Mon, 27 May 2024 10:46:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGy2ORnyCuI94SAXFXEngjbVwMEutyIxUSF/5GTRJXi7Tx2mbyhhytvB9qVU+I43JYFVFeTAw==
+X-Received: by 2002:a05:6214:c2e:b0:6a3:3ea4:7156 with SMTP id
+ 6a1803df08f44-6abbbcc044fmr105327536d6.1.1716831962663; 
+ Mon, 27 May 2024 10:46:02 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43fb18c3c79sm35823031cf.83.2024.05.27.10.46.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 May 2024 10:46:02 -0700 (PDT)
+Date: Mon, 27 May 2024 13:45:59 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+	QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: [PATCH V1 00/26] Live update: cpr-exec
+Message-ID: <ZlTG18jRhp7oQTCQ@x1n>
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+ <cf8e13ae-cac6-4a8a-82a2-92b63a32b7b8@oracle.com>
+ <87ed9wjey7.fsf@suse.de>
+ <CADLect=ODs+-JrT4xOJazVveCtYPyDOCMsfK=2hcR-EJAdWDAw@mail.gmail.com>
+ <be4cdd8d-4328-46d4-9b28-3a074d504180@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240527-m68k-bios-v1-4-6de26552fa77@flygoat.com>
-References: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
-In-Reply-To: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9672;
- i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=nHaNjYJp2Db3HKKzI2WU5EhbcN3PdSAvxdjvtn6y5K0=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhrSQ/TOZJ5UevfHWcE/V4T3i0jsDG2zCFvzsW2DREv9/6
- RLj9UYBHaUsDGJcDLJiiiwhAkp9GxovLrj+IOsPzBxWJpAhDFycAjCRKycZ/nAcOjNxkagMl0bb
- 5uDDQVzLLCyKOXZxTDSzKen5wua5mZPhf55aUtQNtVzOhJ2HEyf1389w1N+99qJbp275UpkTcfP
- UOAE=
-X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
- fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=64.147.123.154;
- envelope-from=jiaxun.yang@flygoat.com; helo=wfhigh3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <be4cdd8d-4328-46d4-9b28-3a074d504180@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,235 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We follow common function split between BIOS and QEMU loader,
-When BIOS firmware is available QEMU does not load kernel/initrd
-binary to memory, instead BIOS retrieve those binaries from fw_cfg.
+On Tue, May 21, 2024 at 07:46:12AM -0400, Steven Sistare wrote:
+> I understand, thanks.  If I can help with any of your todo list,
+> just ask - steve
 
-A stripped version of bootinfo is placed at 1 KiB position of memory.
-This allows BIOS to probe board level information. It does not contain
-any booting related information (kernel, initrd, cmdline, random).
+Thanks for offering the help, Steve.  Started looking at this today, then I
+found that I miss something high-level.  Let me ask here, and let me
+apologize already for starting to throw multiple questions..
 
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
----
- hw/m68k/virt.c | 160 ++++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 90 insertions(+), 70 deletions(-)
+IIUC the whole idea of this patchset is to allow efficient QEMU upgrade, in
+this case not host kernel but QEMU-only, and/or upper.
 
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index a2eebc0f2243..ea7a1bb430fc 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -138,13 +138,16 @@ static void virt_init(MachineState *machine)
-     M68kCPU *cpu = NULL;
-     int32_t kernel_size;
-     uint64_t elf_entry;
--    ram_addr_t initrd_base;
--    int32_t initrd_size;
-+    ram_addr_t initrd_base = 0;
-+    int32_t initrd_size = 0;
-+    int32_t bootinfo_size;
-+    bool bios_loaded = false;
-     ram_addr_t ram_size = machine->ram_size;
-     const char *kernel_filename = machine->kernel_filename;
-     const char *initrd_filename = machine->initrd_filename;
-     const char *kernel_cmdline = machine->kernel_cmdline;
--    hwaddr parameters_base;
-+    void *param_blob, *param_ptr, *param_rng_seed = NULL;
-+    hwaddr parameters_base = 1 * KiB;
-     DriveInfo *dinfo;
-     DeviceState *dev;
-     DeviceState *irqc_dev;
-@@ -264,6 +267,9 @@ static void virt_init(MachineState *machine)
- 
-     /* pflash */
-     dinfo = drive_get(IF_PFLASH, 0, 0);
-+    if (dinfo) {
-+        bios_loaded = true;
-+    }
-     pflash_cfi01_register(VIRT_PFLASH_MMIO_BASE,
-                           "virt.pflash0",
-                            VIRT_PFLASH_SIZE,
-@@ -293,18 +299,12 @@ static void virt_init(MachineState *machine)
-             error_report("Could not load ROM image '%s'", machine->firmware);
-             exit(1);
-         }
-+
-+        bios_loaded = true;
-     }
- 
--    if (kernel_filename) {
--        CPUState *cs = CPU(cpu);
-+    if (kernel_filename && !bios_loaded) {
-         uint64_t high;
--        void *param_blob, *param_ptr, *param_rng_seed;
--
--        if (kernel_cmdline) {
--            param_blob = g_malloc(strlen(kernel_cmdline) + 1024);
--        } else {
--            param_blob = g_malloc(1024);
--        }
- 
-         kernel_size = load_elf(kernel_filename, NULL, NULL, NULL,
-                                &elf_entry, NULL, &high, NULL, 1,
-@@ -315,57 +315,6 @@ static void virt_init(MachineState *machine)
-         }
-         reset_info->initial_pc = elf_entry;
-         parameters_base = (high + 1) & ~1;
--        param_ptr = param_blob;
--
--        BOOTINFO1(param_ptr, BI_MACHTYPE, MACH_VIRT);
--        if (m68k_feature(&cpu->env, M68K_FEATURE_M68020)) {
--            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68020);
--        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68030)) {
--            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68030);
--            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68030);
--        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68040)) {
--            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
--            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
--            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
--        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68060)) {
--            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68060);
--            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68060);
--            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68060);
--        }
--        BOOTINFO2(param_ptr, BI_MEMCHUNK, 0, ram_size);
--
--        BOOTINFO1(param_ptr, BI_VIRT_QEMU_VERSION,
--                  ((QEMU_VERSION_MAJOR << 24) | (QEMU_VERSION_MINOR << 16) |
--                   (QEMU_VERSION_MICRO << 8)));
--        BOOTINFO2(param_ptr, BI_VIRT_GF_PIC_BASE,
--                  VIRT_GF_PIC_MMIO_BASE, VIRT_GF_PIC_IRQ_BASE);
--        BOOTINFO2(param_ptr, BI_VIRT_GF_RTC_BASE,
--                  VIRT_GF_RTC_MMIO_BASE, VIRT_GF_RTC_IRQ_BASE);
--        BOOTINFO2(param_ptr, BI_VIRT_GF_TTY_BASE,
--                  VIRT_GF_TTY_MMIO_BASE, VIRT_GF_TTY_IRQ_BASE);
--        BOOTINFO2(param_ptr, BI_VIRT_CTRL_BASE,
--                  VIRT_CTRL_MMIO_BASE, VIRT_CTRL_IRQ_BASE);
--        BOOTINFO2(param_ptr, BI_VIRT_VIRTIO_BASE,
--                  VIRT_VIRTIO_MMIO_BASE, VIRT_VIRTIO_IRQ_BASE);
--        if (machine_usb(machine)) {
--            BOOTINFO2(param_ptr, BI_VIRT_XHCI_BASE,
--                    VIRT_XHCI_MMIO_BASE, VIRT_XHCI_IRQ_BASE);
--        }
--        BOOTINFO2(param_ptr, BI_VIRT_FW_CFG_BASE,
--                  VIRT_FW_CFG_MMIO_BASE, VIRT_FW_CFG_IRQ_BASE);
--        BOOTINFO2(param_ptr, BI_VIRT_PFLASH_BASE,
--                    VIRT_PFLASH_MMIO_BASE, 0);
--
--        if (kernel_cmdline) {
--            BOOTINFOSTR(param_ptr, BI_COMMAND_LINE,
--                        kernel_cmdline);
--        }
--
--        /* Pass seed to RNG. */
--        param_rng_seed = param_ptr;
--        qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
--        BOOTINFODATA(param_ptr, BI_RNG_SEED,
--                     rng_seed, sizeof(rng_seed));
- 
-         /* load initrd */
-         if (initrd_filename) {
-@@ -379,21 +328,92 @@ static void virt_init(MachineState *machine)
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
-             load_image_targphys(initrd_filename, initrd_base,
-                                 ram_size - initrd_base);
--            BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
--                      initrd_size);
-         } else {
-             initrd_base = 0;
-             initrd_size = 0;
-         }
--        BOOTINFO0(param_ptr, BI_LAST);
--        rom_add_blob_fixed_as("bootinfo", param_blob, param_ptr - param_blob,
--                              parameters_base, cs->as);
-+    }
-+
-+    /* BIOS is going to retrive cmdline from fw_cfg */
-+    if (kernel_cmdline && !bios_loaded) {
-+        param_blob = g_malloc(strlen(kernel_cmdline) + 1024);
-+    } else {
-+        param_blob = g_malloc(1024);
-+    }
-+
-+    param_ptr = param_blob;
-+    BOOTINFO1(param_ptr, BI_MACHTYPE, MACH_VIRT);
-+    if (m68k_feature(&cpu->env, M68K_FEATURE_M68020)) {
-+        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68020);
-+    } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68030)) {
-+        BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68030);
-+        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68030);
-+    } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68040)) {
-+        BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
-+        BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
-+        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
-+    } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68060)) {
-+        BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68060);
-+        BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68060);
-+        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68060);
-+    }
-+    BOOTINFO2(param_ptr, BI_MEMCHUNK, 0, ram_size);
-+
-+    BOOTINFO1(param_ptr, BI_VIRT_QEMU_VERSION,
-+                ((QEMU_VERSION_MAJOR << 24) | (QEMU_VERSION_MINOR << 16) |
-+                (QEMU_VERSION_MICRO << 8)));
-+    BOOTINFO2(param_ptr, BI_VIRT_GF_PIC_BASE,
-+                VIRT_GF_PIC_MMIO_BASE, VIRT_GF_PIC_IRQ_BASE);
-+    BOOTINFO2(param_ptr, BI_VIRT_GF_RTC_BASE,
-+                VIRT_GF_RTC_MMIO_BASE, VIRT_GF_RTC_IRQ_BASE);
-+    BOOTINFO2(param_ptr, BI_VIRT_GF_TTY_BASE,
-+                VIRT_GF_TTY_MMIO_BASE, VIRT_GF_TTY_IRQ_BASE);
-+    BOOTINFO2(param_ptr, BI_VIRT_CTRL_BASE,
-+                VIRT_CTRL_MMIO_BASE, VIRT_CTRL_IRQ_BASE);
-+    BOOTINFO2(param_ptr, BI_VIRT_VIRTIO_BASE,
-+                VIRT_VIRTIO_MMIO_BASE, VIRT_VIRTIO_IRQ_BASE);
-+    if (machine_usb(machine)) {
-+        BOOTINFO2(param_ptr, BI_VIRT_XHCI_BASE,
-+                VIRT_XHCI_MMIO_BASE, VIRT_XHCI_IRQ_BASE);
-+    }
-+    BOOTINFO2(param_ptr, BI_VIRT_FW_CFG_BASE,
-+                VIRT_FW_CFG_MMIO_BASE, VIRT_FW_CFG_IRQ_BASE);
-+    BOOTINFO2(param_ptr, BI_VIRT_PFLASH_BASE,
-+                VIRT_PFLASH_MMIO_BASE, 0);
-+
-+    /* Boot related */
-+    if (!bios_loaded) {
-+        if (kernel_cmdline) {
-+            BOOTINFOSTR(param_ptr, BI_COMMAND_LINE,
-+                        kernel_cmdline);
-+        }
-+        if (initrd_size) {
-+            BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
-+                      initrd_size);
-+        }
-+
-+        /* Pass seed to RNG. */
-+        param_rng_seed = param_ptr;
-+        qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
-+        BOOTINFODATA(param_ptr, BI_RNG_SEED,
-+                     rng_seed, sizeof(rng_seed));
-+    }
-+
-+    BOOTINFO0(param_ptr, BI_LAST);
-+    bootinfo_size = param_ptr - param_blob;
-+    rom_add_blob_fixed_as("bootinfo", param_blob, bootinfo_size,
-+                          parameters_base, &address_space_memory);
-+    if (param_rng_seed) {
-         qemu_register_reset_nosnapshotload(rerandomize_rng_seed,
--                            rom_ptr_for_as(cs->as, parameters_base,
-+                            rom_ptr_for_as(&address_space_memory,
-+                                           parameters_base,
-                                            param_ptr - param_blob) +
-                             (param_rng_seed - param_blob));
--        g_free(param_blob);
-     }
-+
-+    fw_cfg_add_file(fw_cfg, "etc/bootinfo",
-+                    g_memdup2(param_blob, bootinfo_size), bootinfo_size);
-+    g_free(param_blob);
- }
- 
- static void virt_machine_class_init(ObjectClass *oc, void *data)
+Is there any justification on why the complexity is needed here?  It looks
+to me this one is more involved than cpr-reboot, so I'm thinking how much
+we can get from the complexity, and whether it's worthwhile.  1000+ LOC is
+the min support, and if we even expect more to come, that's really
+important, IMHO.
+
+For example, what's the major motivation of this whole work?  Is that more
+on performance, or is it more for supporting the special devices like VFIO
+which we used to not support, or something else?  I can't find them in
+whatever cover letter I can find, including this one.
+
+Firstly, regarding performance, IMHO it'll be always nice to share even
+some very fundamental downtime measurement comparisons using the new exec
+mode v.s. the old migration ways to upgrade QEMU binary.  Do you perhaps
+have some number on hand when you started working on this feature years
+ago?  Or maybe some old links on the list would help too, as I didn't
+follow this work since the start.
+
+On VFIO, IIUC you started out this project without VFIO migration being
+there.  Now we have VFIO migration so not sure how much it would work for
+the upgrade use case. Even with current VFIO migration, we may not want to
+migrate device states for a local upgrade I suppose, as that can be a lot
+depending on the type of device assigned.  However it'll be nice to discuss
+this too if this is the major purpose of the series.
+
+I think one other challenge on QEMU upgrade with VFIO devices is that the
+dest QEMU won't be able to open the VFIO device when the src QEMU is still
+using it as the owner.  IIUC this is a similar condition where QEMU wants
+to have proper ownership transfer of a shared block device, and AFAIR right
+now we resolved that issue using some form of file lock on the image file.
+In this case it won't easily apply to a VFIO dev fd, but maybe we still
+have other approaches, not sure whether you investigated any.  E.g. could
+the VFIO handle be passed over using unix scm rights?  I think this might
+remove one dependency of using exec which can cause quite some difference
+v.s. a generic migration (from which regard, cpr-reboot is still a pretty
+generic migration).
+
+You also mentioned vhost/tap, is that also a major goal of this series in
+the follow up patchsets?  Is this a problem only because this solution will
+do exec?  Can it work if either the exec()ed qemu or dst qemu create the
+vhost/tap fds when boot?
+
+Meanwhile, could you elaborate a bit on the implication on chardevs?  From
+what I read in the doc update it looks like a major part of work in the
+future, but I don't yet understand the issue..  Is it also relevant to the
+exec() approach?
+
+In all cases, some of such discussion would be really appreciated.  And if
+you used to consider other approaches to solve this problem it'll be great
+to mention how you chose this way.  Considering this work contains too many
+things, it'll be nice if such discussion can start with the fundamentals,
+e.g. on why exec() is a must.
+
+Thanks,
 
 -- 
-2.43.0
+Peter Xu
 
 
