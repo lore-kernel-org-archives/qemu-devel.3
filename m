@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F87C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0ACC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBX4e-0007ID-IQ; Mon, 27 May 2024 05:55:26 -0400
+	id 1sBX5j-0000fP-LS; Mon, 27 May 2024 05:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBX4R-00079D-3V
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:55:14 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBX4A-0008Vt-MB
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:55:08 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42108822e3cso15333585e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:54:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716803693; x=1717408493; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E3dSc3yfYv/r+d4wN3BGfw+S9Y3dPGG6wtoFQR1sb/w=;
- b=YcR8227M38uV/qi7+GT5eCsMf/mlHioR82oWWtSL7FU0K2L5RxAWYfVZ4bq+IUkAxt
- YDN4LHBF6m6xrkyj4ZrEXDKFJMO9NSmr/0WoEi/85mdWRXQt+n2cRuQCk4KSmiapxXJw
- Id9FbZXNA9vcjKY49efQ4w676QSmRlTQD3DZNP3UJcwtyPaQvnmSVlB+Z+hyZq9MZEKG
- /M2fdUhL6awnwzeQQaryeSGALohIfXvPWO3IgdQmG+zg9kpELXzyLpVmC6fC0vqJJmGl
- iCz7RvIjCl17k1nRdM8KIbxo0WYuAz0rvjUEfy3SvB2liUYMPzdteLE6BqOmcrraYL0T
- YG6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716803693; x=1717408493;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E3dSc3yfYv/r+d4wN3BGfw+S9Y3dPGG6wtoFQR1sb/w=;
- b=P2+Y27GYAbDF7DQ/SqPpswnQMp3OIaSc1JxmA8NBh3Jenx67ab1DSEc/182+FXUr17
- gj63NUTFVdfp1lyzVZ/7dOGjDwHqaA0H/CFyHvf9kHm+IYND0LNZ7Syp9zW2wghEWQjX
- anLhaCVTH1Ic/kn1Y3tg4JQ6pVbL9zQ5n/XkbFFQHYU9WD7VoxMZBEGAha76EPugr6/1
- IHZXIaRaM/SJdYJgOiGJ9Stw1R7x+nE4sGQ6+4Tg7DCMl9TYUxTzse6Oisvvxaq9l0Pu
- yrNCsbp8d8yFl0IFLW8PIdMR0f5cZFAaI9OPk5iKmRTB0F2L/KUv1vOZBM8bWztAltzO
- R3Ag==
-X-Gm-Message-State: AOJu0YxqmusAS+OuJkGCma0Y9JmzAP9V/UMhoxQ8ZeVUUBkIb+cPCHzv
- QZcmIqjRqKaOUhUavMeTuwu4f0VC3RtoxhHvv2Hj3e8nVdtczvNJTu9FmuBkPbU=
-X-Google-Smtp-Source: AGHT+IHZZqJuTtU8NkYtawvQRFPq+AGB5/vYdZMEJU6Ir6pg+NRAhHfgKkI62X78BYIUSv1zDUAo3w==
-X-Received: by 2002:a05:600c:4fd2:b0:418:3d59:c13a with SMTP id
- 5b1f17b1804b1-421015b3ca3mr107433235e9.9.1716803692816; 
- Mon, 27 May 2024 02:54:52 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.152.134])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-421089ccb10sm103677425e9.44.2024.05.27.02.54.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 02:54:52 -0700 (PDT)
-Message-ID: <df2abc64-9cff-44fb-876e-11a1711ecf4c@linaro.org>
-Date: Mon, 27 May 2024 11:54:50 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBX5e-0000cP-6P; Mon, 27 May 2024 05:56:26 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBX5Z-0000V2-8V; Mon, 27 May 2024 05:56:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716803782; x=1748339782;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=97lFmP1Xif4eZA/n0xbIqmin3Syi5ckopV3vGiHK7Wc=;
+ b=Y2aSS91P/Pm7Q9zAgbKxYA07SXDopcOelfYCFLManFsEVvytT6Jz11FJ
+ yTN229ZFzJxNB0yWu2wRjm2fdRikb2V086hNGKN9lUR6rVJ7o7UbKEiud
+ yOLhlHVL6n21IbXKCQwQbKyRbPj7/zrJCwHK9PcFeiau34AtAl9d6f0wJ
+ s14B3rLCWh8f+RMkvMEKhQdOKRl2tvoy1rqD1C0rzu2SJkEuwjyhDCGOB
+ RhB+XdASNnDROjx5TX0z/4gbB3R6LzKqWBqHoRIelFWhcmG3/keY1oJUx
+ ktHEn1MyOANOn3Yo3DEnFfMhsufbTfdhxAr9Ig/dJnf33TTKhvlh+yvWy A==;
+X-CSE-ConnectionGUID: ma5iHxBjQgeh4vbjeimEbA==
+X-CSE-MsgGUID: tZ/3ucasSfiM80mwua8frg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="35629311"
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="35629311"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2024 02:56:04 -0700
+X-CSE-ConnectionGUID: K+gIUm/3SGCWVzcdfrYm6A==
+X-CSE-MsgGUID: aNP11mAfRpW7Q+k5uFzL2A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="34717942"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 27 May 2024 02:55:55 -0700
+Date: Mon, 27 May 2024 18:11:18 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
+ jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, imammedo@redhat.com,
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
+ eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
+ mst@redhat.com, will@kernel.org, gshan@redhat.com,
+ rafael@kernel.org, alex.bennee@linaro.org, linux@armlinux.org.uk,
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
+ lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>
+Subject: Re: [PATCH V11 3/8] hw/acpi: Update ACPI GED framework to support
+ vCPU Hotplug
+Message-ID: <ZlRcRgGtFq+oeto4@intel.com>
+References: <20240522211111.232114-1-salil.mehta@huawei.com>
+ <20240522211111.232114-4-salil.mehta@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] qemu-keymap: Make references to allocations static
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev
- <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
- <20240524-xkb-v4-1-2de564e5c859@daynix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240524-xkb-v4-1-2de564e5c859@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240522211111.232114-4-salil.mehta@huawei.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,17 +95,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/5/24 07:35, Akihiko Odaki wrote:
-> LeakSanitizer complains about allocations whose references are held
-> only by automatic variables. It is possible to free them to suppress
-> the complaints, but it is a chore to make sure they are freed in all
-> exit paths so make them static instead.
+On Wed, May 22, 2024 at 10:11:06PM +0100, Salil Mehta via wrote:
+> Date: Wed, 22 May 2024 22:11:06 +0100
+> From: Salil Mehta via <qemu-devel@nongnu.org>
+> Subject: [PATCH V11 3/8] hw/acpi: Update ACPI GED framework to support vCPU
+>  Hotplug
+> X-Mailer: git-send-email 2.34.1
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ACPI GED (as described in the ACPI 6.4 spec) uses an interrupt listed in the
+> _CRS object of GED to intimate OSPM about an event. Later then demultiplexes the
+> notified event by evaluating ACPI _EVT method to know the type of event. Use
+> ACPI GED to also notify the guest kernel about any CPU hot(un)plug events.
+> 
+> ACPI CPU hotplug related initialization should only happen if ACPI_CPU_HOTPLUG
+> support has been enabled for particular architecture. Add cpu_hotplug_hw_init()
+> stub to avoid compilation break.
+> 
+> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 > ---
->   qemu-keymap.c | 8 +++-----
->   1 file changed, 3 insertions(+), 5 deletions(-)
+>  hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++++++
+>  hw/acpi/cpu.c                          |  6 +++++-
+>  hw/acpi/generic_event_device.c         | 17 +++++++++++++++++
+>  include/hw/acpi/generic_event_device.h |  4 ++++
+>  4 files changed, 32 insertions(+), 1 deletion(-)
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
