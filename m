@@ -4,105 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 749FCC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F19FC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUe0-0006Aa-7p; Mon, 27 May 2024 03:19:44 -0400
+	id 1sBUin-0007dU-HV; Mon, 27 May 2024 03:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sBUdg-00067u-6e
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:19:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sBUim-0007dB-B9; Mon, 27 May 2024 03:24:40 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sBUdb-0004uY-16
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:19:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716794358;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZoTiePj2SgsSyNDFQiutDJsrzjZVw0FMcnBlVOFGPVo=;
- b=EUrHOB8/MSO89AmbQ14CrQz2LGszmH3SUme+U7NPIRuakYxyA+XQO24Kh5jrWYE+bMMDGV
- h7nOPdKJWidAFodX7JhKi0KBCVnirMQ1ngWO/6x+Q2n189EvBMrzjM0TYjJmK2IsWZX+Tx
- qbjbs8pXjWxnMkcaZNzy4APDUI/+21o=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225--4z1REnjNIGFw4OxBBZKmg-1; Mon, 27 May 2024 03:19:16 -0400
-X-MC-Unique: -4z1REnjNIGFw4OxBBZKmg-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-43fb05ef704so33848011cf.2
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 00:19:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716794356; x=1717399156;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZoTiePj2SgsSyNDFQiutDJsrzjZVw0FMcnBlVOFGPVo=;
- b=UAOGlKKZW3SCmITieEhM16dnELpN6YpsbU01jt6hMwEwJ9ig62GsEkkws763GzsU8T
- yKf+k2xQ+c69b3++8eDss9vTBD2zli5uc8Vec6LkB1iE3iktoYvn23GmxM49zshhHn6e
- euVxRRR1kH03+QMLn39TSjtppD+LvYoHMraKWRj+PsH4bgYmea4eTS8IQlnp1t2j9Ky7
- yLd/BOnSMp+wj58DaciQhKFaQDJrUC9EV/847n5D0YChB8pBRtPEEuVYwpnliWqw5dhH
- OwMAHpNEQeU0DoSARggFHrTn5ctC95DxoL625W3JyE+WlYoJc5G5MGEtr7vCAnR9hdX2
- hOEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLiok44y+mfbHbP1GVznszIOMlIIlgs7K5JGs+nl1oLanBsWJgbMr64UiYvsUocosxz0KBWRQnWpS361K81USy9dJGLGk=
-X-Gm-Message-State: AOJu0YxPEJZxx+kMXpeaqixlFZ9mmVBn8PnEMzZw2kYyt3GMYHTk4Nde
- d3D+OlFT/+sW/wQGaZsS+gtWfgeDdnJDwSUeo0vvQCVRiWO/+r5FNoVIf3XIofEy/bGGos63xN1
- GftlL+aGlhABIeZJ+dMVS+/VLPARo9bo1V9/TL2TexXT2kdJgDw8G
-X-Received: by 2002:a05:622a:188e:b0:43c:7504:32ba with SMTP id
- d75a77b69052e-43fb0e5149cmr91741821cf.10.1716794356067; 
- Mon, 27 May 2024 00:19:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExM2/nlFpN6xxacm/DZQWnwb57vvtqWgQW75EWgLwk087q6KqJMuI28JP+sMiV5LIZeeCvhg==
-X-Received: by 2002:a05:622a:188e:b0:43c:7504:32ba with SMTP id
- d75a77b69052e-43fb0e5149cmr91741671cf.10.1716794355378; 
- Mon, 27 May 2024 00:19:15 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f28:4600:d3a7:6c26:54cf:e01e?
- (p200300d82f284600d3a76c2654cfe01e.dip0.t-ipconnect.de.
- [2003:d8:2f28:4600:d3a7:6c26:54cf:e01e])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43fb17cc2d8sm30838891cf.26.2024.05.27.00.19.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 00:19:15 -0700 (PDT)
-Message-ID: <f1fe0673-254d-494e-ba8a-d252723c1f16@redhat.com>
-Date: Mon, 27 May 2024 09:19:09 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sBUik-0006AP-59; Mon, 27 May 2024 03:24:39 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D65046A4BE;
+ Mon, 27 May 2024 10:25:08 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 1FD5BD845B;
+ Mon, 27 May 2024 10:24:35 +0300 (MSK)
+Received: (nullmailer pid 52872 invoked by uid 1000);
+ Mon, 27 May 2024 07:24:35 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Ruihan Li <lrh2000@pku.edu.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 01/21] target/i386: Give IRQs a chance when resetting
+ HF_INHIBIT_IRQ_MASK
+Date: Mon, 27 May 2024 10:24:11 +0300
+Message-Id: <20240527072435.52812-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] hw/riscv/virt: Add memory hotplugging and
- virtio-md-pci support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Atish Patra <atishp@atishpatra.org>, Atish Patra <atishp@rivosinc.com>
-Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Santosh Mamila <santosh.mamila@catalinasystems.io>,
- Chethan Seshadri <Chethan.Seshadri@catalinasystems.io>,
- Sivakumar Munnangi <siva.munnangi@catalinasystems.io>
-References: <20240521105635.795211-1-bjorn@kernel.org>
- <20240521105635.795211-2-bjorn@kernel.org>
- <55810d52-0360-40ad-a8d2-3b6a8aa220ae@ventanamicro.com>
- <51ef570c-da63-4e25-9c48-dbdf8a40a34d@redhat.com>
- <18f217cf-6d68-4676-8674-d91f96e155fc@ventanamicro.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-In-Reply-To: <18f217cf-6d68-4676-8674-d91f96e155fc@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,20 +63,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> 
-> I wonder if we should forbid users from removing memory that is 'out of place', 
-> i.e. users
-> should always remove pc-dimms in LIFO order. Usually this kind of control is 
-> done by
-> management, e.g. libvirt, but if we're not sure we'll keep consistency during 
-> memory
-> unplugs ...
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-I really don't think we should do any of that. ;)
+When emulated with QEMU, interrupts will never come in the following
+loop. However, if the NOP instruction is uncommented, interrupts will
+fire as normal.
 
+	loop:
+		cli
+    		call do_sti
+		jmp loop
+
+	do_sti:
+		sti
+		# nop
+		ret
+
+This behavior is different from that of a real processor. For example,
+if KVM is enabled, interrupts will always fire regardless of whether the
+NOP instruction is commented or not. Also, the Intel Software Developer
+Manual states that after the STI instruction is executed, the interrupt
+inhibit should end as soon as the next instruction (e.g., the RET
+instruction if the NOP instruction is commented) is executed.
+
+This problem is caused because the previous code may choose not to end
+the TB even if the HF_INHIBIT_IRQ_MASK has just been reset (e.g., in the
+case where the STI instruction is immediately followed by the RET
+instruction), so that IRQs may not have a change to trigger. This commit
+fixes the problem by always terminating the current TB to give IRQs a
+chance to trigger when HF_INHIBIT_IRQ_MASK is reset.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Message-ID: <20240415064518.4951-4-lrh2000@pku.edu.cn>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 6a5a63f74ba5c5355b7a8468d3d814bfffe928fb)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 83c2b40480..6ca4d791ab 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2776,13 +2776,17 @@ static void gen_bnd_jmp(DisasContext *s)
+ static void
+ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
+ {
++    bool inhibit_reset;
++
+     gen_update_cc_op(s);
+ 
+     /* If several instructions disable interrupts, only the first does it.  */
+-    if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
+-        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
+-    } else {
++    inhibit_reset = false;
++    if (s->flags & HF_INHIBIT_IRQ_MASK) {
+         gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
++        inhibit_reset = true;
++    } else if (inhibit) {
++        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
+     }
+ 
+     if (s->base.tb->flags & HF_RF_MASK) {
+@@ -2793,7 +2797,9 @@ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
+         tcg_gen_exit_tb(NULL, 0);
+     } else if (s->flags & HF_TF_MASK) {
+         gen_helper_single_step(tcg_env);
+-    } else if (jr) {
++    } else if (jr &&
++               /* give irqs a chance to happen */
++               !inhibit_reset) {
+         tcg_gen_lookup_and_goto_ptr();
+     } else {
+         tcg_gen_exit_tb(NULL, 0);
 -- 
-Thanks,
-
-David / dhildenb
+2.39.2
 
 
