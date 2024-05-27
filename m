@@ -4,82 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 049E0C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C527C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcUe-0005Nt-QO; Mon, 27 May 2024 11:42:36 -0400
+	id 1sBcW4-0006jT-PM; Mon, 27 May 2024 11:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sBcUd-0005Bx-5I
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:42:35 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sBcUX-0004ot-IA
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:42:34 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2e95a1d5ee2so65294831fa.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 08:42:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716824538; x=1717429338; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=xtjjVrFaJTF2X6JKfJWm8s6KMTtbMjWj+Xib+7eKbLk=;
- b=jD+z/EP5Hb5OFMeAIGYVpX7RGgdy7buFAXnF2kbmhOCZZ6qeCVOx6067DcbHVIBS9L
- Yal4wePlnyttuq2dD5dQ2WmwlFVqncMJupwNQODsv55weIlZlIw4APRmojS/XJLurDbi
- LkmESxg0mifbMLacWYUN0j7hko9lBVce2rV8SueETKQhPMRjQN1cnG5FqAjLpolPKks9
- mNX5YnyTtey5pyfgZ79xK4LsOTzZo604mrCIYa/qAA70m0yCvwLH8DkrVvo56pXc9AAz
- ycO6JuXwFZPFzGBq5ShVuAR6Xg0Ien126kKXT90fZskfn2NNDYb5e+aGZhf54HjzpSHI
- +LFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716824538; x=1717429338;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xtjjVrFaJTF2X6JKfJWm8s6KMTtbMjWj+Xib+7eKbLk=;
- b=W+iImIVwoCgAJE0Xb9u4rAkZH0tmkeddF7f1IJlU9SlJfBdWS3SvF5ymU47zbljyIw
- Z8EID/A24zmmQ3BVW8F52eKB2uNUba4SrKutGUha3HwYeKyjiHrMliWlGf06kDlySl79
- RuoVq8yAO4jmHtOECNEy/Iv1tssTh0ECGGXDGzJKr2hX9Zrip22CDU6BLsjPThRlYkx2
- 1g56ULTvDwtMHcxMUExTWStJni9uGDGdrKl8EkrQKemQxZ5RmxdGPJvy+M7jMr8mV8E2
- +JNRmBtjo8Y0Q6ySA4IPN/1PS8j5cUwu0PDkA/Lk98u++W1z0NcW0YdM9024hj5Xo8Gi
- Os6A==
-X-Gm-Message-State: AOJu0Yx5tc6t9DRYgKRnRqKcNFf+QlYE9g+xilPgS3Wu7Kf6BUOutt8i
- 0Icl1gjc71VhN2+BNocUcxmlLHV8g02qfe1eTP2rp1usT0Hhekz4zh6mGPyJPwM=
-X-Google-Smtp-Source: AGHT+IE1n/X+TNgvqyvPEBBGQPzAFsemjne/fBOg4XMqyQm0v3lcflJXEGM0LQeztVfsguCMS7RlJA==
-X-Received: by 2002:a2e:2404:0:b0:2e2:812:4c4 with SMTP id
- 38308e7fff4ca-2e95b0c2359mr71352901fa.29.1716824538089; 
- Mon, 27 May 2024 08:42:18 -0700 (PDT)
-Received: from localhost ([176.74.158.132]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6286457089sm410548266b.64.2024.05.27.08.42.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 08:42:17 -0700 (PDT)
-Date: Mon, 27 May 2024 17:42:16 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Chao Du <duchao@eswincomputing.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
- alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- anup@brainfault.org, duchao713@qq.com
-Subject: Re: [PATCH v1 2/4] target/riscv/kvm: implement
- kvm_arch_update_guest_debug()
-Message-ID: <20240527-29c3e75b26b24a71b4926950@orel>
-References: <20240527021916.12953-1-duchao@eswincomputing.com>
- <20240527021916.12953-3-duchao@eswincomputing.com>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sBcW2-0006ix-Vs
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:44:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sBcW1-0004xM-Fm
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:44:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716824640;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EcFh+qKyX5x8Cg0Smw3ip1Rj4U1bYuvi9Asr+c4RhMo=;
+ b=YgvWSHskyaexvnc2U1cq0OffA6QPyProOIC/sFAZExlfIJJEgJ88UMjOn77o3rXhd3qJn7
+ F8gYx0z0r73wmNMObwqMm3Zd2D2WGSwfBJTExijOknHB4Hn/BQJr4YLxt4BTJIcJE3++al
+ J0WuzeX6DMsVqSBR+L5XVQPEYbW7Wqk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-440-bdiMYSvFNaSJBP5nFUnwvw-1; Mon, 27 May 2024 11:43:59 -0400
+X-MC-Unique: bdiMYSvFNaSJBP5nFUnwvw-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EB5888008A4
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 15:43:58 +0000 (UTC)
+Received: from localhost (unknown [10.22.8.89])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 467E81C008BB;
+ Mon, 27 May 2024 15:43:57 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] scripts/update-linux-headers.sh: Remove temporary
+ directory inbetween
+In-Reply-To: <e46b4172-a647-44cb-9ce5-52723875c9a2@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20240527060243.12647-1-thuth@redhat.com>
+ <871q5npa89.fsf@redhat.com>
+ <e46b4172-a647-44cb-9ce5-52723875c9a2@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Mon, 27 May 2024 17:43:56 +0200
+Message-ID: <87y17vnttv.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240527021916.12953-3-duchao@eswincomputing.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=ajones@ventanamicro.com; helo=mail-lj1-x236.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,35 +87,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 02:19:14AM GMT, Chao Du wrote:
-> Set the control flag when there are active breakpoints. This will
-> help KVM to know the status in the userspace.
-> 
-> Signed-off-by: Chao Du <duchao@eswincomputing.com>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index cba55c552d..0bc3348b91 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -2039,5 +2039,7 @@ void kvm_arch_remove_all_hw_breakpoints(void)
->  
->  void kvm_arch_update_guest_debug(CPUState *cs, struct kvm_guest_debug *dbg)
->  {
-> -    /* TODO; To be implemented later. */
-> +    if (kvm_sw_breakpoints_active(cs)) {
-> +        dbg->control |= KVM_GUESTDBG_ENABLE;
-> +    }
->  }
-> -- 
-> 2.17.1
-> 
+On Mon, May 27 2024, Thomas Huth <thuth@redhat.com> wrote:
+
+> On 27/05/2024 17.04, Cornelia Huck wrote:
+>> On Mon, May 27 2024, Thomas Huth <thuth@redhat.com> wrote:
+>> 
+>>> We are reusing the same temporary directory for installing the headers
+>>> of all targets, so there could be stale files here when switching from
+>>> one target to another. Make sure to delete the folder before installing
+>>> a new set of target headers into it.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   scripts/update-linux-headers.sh | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+>>> index 8963c39189..fbf7e119bc 100755
+>>> --- a/scripts/update-linux-headers.sh
+>>> +++ b/scripts/update-linux-headers.sh
+>>> @@ -112,6 +112,7 @@ for arch in $ARCHLIST; do
+>>>           arch_var=ARCH
+>>>       fi
+>>>   
+>>> +    rm -rf "$hdrdir"
+>>>       make -C "$linux" O="$blddir" INSTALL_HDR_PATH="$hdrdir" $arch_var=$arch headers_install
+>>>   
+>>>       rm -rf "$output/linux-headers/asm-$arch"
+>> 
+>> Hm. I presume that headers-install gives us the same set of headers
+>> outside include/asm for every arch?
 >
+> I just double-checked and yes, apart from a file called "a.out.h", the other 
+> headers outside of the asm subfolder are the same. So AFAICS there is still 
+> a slight chance that we might pick up a wrong file from the asm folder... 
+> shall I change the patch to only delete that subfolder? Or is that chance 
+> just too small that we can ignore it?
 
-Should squash this into the previous patch.
+The asm folder is probably fine, but there's a chance for errors; if
+moving from "use union of files for all archs outside asm" to "use files
+for the last arch in the list outside asm" always results in the same
+set of files, your patch is probably the better choice here.
 
-Thanks,
-drew
+Acked-by: Cornelia Huck <cohuck@redhat.com>
+
 
