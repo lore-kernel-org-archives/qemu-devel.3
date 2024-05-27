@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5A9C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35730C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUkJ-0001Kt-WD; Mon, 27 May 2024 03:26:16 -0400
+	id 1sBUkH-0000wp-HM; Mon, 27 May 2024 03:26:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUjT-000868-GH; Mon, 27 May 2024 03:25:30 -0400
+ id 1sBUjZ-00087d-9J; Mon, 27 May 2024 03:25:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUjQ-0006FL-FS; Mon, 27 May 2024 03:25:22 -0400
+ id 1sBUjV-0006M5-Co; Mon, 27 May 2024 03:25:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB64D6A4C9;
+ by isrv.corpit.ru (Postfix) with ESMTP id CBAB16A4CB;
  Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E5AAED8466;
- Mon, 27 May 2024 10:24:35 +0300 (MSK)
-Received: (nullmailer pid 52906 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 14CDCD8468;
+ Mon, 27 May 2024 10:24:36 +0300 (MSK)
+Received: (nullmailer pid 52912 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dongwon Kim <dongwon.kim@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 12/21] ui/gtk: Check if fence_fd is equal to or greater
- than 0
-Date: Mon, 27 May 2024 10:24:22 +0300
-Message-Id: <20240527072435.52812-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, donsheng <dongsheng.x.zhang@intel.com>,
+ Chao Gao <chao.gao@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 14/21] target-i386: hyper-v: Correct kvm_hv_handle_exit
+ return value
+Date: Mon, 27 May 2024 10:24:24 +0300
+Message-Id: <20240527072435.52812-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
@@ -66,69 +64,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+From: donsheng <dongsheng.x.zhang@intel.com>
 
-'fence_fd' needs to be validated always before being referenced
-And the passing condition should include '== 0' as 0 is a valid
-value for the file descriptor.
+This bug fix addresses the incorrect return value of kvm_hv_handle_exit for
+KVM_EXIT_HYPERV_SYNIC, which should be EXCP_INTERRUPT.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-Message-Id: <20240508175403.3399895-2-dongwon.kim@intel.com>
-(cherry picked from commit e4e62514e3cc2fc9dbae44af8b80f61c730beab4)
+Handling of KVM_EXIT_HYPERV_SYNIC in QEMU needs to be synchronous.
+This means that async_synic_update should run in the current QEMU vCPU
+thread before returning to KVM, returning EXCP_INTERRUPT to guarantee this.
+Returning 0 can cause async_synic_update to run asynchronously.
+
+One problem (kvm-unit-tests's hyperv_synic test fails with timeout error)
+caused by this bug:
+
+When a guest VM writes to the HV_X64_MSR_SCONTROL MSR to enable Hyper-V SynIC,
+a VM exit is triggered and processed by the kvm_hv_handle_exit function of the
+QEMU vCPU. This function then calls the async_synic_update function to set
+synic->sctl_enabled to true. A true value of synic->sctl_enabled is required
+before creating SINT routes using the hyperv_sint_route_new() function.
+
+If kvm_hv_handle_exit returns 0 for KVM_EXIT_HYPERV_SYNIC, the current QEMU
+vCPU thread may return to KVM and enter the guest VM before running
+async_synic_update. In such case, the hyperv_synic test’s subsequent call to
+synic_ctl(HV_TEST_DEV_SINT_ROUTE_CREATE, ...) immediately after writing to
+HV_X64_MSR_SCONTROL can cause QEMU’s hyperv_sint_route_new() function to return
+prematurely (because synic->sctl_enabled is false).
+
+If the SINT route is not created successfully, the SINT interrupt will not be
+fired, resulting in a timeout error in the hyperv_synic test.
+
+Fixes: 267e071bd6d6 (“hyperv: make overlay pages for SynIC”)
+Suggested-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Dongsheng Zhang <dongsheng.x.zhang@intel.com>
+Message-ID: <20240521200114.11588-1-dongsheng.x.zhang@intel.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 84d4b72854869821eb89813c195927fdd3078c12)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 3af5ac5bcf..955234429d 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -99,7 +99,7 @@ void gd_egl_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd > 0) {
-+            if (dmabuf->fence_fd >= 0) {
-                 qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 52dcac161e..7fffd0544e 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -86,7 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd > 0) {
-+            if (dmabuf->fence_fd >= 0) {
-                 qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-diff --git a/ui/gtk.c b/ui/gtk.c
-index c4a9662085..f1bb838ed3 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -597,10 +597,12 @@ void gd_hw_gl_flushed(void *vcon)
-     VirtualConsole *vc = vcon;
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index e3ac978648..0a2e2a07e9 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -81,7 +81,7 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
+          */
+         async_safe_run_on_cpu(CPU(cpu), async_synic_update, RUN_ON_CPU_NULL);
  
--    qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
--    close(dmabuf->fence_fd);
--    dmabuf->fence_fd = -1;
--    graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+    if (dmabuf->fence_fd >= 0) {
-+        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
-+        close(dmabuf->fence_fd);
-+        dmabuf->fence_fd = -1;
-+        graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+    }
- }
- 
- /** DisplayState Callbacks (opengl version) **/
+-        return 0;
++        return EXCP_INTERRUPT;
+     case KVM_EXIT_HYPERV_HCALL: {
+         uint16_t code = exit->u.hcall.input & 0xffff;
+         bool fast = exit->u.hcall.input & HV_HYPERCALL_FAST;
 -- 
 2.39.2
 
