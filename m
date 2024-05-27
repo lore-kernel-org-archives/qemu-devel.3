@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C771AC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E07C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUBI-0004MU-Du; Mon, 27 May 2024 02:50:04 -0400
+	id 1sBUCE-00052m-V4; Mon, 27 May 2024 02:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sBUBG-0004Lk-FG
- for qemu-devel@nongnu.org; Mon, 27 May 2024 02:50:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sBUBy-0004ty-P4
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:50:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sBUBE-0008Qx-KK
- for qemu-devel@nongnu.org; Mon, 27 May 2024 02:50:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sBUBw-0000Pf-Os
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:50:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716792599;
+ s=mimecast20190719; t=1716792643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/ydN/EyaTB4DuHO1U7DU0E6kU7hv/TOrgk2fjMHpu9I=;
- b=g3KFYflH0ELnA2FO9pJai8WokACiQYeLFK406AuFWf1mxb1/2bVuIxkvQ1uiM2AW526+Nz
- jFO9dd0CCnhtCcxeqbnPM2bhXaF+xXfJ+iVeRxjlaKCUlFJQzrKPe5yD5soXKSw4US5rXf
- Ll6WxsGsAHERzsgc0Jrn2AEVhQJxNf4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3dDa4bMpvWiEHMuR82qvXVDrrC/FsJOmBeWPGv2pbl8=;
+ b=SHyvLcVj+MXCeK0ZEVWexcDCu9vgXdNLx/L3GG8cq79uJiNS64/YjKBN8FJ1f3qA74kZrt
+ lUZfpWsMiuRnZHLn8cxffEaxDiFvbFXyesuiHSruo8RtQdlw5MjeTKy3g3HPymTbJMKyvx
+ Gs2U8/cXfUWjXk97RXspaDFZvr3f/Do=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-sOMkcmKSMZeUEgrxnoUQxA-1; Mon, 27 May 2024 02:49:55 -0400
-X-MC-Unique: sOMkcmKSMZeUEgrxnoUQxA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3550220c37bso1017669f8f.0
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 23:49:54 -0700 (PDT)
+ us-mta-663-X48lnwmiOkiqo8Of7UMhlg-1; Mon, 27 May 2024 02:50:42 -0400
+X-MC-Unique: X48lnwmiOkiqo8Of7UMhlg-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57851ae6090so1366677a12.3
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 23:50:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716792594; x=1717397394;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/ydN/EyaTB4DuHO1U7DU0E6kU7hv/TOrgk2fjMHpu9I=;
- b=oS7zADu29vJTc40/GCKTEAS7QP3xXvdGKuRn3EZBkhrD8LHsNPxKcK1uey9M6BRf10
- TYuSw9FX9uxiXegq9V1LvXxVhJ8r0cmLUn6pdvbusqH7KrHtze0yvSX+oLQiFsa+ifIn
- jlKwRAF5vAvd5CAqbBbnYL5rtd18EhEF96zE7HwTcMZfFQtaqPxEkemWSHlbJ4O+zwAX
- ODKm2yhe3FVvWhVi+XjXvzTJ1tNprGPgn7Mz0ydF6pf0GCt3Ygpw+Jm6mz2HZ9124Fcm
- MRQTcHbQXJpgJfkfUOfKWKbPalv2yGiKHIvwEMVPMP4/QWMR85Pre1HakFgDYYSNd1GF
- 76rQ==
+ d=1e100.net; s=20230601; t=1716792641; x=1717397441;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3dDa4bMpvWiEHMuR82qvXVDrrC/FsJOmBeWPGv2pbl8=;
+ b=p+e/ksR45VAB6Sm6tHsccP8mCQvOVEbCzV44Rbj4qoCd9LXoowgp8qJ9kt5wGKGEA8
+ J3QiVxmhVNdHqZOCEAR5jl9YnWf2ZJrwYp79ffTItvuDM5/gu8Ni7Kfo916WDeiOuaBd
+ C2MVMkNbwPdzuyE8f9kBTdRHmdc7MiENiBJDhkRb0PPjVKpSQYoCI8p/lsnnJfsXefvT
+ HH8w9mKFjXnDDnDqSonR2J5CYBI0qZL5N3KD7EC9M01JYB/13iqZtARyWIa2dhSDpFRk
+ 1KcbpA/wnyEOQQTK10+bHKBnujlW4bMjzINszQbMJOByODtdpCLTwY+Dm3Sj83jk9rtV
+ +VCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVY+MFNcZz6Bff5GHcbMpj316ljymdll66s1rfeqn4cWxD520M3xUeIt5yarztQeDdj0dZ1tVCXgGuzSuzCnVYrf6wkGmc=
-X-Gm-Message-State: AOJu0YzrbaXZeEKw4QzYxoUU51W/43CKUaCmd05MHGxGh//YXKgmyg1b
- bA91CDehoLigGZClBNtTAOO7x2YnV5GGm5Rxr9k23EYsEszsQqmTwvqEOBskJJsnVGbKv7IgMtB
- j6tPyhCnmeGlEp+zdh/Zt/EtCBXkDvt6YxLAOjZG3KDOlpW9iLCcg
-X-Received: by 2002:adf:ce83:0:b0:351:ce05:7a33 with SMTP id
- ffacd0b85a97d-35506dc54ffmr6552801f8f.24.1716792593642; 
- Sun, 26 May 2024 23:49:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwB9K/epghioNOE4vXz8p0+iHbRqyJOBQaGmgBN3FZ3uJPiYRkIF6ry1yNnLb0l4lhArTpqw==
-X-Received: by 2002:adf:ce83:0:b0:351:ce05:7a33 with SMTP id
- ffacd0b85a97d-35506dc54ffmr6552785f8f.24.1716792592942; 
- Sun, 26 May 2024 23:49:52 -0700 (PDT)
+ AJvYcCX+uFhYOKS3VriWc4Ezu2+DW3JRsGEqQnbn77EROF+2GlvrYqfWwgUZEwebqeTPJBfxYkEqgR2QJJusU1SZN5bl8NvCs0s=
+X-Gm-Message-State: AOJu0Yzr0u/d/9PEdZcnbw0pDOJLVaufi74Fq6T3xceFUjzdaoRtHJ7l
+ r8LRWzBrIO6Glogr87o4nCCRG0C2IRkphr5NYwLb42JBqVJ3W3bj2rMdHDArqdynlqBNMr5izZa
+ wj2Up3vJcmOCTK89HP5Mpqd2ndp0+pAZx+8w4bhfYUewLdD+TYsfJ
+X-Received: by 2002:a05:600c:314c:b0:41c:5eb:4f8f with SMTP id
+ 5b1f17b1804b1-421089d7c33mr65293545e9.15.1716792640684; 
+ Sun, 26 May 2024 23:50:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEo/R5mU/xbZ3i3YkGTW3rRVx3+vTjHiG8Cvdnx2sIRL4LjYYnKj+W2aq9W/1YmpipZN4h6Iw==
+X-Received: by 2002:a05:600c:314c:b0:41c:5eb:4f8f with SMTP id
+ 5b1f17b1804b1-421089d7c33mr65293365e9.15.1716792640060; 
+ Sun, 26 May 2024 23:50:40 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:342:cd82:9c62:7faf:9d73:ba3f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7d88esm8143442f8f.19.2024.05.26.23.49.51
+ 5b1f17b1804b1-421089cc504sm98164625e9.40.2024.05.26.23.50.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 23:49:52 -0700 (PDT)
-Date: Mon, 27 May 2024 02:49:49 -0400
+ Sun, 26 May 2024 23:50:39 -0700 (PDT)
+Date: Mon, 27 May 2024 02:50:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yi Liu <yi.l.liu@intel.com>
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- Jason Wang <jasowang@redhat.com>,
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: Jason Wang <jasowang@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "Peng, Chao P" <chao.p.peng@intel.com>,
  Yu Zhang <yu.c.zhang@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -76,7 +76,7 @@ Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by spec
-Message-ID: <20240527024327-mutt-send-email-mst@kernel.org>
+Message-ID: <20240527025023-mutt-send-email-mst@kernel.org>
 References: <CACGkMEvTomFeC1bM3SfY1zGhQ_5i15r6CY6M3jVzau6niNUf_w@mail.gmail.com>
  <SJ0PR11MB6744AECEAA6F9319259B0DF192E92@SJ0PR11MB6744.namprd11.prod.outlook.com>
  <DS0PR11MB752917B52B66A6EF10C10678C3E92@DS0PR11MB7529.namprd11.prod.outlook.com>
@@ -86,12 +86,13 @@ References: <CACGkMEvTomFeC1bM3SfY1zGhQ_5i15r6CY6M3jVzau6niNUf_w@mail.gmail.com>
  <SJ0PR11MB67445F7F8B79D2C2B982C1F692F52@SJ0PR11MB6744.namprd11.prod.outlook.com>
  <CACGkMEuO6T-LqcZ=5oRR83LyhZ7oOtZvb70CUksZDAmC1KnsOA@mail.gmail.com>
  <SJ0PR11MB6744135D8C08CEE42460CAF792F02@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <10696888-9d9c-4a09-854d-a923246035a2@intel.com>
+ <SJ0PR11MB67448F0D3CE487F125D274AF92F02@SJ0PR11MB6744.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <10696888-9d9c-4a09-854d-a923246035a2@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <SJ0PR11MB67448F0D3CE487F125D274AF92F02@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -116,100 +117,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 02:32:46PM +0800, Yi Liu wrote:
-> Folks, looks like it's not necessary to be aligned with spec version.
-> e.g. I can see something like below. This is an old machine which is
-> not possible to be built according to vt-d spec 4.0. Let me check more
-> machines as well to confirm this.
-
-Aligning to a spec version is preferable. We don't *have* to force
-users to do it if we don't want to, but you never know what
-assumptions will guests make.
-
-
-
->Perhaps virtual VT-d implementation
-> can have its own version policy? @Jason, how about your idea?
+On Mon, May 27, 2024 at 06:44:58AM +0000, Duan, Zhenzhong wrote:
+> Hi Jason,
 > 
-> cat /sys/class/iommu/dmar0/intel-iommu/version
-> 4:0
-
-This is PV, really best avoided if we can.
-
-> > > > > > > Probably, this might be something that could be noticed by the
-> > > > > > > management to migration compatibility.
-> > > > > > 
-> > > > > > Could you elaborate what we need to do for migration compatibility?
-> > > > > > I see version is already exported so libvirt can query it, see:
-> > > > > > 
-> > > > > >      DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
-> > > > > 
-> > > > > It is the Qemu command line parameters not the version of the vmstate.
-> > > > > 
-> > > > > For example -device intel-iommu,version=3.0
-> > > > > 
-> > > > > Qemu then knows it should behave as 3.0.
-> > > > 
-> > > > So you want to bump vtd_vmstate.version?
-> > > 
-> > > Well, as I said, it's not a direct bumping.
-> > > 
-> > > > 
-> > > > In fact, this series change intel_iommu property from x-scalable-
-> > > mode=["on"|"off"]"
-> > > > to x-scalable-mode=["legacy"|"modern"|"off"]".
-> > > > 
-> > > > My understanding management app should use same qemu cmdline
-> > > > in source and destination, so compatibility is already guaranteed even if
-> > > > we don't bump vtd_vmstate.version.
-> > > 
-> > > Exactly, so the point is to
-> > > 
-> > > vtd=3.0, the device works exactly as vtd spec 3.0.
-> > > vtd=3.3, the device works exactly as vtd spec 3.3.
-> > 
-> > Get your point. But I have some concerns about this:
-> > 1.Exact version matching will bring vast of version check in the code,
-> >     especially when we support more versions.
-> > 2. There are some missed features before we can update version number to 3.0,
-> >      i.e., nested translation, Accessed/Dirty (A/D) bits, 5 level page table, etc.
-> > 3. Some features are removed in future versions, but we still need to
-> >     implement them for intermediate version,
-> >     i.e., ExecuteRequested (ER), Advanced Fault Logging, etc.
+> >-----Original Message-----
+> >From: Duan, Zhenzhong
+> >Subject: RE: [PATCH] intel_iommu: Use the latest fault reasons defined by
+> >spec
+> >
+> >
+> >
+> >>-----Original Message-----
+> >>From: Jason Wang <jasowang@redhat.com>
+> >>Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by
+> >>spec
+> >>
+> >>On Fri, May 24, 2024 at 4:41 PM Duan, Zhenzhong
+> >><zhenzhong.duan@intel.com> wrote:
+> >>>
+> >>>
+> >>>
+> >>> >-----Original Message-----
+> >>> >From: Jason Wang <jasowang@redhat.com>
+> >>> >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined
+> >by
+> >>> >spec
+> >>> >
+> >>> >On Tue, May 21, 2024 at 6:25 PM Duan, Zhenzhong
+> >>> ><zhenzhong.duan@intel.com> wrote:
+> >>> >>
+> >>> >>
+> >>> >>
+> >>> >> >-----Original Message-----
+> >>> >> >From: Jason Wang <jasowang@redhat.com>
+> >>> >> >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons
+> >defined
+> >>by
+> >>> >> >spec
+> >>> >> >
+> >>> >> >On Mon, May 20, 2024 at 12:15 PM Liu, Yi L <yi.l.liu@intel.com>
+> >>wrote:
+> >>> >> >>
+> >>> >> >> > From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> >>> >> >> > Sent: Monday, May 20, 2024 11:41 AM
+> >>> >> >> >
+> >>> >> >> >
+> >>> >> >> >
+> >>> >> >> > >-----Original Message-----
+> >>> >> >> > >From: Jason Wang <jasowang@redhat.com>
+> >>> >> >> > >Sent: Monday, May 20, 2024 8:44 AM
+> >>> >> >> > >To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> >>> >> >> > >Cc: qemu-devel@nongnu.org; Liu, Yi L <yi.l.liu@intel.com>; Peng,
+> >>> >Chao
+> >>> >> >P
+> >>> >> >> > ><chao.p.peng@intel.com>; Yu Zhang
+> >><yu.c.zhang@linux.intel.com>;
+> >>> >> >Michael
+> >>> >> >> > >S. Tsirkin <mst@redhat.com>; Paolo Bonzini
+> >>> ><pbonzini@redhat.com>;
+> >>> >> >> > >Richard Henderson <richard.henderson@linaro.org>; Eduardo
+> >>> >Habkost
+> >>> >> >> > ><eduardo@habkost.net>; Marcel Apfelbaum
+> >>> >> ><marcel.apfelbaum@gmail.com>
+> >>> >> >> > >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons
+> >>> >defined
+> >>> >> >by
+> >>> >> >> > >spec
+> >>> >> >> > >
+> >>> >> >> > >On Fri, May 17, 2024 at 6:26 PM Zhenzhong Duan
+> >>> >> >> > ><zhenzhong.duan@intel.com> wrote:
+> >>> >> >> > >>
+> >>> >> >> > >> From: Yu Zhang <yu.c.zhang@linux.intel.com>
+> >>> >> >> > >>
+> >>> >> >> > >> Currently we use only VTD_FR_PASID_TABLE_INV as fault
+> >>reason.
+> >>> >> >> > >> Update with more detailed fault reasons listed in VT-d spec
+> >>7.2.3.
+> >>> >> >> > >>
+> >>> >> >> > >> Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
+> >>> >> >> > >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >>> >> >> > >> ---
+> >>> >> >> > >
+> >>> >> >> > >I wonder if this could be noticed by the guest or not. If yes
+> >should
+> >>> >> >> > >we consider starting to add thing like version to vtd emulation
+> >>code?
+> >>> >> >> >
+> >>> >> >> > Kernel only dumps the reason like below:
+> >>> >> >> >
+> >>> >> >> > DMAR: [DMA Write NO_PASID] Request device [20:00.0] fault
+> >addr
+> >>> >> >0x1234600000
+> >>> >> >> > [fault reason 0x71] SM: Present bit in first-level paging entry is
+> >>clear
+> >>> >> >>
+> >>> >> >> Yes, guest kernel would notice it as the fault would be injected to
+> >vm.
+> >>> >> >>
+> >>> >> >> > Maybe bump 1.0 -> 1.1?
+> >>> >> >> > My understanding version number is only informational and is
+> >far
+> >>> >from
+> >>> >> >> > accurate to mark if a feature supported. Driver should check
+> >>cap/ecap
+> >>> >> >> > bits instead.
+> >>> >> >>
+> >>> >> >> Should the version ID here be aligned with VT-d spec?
+> >>> >> >
+> >>> >> >Probably, this might be something that could be noticed by the
+> >>> >> >management to migration compatibility.
+> >>> >>
+> >>> >> Could you elaborate what we need to do for migration compatibility?
+> >>> >> I see version is already exported so libvirt can query it, see:
+> >>> >>
+> >>> >>     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
+> >>> >
+> >>> >It is the Qemu command line parameters not the version of the vmstate.
+> >>> >
+> >>> >For example -device intel-iommu,version=3.0
+> >>> >
+> >>> >Qemu then knows it should behave as 3.0.
+> >>>
+> >>> So you want to bump vtd_vmstate.version?
+> >>
+> >>Well, as I said, it's not a direct bumping.
+> >>
+> >>>
+> >>> In fact, this series change intel_iommu property from x-scalable-
+> >>mode=["on"|"off"]"
+> >>> to x-scalable-mode=["legacy"|"modern"|"off"]".
+> >>>
+> >>> My understanding management app should use same qemu cmdline
+> >>> in source and destination, so compatibility is already guaranteed even if
+> >>> we don't bump vtd_vmstate.version.
+> >>
+> >>Exactly, so the point is to
+> >>
+> >>vtd=3.0, the device works exactly as vtd spec 3.0.
+> >>vtd=3.3, the device works exactly as vtd spec 3.3.
 > 
-> Even the hw follows vtd spec 3.0, it is not required to implement all of
-> them. So it should be fine to implement part of the capabilities. :)
-
-Yes, that's better.
-Specifying version # explicitly is really annoying for both
-qemu and management.
-I think normally we should just start with capabilities and make
-the best decision we can wrt guest support etc.
-
-Being concervative is usually a good idea, if a new version gives no
-useful functionality adding that is just churn.
-So i.e.  we have a set of capabilities we want and select the earliest version
-that supports them.
-
-We can let user override that and I am not sure we need to bother
-actually checking it's consistent with capabilities if we do
-not want to.
-
-
-> > > 
-> > > When migration to the old qemu, mgmt can specify e.g vtd=3.0 for
-> > > backward migration compatibility.
-> > 
-> > Yes, that makes sense for such migration.
-> > But I'm not sure if there is a real scenario migrating to old qemu,
-> > why not just update qemu on destination?
-> > 
-> > Thanks
-> > Zhenzhong
-> > 
+> Yi just found version ID stored in VT-d VER_REG is not aligned with the VT-d spec version.
+> For example, we see a local hw with vtd version 6.0 which is beyond VT-d spec version.
+> We are asking VTD arch, will get back soon.
 > 
-> -- 
-> Regards,
-> Yi Liu
+> Or will you plan qemu vVT-d having its own version policy?
+> 
+> Thanks
+> Zhenzhong
+
+Not unless there's a good reason to do this.
+
+> >
+> >Get your point. But I have some concerns about this:
+> >1.Exact version matching will bring vast of version check in the code,
+> >   especially when we support more versions.
+> >2. There are some missed features before we can update version number to
+> >3.0,
+> >    i.e., nested translation, Accessed/Dirty (A/D) bits, 5 level page table, etc.
+> >3. Some features are removed in future versions, but we still need to
+> >   implement them for intermediate version,
+> >   i.e., ExecuteRequested (ER), Advanced Fault Logging, etc.
+> >
+> >>
+> >>When migration to the old qemu, mgmt can specify e.g vtd=3.0 for
+> >>backward migration compatibility.
+> >
+> >Yes, that makes sense for such migration.
+> >But I'm not sure if there is a real scenario migrating to old qemu,
+> >why not just update qemu on destination?
+> >
+> >Thanks
+> >Zhenzhong
+> 
 
 
