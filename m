@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B35AC25B7E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 10:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0253C25B7D
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 10:50:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBXvT-0000yg-Gi; Mon, 27 May 2024 06:50:00 -0400
+	id 1sBXvY-0000zo-5V; Mon, 27 May 2024 06:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sBXvP-0000vd-Rp
- for qemu-devel@nongnu.org; Mon, 27 May 2024 06:49:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sBXvW-0000zV-2t
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 06:50:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sBXvN-0001Da-OT
- for qemu-devel@nongnu.org; Mon, 27 May 2024 06:49:55 -0400
+ id 1sBXvU-0001EI-1N
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 06:50:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716806992;
+ s=mimecast20190719; t=1716806999;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GpJHE55ZAjMoT0QFbbzLh86GeBN+EnYOYScsqi8Az5s=;
- b=UmF6WsaMVzS+QLFpZUgKWvAuJ0AGf9RR4Nhc62KZLA/ULgmSdibVU3tf8iro+CuKAuYXeG
- I+tByswokNeBET67wXsYPfuUzgeEviiOhv6lluQQ1Lx46MjhGOeWT7spaF3CfXGTW9abHR
- 6JIrtgBtULpxYWn+nksIRCAowzy9jY4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SCjRrgAOVZ/RbqPvWVgleeumPHKestDNF1N1tpDgMds=;
+ b=QGHeqgz1UYcL+K+90TVeHCFiNJmns9gDFdC2Wq9pvAq9b3quO+db25AXWNdHJS7BFOJSo7
+ P1ktX7JMkXrb4PkhdWCTGz6smoWN65e4x75q5wQ7fIHTzd0GJhtA9RtrTRiU0A4GDSn54a
+ 4mETFWh72WGM9E0PI2BW9H/Pa9+Z7ew=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-o0RZPRaqN7ev8595tW0qMQ-1; Mon, 27 May 2024 06:49:51 -0400
-X-MC-Unique: o0RZPRaqN7ev8595tW0qMQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a626ac4d29aso146920666b.3
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 03:49:50 -0700 (PDT)
+ us-mta-472-61NMSt8QMAmtogcrGIYz7A-1; Mon, 27 May 2024 06:49:57 -0400
+X-MC-Unique: 61NMSt8QMAmtogcrGIYz7A-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-579d1754c26so495453a12.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 03:49:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716806989; x=1717411789;
+ d=1e100.net; s=20230601; t=1716806995; x=1717411795;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GpJHE55ZAjMoT0QFbbzLh86GeBN+EnYOYScsqi8Az5s=;
- b=BuBy9f7QoH5XS9f/sEguvl8uLzZsnJ+qydUmJEWf/wWWQmU2xwhIUrFFmR3uIUG9B5
- Wl13da1O6Hbamf0RMPz41o3n1S/FB+XcCX+7Z0YkvGx4C3yq0S9i9ElTXpGgiYylCzGs
- 3zHQm0AVOb5K6ubXhDkjjtN5u8fYCy3jyxUeYURfVg818JPNPMcGJzi4EdF7kgZ5eK7K
- Ic0/Ascbba7fvhaJXxYbsVs81Dz/1uRKRJny0Qkr9QnON25st9R1Nr85FTANbMwA5wgx
- a6ueUwHsTBN7wXpYlYJFQSeBvgN38wYg0CBHTF8XNXqbbL8mLo2dsxTBVkrCwL5+GSP6
- lqWA==
-X-Gm-Message-State: AOJu0Yzqh4CaB0i/w0ygLbY7pxWmh+2jTL2vCb65qh5sL96mUH6F2CRy
- DIlTxGeWjkZhpQUrDrHsjWz7MISDLs4LWxRe27mW33ZQgb8wLlXJV0WTwctt7yBwZpnYuceEqrd
- 9kO21HiMivB4BbcxZXD/lmBwh1+JA3Fvmcp0R5CEdWgthgnIwZdGNCPDzNVlO/xm2mR6qk/md1e
- 0eZxcsq6CSOapbRPhEGw+Szz/wrCXGdwsKvBdO
-X-Received: by 2002:a17:907:9510:b0:a59:a977:a154 with SMTP id
- a640c23a62f3a-a626536ac20mr535239266b.64.1716806988889; 
- Mon, 27 May 2024 03:49:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAe/4SrKO0FeQR0A3g/LYu+AR29BHLGJ1wPTqPLLm4J3MRczmyjwrEGcUvnHofToY3qzliTw==
-X-Received: by 2002:a17:907:9510:b0:a59:a977:a154 with SMTP id
- a640c23a62f3a-a626536ac20mr535237466b.64.1716806988356; 
- Mon, 27 May 2024 03:49:48 -0700 (PDT)
+ bh=SCjRrgAOVZ/RbqPvWVgleeumPHKestDNF1N1tpDgMds=;
+ b=tskYVTapzUnZyBUjr6imLMUFrrZVwC/nuiE1G1zHb9xWLLA6T+sf++xGyE5BYuC+z+
+ TKhajbi3eqKbNUPh6Qvgnn7Sqm9l0hizDQVggvNX81EHXh7alyfNHKOMbcDkStmxVhzS
+ 7dgzCuVzpu82IdLcJMeakMj9/Sr9+Jxd9kb+40VEirNNpLwzd6QOjMXAP2kTiXEmOQJS
+ z+LHoIVYIp6k44PbBmEivAj8QJvKQNITe8MxHWS9udNP3Pn6FeDw0z58S+7OdlT2lxxS
+ zVTp426Xgvpkk+aaRECfOPSWCz+ajIH6q6M4a+xhYYvfcpd4fGvifrji+kz4mazbWP7e
+ jpBQ==
+X-Gm-Message-State: AOJu0YzeeXbLO3NsHIuXN7Uoc/eWWWsiD0ZGdrdzVkdA7HIj0HyW0WTJ
+ azqXpw9uaPNirKOj7BFwaYHAXX825MepdXEq9bR44td20OTrva7ydgoCxXhLUpOnugBW8tSqtl5
+ 8aIjsf+4cqeyDG2MUfhxmD2iyD6ENJsXS4lWsfRgUoh7h2lw1aHOQhCamLyTYdhq5hT3orHTwsg
+ WQPYsFZUCG3NPaQqnUZ8fOTYohMvvoYoz5eM+M
+X-Received: by 2002:a50:9359:0:b0:578:59a9:c6eb with SMTP id
+ 4fb4d7f45d1cf-57859a9cd6bmr7933978a12.15.1716806995387; 
+ Mon, 27 May 2024 03:49:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNTn9TpKicY9kPqgV9fMKFIjDHzLv4P6f8i1CY5jd0i1egezAM12OlYgegdYc3ZXfqybkNeQ==
+X-Received: by 2002:a50:9359:0:b0:578:59a9:c6eb with SMTP id
+ 4fb4d7f45d1cf-57859a9cd6bmr7933961a12.15.1716806994945; 
+ Mon, 27 May 2024 03:49:54 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c9376edsm473308266b.59.2024.05.27.03.49.46
+ 4fb4d7f45d1cf-578524b5898sm5664757a12.82.2024.05.27.03.49.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 03:49:47 -0700 (PDT)
+ Mon, 27 May 2024 03:49:53 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: akihiko.odaki@daynix.com
-Subject: [RFC PATCH v2 3/5] meson: Pass objects and dependencies to
- declare_dependency()
-Date: Mon, 27 May 2024 12:49:35 +0200
-Message-ID: <20240527104937.30443-4-pbonzini@redhat.com>
+Subject: [RFC PATCH v2 5/5] meson: Drop the .fa library suffix
+Date: Mon, 27 May 2024 12:49:37 +0200
+Message-ID: <20240527104937.30443-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527104937.30443-1-pbonzini@redhat.com>
 References: <20240527104937.30443-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -104,270 +103,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+The non-standard .fa library suffix breaks the link source
+de-duplication done by Meson so drop it.
 
-We used to request declare_dependency() to link_whole static libraries.
-If a static library is a thin archive, GNU ld keeps all object files
-referenced by the archive open, and sometimes exceeds the open file limit.
+The lack of link source de-duplication causes AddressSanitizer to
+complain ODR violations, and makes GNU ld abort when combined with
+clang's LTO.
 
-Another problem with link_whole is that suboptimal handling of nested
-dependencies.
+Fortunately, the non-standard suffix is not necessary anymore for
+two reasons.
 
-link_whole by itself does not propagate dependencies. In particular,
-gnutls, a dependency of crypto, is not propagated to its users, and we
-currently workaround the issue by declaring gnutls as a dependency for
-each crypto user.  On the other hand, if you write something like
+First, the non-standard suffix was necessary for fork-fuzzing.
+Meson wraps all standard-suffixed libraries with --start-group and
+--end-group. This made a fork-fuzz.ld linker script wrapped as well and
+broke builds. Commit d2e6f9272d33 ("fuzz: remove fork-fuzzing
+scaffolding") dropped fork-fuzzing so we can now restore the standard
+suffix.
 
-  libfoo = static_library('foo', 'foo.c', dependencies: gnutls)
-  foo = declare_dependency(link_whole: libfoo)
+Second, the libraries are not even built anymore, because it is
+possible to just use the object files directly via extract_all_objects().
 
-  libbar = static_library('bar', 'bar.c', dependencies: foo)
-  bar = declare_dependency(link_whole: libbar, dependencies: foo)
-  executable('prog', sources: files('prog.c'), dependencies: [foo, bar])
-
-hoping to propagate the gnutls dependency into bar.c, you'll see a
-linking failure for "prog", because the foo.c.o object file is included in
-libbar.a and therefore it is linked twice into "prog": once from libfoo.a
-and once from libbar.a.  Here Meson does not see the duplication, it
-just asks the linker to link all of libfoo.a and libbar.a into "prog".
-
-Instead of using link_whole, extract objects included in static libraries
-and pass them to declare_dependency(); and then the dependencies can be
-added as well so that they are propagated, because object files on the
-linker command line are always deduplicated.
-
-This requires Meson 1.1.0 or later.
+The occurences of the suffix were detected and removed by performing
+a tree-wide search with 'fa' and .fa (note the quotes and dot).
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20240524-objects-v1-1-07cbbe96166b@daynix.com>
+Message-ID: <20240524-xkb-v4-4-2de564e5c859@daynix.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/build-system.rst    |  3 ++-
- meson.build                    | 44 +++++++++++++++++++---------------
- gdbstub/meson.build            |  4 ++--
- pythondeps.toml                |  2 +-
- tcg/meson.build                |  6 +++--
- tests/qtest/libqos/meson.build |  2 +-
- 6 files changed, 35 insertions(+), 26 deletions(-)
+ docs/devel/build-system.rst         |  5 -----
+ meson.build                         | 17 ++---------------
+ stubs/blk-exp-close-all.c           |  2 +-
+ .gitlab-ci.d/buildtest-template.yml |  2 --
+ .gitlab-ci.d/buildtest.yml          |  2 --
+ gdbstub/meson.build                 |  2 --
+ tcg/meson.build                     |  2 --
+ tests/Makefile.include              |  2 +-
+ tests/qtest/libqos/meson.build      |  1 -
+ 9 files changed, 4 insertions(+), 31 deletions(-)
 
 diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index 09caf2f8e19..8f73204b7d6 100644
+index 8f73204b7d6..f00adad3181 100644
 --- a/docs/devel/build-system.rst
 +++ b/docs/devel/build-system.rst
-@@ -239,7 +239,8 @@ Subsystem sourcesets:
-                                 name_suffix: 'fa',
+@@ -236,16 +236,11 @@ Subsystem sourcesets:
+   are then turned into static libraries as follows::
+ 
+     libchardev = static_library('chardev', chardev_ss.sources(),
+-                                name_suffix: 'fa',
                                  build_by_default: false)
  
--    chardev = declare_dependency(link_whole: libchardev)
-+    chardev = declare_dependency(objects: libchardev.extract_all_objects(recursive: false),
-+                                 dependencies: chardev_ss.dependencies())
+     chardev = declare_dependency(objects: libchardev.extract_all_objects(recursive: false),
+                                  dependencies: chardev_ss.dependencies())
  
-   As of Meson 0.55.1, the special ``.fa`` suffix should be used for everything
-   that is used with ``link_whole``, to ensure that the link flags are placed
+-  As of Meson 0.55.1, the special ``.fa`` suffix should be used for everything
+-  that is used with ``link_whole``, to ensure that the link flags are placed
+-  correctly in the command line.
+-
+ Target-independent emulator sourcesets:
+   Various general purpose helper code is compiled only once and
+   the .o files are linked into all output binaries that need it.
 diff --git a/meson.build b/meson.build
-index edaef6bca11..9772c145bdb 100644
+index 84dbd7fb371..e3d4347f5bb 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1,4 +1,4 @@
--project('qemu', ['c'], meson_version: '>=0.63.0',
-+project('qemu', ['c'], meson_version: '>=1.1.0',
-         default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++11', 'b_colorout=auto',
-                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
-         version: files('VERSION'))
-@@ -3421,7 +3421,7 @@ endif
- 
- if enable_modules
-   libmodulecommon = static_library('module-common', files('module-common.c') + genh, pic: true, c_args: '-DBUILD_DSO')
--  modulecommon = declare_dependency(link_whole: libmodulecommon, compile_args: '-DBUILD_DSO')
-+  modulecommon = declare_dependency(objects: libmodulecommon.extract_all_objects(recursive: false), compile_args: '-DBUILD_DSO')
- endif
- 
+@@ -3427,7 +3427,6 @@ endif
  qom_ss = qom_ss.apply({})
-@@ -3429,14 +3429,15 @@ libqom = static_library('qom', qom_ss.sources() + genh,
+ libqom = static_library('qom', qom_ss.sources() + genh,
                          dependencies: [qom_ss.dependencies()],
-                         name_suffix: 'fa',
+-                        name_suffix: 'fa',
                          build_by_default: false)
--qom = declare_dependency(link_whole: libqom)
-+qom = declare_dependency(objects: libqom.extract_all_objects(recursive: false),
-+                         dependencies: qom_ss.dependencies())
- 
+ qom = declare_dependency(objects: libqom.extract_all_objects(recursive: false),
+                          dependencies: qom_ss.dependencies())
+@@ -3435,7 +3434,6 @@ qom = declare_dependency(objects: libqom.extract_all_objects(recursive: false),
  event_loop_base = files('event-loop-base.c')
  event_loop_base = static_library('event-loop-base',
                                   sources: event_loop_base + genh,
-                                  name_suffix: 'fa',
+-                                 name_suffix: 'fa',
                                   build_by_default: false)
--event_loop_base = declare_dependency(link_whole: event_loop_base,
-+event_loop_base = declare_dependency(objects: event_loop_base.extract_all_objects(recursive: false),
+ event_loop_base = declare_dependency(objects: event_loop_base.extract_all_objects(recursive: false),
                                       dependencies: [qom])
- 
- stub_ss = stub_ss.apply({})
-@@ -3581,7 +3582,8 @@ foreach d, list : modules
-       endif
-       emulator_modules += shared_module(sl.name(),
-                     name_prefix: '',
--                    link_whole: sl,
-+                    objects: sl.extract_all_objects(recursive: false),
-+                    dependencies: module_ss.dependencies(),
-                     install: true,
-                     install_dir: qemu_moddir)
-       if module_ss.sources() != []
-@@ -3629,7 +3631,8 @@ foreach d, list : target_modules
-             system_mods += sl
-             emulator_modules += shared_module(sl.name(),
-                     name_prefix: '',
--                    link_whole: sl,
-+                    objects: sl.extract_all_objects(recursive: false),
-+                    dependencies: target_module_ss.dependencies(),
-                     install: true,
-                     install_dir: qemu_moddir)
-             # FIXME: Should use sl.extract_all_objects(recursive: true) too.
-@@ -3688,8 +3691,8 @@ libauthz = static_library('authz', authz_ss.sources() + genh,
-                           name_suffix: 'fa',
+@@ -3688,7 +3686,6 @@ qemu_syms = custom_target('qemu.syms', output: 'qemu.syms',
+ authz_ss = authz_ss.apply({})
+ libauthz = static_library('authz', authz_ss.sources() + genh,
+                           dependencies: [authz_ss.dependencies()],
+-                          name_suffix: 'fa',
                            build_by_default: false)
  
--authz = declare_dependency(link_whole: libauthz,
--                           dependencies: qom)
-+authz = declare_dependency(objects: libauthz.extract_all_objects(recursive: false),
-+                           dependencies: [authz_ss.dependencies(), qom])
- 
+ authz = declare_dependency(objects: libauthz.extract_all_objects(recursive: false),
+@@ -3697,7 +3694,6 @@ authz = declare_dependency(objects: libauthz.extract_all_objects(recursive: fals
  crypto_ss = crypto_ss.apply({})
  libcrypto = static_library('crypto', crypto_ss.sources() + genh,
-@@ -3697,8 +3700,8 @@ libcrypto = static_library('crypto', crypto_ss.sources() + genh,
-                            name_suffix: 'fa',
+                            dependencies: [crypto_ss.dependencies()],
+-                           name_suffix: 'fa',
                             build_by_default: false)
  
--crypto = declare_dependency(link_whole: libcrypto,
--                            dependencies: [authz, qom])
-+crypto = declare_dependency(objects: libcrypto.extract_all_objects(recursive: false),
-+                            dependencies: [crypto_ss.dependencies(), authz, qom])
- 
- io_ss = io_ss.apply({})
+ crypto = declare_dependency(objects: libcrypto.extract_all_objects(recursive: false),
+@@ -3707,14 +3703,12 @@ io_ss = io_ss.apply({})
  libio = static_library('io', io_ss.sources() + genh,
-@@ -3707,12 +3710,13 @@ libio = static_library('io', io_ss.sources() + genh,
-                        name_suffix: 'fa',
+                        dependencies: [io_ss.dependencies()],
+                        link_with: libqemuutil,
+-                       name_suffix: 'fa',
                         build_by_default: false)
  
--io = declare_dependency(link_whole: libio, dependencies: [crypto, qom])
-+io = declare_dependency(objects: libio.extract_all_objects(recursive: false),
-+                        dependencies: [io_ss.dependencies(), crypto, qom])
+ io = declare_dependency(objects: libio.extract_all_objects(recursive: false),
+                         dependencies: [io_ss.dependencies(), crypto, qom])
  
  libmigration = static_library('migration', sources: migration_files + genh,
-                               name_suffix: 'fa',
+-                              name_suffix: 'fa',
                                build_by_default: false)
--migration = declare_dependency(link_with: libmigration,
-+migration = declare_dependency(objects: libmigration.extract_all_objects(recursive: false),
+ migration = declare_dependency(objects: libmigration.extract_all_objects(recursive: false),
                                 dependencies: [qom, io])
- system_ss.add(migration)
- 
-@@ -3722,8 +3726,8 @@ libblock = static_library('block', block_ss.sources() + genh,
-                           name_suffix: 'fa',
+@@ -3723,7 +3717,6 @@ system_ss.add(migration)
+ block_ss = block_ss.apply({})
+ libblock = static_library('block', block_ss.sources() + genh,
+                           dependencies: block_ss.dependencies(),
+-                          name_suffix: 'fa',
                            build_by_default: false)
  
--block = declare_dependency(link_whole: [libblock],
--                           dependencies: [crypto, io])
-+block = declare_dependency(objects: libblock.extract_all_objects(recursive: false),
-+                           dependencies: [block_ss.dependencies(), crypto, io])
- 
+ block = declare_dependency(objects: libblock.extract_all_objects(recursive: false),
+@@ -3732,7 +3725,6 @@ block = declare_dependency(objects: libblock.extract_all_objects(recursive: fals
  blockdev_ss = blockdev_ss.apply({})
  libblockdev = static_library('blockdev', blockdev_ss.sources() + genh,
-@@ -3731,8 +3735,8 @@ libblockdev = static_library('blockdev', blockdev_ss.sources() + genh,
-                              name_suffix: 'fa',
+                              dependencies: blockdev_ss.dependencies(),
+-                             name_suffix: 'fa',
                               build_by_default: false)
  
--blockdev = declare_dependency(link_whole: [libblockdev],
--                              dependencies: [block, event_loop_base])
-+blockdev = declare_dependency(objects: libblockdev.extract_all_objects(recursive: false),
-+                              dependencies: [blockdev_ss.dependencies(), block, event_loop_base])
- 
+ blockdev = declare_dependency(objects: libblockdev.extract_all_objects(recursive: false),
+@@ -3741,14 +3733,12 @@ blockdev = declare_dependency(objects: libblockdev.extract_all_objects(recursive
  qmp_ss = qmp_ss.apply({})
  libqmp = static_library('qmp', qmp_ss.sources() + genh,
-@@ -3740,20 +3744,22 @@ libqmp = static_library('qmp', qmp_ss.sources() + genh,
-                         name_suffix: 'fa',
+                         dependencies: qmp_ss.dependencies(),
+-                        name_suffix: 'fa',
                          build_by_default: false)
  
--qmp = declare_dependency(link_whole: [libqmp])
-+qmp = declare_dependency(objects: libqmp.extract_all_objects(recursive: false),
-+                         dependencies: qmp_ss.dependencies())
+ qmp = declare_dependency(objects: libqmp.extract_all_objects(recursive: false),
+                          dependencies: qmp_ss.dependencies())
  
  libchardev = static_library('chardev', chardev_ss.sources() + genh,
-                             name_suffix: 'fa',
+-                            name_suffix: 'fa',
                              dependencies: chardev_ss.dependencies(),
                              build_by_default: false)
  
--chardev = declare_dependency(link_whole: libchardev)
-+chardev = declare_dependency(objects: libchardev.extract_all_objects(recursive: false),
-+                             dependencies: chardev_ss.dependencies())
+@@ -3757,7 +3747,6 @@ chardev = declare_dependency(objects: libchardev.extract_all_objects(recursive:
  
  hwcore_ss = hwcore_ss.apply({})
  libhwcore = static_library('hwcore', sources: hwcore_ss.sources() + genh,
-                            name_suffix: 'fa',
+-                           name_suffix: 'fa',
                             build_by_default: false)
--hwcore = declare_dependency(link_whole: libhwcore)
-+hwcore = declare_dependency(objects: libhwcore.extract_all_objects(recursive: false))
+ hwcore = declare_dependency(objects: libhwcore.extract_all_objects(recursive: false))
  common_ss.add(hwcore)
+@@ -3780,8 +3769,7 @@ common_all = static_library('common',
+                             sources: common_ss.all_sources() + genh,
+                             include_directories: common_user_inc,
+                             implicit_include_directories: false,
+-                            dependencies: common_ss.all_dependencies(),
+-                            name_suffix: 'fa')
++                            dependencies: common_ss.all_dependencies())
  
- ###########
+ feature_to_c = find_program('scripts/feature_to_c.py')
+ 
+@@ -3890,8 +3878,7 @@ foreach target : target_dirs
+                  objects: objects,
+                  include_directories: target_inc,
+                  c_args: c_args,
+-                 build_by_default: false,
+-                 name_suffix: 'fa')
++                 build_by_default: false)
+ 
+   if target.endswith('-softmmu')
+     execs = [{
+diff --git a/stubs/blk-exp-close-all.c b/stubs/blk-exp-close-all.c
+index 1c713167639..2f68e06d7d0 100644
+--- a/stubs/blk-exp-close-all.c
++++ b/stubs/blk-exp-close-all.c
+@@ -1,7 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "block/export.h"
+ 
+-/* Only used in programs that support block exports (libblockdev.fa) */
++/* Only used in programs that support block exports (libblockdev.a) */
+ void blk_exp_close_all(void)
+ {
+ }
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 278a5ea966d..8f7ebfaed8b 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -45,10 +45,8 @@
+     exclude:
+       - build/**/*.p
+       - build/**/*.a.p
+-      - build/**/*.fa.p
+       - build/**/*.c.o
+       - build/**/*.c.o.d
+-      - build/**/*.fa
+ 
+ .common_test_job_template:
+   extends: .base_job_template
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 91c57efdede..cba1ab71331 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -178,10 +178,8 @@ build-previous-qemu:
+     exclude:
+       - build-previous/**/*.p
+       - build-previous/**/*.a.p
+-      - build-previous/**/*.fa.p
+       - build-previous/**/*.c.o
+       - build-previous/**/*.c.o.d
+-      - build-previous/**/*.fa
+   needs:
+     job: amd64-opensuse-leap-container
+   variables:
 diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index da5721d8452..c56b54eae7e 100644
+index c56b54eae7e..dff741ddd4d 100644
 --- a/gdbstub/meson.build
 +++ b/gdbstub/meson.build
-@@ -28,9 +28,9 @@ libgdb_system = static_library('gdb_system',
-                                 name_suffix: 'fa',
-                                 build_by_default: false)
+@@ -19,13 +19,11 @@ gdb_system_ss = gdb_system_ss.apply({})
  
--gdb_user = declare_dependency(link_whole: libgdb_user)
-+gdb_user = declare_dependency(objects: libgdb_user.extract_all_objects(recursive: false))
- user_ss.add(gdb_user)
--gdb_system = declare_dependency(link_whole: libgdb_system)
-+gdb_system = declare_dependency(objects: libgdb_system.extract_all_objects(recursive: false))
- system_ss.add(gdb_system)
- 
- common_ss.add(files('syscalls.c'))
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 9c16602d303..6aba0c9daaa 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -19,7 +19,7 @@
- 
- [meson]
- # The install key should match the version in python/wheels/
--meson = { accepted = ">=0.63.0", installed = "1.2.3", canary = "meson" }
-+meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
- 
- [docs]
- # Please keep the installed versions in sync with docs/requirements.txt
-diff --git a/tcg/meson.build b/tcg/meson.build
-index ffbe754d8b3..165e773abbe 100644
---- a/tcg/meson.build
-+++ b/tcg/meson.build
-@@ -36,7 +36,8 @@ libtcg_user = static_library('tcg_user',
+ libgdb_user = static_library('gdb_user',
+                              gdb_user_ss.sources() + genh,
+-                             name_suffix: 'fa',
                               c_args: '-DCONFIG_USER_ONLY',
                               build_by_default: false)
  
--tcg_user = declare_dependency(link_with: libtcg_user)
-+tcg_user = declare_dependency(objects: libtcg_user.extract_all_objects(recursive: false),
-+                              dependencies: tcg_ss.dependencies())
- user_ss.add(tcg_user)
- 
- libtcg_system = static_library('tcg_system',
-@@ -46,5 +47,6 @@ libtcg_system = static_library('tcg_system',
-                                 c_args: '-DCONFIG_SOFTMMU',
+ libgdb_system = static_library('gdb_system',
+                                 gdb_system_ss.sources() + genh,
+-                                name_suffix: 'fa',
                                  build_by_default: false)
  
--tcg_system = declare_dependency(link_with: libtcg_system)
-+tcg_system = declare_dependency(objects: libtcg_system.extract_all_objects(recursive: false),
-+                                dependencies: tcg_ss.dependencies())
- system_ss.add(tcg_system)
+ gdb_user = declare_dependency(objects: libgdb_user.extract_all_objects(recursive: false))
+diff --git a/tcg/meson.build b/tcg/meson.build
+index 165e773abbe..69ebb4908a6 100644
+--- a/tcg/meson.build
++++ b/tcg/meson.build
+@@ -31,7 +31,6 @@ tcg_ss = tcg_ss.apply({})
+ 
+ libtcg_user = static_library('tcg_user',
+                              tcg_ss.sources() + genh,
+-                             name_suffix: 'fa',
+                              dependencies: tcg_ss.dependencies(),
+                              c_args: '-DCONFIG_USER_ONLY',
+                              build_by_default: false)
+@@ -42,7 +41,6 @@ user_ss.add(tcg_user)
+ 
+ libtcg_system = static_library('tcg_system',
+                                 tcg_ss.sources() + genh,
+-                                name_suffix: 'fa',
+                                 dependencies: tcg_ss.dependencies(),
+                                 c_args: '-DCONFIG_SOFTMMU',
+                                 build_by_default: false)
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index c9d1674bd07..d39d5dd6a43 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -87,7 +87,7 @@ distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
+ .PHONY: check-venv check-avocado check-acceptance check-acceptance-deprecated-warning
+ 
+ # Build up our target list from the filtered list of ninja targets
+-TARGETS=$(patsubst libqemu-%.fa, %, $(filter libqemu-%.fa, $(ninja-targets)))
++TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
+ 
+ TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
+ TESTS_RESULTS_DIR=$(BUILD_DIR)/tests/results
 diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 3aed6efcb8d..7825d7f6831 100644
+index 7825d7f6831..5b18aa4eaeb 100644
 --- a/tests/qtest/libqos/meson.build
 +++ b/tests/qtest/libqos/meson.build
-@@ -71,4 +71,4 @@ libqos = static_library('qos', libqos_srcs + genh,
-                         name_suffix: 'fa',
+@@ -68,7 +68,6 @@ if have_virtfs
+ endif
+ 
+ libqos = static_library('qos', libqos_srcs + genh,
+-                        name_suffix: 'fa',
                          build_by_default: false)
  
--qos = declare_dependency(link_whole: libqos)
-+qos = declare_dependency(objects: libqos.extract_all_objects(recursive: false))
+ qos = declare_dependency(objects: libqos.extract_all_objects(recursive: false))
 -- 
 2.45.1
 
