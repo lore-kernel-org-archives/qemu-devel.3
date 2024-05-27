@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F435C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277B0C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUk7-0000ay-8U; Mon, 27 May 2024 03:26:03 -0400
+	id 1sBUkN-0001gI-0V; Mon, 27 May 2024 03:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUji-0008NS-2b; Mon, 27 May 2024 03:25:42 -0400
+ id 1sBUjX-00087S-8t; Mon, 27 May 2024 03:25:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUjb-0006NI-7x; Mon, 27 May 2024 03:25:34 -0400
+ id 1sBUjT-0006Fa-Pf; Mon, 27 May 2024 03:25:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DCCDD6A4CC;
+ by isrv.corpit.ru (Postfix) with ESMTP id BB1BB6A4CA;
  Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 24B5DD8469;
+ by tsrv.corpit.ru (Postfix) with SMTP id 0474CD8467;
  Mon, 27 May 2024 10:24:36 +0300 (MSK)
-Received: (nullmailer pid 52915 invoked by uid 1000);
+Received: (nullmailer pid 52909 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Fabiano Rosas <farosas@suse.de>, Jason Wang <jasowang@redhat.com>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 15/21] hw/core/machine: move compatibility flags for
- VirtIO-net USO to machine 8.1
-Date: Mon, 27 May 2024 10:24:25 +0300
-Message-Id: <20240527072435.52812-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 13/21] tcg/loongarch64: Fill out tcg_out_{ld,
+ st} for vector regs
+Date: Mon, 27 May 2024 10:24:23 +0300
+Message-Id: <20240527072435.52812-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
@@ -63,62 +62,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Migration from an 8.2 or 9.0 binary to an 8.1 binary with machine
-version 8.1 can fail with:
+TCG register spill/fill uses tcg_out_ld/st with all types,
+not necessarily going through INDEX_op_{ld,st}_vec.
 
-> kvm: Features 0x1c0010130afffa7 unsupported. Allowed features: 0x10179bfffe7
-> kvm: Failed to load virtio-net:virtio
-> kvm: error while loading state for instance 0x0 of device '0000:00:12.0/virtio-net'
-> kvm: load of migration failed: Operation not permitted
-
-The series
-
-53da8b5a99 virtio-net: Add support for USO features
-9da1684954 virtio-net: Add USO flags to vhost support.
-f03e0cf63b tap: Add check for USO features
-2ab0ec3121 tap: Add USO support to tap device.
-
-only landed in QEMU 8.2, so the compatibility flags should be part of
-machine version 8.1.
-
-Moving the flags unfortunately breaks forward migration with machine
-version 8.1 from a binary without this patch to a binary with this
-patch.
-
-Fixes: 53da8b5a99 ("virtio-net: Add support for USO features")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 9710401276a0eb2fc6d467d9abea1f5e3fe2c362)
+Cc: qemu-stable@nongnu.org
+Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2336
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Tested-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit c9290dfebfdba5c13baa5e1f10e13a1c876b0643)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 3c08a894fb..f5408d981a 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -37,15 +37,15 @@ GlobalProperty hw_compat_8_1[] = {
-     { "ramfb", "x-migrate", "off" },
-     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-     { "igb", "x-pcie-flr-init", "off" },
-+    { TYPE_VIRTIO_NET, "host_uso", "off"},
-+    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-+    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
- };
- const size_t hw_compat_8_1_len = G_N_ELEMENTS(hw_compat_8_1);
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index dcf0205458..abdc8b7f4d 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -807,18 +807,88 @@ static void tcg_out_ldst(TCGContext *s, LoongArchInsn opc, TCGReg data,
+     }
+ }
  
- GlobalProperty hw_compat_8_0[] = {
-     { "migration", "multifd-flush-after-each-section", "on"},
-     { TYPE_PCI_DEVICE, "x-pcie-ari-nextfn-1", "on" },
--    { TYPE_VIRTIO_NET, "host_uso", "off"},
--    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
--    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
- };
- const size_t hw_compat_8_0_len = G_N_ELEMENTS(hw_compat_8_0);
+-static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+-                       TCGReg arg1, intptr_t arg2)
++static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
++                       TCGReg base, intptr_t offset)
+ {
+-    bool is_32bit = type == TCG_TYPE_I32;
+-    tcg_out_ldst(s, is_32bit ? OPC_LD_W : OPC_LD_D, arg, arg1, arg2);
++    switch (type) {
++    case TCG_TYPE_I32:
++        if (dest < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_LD_W, dest, base, offset);
++        } else {
++            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_32, dest, base, offset);
++        }
++        break;
++    case TCG_TYPE_I64:
++        if (dest < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
++        } else {
++            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_64, dest, base, offset);
++        }
++        break;
++    case TCG_TYPE_V128:
++        if (-0x800 <= offset && offset <= 0x7ff) {
++            tcg_out_opc_vld(s, dest, base, offset);
++        } else {
++            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++            tcg_out_opc_vldx(s, dest, base, TCG_REG_TMP0);
++        }
++        break;
++    default:
++        g_assert_not_reached();
++    }
+ }
  
+-static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
+-                       TCGReg arg1, intptr_t arg2)
++static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
++                       TCGReg base, intptr_t offset)
+ {
+-    bool is_32bit = type == TCG_TYPE_I32;
+-    tcg_out_ldst(s, is_32bit ? OPC_ST_W : OPC_ST_D, arg, arg1, arg2);
++    switch (type) {
++    case TCG_TYPE_I32:
++        if (src < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_ST_W, src, base, offset);
++        } else {
++            /* TODO: Could use fst_s, fstx_s */
++            if (offset < -0x100 || offset > 0xff || (offset & 3)) {
++                if (-0x800 <= offset && offset <= 0x7ff) {
++                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
++                } else {
++                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
++                }
++                base = TCG_REG_TMP0;
++                offset = 0;
++            }
++            tcg_out_opc_vstelm_w(s, src, base, offset, 0);
++        }
++        break;
++    case TCG_TYPE_I64:
++        if (src < TCG_REG_V0) {
++            tcg_out_ldst(s, OPC_ST_D, src, base, offset);
++        } else {
++            /* TODO: Could use fst_d, fstx_d */
++            if (offset < -0x100 || offset > 0xff || (offset & 7)) {
++                if (-0x800 <= offset && offset <= 0x7ff) {
++                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
++                } else {
++                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
++                }
++                base = TCG_REG_TMP0;
++                offset = 0;
++            }
++            tcg_out_opc_vstelm_d(s, src, base, offset, 0);
++        }
++        break;
++    case TCG_TYPE_V128:
++        if (-0x800 <= offset && offset <= 0x7ff) {
++            tcg_out_opc_vst(s, src, base, offset);
++        } else {
++            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
++            tcg_out_opc_vstx(s, src, base, TCG_REG_TMP0);
++        }
++        break;
++    default:
++        g_assert_not_reached();
++    }
+ }
+ 
+ static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
+@@ -1739,7 +1809,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+ {
+     TCGType type = vecl + TCG_TYPE_V64;
+     TCGArg a0, a1, a2, a3;
+-    TCGReg temp = TCG_REG_TMP0;
+     TCGReg temp_vec = TCG_VEC_TMP0;
+ 
+     static const LoongArchInsn cmp_vec_insn[16][4] = {
+@@ -1819,22 +1888,10 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+ 
+     switch (opc) {
+     case INDEX_op_st_vec:
+-        /* Try to fit vst imm */
+-        if (-0x800 <= a2 && a2 <= 0x7ff) {
+-            tcg_out_opc_vst(s, a0, a1, a2);
+-        } else {
+-            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
+-            tcg_out_opc_vstx(s, a0, a1, temp);
+-        }
++        tcg_out_st(s, type, a0, a1, a2);
+         break;
+     case INDEX_op_ld_vec:
+-        /* Try to fit vld imm */
+-        if (-0x800 <= a2 && a2 <= 0x7ff) {
+-            tcg_out_opc_vld(s, a0, a1, a2);
+-        } else {
+-            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
+-            tcg_out_opc_vldx(s, a0, a1, temp);
+-        }
++        tcg_out_ld(s, type, a0, a1, a2);
+         break;
+     case INDEX_op_and_vec:
+         tcg_out_opc_vand_v(s, a0, a1, a2);
 -- 
 2.39.2
 
