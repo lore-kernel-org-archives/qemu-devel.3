@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E52C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DEBC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcd2-0002sm-De; Mon, 27 May 2024 11:51:16 -0400
+	id 1sBcjr-0005S0-5x; Mon, 27 May 2024 11:58:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=87085421f=graf@amazon.de>)
- id 1sBcd0-0002rt-AF
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:51:14 -0400
-Received: from smtp-fw-80006.amazon.com ([99.78.197.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=87085421f=graf@amazon.de>)
- id 1sBccw-0006GZ-EI
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:51:14 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcjp-0005Re-SI
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:58:17 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBcjo-0007T2-8h
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:58:17 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4202ca70287so33370965e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 08:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1716825071; x=1748361071;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=oBtEMyu8Uz1YHZeVfTiPOkKoJS7ISlby/4/xzC1I8XU=;
- b=ugRjm4tJwc5LjnXrYwoolSQDWBAvtG9CQ2WvkCtao1Gp6ik//MonilOc
- xe9MCLJ7L6YNigFDaVpqCTTHWBJoPlO68KzNjQPzcl/fKj5z5KvvFrnKd
- CbmKhWLFZY6ACrkiAF7Yec74tlVljPSLV1oP0iv00WGsSBgnxXfnrVSFf Y=;
-X-IronPort-AV: E=Sophos;i="6.08,192,1712620800"; d="scan'208";a="297786253"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-80006.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2024 15:51:05 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.7.35:8405]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.53.45:2525]
- with esmtp (Farcaster)
- id 0fb5fbe9-09a5-4dd5-8cd8-8ab84c7d62bf; Mon, 27 May 2024 15:51:05 +0000 (UTC)
-X-Farcaster-Flow-ID: 0fb5fbe9-09a5-4dd5-8cd8-8ab84c7d62bf
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Mon, 27 May 2024 15:51:04 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.28; Mon, 27 May
- 2024 15:51:02 +0000
-Message-ID: <919e6b8c-2f9b-4f91-97e2-20146bf18263@amazon.com>
-Date: Mon, 27 May 2024 17:51:00 +0200
+ d=linaro.org; s=google; t=1716825494; x=1717430294; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3y+qiQqx+Yu806+NVMklywnrg25mrY4P+ljDt/5rfZ8=;
+ b=ETMNydH1BCLmuu/nHZ4wnU/6gFfgUakBRjHn807q0UELhvCWPotWZuoGr84A8V5cnh
+ eH6YpmFjDGaB956DILvjuIlqeAUBTgtJgQHHLcBNDkVtFk5dkTogsDcpTW9rk+/cSuuu
+ AIvKDOFoTb6W/+/GRYwTA194O38LFPH4Ef0PDHgPa5J2lRZPamf+cpflzK8yT58aX9jo
+ W/i8ZS3wHE5TVKKoC3YISnoWAUP/opVKSr3ALYAnItyv7O2xkmOMjOppm3CJrExjuF6G
+ /dD7rJ4fYVTlL86jWcir5lVyigRpPjk8A7DdxfaTSkmhMiPtjvp7grPqDhxPQbf2M+s3
+ q+jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716825494; x=1717430294;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3y+qiQqx+Yu806+NVMklywnrg25mrY4P+ljDt/5rfZ8=;
+ b=q4YqqTLSa6ytd+E3VUmvO/dq19IssMakkfSiRZmdrXULfBMDc6cRxHXsxIuxonNqZ1
+ cuti8r4tTXORwCwWOlfhXeb9Gas9i/SUkmmJzcxYit3ZfM73m28MjtP9vs7uSiJNtqpI
+ x7ACLtcBS9FuNNVcbjA+1Y+me9ry6xZ5tTQMi4vSKS1xHJNGxTUqI6Navp+kylfTk+HB
+ oouukFIJhaDmjilHuNOD8Euq5qwNu2wC8jfdkUn37GM+uOeC4mNdwsH5D4wvLSom6xcp
+ vsVT6n3ZF0r+l4C5mROP4vq/OmAP704WuDwJM9f+Y4nSjBDYmievv2xX0R7KESKMAenk
+ G3Ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhvuLQ3dGtCJ4/8zFxfLkGqmeWe+PSisiyRD/BLKSQU+pgQJ9E8dGwjRdG8Ayv0QH5Wxc1lwVViW8F07MRUgCBLQprFB8=
+X-Gm-Message-State: AOJu0YyuxHDs1mdfC6rzahJPh/A8lN/17T5PrVG3c3KCuM0GcHa3QLVA
+ 7a9PS1IuNdJsrQD9t20i9wG27bM+QuokjuX6xBQwULaZLdRok+FZqatR440eMF8=
+X-Google-Smtp-Source: AGHT+IHl9u0grYbXXZoYIe0MXsQBnQjW/aX79WyNoPV+4WHwTX67ZSImbYi9/WpiN1V66ygqlCij9A==
+X-Received: by 2002:a05:600c:4589:b0:420:29dd:84e3 with SMTP id
+ 5b1f17b1804b1-42108a0d355mr94825445e9.26.1716825494386; 
+ Mon, 27 May 2024 08:58:14 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.152.134])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42100fbb140sm146356945e9.44.2024.05.27.08.58.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 08:58:13 -0700 (PDT)
+Message-ID: <b641018c-e906-452b-8072-1b46f141808b@linaro.org>
+Date: Mon, 27 May 2024 17:58:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] machine/microvm: support for loading EIF image
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-CC: <qemu-devel@nongnu.org>, <agraf@csgraf.de>, <stefanha@redhat.com>,
- <pbonzini@redhat.com>, <slp@redhat.com>, <richard.henderson@linaro.org>,
- <eduardo@habkost.net>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>
-References: <20240518080753.7083-1-dorjoychy111@gmail.com>
- <20240518080753.7083-2-dorjoychy111@gmail.com>
- <bf9dc551-49e4-4ed9-941d-c095bab5755a@linaro.org>
- <CAFfO_h7_V13k9WizTYrY-UsjUhvWFeY4Fn7a_8_c4qEz4=hYFg@mail.gmail.com>
+Subject: Re: [PATCH v4 09/16] aspeed/smc: Add AST2700 support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-10-jamin_lin@aspeedtech.com>
 Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <CAFfO_h7_V13k9WizTYrY-UsjUhvWFeY4Fn7a_8_c4qEz4=hYFg@mail.gmail.com>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D041UWA001.ant.amazon.com (10.13.139.124) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=99.78.197.217;
- envelope-from=prvs=87085421f=graf@amazon.de; helo=smtp-fw-80006.amazon.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240527080231.1576609-10-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,58 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIDI3LjA1LjI0IDE2OjUyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgo+IEhpIFBoaWxpcHBl
-LAo+IFRoYW5rIHlvdSBmb3IgcmV2aWV3aW5nLgo+Cj4gT24gTW9uLCBNYXkgMjcsIDIwMjQgYXQg
-NDo0N+KAr1BNIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpCj4gPHBoaWxtZEBsaW5hcm8ub3JnPiB3
-cm90ZToKPj4gSGkgRG9yam95LAo+Pgo+PiBPbiAxOC81LzI0IDEwOjA3LCBEb3Jqb3kgQ2hvd2Ro
-dXJ5IHdyb3RlOgo+Pj4gQW4gRUlGIChFbmNsYXZlIEltYWdlIEZvcm1hdClbMV0gaW1hZ2UgaXMg
-dXNlZCB0byBib290IGFuIEFXUyBuaXRybwo+Pj4gZW5jbGF2ZVsyXSB2aXJ0dWFsIG1hY2hpbmUu
-IFRoZSBFSUYgZmlsZSBjb250YWlucyB0aGUgbmVjZXNzYXJ5Cj4+PiBrZXJuZWwsIGNtZGxpbmUs
-IHJhbWRpc2socykgc2VjdGlvbnMgdG8gYm9vdC4KPj4+Cj4+PiBUaGlzIGNvbW1pdCBhZGRzIHN1
-cHBvcnQgZm9yIGxvYWRpbmcgRUlGIGltYWdlIHVzaW5nIHRoZSBtaWNyb3ZtCj4+PiBtYWNoaW5l
-IGNvZGUuIEZvciBtaWNyb3ZtIHRvIGJvb3QgZnJvbSBhbiBFSUYgZmlsZSwgdGhlIGtlcm5lbCBh
-bmQKPj4+IHJhbWRpc2socykgYXJlIGV4dHJhY3RlZCBpbnRvIGEgdGVtcG9yYXJ5IGtlcm5lbCBh
-bmQgYSB0ZW1wb3JhcnkKPj4+IGluaXRyZCBmaWxlIHdoaWNoIGFyZSB0aGVuIGhvb2tlZCBpbnRv
-IHRoZSByZWd1bGFyIHg4NiBib290IG1lY2hhbmlzbQo+Pj4gYWxvbmcgd2l0aCB0aGUgZXh0cmFj
-dGVkIGNtZGxpbmUuCj4+Pgo+Pj4gQWx0aG91Z2ggbm90IHVzZWZ1bCBmb3IgdGhlIG1pY3Jvdm0g
-bWFjaGluZSBpdHNlbGYsIHRoaXMgaXMgbmVlZGVkCj4+PiBhcyB0aGUgZm9sbG93aW5nIGNvbW1p
-dCBhZGRzIHN1cHBvcnQgZm9yIGEgbmV3IG1hY2hpbmUgdHlwZQo+Pj4gJ25pdHJvLWVuY2xhdmUn
-IHdoaWNoIHVzZXMgdGhlIG1pY3Jvdm0gbWFjaGluZSB0eXBlIGFzIHBhcmVudC4gVGhlCj4+PiBj
-b2RlIGZvciBjaGVja2luZyBhbmQgbG9hZGluZyBFSUYgd2lsbCBiZSBwdXQgaW5zaWRlIGEgJ25p
-dHJvLWVuY2xhdmUnCj4+PiBtYWNoaW5lIHR5cGUgY2hlY2sgaW4gdGhlIGZvbGxvd2luZyBjb21t
-aXQgc28gdGhhdCBtaWNyb3ZtIGNhbm5vdCBsb2FkCj4+PiBFSUYgYmVjYXVzZSBpdCBzaG91bGRu
-J3QuCj4+Pgo+Pj4gWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9hd3MvYXdzLW5pdHJvLWVuY2xhdmVz
-LWltYWdlLWZvcm1hdAo+PiBUaGUgZG9jdW1lbnRhdGlvbiBpcyByYXRoZXIgc2NhcnNlLi4uCj4+
-Cj4gRG8geW91IG1lYW4gZG9jdW1lbnRhdGlvbiBhYm91dCBFSUYgZmlsZSBmb3JtYXQ/ICBJZiBz
-bywgeWVzLCByaWdodAo+IG5vdyB0aGVyZSBpcyBubyBzcGVjaWZpY2F0aW9uIG90aGVyIHRoYW4g
-dGhlIGdpdGh1YiByZXBvIGZvciBFSUYuCj4KPj4+IFsyXSBodHRwczovL2F3cy5hbWF6b24uY29t
-L2VjMi9uaXRyby9uaXRyby1lbmNsYXZlcy8KPj4+Cj4+PiBTaWduZWQtb2ZmLWJ5OiBEb3Jqb3kg
-Q2hvd2RodXJ5IDxkb3Jqb3ljaHkxMTFAZ21haWwuY29tPgo+Pj4gLS0tCj4+PiAgICBody9pMzg2
-L2VpZi5jICAgICAgIHwgNDg2ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrCj4+PiAgICBody9pMzg2L2VpZi5oICAgICAgIHwgIDIwICsrCj4+PiAgICBody9pMzg2
-L21lc29uLmJ1aWxkIHwgICAyICstCj4+IC4uLiBzdGlsbCBpdCBzZWVtcyBhIGdlbmVyaWMgbG9h
-ZGVyLCBub3QgcmVzdHJpY3RlZCB0byB4ODYuCj4+Cj4+IE1heWJlIGJldHRlciBhZGQgaXQgYXMg
-aHcvY29yZS9sb2FkZXItZWlmLltjaF0/Cj4+Cj4gWWVzLCB0aGUgY29kZSBpbiBlaWYuYyBpcyBh
-cmNoaXRlY3R1cmUgYWdub3N0aWMuIFNvIGl0IGNvdWxkIG1ha2UKPiBzZW5zZSB0byBtb3ZlIHRo
-ZSBmaWxlcyB0byBody9jb3JlLiBCdXQgSSBkb24ndCB0aGluayB0aGUgbmFtZXMgc2hvdWxkCj4g
-aGF2ZSAibG9hZGVyIiBwcmVmaXggYXMgdGhlcmUgaXMgbm8gbG9hZGluZyBsb2dpYyBpbiBlaWYu
-Yy4gVGhlcmUgaXMKPiBvbmx5IGxvZ2ljIGZvciBwYXJzaW5nIGFuZCBleHRyYWN0aW5nIGtlcm5l
-bCwgaW50aXJkLCBjbWRsaW5lIGV0Yy4KPiBCZWNhdXNlIG5pdHJvLWVuY2xhdmUgbWFjaGluZSB0
-eXBlIGlzIGJhc2VkIG9uIG1pY3Jvdm0gd2hpY2ggb25seQo+IHN1cHBvcnRzIHg4NiBub3csIEkg
-dGhpbmsgaXQgYWxzbyBtYWtlcyBzZW5zZSB0byBrZWVwIHRoZSBmaWxlcyBpbnNpZGUKPiBody9p
-Mzg2IGZvciBub3cgYXMgd2UgY2FuIG9ubHkgcmVhbGx5IGxvYWQgeDg2IGtlcm5lbCB1c2luZyBp
-dC4gTWF5YmUKPiBpZiB3ZSwgaW4gdGhlIGZ1dHVyZSwgYWRkIHN1cHBvcnQgZm9yIG90aGVyIGFy
-Y2hpdGVjdHVyZXMsIHRoZW4gd2UgY2FuCj4gbW92ZSB0aGVtIHRvIGh3L2NvcmUuIFdoYXQgZG8g
-eW91IHRoaW5rPwoKCkkgdGhpbmsgaXQgbWFrZXMgc2Vuc2UgdG8gcHV0IEVJRiBwYXJzaW5nIGlu
-dG8gZ2VuZXJpYyBjb2RlIGZyb20gdGhlIApzdGFydC4gTml0cm8gRW5jbGF2ZXMgc3VwcG9ydHMg
-QWFyY2g2NCB3aXRoIHRoZSBzYW1lIEVJRiBzZW1hbnRpY3MuIEluIApmYWN0LCBpdCB3b3VsZCBi
-ZSBwcmV0dHkgc2ltcGxlIHRvIGRvIGEgc3ViLW1hY2hpbmUtY2xhc3Mgc2ltaWxhciB0byB0aGUg
-Cng4NiBORSBvbmUgZm9yIGFybSBiYXNlZCBvbiAtTSB2aXJ0IGFzIGEgZm9sbG93LXVwIGFuZCBi
-eSBtYWtpbmcgdGhlIEVJRiAKbG9naWMgeDg2IG9ubHkgd2UncmUgb25seSBtYWtpbmcgb3VyIGxp
-dmVzIGhhcmRlciBmb3IgdGhhdCBmdXR1cmUuCgoKQWxleAoKCgoKQW1hem9uIFdlYiBTZXJ2aWNl
-cyBEZXZlbG9wbWVudCBDZW50ZXIgR2VybWFueSBHbWJICktyYXVzZW5zdHIuIDM4CjEwMTE3IEJl
-cmxpbgpHZXNjaGFlZnRzZnVlaHJ1bmc6IENocmlzdGlhbiBTY2hsYWVnZXIsIEpvbmF0aGFuIFdl
-aXNzCkVpbmdldHJhZ2VuIGFtIEFtdHNnZXJpY2h0IENoYXJsb3R0ZW5idXJnIHVudGVyIEhSQiAy
-NTc3NjQgQgpTaXR6OiBCZXJsaW4KVXN0LUlEOiBERSAzNjUgNTM4IDU5Nwo=
+Hi,
+
+On 27/5/24 10:02, Jamin Lin wrote:
+> AST2700 fmc/spi controller's address decoding unit is 64KB
+> and only bits [31:16] are used for decoding. Introduce seg_to_reg
+> and reg_to_seg handlers for ast2700 fmc/spi controller.
+> In addition, adds ast2700 fmc, spi0, spi1, and spi2 class init handler.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> ---
+>   hw/ssi/aspeed_smc.c | 222 +++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 220 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+> index df0c63469c..b4006c8339 100644
+> --- a/hw/ssi/aspeed_smc.c
+> +++ b/hw/ssi/aspeed_smc.c
+> @@ -185,7 +185,7 @@
+>    *   0: 4 bytes
+>    *   0x1FFFFFC: 32M bytes
+>    *
+> - * DMA length is from 1 byte to 32MB (AST2600, AST10x0)
+> + * DMA length is from 1 byte to 32MB (AST2600, AST10x0 and AST2700)
+>    *   0: 1 byte
+>    *   0x1FFFFFF: 32M bytes
+>    */
+> @@ -670,7 +670,7 @@ static const MemoryRegionOps aspeed_smc_flash_ops = {
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>       .valid = {
+>           .min_access_size = 1,
+> -        .max_access_size = 4,
+> +        .max_access_size = 8,
+
+Is this a bugfix? If so, please use a separate patch. Otherwise
+please mention why it is OK to widen access for AST2600 & AST10x0.
+
+Thanks,
+
+Phil.
+
+>       },
+>   };
 
 
