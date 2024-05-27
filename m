@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F19FC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53908C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUin-0007dU-HV; Mon, 27 May 2024 03:24:42 -0400
+	id 1sBUj6-0007ol-Jl; Mon, 27 May 2024 03:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUim-0007dB-B9; Mon, 27 May 2024 03:24:40 -0400
+ id 1sBUj4-0007nZ-4G; Mon, 27 May 2024 03:24:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUik-0006AP-59; Mon, 27 May 2024 03:24:39 -0400
+ id 1sBUj2-0006Eh-CG; Mon, 27 May 2024 03:24:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D65046A4BE;
- Mon, 27 May 2024 10:25:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 890CA6A4C7;
+ Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1FD5BD845B;
+ by tsrv.corpit.ru (Postfix) with SMTP id C7E05D8464;
  Mon, 27 May 2024 10:24:35 +0300 (MSK)
-Received: (nullmailer pid 52872 invoked by uid 1000);
+Received: (nullmailer pid 52900 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ruihan Li <lrh2000@pku.edu.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 01/21] target/i386: Give IRQs a chance when resetting
- HF_INHIBIT_IRQ_MASK
-Date: Mon, 27 May 2024 10:24:11 +0300
-Message-Id: <20240527072435.52812-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 10/21] configure: Fix error message when C compiler is
+ not working
+Date: Mon, 27 May 2024 10:24:20 +0300
+Message-Id: <20240527072435.52812-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,79 +64,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Thomas Huth <thuth@redhat.com>
 
-When emulated with QEMU, interrupts will never come in the following
-loop. However, if the NOP instruction is uncommented, interrupts will
-fire as normal.
+If you try to run the configure script on a system without a working
+C compiler, you get a very misleading error message:
 
-	loop:
-		cli
-    		call do_sti
-		jmp loop
+ ERROR: Unrecognized host OS (uname -s reports 'Linux')
 
-	do_sti:
-		sti
-		# nop
-		ret
+Some people already opened bug tickets because of this problem:
 
-This behavior is different from that of a real processor. For example,
-if KVM is enabled, interrupts will always fire regardless of whether the
-NOP instruction is commented or not. Also, the Intel Software Developer
-Manual states that after the STI instruction is executed, the interrupt
-inhibit should end as soon as the next instruction (e.g., the RET
-instruction if the NOP instruction is commented) is executed.
+ https://gitlab.com/qemu-project/qemu/-/issues/2057
+ https://gitlab.com/qemu-project/qemu/-/issues/2288
 
-This problem is caused because the previous code may choose not to end
-the TB even if the HF_INHIBIT_IRQ_MASK has just been reset (e.g., in the
-case where the STI instruction is immediately followed by the RET
-instruction), so that IRQs may not have a change to trigger. This commit
-fixes the problem by always terminating the current TB to give IRQs a
-chance to trigger when HF_INHIBIT_IRQ_MASK is reset.
+We should rather tell the user that we were not able to use the C
+compiler instead, otherwise they will have a hard time to figure
+out what was going wrong.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Message-ID: <20240415064518.4951-4-lrh2000@pku.edu.cn>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6a5a63f74ba5c5355b7a8468d3d814bfffe928fb)
+While we're at it, let's also suppress the "unrecognized host CPU"
+message in this case since it is rather misleading than helpful.
+
+Fixes: 264b803721 ("configure: remove compiler sanity check")
+Message-ID: <20240513114010.51608-1-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 371d60dfdb47dd18d163a7759968ba138089371e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 83c2b40480..6ca4d791ab 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2776,13 +2776,17 @@ static void gen_bnd_jmp(DisasContext *s)
- static void
- do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
- {
-+    bool inhibit_reset;
+diff --git a/configure b/configure
+index 66ca736621..c1e03801f1 100755
+--- a/configure
++++ b/configure
+@@ -411,7 +411,9 @@ else
+   # Using uname is really broken, but it is just a fallback for architectures
+   # that are going to use TCI anyway
+   cpu=$(uname -m)
+-  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  if test "$host_os" != "bogus"; then
++    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  fi
+ fi
+ 
+ # Normalise host CPU name to the values used by Meson cross files and in source
+@@ -893,6 +895,13 @@ EOF
+ exit 0
+ fi
+ 
++# Now that we are sure that the user did not only want to print the --help
++# information, we should double-check that the C compiler really works:
++write_c_skeleton
++if ! compile_object ; then
++    error_exit "C compiler \"$cc\" either does not exist or does not work."
++fi
 +
-     gen_update_cc_op(s);
+ # Remove old dependency files to make sure that they get properly regenerated
+ rm -f ./*/config-devices.mak.d
  
-     /* If several instructions disable interrupts, only the first does it.  */
--    if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
--        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
--    } else {
-+    inhibit_reset = false;
-+    if (s->flags & HF_INHIBIT_IRQ_MASK) {
-         gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
-+        inhibit_reset = true;
-+    } else if (inhibit) {
-+        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
-     }
- 
-     if (s->base.tb->flags & HF_RF_MASK) {
-@@ -2793,7 +2797,9 @@ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
-         tcg_gen_exit_tb(NULL, 0);
-     } else if (s->flags & HF_TF_MASK) {
-         gen_helper_single_step(tcg_env);
--    } else if (jr) {
-+    } else if (jr &&
-+               /* give irqs a chance to happen */
-+               !inhibit_reset) {
-         tcg_gen_lookup_and_goto_ptr();
-     } else {
-         tcg_gen_exit_tb(NULL, 0);
 -- 
 2.39.2
 
