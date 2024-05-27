@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381ACC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 17:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DDFC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 17:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBdwQ-0002zT-OU; Mon, 27 May 2024 13:15:23 -0400
+	id 1sBdwO-0002yX-2b; Mon, 27 May 2024 13:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sBdwM-0002yD-V6
- for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:18 -0400
-Received: from wfhigh3-smtp.messagingengine.com ([64.147.123.154])
+ id 1sBdwI-0002x9-6u
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:16 -0400
+Received: from wfout8-smtp.messagingengine.com ([64.147.123.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sBdwG-0004dO-JB
- for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:18 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailfhigh.west.internal (Postfix) with ESMTP id F294F1800110;
- Mon, 27 May 2024 13:15:08 -0400 (EDT)
+ id 1sBdwE-0004Zm-Q4
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 13:15:13 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailfout.west.internal (Postfix) with ESMTP id D970E1C000FE;
+ Mon, 27 May 2024 13:15:06 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute6.internal (MEProxy); Mon, 27 May 2024 13:15:09 -0400
+ by compute5.internal (MEProxy); Mon, 27 May 2024 13:15:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1716830108;
- x=1716916508; bh=hYYUXh07/gcoXF51WzyMOORAJzyXrEZcGGa7G4S/qJM=; b=
- Unrv661kj8kfAT4BKmuCw9HE+V/+Tjdmw6p2GaDTLYpDD5hozbLpez4RrylRBkcG
- syTtZZGcc3RCO/f5xZ1McVMQM+ABtHOFFhrm7Bw6E/mzVY+QsuJM6M1AP1TPu3E+
- 0q2VKD1C2ZGBSj6poEx3p5gi9gcCNAuroCfjwL3o7zs+WEf9789F1tqN0z5tzOoq
- UH7JT95pGnvl9jJNPHjxDqAYdKNLDIHogvrkW7RY0OM4vbLiKge/cuTK5/rafSLY
- wACg9m8ME13mvQSoSZmrcrdD15gZ8UL7vxwpiEoeuo63x7xbl4BjoJChMViAr2xQ
- zf08xYqD8AFkIjzofU522w==
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm2; t=1716830106; x=1716916506; bh=K1
+ Ockac4cEdD9IESqhUKnFAX63FcNT7CBeiGq+n/22w=; b=oY8r7w6gIpt0u03PQ3
+ nxrs2JZZo7+BSw9rsHx0wYYi4u+CUBs6Fmipwp9TRrv8xPo2XTj6iXr1+tFM6yLR
+ H6PgXRX2eC/D8VDsDU5Zlp5drTK247MuG7HbV66b7OFPVeV557Q+XX47Anj8ZlQb
+ FbquuHoXpNKhguFy1SyQBNbKUYNQucjdqUjvpvJAt7qN75XRMPG7avwS8CspAaKG
+ lqlkDAhSAngXtz+/Y94QjzCLsZpJNg/dn9QVtYQZ7cTgQ74bbOffRrDgTU5aN38I
+ Pr7HQp1/m4nXw3EvMjxoJcMLe/UU6hNsWEUJY/I9ZKr/4Zc5NNyotjbiHg7zoyBT
+ eGTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1716830108; x=
- 1716916508; bh=hYYUXh07/gcoXF51WzyMOORAJzyXrEZcGGa7G4S/qJM=; b=V
- 5y6XDXLNce7gPGnUkLVqd5/wfOXw42OI8GOWD0X2zGlx3HXUfVdNn5r3ZLQ2ICl4
- YohjUynO1M8kGMdMKgjygqIa8QPJogHQ287on+yi3/g995kE7IUaBRJzxjboeb5C
- /9qhR3B0NpmApAMxzoX7DI8J9Y0duoWCzXeis1TarMmFn66AVT5WFU7RJyepyVGj
- c7bEjdJgVdEpE+JsZi/UY71nLWANwLnY0PSEpLJKKijurJcIbUhUE80r5zzRf0qr
- NB/PV+wLXNC7ZJrpLog2rujrsyAxgnNpWMrQiGPnvhBJ1a+FjA5dNcpvS20AL10+
- DQreKhnSpNEBk+cqm0gRQ==
-X-ME-Sender: <xms:nL9UZnHQGvif13jDH2bQiYLQxXfiOixhOWPTPkjLNxUx3DkqHooJtA>
- <xme:nL9UZkVi0ijcVGFgIjRrAommviJ4aay5BIizCKZE0fIEy3r6iUXQGKI9NQzX1vyHz
- wyry5r60y3ZK4UPwOA>
-X-ME-Received: <xmr:nL9UZpIt2sp4gKMUqiGhtb5EUe-BihT_v1HvSZPPusFieCkjZQiKsUE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejgedguddtkecutefuodetggdotefrod
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1716830106; x=1716916506; bh=K1Ockac4cEdD9
+ IESqhUKnFAX63FcNT7CBeiGq+n/22w=; b=MQNt0y1SCcm82hFv/kNkwZSoGAkBO
+ sBWnmSkBlBbyoNiWF0QCtB8Pi2edsKOXTGEISKDmGaB5t02E0c/vNtKB7CrVf4qb
+ K008Cr9OKoqzi5WV7BmrLeKa214tIJdNmnaINvm28RcbJ3QlbrPKCeVQP/c/eM9H
+ rmXF6MgilyEuemh7C+gXdl4cOB06ks7RUvsVcBTDKD+zRz2Ywn0eQAlnrnI1Ichc
+ dRIRcI2Bvwlsy8eR8O4Li+v/lCI8mI6RxFr7e7rlv0uI/lWpUoWYi64g0tu+Rkwo
+ 0bpnRjk7VzkODxMbJPautdrOVLPv6y8N56ghLcSa9+l9Ta1Bz6Q0va/gA==
+X-ME-Sender: <xms:mb9UZpEADTLtMREGuF-j3kIPDddNdWG42AmsEBN76_6m-z-NQ0ZE9g>
+ <xme:mb9UZuWfrYlyiZGIYTuId3BWWF_SB05Z-cmDYHy_M6Bm9tZd7jGuNCQyisiHtCDiK
+ YXdWTipIuIF6k6g9gM>
+X-ME-Received: <xmr:mb9UZrIqEZHw4gxFsrRqxV1MVfkWTExx1iVQSiNbJWseOl3LPGYxtBc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdejgedguddtlecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
  necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheplfhi
- rgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqe
- enucggtffrrghtthgvrhhnpedvkeeihfefveekueevteefleffkeegudeghfdtuddugefh
- ueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
- hlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:nL9UZlH_UUdPKo66lhcUYSymp4nH2aEzog3recb1C72wzQ1Mg_ilWA>
- <xmx:nL9UZtU_POKzw7ul4_O6F6R8tWgeYvKUQ3e6CFycTLeyMoVHn1ILPw>
- <xmx:nL9UZgMoQ4QmmIkQvFzsTGiEHjm5J4ZIZ5qzo65HY12r68EfmUpMPg>
- <xmx:nL9UZs1M7JWtqRPJX4NlBssEu4lNBhSMPp_9RQna7Re8aB_w_gY2JQ>
- <xmx:nL9UZvIzEbO3eT7s8vDr6g38qj5dRlmuGkH1gmVdfq_u38uMvgbRQXl->
+ enucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheplfhirgig
+ uhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenuc
+ ggtffrrghtthgvrhhnpedufffffffhueehvefhgfelveekueegteefgeeiieejheefkeeh
+ keevudevieegueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+ hrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:mb9UZvGFpi2WIH_AOxls1oCPWQBfi4tIB5hH4A7zewX1qit8PdPzoQ>
+ <xmx:mb9UZvVRrcAJnV_H6utdjJ_Ns7xe18Qasl-0kuibDWsh91W3PUu-xw>
+ <xmx:mb9UZqOfMEbJMJVapWSr2Zh1Mc2U4mSDPJzyGXlcLla0UvjE5etXLw>
+ <xmx:mb9UZu37AYlcnbwbwapt-2laT6kl2P4dM8ytlwJzbivSCpYBSEtE7A>
+ <xmx:mr9UZhKsbxwhh-QE3iU_yKnaNfm_Dc-dbAZGy7aC2aNJDWv3kwDaOWGy>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 May 2024 13:15:07 -0400 (EDT)
+ 27 May 2024 13:15:05 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Mon, 27 May 2024 18:15:04 +0100
-Subject: [PATCH 1/4] hw/m68k/virt: Add a XHCI controller
+Subject: [PATCH 0/4] hw/m68k/virt: Add some devices
+Date: Mon, 27 May 2024 18:15:03 +0100
+Message-Id: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240527-m68k-bios-v1-1-6de26552fa77@flygoat.com>
-References: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
-In-Reply-To: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
+X-B4-Tracking: v=1; b=H4sIAJe/VGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUyNz3Vwzi2zdpMz8Yt1Eg0QjY3MDQwvDNFMloPqCotS0zAqwWdGxtbU
+ ApFVwoFsAAAA=
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3672;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=842;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=meVJ+Hif6qYmAV3H2p1MdJpBK1pNp/dXQjk1XyRz74k=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhrSQ/TNfLGCflM33ef3eq4G+a00OPzPlFRe70t1rt8/yp
- +W6vyuMOkpZGMS4GGTFFFlCBJT6NjReXHD9QdYfmDmsTCBDGLg4BWAiylsY/ilP7N1ek7KfLTmm
- pPeIyLkFnbdUUoW3/XCe02Ju1JXMpM3IsHH+YfbM0z+l6o5P2zMzU6UqlqNNodiw8Jkmn5iWyrI
- aNgA=
+ bh=4/BRFvKYfsG/Y7LlJQQcWYbEOhcoiFzMBMsTf6Mq7M8=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrSQ/TN116/vOph06Q1vUlaR6sFX9nN5Qv8VeBzgW388O
+ meJbsjVjlIWBjEuBlkxRZYQAaW+DY0XF1x/kPUHZg4rE8gQBi5OAZiIuwkjw1RVQ0W7Hh3fd+zb
+ mSy2xjOwazKoR56wZfE4dH6h2MaNIQz/szdnOW6882Fu6UKnb6WKluaPMpgXPUz59vD/S+/Lhlf
+ WcgMA
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=64.147.123.154;
- envelope-from=jiaxun.yang@flygoat.com; helo=wfhigh3-smtp.messagingengine.com
+Received-SPF: pass client-ip=64.147.123.151;
+ envelope-from=jiaxun.yang@flygoat.com; helo=wfout8-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -116,104 +116,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VirtIO is somewhat limited on the diversity of devices.
-We lack proper audio, webcam and so on support on m68k virt machine.
+Hi all,
 
-This can be improved by providing a XHCI controller, which enables
-provision of many different discoverable devices.
+This series added some devices that I found lacking when
+I was trying to port U-Boot to m68k virt machine.
+
+Please review.
+Thanks
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- hw/m68k/Kconfig                                   |  1 +
- hw/m68k/virt.c                                    | 22 +++++++++++++++++++++-
- include/standard-headers/asm-m68k/bootinfo-virt.h |  2 ++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+Jiaxun Yang (4):
+      hw/m68k/virt: Add a XHCI controller
+      hw/m68k/virt: Add fw_cfg controller
+      hw/m68k/virt: Add a pflash controller for BIOS firmware
+      hw/m68k/virt: Supply bootinfo for BIOS
 
-diff --git a/hw/m68k/Kconfig b/hw/m68k/Kconfig
-index 0092cda4e9c8..66e63cd60b57 100644
---- a/hw/m68k/Kconfig
-+++ b/hw/m68k/Kconfig
-@@ -44,4 +44,5 @@ config M68K_VIRT
-     select GOLDFISH_PIC
-     select GOLDFISH_TTY
-     select GOLDFISH_RTC
-+    select USB_XHCI_SYSBUS
-     select VIRTIO_MMIO
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index 09bc9bdfefb2..7b3917dcbd2b 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -33,13 +33,16 @@
- #include "hw/char/goldfish_tty.h"
- #include "hw/rtc/goldfish_rtc.h"
- #include "hw/intc/goldfish_pic.h"
-+#include "hw/usb/hcd-xhci-sysbus.h"
- #include "hw/virtio/virtio-mmio.h"
- #include "hw/virtio/virtio-blk.h"
- 
- /*
-  * 6 goldfish-pic for CPU IRQ #1 to IRQ #6
-  * CPU IRQ #1 -> PIC #1
-- *               IRQ #1 to IRQ #31 -> unused
-+ *               IRQ #1 -> virt-ctrl
-+ *               IRQ #2 -> xhci
-+ *               IRQ #3 to IRQ #31 -> unused
-  *               IRQ #32 -> goldfish-tty
-  * CPU IRQ #2 -> PIC #2
-  *               IRQ #1 to IRQ #32 -> virtio-mmio from 1 to 32
-@@ -86,6 +89,9 @@
- #define VIRT_VIRTIO_MMIO_BASE 0xff010000     /* MMIO: 0xff010000 - 0xff01ffff */
- #define VIRT_VIRTIO_IRQ_BASE  PIC_IRQ(2, 1)  /* PIC: 2, 3, 4, 5, IRQ: ALL */
- 
-+#define VIRT_XHCI_MMIO_BASE 0xff020000    /* MMIO: 0xff020000 - 0xff023fff */
-+#define VIRT_XHCI_IRQ_BASE  PIC_IRQ(1, 2) /* PIC: #1, IRQ: #2 */
-+
- typedef struct {
-     M68kCPU *cpu;
-     hwaddr initial_pc;
-@@ -216,6 +222,16 @@ static void virt_init(MachineState *machine)
-         io_base += 0x200;
-     }
- 
-+    /* xhci */
-+    if (machine_usb(machine)) {
-+        dev = qdev_new(TYPE_XHCI_SYSBUS);
-+        qdev_prop_set_uint32(dev, "intrs", 1);
-+        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, VIRT_XHCI_MMIO_BASE);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-+                        PIC_GPIO(VIRT_XHCI_IRQ_BASE));
-+    }
-+
-     if (kernel_filename) {
-         CPUState *cs = CPU(cpu);
-         uint64_t high;
-@@ -268,6 +284,10 @@ static void virt_init(MachineState *machine)
-                   VIRT_CTRL_MMIO_BASE, VIRT_CTRL_IRQ_BASE);
-         BOOTINFO2(param_ptr, BI_VIRT_VIRTIO_BASE,
-                   VIRT_VIRTIO_MMIO_BASE, VIRT_VIRTIO_IRQ_BASE);
-+        if (machine_usb(machine)) {
-+            BOOTINFO2(param_ptr, BI_VIRT_XHCI_BASE,
-+                    VIRT_XHCI_MMIO_BASE, VIRT_XHCI_IRQ_BASE);
-+        }
- 
-         if (kernel_cmdline) {
-             BOOTINFOSTR(param_ptr, BI_COMMAND_LINE,
-diff --git a/include/standard-headers/asm-m68k/bootinfo-virt.h b/include/standard-headers/asm-m68k/bootinfo-virt.h
-index 75ac6bbd7d73..1700c3ada765 100644
---- a/include/standard-headers/asm-m68k/bootinfo-virt.h
-+++ b/include/standard-headers/asm-m68k/bootinfo-virt.h
-@@ -16,6 +16,8 @@
- /* No longer used -- replaced with BI_RNG_SEED -- but don't reuse this index:
-  * #define BI_VIRT_RNG_SEED	0x8006 */
- 
-+#define BI_VIRT_XHCI_BASE	0x8007
-+
- #define VIRT_BOOTI_VERSION	MK_BI_VERSION(2, 0)
- 
- #endif /* _UAPI_ASM_M68K_BOOTINFO_MAC_H */
+ hw/m68k/Kconfig                                   |   3 +
+ hw/m68k/virt.c                                    | 231 ++++++++++++++++------
+ include/standard-headers/asm-m68k/bootinfo-virt.h |   4 +
+ 3 files changed, 176 insertions(+), 62 deletions(-)
+---
+base-commit: 60b54b67c63d8f076152e0f7dccf39854dfc6a77
+change-id: 20240527-m68k-bios-a0a2370181f5
 
+Best regards,
 -- 
-2.43.0
+Jiaxun Yang <jiaxun.yang@flygoat.com>
 
 
