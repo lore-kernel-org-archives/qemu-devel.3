@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B189AC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 13:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17703C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 13:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBaFP-0000jV-OQ; Mon, 27 May 2024 09:18:43 -0400
+	id 1sBaGB-0001MM-4t; Mon, 27 May 2024 09:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sBaFO-0000jC-KM
- for qemu-devel@nongnu.org; Mon, 27 May 2024 09:18:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sBaFN-0004hz-1c
- for qemu-devel@nongnu.org; Mon, 27 May 2024 09:18:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716815920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zU5UGfgbVFmNKgkjtfwwENgHppb1FOpNYw6AmcN6pDM=;
- b=IoQmAAuRBNk5mQRdv1Vq7jIFro0XFL1Wvvu0aenYZkgyWw+cicHWyzOXtpNsBjv5FLzj4y
- MefQLcwQphMeyowCdnYhnnnobFoTVzoMIbWE8uk/IzZRmWkspjlS8RV1Nnr//vFvWqPXpI
- 1V8djXNdDg4kyQkbkbPvX0d3ggO9IwI=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-444-0Bx1Kf4SNJ-4O69rcGe3ww-1; Mon, 27 May 2024 09:18:38 -0400
-X-MC-Unique: 0Bx1Kf4SNJ-4O69rcGe3ww-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6ab9903ed67so44934986d6.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 06:18:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sBaG8-0001Lp-Md
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 09:19:28 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sBaG6-0004mv-FL
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 09:19:28 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-6818e31e5baso2744596a12.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 06:19:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1716815965; x=1717420765; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8vfUxTZGJ+eSUTYdSnZrh0t/6pEj9cIoMqnbXJF5u3Y=;
+ b=hLCiK9kQL1E3Yyat8QavhO4Pgzfo2J7qpUwkFxtZbN8ldgQso4kAsQqwWBJwAg3gTn
+ kPog4oFTZmmnbiMEvIp1ZCL2JRKTVu0X+RMMUZVm4vlci3x8kt1YbhUyzo2ZzeydvVP6
+ A61C5hFae4BmCD8qLaZpFBMcY8so3ALkB2okqRINdPXXCYLceGN35XtLl4KEl9Lt4/pv
+ JSLYsBTs+hzEiBysOu3xPlIzrNejMnagvExthHKOlzM7LGUuB6fEucXx+uq2TSIT6R7+
+ 8IIGME4pwkkvyMdf2L7QkgJDjxlmMQVLpTfG6ANxTk/7tSXOXO5gHrPt5zcYmeZxajDe
+ dAJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716815918; x=1717420718;
+ d=1e100.net; s=20230601; t=1716815965; x=1717420765;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zU5UGfgbVFmNKgkjtfwwENgHppb1FOpNYw6AmcN6pDM=;
- b=vn+EHyOJOcGjlshVDXOj710TiqdcRuxM/12CmRLHBwt8uWQitQJ9L+9eXuPCpLZToZ
- 5WSAym7wS13JxnBNRrH8aTEVlgGn6AkzirQ4oWYccguNrEwMJU715Iqp47Mm3uH4zP+7
- sWifX5ImZ8+BlvFNNE3SuPYK44BeSWZ01YdWgkxvx0+Bf0t1hUfXO8rZ813RxX2n/xtd
- yfEc7TbGuPDY+0hyO+NsWtjDu3JJkGVTKxMZYjkMSnzDSt5QqtdfNUIm53t9dvt4Tsl3
- hQO1KLCvnZxidTVtOYb0uubiu3/XU2e6w7YykQDoe56JN5i7CypSEeOYb4kmyUVPZdl0
- yorA==
+ bh=8vfUxTZGJ+eSUTYdSnZrh0t/6pEj9cIoMqnbXJF5u3Y=;
+ b=TUKc8zAZqwHXxeBwdoeGfKrODNIcDrh8EOgBi739obIrHxefVRBi1K2Ti0OdwG1AnT
+ dDhR250tv4kSSkSlXCz8lbVXOwOObkgo6VczoSkQb3rAR8QqQGF76HzkC44jACbgncmg
+ 98ZJ+Xq0wlI2BsErvurt1DL5mU/Hfi0zmoLLdyLLpW9d0D7gnkWJgOSQZpDtjdI/+Kaf
+ azuFEZYd01YhFZRCeH8OEk0IIPk3T1yN63VnUk+KcZKdHHIyMic5PuD80y4gBM9fv1Kr
+ L5dzCp6rA/CgdJ+r49gPMQ78D6Mg6vAsADLurjReJTS848EMvmVNP+XIVQC97W0EDjvU
+ sb+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVR02YT8h/5uQ5xUTC+oqg+53Ya0NzM9ix8/MqPM43uwXkk+SWch+QC7UeYQqEYksrlpH94xdLuLiRXS/XgP4sYthNQFBQ=
-X-Gm-Message-State: AOJu0YzC41yctI4Me6byYpZwZ+ngFo9/vn+tlFkohTrUEfgrERR13gm8
- JrtNl68ERJddYknV+DBPLgvQ/YkUcZgqv/yf9clxF0H2Q0oj9SmUZPldQ4c5G80HNhor3WcqvMJ
- tbMaAE9KcVaNQcdkkAdCdGRAaF3rihwPqzOsIrpGVg+AjsAoiFRwR
-X-Received: by 2002:a05:6214:3907:b0:6ab:8cbb:79f4 with SMTP id
- 6a1803df08f44-6abcd13ba31mr102936566d6.56.1716815918154; 
- Mon, 27 May 2024 06:18:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHk4oi3RblGLeSDc+Tgm0Lb6NXXLvMVXuRpLnEx4uTruo/NGdkDA0nSCXt/9I9ODhCsmAgQgA==
-X-Received: by 2002:a05:6214:3907:b0:6ab:8cbb:79f4 with SMTP id
- 6a1803df08f44-6abcd13ba31mr102936246d6.56.1716815917708; 
- Mon, 27 May 2024 06:18:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:151b:2482:8f7e:1f56?
- ([2a01:e0a:280:24f0:151b:2482:8f7e:1f56])
+ AJvYcCWdQ4Q/AcoWGfDLQXg4KrQH1bh8CmcuJ1QhjhsQQcNFieIFSKlM7Ri0pii1UipL4TpabVCLiHgonu8SS6NObDAy+Ieg/aM=
+X-Gm-Message-State: AOJu0Yx9XYIr7W0p2YeX1smHxPIvS5NF2SdNijiQ8HYC6xjFV9hwuQzm
+ vDSM8mcc5qfafaJGwrJmkD8VtxEsQbsVBIh06OBKKex0ddSs5hcLPk0lGDE+pRk=
+X-Google-Smtp-Source: AGHT+IHBSUk4YNFT/m9hTvb2N2kKNQepDrMSt+iYW43E1ccXseEkfydTxPOYY2rzxs38RUs0IL9ECA==
+X-Received: by 2002:a17:903:41ce:b0:1f3:2d51:17a with SMTP id
+ d9443c01a7336-1f4486fe1ddmr108097335ad.18.1716815964791; 
+ Mon, 27 May 2024 06:19:24 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.42.4])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ad77430c57sm16875036d6.38.2024.05.27.06.18.35
+ d9443c01a7336-1f44c7c114fsm60508925ad.97.2024.05.27.06.19.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 06:18:37 -0700 (PDT)
-Message-ID: <ba1476d7-624a-41bf-bd73-8463c7460239@redhat.com>
-Date: Mon, 27 May 2024 15:18:33 +0200
+ Mon, 27 May 2024 06:19:24 -0700 (PDT)
+Message-ID: <69bb0364-e2a8-4de1-afa7-e9cb5b569f77@ventanamicro.com>
+Date: Mon, 27 May 2024 10:19:18 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 19/19] intel_iommu: Check compatibility with host IOMMU
- capabilities
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240508090354.1815561-1-zhenzhong.duan@intel.com>
- <20240508090354.1815561-20-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240508090354.1815561-20-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH v2 1/3] hw/riscv/virt: Add memory hotplugging and
+ virtio-md-pci support
+To: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
+ David Hildenbrand <david@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Atish Patra <atishp@atishpatra.org>, Atish Patra <atishp@rivosinc.com>
+Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Santosh Mamila <santosh.mamila@catalinasystems.io>,
+ Chethan Seshadri <Chethan.Seshadri@catalinasystems.io>,
+ Sivakumar Munnangi <siva.munnangi@catalinasystems.io>
+References: <20240521105635.795211-1-bjorn@kernel.org>
+ <20240521105635.795211-2-bjorn@kernel.org>
+ <55810d52-0360-40ad-a8d2-3b6a8aa220ae@ventanamicro.com>
+ <51ef570c-da63-4e25-9c48-dbdf8a40a34d@redhat.com>
+ <87sey38nsf.fsf@all.your.base.are.belong.to.us>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <87sey38nsf.fsf@all.your.base.are.belong.to.us>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,84 +111,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/24 11:03, Zhenzhong Duan wrote:
-> If check fails, host device (either VFIO or VDPA device) is not
-> compatible with current vIOMMU config and should not be passed to
-> guest.
-> 
-> Only aw_bits is checked for now, we don't care other capabilities
-> before scalable modern mode is introduced.
-> 
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/i386/intel_iommu.c | 27 +++++++++++++++++++++++++++
->   1 file changed, 27 insertions(+)
-> 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 747c988bc4..07bfd4f99e 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -20,6 +20,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include CONFIG_DEVICES /* CONFIG_HOST_IOMMU_DEVICE */
->   #include "qemu/error-report.h"
->   #include "qemu/main-loop.h"
->   #include "qapi/error.h"
-> @@ -3819,6 +3820,26 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->       return vtd_dev_as;
->   }
->   
-> +static bool vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
-> +                           Error **errp)
-> +{
-> +#ifdef CONFIG_HOST_IOMMU_DEVICE
-> +    HostIOMMUDevice *hiod = vtd_hdev->dev;
-> +    int ret;
-> +
-> +    /* Common checks */
-> +    ret = host_iommu_device_get_cap(hiod, HOST_IOMMU_DEVICE_CAP_AW_BITS, errp);
 
-To avoid CONFIG_HOST_IOMMU_DEVICE, host_iommu_device_get_cap() could be
-open coded.
 
-> +    if (ret < 0) {
-> +        return false;
-> +    }
-> +    if (s->aw_bits > ret) {
-> +        error_setg(errp, "aw-bits %d > host aw-bits %d", s->aw_bits, ret);
-> +        return false;
-> +    }
-> +#endif
-> +    return true;
-> +}
-> +
->   static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->                                        HostIOMMUDevice *hiod, Error **errp)
->   {
-> @@ -3848,6 +3869,12 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->       vtd_hdev->iommu_state = s;
->       vtd_hdev->dev = hiod;
->   
-> +    if (!vtd_check_hdev(s, vtd_hdev, errp)) {
-> +        g_free(vtd_hdev);
-> +        vtd_iommu_unlock(s);
-> +        return false;
-> +    }
+On 5/27/24 09:03, Björn Töpel wrote:
+> David Hildenbrand <david@redhat.com> writes:
+> 
+>> On 24.05.24 15:14, Daniel Henrique Barboza wrote:
+>>>
+>>>
+>>> On 5/21/24 07:56, Björn Töpel wrote:
+>>>> From: Björn Töpel <bjorn@rivosinc.com>
+>>>>
+>>>> Virtio-based memory devices (virtio-mem/virtio-pmem) allows for
+>>>> dynamic resizing of virtual machine memory, and requires proper
+>>>> hotplugging (add/remove) support to work.
+>>>>
+>>>> Add device memory support for RISC-V "virt" machine, and enable
+>>>> virtio-md-pci with the corresponding missing hotplugging callbacks.
+>>>>
+>>>> Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+>>>> ---
+>>>>     hw/riscv/Kconfig       |  2 +
+>>>>     hw/riscv/virt.c        | 83 +++++++++++++++++++++++++++++++++++++++++-
+>>>>     hw/virtio/virtio-mem.c |  5 ++-
+>>>>     3 files changed, 87 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+>>>> index a2030e3a6ff0..08f82dbb681a 100644
+>>>> --- a/hw/riscv/Kconfig
+>>>> +++ b/hw/riscv/Kconfig
+>>>> @@ -56,6 +56,8 @@ config RISCV_VIRT
+>>>>         select PLATFORM_BUS
+>>>>         select ACPI
+>>>>         select ACPI_PCI
+>>>> +    select VIRTIO_MEM_SUPPORTED
+>>>> +    select VIRTIO_PMEM_SUPPORTED
+>>>>     
+>>>>     config SHAKTI_C
+>>>>         bool
+>>>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+>>>> index 4fdb66052587..443902f919d2 100644
+>>>> --- a/hw/riscv/virt.c
+>>>> +++ b/hw/riscv/virt.c
+>>>> @@ -53,6 +53,8 @@
+>>>>     #include "hw/pci-host/gpex.h"
+>>>>     #include "hw/display/ramfb.h"
+>>>>     #include "hw/acpi/aml-build.h"
+>>>> +#include "hw/mem/memory-device.h"
+>>>> +#include "hw/virtio/virtio-mem-pci.h"
+>>>>     #include "qapi/qapi-visit-common.h"
+>>>>     #include "hw/virtio/virtio-iommu.h"
+>>>>     
+>>>> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machine)
+>>>>         DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+>>>>         int i, base_hartid, hart_count;
+>>>>         int socket_count = riscv_socket_count(machine);
+>>>> +    hwaddr device_memory_base, device_memory_size;
+>>>>     
+>>>>         /* Check socket count limit */
+>>>>         if (VIRT_SOCKETS_MAX < socket_count) {
+>>>> @@ -1420,6 +1423,12 @@ static void virt_machine_init(MachineState *machine)
+>>>>             exit(1);
+>>>>         }
+>>>>     
+>>>> +    if (machine->ram_slots > ACPI_MAX_RAM_SLOTS) {
+>>>> +        error_report("unsupported amount of memory slots: %"PRIu64,
+>>>> +                     machine->ram_slots);
+>>>> +        exit(EXIT_FAILURE);
+>>>> +    }
+>>>> +
+>>>>         /* Initialize sockets */
+>>>>         mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
+>>>>         for (i = 0; i < socket_count; i++) {
+>>>> @@ -1553,6 +1562,37 @@ static void virt_machine_init(MachineState *machine)
+>>>>         memory_region_add_subregion(system_memory, memmap[VIRT_MROM].base,
+>>>>                                     mask_rom);
+>>>>     
+>>>> +    /* device memory */
+>>>> +    device_memory_base = ROUND_UP(s->memmap[VIRT_DRAM].base + machine->ram_size,
+>>>> +                                  GiB);
+>>>> +    device_memory_size = machine->maxram_size - machine->ram_size;
+>>>> +    if (device_memory_size > 0) {
+>>>> +        /*
+>>>> +         * Each DIMM is aligned based on the backend's alignment value.
+>>>> +         * Assume max 1G hugepage alignment per slot.
+>>>> +         */
+>>>> +        device_memory_size += machine->ram_slots * GiB;
+>>>
+>>> We don't need to align to 1GiB. This calc can use 2MiB instead (or 4MiB if we're
+>>> running 32 bits).
+>>>
+>>>> +
+>>>> +        if (riscv_is_32bit(&s->soc[0])) {
+>>>> +            hwaddr memtop = device_memory_base + ROUND_UP(device_memory_size,
+>>>> +                                                          GiB);
+>>>
+>>> Same here - alignment is 2/4 MiB.
+>>>
+>>>> +
+>>>> +            if (memtop > UINT32_MAX) {
+>>>> +                error_report("memory exceeds 32-bit limit by %lu bytes",
+>>>> +                             memtop - UINT32_MAX);
+>>>> +                exit(EXIT_FAILURE);
+>>>> +            }
+>>>> +        }
+>>>> +
+>>>> +        if (device_memory_base + device_memory_size < device_memory_size) {
+>>>> +            error_report("unsupported amount of device memory");
+>>>> +            exit(EXIT_FAILURE);
+>>>> +        }
+>>>
+>>> Took another look and found this a bit strange. These are all unsigned vars, so
+>>> if (unsigned a + unsigned b < unsigned b) will always be 'false'. The compiler is
+>>> probably cropping this out.
+>>
+>> No. Unsigned interger overflow is defined behavior and this is a common
+>> check to detect such overflow. tI's consistent with what we do for other
+>> architectures.
+>>
+>>>
+>>> The calc we need to do is to ensure that the extra ram_slots * alignment will fit into
+>>> the VIRT_DRAM block, i.e. maxram_size + (ram_slots * alignment) < memmap[VIRT_DRAM].size.
+>>>
+>>>
+>>> TBH I'm starting to have second thoughts about letting users hotplug whatever they want.
+>>> It seems cleaner to just force the 2/4 Mb alignment in pre_plug() and be done with it,
+>>> no need to allocate ram_slots * alignment and doing all these extra checks.
+>>
+>> It's worth noting that if user space decides to specify addresses
+>> manually, it can mess up everything already. There are other events that
+>> can result in fragmentation of the memory device area (repeated
+>> hot(un)plug of differing DIMMs).
+>>
+>> Assume you have 1 GiB range and hotplug a 512 MiB DIMM at offset 256
+>> MiB. You won't be able to hotplug another 512 MiB DIMM even though we
+>> reserved space.
+>>
+>> My take so far is: if the user wants to do such stuff it should size the
+>> area (maxmem) much larger or deal with the concequences (not being able
+>> to hotplug memory).
+>>
+>> It usually does not happen in practice ...
+> 
+> Daniel/David, again thanks for spending time on the patches.
+> 
+> The reason I picked 1 GiB per slot was because the alignment is also
+> dependent on the backend AFAIU. Rationale in commit 085f8e88ba73 ("pc:
+> count in 1Gb hugepage alignment when sizing hotplug-memory container").
+> 
+> What I'm reading from you guys are: Just depend on whatever maxmem says
+> (modulo 2/4M alignment), and leave at that. I agree that that's much
+> easier to reason about.
+> 
+> Correct?
 
-This check could be first done before allocating vtd_hdev.
+We could opt for the more conservative approach and keep the 1Gb per dimm to
+account for hugepage mem fragmentation that the commit is talking about, assuming
+that this scenario is still feasible to happen.
+
+riscv64 can take this extra restriction (i.e. an extra 256GiB RAM just for that)
+but I'm afraid this would eradicate hotplug support for riscv32 since it'll never
+has enough memory to deal with a spare 1Gb per slot.
+
+I'm aware that you're working in the RISC-V kernel support for memory hotplug, so
+you can answer this better than I can: do we care about hugepage support for
+riscv32? Assuming we don't, then we could keep 4MiB alignment for riscv32 but do
+1GiB for riscv64 to account for this potential hugepage fragmentation.
 
 
 Thanks,
 
-C.
+Daniel
 
-
-
->       new_key = g_malloc(sizeof(*new_key));
->       new_key->bus = bus;
->       new_key->devfn = devfn;
-
+> 
+>>> As I sent in an earlier email, users must already comply to the alignment of the host
+>>> memory when plugging pc-dimms, so I'm not sure our value/proposition with all this
+>>> extra code is worth it - the alignment will most likely be forced by the host memory
+>>> backend, so might as well force ourselves in pre_plug().
+>>
+>> At least on x86-64, the 2 MiB alignment requirement is handled
+>> automatically. QEMU_VMALLOC_ALIGN implicitly enforces that.
+>>
+>> Maybe RISCV also wants to set QEMU_VMALLOC_ALIGN?
+> 
+> I'll look into this for the next rev!
+> 
+> 
+> Björn
 
