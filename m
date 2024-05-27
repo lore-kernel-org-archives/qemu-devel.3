@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C1AC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD80C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBViT-00043V-9C; Mon, 27 May 2024 04:28:25 -0400
+	id 1sBVgZ-0006eP-Mc; Mon, 27 May 2024 04:26:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVf7-0005Kh-Mu; Mon, 27 May 2024 04:25:00 -0400
+ id 1sBVdp-00020h-Vw; Mon, 27 May 2024 04:23:38 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVf6-0001EX-0x; Mon, 27 May 2024 04:24:57 -0400
+ id 1sBVdm-00010K-V8; Mon, 27 May 2024 04:23:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 393786A582;
- Mon, 27 May 2024 11:22:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 681436A576;
+ Mon, 27 May 2024 11:22:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6303BD851F;
- Mon, 27 May 2024 11:21:41 +0300 (MSK)
-Received: (nullmailer pid 66465 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 93C40D8513;
+ Mon, 27 May 2024 11:21:40 +0300 (MSK)
+Received: (nullmailer pid 66427 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Fabiano Rosas <farosas@suse.de>, Jason Wang <jasowang@redhat.com>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 37/44] hw/core/machine: move compatibility flags for
- VirtIO-net USO to machine 8.1
-Date: Mon, 27 May 2024 11:21:28 +0300
-Message-Id: <20240527082138.66217-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 25/44] hw/loongarch/virt: Fix memory leak
+Date: Mon, 27 May 2024 11:21:16 +0300
+Message-Id: <20240527082138.66217-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,62 +64,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Song Gao <gaosong@loongson.cn>
 
-Migration from an 8.2 or 9.0 binary to an 8.1 binary with machine
-version 8.1 can fail with:
+The char pointer 'ramName' point to a block of memory,
+but never free it. Use 'g_autofree' to automatically free it.
 
-> kvm: Features 0x1c0010130afffa7 unsupported. Allowed features: 0x10179bfffe7
-> kvm: Failed to load virtio-net:virtio
-> kvm: error while loading state for instance 0x0 of device '0000:00:12.0/virtio-net'
-> kvm: load of migration failed: Operation not permitted
+Resolves: Coverity CID 1544773
 
-The series
-
-53da8b5a99 virtio-net: Add support for USO features
-9da1684954 virtio-net: Add USO flags to vhost support.
-f03e0cf63b tap: Add check for USO features
-2ab0ec3121 tap: Add USO support to tap device.
-
-only landed in QEMU 8.2, so the compatibility flags should be part of
-machine version 8.1.
-
-Moving the flags unfortunately breaks forward migration with machine
-version 8.1 from a binary without this patch to a binary with this
-patch.
-
-Fixes: 53da8b5a99 ("virtio-net: Add support for USO features")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 9710401276a0eb2fc6d467d9abea1f5e3fe2c362)
+Fixes: 0cf1478d6 ("hw/loongarch: Add numa support")
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240507022239.3113987-1-gaosong@loongson.cn>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 54c52ec719fb8c83bbde54cb87b58688ab27c166)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixup in hw/loongarch/virt.c due to missing-in-9.0
+      v9.0.0-266-gd771ca1c10 "hw/loongarch: Move boot functions to boot.c")
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 37ede0e7d4..3a5a8d473d 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -45,15 +45,15 @@ GlobalProperty hw_compat_8_1[] = {
-     { "ramfb", "x-migrate", "off" },
-     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-     { "igb", "x-pcie-flr-init", "off" },
-+    { TYPE_VIRTIO_NET, "host_uso", "off"},
-+    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-+    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
- };
- const size_t hw_compat_8_1_len = G_N_ELEMENTS(hw_compat_8_1);
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 441d764843..e3042af7bb 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -832,7 +832,6 @@ static void loongarch_init(MachineState *machine)
+     const CPUArchIdList *possible_cpus;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     CPUState *cpu;
+-    char *ramName = NULL;
+     struct loaderparams loaderparams = { };
  
- GlobalProperty hw_compat_8_0[] = {
-     { "migration", "multifd-flush-after-each-section", "on"},
-     { TYPE_PCI_DEVICE, "x-pcie-ari-nextfn-1", "on" },
--    { TYPE_VIRTIO_NET, "host_uso", "off"},
--    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
--    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
- };
- const size_t hw_compat_8_0_len = G_N_ELEMENTS(hw_compat_8_0);
+     if (!cpu_model) {
+@@ -892,7 +891,7 @@ static void loongarch_init(MachineState *machine)
  
+     for (i = 1; i < nb_numa_nodes; i++) {
+         MemoryRegion *nodemem = g_new(MemoryRegion, 1);
+-        ramName = g_strdup_printf("loongarch.node%d.ram", i);
++        g_autofree char *ramName = g_strdup_printf("loongarch.node%d.ram", i);
+         memory_region_init_alias(nodemem, NULL, ramName, machine->ram,
+                                  offset,  numa_info[i].node_mem);
+         memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
 -- 
 2.39.2
 
