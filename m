@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93257C25B74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BEEC41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU57-0005Y0-2C; Mon, 27 May 2024 02:43:41 -0400
+	id 1sBU38-0003EK-6F; Mon, 27 May 2024 02:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3i-0003ds-5P; Mon, 27 May 2024 02:42:14 -0400
+ id 1sBU35-0003DN-D0; Mon, 27 May 2024 02:41:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3V-0007PF-9e; Mon, 27 May 2024 02:42:12 -0400
+ id 1sBU33-0007NK-An; Mon, 27 May 2024 02:41:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3D2826A3FB;
- Mon, 27 May 2024 09:41:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EDDB26A3F7;
+ Mon, 27 May 2024 09:41:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 88433D83F3;
+ by tsrv.corpit.ru (Postfix) with SMTP id 46117D83EF;
  Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50298 invoked by uid 1000);
+Received: (nullmailer pid 50285 invoked by uid 1000);
  Mon, 27 May 2024 06:40:56 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 13/19] target/i386: fix operand size for DATA16 REX.W
- POPCNT
-Date: Mon, 27 May 2024 09:40:44 +0300
-Message-Id: <20240527064056.50205-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexandra Diupina <adiupina@astralinux.ru>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 09/19] hw/dmax/xlnx_dpdma: fix handling of
+ address_extension descriptor fields
+Date: Mon, 27 May 2024 09:40:40 +0300
+Message-Id: <20240527064056.50205-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
@@ -64,67 +62,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-According to the manual, 32-bit vs 64-bit is governed by REX.W
-and REX ignores the 0x66 prefix.  This can be confirmed with this
-program:
+The DMA descriptor structures for this device have
+a set of "address extension" fields which extend the 32
+bit source addresses with an extra 16 bits to give a
+48 bit address:
+ https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field
 
-    #include <stdio.h>
-    int main()
-    {
-       int x = 0x12340000;
-       int y;
-       asm("popcntl %1, %0" : "=r" (y) : "r" (x)); printf("%x\n", y);
-       asm("mov $-1, %0; .byte 0x66; popcntl %1, %0" : "+r" (y) : "r" (x)); printf("%x\n", y);
-       asm("mov $-1, %0; .byte 0x66; popcntq %q1, %q0" : "+r" (y) : "r" (x)); printf("%x\n", y);
-    }
+However, we misimplemented this address extension in several ways:
+ * we only extracted 12 bits of the extension fields, not 16
+ * we didn't shift the extension field up far enough
+ * we accidentally did the shift as 32-bit arithmetic, which
+   meant that we would have an overflow instead of setting
+   bits [47:32] of the resulting 64-bit address
 
-which prints 5/ffff0000/5 on real hardware and 5/ffff0000/ffff0000
-on QEMU.
+Add a type cast and use extract64() instead of extract32()
+to avoid integer overflow on addition. Fix bit fields
+extraction according to documentation.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 41c685dc59bb611096f3bb6a663cfa82e4cba97b)
+Fixes: d3c6369a96 ("introduce xlnx-dpdma")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Message-id: 20240428181131.23801-1-adiupina@astralinux.ru
+[PMM: adjusted commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 4b00855f0ee2e2eee8fd2500ffef27c108be6dc3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 2b0df7bcfa..c4016314fb 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -415,16 +415,6 @@ static inline MemOp mo_stacksize(DisasContext *s)
-     return CODE64(s) ? MO_64 : SS32(s) ? MO_32 : MO_16;
- }
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+index dd66be5265..06e187e99c 100644
+--- a/hw/dma/xlnx_dpdma.c
++++ b/hw/dma/xlnx_dpdma.c
+@@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
  
--/* Select only size 64 else 32.  Used for SSE operand sizes.  */
--static inline MemOp mo_64_32(MemOp ot)
--{
--#ifdef TARGET_X86_64
--    return ot == MO_64 ? MO_64 : MO_32;
--#else
--    return MO_32;
--#endif
--}
--
- /* Select size 8 if lsb of B is clear, else OT.  Used for decoding
-    byte vs word opcodes.  */
- static inline MemOp mo_b_d(int b, MemOp ot)
-@@ -6788,12 +6778,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-         modrm = x86_ldub_code(env, s);
-         reg = ((modrm >> 3) & 7) | REX_R(s);
- 
--        if (s->prefix & PREFIX_DATA) {
--            ot = MO_16;
--        } else {
--            ot = mo_64_32(dflag);
--        }
--
-+        ot = dflag;
-         gen_ldst_modrm(env, s, modrm, ot, OR_TMP0, 0);
-         gen_extu(ot, s->T0);
-         tcg_gen_mov_tl(cpu_cc_src, s->T0);
+     switch (frag) {
+     case 0:
+-        addr = desc->source_address
+-            + (extract32(desc->address_extension, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address
++            + (extract64(desc->address_extension, 16, 16) << 32);
+         break;
+     case 1:
+-        addr = desc->source_address2
+-            + (extract32(desc->address_extension_23, 0, 12) << 8);
++        addr = (uint64_t)desc->source_address2
++            + (extract64(desc->address_extension_23, 0, 16) << 32);
+         break;
+     case 2:
+-        addr = desc->source_address3
+-            + (extract32(desc->address_extension_23, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address3
++            + (extract64(desc->address_extension_23, 16, 16) << 32);
+         break;
+     case 3:
+-        addr = desc->source_address4
+-            + (extract32(desc->address_extension_45, 0, 12) << 8);
++        addr = (uint64_t)desc->source_address4
++            + (extract64(desc->address_extension_45, 0, 16) << 32);
+         break;
+     case 4:
+-        addr = desc->source_address5
+-            + (extract32(desc->address_extension_45, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address5
++            + (extract64(desc->address_extension_45, 16, 16) << 32);
+         break;
+     default:
+         addr = 0;
 -- 
 2.39.2
 
