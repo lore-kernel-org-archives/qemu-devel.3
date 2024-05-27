@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95558C25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 21:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445D2C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 21:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBhkk-0007Gp-0H; Mon, 27 May 2024 17:19:34 -0400
+	id 1sBhkV-00078Z-Dh; Mon, 27 May 2024 17:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBhki-0007Fy-Aq
- for qemu-devel@nongnu.org; Mon, 27 May 2024 17:19:32 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sBhkT-00077B-Iv
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 17:19:17 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBhkf-0003fb-Vd
- for qemu-devel@nongnu.org; Mon, 27 May 2024 17:19:32 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6f6911d16b4so102604b3a.3
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 14:19:29 -0700 (PDT)
+ id 1sBhkR-0003b4-Ps
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 17:19:17 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6f6a045d476so104892b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 14:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716844768; x=1717449568; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QoQpXNIW9wyYJ/8FBHfMhV4TGUkKv7EgobvaDbpE1/4=;
- b=c0YzFxcTe01j08KI6gSiokA9M/aNQFBfdPdMCJw9FCAZFUKc1oXgvfnFKLjNsfQFZ4
- QeRwf2EzLWZJRW/2KII6IZP/f88LhehqnHZ5gtCau9Sx1xGYy49MGv4oxeWFJXUoPoXD
- V5phqlWWawQb9lMkWxSxw3yfXw2oZ+rkbxwxCNhTkuH98bnlvp4ecMzvFtkdwO99BZUq
- A6KfAp5AXRMPoqGuUiu3Rzw/ZFMwTJS2BUMtnYyBAOPjIsZMyUXS/Qrl2W/Z7HzQofGk
- bSlbLcZmlK7kTOuUFsrPwRbT/vPEYCF9G0mXINWYIHZ/FBQWMG1ffgTZQXteFEKMgfo4
- pd4Q==
+ d=linaro.org; s=google; t=1716844754; x=1717449554; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZDglsqAcp0SxDGAaJ0T9OIIUXwIF6C0mIgo/Mt5cf+M=;
+ b=YLc0A6zKzWchE2US3Gd3Q8QUaWV0zROyW0KOLtibKZIqwigdIHrow7kR3f8CRqfrkT
+ z5+3Nj5LGPnfWx44fhH4WwaklaLgKjca2xGvsOFDzhECG7UCUbIKWblniNdilafzQvPC
+ 6DOAE/24+izawhlZJBA6HWabqtRuKF2YY5BklyyBT1NSLSrE7pOMUxdoaVd4/X32fyGU
+ miQrXyRkT8h4pPeQYsSVeVLr7KQo5f9Urnwb4XKYxam7i2Mv40RpFnEKuewF+lz4g/Ch
+ 1CDcGFjAZtFZI3xHX7sVa7ZXd4ppJheAiEK2731keSVehAC5kiLh4NS0OWY/wJXyx/iu
+ SXPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716844768; x=1717449568;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QoQpXNIW9wyYJ/8FBHfMhV4TGUkKv7EgobvaDbpE1/4=;
- b=rtdoKw30UDdGrqgtit+5Ezizv3V1k8r5qKfnKqMvMs62dFKjFY0jwrcbY53siVLCpf
- IpM7eNR7xcci5+akDxP0/b/y39+ogGlqh1XAntRjZStnmvs4znFqCVybQQJYNA2Wx3Q2
- /t0FshYF3UaulKFpcOAw5f9K5ch96ZvFgnOMEnZ0iEHWKNouzknnzNucSoQvvsDO4sEg
- XVzViOXBkas8d5X7G3yKQ+trv87QKhCghyDAyH0iNu5/i0b8I+ApSG/Yt6NgigJYOOHP
- QL/VUmI9W7AGuJh6CzvUSzb/y/WIsGYHa8N7oLItGNhLBfMy4+1lIhQjmnooynTIrBHd
- L96w==
-X-Gm-Message-State: AOJu0YyxKMOA0NeLFazgttq9luwSkOawFO5u+hy4enql7huxBrvCuFSr
- O/rxNpvlRB+2BEpFOmjWqiVGXhG1fCEdvoB0uyPSjXe6czDcMTW00MHYcIlW0mH6wXUZegh7EN8
- c
-X-Google-Smtp-Source: AGHT+IE1VuIqw5GBl9vVxBQsZ7FOqxigO9+qUxPgKrU7ZpFNDNAGzdT4+rvRUl2hcpVT744TX6HaVQ==
-X-Received: by 2002:a05:6a00:6c87:b0:6f8:bae3:37b4 with SMTP id
- d2e1a72fcca58-6f8f2c7041emr10983232b3a.5.1716844768653; 
- Mon, 27 May 2024 14:19:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716844754; x=1717449554;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZDglsqAcp0SxDGAaJ0T9OIIUXwIF6C0mIgo/Mt5cf+M=;
+ b=ONKjo6RIHa6gXN0nWzdV1UQUtdA/R0yhpBp6hpB1YOD7qJOteHvC7ZoSVqlYU31fi5
+ FwjYL3Xc0ADDdJR0CPlZQCuwrC5wdsLh2kiw/9+LoIthQqAMb9yU4MS8jJGLNmxXjs36
+ KBfQuMxBXP/xZrZWxOiNZlr98bcU3arFmNkCRlpDFOVgj/AB3EksILqvsQ17Eqxg4H1N
+ KdMxAXxbtoMeqjWxnxTSoda2n2Z81m9JhnKzaAlzgpOzx8fYyUOIXi8dCqhOhdvkzk3T
+ 7IX1AARbJWmm1SCOcJlkJu64BHvJxja5ftGqCDzQWJl9lejWRUWM1OVMUyvsoW7tRnHa
+ tojg==
+X-Gm-Message-State: AOJu0YzGugpfhw+/wXFo0Qm8aK9MgR3y06yyAd2QI+rBTIBSCOSdeAex
+ EjDFnlQSr/hVrlnapFuFbAu54nMIo9ADCjoZah48R6R8Sgk/HZQwyywfrK4XwFOHfrRl/DXvdxY
+ w
+X-Google-Smtp-Source: AGHT+IErg+qIUH1la6jMJCMYQHJ7X+su+ekX8gGF505KON0K6xXTVrgeGfVYi+PkrOivsukXJL+70Q==
+X-Received: by 2002:a05:6a20:258e:b0:1ad:89e:21b5 with SMTP id
+ adf61e73a8af0-1b212d5bf99mr12122336637.15.1716844754056; 
+ Mon, 27 May 2024 14:19:14 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fd1d4d5fsm5265876b3a.165.2024.05.27.14.19.28
+ d2e1a72fcca58-6f8fd1d4d5fsm5265876b3a.165.2024.05.27.14.19.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 14:19:28 -0700 (PDT)
+ Mon, 27 May 2024 14:19:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: git@xen0n.name,
 	gaosong@loongson.cn
-Subject: [PATCH 17/18] tcg/loongarch64: Support LASX in tcg_out_vec_op
-Date: Mon, 27 May 2024 14:19:11 -0700
-Message-Id: <20240527211912.14060-18-richard.henderson@linaro.org>
+Subject: [PATCH 00/18] tcg/loongarch64: Support v64 and v256
+Date: Mon, 27 May 2024 14:18:54 -0700
+Message-Id: <20240527211912.14060-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240527211912.14060-1-richard.henderson@linaro.org>
-References: <20240527211912.14060-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,371 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/loongarch64/tcg-target.c.inc | 223 +++++++++++++++++++------------
- 1 file changed, 137 insertions(+), 86 deletions(-)
+Some guests only have, or additionally have, 64-bit vectors.
+For example arm, mips, sparc.  So it's best to enable this
+whenever we can.  As with tcg/i386, use 64-bit loads and stores
+but 128-bit vector registers.
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 5d2a6b2ca2..e2b5aad5e3 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1833,76 +1833,125 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                            const int const_args[TCG_MAX_OP_ARGS])
- {
-     TCGType type = vecl + TCG_TYPE_V64;
-+    bool lasx = type == TCG_TYPE_V256;
-     TCGArg a0, a1, a2, a3;
--
--    static const LoongArchInsn cmp_vec_insn[16][4] = {
--        [TCG_COND_EQ] = {OPC_VSEQ_B, OPC_VSEQ_H, OPC_VSEQ_W, OPC_VSEQ_D},
--        [TCG_COND_LE] = {OPC_VSLE_B, OPC_VSLE_H, OPC_VSLE_W, OPC_VSLE_D},
--        [TCG_COND_LEU] = {OPC_VSLE_BU, OPC_VSLE_HU, OPC_VSLE_WU, OPC_VSLE_DU},
--        [TCG_COND_LT] = {OPC_VSLT_B, OPC_VSLT_H, OPC_VSLT_W, OPC_VSLT_D},
--        [TCG_COND_LTU] = {OPC_VSLT_BU, OPC_VSLT_HU, OPC_VSLT_WU, OPC_VSLT_DU},
--    };
--    static const LoongArchInsn cmp_vec_imm_insn[16][4] = {
--        [TCG_COND_EQ] = {OPC_VSEQI_B, OPC_VSEQI_H, OPC_VSEQI_W, OPC_VSEQI_D},
--        [TCG_COND_LE] = {OPC_VSLEI_B, OPC_VSLEI_H, OPC_VSLEI_W, OPC_VSLEI_D},
--        [TCG_COND_LEU] = {OPC_VSLEI_BU, OPC_VSLEI_HU, OPC_VSLEI_WU, OPC_VSLEI_DU},
--        [TCG_COND_LT] = {OPC_VSLTI_B, OPC_VSLTI_H, OPC_VSLTI_W, OPC_VSLTI_D},
--        [TCG_COND_LTU] = {OPC_VSLTI_BU, OPC_VSLTI_HU, OPC_VSLTI_WU, OPC_VSLTI_DU},
--    };
-     LoongArchInsn insn;
--    static const LoongArchInsn neg_vec_insn[4] = {
--        OPC_VNEG_B, OPC_VNEG_H, OPC_VNEG_W, OPC_VNEG_D
-+
-+    static const LoongArchInsn cmp_vec_insn[16][2][4] = {
-+        [TCG_COND_EQ] = {
-+            { OPC_VSEQ_B, OPC_VSEQ_H, OPC_VSEQ_W, OPC_VSEQ_D },
-+            { OPC_XVSEQ_B, OPC_XVSEQ_H, OPC_XVSEQ_W, OPC_XVSEQ_D },
-+        },
-+        [TCG_COND_LE] = {
-+            { OPC_VSLE_B, OPC_VSLE_H, OPC_VSLE_W, OPC_VSLE_D },
-+            { OPC_XVSLE_B, OPC_XVSLE_H, OPC_XVSLE_W, OPC_XVSLE_D },
-+        },
-+        [TCG_COND_LEU] = {
-+            { OPC_VSLE_BU, OPC_VSLE_HU, OPC_VSLE_WU, OPC_VSLE_DU },
-+            { OPC_XVSLE_BU, OPC_XVSLE_HU, OPC_XVSLE_WU, OPC_XVSLE_DU },
-+        },
-+        [TCG_COND_LT] = {
-+            { OPC_VSLT_B, OPC_VSLT_H, OPC_VSLT_W, OPC_VSLT_D },
-+            { OPC_XVSLT_B, OPC_XVSLT_H, OPC_XVSLT_W, OPC_XVSLT_D },
-+        },
-+        [TCG_COND_LTU] = {
-+            { OPC_VSLT_BU, OPC_VSLT_HU, OPC_VSLT_WU, OPC_VSLT_DU },
-+            { OPC_XVSLT_BU, OPC_XVSLT_HU, OPC_XVSLT_WU, OPC_XVSLT_DU },
-+        }
-     };
--    static const LoongArchInsn mul_vec_insn[4] = {
--        OPC_VMUL_B, OPC_VMUL_H, OPC_VMUL_W, OPC_VMUL_D
-+    static const LoongArchInsn cmp_vec_imm_insn[16][2][4] = {
-+        [TCG_COND_EQ] = {
-+            { OPC_VSEQI_B, OPC_VSEQI_H, OPC_VSEQI_W, OPC_VSEQI_D },
-+            { OPC_XVSEQI_B, OPC_XVSEQI_H, OPC_XVSEQI_W, OPC_XVSEQI_D },
-+        },
-+        [TCG_COND_LE] = {
-+            { OPC_VSLEI_B, OPC_VSLEI_H, OPC_VSLEI_W, OPC_VSLEI_D },
-+            { OPC_XVSLEI_B, OPC_XVSLEI_H, OPC_XVSLEI_W, OPC_XVSLEI_D },
-+        },
-+        [TCG_COND_LEU] = {
-+            { OPC_VSLEI_BU, OPC_VSLEI_HU, OPC_VSLEI_WU, OPC_VSLEI_DU },
-+            { OPC_XVSLEI_BU, OPC_XVSLEI_HU, OPC_XVSLEI_WU, OPC_XVSLEI_DU },
-+        },
-+        [TCG_COND_LT] = {
-+            { OPC_VSLTI_B, OPC_VSLTI_H, OPC_VSLTI_W, OPC_VSLTI_D },
-+            { OPC_XVSLTI_B, OPC_XVSLTI_H, OPC_XVSLTI_W, OPC_XVSLTI_D },
-+        },
-+        [TCG_COND_LTU] = {
-+            { OPC_VSLTI_BU, OPC_VSLTI_HU, OPC_VSLTI_WU, OPC_VSLTI_DU },
-+            { OPC_XVSLTI_BU, OPC_XVSLTI_HU, OPC_XVSLTI_WU, OPC_XVSLTI_DU },
-+        }
-     };
--    static const LoongArchInsn smin_vec_insn[4] = {
--        OPC_VMIN_B, OPC_VMIN_H, OPC_VMIN_W, OPC_VMIN_D
-+    static const LoongArchInsn neg_vec_insn[2][4] = {
-+        { OPC_VNEG_B, OPC_VNEG_H, OPC_VNEG_W, OPC_VNEG_D },
-+        { OPC_XVNEG_B, OPC_XVNEG_H, OPC_XVNEG_W, OPC_XVNEG_D },
-     };
--    static const LoongArchInsn umin_vec_insn[4] = {
--        OPC_VMIN_BU, OPC_VMIN_HU, OPC_VMIN_WU, OPC_VMIN_DU
-+    static const LoongArchInsn mul_vec_insn[2][4] = {
-+        { OPC_VMUL_B, OPC_VMUL_H, OPC_VMUL_W, OPC_VMUL_D },
-+        { OPC_XVMUL_B, OPC_XVMUL_H, OPC_XVMUL_W, OPC_XVMUL_D },
-     };
--    static const LoongArchInsn smax_vec_insn[4] = {
--        OPC_VMAX_B, OPC_VMAX_H, OPC_VMAX_W, OPC_VMAX_D
-+    static const LoongArchInsn smin_vec_insn[2][4] = {
-+        { OPC_VMIN_B, OPC_VMIN_H, OPC_VMIN_W, OPC_VMIN_D },
-+        { OPC_XVMIN_B, OPC_XVMIN_H, OPC_XVMIN_W, OPC_XVMIN_D },
-     };
--    static const LoongArchInsn umax_vec_insn[4] = {
--        OPC_VMAX_BU, OPC_VMAX_HU, OPC_VMAX_WU, OPC_VMAX_DU
-+    static const LoongArchInsn umin_vec_insn[2][4] = {
-+        { OPC_VMIN_BU, OPC_VMIN_HU, OPC_VMIN_WU, OPC_VMIN_DU },
-+        { OPC_XVMIN_BU, OPC_XVMIN_HU, OPC_XVMIN_WU, OPC_XVMIN_DU },
-     };
--    static const LoongArchInsn ssadd_vec_insn[4] = {
--        OPC_VSADD_B, OPC_VSADD_H, OPC_VSADD_W, OPC_VSADD_D
-+    static const LoongArchInsn smax_vec_insn[2][4] = {
-+        { OPC_VMAX_B, OPC_VMAX_H, OPC_VMAX_W, OPC_VMAX_D },
-+        { OPC_XVMAX_B, OPC_XVMAX_H, OPC_XVMAX_W, OPC_XVMAX_D },
-     };
--    static const LoongArchInsn usadd_vec_insn[4] = {
--        OPC_VSADD_BU, OPC_VSADD_HU, OPC_VSADD_WU, OPC_VSADD_DU
-+    static const LoongArchInsn umax_vec_insn[2][4] = {
-+        { OPC_VMAX_BU, OPC_VMAX_HU, OPC_VMAX_WU, OPC_VMAX_DU },
-+        { OPC_XVMAX_BU, OPC_XVMAX_HU, OPC_XVMAX_WU, OPC_XVMAX_DU },
-     };
--    static const LoongArchInsn sssub_vec_insn[4] = {
--        OPC_VSSUB_B, OPC_VSSUB_H, OPC_VSSUB_W, OPC_VSSUB_D
-+    static const LoongArchInsn ssadd_vec_insn[2][4] = {
-+        { OPC_VSADD_B, OPC_VSADD_H, OPC_VSADD_W, OPC_VSADD_D },
-+        { OPC_XVSADD_B, OPC_XVSADD_H, OPC_XVSADD_W, OPC_XVSADD_D },
-     };
--    static const LoongArchInsn ussub_vec_insn[4] = {
--        OPC_VSSUB_BU, OPC_VSSUB_HU, OPC_VSSUB_WU, OPC_VSSUB_DU
-+    static const LoongArchInsn usadd_vec_insn[2][4] = {
-+        { OPC_VSADD_BU, OPC_VSADD_HU, OPC_VSADD_WU, OPC_VSADD_DU },
-+        { OPC_XVSADD_BU, OPC_XVSADD_HU, OPC_XVSADD_WU, OPC_XVSADD_DU },
-     };
--    static const LoongArchInsn shlv_vec_insn[4] = {
--        OPC_VSLL_B, OPC_VSLL_H, OPC_VSLL_W, OPC_VSLL_D
-+    static const LoongArchInsn sssub_vec_insn[2][4] = {
-+        { OPC_VSSUB_B, OPC_VSSUB_H, OPC_VSSUB_W, OPC_VSSUB_D },
-+        { OPC_XVSSUB_B, OPC_XVSSUB_H, OPC_XVSSUB_W, OPC_XVSSUB_D },
-     };
--    static const LoongArchInsn shrv_vec_insn[4] = {
--        OPC_VSRL_B, OPC_VSRL_H, OPC_VSRL_W, OPC_VSRL_D
-+    static const LoongArchInsn ussub_vec_insn[2][4] = {
-+        { OPC_VSSUB_BU, OPC_VSSUB_HU, OPC_VSSUB_WU, OPC_VSSUB_DU },
-+        { OPC_XVSSUB_BU, OPC_XVSSUB_HU, OPC_XVSSUB_WU, OPC_XVSSUB_DU },
-     };
--    static const LoongArchInsn sarv_vec_insn[4] = {
--        OPC_VSRA_B, OPC_VSRA_H, OPC_VSRA_W, OPC_VSRA_D
-+    static const LoongArchInsn shlv_vec_insn[2][4] = {
-+        { OPC_VSLL_B, OPC_VSLL_H, OPC_VSLL_W, OPC_VSLL_D },
-+        { OPC_XVSLL_B, OPC_XVSLL_H, OPC_XVSLL_W, OPC_XVSLL_D },
-     };
--    static const LoongArchInsn shli_vec_insn[4] = {
--        OPC_VSLLI_B, OPC_VSLLI_H, OPC_VSLLI_W, OPC_VSLLI_D
-+    static const LoongArchInsn shrv_vec_insn[2][4] = {
-+        { OPC_VSRL_B, OPC_VSRL_H, OPC_VSRL_W, OPC_VSRL_D },
-+        { OPC_XVSRL_B, OPC_XVSRL_H, OPC_XVSRL_W, OPC_XVSRL_D },
-     };
--    static const LoongArchInsn shri_vec_insn[4] = {
--        OPC_VSRLI_B, OPC_VSRLI_H, OPC_VSRLI_W, OPC_VSRLI_D
-+    static const LoongArchInsn sarv_vec_insn[2][4] = {
-+        { OPC_VSRA_B, OPC_VSRA_H, OPC_VSRA_W, OPC_VSRA_D },
-+        { OPC_XVSRA_B, OPC_XVSRA_H, OPC_XVSRA_W, OPC_XVSRA_D },
-     };
--    static const LoongArchInsn sari_vec_insn[4] = {
--        OPC_VSRAI_B, OPC_VSRAI_H, OPC_VSRAI_W, OPC_VSRAI_D
-+    static const LoongArchInsn shli_vec_insn[2][4] = {
-+        { OPC_VSLLI_B, OPC_VSLLI_H, OPC_VSLLI_W, OPC_VSLLI_D },
-+        { OPC_XVSLLI_B, OPC_XVSLLI_H, OPC_XVSLLI_W, OPC_XVSLLI_D },
-     };
--    static const LoongArchInsn rotrv_vec_insn[4] = {
--        OPC_VROTR_B, OPC_VROTR_H, OPC_VROTR_W, OPC_VROTR_D
-+    static const LoongArchInsn shri_vec_insn[2][4] = {
-+        { OPC_VSRLI_B, OPC_VSRLI_H, OPC_VSRLI_W, OPC_VSRLI_D },
-+        { OPC_XVSRLI_B, OPC_XVSRLI_H, OPC_XVSRLI_W, OPC_XVSRLI_D },
-     };
--    static const LoongArchInsn rotri_vec_insn[4] = {
--        OPC_VROTRI_B, OPC_VROTRI_H, OPC_VROTRI_W, OPC_VROTRI_D
-+    static const LoongArchInsn sari_vec_insn[2][4] = {
-+        { OPC_VSRAI_B, OPC_VSRAI_H, OPC_VSRAI_W, OPC_VSRAI_D },
-+        { OPC_XVSRAI_B, OPC_XVSRAI_H, OPC_XVSRAI_W, OPC_XVSRAI_D },
-+    };
-+    static const LoongArchInsn rotrv_vec_insn[2][4] = {
-+        { OPC_VROTR_B, OPC_VROTR_H, OPC_VROTR_W, OPC_VROTR_D },
-+        { OPC_XVROTR_B, OPC_XVROTR_H, OPC_XVROTR_W, OPC_XVROTR_D },
-+    };
-+    static const LoongArchInsn rotri_vec_insn[2][4] = {
-+        { OPC_VROTRI_B, OPC_VROTRI_H, OPC_VROTRI_W, OPC_VROTRI_D },
-+        { OPC_XVROTRI_B, OPC_XVROTRI_H, OPC_XVROTRI_W, OPC_XVROTRI_D },
-     };
- 
-     a0 = args[0];
-@@ -1910,9 +1959,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-     a2 = args[2];
-     a3 = args[3];
- 
--    /* Currently only supports V64 & V128 */
--    tcg_debug_assert(type == TCG_TYPE_V64 || type == TCG_TYPE_V128);
--
-     switch (opc) {
-     case INDEX_op_st_vec:
-         tcg_out_st(s, type, a0, a1, a2);
-@@ -1921,7 +1967,7 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         tcg_out_ld(s, type, a0, a1, a2);
-         break;
-     case INDEX_op_and_vec:
--        insn = OPC_VAND_V;
-+        insn = lasx ? OPC_XVAND_V : OPC_VAND_V;
-         goto vdvjvk;
-     case INDEX_op_andc_vec:
-         /*
-@@ -1931,22 +1977,22 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-          */
-         a1 = a2;
-         a2 = args[2];
--        insn = OPC_VANDN_V;
-+        insn = lasx ? OPC_XVANDN_V : OPC_VANDN_V;
-         goto vdvjvk;
-     case INDEX_op_or_vec:
--        insn = OPC_VOR_V;
-+        insn = lasx ? OPC_XVOR_V : OPC_VOR_V;
-         goto vdvjvk;
-     case INDEX_op_orc_vec:
--        insn = OPC_VORN_V;
-+        insn = lasx ? OPC_XVORN_V : OPC_VORN_V;
-         goto vdvjvk;
-     case INDEX_op_xor_vec:
--        insn = OPC_VXOR_V;
-+        insn = lasx ? OPC_XVXOR_V : OPC_VXOR_V;
-         goto vdvjvk;
-     case INDEX_op_not_vec:
-         a2 = a1;
-         /* fall through */
-     case INDEX_op_nor_vec:
--        insn = OPC_VNOR_V;
-+        insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
-         goto vdvjvk;
-     case INDEX_op_cmp_vec:
-         {
-@@ -1962,13 +2008,13 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                      cond == TCG_COND_LE ||
-                      cond == TCG_COND_LT) &&
-                     (-0x10 <= value && value <= 0x0f)) {
--                    insn = cmp_vec_imm_insn[cond][vece];
-+                    insn = cmp_vec_imm_insn[cond][lasx][vece];
-                     tcg_out32(s, encode_vdvjsk5_insn(insn, a0, a1, value));
-                     break;
-                 } else if ((cond == TCG_COND_LEU ||
-                             cond == TCG_COND_LTU) &&
-                            (0x00 <= value && value <= 0x1f)) {
--                    insn = cmp_vec_imm_insn[cond][vece];
-+                    insn = cmp_vec_imm_insn[cond][lasx][vece];
-                     tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
-                     break;
-                 }
-@@ -1982,86 +2028,91 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                 a2 = TCG_VEC_TMP0;
-             }
- 
--            insn = cmp_vec_insn[cond][vece];
-+            insn = cmp_vec_insn[cond][lasx][vece];
-             if (insn == 0) {
-                 TCGArg t;
-                 t = a1, a1 = a2, a2 = t;
-                 cond = tcg_swap_cond(cond);
--                insn = cmp_vec_insn[cond][vece];
-+                insn = cmp_vec_insn[cond][lasx][vece];
-                 tcg_debug_assert(insn != 0);
-             }
-         }
-         goto vdvjvk;
-     case INDEX_op_add_vec:
--        tcg_out_addsub_vec(s, false, vece, a0, a1, a2, const_args[2], true);
-+        tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
-         break;
-     case INDEX_op_sub_vec:
--        tcg_out_addsub_vec(s, false, vece, a0, a1, a2, const_args[2], false);
-+        tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], false);
-         break;
-     case INDEX_op_neg_vec:
--        tcg_out32(s, encode_vdvj_insn(neg_vec_insn[vece], a0, a1));
-+        tcg_out32(s, encode_vdvj_insn(neg_vec_insn[lasx][vece], a0, a1));
-         break;
-     case INDEX_op_mul_vec:
--        insn = mul_vec_insn[vece];
-+        insn = mul_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_smin_vec:
--        insn = smin_vec_insn[vece];
-+        insn = smin_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_smax_vec:
--        insn = smax_vec_insn[vece];
-+        insn = smax_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_umin_vec:
--        insn = umin_vec_insn[vece];
-+        insn = umin_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_umax_vec:
--        insn = umax_vec_insn[vece];
-+        insn = umax_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_ssadd_vec:
--        insn = ssadd_vec_insn[vece];
-+        insn = ssadd_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_usadd_vec:
--        insn = usadd_vec_insn[vece];
-+        insn = usadd_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_sssub_vec:
--        insn = sssub_vec_insn[vece];
-+        insn = sssub_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_ussub_vec:
--        insn = ussub_vec_insn[vece];
-+        insn = ussub_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_shlv_vec:
--        insn = shlv_vec_insn[vece];
-+        insn = shlv_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_shrv_vec:
--        insn = shrv_vec_insn[vece];
-+        insn = shrv_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_sarv_vec:
--        insn = sarv_vec_insn[vece];
-+        insn = sarv_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_rotlv_vec:
-         /* rotlv_vec a1, a2 = rotrv_vec a1, -a2 */
--        tcg_out32(s, encode_vdvj_insn(neg_vec_insn[vece], TCG_VEC_TMP0, a2));
-+        tcg_out32(s, encode_vdvj_insn(neg_vec_insn[lasx][vece],
-+                                      TCG_VEC_TMP0, a2));
-         a2 = TCG_VEC_TMP0;
-         /* fall through */
-     case INDEX_op_rotrv_vec:
--        insn = rotrv_vec_insn[vece];
-+        insn = rotrv_vec_insn[lasx][vece];
-         goto vdvjvk;
-     case INDEX_op_shli_vec:
--        insn = shli_vec_insn[vece];
-+        insn = shli_vec_insn[lasx][vece];
-         goto vdvjukN;
-     case INDEX_op_shri_vec:
--        insn = shri_vec_insn[vece];
-+        insn = shri_vec_insn[lasx][vece];
-         goto vdvjukN;
-     case INDEX_op_sari_vec:
--        insn = sari_vec_insn[vece];
-+        insn = sari_vec_insn[lasx][vece];
-         goto vdvjukN;
-     case INDEX_op_rotli_vec:
-         /* rotli_vec a1, a2 = rotri_vec a1, -a2 */
-         a2 = extract32(-a2, 0, 3 + vece);
--        insn = rotri_vec_insn[vece];
-+        insn = rotri_vec_insn[lasx][vece];
-         goto vdvjukN;
-     case INDEX_op_bitsel_vec:
-         /* vbitsel vd, vj, vk, va = bitsel_vec vd, va, vk, vj */
--        tcg_out_opc_vbitsel_v(s, a0, a3, a2, a1);
-+        if (lasx) {
-+            tcg_out_opc_xvbitsel_v(s, a0, a3, a2, a1);
-+        } else {
-+            tcg_out_opc_vbitsel_v(s, a0, a3, a2, a1);
-+        }
-         break;
-     case INDEX_op_dupm_vec:
-         tcg_out_dupm_vec(s, type, vece, a0, a1, a2);
+If LASX is available (all current loongarch64 cpus?), we have
+256-bit vectors as well.  Useful for guests that support such
+things, e.g. aarch64, i386, and loongarch64 itself.
+
+
+r~
+
+
+Richard Henderson (18):
+  tcg/loongarch64: Import LASX, FP insns
+  tcg/loongarch64: Use fp load/store for I32 and I64 into vector regs
+  tcg/loongarch64: Handle i32 and i64 moves between gr and fr
+  tcg/loongarch64: Support TCG_TYPE_V64
+  util/loongarch64: Detect LASX vector support
+  tcg/loongarch64: Simplify tcg_out_dup_vec
+  tcg/loongarch64: Support LASX in tcg_out_dup_vec
+  tcg/loongarch64: Support LASX in tcg_out_dupm_vec
+  tcg/loongarch64: Use tcg_out_dup_vec in tcg_out_dupi_vec
+  tcg/loongarch64: Support LASX in tcg_out_dupi_vec
+  tcg/loongarch64: Simplify tcg_out_addsub_vec
+  tcg/loongarch64: Support LASX in tcg_out_addsub_vec
+  tcg/loongarch64: Split out vdvjvk in tcg_out_vec_op
+  tcg/loongarch64: Support LASX in tcg_out_{mov,ld,st}
+  tcg/loongarch64: Remove temp_vec from tcg_out_vec_op
+  tcg/loongarch64: Split out vdvjukN in tcg_out_vec_op
+  tcg/loongarch64: Support LASX in tcg_out_vec_op
+  tcg/loongarch64: Enable v256 with LASX
+
+ host/include/loongarch64/host/cpuinfo.h |    1 +
+ tcg/loongarch64/tcg-target.h            |    4 +-
+ util/cpuinfo-loongarch.c                |    1 +
+ tcg/loongarch64/tcg-insn-defs.c.inc     | 6181 ++++++++---------------
+ tcg/loongarch64/tcg-target.c.inc        |  575 ++-
+ 5 files changed, 2461 insertions(+), 4301 deletions(-)
+
 -- 
 2.34.1
 
