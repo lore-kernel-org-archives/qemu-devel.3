@@ -4,81 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EBDC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AB3C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:30:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBYWU-00023E-Jk; Mon, 27 May 2024 07:28:14 -0400
+	id 1sBYYg-000464-1X; Mon, 27 May 2024 07:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBYWJ-0001wP-1n; Mon, 27 May 2024 07:28:03 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBYW5-0000k1-Kb; Mon, 27 May 2024 07:28:02 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2bf5baa2773so2639704a91.0; 
- Mon, 27 May 2024 04:27:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716809265; x=1717414065; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f7bLJ0XjhNso+GIkr6uRi/5/OkZcqZK2jiRSJ58+fYc=;
- b=L1T2mG/IwP4sxj5iVk+iQbiUGWxcv87qKJ4gL+3smLdjnby+hPQcG4/t/2zZbnZXXN
- QJR5v2rkWooI6xSIiHCt3PUoAnUYnO9zzS8MBpBn0VggzfIcmFsUElYeGVmykIY0Pta3
- R+LQ5w+Ggavdh0TNMuKT1cqls89e1l5dA+bZalDpYcnc2IVX9sc5VZ08PGmbX69SUs4k
- U/XlxmsDlTBXS9HvaNYmhBo6cUfNsLAQjjcQXYlTeiW2XjY1OHv8d8zfdolVYdXAaNm/
- Ntr6OEp4kuV216ktHz2vnvpWNKmF3sngczPPKdSuxqr5z0AlPK38hSi/GRLZYJ6RfdN/
- Ikbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716809265; x=1717414065;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=f7bLJ0XjhNso+GIkr6uRi/5/OkZcqZK2jiRSJ58+fYc=;
- b=mvgEq8v3pFItx87Ofac8tOXuT1oKGhzMmpXpQnC4+CYVrC90QvowI+BGHyZ5E2Xzuj
- ux4/wC+LhtkCHX6OFZmP2mdJbjICSUZZ/e5phW58aHRf1qMNJVScNTaJZA5VE4lzPMek
- ZMKPr0YAdVZ8RfKGbIXmAWnDut5l6OeAQTGWLvB/6PSP5a9xEnfBkZqmJVw8RA/HwBjt
- Fy0ASrJWkBoZmygD8ujLZBdFFxDZvU07aleRB/0Q0ut6J82cLeG6FE0wlO1dTY/EHo9m
- qrM8s3JlOCMiQ8iaXC3kndSJEhwr2F0fMikVWFQytPSWyGaQGDwKNpCsXwXp3ruSBAzp
- vDfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFG7qCzXj49ayc3xiNYhCa1IdPXXBHYZum+CBewnY5o/XN4s30c5P6tmEMHeVA75ic7lHomxSvY8t3+aoWMJ4VKAawYxg=
-X-Gm-Message-State: AOJu0YxZYxCYzQFU8yxu5oIBPvltKJNrJziJzcXo9/wF/qffTL1tlJYA
- rFRNsL4vGqcf2/OjC2Km7yn5vDJSzpQOebHqeelfk00zcCa5gzk2
-X-Google-Smtp-Source: AGHT+IFwYHCjaavF24QZrKY1tyhcQMQiz5p9rtNIswRAqzPDlR+0/QrsIGuvvcMHFAIpZixLNFa7Dw==
-X-Received: by 2002:a17:90b:ec4:b0:2bd:e8ca:d302 with SMTP id
- 98e67ed59e1d1-2bf5f51ad84mr8859307a91.37.1716809265242; 
- Mon, 27 May 2024 04:27:45 -0700 (PDT)
-Received: from localhost (110-175-65-7.tpgi.com.au. [110.175.65.7])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f9b4359sm6154363a91.50.2024.05.27.04.27.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 04:27:44 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 27 May 2024 21:27:40 +1000
-Message-Id: <D1KE3ACAV55M.2RI2CBTR9I1EJ@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Thomas Huth" <thuth@redhat.com>, "Fabiano Rosas" <farosas@suse.de>
-Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 2/3] tests/qtest/migration-test: Enable on ppc64
-X-Mailer: aerc 0.17.0
-References: <20240525031330.196609-1-npiggin@gmail.com>
- <20240525031330.196609-3-npiggin@gmail.com>
- <30aa8e56-bb43-4a1f-83f0-02324fb680e0@redhat.com>
-In-Reply-To: <30aa8e56-bb43-4a1f-83f0-02324fb680e0@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sBYYU-00043s-7C; Mon, 27 May 2024 07:30:26 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sBYYR-00016o-Qh; Mon, 27 May 2024 07:30:17 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E1B516A6D0;
+ Mon, 27 May 2024 14:30:46 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CC950D8743;
+ Mon, 27 May 2024 14:30:12 +0300 (MSK)
+Message-ID: <10d3d2ce-ba7c-4e25-ba5e-d3e3ee169a98@tls.msk.ru>
+Date: Mon, 27 May 2024 14:30:12 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Stable-8.2.5 19/21] dockerfiles: add 'MAKE' env variable to
+ remaining containers
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
+ <20240527072435.52812-19-mjt@tls.msk.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240527072435.52812-19-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,62 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon May 27, 2024 at 5:35 PM AEST, Thomas Huth wrote:
-> On 25/05/2024 05.13, Nicholas Piggin wrote:
-> > ppc64 with TCG seems to no longer be failing this test. Let's try to
-> > enable it. s390x is still hanging about 1 in 10 runs.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   tests/qtest/migration-test.c | 16 +++-------------
-> >   1 file changed, 3 insertions(+), 13 deletions(-)
-> >=20
-> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.=
-c
-> > index c13535c37d..b8617cc843 100644
-> > --- a/tests/qtest/migration-test.c
-> > +++ b/tests/qtest/migration-test.c
-> > @@ -3454,19 +3454,9 @@ int main(int argc, char **argv)
-> >   #endif
-> >  =20
-> >       /*
-> > -     * On ppc64, the test only works with kvm-hv, but not with kvm-pr =
-and TCG
-> > -     * is touchy due to race conditions on dirty bits (especially on P=
-PC for
-> > -     * some reason)
-> > -     */
-> > -    if (g_str_equal(arch, "ppc64") &&
-> > -        (!has_kvm || access("/sys/module/kvm_hv", F_OK))) {
-> > -        g_test_message("Skipping tests: kvm_hv not available");
-> > -        goto test_add_done;
-> > -    }
-> > -
-> > -    /*
-> > -     * Similar to ppc64, s390x seems to be touchy with TCG, so disable=
- it
-> > -     * there until the problems are resolved
-> > +     * On s390x, the test seems to be touchy with TCG, perhaps due to =
-race
-> > +     * conditions on dirty bits, so disable it there until the problem=
-s are
-> > +     * resolved.
-> >        */
-> >       if (g_str_equal(arch, "s390x") && !has_kvm) {
-> >           g_test_message("Skipping tests: s390x host with KVM is requir=
-ed");
->
-> Since you've identified the problem on s390x, you could maybe adjust the=
-=20
-> comment in case you respin ... OTOH, it will get removed anyway once we=
-=20
-> merge the s390x fix, so no need to respin just because of this.
->
+27.05.2024 10:24, Michael Tokarev wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> All the lcitool generated containers define a "MAKE" env. It will be
+> convenient for later patches if all containers do this.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Message-ID: <20240513111551.488088-2-berrange@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> (cherry picked from commit bad7a2759c69417a5558f0f19d4ede58c08705e8)
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Thanks. I will respin to at least fix the subjet "Enable on ppc64 TCG"
-so I can do the other minor things too.
+This one is picked up for 8.2 by mistake, I dropped it now.
+It was my failed attempt to pick up some changes in CI into staging-7.2
+branch.
 
 Thanks,
-Nick
+
+/mjt
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
