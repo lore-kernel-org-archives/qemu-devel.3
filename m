@@ -4,69 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79320C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF29C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBZCp-0004sa-10; Mon, 27 May 2024 08:11:59 -0400
+	id 1sBZF0-0005wd-MF; Mon, 27 May 2024 08:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sBZCm-0004qH-4K; Mon, 27 May 2024 08:11:57 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBZEr-0005uy-2h
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 08:14:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sBZCj-00014a-3D; Mon, 27 May 2024 08:11:54 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 0CA5DC0002
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1716811908;
- bh=SWzH1z/+Kh0ee5cQlyrOJxpTPt2dW7nTXOthQ/PKTFU=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=fCdJTE/q/YTmouNm2ElY/2ym1WepxFSYVi0YwBxqgKQ03Zxxi/0oRFsUhzZ3Gt+MO
- nmZL3jSLn+2Txy5CUbdEg2XUidThe4Hxi/rRIg4emHudsQSo1IP+B+PpVwIyUiMSk5
- T301ebTeNsE68SAWyysiz0HsgXYJzkughIrrF3kr72omLWCtt2FsywGeK1+ZK61Yvd
- ql65fBtcUtjyqIhfE3//dDu/YjE5MBBp5ZZwo/YRY80VDMH2ndssgwPdgdhxqos61A
- hg4CglYRgbZ5xDkSO3Kb2FwuWukLFwnwTgmTxQdj8gNHwQ45zfBKihNWA2m84LqPrF
- TSe7mICPlB2SQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1716811908;
- bh=SWzH1z/+Kh0ee5cQlyrOJxpTPt2dW7nTXOthQ/PKTFU=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=z+04YcxUX85VKy7p8MOUmd4Gvy30KU0OPuXe5CO2BA6dCsQHx9Pw0QmwFR9U0Wb0o
- brV4eYl0d9j041gcJ0ZAiZrzc30qLgJHIPp2vEs/18sh6ibuikNJozWRWFfQgeF4KG
- DGsfrTCyCStmktfjj9G1ZtIleoHrcaebnG+6jeu6+CANbu1Yf86IX0M+7E2u6QBz6Z
- gbmEMyqG2IpByMTsQ78rPXCxrqWlPj8ipRfnOdM9bMQxrEc0oGDpOfeT3T/4udhnuZ
- Ye4oNnSMBkfH23QczZvpHy/w2MVETnp2UW49CQlooTFiSQcFUx4mA9KdLKaDpERnqj
- B82DEz1FFHg9g==
-From: Alexei Filippov <alexei.filippov@syntacore.com>
-To: <alistair23@gmail.com>
-CC: <alexei.filippov@syntacore.com>, <alistair.francis@wdc.com>,
- <bin.meng@windriver.com>, <dbarboza@ventanamicro.com>,
- <jchan@ventanamicro.com>, <liwei1518@gmail.com>, <palmer@dabbelt.com>,
- <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
- <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v2 1/2] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
-Date: Mon, 27 May 2024 15:11:37 +0300
-Message-ID: <20240527121137.85206-1-alexei.filippov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <CAKmqyKNYFyVEOsRyOQCjZBMO_-Wut+k2Bn_5ep_uZdFi-5O-jQ@mail.gmail.com>
-References: <CAKmqyKNYFyVEOsRyOQCjZBMO_-Wut+k2Bn_5ep_uZdFi-5O-jQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBZEn-0001Qk-Mx
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 08:14:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716812039;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HFnWa4Oh/sxKLAsVsnJmOuTlG52nQsXRZi2FWLNA3NE=;
+ b=R8rLwO5f/OJEV2M7qDV57OfnLUMPBWVQIvLYHPj9QfrQwFFE0VdwObDGQYZpnygzAk+i07
+ m2anQWWbTXdINf0xo0oGbeaOY74ZSUJ0byVDg0wQXmjZ/qH5pdxQzGttGJ3Q1G1upgfajR
+ ce087VZYjqVO7xXZdUthBaX2vYgETnk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-NEXkIPhbNYOjIbVgXEvHSw-1; Mon,
+ 27 May 2024 08:13:55 -0400
+X-MC-Unique: NEXkIPhbNYOjIbVgXEvHSw-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1D9343C025BE;
+ Mon, 27 May 2024 12:13:55 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.77])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5B2B81C0654B;
+ Mon, 27 May 2024 12:13:53 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, Eric Farman <farman@linux.ibm.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] hw/s390x: Remove unused macro VMSTATE_ADAPTER_ROUTES
+Date: Mon, 27 May 2024 14:13:51 +0200
+Message-ID: <20240527121351.211266-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,86 +78,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+It's not used anywhere, so let's simply remove it.
 
-raise_mmu_exception(), as is today, is prioritizing guest page faults by
-checking first if virt_enabled && !first_stage, and then considering the
-regular inst/load/store faults.
-
-There's no mention in the spec about guest page fault being a higher
-priority that PMP faults. In fact, privileged spec section 3.7.1 says:
-
-"Attempting to fetch an instruction from a PMP region that does not have
-execute permissions raises an instruction access-fault exception.
-Attempting to execute a load or load-reserved instruction which accesses
-a physical address within a PMP region without read permissions raises a
-load access-fault exception. Attempting to execute a store,
-store-conditional, or AMO instruction which accesses a physical address
-within a PMP region without write permissions raises a store
-access-fault exception."
-
-So, in fact, we're doing it wrong - PMP faults should always be thrown,
-regardless of also being a first or second stage fault.
-
-The way riscv_cpu_tlb_fill() and get_physical_address() work is
-adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
-reflected in the 'pmp_violation' flag. What we need is to change
-raise_mmu_exception() to prioritize it.
-
-Reported-by: Joseph Chan <jchan@ventanamicro.com>
-Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/riscv/cpu_helper.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ include/hw/s390x/s390_flic.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index fc090d729a..e3a7797d00 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1176,28 +1176,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+diff --git a/include/hw/s390x/s390_flic.h b/include/hw/s390x/s390_flic.h
+index bcb081def5..382d9833f1 100644
+--- a/include/hw/s390x/s390_flic.h
++++ b/include/hw/s390x/s390_flic.h
+@@ -35,9 +35,6 @@ typedef struct AdapterRoutes {
  
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (env->virt_enabled && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-+        } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
--                RISCV_EXCP_STORE_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
-         }
-         break;
-     default:
+ extern const VMStateDescription vmstate_adapter_routes;
+ 
+-#define VMSTATE_ADAPTER_ROUTES(_f, _s) \
+-    VMSTATE_STRUCT(_f, _s, 1, vmstate_adapter_routes, AdapterRoutes)
+-
+ #define TYPE_S390_FLIC_COMMON "s390-flic"
+ OBJECT_DECLARE_TYPE(S390FLICState, S390FLICStateClass,
+                     S390_FLIC_COMMON)
 -- 
-2.34.1
+2.45.1
 
 
