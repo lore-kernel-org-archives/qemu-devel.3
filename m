@@ -4,74 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A692EC25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31EB7C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVJC-0007cf-VC; Mon, 27 May 2024 04:02:19 -0400
+	id 1sBVKD-00018t-Jb; Mon, 27 May 2024 04:03:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sBVGb-0004jf-Cb
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:59:37 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1sBVJn-0000Gn-Br; Mon, 27 May 2024 04:02:58 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sBVGL-0004Xs-Uc
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:59:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716796762; x=1748332762;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=WeM/edYd9mSl+ORqUJfueVLUMLCrkQ8sggeY8fdRPiE=;
- b=MjlBMPo+izQKCzR4fg1P2PX1DNvyIHdRJlw++JX38Fw2vGQMGF7oL1Fj
- KrHZL4pJ+8JuPivlb951vi6e5tx7n/69oqPmAOHvSHHEsvQKhxCddj/BO
- 6S1cPTer0n8JkDKGn+y2i8PCvKjbTEAB2XTNOlI5Blk3wGHdg8pbGx9Xh
- pkPRSWYDE11PM8MT5uDyDejB9C+NwXV1N5/kghntCM/6d5okurEz5V0IR
- OgLcUQGg14AKqD2J6dG9eZz1wZuBN9P+t4DtrUQivqWBGrxmS6lWe29nR
- LijIo1ISJwUZadyTTaPrY2jjFtCKyEc0D55yakPnrYaCXJvAcGosoFyh0 g==;
-X-CSE-ConnectionGUID: d4KGOxdjQwyWH+t0i+Hpcw==
-X-CSE-MsgGUID: gg8WceUUR3+VOjTD+B7/6g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="12967754"
-X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="12967754"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2024 00:59:21 -0700
-X-CSE-ConnectionGUID: atWCFp4JQ9uMGfR422ZL9g==
-X-CSE-MsgGUID: Bqrf2WGoQxm3+u/O1eB1fw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="39085018"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa005.fm.intel.com with ESMTP; 27 May 2024 00:59:18 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 6/6] docs/tracing: Add simpletrace-rust section
-Date: Mon, 27 May 2024 16:14:21 +0800
-Message-Id: <20240527081421.2258624-7-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240527081421.2258624-1-zhao1.liu@intel.com>
-References: <20240527081421.2258624-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1sBVJl-0005H2-3C; Mon, 27 May 2024 04:02:54 -0400
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Mon, 27 May
+ 2024 16:02:33 +0800
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 27 May
+ 2024 16:02:34 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Mon, 27 May 2024 16:02:32 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
+ Cleber Rosa <crosa@redhat.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v4 02/16] aspeed/sli: Add AST2700 support
+Date: Mon, 27 May 2024 16:02:16 +0800
+Message-ID: <20240527080231.1576609-3-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
+ does not designate 192.168.10.10 as permitted sender)
+ receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
+ helo=localhost.localdomain;
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,65 +70,275 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Describe how to compile and use this Rust version program.
+AST2700 SLI engine is designed to accelerate the
+throughput between cross-die connections.
+It have CPU_SLI at CPU die and IO_SLI at IO die.
 
-And also define the Rust code contribution requirements.
+Introduce dummy AST2700 SLI and SLIIO models.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
- docs/devel/tracing.rst | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ hw/misc/aspeed_sli.c         | 177 +++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build          |   3 +-
+ hw/misc/trace-events         |   7 ++
+ include/hw/misc/aspeed_sli.h |  27 ++++++
+ 4 files changed, 213 insertions(+), 1 deletion(-)
+ create mode 100644 hw/misc/aspeed_sli.c
+ create mode 100644 include/hw/misc/aspeed_sli.h
 
-diff --git a/docs/devel/tracing.rst b/docs/devel/tracing.rst
-index 043bed7fd0fc..9f31fa38f9bc 100644
---- a/docs/devel/tracing.rst
-+++ b/docs/devel/tracing.rst
-@@ -273,6 +273,41 @@ You must ensure that the same "trace-events-all" file was used to build QEMU,
- otherwise trace event declarations may have changed and output will not be
- consistent.
+diff --git a/hw/misc/aspeed_sli.c b/hw/misc/aspeed_sli.c
+new file mode 100644
+index 0000000000..fe720ead50
+--- /dev/null
++++ b/hw/misc/aspeed_sli.c
+@@ -0,0 +1,177 @@
++/*
++ * ASPEED SLI Controller
++ *
++ * Copyright (C) 2024 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/error-report.h"
++#include "hw/qdev-properties.h"
++#include "hw/misc/aspeed_sli.h"
++#include "qapi/error.h"
++#include "migration/vmstate.h"
++#include "trace.h"
++
++#define SLI_REGION_SIZE 0x500
++#define TO_REG(addr) ((addr) >> 2)
++
++static uint64_t aspeed_sli_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
++
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return 0;
++    }
++
++    trace_aspeed_sli_read(addr, size, s->regs[reg]);
++    return s->regs[reg];
++}
++
++static void aspeed_sli_write(void *opaque, hwaddr addr, uint64_t data,
++                              unsigned int size)
++{
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
++
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return;
++    }
++
++    trace_aspeed_sli_write(addr, size, data);
++    s->regs[reg] = data;
++}
++
++static uint64_t aspeed_sliio_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
++
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return 0;
++    }
++
++    trace_aspeed_sliio_read(addr, size, s->regs[reg]);
++    return s->regs[reg];
++}
++
++static void aspeed_sliio_write(void *opaque, hwaddr addr, uint64_t data,
++                              unsigned int size)
++{
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
++
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return;
++    }
++
++    trace_aspeed_sliio_write(addr, size, data);
++    s->regs[reg] = data;
++}
++
++static const MemoryRegionOps aspeed_sli_ops = {
++    .read = aspeed_sli_read,
++    .write = aspeed_sli_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static const MemoryRegionOps aspeed_sliio_ops = {
++    .read = aspeed_sliio_read,
++    .write = aspeed_sliio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void aspeed_sli_realize(DeviceState *dev, Error **errp)
++{
++    AspeedSLIState *s = ASPEED_SLI(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sli_ops, s,
++                          TYPE_ASPEED_SLI, SLI_REGION_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
++}
++
++static void aspeed_sliio_realize(DeviceState *dev, Error **errp)
++{
++    AspeedSLIState *s = ASPEED_SLI(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sliio_ops, s,
++                          TYPE_ASPEED_SLI, SLI_REGION_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
++}
++
++static void aspeed_sli_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "Aspeed SLI Controller";
++    dc->realize = aspeed_sli_realize;
++}
++
++static const TypeInfo aspeed_sli_info = {
++    .name          = TYPE_ASPEED_SLI,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(AspeedSLIState),
++    .class_init    = aspeed_sli_class_init,
++    .abstract      = true,
++};
++
++static void aspeed_2700_sli_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "AST2700 SLI Controller";
++}
++
++static void aspeed_2700_sliio_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "AST2700 I/O SLI Controller";
++    dc->realize = aspeed_sliio_realize;
++}
++
++static const TypeInfo aspeed_2700_sli_info = {
++    .name           = TYPE_ASPEED_2700_SLI,
++    .parent         = TYPE_ASPEED_SLI,
++    .class_init     = aspeed_2700_sli_class_init,
++};
++
++static const TypeInfo aspeed_2700_sliio_info = {
++    .name           = TYPE_ASPEED_2700_SLIIO,
++    .parent         = TYPE_ASPEED_SLI,
++    .class_init     = aspeed_2700_sliio_class_init,
++};
++
++static void aspeed_sli_register_types(void)
++{
++    type_register_static(&aspeed_sli_info);
++    type_register_static(&aspeed_2700_sli_info);
++    type_register_static(&aspeed_2700_sliio_info);
++}
++
++type_init(aspeed_sli_register_types);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 86596a3888..2ca8717be2 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -136,7 +136,8 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_sbc.c',
+   'aspeed_sdmc.c',
+   'aspeed_xdma.c',
+-  'aspeed_peci.c'))
++  'aspeed_peci.c',
++  'aspeed_sli.c'))
  
-+Simpletrace-rust
-+----------------
+ system_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-sysreg.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_rng.c'))
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 5d241cb40a..e13b648221 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -351,3 +351,10 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
+ # iosb.c
+ iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
+ iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
 +
-+Simpletrace-rust (scripts/Simpletrace-rust) is a Rust implementation of
-+simpletrace.py, with the same command line arguments as the Python script.
++# aspeed_sli.c
++aspeed_sli_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_sli_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_sliio_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_sliio_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
 +
-+Simpletrace-rust has faster trace parsing compared to the Python version.
+diff --git a/include/hw/misc/aspeed_sli.h b/include/hw/misc/aspeed_sli.h
+new file mode 100644
+index 0000000000..23f346ab93
+--- /dev/null
++++ b/include/hw/misc/aspeed_sli.h
+@@ -0,0 +1,27 @@
++/*
++ * ASPEED SLI Controller
++ *
++ * Copyright (C) 2024 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef ASPEED_SLI_H
++#define ASPEED_SLI_H
 +
-+The script is compiled by::
++#include "hw/sysbus.h"
 +
-+    cargo build --manifest-path ./scripts/simpletrace-rust/Cargo.toml --release
++#define TYPE_ASPEED_SLI "aspeed.sli"
++#define TYPE_ASPEED_2700_SLI TYPE_ASPEED_SLI "-ast2700"
++#define TYPE_ASPEED_2700_SLIIO TYPE_ASPEED_SLI "io" "-ast2700"
++OBJECT_DECLARE_SIMPLE_TYPE(AspeedSLIState, ASPEED_SLI)
 +
-+Or under scripts/simpletrace-rust, just use::
++#define ASPEED_SLI_NR_REGS  (0x500 >> 2)
 +
-+    cargo build --release
++struct AspeedSLIState {
++    SysBusDevice parent;
++    MemoryRegion iomem;
 +
-+The script also takes the "trace-events-all" file and the binary trace::
++    uint32_t regs[ASPEED_SLI_NR_REGS];
++};
 +
-+    ./scripts/simpletrace-rust/target/release/simpletrace-rust trace-events-all \
-+                                                               trace-12345
-+
-+Any contribution to Simpletrace-rust needs to do the following checks:
-+
-+Compilation check::
-+
-+    cargo build
-+
-+Clippy check::
-+
-+    cargo clippy
-+
-+Code style check::
-+
-+    cargo +nightly fmt --check
-+
- Ftrace
- ------
- 
++#endif /* ASPEED_SLI_H */
 -- 
-2.34.1
+2.25.1
 
 
