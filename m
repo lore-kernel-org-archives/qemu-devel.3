@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9363C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA954C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU4w-0005KN-Ae; Mon, 27 May 2024 02:43:31 -0400
+	id 1sBU3O-0003Po-OQ; Mon, 27 May 2024 02:41:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3d-0003c8-8h; Mon, 27 May 2024 02:42:12 -0400
+ id 1sBU39-0003F8-S8; Mon, 27 May 2024 02:41:39 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3b-0007Qa-M7; Mon, 27 May 2024 02:42:08 -0400
+ id 1sBU38-0007Op-4k; Mon, 27 May 2024 02:41:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5A9C16A3FD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2CDBE6A3FA;
  Mon, 27 May 2024 09:41:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A740AD83F5;
+ by tsrv.corpit.ru (Postfix) with SMTP id 76AC5D83F2;
  Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50304 invoked by uid 1000);
+Received: (nullmailer pid 50295 invoked by uid 1000);
  Mon, 27 May 2024 06:40:56 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, hikalium <hikalium@hikalium.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 15/19] ui/gtk: Fix mouse/motion event scaling issue
- with GTK display backend
-Date: Mon, 27 May 2024 09:40:46 +0300
-Message-Id: <20240527064056.50205-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mattias Nissler <mnissler@rivosinc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Jagannathan Raman <jag.raman@oracle.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 12/19] hw/remote/vfio-user: Fix config space access
+ byte order
+Date: Mon, 27 May 2024 09:40:43 +0300
+Message-Id: <20240527064056.50205-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
@@ -64,78 +65,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hikalium <hikalium@hikalium.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-Remove gtk_widget_get_scale_factor() usage from the calculation of
-the motion events in the GTK backend to make it work correctly on
-environments that have `gtk_widget_get_scale_factor() != 1`.
+PCI config space is little-endian, so on a big-endian host we need to
+perform byte swaps for values as they are passed to and received from
+the generic PCI config space access machinery.
 
-This scale factor usage had been introduced in the commit f14aab420c and
-at that time the window size was used for calculating the things and it
-was working correctly. However, in the commit 2f31663ed4 the logic
-switched to use the widget size instead of window size and because of
-the change the usage of scale factor becomes invalid (since widgets use
-`vc->gfx.scale_{x, y}` for scaling).
-
-Tested on Crostini on ChromeOS (15823.51.0) with an external display.
-
-Fixes: 2f31663ed4 ("ui/gtk: use widget size for cursor motion event")
-Fixes: f14aab420c ("ui: fix incorrect pointer position on highdpi with
-gtk")
-(f14aab420c is 95c9059e66 in stable-7.2)
-
-Signed-off-by: hikalium <hikalium@hikalium.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240512111435.30121-3-hikalium@hikalium.com>
-(cherry picked from commit 37e91415018db3656b46cdea8f9e4d47b3ff130d)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Message-ID: <20240507094210.300566-6-mnissler@rivosinc.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit e6578f1f68a0e90789a841ada532c3e494c9a04c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 283c41a1a1..8d740fae83 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -871,7 +871,7 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
-     int x, y;
-     int mx, my;
-     int fbh, fbw;
--    int ww, wh, ws;
-+    int ww, wh;
- 
-     if (!vc->gfx.ds) {
-         return TRUE;
-@@ -879,11 +879,15 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
- 
-     fbw = surface_width(vc->gfx.ds) * vc->gfx.scale_x;
-     fbh = surface_height(vc->gfx.ds) * vc->gfx.scale_y;
--
-     ww = gtk_widget_get_allocated_width(widget);
-     wh = gtk_widget_get_allocated_height(widget);
--    ws = gtk_widget_get_scale_factor(widget);
- 
-+    /*
-+     * `widget` may not have the same size with the frame buffer.
-+     * In such cases, some paddings are needed around the `vc`.
-+     * To achieve that, `vc` will be displayed at (mx, my)
-+     * so that it is displayed at the center of the widget.
-+     */
-     mx = my = 0;
-     if (ww > fbw) {
-         mx = (ww - fbw) / 2;
-@@ -892,8 +896,12 @@ static gboolean gd_motion_event(GtkWidget *widget, GdkEventMotion *motion,
-         my = (wh - fbh) / 2;
-     }
- 
--    x = (motion->x - mx) / vc->gfx.scale_x * ws;
--    y = (motion->y - my) / vc->gfx.scale_y * ws;
-+    /*
-+     * `motion` is reported in `widget` coordinates
-+     * so translating it to the coordinates in `vc`.
-+     */
-+    x = (motion->x - mx) / vc->gfx.scale_x;
-+    y = (motion->y - my) / vc->gfx.scale_y;
- 
-     if (qemu_input_is_absolute()) {
-         if (x < 0 || y < 0 ||
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index 4e36bb8bcf..973cebe785 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -273,7 +273,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+     while (bytes > 0) {
+         len = (bytes > pci_access_width) ? pci_access_width : bytes;
+         if (is_write) {
+-            memcpy(&val, ptr, len);
++            val = ldn_le_p(ptr, len);
+             pci_host_config_write_common(o->pci_dev, offset,
+                                          pci_config_size(o->pci_dev),
+                                          val, len);
+@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+         } else {
+             val = pci_host_config_read_common(o->pci_dev, offset,
+                                               pci_config_size(o->pci_dev), len);
+-            memcpy(ptr, &val, len);
++            stn_le_p(ptr, len, val);
+             trace_vfu_cfg_read(offset, val);
+         }
+         offset += len;
 -- 
 2.39.2
 
