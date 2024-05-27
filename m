@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9978C25B74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB4F8C41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVd5-0001HX-Gp; Mon, 27 May 2024 04:22:51 -0400
+	id 1sBVeA-0003FC-MI; Mon, 27 May 2024 04:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVc1-0000v3-Px; Mon, 27 May 2024 04:21:52 -0400
+ id 1sBVc6-0000vq-Is; Mon, 27 May 2024 04:21:54 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVbz-0000gt-LB; Mon, 27 May 2024 04:21:45 -0400
+ id 1sBVc3-0000hJ-88; Mon, 27 May 2024 04:21:48 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A95B46A55D;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6C816A55E;
  Mon, 27 May 2024 11:22:12 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D3535D84FB;
+ by tsrv.corpit.ru (Postfix) with SMTP id E4D3ED84FC;
  Mon, 27 May 2024 11:21:38 +0300 (MSK)
-Received: (nullmailer pid 66354 invoked by uid 1000);
+Received: (nullmailer pid 66357 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Fabiano Rosas <farosas@suse.de>, Zhang Chen <chen.zhang@intel.com>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 01/44] migration/colo: Fix bdrv_graph_rdlock_main_loop:
- Assertion `!qemu_in_coroutine()' failed.
-Date: Mon, 27 May 2024 11:20:52 +0300
-Message-Id: <20240527082138.66217-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [Stable-9.0.1 02/44] linux-user: do_setsockopt: fix
+ SOL_ALG.ALG_SET_KEY
+Date: Mon, 27 May 2024 11:20:53 +0300
+Message-Id: <20240527082138.66217-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
@@ -63,77 +62,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+This setsockopt accepts zero-lengh optlen (current qemu implementation
+does not allow this).  Also, there's no need to make a copy of the key,
+it is enough to use lock_user() (which accepts zero length already).
 
-bdrv_activate_all() should not be called from the coroutine context, move
-it to the QEMU thread colo_process_incoming_thread() with the bql_lock
-protected.
-
-The backtrace is as follows:
- #4  0x0000561af7948362 in bdrv_graph_rdlock_main_loop () at ../block/graph-lock.c:260
- #5  0x0000561af7907a68 in graph_lockable_auto_lock_mainloop (x=0x7fd29810be7b) at /patch/to/qemu/include/block/graph-lock.h:259
- #6  0x0000561af79167d1 in bdrv_activate_all (errp=0x7fd29810bed0) at ../block.c:6906
- #7  0x0000561af762b4af in colo_incoming_co () at ../migration/colo.c:935
- #8  0x0000561af7607e57 in process_incoming_migration_co (opaque=0x0) at ../migration/migration.c:793
- #9  0x0000561af7adbeeb in coroutine_trampoline (i0=-106876144, i1=22042) at ../util/coroutine-ucontext.c:175
- #10 0x00007fd2a5cf21c0 in  () at /lib64/libc.so.6
-
-Cc: qemu-stable@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2277
-Fixes: 2b3912f135 ("block: Mark bdrv_first_blk() and bdrv_is_root_node() GRAPH_RDLOCK")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Zhang Chen <chen.zhang@intel.com>
-Tested-by: Zhang Chen <chen.zhang@intel.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240417025634.1014582-1-lizhijian@fujitsu.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 2cc637f1ea08d2a1b19fc5b1a30bc609f948de93)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
+Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-Id: <20240331100737.2724186-2-mjt@tls.msk.ru>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 04f6fb897a5aeb3e356a7b889869c9962f9c16c7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/colo.c b/migration/colo.c
-index 84632a603e..5600a43d78 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -835,6 +835,16 @@ static void *colo_process_incoming_thread(void *opaque)
-         return NULL;
-     }
- 
-+    /* Make sure all file formats throw away their mutable metadata */
-+    bql_lock();
-+    bdrv_activate_all(&local_err);
-+    if (local_err) {
-+        bql_unlock();
-+        error_report_err(local_err);
-+        return NULL;
-+    }
-+    bql_unlock();
-+
-     failover_init_state();
- 
-     mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
-@@ -922,7 +932,6 @@ out:
- int coroutine_fn colo_incoming_co(void)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
--    Error *local_err = NULL;
-     QemuThread th;
- 
-     assert(bql_locked());
-@@ -931,13 +940,6 @@ int coroutine_fn colo_incoming_co(void)
-         return 0;
-     }
- 
--    /* Make sure all file formats throw away their mutable metadata */
--    bdrv_activate_all(&local_err);
--    if (local_err) {
--        error_report_err(local_err);
--        return -EINVAL;
--    }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3df2b94d9a..59fb3e911f 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2277,18 +2277,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+         switch (optname) {
+         case ALG_SET_KEY:
+         {
+-            char *alg_key = g_malloc(optlen);
 -
-     qemu_thread_create(&th, "COLO incoming", colo_process_incoming_thread,
-                        mis, QEMU_THREAD_JOINABLE);
- 
++            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
+             if (!alg_key) {
+-                return -TARGET_ENOMEM;
+-            }
+-            if (copy_from_user(alg_key, optval_addr, optlen)) {
+-                g_free(alg_key);
+                 return -TARGET_EFAULT;
+             }
+             ret = get_errno(setsockopt(sockfd, level, optname,
+                                        alg_key, optlen));
+-            g_free(alg_key);
++            unlock_user(alg_key, optval_addr, optlen);
+             break;
+         }
+         case ALG_SET_AEAD_AUTHSIZE:
 -- 
 2.39.2
 
