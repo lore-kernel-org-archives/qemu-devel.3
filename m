@@ -4,62 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36BCC25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D81C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBZq6-0005Q0-Hm; Mon, 27 May 2024 08:52:34 -0400
+	id 1sBZvh-0000p9-Ap; Mon, 27 May 2024 08:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=e5bn=M6=kaod.org=clg@ozlabs.org>)
- id 1sBZq3-0005Oi-IL; Mon, 27 May 2024 08:52:31 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=e5bn=M6=kaod.org=clg@ozlabs.org>)
- id 1sBZpz-0008Hv-Fe; Mon, 27 May 2024 08:52:31 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VnwXQ4vj4z4x2d;
- Mon, 27 May 2024 22:52:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VnwXJ2t5yz4wcS;
- Mon, 27 May 2024 22:52:15 +1000 (AEST)
-Message-ID: <fe0e3579-defd-4b42-8182-83ca7d5af649@kaod.org>
-Date: Mon, 27 May 2024 14:52:13 +0200
+ (Exim 4.90_1) (envelope-from <jojing64@gmail.com>)
+ id 1sBUOM-0008KG-8R
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 03:03:34 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jojing64@gmail.com>)
+ id 1sBUOK-0002LN-4t
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 03:03:34 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-681ad081695so2015136a12.3
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 00:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716793409; x=1717398209; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jw+d+zreaVG0HWwbDpy9TPgRKSIWWaLMGiALDR88rQs=;
+ b=Tlrk1a2hjU64JasiCkeNvXIvS9MXdUZPyEwy5wAOoi1mK3hdtTFflOyNadC+fsNh3Y
+ 8z2lN1nicxCftIEFnBJ2s3unaajergwHhO7X5jCr61nHRF7VWpyL2MEh0s1FzSU9UQos
+ /MdOgEN1eq4CjwtAz8JEj5yYKAp8xQjPfzEXzYwqB2gA90DLdtGlSIqq2XKVgQA5Urw+
+ I9jYEx1IcMB5SrM+aldI7TweRm2n+XsUf6gW2e+cpxFaxqrT7eLbDMKQk1OzwDUtEgC5
+ E6FjWDiW9ez3tdvaWNPO0dwqLB+zziGSpPF5BJkIp8WE0V2KalpAlEqe43jBNg5yrPcx
+ ii2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716793409; x=1717398209;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Jw+d+zreaVG0HWwbDpy9TPgRKSIWWaLMGiALDR88rQs=;
+ b=t/fFTObbzz6sr4v2Yay9arDeDYo33UpGr+Q+OmFeltbOI3Odo6KRLGzJ+k82mrBzsK
+ Z3eYg4vfKe/iFJ7xqepdH4P1r+eJzvYYk4u6JyYS8hoRxAVtuMjU5N23VO06pOnOhmAw
+ BBbOy3EYq9CLereWX7UbB43IhxsO5+obMs4tDIJkZytP6seH9LW6LCsM5MU+neAENsuE
+ +bH1TVUhhHTihbXqp40YVFfgnw8UlYSa9IOF9yy5jxM0H9mg9lKo/QlYD1lNOMqsKwWd
+ Pp7PDJaLuebHabdXslYJMmn2ev0/JT1Cq+n/3o+y6cnYH+6aKnErIJGpwK5Epnot45aV
+ d34w==
+X-Gm-Message-State: AOJu0YwrS4aDcDqsSiCopuo95tS6hV0lG92yzSd3WT0VQzrizcf/pZkN
+ ewyjwqC8k9xY2kQKmezSYFS/x2fz4S8C+JFqeoYmK5tn7n1h0OQcMOchCw==
+X-Google-Smtp-Source: AGHT+IHb8DSJCTlEnF7nm7gM2l5UE6KJAu4fFB5F8Ed634J+SYfNf77ggkQSBF6mzhzz9TcgDujl7w==
+X-Received: by 2002:a05:6a20:9707:b0:1b0:2cae:4622 with SMTP id
+ adf61e73a8af0-1b212f0ea28mr7563046637.42.1716793409055; 
+ Mon, 27 May 2024 00:03:29 -0700 (PDT)
+Received: from ?IPV6:2001:569:590e:4600:1ea1:182:f195:fb52?
+ ([2001:569:590e:4600:1ea1:182:f195:fb52])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f8fc05ab4asm4322102b3a.59.2024.05.27.00.03.28
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 00:03:28 -0700 (PDT)
+Message-ID: <8b639179-e567-469c-bd04-ee8dee12d7d2@gmail.com>
+Date: Mon, 27 May 2024 00:03:27 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/16] aspeed/smc: support dma start length and 1 byte
- length unit
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
- <20240527080231.1576609-8-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240527080231.1576609-8-jamin_lin@aspeedtech.com>
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: Jin Cao <jojing64@gmail.com>
+Subject: block snapshot issue with RBD
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=e5bn=M6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=jojing64@gmail.com; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 27 May 2024 08:58:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,207 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/24 10:02, Jamin Lin wrote:
-> DMA length is from 1 byte to 32MB for AST2600 and AST10x0
-> and DMA length is from 4 bytes to 32MB for AST2500.
-> 
-> In other words, if "R_DMA_LEN" is 0, it should move at least 1 byte
-> data for AST2600 and AST10x0 and 4 bytes data for AST2500.
-> To support all ASPEED SOCs, adds dma_start_length parameter to store
-> the start length, add helper routines function to compute the dma length
-> and update DMA_LENGTH mask to "1FFFFFF" to support dma 1 byte
-> length unit for AST2600 and AST1030.
-> Currently, only supports dma length 4 bytes aligned.
-> 
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Hi,
 
+I encountered RBD block snapshot issue after doing migration.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Steps
+-----
 
-Thanks,
+1. Start QEMU with:
+./qemu-system-x86_64 -name VM -machine q35 -accel kvm -cpu 
+host,migratable=on -m 2G -boot menu=on,strict=on 
+rbd:image/ubuntu-22.04-server-cloudimg-amd64.raw -net nic -net user 
+-cdrom /home/my/path/of/cloud-init.iso -monitor stdio
 
-C.
+2. Do block snapshot in monitor cmd: snapshot_delete_blkdev_internal. It 
+works as expected: the snapshot is visable with command`rbd snap ls 
+pool_name/image_name`.
 
+3. Do pseudo migration with monitor cmd: migrate -d exec:cat>/tmp/vm.out
 
-> ---
->   hw/ssi/aspeed_smc.c         | 43 ++++++++++++++++++++++++++++++-------
->   include/hw/ssi/aspeed_smc.h |  1 +
->   2 files changed, 36 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-> index 8a8d77b480..ffb13a12e8 100644
-> --- a/hw/ssi/aspeed_smc.c
-> +++ b/hw/ssi/aspeed_smc.c
-> @@ -178,13 +178,17 @@
->    * DMA flash addresses should be 4 bytes aligned and the valid address
->    * range is 0x20000000 - 0x2FFFFFFF.
->    *
-> - * DMA length is from 4 bytes to 32MB
-> + * DMA length is from 4 bytes to 32MB (AST2500)
->    *   0: 4 bytes
-> - *   0x7FFFFF: 32M bytes
-> + *   0x1FFFFFC: 32M bytes
-> + *
-> + * DMA length is from 1 byte to 32MB (AST2600, AST10x0)
-> + *   0: 1 byte
-> + *   0x1FFFFFF: 32M bytes
->    */
->   #define DMA_DRAM_ADDR(asc, val)   ((val) & (asc)->dma_dram_mask)
->   #define DMA_FLASH_ADDR(asc, val)  ((val) & (asc)->dma_flash_mask)
-> -#define DMA_LENGTH(val)         ((val) & 0x01FFFFFC)
-> +#define DMA_LENGTH(val)         ((val) & 0x01FFFFFF)
->   
->   /* Flash opcodes. */
->   #define SPI_OP_READ       0x03    /* Read data bytes (low frequency) */
-> @@ -843,6 +847,13 @@ static bool aspeed_smc_inject_read_failure(AspeedSMCState *s)
->       }
->   }
->   
-> +static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
-> +{
-> +    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
-> +
-> +    return QEMU_ALIGN_UP(s->regs[R_DMA_LEN] + asc->dma_start_length, 4);
-> +}
-> +
->   /*
->    * Accumulate the result of the reads to provide a checksum that will
->    * be used to validate the read timing settings.
-> @@ -850,6 +861,7 @@ static bool aspeed_smc_inject_read_failure(AspeedSMCState *s)
->   static void aspeed_smc_dma_checksum(AspeedSMCState *s)
->   {
->       MemTxResult result;
-> +    uint32_t dma_len;
->       uint32_t data;
->   
->       if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
-> @@ -861,7 +873,9 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
->           aspeed_smc_dma_calibration(s);
->       }
->   
-> -    while (s->regs[R_DMA_LEN]) {
-> +    dma_len = aspeed_smc_dma_len(s);
-> +
-> +    while (dma_len) {
->           data = address_space_ldl_le(&s->flash_as, s->regs[R_DMA_FLASH_ADDR],
->                                       MEMTXATTRS_UNSPECIFIED, &result);
->           if (result != MEMTX_OK) {
-> @@ -877,7 +891,8 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
->            */
->           s->regs[R_DMA_CHECKSUM] += data;
->           s->regs[R_DMA_FLASH_ADDR] += 4;
-> -        s->regs[R_DMA_LEN] -= 4;
-> +        dma_len -= 4;
-> +        s->regs[R_DMA_LEN] = dma_len;
->       }
->   
->       if (s->inject_failure && aspeed_smc_inject_read_failure(s)) {
-> @@ -889,14 +904,17 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
->   static void aspeed_smc_dma_rw(AspeedSMCState *s)
->   {
->       MemTxResult result;
-> +    uint32_t dma_len;
->       uint32_t data;
->   
-> +    dma_len = aspeed_smc_dma_len(s);
-> +
->       trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
->                               "write" : "read",
->                               s->regs[R_DMA_FLASH_ADDR],
->                               s->regs[R_DMA_DRAM_ADDR],
-> -                            s->regs[R_DMA_LEN]);
-> -    while (s->regs[R_DMA_LEN]) {
-> +                            dma_len);
-> +    while (dma_len) {
->           if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
->               data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
->                                           MEMTXATTRS_UNSPECIFIED, &result);
-> @@ -937,7 +955,8 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
->            */
->           s->regs[R_DMA_FLASH_ADDR] += 4;
->           s->regs[R_DMA_DRAM_ADDR] += 4;
-> -        s->regs[R_DMA_LEN] -= 4;
-> +        dma_len -= 4;
-> +        s->regs[R_DMA_LEN] = dma_len;
->           s->regs[R_DMA_CHECKSUM] += data;
->       }
->   }
-> @@ -1381,6 +1400,7 @@ static void aspeed_2400_fmc_class_init(ObjectClass *klass, void *data)
->       asc->features          = ASPEED_SMC_FEATURE_DMA;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x1FFFFFFC;
-> +    asc->dma_start_length  = 4;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_smc_reg_to_segment;
-> @@ -1464,6 +1484,7 @@ static void aspeed_2500_fmc_class_init(ObjectClass *klass, void *data)
->       asc->features          = ASPEED_SMC_FEATURE_DMA;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x3FFFFFFC;
-> +    asc->dma_start_length  = 4;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_smc_reg_to_segment;
-> @@ -1620,6 +1641,7 @@ static void aspeed_2600_fmc_class_init(ObjectClass *klass, void *data)
->                                ASPEED_SMC_FEATURE_WDT_CONTROL;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x3FFFFFFC;
-> +    asc->dma_start_length  = 1;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-> @@ -1658,6 +1680,7 @@ static void aspeed_2600_spi1_class_init(ObjectClass *klass, void *data)
->                                ASPEED_SMC_FEATURE_DMA_GRANT;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x3FFFFFFC;
-> +    asc->dma_start_length  = 1;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-> @@ -1697,6 +1720,7 @@ static void aspeed_2600_spi2_class_init(ObjectClass *klass, void *data)
->                                ASPEED_SMC_FEATURE_DMA_GRANT;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x3FFFFFFC;
-> +    asc->dma_start_length  = 1;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-> @@ -1778,6 +1802,7 @@ static void aspeed_1030_fmc_class_init(ObjectClass *klass, void *data)
->       asc->features          = ASPEED_SMC_FEATURE_DMA;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x000BFFFC;
-> +    asc->dma_start_length  = 1;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_1030_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_1030_smc_reg_to_segment;
-> @@ -1815,6 +1840,7 @@ static void aspeed_1030_spi1_class_init(ObjectClass *klass, void *data)
->       asc->features          = ASPEED_SMC_FEATURE_DMA;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x000BFFFC;
-> +    asc->dma_start_length  = 1;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-> @@ -1851,6 +1877,7 @@ static void aspeed_1030_spi2_class_init(ObjectClass *klass, void *data)
->       asc->features          = ASPEED_SMC_FEATURE_DMA;
->       asc->dma_flash_mask    = 0x0FFFFFFC;
->       asc->dma_dram_mask     = 0x000BFFFC;
-> +    asc->dma_start_length  = 1;
->       asc->nregs             = ASPEED_SMC_R_MAX;
->       asc->segment_to_reg    = aspeed_2600_smc_segment_to_reg;
->       asc->reg_to_segment    = aspeed_2600_smc_reg_to_segment;
-> diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-> index 8e1dda556b..f359ed22cc 100644
-> --- a/include/hw/ssi/aspeed_smc.h
-> +++ b/include/hw/ssi/aspeed_smc.h
-> @@ -106,6 +106,7 @@ struct AspeedSMCClass {
->       uint32_t features;
->       hwaddr dma_flash_mask;
->       hwaddr dma_dram_mask;
-> +    uint32_t dma_start_length;
->       uint32_t nregs;
->       uint32_t (*segment_to_reg)(const AspeedSMCState *s,
->                                  const AspeedSegments *seg);
+4. Do block snapshot again with snapshot_delete_blkdev_internal, then I get:
+    Error: Block format 'raw' used by device 'ide0-hd0' does not support 
+internal snapshots
 
+I was hoping to do the second block snapshot successfully, and it feels 
+abnormal the RBD block snapshot function is disrupted after migration.
+
+BTW, I get the same block snapshot error when I start QEMU with:
+     "-drive format=raw,file=rbd:pool_name/image_name"
+
+My questions is: how could I proceed with RBD block snapshot after the 
+pseudo migration?
 
