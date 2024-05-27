@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4F2C25B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1813C25B74
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU2p-00037W-Ra; Mon, 27 May 2024 02:41:20 -0400
+	id 1sBU2k-0002xK-F6; Mon, 27 May 2024 02:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU2n-00033h-QU; Mon, 27 May 2024 02:41:17 -0400
+ id 1sBU2h-0002tL-DU; Mon, 27 May 2024 02:41:11 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU2l-0007IE-02; Mon, 27 May 2024 02:41:16 -0400
+ id 1sBU2e-0007An-Kw; Mon, 27 May 2024 02:41:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8B5DB6A3F1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 630C06A3EE;
  Mon, 27 May 2024 09:41:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D9401D83E9;
+ by tsrv.corpit.ru (Postfix) with SMTP id AA42CD83E6;
  Mon, 27 May 2024 09:40:56 +0300 (MSK)
-Received: (nullmailer pid 50267 invoked by uid 1000);
+Received: (nullmailer pid 50256 invoked by uid 1000);
  Mon, 27 May 2024 06:40:56 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [Stable-7.2.12 03/19] linux-user: do_setsockopt: fix
- SOL_ALG.ALG_SET_KEY
-Date: Mon, 27 May 2024 09:40:34 +0300
-Message-Id: <20240527064056.50205-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 00/19] Patch Round-up for stable 7.2.12,
+ freeze on 2024-06-07
+Date: Mon, 27 May 2024 09:40:31 +0300
+Message-Id: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,44 +60,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This setsockopt accepts zero-lengh optlen (current qemu implementation
-does not allow this).  Also, there's no need to make a copy of the key,
-it is enough to use lock_user() (which accepts zero length already).
+The following patches are queued for QEMU stable v7.2.12:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
-Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-Id: <20240331100737.2724186-2-mjt@tls.msk.ru>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 04f6fb897a5aeb3e356a7b889869c9962f9c16c7)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 41017b0df2..74240f99ad 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2297,18 +2297,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-         switch (optname) {
-         case ALG_SET_KEY:
-         {
--            char *alg_key = g_malloc(optlen);
--
-+            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
-             if (!alg_key) {
--                return -TARGET_ENOMEM;
--            }
--            if (copy_from_user(alg_key, optval_addr, optlen)) {
--                g_free(alg_key);
-                 return -TARGET_EFAULT;
-             }
-             ret = get_errno(setsockopt(sockfd, level, optname,
-                                        alg_key, optlen));
--            g_free(alg_key);
-+            unlock_user(alg_key, optval_addr, optlen);
-             break;
-         }
-         case ALG_SET_AEAD_AUTHSIZE:
--- 
-2.39.2
+Patch freeze is 2024-06-07, and the release is planned for 2024-06-09:
 
+  https://wiki.qemu.org/Planning/7.2
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 690ceb71936f Philippe Mathieu-Daudé:
+   gitlab-ci: Remove job building EDK2 firmware binaries
+02 7bc1286b81d4 Palmer Dabbelt:
+   gitlab/opensbi: Move to docker:stable
+03 04f6fb897a5a Michael Tokarev:
+   linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
+04 ae6d91a7e9b7 Zhu Yangyang:
+   nbd/server: do not poll within a coroutine context
+05 4fa333e08dd9 Eric Blake:
+   nbd/server: Mark negotiation functions as coroutine_fn
+06 06479dbf3d7d Li Zhijian:
+   backends/cryptodev-builtin: Fix local_error leaks
+07 dcc5c018c7e6 Peter Maydell:
+   tests/avocado: update sunxi kernel from armbian to 6.6.16
+08 a88a04906b96 Thomas Huth:
+   .gitlab-ci.d/cirrus.yml: Shorten the runtime of the macOS and FreeBSD jobs
+09 4b00855f0ee2 Alexandra Diupina:
+   hw/dmax/xlnx_dpdma: fix handling of address_extension descriptor fields
+10 eb656a60fd93 Philippe Mathieu-Daudé:
+   hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
+11 6a5a63f74ba5 Ruihan Li:
+   target/i386: Give IRQs a chance when resetting HF_INHIBIT_IRQ_MASK
+12 e6578f1f68a0 Mattias Nissler:
+   hw/remote/vfio-user: Fix config space access byte order
+13 41c685dc59bb Paolo Bonzini:
+   target/i386: fix operand size for DATA16 REX.W POPCNT
+14 40a3ec7b5ffd Paolo Bonzini:
+   target/i386: rdpkru/wrpkru are no-prefix instructions
+15 37e91415018d hikalium:
+   ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
+16 e4e62514e3cc Dongwon Kim:
+   ui/gtk: Check if fence_fd is equal to or greater than 0
+17 84d4b7285486 donsheng:
+   target-i386: hyper-v: Correct kvm_hv_handle_exit return value
+18 8225bff7c5db Paolo Bonzini:
+   target/i386: disable jmp_opt if EFLAGS.RF is 1
+19 f0f0136abba6 Paolo Bonzini:
+   target/i386: no single-step exception after MOV or POP SS
 
