@@ -4,64 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E72BC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C04B7C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUPO-0000LU-Cl; Mon, 27 May 2024 03:04:38 -0400
+	id 1sBUPW-0000Ov-80; Mon, 27 May 2024 03:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
- id 1sBUPM-0000Ka-9m; Mon, 27 May 2024 03:04:36 -0400
-Received: from pharaoh.lmichel.fr ([149.202.28.74])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
- id 1sBUP9-0002ON-Gy; Mon, 27 May 2024 03:04:36 -0400
-Received: from localhost (sekoia-laptop.home.lmichel.fr [192.168.61.102])
- by pharaoh.lmichel.fr (Postfix) with ESMTPSA id 27BD7C60180;
- Mon, 27 May 2024 09:04:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lmichel.fr; s=pharaoh; 
- t=1716793458;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sUN+hBq6elNx/aMrQCnyEWtQdzIQfoahXjvsGkN14Zc=;
- b=ISVkyPt9F7IbIUn/ZA9Ea3Opzx6jG2ceNSZ9uHG1VCbNVhez+jNMv4J+Q78sZ8+Hlm7jQ0
- 9G+PLgfgC1bSYmJ0TDxb4wV4tAC2VpRChXvpmNLmuBQl1Bd6NJ4R4SUDo4sCLvSU5UM2zk
- 1my4BkykGv3ISA7gEEAbUX/q4yEV0oYuBhjsXTaD0tjur4VD75yggiRmCu4dEnhDX+IIBK
- CWnn2JJkVL8/0NrWMvY2iZbM0PTBbR2IUBgvQ88tjUPaChFHKQ/hQK+nogAtuN1DvqVuGu
- ss+pICKgV3pPuLpPJelfTSAscjdmFlQDsxG/5azsxss+yl6Z7BKYPTe6CBGAGQ==
-Date: Mon, 27 May 2024 09:04:17 +0200
-From: Luc Michel <luc@lmichel.fr>
-To: =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- qemu-arm@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v3 3/4] hw/clock: Expose 'qtest-clock-period' QOM
- property for QTests
-Message-ID: <ZlQwcWKiuuYhjU22@michell-laptop.localdomain>
-References: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
- <20240523194441.21036-4-ines.varhol@telecom-paris.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240523194441.21036-4-ines.varhol@telecom-paris.fr>
-Received-SPF: pass client-ip=149.202.28.74; envelope-from=luc@lmichel.fr;
- helo=pharaoh.lmichel.fr
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBUPN-0000LE-Id; Mon, 27 May 2024 03:04:37 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBUPL-0002QL-P1; Mon, 27 May 2024 03:04:37 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6f8ea3e9543so2268707b3a.2; 
+ Mon, 27 May 2024 00:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716793474; x=1717398274; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OkRTKUuLy+20YEprZvh0a0McG/3Sumb6XN5f4D5Erbo=;
+ b=m+DchKSDI1qCG1B8rSOf1kZnVPdeJIeYHNMFWfNNlhAPHCMY9NJwefXVp5M2sqfffb
+ vuKoEosIwgadTzGiB81qW+jQ0+aUJcXEMhawZDx9Ad2c340amayMPtCrOpFOIXNyhf/R
+ gAQcUa0vjwTTW5EjYD9guW78YKWT1zcvAVv7WH2zh9LQTnLRINrzD4F2XBGy+QgYPjZm
+ /NA47F2S5/BpMbcPY0FWmudM0W2O9mO2vc/hNkzShIScD666FNch/6+dUxLKZnlDkpjY
+ GO3xPgZogxIxcFfx4IVyF9Gvq7FI5K596uqv10bihq9wHIBA7WKHA2g9lzPjC7i/Z842
+ 1wBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716793474; x=1717398274;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OkRTKUuLy+20YEprZvh0a0McG/3Sumb6XN5f4D5Erbo=;
+ b=e1RsKFd/SHm6ddyZhhmroMfXbp4FnvRnAwNeB7Bjzs/Xxpuk8oRyQz9w0ilKsQWyeP
+ XEGVgm7D9ydQ7VG/knmlZVHIOsH04iy+58znOc00q827uYzZ98GD+JuUoHAUYKIsEJWl
+ mCOPvxaGDC8ouroBPsO1jHt3x/xAtVbV5d9+gzhW/bdti1sLnKwZpFP283PjWD3ZQc0I
+ C6J12YnHRN9+i/SiTCsldWxwE2Bqt0LRyI69M2WPPhLtTrjs+Cyt1H2ZBl1Oy90NS3O/
+ wVtc4Gx8P4JuIwbStqWXlFCNaxt0TdPPXK55YDPjiXXNEQmbgAA44KndnxNrOxoNzNnt
+ GuaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcp89JS+Y2OXKcx+V8eSGjQUJ8ZjTT5Q8HOggCLASyO4GZ6pX/f1pi+Xb9udibC0QmSNKi8PB2CmS2YZKjaUUjsp0fGGY=
+X-Gm-Message-State: AOJu0YztNInovLbNVr/mw5p/i6HZNlAQQkfV/8Z8FHgDDbIe6PC2Wrdu
+ aKZ4U1p6wTNkRJQYL+jOrd7D4DbCHtGDzDRQbJTi1ddyPtEb/jYV
+X-Google-Smtp-Source: AGHT+IHYsCCq6xOCRUREuZOst4Vqlf46jEuJzc8iPyHCtu+Eqjs25z/Visquu2VgHFCPpZ6WN1jjSw==
+X-Received: by 2002:a05:6a20:9f03:b0:1aa:6167:b6d6 with SMTP id
+ adf61e73a8af0-1b212e20d21mr10848456637.42.1716793473682; 
+ Mon, 27 May 2024 00:04:33 -0700 (PDT)
+Received: from localhost ([1.146.73.168]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f44c967ad7sm53539885ad.136.2024.05.27.00.04.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 00:04:33 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 27 May 2024 17:04:25 +1000
+Message-Id: <D1K8HPYOSEZN.9TWVXUFHPPO3@gmail.com>
+Cc: <qemu-s390x@nongnu.org>, "Halil Pasic" <pasic@linux.ibm.com>, "Christian
+ Borntraeger" <borntraeger@linux.ibm.com>, "David Hildenbrand"
+ <david@redhat.com>, "Thomas Huth" <thuth@redhat.com>, "Peter Xu"
+ <peterx@redhat.com>, "Fabiano Rosas" <farosas@suse.de>, "Laurent Vivier"
+ <lvivier@redhat.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH 2/3] tests/qtest/migration-test: enable on s390x
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Prasad Pandit" <ppandit@redhat.com>
+X-Mailer: aerc 0.17.0
+References: <20240525131241.378473-1-npiggin@gmail.com>
+ <20240525131241.378473-3-npiggin@gmail.com>
+ <CAE8KmOwYPf_1rX_An0K5gncDAC7V5jvR735tEAomVJiVxOeyTg@mail.gmail.com>
+In-Reply-To: <CAE8KmOwYPf_1rX_An0K5gncDAC7V5jvR735tEAomVJiVxOeyTg@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,82 +100,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21:41 Thu 23 May     , Inès Varhol wrote:
-> Expose the clock period via the QOM 'qtest-clock-period' property so it
-> can be used in QTests. This property is only accessible in QTests (not
-> via HMP).
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->  docs/devel/clocks.rst |  3 +++
->  hw/core/clock.c       | 16 ++++++++++++++++
->  2 files changed, 19 insertions(+)
-> 
-> diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
-> index 177ee1c90d..19e67601ec 100644
-> --- a/docs/devel/clocks.rst
-> +++ b/docs/devel/clocks.rst
-> @@ -358,6 +358,9 @@ humans (for instance in debugging), use ``clock_display_freq()``,
->  which returns a prettified string-representation, e.g. "33.3 MHz".
->  The caller must free the string with g_free() after use.
->  
-> +It's also possible to retrieve the clock period from a QTest by
-> +accessing QOM property ``qtest-clock-period`` using a QMP command.
-> +
->  Calculating expiry deadlines
->  ----------------------------
->  
-> diff --git a/hw/core/clock.c b/hw/core/clock.c
-> index e212865307..216b54b8df 100644
-> --- a/hw/core/clock.c
-> +++ b/hw/core/clock.c
-> @@ -13,6 +13,8 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/cutils.h"
-> +#include "qapi/visitor.h"
-> +#include "sysemu/qtest.h"
->  #include "hw/clock.h"
->  #include "trace.h"
->  
-> @@ -158,6 +160,15 @@ bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
->      return true;
->  }
->  
-> +static void clock_period_prop_get(Object *obj, Visitor *v, const char *name,
-> +                                void *opaque, Error **errp)
-> +{
-> +    Clock *clk = CLOCK(obj);
-> +    uint64_t freq_hz = clock_get(clk);
-> +    visit_type_uint64(v, name, &freq_hz, errp);
-s/freq_hz/period
+On Mon May 27, 2024 at 3:46 PM AEST, Prasad Pandit wrote:
+> Hi,
+>
+> On Sat, 25 May 2024 at 18:44, Nicholas Piggin <npiggin@gmail.com> wrote:
+> > s390x is more stable now. Enable it.
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >  tests/qtest/migration-test.c | 12 ------------
+> >  1 file changed, 12 deletions(-)
+> >
+> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.=
+c
+> > index 94d5057857..7987faaded 100644
+> > --- a/tests/qtest/migration-test.c
+> > +++ b/tests/qtest/migration-test.c
+> > @@ -3428,16 +3428,6 @@ int main(int argc, char **argv)
+> >      migration_test_add("/migration/analyze-script", test_analyze_scrip=
+t);
+> >  #endif
+> >
+> > -    /*
+> > -     * On s390x, the test seems to be touchy with TCG, perhaps due to =
+race
+> > -     * conditions on dirty bits, so disable it there until the problem=
+s are
+> > -     * resolved.
+> > -     */
+>
+>     -> https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg04774.=
+html
+>
+> * Above patch (not reviewed yet) adds comment about sporadic problems
+> on s390x, and this patch says s390x is stable now? It'll help to
+> mention in the commit log - what changed to make it stable in 1 day.
 
-Otherwise:
+Patch 1 of this series.
 
-Reviewed-by: Luc Michel <luc@lmichel.fr>
+> * IIUC, this and the ppc64 patch above enable 'migration-test' for
+> s390x and ppc64 platforms, when KVM is not available for them? ie.
+> When running s390x & ppc64 migration-tests with TCG on non s390x or
+> non-ppc64 machines, right? Maybe the commit message could say
+> something to the effect of - enable s390x and ppc64 'migration-test'
+> to run with TCG across platforms where KVM for s390x  OR  KVM for
+> ppc64 is not available.
 
-> +}
-> +
-> +
->  static void clock_initfn(Object *obj)
->  {
->      Clock *clk = CLOCK(obj);
-> @@ -166,6 +177,11 @@ static void clock_initfn(Object *obj)
->      clk->divider = 1;
->  
->      QLIST_INIT(&clk->children);
-> +
-> +    if (qtest_enabled()) {
-> +        object_property_add(obj, "qtest-clock-period", "uint64",
-> +                            clock_period_prop_get, NULL, NULL, NULL);
-> +    }
->  }
->  
->  static void clock_finalizefn(Object *obj)
-> -- 
-> 2.43.2
-> 
+Yes they should be called "enable for TCG" indeed.
 
--- 
+> > -    if (g_str_equal(arch, "s390x") && !has_kvm) {
+> > -        g_test_message("Skipping tests: s390x host with KVM is require=
+d");
+> > -        goto test_add_done;
+> > -    }
+> > -
+> >      if (is_x86) {
+> >          migration_test_add("/migration/precopy/unix/suspend/live",
+> >                             test_precopy_unix_suspend_live);
+> > @@ -3619,8 +3609,6 @@ int main(int argc, char **argv)
+> >                             test_vcpu_dirty_limit);
+> >      }
+> >
+> > -test_add_done:
+> > -
+> >      ret =3D g_test_run();
+> >
+> >      g_assert_cmpint(ret, =3D=3D, 0);
+> > --
+>
+> * Otherwise, the change looks okay to enable 'migration-test' for
+> s390x with TCG IIUC.
+
+Thanks,
+Nick
 
