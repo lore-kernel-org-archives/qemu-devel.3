@@ -4,67 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812ECC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05BDCC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBZ4q-0001Dy-3r; Mon, 27 May 2024 08:03:44 -0400
+	id 1sBZ9X-0002nx-V5; Mon, 27 May 2024 08:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
- id 1sBZ4n-0001DM-NT; Mon, 27 May 2024 08:03:41 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ id 1sBZ9S-0002n4-PB; Mon, 27 May 2024 08:08:32 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
- id 1sBZ4j-0007vp-Cu; Mon, 27 May 2024 08:03:40 -0400
+ id 1sBZ9P-0000Jj-0r; Mon, 27 May 2024 08:08:30 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 1B066CE0ED0;
- Mon, 27 May 2024 12:03:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6448C2BBFC;
- Mon, 27 May 2024 12:03:30 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 3A91661539;
+ Mon, 27 May 2024 12:08:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D366C2BBFC;
+ Mon, 27 May 2024 12:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1716811411;
- bh=IG6zXsfS3dQmkbJcQpTn2+d5jURhljxkwHHNnelw/MI=;
+ s=k20201202; t=1716811704;
+ bh=qIMa/xuUiwpJX/jPycyINr04sXFpaWfLmm6i3tz96OA=;
  h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=qZD/Ut4/BfcW0GF2pviPJAlYhJpE57qTOSdowTR+8KAHQ7rlufv9vccjWKv+2ef6R
- mYmgjSyuxtifpgnrQ/x4WRvby4O72KLOWw9T6iexMDtCQssrtSFHbvFqMQtbXi8noc
- SmqfXUiNu0e5OFPnzxSNhgp8X5G85bJV1O1Zj/W1uysv8EeO86X7E+dXs8vGmPXWwD
- beVcbGKOECG3BHB4dbQE5XubqHEQRKYSlrWfi6iVzXHZ5TZ0zseYzuAxWTal4ejM18
- ZGvN/EJZJ+PeqKal/uN4xQ1wyfjSnxHD1bLH4N7RSZ9V2C4Qo9us3VmB5Mvgx/tkr0
- CxTHEdvxARP8Q==
+ b=DsIu0M6t4mKzhocpq7CKET8wsgy16c2SfcPxza4FjbL6mZZGmnO4G7lPFPtqC1rKO
+ kkNbO+INSdsb2irymKh0EKk3rvYCJZ4LVu9JI/Oc1d15EF+dyPer5zoSz+d7KuyPNT
+ TSyI+4ZRLqNZe0VfIeFm7DITvnLyq6PYBEkflhlBmwyDULp1Ce+R1pCOWIhnF9FDOS
+ 844ttYaw4w/5jmaGUAFCnVZ9GbXwjHwxch5fYDR7AE6xea3v2k4F0A9wX5aCg+uqN+
+ oi3wly/BVP/4jjfkIyK7oZWfiWGXmzcsad9XBOHSPQcMcbqtctqr1L4JGa+uGlwfXl
+ Lc4xflh2zSFlA==
 From: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
-To: David Hildenbrand <david@redhat.com>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>, Alistair
- Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei
- Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Atish Patra
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin
+ Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, Atish Patra
  <atishp@atishpatra.org>, Atish Patra <atishp@rivosinc.com>
 Cc: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>, Sunil V L
  <sunilvl@ventanamicro.com>,
  Santosh Mamila <santosh.mamila@catalinasystems.io>, Chethan Seshadri
  <Chethan.Seshadri@catalinasystems.io>, Sivakumar Munnangi
  <siva.munnangi@catalinasystems.io>
-Subject: Re: [PATCH v2 1/3] hw/riscv/virt: Add memory hotplugging and
- virtio-md-pci support
-In-Reply-To: <51ef570c-da63-4e25-9c48-dbdf8a40a34d@redhat.com>
+Subject: Re: [PATCH v2 3/3] hw/riscv/virt: Add ACPI GED and PC-DIMM MHP support
+In-Reply-To: <40ae0cb9-1596-4cec-994c-71e0abaa0d1e@ventanamicro.com>
 References: <20240521105635.795211-1-bjorn@kernel.org>
- <20240521105635.795211-2-bjorn@kernel.org>
- <55810d52-0360-40ad-a8d2-3b6a8aa220ae@ventanamicro.com>
- <51ef570c-da63-4e25-9c48-dbdf8a40a34d@redhat.com>
-Date: Mon, 27 May 2024 14:03:28 +0200
-Message-ID: <87sey38nsf.fsf@all.your.base.are.belong.to.us>
+ <20240521105635.795211-4-bjorn@kernel.org>
+ <40ae0cb9-1596-4cec-994c-71e0abaa0d1e@ventanamicro.com>
+Date: Mon, 27 May 2024 14:08:21 +0200
+Message-ID: <87o78r8nka.fsf@all.your.base.are.belong.to.us>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=bjorn@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=bjorn@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -70
+X-Spam_score: -7.1
+X-Spam_bar: -------
+X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,191 +79,325 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-David Hildenbrand <david@redhat.com> writes:
+Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
 
-> On 24.05.24 15:14, Daniel Henrique Barboza wrote:
+> On 5/21/24 07:56, Bj=C3=B6rn T=C3=B6pel wrote:
+>> From: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
 >>=20
+>> Add ACPI GED for the RISC-V "virt" machine, and wire up PC-DIMM memory
+>> hotplugging support. Heavily based/copied from hw/arm/virt.c.
 >>=20
->> On 5/21/24 07:56, Bj=C3=B6rn T=C3=B6pel wrote:
->>> From: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
->>>
->>> Virtio-based memory devices (virtio-mem/virtio-pmem) allows for
->>> dynamic resizing of virtual machine memory, and requires proper
->>> hotplugging (add/remove) support to work.
->>>
->>> Add device memory support for RISC-V "virt" machine, and enable
->>> virtio-md-pci with the corresponding missing hotplugging callbacks.
->>>
->>> Signed-off-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
->>> ---
->>>    hw/riscv/Kconfig       |  2 +
->>>    hw/riscv/virt.c        | 83 ++++++++++++++++++++++++++++++++++++++++=
-+-
->>>    hw/virtio/virtio-mem.c |  5 ++-
->>>    3 files changed, 87 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
->>> index a2030e3a6ff0..08f82dbb681a 100644
->>> --- a/hw/riscv/Kconfig
->>> +++ b/hw/riscv/Kconfig
->>> @@ -56,6 +56,8 @@ config RISCV_VIRT
->>>        select PLATFORM_BUS
->>>        select ACPI
->>>        select ACPI_PCI
->>> +    select VIRTIO_MEM_SUPPORTED
->>> +    select VIRTIO_PMEM_SUPPORTED
->>>=20=20=20=20
->>>    config SHAKTI_C
->>>        bool
->>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
->>> index 4fdb66052587..443902f919d2 100644
->>> --- a/hw/riscv/virt.c
->>> +++ b/hw/riscv/virt.c
->>> @@ -53,6 +53,8 @@
->>>    #include "hw/pci-host/gpex.h"
->>>    #include "hw/display/ramfb.h"
->>>    #include "hw/acpi/aml-build.h"
->>> +#include "hw/mem/memory-device.h"
->>> +#include "hw/virtio/virtio-mem-pci.h"
->>>    #include "qapi/qapi-visit-common.h"
->>>    #include "hw/virtio/virtio-iommu.h"
->>>=20=20=20=20
->>> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machi=
+>> Signed-off-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
+>> ---
+>>   hw/riscv/Kconfig           |   3 ++
+>>   hw/riscv/virt-acpi-build.c |  16 ++++++
+>>   hw/riscv/virt.c            | 104 ++++++++++++++++++++++++++++++++++++-
+>>   include/hw/riscv/virt.h    |   6 ++-
+>>   4 files changed, 126 insertions(+), 3 deletions(-)
+>>=20
+>> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+>> index 08f82dbb681a..bebe412f2107 100644
+>> --- a/hw/riscv/Kconfig
+>> +++ b/hw/riscv/Kconfig
+>> @@ -56,6 +56,9 @@ config RISCV_VIRT
+>>       select PLATFORM_BUS
+>>       select ACPI
+>>       select ACPI_PCI
+>> +    select MEM_DEVICE
+>> +    select DIMM
+>> +    select ACPI_HW_REDUCED
+>>       select VIRTIO_MEM_SUPPORTED
+>>       select VIRTIO_PMEM_SUPPORTED
+>>=20=20=20
+>> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+>> index 6dc3baa9ec86..61813abdef3f 100644
+>> --- a/hw/riscv/virt-acpi-build.c
+>> +++ b/hw/riscv/virt-acpi-build.c
+>> @@ -27,6 +27,8 @@
+>>   #include "hw/acpi/acpi-defs.h"
+>>   #include "hw/acpi/acpi.h"
+>>   #include "hw/acpi/aml-build.h"
+>> +#include "hw/acpi/memory_hotplug.h"
+>> +#include "hw/acpi/generic_event_device.h"
+>>   #include "hw/acpi/pci.h"
+>>   #include "hw/acpi/utils.h"
+>>   #include "hw/intc/riscv_aclint.h"
+>> @@ -432,6 +434,20 @@ static void build_dsdt(GArray *table_data,
+>>           acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOU=
+RCES * 2);
+>>       }
+>>=20=20=20
+>> +    if (s->acpi_dev) {
+>> +        uint32_t event =3D object_property_get_uint(OBJECT(s->acpi_dev),
+>> +                                                  "ged-event", &error_a=
+bort);
+>> +
+>> +        build_ged_aml(scope, "\\_SB."GED_DEVICE, HOTPLUG_HANDLER(s->acp=
+i_dev),
+>> +                      GED_IRQ, AML_SYSTEM_MEMORY, memmap[VIRT_ACPI_GED]=
+.base);
+>> +
+>> +        if (event & ACPI_GED_MEM_HOTPLUG_EVT) {
+>> +            build_memory_hotplug_aml(scope, ms->ram_slots, "\\_SB", NUL=
+L,
+>> +                                     AML_SYSTEM_MEMORY,
+>> +                                     memmap[VIRT_PCDIMM_ACPI].base);
+>> +        }
+>> +    }
+>> +
+>>       aml_append(dsdt, scope);
+>>=20=20=20
+>>       /* copy AML table into ACPI tables blob and patch header there */
+>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+>> index 443902f919d2..2e35890187f2 100644
+>> --- a/hw/riscv/virt.c
+>> +++ b/hw/riscv/virt.c
+>> @@ -53,10 +53,13 @@
+>>   #include "hw/pci-host/gpex.h"
+>>   #include "hw/display/ramfb.h"
+>>   #include "hw/acpi/aml-build.h"
+>> +#include "hw/acpi/generic_event_device.h"
+>> +#include "hw/acpi/memory_hotplug.h"
+>>   #include "hw/mem/memory-device.h"
+>>   #include "hw/virtio/virtio-mem-pci.h"
+>>   #include "qapi/qapi-visit-common.h"
+>>   #include "hw/virtio/virtio-iommu.h"
+>> +#include "hw/mem/pc-dimm.h"
+>>=20=20=20
+>>   /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by =
+QEMU. */
+>>   static bool virt_use_kvm_aia(RISCVVirtState *s)
+>> @@ -84,6 +87,8 @@ static const MemMapEntry virt_memmap[] =3D {
+>>       [VIRT_UART0] =3D        { 0x10000000,         0x100 },
+>>       [VIRT_VIRTIO] =3D       { 0x10001000,        0x1000 },
+>>       [VIRT_FW_CFG] =3D       { 0x10100000,          0x18 },
+>> +    [VIRT_PCDIMM_ACPI] =3D  { 0x10200000, MEMORY_HOTPLUG_IO_LEN },
+>> +    [VIRT_ACPI_GED] =3D     { 0x10210000, ACPI_GED_EVT_SEL_LEN },
+>>       [VIRT_FLASH] =3D        { 0x20000000,     0x4000000 },
+>>       [VIRT_IMSIC_M] =3D      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+>>       [VIRT_IMSIC_S] =3D      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+>> @@ -1400,6 +1405,28 @@ static void virt_machine_done(Notifier *notifier,=
+ void *data)
+>>       }
+>>   }
+>>=20=20=20
+>> +static DeviceState *create_acpi_ged(RISCVVirtState *s)
+>> +{
+>> +    DeviceState *dev;
+>> +    MachineState *ms =3D MACHINE(s);
+>> +    uint32_t event =3D 0;
+>> +
+>> +    if (ms->ram_slots) {
+>> +        event |=3D ACPI_GED_MEM_HOTPLUG_EVT;
+>> +    }
+>> +
+>> +    dev =3D qdev_new(TYPE_ACPI_GED);
+>> +    qdev_prop_set_uint32(dev, "ged-event", event);
+>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>> +
+>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].ba=
+se);
+>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, s->memmap[VIRT_PCDIMM_ACPI]=
+.base);
+>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(s->irqc=
+hip[0],
+>> +                                                                GED_IRQ=
+));
+>> +
+>> +    return dev;
+>> +}
+>> +
+>>   static void virt_machine_init(MachineState *machine)
+>>   {
+>>       const MemMapEntry *memmap =3D virt_memmap;
+>> @@ -1612,6 +1639,10 @@ static void virt_machine_init(MachineState *machi=
 ne)
->>>        DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
->>>        int i, base_hartid, hart_count;
->>>        int socket_count =3D riscv_socket_count(machine);
->>> +    hwaddr device_memory_base, device_memory_size;
->>>=20=20=20=20
->>>        /* Check socket count limit */
->>>        if (VIRT_SOCKETS_MAX < socket_count) {
->>> @@ -1420,6 +1423,12 @@ static void virt_machine_init(MachineState *mach=
-ine)
->>>            exit(1);
->>>        }
->>>=20=20=20=20
->>> +    if (machine->ram_slots > ACPI_MAX_RAM_SLOTS) {
->>> +        error_report("unsupported amount of memory slots: %"PRIu64,
->>> +                     machine->ram_slots);
->>> +        exit(EXIT_FAILURE);
->>> +    }
->>> +
->>>        /* Initialize sockets */
->>>        mmio_irqchip =3D virtio_irqchip =3D pcie_irqchip =3D NULL;
->>>        for (i =3D 0; i < socket_count; i++) {
->>> @@ -1553,6 +1562,37 @@ static void virt_machine_init(MachineState *mach=
-ine)
->>>        memory_region_add_subregion(system_memory, memmap[VIRT_MROM].bas=
-e,
->>>                                    mask_rom);
->>>=20=20=20=20
->>> +    /* device memory */
->>> +    device_memory_base =3D ROUND_UP(s->memmap[VIRT_DRAM].base + machin=
-e->ram_size,
->>> +                                  GiB);
->>> +    device_memory_size =3D machine->maxram_size - machine->ram_size;
->>> +    if (device_memory_size > 0) {
->>> +        /*
->>> +         * Each DIMM is aligned based on the backend's alignment value.
->>> +         * Assume max 1G hugepage alignment per slot.
->>> +         */
->>> +        device_memory_size +=3D machine->ram_slots * GiB;
->>=20
->> We don't need to align to 1GiB. This calc can use 2MiB instead (or 4MiB =
-if we're
->> running 32 bits).
->>=20
->>> +
->>> +        if (riscv_is_32bit(&s->soc[0])) {
->>> +            hwaddr memtop =3D device_memory_base + ROUND_UP(device_mem=
-ory_size,
->>> +                                                          GiB);
->>=20
->> Same here - alignment is 2/4 MiB.
->>=20
->>> +
->>> +            if (memtop > UINT32_MAX) {
->>> +                error_report("memory exceeds 32-bit limit by %lu bytes=
-",
->>> +                             memtop - UINT32_MAX);
->>> +                exit(EXIT_FAILURE);
->>> +            }
->>> +        }
->>> +
->>> +        if (device_memory_base + device_memory_size < device_memory_si=
-ze) {
->>> +            error_report("unsupported amount of device memory");
->>> +            exit(EXIT_FAILURE);
->>> +        }
->>=20
->> Took another look and found this a bit strange. These are all unsigned v=
-ars, so
->> if (unsigned a + unsigned b < unsigned b) will always be 'false'. The co=
-mpiler is
->> probably cropping this out.
+>>=20=20=20
+>>       gpex_pcie_init(system_memory, pcie_irqchip, s);
+>>=20=20=20
+>> +    if (virt_is_acpi_enabled(s)) {
+>> +        s->acpi_dev =3D create_acpi_ged(s);
+>> +    }
+>> +
+>>       create_platform_bus(s, mmio_irqchip);
+>>=20=20=20
+>>       serial_mm_init(system_memory, memmap[VIRT_UART0].base,
+>> @@ -1752,6 +1783,7 @@ static HotplugHandler *virt_machine_get_hotplug_ha=
+ndler(MachineState *machine,
+>>       MachineClass *mc =3D MACHINE_GET_CLASS(machine);
+>>=20=20=20
+>>       if (device_is_dynamic_sysbus(mc, dev) ||
+>> +        object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
+>>           object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+>>           object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>>           return HOTPLUG_HANDLER(machine);
+>> @@ -1759,14 +1791,42 @@ static HotplugHandler *virt_machine_get_hotplug_=
+handler(MachineState *machine,
+>>       return NULL;
+>>   }
+>>=20=20=20
+>> +static void virt_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceSta=
+te *dev,
+>> +                                 Error **errp)
+>> +{
+>> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(hotplug_dev);
+>> +
+>> +    if (!s->acpi_dev) {
+>> +        error_setg(errp,
+>> +                   "memory hotplug is not enabled: missing acpi-ged dev=
+ice");
+>> +        return;
+>> +    }
+>> +
+>> +    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
+>> +}
+>> +
 >
-> No. Unsigned interger overflow is defined behavior and this is a common=20
-> check to detect such overflow. tI's consistent with what we do for other=
-=20
-> architectures.
+> Note that we're not doing any aligment checks in this pre_plug(), meaning=
+ that
+> we're kind of accepting whatever the pc-dimm device throw at us.
 >
->>=20
->> The calc we need to do is to ensure that the extra ram_slots * alignment=
- will fit into
->> the VIRT_DRAM block, i.e. maxram_size + (ram_slots * alignment) < memmap=
-[VIRT_DRAM].size.
->>=20
->>=20
->> TBH I'm starting to have second thoughts about letting users hotplug wha=
-tever they want.
->> It seems cleaner to just force the 2/4 Mb alignment in pre_plug() and be=
- done with it,
->> no need to allocate ram_slots * alignment and doing all these extra chec=
-ks.
+> Testing in an AMD x86 machine will force the pc-dimm to be 2Mb aligned:
 >
-> It's worth noting that if user space decides to specify addresses=20
-> manually, it can mess up everything already. There are other events that=
-=20
-> can result in fragmentation of the memory device area (repeated=20
-> hot(un)plug of differing DIMMs).
+> $ ./build/qemu-system-riscv64 -M virt -m 2G,slots=3D4,maxmem=3D8G -nograp=
+hic
+> (...)
+> (qemu) object_add memory-backend-ram,id=3Dram0,size=3D111M
+> (qemu) device_add pc-dimm,id=3Ddimm0,memdev=3Dram0
+> Error: backend memory size must be multiple of 0x200000
+> (qemu) object_del ram0
 >
-> Assume you have 1 GiB range and hotplug a 512 MiB DIMM at offset 256=20
-> MiB. You won't be able to hotplug another 512 MiB DIMM even though we=20
-> reserved space.
+> This happens because the DIMM must be aligned with its own backend, in th=
+is case
+> the host memory itself (backends/hostmem.c).
 >
-> My take so far is: if the user wants to do such stuff it should size the=
-=20
-> area (maxmem) much larger or deal with the concequences (not being able=20
-> to hotplug memory).
->
-> It usually does not happen in practice ...
+> There's no guarantee that we'll always run in a host that is mem aligned =
+with the board,
+> so it would be nice to add align checks in virt_memory_pre_plug().
 
-Daniel/David, again thanks for spending time on the patches.
+Indeed! I'll look into that.
 
-The reason I picked 1 GiB per slot was because the alignment is also
-dependent on the backend AFAIU. Rationale in commit 085f8e88ba73 ("pc:
-count in 1Gb hugepage alignment when sizing hotplug-memory container").
-
-What I'm reading from you guys are: Just depend on whatever maxmem says
-(modulo 2/4M alignment), and leave at that. I agree that that's much
-easier to reason about.
-
-Correct?
-
->> As I sent in an earlier email, users must already comply to the alignmen=
-t of the host
->> memory when plugging pc-dimms, so I'm not sure our value/proposition wit=
-h all this
->> extra code is worth it - the alignment will most likely be forced by the=
- host memory
->> backend, so might as well force ourselves in pre_plug().
+>>   static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_de=
+v,
+>>                                               DeviceState *dev, Error **=
+errp)
+>>   {
+>> +    if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+>> +        virt_memory_pre_plug(hotplug_dev, dev, errp);
+>> +    }
+>> +
+>>       if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev=
+), errp);
+>>       }
+>>   }
+>>=20=20=20
+>> +static void virt_memory_plug(HotplugHandler *hotplug_dev,
+>> +                             DeviceState *dev, Error **errp)
+>> +{
+>> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(hotplug_dev);
+>> +
+>> +    pc_dimm_plug(PC_DIMM(dev), MACHINE(s));
+>> +
+>> +    hotplug_handler_plug(HOTPLUG_HANDLER(s->acpi_dev), dev, &error_abor=
+t);
+>> +}
+>> +
+>>   static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>>                                           DeviceState *dev, Error **errp)
+>>   {
+>> @@ -1785,16 +1845,36 @@ static void virt_machine_device_plug_cb(HotplugH=
+andler *hotplug_dev,
+>>           create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
+>>       }
+>>=20=20=20
+>> +    if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+>> +        virt_memory_plug(hotplug_dev, dev, errp);
+>> +    }
+>> +
+>>       if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>>           virtio_md_pci_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), e=
+rrp);
+>>       }
+>>   }
+>>=20=20=20
+>> +static void virt_dimm_unplug_request(HotplugHandler *hotplug_dev,
+>> +                                     DeviceState *dev, Error **errp)
+>> +{
+>> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(hotplug_dev);
+>> +
+>> +    if (!s->acpi_dev) {
+>> +        error_setg(errp,
+>> +                   "memory hotplug is not enabled: missing acpi-ged dev=
+ice");
+>> +        return;
+>> +    }
+>> +
+>> +    hotplug_handler_unplug_request(HOTPLUG_HANDLER(s->acpi_dev), dev, e=
+rrp);
+>> +}
+>> +
 >
-> At least on x86-64, the 2 MiB alignment requirement is handled=20
-> automatically. QEMU_VMALLOC_ALIGN implicitly enforces that.
+> I'm unsure if we're ready to support both hotplug and hot-unplug, but I t=
+ested anyway.
+> Hotplug seems to work but hot-unplug doesn't:
 >
-> Maybe RISCV also wants to set QEMU_VMALLOC_ALIGN?
+> $ ./build/qemu-system-riscv64 -M virt -m 2G,slots=3D4,maxmem=3D8G -nograp=
+hic
+> (...)
+> (qemu) object_add memory-backend-ram,id=3Dram0,size=3D112M
+> (qemu) device_add pc-dimm,id=3Ddimm0,memdev=3Dram0
+> (qemu)
+> (qemu) info memory-devices
+> Memory device [dimm]: "dimm0"
+>    addr: 0x100000000
+>    slot: 0
+>    node: 0
+>    size: 117440512
+>    memdev: /objects/ram0
+>    hotplugged: true
+>    hotpluggable: true
+> (qemu)
+> (qemu) device_del dimm0
+> (qemu) object_del ram0
+> Error: object 'ram0' is in use, can not be deleted
+> (qemu) info memory-devices
+> Memory device [dimm]: "dimm0"
+>    addr: 0x100000000
+>    slot: 0
+>    node: 0
+>    size: 117440512
+>    memdev: /objects/ram0
+>    hotplugged: true
+>    hotpluggable: true
+> (qemu)
+>
+> In short: hotplugged a 112Mb DIMM, then tried to remove it. 'device_del' =
+doesn't error
+> out but doesn't let me remove the memory backing created, i.e. the dimm0 =
+device is
+> still around.
+>
+> In a quick digging I see that we're hitting virt_dimm_unplug_request() al=
+l the way
+> down to acpi_memory_unplug_request_cb(), where an ACPI_MEMORY_HOTPLUG_STA=
+TUS is being
+> sent. We never reach virt_dimm_unplug() afterwards, so the PC_DIMM is nev=
+er removed.
+>
+> I'm not acquainted with ACPI enough to say if we're missing stuff in QEMU=
+, or if we
+> need SW to be aware of this ACPI HP event to trigger the release of the d=
+imm, or
+> anything in between.
+>
+> I consider this more as a FYI. If we're up to the point of hotplugging pc=
+-dimms it's
+> already an improvement worth having. Hot-unplugging can come later.
 
-I'll look into this for the next rev!
+I'll debug this as well!
+
+Thanks for all the input, Daniel!
 
 
 Bj=C3=B6rn
