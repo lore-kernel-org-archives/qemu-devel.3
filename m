@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5E2C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC19DC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVGx-0004ob-Uw; Mon, 27 May 2024 03:59:59 -0400
+	id 1sBVGj-0004lU-O8; Mon, 27 May 2024 03:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sBVGE-0004ZR-2C
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:59:15 -0400
+ id 1sBVGI-0004e6-V9
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 03:59:19 -0400
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sBVGA-0004WD-SG
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:59:13 -0400
+ id 1sBVGF-0004WD-Ln
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 03:59:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716796751; x=1748332751;
+ t=1716796756; x=1748332756;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=C/uavNm9TPbuPaD5VN1/gZbyddHCNXdVHsl2V4ClR0Q=;
- b=WQ7keHJ3fDzxiQ4t1+YIzuhqY39jLJnSq+oe+WEwl/TKvO66rBz8tbRm
- 2iEdLld30Fd4QrW4rYQltU0j6q2jti1xbKn6bXLPCSwYfUbZUhbAYyrs7
- nKREo6phIAMXXZj+L3F7nk0PVnKpC37ree0ymRDBvOW/5aRdTK3C6QkjE
- B3o8O/LNCykKFwb814TlPUhRnHuzb5n5jo1kkx9gcstvnQ1SrzMqg+rAt
- 8mN4S4mfZBypUEMHsqpMtDXP6JXEnCFNRxT/2XR+RKKFAQEytjsk8qssy
- +foObHVVWRmXpFgfYRHGMpTR+l8BpdjBbvVgrZ5xxJR9NkaZFORRyVbgz w==;
-X-CSE-ConnectionGUID: y4PTYw7sQ8uIdzUNZ7OVTg==
-X-CSE-MsgGUID: veOVoYhNRR2GNrMU6NXYkg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="12967721"
-X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="12967721"
+ bh=yDPEzWhxxW02VCtTc002sd0aS9LHwc20MSP+Cf+0a50=;
+ b=BhJrSc14LR1iWmd7y6l23e4euJiKVdxbZCXIo1BmDxQZqQ5Lds44W8tj
+ q/KWmOnMcXOKS+lPSF93grgcN5iDWrEEs4bLQdzL1KF3QJU4cbxDGMpm7
+ lZoETuxwXDEJZk7PgruFXWIsVE4osDXczs9he9rIR522bKVru/HqxqfG9
+ 5t2Oim3rDHH9C8m5Bs626iR9mQ5w9fSzv8s3LCyAtUq5Vdzb9hiUT/iMe
+ 7FvoZZLYD+Na16kQTnUiAOeVlvkoNcL1YTqgCdAPOMi35UBVtbW+t1mkr
+ nIF2mk2UoaNrh3z5pPPGjmb+5lVa0Veh/cHMMbOO67cLic2QYbZdGT9o9 Q==;
+X-CSE-ConnectionGUID: sK6v5+q0Timi6Q/WkKvreg==
+X-CSE-MsgGUID: HbXGj1cqTleeCHvLEZh/lA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="12967735"
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="12967735"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2024 00:59:09 -0700
-X-CSE-ConnectionGUID: ZsNg3/yMS06F/eWhHl4JBw==
-X-CSE-MsgGUID: Ca4lDMgESfyYZ8tNP5x3cw==
+ 27 May 2024 00:59:15 -0700
+X-CSE-ConnectionGUID: sDKw6Tu4SwiBxSLROdAUCg==
+X-CSE-MsgGUID: btAnab6dQImBbzT0Pzq7TA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="39084961"
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="39084995"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa005.fm.intel.com with ESMTP; 27 May 2024 00:59:05 -0700
+ by fmviesa005.fm.intel.com with ESMTP; 27 May 2024 00:59:11 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -55,10 +55,9 @@ To: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 2/6] scripts/simpletrace-rust: Support Event & Arguments in
- trace module
-Date: Mon, 27 May 2024 16:14:17 +0800
-Message-Id: <20240527081421.2258624-3-zhao1.liu@intel.com>
+Subject: [RFC 4/6] scripts/simpletrace-rust: Parse and check trace recode file
+Date: Mon, 27 May 2024 16:14:19 +0800
+Message-Id: <20240527081421.2258624-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240527081421.2258624-1-zhao1.liu@intel.com>
 References: <20240527081421.2258624-1-zhao1.liu@intel.com>
@@ -66,13 +65,12 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+X-Spam_score_int: -45
+X-Spam_score: -4.6
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,448 +87,491 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refer to scripts/tracetool/__init__.py, add Event & Arguments
-abstractions in trace module.
+Refer to scripts/simpletrace.py, parse and check the simple trace
+backend binary trace file.
+
+Note, in order to keep certain backtrace information to get frame,
+adjust the cargo debug level for release version to "line-tables-only",
+which slows down the program, but is necessary.
 
 Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- scripts/simpletrace-rust/Cargo.lock   |  52 ++++
- scripts/simpletrace-rust/Cargo.toml   |   2 +
- scripts/simpletrace-rust/src/trace.rs | 330 +++++++++++++++++++++++++-
- 3 files changed, 383 insertions(+), 1 deletion(-)
+ scripts/simpletrace-rust/Cargo.lock  |  79 +++++++++
+ scripts/simpletrace-rust/Cargo.toml  |   4 +
+ scripts/simpletrace-rust/src/main.rs | 253 ++++++++++++++++++++++++++-
+ 3 files changed, 329 insertions(+), 7 deletions(-)
 
 diff --git a/scripts/simpletrace-rust/Cargo.lock b/scripts/simpletrace-rust/Cargo.lock
-index 4a0ff8092dcb..3d815014eb44 100644
+index 3d815014eb44..37d80974ffe7 100644
 --- a/scripts/simpletrace-rust/Cargo.lock
 +++ b/scripts/simpletrace-rust/Cargo.lock
-@@ -2,6 +2,15 @@
+@@ -2,6 +2,21 @@
  # It is not intended for manual editing.
  version = 3
  
 +[[package]]
-+name = "aho-corasick"
-+version = "1.1.3"
++name = "addr2line"
++version = "0.21.0"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "8e60d3430d3a69478ad0993f19238d2df97c507009a52b3c10addcd7f6bcb916"
++checksum = "8a30b2e23b9e17a9f90641c7ab1549cd9b44f296d3ccbf309d2863cfe398a0cb"
 +dependencies = [
-+ "memchr",
++ "gimli",
 +]
 +
++[[package]]
++name = "adler"
++version = "1.0.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "f26201604c87b1e01bd3d98f8d5d9a8fcbb815e8cedb41ffccbeb4bf593a35fe"
++
  [[package]]
- name = "anstream"
- version = "0.6.14"
-@@ -90,6 +99,18 @@ version = "1.70.0"
+ name = "aho-corasick"
+ version = "1.1.3"
+@@ -60,6 +75,33 @@ dependencies = [
+  "windows-sys",
+ ]
+ 
++[[package]]
++name = "backtrace"
++version = "0.3.71"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "26b05800d2e817c8b3b4b54abd461726265fa9789ae34330622f2db9ee696f9d"
++dependencies = [
++ "addr2line",
++ "cc",
++ "cfg-if",
++ "libc",
++ "miniz_oxide",
++ "object",
++ "rustc-demangle",
++]
++
++[[package]]
++name = "cc"
++version = "1.0.98"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "41c270e7540d725e65ac7f1b212ac8ce349719624d7bcff99f8e2e488e8cf03f"
++
++[[package]]
++name = "cfg-if"
++version = "1.0.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
++
+ [[package]]
+ name = "clap"
+ version = "4.5.4"
+@@ -93,18 +135,48 @@ version = "1.0.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "0b6a852b24ab71dffc585bcb46eaf7959d175cb865a7152e35b348d1b2960422"
+ 
++[[package]]
++name = "gimli"
++version = "0.28.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "4271d37baee1b8c7e4b708028c57d816cf9d2434acb33a549475f78c181f6253"
++
+ [[package]]
+ name = "is_terminal_polyfill"
+ version = "1.70.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "f8478577c03552c21db0e2724ffb8986a5ce7af88107e6be5d2ee6e158c12800"
  
 +[[package]]
-+name = "memchr"
-+version = "2.7.2"
++name = "libc"
++version = "0.2.155"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
-+
-+[[package]]
-+name = "once_cell"
-+version = "1.19.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
++checksum = "97b3888a4aecf77e811145cadf6eef5901f4782c53886191b2f693f24761847c"
 +
  [[package]]
- name = "proc-macro2"
- version = "1.0.83"
-@@ -108,11 +129,42 @@ dependencies = [
-  "proc-macro2",
- ]
+ name = "memchr"
+ version = "2.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
  
 +[[package]]
-+name = "regex"
-+version = "1.10.4"
++name = "miniz_oxide"
++version = "0.7.3"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "c117dbdfde9c8308975b6a18d71f3f385c89461f7b3fb054288ecf2a2058ba4c"
++checksum = "87dfd01fe195c66b572b37921ad8803d010623c0aca821bea2302239d155cdae"
 +dependencies = [
-+ "aho-corasick",
-+ "memchr",
-+ "regex-automata",
-+ "regex-syntax",
++ "adler",
 +]
 +
 +[[package]]
-+name = "regex-automata"
-+version = "0.4.6"
++name = "object"
++version = "0.32.2"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "86b83b8b9847f9bf95ef68afb0b8e6cdb80f498442f5179a29fad448fcc1eaea"
++checksum = "a6a622008b6e321afc04970976f62ee297fdbaa6f95318ca343e3eebb9648441"
 +dependencies = [
-+ "aho-corasick",
 + "memchr",
-+ "regex-syntax",
 +]
 +
+ [[package]]
+ name = "once_cell"
+ version = "1.19.0"
+@@ -158,10 +230,17 @@ version = "0.8.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
+ 
 +[[package]]
-+name = "regex-syntax"
-+version = "0.8.3"
++name = "rustc-demangle"
++version = "0.1.24"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
++checksum = "719b953e2095829ee67db738b3bfa9fa368c94900df327b3f07fe6e794d2fe1f"
 +
  [[package]]
  name = "simpletrace-rust"
  version = "0.1.0"
  dependencies = [
++ "backtrace",
   "clap",
-+ "once_cell",
-+ "regex",
-  "thiserror",
- ]
- 
+  "once_cell",
+  "regex",
 diff --git a/scripts/simpletrace-rust/Cargo.toml b/scripts/simpletrace-rust/Cargo.toml
-index b44ba1569dad..24a79d04e566 100644
+index 24a79d04e566..23a3179de01c 100644
 --- a/scripts/simpletrace-rust/Cargo.toml
 +++ b/scripts/simpletrace-rust/Cargo.toml
-@@ -8,4 +8,6 @@ license = "GPL-2.0-or-later"
+@@ -7,7 +7,11 @@ authors = ["Zhao Liu <zhao1.liu@intel.com>"]
+ license = "GPL-2.0-or-later"
  
  [dependencies]
++backtrace = "0.3"
  clap = "4.5.4"
-+once_cell = "1.19.0"
-+regex = "1.10.4"
+ once_cell = "1.19.0"
+ regex = "1.10.4"
  thiserror = "1.0.20"
-diff --git a/scripts/simpletrace-rust/src/trace.rs b/scripts/simpletrace-rust/src/trace.rs
-index 3a4b06435b8b..f41d6e0b5bc3 100644
---- a/scripts/simpletrace-rust/src/trace.rs
-+++ b/scripts/simpletrace-rust/src/trace.rs
-@@ -8,4 +8,332 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
++
++[profile.release]
++debug = "line-tables-only"
+diff --git a/scripts/simpletrace-rust/src/main.rs b/scripts/simpletrace-rust/src/main.rs
+index b3b8baee7c66..f9a71d8dc243 100644
+--- a/scripts/simpletrace-rust/src/main.rs
++++ b/scripts/simpletrace-rust/src/main.rs
+@@ -13,17 +13,24 @@
  
--pub struct Event {}
-+#![allow(dead_code)]
+ mod trace;
+ 
++use std::collections::HashMap;
+ use std::env;
+ use std::fs::File;
+ use std::io::Error as IOError;
+ use std::io::ErrorKind;
+ use std::io::Read;
++use std::mem::size_of;
+ 
++use backtrace::Backtrace;
+ use clap::Arg;
+ use clap::Command;
+ use thiserror::Error;
+ use trace::Event;
+ 
++const DROPPED_EVENT_ID: u64 = 0xfffffffffffffffe;
++const HEADER_MAGIC: u64 = 0xf2b177cb0aa429b4;
++const HEADER_EVENT_ID: u64 = 0xffffffffffffffff;
 +
-+use std::fs::read_to_string;
-+
-+use once_cell::sync::Lazy;
-+use regex::Regex;
-+use thiserror::Error;
-+
-+#[derive(Error, Debug)]
-+pub enum Error
-+{
-+    #[error("Empty argument (did you forget to use 'void'?)")]
-+    EmptyArg,
-+    #[error("Event '{0}' has more than maximum permitted argument count")]
-+    InvalidArgCnt(String),
-+    #[error("{0} does not end with a new line")]
-+    InvalidEventFile(String),
-+    #[error("Invalid format: {0}")]
-+    InvalidFormat(String),
+ const RECORD_TYPE_MAPPING: u64 = 0;
+ const RECORD_TYPE_EVENT: u64 = 1;
+ 
+@@ -32,10 +39,25 @@ pub enum Error
+ {
+     #[error("usage: {0} [--no-header] <trace-events> <trace-file>")]
+     CliOptionUnmatch(String),
++    #[error("Invalid event name ({0})")]
++    InvalidEventName(String),
++    #[error("Not a valid trace file, header id {0} != {1}")]
++    InvalidHeaderId(u64, u64),
++    #[error("Not a valid trace file, header magic {0} != {1}")]
++    InvalidHeaderMagic(u64, u64),
+     #[error("Failed to read file: {0}")]
+     ReadFile(IOError),
 +    #[error(
-+        "Argument type '{0}' is not allowed. \
-+        Only standard C types and fixed size integer \
-+        types should be used. struct, union, and \
-+        other complex pointer types should be \
-+        declared as 'void *'"
++        "event {0} is logged but is not declared in the trace events \
++        file, try using trace-events-all instead."
 +    )]
-+    InvalidType(String),
-+    #[error("Error at {0}:{1}: {2}")]
-+    ReadEventFail(String, usize, String),
-+    #[error("Unknown event: {0}")]
 +    UnknownEvent(String),
-+    #[error("Unknown properties: {0}")]
-+    UnknownProp(String),
+     #[error("Unknown record type ({0})")]
+     UnknownRecType(u64),
++    #[error("Unknown version {0} of tracelog format!")]
++    UnknownVersion(u64),
++    #[error("Log format {0} not supported with this QEMU release!")]
++    UnsupportedVersion(u64),
+ }
+ 
+ pub type Result<T> = std::result::Result<T, Error>;
+@@ -98,19 +120,22 @@ struct LogHeader
+     version: u64,
+ }
+ 
++const LOG_HDR_LEN: usize = size_of::<LogHeader>();
++
+ impl ReadHeader for LogHeader
+ {
+     fn read_header(mut fobj: &File) -> Result<Self>
+     {
+-        let mut raw_hdr = [0u8; 24];
++        let mut raw_hdr = [0u8; LOG_HDR_LEN];
+         fobj.read_exact(&mut raw_hdr).map_err(Error::ReadFile)?;
+ 
+         /*
+          * Safe because the size of log header (struct LogHeader)
+          * is 24 bytes, which is ensured by simple trace backend.
+          */
+-        let hdr =
+-            unsafe { std::mem::transmute::<[u8; 24], LogHeader>(raw_hdr) };
++        let hdr = unsafe {
++            std::mem::transmute::<[u8; LOG_HDR_LEN], LogHeader>(raw_hdr)
++        };
+         Ok(hdr)
+     }
+ }
+@@ -142,6 +167,8 @@ struct RecordHeader
+     record_pid: u32,
+ }
+ 
++const REC_HDR_LEN: usize = size_of::<RecordHeader>();
++
+ impl RecordHeader
+ {
+     fn extract_record(&self, mut fobj: &File) -> Result<RecordInfo>
+@@ -167,20 +194,232 @@ impl ReadHeader for RecordHeader
+ {
+     fn read_header(mut fobj: &File) -> Result<Self>
+     {
+-        let mut raw_hdr = [0u8; 24];
++        let mut raw_hdr = [0u8; REC_HDR_LEN];
+         fobj.read_exact(&mut raw_hdr).map_err(Error::ReadFile)?;
+ 
+         /*
+          * Safe because the size of record header (struct RecordHeader)
+          * is 24 bytes, which is ensured by simple trace backend.
+          */
+-        let hdr: RecordHeader =
+-            unsafe { std::mem::transmute::<[u8; 24], RecordHeader>(raw_hdr) };
++        let hdr: RecordHeader = unsafe {
++            std::mem::transmute::<[u8; REC_HDR_LEN], RecordHeader>(raw_hdr)
++        };
+         Ok(hdr)
+     }
+ }
+ 
+-pub struct EventArgPayload {}
++#[derive(Clone)]
++pub struct EventArgPayload
++{
++    raw_val: Option<u64>,
++    raw_str: Option<String>,
 +}
 +
-+pub type Result<T> = std::result::Result<T, Error>;
-+
-+/*
-+ * Refer to the description of ALLOWED_TYPES in
-+ * scripts/tracetool/__init__.py.
-+ */
-+const ALLOWED_TYPES: [&str; 20] = [
-+    "int",
-+    "long",
-+    "short",
-+    "char",
-+    "bool",
-+    "unsigned",
-+    "signed",
-+    "int8_t",
-+    "uint8_t",
-+    "int16_t",
-+    "uint16_t",
-+    "int32_t",
-+    "uint32_t",
-+    "int64_t",
-+    "uint64_t",
-+    "void",
-+    "size_t",
-+    "ssize_t",
-+    "uintptr_t",
-+    "ptrdiff_t",
-+];
-+
-+const STRING_TYPES: [&str; 4] =
-+    ["const char*", "char*", "const char *", "char *"];
-+
-+/* TODO: Support 'vcpu' property. */
-+const VALID_PROPS: [&str; 1] = ["disable"];
-+
-+fn validate_c_type(arg_type: &str) -> Result<()>
++impl EventArgPayload
 +{
-+    static RE_TYPE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\*").unwrap());
-+    let bits: Vec<String> =
-+        arg_type.split_whitespace().map(|s| s.to_string()).collect();
-+    for bit in bits {
-+        let res = RE_TYPE.replace_all(&bit, "");
-+        if res.is_empty() {
-+            continue;
++    fn new(raw_val: Option<u64>, raw_str: Option<String>) -> Self
++    {
++        EventArgPayload { raw_val, raw_str }
++    }
++
++    fn get_payload_str(
++        offset: &mut usize,
++        args_payload: &[u8],
++    ) -> Result<EventArgPayload>
++    {
++        let length = u32::from_le_bytes(
++            args_payload[*offset..(*offset + 4)].try_into().unwrap(),
++        );
++        *offset += 4;
++        let raw_str: &[u8] = args_payload
++            .get(*offset..(*offset + length as usize))
++            .unwrap();
++        *offset += length as usize;
++        Ok(EventArgPayload::new(
++            None,
++            Some(String::from_utf8_lossy(raw_str).into_owned()),
++        ))
++    }
++
++    fn get_payload_val(
++        offset: &mut usize,
++        args_payload: &[u8],
++    ) -> Result<EventArgPayload>
++    {
++        let raw_val = u64::from_le_bytes(
++            args_payload[*offset..(*offset + 8)].try_into().unwrap(),
++        );
++        *offset += 8;
++        Ok(EventArgPayload::new(Some(raw_val), None))
++    }
++}
++
++#[derive(Clone)]
++struct EventEntry
++{
++    event: Event,
++    event_id: u64,
++    timestamp_ns: u64,
++    record_pid: u32,
++    rec_args: Vec<EventArgPayload>,
++}
++
++impl EventEntry
++{
++    fn new(
++        event: &Event,
++        event_id: u64,
++        timestamp_ns: u64,
++        record_pid: u32,
++    ) -> Self
++    {
++        EventEntry {
++            event: event.clone(),
++            event_id,
++            timestamp_ns,
++            record_pid,
++            rec_args: Vec::new(),
 +        }
-+        if res == "const" {
-+            continue;
-+        }
-+        if !ALLOWED_TYPES.contains(&res.as_ref()) {
-+            return Err(Error::InvalidType(res.to_string()));
-+        }
++    }
++}
++
++fn get_mapping(mut fobj: &File) -> Result<(u64, String)>
++{
++    let mut event_id_buf = [0u8; 8];
++    fobj.read_exact(&mut event_id_buf)
++        .map_err(Error::ReadFile)?;
++    let event_id = u64::from_le_bytes(event_id_buf);
++
++    let mut len_buf = [0u8; 4];
++    fobj.read_exact(&mut len_buf).map_err(Error::ReadFile)?;
++
++    let len = u32::from_le_bytes(len_buf);
++    let mut name_buf = vec![0u8; len as usize];
++    fobj.read_exact(&mut name_buf).map_err(Error::ReadFile)?;
++    let name = String::from_utf8(name_buf.clone())
++        .map_err(|_| Error::InvalidEventName(format!("{:?}", name_buf)))?;
++
++    Ok((event_id, name))
++}
++
++fn read_record(fobj: &File) -> Result<RecordInfo>
++{
++    let hdr = RecordHeader::read_header(fobj)?;
++    let info = hdr.extract_record(fobj)?;
++    Ok(info)
++}
++
++fn read_trace_header(fobj: &File) -> Result<()>
++{
++    let log_hdr = LogHeader::read_header(fobj)?;
++    if log_hdr.event_id != HEADER_EVENT_ID {
++        return Err(Error::InvalidHeaderId(log_hdr.event_id, HEADER_EVENT_ID));
++    }
++    if log_hdr.magic != HEADER_MAGIC {
++        return Err(Error::InvalidHeaderMagic(log_hdr.magic, HEADER_MAGIC));
++    }
++    if ![0, 2, 3, 4].contains(&(log_hdr.version as i64)) {
++        return Err(Error::UnknownVersion(log_hdr.version));
++    }
++    if log_hdr.version != 4 {
++        return Err(Error::UnsupportedVersion(log_hdr.version));
 +    }
 +    Ok(())
 +}
 +
-+pub fn read_events(fname: &str) -> Result<Vec<Event>>
++fn read_trace_records(
++    events: &Vec<Event>,
++    fobj: &File,
++    analyzer: &mut Formatter,
++    read_header: bool,
++) -> Result<Vec<String>>
 +{
-+    let fstr = read_to_string(fname).unwrap();
-+    let lines = fstr.lines().map(|s| s.trim()).collect::<Vec<_>>();
-+    let mut events = Vec::new();
++    /* backtrace::Backtrace needs this env variable. */
++    env::set_var("RUST_BACKTRACE", "1");
++    let bt = Backtrace::new();
++    let raw_frame = bt.frames().first().unwrap();
++    let frameinfo = raw_frame.symbols().first().unwrap();
 +
-+    /*
-+     * lines() in Rust: Line terminators are not included in the lines
-+     * returned by the iterator, so check whether line_str is empty.
-+     */
-+    for (lineno, line_str) in lines.iter().enumerate() {
-+        if line_str.is_empty() || line_str.starts_with('#') {
-+            continue;
-+        }
++    let dropped_event = Event::build(
++        "Dropped_Event(uint64_t num_events_dropped)",
++        frameinfo.lineno().unwrap() + 1,
++        frameinfo.filename().unwrap().to_str().unwrap(),
++    )
++    .unwrap();
 +
-+        let event = Event::build(line_str, lineno as u32 + 1, fname);
-+        if let Err(e) = event {
-+            return Err(Error::ReadEventFail(
-+                fname.to_owned(),
-+                lineno,
-+                e.to_string(),
-+            ));
-+        } else {
-+            events.push(event.unwrap());
-+        }
++    let mut event_mapping = HashMap::new();
++    for e in events {
++        event_mapping.insert(e.name.clone(), e.clone());
 +    }
 +
-+    Ok(events)
-+}
++    let drop_str = "dropped".to_string();
++    event_mapping.insert(drop_str.clone(), dropped_event.clone());
++    let mut event_id_to_name: HashMap<u64, String> = HashMap::new();
++    event_id_to_name.insert(DROPPED_EVENT_ID, drop_str.clone());
 +
-+#[derive(Clone)]
-+pub struct ArgProperty
-+{
-+    pub c_type: String,
-+    pub name: String,
-+}
-+
-+impl ArgProperty
-+{
-+    fn new(c_type: &str, name: &str) -> Self
-+    {
-+        ArgProperty {
-+            c_type: c_type.to_string(),
-+            name: name.to_string(),
++    if !read_header {
++        for (event_id, event) in events.iter().enumerate() {
++            event_id_to_name.insert(event_id as u64, event.name.clone());
 +        }
 +    }
 +
-+    pub fn is_string(&self) -> bool
-+    {
-+        let arg_strip = self.c_type.trim_start();
-+        STRING_TYPES.iter().any(|&s| arg_strip.starts_with(s))
-+            && arg_strip.matches('*').count() == 1
-+    }
-+}
-+
-+#[derive(Default, Clone)]
-+pub struct Arguments
-+{
-+    /* List of (type, name) tuples or arguments properties. */
-+    pub props: Vec<ArgProperty>,
-+}
-+
-+impl Arguments
-+{
-+    pub fn new() -> Self
-+    {
-+        Arguments { props: Vec::new() }
-+    }
-+
-+    pub fn len(&self) -> usize
-+    {
-+        self.props.len()
-+    }
-+
-+    pub fn build(arg_str: &str) -> Result<Arguments>
-+    {
-+        let mut args = Arguments::new();
-+        for arg in arg_str.split(',').map(|s| s.trim()) {
-+            if arg.is_empty() {
-+                return Err(Error::EmptyArg);
++    let mut fmt_strs = Vec::new();
++    loop {
++        let rtype = RecordType::read_type(fobj)?;
++        match rtype {
++            RecordType::Empty => {
++                break;
 +            }
-+
-+            if arg == "void" {
++            RecordType::Mapping => {
++                let (event_id, event_name) =
++                    get_mapping(fobj).expect("Error reading mapping");
++                event_id_to_name.insert(event_id, event_name);
 +                continue;
 +            }
++            RecordType::Event => {
++                let rec = read_record(fobj).expect("Error reading record");
++                let event_name =
++                    event_id_to_name.get(&rec.event_id).unwrap().to_string();
++                let event = event_mapping
++                    .get(&event_name)
++                    .ok_or(Error::UnknownEvent(event_name))?;
 +
-+            let (arg_type, identifier) = if arg.contains('*') {
-+                /* FIXME: Implement rsplit_inclusive(). */
-+                let p = arg.rfind('*').unwrap();
-+                (
-+                    /* Safe because arg contains "*" and p exists. */
-+                    unsafe { arg.get_unchecked(..p + 1) },
-+                    /* Safe because arg contains "*" and p exists. */
-+                    unsafe { arg.get_unchecked(p + 1..) },
-+                )
-+            } else {
-+                arg.rsplit_once(' ').unwrap()
-+            };
++                let mut entry = EventEntry::new(
++                    event,
++                    rec.event_id,
++                    rec.timestamp_ns,
++                    rec.record_pid,
++                );
++                let mut offset = 0;
 +
-+            validate_c_type(arg_type)?;
-+            args.props.push(ArgProperty::new(arg_type, identifier));
-+        }
-+        Ok(args)
-+    }
-+}
-+
-+/* TODO: Support original, event_trans, event_exec if needed. */
-+#[derive(Default, Clone)]
-+pub struct Event
-+{
-+    /* The event name. */
-+    pub name: String,
-+    /* Properties of the event. */
-+    pub properties: Vec<String>,
-+    /* The event format string. */
-+    pub fmt: Vec<String>,
-+    /* The event arguments. */
-+    pub args: Arguments,
-+    /* The line number in the input file. */
-+    pub lineno: u32,
-+    /* The path to the input file. */
-+    pub filename: String,
-+}
-+
-+impl Event
-+{
-+    #[allow(clippy::too_many_arguments)]
-+    pub fn new(
-+        name: &str,
-+        mut props: Vec<String>,
-+        fmt: Vec<String>,
-+        args: Arguments,
-+        lineno: u32,
-+        filename: &str,
-+    ) -> Result<Self>
-+    {
-+        let mut event = Event {
-+            name: name.to_string(),
-+            fmt: fmt.clone(),
-+            args,
-+            lineno,
-+            filename: filename.to_string(),
-+            ..Default::default()
-+        };
-+
-+        event.properties.append(&mut props);
-+
-+        if event.args.len() > 10 {
-+            return Err(Error::InvalidArgCnt(event.name));
-+        }
-+
-+        let unknown_props: Vec<String> = event
-+            .properties
-+            .iter()
-+            .filter_map(|p| {
-+                if !VALID_PROPS.contains(&p.as_str()) {
-+                    Some(p.to_string())
-+                } else {
-+                    None
++                for arg in &event.args.props {
++                    let payload = if arg.is_string() {
++                        EventArgPayload::get_payload_str(
++                            &mut offset,
++                            &rec.args_payload,
++                        )?
++                    } else {
++                        EventArgPayload::get_payload_val(
++                            &mut offset,
++                            &rec.args_payload,
++                        )?
++                    };
++                    entry.rec_args.push(payload);
 +                }
-+            })
-+            .collect();
-+        if !unknown_props.is_empty() {
-+            return Err(Error::UnknownProp(format!("{:?}", unknown_props)));
-+        }
 +
-+        if event.fmt.len() > 2 {
-+            return Err(Error::InvalidFormat(
-+                format!("too many arguments ({})", event.fmt.len()).to_string(),
-+            ));
++                let fmt = analyzer.process_event(
++                    &entry.rec_args,
++                    &entry.event,
++                    entry.event_id,
++                    entry.timestamp_ns,
++                    entry.record_pid,
++                )?;
++                fmt_strs.push(fmt);
++            }
 +        }
-+
-+        Ok(event)
 +    }
-+
-+    pub fn build(line_str: &str, lineno: u32, filename: &str) -> Result<Event>
-+    {
-+        static RE: Lazy<Regex> = Lazy::new(|| {
-+            Regex::new(
-+                r#"(?x)
-+                ((?P<props>[\w\s]+)\s+)?
-+                (?P<name>\w+)
-+                \((?P<args>[^)]*)\)
-+                \s*
-+                (?:(?:(?P<fmt_trans>".+),)?\s*(?P<fmt>".+))?
-+                \s*"#,
-+            )
-+            .unwrap()
-+        });
-+
-+        let caps_res = RE.captures(line_str);
-+        if caps_res.is_none() {
-+            return Err(Error::UnknownEvent(line_str.to_owned()));
-+        }
-+        let caps = caps_res.unwrap();
-+        let name = caps.name("name").map_or("", |m| m.as_str());
-+        let props: Vec<String> = if caps.name("props").is_some() {
-+            caps.name("props")
-+                .unwrap()
-+                .as_str()
-+                .split_whitespace()
-+                .map(|s| s.to_string())
-+                .collect()
-+        } else {
-+            Vec::new()
-+        };
-+        let fmt: String =
-+            caps.name("fmt").map_or("", |m| m.as_str()).to_string();
-+        let fmt_trans: String = caps
-+            .name("fmt_trans")
-+            .map_or("", |m| m.as_str())
-+            .to_string();
-+
-+        if fmt.contains("%m") || fmt_trans.contains("%m") {
-+            return Err(Error::InvalidFormat(
-+                "Event format '%m' is forbidden, pass the error 
-+                as an explicit trace argument"
-+                    .to_string(),
-+            ));
-+        }
-+        if fmt.ends_with(r"\n") {
-+            return Err(Error::InvalidFormat(
-+                "Event format must not end with a newline 
-+                character"
-+                    .to_string(),
-+            ));
-+        }
-+        let mut fmt_vec = vec![fmt];
-+        if !fmt_trans.is_empty() {
-+            fmt_vec.push(fmt_trans);
-+        }
-+
-+        let args =
-+            Arguments::build(caps.name("args").map_or("", |m| m.as_str()))?;
-+        let event = Event::new(name, props, fmt_vec, args, lineno, filename)?;
-+
-+        Ok(event)
-+    }
++    Ok(fmt_strs)
 +}
+ 
+ trait Analyzer
+ {
 -- 
 2.34.1
 
