@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0752C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 18:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E5CDC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 18:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBetx-0006x7-RV; Mon, 27 May 2024 14:17:11 -0400
+	id 1sBexi-0000WB-Cy; Mon, 27 May 2024 14:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBett-0006uR-2X
- for qemu-devel@nongnu.org; Mon, 27 May 2024 14:16:49 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBexh-0000Vj-Jk
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 14:20:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBetr-0006k4-IR
- for qemu-devel@nongnu.org; Mon, 27 May 2024 14:16:48 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBexg-0007NL-2w
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 14:20:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716833806;
+ s=mimecast20190719; t=1716834043;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0SG/L4NgD8oSC9bs/3RT412i8aFmgyc9us8nhBMLolY=;
- b=fsOC8uwkxgU33exxTVDeLIwc/2ufnPkj6guHbxHS576MR3ffIocuUfZa87ZB4AUMAyevvN
- eC+IXLFuJn964acXB2DOuRk/DJyfSOBoP8k2POYkYIumNm2do0adPtmvA83eZnsMc8bmIj
- XE5U0zy61lE6+hwCFHff0etp9VvTN/0=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GiQ5SAW7MzgSMgVxF5Dijk1dxHGt//ev/81U+kF+zFQ=;
+ b=bBKNDnfw5rkiVqeqolpLlEJUkgjJx9ynuEB32QED4jxrVawRNdui9mprXAaPk/2r6/D9Qo
+ k7MVBIdO6PbmU4VM1cTWB/b5P01l3cOK+kiYDoPSDvOBhJMGFoZsPjX8k9RQraacAjr2o0
+ IaGf3+/LqoETAZpwCA0Hddn8rv8qsso=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-E-PlaemnM8SvkcHUARBnjw-1; Mon, 27 May 2024 14:16:44 -0400
-X-MC-Unique: E-PlaemnM8SvkcHUARBnjw-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5b9b2a518b9so1932eaf.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 11:16:44 -0700 (PDT)
+ us-mta-98-JAv9VLcaPj2ZV7rx_5Hi8g-1; Mon, 27 May 2024 14:20:41 -0400
+X-MC-Unique: JAv9VLcaPj2ZV7rx_5Hi8g-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5b970b125fcso3760eaf.0
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 11:20:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716833804; x=1717438604;
+ d=1e100.net; s=20230601; t=1716834041; x=1717438841;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0SG/L4NgD8oSC9bs/3RT412i8aFmgyc9us8nhBMLolY=;
- b=ahH4gNm4BcWi28OKdr4og0JzoPdyxD9bg6lDkJUCw/ucsXVOCmT52sHXN/juWwV7Ng
- 0Bm348Fs1m0riJre8wYl0u9qTxIFwi8/TePhNAPzbT5uuvuT4eHr+gPJCKymNC3yG995
- xwiYFigQzIPZfhOeIHKxKPSw+qSJeMqiBbG+cSndAs4cutKCpA45KeEzq5NKpK++GiYr
- 8Q5RBpwdqqWzkN3NixoaG3DsKMhu3jD1rVpfh3Plmid6TG4iDS4jbhqvOjpzFiQNgS3E
- gQo9SEXd+gVAzI2TDSz/uwWWxMFt4pjEGF7sIMPTKbhAJ5EMtFEnlGgxzUiMJudwi/G8
- UO6Q==
-X-Gm-Message-State: AOJu0YyV24GN10WYFNMgZ0LyvfnY9b7EupClIjHCj7Oo5Oeu4ZLumtRd
- dbYUM4fg7SEL2UxdxZ54uGccEC4aF1VCfWM00RtgEHa1vxgi5Isl+iTX8u+bS4TJxYCYImdYWXV
- qnPXJh2XWrxujIRDDDohAu6ozeRzEfiUWLW4JuRssq/7N3IsEhqgm
-X-Received: by 2002:a05:6870:55ce:b0:24f:c0ba:2b01 with SMTP id
- 586e51a60fabf-24fc0ba2c85mr8352397fac.3.1716833803762; 
- Mon, 27 May 2024 11:16:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcI53bxlvillJ4FULZzoofAqKdQcCAUr/G64AhAt6wKqjyWhWuJEt8wyxgW6FhFgf63FwxGg==
-X-Received: by 2002:a05:6870:55ce:b0:24f:c0ba:2b01 with SMTP id
- 586e51a60fabf-24fc0ba2c85mr8352346fac.3.1716833802899; 
- Mon, 27 May 2024 11:16:42 -0700 (PDT)
+ bh=GiQ5SAW7MzgSMgVxF5Dijk1dxHGt//ev/81U+kF+zFQ=;
+ b=c73ag6lqJ1BG3VGS5bd6wX5tNCnuf0uR9jJ+X3y6uHhbInfKuYK/gMqMu2SryKPDg9
+ O8lh9o29Lfft0/2tuDjbKkilB583r78IloGOArTsO/kk0pZai9An0wlhph9Af0d2VEqh
+ MzEg5Qqs3ht2cl0ORkgp0WsMZv7hWJJm9thxjxQaca8Dmaq4ZWYzGWTRtNul1jpv8hnx
+ xftsRXdE72I5yR7aVj149cKk4T0C1uBZtXYgFeAwPkiOIbNUruydgX8Zw9zG8ysGfToo
+ T0kVnq6OElVI/v9c1hKrGVfZs/L0k9w5EY9o4HlQSOSEBTlovnqcWLrssKsgR61l4XiQ
+ 9SLg==
+X-Gm-Message-State: AOJu0Ywveg/CNN0B1MZgXu3wR90zIpr2lZfDOofiB0GebR2ThP8xxLN2
+ xVDaSNO2JG4wSAYVJzcRJH3SNoONxwtzOQbFBGTSjlUgshH9fPvu45LUqoFl67Uv9D71ItMLIAn
+ cm70vtg6o4Lqv4E5Lv2QyLJ/+L0lLFKId7w64H7/lF4rbZpEg0Kj/
+X-Received: by 2002:a05:6870:89a5:b0:24f:cc8a:b407 with SMTP id
+ 586e51a60fabf-24fcc8ac55bmr8182150fac.3.1716834040656; 
+ Mon, 27 May 2024 11:20:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGD1Dd0skwd/0jj41lbJ0MXWoWL3U4jqLaHIp7ZpyhtGt/0cp+NRj76Mn8DAcf/a1HmurFN8w==
+X-Received: by 2002:a05:6870:89a5:b0:24f:cc8a:b407 with SMTP id
+ 586e51a60fabf-24fcc8ac55bmr8182120fac.3.1716834040132; 
+ Mon, 27 May 2024 11:20:40 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794abd09fd8sm314896085a.94.2024.05.27.11.16.41
+ d75a77b69052e-43fb17c8a6bsm35523741cf.21.2024.05.27.11.20.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 11:16:42 -0700 (PDT)
-Date: Mon, 27 May 2024 14:16:40 -0400
+ Mon, 27 May 2024 11:20:39 -0700 (PDT)
+Date: Mon, 27 May 2024 14:20:37 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -73,14 +73,14 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V1 05/26] migration: precreate vmstate
-Message-ID: <ZlTOCLFNF894T46U@x1n>
+Subject: Re: [PATCH V1 07/26] migration: VMStateId
+Message-ID: <ZlTO9fVYG50r3XL9@x1n>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-6-git-send-email-steven.sistare@oracle.com>
+ <1714406135-451286-8-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1714406135-451286-6-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1714406135-451286-8-git-send-email-steven.sistare@oracle.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -106,66 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 08:55:14AM -0700, Steve Sistare wrote:
-> Provide the VMStateDescription precreate field to mark objects that must
-> be loaded on the incoming side before devices have been created, because
-> they provide properties that will be needed at creation time.  They will
-> be saved to and loaded from their own QEMUFile, via
-> qemu_savevm_precreate_save and qemu_savevm_precreate_load, but these
-> functions are not yet called in this patch.  Allow them to be called
-> before or after normal migration is active, when current_migration and
-> current_incoming are not valid.
+On Mon, Apr 29, 2024 at 08:55:16AM -0700, Steve Sistare wrote:
+> Define a type for the 256 byte id string to guarantee the same length is
+> used and enforced everywhere.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->  include/migration/vmstate.h |  6 ++++
->  migration/savevm.c          | 69 +++++++++++++++++++++++++++++++++++++++++----
->  migration/savevm.h          |  3 ++
->  3 files changed, 73 insertions(+), 5 deletions(-)
+>  include/exec/ramblock.h     | 3 ++-
+>  include/migration/vmstate.h | 2 ++
+>  migration/savevm.c          | 8 ++++----
+>  migration/vmstate.c         | 3 ++-
+>  4 files changed, 10 insertions(+), 6 deletions(-)
 > 
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 294d2d8..4691334 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -198,6 +198,12 @@ struct VMStateDescription {
->       * a QEMU_VM_SECTION_START section.
->       */
->      bool early_setup;
-> +
-> +    /*
-> +     * Send/receive this object in the precreate migration stream.
-> +     */
-> +    bool precreate;
-> +
->      int version_id;
->      int minimum_version_id;
->      MigrationPriority priority;
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 9789823..a30bcd9 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -239,6 +239,7 @@ static SaveState savevm_state = {
+> diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+> index 0babd10..61deefe 100644
+> --- a/include/exec/ramblock.h
+> +++ b/include/exec/ramblock.h
+> @@ -23,6 +23,7 @@
+>  #include "cpu-common.h"
+>  #include "qemu/rcu.h"
+>  #include "exec/ramlist.h"
+> +#include "migration/vmstate.h"
 >  
->  #define SAVEVM_FOREACH(se, entry)                                    \
->      QTAILQ_FOREACH(se, &savevm_state.handlers, entry)                \
-> +        if (!se->vmsd || !se->vmsd->precreate)
->  
->  #define SAVEVM_FOREACH_ALL(se, entry)                                \
->      QTAILQ_FOREACH(se, &savevm_state.handlers, entry)
-> @@ -1006,13 +1007,19 @@ static void save_section_header(QEMUFile *f, SaveStateEntry *se,
->      }
->  }
->  
-> +static bool send_section_footer(SaveStateEntry *se)
-> +{
-> +    return (se->vmsd && se->vmsd->precreate) ||
-> +           migrate_get_current()->send_section_footer;
-> +}
+>  struct RAMBlock {
+>      struct rcu_head rcu;
+> @@ -35,7 +36,7 @@ struct RAMBlock {
+>      void (*resized)(const char*, uint64_t length, void *host);
+>      uint32_t flags;
+>      /* Protected by the BQL.  */
+> -    char idstr[256];
+> +    VMStateId idstr;
+>      /* RCU-enabled, writes protected by the ramlist lock */
+>      QLIST_ENTRY(RAMBlock) next;
+>      QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
 
-Does the precreate vmsd "require" the footer?  Or it should also work?
-IMHO it's less optimal to bind features without good reasons.
-
-Thanks,
+Hmm.. Don't look like a good idea to include a migration header in
+ramblock.h?  Is this ramblock change needed for this work?
 
 -- 
 Peter Xu
