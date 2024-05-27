@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6992CC25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C158AC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBWm7-00088m-Dm; Mon, 27 May 2024 05:36:17 -0400
+	id 1sBWnF-0000SV-7g; Mon, 27 May 2024 05:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWm3-00086u-SN
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:36:13 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWnE-0000SG-Bp
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 05:37:24 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWm1-0005Di-Id
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:36:11 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-420180b5897so43862165e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:36:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWnC-0005KW-FE
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 05:37:23 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5295dadce7fso3844620e87.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716802567; x=1717407367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716802640; x=1717407440; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Yy5PRIVdEb77I/eexM2zbRlXxcgfRGKq/R8nyRoojLQ=;
- b=oXkW1jenTXF+U9TRzL5yvMetzJGXfOCcbUfpPGOIcoxRkvho3Hc/TCiK88mGRFOeWL
- sKwqlRBm0SWSlP+i3JGGLTULArMgwFE5R7DeQyvsnX0BguB8d2OR36dV7BeJiQD0kr6G
- FvaUUNHyIW6Ly5bSjNowUiQtaSWxAkhQJdrVC/7kz7vzs5uRb4Jf65KT8iKmLtHtH80M
- Rkzq0HG3tQdY8OTprm5ikxef3DujSTzNRhL92Bb/9sWF8xldCFpbL+awVPGBHiZVVrMI
- /p4Wo3W5FROpsMFKojUXt61UrHWXZTMcOZ8odlwzpQwfxWg5qlp9oSVG9eCA9pXSu1s1
- ijbQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=98HExPg7WH7IeeLiCebIdJ65EUuHdinqNzsoI+BnCs4=;
+ b=FgwFuYAXuuN+BU4i6X6DTOQggNM7O0saPwenQPtzvSaiCs4bV2Op52xcU2uxBjoT+9
+ hrjR/BL5f/lxIPrY6UvkOUTBu4/9bxFkdEmL31YZt+BIRRPCh+IKRvGqzjUExRW+2uFl
+ k6bfR4Xc1St+40x01FdE0iCB6EkOn59Bv7ehY/aWXpYpHl3/29FDuPs/1OUxinkbEUpp
+ IJ4hds89O7mgBNdRPxj2ZLEzKbAkLVfi+DHDWZkRHuJtH2YPGzRXFRZOoVhVZovlr0TE
+ V35TRHsCESB51LOS7Jiv81mnxXG4QxEOqFSsSxZ7Qf7n+e18MfH2O5+UGhuXdh0QNMeE
+ Idjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716802567; x=1717407367;
+ d=1e100.net; s=20230601; t=1716802640; x=1717407440;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yy5PRIVdEb77I/eexM2zbRlXxcgfRGKq/R8nyRoojLQ=;
- b=K3pquMVCUf+yNnj9MARyr05yyZaKUR6UWIrDgbLd6SMk5mTPJMnm05KnwFrBzHHIKe
- gDO6QADS8HuF5tkpaqmdkLlH1SDG0VGIpw7TNxE85FUdt4roJ7nyTrRVOchxO1qGN745
- JhUGqBLb/aw1olztcUIBDPR285aUiYrhCYAZj0rvijS4J3BX7NmG4Bss9zLXFatYUVTH
- 1oN8WazAF/A/Sa13F5KWnglcYvbr6AJwPSmYX07h6c8emDAdlYYQs8ZOUntu/Mn7jGWP
- 8o7cxLo/MM+NHemNY3z28tFK16X6zwOAruoQW/OxBzfcjAh1PZcVhFbuEGFibyYtm3FW
- hEBw==
+ bh=98HExPg7WH7IeeLiCebIdJ65EUuHdinqNzsoI+BnCs4=;
+ b=Y/8b5t8rtnJMR7d1G0qg7EEDvHtY7TmuafwjhF5Q6cnHUk3jUdP4AHuzZ6854RcPhp
+ O5Q2zT0t9yCSjyJlUHET/VBfV3mupPGTGwr7KwM+R32GqdWuBArqrcV07jCU8WDrStYi
+ szYmIlMESTAZ5kuO9TqBugIhuQZcmhsdUmRldrjN65aXCK8WjUi8pA3mzFr2MP5Zn74r
+ 1XYHIQPpfrJxBdlszfYVnHC+flTz5Zi+hjOlEZckE2RcpAlF+f8DkXk3ehtgPkMbTqnq
+ ulA2pALGNUJbYSrtvWBsWbXg3qFjJEeZ8jmFZxmWatGZUtaI7WzcE4G3aoxQhZhEO0Bc
+ hDrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwePp7aioK5J953n/gNiduHZiFzVSqdhPyEt9hKGRXqMYjnwiDVRBBtg825SCksRk16Q4HiT0xe2V4W7QwyvYH2P3QY9o=
-X-Gm-Message-State: AOJu0YwQXgoIzNMBmEsfEbaYWW3B/Vuz06LUSpQGvaXq6VvaAQKSUTvL
- Au7tnzpiIPkn2O7Yz0CrIZGwW8m6omTqyK0ZDmKh6CwmnJWeLYa7EZ6TXvHxExPbNm2ogzAbgOn
- UGsI=
-X-Google-Smtp-Source: AGHT+IEQ17KoZzYpZBK/3138NBVTWnZxNigZ5LrrFdfiDHtdkggxZ4AdRSSySS1P6KsQgGoyWJOBsg==
-X-Received: by 2002:a05:600c:286:b0:41b:d8df:93a3 with SMTP id
- 5b1f17b1804b1-421089d1907mr77539725e9.1.1716802567151; 
- Mon, 27 May 2024 02:36:07 -0700 (PDT)
+ AJvYcCWv3lXIx4MGmDWHSTb5W9edDvF4AXFNB94xXc1CwVizy02+nPp1oWVgWIQbZDnyji17DGfr5XFq9UYuL7gUR/6UUzGdDGI=
+X-Gm-Message-State: AOJu0YzqCcTfn+WtCKf8InQ0lCp5jCF61hO9/Cs12fPjM+Prjse/UzgM
+ GI1uHswVr0zcKtGi/qDcpKyHraG7N+xgMurD4R/HWGhS/2q6haSgOdAtlYm5SfQ=
+X-Google-Smtp-Source: AGHT+IHUhARjQ3VaWpLBTf3SuCrEcadQ0g3qu/te65YbERZ8igAr/QLma5FEukl7pHrHYekS5OPLHw==
+X-Received: by 2002:a05:6512:388b:b0:523:aac1:b559 with SMTP id
+ 2adb3069b0e04-529663e6304mr5306695e87.44.1716802640354; 
+ Mon, 27 May 2024 02:37:20 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.152.134])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-421089711e8sm103192275e9.18.2024.05.27.02.36.06
+ 5b1f17b1804b1-4210e63ea39sm74680825e9.30.2024.05.27.02.37.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 02:36:06 -0700 (PDT)
-Message-ID: <bcee2ec3-c3fe-4d89-898b-0f78c5ea7e31@linaro.org>
-Date: Mon, 27 May 2024 11:36:05 +0200
+ Mon, 27 May 2024 02:37:19 -0700 (PDT)
+Message-ID: <98e4926e-efbc-4ea7-9b4b-5c2227dd455d@linaro.org>
+Date: Mon, 27 May 2024 11:37:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: generate simpler code for ROL/ROR with
- immediate count
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240522123914.608516-1-pbonzini@redhat.com>
+Subject: Re: [PATCH] accel/tcg: Init tb size and icount before
+ plugin_gen_tb_end
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>
+References: <20240521210604.130837-1-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240522123914.608516-1-pbonzini@redhat.com>
+In-Reply-To: <20240521210604.130837-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,20 +96,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/5/24 14:39, Paolo Bonzini wrote:
-> gen_rot_carry and gen_rot_overflow are meant to be called with count == NULL
-> if the count cannot be zero.  However this is not done in gen_ROL and gen_ROR,
-> and writing everywhere "can_be_zero ? count : NULL" is burdensome and less
-> readable.  Just pass can_be_zero as a separate argument.
+On 21/5/24 23:06, Richard Henderson wrote:
+> When passing disassembly data to plugin callbacks,
+> translator_st_len relies on db->tb->size having been set.
 > 
-> gen_RCL and gen_RCR use a conditional branch to skip the computation
-> if count is zero, so they can pass false unconditionally to gen_rot_overflow.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Fixes: 4c833c60e047 ("disas: Use translator_st to get disassembly data")
+> Reported-by: Bernhard Beschow <shentey@gmail.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/i386/tcg/emit.c.inc | 26 ++++++++++++++------------
->   1 file changed, 14 insertions(+), 12 deletions(-)
+>   accel/tcg/translator.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
+Oops, missed.
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
