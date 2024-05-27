@@ -4,82 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E719C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 05:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41A3C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 05:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBTCx-0000lx-1j; Mon, 27 May 2024 01:47:43 -0400
+	id 1sBTGe-0003Qj-F3; Mon, 27 May 2024 01:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sBTCN-0000Wd-G6
- for qemu-devel@nongnu.org; Mon, 27 May 2024 01:47:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBTGU-0003MX-Av
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 01:51:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sBTCJ-0005VA-Cj
- for qemu-devel@nongnu.org; Mon, 27 May 2024 01:47:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBTGS-0006op-MT
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 01:51:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716788821;
+ s=mimecast20190719; t=1716789080;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YMe8yPsFZZNhmxpyGaINXt+QLPl4uSUmrpd5iSr/OZ0=;
- b=OyoyX5EsidX+ipW5yF+kLjIMMDRFfbz+34FlpkUz6gOnghu9V1Ht4IeiXRXfIh7DIw2SDJ
- RoP7jU5KWG2JxwP5d4n5EQo1s5TqMVmI2jQTyAt9ea9DZl1hRkXWiqXWWwmFGG1vG9Ve1t
- BCPBpDD4w52m+PttzZiHMbYVOWQKKvI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XZVsMxU1q8ns2+uk2Z4IlSl2LbqRSgvNAXqv3cPqTpI=;
+ b=LqWhUBUtmptscAXAcclPzx1oL6V0mj45ja+we94TZqhdYh7GDtDiBCr1dKwdYkdP9JeA68
+ zYfAJBj4JQQJ1TNmihmUPJX0hKifLm7SYR7+yiZtntmoOwSp8cw/bm3s+UrobgGxf0w5ja
+ U5zVh+1c5gbIK0EvWTvS5a23COIHbxA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-CjrBf4n6Mxa0CvWKH8sAGA-1; Mon, 27 May 2024 01:46:59 -0400
-X-MC-Unique: CjrBf4n6Mxa0CvWKH8sAGA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-358f9dffbedso536818f8f.3
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 22:46:58 -0700 (PDT)
+ us-mta-446-ZCm8Q4J3M6OOh5BdtAbR4Q-1; Mon, 27 May 2024 01:51:18 -0400
+X-MC-Unique: ZCm8Q4J3M6OOh5BdtAbR4Q-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4211239ed3eso2309025e9.1
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 22:51:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716788818; x=1717393618;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YMe8yPsFZZNhmxpyGaINXt+QLPl4uSUmrpd5iSr/OZ0=;
- b=t0sGFvSJ2ImFhpe4iXrywhxWBDP8QVDrucw5VoW2rUex5oh1kwU2Rnxca8Kzoxi8r+
- ogZj4MZZvjMXeD6cnmNCVC5XmwJ7ne7/ZpdRdxXfIWb57/701qSh+TzKuO49KMG/Eon8
- /tuP3eC3cIH/IJZQwCunVG9zbeghRUHDs77zDPfoptBwAEj5ByuEVX0ny6SzLpTvq2t7
- YYET5sdk6u06C41XdIpjBiJ01I7/8Tp/3tfjt6PJmZGtZdcIv/Q7Guqd4kd21xih+n7t
- Tg32GNEbOOOq9E3W/b4IJvxQqGPuRhryxW32twfoOSgs5HK1IchfB2EzzsUeq6FGl2U4
- 52Rg==
+ d=1e100.net; s=20230601; t=1716789077; x=1717393877;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XZVsMxU1q8ns2+uk2Z4IlSl2LbqRSgvNAXqv3cPqTpI=;
+ b=EhV2BXPEdOBIffq1Ng52bhxVNpd7clprfN0bVMOyjKlLLVSqdcfpYxbJPzbJ4rl8/R
+ eHKgzE4JumAl7C8kh1e97yDgZUsGVQEi2hOf/ngYBisxzZpw7Ar0Le4o9JGirhhT7fKq
+ tsRhZJiPFmG6sv0vueDwYfxqdBPgzITsATSlDFpDAvDE0BgB+Qq5MofFGoq5It+kPtlU
+ p1ar7P7MB7Sjwb2ABFuA5GTZnLRZ+5CI6fsGuuO0QQ8g8WEyGhIbsOQPLHPalwJxh1DO
+ 47QYLuuI+wN+VkXHLvrCH3KlKKut0dN/yoKcuYV2RVtD+iOgVF8UPrgXAvq6YmT6msor
+ VfkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHvEX7quBGphRb/boq+iWoVA+FdOqLKs3ojsxDwc8vcGIfrG3hfkbzVobDbDKufg7mIF156Q49fYaGfZ7JpmtkiGTr1Oo=
-X-Gm-Message-State: AOJu0YyUm+mMpEbICgRa4ADk5a2CW9S0dVSxp0FElvxskV4xN7fj/wbj
- Hqux4FcAaIGjr6VOxUDtst4m3/wvBf3D+zyW3haf91iAuR6ea3/2RoqaS6Zw687jMPvMnLheZEl
- 0OCnVhCkLWKLl9hhnr5wMImzlE19jh86wvFv6e5UbwAzS+BCROUKKfV9m+Ykub2fZmFpq9lS8WD
- DVwBvFsmiCaWoWVUygbe3vXb0kBIk=
-X-Received: by 2002:a5d:5983:0:b0:359:b737:51e4 with SMTP id
- ffacd0b85a97d-359b73753dcmr962220f8f.2.1716788817908; 
- Sun, 26 May 2024 22:46:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFDk3mtytrZ9jeyU7UHU0Wp2AS2T9chUrSd27kPYeAiIn4SkOjW6ZQp7lJFxzZbWpivFOlxidrPJz8eCpIwDQ=
-X-Received: by 2002:a5d:5983:0:b0:359:b737:51e4 with SMTP id
- ffacd0b85a97d-359b73753dcmr962206f8f.2.1716788817463; Sun, 26 May 2024
- 22:46:57 -0700 (PDT)
+ AJvYcCVGGjY/wFSLSpBiRcMcMNzjRAJyNvJ8g8a2nvT08UMNhbKAFb7H9FdWrUSvFvy85JOyk7qCr8VJfLfLTC0/L4ewrzo52/8=
+X-Gm-Message-State: AOJu0YxwHF8P2m/DfKRUaDTu2pPoaXkQupLZ9a4Wy1fi0VjnSGlTKisc
+ c3NEifI2c1qUbw1x6yZ/oz6xSoc6rHC9jq022i0Le0Y8XG7IsG5jomceiForj/lswkJirxrvmj8
+ OI+IKRhrZ0heh76GtDtICX5LmU+F4e/e/W591kBS8W4WSxHwRsRQx
+X-Received: by 2002:a05:6000:1a44:b0:354:fbc2:5cf6 with SMTP id
+ ffacd0b85a97d-35526c5a119mr5689194f8f.30.1716789077216; 
+ Sun, 26 May 2024 22:51:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwyv1E8vS0rL1PPafnkk6JQ2HM5I6hUo5AMaE+xx1YP+AEaxZOkm+QT3duCr0ft4SiH02I0g==
+X-Received: by 2002:a05:6000:1a44:b0:354:fbc2:5cf6 with SMTP id
+ ffacd0b85a97d-35526c5a119mr5689176f8f.30.1716789076810; 
+ Sun, 26 May 2024 22:51:16 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
+ [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42100f15f66sm127576575e9.14.2024.05.26.22.51.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 May 2024 22:51:16 -0700 (PDT)
+Message-ID: <88f79ea3-8b83-45c2-bd15-cdf16ffeac9a@redhat.com>
+Date: Mon, 27 May 2024 07:51:13 +0200
 MIME-Version: 1.0
-References: <20240525131241.378473-1-npiggin@gmail.com>
- <20240525131241.378473-3-npiggin@gmail.com>
-In-Reply-To: <20240525131241.378473-3-npiggin@gmail.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 27 May 2024 11:16:41 +0530
-Message-ID: <CAE8KmOwYPf_1rX_An0K5gncDAC7V5jvR735tEAomVJiVxOeyTg@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/3] tests/qtest/migration-test: enable on s390x
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/3] hw/intc/s390_flic: Migrate pending state
+To: David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-s390x@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+References: <20240525131241.378473-1-npiggin@gmail.com>
+ <20240525131241.378473-2-npiggin@gmail.com>
+ <3bf1025b-021a-42fa-a4cc-d3cd9ea90676@redhat.com>
+ <10e876de-b973-4016-9155-960383d46297@linaro.org>
+ <22e05fc7-6256-41b3-9f0d-f983f169b08c@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <22e05fc7-6256-41b3-9f0d-f983f169b08c@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -104,68 +156,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 26/05/2024 22.33, David Hildenbrand wrote:
+> Am 26.05.24 um 21:44 schrieb Richard Henderson:
+>> On 5/26/24 08:53, David Hildenbrand wrote:
+>>> Am 25.05.24 um 15:12 schrieb Nicholas Piggin:
+>>>> The flic pending state is not migrated, so if the machine is migrated
+>>>> while an interrupt is pending, it can be lost. This shows up in
+>>>> qtest migration test, an extint is pending (due to console writes?)
+>>>> and the CPU waits via s390_cpu_set_psw and expects the interrupt to
+>>>> wake it. However when the flic pending state is lost, s390_cpu_has_int
+>>>> returns false, so s390_cpu_exec_interrupt falls through to halting
+>>>> again.
+>>>>
+>>>> Fix this by migrating pending. This prevents the qtest from hanging.
+>>>> Does service_param need to be migrated? Or the IO lists?
+>>>>
+>>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>>>> ---
+>>>>   hw/intc/s390_flic.c | 1 +
+>>>>   1 file changed, 1 insertion(+)
+>>>>
+>>>> diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+>>>> index 6771645699..b70cf2295a 100644
+>>>> --- a/hw/intc/s390_flic.c
+>>>> +++ b/hw/intc/s390_flic.c
+>>>> @@ -369,6 +369,7 @@ static const VMStateDescription 
+>>>> qemu_s390_flic_vmstate = {
+>>>>       .fields = (const VMStateField[]) {
+>>>>           VMSTATE_UINT8(simm, QEMUS390FLICState),
+>>>>           VMSTATE_UINT8(nimm, QEMUS390FLICState),
+>>>> +        VMSTATE_UINT32(pending, QEMUS390FLICState),
+>>>>           VMSTATE_END_OF_LIST()
+>>>>       }
+>>>>   };
+>>>
+>>> Likely you have to handle this using QEMU compat machines.
+>>
+>> Well, since existing migration is broken, I don't think you have to preserve 
+> 
+> Migration is broken only in some case "while an interrupt is pending, it can 
+> be lost".
+> 
+>> compatibility.  But you do have to bump the version number.
+> 
+> Looking at it, this is TCG only, so likely we don't care that much about 
+> migration compatibility. But I have no idea what level of compatibility we 
+> want to support there.
 
-On Sat, 25 May 2024 at 18:44, Nicholas Piggin <npiggin@gmail.com> wrote:
-> s390x is more stable now. Enable it.
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  tests/qtest/migration-test.c | 12 ------------
->  1 file changed, 12 deletions(-)
->
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 94d5057857..7987faaded 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -3428,16 +3428,6 @@ int main(int argc, char **argv)
->      migration_test_add("/migration/analyze-script", test_analyze_script);
->  #endif
->
-> -    /*
-> -     * On s390x, the test seems to be touchy with TCG, perhaps due to race
-> -     * conditions on dirty bits, so disable it there until the problems are
-> -     * resolved.
-> -     */
+Yes, this seems to only affect the TCG-only flic device, where migration has 
+never been working very reliably. So I think we don't really need the whole 
+compat-machine dance here. But I think we should at least bump the 
+version_id to 2 now and then use
 
-    -> https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg04774.html
+    VMSTATE_UINT32_V(pending, QEMUS390FLICState, 2);
 
-* Above patch (not reviewed yet) adds comment about sporadic problems
-on s390x, and this patch says s390x is stable now? It'll help to
-mention in the commit log - what changed to make it stable in 1 day.
+for the new field. That way we would at least support forward migrations 
+without too much hassle.
 
-* IIUC, this and the ppc64 patch above enable 'migration-test' for
-s390x and ppc64 platforms, when KVM is not available for them? ie.
-When running s390x & ppc64 migration-tests with TCG on non s390x or
-non-ppc64 machines, right? Maybe the commit message could say
-something to the effect of - enable s390x and ppc64 'migration-test'
-to run with TCG across platforms where KVM for s390x  OR  KVM for
-ppc64 is not available.
-
-> -    if (g_str_equal(arch, "s390x") && !has_kvm) {
-> -        g_test_message("Skipping tests: s390x host with KVM is required");
-> -        goto test_add_done;
-> -    }
-> -
->      if (is_x86) {
->          migration_test_add("/migration/precopy/unix/suspend/live",
->                             test_precopy_unix_suspend_live);
-> @@ -3619,8 +3609,6 @@ int main(int argc, char **argv)
->                             test_vcpu_dirty_limit);
->      }
->
-> -test_add_done:
-> -
->      ret = g_test_run();
->
->      g_assert_cmpint(ret, ==, 0);
-> --
-
-* Otherwise, the change looks okay to enable 'migration-test' for
-s390x with TCG IIUC.
-
-Thank you.
----
-  - Prasad
+  Thomas
 
 
