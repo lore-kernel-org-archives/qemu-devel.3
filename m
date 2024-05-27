@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0ACC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A1FBC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBX5j-0000fP-LS; Mon, 27 May 2024 05:56:33 -0400
+	id 1sBX6S-0001nR-KF; Mon, 27 May 2024 05:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sBX5e-0000cP-6P; Mon, 27 May 2024 05:56:26 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sBX5Z-0000V2-8V; Mon, 27 May 2024 05:56:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716803782; x=1748339782;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=97lFmP1Xif4eZA/n0xbIqmin3Syi5ckopV3vGiHK7Wc=;
- b=Y2aSS91P/Pm7Q9zAgbKxYA07SXDopcOelfYCFLManFsEVvytT6Jz11FJ
- yTN229ZFzJxNB0yWu2wRjm2fdRikb2V086hNGKN9lUR6rVJ7o7UbKEiud
- yOLhlHVL6n21IbXKCQwQbKyRbPj7/zrJCwHK9PcFeiau34AtAl9d6f0wJ
- s14B3rLCWh8f+RMkvMEKhQdOKRl2tvoy1rqD1C0rzu2SJkEuwjyhDCGOB
- RhB+XdASNnDROjx5TX0z/4gbB3R6LzKqWBqHoRIelFWhcmG3/keY1oJUx
- ktHEn1MyOANOn3Yo3DEnFfMhsufbTfdhxAr9Ig/dJnf33TTKhvlh+yvWy A==;
-X-CSE-ConnectionGUID: ma5iHxBjQgeh4vbjeimEbA==
-X-CSE-MsgGUID: tZ/3ucasSfiM80mwua8frg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="35629311"
-X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="35629311"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2024 02:56:04 -0700
-X-CSE-ConnectionGUID: K+gIUm/3SGCWVzcdfrYm6A==
-X-CSE-MsgGUID: aNP11mAfRpW7Q+k5uFzL2A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="34717942"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 27 May 2024 02:55:55 -0700
-Date: Mon, 27 May 2024 18:11:18 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
- jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- mst@redhat.com, will@kernel.org, gshan@redhat.com,
- rafael@kernel.org, alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net,
- zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>
-Subject: Re: [PATCH V11 3/8] hw/acpi: Update ACPI GED framework to support
- vCPU Hotplug
-Message-ID: <ZlRcRgGtFq+oeto4@intel.com>
-References: <20240522211111.232114-1-salil.mehta@huawei.com>
- <20240522211111.232114-4-salil.mehta@huawei.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBX6R-0001ms-6E
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 05:57:15 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBX6P-0000bu-Hr
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 05:57:14 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3550134ef25so3288670f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:57:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716803832; x=1717408632; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PFtt2bKZ6/DT9ANXXYNtjj9q8dLUfprQ0zoGjZv5Zcg=;
+ b=CxPiqo/3o/EQu/BjLOtT74v9XyYaROrx/EYBfkCOzhHP+0J3kX88iNPdoOITZk8mWN
+ 6ABHJpRH4cSS5QjfJaUCvGhEiXRRZYHvDHKA5nkcaOIDW6BMvNdjJdzJJB57XKIjY1L8
+ o9gSxa44JQHJOB4qhT4JRLWbN0rcoWsZ3CyIQVFF9b86AKgPkP7m2nOwaWEfeXBnjq0g
+ t8WMiT4i3QdvScMAVGA22hx8Kdp1hmk1XkCLd1j5mU5P24ebEoh30RVidoIalIfNAxLP
+ ekw5lyXOWlJObjlACyimqt8WROYJMiYhB1xMqrZg/y7Yk+IsooN/MLrv1T0DNraoslnh
+ xaIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716803832; x=1717408632;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PFtt2bKZ6/DT9ANXXYNtjj9q8dLUfprQ0zoGjZv5Zcg=;
+ b=jwHWxse+FLFMKp6m8k0BpYEtHIe4CmHhpXzvJ5vFZAA+wCDeuF6c9S8w6O92UqGRS4
+ 4biC0OYKBXDFJ8Pjjyh8JMkseOzBnbpmEfGt8042i0XvhSlCUo68OvGoUS+BGUNFPE7C
+ nhlP0ND1dY5kdIWu0+VEgqvamFoB1Sx0ROy1COeFw6a6KIdk+ZAf8yFb50qHJ8+1rO3+
+ 2DLdE6nnvu2PSvEndd21FT+KVT+cnQHu9ufO2jjJ7zw6SNO5Upmx0bIbfkoUL+VhXJrc
+ q2xwjHn1w2Vhrr5AG+9l9xwkwm7Vg2+LJoJfI+ITwv3rCoZDYvwvtbTFCzzlwV609Ret
+ McTA==
+X-Gm-Message-State: AOJu0YxRtHrwSifth22wEMf09JDIlNxqdcHjslfB5bVBXLcfNumbfV1F
+ ltyqgmgFx6cJ2NdghGdt8dKxLfZuJBOOAeSqmxaBCinQOjzpHRP2G6yUvErjXeg=
+X-Google-Smtp-Source: AGHT+IEYyPrKU5IkULvcn/hNGNW8joaXOHJtH5SLMTvdOroMQCl00J17VH0M/qN4axtUjdG7U0UxPw==
+X-Received: by 2002:adf:e907:0:b0:34c:719e:6786 with SMTP id
+ ffacd0b85a97d-35526c19185mr5885066f8f.4.1716803831861; 
+ Mon, 27 May 2024 02:57:11 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.152.134])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-358a33e6f03sm3391916f8f.36.2024.05.27.02.57.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 02:57:11 -0700 (PDT)
+Message-ID: <a972e12b-398b-4843-a7d5-1fc66fd03bce@linaro.org>
+Date: Mon, 27 May 2024 11:57:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240522211111.232114-4-salil.mehta@huawei.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] lockable: Do not cast function pointers
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev
+ <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
+ <20240524-xkb-v4-2-2de564e5c859@daynix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240524-xkb-v4-2-2de564e5c859@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,41 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 22, 2024 at 10:11:06PM +0100, Salil Mehta via wrote:
-> Date: Wed, 22 May 2024 22:11:06 +0100
-> From: Salil Mehta via <qemu-devel@nongnu.org>
-> Subject: [PATCH V11 3/8] hw/acpi: Update ACPI GED framework to support vCPU
->  Hotplug
-> X-Mailer: git-send-email 2.34.1
+On 24/5/24 07:35, Akihiko Odaki wrote:
+> -fsanitize=undefined complains if function pointers are casted. It
+> also prevents enabling teh strict mode of CFI which is currently
+> disabled with -fsanitize-cfi-icall-generalize-pointers.
 > 
-> ACPI GED (as described in the ACPI 6.4 spec) uses an interrupt listed in the
-> _CRS object of GED to intimate OSPM about an event. Later then demultiplexes the
-> notified event by evaluating ACPI _EVT method to know the type of event. Use
-> ACPI GED to also notify the guest kernel about any CPU hot(un)plug events.
-> 
-> ACPI CPU hotplug related initialization should only happen if ACPI_CPU_HOTPLUG
-> support has been enabled for particular architecture. Add cpu_hotplug_hw_init()
-> stub to avoid compilation break.
-> 
-> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Miguel Luis <miguel.luis@oracle.com>
-> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2345
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++++++
->  hw/acpi/cpu.c                          |  6 +++++-
->  hw/acpi/generic_event_device.c         | 17 +++++++++++++++++
->  include/hw/acpi/generic_event_device.h |  4 ++++
->  4 files changed, 32 insertions(+), 1 deletion(-)
-> 
+>   include/qemu/lockable.h | 23 +++++++++++++++++++----
+>   1 file changed, 19 insertions(+), 4 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
