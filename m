@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E685BC25B7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 03:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D54BC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 03:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBQdo-0005Dh-GG; Sun, 26 May 2024 23:03:16 -0400
+	id 1sBQe8-0005KW-2G; Sun, 26 May 2024 23:03:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sBQdn-0005DX-FP
- for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:15 -0400
+ id 1sBQdz-0005Ie-NI
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:27 -0400
 Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sBQdl-0002Ip-S6
- for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:15 -0400
+ id 1sBQdx-0002MF-K8
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 23:03:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1716778991;
- bh=u3lPt4dfSywaRiWn1iJk8KCTSQnwKkF0pZSAepAV4MA=;
+ s=mail; t=1716779004;
+ bh=BrPXfBLT4OK9hIVMJYTAuXzdMXeBIR++LJJ0eCKUIvc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NGu2nTsIi9NY3PFL7Onp8HE2j/sYMjzMmm9QWtbPUXGpG/8XKETlFQpWiWTpjn1Rh
- 2+Q9lc2KFEzfIm86/UCdYehAkx3MwfV/dmjHnuD2+kCEQXAb3jgHaeG2xqDRSUwPlU
- LBwkWesFe+jEaEG0pdAKk1VbCQxYU0zsTwyEzJPjd0yuXhdpa46vg1o1cUQQKAGsEI
- 61ehwlR5VP1nLmvl3PNi6sYgsLmDgOVh3EmHSC6mvKjvILZZFbQXzgA20AeWbTwIAx
- GgaMmXlMGbH4SfHEuikQzSbCI6j4YtynCj7iQ1Z2tUanvaMjfSKGgU1vOA5pY/jgs5
- tI1UlJCvP+lbQ==
+ b=s5Mo7jDF+qB5BVgorYEyXaK+owBm7EmdtoeyI5WWTto50mmdrzohck2EcxqEE1dCi
+ ZGDaAHmsS+DJgQ4KW3MDpWtLTJBpV8ubjxRq6PAkNVetCCoZuIGRBNRkxI6Lg0O5Tw
+ LYwNQ0qzET9qRdyb8Xb0wYvGPjCkaAThQwGRMHnab8bscy0+gdu6dm9JCVy7F240mI
+ clO01o6Z1zxuM7v1RiS8h/ke+NJzjt5/ME7u/F2zPwvWFuA3QUb5kYiq2avjw2Pu1d
+ QPCyAR2IemcgqLJT0H0aobas2H4Nj872LWxBlm2UYCpVQSYxYW23JBrmGFJPPX1xKQ
+ G7jHwur3VBEcQ==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id D5BBB37820A7;
- Mon, 27 May 2024 03:03:09 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id C9CD6378212E;
+ Mon, 27 May 2024 03:03:22 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -58,10 +58,9 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v13 06/13] virtio-gpu: Support context-init feature with
- virglrenderer
-Date: Mon, 27 May 2024 06:02:26 +0300
-Message-ID: <20240527030233.3775514-7-dmitry.osipenko@collabora.com>
+Subject: [PATCH v13 12/13] virtio-gpu: Register capsets dynamically
+Date: Mon, 27 May 2024 06:02:32 +0300
+Message-ID: <20240527030233.3775514-13-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
 References: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
@@ -90,80 +89,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huang Rui <ray.huang@amd.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-Patch "virtio-gpu: CONTEXT_INIT feature" has added the context_init
-feature flags. Expose this feature and support creating virglrenderer
-context with flags using context_id if libvirglrenderer is new enough.
+virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
+assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
+like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
 
-Originally-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-Signed-off-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-gl.c    |  4 ++++
- hw/display/virtio-gpu-virgl.c | 20 ++++++++++++++++++--
- meson.build                   |  1 +
- 3 files changed, 23 insertions(+), 2 deletions(-)
+ hw/display/virtio-gpu-gl.c     |  6 ++++--
+ hw/display/virtio-gpu-virgl.c  | 33 +++++++++++++++++++++------------
+ include/hw/virtio/virtio-gpu.h |  4 +++-
+ 3 files changed, 28 insertions(+), 15 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 7978b2985e17..9822d79c5e81 100644
+index 9822d79c5e81..34a2bd2fa426 100644
 --- a/hw/display/virtio-gpu-gl.c
 +++ b/hw/display/virtio-gpu-gl.c
-@@ -140,6 +140,10 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-     VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
-         virtio_gpu_virgl_get_num_capsets(g);
+@@ -137,8 +137,8 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+     }
  
-+#ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
-+    g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
-+#endif
+     g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
+-    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
+-        virtio_gpu_virgl_get_num_capsets(g);
++    g->capset_ids = virtio_gpu_virgl_get_capsets(g);
++    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
+ 
+ #ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
+     g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
+@@ -163,6 +163,8 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+     }
+ 
+     gl->renderer_state = RS_START;
 +
-     virtio_gpu_device_realize(qdev, errp);
++    g_array_unref(g->capset_ids);
  }
  
+ static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 66c4aab9b283..4b2d4a643e30 100644
+index 0c73d9ba65f9..d3ae3e3d4e24 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -106,8 +106,24 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
-     trace_virtio_gpu_cmd_ctx_create(cc.hdr.ctx_id,
-                                     cc.debug_name);
+@@ -636,19 +636,13 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
+     VIRTIO_GPU_FILL_CMD(info);
  
--    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen,
--                                  cc.debug_name);
-+    if (cc.context_init) {
-+        if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
-+                          __func__);
-+            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+            return;
-+        }
+     memset(&resp, 0, sizeof(resp));
+-    if (info.capset_index == 0) {
+-        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
+-        virgl_renderer_get_cap_set(resp.capset_id,
+-                                   &resp.capset_max_version,
+-                                   &resp.capset_max_size);
+-    } else if (info.capset_index == 1) {
+-        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
 +
-+#ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
-+        virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
-+                                                 cc.context_init,
-+                                                 cc.nlen,
-+                                                 cc.debug_name);
-+        return;
-+#endif
-+    }
-+
-+    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen, cc.debug_name);
++    if (info.capset_index < g->capset_ids->len) {
++        resp.capset_id = g_array_index(g->capset_ids, uint32_t,
++                                       info.capset_index);
+         virgl_renderer_get_cap_set(resp.capset_id,
+                                    &resp.capset_max_version,
+                                    &resp.capset_max_size);
+-    } else {
+-        resp.capset_max_version = 0;
+-        resp.capset_max_size = 0;
+     }
+     resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
+     virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
+@@ -1171,14 +1165,29 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     return 0;
  }
  
- static void virgl_cmd_context_destroy(VirtIOGPU *g,
-diff --git a/meson.build b/meson.build
-index de97d2426bde..65fddfbbc3a7 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2310,6 +2310,7 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
- config_host_data.set('CONFIG_VNC_SASL', sasl.found())
- if virgl.version().version_compare('>=1.0.0')
-   config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
-+  config_host_data.set('HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS', 1)
- endif
- config_host_data.set('CONFIG_VIRTFS', have_virtfs)
- config_host_data.set('CONFIG_VTE', vte.found())
+-int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
++static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
++{
++    g_array_append_val(capset_ids, capset_id);
++}
++
++GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
+ {
+     uint32_t capset2_max_ver, capset2_max_size;
++    GArray *capset_ids;
++
++    capset_ids = g_array_new(false, false, sizeof(uint32_t));
++
++    /* VIRGL is always supported. */
++    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
++
+     virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
+                               &capset2_max_ver,
+                               &capset2_max_size);
++    if (capset2_max_ver) {
++        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
++    }
+ 
+-    return capset2_max_ver ? 2 : 1;
++    return capset_ids;
+ }
+ 
+ void virtio_gpu_virgl_deinit(VirtIOGPU *g)
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 368f96a813c9..b9de761fd673 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -209,6 +209,8 @@ struct VirtIOGPU {
+         QTAILQ_HEAD(, VGPUDMABuf) bufs;
+         VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
+     } dmabuf;
++
++    GArray *capset_ids;
+ };
+ 
+ struct VirtIOGPUClass {
+@@ -355,6 +357,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset(VirtIOGPU *g);
+ int virtio_gpu_virgl_init(VirtIOGPU *g);
+ void virtio_gpu_virgl_deinit(VirtIOGPU *g);
+-int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
++GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+ 
+ #endif
 -- 
 2.44.0
 
