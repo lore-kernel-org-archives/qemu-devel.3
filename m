@@ -4,72 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9942AC25B7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 01:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49C3C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 02:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBPZ7-00082A-4q; Sun, 26 May 2024 21:54:21 -0400
+	id 1sBPsk-0005a4-Vt; Sun, 26 May 2024 22:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sBPZ5-00081I-88; Sun, 26 May 2024 21:54:19 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
+ (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
+ id 1sBPsi-0005Z6-1K; Sun, 26 May 2024 22:14:36 -0400
+Received: from azure-sdnproxy.icoremail.net ([207.46.229.174])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1sBPZ1-0006pU-DA; Sun, 26 May 2024 21:54:19 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxL_C751NmXQIAAA--.129S3;
- Mon, 27 May 2024 09:54:03 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxZcW451Nm4ZsKAA--.17292S3; 
- Mon, 27 May 2024 09:54:02 +0800 (CST)
-Subject: Re: [PULL 01/10] target/loongarch/kvm: Fix VM recovery from disk
- failures
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, qemu-stable@nongnu.org,
- Peter Xu <peterx@redhat.com>
-References: <20240523014637.614872-1-gaosong@loongson.cn>
- <20240523014637.614872-2-gaosong@loongson.cn>
- <78c5abe1-546d-4ced-a160-a087ff3326ce@tls.msk.ru>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <3df90839-c24d-f580-8049-cc20df443919@loongson.cn>
-Date: Mon, 27 May 2024 09:54:02 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <duchao@eswincomputing.com>)
+ id 1sBPsf-0001my-Id; Sun, 26 May 2024 22:14:35 -0400
+Received: from duchao$eswincomputing.com ( [10.64.112.210] ) by
+ ajax-webmail-app1 (Coremail) ; Mon, 27 May 2024 10:12:03 +0800 (GMT+08:00)
+X-Originating-IP: [10.64.112.210]
+Date: Mon, 27 May 2024 10:12:03 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Chao Du" <duchao@eswincomputing.com>
+To: "Paolo Bonzini" <pbonzini@redhat.com>
+Cc: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair23@gmail.com, 
+ bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ anup@brainfault.org, atishp@atishpatra.org
+Subject: Re: [RFC PATCH 1/4] target/riscv/kvm: add software breakpoints support
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20220420(169d3f8c)
+ Copyright (c) 2002-2024 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <CABgObfYA3Er1y3R9v0Huf3w43n7oD83UhkqdRk-oBYzyM6O_ow@mail.gmail.com>
+References: <20231221094923.7349-1-duchao@eswincomputing.com>
+ <20231221094923.7349-2-duchao@eswincomputing.com>
+ <ada42503-dab4-474f-a61a-a9fe3fa63afa@ventanamicro.com>
+ <CABgObfYA3Er1y3R9v0Huf3w43n7oD83UhkqdRk-oBYzyM6O_ow@mail.gmail.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-In-Reply-To: <78c5abe1-546d-4ced-a160-a087ff3326ce@tls.msk.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8CxZcW451Nm4ZsKAA--.17292S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJr4xAF45Zr45Cr4xJr1rKrX_yoW8Cw4rpF
- 1kZFyUKFyrCrykZw1xta45W3s8Wr4UGa17KF4Yya4kGFs7JrnYgr4vq3sFgF4rAw48Jr1j
- vr4kJr9rZFsrZrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.118,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Message-ID: <1deff797.ed0.18fb7d1ae25.Coremail.duchao@eswincomputing.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: TAJkCgDHaOXz61NmXgANAA--.4628W
+X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/1tbiAQEKDGZTAc0YowABsF
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+ CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+ daVFxhVjvjDU=
+Received-SPF: pass client-ip=207.46.229.174;
+ envelope-from=duchao@eswincomputing.com; helo=azure-sdnproxy.icoremail.net
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL=1.31, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,54 +73,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/5/24 下午6:00, Michael Tokarev 写道:
-> 23.05.2024 04:46, Song Gao wrote:
->> vmstate does not save kvm_state_conter,
->> which can cause VM recovery from disk to fail.
->>
->> Cc: qemu-stable@nongnu.org
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> Acked-by: Peter Xu <peterx@redhat.com>
->> Message-Id: <20240508024732.3127792-1-gaosong@loongson.cn>
->> ---
->>   target/loongarch/machine.c | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
->> index 9cd9e848d6..08a7fa5370 100644
->> --- a/target/loongarch/machine.c
->> +++ b/target/loongarch/machine.c
->> @@ -145,8 +145,8 @@ static const VMStateDescription vmstate_tlb = {
->>   /* LoongArch CPU state */
->>   const VMStateDescription vmstate_loongarch_cpu = {
->>       .name = "cpu",
->> -    .version_id = 1,
->> -    .minimum_version_id = 1,
->> +    .version_id = 2,
->> +    .minimum_version_id = 2,
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
->>           VMSTATE_UINTTL(env.pc, LoongArchCPU),
->> @@ -208,6 +208,8 @@ const VMStateDescription vmstate_loongarch_cpu = {
->>           VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
->>           VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
->>   +        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
->> +
->>           VMSTATE_END_OF_LIST()
->>       },
->>       .subsections = (const VMStateDescription * const []) {
->
-> Should this really be part of any stable releases?
-[...]
->
-> Wouldn't it break migration between, say, 8.2 with this change
-> and without?
-Yes, I didn't take this into consideration, please ignore this patch.
-
-Thanks.
-Song Gao
-> Thanks,
->
-> /mjt
-
+T24gMjAyNC0wNS0yNSAwMDoxMSwgUGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT4g
+d3JvdGU6Cj4gCj4gT24gVHVlLCBBcHIgMTYsIDIwMjQgYXQgMTE6MjPigK9BTSBEYW5pZWwgSGVu
+cmlxdWUgQmFyYm96YQo+IDxkYmFyYm96YUB2ZW50YW5hbWljcm8uY29tPiB3cm90ZToKPiA+ID4g
+K2ludCBrdm1fYXJjaF9pbnNlcnRfc3dfYnJlYWtwb2ludChDUFVTdGF0ZSAqY3MsIHN0cnVjdCBr
+dm1fc3dfYnJlYWtwb2ludCAqYnAsCj4gPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgdmFkZHIgbGVuKQo+ID4gPiArewo+ID4gPiArICAgIGlmIChsZW4gIT0gNCAmJiBsZW4g
+IT0gMikgewo+ID4gPiArICAgICAgICByZXR1cm4gLUVJTlZBTDsKPiA+ID4gKyAgICB9Cj4gPgo+
+ID4gSSB3b25kZXIgaWYgdGhpcyB2ZXJpZmljYXRpb24gc2hvdWxkIGJlIG1vdmVkIHRvIGt2bV9p
+bnNlcnRfYnJlYWtwb2ludCgpLiBJcwo+ID4gdGhlcmUgYW55IGtub3duIHJlYXNvbiB3aHkgb3Ro
+ZXIgYXJjaHMgd291bGQgdXNlICdsZW4nIG90aGVyIHRoYW4gMiBvciA0PyBUaGUKPiA+IHBhcmVu
+dCBmdW5jdGlvbiBjYW4gdGhyb3cgdGhlIEVJTlZBTCBpbiB0aGlzIGNhc2UuIE90aGVyd2lzZSBh
+bGwgY2FsbGVycyBmcm9tCj4gPiBhbGwgYXJjaHMgd2lsbCBuZWVkIGEgc2ltaWxhciBFSU5WQUwg
+Y2hlY2suCj4gCj4gSSdtIG5vdCBzdXJlIGhvdyBsZW4gaXMgZGVmaW5lZCBpbiB0aGUgZ2RiIHBy
+b3RvY29sLCBidXQgeDg2IGhhcyBhCj4gYnJlYWtwb2ludCBsZW5ndGggb2YgMSBhbmQgYW4gaW5z
+dHJ1Y3Rpb24gbGVuZ3RoIHRoYXQgY2FuIGJlIGFueSB2YWx1ZQo+IGJldHdlZW4gMSBhbmQgMTUu
+Cj4gCj4gTW9zdCBhcmNoaXRlY3R1cmVzIGNvdWxkIGFzc3VtZSB0aGF0IGl0J3MgYWx3YXlzIG9u
+ZSB2YWx1ZSwgaS5lLiBqdXN0Cj4gbm90IGNhcmUgYWJvdXQgY2hlY2tpbmcgbGVuIGluIGt2bV9h
+cmNoX2luc2VydF9zd19icmVha3BvaW50Lgo+IAo+IFRoZSBwYXRjaGVzIGxvb2sgZ29vZCwgZmVl
+bCBmcmVlIHRvIHRha2UgdGhlbSB0aHJvdWdoIHRoZSBSSVNDLVYgdHJlZS4KPiAKPiBPbmUgdGhp
+bmcgdGhhdCBJIHdhcyB3b25kZXJpbmcgaXM6IGNvdWxkIFJJU0MtViBqdXN0IHVzZSBhbHdheXMK
+PiBjLmVicmVhayBpZiBDIGluc3RydWN0aW9ucyBhcmUgc3VwcG9ydGVkLCBhbmQgZWJyZWFrIGlm
+IHRoZXkncmUgbm90Pwo+IEJ1dCBpZiBmb3IgZXhhbXBsZSB0aGF0IHdvdWxkIHRoYXQgbWVzcyB1
+cCB0aGUgc3luY2hyb25pemF0aW9uIG9mIHRoZQo+IGRpc2Fzc2VtYmx5IGluIGdkYiwgaXQncyBh
+IGdvb2QgcmVhc29uIHRvIGFkZCB0aGUgbGVuIGFyZ3VtZW50IGFzIHlvdQo+IGRpZCBoZXJlLgoK
+WWVzLCB5b3UgYXJlIHJpZ2h0LiBJZiB3ZSBpbnNlcnQgYW4gZWJyZWFrIGluc3RydWN0aW9uIHdo
+b3NlIGxlbmd0aCBpcwpkaWZmZXJlbnQgZnJvbSB0aGUgb3JpZ2luYWwgb25lLCB0aGVuIHRoZSBk
+aXNhc3NlbWJseSBpbiBnZGIgbWF5IGVuY291bnRlcgpzb21lIHByb2JsZW1zLgoKVGhhbmtzIGZv
+ciB0aGUgcmV2aWV3LCBJIHdpbGwgcmViYXNlIHRoaXMgc2VyaWVzIGFuZCBzZW5kIGl0IG91dC4K
+CkNoYW8KCj4gCj4gUGFvbG8K
 
