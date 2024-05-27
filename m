@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2729BC25B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE7DC41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVLP-0003uZ-He; Mon, 27 May 2024 04:04:35 -0400
+	id 1sBVLq-0004RY-S2; Mon, 27 May 2024 04:05:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sBVKk-0001fg-Mk; Mon, 27 May 2024 04:03:54 -0400
+ id 1sBVKt-0001qB-4N; Mon, 27 May 2024 04:04:03 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sBVKi-0005H2-W2; Mon, 27 May 2024 04:03:54 -0400
+ id 1sBVKr-0005ft-6d; Mon, 27 May 2024 04:04:02 -0400
 Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Mon, 27 May
- 2024 16:02:39 +0800
+ 2024 16:02:40 +0800
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 27 May
- 2024 16:02:40 +0800
+ 2024 16:02:41 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 27 May 2024 16:02:38 +0800
+ Transport; Mon, 27 May 2024 16:02:39 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -38,15 +38,15 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v4 14/16] aspeed/soc: fix incorrect dram size for AST2700
-Date: Mon, 27 May 2024 16:02:28 +0800
-Message-ID: <20240527080231.1576609-15-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 16/16] docs:aspeed: Add AST2700 Evaluation board
+Date: Mon, 27 May 2024 16:02:30 +0800
+Message-ID: <20240527080231.1576609-17-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
 References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
  does not designate 192.168.10.10 as permitted sender)
  receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
@@ -75,159 +75,94 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 dram size calculation is not back compatible AST2600.
-According to the DDR capacity hardware behavior,
-if users write the data to address which is beyond the ram size,
-it would write the data to address 0.
-For example:
-a. sdram base address "0x4 00000000"
-b. sdram size is 1 GiB
-The available address range is from "0x4 00000000" to "0x4 40000000".
-If users write 0xdeadbeef to address "0x6 00000000",
-the value of DRAM address 0 (base address 0x4 00000000) should be 0xdeadbeef.
-
-Add aspeed_soc_ast2700_dram_init to calculate the dram size and add
-memory I/O whose address range is from max_ram_size - ram_size to max_ram_size
-and its read/write handler to emulate DDR capacity hardware behavior.
+Add AST2700 Evaluation board and its boot command.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
- hw/arm/aspeed_ast27x0.c     | 94 ++++++++++++++++++++++++++++++++++++-
- include/hw/arm/aspeed_soc.h |  1 +
- 2 files changed, 94 insertions(+), 1 deletion(-)
+ docs/system/arm/aspeed.rst | 39 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 35 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index a3a03fc1ca..19380087fa 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -20,6 +20,7 @@
- #include "sysemu/sysemu.h"
- #include "hw/intc/arm_gicv3.h"
- #include "qapi/qmp/qlist.h"
-+#include "qemu/log.h"
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index b2dea54eed..cd9559e3e2 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,11 +1,12 @@
+-Aspeed family boards (``*-bmc``, ``ast2500-evb``, ``ast2600-evb``)
+-==================================================================
++Aspeed family boards (``*-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``)
++===================================================================================
  
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_SPI_BOOT]  =  0x400000000,
-@@ -191,6 +192,97 @@ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
-     return qdev_get_gpio_in(a->intc.gic, sc->irqmap[dev]);
- }
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
+ Aspeed SoC : the AST2400 integrating an ARM926EJ-S CPU (400MHz), the
+-AST2500 with an ARM1176JZS CPU (800MHz) and more recently the AST2600
+-with dual cores ARM Cortex-A7 CPUs (1.2GHz).
++AST2500 with an ARM1176JZS CPU (800MHz), the AST2600
++with dual cores ARM Cortex-A7 CPUs (1.2GHz) and more recently the AST2700
++with quad cores ARM Cortex-A35 64 bits CPUs (1.6GHz)
  
-+static uint64_t aspeed_ram_capacity_read(void *opaque, hwaddr addr,
-+                                                    unsigned int size)
-+{
-+    qemu_log_mask(LOG_GUEST_ERROR,
-+                  "%s: read @%" PRIx64 " out of ram size\n",
-+                   __func__, addr);
-+    return 0;
-+}
-+
-+static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
-+                                                unsigned int size)
-+{
-+    AspeedSoCState *s = ASPEED_SOC(opaque);
-+    uint32_t test_pattern = 0xdeadbeef;
-+    bool invalid_pattern = true;
-+    uint32_t *ram_ptr;
-+    int sz;
-+
-+    ram_ptr = memory_region_get_ram_ptr(s->dram_mr);
-+
-+   /*
-+    * Emulate ddr capacity hardware behavior.
-+    * If writes the test_pattern to address which is beyond the ram size,
-+    * it would write the test_pattern to address 0.
-+    */
-+    for (sz = 4; sz > 0 ; sz--) {
-+        test_pattern = (test_pattern << 4) + sz;
-+        if (data == test_pattern) {
-+            ram_ptr[0] = test_pattern;
-+            invalid_pattern = false;
-+            break;
-+        }
-+    }
-+
-+    if (invalid_pattern) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: write invalid pattern @%" PRIx64
-+                      " to addr @%" HWADDR_PRIx "]\n",
-+                      __func__, data, addr);
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_ram_capacity_ops = {
-+    .read = aspeed_ram_capacity_read,
-+    .write = aspeed_ram_capacity_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
-+/*
-+ * SDMC should be realized first to get correct RAM size and max size
-+ * values
-+ */
-+static bool aspeed_soc_ast2700_dram_init(DeviceState *dev, Error **errp)
-+{
-+    ram_addr_t ram_size, max_ram_size;
-+    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
-+    AspeedSoCState *s = ASPEED_SOC(dev);
-+    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-+
-+    ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
-+                                        &error_abort);
-+    max_ram_size = object_property_get_uint(OBJECT(&s->sdmc), "max-ram-size",
-+                                            &error_abort);
-+
-+    memory_region_init(&s->dram_container, OBJECT(s), "ram-container",
-+                       ram_size);
-+    memory_region_add_subregion(&s->dram_container, 0, s->dram_mr);
-+
-+    /*
-+     * Add a memory region beyond the RAM region to emulate
-+     * ddr capacity hardware behavior.
-+     */
-+    if (ram_size < max_ram_size) {
-+        memory_region_init_io(&a->dram_empty, OBJECT(s),
-+                              &aspeed_ram_capacity_ops, s,
-+                              "ram-empty", max_ram_size - ram_size);
-+
-+        memory_region_add_subregion(s->memory,
-+                                    sc->memmap[ASPEED_DEV_SDRAM] + ram_size,
-+                                    &a->dram_empty);
-+    }
-+
-+    memory_region_add_subregion(s->memory,
-+                      sc->memmap[ASPEED_DEV_SDRAM], &s->dram_container);
-+    return true;
-+}
-+
- static void aspeed_soc_ast2700_init(Object *obj)
- {
-     Aspeed27x0SoCState *a = ASPEED27X0_SOC(obj);
-@@ -461,7 +553,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-                     sc->memmap[ASPEED_DEV_SDMC]);
+ The SoC comes with RAM, Gigabit ethernet, USB, SD/MMC, USB, SPI, I2C,
+ etc.
+@@ -38,6 +39,10 @@ AST2600 SoC based machines :
+ - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+ - ``qcom-firework-bmc``    Qualcomm Firework BMC
  
-     /* RAM */
--    if (!aspeed_soc_dram_init(s, errp)) {
-+    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
-         return;
-     }
++AST2700 SoC based machines :
++
++- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
++
+ Supported devices
+ -----------------
  
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 9f177b6037..9dbf48f873 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -127,6 +127,7 @@ struct Aspeed27x0SoCState {
+@@ -66,6 +71,7 @@ Supported devices
+  * eMMC Boot Controller (dummy)
+  * PECI Controller (minimal)
+  * I3C Controller
++ * Internal Bridge Controller (SLI dummy)
  
-     ARMCPU cpu[ASPEED_CPUS_NUM];
-     AspeedINTCState intc;
-+    MemoryRegion dram_empty;
- };
  
- #define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
+ Missing devices
+@@ -95,6 +101,10 @@ or directly from the OpenBMC GitHub release repository :
+ 
+    https://github.com/openbmc/openbmc/releases
+ 
++or directly from the ASPEED Forked OpenBMC GitHub release repository :
++
++   https://github.com/AspeedTech-BMC/openbmc/releases
++
+ To boot a kernel directly from a Linux build tree:
+ 
+ .. code-block:: bash
+@@ -164,6 +174,27 @@ under Linux), use :
+ 
+   -M ast2500-evb,bmc-console=uart3
+ 
++
++Boot the AST2700 machine from the flash image, use an MTD drive :
++
++.. code-block:: bash
++
++  IMGDIR=ast2700-default
++  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
++
++  $ qemu-system-aarch64 -M ast2700-evb \
++       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
++       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
++       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
++       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
++       -device loader,cpu-num=0,addr=0x430000000 \
++       -device loader,cpu-num=1,addr=0x430000000 \
++       -device loader,cpu-num=2,addr=0x430000000 \
++       -device loader,cpu-num=3,addr=0x430000000 \
++       -smp 4 \
++       -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
++       -nographic
++
+ Aspeed minibmc family boards (``ast1030-evb``)
+ ==================================================================
+ 
 -- 
 2.25.1
 
