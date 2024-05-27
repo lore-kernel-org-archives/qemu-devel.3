@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE110C25B78
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05ACC25B75
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 00:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBOZb-0007SC-06; Sun, 26 May 2024 20:50:47 -0400
+	id 1sBOZd-0007YG-9l; Sun, 26 May 2024 20:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBOZJ-0007Cp-8C
- for qemu-devel@nongnu.org; Sun, 26 May 2024 20:50:29 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1sBOZM-0007HF-Fj
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 20:50:32 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sBOZ7-0003f1-TA
- for qemu-devel@nongnu.org; Sun, 26 May 2024 20:50:25 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6f8e9870e72so2388820b3a.1
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 17:50:16 -0700 (PDT)
+ id 1sBOZK-0003hP-2d
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 20:50:32 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-6f12171523eso4699425a34.1
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 17:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716771015; x=1717375815; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716771021; x=1717375821; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cH8p7zFQoa8qKM/2WS7ZfbaGhkQJFlfpHgdlJuwcM/w=;
- b=LwdQg8ib+n6BafR6TW9s36jZHujxpgIkqjWOHt1X3PEnRlVGsISjGmcg/JV9bDrT7p
- jRGBZjfpxAyOpYyMIOD8CSU9vO/+M2r8IP56Ea50VlWW/VnkrLWtQttukiD/NemPEKSc
- Q4v2kAUUhvGAH6Bc7SKoBBoebIeSaJtCD6L/inH2UD0QcMDX0LEW58eJNbangTpi00rx
- 8GLlcjhhnOHvsBISpN6dtp9rZl+yU5m0kUMCj+5lUfz+qqSl186/EuIJH9ALX/jSHLjU
- +YHQPJ5ku8K73j6mE1siIBouRc3ioPSiybg4Ryi3NZcYQpeUrBmd30TO8ppHQnhlVW4W
- DcNg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=vNGTbU6DTUvMSHt1rxKvf5wFDuC+/EH4FoXciheiqRg=;
+ b=IW/YV/g3z8GMM37gpwlYY5QUELIP9mQuH1ZZz/F5lX7DUJvCpXc0UnAixZc9nxo4Pz
+ ItfINgNUPlT8P9ioQ2FT7XBaum9i3l1eVwvjeffmfSlHgjGkXMO4KvmzW9toZlN0dbhC
+ I3M1VncSQLUi0YzYyOPscjKrr5AnnkkAZeacO+NoWW0ReIMHmzcyEqx/NYDlkd4PU/fD
+ tTks55PwhZtlPq4BNeh5PtSLfzORJCtjXna+bDr2ssB7OjURq0Q+uWov7anu7Dc5vvKq
+ TDOypPhPlIJSigjUwzCWca7QCSXaYV4vGv3LvY1O+DcTVcAP9FNFtn/NTrRs3HQgQNfj
+ i4Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716771015; x=1717375815;
+ d=1e100.net; s=20230601; t=1716771021; x=1717375821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cH8p7zFQoa8qKM/2WS7ZfbaGhkQJFlfpHgdlJuwcM/w=;
- b=LiQxO7q4plhYvMfP2UBFsNAbXNj5ghKUTS6afWE14JJLSV/SBXmSWw5GYxStrHMjmm
- 2tjbXADfR1phgu8RnPg7+j883oUviWjMfJbsUVyEPutlrd2D4KVxjIT46pwiz+oEegM7
- oZtSNMxjl6qd6fBnZALfPtQDuJHSBLzzOlRcaNp0irEgqaZ/o3D8Tg2od9mSS3VaFk1s
- 3hTPgV7kDSvwMdCnGcQ+AhVnW4AHpclfYELUPeN5rLTTAmJfW+DIdF+Tw7tQaL1alrHd
- cso7y2JTt9MSuCk39VDVXKab9t6K0N+9j5+D8FCShI3G0yDd1paBKYV1zHMAjezFInEi
- vXdg==
-X-Gm-Message-State: AOJu0Yxt826r7y8qoI/DvoTHfvkTZAF6q0kDFfDbVl5wAbukai0lZAOZ
- MLcmkBuWQyJWg3RcXXNjEH5NkSwVlGk5HzIdzdSgbf+yRUJhMgUgOPesPIthYGmMcBb9QyDHx0n
- W
-X-Google-Smtp-Source: AGHT+IHPn3d4k39EEaLTJfcpFpdY4Zbr0JG2RGUUp2RFuHF/+s++Gnkx9iHh6ecy+jHCqdaNjILpJQ==
-X-Received: by 2002:a05:6a00:368a:b0:6f6:a417:fa44 with SMTP id
- d2e1a72fcca58-6f8f45d8ff2mr8400917b3a.29.1716771015417; 
- Sun, 26 May 2024 17:50:15 -0700 (PDT)
+ bh=vNGTbU6DTUvMSHt1rxKvf5wFDuC+/EH4FoXciheiqRg=;
+ b=kqyP+M4Mqs1IycMt+pg/Cs2m1cqgrkjk7zj6TGEwzOXKDctD1ZXlssTrcEtt4MsiCx
+ bMqevEPqNTDsFM1a1+h5dk5tk+tIL0ek7a1D+LfCasj3hT06FZLmW5W30H5N8vbC1gTf
+ W+ahirUX3ehAcXLKGmtC+/0tmv+SSOvdIdBFasDSgrGuZtGEA/wMw4a94SdplE4BugVO
+ TlYkyQEHhiCFMqhL8OtZxKZYEusfPVGpsWmuzga1u8sL+t4Ow8JONV09QC96ILw0cTnf
+ u7dIR0KOTgUG91YRhd9gCOV3CHE7ivLt0dStP/SvcqEwVV0y49lq93/Du3n7/lVtbuFS
+ 9jUQ==
+X-Gm-Message-State: AOJu0YzYZwMs2vC3ohVPQtVZaZyOAwQOjyR84XG7d8863DtW2IqSUbge
+ FRg6gQrgEJUN5iKXL04gmkHbzP3NsvZqP5HRMPGJEioQFAit18yWzXWIUpVPeptNyqotSvBsXXC
+ 4
+X-Google-Smtp-Source: AGHT+IEbQxdYqF0MRFYLAx8XZ75mE79vXrUuxYoO7+cCJ5IEaQtY1Pi5bFpKnba0FQqfPGzlsS/o6A==
+X-Received: by 2002:a05:6870:828b:b0:24f:eadd:9a30 with SMTP id
+ 586e51a60fabf-24feade53d6mr2861908fac.55.1716771021077; 
+ Sun, 26 May 2024 17:50:21 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fd6d7598sm3942958b3a.220.2024.05.26.17.50.14
+ d2e1a72fcca58-6f8fd6d7598sm3942958b3a.220.2024.05.26.17.50.20
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 May 2024 17:50:15 -0700 (PDT)
+ Sun, 26 May 2024 17:50:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 16/28] linux-user/i386: Remove xfeatures from
- target_fpstate_fxsave
-Date: Sun, 26 May 2024 17:49:49 -0700
-Message-Id: <20240527005001.642825-17-richard.henderson@linaro.org>
+Subject: [PULL 23/28] linux-user/i386: Honor xfeatures in xrstor_sigcontext
+Date: Sun, 26 May 2024 17:49:56 -0700
+Message-Id: <20240527005001.642825-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240527005001.642825-1-richard.henderson@linaro.org>
 References: <20240527005001.642825-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,36 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is easily computed by advancing past the structure.
-At the same time, replace the magic number "64".
-
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/i386/signal.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ linux-user/i386/signal.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 89048ed069..f8064691c4 100644
+index 47e6c0ff0d..e716ec8989 100644
 --- a/linux-user/i386/signal.c
 +++ b/linux-user/i386/signal.c
-@@ -67,7 +67,6 @@ struct target_fpstate_fxsave {
-     uint32_t xmm_space[64];
-     uint32_t hw_reserved[12];
-     struct target_fpx_sw_bytes sw_reserved;
--    uint8_t xfeatures[];
- };
- #define TARGET_FXSAVE_SIZE   sizeof(struct target_fpstate_fxsave)
- QEMU_BUILD_BUG_ON(TARGET_FXSAVE_SIZE != 512);
-@@ -266,7 +265,7 @@ static void xsave_sigcontext(CPUX86State *env, struct target_fpstate_fxsave *fxs
-         assert(!(fxsave_addr & 0x3f));
+@@ -613,6 +613,7 @@ static bool xrstor_sigcontext(CPUX86State *env, FPStateKind fpkind,
+     struct target_fpx_sw_bytes *sw = (void *)&fxstate->sw_reserved;
+     uint32_t magic1, magic2;
+     uint32_t extended_size, xstate_size, min_size, max_size;
++    uint64_t xfeatures;
  
-         /* Zero the header, XSAVE *adds* features to an existing save state.  */
--        memset(fxsave->xfeatures, 0, 64);
-+        memset(fxsave + 1, 0, sizeof(X86XSaveHeader));
-         cpu_x86_xsave(env, fxsave_addr, -1);
-         __put_user(TARGET_FP_XSTATE_MAGIC1, &fxsave->sw_reserved.magic1);
-         __put_user(extended_size, &fxsave->sw_reserved.extended_size);
+     switch (fpkind) {
+     case FPSTATE_XSAVE:
+@@ -629,10 +630,25 @@ static bool xrstor_sigcontext(CPUX86State *env, FPStateKind fpkind,
+             xstate_size > extended_size) {
+             break;
+         }
++
++        /*
++         * Restore the features indicated in the frame, masked by
++         * those currently enabled.  Re-check the frame size.
++         * ??? It is not clear where the kernel does this, but it
++         * is not in check_xstate_in_sigframe, and so (probably)
++         * does not fall back to fxrstor.
++         */
++        xfeatures = tswap64(sw->xfeatures) & env->xcr0;
++        min_size = xsave_area_size(xfeatures, false);
++        if (xstate_size < min_size) {
++            return false;
++        }
++
+         if (!access_ok(env_cpu(env), VERIFY_READ, fxstate_addr,
+                        xstate_size + TARGET_FP_XSTATE_MAGIC2_SIZE)) {
+             return false;
+         }
++
+         /*
+          * Check for the presence of second magic word at the end of memory
+          * layout. This detects the case where the user just copied the legacy
+@@ -645,7 +661,8 @@ static bool xrstor_sigcontext(CPUX86State *env, FPStateKind fpkind,
+         if (magic2 != TARGET_FP_XSTATE_MAGIC2) {
+             break;
+         }
+-        cpu_x86_xrstor(env, fxstate_addr, -1);
++
++        cpu_x86_xrstor(env, fxstate_addr, xfeatures);
+         return true;
+ 
+     default:
 -- 
 2.34.1
 
