@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11E3C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 049E0C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcTn-0004Gn-CA; Mon, 27 May 2024 11:41:43 -0400
+	id 1sBcUe-0005Nt-QO; Mon, 27 May 2024 11:42:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBcTe-0004Ei-Ds
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:41:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBcTc-0004kH-Od
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:41:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716824490;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=e2jjXAGnMJIup5py9qFNx8dqcZIpm8XYuyMzu+9N0U0=;
- b=MRNRhjtghLJNMLRCfQ2siUTb6pTkMUA3amC3R1N+trKOKvGbKN9LZ1uClXIPngjT7kmITL
- Lj4honBvqnCt/hnLaD7FXJtZL3cM+yUa2spwndZrNn4xvGJv/GobPPPL+sOwItoLhZ6QBx
- moL5x4mFvwUs3n03WR31PLtY9fG5H/E=
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-EsuVNf3MMNmlinxpfl-D8w-1; Mon, 27 May 2024 11:41:28 -0400
-X-MC-Unique: EsuVNf3MMNmlinxpfl-D8w-1
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-48a3a10e7e5so180390137.2
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 08:41:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sBcUd-0005Bx-5I
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:42:35 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sBcUX-0004ot-IA
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:42:34 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2e95a1d5ee2so65294831fa.0
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 08:42:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1716824538; x=1717429338; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=xtjjVrFaJTF2X6JKfJWm8s6KMTtbMjWj+Xib+7eKbLk=;
+ b=jD+z/EP5Hb5OFMeAIGYVpX7RGgdy7buFAXnF2kbmhOCZZ6qeCVOx6067DcbHVIBS9L
+ Yal4wePlnyttuq2dD5dQ2WmwlFVqncMJupwNQODsv55weIlZlIw4APRmojS/XJLurDbi
+ LkmESxg0mifbMLacWYUN0j7hko9lBVce2rV8SueETKQhPMRjQN1cnG5FqAjLpolPKks9
+ mNX5YnyTtey5pyfgZ79xK4LsOTzZo604mrCIYa/qAA70m0yCvwLH8DkrVvo56pXc9AAz
+ ycO6JuXwFZPFzGBq5ShVuAR6Xg0Ien126kKXT90fZskfn2NNDYb5e+aGZhf54HjzpSHI
+ +LFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716824488; x=1717429288;
+ d=1e100.net; s=20230601; t=1716824538; x=1717429338;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e2jjXAGnMJIup5py9qFNx8dqcZIpm8XYuyMzu+9N0U0=;
- b=MwCBYHtEUcRkSu791ihhTx3taGTfnWOqeIAkjhVDUPdijS7mVRJB2Q4y5yxcuvqXyq
- frSHltOMQmQrJoESETjdhVEgGvNlRf+FQFWxhb5+uOV64b/ehhE+IlI/d6yYvmXUUrca
- XsuzmLRFefCDxNvDaT9wcK5PMp+CmphBBtt9wYY7R+XMQJ0KAFsuMQ437KRs66ofl9YK
- fY/L7g42ncp7Ud9DfkmIJnadrWEbKnEpLmn03AZu5zedbeFLGTkQJG/vplOhaxPXWie4
- vnhAqbyspqQbji2n3HKClawIqqdCEjDSotB5WkFfNRP0Hthfaomf8P2mo8KIWbM7Cde6
- WJ3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRV8lLOXeLun4wWfMLYY1YJh7snkReR8mMxXWjOF0LsEA/wq1Xd8RdwNSuloFatYpNQWQazAjlVTLcb8Crdr2oMpMubE0=
-X-Gm-Message-State: AOJu0YzuIQImUwRURZB5G65s3mgx1mrwQf5LxH2GR5rerAy7O5vc1cjy
- TK2CYge+FmYjxJ+6QSEdJ1cHHgbQzSZTwAvxt0jsnG7DzK+G8Ya8rTqCDJ+1KpzIYp54C25k5cQ
- WDO2Q8suC5Ms8rZq/2eYiSzIIrNe06JTZ7iPIfTVML02hB5souVK/
-X-Received: by 2002:a05:6122:36a5:b0:4df:7ba8:5c79 with SMTP id
- 71dfb90a1353d-4e4f01238cemr9448919e0c.0.1716824487788; 
- Mon, 27 May 2024 08:41:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE34VQSCdPigH4Z/67XKZrqVvIIvh5kzZeSgKv34vtOpjCWxzLMBaz60esA6v6wtSQ05xpI5A==
-X-Received: by 2002:a05:6122:36a5:b0:4df:7ba8:5c79 with SMTP id
- 71dfb90a1353d-4e4f01238cemr9448880e0c.0.1716824486993; 
- Mon, 27 May 2024 08:41:26 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794abd06397sm305174485a.96.2024.05.27.08.41.25
+ bh=xtjjVrFaJTF2X6JKfJWm8s6KMTtbMjWj+Xib+7eKbLk=;
+ b=W+iImIVwoCgAJE0Xb9u4rAkZH0tmkeddF7f1IJlU9SlJfBdWS3SvF5ymU47zbljyIw
+ Z8EID/A24zmmQ3BVW8F52eKB2uNUba4SrKutGUha3HwYeKyjiHrMliWlGf06kDlySl79
+ RuoVq8yAO4jmHtOECNEy/Iv1tssTh0ECGGXDGzJKr2hX9Zrip22CDU6BLsjPThRlYkx2
+ 1g56ULTvDwtMHcxMUExTWStJni9uGDGdrKl8EkrQKemQxZ5RmxdGPJvy+M7jMr8mV8E2
+ +JNRmBtjo8Y0Q6ySA4IPN/1PS8j5cUwu0PDkA/Lk98u++W1z0NcW0YdM9024hj5Xo8Gi
+ Os6A==
+X-Gm-Message-State: AOJu0Yx5tc6t9DRYgKRnRqKcNFf+QlYE9g+xilPgS3Wu7Kf6BUOutt8i
+ 0Icl1gjc71VhN2+BNocUcxmlLHV8g02qfe1eTP2rp1usT0Hhekz4zh6mGPyJPwM=
+X-Google-Smtp-Source: AGHT+IE1n/X+TNgvqyvPEBBGQPzAFsemjne/fBOg4XMqyQm0v3lcflJXEGM0LQeztVfsguCMS7RlJA==
+X-Received: by 2002:a2e:2404:0:b0:2e2:812:4c4 with SMTP id
+ 38308e7fff4ca-2e95b0c2359mr71352901fa.29.1716824538089; 
+ Mon, 27 May 2024 08:42:18 -0700 (PDT)
+Received: from localhost ([176.74.158.132]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6286457089sm410548266b.64.2024.05.27.08.42.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 08:41:26 -0700 (PDT)
-Date: Mon, 27 May 2024 11:41:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-s390x@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Yury Kotov <yury-kotov@yandex-team.ru>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>
-Subject: Re: [RFC PATCH 3/3] tests/qtest/migration-test: Enable
- test_ignore_shared
-Message-ID: <ZlSppKDE6wzjCF--@x1n>
-References: <20240525131241.378473-1-npiggin@gmail.com>
- <20240525131241.378473-4-npiggin@gmail.com>
- <87a5kbh1e3.fsf@suse.de> <ZlSfNe6DhBgft79p@x1n>
- <8734q3guha.fsf@suse.de>
+ Mon, 27 May 2024 08:42:17 -0700 (PDT)
+Date: Mon, 27 May 2024 17:42:16 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Chao Du <duchao@eswincomputing.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ anup@brainfault.org, duchao713@qq.com
+Subject: Re: [PATCH v1 2/4] target/riscv/kvm: implement
+ kvm_arch_update_guest_debug()
+Message-ID: <20240527-29c3e75b26b24a71b4926950@orel>
+References: <20240527021916.12953-1-duchao@eswincomputing.com>
+ <20240527021916.12953-3-duchao@eswincomputing.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8734q3guha.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20240527021916.12953-3-duchao@eswincomputing.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=ajones@ventanamicro.com; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,40 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 12:11:45PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On Mon, May 27, 2024 at 02:19:14AM GMT, Chao Du wrote:
+> Set the control flag when there are active breakpoints. This will
+> help KVM to know the status in the userspace.
 > 
-> > On Mon, May 27, 2024 at 09:42:28AM -0300, Fabiano Rosas wrote:
-> >> However, there is an issue here still on all archs - which might very
-> >> well have been the original issue - which is the fact that the
-> >> containers on the Gitlab CI have limits on shared memory usage.
-> >> Unfortunately we cannot enable this test for the CI, so it needs a check
-> >> on the GITLAB_CI environment variable.
-> >
-> > Another option is we teach migration-test to detect whether memory_size of
-> > shmem is available, skip if not.  It can be a sequence of:
-> >
-> >   memfd_create()
-> >   fallocate()
-> >   ret = madvise(MADV_POPULATE_WRITE)
-> >
-> > To be run at the entry of migration-test, and skip all use_shmem=true tests
-> > if ret != 0, or any step failed above.
+> Signed-off-by: Chao Du <duchao@eswincomputing.com>
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> There are actually two issues:
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index cba55c552d..0bc3348b91 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -2039,5 +2039,7 @@ void kvm_arch_remove_all_hw_breakpoints(void)
+>  
+>  void kvm_arch_update_guest_debug(CPUState *cs, struct kvm_guest_debug *dbg)
+>  {
+> -    /* TODO; To be implemented later. */
+> +    if (kvm_sw_breakpoints_active(cs)) {
+> +        dbg->control |= KVM_GUESTDBG_ENABLE;
+> +    }
+>  }
+> -- 
+> 2.17.1
 > 
-> 1) Trying to run a test that needs more shmem than available in the
-> container. This is covered well by your suggestion.
-> 
-> 2) Trying to use some shmem while another test has already consumed all
-> shmem. I'm not sure if this can be done reliably as the tests run in
-> parallel.
+>
 
-Maybe we can also make that check to be per-test, then when use_shmem=true
-the test populates the shmem file before using, skip if population fails.
-And if it succeeded, using that file in that test should be reliable.
+Should squash this into the previous patch.
 
--- 
-Peter Xu
-
+Thanks,
+drew
 
