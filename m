@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1494C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DB1C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUjs-0008QB-OD; Mon, 27 May 2024 03:25:48 -0400
+	id 1sBUjL-0007zP-U5; Mon, 27 May 2024 03:25:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUix-0007iJ-QA; Mon, 27 May 2024 03:24:51 -0400
+ id 1sBUir-0007fv-KM; Mon, 27 May 2024 03:24:45 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBUiv-0006DE-Up; Mon, 27 May 2024 03:24:51 -0400
+ id 1sBUip-0006B9-0x; Mon, 27 May 2024 03:24:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4CE286A4C3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A5056A4C0;
  Mon, 27 May 2024 10:25:09 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8A7F3D8460;
+ by tsrv.corpit.ru (Postfix) with SMTP id 4B82DD845D;
  Mon, 27 May 2024 10:24:35 +0300 (MSK)
-Received: (nullmailer pid 52887 invoked by uid 1000);
+Received: (nullmailer pid 52878 invoked by uid 1000);
  Mon, 27 May 2024 07:24:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 06/21] target/i386: fix operand size for DATA16 REX.W
- POPCNT
-Date: Mon, 27 May 2024 10:24:16 +0300
-Message-Id: <20240527072435.52812-6-mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 03/21] target/sparc: Fix FMUL8x16
+Date: Mon, 27 May 2024 10:24:13 +0300
+Message-Id: <20240527072435.52812-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240527072014@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,67 +64,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-According to the manual, 32-bit vs 64-bit is governed by REX.W
-and REX ignores the 0x66 prefix.  This can be confirmed with this
-program:
+This instruction has f32 as source1, which alters the
+decoding of the register number, which means we've been
+passing the wrong data for odd register numbers.
 
-    #include <stdio.h>
-    int main()
-    {
-       int x = 0x12340000;
-       int y;
-       asm("popcntl %1, %0" : "=r" (y) : "r" (x)); printf("%x\n", y);
-       asm("mov $-1, %0; .byte 0x66; popcntl %1, %0" : "+r" (y) : "r" (x)); printf("%x\n", y);
-       asm("mov $-1, %0; .byte 0x66; popcntq %q1, %q0" : "+r" (y) : "r" (x)); printf("%x\n", y);
-    }
-
-which prints 5/ffff0000/5 on real hardware and 5/ffff0000/ffff0000
-on QEMU.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 41c685dc59bb611096f3bb6a663cfa82e4cba97b)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240502165528.244004-4-richard.henderson@linaro.org>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+(cherry picked from commit 9157dccc7e71f7c94581c38f38acbef9a21bbe9a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 6ca4d791ab..47d2d1bb16 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -420,16 +420,6 @@ static inline MemOp mo_stacksize(DisasContext *s)
-     return CODE64(s) ? MO_64 : SS32(s) ? MO_32 : MO_16;
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 6e718da8ca..869b2b76c9 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -118,7 +118,7 @@ DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_RWG, s64, env, f64)
+ DEF_HELPER_FLAGS_1(fqtox, TCG_CALL_NO_RWG, s64, env)
+ 
+ DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+-DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
++DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i32, i64)
+ DEF_HELPER_FLAGS_2(fmul8x16al, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmul8x16au, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmul8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 6c204da2ae..7058b6c2a4 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -4842,6 +4842,26 @@ TRANS(FSUBs, ALL, do_env_fff, a, gen_helper_fsubs)
+ TRANS(FMULs, ALL, do_env_fff, a, gen_helper_fmuls)
+ TRANS(FDIVs, ALL, do_env_fff, a, gen_helper_fdivs)
+ 
++static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
++                   void (*func)(TCGv_i64, TCGv_i32, TCGv_i64))
++{
++    TCGv_i64 dst, src2;
++    TCGv_i32 src1;
++
++    if (gen_trap_ifnofpu(dc)) {
++        return true;
++    }
++
++    dst = gen_dest_fpr_D(dc, a->rd);
++    src1 = gen_load_fpr_F(dc, a->rs1);
++    src2 = gen_load_fpr_D(dc, a->rs2);
++    func(dst, src1, src2);
++    gen_store_fpr_D(dc, a->rd, dst);
++    return advance_pc(dc);
++}
++
++TRANS(FMUL8x16, VIS1, do_dfd, a, gen_helper_fmul8x16)
++
+ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
+                    void (*func)(TCGv_i64, TCGv_i64, TCGv_i64))
+ {
+@@ -4859,7 +4879,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
+     return advance_pc(dc);
  }
  
--/* Select only size 64 else 32.  Used for SSE operand sizes.  */
--static inline MemOp mo_64_32(MemOp ot)
--{
--#ifdef TARGET_X86_64
--    return ot == MO_64 ? MO_64 : MO_32;
--#else
--    return MO_32;
--#endif
--}
--
- /* Select size 8 if lsb of B is clear, else OT.  Used for decoding
-    byte vs word opcodes.  */
- static inline MemOp mo_b_d(int b, MemOp ot)
-@@ -6780,12 +6770,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-         modrm = x86_ldub_code(env, s);
-         reg = ((modrm >> 3) & 7) | REX_R(s);
+-TRANS(FMUL8x16, VIS1, do_ddd, a, gen_helper_fmul8x16)
+ TRANS(FMUL8x16AU, VIS1, do_ddd, a, gen_helper_fmul8x16au)
+ TRANS(FMUL8x16AL, VIS1, do_ddd, a, gen_helper_fmul8x16al)
+ TRANS(FMUL8SUx16, VIS1, do_ddd, a, gen_helper_fmul8sux16)
+diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
+index db2e6dd6c1..7728ffe9c6 100644
+--- a/target/sparc/vis_helper.c
++++ b/target/sparc/vis_helper.c
+@@ -94,16 +94,17 @@ uint64_t helper_fpmerge(uint64_t src1, uint64_t src2)
+     return d.ll;
+ }
  
--        if (s->prefix & PREFIX_DATA) {
--            ot = MO_16;
--        } else {
--            ot = mo_64_32(dflag);
--        }
--
-+        ot = dflag;
-         gen_ldst_modrm(env, s, modrm, ot, OR_TMP0, 0);
-         gen_extu(ot, s->T0);
-         tcg_gen_mov_tl(cpu_cc_src, s->T0);
+-uint64_t helper_fmul8x16(uint64_t src1, uint64_t src2)
++uint64_t helper_fmul8x16(uint32_t src1, uint64_t src2)
+ {
+-    VIS64 s, d;
++    VIS64 d;
++    VIS32 s;
+     uint32_t tmp;
+ 
+-    s.ll = src1;
++    s.l = src1;
+     d.ll = src2;
+ 
+ #define PMUL(r)                                                 \
+-    tmp = (int32_t)d.VIS_SW64(r) * (int32_t)s.VIS_B64(r);       \
++    tmp = (int32_t)d.VIS_SW64(r) * (int32_t)s.VIS_B32(r);       \
+     if ((tmp & 0xff) > 0x7f) {                                  \
+         tmp += 0x100;                                           \
+     }                                                           \
 -- 
 2.39.2
 
