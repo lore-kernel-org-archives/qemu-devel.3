@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9526EC25B79
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 312F1C25B79
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBTQc-00061N-RH; Mon, 27 May 2024 02:01:50 -0400
+	id 1sBTS1-0006mA-Dx; Mon, 27 May 2024 02:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBTQP-0005yd-5H
- for qemu-devel@nongnu.org; Mon, 27 May 2024 02:01:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBTRb-0006cN-Pz
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:02:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBTQK-0008NC-UY
- for qemu-devel@nongnu.org; Mon, 27 May 2024 02:01:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBTRY-0008VS-9Y
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:02:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716789692;
+ s=mimecast20190719; t=1716789767;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=6Zc6Oq7lx9Yhev1rHgtRKGdC/u2ne8phaEu8qwMz2ms=;
- b=ZUlV6L3SRr6GW7auVN0eBxfZxijLBIvrCcXpouirpfDcpK6eXB13SvxuKvfC/iFfvcGLha
- c8yrUoozMqiQEYn/U/4QzbQaSUXVwAl17fLq4cGjjkODM6c1csP2PJXCG2ioSFphqETvcV
- bmFRVTdthVLSysJmouidJUlpp023qeY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136--qYn5bMOOxK9e1KfR038hA-1; Mon,
- 27 May 2024 02:01:29 -0400
-X-MC-Unique: -qYn5bMOOxK9e1KfR038hA-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=nVOQqWR/rpjpASy8MgjbS4rjsUmQA2RN2dDYslTzDSM=;
+ b=Pi1qucl7L3ffrmlt+vUtp+H+gvAxTvo9Yax+Blh5wNCYbmvMkai3cJPQVk+IBtyVADecKb
+ IAillApdsCcTmMH6TxtXB7Vw+yZ2NQz3C4fHYi5hsik7Ce73ardd/Jo+uVgN3fbAbqXva0
+ EkSVRcSBpi7rU5Dd85xo6es7okBIjQI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-532-Ar3vVcFYNAOy-P5z2K3DHA-1; Mon, 27 May 2024 02:02:45 -0400
+X-MC-Unique: Ar3vVcFYNAOy-P5z2K3DHA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7151F29AA3A2;
- Mon, 27 May 2024 06:01:29 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 63726101A525
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 06:02:45 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.77])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B3C925ADC7E;
- Mon, 27 May 2024 06:01:27 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 21C6E105480A;
+ Mon, 27 May 2024 06:02:43 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Cornelia Huck <cohuck@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>
-Subject: [PATCH] scripts/update-linux-headers.sh: Fix the path of setup_data.h
-Date: Mon, 27 May 2024 08:01:26 +0200
-Message-ID: <20240527060126.12578-1-thuth@redhat.com>
+Subject: [PATCH] scripts/update-linux-headers.sh: Remove temporary directory
+ inbetween
+Date: Mon, 27 May 2024 08:02:43 +0200
+Message-ID: <20240527060243.12647-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -77,32 +77,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running the update-linx-headers.sh script, it currently fails with:
+We are reusing the same temporary directory for installing the headers
+of all targets, so there could be stale files here when switching from
+one target to another. Make sure to delete the folder before installing
+a new set of target headers into it.
 
-scripts/update-linux-headers.sh: line 73: .../qemu/standard-headers/asm-x86/setup_data.h: No such file or directory
-
-The "include" folder is obviously missing here - no clue how this could
-have worked before?
-
-Fixes: 66210a1a30 ("scripts/update-linux-headers: Add setup_data.h to import list")
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- scripts/update-linux-headers.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/update-linux-headers.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index fbf7e119bc..23afe8c08a 100755
+index 8963c39189..fbf7e119bc 100755
 --- a/scripts/update-linux-headers.sh
 +++ b/scripts/update-linux-headers.sh
-@@ -159,7 +159,7 @@ for arch in $ARCHLIST; do
-         cp_portable "$hdrdir/bootparam.h" \
-                     "$output/include/standard-headers/asm-$arch"
-         cp_portable "$hdrdir/include/asm/setup_data.h" \
--                    "$output/standard-headers/asm-x86"
-+                    "$output/include/standard-headers/asm-x86"
+@@ -112,6 +112,7 @@ for arch in $ARCHLIST; do
+         arch_var=ARCH
      fi
-     if [ $arch = riscv ]; then
-         cp "$hdrdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
+ 
++    rm -rf "$hdrdir"
+     make -C "$linux" O="$blddir" INSTALL_HDR_PATH="$hdrdir" $arch_var=$arch headers_install
+ 
+     rm -rf "$output/linux-headers/asm-$arch"
 -- 
 2.45.1
 
