@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B61CDC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7CEC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVhp-0002n0-SG; Mon, 27 May 2024 04:27:46 -0400
+	id 1sBVh0-0000mI-CV; Mon, 27 May 2024 04:26:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVfX-0005bl-KC; Mon, 27 May 2024 04:25:30 -0400
+ id 1sBVeG-0003dO-79; Mon, 27 May 2024 04:24:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVfU-0001Fa-OD; Mon, 27 May 2024 04:25:22 -0400
+ id 1sBVeE-00015R-IZ; Mon, 27 May 2024 04:24:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 67B246A585;
- Mon, 27 May 2024 11:22:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A81036A57A;
+ Mon, 27 May 2024 11:22:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9477AD8522;
- Mon, 27 May 2024 11:21:41 +0300 (MSK)
-Received: (nullmailer pid 66474 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id D4FB2D8517;
+ Mon, 27 May 2024 11:21:40 +0300 (MSK)
+Received: (nullmailer pid 66440 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 40/44] hw/loongarch/virt: Fix FDT memory node address
- width
-Date: Mon, 27 May 2024 11:21:31 +0300
-Message-Id: <20240527082138.66217-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 29/44] target/i386: fix feature dependency for WAITPKG
+Date: Mon, 27 May 2024 11:21:20 +0300
+Message-Id: <20240527082138.66217-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
@@ -62,32 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Higher bits for memory nodes were omitted at qemu_fdt_setprop_cells.
+The VMX feature bit depends on general availability of WAITPKG,
+not the other way round.
 
+Fixes: 33cc88261c3 ("target/i386: add support for VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE", 2023-08-28)
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240520-loongarch-fdt-memnode-v1-1-5ea9be93911e@flygoat.com>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit 6204af704a071ea68d3af55c0502b112a7af9546)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit fe01af5d47d4cf7fdf90c54d43f784e5068c8d72)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 8f39254880..83d3d7522f 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -333,7 +333,8 @@ static void fdt_add_memory_node(MachineState *ms,
-     char *nodename = g_strdup_printf("/memory@%" PRIx64, base);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 33760a2ee1..e693f8ca9a 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1550,8 +1550,8 @@ static FeatureDep feature_dependencies[] = {
+         .to = { FEAT_SVM,                   ~0ull },
+     },
+     {
+-        .from = { FEAT_VMX_SECONDARY_CTLS,  VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
+-        .to = { FEAT_7_0_ECX,               CPUID_7_0_ECX_WAITPKG },
++        .from = { FEAT_7_0_ECX,             CPUID_7_0_ECX_WAITPKG },
++        .to = { FEAT_VMX_SECONDARY_CTLS,    VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
+     },
+ };
  
-     qemu_fdt_add_subnode(ms->fdt, nodename);
--    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, 0, size);
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", base >> 32, base,
-+                           size >> 32, size);
-     qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "memory");
- 
-     if (ms->numa_state && ms->numa_state->num_nodes) {
 -- 
 2.39.2
 
