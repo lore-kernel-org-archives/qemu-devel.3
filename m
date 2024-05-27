@@ -4,111 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACEDC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 13:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BCFC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 13:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBZz6-0002vE-PD; Mon, 27 May 2024 09:01:54 -0400
+	id 1sBa0b-0004EB-Jl; Mon, 27 May 2024 09:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sBZyn-0002qr-Tr; Mon, 27 May 2024 09:01:34 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sBZyl-0001j7-De; Mon, 27 May 2024 09:01:33 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 940811FD8E;
- Mon, 27 May 2024 13:01:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716814889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=99IEBjWlH1+gp81vCfQJY5ywW2rBRijx5Rrl4Rz4yG8=;
- b=yZ8GgIBjVqKFntxNT1e4tyuiz0LByCWQOQJAQnt7XSBQvFwtKE3PXtwhE50IZ1/unxGvlX
- 9TsiY+7uZM7U00e1y3DwyAw30wgYTt+/6EfarNWn/9EYDfE2+9EzPzSvrHx25DY8mfqkUH
- t7am05VPU8hwLxhyT6k3Hmx5r601OHo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716814889;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=99IEBjWlH1+gp81vCfQJY5ywW2rBRijx5Rrl4Rz4yG8=;
- b=PRgHGgmooLWuvpn4VVsYenXhBkI3K5wrQHL6KpMWRbteFTNl52R7GSGzhk18lozxtHHfa+
- dSq1nCPwnYFCtKBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yZ8GgIBj;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PRgHGgmo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716814889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=99IEBjWlH1+gp81vCfQJY5ywW2rBRijx5Rrl4Rz4yG8=;
- b=yZ8GgIBjVqKFntxNT1e4tyuiz0LByCWQOQJAQnt7XSBQvFwtKE3PXtwhE50IZ1/unxGvlX
- 9TsiY+7uZM7U00e1y3DwyAw30wgYTt+/6EfarNWn/9EYDfE2+9EzPzSvrHx25DY8mfqkUH
- t7am05VPU8hwLxhyT6k3Hmx5r601OHo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716814889;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=99IEBjWlH1+gp81vCfQJY5ywW2rBRijx5Rrl4Rz4yG8=;
- b=PRgHGgmooLWuvpn4VVsYenXhBkI3K5wrQHL6KpMWRbteFTNl52R7GSGzhk18lozxtHHfa+
- dSq1nCPwnYFCtKBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1755313A87;
- Mon, 27 May 2024 13:01:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JhILNCiEVGbrKAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 27 May 2024 13:01:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 3/3] tests/qtest/migration-test: Use custom asm bios for
- ppc64
-In-Reply-To: <20240525031330.196609-4-npiggin@gmail.com>
-References: <20240525031330.196609-1-npiggin@gmail.com>
- <20240525031330.196609-4-npiggin@gmail.com>
-Date: Mon, 27 May 2024 10:01:26 -0300
-Message-ID: <877cffh0ih.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBa0a-0004Dx-P4
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 09:03:24 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBa0X-00027l-4T
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 09:03:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716815001; x=1748351001;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=NBxTVic0omPJuYm887+8KTZTarZM0b+ftsU4yFUekEs=;
+ b=T+Q1A/yfe7OQ85Zs6PLX0CDyTq9n4zaRtAco+dKqhjifCDgwwhI9vhc3
+ 4UtAGBauGck7zPyxoAMDTWmTIhK2LlIpgorfc/4tHhd3ttv7jTAIXibpZ
+ bjqIqkDB4kaPQbNaV8PwPnvd38MrFeCBMgutoi8Y+MRrtRQ0mUm5TXphr
+ 9iFPIaNgQbV0yTB0Bs1zurkeA319xDWeYkxr+Uq7CBpMPsFsh8zRhr5Tl
+ i0KOUZyKgXMN95abML7f6lisU9j1CibdndGLJxbIqJ2I2UZsEyZqOk5bG
+ thKe+ONL2u+gDcqFNV/91OCj2VdDsqZyCdTp5UaR43Xz31cEo+CIuy3V3 g==;
+X-CSE-ConnectionGUID: NsG4u8HHSpWPnhTvCDCe0Q==
+X-CSE-MsgGUID: W3DAZp3jQqazpEStJNyM5w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="13004272"
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="13004272"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2024 06:03:18 -0700
+X-CSE-ConnectionGUID: LJcfWO4jRsqvZ6EGVsE/1Q==
+X-CSE-MsgGUID: Nui9ANEARgq94C3nHHN/Cw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="34783161"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 27 May 2024 06:03:16 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] hw/core: Rename CpuTopology to CPUTopology
+Date: Mon, 27 May 2024 21:18:37 +0800
+Message-Id: <20240527131837.2630961-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.18 / 50.00]; BAYES_HAM(-2.67)[98.56%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FREEMAIL_TO(0.00)[gmail.com];
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com,nongnu.org,redhat.com];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 940811FD8E
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,13 +82,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicholas Piggin <npiggin@gmail.com> writes:
+Use CPUTopology to honor the generic style of CPU capitalization
+abbreviations.
 
-> Similar to other archs, build a custom bios memory updater. Running the
-> test with OF code is a cool trick, but SLOF takes a long time to boot.
-> This reduces test time by around 3x (150s to 50s).
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ * Split from the previous SMP cache RFC:
+   https://lore.kernel.org/qemu-devel/20240220092504.726064-2-zhao1.liu@linux.intel.com/
+---
+ hw/s390x/cpu-topology.c         |  6 +++---
+ include/hw/boards.h             |  8 ++++----
+ include/hw/s390x/cpu-topology.h |  6 +++---
+ tests/unit/test-smp-parse.c     | 14 +++++++-------
+ 4 files changed, 17 insertions(+), 17 deletions(-)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/hw/s390x/cpu-topology.c b/hw/s390x/cpu-topology.c
+index f16bdf65faa0..016f6c1c15ac 100644
+--- a/hw/s390x/cpu-topology.c
++++ b/hw/s390x/cpu-topology.c
+@@ -86,7 +86,7 @@ bool s390_has_topology(void)
+  */
+ static void s390_topology_init(MachineState *ms)
+ {
+-    CpuTopology *smp = &ms->smp;
++    CPUTopology *smp = &ms->smp;
+ 
+     s390_topology.cores_per_socket = g_new0(uint8_t, smp->sockets *
+                                             smp->books * smp->drawers);
+@@ -181,7 +181,7 @@ void s390_topology_reset(void)
+  */
+ static bool s390_topology_cpu_default(S390CPU *cpu, Error **errp)
+ {
+-    CpuTopology *smp = &current_machine->smp;
++    CPUTopology *smp = &current_machine->smp;
+     CPUS390XState *env = &cpu->env;
+ 
+     /* All geometry topology attributes must be set or all unset */
+@@ -234,7 +234,7 @@ static bool s390_topology_check(uint16_t socket_id, uint16_t book_id,
+                                 uint16_t drawer_id, uint16_t entitlement,
+                                 bool dedicated, Error **errp)
+ {
+-    CpuTopology *smp = &current_machine->smp;
++    CPUTopology *smp = &current_machine->smp;
+ 
+     if (socket_id >= smp->sockets) {
+         error_setg(errp, "Unavailable socket: %d", socket_id);
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 2fa800f11ae4..c1737f2a5736 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -334,7 +334,7 @@ typedef struct DeviceMemoryState {
+ } DeviceMemoryState;
+ 
+ /**
+- * CpuTopology:
++ * CPUTopology:
+  * @cpus: the number of present logical processors on the machine
+  * @drawers: the number of drawers on the machine
+  * @books: the number of books in one drawer
+@@ -346,7 +346,7 @@ typedef struct DeviceMemoryState {
+  * @threads: the number of threads in one core
+  * @max_cpus: the maximum number of logical processors on the machine
+  */
+-typedef struct CpuTopology {
++typedef struct CPUTopology {
+     unsigned int cpus;
+     unsigned int drawers;
+     unsigned int books;
+@@ -357,7 +357,7 @@ typedef struct CpuTopology {
+     unsigned int cores;
+     unsigned int threads;
+     unsigned int max_cpus;
+-} CpuTopology;
++} CPUTopology;
+ 
+ /**
+  * MachineState:
+@@ -409,7 +409,7 @@ struct MachineState {
+     const char *cpu_type;
+     AccelState *accelerator;
+     CPUArchIdList *possible_cpus;
+-    CpuTopology smp;
++    CPUTopology smp;
+     struct NVDIMMState *nvdimms_state;
+     struct NumaState *numa_state;
+ };
+diff --git a/include/hw/s390x/cpu-topology.h b/include/hw/s390x/cpu-topology.h
+index c064f427e948..ff09c57a4428 100644
+--- a/include/hw/s390x/cpu-topology.h
++++ b/include/hw/s390x/cpu-topology.h
+@@ -63,17 +63,17 @@ static inline void s390_topology_reset(void)
+ 
+ extern S390Topology s390_topology;
+ 
+-static inline int s390_std_socket(int n, CpuTopology *smp)
++static inline int s390_std_socket(int n, CPUTopology *smp)
+ {
+     return (n / smp->cores) % smp->sockets;
+ }
+ 
+-static inline int s390_std_book(int n, CpuTopology *smp)
++static inline int s390_std_book(int n, CPUTopology *smp)
+ {
+     return (n / (smp->cores * smp->sockets)) % smp->books;
+ }
+ 
+-static inline int s390_std_drawer(int n, CpuTopology *smp)
++static inline int s390_std_drawer(int n, CPUTopology *smp)
+ {
+     return (n / (smp->cores * smp->sockets * smp->books)) % smp->drawers;
+ }
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index 9fdba24fce56..f51138794ca1 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -120,8 +120,8 @@
+  */
+ typedef struct SMPTestData {
+     SMPConfiguration config;
+-    CpuTopology expect_prefer_sockets;
+-    CpuTopology expect_prefer_cores;
++    CPUTopology expect_prefer_sockets;
++    CPUTopology expect_prefer_cores;
+     const char *expect_error;
+ } SMPTestData;
+ 
+@@ -643,7 +643,7 @@ static char *smp_config_to_string(const SMPConfiguration *config)
+ }
+ 
+ /* Use the different calculation than machine_topo_get_threads_per_socket(). */
+-static unsigned int cpu_topology_get_threads_per_socket(const CpuTopology *topo)
++static unsigned int cpu_topology_get_threads_per_socket(const CPUTopology *topo)
+ {
+     /* Check the divisor to avoid invalid topology examples causing SIGFPE. */
+     if (!topo->drawers || !topo->books || !topo->sockets) {
+@@ -654,7 +654,7 @@ static unsigned int cpu_topology_get_threads_per_socket(const CpuTopology *topo)
+ }
+ 
+ /* Use the different calculation than machine_topo_get_cores_per_socket(). */
+-static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
++static unsigned int cpu_topology_get_cores_per_socket(const CPUTopology *topo)
+ {
+     /* Check the divisor to avoid invalid topology examples causing SIGFPE. */
+     if (!topo->threads) {
+@@ -664,13 +664,13 @@ static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
+     }
+ }
+ 
+-static char *cpu_topology_to_string(const CpuTopology *topo,
++static char *cpu_topology_to_string(const CPUTopology *topo,
+                                     unsigned int threads_per_socket,
+                                     unsigned int cores_per_socket,
+                                     bool has_clusters)
+ {
+     return g_strdup_printf(
+-        "(CpuTopology) {\n"
++        "(CPUTopology) {\n"
+         "    .cpus               = %u,\n"
+         "    .drawers            = %u,\n"
+         "    .books              = %u,\n"
+@@ -692,7 +692,7 @@ static char *cpu_topology_to_string(const CpuTopology *topo,
+ }
+ 
+ static void check_parse(MachineState *ms, const SMPConfiguration *config,
+-                        const CpuTopology *expect_topo, const char *expect_err,
++                        const CPUTopology *expect_topo, const char *expect_err,
+                         bool is_valid)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+-- 
+2.34.1
+
 
