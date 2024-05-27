@@ -4,66 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DF9C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BD3C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 12:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBZhS-00018z-Bi; Mon, 27 May 2024 08:43:38 -0400
+	id 1sBZpa-0005E6-OR; Mon, 27 May 2024 08:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sBZhK-00014l-EF
- for qemu-devel@nongnu.org; Mon, 27 May 2024 08:43:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=e5bn=M6=kaod.org=clg@ozlabs.org>)
+ id 1sBZpW-0005Bt-Bx; Mon, 27 May 2024 08:51:58 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sBZhJ-0006Y7-2E
- for qemu-devel@nongnu.org; Mon, 27 May 2024 08:43:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716813806;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=GsSo7ggYXEy2RsZ9Fjk6S+D1m5a9eQJCeX/Gs9rTaKo=;
- b=PpPeMROzsNhkeNPL6W57nnUQzgCID7vCvuRz1FPj+xgAczrJ1QLk9+9Y1+PH3+l6Q3cybO
- 4FOcTBFRojryFEmkTGzzCdkLs/UR6LYX1kVS2p714diUHIxZ8zwvIBV1ms8I/PTYdSrLza
- ac4CXoO0V1NMSBx/DnCxJ9KKIxYDWPA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-1KkSo3sPN1K04e0bg1GMRQ-1; Mon, 27 May 2024 08:43:22 -0400
-X-MC-Unique: 1KkSo3sPN1K04e0bg1GMRQ-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ (Exim 4.90_1) (envelope-from <SRS0=e5bn=M6=kaod.org=clg@ozlabs.org>)
+ id 1sBZpS-0008GT-NP; Mon, 27 May 2024 08:51:58 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VnwWm0TYNz4x1T;
+ Mon, 27 May 2024 22:51:48 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 81F32185A780;
- Mon, 27 May 2024 12:43:22 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.193.246])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 2632E492BC6;
- Mon, 27 May 2024 12:43:19 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] aspeed/smc: Reintroduce "dram-base" property for AST2700
-Date: Mon, 27 May 2024 14:43:15 +0200
-Message-ID: <20240527124315.35356-1-clg@redhat.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VnwWd13kqz4wcS;
+ Mon, 27 May 2024 22:51:21 +1000 (AEST)
+Message-ID: <4bc9c170-52ff-48a9-a3a1-4c9c0f2c7153@kaod.org>
+Date: Mon, 27 May 2024 14:51:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/16] aspeed/smc: support 64 bits dma dram address
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-9-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240527080231.1576609-9-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=e5bn=M6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,50 +73,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed SMC device model use to have a 'sdram_base' property. It
-was removed by commit d177892d4a48 ("aspeed/smc: Remove unused
-"sdram-base" property") because previous changes simplified the DMA
-transaction model to use an offset in RAM and not the physical
-address.
+On 5/27/24 10:02, Jamin Lin wrote:
+> AST2700 support the maximum dram size is 8GiB
+> and has a "DMA DRAM Side Address High Part(0x7C)"
+> register to support 64 bits dma dram address.
+> Add helper routines functions to compute the dma dram
+> address, new features and update trace-event
+> to support 64 bits dram address.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The AST2700 SoC has larger address space (64-bit) and a new register
-DMA DRAM Side Address High Part (0x7C) is introduced to deal with the
-high bits of the DMA address. To be able to compute the offset of the
-DMA transaction, as done on the other SoCs, we will need to know where
-the DRAM is mapped in the address space. Re-introduce a "dram-base"
-property to hold this value.
+I will move the addition of the "dram-base" property to another patch. See :
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/ssi/aspeed_smc.h | 1 +
- hw/ssi/aspeed_smc.c         | 1 +
- 2 files changed, 2 insertions(+)
+   https://patchew.org/QEMU/20240527124315.35356-1-clg@redhat.com/
 
-diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-index 8e1dda556b91..8791cc0ecb11 100644
---- a/include/hw/ssi/aspeed_smc.h
-+++ b/include/hw/ssi/aspeed_smc.h
-@@ -76,6 +76,7 @@ struct AspeedSMCState {
-     AddressSpace flash_as;
-     MemoryRegion *dram_mr;
-     AddressSpace dram_as;
-+    uint64_t     dram_base;
- 
-     AspeedSMCFlash flashes[ASPEED_SMC_CS_MAX];
- 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 6e1a84c19713..7075bc9d61b0 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -1220,6 +1220,7 @@ static const VMStateDescription vmstate_aspeed_smc = {
- 
- static Property aspeed_smc_properties[] = {
-     DEFINE_PROP_BOOL("inject-failure", AspeedSMCState, inject_failure, false),
-+    DEFINE_PROP_UINT64("dram-base", AspeedSMCState, dram_base, 0),
-     DEFINE_PROP_LINK("dram", AspeedSMCState, dram_mr,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
-     DEFINE_PROP_END_OF_LIST(),
--- 
-2.45.1
+(Please review)
+
+Else,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/ssi/aspeed_smc.c         | 52 +++++++++++++++++++++++++++++++------
+>   hw/ssi/trace-events         |  2 +-
+>   include/hw/ssi/aspeed_smc.h |  1 +
+>   3 files changed, 46 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+> index ffb13a12e8..df0c63469c 100644
+> --- a/hw/ssi/aspeed_smc.c
+> +++ b/hw/ssi/aspeed_smc.c
+> @@ -132,6 +132,9 @@
+>   #define   FMC_WDT2_CTRL_BOOT_SOURCE      BIT(4) /* O: primary 1: alternate */
+>   #define   FMC_WDT2_CTRL_EN               BIT(0)
+>   
+> +/* DMA DRAM Side Address High Part (AST2700) */
+> +#define R_DMA_DRAM_ADDR_HIGH   (0x7c / 4)
+> +
+>   /* DMA Control/Status Register */
+>   #define R_DMA_CTRL        (0x80 / 4)
+>   #define   DMA_CTRL_REQUEST      (1 << 31)
+> @@ -187,6 +190,7 @@
+>    *   0x1FFFFFF: 32M bytes
+>    */
+>   #define DMA_DRAM_ADDR(asc, val)   ((val) & (asc)->dma_dram_mask)
+> +#define DMA_DRAM_ADDR_HIGH(val)   ((val) & 0xf)
+>   #define DMA_FLASH_ADDR(asc, val)  ((val) & (asc)->dma_flash_mask)
+>   #define DMA_LENGTH(val)         ((val) & 0x01FFFFFF)
+>   
+> @@ -207,6 +211,7 @@ static const AspeedSegments aspeed_2500_spi2_segments[];
+>   #define ASPEED_SMC_FEATURE_DMA       0x1
+>   #define ASPEED_SMC_FEATURE_DMA_GRANT 0x2
+>   #define ASPEED_SMC_FEATURE_WDT_CONTROL 0x4
+> +#define ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH 0x08
+>   
+>   static inline bool aspeed_smc_has_dma(const AspeedSMCClass *asc)
+>   {
+> @@ -218,6 +223,11 @@ static inline bool aspeed_smc_has_wdt_control(const AspeedSMCClass *asc)
+>       return !!(asc->features & ASPEED_SMC_FEATURE_WDT_CONTROL);
+>   }
+>   
+> +static inline bool aspeed_smc_has_dma64(const AspeedSMCClass *asc)
+> +{
+> +    return !!(asc->features & ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH);
+> +}
+> +
+>   #define aspeed_smc_error(fmt, ...)                                      \
+>       qemu_log_mask(LOG_GUEST_ERROR, "%s: " fmt "\n", __func__, ## __VA_ARGS__)
+>   
+> @@ -747,6 +757,8 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
+>           (aspeed_smc_has_dma(asc) && addr == R_DMA_CTRL) ||
+>           (aspeed_smc_has_dma(asc) && addr == R_DMA_FLASH_ADDR) ||
+>           (aspeed_smc_has_dma(asc) && addr == R_DMA_DRAM_ADDR) ||
+> +        (aspeed_smc_has_dma(asc) && aspeed_smc_has_dma64(asc) &&
+> +         addr == R_DMA_DRAM_ADDR_HIGH) ||
+>           (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN) ||
+>           (aspeed_smc_has_dma(asc) && addr == R_DMA_CHECKSUM) ||
+>           (addr >= R_SEG_ADDR0 &&
+> @@ -847,6 +859,12 @@ static bool aspeed_smc_inject_read_failure(AspeedSMCState *s)
+>       }
+>   }
+>   
+> +static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
+> +{
+> +    return s->regs[R_DMA_DRAM_ADDR] |
+> +        ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32);
+> +}
+> +
+>   static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
+>   {
+>       AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+> @@ -903,24 +921,34 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
+>   
+>   static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>   {
+> +    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+> +    uint64_t dma_dram_offset;
+> +    uint64_t dma_dram_addr;
+>       MemTxResult result;
+>       uint32_t dma_len;
+>       uint32_t data;
+>   
+>       dma_len = aspeed_smc_dma_len(s);
+> +    dma_dram_addr = aspeed_smc_dma_dram_addr(s);
+> +
+> +    if (aspeed_smc_has_dma64(asc)) {
+> +        dma_dram_offset = dma_dram_addr - s->dram_base;
+> +    } else {
+> +        dma_dram_offset = dma_dram_addr;
+> +    }
+>   
+>       trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
+>                               "write" : "read",
+>                               s->regs[R_DMA_FLASH_ADDR],
+> -                            s->regs[R_DMA_DRAM_ADDR],
+> +                            dma_dram_offset,
+>                               dma_len);
+>       while (dma_len) {
+>           if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
+> -            data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
+> +            data = address_space_ldl_le(&s->dram_as, dma_dram_offset,
+>                                           MEMTXATTRS_UNSPECIFIED, &result);
+>               if (result != MEMTX_OK) {
+> -                aspeed_smc_error("DRAM read failed @%08x",
+> -                                 s->regs[R_DMA_DRAM_ADDR]);
+> +                aspeed_smc_error("DRAM read failed @%" PRIx64,
+> +                                 dma_dram_offset);
+>                   return;
+>               }
+>   
+> @@ -940,11 +968,11 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>                   return;
+>               }
+>   
+> -            address_space_stl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
+> +            address_space_stl_le(&s->dram_as, dma_dram_offset,
+>                                    data, MEMTXATTRS_UNSPECIFIED, &result);
+>               if (result != MEMTX_OK) {
+> -                aspeed_smc_error("DRAM write failed @%08x",
+> -                                 s->regs[R_DMA_DRAM_ADDR]);
+> +                aspeed_smc_error("DRAM write failed @%" PRIx64,
+> +                                 dma_dram_offset);
+>                   return;
+>               }
+>           }
+> @@ -953,8 +981,12 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>            * When the DMA is on-going, the DMA registers are updated
+>            * with the current working addresses and length.
+>            */
+> +        dma_dram_offset += 4;
+> +        dma_dram_addr += 4;
+> +
+> +        s->regs[R_DMA_DRAM_ADDR_HIGH] = dma_dram_addr >> 32;
+> +        s->regs[R_DMA_DRAM_ADDR] = dma_dram_addr & 0xffffffff;
+>           s->regs[R_DMA_FLASH_ADDR] += 4;
+> -        s->regs[R_DMA_DRAM_ADDR] += 4;
+>           dma_len -= 4;
+>           s->regs[R_DMA_LEN] = dma_len;
+>           s->regs[R_DMA_CHECKSUM] += data;
+> @@ -1107,6 +1139,9 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+>       } else if (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN &&
+>                  aspeed_smc_dma_granted(s)) {
+>           s->regs[addr] = DMA_LENGTH(value);
+> +    } else if (aspeed_smc_has_dma(asc) && aspeed_smc_has_dma64(asc) &&
+> +               addr == R_DMA_DRAM_ADDR_HIGH) {
+> +        s->regs[addr] = DMA_DRAM_ADDR_HIGH(value);
+>       } else {
+>           qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+>                         __func__, addr);
+> @@ -1239,6 +1274,7 @@ static const VMStateDescription vmstate_aspeed_smc = {
+>   
+>   static Property aspeed_smc_properties[] = {
+>       DEFINE_PROP_BOOL("inject-failure", AspeedSMCState, inject_failure, false),
+> +    DEFINE_PROP_UINT64("dram-base", AspeedSMCState, dram_base, 0),
+>       DEFINE_PROP_LINK("dram", AspeedSMCState, dram_mr,
+>                        TYPE_MEMORY_REGION, MemoryRegion *),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
+> index 2d5bd2b83d..7b5ad6a939 100644
+> --- a/hw/ssi/trace-events
+> +++ b/hw/ssi/trace-events
+> @@ -6,7 +6,7 @@ aspeed_smc_do_snoop(int cs, int index, int dummies, int data) "CS%d index:0x%x d
+>   aspeed_smc_flash_write(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
+>   aspeed_smc_read(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
+>   aspeed_smc_dma_checksum(uint32_t addr, uint32_t data) "0x%08x: 0x%08x"
+> -aspeed_smc_dma_rw(const char *dir, uint32_t flash_addr, uint32_t dram_addr, uint32_t size) "%s flash:@0x%08x dram:@0x%08x size:0x%08x"
+> +aspeed_smc_dma_rw(const char *dir, uint32_t flash_addr, uint64_t dram_addr, uint32_t size) "%s flash:@0x%08x dram:@0x%" PRIx64 " size:0x%08x"
+>   aspeed_smc_write(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
+>   aspeed_smc_flash_select(int cs, const char *prefix) "CS%d %sselect"
+>   
+> diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
+> index f359ed22cc..fb36c386c0 100644
+> --- a/include/hw/ssi/aspeed_smc.h
+> +++ b/include/hw/ssi/aspeed_smc.h
+> @@ -76,6 +76,7 @@ struct AspeedSMCState {
+>       AddressSpace flash_as;
+>       MemoryRegion *dram_mr;
+>       AddressSpace dram_as;
+> +    uint64_t dram_base;
+>   
+>       AspeedSMCFlash flashes[ASPEED_SMC_CS_MAX];
+>   
 
 
