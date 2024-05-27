@@ -4,49 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D28C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F68C25B79
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU5F-0005pl-3J; Mon, 27 May 2024 02:43:49 -0400
+	id 1sBU3A-0003F7-Rr; Mon, 27 May 2024 02:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3w-00040f-G1; Mon, 27 May 2024 02:42:33 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
+ id 1sBU2n-00033k-S2
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:41:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3r-0007Rp-RC; Mon, 27 May 2024 02:42:26 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8D4166A400;
- Mon, 27 May 2024 09:41:31 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D984ED83F8;
- Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50313 invoked by uid 1000);
- Mon, 27 May 2024 06:40:56 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 18/19] target/i386: disable jmp_opt if EFLAGS.RF is 1
-Date: Mon, 27 May 2024 09:40:49 +0300
-Message-Id: <20240527064056.50205-18-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
+ id 1sBU2h-0007GD-JO
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:41:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716792070;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GDQ4+f7uSOIPxyxtatT2QjghoY3eF9jP0el/KnAqVDY=;
+ b=YlWtgNAHkHllggx3WKwYFhwE+hjJf6JSJwkt/32uBHcv/KAwQDR2IZLhTmBwB+kyMQFb2p
+ uwK05Fl/W3A6CppSuW8hymvBMGrpuFwbetQptOamQ1oHxE13UFAqxo/sEmx8c1mHchB/9i
+ /7UiZtqksPm/fc+8jXWJ969eOZ+UMzw=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-150-QNVsCJ4XOFa_AFr16VX10g-1; Mon, 27 May 2024 02:41:08 -0400
+X-MC-Unique: QNVsCJ4XOFa_AFr16VX10g-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2bf59a23985so967875a91.0
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 23:41:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716792067; x=1717396867;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GDQ4+f7uSOIPxyxtatT2QjghoY3eF9jP0el/KnAqVDY=;
+ b=OqzDrCla+m2bG7Xqi3G8MhrTv4vARrT7NRC0PEpS/o2gphiH/PXHDrSycfWWF/F2au
+ GsZIUNHcqXrBQcUvVyGi0lpnt+mUP08l0/QSJ0HRf0rQprxGqatetaV4YfiqDh5OKMc5
+ uzoxktmgc4k8sMqDRpq5eRavmKrDqagllBryPgDI+3hEQ+EO6Q3QFZ1nJWlJ7oy5v1+r
+ vm6Pj7zTiAOq8YzdORdo81wHPX0xm3QTdgS9qllkCV3e32GGwvRMpzDtgfPwd5u7yPYf
+ 5Pc+gLv27gipaG7GT9QhFkZEI3vzfsZ8uSxbFFMaTC3v9vbyFCUf26Qo+VUShtnjegBT
+ jzpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFswmuf2KB1DaxxIYyeE/7wHIdWQnnUjcHaGMdTToTkBl3zEvmtOCJ7BlZbW31eUOhyw+RWMNHrpdGbTcmwHOQTQfe9Es=
+X-Gm-Message-State: AOJu0YwgaqLRJJR9+5mQ/qYLfPpH1bMfo/RB0qjSQU/1b6SdjBAmn9I0
+ 2Y+77VfIokNEeWoof6gaUpmFdyKge58Kgp6nUiZBqFJVisi0hu56eQDPsWZWEdsJkQncva30Z5T
+ 53QGpRHnO+vfxnwzy2HwvJtdRiD5N5F1n1/BbVoDTeGbiXosfC3QJ
+X-Received: by 2002:a17:90b:24c:b0:2b4:329e:eac5 with SMTP id
+ 98e67ed59e1d1-2bf5f202ac5mr8055011a91.2.1716792066832; 
+ Sun, 26 May 2024 23:41:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEL7QRzKtBCyiR8SVB39tTRtC2TtbQpijjse3JQktv824/f92qgYmTQuQaeYz4emWsaV/J+/Q==
+X-Received: by 2002:a17:90b:24c:b0:2b4:329e:eac5 with SMTP id
+ 98e67ed59e1d1-2bf5f202ac5mr8054991a91.2.1716792066333; 
+ Sun, 26 May 2024 23:41:06 -0700 (PDT)
+Received: from [10.66.61.39] ([43.228.180.230])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2bdf1f931c8sm6262050a91.50.2024.05.26.23.41.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 May 2024 23:41:05 -0700 (PDT)
+Message-ID: <d3733e25-eb1e-4c19-b77f-d68e871c9f0f@redhat.com>
+Date: Mon, 27 May 2024 14:41:01 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
+To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-arm@nongnu.org, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>
+References: <20240409024940.180107-1-shahuang@redhat.com>
+ <Zh1j9b92UGPzr1-a@redhat.com> <Zjyb43JqMZA+bO4r@intel.com>
+ <ZjyZ1ZV7BGME_bY9@redhat.com> <ZkG4nlwRnvz9oUXX@intel.com>
+Content-Language: en-US
+From: Shaoqin Huang <shahuang@redhat.com>
+In-Reply-To: <ZkG4nlwRnvz9oUXX@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=shahuang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,32 +112,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+Hi Zhao,
 
-If EFLAGS.RF is 1, special processing in gen_eob_worker() is needed and
-therefore goto_tb cannot be used.
+Thanks for your proposed idea. If you are willing to take the PMU Filter 
+Enabling work, you can do it. I won't update this series anymore due to 
+the QAPI restriction. I really appreciate if you can implement that.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8225bff7c5db504f50e54ef66b079854635dba70)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Thanks,
+Shaoqin
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 20be036e1c..f8578ad1ea 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -6946,7 +6946,7 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-     dc->cpuid_7_0_ecx_features = env->features[FEAT_7_0_ECX];
-     dc->cpuid_xsave_features = env->features[FEAT_XSAVE];
-     dc->jmp_opt = !((cflags & CF_NO_GOTO_TB) ||
--                    (flags & (HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
-+                    (flags & (HF_RF_MASK | HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
-     /*
-      * If jmp_opt, we want to handle each string instruction individually.
-      * For icount also disable repz optimization so that each iteration
+On 5/13/24 14:52, Zhao Liu wrote:
+> Hi Daniel,
+> 
+>> Please describe it in terms of a QAPI definition, as that's what we're
+>> striving for with all QEMU public interfaces. Once the QAPI design is
+>> agreed, then the -object mapping is trivial, as -object's JSON format
+>> supports arbitrary QAPI structures.
+> 
+> Thank you for your guidance!
+> 
+> I rethought and and modified my previous proposal:
+> 
+> Let me show the command examples firstly:
+>    * Add a single event:
+>      (x86) -object kvm-pmu-event,id=e0,action=allow,format=x86-default,\
+>                    select=0x3c,umask=0x00
+>      (arm or general) -object kvm-pmu-event,id=e1,action=deny,\
+>                               format=raw,code=0x01
+>   
+>    * Add a counter bitmap:
+>      (x86) -object kvm-pmu-counter,id=cnt,action=allow,type=x86-fixed,\
+>                    bitmap=0xffff0000
+>   
+>    * Add an event list (must use Json syntax format):
+>     (x86) -object '{"qom-type":"kvm-pmu-event-list","id"="filter0","action"="allow","format"="x86-default","events=[{"select"=0x3c,"umask"=0x00},{"select"=0x2e,"umask"=0x4f}]'
+>     (arm) -object '{"qom-type":"kvm-pmu-event-list","id"="filter1","action"="allow","format"="raw","events"=[{"code"=0x01},{"code"=0x02}]'
+> 
+> 
+> The specific JSON definitions are as follows (IIUC, this is "in terms of
+> a QAPI definition", right? ;-)):
+> * Define PMU event and counter bitmap with JSON format:
+>    - basic filter action:
+> 
+>    { 'enum': 'KVMPMUFilterAction',
+>      'prefix': 'KVM_PMU_FILTER_ACTION',
+>      'data': ['deny', 'allow' ] }
+> 
+>    - PMU counter:
+> 
+>    { 'enum': 'KVMPMUCounterType',
+>      'prefix': 'KVM_PMU_COUNTER_TYPE',
+>      'data': [ 'x86-fixed' ] }
+> 
+>    { 'struct': 'KVMPMUX86FixedCounter',
+>      'data': { 'bitmap': 'uint32' } }
+> 
+>    - PMU events (total 3 formats):
+> 
+>    # 3 encoding formats: "raw" is compatible with shaoqin's ARM format as
+>    # well as the x86 raw format, and could support other architectures in
+>    # the future.
+>    { 'enum': 'KVMPMUEventEncodeFmt',
+>      'prefix': 'KVM_PMU_EVENT_ENCODE_FMT',
+>      'data': ['raw', 'x86-default', 'x86-masked-entry' ] }
+> 
+>    # A general format.
+>    { 'struct': 'KVMPMURawEvent',
+>      'data': { 'code': 'uint64' } }
+> 
+>    # x86-specific
+>    { 'struct': 'KVMPMUX86DefalutEvent',
+>      'data': { 'select': 'uint16',
+>                'umask': 'uint16' } }
+> 
+>    # another x86 specific
+>    { 'struct': 'KVMPMUX86MaskedEntry',
+>      'data': { 'select': 'uint16',
+>                'match': 'uint8',
+>                'mask': 'uint8',
+>                'exclude': 'bool' } }
+> 
+>    # And their list wrappers:
+>    { 'struct': 'KVMPMURawEventList',
+>      'data': { 'events': ['KVMPMURawEvent'] } }
+> 
+>    { 'struct': 'KVMPMUX86DefalutEventList',
+>      'data': { 'events': ['KVMPMUX86DefalutEvent'] } }
+> 
+>    { 'struct': 'KVMPMUX86MaskedEntryList',
+>      'data': { 'events': ['KVMPMUX86MaskedEntryList'] } }
+> 
+> 
+> Based on the above basic structs, we could provide 3 new more qom-types:
+>    - 'kvm-pmu-counter': 'KVMPMUFilterCounter'
+> 
+>    # This is a single object option to configure PMU counter
+>    # bitmap filter.
+>    { 'union': 'KVMPMUFilterCounter',
+>      'base': { 'action': 'KVMPMUFilterAction',
+>                'type': 'KVMPMUCounterType' },
+>      'discriminator': 'type',
+>      'data': { 'x86-fixed': 'KVMPMUX86FixedCounter' } }
+> 
+> 
+>    - 'kvm-pmu-counter': 'KVMPMUFilterCounter'
+> 
+>    # This option is used to configure a single PMU event for
+>    # PMU filter.
+>    { 'union': 'KVMPMUFilterEvent',
+>      'base': { 'action': 'KVMPMUFilterAction',
+>                'format': 'KVMPMUEventEncodeFmt' },
+>      'discriminator': 'format',
+>      'data': { 'raw': 'KVMPMURawEvent',
+>                'x86-default': 'KVMPMUX86DefalutEvent',
+>                'x86-masked-entry': 'KVMPMUX86MaskedEntry' } }
+> 
+> 
+>    - 'kvm-pmu-event-list': 'KVMPMUFilterEventList'
+> 
+>    # Used to configure multiple events.
+>    { 'union': 'KVMPMUFilterEventList',
+>      'base': { 'action': 'KVMPMUFilterAction',
+>                'format': 'KVMPMUEventEncodeFmt' },
+>      'discriminator': 'format',
+>      'data': { 'raw': 'KVMPMURawEventList',
+>                'x86-default': 'KVMPMUX86DefalutEventList',
+>                'x86-masked-entry': 'KVMPMUX86MaskedEntryList' } }
+> 
+> 
+> Compared to Shaoqin's original format, kvm-pmu-event-list is not able to
+> enumerate events continuously (similar to 0x00-0x30 before), and now
+> user must enumerate events one by one individually.
+> 
+> What do you think about the above 3 new commands?
+> 
+> Thanks and Best Regards,
+> Zhao
+> 
+
 -- 
-2.39.2
+Shaoqin
 
 
