@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C36C8C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF41C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 11:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBYgO-0004FZ-Tn; Mon, 27 May 2024 07:38:29 -0400
+	id 1sBYr4-0000m6-Qb; Mon, 27 May 2024 07:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sBYgL-0004Ed-LJ
- for qemu-devel@nongnu.org; Mon, 27 May 2024 07:38:25 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
+ id 1sBYr3-0000lN-4N; Mon, 27 May 2024 07:49:29 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sBYgB-0002Z0-El
- for qemu-devel@nongnu.org; Mon, 27 May 2024 07:38:25 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 036EE6A714;
- Mon, 27 May 2024 14:38:43 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E1A8DD875C;
- Mon, 27 May 2024 14:38:08 +0300 (MSK)
-Message-ID: <61ae842e-179e-453a-b109-e8801354b9e4@tls.msk.ru>
-Date: Mon, 27 May 2024 14:38:08 +0300
+ (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
+ id 1sBYqz-0004v8-6x; Mon, 27 May 2024 07:49:27 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 71D026164B;
+ Mon, 27 May 2024 11:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8139C32781;
+ Mon, 27 May 2024 11:49:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1716810556;
+ bh=ANc93QpJU98kip+ce/cUfXu1x9xaQYAdf5V6F0ChfKg=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=TEcQWe5ObqSvEjnk52pqhipPWYk38kt1Ppo0bQk3hdlc+lafBIuv2RKY+hhUmnuL3
+ zhD5hXqd5tdcQEZm6jtJOh7evKc8mtXxe1goGedk1XejaD/hrx4HRw22/DE7+Ov2fv
+ r468CMQ1JoewfxaTwH8A/FW8O802Rxcl0sGXZ/V2QPiUaUvVwOWgcQKWbYU4AzY5VE
+ 1mjigHVNTIyHOq6ZMFc4ubEc6NxkvAvKwoVTyk8CZGTcfIrqj4Cz99+SdKvP8R/237
+ v45fSQRiF9ba3wzG20eTkcrfCZJpr24KqeUAzI7pWPlvKNHka8/BJ4D7EqBK8NGCm+
+ RP7IbFJ+j3HdQ==
+From: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin
+ Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, Atish Patra
+ <atishp@atishpatra.org>, Atish Patra <atishp@rivosinc.com>
+Cc: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@rivosinc.com>, Sunil V L
+ <sunilvl@ventanamicro.com>,
+ Santosh Mamila <santosh.mamila@catalinasystems.io>, Chethan Seshadri
+ <Chethan.Seshadri@catalinasystems.io>, Sivakumar Munnangi
+ <siva.munnangi@catalinasystems.io>
+Subject: Re: [PATCH v2 1/3] hw/riscv/virt: Add memory hotplugging and
+ virtio-md-pci support
+In-Reply-To: <f1513236-867f-4780-a51f-81b5ac91a485@ventanamicro.com>
+References: <20240521105635.795211-1-bjorn@kernel.org>
+ <20240521105635.795211-2-bjorn@kernel.org>
+ <f1513236-867f-4780-a51f-81b5ac91a485@ventanamicro.com>
+Date: Mon, 27 May 2024 13:49:11 +0200
+Message-ID: <87y17v8og8.fsf@all.your.base.are.belong.to.us>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: qemu CI & ccache: cache size is too small
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>
-References: <4ccbaa65-41cf-4317-9dfb-2c9ab17296d0@tls.msk.ru>
- <5d4de3b2-a940-44e1-bde9-77e8389fb58c@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <5d4de3b2-a940-44e1-bde9-77e8389fb58c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=bjorn@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -70
+X-Spam_score: -7.1
+X-Spam_bar: -------
+X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,72 +80,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-27.05.2024 14:19, Thomas Huth wrote:
-> On 27/05/2024 12.49, Michael Tokarev wrote:
->> Hi!
->>
->> Noticed today that a rebuild of basically the same tree (a few commits apart)
->> in CI result in just 11% hit rate of ccache:
->>
->> https://gitlab.com/mjt0k/qemu/-/jobs/6947445337#L5054
-> 
-> For me, the results look better:
-> 
->   https://gitlab.com/thuth/qemu/-/jobs/6918599017#L4954
+Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
 
-Yeah, it's a bit better, but still not good enough.
-I dunno how much changes the source had between the two runs.
-It still had 11 cleanups, and the cache size is at the same level.
-(It is an older ccache, too).
+> On 5/21/24 07:56, Bj=C3=B6rn T=C3=B6pel wrote:
+>> From: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
+>>=20
+>> Virtio-based memory devices (virtio-mem/virtio-pmem) allows for
+>> dynamic resizing of virtual machine memory, and requires proper
+>> hotplugging (add/remove) support to work.
+>>=20
+>> Add device memory support for RISC-V "virt" machine, and enable
+>> virtio-md-pci with the corresponding missing hotplugging callbacks.
+>>=20
+>> Signed-off-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
+>> ---
+>>   hw/riscv/Kconfig       |  2 +
+>>   hw/riscv/virt.c        | 83 +++++++++++++++++++++++++++++++++++++++++-
+>>   hw/virtio/virtio-mem.c |  5 ++-
+>>   3 files changed, 87 insertions(+), 3 deletions(-)
+>>=20
+>> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+>> index a2030e3a6ff0..08f82dbb681a 100644
+>> --- a/hw/riscv/Kconfig
+>> +++ b/hw/riscv/Kconfig
+>> @@ -56,6 +56,8 @@ config RISCV_VIRT
+>>       select PLATFORM_BUS
+>>       select ACPI
+>>       select ACPI_PCI
+>> +    select VIRTIO_MEM_SUPPORTED
+>> +    select VIRTIO_PMEM_SUPPORTED
+>>=20=20=20
+>>   config SHAKTI_C
+>>       bool
+>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+>> index 4fdb66052587..443902f919d2 100644
+>> --- a/hw/riscv/virt.c
+>> +++ b/hw/riscv/virt.c
+>> @@ -53,6 +53,8 @@
+>>   #include "hw/pci-host/gpex.h"
+>>   #include "hw/display/ramfb.h"
+>>   #include "hw/acpi/aml-build.h"
+>> +#include "hw/mem/memory-device.h"
+>> +#include "hw/virtio/virtio-mem-pci.h"
+>>   #include "qapi/qapi-visit-common.h"
+>>   #include "hw/virtio/virtio-iommu.h"
+>>=20=20=20
+>> @@ -1407,6 +1409,7 @@ static void virt_machine_init(MachineState *machin=
+e)
+>>       DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+>>       int i, base_hartid, hart_count;
+>>       int socket_count =3D riscv_socket_count(machine);
+>> +    hwaddr device_memory_base, device_memory_size;
+>>=20=20=20
+>>       /* Check socket count limit */
+>>       if (VIRT_SOCKETS_MAX < socket_count) {
+>> @@ -1420,6 +1423,12 @@ static void virt_machine_init(MachineState *machi=
+ne)
+>>           exit(1);
+>>       }
+>>=20=20=20
+>> +    if (machine->ram_slots > ACPI_MAX_RAM_SLOTS) {
+>> +        error_report("unsupported amount of memory slots: %"PRIu64,
+>> +                     machine->ram_slots);
+>
+> Let's also add the maximum amount allowed in this message, e.g. this erro=
+r:
+>
+> $ (...) -m 2G,slots=3D512,maxmem=3D8G
+> qemu-system-riscv64: unsupported amount of memory slots: 512
+>
+> could be something like:
+>
+> qemu-system-riscv64: unsupported amount of memory slots (512), maximum am=
+ount: 256
+>
+>
+> LGTM otherwise. Thanks,
 
->> while it should be near 100%.  What's interesting in there is:
->>
->> 1) cache size is close to max cache size,
->> and more important,
->> 2) cleanups performed 78
->>
->> so it has to remove old entries before it finished the build.
-> 
-> Did you maybe switch between master and stable branches before that run? ... I guess that could have invalidated most of the cached files since we 
-> switched from CentOS 8 to 9 recently...?
+Thanks for getting back!
 
-Nope, nothing else ran between the two and it was just a few
-source-level commits (stable-8.2 pick ups), without changing
-giltab/containers/etc configuration.
+Sure! I'll fix this in the next rev.
 
-I increased cache size to 900M and did another test run, here are
-the results: https://gitlab.com/mjt0k/qemu/-/jobs/6947894974#L5054
 
-cache directory                     /builds/mjt0k/qemu/ccache
-primary config                      /builds/mjt0k/qemu/ccache/ccache.conf
-secondary config      (readonly)    /etc/ccache.conf
-stats updated                       Mon May 27 11:17:44 2024
-stats zeroed                        Mon May 27 11:10:22 2024
-cache hit (direct)                  1862
-cache hit (preprocessed)             274
-cache miss                          1219
-cache hit rate                     63.67 %
-called for link                      285
-called for preprocessing              71
-compiler produced empty output         5
-preprocessor error                     2
-no input file                          6
-cleanups performed                     0
-files in cache                      9948
-cache size                         654.6 MB
-max cache size                     900.0 MB
-
-This is having in mind that the previous run was with CCACHE_SIZE=500M
-and had multiple cleanups, so 63% is actually more than I'd expect already.
-
-Thanks,
-
-/mjt
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
-
+Bj=C3=B6rn
 
