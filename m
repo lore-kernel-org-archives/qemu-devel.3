@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD80C25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B61CDC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVgZ-0006eP-Mc; Mon, 27 May 2024 04:26:27 -0400
+	id 1sBVhp-0002n0-SG; Mon, 27 May 2024 04:27:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVdp-00020h-Vw; Mon, 27 May 2024 04:23:38 -0400
+ id 1sBVfX-0005bl-KC; Mon, 27 May 2024 04:25:30 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVdm-00010K-V8; Mon, 27 May 2024 04:23:36 -0400
+ id 1sBVfU-0001Fa-OD; Mon, 27 May 2024 04:25:22 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 681436A576;
- Mon, 27 May 2024 11:22:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 67B246A585;
+ Mon, 27 May 2024 11:22:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 93C40D8513;
- Mon, 27 May 2024 11:21:40 +0300 (MSK)
-Received: (nullmailer pid 66427 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 9477AD8522;
+ Mon, 27 May 2024 11:21:41 +0300 (MSK)
+Received: (nullmailer pid 66474 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 25/44] hw/loongarch/virt: Fix memory leak
-Date: Mon, 27 May 2024 11:21:16 +0300
-Message-Id: <20240527082138.66217-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 40/44] hw/loongarch/virt: Fix FDT memory node address
+ width
+Date: Mon, 27 May 2024 11:21:31 +0300
+Message-Id: <20240527082138.66217-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,45 +62,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Song Gao <gaosong@loongson.cn>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-The char pointer 'ramName' point to a block of memory,
-but never free it. Use 'g_autofree' to automatically free it.
+Higher bits for memory nodes were omitted at qemu_fdt_setprop_cells.
 
-Resolves: Coverity CID 1544773
-
-Fixes: 0cf1478d6 ("hw/loongarch: Add numa support")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240520-loongarch-fdt-memnode-v1-1-5ea9be93911e@flygoat.com>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240507022239.3113987-1-gaosong@loongson.cn>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 54c52ec719fb8c83bbde54cb87b58688ab27c166)
+(cherry picked from commit 6204af704a071ea68d3af55c0502b112a7af9546)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in hw/loongarch/virt.c due to missing-in-9.0
-      v9.0.0-266-gd771ca1c10 "hw/loongarch: Move boot functions to boot.c")
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 441d764843..e3042af7bb 100644
+index 8f39254880..83d3d7522f 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -832,7 +832,6 @@ static void loongarch_init(MachineState *machine)
-     const CPUArchIdList *possible_cpus;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     CPUState *cpu;
--    char *ramName = NULL;
-     struct loaderparams loaderparams = { };
+@@ -333,7 +333,8 @@ static void fdt_add_memory_node(MachineState *ms,
+     char *nodename = g_strdup_printf("/memory@%" PRIx64, base);
  
-     if (!cpu_model) {
-@@ -892,7 +891,7 @@ static void loongarch_init(MachineState *machine)
+     qemu_fdt_add_subnode(ms->fdt, nodename);
+-    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, 0, size);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", base >> 32, base,
++                           size >> 32, size);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "memory");
  
-     for (i = 1; i < nb_numa_nodes; i++) {
-         MemoryRegion *nodemem = g_new(MemoryRegion, 1);
--        ramName = g_strdup_printf("loongarch.node%d.ram", i);
-+        g_autofree char *ramName = g_strdup_printf("loongarch.node%d.ram", i);
-         memory_region_init_alias(nodemem, NULL, ramName, machine->ram,
-                                  offset,  numa_info[i].node_mem);
-         memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
+     if (ms->numa_state && ms->numa_state->num_nodes) {
 -- 
 2.39.2
 
