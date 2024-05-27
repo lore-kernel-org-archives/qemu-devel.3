@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4935DC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 20:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D0FFC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 21:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBhOR-0006jH-BP; Mon, 27 May 2024 16:56:31 -0400
+	id 1sBhYF-0001pL-I7; Mon, 27 May 2024 17:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBhOD-0006hX-Rl
- for qemu-devel@nongnu.org; Mon, 27 May 2024 16:56:19 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBhYE-0001pB-FI
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 17:06:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBhO9-0000N8-Qp
- for qemu-devel@nongnu.org; Mon, 27 May 2024 16:56:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBhYC-00021r-RO
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 17:06:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716843373;
+ s=mimecast20190719; t=1716843995;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=gM1dQFFDiP1Rnc4EpMqt2I/zSPCn1BKZf7F8xZOYKdI=;
- b=ZC9faGSSiittmSBF9q7E9IkHHW0m/bXH168wMWk2Y1sY5c17kVx7PvHCWYOBHqHIv8rNn+
- qOnZXiv4FPyNBPLva+JDZkT8Q5s9UNf5unowyMFmxjFo+/ffYa8xzIMiMhSCq3MKgNdNzo
- ajSqnKpayJCeNYxQaDFsc3SYFZPUbQc=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TyOiUAYMjUXV38DwnK7Fh3CUCrCM7uBFDKE4qL12XJw=;
+ b=UPIleWJAg9JE8EvjbUTTZ2RfQgVn8Zb0DUDowgdptDlPAPhxLrpCV4pCP8H0GQU8jQL/W+
+ gUvQb7oQI8tuk/n7OUucx+BJiYu3BBoLDAh0C3HDbrw4tWJK3cA3a+SFSvCjnvShpxuh44
+ vLG7ddA3RFuaD8rpC80+prthfBmy4KM=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-ryWV8OkbONCLtoHaBGXK0w-1; Mon, 27 May 2024 16:56:11 -0400
-X-MC-Unique: ryWV8OkbONCLtoHaBGXK0w-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6ab9d3f089dso298806d6.3
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 13:56:11 -0700 (PDT)
+ us-mta-436-Kv8WnS62Om2xehBV-Opn0g-1; Mon, 27 May 2024 17:06:34 -0400
+X-MC-Unique: Kv8WnS62Om2xehBV-Opn0g-1
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-5b96a77ea14so51201eaf.1
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 14:06:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716843371; x=1717448171;
+ d=1e100.net; s=20230601; t=1716843993; x=1717448793;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gM1dQFFDiP1Rnc4EpMqt2I/zSPCn1BKZf7F8xZOYKdI=;
- b=afaFnuiT+Jsv4AVPpC9ZOqErFrvBW2AGXrz8kZrRJJ1m4jwBnFwjoauCIGfDYUMdhu
- tjuKW8r+7Y+Xks1rq7oN25Uqwn3wn9AlTIc1tq2Ozl37DxPXHQDXbe4SrMxcqEPIFC0r
- MQBYPbn8swd3xA6rK3T2C8Ls7b4QTUR7DblyDDG7EsbR1YuzYlNQEtyD4mcA8pNbhnXi
- 2BZ4Wr3/M4OBNQ2Wv8KDL6F71kfRQFEbc494a9Zvj5EVLSTo/jEvCtxQ+QdkSHCOSdmb
- g/FIYLZZDj4lriR6xUWYYi+Tt9UUGReMMbZOAzqjWwHdALjmNp0wqnTdxql6ZVIXe1N3
- 6P6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUum4vtHlVdjsq8oirgxW0pDny2GKGrYGnAv2QZpLJhoOlvWAIkhax3aLoApIQ7DaUsFJiA2KyLufg2TViqk1oP33OiTU4=
-X-Gm-Message-State: AOJu0Yw1QnfviyfcgOkGx1V5JAlIxM9Xs0OjB4TabpOqo2OWl5o1yM0e
- s11VCZH02y7wHN1O1w6/T09nuXLBM0aJYyikdP0FW92qCv6fmqVKqsyYZNVsAyrGWxjTceFdUdi
- xA2hXeaqVIFfvMchKUDWKGqVq2Lj9wazKE/SqCV5WbZ4yRyjLEJJ7
-X-Received: by 2002:a05:6214:c2e:b0:6a3:3ea4:7156 with SMTP id
- 6a1803df08f44-6abbbcc044fmr109117076d6.1.1716843370485; 
- Mon, 27 May 2024 13:56:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7pYz7pqkMzerLU0G4JBDpLWP21vWrtrU9CwulihmGh+DbIl66xXGBtBZFfc2aqBLTqK9cLQ==
-X-Received: by 2002:a05:6214:c2e:b0:6a3:3ea4:7156 with SMTP id
- 6a1803df08f44-6abbbcc044fmr109116896d6.1.1716843369823; 
- Mon, 27 May 2024 13:56:09 -0700 (PDT)
+ bh=TyOiUAYMjUXV38DwnK7Fh3CUCrCM7uBFDKE4qL12XJw=;
+ b=CTqPUrY5v54Ts3lxPCy0INxqGR4eYW0njzWriRYxrztLTZR0mTFKHFTthcDui2iA5Z
+ K18KJx7yzzWKhypp6CwJxZg5HYeyXFuo6JKUWaqwffeQFD3iNpwBwmhJ98ukev8KSeQU
+ 5rIpamm9rmJVEfvaDcSrhfD/lRfKWyyzruBj2c2+Ktkxf4d0kkRpT4SuC/R++lj5tMWj
+ OgL9J0YlkVN6Jkbhbaq46Z/M8DUQiXlXWXs3Dvrz+59L+8L+ZYWxUflSY8o+YajJ+ido
+ vDtI9BhWzm5K0ZV6QKqDM4j9fgXe1LLHO7/oiuPFW5LCNGZllWlaebvq7vFDyPVojU84
+ DF3w==
+X-Gm-Message-State: AOJu0Yx4wfc6IoMZV50cn6olhvkoFwbMdnky/WoSZNbRhGvnTxFcVfb2
+ 1lgH0THE7tIyjvAHD2wlX5jd+vfsKOa+7ZV8OcF/i4p4Zg0y9sgjbFSSOnGt+HmlgJuzO4ZYDNo
+ lZtDUrNTy+Yhn2DcOaNZyQJrgc596JcIfp++ICzXyxJjjRqNdqvuc
+X-Received: by 2002:a05:6808:2108:b0:3c7:528b:12ce with SMTP id
+ 5614622812f47-3d1a7648067mr12064087b6e.3.1716843993093; 
+ Mon, 27 May 2024 14:06:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtnMPyN/NJo6akkJVO4DejglFKiBCrbkFfX44m4qgFOc3qMsd1RvCwdZ1p9/VrdhIv/+S/sQ==
+X-Received: by 2002:a05:6808:2108:b0:3c7:528b:12ce with SMTP id
+ 5614622812f47-3d1a7648067mr12064046b6e.3.1716843992422; 
+ Mon, 27 May 2024 14:06:32 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43fb18aecbdsm36775331cf.61.2024.05.27.13.56.09
+ 6a1803df08f44-6ad8fa000eesm2247116d6.1.2024.05.27.14.06.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 13:56:09 -0700 (PDT)
-Date: Mon, 27 May 2024 16:56:07 -0400
+ Mon, 27 May 2024 14:06:31 -0700 (PDT)
+Date: Mon, 27 May 2024 17:06:29 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Yuan Liu <yuan1.liu@intel.com>
-Cc: farosas@suse.de, qemu-devel@nongnu.org, nanhai.zou@intel.com
-Subject: Re: [PATCH v6 7/7] tests/migration-test: add qpl compression test
-Message-ID: <ZlTzZ8epiucEr0W3@x1n>
-References: <20240505165751.2392198-1-yuan1.liu@intel.com>
- <20240505165751.2392198-8-yuan1.liu@intel.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Het Gala <het.gala@nutanix.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH 2/4] tests/qtest/migration: Add a test that runs
+ vmstate-static-checker
+Message-ID: <ZlT11c-9IDwVfm52@x1n>
+References: <20240523201922.28007-1-farosas@suse.de>
+ <20240523201922.28007-3-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240505165751.2392198-8-yuan1.liu@intel.com>
+In-Reply-To: <20240523201922.28007-3-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -101,18 +103,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 06, 2024 at 12:57:51AM +0800, Yuan Liu wrote:
-> add qpl to compression method test for multifd migration
+On Thu, May 23, 2024 at 05:19:20PM -0300, Fabiano Rosas wrote:
+> We have the vmstate-static-checker script that takes the output of:
+> '$QEMU -M $machine -dump-vmstate' for two different QEMU versions and
+> compares them to check for compatibility breakages. This is just too
+> simple and useful for us to pass on it. Add a test that runs the
+> script.
 > 
-> the qpl compression supports software path and hardware
-> path(IAA device), and the hardware path is used first by
-> default. If the hardware path is unavailable, it will
-> automatically fallback to the software path for testing.
+> Since this needs to use two different QEMU versions, the test is
+> skipped if only one QEMU is provided. The infrastructure for passing
+> more than one binary is already in place:
 > 
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+> $ PYTHON=$(which python3.11) \
+>  QTEST_QEMU_BINARY_SRC=../build-previous/qemu-system-x86_64 \
+>  QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+>  ./tests/qtest/migration-test -p /x86_64/migration/vmstate-checker-script
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+> some code duplication for now, just so we can reason about this
+> without too much noise
+> ---
+>  tests/qtest/migration-test.c | 82 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+> 
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index e8d3555f56..2253e0fc5b 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -63,6 +63,7 @@ static QTestMigrationState dst_state;
+>  #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
+>  
+>  #define ANALYZE_SCRIPT "scripts/analyze-migration.py"
+> +#define VMSTATE_CHECKER_SCRIPT "scripts/vmstate-static-checker.py"
+>  
+>  #define QEMU_VM_FILE_MAGIC 0x5145564d
+>  #define FILE_TEST_FILENAME "migfile"
+> @@ -1611,6 +1612,85 @@ static void test_analyze_script(void)
+>      test_migrate_end(from, to, false);
+>      cleanup("migfile");
+>  }
+> +
+> +static void test_vmstate_checker_script(void)
+> +{
+> +    g_autofree gchar *cmd_src = NULL;
+> +    g_autofree gchar *cmd_dst = NULL;
+> +    g_autofree gchar *vmstate_src = NULL;
+> +    g_autofree gchar *vmstate_dst = NULL;
+> +    const char *machine_alias, *machine_opts = "";
+> +    g_autofree char *machine = NULL;
+> +    const char *arch = qtest_get_arch();
+> +    int pid, wstatus;
+> +    const char *python = g_getenv("PYTHON");
+> +
+> +    if (!getenv(QEMU_ENV_SRC) && !getenv(QEMU_ENV_DST)) {
+> +        g_test_skip("Test needs two different QEMU versions");
+> +        return;
+> +    }
+> +
+> +    if (!python) {
+> +        g_test_skip("PYTHON variable not set");
+> +        return;
+> +    }
+> +
+> +    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
+> +        if (g_str_equal(arch, "i386")) {
+> +            machine_alias = "pc";
+> +        } else {
+> +            machine_alias = "q35";
+> +        }
+> +    } else if (g_str_equal(arch, "s390x")) {
+> +        machine_alias = "s390-ccw-virtio";
+> +    } else if (strcmp(arch, "ppc64") == 0) {
+> +        machine_alias = "pseries";
+> +    } else if (strcmp(arch, "aarch64") == 0) {
+> +        machine_alias = "virt";
+> +    } else {
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    if (!qtest_has_machine(machine_alias)) {
+> +        g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
+> +        g_test_skip(msg);
+> +        return;
+> +    }
+> +
+> +    machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
+> +                                      QEMU_ENV_DST);
+> +
+> +    vmstate_src = g_strdup_printf("%s/vmstate-src", tmpfs);
+> +    vmstate_dst = g_strdup_printf("%s/vmstate-dst", tmpfs);
+> +
+> +    cmd_dst = g_strdup_printf("-machine %s,%s -dump-vmstate %s",
+> +                              machine, machine_opts, vmstate_dst);
+> +    cmd_src = g_strdup_printf("-machine %s,%s -dump-vmstate %s",
+> +                              machine, machine_opts, vmstate_src);
+> +
+> +    qtest_init_with_env_no_handshake(QEMU_ENV_SRC, cmd_src);
+> +    qtest_init_with_env_no_handshake(QEMU_ENV_DST, cmd_dst);
+> +
+> +    pid = fork();
+> +    if (!pid) {
+> +        close(1);
+> +        open("/dev/null", O_WRONLY);
+> +        execl(python, python, VMSTATE_CHECKER_SCRIPT,
+> +              "-s", vmstate_src,
+> +              "-d", vmstate_dst,
+> +              NULL);
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    g_assert(waitpid(pid, &wstatus, 0) == pid);
+> +    if (!WIFEXITED(wstatus) || WEXITSTATUS(wstatus) != 0) {
+> +        g_test_message("Failed to run vmstate-static-checker.py");
+> +        g_test_fail();
+> +    }
+> +
+> +    cleanup("vmstate-src");
+> +    cleanup("vmstate-dst");
+> +}
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Did I ask before on whether this can be written without C?
+
+I think this and also the analyze-script are more suitable to be written in
+other ways, e.g., bash or python, no?
+
+>  #endif
+>  
+>  static void test_precopy_common(MigrateCommon *args)
+> @@ -3495,6 +3575,8 @@ int main(int argc, char **argv)
+>  #ifndef _WIN32
+>      if (!g_str_equal(arch, "s390x")) {
+>          migration_test_add("/migration/analyze-script", test_analyze_script);
+> +        migration_test_add("/migration/vmstate-checker-script",
+> +                           test_vmstate_checker_script);
+>      }
+>  #endif
+>      migration_test_add("/migration/precopy/unix/plain",
+> -- 
+> 2.35.3
+> 
 
 -- 
 Peter Xu
