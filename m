@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35334C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E52C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 15:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBcby-0001t9-SC; Mon, 27 May 2024 11:50:10 -0400
+	id 1sBcd2-0002sm-De; Mon, 27 May 2024 11:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sBcbu-0001qu-8k
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:50:08 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sBcbs-0005yF-HF
- for qemu-devel@nongnu.org; Mon, 27 May 2024 11:50:05 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5789733769dso3100220a12.1
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 08:50:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=87085421f=graf@amazon.de>)
+ id 1sBcd0-0002rt-AF
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:51:14 -0400
+Received: from smtp-fw-80006.amazon.com ([99.78.197.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=87085421f=graf@amazon.de>)
+ id 1sBccw-0006GZ-EI
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 11:51:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716825003; x=1717429803; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XM5Im406scw4q+Mg0JOZwqUaKO52nl4uNDz9YlPmYTQ=;
- b=oFyHMNcIHz6A+t9z/a+pjJ4fpbzV2PIeIgBsa0wBAH3d5DVbajcVKmUnauWtW7b0GH
- ywkEdyrK0RdyzDCYJCaQ/dDi3NVY28GifxrIqG3dKuulx7TjiBjy0gWELVUuNi+KK5an
- jjvgM52qG2uMmp0+T5BBjD/NUy4+rzCycQMbwjdTmG9hayXpVknFpnEV2nQTqbBf3gM5
- Mr2ts/WoepX+fCIeNu9bAD1Z68z/3cTmqlvNWpEK8yTKNSdYUnk4G9Tg2kKZqKCl3Xow
- L27ScFdcOJOjdyLr/LHfOHCdsa67g198z/FQjH+Y6pf2R+RgGEjikRzcCkbL4ewuegy8
- raQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716825003; x=1717429803;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XM5Im406scw4q+Mg0JOZwqUaKO52nl4uNDz9YlPmYTQ=;
- b=k+mfLtLq8kBmrnDDBhPQgzjlEfLe9ayKE+194/e565lvNvi1Pcwr1m8DNgoS2mlpMQ
- MrHhj5q4oSH+2YzJpIPnDLUXR6OBMAhwg7v6DYYSf+KAmQf28saWMpmPQOLVwkswXZIl
- +nhoIKGgYTwiTXsiR7yieav/1s4Ss2+FxWeflJC5tejnVWzmgtF+laFodz9+HQn9+zx2
- NxKcM2GqV8xRAGPdRLETpGr4irMxXGtIvdgRlj4/WBsidhjuXZYMwx+R5T1RZ1tKCWKH
- cTokRJ42zp+bH6mixAKcGRllkA4w69/pNnwx+bDsd1n3gIWGhCvPGgwaMkb5wcgEnwpK
- sp4g==
-X-Gm-Message-State: AOJu0YzAWpwbw5buNLlyDOBntiIAesz7tHbgtiNlqiFuB8qUes41gtwF
- wMt0JMNsGLUTWJyXQPAhajl2x+vr8MPrK9tNLg3Zqdqk+nnWfJ4sVPWHHZY2dX8=
-X-Google-Smtp-Source: AGHT+IFGlFNyn5cWI3Ey7rBJ+LeGaCNeCuilEI4QgB89i9Eb7XvoXg5MD73W7j6yBc5cgFdWkFNqPQ==
-X-Received: by 2002:a50:ab47:0:b0:572:2efe:4d14 with SMTP id
- 4fb4d7f45d1cf-57850c60807mr8446644a12.10.1716825002882; 
- Mon, 27 May 2024 08:50:02 -0700 (PDT)
-Received: from localhost ([176.74.158.132]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-579ce607407sm2223913a12.74.2024.05.27.08.50.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 08:50:02 -0700 (PDT)
-Date: Mon, 27 May 2024 17:50:00 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Chao Du <duchao@eswincomputing.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
- alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- anup@brainfault.org, duchao713@qq.com
-Subject: Re: [PATCH v1 4/4] target/riscv/kvm: define
- TARGET_KVM_HAVE_GUEST_DEBUG
-Message-ID: <20240527-204a10f1cd8f4515f1744f42@orel>
-References: <20240527021916.12953-1-duchao@eswincomputing.com>
- <20240527021916.12953-5-duchao@eswincomputing.com>
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1716825071; x=1748361071;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=oBtEMyu8Uz1YHZeVfTiPOkKoJS7ISlby/4/xzC1I8XU=;
+ b=ugRjm4tJwc5LjnXrYwoolSQDWBAvtG9CQ2WvkCtao1Gp6ik//MonilOc
+ xe9MCLJ7L6YNigFDaVpqCTTHWBJoPlO68KzNjQPzcl/fKj5z5KvvFrnKd
+ CbmKhWLFZY6ACrkiAF7Yec74tlVljPSLV1oP0iv00WGsSBgnxXfnrVSFf Y=;
+X-IronPort-AV: E=Sophos;i="6.08,192,1712620800"; d="scan'208";a="297786253"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+ by smtp-border-fw-80006.pdx80.corp.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2024 15:51:05 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [10.0.7.35:8405]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.53.45:2525]
+ with esmtp (Farcaster)
+ id 0fb5fbe9-09a5-4dd5-8cd8-8ab84c7d62bf; Mon, 27 May 2024 15:51:05 +0000 (UTC)
+X-Farcaster-Flow-ID: 0fb5fbe9-09a5-4dd5-8cd8-8ab84c7d62bf
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Mon, 27 May 2024 15:51:04 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.28; Mon, 27 May
+ 2024 15:51:02 +0000
+Message-ID: <919e6b8c-2f9b-4f91-97e2-20146bf18263@amazon.com>
+Date: Mon, 27 May 2024 17:51:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240527021916.12953-5-duchao@eswincomputing.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] machine/microvm: support for loading EIF image
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+CC: <qemu-devel@nongnu.org>, <agraf@csgraf.de>, <stefanha@redhat.com>,
+ <pbonzini@redhat.com>, <slp@redhat.com>, <richard.henderson@linaro.org>,
+ <eduardo@habkost.net>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>
+References: <20240518080753.7083-1-dorjoychy111@gmail.com>
+ <20240518080753.7083-2-dorjoychy111@gmail.com>
+ <bf9dc551-49e4-4ed9-941d-c095bab5755a@linaro.org>
+ <CAFfO_h7_V13k9WizTYrY-UsjUhvWFeY4Fn7a_8_c4qEz4=hYFg@mail.gmail.com>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <CAFfO_h7_V13k9WizTYrY-UsjUhvWFeY4Fn7a_8_c4qEz4=hYFg@mail.gmail.com>
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D041UWA001.ant.amazon.com (10.13.139.124) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=99.78.197.217;
+ envelope-from=prvs=87085421f=graf@amazon.de; helo=smtp-fw-80006.amazon.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,29 +95,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 02:19:16AM GMT, Chao Du wrote:
-> To enable the KVM GUEST DEBUG for RISC-V at QEMU side.
-> 
-> Signed-off-by: Chao Du <duchao@eswincomputing.com>
-> ---
->  configs/targets/riscv64-softmmu.mak | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
-> index 7c0e7eeb42..f938cc1ee6 100644
-> --- a/configs/targets/riscv64-softmmu.mak
-> +++ b/configs/targets/riscv64-softmmu.mak
-> @@ -1,5 +1,6 @@
->  TARGET_ARCH=riscv64
->  TARGET_BASE_ARCH=riscv
->  TARGET_SUPPORTS_MTTCG=y
-> +TARGET_KVM_HAVE_GUEST_DEBUG=y
->  TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
->  TARGET_NEED_FDT=y
-> -- 
-> 2.17.1
-> 
->
+Ck9uIDI3LjA1LjI0IDE2OjUyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgo+IEhpIFBoaWxpcHBl
+LAo+IFRoYW5rIHlvdSBmb3IgcmV2aWV3aW5nLgo+Cj4gT24gTW9uLCBNYXkgMjcsIDIwMjQgYXQg
+NDo0N+KAr1BNIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpCj4gPHBoaWxtZEBsaW5hcm8ub3JnPiB3
+cm90ZToKPj4gSGkgRG9yam95LAo+Pgo+PiBPbiAxOC81LzI0IDEwOjA3LCBEb3Jqb3kgQ2hvd2Ro
+dXJ5IHdyb3RlOgo+Pj4gQW4gRUlGIChFbmNsYXZlIEltYWdlIEZvcm1hdClbMV0gaW1hZ2UgaXMg
+dXNlZCB0byBib290IGFuIEFXUyBuaXRybwo+Pj4gZW5jbGF2ZVsyXSB2aXJ0dWFsIG1hY2hpbmUu
+IFRoZSBFSUYgZmlsZSBjb250YWlucyB0aGUgbmVjZXNzYXJ5Cj4+PiBrZXJuZWwsIGNtZGxpbmUs
+IHJhbWRpc2socykgc2VjdGlvbnMgdG8gYm9vdC4KPj4+Cj4+PiBUaGlzIGNvbW1pdCBhZGRzIHN1
+cHBvcnQgZm9yIGxvYWRpbmcgRUlGIGltYWdlIHVzaW5nIHRoZSBtaWNyb3ZtCj4+PiBtYWNoaW5l
+IGNvZGUuIEZvciBtaWNyb3ZtIHRvIGJvb3QgZnJvbSBhbiBFSUYgZmlsZSwgdGhlIGtlcm5lbCBh
+bmQKPj4+IHJhbWRpc2socykgYXJlIGV4dHJhY3RlZCBpbnRvIGEgdGVtcG9yYXJ5IGtlcm5lbCBh
+bmQgYSB0ZW1wb3JhcnkKPj4+IGluaXRyZCBmaWxlIHdoaWNoIGFyZSB0aGVuIGhvb2tlZCBpbnRv
+IHRoZSByZWd1bGFyIHg4NiBib290IG1lY2hhbmlzbQo+Pj4gYWxvbmcgd2l0aCB0aGUgZXh0cmFj
+dGVkIGNtZGxpbmUuCj4+Pgo+Pj4gQWx0aG91Z2ggbm90IHVzZWZ1bCBmb3IgdGhlIG1pY3Jvdm0g
+bWFjaGluZSBpdHNlbGYsIHRoaXMgaXMgbmVlZGVkCj4+PiBhcyB0aGUgZm9sbG93aW5nIGNvbW1p
+dCBhZGRzIHN1cHBvcnQgZm9yIGEgbmV3IG1hY2hpbmUgdHlwZQo+Pj4gJ25pdHJvLWVuY2xhdmUn
+IHdoaWNoIHVzZXMgdGhlIG1pY3Jvdm0gbWFjaGluZSB0eXBlIGFzIHBhcmVudC4gVGhlCj4+PiBj
+b2RlIGZvciBjaGVja2luZyBhbmQgbG9hZGluZyBFSUYgd2lsbCBiZSBwdXQgaW5zaWRlIGEgJ25p
+dHJvLWVuY2xhdmUnCj4+PiBtYWNoaW5lIHR5cGUgY2hlY2sgaW4gdGhlIGZvbGxvd2luZyBjb21t
+aXQgc28gdGhhdCBtaWNyb3ZtIGNhbm5vdCBsb2FkCj4+PiBFSUYgYmVjYXVzZSBpdCBzaG91bGRu
+J3QuCj4+Pgo+Pj4gWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9hd3MvYXdzLW5pdHJvLWVuY2xhdmVz
+LWltYWdlLWZvcm1hdAo+PiBUaGUgZG9jdW1lbnRhdGlvbiBpcyByYXRoZXIgc2NhcnNlLi4uCj4+
+Cj4gRG8geW91IG1lYW4gZG9jdW1lbnRhdGlvbiBhYm91dCBFSUYgZmlsZSBmb3JtYXQ/ICBJZiBz
+bywgeWVzLCByaWdodAo+IG5vdyB0aGVyZSBpcyBubyBzcGVjaWZpY2F0aW9uIG90aGVyIHRoYW4g
+dGhlIGdpdGh1YiByZXBvIGZvciBFSUYuCj4KPj4+IFsyXSBodHRwczovL2F3cy5hbWF6b24uY29t
+L2VjMi9uaXRyby9uaXRyby1lbmNsYXZlcy8KPj4+Cj4+PiBTaWduZWQtb2ZmLWJ5OiBEb3Jqb3kg
+Q2hvd2RodXJ5IDxkb3Jqb3ljaHkxMTFAZ21haWwuY29tPgo+Pj4gLS0tCj4+PiAgICBody9pMzg2
+L2VpZi5jICAgICAgIHwgNDg2ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrCj4+PiAgICBody9pMzg2L2VpZi5oICAgICAgIHwgIDIwICsrCj4+PiAgICBody9pMzg2
+L21lc29uLmJ1aWxkIHwgICAyICstCj4+IC4uLiBzdGlsbCBpdCBzZWVtcyBhIGdlbmVyaWMgbG9h
+ZGVyLCBub3QgcmVzdHJpY3RlZCB0byB4ODYuCj4+Cj4+IE1heWJlIGJldHRlciBhZGQgaXQgYXMg
+aHcvY29yZS9sb2FkZXItZWlmLltjaF0/Cj4+Cj4gWWVzLCB0aGUgY29kZSBpbiBlaWYuYyBpcyBh
+cmNoaXRlY3R1cmUgYWdub3N0aWMuIFNvIGl0IGNvdWxkIG1ha2UKPiBzZW5zZSB0byBtb3ZlIHRo
+ZSBmaWxlcyB0byBody9jb3JlLiBCdXQgSSBkb24ndCB0aGluayB0aGUgbmFtZXMgc2hvdWxkCj4g
+aGF2ZSAibG9hZGVyIiBwcmVmaXggYXMgdGhlcmUgaXMgbm8gbG9hZGluZyBsb2dpYyBpbiBlaWYu
+Yy4gVGhlcmUgaXMKPiBvbmx5IGxvZ2ljIGZvciBwYXJzaW5nIGFuZCBleHRyYWN0aW5nIGtlcm5l
+bCwgaW50aXJkLCBjbWRsaW5lIGV0Yy4KPiBCZWNhdXNlIG5pdHJvLWVuY2xhdmUgbWFjaGluZSB0
+eXBlIGlzIGJhc2VkIG9uIG1pY3Jvdm0gd2hpY2ggb25seQo+IHN1cHBvcnRzIHg4NiBub3csIEkg
+dGhpbmsgaXQgYWxzbyBtYWtlcyBzZW5zZSB0byBrZWVwIHRoZSBmaWxlcyBpbnNpZGUKPiBody9p
+Mzg2IGZvciBub3cgYXMgd2UgY2FuIG9ubHkgcmVhbGx5IGxvYWQgeDg2IGtlcm5lbCB1c2luZyBp
+dC4gTWF5YmUKPiBpZiB3ZSwgaW4gdGhlIGZ1dHVyZSwgYWRkIHN1cHBvcnQgZm9yIG90aGVyIGFy
+Y2hpdGVjdHVyZXMsIHRoZW4gd2UgY2FuCj4gbW92ZSB0aGVtIHRvIGh3L2NvcmUuIFdoYXQgZG8g
+eW91IHRoaW5rPwoKCkkgdGhpbmsgaXQgbWFrZXMgc2Vuc2UgdG8gcHV0IEVJRiBwYXJzaW5nIGlu
+dG8gZ2VuZXJpYyBjb2RlIGZyb20gdGhlIApzdGFydC4gTml0cm8gRW5jbGF2ZXMgc3VwcG9ydHMg
+QWFyY2g2NCB3aXRoIHRoZSBzYW1lIEVJRiBzZW1hbnRpY3MuIEluIApmYWN0LCBpdCB3b3VsZCBi
+ZSBwcmV0dHkgc2ltcGxlIHRvIGRvIGEgc3ViLW1hY2hpbmUtY2xhc3Mgc2ltaWxhciB0byB0aGUg
+Cng4NiBORSBvbmUgZm9yIGFybSBiYXNlZCBvbiAtTSB2aXJ0IGFzIGEgZm9sbG93LXVwIGFuZCBi
+eSBtYWtpbmcgdGhlIEVJRiAKbG9naWMgeDg2IG9ubHkgd2UncmUgb25seSBtYWtpbmcgb3VyIGxp
+dmVzIGhhcmRlciBmb3IgdGhhdCBmdXR1cmUuCgoKQWxleAoKCgoKQW1hem9uIFdlYiBTZXJ2aWNl
+cyBEZXZlbG9wbWVudCBDZW50ZXIgR2VybWFueSBHbWJICktyYXVzZW5zdHIuIDM4CjEwMTE3IEJl
+cmxpbgpHZXNjaGFlZnRzZnVlaHJ1bmc6IENocmlzdGlhbiBTY2hsYWVnZXIsIEpvbmF0aGFuIFdl
+aXNzCkVpbmdldHJhZ2VuIGFtIEFtdHNnZXJpY2h0IENoYXJsb3R0ZW5idXJnIHVudGVyIEhSQiAy
+NTc3NjQgQgpTaXR6OiBCZXJsaW4KVXN0LUlEOiBERSAzNjUgNTM4IDU5Nwo=
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
