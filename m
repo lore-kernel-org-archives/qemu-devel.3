@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F65C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 106A1C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVdp-0001x3-QE; Mon, 27 May 2024 04:23:38 -0400
+	id 1sBViu-0005Ni-JL; Mon, 27 May 2024 04:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVcm-00018r-KF; Mon, 27 May 2024 04:22:33 -0400
+ id 1sBVf6-0005KQ-1K; Mon, 27 May 2024 04:24:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVck-0000px-Pz; Mon, 27 May 2024 04:22:32 -0400
+ id 1sBVf3-0001AR-JC; Mon, 27 May 2024 04:24:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 94CC36A56C;
- Mon, 27 May 2024 11:22:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2765A6A581;
+ Mon, 27 May 2024 11:22:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id BF32AD8509;
- Mon, 27 May 2024 11:21:39 +0300 (MSK)
-Received: (nullmailer pid 66396 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 523B2D851E;
+ Mon, 27 May 2024 11:21:41 +0300 (MSK)
+Received: (nullmailer pid 66462 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paul Cercueil <paul@crapouillou.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 15/44] target/sh4: Fix ADDV opcode
-Date: Mon, 27 May 2024 11:21:06 +0300
-Message-Id: <20240527082138.66217-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, donsheng <dongsheng.x.zhang@intel.com>,
+ Chao Gao <chao.gao@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 36/44] target-i386: hyper-v: Correct kvm_hv_handle_exit
+ return value
+Date: Mon, 27 May 2024 11:21:27 +0300
+Message-Id: <20240527082138.66217-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
@@ -65,88 +64,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: donsheng <dongsheng.x.zhang@intel.com>
 
-The documentation says:
+This bug fix addresses the incorrect return value of kvm_hv_handle_exit for
+KVM_EXIT_HYPERV_SYNIC, which should be EXCP_INTERRUPT.
 
-  ADDV Rm, Rn        Rn + Rm -> Rn, overflow -> T
+Handling of KVM_EXIT_HYPERV_SYNIC in QEMU needs to be synchronous.
+This means that async_synic_update should run in the current QEMU vCPU
+thread before returning to KVM, returning EXCP_INTERRUPT to guarantee this.
+Returning 0 can cause async_synic_update to run asynchronously.
 
-But QEMU implementation was:
+One problem (kvm-unit-tests's hyperv_synic test fails with timeout error)
+caused by this bug:
 
-  ADDV Rm, Rn        Rn + Rm -> Rm, overflow -> T
+When a guest VM writes to the HV_X64_MSR_SCONTROL MSR to enable Hyper-V SynIC,
+a VM exit is triggered and processed by the kvm_hv_handle_exit function of the
+QEMU vCPU. This function then calls the async_synic_update function to set
+synic->sctl_enabled to true. A true value of synic->sctl_enabled is required
+before creating SINT routes using the hyperv_sint_route_new() function.
 
-Fix by filling the correct Rm register.
+If kvm_hv_handle_exit returns 0 for KVM_EXIT_HYPERV_SYNIC, the current QEMU
+vCPU thread may return to KVM and enter the guest VM before running
+async_synic_update. In such case, the hyperv_synic test’s subsequent call to
+synic_ctl(HV_TEST_DEV_SINT_ROUTE_CREATE, ...) immediately after writing to
+HV_X64_MSR_SCONTROL can cause QEMU’s hyperv_sint_route_new() function to return
+prematurely (because synic->sctl_enabled is false).
 
-Add tests provided by Paul Cercueil.
+If the SINT route is not created successfully, the SINT interrupt will not be
+fired, resulting in a timeout error in the hyperv_synic test.
 
+Fixes: 267e071bd6d6 (“hyperv: make overlay pages for SynIC”)
+Suggested-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Dongsheng Zhang <dongsheng.x.zhang@intel.com>
+Message-ID: <20240521200114.11588-1-dongsheng.x.zhang@intel.com>
 Cc: qemu-stable@nongnu.org
-Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
-Reported-by: Paul Cercueil <paul@crapouillou.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2317
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-Message-Id: <20240430163125.77430-2-philmd@linaro.org>
-(cherry picked from commit c365e6b0705788866a65e7b8206bd4c5332595cd)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 84d4b72854869821eb89813c195927fdd3078c12)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index ebb6c901bf..4a1dd0d1f4 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -714,7 +714,7 @@ static void _decode_opc(DisasContext * ctx)
-             tcg_gen_xor_i32(t2, REG(B7_4), REG(B11_8));
-             tcg_gen_andc_i32(cpu_sr_t, t1, t2);
-             tcg_gen_shri_i32(cpu_sr_t, cpu_sr_t, 31);
--            tcg_gen_mov_i32(REG(B7_4), t0);
-+            tcg_gen_mov_i32(REG(B11_8), t0);
-         }
-         return;
-     case 0x2009: /* and Rm,Rn */
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 4d09291c0c..521b8b0a76 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -17,3 +17,6 @@ TESTS += test-macl
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index f2a3fe650a..b94f12acc2 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -81,7 +81,7 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
+          */
+         async_safe_run_on_cpu(CPU(cpu), async_synic_update, RUN_ON_CPU_NULL);
  
- test-macw: CFLAGS += -O -g
- TESTS += test-macw
-+
-+test-addv: CFLAGS += -O -g
-+TESTS += test-addv
-diff --git a/tests/tcg/sh4/test-addv.c b/tests/tcg/sh4/test-addv.c
-new file mode 100644
-index 0000000000..ca87fe746a
---- /dev/null
-+++ b/tests/tcg/sh4/test-addv.c
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <limits.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+
-+static void addv(const int a, const int b, const int res, const int carry)
-+{
-+    int o = a, c;
-+
-+    asm volatile("addv %2,%0\n"
-+                 "movt %1\n"
-+                 : "+r"(o), "=r"(c) : "r"(b) : );
-+
-+    if (c != carry || o != res) {
-+        printf("ADDV %d, %d = %d/%d [T = %d/%d]\n", a, b, o, res, c, carry);
-+        abort();
-+    }
-+}
-+
-+int main(void)
-+{
-+    addv(INT_MAX, 1, INT_MIN, 1);
-+    addv(INT_MAX - 1, 1, INT_MAX, 0);
-+
-+    return 0;
-+}
+-        return 0;
++        return EXCP_INTERRUPT;
+     case KVM_EXIT_HYPERV_HCALL: {
+         uint16_t code = exit->u.hcall.input & 0xffff;
+         bool fast = exit->u.hcall.input & HV_HYPERCALL_FAST;
 -- 
 2.39.2
 
