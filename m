@@ -4,84 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3155EC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6992CC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBWiS-0006xD-5Y; Mon, 27 May 2024 05:32:28 -0400
+	id 1sBWm7-00088m-Dm; Mon, 27 May 2024 05:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWiQ-0006wC-R7
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:32:27 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWm3-00086u-SN
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 05:36:13 -0400
 Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWiM-0004aH-88
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:32:26 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBWm1-0005Di-Id
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 05:36:11 -0400
 Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-420180b5838so56744025e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:32:21 -0700 (PDT)
+ 5b1f17b1804b1-420180b5897so43862165e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716802340; x=1717407140; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716802567; x=1717407367; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g/DU5vIId6YhzHGLFYreXmHswyG4Ber22YIIUQccoe8=;
- b=T2HPWt2BqMW+y0UtxHfQ8pu1SiKj0fJ7YQFdAOo24uJKeWYw9/Gf4uRlefWvK2yN6x
- P7AB6yxPQEHtfL3wNi9H4ylrz+RtoNwinOku70tOZhb9kHRtfNTa56xVbqzmtnMy+vhf
- FwDo6Ycf94k0CedpFi10PHA8U9we+EA4lgDlaq3hd8vcFK/jN4MSLa5H8QrKYDyaO5q+
- P1g8dQLizUm3BhOmxFSHTBP0hDEd9KdHBxgMoBybL95eyNtPwxYvAns6DKktF2ESf1Yh
- wACUQVOAH0Y9UnxKWpoaKGNj0EvrVjzRXia9nD3MkwD7MTe3JCu9TOb+tLRSjrj4YfTv
- v8QQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Yy5PRIVdEb77I/eexM2zbRlXxcgfRGKq/R8nyRoojLQ=;
+ b=oXkW1jenTXF+U9TRzL5yvMetzJGXfOCcbUfpPGOIcoxRkvho3Hc/TCiK88mGRFOeWL
+ sKwqlRBm0SWSlP+i3JGGLTULArMgwFE5R7DeQyvsnX0BguB8d2OR36dV7BeJiQD0kr6G
+ FvaUUNHyIW6Ly5bSjNowUiQtaSWxAkhQJdrVC/7kz7vzs5uRb4Jf65KT8iKmLtHtH80M
+ Rkzq0HG3tQdY8OTprm5ikxef3DujSTzNRhL92Bb/9sWF8xldCFpbL+awVPGBHiZVVrMI
+ /p4Wo3W5FROpsMFKojUXt61UrHWXZTMcOZ8odlwzpQwfxWg5qlp9oSVG9eCA9pXSu1s1
+ ijbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716802340; x=1717407140;
+ d=1e100.net; s=20230601; t=1716802567; x=1717407367;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g/DU5vIId6YhzHGLFYreXmHswyG4Ber22YIIUQccoe8=;
- b=fF8L5eJLeTSiGuNJfrwDqznoWzZ3ohKY/xeM3gD2pfak0TWK0IsIiEsKgCHL0uwhIc
- K1L1UhsXh46qPIckf6sCl+SuqziLeOZKh9mE9JWfmY0c7N373XqL1DVGtdyXYB3ff5jb
- OiTtmC9louraF2INWsEpg/detdb/pjnx+g2NzqZRPdzsO72jfykaNgkXzcJO+jyTKq/R
- WcFq9iX6COl79zJ3s3vtE/bKI0cTaJ44/oKHVBiJoLG/1KkvwbND3xAaycKy5MkDXwzi
- IN6LzV3wQ3e5GrVU2FBFVsvmrRpITCeSZ7oGkng0w2zwYYnyts7BanZm1x0uTIvL72FG
- wQJQ==
+ bh=Yy5PRIVdEb77I/eexM2zbRlXxcgfRGKq/R8nyRoojLQ=;
+ b=K3pquMVCUf+yNnj9MARyr05yyZaKUR6UWIrDgbLd6SMk5mTPJMnm05KnwFrBzHHIKe
+ gDO6QADS8HuF5tkpaqmdkLlH1SDG0VGIpw7TNxE85FUdt4roJ7nyTrRVOchxO1qGN745
+ JhUGqBLb/aw1olztcUIBDPR285aUiYrhCYAZj0rvijS4J3BX7NmG4Bss9zLXFatYUVTH
+ 1oN8WazAF/A/Sa13F5KWnglcYvbr6AJwPSmYX07h6c8emDAdlYYQs8ZOUntu/Mn7jGWP
+ 8o7cxLo/MM+NHemNY3z28tFK16X6zwOAruoQW/OxBzfcjAh1PZcVhFbuEGFibyYtm3FW
+ hEBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAjXPxoefAA+lgViPtAAeXdnJiCs7EcbgVOGq+3A8F1sY4bYG+USDbQNc5XPD1miMpfgck1wt35jO/yLoCs0ZRwPzBDW8=
-X-Gm-Message-State: AOJu0YwqjxnGMoylFhIJ6qHevb6yTHZG/IuI8dCo7hbo+r0e9W5PDw3M
- ncwkkZ7cUOTzQ/9fsdPLlsTmGyJuvoYMns7Jv5ZHE4jS7TDJkqX9TdrDF+EFXSA=
-X-Google-Smtp-Source: AGHT+IHkRxYFyKRO+kgrRQGAcq0u8Q+SMCJlItR1oAHAaikdt5RWPpw5jEJYg/W44LsBvWTho953vQ==
-X-Received: by 2002:a05:600c:2949:b0:420:e454:1599 with SMTP id
- 5b1f17b1804b1-421089da927mr90136605e9.15.1716802340384; 
- Mon, 27 May 2024 02:32:20 -0700 (PDT)
+ AJvYcCVwePp7aioK5J953n/gNiduHZiFzVSqdhPyEt9hKGRXqMYjnwiDVRBBtg825SCksRk16Q4HiT0xe2V4W7QwyvYH2P3QY9o=
+X-Gm-Message-State: AOJu0YwQXgoIzNMBmEsfEbaYWW3B/Vuz06LUSpQGvaXq6VvaAQKSUTvL
+ Au7tnzpiIPkn2O7Yz0CrIZGwW8m6omTqyK0ZDmKh6CwmnJWeLYa7EZ6TXvHxExPbNm2ogzAbgOn
+ UGsI=
+X-Google-Smtp-Source: AGHT+IEQ17KoZzYpZBK/3138NBVTWnZxNigZ5LrrFdfiDHtdkggxZ4AdRSSySS1P6KsQgGoyWJOBsg==
+X-Received: by 2002:a05:600c:286:b0:41b:d8df:93a3 with SMTP id
+ 5b1f17b1804b1-421089d1907mr77539725e9.1.1716802567151; 
+ Mon, 27 May 2024 02:36:07 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.152.134])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100eeca80sm136215695e9.2.2024.05.27.02.32.18
+ 5b1f17b1804b1-421089711e8sm103192275e9.18.2024.05.27.02.36.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 02:32:19 -0700 (PDT)
-Message-ID: <ed69a712-689a-4294-978d-d8d818a12b6f@linaro.org>
-Date: Mon, 27 May 2024 11:32:17 +0200
+ Mon, 27 May 2024 02:36:06 -0700 (PDT)
+Message-ID: <bcee2ec3-c3fe-4d89-898b-0f78c5ea7e31@linaro.org>
+Date: Mon, 27 May 2024 11:36:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] testing/next: purging remaining centos 8 bits
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, Beraldo Leal <bleal@redhat.com>,
- qemu-s390x@nongnu.org, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Joel Stanley <joel@jms.id.au>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Aurelien Jarno <aurelien@aurel32.net>, Thomas Huth <thuth@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20240521125314.1255403-1-alex.bennee@linaro.org>
+Subject: Re: [PATCH] target/i386: generate simpler code for ROL/ROR with
+ immediate count
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240522123914.608516-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240521125314.1255403-1-alex.bennee@linaro.org>
+In-Reply-To: <20240522123914.608516-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
@@ -108,47 +96,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On 22/5/24 14:39, Paolo Bonzini wrote:
+> gen_rot_carry and gen_rot_overflow are meant to be called with count == NULL
+> if the count cannot be zero.  However this is not done in gen_ROL and gen_ROR,
+> and writing everywhere "can_be_zero ? count : NULL" is burdensome and less
+> readable.  Just pass can_be_zero as a separate argument.
+> 
+> gen_RCL and gen_RCR use a conditional branch to skip the computation
+> if count is zero, so they can pass false unconditionally to gen_rot_overflow.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/emit.c.inc | 26 ++++++++++++++------------
+>   1 file changed, 14 insertions(+), 12 deletions(-)
 
-On 21/5/24 14:53, Alex Bennée wrote:
-> There are a few more bits referencing centos8 in the tree which needed
-> cleaning up. After this we can remove the dedicated runner from the
-> gitlab registration. If we want to keep a dedicated Centos runner then
-> we can add back the bits needed to set it up (although arguably we
-> could have a single build-environment setup that handles all distros
-> and integrates with lcitool).
-
-Do you you mean we should generate 
-scripts/ci/setup/build-environment.yml with lcitool?
-Otherwise should we update it?
-
-> 
-> Alex.
-> 
-> Alex Bennée (4):
->    ci: remove centos-steam-8 customer runner
->    docs/devel: update references to centos to later version
->    tests/vm: update centos.aarch64 image to 9
->    tests/vm: remove plain centos image
-> 
->   docs/devel/ci-jobs.rst.inc                    |   7 -
->   docs/devel/testing.rst                        |   8 +-
->   .gitlab-ci.d/custom-runners.yml               |   1 -
->   .../custom-runners/centos-stream-8-x86_64.yml |  24 ---
->   .../org.centos/stream/8/build-environment.yml |  82 --------
->   .../ci/org.centos/stream/8/x86_64/configure   | 198 ------------------
->   .../org.centos/stream/8/x86_64/test-avocado   |  65 ------
->   scripts/ci/org.centos/stream/README           |  17 --
->   tests/vm/Makefile.include                     |   1 -
->   tests/vm/centos                               |  51 -----
->   tests/vm/centos.aarch64                       |  10 +-
->   11 files changed, 9 insertions(+), 455 deletions(-)
->   delete mode 100644 .gitlab-ci.d/custom-runners/centos-stream-8-x86_64.yml
->   delete mode 100644 scripts/ci/org.centos/stream/8/build-environment.yml
->   delete mode 100755 scripts/ci/org.centos/stream/8/x86_64/configure
->   delete mode 100755 scripts/ci/org.centos/stream/8/x86_64/test-avocado
->   delete mode 100644 scripts/ci/org.centos/stream/README
->   delete mode 100755 tests/vm/centos
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
