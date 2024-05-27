@@ -4,50 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA954C25B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A8AC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU3O-0003Po-OQ; Mon, 27 May 2024 02:41:55 -0400
+	id 1sBU5U-0006CQ-7b; Mon, 27 May 2024 02:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU39-0003F8-S8; Mon, 27 May 2024 02:41:39 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sBU56-0005Wh-7M
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:43:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU38-0007Op-4k; Mon, 27 May 2024 02:41:39 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2CDBE6A3FA;
- Mon, 27 May 2024 09:41:31 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 76AC5D83F2;
- Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50295 invoked by uid 1000);
- Mon, 27 May 2024 06:40:56 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mattias Nissler <mnissler@rivosinc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Jagannathan Raman <jag.raman@oracle.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 12/19] hw/remote/vfio-user: Fix config space access
- byte order
-Date: Mon, 27 May 2024 09:40:43 +0300
-Message-Id: <20240527064056.50205-12-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sBU53-0007Y5-Or
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 02:43:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716792216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Gr1mLTPjwzgZ91iRsFhW6H5tUkk7Pr+jkh77+fxkk6Q=;
+ b=KVf0VjOmLclwO44AQOk2swmcKohiog4x7U+ZtSDf19C64Z8EHb1mjoVw4RppfNs2zOhC73
+ MkqqTQp+FKb0G6vm6xCsjYYDLoNd/ZLVAktlzCAFUF4iiiSVm3b073ot7qPhm41xPW4wmv
+ gsL5kC2LOhR+Y2Ovc1j/z7A5wJQOYjE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-576-4ddlX7IROWuxitJH26IKSQ-1; Mon, 27 May 2024 02:43:35 -0400
+X-MC-Unique: 4ddlX7IROWuxitJH26IKSQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-35507e4c41dso1057677f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 23:43:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716792214; x=1717397014;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gr1mLTPjwzgZ91iRsFhW6H5tUkk7Pr+jkh77+fxkk6Q=;
+ b=IkFY43i3M4YSTnSOKXXtt6EhixAYWy2cz9++yP2zGhAlaNY2LkfoZx6229vIs7BLBv
+ b8OlWhCpMRVmPYv9JQFfbSqw6yoRQICZjjUOJAFIem/8C0L7hUnuM78tKWwaHYveqoFQ
+ 9faEL+rOX6zb+OaTi2/kNdDIT4t04ZCe4bwsdsK8jNZoNQBwuPP27exgrhugrKRVepHR
+ qlyjjE2BO+ak2quZW+xpLLofzTuRHUdyWX0gFUo8EFygcjfqRxV7+wHj5gdoj88OFjYU
+ oyaQEkk/WFLvbQK/izzURu+P+nqnLNoqNSildoYVkJHUuVj+3PwQg4qCiv9qgArJrlpI
+ 3e5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVygX7q5PfAAT269xGKn1bOYWhD9M3Yxi2ih3NZDpV4yfSvW22GctJQgpOYtWolE10LvkL3BS+SnfdTtQp5Zc1rmMfoU3o=
+X-Gm-Message-State: AOJu0Yw6NKi9w0/UgjWJt63wVvhI+eN8u+g6pl9q90ZnBQW+xrlrGdvS
+ 3Rq5ziCV5XGj9D5a4JC6lxSsHU/Z9vllTAh8VQByGRdwapbIRu67FnnmRn0zdA7NWVtRAa9k1ZI
+ wMbRrEkkA0pOkX+QJZF9Wub9AsD9ahnPLIfPPUjwHqdIv0s39Yo13
+X-Received: by 2002:a05:6000:1942:b0:358:d9d4:1026 with SMTP id
+ ffacd0b85a97d-358d9d411a5mr2134595f8f.17.1716792213960; 
+ Sun, 26 May 2024 23:43:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXxuKR0SvDHY8xfZt3kH6riPfPPS1RM8fIqH/zMu+5e4lTmVILteEFvn0q0+0piG303TMglw==
+X-Received: by 2002:a05:6000:1942:b0:358:d9d4:1026 with SMTP id
+ ffacd0b85a97d-358d9d411a5mr2134577f8f.17.1716792213506; 
+ Sun, 26 May 2024 23:43:33 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:151b:2482:8f7e:1f56?
+ ([2a01:e0a:280:24f0:151b:2482:8f7e:1f56])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3557a0931c9sm8048430f8f.65.2024.05.26.23.43.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 May 2024 23:43:32 -0700 (PDT)
+Message-ID: <ad91302c-76f1-41ee-8ea5-3ec5c5ae96d7@redhat.com>
+Date: Mon, 27 May 2024 08:43:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] s390x/ccw: Error reporting cleanups
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>
+References: <20240522170107.289532-1-clg@redhat.com>
+ <43453697-969f-4013-b306-e4e4e1536861@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <43453697-969f-4013-b306-e4e4e1536861@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -65,44 +107,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mattias Nissler <mnissler@rivosinc.com>
+On 5/27/24 08:23, Thomas Huth wrote:
+> On 22/05/2024 19.01, Cédric Le Goater wrote:
+>> Hello,
+>>
+>> The first patches of this series simply apply the practices described
+>> in the Rules section of the qapi/error.h file for routines taking an
+>> 'Error **' argument. The remaining patches are a fixup in the error
+>> path of vfio_ccw_realize() and some error reporting adjustements.
+>>
+>> Applies on top of this vfio PR :
+>>
+>>    https://lore.kernel.org/qemu-devel/20240522095442.195243-1-clg@redhat.com
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>> Cédric Le Goater (6):
+>>    hw/s390x/ccw: Make s390_ccw_get_dev_info() return a bool
+>>    s390x/css: Make CCWDeviceClass::realize return bool
+>>    hw/s390x/ccw: Remove local Error variable from s390_ccw_realize()
+>>    s390x/css: Make S390CCWDeviceClass::realize return bool
+>>    vfio/ccw: Use the 'Error **errp' argument of vfio_ccw_realize()
+>>    vfio/{ap,ccw}: Use warn_report_err() for IRQ notifier registration
+>>      errors
+> 
+> Series
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
 
-PCI config space is little-endian, so on a big-endian host we need to
-perform byte swaps for values as they are passed to and received from
-the generic PCI config space access machinery.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Message-ID: <20240507094210.300566-6-mnissler@rivosinc.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit e6578f1f68a0e90789a841ada532c3e494c9a04c)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Applied to vfio-next.
 
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index 4e36bb8bcf..973cebe785 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -273,7 +273,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
-     while (bytes > 0) {
-         len = (bytes > pci_access_width) ? pci_access_width : bytes;
-         if (is_write) {
--            memcpy(&val, ptr, len);
-+            val = ldn_le_p(ptr, len);
-             pci_host_config_write_common(o->pci_dev, offset,
-                                          pci_config_size(o->pci_dev),
-                                          val, len);
-@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
-         } else {
-             val = pci_host_config_read_common(o->pci_dev, offset,
-                                               pci_config_size(o->pci_dev), len);
--            memcpy(ptr, &val, len);
-+            stn_le_p(ptr, len, val);
-             trace_vfu_cfg_read(offset, val);
-         }
-         offset += len;
--- 
-2.39.2
+Thanks,
+
+C.
+
 
 
