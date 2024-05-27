@@ -4,105 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E87C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F798C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:36:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUsg-0000AO-9C; Mon, 27 May 2024 03:34:54 -0400
+	id 1sBUtX-0001ZX-TX; Mon, 27 May 2024 03:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sBUsL-0008NB-6w; Mon, 27 May 2024 03:34:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBUt6-00015u-1v
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 03:35:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sBUsJ-00085P-MR; Mon, 27 May 2024 03:34:32 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44R6liBp010893; Mon, 27 May 2024 07:34:23 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Dibm.com; _h=3Dcc?=
- =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
- =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3DQ9Z?=
- =?UTF-8?Q?dG0LLGazrxsNfC5nM56OqVLfyGj+FQT9ZhTdSjrE=3D;_b=3DikDttpB6T/PDKG?=
- =?UTF-8?Q?jIFmXUDTxy6yc7o1oP9qZjJdiVmoD0IaSv7mbdH5bFkAmAn4t8WbWr_fcM09MeF?=
- =?UTF-8?Q?97m01SCY5ZZhJ3qoY4WJv5qrHegA0EUjLH0Cdu5G+yGldujPw33VcFsJgyLm_Ks?=
- =?UTF-8?Q?v0uxBhAZ3zWXn5/lCydW79Lv4oLdPBSxopmGzdQLVFDxOFkBWtbKEG1syjBcylE?=
- =?UTF-8?Q?I/W_paNgHrWx54Gk+5uSgtt5NQlz3uzCRpA+AepFGSUjlilz5ZCeYRAAtwf9Vbc?=
- =?UTF-8?Q?1CGOZJ0t9_E7QieaFz4M8NthPwuDVEKEJC7W7VdCeQheKtF1EM8cJmD0008K3k/?=
- =?UTF-8?Q?TXz33rGoY5YHenM_zQ=3D=3D_?=
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ycn77r488-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 May 2024 07:34:23 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44R7YIG3021247;
- Mon, 27 May 2024 07:34:22 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ycn77r47t-3
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 May 2024 07:34:22 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44R41sEV006716; Mon, 27 May 2024 07:11:13 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ybtat7u15-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 May 2024 07:11:13 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44R7B8Yo56492382
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 May 2024 07:11:10 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 436C82005A;
- Mon, 27 May 2024 07:11:08 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1DA942004B;
- Mon, 27 May 2024 07:11:06 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
- [9.179.2.64]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 May 2024 07:11:05 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH v3 08/11] ppc/pnv: Add OCC for Power11
-Date: Mon, 27 May 2024 12:40:39 +0530
-Message-ID: <20240527071042.489540-9-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240527071042.489540-1-adityag@linux.ibm.com>
-References: <20240527071042.489540-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBUt2-0008Ar-Vu
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 03:35:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716795315;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=PVMZUATiaPmT3ZndVyOxtmr7JmtVnEdjc67ZoRLK2Fs=;
+ b=UgnE/HdA7oNCCc2bbp7L2uFnYUwMu0U4uboxDpbSyWeCv9G+gf9COykl2EUmAsP6NYnHVq
+ Nlb/mppljlQxbbP63/V2nj7v9t/GxZMkomQJtIXFOAV1rHOnBzUGhgP7pOr7ODCCcgoC4P
+ cKCHFOgA1iYp/4FX59KWW259jbrDclk=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-502-8ULrR_GYOLedTTek3wabOw-1; Mon, 27 May 2024 03:35:13 -0400
+X-MC-Unique: 8ULrR_GYOLedTTek3wabOw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-357f24b8cabso1052656f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 00:35:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716795312; x=1717400112;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PVMZUATiaPmT3ZndVyOxtmr7JmtVnEdjc67ZoRLK2Fs=;
+ b=QK/nwownJOBdaXey57zFySYxcEhkzReU9r/xLht3AfRpK35uvhvFdsBNyuNV4Uh4EQ
+ R+ba9BD8/0nqd6hrSdC4qH6ufOR/uE0u2TcbOjDqC0Al7zGaIxmoq0ewjbo8ZGahxhco
+ 2goQQjo1+bvcZ+rkenVVJ5TYS4AyrHA84H6RVacs71uvoH8MoIlyAFhesWLxd1ylnWf5
+ idFvB7mhG9lXNTTsMndZesD8qVfyi9gZmXRywgWJOJIJUVlhgVLnoD/jcMcqG1xAF/B1
+ 5VRrYRL3UxizWxzyCDOoj3owuC3N3kfjJyYPU2r0Zs6drQqXI5PLxRF6rp091mveEzFr
+ GqTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVK9Lcip5DiElNLZK4rfPGV16SssR6wH5vK3OA3ph7hwvFFOY/lySjaBRBKHOJ1TTD+lA3DyZWbGqe0qGfGFvWS5k9TCdk=
+X-Gm-Message-State: AOJu0Yyb1Ta0PQk/hGIBvQJEkuIRY6R80kXWhD8MMoNNDCzcTfP7PmN9
+ +tbZ47sPuKoHeuq0q/WXvdO/+IiGrRLzwR3x/xuMDERxJaiBOg93uqVZfI/BnS0JNnxlC12kOKO
+ dwGXQWqG6wAS3e7HkOnP3Gfyght31VlaBhk22Sb481mo0v7/RH6d+
+X-Received: by 2002:a5d:4cc1:0:b0:354:de21:2145 with SMTP id
+ ffacd0b85a97d-35526c2bd2amr6116628f8f.22.1716795312180; 
+ Mon, 27 May 2024 00:35:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVHNuWgd5EYdI4agXNTZtnUASnhRfmcgHO9KF95zw2AtKmO26EJdPihm+TIfh9czoGibkhyg==
+X-Received: by 2002:a5d:4cc1:0:b0:354:de21:2145 with SMTP id
+ ffacd0b85a97d-35526c2bd2amr6116615f8f.22.1716795311755; 
+ Mon, 27 May 2024 00:35:11 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
+ [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-358c0acf7d5sm2774997f8f.7.2024.05.27.00.35.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 May 2024 00:35:11 -0700 (PDT)
+Message-ID: <30aa8e56-bb43-4a1f-83f0-02324fb680e0@redhat.com>
+Date: Mon, 27 May 2024 09:35:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: j3h1amUymVWJZOJBpQnXW07bSx0PSYLu
-X-Proofpoint-GUID: mywBI8L2HEbT1y2x3qc1zwQ74WMnIHcF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-26_09,2024-05-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 adultscore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=1015 mlxlogscore=913
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405270060
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] tests/qtest/migration-test: Enable on ppc64
+To: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+References: <20240525031330.196609-1-npiggin@gmail.com>
+ <20240525031330.196609-3-npiggin@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240525031330.196609-3-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,67 +147,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power11 core is same as Power10, reuse PNV10_OCC initialisation,
-by declaring `PNV11_OCC` as child class of `PNV10_OCC`
+On 25/05/2024 05.13, Nicholas Piggin wrote:
+> ppc64 with TCG seems to no longer be failing this test. Let's try to
+> enable it. s390x is still hanging about 1 in 10 runs.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   tests/qtest/migration-test.c | 16 +++-------------
+>   1 file changed, 3 insertions(+), 13 deletions(-)
+> 
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index c13535c37d..b8617cc843 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -3454,19 +3454,9 @@ int main(int argc, char **argv)
+>   #endif
+>   
+>       /*
+> -     * On ppc64, the test only works with kvm-hv, but not with kvm-pr and TCG
+> -     * is touchy due to race conditions on dirty bits (especially on PPC for
+> -     * some reason)
+> -     */
+> -    if (g_str_equal(arch, "ppc64") &&
+> -        (!has_kvm || access("/sys/module/kvm_hv", F_OK))) {
+> -        g_test_message("Skipping tests: kvm_hv not available");
+> -        goto test_add_done;
+> -    }
+> -
+> -    /*
+> -     * Similar to ppc64, s390x seems to be touchy with TCG, so disable it
+> -     * there until the problems are resolved
+> +     * On s390x, the test seems to be touchy with TCG, perhaps due to race
+> +     * conditions on dirty bits, so disable it there until the problems are
+> +     * resolved.
+>        */
+>       if (g_str_equal(arch, "s390x") && !has_kvm) {
+>           g_test_message("Skipping tests: s390x host with KVM is required");
 
-Cc: Cédric Le Goater <clg@kaod.org>
-Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- hw/ppc/pnv_occ.c         | 14 ++++++++++++++
- include/hw/ppc/pnv_occ.h |  2 ++
- 2 files changed, 16 insertions(+)
+Since you've identified the problem on s390x, you could maybe adjust the 
+comment in case you respin ... OTOH, it will get removed anyway once we 
+merge the s390x fix, so no need to respin just because of this.
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 48123ceae176..4f510419045e 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -262,6 +262,19 @@ static const TypeInfo pnv_occ_power10_type_info = {
-     .class_init    = pnv_occ_power10_class_init,
- };
- 
-+static void pnv_occ_power11_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "PowerNV OCC Controller (POWER11)";
-+}
-+
-+static const TypeInfo pnv_occ_power11_type_info = {
-+    .name          = TYPE_PNV11_OCC,
-+    .parent        = TYPE_PNV10_OCC,
-+    .class_init    = pnv_occ_power11_class_init,
-+};
-+
- static void pnv_occ_realize(DeviceState *dev, Error **errp)
- {
-     PnvOCC *occ = PNV_OCC(dev);
-@@ -305,6 +318,7 @@ static void pnv_occ_register_types(void)
-     type_register_static(&pnv_occ_power8_type_info);
-     type_register_static(&pnv_occ_power9_type_info);
-     type_register_static(&pnv_occ_power10_type_info);
-+    type_register_static(&pnv_occ_power11_type_info);
- }
- 
- type_init(pnv_occ_register_types);
-diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
-index df321244e3b1..7b5e28f13b4f 100644
---- a/include/hw/ppc/pnv_occ.h
-+++ b/include/hw/ppc/pnv_occ.h
-@@ -34,6 +34,8 @@ DECLARE_INSTANCE_CHECKER(PnvOCC, PNV9_OCC,
-                          TYPE_PNV9_OCC)
- #define TYPE_PNV10_OCC TYPE_PNV_OCC "-POWER10"
- DECLARE_INSTANCE_CHECKER(PnvOCC, PNV10_OCC, TYPE_PNV10_OCC)
-+#define TYPE_PNV11_OCC TYPE_PNV_OCC "-POWER11"
-+DECLARE_INSTANCE_CHECKER(PnvOCC, PNV11_OCC, TYPE_PNV11_OCC)
- 
- #define PNV_OCC_SENSOR_DATA_BLOCK_OFFSET 0x00580000
- #define PNV_OCC_SENSOR_DATA_BLOCK_SIZE   0x00025800
--- 
-2.45.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
