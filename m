@@ -4,99 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCD1C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 03:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B11CC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 03:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBQvx-00048l-JI; Sun, 26 May 2024 23:22:01 -0400
+	id 1sBRHS-0007Vl-Ko; Sun, 26 May 2024 23:44:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sBQvv-00046x-F6
- for qemu-devel@nongnu.org; Sun, 26 May 2024 23:21:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sBRHK-0007V1-Vg
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 23:44:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sBQvt-0005WZ-OB
- for qemu-devel@nongnu.org; Sun, 26 May 2024 23:21:59 -0400
+ id 1sBRHI-00019K-Ik
+ for qemu-devel@nongnu.org; Sun, 26 May 2024 23:44:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716780115;
+ s=mimecast20190719; t=1716781443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0/dnm8N3diEOuN7i2diwW/1b4MoZ1ZDBNBlb+MkEwR8=;
- b=Rl1+SbhHghREJ/095R1SCAIzE0fmbJ7fIRCAd6MUhdT7lo1QArmlGUMBoDJ8nY1CwREzrd
- rAdP/zVMZnrsDCz7+78X1vdhgU78z96J0wieY2G2RFMNHyEogNl/wJug0otBkbXU78ZswE
- /dQ/V9L/ohgBA5rP9OmcJCtYm+xNAmA=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FewZXNcwkcwS0omzM5TAlzTtsmcNA5y3gORAUIAy8x0=;
+ b=CAWjpFyO964JUNt7oWADIqrSx3h9tYcnZG597AqaX2rRZXfATj1iX2iimiE8EpkeSx/KwS
+ lBrQny4waUoqElRdfIMzBjYwcX2Ql90K9pFMOzyoFXslepwOt3ItUvlh3Cz/kkats/DuFw
+ gTzjR8FWVDk8Q2hR2tCoETGe42Ebp9k=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-lSd3cgZSOpyC4rFBOUbQvw-1; Sun, 26 May 2024 23:21:54 -0400
-X-MC-Unique: lSd3cgZSOpyC4rFBOUbQvw-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-6818f651293so2742628a12.1
- for <qemu-devel@nongnu.org>; Sun, 26 May 2024 20:21:53 -0700 (PDT)
+ us-mta-527--rYVeGbkME-lkCtsyuwOzA-1; Sun, 26 May 2024 23:43:59 -0400
+X-MC-Unique: -rYVeGbkME-lkCtsyuwOzA-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-667fd2bf4feso3930122a12.3
+ for <qemu-devel@nongnu.org>; Sun, 26 May 2024 20:43:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716780113; x=1717384913;
+ d=1e100.net; s=20230601; t=1716781438; x=1717386238;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0/dnm8N3diEOuN7i2diwW/1b4MoZ1ZDBNBlb+MkEwR8=;
- b=D0ePExcynjLtT/W2M65F4Wv+WHiVx2gF9s1qMcgDi3ec/juiocKMCGF3kAjVCC5RkE
- +Cal8kp8ze6W5wjjkZerLJMBxLjZGjFZxIPOIPsn4ONm63d9huszqZsYuKVPop+akSf+
- TffXli1jBjk/ySw7N0FMfjfwbvZkpng10AEH5VGdgElMmiGgT339RfAAc0hjT/pLXkMK
- rYddmKAUyaMmWh9GQFh/vSiMIq8rLedcJ9ENkG0h044aM7y9rkQBdRBSpvqYnWqDlR8w
- 4lHUlnfROAW1ov7etgmPC9kW0uh6SPxa0W0uThOwI14MbcCMWH5OHWu1nxkuouC/UlZt
- smEQ==
+ bh=FewZXNcwkcwS0omzM5TAlzTtsmcNA5y3gORAUIAy8x0=;
+ b=lQWHMAz/5w9YLepDMLLkS5ComFe7ou5Ak3ZBDExCU7TnTVn1Tv5UIGZVWOY4kBvHpe
+ 1D122EZqvA7H8j+ry8ngN+lG1J21eCxQW8IVB574M9ZAFc37qK7QMCSVK2JYu4FmrCaH
+ n+JEXMugf6vyLbFsz6oAvPBtytbVRS6pOPSe3wFhjp7Z7kGre2wS+w1nlYY8MNCKrVRZ
+ x+ppmLpIBm89yh3mgkxh3xncO1wQeHo60ALov3ja74cV/aJe4hVCuEYI0fwiZ0Q9KmO4
+ eV/doi6c95TsvLdgbtLLJVfGE4FN31GN44l2Yc+hQymxTcut6fdP/zJDonY49xUFNmKe
+ uFug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVemRd8OfGvnAi+qdGg6/Pf5WRDKTBBTQz7MZG5r3jtJmKiIQhDd0mb7m4isTuE//OiFMmYDBF8W1tro/tHjYTNYF60Df8=
-X-Gm-Message-State: AOJu0YxTM/UL7Yp0dkXSRFfVvhSEQ4sGod90FTnHNPElgbRYrbroaWaX
- JG9TGYHNmux+dOWa1+q4ZuvHrTLWFKfMhL9DkBbPPjDIKlpyl9ipYrkbI5TsV18N8dyc9A/CH/g
- KKeEl27wn1ZM1rOHAXkGGF1cnZ18Hzp3b030DW0qz4m4KUT2xQrvUuGC/m6SET4MmQP8F4fpCtG
- SJvD2QMj5Y11e+9iBnq3aQb5V+UTY=
-X-Received: by 2002:a05:6a21:9991:b0:1b1:cce2:51d3 with SMTP id
- adf61e73a8af0-1b212f63a2dmr8867602637.54.1716780112916; 
- Sun, 26 May 2024 20:21:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoZQO9OLI5XezbqN9OV9dLYImMYM/XLNPaDhBSoPjPoFy2P1h6BM6JrxgH+ONsIBwQeMDk1gctH8cKzwBWoDQ=
-X-Received: by 2002:a05:6a21:9991:b0:1b1:cce2:51d3 with SMTP id
- adf61e73a8af0-1b212f63a2dmr8867588637.54.1716780112530; Sun, 26 May 2024
- 20:21:52 -0700 (PDT)
+ AJvYcCWrOy45rHLSDUHQX1fwZs9/VaiJWluE8/7duwIXxmiBoinORQZ6sQ2J/xH9fsYvUdjFjRFCmC4IylIWzotE26Cl1T98YVc=
+X-Gm-Message-State: AOJu0Yz7UQ3JqG7/fZyIj0SdHyysRTNj/8mae0UsEec9hEohTZ4UR0YE
+ BEcGQBGtEHgAGthQsKZQ96L0Bq0+jArzPLYaB5o0qo2jc/I7KTqDFpyCQWG3AX5pvzt4zv2aXXK
+ EmW8kVo7wOx0B3IFXCFJwN1UxZQPQI2chD+lgVHeurUKeVlP9X5yBRwHlTFrKN0BML2/GvNXzMF
+ 3ZFZdP4T2K4xMBVyjX4XkSgb87Bd4=
+X-Received: by 2002:a05:6a20:5603:b0:1af:d2f8:382a with SMTP id
+ adf61e73a8af0-1b212d4a2b7mr8513920637.34.1716781438236; 
+ Sun, 26 May 2024 20:43:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgJaO4JACiaXg/tJuR0umkLGbl2K829N7C7dApMIUvIFdAOwSi0SLHvnwtcnffcPN66xx/Io8i+05brpICtTI=
+X-Received: by 2002:a05:6a20:5603:b0:1af:d2f8:382a with SMTP id
+ adf61e73a8af0-1b212d4a2b7mr8513908637.34.1716781437732; Sun, 26 May 2024
+ 20:43:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240517102334.81943-1-zhenzhong.duan@intel.com>
- <CACGkMEvTomFeC1bM3SfY1zGhQ_5i15r6CY6M3jVzau6niNUf_w@mail.gmail.com>
- <SJ0PR11MB6744AECEAA6F9319259B0DF192E92@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <DS0PR11MB752917B52B66A6EF10C10678C3E92@DS0PR11MB7529.namprd11.prod.outlook.com>
- <CACGkMEt5ofYt12A6uKUj=QLcLbOnrGT=UkMpee=MUxO6Xy3sxg@mail.gmail.com>
- <SJ0PR11MB6744C340AAB1B786D3913F5D92EA2@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <CACGkMEsV05ujKNEL9JSAsfikWGW582yvfSOdHJgRxZC_1cxgEg@mail.gmail.com>
- <SJ0PR11MB67445F7F8B79D2C2B982C1F692F52@SJ0PR11MB6744.namprd11.prod.outlook.com>
-In-Reply-To: <SJ0PR11MB67445F7F8B79D2C2B982C1F692F52@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240522051042.985825-1-lulu@redhat.com>
+In-Reply-To: <20240522051042.985825-1-lulu@redhat.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 27 May 2024 11:21:41 +0800
-Message-ID: <CACGkMEuO6T-LqcZ=5oRR83LyhZ7oOtZvb70CUksZDAmC1KnsOA@mail.gmail.com>
-Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by spec
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: "Liu, Yi L" <yi.l.liu@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "Peng, Chao P" <chao.p.peng@intel.com>, Yu Zhang <yu.c.zhang@linux.intel.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Date: Mon, 27 May 2024 11:43:46 +0800
+Message-ID: <CACGkMEsUY=X8vGGRmUcvpieNtfcmFEKW-AYzbv_vcL3UNQkPTg@mail.gmail.com>
+Subject: Re: [PATCH] virtio-pci: Fix the use of an uninitialized irqfd.
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,132 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 24, 2024 at 4:41=E2=80=AFPM Duan, Zhenzhong
-<zhenzhong.duan@intel.com> wrote:
+On Wed, May 22, 2024 at 1:10=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
 >
+> The crash was reported in MAC OS and NixOS, here is the link for this bug
+> https://gitlab.com/qemu-project/qemu/-/issues/2334
+> https://gitlab.com/qemu-project/qemu/-/issues/2321
 >
+> The root cause is that the function virtio_pci_set_guest_notifiers() only
+> initializes the irqfd when the use_guest_notifier_mask and guest_notifier=
+_mask
+> are set.
+> However, this check is missing in virtio_pci_set_vector().
+> So the fix is to add this check.
 >
-> >-----Original Message-----
-> >From: Jason Wang <jasowang@redhat.com>
-> >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined b=
-y
-> >spec
-> >
-> >On Tue, May 21, 2024 at 6:25=E2=80=AFPM Duan, Zhenzhong
-> ><zhenzhong.duan@intel.com> wrote:
-> >>
-> >>
-> >>
-> >> >-----Original Message-----
-> >> >From: Jason Wang <jasowang@redhat.com>
-> >> >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons define=
-d by
-> >> >spec
-> >> >
-> >> >On Mon, May 20, 2024 at 12:15=E2=80=AFPM Liu, Yi L <yi.l.liu@intel.co=
-m> wrote:
-> >> >>
-> >> >> > From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> >> >> > Sent: Monday, May 20, 2024 11:41 AM
-> >> >> >
-> >> >> >
-> >> >> >
-> >> >> > >-----Original Message-----
-> >> >> > >From: Jason Wang <jasowang@redhat.com>
-> >> >> > >Sent: Monday, May 20, 2024 8:44 AM
-> >> >> > >To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> >> >> > >Cc: qemu-devel@nongnu.org; Liu, Yi L <yi.l.liu@intel.com>; Peng,
-> >Chao
-> >> >P
-> >> >> > ><chao.p.peng@intel.com>; Yu Zhang <yu.c.zhang@linux.intel.com>;
-> >> >Michael
-> >> >> > >S. Tsirkin <mst@redhat.com>; Paolo Bonzini
-> ><pbonzini@redhat.com>;
-> >> >> > >Richard Henderson <richard.henderson@linaro.org>; Eduardo
-> >Habkost
-> >> >> > ><eduardo@habkost.net>; Marcel Apfelbaum
-> >> ><marcel.apfelbaum@gmail.com>
-> >> >> > >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons
-> >defined
-> >> >by
-> >> >> > >spec
-> >> >> > >
-> >> >> > >On Fri, May 17, 2024 at 6:26=E2=80=AFPM Zhenzhong Duan
-> >> >> > ><zhenzhong.duan@intel.com> wrote:
-> >> >> > >>
-> >> >> > >> From: Yu Zhang <yu.c.zhang@linux.intel.com>
-> >> >> > >>
-> >> >> > >> Currently we use only VTD_FR_PASID_TABLE_INV as fault reason.
-> >> >> > >> Update with more detailed fault reasons listed in VT-d spec 7.=
-2.3.
-> >> >> > >>
-> >> >> > >> Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
-> >> >> > >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> >> >> > >> ---
-> >> >> > >
-> >> >> > >I wonder if this could be noticed by the guest or not. If yes sh=
-ould
-> >> >> > >we consider starting to add thing like version to vtd emulation =
-code?
-> >> >> >
-> >> >> > Kernel only dumps the reason like below:
-> >> >> >
-> >> >> > DMAR: [DMA Write NO_PASID] Request device [20:00.0] fault addr
-> >> >0x1234600000
-> >> >> > [fault reason 0x71] SM: Present bit in first-level paging entry i=
-s clear
-> >> >>
-> >> >> Yes, guest kernel would notice it as the fault would be injected to=
- vm.
-> >> >>
-> >> >> > Maybe bump 1.0 -> 1.1?
-> >> >> > My understanding version number is only informational and is far
-> >from
-> >> >> > accurate to mark if a feature supported. Driver should check cap/=
-ecap
-> >> >> > bits instead.
-> >> >>
-> >> >> Should the version ID here be aligned with VT-d spec?
-> >> >
-> >> >Probably, this might be something that could be noticed by the
-> >> >management to migration compatibility.
-> >>
-> >> Could you elaborate what we need to do for migration compatibility?
-> >> I see version is already exported so libvirt can query it, see:
-> >>
-> >>     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
-> >
-> >It is the Qemu command line parameters not the version of the vmstate.
-> >
-> >For example -device intel-iommu,version=3D3.0
-> >
-> >Qemu then knows it should behave as 3.0.
+> This fix is verified in vyatta,MacOS,NixOS,fedora system.
 >
-> So you want to bump vtd_vmstate.version?
+> The bt tree for this bug is:
+> Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+> kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:8=
+17
+> 817         if (irqfd->users =3D=3D 0) {
+> (gdb) thread apply all bt
+> ...
+> Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+> 0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.=
+c:817
+> 1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci=
+.c:893
+> 2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0=
+/system/memory.c:497
+> 3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/sy=
+stem/memory.c:573
+> 4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0=
+/system/memory.c:1528
+> 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qem=
+u-9.0.0/system/physmem.c:2713
+> 6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/syst=
+em/physmem.c:2743
+> 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+> 8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/p=
+hysmem.c:2894
+> 9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/phys=
+mem.c:2904
+> 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+> 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm=
+/kvm-accel-ops.c:50
+> 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-=
+thread-posix.c:541
+> 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+> 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+>
+> Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
+> Cc: qemu-stable@nongnu.org
+>
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
 
-Well, as I said, it's not a direct bumping.
-
->
-> In fact, this series change intel_iommu property from x-scalable-mode=3D[=
-"on"|"off"]"
-> to x-scalable-mode=3D["legacy"|"modern"|"off"]".
->
-> My understanding management app should use same qemu cmdline
-> in source and destination, so compatibility is already guaranteed even if
-> we don't bump vtd_vmstate.version.
-
-Exactly, so the point is to
-
-vtd=3D3.0, the device works exactly as vtd spec 3.0.
-vtd=3D3.3, the device works exactly as vtd spec 3.3.
-
-When migration to the old qemu, mgmt can specify e.g vtd=3D3.0 for
-backward migration compatibility.
+Acked-by: Jason Wang <jasowang@redhat.com>
 
 Thanks
 
+> ---
+>  hw/virtio/virtio-pci.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 >
-> Thanks
-> Zhenzhong
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index b1d02f4b3d..a7faee5b33 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -1431,6 +1431,7 @@ static void virtio_pci_set_vector(VirtIODevice *vde=
+v,
+>  {
+>      bool kvm_irqfd =3D (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+>          msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
+> +    VirtioDeviceClass *k =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+>
+>      if (new_vector =3D=3D old_vector) {
+>          return;
+> @@ -1441,7 +1442,8 @@ static void virtio_pci_set_vector(VirtIODevice *vde=
+v,
+>       * set, we need to release the old vector and set up the new one.
+>       * Otherwise just need to set the new vector on the device.
+>       */
+> -    if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
+> +    if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR &&
+> +        vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
+>          kvm_virtio_pci_vector_release_one(proxy, queue_no);
+>      }
+>      /* Set the new vector on the device. */
+> @@ -1451,7 +1453,8 @@ static void virtio_pci_set_vector(VirtIODevice *vde=
+v,
+>          virtio_queue_set_vector(vdev, queue_no, new_vector);
+>      }
+>      /* If the new vector changed need to set it up. */
+> -    if (kvm_irqfd && new_vector !=3D VIRTIO_NO_VECTOR) {
+> +    if (kvm_irqfd && new_vector !=3D VIRTIO_NO_VECTOR &&
+> +        vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
+>          kvm_virtio_pci_vector_use_one(proxy, queue_no);
+>      }
+>  }
+> --
+> 2.43.0
+>
 
 
