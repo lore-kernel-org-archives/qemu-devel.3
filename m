@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ED18C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70EFFC25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU3P-0003UP-Te; Mon, 27 May 2024 02:41:56 -0400
+	id 1sBU5C-0005l3-7j; Mon, 27 May 2024 02:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU3D-0003Gf-4e; Mon, 27 May 2024 02:41:43 -0400
+ id 1sBU3u-00040F-6F; Mon, 27 May 2024 02:42:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU36-0007Oc-PM; Mon, 27 May 2024 02:41:42 -0400
+ id 1sBU3r-0007Rz-9T; Mon, 27 May 2024 02:42:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1AFCC6A3F9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B0446A401;
  Mon, 27 May 2024 09:41:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 65EAAD83F1;
+ by tsrv.corpit.ru (Postfix) with SMTP id E8E85D83F9;
  Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50292 invoked by uid 1000);
+Received: (nullmailer pid 50316 invoked by uid 1000);
  Mon, 27 May 2024 06:40:56 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ruihan Li <lrh2000@pku.edu.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 11/19] target/i386: Give IRQs a chance when resetting
- HF_INHIBIT_IRQ_MASK
-Date: Mon, 27 May 2024 09:40:42 +0300
-Message-Id: <20240527064056.50205-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 19/19] target/i386: no single-step exception after MOV
+ or POP SS
+Date: Mon, 27 May 2024 09:40:50 +0300
+Message-Id: <20240527064056.50205-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
@@ -63,81 +62,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-When emulated with QEMU, interrupts will never come in the following
-loop. However, if the NOP instruction is uncommented, interrupts will
-fire as normal.
+Intel SDM 18.3.1.4 "If an occurrence of the MOV or POP instruction
+loads the SS register executes with EFLAGS.TF = 1, no single-step debug
+exception occurs following the MOV or POP instruction."
 
-	loop:
-		cli
-    		call do_sti
-		jmp loop
-
-	do_sti:
-		sti
-		# nop
-		ret
-
-This behavior is different from that of a real processor. For example,
-if KVM is enabled, interrupts will always fire regardless of whether the
-NOP instruction is commented or not. Also, the Intel Software Developer
-Manual states that after the STI instruction is executed, the interrupt
-inhibit should end as soon as the next instruction (e.g., the RET
-instruction if the NOP instruction is commented) is executed.
-
-This problem is caused because the previous code may choose not to end
-the TB even if the HF_INHIBIT_IRQ_MASK has just been reset (e.g., in the
-case where the STI instruction is immediately followed by the RET
-instruction), so that IRQs may not have a change to trigger. This commit
-fixes the problem by always terminating the current TB to give IRQs a
-chance to trigger when HF_INHIBIT_IRQ_MASK is reset.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Message-ID: <20240415064518.4951-4-lrh2000@pku.edu.cn>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6a5a63f74ba5c5355b7a8468d3d814bfffe928fb)
+(cherry picked from commit f0f0136abba688a6516647a79cc91e03fad6d5d7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup due to missing-in-7.2
- v8.1.0-1189-gad75a51e84 "tcg: Rename cpu_env to tcg_env")
+(Mjt: context fixup for v8.1.0-1189-gad75a51e84af "tcg: Rename cpu_env to tcg_env")
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index abacb91ddf..2b0df7bcfa 100644
+index f8578ad1ea..0d47b61603 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -2814,13 +2814,17 @@ static void gen_bnd_jmp(DisasContext *s)
- static void
- do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
- {
-+    bool inhibit_reset;
-+
-     gen_update_cc_op(s);
- 
-     /* If several instructions disable interrupts, only the first does it.  */
--    if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
--        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
--    } else {
-+    inhibit_reset = false;
-+    if (s->flags & HF_INHIBIT_IRQ_MASK) {
-         gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
-+        inhibit_reset = true;
-+    } else if (inhibit) {
-+        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
-     }
- 
-     if (s->base.tb->flags & HF_RF_MASK) {
-@@ -2831,7 +2835,9 @@ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
+@@ -2823,7 +2823,7 @@ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
+     if (recheck_tf) {
+         gen_helper_rechecking_single_step(cpu_env);
          tcg_gen_exit_tb(NULL, 0);
-     } else if (s->flags & HF_TF_MASK) {
+-    } else if (s->flags & HF_TF_MASK) {
++    } else if ((s->flags & HF_TF_MASK) && !inhibit) {
          gen_helper_single_step(cpu_env);
--    } else if (jr) {
-+    } else if (jr &&
-+               /* give irqs a chance to happen */
-+               !inhibit_reset) {
-         tcg_gen_lookup_and_goto_ptr();
-     } else {
-         tcg_gen_exit_tb(NULL, 0);
+     } else if (jr &&
+                /* give irqs a chance to happen */
 -- 
 2.39.2
 
