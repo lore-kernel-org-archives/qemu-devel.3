@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F88C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC18C25B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 09:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBX2a-0005k4-Ot; Mon, 27 May 2024 05:53:16 -0400
+	id 1sBX3N-00060a-Qt; Mon, 27 May 2024 05:54:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBX2Y-0005jK-Hc
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:53:14 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBX2W-0008HE-CF
- for qemu-devel@nongnu.org; Mon, 27 May 2024 05:53:14 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-357f1c0b86fso1091503f8f.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 02:53:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716803590; x=1717408390; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TTvOFcRioRnhwU5iUk34BgipIQyxDh4f1bq5Rktqm/A=;
- b=qZTABBJPJF3dLRmW7Vxl8mFZJKr1KPqR64Z+sdySGXKsBsqBq1o6fohqJHuLuDC5lv
- VsIodYNNSNMCrteiK6DgZ6wXM3Ue2+eJ4JdopiMsTol27ermBH+r4GTOPR0Pb1M//MaZ
- ARxGCefxHgvRLjBG7hN7zDFuwkZEdxAlL+rJ0KX9+r/RNLKL/qc+1QX2Ej68FeuVC3UT
- wkbFUHPXVAojH4x9u50BaD5SSOp86XHFYBAVRR8Wr1me4lqRuK6l71cBbxWKKePrWcKf
- BpYYC62Fl/nIbIRfub/InTihkh8T1qjiCzSSjtRHRgEu1OvV1NY/oWfgPaJOPjjxl046
- i2Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716803590; x=1717408390;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TTvOFcRioRnhwU5iUk34BgipIQyxDh4f1bq5Rktqm/A=;
- b=IaWxuUdzVzjVT2ZxluUTI7POTL3jiYNfZ4qCkTlymS92nDmHCE1YZYBYCAU+bajg0q
- jQDbHuur50t4Z0P+cTSRRpBHafRt17anQXdbEa9icNmijX/2kjhCdfeyrIA3iNyS2IiH
- feD0pOlWYH1/uK55cGf2a9VjKTidRakgV5OGYbz8V/63PxTwZLdEE82FN0KiQAsXseoH
- D0RWfQNtXEHXFwiiFJcApN73ZZXbqRSbWBY/4LY13bc1yXsC3T7pv0Lwvjh/EY7c5KBr
- 1G4LzSFVqss8QHutQzCGBt3OZXGB4PVDoT1U8QWUfltPPxHCKiMHL0v1IN+KkcuxpV1b
- kQDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUz/aHXnn1kvAZG6YnyV3XLt8nD5MjwTytZgKX4qDM0UN5riyCXNfn93ahl0Tnhk5GfaH727TaIQS5hSroWqnfrdHdRycU=
-X-Gm-Message-State: AOJu0YzT7MgmTFQVoHRI3449J3osfz8mS3RIaLbX/ZEPsJ5iwYzlC8Zl
- rfNcUbQ3jrjsJkXoSzg10t1lEc1KII0/QpPB5m2e9upof0UNdFXdpBHwlZ6zuK8=
-X-Google-Smtp-Source: AGHT+IHTDfadl0OwYpEBCJW7/XCfkDFGaGDZRFu93YEcIrNNvJ5cpITi+jqGXGnJRjntRXrMyC29wg==
-X-Received: by 2002:adf:f605:0:b0:351:d78e:875e with SMTP id
- ffacd0b85a97d-35526c271e2mr5889702f8f.14.1716803590214; 
- Mon, 27 May 2024 02:53:10 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.152.134])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3577505a218sm5416098f8f.31.2024.05.27.02.53.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 02:53:09 -0700 (PDT)
-Message-ID: <f2b32bb7-409b-484a-b4c3-71ca40d9bbe2@linaro.org>
-Date: Mon, 27 May 2024 11:53:07 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBX3B-0005rW-SR; Mon, 27 May 2024 05:53:55 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBX39-0008M5-Lk; Mon, 27 May 2024 05:53:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716803632; x=1748339632;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=BUIk9Rus9L/HpaU1BXvE1EmkaCoph9S57b23c7qT2EM=;
+ b=jhOX/UTAd/vb8s1dmjVruF/7uXcDU/eIc1CqC19yylJ5YXwqd99KrgDc
+ mxDLVu0wUuQtyid5uQYwRemTWdGMUjZQieJk9mBu7zC1D+MpGK4qEREsZ
+ Jvh2NH7F4FnMI6m5Ox1QryZk0rrhztfvHKb0Iq74doNBhbIr+z799iRd0
+ h4swj88P26Qdkj7Kgc+hKp2b0L8NUAtuyc7OE7ueIpJ/NZei8rH6VNJhI
+ olrdEHNyKWdjzz5aZFhjVRVm1njV3V2+ceN0CXydFm/m/uTPf4PrMYpeJ
+ 28kmkNR5U6QNL6Vhw3bi/92UoJ2tr5o5lWPwZ6dW+/muLROKmeWUlygjn g==;
+X-CSE-ConnectionGUID: +w/orFDdRrun7Lgx2pjgNQ==
+X-CSE-MsgGUID: L3wCq9BVQFmeavewJLCpRg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11084"; a="13286027"
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="13286027"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2024 02:53:47 -0700
+X-CSE-ConnectionGUID: yeS/vLVGS96D9Qsre28CeA==
+X-CSE-MsgGUID: /G/k4l2NS/uO0McdkEG5Og==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,192,1712646000"; d="scan'208";a="57904338"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa002.fm.intel.com with ESMTP; 27 May 2024 02:53:38 -0700
+Date: Mon, 27 May 2024 18:09:01 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
+ jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, imammedo@redhat.com,
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
+ eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
+ mst@redhat.com, will@kernel.org, gshan@redhat.com,
+ rafael@kernel.org, alex.bennee@linaro.org, linux@armlinux.org.uk,
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
+ lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>
+Subject: Re: [PATCH V11 1/8] accel/kvm: Extract common KVM vCPU {creation,
+ parking} code
+Message-ID: <ZlRbvdTEcqgoEmuo@intel.com>
+References: <20240522211111.232114-1-salil.mehta@huawei.com>
+ <20240522211111.232114-2-salil.mehta@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] tests/avocado: sbsa-ref: switch from OpenBSD to
- FreeBSD
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>
-References: <20240523183928.37809-1-marcin.juszkiewicz@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240523183928.37809-1-marcin.juszkiewicz@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240522211111.232114-2-salil.mehta@huawei.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,134 +95,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/5/24 20:39, Marcin Juszkiewicz wrote:
-> FreeBSD has longer support cycle for stable release (14.x EoL in 2028)
-> than OpenBSD (7.3 we used is already EoL). Also bugfixes are backported
-> so we can stay on 14.x for longer.
+On Wed, May 22, 2024 at 10:11:04PM +0100, Salil Mehta via wrote:
+> Date: Wed, 22 May 2024 22:11:04 +0100
+> From: Salil Mehta via <qemu-devel@nongnu.org>
+> Subject: [PATCH V11 1/8] accel/kvm: Extract common KVM vCPU {creation,
+>  parking} code
+> X-Mailer: git-send-email 2.34.1
 > 
-> Planned to upgrade to newer OpenBSD but we would have to wait for 7.6
-> release to get Neoverse-V1/N2 support.
+> KVM vCPU creation is done once during the vCPU realization when Qemu vCPU thread
+> is spawned. This is common to all the architectures as of now.
 > 
-> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but the
+> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM doesn't
+> support vCPU removal. Therefore, its representative KVM vCPU object/context in
+> Qemu is parked.
+> 
+> Refactor architecture common logic so that some APIs could be reused by vCPU
+> Hotplug code of some architectures likes ARM, Loongson etc. Update new/old APIs
+> with trace events. No functional change is intended here.
+> 
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   tests/avocado/machine_aarch64_sbsaref.py | 65 ++++++++++++++++--------
->   1 file changed, 43 insertions(+), 22 deletions(-)
+>  accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++--------------
+>  accel/kvm/kvm-cpus.h   | 23 ++++++++++
+>  accel/kvm/trace-events |  5 ++-
+>  3 files changed, 90 insertions(+), 33 deletions(-)
 > 
-> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-> index 98c76c1ff7..c3c7c0e639 100644
-> --- a/tests/avocado/machine_aarch64_sbsaref.py
-> +++ b/tests/avocado/machine_aarch64_sbsaref.py
-> @@ -1,4 +1,4 @@
-> -# Functional test that boots a Linux kernel and checks the console
-> +# Functional test that boots a kernel and checks the console
->   #
->   # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
->   # SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
-> @@ -177,14 +177,14 @@ def test_sbsaref_alpine_linux_max(self):
->       # This tests the whole boot chain from EFI to Userspace
->       # We only boot a whole OS for the current top level CPU and GIC
->       # Other test profiles should use more minimal boots
-> -    def boot_openbsd73(self, cpu):
-> +    def boot_freebsd14(self, cpu):
->           self.fetch_firmware()
->   
->           img_url = (
-> -            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img"
-> +            "https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/14.0/FreeBSD-14.0-RELEASE-arm64-aarch64-bootonly.iso"
->           )
->   
-> -        img_hash = "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
-> +        img_hash = "2f3ceb0ef6b1de53553abb9979a6d65f51b006dbfa985798b282812ecb758c1b"
->           img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
->   
->           self.vm.set_console()
-> @@ -196,43 +196,64 @@ def boot_openbsd73(self, cpu):
->           )
->   
->           self.vm.launch()
-> -        wait_for_console_pattern(self,
-> -                                 "Welcome to the OpenBSD/arm64"
-> -                                 " 7.3 installation program.")
-> +        wait_for_console_pattern(self, "Welcome to FreeBSD!")
->   
-> -    def test_sbsaref_openbsd73_cortex_a57(self):
-> +    def test_sbsaref_freebsd14_cortex_a57(self):
->           """
->           :avocado: tags=cpu:cortex-a57
-> -        :avocado: tags=os:openbsd
-> +        :avocado: tags=os:freebsd
->           """
-> -        self.boot_openbsd73("cortex-a57")
-> +        self.boot_freebsd14("cortex-a57")
->   
-> -    def test_sbsaref_openbsd73_neoverse_n1(self):
-> +    def test_sbsaref_freebsd14_neoverse_n1(self):
->           """
->           :avocado: tags=cpu:neoverse-n1
-> -        :avocado: tags=os:openbsd
-> +        :avocado: tags=os:freebsd
->           """
-> -        self.boot_openbsd73("neoverse-n1")
-> +        self.boot_freebsd14("neoverse-n1")
->   
-> -    def test_sbsaref_openbsd73_max_pauth_off(self):
-> +    def test_sbsaref_freebsd14_neoverse_n2_pauth_off(self):
-> +        """
-> +        :avocado: tags=cpu:neoverse-n2
-> +        :avocado: tags=os:freebsd
-> +        """
-> +        self.boot_freebsd14("neoverse-n2,pauth=off")
-> +
-> +    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
 
-Nitpicking, maybe 'Test might timeout due to PAuth'? (few occurrences).
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +    def test_sbsaref_freebsd14_neoverse_n2_pauth_impdef(self):
-> +        """
-> +        :avocado: tags=cpu:neoverse-n2
-> +        :avocado: tags=os:freebsd
-> +        """
-> +        self.boot_freebsd14("neoverse-n2,pauth-impdef=on")
-> +
-> +    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-> +    def test_sbsaref_freebsd14_neoverse_n2(self):
-> +        """
-> +        :avocado: tags=cpu:neoverse-n2
-> +        :avocado: tags=os:freebsd
-> +        """
-> +        self.boot_freebsd14("neoverse-n2")
-> +
-> +    def test_sbsaref_freebsd14_max_pauth_off(self):
->           """
->           :avocado: tags=cpu:max
-> -        :avocado: tags=os:openbsd
-> +        :avocado: tags=os:freebsd
->           """
-> -        self.boot_openbsd73("max,pauth=off")
-> +        self.boot_freebsd14("max,pauth=off")
->   
->       @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-> -    def test_sbsaref_openbsd73_max_pauth_impdef(self):
-> +    def test_sbsaref_freebsd14_max_pauth_impdef(self):
->           """
->           :avocado: tags=cpu:max
-> -        :avocado: tags=os:openbsd
-> +        :avocado: tags=os:freebsd
->           """
-> -        self.boot_openbsd73("max,pauth-impdef=on")
-> +        self.boot_freebsd14("max,pauth-impdef=on")
->   
->       @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-> -    def test_sbsaref_openbsd73_max(self):
-> +    def test_sbsaref_freebsd14_max(self):
->           """
->           :avocado: tags=cpu:max
-> -        :avocado: tags=os:openbsd
-> +        :avocado: tags=os:freebsd
->           """
-> -        self.boot_openbsd73("max")
-> +        self.boot_freebsd14("max")
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
