@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294C9C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 14:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 334FCC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 14:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBbB5-0007G1-ST; Mon, 27 May 2024 10:18:19 -0400
+	id 1sBbRo-0003ic-IZ; Mon, 27 May 2024 10:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
- id 1sBbB4-0007FG-AD
- for qemu-devel@nongnu.org; Mon, 27 May 2024 10:18:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBbRm-0003i8-Sg
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 10:35:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
- id 1sBbB2-000710-KT
- for qemu-devel@nongnu.org; Mon, 27 May 2024 10:18:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sBbRl-0001Ol-5j
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 10:35:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716819495;
+ s=mimecast20190719; t=1716820526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LX0EHSEVJhD0lg4/D+XzVCe5VLKa2SwS9nSvAcHA4Gk=;
- b=OSNQ+k5bcQLdcZubnHYhd7iAKssU7E71pkCqnf0L0PP2ZLNt1Si3Z9/Pj7osrCWyYe976+
- Ayx8VC5seExwlL+g4RKJYssgOpW9nkHhqBKxWAcA91tZ+pto8kAKW7C4sD0qwsxM+rJcRK
- xk4Y+ZIpqErs9YwS0Gl8tuiQjL0/F50=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MwL2OENyT+cl4QjB2/7FNguYnY74UqePBN3QLxtRQbc=;
+ b=ZRUqcUkUzQdcm2GHtyg0ho0MVGDZZqub8LG95U4aoUjE6WoOeqXXlQEkD0wxYBQ7mEsyo5
+ 0ZmSpR3GPp0JNE4AKlQERvGA7V1jtVnDJqQY5FRIZsOaDmr2XaNXJGTDm3WeYD3mT6paSt
+ qbpFaMp5/oNeXDSw6WEDJ7a6xls/ZD4=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-90UCNmMtOla86tTAFzU7vw-1; Mon, 27 May 2024 10:17:02 -0400
-X-MC-Unique: 90UCNmMtOla86tTAFzU7vw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-354fc05816dso2105821f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 07:17:02 -0700 (PDT)
+ us-mta-690-thj83V22PXSvuZRn-9HPZw-1; Mon, 27 May 2024 10:35:25 -0400
+X-MC-Unique: thj83V22PXSvuZRn-9HPZw-1
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3d1c2de9170so8884b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 07:35:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716819420; x=1717424220;
+ d=1e100.net; s=20230601; t=1716820524; x=1717425324;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LX0EHSEVJhD0lg4/D+XzVCe5VLKa2SwS9nSvAcHA4Gk=;
- b=BrdzqBK7co7FZA+zjMXZWp4QmNfcbSxOk7/VBqCDJcoWKUQW9Zm+6b4HDUCcNiTXDT
- ft0PNoJSheca0DmqwasI32/1VG4SLuEsud/gvh3Y1lO6fuBIsYYx/6x+ihDDrsRyH6Uo
- tkE5THcMPv72zb9D1WhV67yTm4Ut/nDfYTPYZ0mNztYmhgEVfV0txNPPoEkN6wjcfM3b
- Kgxk+Ny+9qB6PVuzX8fXR8JTWONxfelZycy6o2PUg8xS5axWrnuHkort7dxnkWAycwaU
- qOMRa6/3Tjx0jmwgiCz16anpsvTMBIjVKOxCvrQxK2mtS4aIN0FQeGAeSVrKIYcYuEhM
- EwHw==
-X-Gm-Message-State: AOJu0Yz/lTKGg6reA96Jv2dmuZKOejUOSVq1YqShq4prnE96X+VZtOYv
- FplR5xTGY8w41cxBa3YwjJcnOOAAdgyQtLQ5HfRf71R6UcH6tcvRpfoElIp7aJWgi8Gf833zoLv
- B5qjjcY+7JijhjfOv1GPReQVn5TJBc81Vpxl+iKAL1Ayt8HEpebdZ
-X-Received: by 2002:adf:e38a:0:b0:354:f7a1:261a with SMTP id
- ffacd0b85a97d-3552fdfcb54mr5533897f8f.71.1716819420683; 
- Mon, 27 May 2024 07:17:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFixC3YRAO/TjP+RlE+ED3kassFFjU+kGYsHkRtWZlN3pWtVUV/d+zEb27mULmv4T3efl8/fQ==
-X-Received: by 2002:adf:e38a:0:b0:354:f7a1:261a with SMTP id
- ffacd0b85a97d-3552fdfcb54mr5533880f8f.71.1716819420256; 
- Mon, 27 May 2024 07:17:00 -0700 (PDT)
-Received: from fedora ([2a01:e0a:257:8c60:80f1:cdf8:48d0:b0a1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3587724c6f4sm4214474f8f.28.2024.05.27.07.16.59
+ bh=MwL2OENyT+cl4QjB2/7FNguYnY74UqePBN3QLxtRQbc=;
+ b=nBu42R6dpuOMDk/7cgIEXc5nGkLAR7cQebMshe5XUnhTssZFBpMvMD96goQ3061PRw
+ VKAtfKKckPR5XGOeH6Bw3qJRZuWKyhWGm6W5KzRZ1ygeLfSbhpbLTYdK3UdhwmBYp0AX
+ 3M+wl5wpt3jKnaIZTEcqTfrcmpaUmbB2t302/2DQVavHWEU887FIEi0vj7rhhttfARJT
+ DUeFBOjGX91scCAdKYL0vEeLHlQaofmnpc/b7OOK7u9i4W4H+T3JAr9Dyp4nPpuFrWeS
+ 2eU25BtcyrlpJqWwGX6NQFK3ABkPcN8kGeSBoXYvehJBVw1g6MMqQLk68R0bR+c6RSgR
+ cXHA==
+X-Gm-Message-State: AOJu0Yx4axxVjGc9d0LSE3AGPM26xIaJx18Uo4alwJT8u6sHDUUDPk2v
+ A+KUCCBd0NrYgy2I/ij3RFD1+qiUkeX+pBBUMBIJOd527rduj7MqhO0/7LZmGt6/aeyLrGsjmtA
+ 1aDmDnolQ7caWib4Bzvqmksa945zz9Gs6nDBD7MnGD9KXxWXThrAu
+X-Received: by 2002:a05:6808:2015:b0:3c8:4de7:6736 with SMTP id
+ 5614622812f47-3d1a9190978mr11998372b6e.4.1716820524119; 
+ Mon, 27 May 2024 07:35:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOVgOEgnjhH0GDVL4d5MRFfWWUQeQ4YNFCEfKR/9RYjH6/4ydY7vtK6y6eKQPN/MblNTsh9Q==
+X-Received: by 2002:a05:6808:2015:b0:3c8:4de7:6736 with SMTP id
+ 5614622812f47-3d1a9190978mr11998313b6e.4.1716820523216; 
+ Mon, 27 May 2024 07:35:23 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43fb18c1268sm34282201cf.87.2024.05.27.07.35.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 07:16:59 -0700 (PDT)
-Date: Mon, 27 May 2024 16:16:58 +0200
-From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/4] MAINTAINERS: drop audio maintainership
-Message-ID: <ZlSV2uSApV7dRe2d@fedora>
-References: <20240516120344.531521-1-kraxel@redhat.com>
- <20240516120344.531521-2-kraxel@redhat.com>
+ Mon, 27 May 2024 07:35:22 -0700 (PDT)
+Date: Mon, 27 May 2024 10:35:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, fam@euphon.net,
+ kwolf@redhat.com, hreitz@redhat.com, marcandre.lureau@redhat.com,
+ farosas@suse.de, pbonzini@redhat.com, richard.henderson@linaro.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 5/6] migration: Rephrase message on failure to save /
+ load Xen device state
+Message-ID: <ZlSaKHxJS7ZtMH0o@x1n>
+References: <20240513141703.549874-1-armbru@redhat.com>
+ <20240513141703.549874-6-armbru@redhat.com> <Zk-cZFil8GYo0JY8@x1n>
+ <87wmnfcyql.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240516120344.531521-2-kraxel@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mvaralar@redhat.com;
+In-Reply-To: <87wmnfcyql.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,41 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 16, 2024 at 02:03:38PM +0200, Gerd Hoffmann wrote:
-> Remove myself from audio (both devices and backend) entries.
-> Flip status to "Orphan" for entries which have nobody else listed.
+On Mon, May 27, 2024 at 12:53:22PM +0200, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  MAINTAINERS | 19 ++++---------------
->  1 file changed, 4 insertions(+), 15 deletions(-)
+> > On Mon, May 13, 2024 at 04:17:02PM +0200, Markus Armbruster wrote:
+> >> Functions that use an Error **errp parameter to return errors should
+> >> not also report them to the user, because reporting is the caller's
+> >> job.  When the caller does, the error is reported twice.  When it
+> >> doesn't (because it recovered from the error), there is no error to
+> >> report, i.e. the report is bogus.
+> >> 
+> >> qmp_xen_save_devices_state() and qmp_xen_load_devices_state() violate
+> >> this principle: they call qemu_save_device_state() and
+> >> qemu_loadvm_state(), which call error_report_err().
+> >> 
+> >> I wish I could clean this up now, but migration's error reporting is
+> >> too complicated (confused?) for me to mess with it.
+> >
+> > :-(
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1b79767d6196..7f52e2912fc3 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1913,8 +1913,7 @@ F: include/hw/xtensa/mx_pic.h
->  Devices
->  -------
->  Overall Audio frontends
-> -M: Gerd Hoffmann <kraxel@redhat.com>
-> -S: Odd Fixes
-> +S: Orphan
->  F: hw/audio/
->  F: include/hw/audio/
->  F: tests/qtest/ac97-test.c
-> @@ -2388,7 +2387,6 @@ F: hw/virtio/virtio-mem-pci.c
->  F: include/hw/virtio/virtio-mem.h
->  
->  virtio-snd
-> -M: Gerd Hoffmann <kraxel@redhat.com>
->  R: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->  S: Supported
->  F: hw/audio/virtio-snd.c
-> @@ -2767,7 +2765,6 @@ F: include/hw/hyperv/hv-balloon.h
+> If I understood how it's *supposed* to work, I might have a chance...
+> 
+> I can see a mixture of reporting errors directly (with error_report() &
+> friends), passing them to callers (via Error **errp), and storing them
+> in / retrieving them from MigrationState member @error.  This can't be
+> right.
+> 
+> I think a necessary first step towards getting it right is a shared
+> understanding how errors are to be handled in migration code.  This
+> includes how error data should flow from error source to error sink, and
+> what the possible sinks are.
 
-For virtio-snd, I can join as Reviewer if that helps.
+True.  I think the sink should always be MigrationState.error so far.
 
-Matias
+There's also the other complexity on detecting errors using either
+qemu_file_get_error() or migrate_get_error().. the error handling in
+migration is indeed prone to a cleanup.
+
+I've added a cleanup entry for migration todo page:
+
+https://wiki.qemu.org/ToDo/LiveMigration#Migration_error_detection_and_reporting
+
+Thanks,
+
+-- 
+Peter Xu
 
 
