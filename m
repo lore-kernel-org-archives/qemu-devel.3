@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8823AC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2929AC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 06:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBU32-0003CD-8X; Mon, 27 May 2024 02:41:32 -0400
+	id 1sBU49-0004FV-Sj; Mon, 27 May 2024 02:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU2z-0003AW-KO; Mon, 27 May 2024 02:41:29 -0400
+ id 1sBU33-0003Cw-Lo; Mon, 27 May 2024 02:41:33 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBU2x-0007Mr-Av; Mon, 27 May 2024 02:41:29 -0400
+ id 1sBU31-0007NB-WF; Mon, 27 May 2024 02:41:33 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D13526A3F5;
+ by isrv.corpit.ru (Postfix) with ESMTP id DE8B36A3F6;
  Mon, 27 May 2024 09:41:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 264A7D83ED;
+ by tsrv.corpit.ru (Postfix) with SMTP id 386A7D83EE;
  Mon, 27 May 2024 09:40:57 +0300 (MSK)
-Received: (nullmailer pid 50279 invoked by uid 1000);
+Received: (nullmailer pid 50282 invoked by uid 1000);
  Mon, 27 May 2024 06:40:56 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 07/19] tests/avocado: update sunxi kernel from armbian
- to 6.6.16
-Date: Mon, 27 May 2024 09:40:38 +0300
-Message-Id: <20240527064056.50205-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 08/19] .gitlab-ci.d/cirrus.yml: Shorten the runtime of
+ the macOS and FreeBSD jobs
+Date: Mon, 27 May 2024 09:40:39 +0300
+Message-Id: <20240527064056.50205-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
 References: <qemu-stable-7.2.12-20240527072010@cover.tls.msk.ru>
@@ -63,137 +62,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-The Linux kernel 5.10.16 binary for sunxi has been removed from
-apt.armbian.com. This means that the avocado tests for these machines
-will be skipped (status CANCEL) if the old binary isn't present in
-the avocado cache.
+Cirrus-CI introduced limitations to the free CI minutes. To avoid that
+we are consuming them too fast, let's drop the usual targets that are
+not that important since they are either a subset of another target
+(like i386 or ppc being a subset of x86_64 or ppc64 respectively), or
+since there is still a similar target with the opposite endianness
+(like xtensa/xtensael, microblaze/microblazeel etc.).
 
-Update to 6.6.16, in the same way we did in commit e384db41d8661
-when we moved to 5.10.16 in 2021.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2284
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Reviewed-by: Niek Linnenbank <nieklinnenbank@gmail.com>
-Tested-by: Niek Linnenbank <nieklinnenbank@gmail.com>
-Message-id: 20240415151845.1564201-1-peter.maydell@linaro.org
-(cherry picked from commit dcc5c018c7e6acddf81951bcbdf1019b9ab45f56)
+Message-ID: <20240429100113.53357-1-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit a88a04906b966ffdcda23a5a456abe10aa8c826e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: drop changes for tests which does not exists in 7.2)
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index ec07c64291..b54693869b 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -542,12 +542,12 @@ def test_arm_cubieboard_initrd(self):
-         :avocado: tags=accel:tcg
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun4i-a10-cubieboard.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
-@@ -583,12 +583,12 @@ def test_arm_cubieboard_sata(self):
-         :avocado: tags=accel:tcg
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun4i-a10-cubieboard.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         rootfs_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
-@@ -713,12 +713,12 @@ def test_arm_orangepi(self):
-         :avocado: tags=accel:tcg
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index c86487da5b..f6e97c47f1 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -68,6 +68,7 @@ x64-freebsd-13-build:
+     CIRRUS_VM_RAM: 8G
+     UPDATE_COMMAND: pkg update
+     INSTALL_COMMAND: pkg install -y
++    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
+     TEST_TARGETS: check
  
-         self.vm.set_console()
-@@ -739,12 +739,12 @@ def test_arm_orangepi_initrd(self):
-         :avocado: tags=machine:orangepi-pc
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
-@@ -785,12 +785,12 @@ def test_arm_orangepi_sd(self):
-         self.require_netdev('user')
+ aarch64-macos-12-base-build:
+@@ -83,6 +84,7 @@ aarch64-macos-12-base-build:
+     INSTALL_COMMAND: brew install
+     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
++    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
+     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
  
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         rootfs_url = ('http://storage.kernelci.org/images/rootfs/buildroot/'
-                       'buildroot-baseline/20221116.0/armel/rootfs.ext2.xz')
-diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index 00a26e4a0c..154de3ab5e 100644
---- a/tests/avocado/replay_kernel.py
-+++ b/tests/avocado/replay_kernel.py
-@@ -185,12 +185,12 @@ def test_arm_cubieboard_initrd(self):
-         :avocado: tags=machine:cubieboard
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun4i-a10-cubieboard.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
+ 
 -- 
 2.39.2
 
