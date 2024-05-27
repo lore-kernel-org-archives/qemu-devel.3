@@ -4,106 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA997C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 22:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D03C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 22:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBjCn-0003jc-TZ; Mon, 27 May 2024 18:52:37 -0400
+	id 1sBjFR-0004hT-Iy; Mon, 27 May 2024 18:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sBjCm-0003jB-Hl
- for qemu-devel@nongnu.org; Mon, 27 May 2024 18:52:36 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sBjCk-0001lu-Js
- for qemu-devel@nongnu.org; Mon, 27 May 2024 18:52:36 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6A17F1FFC3;
- Mon, 27 May 2024 22:52:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716850352; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3/qbMfx3PYFNdZvSICr1x7eDWGcYOgjDAe9zAdmpyY4=;
- b=pGAfuisn3NPk9Eym1VQHMNu7W0VWA/LPl880J7H7Ym/qJEe5X3k03dV/k8s/WMsO0JFzjJ
- pFXVyiXdqWXRAu7QlbNI0d39GI5Rf5ZUK0Uy73oybkDPI2mFy1CLWa/LQiEVuyE3j9RmhI
- jme3rAEgK6ZvfetRIOw8EanmRsB9KQ0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716850352;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3/qbMfx3PYFNdZvSICr1x7eDWGcYOgjDAe9zAdmpyY4=;
- b=VFTOYBGrqkt2eNziaI+0ItzjXsawRGUoL3RCBS4QXmlvFjgtPIcYen/l1W3S93pcZafS0/
- pmq41+2muP6mPKCQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716850351; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3/qbMfx3PYFNdZvSICr1x7eDWGcYOgjDAe9zAdmpyY4=;
- b=jLiwbciH3FFN0yLowbneGfZm11duxcnjsMWxuqjgvlDjG5e+yoLDR875Jii2qP3XhiapsA
- OzaPjnwp9KU3+z+j/+ZOucTS0QjatmlIopC0NrK1AaXCeqeyEEVbh8RWNMMi6gVNTT6hE8
- 0+cNjT0Vx0l9eprwQgLREg5XZL+gUvU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716850351;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3/qbMfx3PYFNdZvSICr1x7eDWGcYOgjDAe9zAdmpyY4=;
- b=HyIJincywn2bfHvGoWC/PyF8v7/FG6sDL3k8jqAq6bt7h9CEMJ+7i0QJvKRerWKStCK9VR
- fNomVEd3y/CRwOBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E604B13A6B;
- Mon, 27 May 2024 22:52:30 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id prH5Kq4OVWb9UQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 27 May 2024 22:52:30 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, =?utf-8?Q?Marc-?=
- =?utf-8?Q?Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>, Het Gala
- <het.gala@nutanix.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [RFC PATCH 2/4] tests/qtest/migration: Add a test that runs
- vmstate-static-checker
-In-Reply-To: <ZlT11c-9IDwVfm52@x1n>
-References: <20240523201922.28007-1-farosas@suse.de>
- <20240523201922.28007-3-farosas@suse.de> <ZlT11c-9IDwVfm52@x1n>
-Date: Mon, 27 May 2024 19:52:28 -0300
-Message-ID: <87zfsag95f.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sBjFQ-0004h9-0m; Mon, 27 May 2024 18:55:20 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sBjFM-0001wj-Jc; Mon, 27 May 2024 18:55:19 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A40384E6004;
+ Tue, 28 May 2024 00:55:13 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id o_UhACqbAKQi; Tue, 28 May 2024 00:55:11 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 5624F4E6001; Tue, 28 May 2024 00:55:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 53E6D7470B7;
+ Tue, 28 May 2024 00:55:11 +0200 (CEST)
+Date: Tue, 28 May 2024 00:55:11 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: TCG change broke MorphOS boot on sam460ex
+In-Reply-To: <01b67a5a-111c-ba3a-f51d-9c8a5b228500@eik.bme.hu>
+Message-ID: <db82c283-5b16-7dab-c0b5-b0c04ac752e7@eik.bme.hu>
+References: <fe59ceb1-e8cd-f488-d6f0-6372923a8a33@eik.bme.hu>
+ <48e5e0b8-9b0a-4c9f-9f3e-c30e2fddc502@linaro.org>
+ <2a286d38-1fd7-d53a-d7db-e953e6aefbf2@eik.bme.hu>
+ <3386e6ec-9b87-fa01-9bf0-967a362bf90a@eik.bme.hu>
+ <D0A8CN9E4ZZG.3RV43XZWO6S5H@gmail.com>
+ <01b67a5a-111c-ba3a-f51d-9c8a5b228500@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-878347133-1716850511=:90539"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,153 +69,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Thu, May 23, 2024 at 05:19:20PM -0300, Fabiano Rosas wrote:
->> We have the vmstate-static-checker script that takes the output of:
->> '$QEMU -M $machine -dump-vmstate' for two different QEMU versions and
->> compares them to check for compatibility breakages. This is just too
->> simple and useful for us to pass on it. Add a test that runs the
->> script.
+--3866299591-878347133-1716850511=:90539
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 28 May 2024, BALATON Zoltan wrote:
+> On Wed, 3 Apr 2024, Nicholas Piggin wrote:
+>> On Tue Apr 2, 2024 at 9:32 PM AEST, BALATON Zoltan wrote:
+>>> On Thu, 21 Mar 2024, BALATON Zoltan wrote:
+>>>> On 27/2/24 17:47, BALATON Zoltan wrote:
+>>>>> Hello,
+>>>>> 
+>>>>> Commit 18a536f1f8 (accel/tcg: Always require can_do_io) broke booting
+>>>>> MorphOS on sam460ex (this was before 8.2.0 and I thought I've verified 
+>>>>> it
+>>>>> before that release but apparently missed it back then). It can be
+>>>>> reproduced with https://www.morphos-team.net/morphos-3.18.iso and 
+>>>>> following
+>>>>> command:
+>>>>> 
+>>>>> qemu-system-ppc -M sam460ex -serial stdio -d unimp,guest_errors \
+>>>>>    -drive if=none,id=cd,format=raw,file=morphos-3.18.iso \
+>>>>>    -device ide-cd,drive=cd,bus=ide.1
+>>> 
+>>> Any idea on this one? While MorphOS boots on other machines and other OSes
+>>> seem to boot on this machine it may still suggest there's some problem
+>>> somewhere as this worked before. So it may worth investigating it to make
+>>> sure there's no bug that could affect other OSes too even if they boot. I
+>>> don't know how to debug this so some help would be needed.
 >> 
->> Since this needs to use two different QEMU versions, the test is
->> skipped if only one QEMU is provided. The infrastructure for passing
->> more than one binary is already in place:
+>> In the bad case it crashes after running this TB:
 >> 
->> $ PYTHON=$(which python3.11) \
->>  QTEST_QEMU_BINARY_SRC=../build-previous/qemu-system-x86_64 \
->>  QTEST_QEMU_BINARY=./qemu-system-x86_64 \
->>  ./tests/qtest/migration-test -p /x86_64/migration/vmstate-checker-script
+>> ----------------
+>> IN:
+>> 0x00c01354:  38c00040  li       r6, 0x40
+>> 0x00c01358:  38e10204  addi     r7, r1, 0x204
+>> 0x00c0135c:  39010104  addi     r8, r1, 0x104
+>> 0x00c01360:  39410004  addi     r10, r1, 4
+>> 0x00c01364:  39200000  li       r9, 0
+>> 0x00c01368:  7cc903a6  mtctr    r6
+>> 0x00c0136c:  84c70004  lwzu     r6, 4(r7)
+>> 0x00c01370:  7cc907a4  tlbwehi  r6, r9
+>> 0x00c01374:  84c80004  lwzu     r6, 4(r8)
+>> 0x00c01378:  7cc90fa4  tlbwelo  r6, r9
+>> 0x00c0137c:  84ca0004  lwzu     r6, 4(r10)
+>> 0x00c01380:  7cc917a4  tlbwehi  r6, r9
+>> 0x00c01384:  39290001  addi     r9, r9, 1
+>> 0x00c01388:  4200ffe4  bdnz     0xc0136c
+>> ----------------
+>> IN:
+>> 0x00c01374: unable to read memory
+>> ----------------
 >> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->> some code duplication for now, just so we can reason about this
->> without too much noise
->> ---
->>  tests/qtest/migration-test.c | 82 ++++++++++++++++++++++++++++++++++++
->>  1 file changed, 82 insertions(+)
+>> "unable to read memory" is the tracer, it does actually translate
+>> the address, but it points to a wayward real address which returns
+>> 0 to TCG, which is an invalid instruction.
 >> 
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index e8d3555f56..2253e0fc5b 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
->> @@ -63,6 +63,7 @@ static QTestMigrationState dst_state;
->>  #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
->>  
->>  #define ANALYZE_SCRIPT "scripts/analyze-migration.py"
->> +#define VMSTATE_CHECKER_SCRIPT "scripts/vmstate-static-checker.py"
->>  
->>  #define QEMU_VM_FILE_MAGIC 0x5145564d
->>  #define FILE_TEST_FILENAME "migfile"
->> @@ -1611,6 +1612,85 @@ static void test_analyze_script(void)
->>      test_migrate_end(from, to, false);
->>      cleanup("migfile");
->>  }
->> +
->> +static void test_vmstate_checker_script(void)
->> +{
->> +    g_autofree gchar *cmd_src = NULL;
->> +    g_autofree gchar *cmd_dst = NULL;
->> +    g_autofree gchar *vmstate_src = NULL;
->> +    g_autofree gchar *vmstate_dst = NULL;
->> +    const char *machine_alias, *machine_opts = "";
->> +    g_autofree char *machine = NULL;
->> +    const char *arch = qtest_get_arch();
->> +    int pid, wstatus;
->> +    const char *python = g_getenv("PYTHON");
->> +
->> +    if (!getenv(QEMU_ENV_SRC) && !getenv(QEMU_ENV_DST)) {
->> +        g_test_skip("Test needs two different QEMU versions");
->> +        return;
->> +    }
->> +
->> +    if (!python) {
->> +        g_test_skip("PYTHON variable not set");
->> +        return;
->> +    }
->> +
->> +    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
->> +        if (g_str_equal(arch, "i386")) {
->> +            machine_alias = "pc";
->> +        } else {
->> +            machine_alias = "q35";
->> +        }
->> +    } else if (g_str_equal(arch, "s390x")) {
->> +        machine_alias = "s390-ccw-virtio";
->> +    } else if (strcmp(arch, "ppc64") == 0) {
->> +        machine_alias = "pseries";
->> +    } else if (strcmp(arch, "aarch64") == 0) {
->> +        machine_alias = "virt";
->> +    } else {
->> +        g_assert_not_reached();
->> +    }
->> +
->> +    if (!qtest_has_machine(machine_alias)) {
->> +        g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
->> +        g_test_skip(msg);
->> +        return;
->> +    }
->> +
->> +    machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
->> +                                      QEMU_ENV_DST);
->> +
->> +    vmstate_src = g_strdup_printf("%s/vmstate-src", tmpfs);
->> +    vmstate_dst = g_strdup_printf("%s/vmstate-dst", tmpfs);
->> +
->> +    cmd_dst = g_strdup_printf("-machine %s,%s -dump-vmstate %s",
->> +                              machine, machine_opts, vmstate_dst);
->> +    cmd_src = g_strdup_printf("-machine %s,%s -dump-vmstate %s",
->> +                              machine, machine_opts, vmstate_src);
->> +
->> +    qtest_init_with_env_no_handshake(QEMU_ENV_SRC, cmd_src);
->> +    qtest_init_with_env_no_handshake(QEMU_ENV_DST, cmd_dst);
->> +
->> +    pid = fork();
->> +    if (!pid) {
->> +        close(1);
->> +        open("/dev/null", O_WRONLY);
->> +        execl(python, python, VMSTATE_CHECKER_SCRIPT,
->> +              "-s", vmstate_src,
->> +              "-d", vmstate_dst,
->> +              NULL);
->> +        g_assert_not_reached();
->> +    }
->> +
->> +    g_assert(waitpid(pid, &wstatus, 0) == pid);
->> +    if (!WIFEXITED(wstatus) || WEXITSTATUS(wstatus) != 0) {
->> +        g_test_message("Failed to run vmstate-static-checker.py");
->> +        g_test_fail();
->> +    }
->> +
->> +    cleanup("vmstate-src");
->> +    cleanup("vmstate-dst");
->> +}
+>> The good case instead doesn't exit the TB after 0x00c01370 but after
+>> the complete loop at the bdnz. That look like this after the same
+>> first TB:
+>> 
+>> ----------------
+>> IN:
+>> 0x00c0136c:  84c70004  lwzu     r6, 4(r7)
+>> 0x00c01370:  7cc907a4  tlbwehi  r6, r9
+>> 0x00c01374:  84c80004  lwzu     r6, 4(r8)
+>> 0x00c01378:  7cc90fa4  tlbwelo  r6, r9
+>> 0x00c0137c:  84ca0004  lwzu     r6, 4(r10)
+>> 0x00c01380:  7cc917a4  tlbwehi  r6, r9
+>> 0x00c01384:  39290001  addi     r9, r9, 1
+>> 0x00c01388:  4200ffe4  bdnz     0xc0136c
+>> ----------------
+>> IN:
+>> 0x00c0138c:  4c00012c  isync
+>> 
+>> All the tlbwe are executed in the same TB. MMU tracing shows the
+>> first tlbwehi creates a new valid(!) TLB for 0x00000000-0x100000000
+>> that has a garbage RPN because the tlbwelo did not run yet.
+>> 
+>> What's happening in the bad case is that the translator breaks
+>> and "re-fetches" instructions in the middle of that sequence, and
+>> that's where the bogus translation causes 0 to be returned. The
+>> good case the whole block is executed in the same fetch which
+>> creates correct translations.
+>> 
+>> So it looks like a morphos bug, the can-do-io change just happens
+>> to cause it to re-fetch in that place, but that could happen for
+>> a number of reasons, so you can't rely on TLB *only* changing or
+>> ifetch *only* re-fetching at a sync point like isync.
+>> 
+>> I would expect code like this to write an invalid entry with tlbwehi,
+>> then tlbwelo to set the correct RPN, then make the entry valid with
+>> the second tlbwehi. It would probably fix the bug if you just did the
+>> first tlbwehi with r6=0 (or at least without the 0x200 bit set).
 >
-> Did I ask before on whether this can be written without C?
-
-If you did I forgot about it, sorry.
-
-> I think this and also the analyze-script are more suitable to be written in
-> other ways, e.g., bash or python, no?
+> Revisiting this, I've found in the docs that PPC440 has shadow TLBs so this 
+> code can rely upon the TLB not being invalidated until isync and works on 
+> real machine but breaks on QEMU. We would either need to make sure the TB 
+> runs until the sync or somehow emulate the shadow TLB. I've experimented with 
+> the latter but I could not make it work (and unexpectedly keeping a cache of 
+> the most recently used entries is slower than always searching through all 
+> TLB entries as done now so I've abandoned that idea). The problem is that an 
+> entry is modified by multiple tlbwe instructions but these can come in any 
+> order (and sometimes only one of them is done like invalidating an entry 
+> seems to only do one write) so I don't know when to copy the new entry to the 
+> TLB and when to wait for more parts and keep the old one. Any idea how to fix 
+> this?
 >
+> Also I'm not sure if it's related but by running the stream benchmark on 
+> sam460ex now I can reproduce some memory access problem but I'm not sure what 
+> causes it. The full output of that benchmark under AmigaOS on sam460ex is 
+> this:
+>
+> -------------------------------------------------------------
+> STREAM version $Revision: 5.10 $
+> -------------------------------------------------------------
+> This system uses 8 bytes per array element.
+> -------------------------------------------------------------
+> Array size = 10000000 (elements), Offset = 0 (elements)
+> Memory per array = 76.3 MiB (= 0.1 GiB).
+> Total memory required = 228.9 MiB (= 0.2 GiB).
+> Each kernel will be executed 10 times.
+> The *best* time for each kernel (excluding the first iteration)
+> will be used to compute the reported bandwidth.
+> -------------------------------------------------------------
+> Your clock granularity/precision appears to be 3 microseconds.
+> Each test below will take on the order of 186279 microseconds.
+>   (= 62093 clock ticks)
+> Increase the size of the arrays if this shows that
+> you are not getting at least 20 clock ticks per test.
+> -------------------------------------------------------------
+> WARNING -- The above is only a rough guideline.
+> For best results, please be sure you know the
+> precision of your system timer.
+> -------------------------------------------------------------
+> Function    Best Rate MB/s  Avg time     Min time     Max time
+> Copy:            1723.8     0.095517     0.092821     0.103645
+> Scale:            790.2     0.206338     0.202479     0.214062
+> Add:              994.7     0.246171     0.241289     0.256950
+> Triad:            763.2     0.323731     0.314454     0.343873
+> -------------------------------------------------------------
+> Failed Validation on array a[], AvgRelAbsErr > epsilon (1.000000e-13)
+>     Expected Value: 1.153301e+12, AvgAbsErr: 1.137394e+12, AvgRelAbsErr: 
+> 9.862079e-01
+>     For array a[], 9863168 errors were found.
+> Failed Validation on array b[], AvgRelAbsErr > epsilon (1.000000e-13)
+>     Expected Value: 2.306602e+11, AvgAbsErr: 2.274872e+11, AvgRelAbsErr: 
+> 9.862438e-01
+>     AvgRelAbsErr > Epsilon (1.000000e-13)
+>     For array b[], 9863168 errors were found.
+> Failed Validation on array c[], AvgRelAbsErr > epsilon (1.000000e-13)
+>     Expected Value: 3.075469e+11, AvgAbsErr: 3.033024e+11, AvgRelAbsErr: 
+> 9.861989e-01
+>     AvgRelAbsErr > Epsilon (1.000000e-13)
+>     For array c[], 9863168 errors were found.
+> -------------------------------------------------------------
+>
+> while on amigaone or pegasos2 the same executable finishes with:
+> -------------------------------------------------------------
+> Solution Validates: avg error less than 1.000000e-13 on all three arrays
+> -------------------------------------------------------------
+>
+> On a real Sam460EX this same executable also validates as confirmed here:
+> https://www.amigans.net/modules/newbb/viewtopic.php?post_id=148020#forumpost148020
+>
+> The binary and source is from here:
+> http://os4depot.net/?function=showfile&file=utility/benchmark/stream.lha
+>
+> This binary runs on QEMU amigaone and pegasos2 that use G4 and validates so 
+> only seems to be a problem with 460EX. I've compiled the source for PPC Linux 
+> and tried running that with qemu-ppc linux-user to verify it which does not 
+> use MMU so it's expected to work and it does:
+>
+> $ qemu-ppc -cpu 460ex streamPPC
+> -------------------------------------------------------------
+> Based on STREAM version $Revision: 5.10 $
+> -------------------------------------------------------------
+> This system uses 8 bytes per array element.
+> -------------------------------------------------------------
+> Array size = 10000000 (elements), Offset = 0 (elements)
+> Memory per array = 76.3 MiB (= 0.1 GiB).
+> Total memory required = 228.9 MiB (= 0.2 GiB).
+> Each kernel will be executed 10 times.
+> The *best* time for each kernel (excluding the first iteration)
+> will be used to compute the reported bandwidth.
+> -------------------------------------------------------------
+> Your clock granularity/precision appears to be 1 microseconds.
+> Each test below will take on the order of 192649 microseconds.
+>   (= 192649 clock ticks)
+> Increase the size of the arrays if this shows that
+> you are not getting at least 20 clock ticks per test.
+> -------------------------------------------------------------
+> WARNING -- The above is only a rough guideline.
+> For best results, please be sure you know the
+> precision of your system timer.
+> -------------------------------------------------------------
+> Function    Best Rate MB/s  Avg time     Min time     Max time
+> Copy:            3191.5     0.050227     0.050133     0.050584
+> Scale:            889.5     0.181873     0.179880     0.183075
+> Add:             1174.7     0.207856     0.204303     0.213941
+> Triad:            683.0     0.354251     0.351415     0.358936
+> -------------------------------------------------------------
+> Solution Validates: avg error less than 1.000000e-13 on all three arrays
+> Results Validation Verbose Results:
+>    Expected a(1), b(1), c(1): 1153300781250.000000 230660156250.000000 
+> 307546875000.000000
+>    Observed a(1), b(1), c(1): 1153300781250.000000 230660156250.000000 
+> 307546875000.000000
+>    Rel Errors on a, b, c:     0.000000e+00 0.000000e+00 0.000000e+00
+> -------------------------------------------------------------
+>
+> or compiled with -O3 that was said to be used for the AmigaOS binary it's 
+> even better (as long as no FPU is used at least which is another known weak 
+> point of QEMU):
+>
+> $ qemu-ppc -cpu 460ex streamPPCpowerpcO3
+> -------------------------------------------------------------
+> Based on STREAM version $Revision: 5.10 $
+> -------------------------------------------------------------
+> This system uses 8 bytes per array element.
+> -------------------------------------------------------------
+> Array size = 10000000 (elements), Offset = 0 (elements)
+> Memory per array = 76.3 MiB (= 0.1 GiB).
+> Total memory required = 228.9 MiB (= 0.2 GiB).
+> Each kernel will be executed 10 times.
+> The *best* time for each kernel (excluding the first iteration)
+> will be used to compute the reported bandwidth.
+> -------------------------------------------------------------
+> Your clock granularity/precision appears to be 1 microseconds.
+> Each test below will take on the order of 171833 microseconds.
+>   (= 171833 clock ticks)
+> Increase the size of the arrays if this shows that
+> you are not getting at least 20 clock ticks per test.
+> -------------------------------------------------------------
+> WARNING -- The above is only a rough guideline.
+> For best results, please be sure you know the
+> precision of your system timer.
+> -------------------------------------------------------------
+> Function    Best Rate MB/s  Avg time     Min time     Max time
+> Copy:            8931.7     0.017950     0.017914     0.018114
+> Scale:           1078.1     0.151183     0.148407     0.153068
+> Add:             1359.3     0.178790     0.176561     0.184122
+> Triad:           1161.2     0.210525     0.206683     0.216876
+> -------------------------------------------------------------
+> Solution Validates: avg error less than 1.000000e-13 on all three arrays
+> Results Validation Verbose Results:
+>    Expected a(1), b(1), c(1): 1153300781250.000000 230660156250.000000 
+> 307546875000.000000
+>    Observed a(1), b(1), c(1): 1153300781250.000000 230660156250.000000 
+> 307546875000.000000
+>    Rel Errors on a, b, c:     0.000000e+00 0.000000e+00 0.000000e+00
+> -------------------------------------------------------------
+>
+> Then I've tried booting Linux on QEMU sam460ex and run my compiled Linux exe 
+> under that and it validates there so I could only reproduce this on AmigaOS
 
-I would prefer not to fragment the test framework. There's a bunch of
-infra already present in migration-test/libqtest that we would end up
-having to rewrite in the other languages.
+For completeness here's the run on sam460ex Linux:
 
->>  #endif
->>  
->>  static void test_precopy_common(MigrateCommon *args)
->> @@ -3495,6 +3575,8 @@ int main(int argc, char **argv)
->>  #ifndef _WIN32
->>      if (!g_str_equal(arch, "s390x")) {
->>          migration_test_add("/migration/analyze-script", test_analyze_script);
->> +        migration_test_add("/migration/vmstate-checker-script",
->> +                           test_vmstate_checker_script);
->>      }
->>  #endif
->>      migration_test_add("/migration/precopy/unix/plain",
->> -- 
->> 2.35.3
->> 
+$ ./streamPPCpowerpcO3
+-------------------------------------------------------------
+Based on STREAM version $Revision: 5.10 $
+-------------------------------------------------------------
+This system uses 8 bytes per array element.
+-------------------------------------------------------------
+Array size = 10000000 (elements), Offset = 0 (elements)
+Memory per array = 76.3 MiB (= 0.1 GiB).
+Total memory required = 228.9 MiB (= 0.2 GiB).
+Each kernel will be executed 10 times.
+  The *best* time for each kernel (excluding the first iteration)
+  will be used to compute the reported bandwidth.
+-------------------------------------------------------------
+Your clock granularity/precision appears to be 2 microseconds.
+Each test below will take on the order of 169662 microseconds.
+    (= 84831 clock ticks)
+Increase the size of the arrays if this shows that
+you are not getting at least 20 clock ticks per test.
+-------------------------------------------------------------
+WARNING -- The above is only a rough guideline.
+For best results, please be sure you know the
+precision of your system timer.
+-------------------------------------------------------------
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:            2143.7     0.075259     0.074636     0.076172
+Scale:            846.4     0.190517     0.189029     0.192099
+Add:             1043.7     0.232548     0.229945     0.237299
+Triad:            814.4     0.299620     0.294695     0.309323
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+Results Validation Verbose Results:
+     Expected a(1), b(1), c(1): 1153300781250.000000 230660156250.000000 307546875000.000000
+     Observed a(1), b(1), c(1): 1153300781250.000000 230660156250.000000 307546875000.000000
+     Rel Errors on a, b, c:     0.000000e+00 0.000000e+00 0.000000e+00
+-------------------------------------------------------------
+
+> with the binary in stream.lha but that binary works on real machine so there 
+> is some problem somewhere but I'm not sure what and how to debug it. I think 
+> this may be related to TLB writes though as AmigaOS seems to do a lot of 
+> those when running this test so maybe it hits some issues that does not 
+> happen normally. Fixing the known issue with missing shadow TLB as found with 
+> MorphOS might fix this too or we could at least rule that out then.
+
+Also it's not something that broke recently and thus could be bisected. I 
+get the same validation error with QEMU v8.2.0 before any embedded tlb 
+changes or even before that so it may be something pre existing and then 
+not related to the MorphOS boot problem above.
+
+> I'm open to ideas on this one as I don't have any on how to proceed.
+>
+> Regards,
+> BALATON Zoltan
+--3866299591-878347133-1716850511=:90539--
 
