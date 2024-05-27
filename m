@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B812C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A70C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBVeS-0004Gn-Fa; Mon, 27 May 2024 04:24:16 -0400
+	id 1sBVfl-0005c9-8W; Mon, 27 May 2024 04:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVcC-0000z2-Sm; Mon, 27 May 2024 04:21:57 -0400
+ id 1sBVdi-0001dD-Ie; Mon, 27 May 2024 04:23:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVcB-0000i6-53; Mon, 27 May 2024 04:21:56 -0400
+ id 1sBVdg-0000vD-IO; Mon, 27 May 2024 04:23:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 037116A563;
- Mon, 27 May 2024 11:22:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2D64C6A573;
+ Mon, 27 May 2024 11:22:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2E877D8500;
- Mon, 27 May 2024 11:21:39 +0300 (MSK)
-Received: (nullmailer pid 66369 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 58C0FD8510;
+ Mon, 27 May 2024 11:21:40 +0300 (MSK)
+Received: (nullmailer pid 66418 invoked by uid 1000);
  Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- zhenwei pi <pizhenwei@bytedance.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 06/44] backends/cryptodev-builtin: Fix local_error leaks
-Date: Mon, 27 May 2024 11:20:57 +0300
-Message-Id: <20240527082138.66217-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 22/44] target/sparc: Fix FMULD8*X16
+Date: Mon, 27 May 2024 11:21:13 +0300
+Message-Id: <20240527082138.66217-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,55 +62,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-It seems that this error does not need to be propagated to the upper,
-directly output the error to avoid the leaks
+Not only do these instructions have f32 inputs, they also do not
+perform rounding.  Since these are relatively simple, implement
+them properly inline.
 
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2283
-Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 06479dbf3d7d245572c4b3016e5a1d923ff04d66)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240502165528.244004-6-richard.henderson@linaro.org>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+(cherry picked from commit be8998e046c2a7e434494b75cf468ffd9d536025)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index a514bbb310..940104ee55 100644
---- a/backends/cryptodev-builtin.c
-+++ b/backends/cryptodev-builtin.c
-@@ -23,6 +23,7 @@
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 9cde2b69a5..fcb9c617b7 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -99,8 +99,6 @@ DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i32, i64)
+ DEF_HELPER_FLAGS_2(fmul8x16a, TCG_CALL_NO_RWG_SE, i64, i32, s32)
+ DEF_HELPER_FLAGS_2(fmul8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmul8ulx16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+-DEF_HELPER_FLAGS_2(fmuld8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+-DEF_HELPER_FLAGS_2(fmuld8ulx16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_1(fexpand, TCG_CALL_NO_RWG_SE, i64, i32)
+ DEF_HELPER_FLAGS_3(pdist, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fpack16, TCG_CALL_NO_RWG_SE, i32, i64, i64)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index a8ada6934a..8a2894bb9f 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -74,8 +74,6 @@
+ # define gen_helper_fmul8sux16           ({ qemu_build_not_reached(); NULL; })
+ # define gen_helper_fmul8ulx16           ({ qemu_build_not_reached(); NULL; })
+ # define gen_helper_fmul8x16             ({ qemu_build_not_reached(); NULL; })
+-# define gen_helper_fmuld8sux16          ({ qemu_build_not_reached(); NULL; })
+-# define gen_helper_fmuld8ulx16          ({ qemu_build_not_reached(); NULL; })
+ # define gen_helper_fpmerge              ({ qemu_build_not_reached(); NULL; })
+ # define gen_helper_fqtox                ({ qemu_build_not_reached(); NULL; })
+ # define gen_helper_fstox                ({ qemu_build_not_reached(); NULL; })
+@@ -730,6 +728,48 @@ static void gen_op_fmul8x16au(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
+     gen_helper_fmul8x16a(dst, src1, src2);
+ }
  
- #include "qemu/osdep.h"
- #include "sysemu/cryptodev.h"
-+#include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "standard-headers/linux/virtio_crypto.h"
- #include "crypto/cipher.h"
-@@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
-     case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
-     case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
-     default:
--        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
--                   sess_info->op_code);
-+        error_report("Unsupported opcode :%" PRIu32 "",
-+                     sess_info->op_code);
-         return -VIRTIO_CRYPTO_NOTSUPP;
-     }
++static void gen_op_fmuld8ulx16(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
++{
++    TCGv_i32 t0 = tcg_temp_new_i32();
++    TCGv_i32 t1 = tcg_temp_new_i32();
++    TCGv_i32 t2 = tcg_temp_new_i32();
++
++    tcg_gen_ext8u_i32(t0, src1);
++    tcg_gen_ext16s_i32(t1, src2);
++    tcg_gen_mul_i32(t0, t0, t1);
++
++    tcg_gen_extract_i32(t1, src1, 16, 8);
++    tcg_gen_sextract_i32(t2, src2, 16, 16);
++    tcg_gen_mul_i32(t1, t1, t2);
++
++    tcg_gen_concat_i32_i64(dst, t0, t1);
++}
++
++static void gen_op_fmuld8sux16(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
++{
++    TCGv_i32 t0 = tcg_temp_new_i32();
++    TCGv_i32 t1 = tcg_temp_new_i32();
++    TCGv_i32 t2 = tcg_temp_new_i32();
++
++    /*
++     * The insn description talks about extracting the upper 8 bits
++     * of the signed 16-bit input rs1, performing the multiply, then
++     * shifting left by 8 bits.  Instead, zap the lower 8 bits of
++     * the rs1 input, which avoids the need for two shifts.
++     */
++    tcg_gen_ext16s_i32(t0, src1);
++    tcg_gen_andi_i32(t0, t0, ~0xff);
++    tcg_gen_ext16s_i32(t1, src2);
++    tcg_gen_mul_i32(t0, t0, t1);
++
++    tcg_gen_sextract_i32(t1, src1, 16, 16);
++    tcg_gen_andi_i32(t1, t1, ~0xff);
++    tcg_gen_sextract_i32(t2, src2, 16, 16);
++    tcg_gen_mul_i32(t1, t1, t2);
++
++    tcg_gen_concat_i32_i64(dst, t0, t1);
++}
++
+ static void finishing_insn(DisasContext *dc)
+ {
+     /*
+@@ -4614,6 +4654,8 @@ static bool do_dff(DisasContext *dc, arg_r_r_r *a,
  
-@@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
+ TRANS(FMUL8x16AU, VIS1, do_dff, a, gen_op_fmul8x16au)
+ TRANS(FMUL8x16AL, VIS1, do_dff, a, gen_op_fmul8x16al)
++TRANS(FMULD8SUx16, VIS1, do_dff, a, gen_op_fmuld8sux16)
++TRANS(FMULD8ULx16, VIS1, do_dff, a, gen_op_fmuld8ulx16)
  
-     if (op_info->session_id >= MAX_NUM_SESSIONS ||
-               builtin->sessions[op_info->session_id] == NULL) {
--        error_setg(&local_error, "Cannot find a valid session id: %" PRIu64 "",
--                   op_info->session_id);
-+        error_report("Cannot find a valid session id: %" PRIu64 "",
-+                     op_info->session_id);
-         return -VIRTIO_CRYPTO_INVSESS;
-     }
+ static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
+                    void (*func)(TCGv_i64, TCGv_i32, TCGv_i64))
+@@ -4654,8 +4696,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
  
+ TRANS(FMUL8SUx16, VIS1, do_ddd, a, gen_helper_fmul8sux16)
+ TRANS(FMUL8ULx16, VIS1, do_ddd, a, gen_helper_fmul8ulx16)
+-TRANS(FMULD8SUx16, VIS1, do_ddd, a, gen_helper_fmuld8sux16)
+-TRANS(FMULD8ULx16, VIS1, do_ddd, a, gen_helper_fmuld8ulx16)
+ TRANS(FPMERGE, VIS1, do_ddd, a, gen_helper_fpmerge)
+ 
+ TRANS(FPADD16, VIS1, do_ddd, a, tcg_gen_vec_add16_i64)
+diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
+index ff2f43c23f..61c61c7fea 100644
+--- a/target/sparc/vis_helper.c
++++ b/target/sparc/vis_helper.c
+@@ -194,52 +194,6 @@ uint64_t helper_fmul8ulx16(uint64_t src1, uint64_t src2)
+     return d.ll;
+ }
+ 
+-uint64_t helper_fmuld8sux16(uint64_t src1, uint64_t src2)
+-{
+-    VIS64 s, d;
+-    uint32_t tmp;
+-
+-    s.ll = src1;
+-    d.ll = src2;
+-
+-#define PMUL(r)                                                         \
+-    tmp = (int32_t)d.VIS_SW64(r) * ((int32_t)s.VIS_SW64(r) >> 8);       \
+-    if ((tmp & 0xff) > 0x7f) {                                          \
+-        tmp += 0x100;                                                   \
+-    }                                                                   \
+-    d.VIS_L64(r) = tmp;
+-
+-    /* Reverse calculation order to handle overlap */
+-    PMUL(1);
+-    PMUL(0);
+-#undef PMUL
+-
+-    return d.ll;
+-}
+-
+-uint64_t helper_fmuld8ulx16(uint64_t src1, uint64_t src2)
+-{
+-    VIS64 s, d;
+-    uint32_t tmp;
+-
+-    s.ll = src1;
+-    d.ll = src2;
+-
+-#define PMUL(r)                                                         \
+-    tmp = (int32_t)d.VIS_SW64(r) * ((uint32_t)s.VIS_B64(r * 2));        \
+-    if ((tmp & 0xff) > 0x7f) {                                          \
+-        tmp += 0x100;                                                   \
+-    }                                                                   \
+-    d.VIS_L64(r) = tmp;
+-
+-    /* Reverse calculation order to handle overlap */
+-    PMUL(1);
+-    PMUL(0);
+-#undef PMUL
+-
+-    return d.ll;
+-}
+-
+ uint64_t helper_fexpand(uint32_t src2)
+ {
+     VIS32 s;
 -- 
 2.39.2
 
