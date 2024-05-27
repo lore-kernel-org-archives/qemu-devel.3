@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998DFC25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C0F1C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 16:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBdAV-0005Hn-BU; Mon, 27 May 2024 12:25:51 -0400
+	id 1sBdPq-0000vl-5t; Mon, 27 May 2024 12:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBdAT-0005HQ-TB
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:25:49 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBdAF-0004ne-MI
- for qemu-devel@nongnu.org; Mon, 27 May 2024 12:25:49 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4202ca70270so63686945e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 09:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716827134; x=1717431934; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pHCRB1EKjD0Nhx9Lp4qHLpHLpjYqMbPoKLCmaUHOhBk=;
- b=N6jt3qm9Qwyzvfc590Ciub4socgShR5n73PMq8KPy9LH6QTRKrsXX4Fq9Gbfh2axVD
- h6F44D4G/gW3O3/PMhC7PvGUyRQkHUKkvrvDymsZdlWTi+GY9rdwnZ9nmBR7fCb0c7TB
- r6z34062lf9YeFxr7pOtk8e6whcToeMnf8xQa0RC/MhsDsceIraMdSRbH3nn7tjXU1iy
- A+VPlxTnQ0ivbDWdIR4NzO8rnBByTFCFj7ch1cEG9fAXQes0WAcrNOVS6eT4bTPRix/s
- 5sA8yD9BI3qnpwpcuiv0GbDI93oc1mdg5n17g/iPGVjzVt9p4WTztMhtGlT6TcySg88T
- KE4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716827134; x=1717431934;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pHCRB1EKjD0Nhx9Lp4qHLpHLpjYqMbPoKLCmaUHOhBk=;
- b=AYdwlpjgVf0Vo5Gw2cDAmPdAQYgvsXwQY99Z70c2fYrSUsh3079cEXPtYSoQBv1BlZ
- O/Pu3Og25qfFMOsVMbU34xROJJxtClqlrPwz2EY/5jJIB7+1oaswUHcNf1E5WDA6EZZt
- /MNoxB1ADTIL7eok1Ge0hvjcpr/AXxJtr2vHoZoZ08Vlg5Ap+ddjNWusX3Qx8xdjWrYk
- h4nwKTHZWS5Jk+7/mIMA/9dYDBG9s1cOt8jI6CHfSLbnL83LkImf0iUX6wIKyQpmMdyv
- FuTFSs4raV1oXB5twAC0kYMtKR05lwxdeJHgQ3/DeK/8IgHKZWf8FGLkMrsiqCX+yZB+
- Wylg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVFJT9rsAIaGsFJ+NYutvtu7kv7qdhHvxh2S3NLaawOSGhvwwTFupZiWZhbVXal/xGpiiVKTI9W/EVtvs233ZG1OthlqM=
-X-Gm-Message-State: AOJu0YxMJUMYENW61yxsH8mZTqfgysr6TqmhIm43JoYU51I0foPUjUAb
- qMaPdR6sV8KdBZnDTA/+gpRzXf33bj8GGaoh+WDAqbISbVyxECVkVgT913rsjANiGgSqnZhMdyd
- I
-X-Google-Smtp-Source: AGHT+IH6WMXwWBG4+mCGuCUb/g8oSTSVIPe9BmZQhyjU+xKoK4iDxbkQ67gIKHpGtUg5mEm1R3VGJA==
-X-Received: by 2002:a05:600c:138e:b0:41b:fa34:9e48 with SMTP id
- 5b1f17b1804b1-42108a99ea9mr89258365e9.30.1716827133954; 
- Mon, 27 May 2024 09:25:33 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.152.134])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557a08a8c9sm9425250f8f.40.2024.05.27.09.25.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 09:25:33 -0700 (PDT)
-Message-ID: <4025f82f-242c-4c3e-952e-8ecf7a66838f@linaro.org>
-Date: Mon, 27 May 2024 18:25:31 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBdPn-0000vA-Eu
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:41:39 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBdPl-0007PD-Bl
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 12:41:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716828097; x=1748364097;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Cmw4nIUxhVOSAdRT2Ygkx9iTQKrmA+RTH/iOYZumS4M=;
+ b=XWf7/ZnfHuDhzYlncbVA1M9V8R2u7kXjHskV/TphEwYrWUh+kRCD8uOC
+ lCyZQq/IU9/zN+dwZl1CFKfdoZaePp6LhrpZYKa924bKdBlVqD6uMC9Xv
+ /blC4S0awA9XyKm0V6HPk2TTKu8IKdkoWI5I0f6151C5oBlz4zh/c21WQ
+ aMZ/HlcYlhjCmRao+0gpXfAMB8RLsqTEuUBINUSLikoF0K5SXlgzqER1x
+ Krkwz1qcGCPVcm2ePYojCvd2Q09VF/wl9zSq3p1Od3aeXlSHSjO0Epdj4
+ Oq2Iu+qqF6tqhBR0HOI6UVO/Tsn0jn8VfRv0zf5Nll5YmU/SYhFtXFQP8 Q==;
+X-CSE-ConnectionGUID: 5xWaYd8nSfKHF6z1u3HeAA==
+X-CSE-MsgGUID: I1sE0vWoTlCoeGVD6dEbTg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="30682291"
+X-IronPort-AV: E=Sophos;i="6.08,193,1712646000"; d="scan'208";a="30682291"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2024 09:41:34 -0700
+X-CSE-ConnectionGUID: tFULggY6R8GCJdTgNRTvSg==
+X-CSE-MsgGUID: YFJPzj8qSza1yPrtj2O8Ew==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,193,1712646000"; d="scan'208";a="39654247"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 27 May 2024 09:41:32 -0700
+Date: Tue, 28 May 2024 00:56:54 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, xieyongji@bytedance.com,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>,
+ Babu Moger <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>
+Subject: Re: [PATCH] x86: cpu: fixup number of addressable IDs for processor
+ cores in the physical package
+Message-ID: <ZlS7VjagJ5jd0Alq@intel.com>
+References: <20240527031333.85932-1-xuchuangxclwt@bytedance.com>
+ <20240527170317.14520a2f@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/8] xen: Add xen_mr_is_memory()
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- David Hildenbrand <david@redhat.com>, Anthony PERARD
- <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-References: <20240524105152.1301842-1-edgar.iglesias@gmail.com>
- <20240524105152.1301842-4-edgar.iglesias@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240524105152.1301842-4-edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240527170317.14520a2f@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,70 +89,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Edgar,
+Hi Igor,
 
-On 24/5/24 12:51, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On Mon, May 27, 2024 at 05:03:17PM +0200, Igor Mammedov wrote:
+> Date: Mon, 27 May 2024 17:03:17 +0200
+> From: Igor Mammedov <imammedo@redhat.com>
+> Subject: Re: [PATCH] x86: cpu: fixup number of addressable IDs for
+>  processor cores in the physical package
+> X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 > 
-> Add xen_mr_is_memory() to abstract away tests for the
-> xen_memory MR.
+> On Mon, 27 May 2024 11:13:33 +0800
+> Chuang Xu <xuchuangxclwt@bytedance.com> wrote:
 > 
-> No functional changes.
+> > When QEMU is started with:
+> > -cpu host,host-cache-info=on,l3-cache=off \
+> > -smp 2,sockets=1,dies=1,cores=1,threads=2
+> > Guest can't acquire maximum number of addressable IDs for processor cores in
+> > the physical package from CPUID[04H].
 > 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-> Acked-by: David Hildenbrand <david@redhat.com>
-> ---
->   hw/xen/xen-hvm-common.c | 10 ++++++++--
->   include/sysemu/xen.h    |  8 ++++++++
->   2 files changed, 16 insertions(+), 2 deletions(-)
+> please add commit message, what you are actually seeing
+> and expected values as well.
+> And if guest complains about it also include related dmesg output.
+> 
+> 
+> > This bug was introduced in commit d7caf13b5fcf742e5680c1d3448ba070fc811644.
+> > Fix it by changing the judgement condition to a >= 1.
+> > 
+> > Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> > Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> > Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> > ---
+> >  target/i386/cpu.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index cd16cb893d..0369c01153 100644
+> > --- a/target/i386/cpu.c
+> > +++ b/target/i386/cpu.c
+> > @@ -6097,7 +6097,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+> >              if (*eax & 31) {
+> >                  int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+> >                  int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+> 
+> in light of dies and recent modules shouldn't we also account for them here?
 
-To consolidate we could add:
+cs->nr_cores now account dies and modules (as its comment said "Number
+of cores within this CPU package"). The code for this patch is a bit
+outdated, although the issue is still here on the latest master.
 
-   static MemoryRegion xen_memory;
+> > -                if (cs->nr_cores > 1) {
+> > +                if (cs->nr_cores >= 1) {
+> >                      *eax &= ~0xFC000000;
+> >                      *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+> >                  }
+> above and also following condition
+> 
+>                 if (host_vcpus_per_cache > vcpus_per_socket) {
+>                     ...
+>                     *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
+> 
+> Makes me think, do we really have to have both conditionals,
+> Why not just drop conditions and always encode both values
+> to ones configured on '-smp' CLI?
 
-   MemoryRegion *xen_mr_memory_init(uint64_t block_len)
-   {
-      assert(!xen_memory.size);
-      memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len, 
-&error_fatal);
-      return &xen_memory;
-   }
+The first condition "cores_per_pkg >= 1" can be removed in this patch
+since cs->nr_cores won't be 0. :-)
 
-and remove the extern declaration.
+About the 2nd condition "host_vcpus_per_cache > vcpus_per_socket", more
+work is needed for cleanup...removal is also desirable, but not direct
+removal, otherwise, Guest's L1/L2/L3 cache topology will default to
+package level.
 
-> diff --git a/include/sysemu/xen.h b/include/sysemu/xen.h
-> index 754ec2e6cb..dc72f83bcb 100644
-> --- a/include/sysemu/xen.h
-> +++ b/include/sysemu/xen.h
-> @@ -34,6 +34,8 @@ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length);
->   void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
->                      struct MemoryRegion *mr, Error **errp);
->   
-> +bool xen_mr_is_memory(MemoryRegion *mr);
-> +
->   #else /* !CONFIG_XEN_IS_POSSIBLE */
->   
->   #define xen_enabled() 0
-> @@ -47,6 +49,12 @@ static inline void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
->       g_assert_not_reached();
->   }
->   
-> +static inline bool xen_mr_is_memory(MemoryRegion *mr)
-> +{
-> +    g_assert_not_reached();
-> +    return false;
+Currently with host_vcpus_per_cache <= threads_per_pkg, QEMU will
+directly give Guest the Host's EAX[bits 25 -14], which is also
+inaccurate, especially if there is a big difference between Guest and
+Host CPU topology.
 
-No need for the stub, just always declare xen_mr_is_memory() ...
-> +}
-> +
->   #endif /* CONFIG_XEN_IS_POSSIBLE */
+The correct way to do it is to parse the specific level of cache
+topology on Host (core/module/die/package), and then encode Guest's
+EAX[bits 25 -14] according to the specific items configured in -smp.
 
-... here.
+By cleaning up in this way, the second condition can be removed
+naturally.
 
->   #endif
+The host-cache-info cleanup was originally planned for me as well, I
+think I can do this after Chuang's fix.
 
-Removing the stub:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks,
+Zhao
 
 
