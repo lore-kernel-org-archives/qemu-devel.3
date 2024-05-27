@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4385C25B7D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94428C25B74
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 08:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBViz-0005cN-SE; Mon, 27 May 2024 04:28:58 -0400
+	id 1sBVgj-00080u-Jj; Mon, 27 May 2024 04:26:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVff-0005dR-BR; Mon, 27 May 2024 04:25:36 -0400
+ id 1sBVe9-0003Hm-Mw; Mon, 27 May 2024 04:23:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sBVfc-0001Ua-PG; Mon, 27 May 2024 04:25:30 -0400
+ id 1sBVe7-00010M-1f; Mon, 27 May 2024 04:23:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 965C76A588;
- Mon, 27 May 2024 11:22:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 79EFD6A577;
+ Mon, 27 May 2024 11:22:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C4AEBD8525;
- Mon, 27 May 2024 11:21:41 +0300 (MSK)
-Received: (nullmailer pid 66483 invoked by uid 1000);
- Mon, 27 May 2024 08:21:39 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id A3E7BD8514;
+ Mon, 27 May 2024 11:21:40 +0300 (MSK)
+Received: (nullmailer pid 66430 invoked by uid 1000);
+ Mon, 27 May 2024 08:21:38 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 43/44] target/i386: no single-step exception after MOV
- or POP SS
-Date: Mon, 27 May 2024 11:21:34 +0300
-Message-Id: <20240527082138.66217-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mattias Nissler <mnissler@rivosinc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Jagannathan Raman <jag.raman@oracle.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 26/44] hw/remote/vfio-user: Fix config space access
+ byte order
+Date: Mon, 27 May 2024 11:21:17 +0300
+Message-Id: <20240527082138.66217-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 References: <qemu-stable-9.0.1-20240527112053@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,30 +65,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-Intel SDM 18.3.1.4 "If an occurrence of the MOV or POP instruction
-loads the SS register executes with EFLAGS.TF = 1, no single-step debug
-exception occurs following the MOV or POP instruction."
+PCI config space is little-endian, so on a big-endian host we need to
+perform byte swaps for values as they are passed to and received from
+the generic PCI config space access machinery.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit f0f0136abba688a6516647a79cc91e03fad6d5d7)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Message-ID: <20240507094210.300566-6-mnissler@rivosinc.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit e6578f1f68a0e90789a841ada532c3e494c9a04c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index c2c5e73b3f..a55df176c6 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2817,7 +2817,7 @@ do_gen_eob_worker(DisasContext *s, bool inhibit, bool recheck_tf, bool jr)
-     if (recheck_tf) {
-         gen_helper_rechecking_single_step(tcg_env);
-         tcg_gen_exit_tb(NULL, 0);
--    } else if (s->flags & HF_TF_MASK) {
-+    } else if ((s->flags & HF_TF_MASK) && !inhibit) {
-         gen_helper_single_step(tcg_env);
-     } else if (jr &&
-                /* give irqs a chance to happen */
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index d9b879e056..8dbafafb9e 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+     while (bytes > 0) {
+         len = (bytes > pci_access_width) ? pci_access_width : bytes;
+         if (is_write) {
+-            memcpy(&val, ptr, len);
++            val = ldn_le_p(ptr, len);
+             pci_host_config_write_common(o->pci_dev, offset,
+                                          pci_config_size(o->pci_dev),
+                                          val, len);
+@@ -289,7 +289,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+         } else {
+             val = pci_host_config_read_common(o->pci_dev, offset,
+                                               pci_config_size(o->pci_dev), len);
+-            memcpy(ptr, &val, len);
++            stn_le_p(ptr, len, val);
+             trace_vfu_cfg_read(offset, val);
+         }
+         offset += len;
 -- 
 2.39.2
 
