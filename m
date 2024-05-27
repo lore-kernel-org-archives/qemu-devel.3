@@ -4,134 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F798C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A9DC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 07:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBUtX-0001ZX-TX; Mon, 27 May 2024 03:35:47 -0400
+	id 1sBUv7-0003kS-0L; Mon, 27 May 2024 03:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBUt6-00015u-1v
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:35:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=e5bn=M6=kaod.org=clg@ozlabs.org>)
+ id 1sBUui-0003WN-Oo; Mon, 27 May 2024 03:37:00 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sBUt2-0008Ar-Vu
- for qemu-devel@nongnu.org; Mon, 27 May 2024 03:35:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716795315;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PVMZUATiaPmT3ZndVyOxtmr7JmtVnEdjc67ZoRLK2Fs=;
- b=UgnE/HdA7oNCCc2bbp7L2uFnYUwMu0U4uboxDpbSyWeCv9G+gf9COykl2EUmAsP6NYnHVq
- Nlb/mppljlQxbbP63/V2nj7v9t/GxZMkomQJtIXFOAV1rHOnBzUGhgP7pOr7ODCCcgoC4P
- cKCHFOgA1iYp/4FX59KWW259jbrDclk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-8ULrR_GYOLedTTek3wabOw-1; Mon, 27 May 2024 03:35:13 -0400
-X-MC-Unique: 8ULrR_GYOLedTTek3wabOw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-357f24b8cabso1052656f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 00:35:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716795312; x=1717400112;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PVMZUATiaPmT3ZndVyOxtmr7JmtVnEdjc67ZoRLK2Fs=;
- b=QK/nwownJOBdaXey57zFySYxcEhkzReU9r/xLht3AfRpK35uvhvFdsBNyuNV4Uh4EQ
- R+ba9BD8/0nqd6hrSdC4qH6ufOR/uE0u2TcbOjDqC0Al7zGaIxmoq0ewjbo8ZGahxhco
- 2goQQjo1+bvcZ+rkenVVJ5TYS4AyrHA84H6RVacs71uvoH8MoIlyAFhesWLxd1ylnWf5
- idFvB7mhG9lXNTTsMndZesD8qVfyi9gZmXRywgWJOJIJUVlhgVLnoD/jcMcqG1xAF/B1
- 5VRrYRL3UxizWxzyCDOoj3owuC3N3kfjJyYPU2r0Zs6drQqXI5PLxRF6rp091mveEzFr
- GqTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVK9Lcip5DiElNLZK4rfPGV16SssR6wH5vK3OA3ph7hwvFFOY/lySjaBRBKHOJ1TTD+lA3DyZWbGqe0qGfGFvWS5k9TCdk=
-X-Gm-Message-State: AOJu0Yyb1Ta0PQk/hGIBvQJEkuIRY6R80kXWhD8MMoNNDCzcTfP7PmN9
- +tbZ47sPuKoHeuq0q/WXvdO/+IiGrRLzwR3x/xuMDERxJaiBOg93uqVZfI/BnS0JNnxlC12kOKO
- dwGXQWqG6wAS3e7HkOnP3Gfyght31VlaBhk22Sb481mo0v7/RH6d+
-X-Received: by 2002:a5d:4cc1:0:b0:354:de21:2145 with SMTP id
- ffacd0b85a97d-35526c2bd2amr6116628f8f.22.1716795312180; 
- Mon, 27 May 2024 00:35:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVHNuWgd5EYdI4agXNTZtnUASnhRfmcgHO9KF95zw2AtKmO26EJdPihm+TIfh9czoGibkhyg==
-X-Received: by 2002:a5d:4cc1:0:b0:354:de21:2145 with SMTP id
- ffacd0b85a97d-35526c2bd2amr6116615f8f.22.1716795311755; 
- Mon, 27 May 2024 00:35:11 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-179-90.web.vodafone.de.
- [109.43.179.90]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-358c0acf7d5sm2774997f8f.7.2024.05.27.00.35.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 00:35:11 -0700 (PDT)
-Message-ID: <30aa8e56-bb43-4a1f-83f0-02324fb680e0@redhat.com>
-Date: Mon, 27 May 2024 09:35:10 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=e5bn=M6=kaod.org=clg@ozlabs.org>)
+ id 1sBUuV-0000I2-C0; Mon, 27 May 2024 03:37:00 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VnnXB0V9Zz4x0y;
+ Mon, 27 May 2024 17:36:42 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VnnX71vDBz4x0K;
+ Mon, 27 May 2024 17:36:38 +1000 (AEST)
+Message-ID: <6ef44e57-14b4-4498-b51b-7c486582c5ca@kaod.org>
+Date: Mon, 27 May 2024 09:36:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] tests/qtest/migration-test: Enable on ppc64
-To: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20240525031330.196609-1-npiggin@gmail.com>
- <20240525031330.196609-3-npiggin@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240525031330.196609-3-npiggin@gmail.com>
+Subject: Re: [RFC PATCH 00/10] ppc/pnv: Better big-core model, lpar-per-core, 
+ PC unit
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+References: <20240526122612.473476-1-npiggin@gmail.com>
+ <66c95ef6-8f94-4661-bc4c-8f5f7abcce1f@kaod.org>
+ <D1K935B9TYYV.3GMTXCVHSWP0G@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <D1K935B9TYYV.3GMTXCVHSWP0G@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=e5bn=M6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,47 +68,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/05/2024 05.13, Nicholas Piggin wrote:
-> ppc64 with TCG seems to no longer be failing this test. Let's try to
-> enable it. s390x is still hanging about 1 in 10 runs.
+On 5/27/24 09:32, Nicholas Piggin wrote:
+> On Mon May 27, 2024 at 4:25 PM AEST, Cédric Le Goater wrote:
+>> On 5/26/24 14:26, Nicholas Piggin wrote:
+>>> Primary motivation for this series is to improve big-core support.
+>>> Other things like SPR indirect, timebase state, PC xscom, are required
+>>> for minimal big core support.
+>>>
+>>> I'm still not 100% happy with the big-core topology model after this.
+>>> Maybe one day we add pnv big core and pnv small core structures. But
+>>
+>> I haven't look at the proposal yet, but indeed, we could introduce
+>> a new TYPE_PNV_CORE type for big cores only.
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   tests/qtest/migration-test.c | 16 +++-------------
->   1 file changed, 3 insertions(+), 13 deletions(-)
+> Yeah. It's still tricky because big-core structure contains the CPUs
+> if you are running in small core mode. So it would really have to be
+> a PnvCPUCore and PnvPervasiveCore or something, where the former is
+> either SMT4 and 1:1 with the latter or SMT8 and 1:2 depending on mode.
 > 
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index c13535c37d..b8617cc843 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -3454,19 +3454,9 @@ int main(int argc, char **argv)
->   #endif
->   
->       /*
-> -     * On ppc64, the test only works with kvm-hv, but not with kvm-pr and TCG
-> -     * is touchy due to race conditions on dirty bits (especially on PPC for
-> -     * some reason)
-> -     */
-> -    if (g_str_equal(arch, "ppc64") &&
-> -        (!has_kvm || access("/sys/module/kvm_hv", F_OK))) {
-> -        g_test_message("Skipping tests: kvm_hv not available");
-> -        goto test_add_done;
-> -    }
-> -
-> -    /*
-> -     * Similar to ppc64, s390x seems to be touchy with TCG, so disable it
-> -     * there until the problems are resolved
-> +     * On s390x, the test seems to be touchy with TCG, perhaps due to race
-> +     * conditions on dirty bits, so disable it there until the problems are
-> +     * resolved.
->        */
->       if (g_str_equal(arch, "s390x") && !has_kvm) {
->           g_test_message("Skipping tests: s390x host with KVM is required");
+> And some of the "CPU" type operations in big core mode still need to
+> operate on the small core.
+> 
+> For now, the accessors and helpers seem to be not too bad.
+> 
+>>> nothing is completely clean because big core mode still has certain
+>>> small core restrictions. I think for now we take a bit of mostly
+>>> abstracted ugliness in TCG code for the benefit of not spreading
+>>> hacks through pervasive (xscom) core addressing.
+>>>
+>>> After this series, power9 and power10 get through skiboot/Linux boot
+>> s
+>>
+>> Have you tried SMT8 on powernv8 ? I remember seeing a hang if I am correct.
+>> I don't think POWER8 deserves much attention anymore, we could deprecate
+>> POWER8E and POWER8NVL. However, we should at least report an error if we
+>> know a setup is broken.
+> 
+> Yeah it does have some problem. Maybe should just disable SMT unless
+> someone finds time to work it out.
 
-Since you've identified the problem on s390x, you could maybe adjust the 
-comment in case you respin ... OTOH, it will get removed anyway once we 
-merge the s390x fix, so no need to respin just because of this.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+The new _init routines would be a good place to do that.
+
+Thanks,
+
+C.
+
+
+> 
+> Thanks,
+> Nick
 
 
