@@ -4,108 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8493AC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A918C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:57:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBsa0-0005ID-5i; Tue, 28 May 2024 04:53:12 -0400
+	id 1sBsdU-0006Wt-Ss; Tue, 28 May 2024 04:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sBsZx-0005HZ-Q0; Tue, 28 May 2024 04:53:09 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sBsZw-0007rb-7F; Tue, 28 May 2024 04:53:09 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S8eW7E001756; Tue, 28 May 2024 08:52:59 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Dibm.com; _h=3Dcc?=
- =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
- =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3DUvX?=
- =?UTF-8?Q?VtoOG6UaBYz+sXFrhBhPFVX3FFYKTYsvfwZKRs5g=3D;_b=3DMd3YZq2fdgvemq?=
- =?UTF-8?Q?QkETw5oLuea2mV1nRY8dn9H4yBe6R2An37qh3AZi2qqBBx2hb/oDpF_AUiDvLdW?=
- =?UTF-8?Q?I55wU6GF8yW8IoiEstmix4hoofV3DavZ7eeWojYPIa8x/9VxD4QASoaMB42W_v6?=
- =?UTF-8?Q?7bGQ+lJlZhgl0QXKzhftxNMGv+CDplqr8m4XFL4znKIdm8yJw3FBjuNv2NChnhz?=
- =?UTF-8?Q?3Un_oN+zHOHe9gWBTlDPHezL0vgbNEJM2KKnSWcYzSdp4s3eG6U9GgIWfea1SUd?=
- =?UTF-8?Q?a1pMznMNv_NZgbxl+3ZarqFxo/QJdsVis5ro48NrRzsNhjI5qFaKUpdBfx47T18?=
- =?UTF-8?Q?xDp9mGm9CmK7FTM_kw=3D=3D_?=
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd9048h16-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 08:52:58 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44S8qwxq021979;
- Tue, 28 May 2024 08:52:58 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd9048h14-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 08:52:58 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S61AMr004511; Tue, 28 May 2024 08:52:57 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ybuanwujn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 08:52:57 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44S8qsB217433270
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 May 2024 08:52:57 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B553D58059;
- Tue, 28 May 2024 08:52:54 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62AFA58043;
- Tue, 28 May 2024 08:52:52 +0000 (GMT)
-Received: from [9.109.242.165] (unknown [9.109.242.165])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 May 2024 08:52:52 +0000 (GMT)
-Message-ID: <e18f4a73-055c-4fc9-bad8-26a9a70fe081@linux.ibm.com>
-Date: Tue, 28 May 2024 14:22:51 +0530
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sBsdT-0006Wj-8v
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:56:47 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sBsdR-0008MS-8B
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:56:46 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a5d67064885so79879266b.1
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 01:56:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716886602; x=1717491402; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/SGQT7B8+ToCiJcB7dCXTyM2BHU3v0xR2SR2qeBbgm0=;
+ b=XPekx6VWooqfrJLCDzyHRwLYQkmhmOPCVAsN67sVZs2S3uTio7hOxgiH2dh2FMct9p
+ Ic2AmdGzezhd11mSmT6zmx+xlsZR9n4Rd75EL4N+z1jAp5aT/U2q1feupAgPe5IjVUMc
+ J9YTPiwHWt5TODl6inERfChYRSC+L7U1UfBF5kvNv87njzygz6T8azsNQKvcL6SRz3y8
+ 4wpgYOW5LVC6Vafp3Eg3LPiM6sc3L/FVvmxySt3eCuISqKL+yKE5kerPEBcMGvfEJoy0
+ G7EXAV7xnzGRgtt+ywQwk3Ln4evSvNdB4GzC1yBvR5nqx2QDzfSfCQ/7JPmIcLG820yO
+ fW4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716886602; x=1717491402;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/SGQT7B8+ToCiJcB7dCXTyM2BHU3v0xR2SR2qeBbgm0=;
+ b=rBdaTacbUEbsysLcMbY84MhiR2dHHhuuQ7xbOPuHTjjDh+Gp98BdKuDBptuXqxJiYd
+ 8o6CYhc6c63ExhZUw3jdPu1HMZXfQqCg7R7wHsEBR5AbgjV0hdtH1we6R1vP5ywxn10K
+ gjz9ogzbxGnM9yM3ND+tL44xUb3IsgTTB1FlzxLNStGAtEcMT1hp61hmkT3dAPDrARWD
+ ZQlMqAsk7oqjX6NVgfpyGswWYQT9Kxzq+00FaHNie2tobaeIS7LiNNgFuVnM8TvZj/bJ
+ ADs5epUgd0+uRIGriG1ihw4OlAKame7h+8KUWIgaDqHJPgypkvOH9esGTF3HST+3bQM9
+ nNEw==
+X-Gm-Message-State: AOJu0Yweta1EINwS4F/5mqagVj1LNxZRjiKPdqWOYdHRCmDHEyCNH+sa
+ s42inJkdj9qO4HIxwHZ9HGVFQkjF/iipg6+qMvyhGFPcmreFMQJeyB757xgJSlm8V4Q565OpB3F
+ yqnyhu7Cg9k3Y1dHgLaW6NzNtAiCSN6nJrWGSirNt5jMKhUdFt3sN3Q==
+X-Google-Smtp-Source: AGHT+IHdkneil0xg2sd6KMd/mYNgh4OclCmRUygO4+cZnHEmltwdXJ6mtiAhITv4skn1eSh5ZDp36er8IFSBZBQW3Sk=
+X-Received: by 2002:a17:906:90d:b0:a59:9da0:cc1 with SMTP id
+ a640c23a62f3a-a626511b172mr1254969466b.58.1716886602569; Tue, 28 May 2024
+ 01:56:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/10] ppc: Add a core_index to CPUPPCState for SMT
- vCPUs
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-7-npiggin@gmail.com>
- <0d8011f6-653f-49fb-9cd8-008fc0029d78@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <0d8011f6-653f-49fb-9cd8-008fc0029d78@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ew4yztaZhC1wrGKQXQLOTFQ_BwF3mOqO
-X-Proofpoint-ORIG-GUID: aj7U-yHPXbBsxzU379u54Re0atiVkpS3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-28_05,2024-05-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- mlxlogscore=937 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405280064
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240528083858.836262-1-kraxel@redhat.com>
+ <20240528083858.836262-2-kraxel@redhat.com>
+In-Reply-To: <20240528083858.836262-2-kraxel@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 28 May 2024 11:56:26 +0300
+Message-ID: <CAAjaMXaucLgfWVuf96ZbjDyXxw3yZ-yzuJeZGK66ib0oCq6r6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] MAINTAINERS: drop audio maintainership
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,13 +91,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-corrected typo, it's bitwise.
+On Tue, 28 May 2024 at 11:39, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>
+> Remove myself from audio (both devices and backend) entries.
+> Flip status to "Orphan" for entries which have nobody else listed.
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  MAINTAINERS | 30 ++++++++++--------------------
+>  1 file changed, 10 insertions(+), 20 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 448dc951c509..58e44885ce94 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1913,8 +1913,7 @@ F: include/hw/xtensa/mx_pic.h
+>  Devices
+>  -------
+>  Overall Audio frontends
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: hw/audio/
+>  F: include/hw/audio/
+>  F: tests/qtest/ac97-test.c
+> @@ -2389,8 +2388,8 @@ F: hw/virtio/virtio-mem-pci.c
+>  F: include/hw/virtio/virtio-mem.h
+>
+>  virtio-snd
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+> -R: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> +M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> +R: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+>  S: Supported
+>  F: hw/audio/virtio-snd.c
+>  F: hw/audio/virtio-snd-pci.c
 
-On 5/28/24 14:18, Harsh Prateek Bora wrote:
->> -    (POWERPC_CPU(cs)->env.spr_cb[SPR_PIR].default_value & 
->> ~(cs->nr_threads - 1))
->> +    (POWERPC_CPU(cs)->env.core_index)
-> 
-> Dont we want to keep the bitwise & with ~(cs->nr_threads - 1) ?
-> How's it taken care ?
+While extra reviewers are always helpful, someone like Volker would
+make sense, not someone without any contributions:
+
+$ git log --format=3D"%an" hw/audio/virtio-snd.c
+hw/audio/virtio-snd-pci.c include/hw/audio/virtio-snd.h
+docs/system/devices/virtio-snd.rst | sort -u
+Manos Pitsidianakis
+Michael Tokarev
+Philippe Mathieu-Daud=C3=A9
+Richard Henderson
+Stefan Hajnoczi
+Volker R=C3=BCmelin
+Zheyu Ma
+
+I'd suggest leaving adding reviewers here for a different patch submission.
+
+Otherwise:
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+
+> @@ -2768,7 +2767,6 @@ F: include/hw/hyperv/hv-balloon.h
+>  Subsystems
+>  ----------
+>  Overall Audio backends
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+>  M: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>  S: Odd Fixes
+>  F: audio/
+> @@ -2784,13 +2782,11 @@ X: audio/spiceaudio.c
+>  F: qapi/audio.json
+>
+>  ALSA Audio backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+>  R: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: audio/alsaaudio.c
+>
+>  Core Audio framework backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+>  M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>  R: Christian Schoenebeck <qemu_oss@crudebyte.com>
+>  R: Akihiko Odaki <akihiko.odaki@daynix.com>
+> @@ -2798,36 +2794,30 @@ S: Odd Fixes
+>  F: audio/coreaudio.c
+>
+>  DSound Audio backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: audio/dsound*
+>
+>  JACK Audio Connection Kit backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+>  R: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: audio/jackaudio.c
+>
+>  Open Sound System (OSS) Audio backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: audio/ossaudio.c
+>
+>  PulseAudio backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: audio/paaudio.c
+>
+>  SDL Audio backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+> -R: Thomas Huth <huth@tuxfamily.org>
+> +M: Thomas Huth <huth@tuxfamily.org>
+>  S: Odd Fixes
+>  F: audio/sdlaudio.c
+>
+>  Sndio Audio backend
+> -M: Gerd Hoffmann <kraxel@redhat.com>
+>  R: Alexandre Ratchov <alex@caoua.org>
+> -S: Odd Fixes
+> +S: Orphan
+>  F: audio/sndioaudio.c
+>
+>  Block layer core
+> --
+> 2.45.1
+>
 
