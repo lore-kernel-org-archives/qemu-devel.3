@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41ADCC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 06:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE433C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 06:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBqin-0001GL-VS; Tue, 28 May 2024 02:54:10 -0400
+	id 1sBqmK-0002pS-0G; Tue, 28 May 2024 02:57:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
- id 1sBqiU-0001DG-Qh; Tue, 28 May 2024 02:53:50 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sBqmH-0002p7-GP; Tue, 28 May 2024 02:57:46 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
- id 1sBqiS-0002J4-2K; Tue, 28 May 2024 02:53:50 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VpNX66Gf7z4x2d;
- Tue, 28 May 2024 16:53:42 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VpNX13BlGz4wyj;
- Tue, 28 May 2024 16:53:37 +1000 (AEST)
-Message-ID: <4cc3df8f-6d61-4c70-a7ce-94e2cbf96a7d@kaod.org>
-Date: Tue, 28 May 2024 08:53:34 +0200
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sBqmE-00032g-BX; Tue, 28 May 2024 02:57:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1716879453; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=gRw/eSq2LPDM9ogXGYpeYnLMy9GVHC6TUNR9QdwCuoI=;
+ b=ya+O3fn66rV+851cWg4pzrFj+ymEBAx0RmMXcTg3tNg/UYLVtfaxu3SSaRIRvdoxjARIQ7McJwDD+737rme84yjPT8GNKH5qQlGTt8Mk67CqUVOB48Ot1avfAx+utjcTOu8U8bc5LRv20355eAjbovAPHpGfgaFDxi6C9YB1G6E=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033068173054;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W7OoUtj_1716879450; 
+Received: from 30.166.64.174(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W7OoUtj_1716879450) by smtp.aliyun-inc.com;
+ Tue, 28 May 2024 14:57:32 +0800
+Message-ID: <80fb43eb-0e24-4fc3-9aaa-77e040317b0d@linux.alibaba.com>
+Date: Tue, 28 May 2024 14:56:37 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] Re: [PATCH v4 08/16] aspeed/smc: support 64 bits dma dram
- address
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
- <20240527080231.1576609-9-jamin_lin@aspeedtech.com>
- <2d64463d-0694-4d6e-a8c4-5bfad2cf801d@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <2d64463d-0694-4d6e-a8c4-5bfad2cf801d@linaro.org>
+Subject: Re: [PATCH] targer/riscv: Implement Zabha extension
+To: Alexandre Ghiti <alexghiti@rivosinc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Gianluca Guida <gianluca@rivosinc.com>
+References: <20240528054535.290953-1-alexghiti@rivosinc.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240528054535.290953-1-alexghiti@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=HxTW=M7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,146 +74,277 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/24 18:06, Philippe Mathieu-Daudé wrote:
-> Hi Jamin,
-> 
-> On 27/5/24 10:02, Jamin Lin wrote:
->> AST2700 support the maximum dram size is 8GiB
->> and has a "DMA DRAM Side Address High Part(0x7C)"
->> register to support 64 bits dma dram address.
->> Add helper routines functions to compute the dma dram
->> address, new features and update trace-event
->> to support 64 bits dram address.
->>
->> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
->> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->> ---
->>   hw/ssi/aspeed_smc.c         | 52 +++++++++++++++++++++++++++++++------
->>   hw/ssi/trace-events         |  2 +-
->>   include/hw/ssi/aspeed_smc.h |  1 +
->>   3 files changed, 46 insertions(+), 9 deletions(-)
-> 
-> 
->> +static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
->> +{
->> +    return s->regs[R_DMA_DRAM_ADDR] |
->> +        ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32);
->> +}
->> +
->>   static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
->>   {
->>       AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
->> @@ -903,24 +921,34 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
->>   static void aspeed_smc_dma_rw(AspeedSMCState *s)
->>   {
->> +    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
->> +    uint64_t dma_dram_offset;
->> +    uint64_t dma_dram_addr;
->>       MemTxResult result;
->>       uint32_t dma_len;
->>       uint32_t data;
->>       dma_len = aspeed_smc_dma_len(s);
->> +    dma_dram_addr = aspeed_smc_dma_dram_addr(s);
->> +
->> +    if (aspeed_smc_has_dma64(asc)) {
->> +        dma_dram_offset = dma_dram_addr - s->dram_base;
->> +    } else {
->> +        dma_dram_offset = dma_dram_addr;
-> 
-> Here s->dram_base is 0x0. Do we really need to check
-> aspeed_smc_has_dma64?
+Hi Alexandre,
 
-You are right, it could be done as your proposal below. However,
-we should add a comment regarding some values :
+I have sent the patch set about Zabha before last week.
 
-R_DMA_DRAM_ADDR_HIGH and s->dram_base are only set on the AST2700
-SoC and zero on other Aspeed SoCs.
+https://lore.kernel.org/all/fed99165-58da-458c-b68f-a9717fc15034@linux.alibaba.com/T/
 
->> +    }
-> 
-> Maybe simplify improving aspeed_smc_dma_dram_addr() as:
-> 
->    static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
->    {
->        return (s->regs[R_DMA_DRAM_ADDR]
->                | ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32))
->                - s->dram_base;
->    }
-> 
-> Then no need for dma_dram_offset, dma_dram_addr is enough.
-
-we need both, dma_dram_offset for the transaction and dma_dram_addr
-to update the R_DMA_DRAM_ADDR_HIGH reg. A bit cumbersome, I agree.
+Welcome to review it and give comments.
 
 Thanks,
+Zhiwei
 
-C.
-
-
-> 
->>       trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
->>                               "write" : "read",
->>                               s->regs[R_DMA_FLASH_ADDR],
->> -                            s->regs[R_DMA_DRAM_ADDR],
->> +                            dma_dram_offset,
->>                               dma_len);
->>       while (dma_len) {
->>           if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
->> -            data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
->> +            data = address_space_ldl_le(&s->dram_as, dma_dram_offset,
->>                                           MEMTXATTRS_UNSPECIFIED, &result);
->>               if (result != MEMTX_OK) {
->> -                aspeed_smc_error("DRAM read failed @%08x",
->> -                                 s->regs[R_DMA_DRAM_ADDR]);
->> +                aspeed_smc_error("DRAM read failed @%" PRIx64,
->> +                                 dma_dram_offset);
->>                   return;
->>               }
->> @@ -940,11 +968,11 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
->>                   return;
->>               }
->> -            address_space_stl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
->> +            address_space_stl_le(&s->dram_as, dma_dram_offset,
->>                                    data, MEMTXATTRS_UNSPECIFIED, &result);
->>               if (result != MEMTX_OK) {
->> -                aspeed_smc_error("DRAM write failed @%08x",
->> -                                 s->regs[R_DMA_DRAM_ADDR]);
->> +                aspeed_smc_error("DRAM write failed @%" PRIx64,
->> +                                 dma_dram_offset);
->>                   return;
->>               }
->>           }
->> @@ -953,8 +981,12 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
->>            * When the DMA is on-going, the DMA registers are updated
->>            * with the current working addresses and length.
->>            */
->> +        dma_dram_offset += 4;
->> +        dma_dram_addr += 4;
->> +
->> +        s->regs[R_DMA_DRAM_ADDR_HIGH] = dma_dram_addr >> 32;
->> +        s->regs[R_DMA_DRAM_ADDR] = dma_dram_addr & 0xffffffff;
->>           s->regs[R_DMA_FLASH_ADDR] += 4;
->> -        s->regs[R_DMA_DRAM_ADDR] += 4;
->>           dma_len -= 4;
->>           s->regs[R_DMA_LEN] = dma_len;
->>           s->regs[R_DMA_CHECKSUM] += data;
->> @@ -1107,6 +1139,9 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
->>       } else if (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN &&
->>                  aspeed_smc_dma_granted(s)) {
->>           s->regs[addr] = DMA_LENGTH(value);
->> +    } else if (aspeed_smc_has_dma(asc) && aspeed_smc_has_dma64(asc) &&
->> +               addr == R_DMA_DRAM_ADDR_HIGH) {
->> +        s->regs[addr] = DMA_DRAM_ADDR_HIGH(value);
->>       } else {
->>           qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
->>                         __func__, addr);
->> @@ -1239,6 +1274,7 @@ static const VMStateDescription vmstate_aspeed_smc = {
->>   static Property aspeed_smc_properties[] = {
->>       DEFINE_PROP_BOOL("inject-failure", AspeedSMCState, inject_failure, false),
->> +    DEFINE_PROP_UINT64("dram-base", AspeedSMCState, dram_base, 0),
->>       DEFINE_PROP_LINK("dram", AspeedSMCState, dram_mr,
->>                        TYPE_MEMORY_REGION, MemoryRegion *),
->>       DEFINE_PROP_END_OF_LIST(),
-> 
-
+On 2024/5/28 13:45, Alexandre Ghiti wrote:
+> From: Gianluca Guida <gianluca@rivosinc.com>
+>
+> Add Zabha implementation.
+>
+> Signed-off-by: Gianluca Guida <gianluca@rivosinc.com>
+> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> ---
+>   target/riscv/cpu.c                          |   2 +
+>   target/riscv/cpu_cfg.h                      |   1 +
+>   target/riscv/insn32.decode                  |  22 +++
+>   target/riscv/insn_trans/trans_rvzabha.c.inc | 149 ++++++++++++++++++++
+>   target/riscv/tcg/tcg-cpu.c                  |   5 +
+>   target/riscv/translate.c                    |   1 +
+>   6 files changed, 180 insertions(+)
+>   create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 70d1a527a1..b01f82002b 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -116,6 +116,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>       ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_11),
+>       ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+> +    ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_12_0, ext_zabha),
+>       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>       ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+>       ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+> @@ -1464,6 +1465,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+>       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+>       MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
+> +    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
+>       MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+>       MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+>       MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index d36c416ef0..7f614da4e2 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -81,6 +81,7 @@ struct RISCVCPUConfig {
+>       bool ext_svvptc;
+>       bool ext_zdinx;
+>       bool ext_zaamo;
+> +    bool ext_zabha;
+>       bool ext_zacas;
+>       bool ext_zalrsc;
+>       bool ext_zawrs;
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index f22df04cfd..6d7726120f 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -1010,3 +1010,25 @@ amocas_w    00101 . . ..... ..... 010 ..... 0101111 @atom_st
+>   amocas_d    00101 . . ..... ..... 011 ..... 0101111 @atom_st
+>   # *** RV64 Zacas Standard Extension ***
+>   amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
+> +
+> +# *** Zabha Standard Extension ***
+> +amoswap_b  00001 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoadd_b   00000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoxor_b   00100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoand_b   01100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoor_b    01000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amomin_b   10000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amomax_b   10100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amominu_b  11000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amomaxu_b  11100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amocas_b   00101 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoswap_h  00001 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoadd_h   00000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoxor_h   00100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoand_h   01100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoor_h    01000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amomin_h   10000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amomax_h   10100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amocas_h   00101 . . ..... ..... 001 ..... 0101111 @atom_st
+> diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
+> new file mode 100644
+> index 0000000000..74f43bb95a
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
+> @@ -0,0 +1,149 @@
+> +/*
+> + * RISC-V translation routines for the Zabha Standard Extension.
+> + *
+> + * Copyright (c) 2023 Rivos Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#define REQUIRE_ZABHA(ctx) do {                 \
+> +        if (!ctx->cfg_ptr->ext_zabha) {         \
+> +            return false;                       \
+> +        }                                       \
+> +    } while (0)
+> +
+> +#define REQUIRE_ZABHA_AND_ZACAS(ctx) do {                               \
+> +        if (!ctx->cfg_ptr->ext_zabha || !ctx->cfg_ptr->ext_zacas) {     \
+> +            return false;                                               \
+> +        }                                                               \
+> +    } while (0)
+> +
+> +static bool trans_amoswap_b(DisasContext *ctx, arg_amoswap_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoswap_h(DisasContext *ctx, arg_amoswap_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amoadd_b(DisasContext *ctx, arg_amoadd_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoadd_h(DisasContext *ctx, arg_amoadd_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amoxor_b(DisasContext *ctx, arg_amoxor_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoxor_h(DisasContext *ctx, arg_amoxor_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amoand_b(DisasContext *ctx, arg_amoand_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoand_h(DisasContext *ctx, arg_amoand_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amoor_b(DisasContext *ctx, arg_amoor_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoor_h(DisasContext *ctx, arg_amoor_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amomin_b(DisasContext *ctx, arg_amomin_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amomin_h(DisasContext *ctx, arg_amomin_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amomax_b(DisasContext *ctx, arg_amomax_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amomax_h(DisasContext *ctx, arg_amomax_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amominu_b(DisasContext *ctx, arg_amominu_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amominu_h(DisasContext *ctx, arg_amominu_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amomaxu_b(DisasContext *ctx, arg_amomaxu_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amomaxu_h(DisasContext *ctx, arg_amomaxu_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_amocas_b(DisasContext *ctx, arg_amocas_b *a)
+> +{
+> +    REQUIRE_ZABHA_AND_ZACAS(ctx);
+> +    return gen_cmpxchg(ctx, a, MO_SB);
+> +}
+> +
+> +static bool trans_amocas_h(DisasContext *ctx, arg_amocas_h *a)
+> +{
+> +    REQUIRE_ZABHA_AND_ZACAS(ctx);
+> +    return gen_cmpxchg(ctx, a, (MO_ALIGN | MO_TESW));
+> +}
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index b5b95e052d..25a57bac0f 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -456,6 +456,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>           return;
+>       }
+>   
+> +    if ((cpu->cfg.ext_zabha) && !riscv_has_ext(env, RVA)) {
+> +        error_setg(errp, "Zabha extension requires A extension");
+> +        return;
+> +    }
+> +
+>       if ((cpu->cfg.ext_zawrs) && !riscv_has_ext(env, RVA)) {
+>           error_setg(errp, "Zawrs extension requires A extension");
+>           return;
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 9ff09ebdb6..1e128711db 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1097,6 +1097,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>   #include "insn_trans/trans_rvb.c.inc"
+>   #include "insn_trans/trans_rvzicond.c.inc"
+>   #include "insn_trans/trans_rvzacas.c.inc"
+> +#include "insn_trans/trans_rvzabha.c.inc"
+>   #include "insn_trans/trans_rvzawrs.c.inc"
+>   #include "insn_trans/trans_rvzicbo.c.inc"
+>   #include "insn_trans/trans_rvzfa.c.inc"
 
