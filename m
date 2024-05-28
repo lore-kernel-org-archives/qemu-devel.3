@@ -4,83 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B79C2C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AB25C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBy8i-0004Jl-WE; Tue, 28 May 2024 10:49:25 -0400
+	id 1sByAc-0005uW-S2; Tue, 28 May 2024 10:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBy8h-0004JW-7b
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:49:23 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBy8e-0005K8-Ja
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:49:22 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-572c65cea55so1670326a12.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:49:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716907757; x=1717512557; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IxUt6ACqDbtaBlBD2z5cdjz/trusH42rWRMcsDpvaFY=;
- b=wM6+YYCvjP3b4r6oQzm5scGpvW5Y9IBin9GNykt/L5nqjHcrXy3Zddk7kYcsUkqtEW
- 3qI/zVPLRaNDMA7ykfv0bg2hAmmCav8kNDz5uSRvWhiQ/Z/1oYM2bqwXqUkwLWCdfKB5
- W7+T8e4BciQtV46bqsF2NySr09eS8DIKRO49yjB8mvChoKc9eYD700u2xMzQ2rMkI4g8
- RCCFhDWgFFX4tqzSEkstvHMYiHEneOI7OKLjXE7yScXUwdZhcbVK6CMRavcUsMFs8oZV
- 55XPDagj5CYDDdACwucrwux2z5EPNJ16j7gIVua0/dDeLnN8phQI1mS8I8McQwpX7MyJ
- bSGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716907757; x=1717512557;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IxUt6ACqDbtaBlBD2z5cdjz/trusH42rWRMcsDpvaFY=;
- b=MtRRjKoXsYxBsxI8LlG+qjeZapdUqxeM1fHuGJO5XW3ccRLLBRlvJfO8GvgopVu5jk
- BbeYcVmInfBL3LtiYnPVWvDs4s7eElsDy2RG6os8nUTh6eRNqgX05Rj/ayr31cM0A9/0
- cpsalelEFL7eHOsxGECKLPlHjeNJFdr0j31P0U1AL3XOQQnlf4FKTMSuWJcSJUeBnjaO
- 2DgxD7lTxotZwKhm2hNcq6DY2LNrmqlKeo+L9yxVRhsFqZgvNyfWPLO8sLvDD60xcrA6
- 6hRDE1lwNnuhCivh3a8Sz/HZHdO5wXHABv2DeJZdJ0v75jjRds9m4Ui7lHJE3n3geURb
- /e1g==
-X-Gm-Message-State: AOJu0YxKOkCQBlweXSEAk8MM85N83PCqmpZYsl/K4jfpw4jKuAma677W
- 6pQKPCi2oEmFJrRF/V3gX/nW+/Kft33t3ShuO0VZ1I6skDKx8KZsdyFPk8BJFNlA8Va1M0EijW2
- s3nCMA9NJH/QAFl3akAk0ainzic8HmqXEGOtCZwLipVrq5QAY
-X-Google-Smtp-Source: AGHT+IF9RxCZdQDiRmc27akKJQbQJEgk0jxIb9JFl8/RjjBhsEBSJoDfeBsWIg6NEk1sS0Kw1bj1bGK7Xay72lf3Wtc=
-X-Received: by 2002:a50:c051:0:b0:578:6481:584b with SMTP id
- 4fb4d7f45d1cf-5786481588dmr9113447a12.14.1716907757070; Tue, 28 May 2024
- 07:49:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
- <20240523194441.21036-5-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240523194441.21036-5-ines.varhol@telecom-paris.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 May 2024 15:49:06 +0100
-Message-ID: <CAFEAcA-30JquShwj8BH0Yt6hTdgGjRvdMgooBwmGDtOygjLWsg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] tests/qtest: Check STM32L4x5 clock connections
-To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- qemu-arm@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
- Luc Michel <luc@lmichel.fr>, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1sByAU-0005sl-2S; Tue, 28 May 2024 10:51:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1sByAQ-0005rz-GR; Tue, 28 May 2024 10:51:13 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44SEhThY003728; Tue, 28 May 2024 14:51:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc :
+ content-transfer-encoding : content-type : date : from : in-reply-to :
+ message-id : mime-version : references : subject : to; s=pp1;
+ bh=l4L8/98/lOiZPn3b116XmyHcwlcihfuGk72XBVc4HqU=;
+ b=Cj4p1RIAZN4RK0UWHt+XbSNKLAFNuuHcuhcVHFK8irczD7RJzCEws0OLo8i+I4Dwlles
+ OjYlFpZ189qVbjKFmFBk+rr3ZSm/xPppObYsJFlkG69Hz249wRklu9PSh0tnC/AbcLF3
+ ptgimojZO87rPQAqXCiY0huJoV0oajlOTbdSGM7wrE5F8x3Fe5jSeFyoM6mOyjiBYLhL
+ 10NbgC1n1ObT7kExMYq93RmVdUej2tDuswcFQ+fILlykSl/kChhC77u8dOsA6M+Mq1ti
+ smtG1riv2fBbwamJnrRJn6vrP63kAxg9b2YtMYbLWLOmtbjR+6kbVZesMhoh2xGOFRzA fA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ydh99g0xp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 14:51:07 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44SEp6fm020103;
+ Tue, 28 May 2024 14:51:06 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ydh99g0xm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 14:51:06 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44SBS8tf010953; Tue, 28 May 2024 14:51:05 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ybw12px9j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 14:51:05 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44SEp2on48038174
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 May 2024 14:51:04 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7ED0B5805B;
+ Tue, 28 May 2024 14:51:02 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 97E445804B;
+ Tue, 28 May 2024 14:51:01 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.30.96]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 May 2024 14:51:01 +0000 (GMT)
+Message-ID: <4ff4e3bb57b7c860b5e66006da7d722c01505669.camel@linux.ibm.com>
+Subject: Re: [PATCH] hw/s390x: Remove unused macro VMSTATE_ADAPTER_ROUTES
+From: Eric Farman <farman@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Halil Pasic
+ <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org
+Date: Tue, 28 May 2024 10:51:01 -0400
+In-Reply-To: <20240527121351.211266-1-thuth@redhat.com>
+References: <20240527121351.211266-1-thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Yyvv6pikxAGL42ACWUmiAWJfsaF9ZZeM
+X-Proofpoint-ORIG-GUID: FTAGbKbw8NZCDfoyNnPCOFDLE_-6WYNL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-28_10,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ mlxlogscore=727 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0 impostorscore=0
+ adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405280111
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,68 +114,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 May 2024 at 20:44, In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
-r> wrote:
->
-> For USART, GPIO and SYSCFG devices, check that clock frequency before
-> and after enabling the peripheral clock in RCC is correct.
->
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+On Mon, 2024-05-27 at 14:13 +0200, Thomas Huth wrote:
+> It's not used anywhere, so let's simply remove it.
+>=20
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  tests/qtest/stm32l4x5.h             | 43 +++++++++++++++++++++++++++++
->  tests/qtest/stm32l4x5_gpio-test.c   | 23 +++++++++++++++
->  tests/qtest/stm32l4x5_syscfg-test.c | 20 ++++++++++++--
->  tests/qtest/stm32l4x5_usart-test.c  | 26 +++++++++++++++++
->  4 files changed, 110 insertions(+), 2 deletions(-)
->  create mode 100644 tests/qtest/stm32l4x5.h
->
-> diff --git a/tests/qtest/stm32l4x5.h b/tests/qtest/stm32l4x5.h
-> new file mode 100644
-> index 0000000000..cf59aeb019
-> --- /dev/null
-> +++ b/tests/qtest/stm32l4x5.h
-> @@ -0,0 +1,43 @@
-> +/*
-> + * QTest testcase header for STM32L4X5 :
-> + * used for consolidating common objects in stm32l4x5_*-test.c
-> + *
-> + * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (c) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
+> =C2=A0include/hw/s390x/s390_flic.h | 3 ---
+> =C2=A01 file changed, 3 deletions(-)
 
-Header files must never include osdep.h. The rules for
-osdep.h are:
- * never included in a .h file
- * always included as the first include in every .c file
-
-> +#include "libqtest.h"
-> +
-> +/*
-> + * MSI (4 MHz) is used as system clock source after startup
-> + * from Reset.
-> + * AHB, APB1 and APB2 prescalers are set to 1 at reset.
-> + *
-> + * A clock period is stored in units of 2^-32 ns :
-> + * 10^9 * 2^32 / 4000000 =3D 1073741824000
-> + */
-> +#define SYSCLK_PERIOD 1073741824000UL
-
-Rather than doing the calculation by hand, it would be
-clearer to use the CLOCK_PERIOD_FROM_HZ() macro from hw/clock.h.
-(If #including clock.h from the test C file doesn't work for
-some reason, you can copy the macro definition; it's a one-liner).
-
-#define SYSCLK_PERIOD CLOCK_PERIOD_FROM_HZ(4000000)
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
