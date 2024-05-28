@@ -4,90 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899B8C25B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FC4C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sByaY-0006C1-U7; Tue, 28 May 2024 11:18:10 -0400
+	id 1sByaY-0006Bs-FY; Tue, 28 May 2024 11:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sByaV-0006Ab-U5
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sByaV-0006AV-T9
  for qemu-devel@nongnu.org; Tue, 28 May 2024 11:18:07 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sByaQ-0001OD-Jo
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sByaQ-0001OH-9t
  for qemu-devel@nongnu.org; Tue, 28 May 2024 11:18:06 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-354ba5663c9so777348f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:18:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716909479; x=1717514279; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3GPidNkvE7hjDr8Tb2VFal5rZ4pUkGWbicQZrjprVTE=;
- b=BKXgmAqqxbMhSz1fYRiLaIImEBCtz9/JMERYLISlavkfw/zFGtft5IvZM9F+cuJfeb
- JrmnFIeBcf40yfwj7ij8Ihk41I+JNSj3s6oAj//dcPNWGecMWQUKmy+mNoTbmH3MIXbT
- 7vp0Aa82ob+SdFIvsOul6KIVGNhtRkWSPdpLgi9lqGM4zHz+2/kNydA8IuWxzCxbOYks
- WWIiOG4kbGkbQLYe1AIvNiys1GoiLVth4IBJi874K41x8LfJE2tsk3t8oTUwBv57Ncwr
- I60U8XGCSwhlgofuJuSR+7hAlGa3mIJp6XTLAvJbTxtt+1l1bNM4C4gWgClfCSjFWDnA
- jZRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716909479; x=1717514279;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3GPidNkvE7hjDr8Tb2VFal5rZ4pUkGWbicQZrjprVTE=;
- b=KvdSp/8P/uxXSDPFh2IWTeUHgg2PoSIiM/aYGjGSYuj9lPzrk0cQnth85AlUDYW/6G
- nhquqBYOLEl2s5+tS1VpSedDq5uQO/vvPraFPTK2JHHA8BlkviuwQG0HcNDiDF5gCdFV
- gquSRoZRT2su1OtLimqFGJnxR9IuGD8IERlJ8knumPVP0QCNAcJlSu61NvRaHXrILK/1
- yrPtEEZd6fD1OJrgUugr2uLFNu4GaD5HnZyvT5wGe5kpggAPjRhjrFjQUWKY0i+icMY1
- kdh6I2XQ4C9QzlI/eY3lfFUySyZ+jNcxzybIwhjfmZF6G2Wcr53VqOeO9dYOvn+NY1jb
- VZ6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW+q83jOUuQ4OBi/wNx6brEIvxnQjsmARLI88FnsMPrhajpkKr/9XeD2ds+eLdZR6UruHCa05qLW1QSTLfEi5YBMrSAjgw=
-X-Gm-Message-State: AOJu0YzuzYpwLG8aIev7K/LFSywgOm8Nkx4dwCA59arqnnkYVhbRMizj
- xdMrID/HBjbp27paw2ndH9KMEg0/efvqOFCMBHWlb7cx4x3EGqXzhOp+sJbm1Pw=
-X-Google-Smtp-Source: AGHT+IGpRooaSo0K6VKPXTxZ32+3ceOcSohNNQHFLdXu7k6LD+NzoIoEU/RA9/vpm0A+vH14ITnfuA==
-X-Received: by 2002:a5d:4f8e:0:b0:354:c329:90d3 with SMTP id
- ffacd0b85a97d-3552fddfa23mr8992819f8f.49.1716909479169; 
- Tue, 28 May 2024 08:17:59 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.214.26])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557dcefdd7sm12282561f8f.91.2024.05.28.08.17.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 08:17:58 -0700 (PDT)
-Message-ID: <4d964d18-db2b-4282-b499-ca42ec8b6112@linaro.org>
-Date: Tue, 28 May 2024 17:17:56 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716909480;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EdT2d+RRjtzKt0J6GRKfnsJpys3bFNVVWzGeKhOF5/k=;
+ b=hDI3/qgvz7a1yBzuXbXre9a4LibohJwv09RDjJM2uYA30ZGqnK2hOnapg9fU5U0J6sLyx8
+ KCMM2VgDQ3RGfPhTLYMDbBlZNo5cjPPiKjvriiQbLUUHebtqgpNaYHlNPpCioK370+hV8S
+ 42OFKRvRisyij5qkA8jQIx7ah1PBORY=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-500-xeLmQaImPwmaCQk2_W-kQw-1; Tue, 28 May 2024 11:17:57 -0400
+X-MC-Unique: xeLmQaImPwmaCQk2_W-kQw-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E0C3F800169;
+ Tue, 28 May 2024 15:17:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.195.1])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B2BD810004F6;
+ Tue, 28 May 2024 15:17:55 +0000 (UTC)
+Date: Tue, 28 May 2024 17:17:54 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ jsnow@redhat.com, f.ebner@proxmox.com
+Subject: Re: [PATCH] iotests/pylintrc: allow up to 10 similar lines
+Message-ID: <ZlX1ovj3v5YsL7Al@redhat.com>
+References: <20240430091329.2365053-1-vsementsov@yandex-team.ru>
+ <10070ee3-2ef7-45e6-bd27-5ac74559f192@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] hw/clock: Expose 'qtest-clock-period' QOM property
- for QTests
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Damien Hedde
- <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
- Luc Michel <luc@lmichel.fr>, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Thomas Huth <thuth@redhat.com>
-References: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
- <20240523194441.21036-4-ines.varhol@telecom-paris.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240523194441.21036-4-ines.varhol@telecom-paris.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <10070ee3-2ef7-45e6-bd27-5ac74559f192@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,23 +81,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/5/24 21:41, Inès Varhol wrote:
-> Expose the clock period via the QOM 'qtest-clock-period' property so it
-> can be used in QTests. This property is only accessible in QTests (not
-> via HMP).
+Am 28.05.2024 um 14:49 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> On 30.04.24 12:13, Vladimir Sementsov-Ogievskiy wrote:
+> > We want to have similar QMP objects in different tests. Reworking these
+> > objects to make common parts by calling some helper functions doesn't
+> > seem good. It's a lot more comfortable to see the whole QAPI request in
+> > one place.
+> > 
+> > So, let's increase the limit, to unblock further commit
+> > "iotests: add backup-discard-source"
+> > 
+> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > ---
+> > 
+> > Hi all! That's a patch to unblock my PR
+> > "[PULL 0/6] Block jobs patches for 2024-04-29"
+> >    <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+> >    https://patchew.org/QEMU/20240429115157.2260885-1-vsementsov@yandex-team.ru/
+> > 
+> > 
+> >   tests/qemu-iotests/pylintrc | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/tests/qemu-iotests/pylintrc b/tests/qemu-iotests/pylintrc
+> > index de2e0c2781..05b75ee59b 100644
+> > --- a/tests/qemu-iotests/pylintrc
+> > +++ b/tests/qemu-iotests/pylintrc
+> > @@ -55,4 +55,4 @@ max-line-length=79
+> >   [SIMILARITIES]
+> > -min-similarity-lines=6
+> > +min-similarity-lines=10
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Hi! I hope it's OK, if I just apply this to my block branch, and
+> resend "[PULL 0/6] Block jobs patches for 2024-04-29" which is blocked
+> on this problem.
 
-Addressing Luc and Peter comments, you can replace that line by:
+Sorry, I only just returned from PTO and now have to catch up with
+things.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+But yes, if John doesn't have any objections, it's fine with me, too.
 
-Thanks!
-
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->   docs/devel/clocks.rst |  3 +++
->   hw/core/clock.c       | 16 ++++++++++++++++
->   2 files changed, 19 insertions(+)
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
