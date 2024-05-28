@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE67C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 17:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C2EC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 17:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC0bR-0003eT-GG; Tue, 28 May 2024 13:27:13 -0400
+	id 1sC0eu-0004d0-Le; Tue, 28 May 2024 13:30:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sC0bQ-0003e0-BL
- for qemu-devel@nongnu.org; Tue, 28 May 2024 13:27:12 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1sC0er-0004bd-7i
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 13:30:45 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sC0bO-0002mR-Cc
- for qemu-devel@nongnu.org; Tue, 28 May 2024 13:27:12 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1f480624d0dso9337115ad.1
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 10:27:08 -0700 (PDT)
+ id 1sC0ep-0003Pk-Dw
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 13:30:44 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-681a49e6e86so720348a12.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 10:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716917227; x=1717522027; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716917441; x=1717522241; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6bBlwiUJeQIH7DSXgOBC1Z5vxVVOeQRW7eyy+qteuh8=;
- b=xEBBeb8PK6VMNFWsHWSGFNAVMjyuQAvfgdqIjt7tKDXAmcJqqTQWKgetH9WH7U6T+A
- JvTYT4cUM866fNJQSKtRNZMljeP2VGJwxcWV13ACate/9pHSzJup6zmfe8rZmCxRAnXw
- cNB6wrBSlTXUAFWo6SfiU7UbyDmDlWp4C5dGJXkjqYB1UY9YMK2dYELuQiP6bN8VE7r3
- 4DfyEc9kTrzzEc37HemVuGXWaSIF/aN+jZhNzhYG8FJirXYGKjPmY0jpZOcDgmDTobUk
- gHi5aCL4xq7wFRbHZPH9FiEGae4hOFQaLbFkhtuK9iB81yVnHBjKUVzEcKJ0OByVja2P
- dqHA==
+ bh=ddoEk8SCUGeJcFxzW+97wHAXgv6KKxC6gZU+3qXMuSA=;
+ b=i9+AKViHTi/a/iS04hB/6+1WyNz59ZVvALfvF/qCxBbHVeMfDs/ebmqLleu5c7gRad
+ Mu44gwJsLkwJE+YtGLdFHZGzpE62EJPBk/zVhFf6KmC5ClUp36hwfk8p07W3XLQ52vjN
+ CkJ1HtFvNeFSgYVdEQaaKguQGvrUnSyKetNfGeC4c81p846/w6NvzphLKTuGPGOtKBdw
+ 1MalWz08qPFMF9qG8zzegBX86JhLQ9jNmYFmFT0+ACvxgaif12CwZEDnpyyw67io4NWm
+ uW6bPGG8ZZea0FPf3h+RY7oafGiqX7Z8NCVlEyZ88yGJw+lneS5w38h8F3X+OmUhzJq5
+ a13g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716917227; x=1717522027;
+ d=1e100.net; s=20230601; t=1716917441; x=1717522241;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6bBlwiUJeQIH7DSXgOBC1Z5vxVVOeQRW7eyy+qteuh8=;
- b=Z9lqJGH0t09u42tPCepeaoRwfYVBvQ3SSVslphsb+dZa3n1b+2lspJRv0R3k6hFAPc
- V8f5a3m47V3aIGTBQm65fr0MAHWwSy6st9XP9wTLZ8ANS+rVf05muRc2yLNMow9xb0X2
- MMWsVhXgzYzXXZxPT/4gTNNXefbiHH+Gd2wcmszR3C3Xryp0dHodmZLm7s+nWLzFWqpg
- SWsrA2YFhCLxDeOgoZWniTACADMH2yOsflm532zXc8BAplubDJkrCuQMvkjW+hQzDbIK
- NsC78/7jqyeB1/XKTBDIryJ+NGdZecGSH+4a4ifBapJQLinBo51kU9CySjASlTvM+IwZ
- QxeA==
-X-Gm-Message-State: AOJu0YxdJNFuFsWdOnsLSE1UIx4AgCecSBGLNVTDhj0aIDXoRITQavnU
- ls9FVBFyLhpRlcArjQdWMC8tTbpVvJiMENdG8BtbjUWBM63jVzsUbvwKpLgjvPG9cZ/D2K9/0Rp
- V
-X-Google-Smtp-Source: AGHT+IFGexHjtCw6gHn9t841IT1EMgIoMnALxdyoYO6/1oby25NljE0ssx4rqLIIoT4V6fEVj2YGaw==
-X-Received: by 2002:a17:902:d509:b0:1f4:be9b:d30f with SMTP id
- d9443c01a7336-1f4be9bdadamr52760765ad.68.1716917227337; 
- Tue, 28 May 2024 10:27:07 -0700 (PDT)
+ bh=ddoEk8SCUGeJcFxzW+97wHAXgv6KKxC6gZU+3qXMuSA=;
+ b=BFvt6UwDqAvMdQSH0ElrDQTUcY40XlQgzt12tYLy+lgSzjQextzIIk7y8KBrHKvhYu
+ w+WTGpeMvVhCWYNhWn/Rij5tXR2zgGDmSzQ9b3cAX9fHQLrXpDdTD2nnW5obTMxhp6pD
+ syMVC2jxHKltQ3Dlnpe5S8dAT/rmSif8QHmXAFb3t6W9ZZQ8o9p9PLYvhnDco845943B
+ dXxnEwFcvFi05FoDUNR4+tkXyPHmfPgRmGWg9958w/g2IBFDq/n+/1R3SX0t14bW4pp7
+ SZTa+VKS9mxkWUSp7HzpMBArQtFK0wRYmA0vP1pyg+jdT6F2yAIr0o9ZJtyB6Bm5WoGE
+ T+SQ==
+X-Gm-Message-State: AOJu0YwKisguQWiKtofPY/tDJz9FtMPb+G/79O9dl3DmuJF/FBB9X22V
+ JzUvg6Fn0gf1V47ZzEa6QdEjVdj16F+E5jZTugIzCnpoclM6gf8lSkbYHysIsTSdZav5TxmUXpO
+ d
+X-Google-Smtp-Source: AGHT+IH8acP9wVaB2jRKu1xS1EA46dQclNNqk763PU+DLyVHN5umShmr3l/zHwFiPEJAC6rsVq5DnA==
+X-Received: by 2002:a17:90a:688e:b0:2bf:9ed7:a7a2 with SMTP id
+ 98e67ed59e1d1-2bf9ed7aab8mr7805931a91.23.1716917441315; 
+ Tue, 28 May 2024 10:30:41 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c75e663sm84820665ad.29.2024.05.28.10.27.06
+ 98e67ed59e1d1-2c00f389824sm1765562a91.1.2024.05.28.10.30.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 10:27:06 -0700 (PDT)
-Message-ID: <ee96e58f-28d9-4fbb-a0b3-1ec385fdadf2@linaro.org>
-Date: Tue, 28 May 2024 10:27:05 -0700
+ Tue, 28 May 2024 10:30:40 -0700 (PDT)
+Message-ID: <0d61e5a8-84ab-4379-b58e-364d929293bc@linaro.org>
+Date: Tue, 28 May 2024 10:30:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 65/67] target/arm: Convert SQDMULH, SQRDMULH to
- decodetree
+Subject: Re: [PATCH v2 44/67] target/arm: Convert SRSHL and URSHL (register)
+ to gvec
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20240524232121.284515-1-richard.henderson@linaro.org>
- <20240524232121.284515-66-richard.henderson@linaro.org>
- <CAFEAcA9MKmvgT6Q4qn8ELSA0pXEO2w2poHELW3Ed6xCs6cKstw@mail.gmail.com>
+ <20240524232121.284515-45-richard.henderson@linaro.org>
+ <CAFEAcA-4xMXjVZFGbDjefNabHn2MW=4jFaYD79iq5oV4qyXafA@mail.gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA9MKmvgT6Q4qn8ELSA0pXEO2w2poHELW3Ed6xCs6cKstw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-4xMXjVZFGbDjefNabHn2MW=4jFaYD79iq5oV4qyXafA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,44 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/24 09:10, Peter Maydell wrote:
->> +void HELPER(neon_sqdmulh_idx_s)(void *vd, void *vn, void *vm,
->> +                                void *vq, uint32_t desc)
->> +{
->> +    intptr_t i, j, opr_sz = simd_oprsz(desc);
->> +    int idx = simd_data(desc);
->> +    int32_t *d = vd, *n = vn, *m = (int32_t *)vm + H4(idx);
->> +
->> +    for (i = 0; i < opr_sz / 4; i += 16 / 4) {
->> +        int32_t mm = m[i];
->> +        for (j = 0; j < 16 / 4; ++j) {
->> +            d[i + j] = do_sqrdmlah_s(n[i + j], mm, 0, false, false, vq);
->> +        }
->> +    }
->> +    clear_tail(d, opr_sz, simd_maxsz(desc));
->> +}
->> +
->> +void HELPER(neon_sqrdmulh_idx_s)(void *vd, void *vn, void *vm,
->> +                                 void *vq, uint32_t desc)
->> +{
->> +    intptr_t i, j, opr_sz = simd_oprsz(desc);
->> +    int idx = simd_data(desc);
->> +    int32_t *d = vd, *n = vn, *m = (int32_t *)vm + H4(idx);
->> +
->> +    for (i = 0; i < opr_sz / 4; i += 16 / 4) {
->> +        int32_t mm = m[i];
->> +        for (j = 0; j < 16 / 4; ++j) {
->> +            d[i + j] = do_sqrdmlah_s(n[i + j], mm, 0, false, true, vq);
->> +        }
->> +    }
->> +    clear_tail(d, opr_sz, simd_maxsz(desc));
->> +}
+On 5/28/24 08:51, Peter Maydell wrote:
+> On Sat, 25 May 2024 at 00:27, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/helper.h             | 10 +++++++++
+>>   target/arm/tcg/translate.h      |  4 ++++
+>>   target/arm/tcg/neon-dp.decode   | 10 ++-------
+>>   target/arm/tcg/gengvec.c        | 22 +++++++++++++++++++
+>>   target/arm/tcg/neon_helper.c    | 38 ++++++++++++++++++++++++++++++++-
+>>   target/arm/tcg/translate-a64.c  | 17 ++++++---------
+>>   target/arm/tcg/translate-neon.c |  6 ++----
+>>   7 files changed, 84 insertions(+), 23 deletions(-)
 > 
-> Missing H macros in these helpers ?
+> 
+>>   uint32_t HELPER(glue(neon_,name))(CPUARMState *env, uint32_t arg1, uint32_t arg2) \
+>>   NEON_VOP_BODY(vtype, n)
+>>
+>> +#define NEON_GVEC_VOP2(name, vtype) \
+>> +void HELPER(name)(void *vd, void *vn, void *vm, uint32_t desc) \
+>> +{                                                               \
+>> +    intptr_t i, opr_sz = simd_oprsz(desc);                      \
+>> +    vtype *d = vd, *n = vn, *m = vm;                            \
+>> +    for (i = 0; i < opr_sz / sizeof(vtype); i++) {              \
+>> +        NEON_FN(d[i], n[i], m[i]);                              \
+> 
+> Does this need H macros for the bigendian case ? It looks
+> like we use it for smaller-than-64-bit element cases.
 
-No.  The only index that's not identical across the vector is M, and H is handled once at 
-the beginning.  Otherwise n[] and d[] have the same operation applied to all indicies, and 
-it doesn't matter which order in which these happen.
+The same operation happens in each lane, and order of evaluation does not matter.  So, no 
+H macros needed.
 
 
 r~
