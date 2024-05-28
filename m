@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1967EC25B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9986C25B78
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxUg-0001Uv-Il; Tue, 28 May 2024 10:08:02 -0400
+	id 1sBxUv-0001fL-Iy; Tue, 28 May 2024 10:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUf-0001Tq-7R
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:01 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1sBxUt-0001dt-E5
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:15 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUd-00070S-Ha
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:00 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-35bf77ba951so210008f8f.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:07:59 -0700 (PDT)
+ id 1sBxUh-00072s-4j
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:15 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-357f1c0b86fso644926f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:08:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716905278; x=1717510078; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716905282; x=1717510082; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=js5qncWkemZbFOUTBcvGMDqOGolfrcRJMq2DK5PGxrw=;
- b=sXX4gy/28aC7T3VCBj8KFmLrXZinqkKJTsHpRbPtz7R+FJ229SZNdptGVtYfW++yV8
- 92Zco127RY4BcdqBiMVrO067VXrGHdTBIqlRmqBqE0lM2QKIvqBGG5U+U77fHWqsHDYp
- MO0ai/5GKw36e+kxA4kf5L6Kguf54BOEzJzEd3Pkdfap6dz2tIaOFmkZi/I5S0OCAqV/
- aKtyIfG67Z5dacmapW+m9Uhwn4EVFQ5mm3di8o6kTQqxbUDmyfgzFkSKJ18UjvdgcKIe
- vg2VxFFPudGws5/+d98wjPC+3Dfohvozidlm0DEdB5sCLF8gJIFIFp01Ii6/RLj+kGW4
- WKEw==
+ :reply-to; bh=MMlq9Auj6l45MaC9OkLzg6YYNbQpSqIPdMIwL/zQx0E=;
+ b=IA6bRw0JA6ZrsWCaq7MPgvgmYEjgj5OAg8obfE9DzpzXm7HHkyOFBuo0YEL5b3r3/R
+ y5wi7AEs53OeNGB2udEtdsN+w6i0w2lJqU2ZXY+s1v0ugYDeHxYpXsAx74LIozIpmnR4
+ UuIAjIoOrxjhhguCdXWSz1GfzSWqC9T47i67bhAvxnxfc4bjrRWaDkr8BT9GUKaTrkJR
+ WbnmDzN+AWPX++OXOQAnsSEJ0DV7Ryr624f627bCkW2UUngGtgbMbbRwgg7Q9tlL7PXw
+ vHMPN1Kpsngyxmu1IqEM7SpRJjtaaTAs8pO9S+On8R8YtPIGtxfkRPXFqCpCbLMYJ08s
+ wD7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716905278; x=1717510078;
+ d=1e100.net; s=20230601; t=1716905282; x=1717510082;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=js5qncWkemZbFOUTBcvGMDqOGolfrcRJMq2DK5PGxrw=;
- b=dSxJMO0QZ2tHN7C6AyXFAvAFbEqA1zfcrPH0lHvhasAIRzHtIRBSFNgo6LdZXIUbdN
- GLu0vGbNJvJZZIWGdFj2M7U6z5a0A5fFhuxfpk2+Doaa6v/EXukxTI0oHF1rvHVgFaYb
- qIEEhBI9rF3W1FDrYQC5GhDCQs9oie9TOhMk+XvvI4bDaeE2X2/fvGBQ5x7k+aPQRDkF
- 9Wmu5z7bdNaRL44OE33UYbaoL4+LJpiKln0Iz2Ov1SJ4M70+F1APo0YgUO9oURh4qdiP
- mnczmCHXOP+d5VKyFSrG+bSlMdBLNADH81R0TMycjhArnCdy/1Pi2N7sg+CN+OM4SbJO
- 3EdA==
-X-Gm-Message-State: AOJu0YyMYAEI9xs287x5KaHAZoNlUFvqDrQhL3Z3+Q6QVoC167foZnLQ
- dywPVQKnOxL5+YP28mAUqz/ZkO8IbGyGJxu8Wgz3hUv2uvsVy9n/RN4Nu4yNh2o9UwDmsxpKA/g
- u
-X-Google-Smtp-Source: AGHT+IHDpbbNQL4S4FsazvxQtOjWo80Y1YbSx9AqlPUC8vZBYaUKR48E61Ih+Hcs/E1+gxjfM3kKEA==
-X-Received: by 2002:a5d:4988:0:b0:354:f489:fb8 with SMTP id
- ffacd0b85a97d-35526c3e2admr8015667f8f.14.1716905278262; 
- Tue, 28 May 2024 07:07:58 -0700 (PDT)
+ bh=MMlq9Auj6l45MaC9OkLzg6YYNbQpSqIPdMIwL/zQx0E=;
+ b=mQXEgZFwgdWHhmUTgQkFqcpOK05fdZcI/hUv0TxPoeAISE22HmyMcqkQ4cD825qdB5
+ UF9QLVv2zbmKOlMzUj2K9yxxT9F1MHrK0IUP6tVYWQLAzFv8f9qwxJYK4hXCd1BnALzQ
+ 7suJG8GJe3NSArTEP9aT95TDv1gNGTc+poyG7GhITdfykc6zLlZIP+uZI515UKqIjTe9
+ B3cHtXQZ5KjasdGvSkvsMIQZzgpEdQl3WyNm5B40QUg6xGYFL4ioVCAvK30Vb5zp6+zM
+ +YZ9YhDwQTvQmYMGN9rV/y0s0t7WMlqAwUvu9D8XuL5q3OmTDYOdTobx25V+RFYNLdMD
+ ts1w==
+X-Gm-Message-State: AOJu0YyFsq7NSeTlhF9qngO8MbkK9UGkLYRUE3iOihru/DbBrBM0wyBK
+ lw7/IYdJtVkmh07e8E/uhL+ViaQ98QMDete2oCfi+A+22e/tXOsDjIlxVvYzmpUT9eqNq3c8VMu
+ 7
+X-Google-Smtp-Source: AGHT+IHofExPWsofs5fLgXkw4PjrIWmiVDEd6Oehi8UnH2/OUIRzXLYjQcaOF1hLJNQenuSSv33Ysg==
+X-Received: by 2002:adf:f605:0:b0:351:d78e:875e with SMTP id
+ ffacd0b85a97d-35526c271e2mr8205750f8f.14.1716905281814; 
+ Tue, 28 May 2024 07:08:01 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.07.57
+ ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.08.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 07:07:57 -0700 (PDT)
+ Tue, 28 May 2024 07:08:01 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/42] hw/char: Correct STM32L4x5 usart register CR2 field
- ADD_0 size
-Date: Tue, 28 May 2024 15:07:15 +0100
-Message-Id: <20240528140753.3620597-5-peter.maydell@linaro.org>
+Subject: [PULL 10/42] target/arm: Zero-extend writeback for fp16 FCVTZS
+ (scalar, integer)
+Date: Tue, 28 May 2024 15:07:21 +0100
+Message-Id: <20240528140753.3620597-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
 References: <20240528140753.3620597-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,30 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inès Varhol <ines.varhol@telecom-paris.fr>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Message-id: 20240505141613.387508-1-ines.varhol@telecom-paris.fr
+Fixes RISU mismatch for "fcvtzs h31, h0, #14".
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240524232121.284515-5-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/char/stm32l4x5_usart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/translate-a64.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index 02f666308c0..fc5dcac0c45 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -56,7 +56,7 @@ REG32(CR1, 0x00)
-     FIELD(CR1, UE, 0, 1)     /* USART enable */
- REG32(CR2, 0x04)
-     FIELD(CR2, ADD_1, 28, 4)    /* ADD[7:4] */
--    FIELD(CR2, ADD_0, 24, 1)    /* ADD[3:0] */
-+    FIELD(CR2, ADD_0, 24, 4)    /* ADD[3:0] */
-     FIELD(CR2, RTOEN, 23, 1)    /* Receiver timeout enable */
-     FIELD(CR2, ABRMOD, 21, 2)   /* Auto baud rate mode */
-     FIELD(CR2, ABREN, 20, 1)    /* Auto baud rate enable */
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 4126aaa27e6..d97acdbaf9a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8707,6 +8707,9 @@ static void handle_simd_shift_fpint_conv(DisasContext *s, bool is_scalar,
+             read_vec_element_i32(s, tcg_op, rn, pass, size);
+             fn(tcg_op, tcg_op, tcg_shift, tcg_fpstatus);
+             if (is_scalar) {
++                if (size == MO_16 && !is_u) {
++                    tcg_gen_ext16u_i32(tcg_op, tcg_op);
++                }
+                 write_fp_sreg(s, rd, tcg_op);
+             } else {
+                 write_vec_element_i32(s, tcg_op, rd, pass, size);
 -- 
 2.34.1
 
