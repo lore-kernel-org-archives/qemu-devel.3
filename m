@@ -4,70 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6295C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68DBC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBsMP-0002lX-Kg; Tue, 28 May 2024 04:39:09 -0400
+	id 1sBsMP-0002lE-3x; Tue, 28 May 2024 04:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMO-0002io-Ah
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMM-0004p3-N3
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716885546;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zVJuHdR616Jr9GPZTPprRXPHLywe9FOHnGfvgXh/Rz8=;
- b=FUDjKr2HC74PStZuduwNO4nO/Wi0cpHtJjF+gHuDOX0SqqTUgVICHZgB5hhtG/TmOP2WZb
- nQYZsq/uWKMg+6AbBiryGPyxYtZzHeczl1M318v0fVjXwIup1mHfM4WWIolo62KfO934TV
- b7mcCWZZG/ubQWQlBEVUzPwljAz31Y4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-52-ewYBn7U8MJWjrmpsQXb2bQ-1; Tue, 28 May 2024 04:39:03 -0400
-X-MC-Unique: ewYBn7U8MJWjrmpsQXb2bQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0F74D800CB1;
- Tue, 28 May 2024 08:39:03 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.232])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id ACDC22026D68;
- Tue, 28 May 2024 08:39:02 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 80D5E1800DFF; Tue, 28 May 2024 10:38:58 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v2 4/4] MAINTAINERS: drop spice+ui maintainership
-Date: Tue, 28 May 2024 10:38:56 +0200
-Message-ID: <20240528083858.836262-5-kraxel@redhat.com>
-In-Reply-To: <20240528083858.836262-1-kraxel@redhat.com>
-References: <20240528083858.836262-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sBsMM-0002hp-Mn
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:06 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sBsMK-0004oS-68
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:06 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxW+ogmFVmpJwAAA--.2405S3;
+ Tue, 28 May 2024 16:38:56 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxosQfmFVmQcYLAA--.20131S2; 
+ Tue, 28 May 2024 16:38:55 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v4 0/3] Add extioi virt extension support
+Date: Tue, 28 May 2024 16:38:52 +0800
+Message-Id: <20240528083855.1912757-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAf8CxosQfmFVmQcYLAA--.20131S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,38 +62,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove myself from spice and ui entries.
-Flip status to "Orphan" for entries which have nobody else listed.
+On LoongArch, IRQs can be routed to four vcpus with hardware extioi.
+This patch adds the extioi virt extension support so that the IRQ can
+route to 256 vcpus.
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- MAINTAINERS | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+v4:
+- Put patch3 ahead of patch2;
+- patch1 Introduce two IRQ model(Extended IRQ model and Virt extended IRQ model);
+- Link to v3: https://patchew.org/QEMU/20240521123225.231072-1-gaosong@loongson.cn/
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 37f2be570cc7..8479e8146470 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3044,8 +3044,7 @@ F: stubs/memory_device.c
- F: docs/nvdimm.txt
- 
- SPICE
--M: Gerd Hoffmann <kraxel@redhat.com>
--S: Odd Fixes
-+S: Orphan
- F: include/ui/qemu-spice.h
- F: include/ui/spice-display.h
- F: ui/spice-*.c
-@@ -3055,7 +3054,6 @@ F: qapi/ui.json
- F: docs/spice-port-fqdn.txt
- 
- Graphics
--M: Gerd Hoffmann <kraxel@redhat.com>
- M: Marc-André Lureau <marcandre.lureau@redhat.com>
- S: Odd Fixes
- F: ui/
+v3:
+- Split patch2 to two small patch.
+- remove unused code.
+- loongarch_extioi_reset() clear status without checking virt extioi
+  features.
+- Link to v2: https://patchew.org/QEMU/20240514090756.988096-1-gaosong@loongson.cn/
+
+v2:
+- Split the patch to two small patch.
+- Drop 'RFC' title. extioi virt extension suport only enable on kvm
+  mode and  the extioi driver need patch[1].
+  but this series do not affect the old codes in any way.
+- Link to v1: https://lore.kernel.org/all/20240116022526.498613-1-gaosong@loongson.cn/#r
+
+[1]: https://gitee.com/openeuler/kernel/commit/5d97cff72f91f4f20a536efd60eca75bfcb78a64
+
+Thanks.
+Song Gao
+
+Song Gao (3):
+  hw/intc/loongarch_extioi: Add extioi virt extension definition
+  hw/loongarch/virt: Use MemTxAttrs interface for misc ops
+  hw/loongarch/virt: Enable extioi virt extension
+
+ include/hw/intc/loongarch_extioi.h |  21 ++++
+ include/hw/loongarch/virt.h        |   1 +
+ target/loongarch/cpu.h             |   1 +
+ hw/intc/loongarch_extioi.c         |  88 +++++++++++++-
+ hw/loongarch/virt.c                | 182 +++++++++++++++++++++++------
+ 5 files changed, 256 insertions(+), 37 deletions(-)
+
 -- 
-2.45.1
+2.34.1
 
 
