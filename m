@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF4C9C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5120C25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:37:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sByr7-0006HL-QT; Tue, 28 May 2024 11:35:17 -0400
+	id 1sBytO-0007Sj-1U; Tue, 28 May 2024 11:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sByr6-0006Gy-Dd
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:35:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sByr4-0003sF-MX
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:35:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716910513;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1WdTmjw8EhuVR8eQNarlG3ROBvZ5T382348YDC217RY=;
- b=SnTSBmoxLHsCrTnbyEsLIl3gpV9INJaWgjtMw3Et64UxNSzmVxH85Ytxy3mz1rH+hZdcqY
- eZjygPQ1NtvH/J5cKDNll4gIVHY93bJumv9pyAGD0jAYJuRVDWOuPdKD5K3hrMx86Zvj3n
- jQals7UVPaJhqFMW8n+zuS5NtLoM2L8=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-MmP-gvXOO8u-9shdGqRJvA-1; Tue, 28 May 2024 11:35:11 -0400
-X-MC-Unique: MmP-gvXOO8u-9shdGqRJvA-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43fc8bb9f09so169031cf.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:35:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sBytK-0007S6-P4
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:37:34 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sBytJ-0004IU-7p
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:37:34 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57857e0f462so1213859a12.0
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716910650; x=1717515450; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oFaEL3/ajUvsHYgVR7FBeteVoZbSYcqZKWXU7bOEY+A=;
+ b=A3saABWbbIlctKWxZsnjl1maoIv/ELKLKUAuU1XVcGnifvBYqSUM9AubIGJ3lj/AVm
+ JfEMF8dxtV/Yha6JQrcWS/Pw8y6ajb2u8ugirUP0w9rcKj55Od/vTl5myRBdVeAbZ1pr
+ sejCToLfMlLhHZ3z2l4/UOKE5yILfaI4f+mpagj6etkztwF8yct7MInPgW4r8B946P/Y
+ e8sdDug/OQv5ETUPYnz8yVB4B78KqRdqs8ildbAUpJAWAWuUQnpLdgnv9P6FBeaKnphu
+ vlptpTjUvdQp2B5AkJHXhWP/S9aPE285ySOWRZVARV+EyEsl1QQpCzhTTt5GkO5Vx+At
+ hazw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716910511; x=1717515311;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1WdTmjw8EhuVR8eQNarlG3ROBvZ5T382348YDC217RY=;
- b=EwHADB+xZlS0rg9aZsGVo6WTgTrnNfi7fWNLii7kpXK545DovT0UjZLeIZhTD3/Bf9
- lXR1GH4YkLJrmoEZf4zHRpfzRxdBUaRKd2KIfpBW8xtU+zZNl+d9jtgh7XfvEZVZzyY1
- JRPArljCnROXcjuky2uyPzY37sc1Tz/TxVAol/KtRLCSqANYQtlnM6AtqWcxb2pLmJiL
- NrDJ7UzR2iiR8jdQN835h5KDmkiJMre4j6PfrLaf3OJqY4VKXr8FbyVE69Ohph99TXiN
- d2rKeZb6i4hPb3dWTg6JI8biG0CC7E7YQ7LgykQMbOU+kDbKnuin/PtdUxFgxXauZUzY
- 7cQA==
-X-Gm-Message-State: AOJu0Yx1EJZU8kpghoz4Z8utLccdTrC0Dmzzbi561r/fZjWSZ/pZOq8S
- UTYmJpYRBVgUWCBnQ3EqrSI11tROlRZ217TyH4cfpPRXFHR14jAjosw58XKPKo9v0ojF/lGXXGE
- YcpZhuqxQMidKvjYhy70J8rmV/uu2Qo/B9+k6kNTw1kW+Af2zPAzS
-X-Received: by 2002:ac8:58d4:0:b0:437:cc82:9c00 with SMTP id
- d75a77b69052e-43fb0d69b99mr138894231cf.0.1716910510687; 
- Tue, 28 May 2024 08:35:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjC1pa7WMNKRno+MCbUCfIOCwB+9sjtaA1afZw2EYtGD6jEu93OkNPJKZhDZSd0QiriNKoFA==
-X-Received: by 2002:ac8:58d4:0:b0:437:cc82:9c00 with SMTP id
- d75a77b69052e-43fb0d69b99mr138893791cf.0.1716910509875; 
- Tue, 28 May 2024 08:35:09 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43fb16b97b5sm43547591cf.18.2024.05.28.08.35.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 08:35:09 -0700 (PDT)
-Date: Tue, 28 May 2024 11:35:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>, Het Gala <het.gala@nutanix.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [RFC PATCH 3/4] tests/qtest/migration: Add support for simple
- device tests
-Message-ID: <ZlX5q9e-p93i0Am9@x1n>
-References: <20240523201922.28007-1-farosas@suse.de>
- <20240523201922.28007-4-farosas@suse.de> <ZlT3ORBU6-FbRXda@x1n>
- <87wmneg8t5.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1716910650; x=1717515450;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oFaEL3/ajUvsHYgVR7FBeteVoZbSYcqZKWXU7bOEY+A=;
+ b=uPaEPIqr2U3S5Asowh4DVNTRfV4Oeju92B0WwCCl4BgUksYYpV2jZLUaZTRlYC/8Qt
+ Y6ew8jdHU20GiJWZECosM07ztwkj0mgR06f6Jc/s/KORp8bxZMQwjD8nYLbs6hF4wfpG
+ oy6wVijMQtjU888ic4oQ4lPiLHWTW/NN4A4SljCIUoUlWPKAX/pCHJ+NiL3ewG+OZwCv
+ suDvzL094/pRCldCCisrGNlctzZpcvVOM+kh4VNmkjjIhrfrCG0OPaIlge4oq5B/d/pM
+ cgO2ivtZhMiLj1pQZxIyqXetjnMDoU9xAxN1/kZ6nL/0pBHGzvjZm9CfxNNkazB0stF6
+ JBhg==
+X-Gm-Message-State: AOJu0YxbtKLQ+Y6tjKG6ieIRC1ZmDGuuxU05aJacmNHQndl/mMtqYYbp
+ fdJmcRgfzfUDIGSWimuaBiDKxV8CtHVezoOlu0GjibPn8jKYmGX11Zpch6ukeRF+nyaNBl8NhA/
+ O/cY47lDx0vaqk1V9QhHaPTN0QVJzJM8yCKII5A==
+X-Google-Smtp-Source: AGHT+IHM805mIJ7N3Z50oQVipkTYb39Ja2auesIQ76K3Rc9Knwl7WbSiZwIODPdvVJu5FClJCkMU36HQJPBL6lElQOw=
+X-Received: by 2002:a50:d659:0:b0:579:c015:5377 with SMTP id
+ 4fb4d7f45d1cf-579c01555c7mr5468253a12.8.1716910650462; Tue, 28 May 2024
+ 08:37:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87wmneg8t5.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240524232121.284515-1-richard.henderson@linaro.org>
+ <20240524232121.284515-39-richard.henderson@linaro.org>
+In-Reply-To: <20240524232121.284515-39-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 May 2024 16:37:19 +0100
+Message-ID: <CAFEAcA9oBzyrjBKcX6NdkDGde5YJzfHUYpPKfx4w20KaqhpS_Q@mail.gmail.com>
+Subject: Re: [PATCH v2 38/67] target/arm: Convert SUQADD and USQADD to gvec
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,89 +88,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 07:59:50PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Thu, May 23, 2024 at 05:19:21PM -0300, Fabiano Rosas wrote:
-> >> The current migration-tests are almost entirely focused on catching
-> >> bugs on the migration code itself, not on the device migration
-> >> infrastructure (vmstate). That means we miss catching some low hanging
-> >> fruits that would show up immediately if only we had the device in
-> >> question present in the VM.
-> >> 
-> >> Add a list of devices to include by default in the migration-tests,
-> >> starting with one that recently had issues, virtio-gpu. Also add an
-> >> environment variable QTEST_DEVICE_OPTS to allow test users to
-> >> experiment with different devices or device options.
-> >> 
-> >> Do not run every migration test with the devices because that would
-> >> increase the complexity of the command lines and, as mentioned, the
-> >> migration-tests are mostly used to test the core migration code, not
-> >> the device migration. Add a special value QTEST_DEVICE_OPTS=all that
-> >> enables testing with devices.
-> >> 
-> >> Notes on usage:
-> >> 
-> >> For this new testing mode, it's not useful to run all the migration
-> >> tests, a single test would probably suffice to catch any issues, so
-> >> provide the -p option to migration-test and the test of your choice.
-> >> 
-> >> Like with the cross-version compatibility tests in CI and the recently
-> >> introduced vmstate-static-checker test, to be of any use, a test with
-> >> devices needs to be run against a different QEMU version, like so:
-> >> 
-> >> $ cd build
-> >> $ QTEST_DEVICE_OPTS=all \
-> >>  QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-> >>  QTEST_QEMU_BINARY_DST=../build-previous/qemu-system-x86_64 \
-> >>  ./tests/qtest/migration-test -p /x86_64/migration/precopy/tcp/plain
-> >> 
-> >> $ cd build
-> >> $ QTEST_DEVICE_OPTS='-device virtio-net' \
-> >>  QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-> >>  QTEST_QEMU_BINARY_DST=../build-previous/qemu-system-x86_64 \
-> >>  ./tests/qtest/migration-test -p /x86_64/migration/precopy/tcp/plain
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  tests/qtest/migration-test.c | 19 +++++++++++++++++--
-> >>  1 file changed, 17 insertions(+), 2 deletions(-)
-> >> 
-> >> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> >> index 2253e0fc5b..35bb224d18 100644
-> >> --- a/tests/qtest/migration-test.c
-> >> +++ b/tests/qtest/migration-test.c
-> >> @@ -71,6 +71,13 @@ static QTestMigrationState dst_state;
-> >>  #define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
-> >>  #define QEMU_ENV_DST "QTEST_QEMU_BINARY_DST"
-> >>  
-> >> +/*
-> >> + * The tests using DEFAULT_DEVICES need a special invocation and
-> >> + * cannot be reached from make check, so don't bother with the
-> >> + * --without-default-devices build.
-> >
-> > What's this "--without-default-devices"?
-> 
-> A configure option. It removes from the build any devices that are
-> marked as default. It's an endless source of bugs because it is supposed
-> to be paired with a config file that adds back some of the removed
-> devices, but there's nothing enforcing that so we always run it as is
-> and generate a broken QEMU binary.
-> 
-> So anything in the tests that refer to devices should first check if
-> that QEMU binary even has the device present. I'm saying here that we're
-> not going to do that because this test cannot be accidentally reached
-> via make check. Realistically, most people will consume this test
-> through the CI job only.
+On Sat, 25 May 2024 at 00:32, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/helper.h            |  16 +++++
+>  target/arm/tcg/translate-a64.h |   6 ++
+>  target/arm/tcg/gengvec64.c     | 106 +++++++++++++++++++++++++++++++
+>  target/arm/tcg/translate-a64.c | 113 ++++++++++++++-------------------
+>  target/arm/tcg/vec_helper.c    |  64 +++++++++++++++++++
+>  5 files changed, 241 insertions(+), 64 deletions(-)
 
-Ah I didn't expect that is an existing configure option.. then it is all
-fine.
+> diff --git a/target/arm/tcg/gengvec64.c b/target/arm/tcg/gengvec64.c
+> index 093b498b13..4b76e476a0 100644
+> --- a/target/arm/tcg/gengvec64.c
+> +++ b/target/arm/tcg/gengvec64.c
+> @@ -188,3 +188,109 @@ void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+>      tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
+>  }
+>
+> +static void gen_suqadd_vec(unsigned vece, TCGv_vec t, TCGv_vec qc,
+> +                           TCGv_vec a, TCGv_vec b)
+> +{
+> +    TCGv_vec max =
+> +        tcg_constant_vec_matching(t, vece, (1ull << ((8 << vece) - 1)) - 1);
+> +    TCGv_vec u = tcg_temp_new_vec_matching(t);
+> +
+> +    /* Maximum value that can be added to @a without overflow. */
+> +    tcg_gen_sub_vec(vece, u, max, a);
+> +
+> +    /* Constrain addend so that the next addition never overflows. */
+> +    tcg_gen_umin_vec(vece, u, u, b);
+> +    tcg_gen_add_vec(vece, t, u, a);
+> +
+> +    /* Compute QC by comparing the adjusted @b. */
+> +    tcg_gen_xor_vec(vece, u, u, b);
+> +    tcg_gen_or_vec(vece, qc, qc, u);
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+With this kind of code where we wind up doing a vector op
+into vfp.qc, is there anything somewhere that asserts that
+we don't try to do it with a vector length bigger than
+sizeof(vfp.qc) (i.e. 128) ?
 
-Thanks,
-
--- 
-Peter Xu
-
+thanks
+-- PMM
 
