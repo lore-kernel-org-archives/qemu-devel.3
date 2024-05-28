@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63705C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD0E7C25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxUt-0001ds-Bq; Tue, 28 May 2024 10:08:15 -0400
+	id 1sBxUn-0001aT-3P; Tue, 28 May 2024 10:08:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUs-0001cf-8m
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:14 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1sBxUk-0001Xi-UH
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:06 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUo-00074a-3z
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:13 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-421087b6f3fso6866285e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:08:09 -0700 (PDT)
+ id 1sBxUi-00073C-Am
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:05 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-357ec504fcdso579070f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716905288; x=1717510088; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716905283; x=1717510083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7BpILccreJv3wPcv9huqs/UAol5xV2assISwJtuW028=;
- b=IBIsfOCaxabwhP53mrIqLIwBTcuasN31Aq7McSggh45QFBeVjPgGRV16JUbW849MH3
- AyKPegqjOjPJTOF6QdTbE6T6JSAzavSqZTsCK5/sEfDDcCXC/JEe7oM1968nq8nEX+od
- Q5bPXwIZW4ps6TuxIXKrpdjiuEyZycCgNvFtuAXzMaZTeDzYOmXYs7Mizo4HoWczLBZ/
- 5ds0Q1BgKxEdSvL5FER8WVhYu7ZsFkZeNrtQUCYDme5HE3YtYhs/9iPXK/pTlDhQiDw2
- crEGA7DMccsX0COtapLdnVBfkeoXVnse0EdKv/M3sVgfpWmFluQkMhaWBS8Q3q8xVtUQ
- Ta4w==
+ :reply-to; bh=0NfFGA91GjMAl+N5OiSeWRtiynvfnz6dd2uWVlnAF1w=;
+ b=BETzmEY0PNafl3znuUlD4c/Y0lmPXdi3hNHxdvHauEuL2AzjShnudTeos8PEPtNcIK
+ Xp0tLzWkISgLc+dPfGLwV+e9AbA3f5idkzzPaTtWCVKet8+3kgoqEZCn4OtokELIdYve
+ CZSSEnBag9MPlJoQXX6qf052j9vfVZ8t7qTxnoCznrqRGiiReySFlp4U7hQC6bjPB2PN
+ 07F0DYK71e9Gv0aNweK7z4LIOsAe00Qbe3NSRPDy0H4wuPXBBUIBR1AYlpY3WlV2oPnp
+ 1h5nOdxRgPTDJCfrlvra+6GAiP8eOdtuogQ3rqhhtUKGC99S6ENNa5SEKgCfnCxTkacP
+ a9aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716905288; x=1717510088;
+ d=1e100.net; s=20230601; t=1716905283; x=1717510083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7BpILccreJv3wPcv9huqs/UAol5xV2assISwJtuW028=;
- b=UwkPYrguDtt4Un0OOeJ2pXlWuRpM/RlqkhdMHd8jY1zBRtvkwRP+erHDpGTeDZvmOU
- DGNRL+9K7zrK2BaBQ3z+DHaSA5QRFsiKKQdS81tCQXM3zejEFO0YuhzQvUCmL/knG18b
- 4QrXMUYlZ/hw6sO1PrFZ0KGIgvvYngGck/NJ5/Oe+7t7YPDiR1fz0+fl0boOMEJsj1xj
- laqim75RiG8vC3RJKE6/ylCHtkfV0qS5HDxKxG1z2/w0uFF41OAVbDo1asWazJGO+6Ik
- OpSru3v96p6kkTDk5qn2ji1NTebJ3Ga7kD4MbRJPbf69QyPT0c+K9jFsAtJ0stt8wwVe
- vTkg==
-X-Gm-Message-State: AOJu0YwCHB/ZXfQPN97JrfNsOQF+85y5o1kHNbZ5tr8ps+13YWO+bRf1
- gQTwkotSFQIot3OXXljjAiUkinsIwc+7/7MurDgUBHZ78pHoIYFnWFTrHnYD9rk3XnMQ6iHhinE
- Y
-X-Google-Smtp-Source: AGHT+IHSR8EFgeDmWdodHHdWlEXVugRpnzeehSqScFuKNwrd6MOOlICjO+iIMViZaVdx30CHcpK43g==
-X-Received: by 2002:adf:fcce:0:b0:34b:81b3:2c62 with SMTP id
- ffacd0b85a97d-3552219d1e6mr8183411f8f.35.1716905288645; 
- Tue, 28 May 2024 07:08:08 -0700 (PDT)
+ bh=0NfFGA91GjMAl+N5OiSeWRtiynvfnz6dd2uWVlnAF1w=;
+ b=DRX7Pej58QtdzMKz+byUHKWmCnkgm6Z+IljfvVssRxZGu2S1e82Nm6xzGXspoc+q9d
+ qT/a95ahkx5Ihjru9PSFojMkRNN+O6xxOP6HNhEmudv6QXfmrsF3TS2q2+1xZmSU9Yda
+ OXmiJu9Zg83xfTabkF/qlXPfGnwta0waZBEchyDWefkPijpf6IztMiMKfMYUKepUll9b
+ JfLkCeJC9bod78YvKIDOWki1JTX1KkjfMFaE57qwTUcB+vj4G9Vc68TeXUbcnnQKcgeL
+ LmUFM87UT/AGEh4RRnni8+ElrlQUIGe6C4uDf7WgVkRTuF+3ZmY7aZc3DGHvbo7iyg3i
+ TZhA==
+X-Gm-Message-State: AOJu0YwB56mIVq3ri0uxTYBPLMH6cy2LESYOKAR1cani7peHr3PSd5H/
+ dRhrG3bxgoMVBkmkaUB541uEdVxveb1SMIH/24fx1byUe8xY7bWepqhyRXsXmovWTWGZVzeGNWD
+ q
+X-Google-Smtp-Source: AGHT+IGjaXehukhJySyzAd0ScCZbVrr/JRBAAbjQ8GyqcKSq02sO+TQpuF89PdmEF9mXes9arS5PcQ==
+X-Received: by 2002:a5d:4950:0:b0:354:fc03:b44 with SMTP id
+ ffacd0b85a97d-35526c27760mr7848927f8f.4.1716905282884; 
+ Tue, 28 May 2024 07:08:02 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.08.08
+ ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.08.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 07:08:08 -0700 (PDT)
+ Tue, 28 May 2024 07:08:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/42] target/arm: Convert XAR to decodetree
-Date: Tue, 28 May 2024 15:07:33 +0100
-Message-Id: <20240528140753.3620597-23-peter.maydell@linaro.org>
+Subject: [PULL 12/42] target/arm: Verify sz=0 for Advanced SIMD scalar
+ pairwise (fp16)
+Date: Tue, 28 May 2024 15:07:23 +0100
+Message-Id: <20240528140753.3620597-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
 References: <20240528140753.3620597-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,95 +96,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+All of these insns have "if sz == '1' then UNDEFINED" in their pseudocode.
+Fixes a RISU miscompare for invalid insn 0x5ef0c87a.
+
+Fixes: 5c36d89567c ("arm/translate-a64: add all FP16 ops in simd_scalar_pairwise")
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240524232121.284515-17-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240524232121.284515-7-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  4 ++++
- target/arm/tcg/translate-a64.c | 43 +++++++++++-----------------------
- 2 files changed, 18 insertions(+), 29 deletions(-)
+ target/arm/tcg/translate-a64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 1292312a7f9..7f354af25d3 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -654,3 +654,7 @@ SM3TT1A         11001110 010 ..... 10 .. 00 ..... ..... @crypto3i
- SM3TT1B         11001110 010 ..... 10 .. 01 ..... ..... @crypto3i
- SM3TT2A         11001110 010 ..... 10 .. 10 ..... ..... @crypto3i
- SM3TT2B         11001110 010 ..... 10 .. 11 ..... ..... @crypto3i
-+
-+### Cryptographic XAR
-+
-+XAR             1100 1110 100 rm:5 imm:6 rn:5 rd:5
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index cf3a7dfa99f..75f1e6a7b90 100644
+index 5455ae36850..0bdddb8517a 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -4688,6 +4688,20 @@ TRANS_FEAT(SM3TT1B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt1b)
- TRANS_FEAT(SM3TT2A, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2a)
- TRANS_FEAT(SM3TT2B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2b)
- 
-+static bool trans_XAR(DisasContext *s, arg_XAR *a)
-+{
-+    if (!dc_isar_feature(aa64_sha3, s)) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        gen_gvec_xar(MO_64, vec_full_reg_offset(s, a->rd),
-+                     vec_full_reg_offset(s, a->rn),
-+                     vec_full_reg_offset(s, a->rm), a->imm, 16,
-+                     vec_full_reg_size(s));
-+    }
-+    return true;
-+}
-+
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -13588,34 +13602,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     }
- }
- 
--/* Crypto XAR
-- *  31                   21 20  16 15    10 9    5 4    0
-- * +-----------------------+------+--------+------+------+
-- * | 1 1 0 0 1 1 1 0 1 0 0 |  Rm  |  imm6  |  Rn  |  Rd  |
-- * +-----------------------+------+--------+------+------+
-- */
--static void disas_crypto_xar(DisasContext *s, uint32_t insn)
--{
--    int rm = extract32(insn, 16, 5);
--    int imm6 = extract32(insn, 10, 6);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--
--    if (!dc_isar_feature(aa64_sha3, s)) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    gen_gvec_xar(MO_64, vec_full_reg_offset(s, rd),
--                 vec_full_reg_offset(s, rn),
--                 vec_full_reg_offset(s, rm), imm6, 16,
--                 vec_full_reg_size(s));
--}
--
- /* C3.6 Data processing - SIMD, inc Crypto
-  *
-  * As the decode gets a little complex we are using a table based
-@@ -13644,7 +13630,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
-     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
--    { 0xce800000, 0xffe00000, disas_crypto_xar },
-     { 0x0e400400, 0x9f60c400, disas_simd_three_reg_same_fp16 },
-     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
-     { 0x5e400400, 0xdf60c400, disas_simd_scalar_three_reg_same_fp16 },
+@@ -8006,7 +8006,7 @@ static void disas_simd_scalar_pairwise(DisasContext *s, uint32_t insn)
+     case 0x2f: /* FMINP */
+         /* FP op, size[0] is 32 or 64 bit*/
+         if (!u) {
+-            if (!dc_isar_feature(aa64_fp16, s)) {
++            if ((size & 1) || !dc_isar_feature(aa64_fp16, s)) {
+                 unallocated_encoding(s);
+                 return;
+             } else {
 -- 
 2.34.1
 
