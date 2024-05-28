@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F49C27C44
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04505C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxQk-0000Rm-QE; Tue, 28 May 2024 10:03:58 -0400
+	id 1sBxUf-0001UM-Tk; Tue, 28 May 2024 10:08:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxQi-0000Rb-Ff
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:03:57 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sBxUf-0001Tn-3b
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:01 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxQg-0006EF-RG
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:03:56 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57883b25b50so1030742a12.2
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:03:53 -0700 (PDT)
+ id 1sBxUd-00070M-45
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:00 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-354e0cc9c5cso756125f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716905032; x=1717509832; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+mJJ9KRbOi6yXGkWEMga4XC9YzRrIKnUkrfuNGlnj+w=;
- b=A1O3E6igY752S9RB+Lb7Jei14pJlOhEC9yeCzFdY6amXnIxixAx2ISjaBdHibCVlLI
- WDEv44hnwgOqnyTFN7g2D2B51fs9tYIrnRFMrotx3vG8DPYQzYDThxRpWwzmaQAWADpD
- yNH00vjfg1SoN3MplpOL5y6hSwywkZQgGnMVUV9VoxTfbcJ3rCQOIzszoPB/CbQ2muUM
- Hb8Du0ga0xYhC7uUtbIKSM+1TP8Dy0/W0eKqsDQmqXaXArQZqrhzMdBNQT2Bc0uVJzhy
- +eG5d4pJw76h74uxV7O8Ts6/L7ct/SAyipmgLHqVkJ0M8z5/LIjjcHxtGZSCQqSCzq+i
- TG3Q==
+ d=linaro.org; s=google; t=1716905277; x=1717510077; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=EAAlRYMlBTnMK71N/Zu05HtnM34HblCxoLd1v+E1rkk=;
+ b=EkGF+zQGRmrzicrr4ZUfs+Fx/hiQnBUEQd0IGzOdvK0Pf3VtPvBIFkaDpkKImKS9uX
+ WJc0G2Keh/fRhvl9pemS1XVBQk9uuy4grRbm6dH3dd2FD2isJ3iVJteuloU+EyHq0Bvs
+ yBM1KzTDJiTVbjtQUgOzfzGEJDyS+AADxqfQvj2b+C6VPgCSoORByEF940H6wafpgs0h
+ ZdCeV5Cvmujlbt5Bqvt53Btm15NIPGaEdar/AblFNK8X2ObxMoJnnHRmKvw3DIQCQKlZ
+ eM+NBMx21/m+XWudsMDFaTwzuUFPxuWLj+Hl9DVatAVKpc6av/A/0HRs7H1rWSQN/b2h
+ zCAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716905032; x=1717509832;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1716905277; x=1717510077;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+mJJ9KRbOi6yXGkWEMga4XC9YzRrIKnUkrfuNGlnj+w=;
- b=IxX6n2Qx4ze6r2UHGoY5lQmg9do2Aq5X00KKbYf3PnZ83oMsTzIYhm4RowKAV/dzh6
- 9VtQUmLNyQqPUkQczAYx/hrkiPir6I6T/24wl/r9U0EmPumPOfgKuchcIDc0bCI6wDQ0
- cIX5Vtj9vtJTuQuwPoUqsfRStbURA1asnuL7Rs0ximzR6Ftad8ciClT+ec9vjNnzTZ60
- fifNZSAQxoAuepvXYYMWfhPJ5eyqnE1VMQzJNxsceFqsy+KUIPgZnntgLqyx7DKxGFJS
- PyHLw6XvRf1emjE3GJt3qOHtCZJdYRE6BbEWxSyH/n4oCW8JQEbr5QkJ8OxYaHSGnsnv
- 8sxg==
-X-Gm-Message-State: AOJu0Yz5VY6RtZwLKuUaSwZ+MMkl3qhic892zKsHXS4kVu7ItpNJLNkN
- MAtwV9eEAtcYB4PzBT5ZdtkvPsQlJhK1KKi/MqTvrymU9xLnZml/sjrfJT5WpkFQ/NEfr45Rkaw
- 20kpuXU2p8vQxGjAQ0sRPPggL7Sw5SnOiK+CvWA==
-X-Google-Smtp-Source: AGHT+IEdjHhJEGHHCsWT32GTtPtxW/JBR4qgKnO/z6EZ+w+7T6cP0HMaoeQhqrMD/Q0ZWN04lk8AkRFYQ5EGrXaZBM4=
-X-Received: by 2002:a50:9e67:0:b0:578:5f58:80a2 with SMTP id
- 4fb4d7f45d1cf-5785f588378mr7165076a12.7.1716905032626; Tue, 28 May 2024
- 07:03:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
- <CAFEAcA9aum5+z3sr-OpCHZRWxFtZGS_kGOjjmRh7H1TBTZuFRQ@mail.gmail.com>
- <CACBuX0Q3TMvmxuuAHfVY679wpKF+0N+-aw=A7PLiba7ndc5v+w@mail.gmail.com>
-In-Reply-To: <CACBuX0Q3TMvmxuuAHfVY679wpKF+0N+-aw=A7PLiba7ndc5v+w@mail.gmail.com>
+ bh=EAAlRYMlBTnMK71N/Zu05HtnM34HblCxoLd1v+E1rkk=;
+ b=qNHijZaUhdHc8ljweMHDA7/i9/9G1ud2qdet/md9cT/o3W578VhwZ5BJnFYkaS2iEg
+ 82l7Zr6fn4M/Mi+BxcPNybF6o6Rt/hGK49U00ZwB2wnopB7B0zRjHGFdCXZqGixUhxkx
+ TwjpkZL9mSircbUpasT5sfr1YHZKx7CxtRvT6ZEj3SmH5lUcu0r0w8jbktqsBrorTg4w
+ rdbCdm+NsYnBfec/5A+JMMmJ3JJzV8wsnqpAbn8OuEcVYPIqapxpe1WOU0LuQAzp1zG6
+ 7omDWK5o4qkVPYvllNPEXYUiqc3q6NHMlFgNyW7h87U7ykWVxQcgIfN8KpeeZMS88ra/
+ j6BQ==
+X-Gm-Message-State: AOJu0YwFuqQTYECDYLJwwiaAegsSIklyYKouEcRGtx8PvgA1t2p8I6c5
+ c+g9LM4WPNgdmoZ5VqOteSSgj3RWayHLaBg6QdEh4I2+qIv5TemW0rDBXO1FI+qZnqyJiK5QcAx
+ q
+X-Google-Smtp-Source: AGHT+IF3r5oo6cmZr2OoyOeFQxnyXX8c8F74VC7x5bbnqexqtsx4iELupdBcjnD7ueE2yu4lIUEwtg==
+X-Received: by 2002:a05:6000:1541:b0:359:733c:c8d6 with SMTP id
+ ffacd0b85a97d-359733cc9fbmr4982633f8f.67.1716905277685; 
+ Tue, 28 May 2024 07:07:57 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.07.57
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 May 2024 07:07:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 May 2024 15:03:40 +0100
-Message-ID: <CAFEAcA9XvHOF22m-9ZFtKLAaShE5gVjsy-AxQyBwVAkRZ2QW6g@mail.gmail.com>
-Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-To: Cord Amfmgm <dmamfmgm@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 03/42] hw/arm/npcm7xx: remove setting of mp-affinity
+Date: Tue, 28 May 2024 15:07:14 +0100
+Message-Id: <20240528140753.3620597-4-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
+References: <20240528140753.3620597-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,60 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 May 2024 at 23:24, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
-> On Mon, May 20, 2024 at 12:05=E2=80=AFPM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
->> For the "zero length buffer" case, do you have a more detailed
->> pointer to the bit of the spec that says that "cbp =3D be + 1" is a
->> valid way to specify a zero length buffer? Table 4-2 in the copy I
->> have says for CurrentBufferPointer "a value of 0 indicates
->> a zero-length data packet or that all bytes have been transferred",
->> and the sample host OS driver function QueueGeneralRequest()
->> later in the spec handles a 0 length packet by setting
->>   TD->HcTD.CBP =3D TD->HcTD.BE =3D 0;
->> (which our emulation's code does handle).
->
->
-> Reading the spec carefully, a CBP set to 0 should always mean the zero-le=
-ngth buffer case (or that all bytes have been transferred, so the buffer is=
- now zero-length - the same thing).
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 
-Yeah, I can see the argument for "we should treat all cbp =3D=3D 0 as
-zero-length buffer, not just cbp =3D=3D be =3D=3D 0".
+The value of the mp-affinity property being set in npcm7xx_realize is
+always the same as the default value it would have when arm_cpu_realizefn
+is called if the property is not set here. So there is no need to set
+the property value in npcm7xx_realize function.
 
-> Table 4-2 is the correct reference, and this part is clear. It's the part=
- you quoted. "Contains the physical address of the next memory location tha=
-t will be accessed for transfer to/from the endpoint. A value of 0 indicate=
-s a zero-length data packet or that all bytes have been transferred."
->
-> Table 4-2 has this additional nugget that may be confusingly worded, for =
-BufferEnd: "Contains physical address of the last byte in the buffer for th=
-is TD"
+Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240504141733.14813-1-dorjoychy111@gmail.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/npcm7xx.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Mmm, but for a zero length buffer there is no "last byte" to
-have this be the physical address of.
+diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+index 9f2d96c733a..cb7791301b4 100644
+--- a/hw/arm/npcm7xx.c
++++ b/hw/arm/npcm7xx.c
+@@ -487,9 +487,6 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
+ 
+     /* CPUs */
+     for (i = 0; i < nc->num_cpus; i++) {
+-        object_property_set_int(OBJECT(&s->cpu[i]), "mp-affinity",
+-                                arm_build_mp_affinity(i, NPCM7XX_MAX_NUM_CPUS),
+-                                &error_abort);
+         object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+                                 NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
+         object_property_set_bool(OBJECT(&s->cpu[i]), "reset-hivecs", true,
+-- 
+2.34.1
 
-> And here's an example buffer of length 0 -- you probably already know wha=
-t I'm going to do here:
->
-> char buf[0];
-> char * CurrentBufferPointer =3D &buf[0];
-> char * BufferEnd =3D &buf[-1]; // "address of the last byte in the buffer=
-"
-> // The OHCI Host Controller than advances CurrentBufferPointer like this:=
- CurrentBufferPointer +=3D 0
-> // After the transfer:
-> // CurrentBufferPointer =3D &buf[0];
-> // BufferEnd =3D &buf[-1];
-
-Right, but why do you think this is valid, rather than
-being a guest software bug? My reading of the spec is that it's
-pretty clear about how to say "zero length buffer", and this
-isn't it.
-
-Is there some real-world guest OS that programs the OHCI
-controller this way that we're trying to accommodate?
-
-thanks
--- PMM
 
