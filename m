@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E5B2C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67DCFC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxtq-0007NF-Kp; Tue, 28 May 2024 10:34:02 -0400
+	id 1sBxz5-0000WG-JT; Tue, 28 May 2024 10:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxto-0007Mp-Tp
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:34:00 -0400
+ id 1sBxz4-0000Vo-E6
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:39:26 -0400
 Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxtm-0002rC-Vw
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:34:00 -0400
+ id 1sBxz2-0003xC-UO
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:39:26 -0400
 Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5766cd9ca1bso1261132a12.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:33:58 -0700 (PDT)
+ 4fb4d7f45d1cf-5785199e0d6so1325539a12.2
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716906837; x=1717511637; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716907163; x=1717511963; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c5LCgVEizw6DtouBqcgIIvIsuJPil9t/nZVk415WmuY=;
- b=dpzPMXJ1snLtUCv4RfpYREiffmXNo6/LmzclOei1uTOTvB1rMyHkXI2ALd1nbJ0R5e
- Nno72DXk+sNxCqWzN6gsFVBYqINstO3hGvIfUbGRIK4V/X6EFDgf6AEy38/B+wgiQjId
- SLdwSspbbQiPtbTCXninlH1KZfa+eeg7M1xxhwGUdN43KItW10jAecb8afA9WoVF68qG
- TTaZu8nx8hgSzYSXUQTbxWtcTdouktsnehvWF87biSJ4hEOiCWn94H4ZJs66uxIh1HuQ
- sac4H07uOoFCqjnd0KeXvIvL7YcBpjyeXcsnfTx5/XtQ8PbTSwrJpejeGrU+0yvUU0E+
- Ll0Q==
+ bh=82Dad7r9mnGdA86VN1MU+SipozoAUOPsiZ7WniVAyRg=;
+ b=i2An08heFD5PI8ufXDeF2HIAwonMoBE5bDz960tKXyKMbDlhb/Dq4SXC/bq7Vs21rd
+ 0KDZWPDZsBQbCj8gkPQtfFOmUL5W+jj5H7UmSxWF2Cb/udB32VfatmMyMUAzd5klBWB6
+ Oo0d64BSZsXtlWF3HqYpC5vjFhDowZrAfy5q10F8D84mJjFxS3aDb0EWtYzN70LOA5Cn
+ JQICfsqVF8RHXddRqQns3yB0kbu73/mUmVKYEKZ5gtayTmbeuYGZ4hgEa70RpHdbf8Tz
+ S2IXfEc61S/dZQbsf/2oDHfVM3IChV0+I3LrtPowDNvui7sLrZG87/U7MDoOote6PSUU
+ n1hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716906837; x=1717511637;
+ d=1e100.net; s=20230601; t=1716907163; x=1717511963;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=c5LCgVEizw6DtouBqcgIIvIsuJPil9t/nZVk415WmuY=;
- b=d9xsjtbSYmZW13LGJIvumB9tdjoiTgTFxg8RAR3D9p94qel9nRUowvAxWVWUUf2FJ0
- uzYsA+5rrOtj3UXMwMfuHs+nPVdU/f3pwPX1dRWm9aSe78PZRWOC+r8BG4f5StykJS7i
- AzMjACTwjvuq0hYgSJCZ6XQu7w3AhHBHVm++xy3PVwG+qzNZv/2IEM84tMJP23JVmg1d
- kdc5/YT6asadQUfrY0+XkNK40yuRehAH3EH4+NLTUG1El4iIpWFZslDBpPAqgC9ExLxi
- pOmOYBRbZcXNifB0BLaN92ogBzL9zR3QsQynFMhDuQh0fkOUJhFhRuUiWiL+mYCH+92i
- 41Lg==
-X-Gm-Message-State: AOJu0YxYWSTFzox/7MBwUywSMGsTyH5dpNnF1wLH3ZQUgZ/xhWFmxmou
- +B9OkJhmue2tZ1/qGk+dCgeCKfuNpEphkpISuoBhS92XhtCZswUHTglbs7/qGVhWJY/kfFHy4Xt
- 2TScTehls9yhtSrobTPWmwXTJSokxxYYvfgL+VQ==
-X-Google-Smtp-Source: AGHT+IH5O5IpkQTxFJXyR8oS5+emshOmt3ZVjPvtHjXyEVC18S/ViDYo0O++25XAoclPD0KJxbkH7i7GKvf9/CiRofk=
-X-Received: by 2002:a50:d6c9:0:b0:578:4b06:fdf7 with SMTP id
- 4fb4d7f45d1cf-5785198a027mr8495091a12.25.1716906837143; Tue, 28 May 2024
- 07:33:57 -0700 (PDT)
+ bh=82Dad7r9mnGdA86VN1MU+SipozoAUOPsiZ7WniVAyRg=;
+ b=dc8Xd2xyQ6day5YhUGcYVaxqFOvzSeU+sGT/aXInITTIc9+10fCHZMS+wLU+p0m6gr
+ ofD4LZip+v3xcnhnyyO42rql64kzKheY1VwEODhAZTamAFedlNpcAxs9TsVtHjUBp9BY
+ uA0x2WFm/3l4w9c1MRtZArqXyZPhJg0m8Jzm0jotptq9pjMgM2T/jj2MKjS2pSDJ8ult
+ XkEo4OhYEiKkjIZ1YGrq5PJP/IrWm2n/8XOZlo3bdSgTtpYo1w6qPui7ssPDJ+ycSuVo
+ T3XBZYKwTjhz3Xfj4pF1ZbFOndYbaZmNsWgu6IEnP/Hja8LdXhgKlu4wie9ppj4bN0ZS
+ evdw==
+X-Gm-Message-State: AOJu0YwSIZFU2r1LnjBBh+rcc2gdKFX+4AR7SeJ5Q/7kxxSFQXeqPzbR
+ ITcwo7Xu3h/xwHIgnVX8FsHK0lO6u2k24wIc1SKJndQo4FjKWnFe03kO9u7EzmODzl5DKM5T2PN
+ tY1+KVqzDt5ccrpcxmXH9ZmsF4JHl/4zjdnaG9Q==
+X-Google-Smtp-Source: AGHT+IE/mfD9LNjwtaF/VBPziMkUPfqcW8wvGzsxJd7AprfLekckVu4Um6VjEahxvnLM3lwHKD8ZnsnnNNP7FDKxo6A=
+X-Received: by 2002:a50:a45d:0:b0:578:632e:6794 with SMTP id
+ 4fb4d7f45d1cf-578632e6d9fmr11865679a12.10.1716907163547; Tue, 28 May 2024
+ 07:39:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240522204020.203905-1-ines.varhol@telecom-paris.fr>
- <20240522204020.203905-3-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240522204020.203905-3-ines.varhol@telecom-paris.fr>
+References: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
+ <20240523194441.21036-3-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240523194441.21036-3-ines.varhol@telecom-paris.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 May 2024 15:33:45 +0100
-Message-ID: <CAFEAcA88uoTwqa1OaQj_u+M2BgB9MHagizE3zdvLUCjczQ1_bg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] hw/misc: In STM32L4x5 EXTI, handle direct and
- configurable interrupts
+Date: Tue, 28 May 2024 15:39:12 +0100
+Message-ID: <CAFEAcA-zQKi3Wt_wxHOEXRywCNrK=-Mrt1ZgX390de2Y0BsT8g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] hw/char: Use v2 VMStateDescription for STM32L4x5
+ USART
 To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ qemu-arm@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
+ Luc Michel <luc@lmichel.fr>, 
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::534;
@@ -93,146 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 May 2024 at 21:40, In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
+On Thu, 23 May 2024 at 20:44, In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
 r> wrote:
 >
-> The previous implementation for EXTI interrupts only handled
-> "configurable" interrupts, like those originating from STM32L4x5 SYSCFG
-> (the only device currently connected to the EXTI up until now).
+> `vmstate_stm32l4x5_usart_base` namely uses `VMSTATE_CLOCK` so
+> version needs to be 2.
 >
-> In order to connect STM32L4x5 USART to the EXTI, this commit adds
-> handling for direct interrupts (interrupts without configurable edge).
->
-> The implementation of configurable interrupts (interrupts supporting
-> edge selection) was incorrectly expecting alternating input levels :
-> this commits adds a new status field `irq_levels` to actually detect
-> edges.
-
-This patch is now doing two different things:
- * correcting the handling of detecting of rising/falling edges
- * adding the direct-interrupt support
-
-These should be two separate patches, I think.
-
 > Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 > ---
->  include/hw/misc/stm32l4x5_exti.h |  2 ++
->  hw/misc/stm32l4x5_exti.c         | 25 ++++++++++++++++++++-----
->  2 files changed, 22 insertions(+), 5 deletions(-)
+>  hw/char/stm32l4x5_usart.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/include/hw/misc/stm32l4x5_exti.h b/include/hw/misc/stm32l4x5=
-_exti.h
-> index 82f75a2417..62f79362f2 100644
-> --- a/include/hw/misc/stm32l4x5_exti.h
-> +++ b/include/hw/misc/stm32l4x5_exti.h
-> @@ -45,6 +45,8 @@ struct Stm32l4x5ExtiState {
->      uint32_t swier[EXTI_NUM_REGISTER];
->      uint32_t pr[EXTI_NUM_REGISTER];
+> diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+> index 02f666308c..0f16f0917a 100644
+> --- a/hw/char/stm32l4x5_usart.c
+> +++ b/hw/char/stm32l4x5_usart.c
+> @@ -546,8 +546,8 @@ static int stm32l4x5_usart_base_post_load(void *opaqu=
+e, int version_id)
 >
-> +    /* used for edge detection */
-> +    uint32_t irq_levels[EXTI_NUM_REGISTER];
->      qemu_irq irq[EXTI_NUM_LINES];
->  };
->
-> diff --git a/hw/misc/stm32l4x5_exti.c b/hw/misc/stm32l4x5_exti.c
-> index eebefc6cd3..bdc3dc10d6 100644
-> --- a/hw/misc/stm32l4x5_exti.c
-> +++ b/hw/misc/stm32l4x5_exti.c
-> @@ -87,6 +87,7 @@ static void stm32l4x5_exti_reset_hold(Object *obj, Rese=
-tType type)
->          s->ftsr[bank] =3D 0x00000000;
->          s->swier[bank] =3D 0x00000000;
->          s->pr[bank] =3D 0x00000000;
-> +        s->irq_levels[bank] =3D 0x00000000;
->      }
->  }
->
-> @@ -106,17 +107,30 @@ static void stm32l4x5_exti_set_irq(void *opaque, in=
-t irq, int level)
->          return;
->      }
->
-> +    /* In case of a direct line interrupt */
-> +    if (extract32(exti_romask[bank], irq, 1)) {
-> +        qemu_set_irq(s->irq[oirq], level);
-> +        return;
-> +    }
-> +
-> +    /* In case of a configurable interrupt */
->      if (((1 << irq) & s->rtsr[bank]) && level) {
->          /* Rising Edge */
-> -        s->pr[bank] |=3D 1 << irq;
-> -        qemu_irq_pulse(s->irq[oirq]);
-> +        if (!extract32(s->irq_levels[bank], irq, 1)) {
-> +            s->pr[bank] |=3D 1 << irq;
-> +            qemu_irq_pulse(s->irq[oirq]);
-> +        }
-> +        s->irq_levels[bank] |=3D 1 << irq;
->      } else if (((1 << irq) & s->ftsr[bank]) && !level) {
->          /* Falling Edge */
-> -        s->pr[bank] |=3D 1 << irq;
-> -        qemu_irq_pulse(s->irq[oirq]);
-> +        if (extract32(s->irq_levels[bank], irq, 1)) {
-> +            s->pr[bank] |=3D 1 << irq;
-> +            qemu_irq_pulse(s->irq[oirq]);
-> +        }
-> +        s->irq_levels[bank] &=3D ~(1 << irq);
->      }
+>  static const VMStateDescription vmstate_stm32l4x5_usart_base =3D {
+>      .name =3D TYPE_STM32L4X5_USART_BASE,
+> -    .version_id =3D 1,
+> -    .minimum_version_id =3D 1,
+> +    .version_id =3D 2,
+> +    .minimum_version_id =3D 2,
 
-The irq_levels[] array should be updated based on 'level'
-separately from determining whether it's a rising or falling
-edge. With this code, if for instance the line is
-configured for rising-edge detection then we never clear
-the irq_levels[] bit when the level falls again, because
-the only place we're clearing irq_levels bits is inside the
-falling-edge-detected codepath.
-
-We also don't get the case of "guest set the bit in both the
-RTSR and FTSR right, which the datasheet specifically calls out
-as permitted.
-
-I think something like this will do the right thing:
-
-    if (level =3D=3D extract32(s->irq_levels[bank], irq, 1)) {
-        /* No change in IRQ line state: do nothing */
-        return;
-    }
-    s->irq_levels[bank] =3D deposit32(s->irq_levels[bank], irq, level);
-
-    if ((level && extract32(s->rtsr[bank], irq, 1) ||
-        (!level && extract32(s->ftsr[bank], irq, 1)) {
-        /*
-         * Trigger on this rising or falling edge. Note that the guest
-         * can configure the same interrupt line to trigger on both
-         * rising and falling edges if it wishes, or to not trigger
-         * at all.
-         */
-        s->pr[bank] |=3D 1 << irq;
-        qemu_irq_pulse(s->irq[oirq]);
-    }
-
-(I would then consider the "In the following situations" comment
-to be a bit redundant and deleteable, but that's a matter of taste.)
-
->      /*
-> -     * In the following situations :
-> +     * In the following situations (for configurable interrupts) :
->       * - falling edge but rising trigger selected
->       * - rising edge but falling trigger selected
->       * - no trigger selected
-> @@ -262,6 +276,7 @@ static const VMStateDescription vmstate_stm32l4x5_ext=
-i =3D {
->          VMSTATE_UINT32_ARRAY(ftsr, Stm32l4x5ExtiState, EXTI_NUM_REGISTER=
-),
->          VMSTATE_UINT32_ARRAY(swier, Stm32l4x5ExtiState, EXTI_NUM_REGISTE=
-R),
->          VMSTATE_UINT32_ARRAY(pr, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-> +        VMSTATE_UINT32_ARRAY(irq_levels, Stm32l4x5ExtiState, EXTI_NUM_RE=
-GISTER),
->          VMSTATE_END_OF_LIST()
->      }
-
-If you add a new field to vmstate you must always bump the version numbers.
+I don't understand why we are bumping the version number here;
+can you explain? Usually we bump the version number when we
+add a new vmstate field to the vmstate, but this commit doesn't
+do that.
 
 thanks
 -- PMM
