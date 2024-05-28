@@ -4,75 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C3DFC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 16:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA4AC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 16:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBzTq-0003Qt-Sj; Tue, 28 May 2024 12:15:18 -0400
+	id 1sBzTu-0003T5-U9; Tue, 28 May 2024 12:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBzTp-0003QQ-KC
- for qemu-devel@nongnu.org; Tue, 28 May 2024 12:15:17 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBzTo-0001i9-4U
- for qemu-devel@nongnu.org; Tue, 28 May 2024 12:15:17 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5766cd9ca1bso1416586a12.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 09:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716912914; x=1717517714; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GukKbc5tV8LtZIe9Cz4pP9VS+Y0KkH7EySCSlImjxxA=;
- b=pm3agyvG3SHmFFrgiVZPzJ/ZYLMB6Vkz1/adOQaffjrbH9qvkzSDebfSqTKatS+3qs
- kwlwFBRXYs8SQiThJST4/xTFHcieFo7LOzF2CJrXNE5VHYFYrZRv5fW1NPM1KzaFEjSz
- QHVtKsyPtRNPU/Ub6hPqcVtWb9E2BVmUf+fVuJA/Lf4VbJ5MZ+XU058/XAhdijsrKaPG
- rcGmTrSURHVLOhV8qpx2aECGUsaekrcQMfDJbqYKOxE80b+XdarPsz+khfDCKFaNkWDc
- Cm5WFs+XRRxWdb5cUOsD2m/8S++LhMn47Fhon5aRyy5BsI0KSh53HmfVODF4X4CjcHQs
- QqnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716912914; x=1717517714;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GukKbc5tV8LtZIe9Cz4pP9VS+Y0KkH7EySCSlImjxxA=;
- b=E6nuTd2dXdmAPHGSXyacfOfCAtPUPXkX4twHE9qkv1ecK1nzNFfu+PHptyPhxtUdq4
- 5VrN/Q9kD0SagtU2co9/YIg8BdZ5helrSDGIkmg05mzcW68tOHjAGky9hSfZddvOWOJk
- gb9zwuYLSTpRaev6+y+S4yq78rBNh9ZgOqlPhr5Avrsl/NG6Bntv2hhopoLscBeTsSC4
- Dfk2SyCuw63i4ZEnMft2WE/0iueqMPrJ0hT+ZNMtIua+w0MVELlo5kdmpjzrvQTb5eaj
- DCE+xJ+bSAplYpfEDK3bJNe09xAyHoXUi2kThjXT6Iw9IyevP1bRbYrGGXBa9Aly5gGy
- FD/w==
-X-Gm-Message-State: AOJu0Yzp2EH1zWdl7RntHGACoahV36W1BlcoNvpTcjthE8j6ZCc9dqR3
- JvyIjsSuQQvWepcZ+VQY8qLPM9pLirhsRgsa2Fc20CEbPaFtVKLMICWqPIGe3Z6c4w+Ko73bNnk
- r1gKKDopVXvSfeASr0tI7zIetPYUphA3gwSKNMluje/qxgkY3
-X-Google-Smtp-Source: AGHT+IHxicSgoUGZ/41sb0r9tiDr9KkPUak+xE1iZH8fOlRoDRPAUHQBTbIbI6BVNQbNO1ROUqhTAniG2Xnkgn0sWdg=
-X-Received: by 2002:a50:9343:0:b0:579:e7c5:1001 with SMTP id
- 4fb4d7f45d1cf-579e7c51a1cmr2611203a12.23.1716912914347; Tue, 28 May 2024
- 09:15:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
+ id 1sBzTt-0003SD-59
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 12:15:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
+ id 1sBzTr-0001ib-IC
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 12:15:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716912918;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a8S6mW08ZFnf4Hy8qt0xgV8FecjvZuL0DLHEmVYF3fI=;
+ b=eqWupJN81U1gzmuy8KtagtgvjwoxYa+LPojZQFxV+RnWLNoGPcjg5m8A2PSHgsq7dK85Ze
+ kdtRh84lIRdG/aAid72rXt2kTPu4Cg5xo+Xmpn4RGxuPKyngo71UydG3TlbQIeZrirHAr4
+ qvKOV5Rks+MMM1lL8EVkJxbtwUYNErg=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-YcXACB2fO6226lg_b1INYg-1; Tue, 28 May 2024 12:15:16 -0400
+X-MC-Unique: YcXACB2fO6226lg_b1INYg-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4A6CB80118E
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 16:15:16 +0000 (UTC)
+Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 75D02C15BC3;
+ Tue, 28 May 2024 16:15:15 +0000 (UTC)
+From: Michal Privoznik <mprivozn@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: david@redhat.com,
+	imammedo@redhat.com
+Subject: [PATCH 1/3] osdep: Make qemu_madvise() to set errno in all cases
+Date: Tue, 28 May 2024 18:15:07 +0200
+Message-ID: <4d8a74a512bf55f39c5d1be115b1c52b6a632e09.1716912651.git.mprivozn@redhat.com>
+In-Reply-To: <cover.1716912651.git.mprivozn@redhat.com>
+References: <cover.1716912651.git.mprivozn@redhat.com>
 MIME-Version: 1.0
-References: <20240524232121.284515-1-richard.henderson@linaro.org>
- <20240524232121.284515-67-richard.henderson@linaro.org>
-In-Reply-To: <20240524232121.284515-67-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 May 2024 17:15:03 +0100
-Message-ID: <CAFEAcA8tSj=5QNBKb72iZ0fmYRBGf7QjpK-0YtpbF5sdBMffxQ@mail.gmail.com>
-Subject: Re: [PATCH v2 66/67] target/arm: Convert FMADD, FMSUB, FNMADD, FNMSUB
- to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,39 +82,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 25 May 2024 at 00:27, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> These are the only instructions in the 3 source scalar class.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/a64.decode      |  10 ++
->  target/arm/tcg/translate-a64.c | 233 ++++++++++++---------------------
->  2 files changed, 93 insertions(+), 150 deletions(-)
->
+The unspoken premise of qemu_madvise() is that errno is set on
+error. And it is mostly the case except for posix_madvise() which
+is documented to return either zero (on success) or a positive
+error number. This means, we must set errno ourselves. And while
+at it, make the function return a negative value on error, just
+like other error paths do.
 
->  static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
->  {
-> -    if (extract32(insn, 24, 1)) {
-> -        /* Floating point data-processing (3 source) */
-> -        disas_fp_3src(s, insn);
-> -    } else if (extract32(insn, 21, 1) == 0) {
-> +    if (extract32(insn, 21, 1) == 0) {
->          /* Floating point to fixed point conversions */
->          disas_fp_fixed_conv(s, insn);
->      } else {
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ util/osdep.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-Doesn't this result in the unallocated-encodings in the
-fp-3src class now falling into the "else" clause and
-being mis-decoded as the wrong thing? I think this
-needs to be
+diff --git a/util/osdep.c b/util/osdep.c
+index e996c4744a..e42f4e8121 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -57,7 +57,12 @@ int qemu_madvise(void *addr, size_t len, int advice)
+ #if defined(CONFIG_MADVISE)
+     return madvise(addr, len, advice);
+ #elif defined(CONFIG_POSIX_MADVISE)
+-    return posix_madvise(addr, len, advice);
++    int rc = posix_madvise(addr, len, advice);
++    if (rc) {
++        errno = rc;
++        return -1;
++    }
++    return 0;
+ #else
+     errno = EINVAL;
+     return -1;
+-- 
+2.44.1
 
-    if (extract32(insn, 24, 1)) {
-        unallocated_encoding();
-    } else if (extract32(insn, 21, 1) == 0) {
-    [etc]
-
-thanks
--- PMM
 
