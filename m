@@ -4,82 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02FEC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 09:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4124EC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 09:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBsmz-0000xZ-Mx; Tue, 28 May 2024 05:06:37 -0400
+	id 1sBss7-0002ip-5O; Tue, 28 May 2024 05:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
- id 1sBsmo-0000vz-Bz; Tue, 28 May 2024 05:06:27 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
- id 1sBsmk-0001Bg-Sq; Tue, 28 May 2024 05:06:26 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.163])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4VpRPD6phyz1ysWV;
- Tue, 28 May 2024 17:02:56 +0800 (CST)
-Received: from dggpeml500006.china.huawei.com (unknown [7.185.36.76])
- by mail.maildlp.com (Postfix) with ESMTPS id 149CF180066;
- Tue, 28 May 2024 17:06:05 +0800 (CST)
-Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
- dggpeml500006.china.huawei.com (7.185.36.76) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 28 May 2024 17:06:04 +0800
-Received: from dggpemm500006.china.huawei.com ([7.185.36.236]) by
- dggpemm500006.china.huawei.com ([7.185.36.236]) with mapi id 15.01.2507.035;
- Tue, 28 May 2024 17:06:04 +0800
-To: Peter Xu <peterx@redhat.com>, Yu Zhang <yu.zhang@ionos.com>
-CC: Michael Galaxy <mgalaxy@akamai.com>, Jinpu Wang <jinpu.wang@ionos.com>,
- Elmar Gerdes <elmar.gerdes@ionos.com>, zhengchuan <zhengchuan@huawei.com>,
- =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>, "Markus
- Armbruster" <armbru@redhat.com>, "Zhijian Li (Fujitsu)"
- <lizhijian@fujitsu.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, "Prasanna Kumar
- Kalever" <prasanna4324@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "devel@lists.libvirt.org"
- <devel@lists.libvirt.org>, Hanna Reitz <hreitz@redhat.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>, Eric Blake
- <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>,
- =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
- =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, "Wainer dos Santos
- Moschetta" <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Pannengyuan <pannengyuan@huawei.com>, Xiexiangyou <xiexiangyou@huawei.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: RE: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Thread-Topic: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Thread-Index: AQHaib4eb+nVph6utEe7HatbjXSGr7FeBxGAgAD/kQCAAM0PAIAAcGaAgAC+EICAAZsBgIAAJisAgBwPpQCAAB5mAIABl4t9//+GhYCAAhAsgIAHeqWwgABddICAATP+EIAAcc0AgAKnDgCAAFgYAIAH7hYAgANI14CAAUekgIAG49qAgAqnmyA=
-Date: Tue, 28 May 2024 09:06:04 +0000
-Message-ID: <2308a8b894244123b638038e40a33990@huawei.com>
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1sBss4-0002iE-MJ
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 05:11:52 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1sBss2-0002CP-8n
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 05:11:52 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-5296935252dso694656e87.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 02:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ionos.com; s=google; t=1716887507; x=1717492307; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8b1XVNPTN3AViNLqtsZ1RU+PWuuA/M6iRuFGZ4I739g=;
+ b=Zp7OkI6zq9wzr/swPplsFXpnAK5r+fe4/g1o6ZvxeBJgktQirelmxEwg9bhLa3rs0v
+ AZ+ECFIkl7aqXpMYxyt6tg/4KXUtXmbl9a2l539rllbuHYgD4gxy6naeehNeyZ880NkS
+ ocJfXN4SbhD6xtE197TPi7px/n18w7hZvygqw9/ZVom/VRp1ceG5LJYCO+Aw/WPeohso
+ r8R6vjU10hWVOapg/loQYwVwcLeXG4iUcShviqdITSTQ6mdFRJ7gQa5hmuPq9RQaguff
+ gFhYtYW+GmxDmVFBlCsMaoChal89BtyEe9ncJCFh398wZfcx8qtaxoDXDfREMkSnTUMV
+ /vHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716887507; x=1717492307;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8b1XVNPTN3AViNLqtsZ1RU+PWuuA/M6iRuFGZ4I739g=;
+ b=b0p8cL9+iRFXo//U5k+bU8p1Di+MmnrVK0i4VFErbGXSNeN4uqjm2z2vC17TSs3ynk
+ 0MgxYYD7oRBokXDsxXMg+jnuT2pLKjJqgoIUkRVbLz2xOyPB8cE4YMP0++ezigfvFdSD
+ F5Tn+oLXD8hYBiS7pE3ikiXnfFVKMyUCfAulnxNVa+p/dVyt818elRRJ3KPN6yL+KyZ9
+ CaC7sv3XHu8zNPdM47DF5y73+YFo4TszZdya/r3V+x4xOBXDLZzHWlK6sUsdGRtrVxGx
+ yvZNTBQNWtYQUdSV3cHWIFnPJgktdcvtvyHV1StSYCnXln9MHZnFTUjWoHvPjcOG14KM
+ ULYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjO1saRQxLR+IFz+gU3hVKimDVqR+eedWwkYaLsTSr5tkDdiytskwKcMivtnFpHZpAoqWyH/gx6sDROxYWfxiGtxDu49A=
+X-Gm-Message-State: AOJu0YxxfpsoPvG+i6F7/EAU58b7xTLFfBcZBkZD1a3i6VJFWBPXJ6sq
+ xEQklhFTsn+OXT51uDOerGqaM87grk47tfAEmVJdb78isTywclYwSxhDMCq5E1w9B+djRRRv2qo
+ g5q3OsjJdlcVGln7izDnkMmDbBqG+5n3a+4wbKg==
+X-Google-Smtp-Source: AGHT+IHow/rrXPpnY6FyssuhZZq9j3N2/ZhTftNcERfAcxLJRIFCxgpyrhc36BjsrTKu5AWP4A40XFhzkgx4Nn0aDzQ=
+X-Received: by 2002:a05:6512:3a93:b0:529:b3c9:7261 with SMTP id
+ 2adb3069b0e04-529b3c97397mr3151037e87.5.1716887506900; Tue, 28 May 2024
+ 02:11:46 -0700 (PDT)
+MIME-Version: 1.0
 References: <ZjJgQcPQ29HJsTpY@x1n>
- <7e902e4e576a4e199e36d28f99bd55e5@huawei.com> <Zjj0xa-3KrFHTK0S@x1n>
- <addaa8d094904315a466533763689ead@huawei.com> <ZjpWmG2aUJLkYxJm@x1n>
- <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com> <ZjzaIAMgUHV8zdNz@x1n>
+ <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
+ <Zjj0xa-3KrFHTK0S@x1n> <addaa8d094904315a466533763689ead@huawei.com>
+ <ZjpWmG2aUJLkYxJm@x1n> <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com>
+ <ZjzaIAMgUHV8zdNz@x1n>
  <CAHEcVy48Mcup3d3FgYh_oPtV-M9CZBVr4G_9jyg2K+8Esi0WGA@mail.gmail.com>
  <04769507-ac37-495d-a797-e05084d73e64@akamai.com>
  <CAHEcVy4d7uJENZ1hRx2FBzbw22qN4Qm0TwtxvM5DLw3s81Zp_g@mail.gmail.com>
- <Zk0c51D1Oo6NdIxR@x1n>
-In-Reply-To: <Zk0c51D1Oo6NdIxR@x1n>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.173.124.235]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Received-SPF: pass client-ip=45.249.212.190;
- envelope-from=arei.gonglei@huawei.com; helo=szxga04-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ <Zk0c51D1Oo6NdIxR@x1n> <2308a8b894244123b638038e40a33990@huawei.com>
+In-Reply-To: <2308a8b894244123b638038e40a33990@huawei.com>
+From: Jinpu Wang <jinpu.wang@ionos.com>
+Date: Tue, 28 May 2024 11:11:35 +0200
+Message-ID: <CAMGffEmK5QNPisU8uM_GLzTtY8LgimOtyY+d3GJV-bLPH9-FqQ@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: Peter Xu <peterx@redhat.com>, Yu Zhang <yu.zhang@ionos.com>, 
+ Michael Galaxy <mgalaxy@akamai.com>, Elmar Gerdes <elmar.gerdes@ionos.com>, 
+ zhengchuan <zhengchuan@huawei.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>, 
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, 
+ Pannengyuan <pannengyuan@huawei.com>, Xiexiangyou <xiexiangyou@huawei.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::135;
+ envelope-from=jinpu.wang@ionos.com; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,73 +118,117 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gonglei (Arei)" <arei.gonglei@huawei.com>
-From:  "Gonglei (Arei)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgUGV0ZXIsDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGV0ZXIg
-WHUgW21haWx0bzpwZXRlcnhAcmVkaGF0LmNvbV0NCj4gU2VudDogV2VkbmVzZGF5LCBNYXkgMjIs
-IDIwMjQgNjoxNSBBTQ0KPiBUbzogWXUgWmhhbmcgPHl1LnpoYW5nQGlvbm9zLmNvbT4NCj4gQ2M6
-IE1pY2hhZWwgR2FsYXh5IDxtZ2FsYXh5QGFrYW1haS5jb20+OyBKaW5wdSBXYW5nDQo+IDxqaW5w
-dS53YW5nQGlvbm9zLmNvbT47IEVsbWFyIEdlcmRlcyA8ZWxtYXIuZ2VyZGVzQGlvbm9zLmNvbT47
-DQo+IHpoZW5nY2h1YW4gPHpoZW5nY2h1YW5AaHVhd2VpLmNvbT47IEdvbmdsZWkgKEFyZWkpDQo+
-IDxhcmVpLmdvbmdsZWlAaHVhd2VpLmNvbT47IERhbmllbCBQLiBCZXJyYW5nw6kgPGJlcnJhbmdl
-QHJlZGhhdC5jb20+Ow0KPiBNYXJrdXMgQXJtYnJ1c3RlciA8YXJtYnJ1QHJlZGhhdC5jb20+OyBa
-aGlqaWFuIExpIChGdWppdHN1KQ0KPiA8bGl6aGlqaWFuQGZ1aml0c3UuY29tPjsgcWVtdS1kZXZl
-bEBub25nbnUub3JnOyBZdXZhbCBTaGFpYQ0KPiA8eXV2YWwuc2hhaWEubWxAZ21haWwuY29tPjsg
-S2V2aW4gV29sZiA8a3dvbGZAcmVkaGF0LmNvbT47IFByYXNhbm5hDQo+IEt1bWFyIEthbGV2ZXIg
-PHByYXNhbm5hLmthbGV2ZXJAcmVkaGF0LmNvbT47IENvcm5lbGlhIEh1Y2sNCj4gPGNvaHVja0By
-ZWRoYXQuY29tPjsgTWljaGFlbCBSb3RoIDxtaWNoYWVsLnJvdGhAYW1kLmNvbT47IFByYXNhbm5h
-DQo+IEt1bWFyIEthbGV2ZXIgPHByYXNhbm5hNDMyNEBnbWFpbC5jb20+OyBQYW9sbyBCb256aW5p
-DQo+IDxwYm9uemluaUByZWRoYXQuY29tPjsgcWVtdS1ibG9ja0Bub25nbnUub3JnOyBkZXZlbEBs
-aXN0cy5saWJ2aXJ0Lm9yZzsNCj4gSGFubmEgUmVpdHogPGhyZWl0ekByZWRoYXQuY29tPjsgTWlj
-aGFlbCBTLiBUc2lya2luIDxtc3RAcmVkaGF0LmNvbT47DQo+IFRob21hcyBIdXRoIDx0aHV0aEBy
-ZWRoYXQuY29tPjsgRXJpYyBCbGFrZSA8ZWJsYWtlQHJlZGhhdC5jb20+OyBTb25nDQo+IEdhbyA8
-Z2Fvc29uZ0Bsb29uZ3Nvbi5jbj47IE1hcmMtQW5kcsOpIEx1cmVhdQ0KPiA8bWFyY2FuZHJlLmx1
-cmVhdUByZWRoYXQuY29tPjsgQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPjsN
-Cj4gV2FpbmVyIGRvcyBTYW50b3MgTW9zY2hldHRhIDx3YWluZXJzbUByZWRoYXQuY29tPjsgQmVy
-YWxkbyBMZWFsDQo+IDxibGVhbEByZWRoYXQuY29tPjsgUGFubmVuZ3l1YW4gPHBhbm5lbmd5dWFu
-QGh1YXdlaS5jb20+Ow0KPiBYaWV4aWFuZ3lvdSA8eGlleGlhbmd5b3VAaHVhd2VpLmNvbT47IEZh
-Ymlhbm8gUm9zYXMgPGZhcm9zYXNAc3VzZS5kZT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSC1mb3It
-OS4xIHYyIDIvM10gbWlncmF0aW9uOiBSZW1vdmUgUkRNQSBwcm90b2NvbCBoYW5kbGluZw0KPiAN
-Cj4gT24gRnJpLCBNYXkgMTcsIDIwMjQgYXQgMDM6MDE6NTlQTSArMDIwMCwgWXUgWmhhbmcgd3Jv
-dGU6DQo+ID4gSGVsbG8gTWljaGFlbCBhbmQgUGV0ZXIsDQo+IA0KPiBIaSwNCj4gDQo+ID4NCj4g
-PiBFeGFjdGx5LCBub3Qgc28gY29tcGVsbGluZywgYXMgSSBkaWQgaXQgZmlyc3Qgb25seSBvbiBz
-ZXJ2ZXJzIHdpZGVseQ0KPiA+IHVzZWQgZm9yIHByb2R1Y3Rpb24gaW4gb3VyIGRhdGEgY2VudGVy
-LiBUaGUgbmV0d29yayBhZGFwdGVycyBhcmUNCj4gPg0KPiA+IEV0aGVybmV0IGNvbnRyb2xsZXI6
-IEJyb2FkY29tIEluYy4gYW5kIHN1YnNpZGlhcmllcyBOZXRYdHJlbWUgQkNNNTcyMA0KPiA+IDIt
-cG9ydCBHaWdhYml0IEV0aGVybmV0IFBDSWUNCj4gDQo+IEhtbS4uLiBJIGRlZmluaXRlbHkgdGhp
-bmtzIEppbnB1J3MgTWVsbGFub3ggQ29ubmVjdFgtNiBsb29rcyBtb3JlIHJlYXNvbmFibGUuDQo+
-IA0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsL0NBTUdmZkVuLURLcE1aNHRB
-NzFNSllkeWVtZzBaZGExNQ0KPiB3VkFxazgxdlh0S3p4LUxmSlFAbWFpbC5nbWFpbC5jb20vDQo+
-IA0KPiBBcHByZWNpYXRlIGEgbG90IGZvciBldmVyeW9uZSBoZWxwaW5nIG9uIHRoZSB0ZXN0aW5n
-cy4NCj4gDQo+ID4gSW5maW5pQmFuZCBjb250cm9sbGVyOiBNZWxsYW5veCBUZWNobm9sb2dpZXMg
-TVQyNzgwMCBGYW1pbHkNCj4gPiBbQ29ubmVjdFgtNV0NCj4gPg0KPiA+IHdoaWNoIGRvZXNuJ3Qg
-bWVldCBvdXIgcHVycG9zZS4gSSBjYW4gY2hvb3NlIFJETUEgb3IgVENQIGZvciBWTQ0KPiA+IG1p
-Z3JhdGlvbi4gUkRNQSB0cmFmZmljIGlzIHRocm91Z2ggSW5maW5pQmFuZCBhbmQgVENQIHRocm91
-Z2ggRXRoZXJuZXQNCj4gPiBvbiB0aGVzZSB0d28gaG9zdHMuIE9uZSBpcyBzdGFuZGJ5IHdoaWxl
-IHRoZSBvdGhlciBpcyBhY3RpdmUuDQo+ID4NCj4gPiBOb3cgSSdsbCB0cnkgb24gYSBzZXJ2ZXIg
-d2l0aCBtb3JlIHJlY2VudCBFdGhlcm5ldCBhbmQgSW5maW5pQmFuZA0KPiA+IG5ldHdvcmsgYWRh
-cHRlcnMuIE9uZSBvZiB0aGVtIGhhczoNCj4gPiBCQ001NzQxNCBOZXRYdHJlbWUtRSAxMEdiLzI1
-R2IgUkRNQSBFdGhlcm5ldCBDb250cm9sbGVyIChyZXYgMDEpDQo+ID4NCj4gPiBUaGUgY29tcGFy
-aXNvbiBiZXR3ZWVuIFJETUEgYW5kIFRDUCBvbiB0aGUgc2FtZSBOSUMgY291bGQgbWFrZSBtb3Jl
-DQo+IHNlbnNlLg0KPiANCj4gSXQgbG9va3MgdG8gbWUgTklDcyBhcmUgcG93ZXJmdWwgbm93LCBi
-dXQgYWdhaW4gYXMgSSBtZW50aW9uZWQgSSBkb24ndCB0aGluayBpdCdzDQo+IGEgcmVhc29uIHdl
-IG5lZWQgdG8gZGVwcmVjYXRlIHJkbWEsIGVzcGVjaWFsbHkgaWYgUUVNVSdzIHJkbWEgbWlncmF0
-aW9uIGhhcw0KPiB0aGUgY2hhbmNlIHRvIGJlIHJlZmFjdG9yZWQgdXNpbmcgcnNvY2tldC4NCj4g
-DQo+IElzIHRoZXJlIGFueW9uZSB3aG8gc3RhcnRlZCBsb29raW5nIGludG8gdGhhdCBkaXJlY3Rp
-b24/ICBXb3VsZCBpdCBtYWtlIHNlbnNlDQo+IHdlIHN0YXJ0IHNvbWUgUG9DIG5vdz8NCj4gDQoN
-Ck15IHRlYW0gaGFzIGZpbmlzaGVkIHRoZSBQb0MgcmVmYWN0b3Jpbmcgd2hpY2ggd29ya3Mgd2Vs
-bC4gDQoNClByb2dyZXNzOg0KMS4gIEltcGxlbWVudCBpby9jaGFubmVsLXJkbWEuYywNCjIuICBB
-ZGQgdW5pdCB0ZXN0IHRlc3RzL3VuaXQvdGVzdC1pby1jaGFubmVsLXJkbWEuYyBhbmQgdmVyaWZ5
-aW5nIGl0IGlzIHN1Y2Nlc3NmdWwsDQozLiAgUmVtb3ZlIHRoZSBvcmlnaW5hbCBjb2RlIGZyb20g
-bWlncmF0aW9uL3JkbWEuYywNCjQuICBSZXdyaXRlIHRoZSByZG1hX3N0YXJ0X291dGdvaW5nX21p
-Z3JhdGlvbiBhbmQgcmRtYV9zdGFydF9pbmNvbWluZ19taWdyYXRpb24gbG9naWMsDQo1LiAgUmVt
-b3ZlIGFsbCByZG1hX3h4eCBmdW5jdGlvbnMgZnJvbSBtaWdyYXRpb24vcmFtLmMuICh0byBwcmV2
-ZW50IFJETUEgbGl2ZSBtaWdyYXRpb24gZnJvbSBwb2xsdXRpbmcgdGhlIGNvcmUgbG9naWMgb2Yg
-bGl2ZSBtaWdyYXRpb24pLA0KNi4gIFRoZSBzb2Z0LVJvQ0UgaW1wbGVtZW50ZWQgYnkgc29mdHdh
-cmUgaXMgdXNlZCB0byB0ZXN0IHRoZSBSRE1BIGxpdmUgbWlncmF0aW9uLiBJdCdzIHN1Y2Nlc3Nm
-dWwuDQoNCldlIHdpbGwgYmUgc3VibWl0IHRoZSBwYXRjaHNldCBsYXRlci4NCg0KDQpSZWdhcmRz
-LA0KLUdvbmdsZWkNCg0KPiBUaGFua3MsDQo+IA0KPiAtLQ0KPiBQZXRlciBYdQ0KDQo=
+Hi Gonglei,
+
+On Tue, May 28, 2024 at 11:06=E2=80=AFAM Gonglei (Arei) <arei.gonglei@huawe=
+i.com> wrote:
+>
+> Hi Peter,
+>
+> > -----Original Message-----
+> > From: Peter Xu [mailto:peterx@redhat.com]
+> > Sent: Wednesday, May 22, 2024 6:15 AM
+> > To: Yu Zhang <yu.zhang@ionos.com>
+> > Cc: Michael Galaxy <mgalaxy@akamai.com>; Jinpu Wang
+> > <jinpu.wang@ionos.com>; Elmar Gerdes <elmar.gerdes@ionos.com>;
+> > zhengchuan <zhengchuan@huawei.com>; Gonglei (Arei)
+> > <arei.gonglei@huawei.com>; Daniel P. Berrang=C3=A9 <berrange@redhat.com=
+>;
+> > Markus Armbruster <armbru@redhat.com>; Zhijian Li (Fujitsu)
+> > <lizhijian@fujitsu.com>; qemu-devel@nongnu.org; Yuval Shaia
+> > <yuval.shaia.ml@gmail.com>; Kevin Wolf <kwolf@redhat.com>; Prasanna
+> > Kumar Kalever <prasanna.kalever@redhat.com>; Cornelia Huck
+> > <cohuck@redhat.com>; Michael Roth <michael.roth@amd.com>; Prasanna
+> > Kumar Kalever <prasanna4324@gmail.com>; Paolo Bonzini
+> > <pbonzini@redhat.com>; qemu-block@nongnu.org; devel@lists.libvirt.org;
+> > Hanna Reitz <hreitz@redhat.com>; Michael S. Tsirkin <mst@redhat.com>;
+> > Thomas Huth <thuth@redhat.com>; Eric Blake <eblake@redhat.com>; Song
+> > Gao <gaosong@loongson.cn>; Marc-Andr=C3=A9 Lureau
+> > <marcandre.lureau@redhat.com>; Alex Benn=C3=A9e <alex.bennee@linaro.org=
+>;
+> > Wainer dos Santos Moschetta <wainersm@redhat.com>; Beraldo Leal
+> > <bleal@redhat.com>; Pannengyuan <pannengyuan@huawei.com>;
+> > Xiexiangyou <xiexiangyou@huawei.com>; Fabiano Rosas <farosas@suse.de>
+> > Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol han=
+dling
+> >
+> > On Fri, May 17, 2024 at 03:01:59PM +0200, Yu Zhang wrote:
+> > > Hello Michael and Peter,
+> >
+> > Hi,
+> >
+> > >
+> > > Exactly, not so compelling, as I did it first only on servers widely
+> > > used for production in our data center. The network adapters are
+> > >
+> > > Ethernet controller: Broadcom Inc. and subsidiaries NetXtreme BCM5720
+> > > 2-port Gigabit Ethernet PCIe
+> >
+> > Hmm... I definitely thinks Jinpu's Mellanox ConnectX-6 looks more reaso=
+nable.
+> >
+> > https://lore.kernel.org/qemu-devel/CAMGffEn-DKpMZ4tA71MJYdyemg0Zda15
+> > wVAqk81vXtKzx-LfJQ@mail.gmail.com/
+> >
+> > Appreciate a lot for everyone helping on the testings.
+> >
+> > > InfiniBand controller: Mellanox Technologies MT27800 Family
+> > > [ConnectX-5]
+> > >
+> > > which doesn't meet our purpose. I can choose RDMA or TCP for VM
+> > > migration. RDMA traffic is through InfiniBand and TCP through Etherne=
+t
+> > > on these two hosts. One is standby while the other is active.
+> > >
+> > > Now I'll try on a server with more recent Ethernet and InfiniBand
+> > > network adapters. One of them has:
+> > > BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller (rev 01)
+> > >
+> > > The comparison between RDMA and TCP on the same NIC could make more
+> > sense.
+> >
+> > It looks to me NICs are powerful now, but again as I mentioned I don't =
+think it's
+> > a reason we need to deprecate rdma, especially if QEMU's rdma migration=
+ has
+> > the chance to be refactored using rsocket.
+> >
+> > Is there anyone who started looking into that direction?  Would it make=
+ sense
+> > we start some PoC now?
+> >
+>
+> My team has finished the PoC refactoring which works well.
+>
+> Progress:
+> 1.  Implement io/channel-rdma.c,
+> 2.  Add unit test tests/unit/test-io-channel-rdma.c and verifying it is s=
+uccessful,
+> 3.  Remove the original code from migration/rdma.c,
+> 4.  Rewrite the rdma_start_outgoing_migration and rdma_start_incoming_mig=
+ration logic,
+> 5.  Remove all rdma_xxx functions from migration/ram.c. (to prevent RDMA =
+live migration from polluting the core logic of live migration),
+> 6.  The soft-RoCE implemented by software is used to test the RDMA live m=
+igration. It's successful.
+>
+> We will be submit the patchset later.
+>
+Thanks for working on this PoC, and sharing progress on this, we are
+looking forward for the patchset.
+
+>
+> Regards,
+> -Gonglei
+Regards!
+Jinpu
+>
+> > Thanks,
+> >
+> > --
+> > Peter Xu
+>
 
