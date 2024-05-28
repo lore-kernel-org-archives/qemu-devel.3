@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC9AC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 21:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF5BC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 23:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC4cz-0004ZK-6D; Tue, 28 May 2024 17:45:05 -0400
+	id 1sC61a-0007Ez-Pv; Tue, 28 May 2024 19:14:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sC4cx-0004XR-3n
- for qemu-devel@nongnu.org; Tue, 28 May 2024 17:45:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sC4cv-000508-Fz
- for qemu-devel@nongnu.org; Tue, 28 May 2024 17:45:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716932700;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=h7vAHbXgtzSsa9a2dc28G2k+DKuhP8PHSJ9Ue2I1CM8=;
- b=BclF/GKQalVhvATnlbygIOok0kTW2vl3Ac0eFr5AdjIW2ZHSP6gfraILi/j4Vh7LnZEMXO
- u3ZZhDVoHPAnU67K/27Ogy4fa0bi8DiiHV7Im5sncciL0GhR8Tt6KZDz8N+UNZ3sPLJj6d
- GVVr4Y57o4qcnRqUs89TB6rq19yImZk=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-kCciOdMOOpiIiiw9pg6oFg-1; Tue, 28 May 2024 17:44:58 -0400
-X-MC-Unique: kCciOdMOOpiIiiw9pg6oFg-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5b96a77ea14so488717eaf.1
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 14:44:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sC61Z-0007Ek-Rx; Tue, 28 May 2024 19:14:33 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sC61W-0000eb-Jq; Tue, 28 May 2024 19:14:33 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1f47784a2adso10550605ad.1; 
+ Tue, 28 May 2024 16:14:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716938069; x=1717542869; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rgDRUApwjHELlJBi3de/ejRg84WPG/VZw+fQVa7YjoY=;
+ b=iCwhgm7Ud+WA2bi62+dG70W+VS4JQjqD3QdIbXPJ9UJlG0jX8+XuntAqInRWO+u5/d
+ U+3c5kNBvjRHgSvCcLk1wWw8xCrQcCdKJye+eXIC6q7N8WrT34EUYuy1KQ9IhsNyRUx7
+ eJ8gWDs6CE006RjOqs2Zgna5dJhrv8kBrGq8jIe3oh/ijLgwq5zzprUYnPqQFRsFeVf4
+ 2bQyS+CMvKlXDYF4mCRFZY3ILpwSIDBacKzoCBU7bH3V0iQIbJuIuGKvYftI5+++kSFD
+ g+5QAARnyQNVwS0pZNpDSLMrgdkQ7rPgmX4FD8KTPTe/C/yzhTj+WOMR2ods1c8r8RZT
+ L3cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716932698; x=1717537498;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h7vAHbXgtzSsa9a2dc28G2k+DKuhP8PHSJ9Ue2I1CM8=;
- b=EOH3xSKTF4VsbT/jqMzyUqRjbzNrDG05ZzxQrAoXJUPnW2x6/qOtdJUSxgDEXZ7RYp
- 7anEDgrkZPIHmqEh5fOpOTV8ePQFbRCtjAn941fCuibPc9nwo2DoRV9Y7kJTHI+OhjT3
- UlfL20HogrK2mzZ/ZdG0TQ2qpGSJMX59KP2dHTYdpU3XaujPV+qqhv1toG1ZII6WDFRG
- KmswNQ2mCInfB/t4N+tOYijw/nr3OC0NBPDt8CzP6uFysue6qplbxPOAxakxz5D6PHBC
- zkgYZGEXE8QgDnBcsQr/iLFycXYqh25YsaZ1qPQtD6s1uLKvgFg96CaTDFdSot6sipfc
- WmTQ==
-X-Gm-Message-State: AOJu0YxFFOf1a7h74+n7dzzSYeoGjPZXP4EA810BSChNe1zf7m3UTKzL
- DwLvsX6455oWNvZk74OMoiQ/u4bFFLNb3sz+PcEE+GXUMIGuiEGUYfaFctFs4xRj6uDdBMwumfX
- UlRvI7EzSISTVB2fTsQYY6cQPHL1p1quA7Vt0bmuQMrKKxXKtyzwT
-X-Received: by 2002:a05:6808:4c85:b0:3d1:d3ba:ce0b with SMTP id
- 5614622812f47-3d1d3bad073mr1083783b6e.2.1716932697625; 
- Tue, 28 May 2024 14:44:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfcvhHEBdzHlmad9nm9eajofaNTE9nKjy9cy8E1bXaxYGuI0CG/jl8Gqn4i5tl0K3AO2R5Aw==
-X-Received: by 2002:a05:6808:4c85:b0:3d1:d3ba:ce0b with SMTP id
- 5614622812f47-3d1d3bad073mr1083764b6e.2.1716932697027; 
- Tue, 28 May 2024 14:44:57 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ac1641928esm47971866d6.134.2024.05.28.14.44.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 14:44:56 -0700 (PDT)
-Date: Tue, 28 May 2024 17:44:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V1 19/26] physmem: preserve ram blocks for cpr
-Message-ID: <ZlZQVijf2weEmzYK@x1n>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-20-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1716938069; x=1717542869;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rgDRUApwjHELlJBi3de/ejRg84WPG/VZw+fQVa7YjoY=;
+ b=sOLoAlxeUWjuG5ynFhsiTdsgBSp1tLSC38+wZhZChah/4zcCMZtpe5hC4GzeUQ35bU
+ bN/weriWF3nhdSv6HCNK8ScwZXy5sQib4E5bPn5MRXmRmR1OXeW2GfhtejuST4OGqfSB
+ Qa+nSrp578xzTxNCVh/jeHVnrMNv5xkXc8SzmFkiCkUjymA5+vVNCC8zkXUWaZv7YTcZ
+ FxdX8iykXXYd80MW8r1eBYsYJOkyQqPDLjVXN8gxY3G/DE1WgxkjKExVjNmHMyUNdmdP
+ fMIW1U/GjNwOM7BPFEG9SFIEjBv0aKyEY4S1ui/zPsszJergl86RUE9AtME2+QORtu+k
+ dAww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/I23jKbz7XyV8EV25xL6ehGPkIEBCMKczEAkMjU4eO19FBZDDddvsmCf25guhc2jZVBOCvMW4YtTFCA/SRXIAEg+Ua/ViInoc1o/SGZLFJNLkiDbrkvB4S/p/rg==
+X-Gm-Message-State: AOJu0YziKZauFKYHNzMcFFwJ3e9+nQslvkdT4RdEHvvqPgOEHuiL7YTz
+ BakRTsJFaTAeLmStimgaqraGQIPKmRw9msciJ9/4Kg6r1+GRgqnP
+X-Google-Smtp-Source: AGHT+IHIGO+yqYbL5qD1Mas7pqBiI46htZGFVuGmxYKpfuABpYXd1ZXk9he3JzfHwyTOv9lkS64hsQ==
+X-Received: by 2002:a17:902:e5cb:b0:1f4:71c5:c78 with SMTP id
+ d9443c01a7336-1f471c50fbfmr94591975ad.39.1716938068799; 
+ Tue, 28 May 2024 16:14:28 -0700 (PDT)
+Received: from [192.168.0.22] ([210.223.46.112])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f471f127c2sm66271925ad.13.2024.05.28.16.14.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 May 2024 16:14:28 -0700 (PDT)
+Message-ID: <b6231f60-db8a-4dc0-a5db-b1d608059e6e@gmail.com>
+Date: Wed, 29 May 2024 08:14:24 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1714406135-451286-20-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 2/2] hw/ufs: Add support MCQ of UFSHCI 4.0
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com, minwoo.im@samsung.com
+References: <cover.1716876237.git.jeuk20.kim@samsung.com>
+ <71a82d3f0555e65c98df129ce0e38b2aa5681ec0.1716876237.git.jeuk20.kim@samsung.com>
+ <19857a64-0f57-4f7c-877e-c4d0e884c4f1@linaro.org>
+Content-Language: ko
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+In-Reply-To: <19857a64-0f57-4f7c-877e-c4d0e884c4f1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,51 +98,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 08:55:28AM -0700, Steve Sistare wrote:
-> Preserve fields of RAMBlocks that allocate their host memory during CPR so
-> the RAM allocation can be recovered.
 
-This sentence itself did not explain much, IMHO.  QEMU can share memory
-using fd based memory already of all kinds, as long as the memory backend
-is path-based it can be shared by sharing the same paths to dst.
+On 5/29/2024 2:06 AM, Richard Henderson wrote:
+> On 5/27/24 23:12, Jeuk Kim wrote:
+>> From: Minwoo Im <minwoo.im@samsung.com>
+>>
+>> This patch adds support for MCQ defined in UFSHCI 4.0.  This patch
+>> utilized the legacy I/O codes as much as possible to support MCQ.
+>>
+>> MCQ operation & runtime register is placed at 0x1000 offset of UFSHCI
+>> register statically with no spare space among four registers (48B):
+>>
+>>     UfsMcqSqReg, UfsMcqSqIntReg, UfsMcqCqReg, UfsMcqCqIntReg
+>>
+>> The maxinum number of queue is 32 as per spec, and the default
+>> MAC(Multiple Active Commands) are 32 in the device.
+>>
+>> Example:
+>>     -device ufs,serial=foo,id=ufs0,mcq=true,mcq-maxq=8
+>>
+>> Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+>> Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+>> Message-Id: <20240528023106.856777-3-minwoo.im@samsung.com>
+>> Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+>> ---
+>>   hw/ufs/trace-events |  17 ++
+>>   hw/ufs/ufs.c        | 475 ++++++++++++++++++++++++++++++++++++++++++--
+>>   hw/ufs/ufs.h        |  98 ++++++++-
+>>   include/block/ufs.h |  23 ++-
+>>   4 files changed, 593 insertions(+), 20 deletions(-)
+>
+> Fails build:
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/6960270722
+>
+> In file included from trace/trace-hw_ufs.c:5:
+> ../hw/ufs/trace-events:28:24: error: format specifies type 'unsigned 
+> char' but the argument has type 'uint32_t' (aka 'unsigned int') 
+> [-Werror,-Wformat]
+>                      , cqid, addr);
+>                        ^~~~
+> ../hw/ufs/trace-events:25:112: error: format specifies type 'unsigned 
+> char' but the argument has type 'uint32_t' (aka 'unsigned int') 
+> [-Werror,-Wformat]
+>             qemu_log("ufs_err_dma_write_cq " "failed to write cq 
+> entry. cqid %"PRIu8", hwaddr %"PRIu64"" "\n", cqid, addr);
+> ~~~~~~~                      ^~~~
+> 2 errors generated.
+>
+>
+>
+> r~
 
-This reads very confusing as a generic concept.  I mean, QEMU migration
-relies on so many things to work right.  We mostly asks the users to "use
-exactly the same cmdline for src/dst QEMU unless you know what you're
-doing", otherwise many things can break.  That should also include ramblock
-being matched between src/dst due to the same cmdlines provided on both
-sides.  It'll be confusing to mention this when we thought the ramblocks
-also rely on that fact.
 
-So IIUC this sentence should be dropped in the real patch, and I'll try to
-guess the real reason with below..
+Sorry about that.
 
-> Mirror the mr->align field in the RAMBlock to simplify the vmstate.
-> Preserve the old host address, even though it is immediately discarded,
-> as it will be needed in the future for CPR with iommufd.  Preserve
-> guest_memfd, even though CPR does not yet support it, to maintain vmstate
-> compatibility when it becomes supported.
-
-.. It could be about the vfio vaddr update feature that you mentioned and
-only for iommufd (as IIUC vfio still relies on iova ranges, then it won't
-help here)?
-
-If so, IMHO we should have this patch (or any variance form) to be there
-for your upcoming vfio support.  Keeping this around like this will make
-the series harder to review.  Or is it needed even before VFIO?
-
-Another thing to ask: does this idea also need to rely on some future
-iommufd kernel support?  If there's anything that's not merged in current
-Linux upstream, this series needs to be marked as RFC, so it's not target
-for merging.  This will also be true if this patch is "preparing" for that
-work.  It means if this patch only services iommufd purpose, even if it
-doesn't require any kernel header to be referenced, we should only merge it
-together with the full iommufd support comes later (and that'll be after
-iommufd kernel supports land).
-
-Thanks,
-
--- 
-Peter Xu
+I'll fix it and send it back to you.
 
 
