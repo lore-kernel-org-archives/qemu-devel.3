@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AA9C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 10:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEAC8C25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 10:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBuBu-0004RU-9N; Tue, 28 May 2024 06:36:26 -0400
+	id 1sBuBw-0004Ss-5k; Tue, 28 May 2024 06:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sBuBb-0004Hj-OZ
- for qemu-devel@nongnu.org; Tue, 28 May 2024 06:36:11 -0400
+ id 1sBuBs-0004Px-DI
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 06:36:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sBuBZ-0008Bk-0i
- for qemu-devel@nongnu.org; Tue, 28 May 2024 06:36:07 -0400
+ id 1sBuBq-0008F5-NX
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 06:36:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716892564;
+ s=mimecast20190719; t=1716892582;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1S2/FREUTloncOeuDDrajxRNh9S3+Gj4t6YZDhkj1gc=;
- b=XdJ9IfzdSiPo6JAI3hPN0bDMcDdKxk4Epx9hxpNrAl59bztjPKc88vDxVukfubO+jj7/W+
- BxUXBw9mRKM8wEvwPG17zLwVCgdnryIbZyVx+BrLVETToPp1JEkUNJtSPde8t8mKkXRokc
- b99RrEVMcysdGJmS4JJArykfEdwwVB0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e7uQF4Gi0pZ6bwyXQv9cyLYqbc38Kf+gnOBq39sMLzc=;
+ b=gfvx1msfygBzUOmeKcJGXZvp4cGBNDPUJ6G1LJXvfSMQqvT70ViT7lcgzkXfGAFYA7Ga1Y
+ 2rvr66JE7utDgMWA0oUFfAXgwvIN04WFx8a9/iZPDVfO287DBY7/E1KK7SsSon4wHkJzAi
+ 13wANqPnJ5FEnRK42OIZo2XDTUzuBic=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-AbgRrUeLP3egJT5C4pfgyA-1; Tue, 28 May 2024 06:36:03 -0400
-X-MC-Unique: AbgRrUeLP3egJT5C4pfgyA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42109a85f5cso4638865e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 03:36:03 -0700 (PDT)
+ us-mta-508-sfcix_OQMvyYS04tUludeA-1; Tue, 28 May 2024 06:36:20 -0400
+X-MC-Unique: sfcix_OQMvyYS04tUludeA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4211211e18cso3266475e9.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 03:36:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716892561; x=1717497361;
+ d=1e100.net; s=20230601; t=1716892576; x=1717497376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1S2/FREUTloncOeuDDrajxRNh9S3+Gj4t6YZDhkj1gc=;
- b=CPtuFxytrijp8joprFPvbRntR1DbISliBDT+vMUtRNrvNqRuY9C3mIvDJU5JUgPFaC
- Q+DK0oUhVb1n1n/78Ggm9eQmR9U1nnwyx6sGLkXjd69q5IngZQkBDUYlNwZT55wfw4Gl
- Dmvd51foP3lOP1yrQzB5QUtgVMCd5ioKDudxisHE9Ec46sfsEo28HEHtJEuR/e6d/ceH
- UiXfhGxhxYS4iqvRFJUxd4CySh3l73tQU1B8csLQyZa2HqT6jgK0H1gibH7i4nEHUaUB
- ljDMYVqT5RR6BxEtNWEOIpJk+e6PXUiulcxO2wT9HPDf8QhFB16dho/xTTFSCFjoLWrW
- Yd0w==
-X-Gm-Message-State: AOJu0YyWc2VY7Sw+uFzHZ3BxLKRcvRhYWp4kePJ/X8O+IwBYk/0w6V9J
- AHh8DufPnnVD354ehfXvaKxwBVozncGz8IX5iFst+evToggCWEKtSmWSQ0nCU8UrBbZs+16SkTO
- us0G/XKghPvOnyrizzysOdFYJtJGWeo82X1ily8Xteqo/B5jmU1TamoEgzML6u4w5V1PmTevCYg
- xF1rZ9TbR9ZR40wFX52Gvvl0a1uIh+1g8WUI22
-X-Received: by 2002:a7b:ce8c:0:b0:41b:edf4:4071 with SMTP id
- 5b1f17b1804b1-42108aa6fc3mr136175265e9.35.1716892561665; 
- Tue, 28 May 2024 03:36:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFAHjoS3mWbS3S5UrzxHwxs2o/RE6gwgI0Ih4ab6GDi4TNszd+g85Axky2YD+4HZL6p13/6FA==
-X-Received: by 2002:a7b:ce8c:0:b0:41b:edf4:4071 with SMTP id
- 5b1f17b1804b1-42108aa6fc3mr136174815e9.35.1716892561256; 
- Tue, 28 May 2024 03:36:01 -0700 (PDT)
+ bh=e7uQF4Gi0pZ6bwyXQv9cyLYqbc38Kf+gnOBq39sMLzc=;
+ b=mkHNdfle9cvY/H94PZy01ZhPfKR3d9Q4+Rbo+teoeGck0aA8se/b8g9kKCG2usuNQN
+ X7xXjKT0tjh7NQJFhnvHKY5WmSPuw/oJNCYHaD83Edew2PsRfdj2B2h2alOypQUq7vO6
+ 39FrTp6MNbFOMBuRp4Qql/pZzB9KRABRZ0Al/UHdssS/ek3i7jDSYzq/ts830rh6A2ls
+ sTKWtM33KIwOUwxaZzV8n56Wk2uCR9y8xdwhSEKTnZG+EZ1csxS9Y//K7YLhrIzc2CM3
+ zLXSoO9xKTWnL2KQPSAMLOoABfYT1gRre8EFuDe5b+uL/gDkYb0L7zDg67Tooq8OsKJj
+ /4uA==
+X-Gm-Message-State: AOJu0Yy+SJzLNJ2UWOUcVA0CDsAoUuwe3U2skGpPiVnjlhiOqZI2rVfe
+ XS8QrOhou+ukhOIFlmGYPnE48wTPMOFzZheG7z2r0ENaSZvnnX4tgIQa4YZocnfacTIeRnSt2ju
+ 1a7+vnqDXYkQGpNcdihP2/9e8lMxvoDP8ZqLCjohkq4+WY8swGW+yJBpv4IgZynQXWYcHUOh+Fq
+ sVOrW1cr7UTBRx1qZ2akENNAW3/wHTJuPCOljF
+X-Received: by 2002:a05:600c:2948:b0:41f:ec3e:9797 with SMTP id
+ 5b1f17b1804b1-421089de607mr105969355e9.16.1716892576015; 
+ Tue, 28 May 2024 03:36:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIxOxzA8eL9YpWF+7ehAGvkh3xRIaVcT9fg19M67elzzhEy+5NF+4HBuR6WsYqq00Etmm/Tw==
+X-Received: by 2002:a05:600c:2948:b0:41f:ec3e:9797 with SMTP id
+ 5b1f17b1804b1-421089de607mr105968945e9.16.1716892575649; 
+ Tue, 28 May 2024 03:36:15 -0700 (PDT)
 Received: from step1.redhat.com (host-79-53-30-109.retail.telecomitalia.it.
  [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7dba2sm11244776f8f.17.2024.05.28.03.35.58
+ 5b1f17b1804b1-42100fad638sm170283785e9.29.2024.05.28.03.36.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 03:36:00 -0700 (PDT)
+ Tue, 28 May 2024 03:36:14 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: slp@redhat.com, David Hildenbrand <david@redhat.com>,
@@ -83,10 +83,9 @@ Cc: slp@redhat.com, David Hildenbrand <david@redhat.com>,
  stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v6 03/12] libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not
- supported
-Date: Tue, 28 May 2024 12:35:34 +0200
-Message-ID: <20240528103543.145412-4-sgarzare@redhat.com>
+Subject: [PATCH v6 06/12] contrib/vhost-user-*: use QEMU bswap helper functions
+Date: Tue, 28 May 2024 12:35:37 +0200
+Message-ID: <20240528103543.145412-7-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240528103543.145412-1-sgarzare@redhat.com>
 References: <20240528103543.145412-1-sgarzare@redhat.com>
@@ -118,46 +117,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-libvhost-user will panic when receiving VHOST_USER_GET_INFLIGHT_FD
-message if MFD_ALLOW_SEALING is not defined, since it's not able
-to create a memfd.
+Let's replace the calls to le*toh() and htole*() with qemu/bswap.h
+helpers to make the code more portable.
 
-VHOST_USER_GET_INFLIGHT_FD is used only if
-VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD is negotiated. So, let's mask
-that feature if the backend is not able to properly handle these
-messages.
-
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ contrib/vhost-user-blk/vhost-user-blk.c |  9 +++++----
+ contrib/vhost-user-input/main.c         | 16 ++++++++--------
+ 2 files changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a11afd1960..2c20cdc16e 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1674,6 +1674,17 @@ vu_get_protocol_features_exec(VuDev *dev, VhostUserMsg *vmsg)
-         features |= dev->iface->get_protocol_features(dev);
+diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
+index a8ab9269a2..9492146855 100644
+--- a/contrib/vhost-user-blk/vhost-user-blk.c
++++ b/contrib/vhost-user-blk/vhost-user-blk.c
+@@ -16,6 +16,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "standard-headers/linux/virtio_blk.h"
+ #include "libvhost-user-glib.h"
+ 
+@@ -194,8 +195,8 @@ vub_discard_write_zeroes(VubReq *req, struct iovec *iov, uint32_t iovcnt,
+     #if defined(__linux__) && defined(BLKDISCARD) && defined(BLKZEROOUT)
+     VubDev *vdev_blk = req->vdev_blk;
+     desc = buf;
+-    uint64_t range[2] = { le64toh(desc->sector) << 9,
+-                          le32toh(desc->num_sectors) << 9 };
++    uint64_t range[2] = { le64_to_cpu(desc->sector) << 9,
++                          le32_to_cpu(desc->num_sectors) << 9 };
+     if (type == VIRTIO_BLK_T_DISCARD) {
+         if (ioctl(vdev_blk->blk_fd, BLKDISCARD, range) == 0) {
+             g_free(buf);
+@@ -267,13 +268,13 @@ static int vub_virtio_process_req(VubDev *vdev_blk,
+     req->in = (struct virtio_blk_inhdr *)elem->in_sg[in_num - 1].iov_base;
+     in_num--;
+ 
+-    type = le32toh(req->out->type);
++    type = le32_to_cpu(req->out->type);
+     switch (type & ~VIRTIO_BLK_T_BARRIER) {
+     case VIRTIO_BLK_T_IN:
+     case VIRTIO_BLK_T_OUT: {
+         ssize_t ret = 0;
+         bool is_write = type & VIRTIO_BLK_T_OUT;
+-        req->sector_num = le64toh(req->out->sector);
++        req->sector_num = le64_to_cpu(req->out->sector);
+         if (is_write) {
+             ret  = vub_writev(req, &elem->out_sg[1], out_num);
+         } else {
+diff --git a/contrib/vhost-user-input/main.c b/contrib/vhost-user-input/main.c
+index 081230da54..f3362d41ac 100644
+--- a/contrib/vhost-user-input/main.c
++++ b/contrib/vhost-user-input/main.c
+@@ -51,8 +51,8 @@ static void vi_input_send(VuInput *vi, struct virtio_input_event *event)
+     vi->queue[vi->qindex++].event = *event;
+ 
+     /* ... until we see a report sync ... */
+-    if (event->type != htole16(EV_SYN) ||
+-        event->code != htole16(SYN_REPORT)) {
++    if (event->type != cpu_to_le16(EV_SYN) ||
++        event->code != cpu_to_le16(SYN_REPORT)) {
+         return;
      }
  
-+#ifndef MFD_ALLOW_SEALING
-+    /*
-+     * If MFD_ALLOW_SEALING is not defined, we are not able to handle
-+     * VHOST_USER_GET_INFLIGHT_FD messages, since we can't create a memfd.
-+     * Those messages are used only if VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD
-+     * is negotiated. A device implementation can enable it, so let's mask
-+     * it to avoid a runtime panic.
-+     */
-+    features &= ~(1ULL << VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD);
-+#endif
-+
-     vmsg_set_reply_u64(vmsg, features);
-     return true;
+@@ -103,9 +103,9 @@ vi_evdev_watch(VuDev *dev, int condition, void *data)
+ 
+         g_debug("input %d %d %d", evdev.type, evdev.code, evdev.value);
+ 
+-        virtio.type  = htole16(evdev.type);
+-        virtio.code  = htole16(evdev.code);
+-        virtio.value = htole32(evdev.value);
++        virtio.type  = cpu_to_le16(evdev.type);
++        virtio.code  = cpu_to_le16(evdev.code);
++        virtio.value = cpu_to_le32(evdev.value);
+         vi_input_send(vi, &virtio);
+     }
  }
+@@ -124,9 +124,9 @@ static void vi_handle_status(VuInput *vi, virtio_input_event *event)
+ 
+     evdev.input_event_sec = tval.tv_sec;
+     evdev.input_event_usec = tval.tv_usec;
+-    evdev.type = le16toh(event->type);
+-    evdev.code = le16toh(event->code);
+-    evdev.value = le32toh(event->value);
++    evdev.type = le16_to_cpu(event->type);
++    evdev.code = le16_to_cpu(event->code);
++    evdev.value = le32_to_cpu(event->value);
+ 
+     rc = write(vi->evdevfd, &evdev, sizeof(evdev));
+     if (rc == -1) {
 -- 
 2.45.1
 
