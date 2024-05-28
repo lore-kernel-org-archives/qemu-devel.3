@@ -4,47 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCF1C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 21:30:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B7CC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 21:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC4O6-0006YT-AI; Tue, 28 May 2024 17:29:42 -0400
+	id 1sC4ZA-0002ah-Is; Tue, 28 May 2024 17:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sC4O3-0006XP-Ag
- for qemu-devel@nongnu.org; Tue, 28 May 2024 17:29:40 -0400
+ id 1sC4Z7-0002Z6-HH; Tue, 28 May 2024 17:41:05 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sC4O0-00036R-7F
- for qemu-devel@nongnu.org; Tue, 28 May 2024 17:29:39 -0400
+ id 1sC4Z1-0004e6-Ua; Tue, 28 May 2024 17:41:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Wn5r9qVd1Y2YsN1YXCZrzMKZ7k2dvT3WuvgguoJVGvE=; b=oR+CCBys7vLIzBtYYdASTN6Cr3
- HlKgvjUBUduSgNRmmC/KKc837/vh9pdRb70ODiXepuHpgU8/K0af7qM35O6U+6grBNeuhu7r5SQ6e
- M65O59jKCsBXlmILMUKxS3A5T9uleb1Py460SQ6WC5vUhqB0TWIuDlpaWAU5oRYfy4z5kiAm/93pd
- +EEJZAj4PMXd1pJzxGcP7FhF8N2Ey7rFuc7f+hszs2u2iltEZDTHy3ck8dmVlmM7hlLCsaaDeM0kt
- w4Eu2YOK2uVPZURn6lOIzme4XrXpw6RhYCkdpfHzvXR+qmicKNJwlYlnAyckTMiGTBerKfNqPS1A+
- EjS7j8GbWFLocNGy4uZJQ1N/9U4HXgoExYn3GWdsDxO87E0UbtxAmyu/TvKHsK3FcnJ6TvL21vZ95
- da59XlfzZsIbXcB6svnYTFaMCyInscG6wlmGr4Ej22y6BqL8QKoJy3Egp2fW35xMLnDxAERlbYCfv
- 9ig0eD32Cs41zD3CuIcx5f1D8vpEiI7UXgtOHCZRw/ufHgvk6gRGZRjcDnVTfhVIysy6UuO/Gadkz
- fsvgm9ka7zW+s0lNtPxOiGVYITvkSEtEoUZ+n+rGbXpJzdTxcjVvcVW+O6usuJ1i7L2K3XGQ1Rj2y
- lDbVaeK+UMdlZqjFDBkvTqxXUL4MWnwCWxqCRzHgI=;
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=su9804s1CmgfrqGS+sPnXmO8RKsK7NVunbL4EELLd18=; b=zY+4DHnP+jprS5sVB7EdCrLOO+
+ JrHjK1P5TdVOnqVhgJjCPzO/ObUvwq2aJ70Ec9B7HQXeBnFmfYvAM6JTnr/YIrCMqVTM5tlZOREJF
+ BFcwFRBvh+Fv0QFmkC/RVOcIh249q1dv2894b9oZ/AwIumCiadG1dXsYx0oxQG033UroGhCwWVCdJ
+ vU3kiWuyxFkDqsaPAIk+PK9moj4cB/awEjW9lDuN3nxvU5qL5nzYRrzFoBKgJJnE7ekkGYXLmc8NE
+ PcvbZ+Vkc1UWeDwXwVPZCPMn9GPHOQvY0pgtUfezSxpZG/OrXl+mOmBUvg9+qanXMfxS1bZqOH0DC
+ gFOInzlCS+OJpVpsNAmeK+lFRN6cL5dhGVcd9xbqd10bi9gGbZiaCHP9cMuDNfpydIp7Noj/r98fC
+ Mb7RaJIheIARFQliiyVWonUwJI3lVVWlpp2GnqeiIMqHr6hc5cwLOWJVT7Rtau+DMFUzHnu8BrXZ8
+ RhKI4dOY4uLyz/dDIEUhoWYWjGFTntOjJQ1ii1eNyTkPyVy/85YXVAt+1DJPayHz2pVCarCYLyi/O
+ jbvnu7l6SbjeeCjnBQr0mk1hdsnkULuHW2RTrRT77Wfya0XSpyB6MVNdwETKECMjT7YjSjYWBNvAH
+ GkfOZLKhq53pWPs+0ck6vL0bz8jeXH3Ljc6W7Lddw=;
 Received: from [2a00:23c4:8bb4:4000:7888:3a1b:7ac1:9da2]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sC4Mm-0001ed-HD; Tue, 28 May 2024 22:28:20 +0100
-Message-ID: <b7ef97e1-5e3a-419e-bc35-0f51bc18e563@ilande.co.uk>
-Date: Tue, 28 May 2024 22:29:32 +0100
+ id 1sC4Xk-0001js-3W; Tue, 28 May 2024 22:39:40 +0100
+Message-ID: <f8337cd4-ecc1-4483-a2e7-4dc0ec7b65ca@ilande.co.uk>
+Date: Tue, 28 May 2024 22:40:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240526194254.459395-1-richard.henderson@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Helge Deller <deller@gmx.de>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20240528095459.896594-1-kraxel@redhat.com>
+ <20240528095459.896594-4-kraxel@redhat.com>
+ <8fa84896-f534-4d2e-8b00-057514a7de03@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -71,12 +81,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240526194254.459395-1-richard.henderson@linaro.org>
+In-Reply-To: <8fa84896-f534-4d2e-8b00-057514a7de03@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:7888:3a1b:7ac1:9da2
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 00/37] target/sparc: Implement VIS4
+Subject: Re: [PATCH 3/4] usb/ohci-pci: deprecate, don't build by default
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -102,72 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/05/2024 20:42, Richard Henderson wrote:
+On 28/05/2024 11:35, Thomas Huth wrote:
 
-> Now tested with RISU, using a Solaris M8 host as reference.
-> This exposed a few bugs in the existing VIS1 support as well,
-> so fix those before anything else.  It also exposed a few bugs
-> in the implementation of VIS3, so fixes squashed there as well.
+> On 28/05/2024 11.54, Gerd Hoffmann wrote:
+>> The xhci host adapter is the much better choice.
+>>
+>> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>> ---
+>>   hw/usb/hcd-ohci-pci.c | 1 +
+>>   hw/usb/Kconfig        | 1 -
+>>   2 files changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/usb/hcd-ohci-pci.c b/hw/usb/hcd-ohci-pci.c
+>> index 33ed9b6f5a52..88de657def71 100644
+>> --- a/hw/usb/hcd-ohci-pci.c
+>> +++ b/hw/usb/hcd-ohci-pci.c
+>> @@ -143,6 +143,7 @@ static void ohci_pci_class_init(ObjectClass *klass, void *data)
+>>       dc->hotpluggable = false;
+>>       dc->vmsd = &vmstate_ohci;
+>>       dc->reset = usb_ohci_reset_pci;
+>> +    klass->deprecation_note = "use qemu-xhci instead";
+>>   }
+>>   static const TypeInfo ohci_pci_info = {
+>> diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+>> index 84bc7fbe36cd..c4a6ea5a687f 100644
+>> --- a/hw/usb/Kconfig
+>> +++ b/hw/usb/Kconfig
+>> @@ -17,7 +17,6 @@ config USB_OHCI_SYSBUS
+>>   config USB_OHCI_PCI
+>>       bool
+>> -    default y if PCI_DEVICES
+>>       depends on PCI
+>>       select USB_OHCI
 > 
+> Not sure whether we should disable it by default just because it is deprecated. We 
+> don't do that for any other devices as far as I know.
 > 
-> r~
+> Anyway, you should add the device to docs/about/deprecated.rst to really mark it as 
+> deprecated, since that's our official list (AFAIK).
 > 
+> Also, there are still some machines that use this device:
 > 
-> Richard Henderson (37):
->    target/sparc: Fix ARRAY8
->    target/sparc: Rewrite gen_edge
->    target/sparc: Fix do_dc
->    target/sparc: Fix helper_fmul8ulx16
->    target/sparc: Perform DFPREG/QFPREG in decodetree
->    target/sparc: Remove gen_dest_fpr_D
->    target/sparc: Remove cpu_fpr[]
->    target/sparc: Use gvec for VIS1 parallel add/sub
->    target/sparc: Implement FMAf extension
->    target/sparc: Add feature bits for VIS 3
->    target/sparc: Implement ADDXC, ADDXCcc
->    target/sparc: Implement CMASK instructions
->    target/sparc: Implement FCHKSM16
->    target/sparc: Implement FHADD, FHSUB, FNHADD, FNADD, FNMUL
->    target/sparc: Implement FLCMP
->    target/sparc: Implement FMEAN16
->    target/sparc: Implement FPADD64, FPSUB64
->    target/sparc: Implement FPADDS, FPSUBS
->    target/sparc: Implement FPCMPEQ8, FPCMPNE8, FPCMPULE8, FPCMPUGT8
->    target/sparc: Implement FSLL, FSRL, FSRA, FSLAS
->    target/sparc: Implement LDXEFSR
->    target/sparc: Implement LZCNT
->    target/sparc: Implement MOVsTOw, MOVdTOx, MOVwTOs, MOVxTOd
->    target/sparc: Implement PDISTN
->    target/sparc: Implement UMULXHI
->    target/sparc: Implement XMULX
->    target/sparc: Enable VIS3 feature bit
->    target/sparc: Implement IMA extension
->    target/sparc: Add feature bit for VIS4
->    target/sparc: Implement FALIGNDATAi
->    target/sparc: Implement 8-bit FPADD, FPADDS, and FPADDUS
->    target/sparc: Implement VIS4 comparisons
->    target/sparc: Implement FPMIN, FPMAX
->    target/sparc: Implement SUBXC, SUBXCcc
->    target/sparc: Implement MWAIT
->    target/sparc: Implement monitor ASIs
->    target/sparc: Enable VIS4 feature bit
+> $ grep -r USB_OHCI_PCI *
+> hw/hppa/Kconfig:    imply USB_OHCI_PCI
+> hw/mips/Kconfig:    imply USB_OHCI_PCI
+> hw/ppc/Kconfig:    imply USB_OHCI_PCI
+> hw/ppc/Kconfig:    imply USB_OHCI_PCI
 > 
->   target/sparc/asi.h             |   4 +
->   target/sparc/helper.h          |  27 +-
->   target/sparc/cpu-feature.h.inc |   4 +
->   target/sparc/insns.decode      | 338 ++++++++----
->   linux-user/elfload.c           |   3 +
->   target/sparc/cpu.c             |  12 +
->   target/sparc/fop_helper.c      | 136 +++++
->   target/sparc/ldst_helper.c     |   4 +
->   target/sparc/translate.c       | 938 ++++++++++++++++++++++++++-------
->   target/sparc/vis_helper.c      | 392 +++++++++++---
->   fpu/softfloat-specialize.c.inc |  31 ++
->   11 files changed, 1558 insertions(+), 331 deletions(-)
+> pseries could certainly continue without OHCI AFAICT, but the others? Maybe this 
+> needs some discussion first... (thus putting some more people on CC:)
+> 
+>   Thomas
 
-Thanks - I'll give this series a quick run over my test images over the next few days 
-just to make sure there are no regressions (unlikely as I don't have much in the way 
-of current VIS test cases) and report back.
+The mac99 machine has an in-built OHCI PCI interface so I don't think this device 
+should be marked as deprecated. Normally in these cases isn't it just a matter of 
+updating documentation to recommend XHCI over OHCI for particular uses?
 
 
 ATB,
