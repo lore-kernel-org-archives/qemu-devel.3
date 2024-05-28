@@ -4,56 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A160C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01EC1C27C44
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBsMM-0002hn-La; Tue, 28 May 2024 04:39:06 -0400
+	id 1sBsMS-0002mh-GG; Tue, 28 May 2024 04:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsML-0002hZ-Dr
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:05 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMQ-0002le-8B
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMJ-0004oZ-Po
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:05 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMN-0004pP-9q
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716885542;
+ s=mimecast20190719; t=1716885546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=A1UrnLyvAfYu3lvm+2EGpMl72XMudIZPVV8xi1QNEX4=;
- b=PTjSn4bOpzKVZdu8ROjzqDFes6RJbQsvu44OXnZhH98CP6wApxtr1taf1Ws5o+LDu6NDZf
- RnaiaY4hl3xjEB0UuvIl9PAfKFs5GAVoIV9xdfVfZ/8nNIvSIPgcU5uJTJh0owwuPpGJNg
- RF+IfJm/caev5L/wmavlGyRrCvL/MWo=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GoLnTO5q1GgvOjeuLpZRZIgJgBIxj235DGDvGKl6tfQ=;
+ b=MYrj1rgXw1Md4mG9L9Jf7I4crC4PxNt1Y+j7ftydMtBtkiBApYWOUM63M16QovtB29+BdV
+ bI9WeTOjh4ijpb8peCuVy3pxoyKw396JI2MvJ3VpoFNTkTApLiE75KmiYhHZh5IsppcXKO
+ jRZjFAw5buP9KFvZDZpFSXHiDShEKwY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-452-_414HVcwP9WwkbDR8fUG8w-1; Tue, 28 May 2024 04:39:00 -0400
-X-MC-Unique: _414HVcwP9WwkbDR8fUG8w-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ us-mta-34-JxHPQ73vMl2A4SJz2jf4_g-1; Tue, 28 May 2024 04:39:02 -0400
+X-MC-Unique: JxHPQ73vMl2A4SJz2jf4_g-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BEB42812296
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:38:59 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6DD1B85A58C;
+ Tue, 28 May 2024 08:39:02 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.232])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 67AFE40004D;
- Tue, 28 May 2024 08:38:59 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 14C6E2818;
+ Tue, 28 May 2024 08:39:02 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 45DA018009F4; Tue, 28 May 2024 10:38:58 +0200 (CEST)
+ id 736B91800DEB; Tue, 28 May 2024 10:38:58 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 0/4] MAINTAINERS: update kraxel's entries.
-Date: Tue, 28 May 2024 10:38:52 +0200
-Message-ID: <20240528083858.836262-1-kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2 3/4] MAINTAINERS: drop virtio-gpu maintainership
+Date: Tue, 28 May 2024 10:38:55 +0200
+Message-ID: <20240528083858.836262-4-kraxel@redhat.com>
+In-Reply-To: <20240528083858.836262-1-kraxel@redhat.com>
+References: <20240528083858.836262-1-kraxel@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -79,41 +83,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have not found much time to work on qemu due to being busy with
-firmware (edk2 for the most part).  Time to update the MAINTAINERS
-file entries to match reality.
+Remove myself from virtio-gpu entries.
+Flip status to "Orphan" for entries which have nobody else listed.
 
-I drop spice, ui, audio and usb due to lack of time.
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ MAINTAINERS | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-I drop virtio-gpu, I don't follow recent development (venus etc.)
-close enough to be able to actually review the changes.  Looking at
-qemu-devel traffic for virtio-gpu it seems to be in good hands with
-multiple people working on it, even though this is not reflected in
-the MAINTAINERS file.
-
-I keep the firmware bits (edk2, fw_cfg).
-
-I also keep some other pieces which don't see much development
-activity such as stdvga and cirrus for now.  I might revisit
-this later.
-
-v2 changes:
- - flip entries without maintainer to orphan even if there is
-   a reviewer left.
- - add/upgrade volunteers from replies to audio sections.
-
-take care,
-  Gerd
-
-Gerd Hoffmann (4):
-  MAINTAINERS: drop audio maintainership
-  MAINTAINERS: drop usb maintainership
-  MAINTAINERS: drop virtio-gpu maintainership
-  MAINTAINERS: drop spice+ui maintainership
-
- MAINTAINERS | 42 +++++++++++++-----------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a03756274017..37f2be570cc7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2574,8 +2574,7 @@ F: hw/display/ramfb*.c
+ F: include/hw/display/ramfb.h
+ 
+ virtio-gpu
+-M: Gerd Hoffmann <kraxel@redhat.com>
+-S: Odd Fixes
++S: Orphan
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
+@@ -2597,7 +2596,6 @@ F: include/hw/virtio/virtio-blk-common.h
+ 
+ vhost-user-gpu
+ M: Marc-André Lureau <marcandre.lureau@redhat.com>
+-R: Gerd Hoffmann <kraxel@redhat.com>
+ S: Maintained
+ F: docs/interop/vhost-user-gpu.rst
+ F: contrib/vhost-user-gpu
 -- 
 2.45.1
 
