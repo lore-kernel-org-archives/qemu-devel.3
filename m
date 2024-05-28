@@ -4,106 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303BBC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 May 2024 23:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4FBC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 00:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBkF9-0003NZ-Vd; Mon, 27 May 2024 19:59:08 -0400
+	id 1sBkvk-0005Fy-F8; Mon, 27 May 2024 20:43:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sBkF9-0003NQ-CZ
- for qemu-devel@nongnu.org; Mon, 27 May 2024 19:59:07 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBkvj-0005Fc-6D; Mon, 27 May 2024 20:43:07 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sBkF7-0003HB-Iv
- for qemu-devel@nongnu.org; Mon, 27 May 2024 19:59:07 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DA86720011;
- Mon, 27 May 2024 23:59:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716854344; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s/SLF2CxEb/V1LwdSAYVxMqZNLYxjbwpGn30U5BYZOE=;
- b=CX8p3m0dHSDV06IlKFM0AV/BysL9Y+LXnzrTxLtqgyP70R0IaOQuVzeIM9r6fVwLj0CMw9
- A6U9nW4p79p1bD5HedLc66xL8B9yJmRCnhNCLs6Fx6AJOyEif8J+hLG12XYsD87pns8JM+
- sPD30eUjwxqVoCGc0mBDvbhVFumTelE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716854344;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s/SLF2CxEb/V1LwdSAYVxMqZNLYxjbwpGn30U5BYZOE=;
- b=rdu42DvGgFrpiUVMjuaqUYZW4MVnjYxJ1Lts6KbNpdGnOTE/YNZcvdtYqkuv7PJvh7qa9o
- ZaxcBQXGu+wsYoCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1716854343; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s/SLF2CxEb/V1LwdSAYVxMqZNLYxjbwpGn30U5BYZOE=;
- b=KMRdCMMHZvQI5u81iyEanTSBwxQoO7hBvBGd9KnhAx4UGZPPWdan92H/qv0v2eb35iyC4f
- HjyOlGXPdkswExi+UU1xjxtbmCFVn/vBqDzdq1DyY8Gho4Q6AtXFxwfDIAuNsFntWi/vwK
- kmejuj54jodM4kQeK3UtVvdOxFvVSD0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1716854343;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s/SLF2CxEb/V1LwdSAYVxMqZNLYxjbwpGn30U5BYZOE=;
- b=/FavSnSsursRtSyDBfOzXCoa5opUaqBtVwXhr0ONXf8wUsnGrLhNRvlzuC8AR1Li/KInwE
- Zqu/L/AlBBP/XTCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5A97713A56;
- Mon, 27 May 2024 23:59:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id r6vHCEceVWb3JQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 27 May 2024 23:59:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, =?utf-8?Q?Marc-?=
- =?utf-8?Q?Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>, Het Gala
- <het.gala@nutanix.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Wainer dos Santos
- Moschetta <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>
-Subject: Re: [RFC PATCH 4/4] ci: Add the new migration device tests
-In-Reply-To: <ZlT4f368xO8fXsUY@x1n>
-References: <20240523201922.28007-1-farosas@suse.de>
- <20240523201922.28007-5-farosas@suse.de> <ZlT4f368xO8fXsUY@x1n>
-Date: Mon, 27 May 2024 20:59:00 -0300
-Message-ID: <87ttiig62j.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sBkvh-0001jR-MH; Mon, 27 May 2024 20:43:06 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6f693fb0ab6so217160b3a.1; 
+ Mon, 27 May 2024 17:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716856982; x=1717461782; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hV/Ff4XuDNOr3amt5eEY63kZmhuDX+0RMWIQl2Ft4Ec=;
+ b=lwqdla8jLz7eSyshPoazG1aKyWtW0rmpGKUbqTQ6L1t/A0evcIzJhAhl/3I4jx4jIO
+ 8Mcpm0op+ZeTK5dW0PrZquozs085PJzTVn6icZZZnI5e+HObrtjejYrJX4hOnQBO3KpA
+ 0fCnG7LOmZcUK9uHo1KegwcaG/DiwKFC0Tks1goxiOI4o2ivF0YV5Wdw03Pf8/4pM2L5
+ 9tSNvq32A6GES7PKKvPn4fK55d1Jc8eEaydtpXn9xZFVSWeDXkf5+0oHXumFWKbsELHf
+ CS6mYrDyPWSLYhHTF/RA9UY7B7ITBsM6auLQ9DmdwsZZZLh3oIeJeSR1sWYv9ooRsGv1
+ 4zFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716856982; x=1717461782;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hV/Ff4XuDNOr3amt5eEY63kZmhuDX+0RMWIQl2Ft4Ec=;
+ b=Dtc3rGBN5MYYTi0N0CwC75HncpjBEl0TcaLcYHSaZDjaR5aX+MmsZ+kT1c/XzFUonN
+ T4iMhrjnorEJEy3n5ZpnYgImUPVFDngjiFyKNCYtOUHE4Qkk7F8FCJbuFbhOEGwM8riC
+ pjmxdO3E8D37xlFTf/+K+bkKM71NUx4/TWC6DuranWhRSr68S8Yc3NwlwpFVRNsSLYdd
+ maaC/UCktnrW6EBadgTFLi3mgw4RJU/SYRVeTn0jRHSNnqIgnyOmkWxEp1Adg1rCDbh5
+ ypLTiRQJXQhsoJ0CGnU0iOhbAD5J021ilzTHnkvWgPfoRBC3SOG3Dv/gsEY01UnJb7s9
+ kwtg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8i8oYv4G3OYqkpwcapU4OhZt1HY71tFnhu3NSPV8OLAo4lc1rFz401f2xLmA921bqJ0b5nRa/P05ZOQoGsoLURdop
+X-Gm-Message-State: AOJu0YzQBt5UnLEdFKkYCdLbrGj0L5Y0NRO12ql82p30WFa7DaXkjzLz
+ K+6EzR78pMmXdGBu01psN6QA3NigHJwiXGzbAn2VOG3AiBcF3N3bwJcpKg==
+X-Google-Smtp-Source: AGHT+IF16yS6qGilLmRCukaw3CVELDjCEYb5J35GbDgru/YoPSB/d0zZgAZJIh80DvET+cex1JRfJQ==
+X-Received: by 2002:a05:6a20:9493:b0:1b0:18d1:c46c with SMTP id
+ adf61e73a8af0-1b212d39517mr9088002637.27.1716856982106; 
+ Mon, 27 May 2024 17:43:02 -0700 (PDT)
+Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f44c75783asm67613595ad.23.2024.05.27.17.42.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 May 2024 17:43:01 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org
+Subject: [PATCH v2 0/6] tests/qtest/migration-test: Improve and enable on ppc64
+Date: Tue, 28 May 2024 10:42:04 +1000
+Message-ID: <20240528004211.564010-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,91 +93,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Since v1:
+- Added "TCG" in subject since it is enabling for TCG
+- Enable test_mode_reboot with checking GITLAB_CI env that Fabiano
+  suggested.
+- Move test_ignore_shared patch out of the s390 fix series to here
+  and use GITLAB_CI for it too.
+- Move ppc64 pseries machine options out of libqos-spapr.h to a
+  new general qtest ppc header.
+- Adjust remaining s390x comment to explain the problem.
 
-> On Thu, May 23, 2024 at 05:19:22PM -0300, Fabiano Rosas wrote:
->> We have two new migration tests that check cross version
->> compatibility. One uses the vmstate-static-checker.py script to
->> compare the vmstate structures from two different QEMU versions. The
->> other runs a simple migration with a few devices present in the VM, to
->> catch obvious breakages.
->> 
->> Add both tests to the migration-compat-common job.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  .gitlab-ci.d/buildtest.yml | 43 +++++++++++++++++++++++++++++++-------
->>  1 file changed, 36 insertions(+), 7 deletions(-)
->> 
->> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
->> index 91c57efded..bc7ac35983 100644
->> --- a/.gitlab-ci.d/buildtest.yml
->> +++ b/.gitlab-ci.d/buildtest.yml
->> @@ -202,18 +202,47 @@ build-previous-qemu:
->>    needs:
->>      - job: build-previous-qemu
->>      - job: build-system-opensuse
->> -  # The old QEMU could have bugs unrelated to migration that are
->> -  # already fixed in the current development branch, so this test
->> -  # might fail.
->> +  # This test is allowed to fail because:
->> +  #
->> +  # - The old QEMU could have bugs unrelated to migration that are
->> +  #   already fixed in the current development branch.
->
-> Did you ever hit a real failure with this?  I'm wondering whether we can
-> remove this allow_failure thing.
->
+Thanks,
+Nick
 
-I haven't. But when it fails we'll go through an entire release cycle
-with this thing showing red for every person that runs the CI. Remember,
-this is a CI failure to which there's no fix aside from waiting for the
-release to happen. Even if we're quick to react and disable the job, I
-feel it might create some confusion already.
+Nicholas Piggin (6):
+  tests/qtest/migration: Run test_mode_reboot outside gitlab CI
+  tests/qtest/migration-test: Fix and enable test_ignore_shared
+  tests/qtest: Move common define from libqos-spapr.h to new ppc-util.h
+  tests/qtest/migration-test: Quieten ppc64 QEMU warnigns
+  tests/qtest/migration-test: Enable on ppc64 TCG
+  tests/qtest/migration-test: Use custom asm bios for ppc64
 
->> +  #
->> +  # - The vmstate-static-checker script trips on renames and other
->> +  #   backward-compatible changes to the vmstate structs.
->
-> I think I keep my preference per last time we talked on this. :)
+ tests/migration/migration-test.h   |  1 +
+ tests/migration/ppc64/a-b-kernel.h | 42 +++++++++++++++
+ tests/qtest/libqos/libqos-spapr.h  |  7 ---
+ tests/qtest/ppc-util.h             | 19 +++++++
+ tests/qtest/boot-serial-test.c     |  2 +-
+ tests/qtest/migration-test.c       | 85 ++++++++++--------------------
+ tests/qtest/prom-env-test.c        |  2 +-
+ tests/qtest/pxe-test.c             |  2 +-
+ tests/migration/Makefile           |  2 +-
+ tests/migration/ppc64/Makefile     | 15 ++++++
+ tests/migration/ppc64/a-b-kernel.S | 66 +++++++++++++++++++++++
+ 11 files changed, 174 insertions(+), 69 deletions(-)
+ create mode 100644 tests/migration/ppc64/a-b-kernel.h
+ create mode 100644 tests/qtest/ppc-util.h
+ create mode 100644 tests/migration/ppc64/Makefile
+ create mode 100644 tests/migration/ppc64/a-b-kernel.S
 
-Sorry, I'm not trying to force this in any way, I just wrote these to
-use in the pull-request and thought I'd put it out there. At the very
-least we can have your concerns documented. =)
+-- 
+2.43.0
 
-> I still think it's too early to involve a test that can report false
-> negative.
-
-(1)
-Well, we haven't seen any false negatives, we've seen fields being
-renamed. If that happens, then we'll ask the person to update the
-script. Is that not acceptable to you? Or are you thinking about other
-sorts of issues?
-
-> I'd still keep running this before soft-freeze like I used to
-> do, throw issues to others and urge them to fix before release.
-
-Having hidden procedures that maintainers run before a release is bad
-IMHO, it just delays the catching of bugs and frustrates
-contributors. Imagine working on a series, everything goes well with
-reviews, CI passes, patch gets queued and merged and a month later you
-get a ping about something you should have done to avoid breaking
-migration. Right during freeze.
-
-> Per my
-> previous experience that doesn't consume me a lot of time, and it's not
-> common to see issues either.
->
-> So I want people to really pay attention when someone sees a migration CI
-> test failed, rather than we help people form the habit in "oh migration CI
-> failed again?  I think that's fine, it allows failing anyway".
-
-That's a good point. I don't think it applies here though. See my point
-in (1).
-
-> So far I still don't see as much benefit to adding this if we need to pay
-> for the other false negative issue.  I'll fully support it if e.g. we can
-> fix the tool to avoid reporting false negatives, but that may take effort
-> that I didn't check.
->
 
