@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4753C25B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 180F8C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBmox-00020G-Ax; Mon, 27 May 2024 22:44:15 -0400
+	id 1sBmor-0001s3-Ud; Mon, 27 May 2024 22:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmou-0001wC-Oo
- for qemu-devel@nongnu.org; Mon, 27 May 2024 22:44:12 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1sBmoq-0001ro-1i; Mon, 27 May 2024 22:44:08 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmos-0003iK-Ql
- for qemu-devel@nongnu.org; Mon, 27 May 2024 22:44:12 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-681907aebebso247651a12.1
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 19:44:10 -0700 (PDT)
+ id 1sBmom-0003hC-EJ; Mon, 27 May 2024 22:44:06 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70109d34a16so242220b3a.2; 
+ Mon, 27 May 2024 19:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716864249; x=1717469049; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716864242; x=1717469042; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IQJJohChSJ2PfThq4oGFFdMUA1uJJ98Ep3im4MVkieI=;
- b=IBEh5O9h3pp1PPHmu86grEaYKOWAOXNm1AvuyeurZhELG8RQSpX7BRQZXQiEQyT/Cl
- BRl6TI2AflSmsaoC46slBHbKXlglej0h2cKzlZRaOy6tMUZTkTMod6xZglPUjgDN24aj
- HqkPdWBJz+YgOUIwl2X8gmIHzrNNTQ/fGScYJjxmQ+RRMjmMg+giSCrLbLrlG4wIkKXt
- LBWuxDtb4JemCeY/4KZP7u+sL9A1EsJ0CsIig2vrn/rAX6LVst1KMqZ74idlF4pHM+U9
- W4jRH9APko9uk2JCO7S/ndGeoJFaJrn94u0dkgPrU/UG095HKzxosMyaIwF/xJvMpHDt
- 1e0w==
+ bh=F2fI6nwAJXeFe1hxyMYDF/QLET3EtTO13tMnuGkb/Vs=;
+ b=Rd1c3Qmgh+TuIXaz1JkQZNmIwRD27g4Z9HamwBnzl8+9154jne47jzoXRb/VJtdL1C
+ W1Zwa9NKef8jOGGdhrTs/qDpLSyx7wuaVdJj6h2Ew99xH5H1GjiY7TMkokNFPrkPOnWw
+ J+ILOZHucpCU+3FknNjK9b5lFeNSyGpDngWzUbxkySxKO1V+9H4BzSM6pFyVS17TIfzz
+ dt0FZl9IdFVW4wg1OV2ZCUr12DJd5jURTyty+t4xeKXavmldhhPcRk0uR+iHllRsHqMl
+ p3uoUSgX7Xo2CnYMxJD1FgdkKCVit4WsB3EARkWjNIBVj0xZ2i38yev8eHs2c5+8bUfV
+ ZD1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716864249; x=1717469049;
+ d=1e100.net; s=20230601; t=1716864242; x=1717469042;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IQJJohChSJ2PfThq4oGFFdMUA1uJJ98Ep3im4MVkieI=;
- b=ggktnJcVfUo0BCv2nTOktxP3E1ItWGzLlyVLX0BlIp5LPV0/g6NGxnT7NGX1T7jUAL
- C7skjGJEk5cApqzK0BVzAyoW+Pb1ndOsxE9sd0+cIK4j+2tJ2zvmtMEMdB1u/jyyrlbg
- ES2IaNdzOKVtQ6Esu3KwIfp/FEYB8c1YA+/x3xGVB0iI3JodLNqt9zEvUFRLwdQZmTaC
- oTOf8DVeyNenDAuxsJ3yXZNlz+XA4nYZPpHyku5pJcTu9GKSc4Nu0YOfMtrlriMyZYMc
- Y4c/BBjRI6v0qr2pOeDRaCCHwI2bM/9FVrFRkNPksryTHumngLPdD0t2KxZWw7i8lUSv
- Qcig==
-X-Gm-Message-State: AOJu0YxV6i7saZK06QzK7weB0RFuHiA5tof8lnkkewGSK23wB9v0Z79j
- 5iWBzgY21FFnTpD9D3yyfyixk6cJdCa8u5+XrOM8YBwoObZ1/c/oX5qE0g==
-X-Google-Smtp-Source: AGHT+IGMCSVaCWDxxuxMZ/DUxHaptWtvEumWXbMgRzB0n8Ojykvfj3vGGZV0Z0gv3a30RePVZh70jA==
-X-Received: by 2002:a17:902:684c:b0:1f3:3265:2fb0 with SMTP id
- d9443c01a7336-1f448716b3fmr92730805ad.22.1716864249033; 
- Mon, 27 May 2024 19:44:09 -0700 (PDT)
+ bh=F2fI6nwAJXeFe1hxyMYDF/QLET3EtTO13tMnuGkb/Vs=;
+ b=lQ1b5STv26tDTf78m3ZM52fF/Rnklh+k+mCTNuSP0rRvSy1RHkSpgRr782hD0OSETM
+ e5oYLRL1ALjBKWWv5fXzPjptK47jMxol6eT3h+KNzz3d7ppoJXccJWAxFxgIzzYrPZHB
+ FTAeJ3MmXBQoApOYif7EP5rXudKYokudk6LL8aDjnGMbnDFKPEU1MSln8GoQWNzQUPCY
+ xBko/GYQDHRxFLhPDwX+kp5gpiqpaYXu4xi4PGkievMkpKpZW+FBp6JA0R0v+tNf/Ep+
+ 6GkrCKYHUU6r1+DB+K3MEkulAhbIUELRSQxf+sITV7CgteXNPHEfYrHEafzpHMkQd4f5
+ Nslg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6ki0tqpb45TFssZNLG9+3rGO/vvM8kjd8KQYGty34VZv0xLqPkgln2K0u6AnmSe8dpYs05Ve+PaHGlXJv/uOLUnjV8gRQ
+X-Gm-Message-State: AOJu0Yx/idQTmIdTdY6js1VdTHbAA/weAtbz24l9trKj9+c9+VGxbWNk
+ 7Bp65CPQJcA79JlxXVrSghNbSxKA56/Ap1+I2pIx4yl+OyWxyCoioSkHWg==
+X-Google-Smtp-Source: AGHT+IEURWKJSnllvdHQtp1ADQBWCW53PlI5ryhsHlqVZgo2m3Z7/WUmlIy+cmLE5iTWf8KYXUMzhw==
+X-Received: by 2002:a05:6a21:27a9:b0:1b1:f7a1:df97 with SMTP id
+ adf61e73a8af0-1b212e3aa39mr10696527637.54.1716864241914; 
+ Mon, 27 May 2024 19:44:01 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.44.05
+ d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.43.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 19:44:07 -0700 (PDT)
+ Mon, 27 May 2024 19:44:01 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+Cc: alistair23@gmail.com, "yang.zhang" <yang.zhang@hexintek.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-stable <qemu-stable@nongnu.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 03/28] target/riscv: Raise exceptions on wrs.nto
-Date: Tue, 28 May 2024 12:43:03 +1000
-Message-ID: <20240528024328.246965-4-alistair.francis@wdc.com>
+Subject: [PULL 01/28] hw/intc/riscv_aplic: APLICs should add child earlier
+ than realize
+Date: Tue, 28 May 2024 12:43:01 +1000
+Message-ID: <20240528024328.246965-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240528024328.246965-1-alistair.francis@wdc.com>
 References: <20240528024328.246965-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,110 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: "yang.zhang" <yang.zhang@hexintek.com>
 
-Implementing wrs.nto to always just return is consistent with the
-specification, as the instruction is permitted to terminate the
-stall for any reason, but it's not useful for virtualization, where
-we'd like the guest to trap to the hypervisor in order to allow
-scheduling of the lock holding VCPU. Change to always immediately
-raise exceptions when the appropriate conditions are present,
-otherwise continue to just return. Note, immediately raising
-exceptions is also consistent with the specification since the
-time limit that should expire prior to the exception is
-implementation-specific.
+Since only root APLICs can have hw IRQ lines, aplic->parent should
+be initialized first.
 
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Christoph Müllner <christoph.muellner@vrull.eu>
+Fixes: e8f79343cf ("hw/intc: Add RISC-V AIA APLIC device emulation")
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240424142808.62936-2-ajones@ventanamicro.com>
+Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240409014445.278-1-gaoshanliukou@163.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/helper.h                       |  1 +
- target/riscv/op_helper.c                    | 11 ++++++++
- target/riscv/insn_trans/trans_rvzawrs.c.inc | 29 ++++++++++++++-------
- 3 files changed, 32 insertions(+), 9 deletions(-)
+ hw/intc/riscv_aplic.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 8a63523851..451261ce5a 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -132,6 +132,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
- DEF_HELPER_1(sret, tl, env)
- DEF_HELPER_1(mret, tl, env)
- DEF_HELPER_1(wfi, void, env)
-+DEF_HELPER_1(wrs_nto, void, env)
- DEF_HELPER_1(tlb_flush, void, env)
- DEF_HELPER_1(tlb_flush_all, void, env)
- /* Native Debug */
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index f414aaebdb..2baf5bc3ca 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -380,6 +380,17 @@ void helper_wfi(CPURISCVState *env)
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index fc5df0d598..32edd6d07b 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -1000,16 +1000,16 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
+     qdev_prop_set_bit(dev, "msimode", msimode);
+     qdev_prop_set_bit(dev, "mmode", mmode);
+ 
++    if (parent) {
++        riscv_aplic_add_child(parent, dev);
++    }
++
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     if (!is_kvm_aia(msimode)) {
+         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
      }
- }
  
-+void helper_wrs_nto(CPURISCVState *env)
-+{
-+    if (env->virt_enabled && (env->priv == PRV_S || env->priv == PRV_U) &&
-+        get_field(env->hstatus, HSTATUS_VTW) &&
-+        !get_field(env->mstatus, MSTATUS_TW)) {
-+        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
-+    } else if (env->priv != PRV_M && get_field(env->mstatus, MSTATUS_TW)) {
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-+    }
-+}
-+
- void helper_tlb_flush(CPURISCVState *env)
- {
-     CPUState *cs = env_cpu(env);
-diff --git a/target/riscv/insn_trans/trans_rvzawrs.c.inc b/target/riscv/insn_trans/trans_rvzawrs.c.inc
-index 32efbff4d5..0eef033838 100644
---- a/target/riscv/insn_trans/trans_rvzawrs.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzawrs.c.inc
-@@ -16,7 +16,7 @@
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
- 
--static bool trans_wrs(DisasContext *ctx)
-+static bool trans_wrs_sto(DisasContext *ctx, arg_wrs_sto *a)
- {
-     if (!ctx->cfg_ptr->ext_zawrs) {
-         return false;
-@@ -40,12 +40,23 @@ static bool trans_wrs(DisasContext *ctx)
-     return true;
- }
- 
--#define GEN_TRANS_WRS(insn)                                     \
--static bool trans_ ## insn(DisasContext *ctx, arg_ ## insn *a)  \
--{                                                               \
--    (void)a;                                                    \
--    return trans_wrs(ctx);                                      \
--}
-+static bool trans_wrs_nto(DisasContext *ctx, arg_wrs_nto *a)
-+{
-+    if (!ctx->cfg_ptr->ext_zawrs) {
-+        return false;
-+    }
- 
--GEN_TRANS_WRS(wrs_nto)
--GEN_TRANS_WRS(wrs_sto)
-+    /*
-+     * Depending on the mode of execution, mstatus.TW and hstatus.VTW, wrs.nto
-+     * should raise an exception when the implementation-specific bounded time
-+     * limit has expired. Our time limit is zero, so we either return
-+     * immediately, as does our implementation of wrs.sto, or raise an
-+     * exception, as handled by the wrs.nto helper.
-+     */
-+#ifndef CONFIG_USER_ONLY
-+    gen_helper_wrs_nto(tcg_env);
-+#endif
-+
-+    /* We only get here when helper_wrs_nto() doesn't raise an exception. */
-+    return trans_wrs_sto(ctx, NULL);
-+}
+-    if (parent) {
+-        riscv_aplic_add_child(parent, dev);
+-    }
+-
+     if (!msimode) {
+         for (i = 0; i < num_harts; i++) {
+             CPUState *cpu = cpu_by_arch_id(hartid_base + i);
 -- 
 2.45.1
 
