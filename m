@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0310C25B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 10:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA434C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 10:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBuBa-0004H4-Jf; Tue, 28 May 2024 06:36:09 -0400
+	id 1sBuBz-0004Tn-PD; Tue, 28 May 2024 06:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sBuBR-0004G5-Dp
- for qemu-devel@nongnu.org; Tue, 28 May 2024 06:35:57 -0400
+ id 1sBuBy-0004TD-EK
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 06:36:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sBuBO-0008AN-UI
- for qemu-devel@nongnu.org; Tue, 28 May 2024 06:35:56 -0400
+ id 1sBuBw-0008Hu-Ht
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 06:36:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716892554;
+ s=mimecast20190719; t=1716892588;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3UtH0D4I15f6AmqPGZ/mKuxu8KcITJcJzO63ZIJCMrs=;
- b=M6IUFiSxUs6k+M0DPac/gE1T4R+iGn5r1rI6LE/QoIvcpg9mx7whN4T1gWrauAefWvaG1e
- /3bHyjcn4bMRWDO5pJqIHCEtWB2V1OFAzCP3MI7u9pZSjpiT2Fr+ZGEinf/zRDEFXS6Pz+
- fT0/42TJnBJbRTjU17psBt9ijeF9v4E=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QWgDH/gDQAxyHJPRHaKd8r5IWyJMqj8jhSH9L5DHuSs=;
+ b=PX8LnCiErlTqinScRaUxJbUH3BlwYdpHEsJ7pQYk+JdFq/v3195ijaQtkpvCVppLsKE15F
+ AcABhGGKc72BDoCTfFu4npfhKoghUpY6JHZkGl90fUuSE6Z6aPo8yK9Gkpe+j3RYIFHHe5
+ OP+y66aTnn5DTYBg8jxP4ZavGESLbM4=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-EgYDU-qnMauWdSwHeLPDfw-1; Tue, 28 May 2024 06:35:53 -0400
-X-MC-Unique: EgYDU-qnMauWdSwHeLPDfw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3580f213373so518412f8f.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 03:35:52 -0700 (PDT)
+ us-mta-240-zntWtRH7OmG4nZm3nBuyjQ-1; Tue, 28 May 2024 06:36:26 -0400
+X-MC-Unique: zntWtRH7OmG4nZm3nBuyjQ-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-5236c5cec7dso585586e87.2
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 03:36:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716892551; x=1717497351;
+ d=1e100.net; s=20230601; t=1716892581; x=1717497381;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3UtH0D4I15f6AmqPGZ/mKuxu8KcITJcJzO63ZIJCMrs=;
- b=CmtvuelmUE59KE8PuKPj6Jquj+qSBRRlcoBkxj4A/kkqzfxf+lhVMlFTModkca4S07
- a4fOBLOQdjTL71Wjh3n6oBBk0FamyrxgHA5szSZLmz73Xp+P98qRSkBaYjsCiYWGlzXk
- 21Fbj7J8Gxl1sXa5slxaO+Ckac3sewBeth3GGpCQc2YJXzU1lCbMbjdqim63N/t6AuZR
- 9j5e+C/Y/dQEES0sE1vYszmTcDZYnKFvGU0MbhyyiahEJzXerd32CmMJp/QQQ6S541Kg
- 4Axef/FEZPNVzmPcyaTCPwl2WP1Z5HqNm/lWpEG/5EUyoQXfWk/0T5GgmTml22GzPeaN
- 3mVw==
-X-Gm-Message-State: AOJu0Yxm4r2JJd/Wicq+HbpnCFwmN7agyqIz2wUQBJi/CU4qGCRwlqSa
- tNugy+d9whVEafeEcSFoi6iCl1Qfz6idz/Fabkq7zmVA9dNdE+qFy8EHvzm9xfZj3hTrFydFhCs
- CwVQO8aeoHzsHMER9H54qwRJIU2NMbD/VXu0g/XjrJrlULSz4fEH+VPqweAq8hNbP7TLnlWDjo0
- wG0i+p2O9Ch+brY2AVHyHwVuEOeeGcN1ny6xlY
-X-Received: by 2002:a5d:4385:0:b0:357:5051:2a58 with SMTP id
- ffacd0b85a97d-35750512b9fmr6204890f8f.16.1716892551404; 
- Tue, 28 May 2024 03:35:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWuQ2BGJUk3myyZuI10BwMyCNuCR38/3F2ZlIx6PoUKn8VGkBeGUglZZ5r0fNeXYH/kE3XLA==
-X-Received: by 2002:a5d:4385:0:b0:357:5051:2a58 with SMTP id
- ffacd0b85a97d-35750512b9fmr6204854f8f.16.1716892551077; 
- Tue, 28 May 2024 03:35:51 -0700 (PDT)
+ bh=QWgDH/gDQAxyHJPRHaKd8r5IWyJMqj8jhSH9L5DHuSs=;
+ b=Ti5dJFUZ2WPTZyvPL7wKr5Qg9OqZLSrFtdze4gMNUa6De0THuI4EWCTrIIdurThpoF
+ 56FWZ6x+we4r39+91LAOKvODLhkV4wY7f4M9tRvNf06wag+s4U8Tfjonjr+++wPhWLb9
+ 483SxBgfDl6xxVtaYDP6wifP3MQVgsGG9T9vkH1VB1v4SN3UdrM13bzs+lCO31xWPjiQ
+ KkAiKu65b260QoSg5CtAHsYTpNmE3Vn/nKOkeSVj/I2DVCC84RizIOjiWvDYknz842e1
+ uZWm+NXHXaRomY5IP19bQ1qn+eABdzKcuos5A6gq7c+9Jfzhsf2fD5YCD2L1Vf2bYXOa
+ INCg==
+X-Gm-Message-State: AOJu0Yz8z40rLyFrQJvBKUVGlDDDYpsYsFQJEQ8NLmMuCs2MpCvLhePs
+ G8ebj4ybu6MG6pbpfEShQyYq4LEgLgyJiW5l05+vPWnmDIb2TF54AQHw61k9P6AKejI+baAvJmS
+ uiaTplmod+sC+0ubLA0Sl45jYKN4JN9FB7VI2QQ5+0TLG9FDbRHwsQCSWso5rNFJT6s2ZP9mVPG
+ EivGM8wUlSOey/GLpRwoyEIP+mg20F05O+w3u1
+X-Received: by 2002:a05:6512:110a:b0:529:a6f6:1b03 with SMTP id
+ 2adb3069b0e04-529a6f61b4dmr8420657e87.14.1716892581512; 
+ Tue, 28 May 2024 03:36:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkqFaQhWkWgum4f5hE8KsQlq89AehXAbjYzuR81wRF8t6iD1TeW8UNVZ+xnGtVO04DVyStDQ==
+X-Received: by 2002:a05:6512:110a:b0:529:a6f6:1b03 with SMTP id
+ 2adb3069b0e04-529a6f61b4dmr8420621e87.14.1716892580988; 
+ Tue, 28 May 2024 03:36:20 -0700 (PDT)
 Received: from step1.redhat.com (host-79-53-30-109.retail.telecomitalia.it.
  [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3564b762ca8sm10588060f8f.112.2024.05.28.03.35.49
+ 5b1f17b1804b1-42108966ce0sm137940055e9.8.2024.05.28.03.36.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 03:35:50 -0700 (PDT)
+ Tue, 28 May 2024 03:36:19 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: slp@redhat.com, David Hildenbrand <david@redhat.com>,
@@ -83,10 +83,9 @@ Cc: slp@redhat.com, David Hildenbrand <david@redhat.com>,
  stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v6 01/12] libvhost-user: set msg.msg_control to NULL when it
- is empty
-Date: Tue, 28 May 2024 12:35:32 +0200
-Message-ID: <20240528103543.145412-2-sgarzare@redhat.com>
+Subject: [PATCH v6 07/12] vhost-user: enable frontends on any POSIX system
+Date: Tue, 28 May 2024 12:35:38 +0200
+Message-ID: <20240528103543.145412-8-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240528103543.145412-1-sgarzare@redhat.com>
 References: <20240528103543.145412-1-sgarzare@redhat.com>
@@ -102,7 +101,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,32 +117,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On some OS (e.g. macOS) sendmsg() returns -1 (errno EINVAL) if
-the `struct msghdr` has the field `msg_controllen` set to 0, but
-`msg_control` is not NULL.
+The vhost-user protocol is not really Linux-specific so let's enable
+vhost-user frontends for any POSIX system.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+In vhost_net.c we use VHOST_FILE_UNBIND which is defined in a Linux
+specific header, let's define it for other systems as well.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 1 +
- 1 file changed, 1 insertion(+)
+ meson.build        | 1 -
+ hw/net/vhost_net.c | 5 +++++
+ hw/block/Kconfig   | 2 +-
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a879149fef..22bea0c775 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -632,6 +632,7 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
-         memcpy(CMSG_DATA(cmsg), vmsg->fds, fdsize);
-     } else {
-         msg.msg_controllen = 0;
-+        msg.msg_control = NULL;
-     }
+diff --git a/meson.build b/meson.build
+index 6386607144..a72500be77 100644
+--- a/meson.build
++++ b/meson.build
+@@ -151,7 +151,6 @@ have_tpm = get_option('tpm') \
  
-     do {
+ # vhost
+ have_vhost_user = get_option('vhost_user') \
+-  .disable_auto_if(host_os != 'linux') \
+   .require(host_os != 'windows',
+            error_message: 'vhost-user is not available on Windows').allowed()
+ have_vhost_vdpa = get_option('vhost_vdpa') \
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index fd1a93701a..fced429813 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -34,8 +34,13 @@
+ #include "standard-headers/linux/virtio_ring.h"
+ #include "hw/virtio/vhost.h"
+ #include "hw/virtio/virtio-bus.h"
++#if defined(__linux__)
+ #include "linux-headers/linux/vhost.h"
++#endif
+ 
++#ifndef VHOST_FILE_UNBIND
++#define VHOST_FILE_UNBIND -1
++#endif
+ 
+ /* Features supported by host kernel. */
+ static const int kernel_feature_bits[] = {
+diff --git a/hw/block/Kconfig b/hw/block/Kconfig
+index 9e8f28f982..29ee09e434 100644
+--- a/hw/block/Kconfig
++++ b/hw/block/Kconfig
+@@ -40,7 +40,7 @@ config VHOST_USER_BLK
+     bool
+     # Only PCI devices are provided for now
+     default y if VIRTIO_PCI
+-    depends on VIRTIO && VHOST_USER && LINUX
++    depends on VIRTIO && VHOST_USER
+ 
+ config SWIM
+     bool
 -- 
 2.45.1
 
