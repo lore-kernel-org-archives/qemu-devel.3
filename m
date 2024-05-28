@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA84C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6295C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBsMT-0002n1-2A; Tue, 28 May 2024 04:39:13 -0400
+	id 1sBsMP-0002lX-Kg; Tue, 28 May 2024 04:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMO-0002iq-BE
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMO-0002io-Ah
  for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMM-0004p1-N3
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBsMM-0004p3-N3
  for qemu-devel@nongnu.org; Tue, 28 May 2024 04:39:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1716885546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I0lBdbUTHbui5ln/PYrHB8IAjP+jvZZiRs/R3y2NxPA=;
- b=AWdwoQw/9sb+kBkKK6KfXuUQXWiI/HXWTLXKdyOL5fIm882njiPYQ7AAqu/OdR15xdKfCK
- VWAGLGBf3e1n3FZZBNBlQUyd4nGOzNU0YSTbp1KyXdyR5/LIHoc6w0aHHRen1qNGtnIvUG
- oPJNU6aW98RNXtDJ0B5C9rANcBF6a+g=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-428-EldO7QwEO0eg9uIObeU8GA-1; Tue,
- 28 May 2024 04:39:02 -0400
-X-MC-Unique: EldO7QwEO0eg9uIObeU8GA-1
+ bh=zVJuHdR616Jr9GPZTPprRXPHLywe9FOHnGfvgXh/Rz8=;
+ b=FUDjKr2HC74PStZuduwNO4nO/Wi0cpHtJjF+gHuDOX0SqqTUgVICHZgB5hhtG/TmOP2WZb
+ nQYZsq/uWKMg+6AbBiryGPyxYtZzHeczl1M318v0fVjXwIup1mHfM4WWIolo62KfO934TV
+ b7mcCWZZG/ubQWQlBEVUzPwljAz31Y4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-52-ewYBn7U8MJWjrmpsQXb2bQ-1; Tue, 28 May 2024 04:39:03 -0400
+X-MC-Unique: ewYBn7U8MJWjrmpsQXb2bQ-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 973791C0512D;
- Tue, 28 May 2024 08:39:01 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0F74D800CB1;
+ Tue, 28 May 2024 08:39:03 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.232])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D8E9C2026D68;
- Tue, 28 May 2024 08:39:00 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id ACDC22026D68;
+ Tue, 28 May 2024 08:39:02 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 65E0B1800DDA; Tue, 28 May 2024 10:38:58 +0200 (CEST)
+ id 80D5E1800DFF; Tue, 28 May 2024 10:38:58 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v2 2/4] MAINTAINERS: drop usb maintainership
-Date: Tue, 28 May 2024 10:38:54 +0200
-Message-ID: <20240528083858.836262-3-kraxel@redhat.com>
+Subject: [PATCH v2 4/4] MAINTAINERS: drop spice+ui maintainership
+Date: Tue, 28 May 2024 10:38:56 +0200
+Message-ID: <20240528083858.836262-5-kraxel@redhat.com>
 In-Reply-To: <20240528083858.836262-1-kraxel@redhat.com>
 References: <20240528083858.836262-1-kraxel@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
@@ -82,7 +83,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove myself from usb entries.
+Remove myself from spice and ui entries.
 Flip status to "Orphan" for entries which have nobody else listed.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
@@ -92,27 +93,27 @@ Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 58e44885ce94..a03756274017 100644
+index 37f2be570cc7..8479e8146470 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2140,8 +2140,7 @@ F: tests/qtest/fuzz-sdcard-test.c
- F: tests/qtest/sdhci-test.c
+@@ -3044,8 +3044,7 @@ F: stubs/memory_device.c
+ F: docs/nvdimm.txt
  
- USB
+ SPICE
 -M: Gerd Hoffmann <kraxel@redhat.com>
 -S: Odd Fixes
 +S: Orphan
- F: hw/usb/*
- F: stubs/usb-dev-stub.c
- F: tests/qtest/usb-*-test.c
-@@ -2150,7 +2149,6 @@ F: include/hw/usb.h
- F: include/hw/usb/
+ F: include/ui/qemu-spice.h
+ F: include/ui/spice-display.h
+ F: ui/spice-*.c
+@@ -3055,7 +3054,6 @@ F: qapi/ui.json
+ F: docs/spice-port-fqdn.txt
  
- USB (serial adapter)
--R: Gerd Hoffmann <kraxel@redhat.com>
- M: Samuel Thibault <samuel.thibault@ens-lyon.org>
- S: Maintained
- F: hw/usb/dev-serial.c
+ Graphics
+-M: Gerd Hoffmann <kraxel@redhat.com>
+ M: Marc-André Lureau <marcandre.lureau@redhat.com>
+ S: Odd Fixes
+ F: ui/
 -- 
 2.45.1
 
