@@ -4,106 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F84C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 06:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F034C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 06:33:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBqJs-0003aH-SD; Tue, 28 May 2024 02:28:27 -0400
+	id 1sBqOq-0005DT-NM; Tue, 28 May 2024 02:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sBqJk-0003ZE-TI; Tue, 28 May 2024 02:28:18 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBqOp-0005Cl-1f
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 02:33:31 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sBqJg-0006Hn-0y; Tue, 28 May 2024 02:28:16 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S6B23e028000; Tue, 28 May 2024 06:28:09 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Dibm.com; _h=3Dcc?=
- =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
- =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3DYAT?=
- =?UTF-8?Q?JobFGrHpiaPiUMCTfMXg4AMOe4hiLzIBQtEhanA4=3D;_b=3DiBoG3A7i3KJuKq?=
- =?UTF-8?Q?gxZKpMU0WmBBmz2km1qckcPvaxcW/vPTZYXtmmL1uYINAPgUghqIXN_1pE1fYO9?=
- =?UTF-8?Q?4iLXorwrxDwMIl7UmGqsZY5clUC51L71vAxLYGLkPMZ7kuRVwePN4wcdZWHq_tI?=
- =?UTF-8?Q?pFHWPCozmFsRKpA4XWZPEsqDzC103vy3Ad0mjIr27coK9Hl6Ypb+Pe+X7onzRF4?=
- =?UTF-8?Q?E7/_zqE0pko/SFyJY+B3JwD+9NomFggWNbkS75ywHTCKiT/UIBGVGb0xTGtabZu?=
- =?UTF-8?Q?zbS328Fgm_mkkjsWywbujzSfdOc+Lg982GrtmbkrE8JIAKbdpFOemmS1WzY8A9d?=
- =?UTF-8?Q?2pDytCHCM3WDhm7_5g=3D=3D_?=
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd8wsr5mn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 06:28:08 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44S6S8JC021792;
- Tue, 28 May 2024 06:28:08 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd8wsr5mk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 06:28:08 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S4OCCM006721; Tue, 28 May 2024 06:28:07 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ybtatdjhm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 06:28:07 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44S6S4DV36242034
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 May 2024 06:28:06 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C78D5805D;
- Tue, 28 May 2024 06:28:04 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 00C4B58061;
- Tue, 28 May 2024 06:28:02 +0000 (GMT)
-Received: from [9.109.242.165] (unknown [9.109.242.165])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 May 2024 06:28:01 +0000 (GMT)
-Message-ID: <5876e49c-9912-4979-9613-c60d40eabd41@linux.ibm.com>
-Date: Tue, 28 May 2024 11:58:00 +0530
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBqOi-00079W-SV
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 02:33:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716878005; x=1748414005;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=SlQgWHgTN11nJLO6E8qeChyAHBxtKVmNeV46RQXK/7E=;
+ b=DF3KTwJPd2o80LGcI6ZOGF75f1rBjxQmGz2vEC39ltjhElFPfmK+XhpO
+ fxpfR6VRXsKbcYFYp29RZJ2v9pl4Yi7lmXBNgJ2LNTbI/cP00vvKgsMxO
+ 8VVqRGvYkIc1T8msyFc0PYbZNVXEhqJut4jMJOYnx0UrDkDyy6436sJKe
+ sZTKK0NV1LldkRPmGVG7Tk6JVQM5fqvFWcHZWxNtrVmyFISkMPbROahet
+ zlHUUrSKvBVKoGTOYmtFXqkbA2j6MPq/0JaACiUUuKLR1d2KosCMcpXDo
+ OpHp5rUBbOyzebaFUz10e4B2iJE455baEPfu9p1pMOSckxiqKuGSZU/An A==;
+X-CSE-ConnectionGUID: 150PUv1NTRy57pUHDuxEDQ==
+X-CSE-MsgGUID: 2KF98gDgTFywqVrEAMzY7A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="17038240"
+X-IronPort-AV: E=Sophos;i="6.08,194,1712646000"; d="scan'208";a="17038240"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2024 23:33:22 -0700
+X-CSE-ConnectionGUID: lqo6SHqiTEaXr4Km7iNx2A==
+X-CSE-MsgGUID: UIFzbFo4SzK/z2hGtHBZkg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,194,1712646000"; d="scan'208";a="39767110"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 27 May 2024 23:33:20 -0700
+Date: Tue, 28 May 2024 14:48:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [RFC 0/6] scripts: Rewrite simpletrace printer in Rust
+Message-ID: <ZlV+Su4hziCFymVt@intel.com>
+References: <20240527081421.2258624-1-zhao1.liu@intel.com>
+ <20240527195944.GA913874@fedora.redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 02/10] ppc/pnv: Move timebase state into PnvCore
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-3-npiggin@gmail.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240526122612.473476-3-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: v5gnNYOj2Qp57xntGjkGXceggWgg5VCV
-X-Proofpoint-GUID: hJFDT5jhgQoCcF8GqNKTxL_eTvlejPhE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-28_03,2024-05-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- spamscore=0 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405280046
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240527195944.GA913874@fedora.redhat.com>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_MED=-2.3, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,279 +90,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Stefan,
 
-
-On 5/26/24 17:56, Nicholas Piggin wrote:
-> The timebase state machine is per per-core state and can be driven
-> by any thread in the core. It is currently implemented as a hack
-> where the state is in a CPU structure and only thread 0's state is
-> accessed by the chiptod, which limits programming the timebase
-> side of the state machine to thread 0 of a core.
+On Mon, May 27, 2024 at 03:59:44PM -0400, Stefan Hajnoczi wrote:
+> Date: Mon, 27 May 2024 15:59:44 -0400
+> From: Stefan Hajnoczi <stefanha@redhat.com>
+> Subject: Re: [RFC 0/6] scripts: Rewrite simpletrace printer in Rust
 > 
-> Move the state out into PnvCore and share it among all threads.
+> On Mon, May 27, 2024 at 04:14:15PM +0800, Zhao Liu wrote:
+> > Hi maintainers and list,
+> > 
+> > This RFC series attempts to re-implement simpletrace.py with Rust, which
+> > is the 1st task of Paolo's GSoC 2024 proposal.
+> > 
+> > There are two motivations for this work:
+> > 1. This is an open chance to discuss how to integrate Rust into QEMU.
+> > 2. Rust delivers faster parsing.
+> > 
+> > 
+> > Introduction
+> > ============
+> > 
+> > Code framework
+> > --------------
+> > 
+> > I choose "cargo" to organize the code, because the current
+> > implementation depends on external crates (Rust's library), such as
+> > "backtrace" for getting frameinfo, "clap" for parsing the cli, "rex" for
+> > regular matching, and so on. (Meson's support for external crates is
+> > still incomplete. [2])
+> > 
+> > The simpletrace-rust created in this series is not yet integrated into
+> > the QEMU compilation chain, so it can only be compiled independently, e.g.
+> > under ./scripts/simpletrace/, compile it be:
+> > 
+> >     cargo build --release
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   include/hw/ppc/pnv_core.h    | 17 ++++++++++++
->   target/ppc/cpu.h             | 20 --------------
->   hw/ppc/pnv_chiptod.c         |  6 ++--
->   target/ppc/timebase_helper.c | 53 ++++++++++++++++++++----------------
->   4 files changed, 49 insertions(+), 47 deletions(-)
+> Please make sure it's built by .gitlab-ci.d/ so that the continuous
+> integration system prevents bitrot. You can add a job that runs the
+> cargo build.
+
+Thanks! I'll do this.
+
+> > 
+> > The code tree for the entire simpletrace-rust is as follows:
+> > 
+> > $ script/simpletrace-rust .
+> > .
+> > ©À©¤©¤ Cargo.toml
+> > ©¸©¤©¤ src
+> >     ©¸©¤©¤ main.rs   // The simpletrace logic (similar to simpletrace.py).
+> >     ©¸©¤©¤ trace.rs  // The Argument and Event abstraction (refer to
+> >                   // tracetool/__init__.py).
+> > 
+> > My question about meson v.s. cargo, I put it at the end of the cover
+> > letter (the section "Opens on Rust Support").
+> > 
+> > The following two sections are lessons I've learned from this Rust
+> > practice.
+> > 
+> > 
+> > Performance
+> > -----------
+> > 
+> > I did the performance comparison using the rust-simpletrace prototype with
+> > the python one:
+> > 
+> > * On the i7-10700 CPU @ 2.90GHz machine, parsing and outputting a 35M
+> > trace binary file for 10 times on each item:
+> > 
+> >                       AVE (ms)       Rust v.s. Python
+> > Rust   (stdout)       12687.16            114.46%
+> > Python (stdout)       14521.85
+> > 
+> > Rust   (file)          1422.44            264.99%
+> > Python (file)          3769.37
+> > 
+> > - The "stdout" lines represent output to the screen.
+> > - The "file" lines represent output to a file (via "> file").
+> > 
+> > This Rust version contains some optimizations (including print, regular
+> > matching, etc.), but there should be plenty of room for optimization.
+> > 
+> > The current performance bottleneck is the reading binary trace file,
+> > since I am parsing headers and event payloads one after the other, so
+> > that the IO read overhead accounts for 33%, which can be further
+> > optimized in the future.
 > 
-> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> index 30c1e5b1a3..f434c71547 100644
-> --- a/include/hw/ppc/pnv_core.h
-> +++ b/include/hw/ppc/pnv_core.h
-> @@ -25,6 +25,20 @@
->   #include "hw/ppc/pnv.h"
->   #include "qom/object.h"
->   
-> +/* ChipTOD and TimeBase State Machine */
-> +struct pnv_tod_tbst {
-> +    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-> +    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
-> +
-> +    /*
-> +     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
-> +     * is polled for such events. These are just used to ensure firmware
-> +     * performs the polling at least a few times.
-> +     */
-> +    int tb_state_timer;
-> +    int tb_sync_pulse_timer;
-> +};
-> +
->   #define TYPE_PNV_CORE "powernv-cpu-core"
->   OBJECT_DECLARE_TYPE(PnvCore, PnvCoreClass,
->                       PNV_CORE)
-> @@ -38,6 +52,9 @@ struct PnvCore {
->       uint32_t pir;
->       uint32_t hwid;
->       uint64_t hrmor;
-> +
-> +    struct pnv_tod_tbst pnv_tod_tbst;
-> +
+> Performance will become more important when large amounts of TCG data is
+> captured, as described in the project idea:
+> https://wiki.qemu.org/Internships/ProjectIdeas/TCGBinaryTracing
+> 
+> While I can't think of a time in the past where simpletrace.py's
+> performance bothered me, improving performance is still welcome. Just
+> don't spend too much time on performance (and making the code more
+> complex) unless there is a real need.
 
-Now that it is part of struct PnvCore itself, we can drop pnv_ prefix
-and just call the member variable as tod_tbst ?
+Yes, I agree that it shouldn't be over-optimized.
 
->       PnvChip *chip;
->   
->       MemoryRegion xscom_regs;
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 2015e603d4..1e86658da6 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1196,21 +1196,6 @@ DEXCR_ASPECT(SRAPD, 4)
->   DEXCR_ASPECT(NPHIE, 5)
->   DEXCR_ASPECT(PHIE, 6)
->   
-> -/*****************************************************************************/
-> -/* PowerNV ChipTOD and TimeBase State Machine */
-> -struct pnv_tod_tbst {
-> -    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-> -    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
-> -
-> -    /*
-> -     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
-> -     * is polled for such events. These are just used to ensure firmware
-> -     * performs the polling at least a few times.
-> -     */
-> -    int tb_state_timer;
-> -    int tb_sync_pulse_timer;
-> -};
-> -
->   /*****************************************************************************/
->   /* The whole PowerPC CPU context */
->   
-> @@ -1292,11 +1277,6 @@ struct CPUArchState {
->   #define TLB_NEED_LOCAL_FLUSH   0x1
->   #define TLB_NEED_GLOBAL_FLUSH  0x2
->   
-> -#if defined(TARGET_PPC64)
-> -    /* PowerNV chiptod / timebase facility state. */
-> -    /* Would be nice to put these into PnvCore */
-> -    struct pnv_tod_tbst pnv_tod_tbst;
-> -#endif
->   #endif
->   
->       /* Other registers */
-> diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
-> index 3831a72101..3eaddd66f0 100644
-> --- a/hw/ppc/pnv_chiptod.c
-> +++ b/hw/ppc/pnv_chiptod.c
-> @@ -365,7 +365,7 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
->                             " TOD_MOVE_TOD_TO_TB_REG with no slave target\n");
->           } else {
->               PowerPCCPU *cpu = chiptod->slave_pc_target->threads[0];
-> -            CPUPPCState *env = &cpu->env;
-> +            PnvCore *pc = pnv_cpu_state(cpu)->core;
->   
->               /*
->                * Moving TOD to TB will set the TB of all threads in a
-> @@ -377,8 +377,8 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
->                * thread 0.
->                */
->   
-> -            if (env->pnv_tod_tbst.tb_ready_for_tod) {
-> -                env->pnv_tod_tbst.tod_sent_to_tb = 1;
-> +            if (pc->pnv_tod_tbst.tb_ready_for_tod) {
-> +                pc->pnv_tod_tbst.tod_sent_to_tb = 1;
->               } else {
->                   qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
->                                 " TOD_MOVE_TOD_TO_TB_REG with TB not ready to"
-> diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-> index 39d397416e..788c498d63 100644
-> --- a/target/ppc/timebase_helper.c
-> +++ b/target/ppc/timebase_helper.c
-> @@ -19,6 +19,7 @@
->   #include "qemu/osdep.h"
->   #include "cpu.h"
->   #include "hw/ppc/ppc.h"
-> +#include "hw/ppc/pnv_core.h"
->   #include "exec/helper-proto.h"
->   #include "exec/exec-all.h"
->   #include "qemu/log.h"
-> @@ -298,8 +299,17 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
->       }
->   }
->   
-> +static struct pnv_tod_tbst *cpu_get_tbst(PowerPCCPU *cpu)
-> +{
-> +    PnvCore *pc = pnv_cpu_state(cpu)->core;
-> +
-> +    return &pc->pnv_tod_tbst;
-> +}
-> +
->   static void tb_state_machine_step(CPUPPCState *env)
->   {
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    struct pnv_tod_tbst *pnv_tod_tbst = cpu_get_tbst(cpu);
+The logic in the current Rust version is pretty much a carbon copy of
+the Python version, without additional complex logic introduced, but the
+improvements in x2.6 were obtained by optimizing IO:
 
-Since cpu is not used anywhere later, we could just do 
-cpu_get_tbst(env_archcpu(env)) ?
+* reading the event configuration file, where I called the buffered
+  interface,
+* and the output formatted trace log, which I output all via std_out.lock()
+  followed by write_all().
 
->       uint64_t tfmr = env->spr[SPR_TFMR];
->       unsigned int tbst = tfmr_get_tb_state(tfmr);
->   
-> @@ -307,15 +317,15 @@ static void tb_state_machine_step(CPUPPCState *env)
->           return;
->       }
->   
-> -    if (env->pnv_tod_tbst.tb_sync_pulse_timer) {
-> -        env->pnv_tod_tbst.tb_sync_pulse_timer--;
-> +    if (pnv_tod_tbst->tb_sync_pulse_timer) {
-> +        pnv_tod_tbst->tb_sync_pulse_timer--;
->       } else {
->           tfmr |= TFMR_TB_SYNC_OCCURED;
->           write_tfmr(env, tfmr);
->       }
->   
-> -    if (env->pnv_tod_tbst.tb_state_timer) {
-> -        env->pnv_tod_tbst.tb_state_timer--;
-> +    if (pnv_tod_tbst->tb_state_timer) {
-> +        pnv_tod_tbst->tb_state_timer--;
->           return;
->       }
->   
-> @@ -332,20 +342,20 @@ static void tb_state_machine_step(CPUPPCState *env)
->       } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
->           if (tbst == TBST_SYNC_WAIT) {
->               tfmr = tfmr_new_tb_state(tfmr, TBST_GET_TOD);
-> -            env->pnv_tod_tbst.tb_state_timer = 3;
-> +            pnv_tod_tbst->tb_state_timer = 3;
->           } else if (tbst == TBST_GET_TOD) {
-> -            if (env->pnv_tod_tbst.tod_sent_to_tb) {
-> +            if (pnv_tod_tbst->tod_sent_to_tb) {
->                   tfmr = tfmr_new_tb_state(tfmr, TBST_TB_RUNNING);
->                   tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
-> -                env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> -                env->pnv_tod_tbst.tod_sent_to_tb = 0;
-> +                pnv_tod_tbst->tb_ready_for_tod = 0;
-> +                pnv_tod_tbst->tod_sent_to_tb = 0;
->               }
->           } else {
->               qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
->                             "state machine in invalid state 0x%x\n", tbst);
->               tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
->               tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-> -            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> +            pnv_tod_tbst->tb_ready_for_tod = 0;
->           }
->       }
->   
-> @@ -361,6 +371,8 @@ target_ulong helper_load_tfmr(CPUPPCState *env)
->   
->   void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->   {
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    struct pnv_tod_tbst *pnv_tod_tbst = cpu_get_tbst(cpu);
+So, just the simple tweak of the interfaces brings much benefits. :-)
 
-... similarly here as well.
+> > Security
+> > --------
+> > 
+> > This is an example.
+> > 
+> > Rust is very strict about type-checking, and it found timestamp reversal
+> > issue in simpletrace-rust [3] (sorry, haven't gotten around to digging
+> > deeper with more time)...in this RFC, I workingaround it by allowing
+> > negative values. And the python version, just silently covered this
+> > issue up.
+> >
+> > Opens on Rust Support
+> > =====================
+> > 
+> > Meson v.s. Cargo
+> > ----------------
+> > 
+> > The first question is whether all Rust code (including under scripts)
+> > must be integrated into meson?
+> > 
+> > If so, because of [2] then I have to discard the external crates and
+> > build some more Rust wheels of my own to replace the previous external
+> > crates.
+> > 
+> > For the main part of the QEMU code, I think the answer must be Yes, but
+> > for the tools in the scripts directory, would it be possible to allow
+> > the use of cargo to build small tools/program for flexibility and
+> > migrate to meson later (as meson's support for rust becomes more
+> > mature)?
+> 
+> I have not seen a satisfying way to natively build Rust code using
+> meson. I remember reading about a tool that converts Cargo.toml files to
+> meson wrap files or something similar. That still doesn't feel great
+> because upstream works with Cargo and duplicating build information in
+> meson is a drag.
+> 
+> Calling cargo from meson is not ideal either, but it works and avoids
+> duplicating build information. This is the approach I would use for now
+> unless someone can point to an example of native Rust support in meson
+> that is clean.
+> 
+> Here is how libblkio calls cargo from meson:
+> https://gitlab.com/libblkio/libblkio/-/blob/main/src/meson.build
+> https://gitlab.com/libblkio/libblkio/-/blob/main/src/cargo-build.sh
 
-With suggested minor improvements,
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Many thanks! This is a good example and I'll try to build similarly to
+it.
 
->       uint64_t tfmr = env->spr[SPR_TFMR];
->       uint64_t clear_on_write;
->       unsigned int tbst = tfmr_get_tb_state(tfmr);
-> @@ -384,14 +396,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->        * after the second mfspr.
->        */
->       tfmr &= ~TFMR_TB_SYNC_OCCURED;
-> -    env->pnv_tod_tbst.tb_sync_pulse_timer = 1;
-> -
-> -    if (ppc_cpu_tir(env_archcpu(env)) != 0 &&
-> -        (val & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB))) {
-> -        qemu_log_mask(LOG_UNIMP, "TFMR timebase state machine can only be "
-> -                                 "driven by thread 0\n");
-> -        goto out;
-> -    }
-> +    pnv_tod_tbst->tb_sync_pulse_timer = 1;
->   
->       if (((tfmr | val) & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) ==
->                           (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) {
-> @@ -399,7 +404,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->                                          "MOVE_CHIP_TOD_TO_TB both set\n");
->           tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
->           tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-> -        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> +        pnv_tod_tbst->tb_ready_for_tod = 0;
->           goto out;
->       }
->   
-> @@ -413,8 +418,8 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->           tfmr &= ~TFMR_LOAD_TOD_MOD;
->           tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
->           tfmr &= ~TFMR_FIRMWARE_CONTROL_ERROR; /* XXX: should this be cleared? */
-> -        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> -        env->pnv_tod_tbst.tod_sent_to_tb = 0;
-> +        pnv_tod_tbst->tb_ready_for_tod = 0;
-> +        pnv_tod_tbst->tod_sent_to_tb = 0;
->           goto out;
->       }
->   
-> @@ -427,19 +432,19 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->   
->       if (tfmr & TFMR_LOAD_TOD_MOD) {
->           /* Wait for an arbitrary 3 mfspr until the next state transition. */
-> -        env->pnv_tod_tbst.tb_state_timer = 3;
-> +        pnv_tod_tbst->tb_state_timer = 3;
->       } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
->           if (tbst == TBST_NOT_SET) {
->               tfmr = tfmr_new_tb_state(tfmr, TBST_SYNC_WAIT);
-> -            env->pnv_tod_tbst.tb_ready_for_tod = 1;
-> -            env->pnv_tod_tbst.tb_state_timer = 3; /* arbitrary */
-> +            pnv_tod_tbst->tb_ready_for_tod = 1;
-> +            pnv_tod_tbst->tb_state_timer = 3; /* arbitrary */
->           } else {
->               qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
->                                              "not in TB not set state 0x%x\n",
->                                              tbst);
->               tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
->               tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-> -            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> +            pnv_tod_tbst->tb_ready_for_tod = 0;
->           }
->       }
->   
+> > 
+> > 
+> > External crates
+> > ---------------
+> > 
+> > This is an additional question that naturally follows from the above
+> > question, do we have requirements for Rust's external crate? Is only std
+> > allowed?
+> 
+> There is no policy. My suggestion:
+> 
+> If you need a third-party crate then it's okay to use it, but try to
+> minimize dependencies. Avoid adding dependening for niceties that are
+> not strictly needed. Third-party crates are a burden for package
+> maintainers and anyone building from source. They increase the risk that
+> the code will fail to build. They can also be a security risk.
+
+Thanks for the suggestion, that's clear to me, I'll try to control the
+third party dependencies.
+
+> > 
+> > Welcome your feedback!
+> 
+> It would be easier to give feedback if you implement some examples of
+> TCG binary tracing before rewriting simpletrace.py. It's unclear to me
+> why simpletrace needs to be rewritten at this point. If you are
+> extending the simpletrace file format in ways that are not suitable for
+> Python or can demonstrate that Python performance is a problem, then
+> focussing on a Rust simpletrace implementation is more convincing.
+> 
+> Could you use simpletrace.py to develop TCG binary tracing first?
+
+Yes, I can. :-)
+
+Rewriting in Rust does sound duplicative, but I wonder if this could be
+viewed as an open opportunity to add Rust support for QEMU, looking at
+the scripts directory to start exploring Rust support/build would be
+a relatively easy place to start.
+
+I think the exploration of Rust's build of the simpletrace tool under
+scripts parts can help with subsequent work on supporting Rust in other
+QEMU core parts.
+
+From this point, may I ask your opinion?
+
+Maybe later, Rust-simpletrace and python-simpletrace can differ, e.g.
+the former goes for performance and the latter for scalability.
+
+Thanks,
+Zhao
+
+
 
