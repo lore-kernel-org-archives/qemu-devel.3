@@ -4,77 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB221C25B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B221C25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxae-0001KG-Q5; Tue, 28 May 2024 10:14:12 -0400
+	id 1sBxkA-0004US-7i; Tue, 28 May 2024 10:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sBxad-0001JS-3I
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:14:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1sBxk6-0004Tj-BQ; Tue, 28 May 2024 10:23:58 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sBxab-00087o-Lc
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:14:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716905648;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=m7Ud10jNcbkX6MYTfuXp5eL+xOHOvA4Pk/yEuZidcVY=;
- b=Bu0tm+9GRWa43m2qc6ww5tHW3h48Qta5oLeq+8t48nM6kjeoKOVavoRUVVODef+KudW7SZ
- QeZYO/Lw3MH9xIWoZ7HcNaec/KuXXPlI9vczDl9eyyujHm9VIsofX3dchhfSchYxg99m+C
- nSIuczbOn32F/U0vVcAHz1/1aYKeUvg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-aCFrG2PtNHCtZN8irSNSng-1; Tue,
- 28 May 2024 10:14:03 -0400
-X-MC-Unique: aCFrG2PtNHCtZN8irSNSng-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4B30D29AA382;
- Tue, 28 May 2024 14:14:03 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.73])
- by smtp.corp.redhat.com (Postfix) with ESMTP id BEAB73C27;
- Tue, 28 May 2024 14:14:02 +0000 (UTC)
-Date: Tue, 28 May 2024 10:14:01 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo framework
-Message-ID: <20240528141401.GB993828@fedora.redhat.com>
-References: <20240527081421.2258624-1-zhao1.liu@intel.com>
- <20240527081421.2258624-2-zhao1.liu@intel.com>
- <20240527200504.GB913874@fedora.redhat.com>
- <ZlWNk46MF5uNa+ZC@intel.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="dio/WzXmXdOFsWee"
-Content-Disposition: inline
-In-Reply-To: <ZlWNk46MF5uNa+ZC@intel.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1sBxk4-00018V-87; Tue, 28 May 2024 10:23:58 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44SEHCxO004356; Tue, 28 May 2024 14:23:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc :
+ content-transfer-encoding : content-type : date : from : in-reply-to :
+ message-id : mime-version : references : reply-to : subject : to; s=pp1;
+ bh=Y0j9SVZj5JAxFd0wXrkGlEEGAhIaKYwQtr3CU9gTCuY=;
+ b=V8pO4uRcEDZiE+ZNEJehw2s9YivRq588Lx6RxaLKUKQ+yR1c8K86x3wBTcwk/7N8zYtE
+ K6cD61CF5HBEfQlIN6mzXxF7kFvXOWU5fTiJIvR3cjFWAm4curild/yR7KdL7nrH6wG8
+ 1s2fHhmov5BVX9HOcaINin7OZqWqbgvfLErgLyqa4HjCMfxiSDLJvqvgbpajcgtSoIRt
+ gOJrJ1RVP+a8nrM0/83Y2kak+XE/iNtQ0CBbgUnjbtXwoBfdMpbMuIWG6MJU6/uIcaN1
+ IOj9OdGIU1qGxt5x1eDs5KcIE6JKtgqirtyKXzfuaQrB0lTQdlcspFKVq1UKL6Sz+2uI nA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ydgw300ft-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 14:23:39 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44SENcpf016416;
+ Tue, 28 May 2024 14:23:38 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ydgw300fr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 14:23:38 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44SEI4C1027089; Tue, 28 May 2024 14:23:37 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ybvhkpx1m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 14:23:37 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44SENX5X21758554
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 May 2024 14:23:36 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD0725806D;
+ Tue, 28 May 2024 14:23:33 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A400C58063;
+ Tue, 28 May 2024 14:23:33 +0000 (GMT)
+Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 May 2024 14:23:33 +0000 (GMT)
+Message-ID: <ba7fe24a38b5cf1954cdde91ea3c777324b78c82.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/2] ppc/pnv: Fix loss of LPC SERIRQ interrupts
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@kaod.org>, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
+ <fbarrat@linux.ibm.com>, qemu-devel@nongnu.org
+Date: Tue, 28 May 2024 09:23:33 -0500
+In-Reply-To: <20240528062045.624906-2-npiggin@gmail.com>
+References: <20240528062045.624906-1-npiggin@gmail.com>
+ <20240528062045.624906-2-npiggin@gmail.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 1-VLlfEGbv5RlFEuLwwsm0dVtZ9AsJyd
+X-Proofpoint-ORIG-GUID: guKIb3on-4cM9crAESqxANX3bZpneXiG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-28_10,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0
+ mlxlogscore=889 suspectscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405280108
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,63 +113,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
---dio/WzXmXdOFsWee
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks,
 
-On Tue, May 28, 2024 at 03:53:55PM +0800, Zhao Liu wrote:
-> Hi Stefan,
->=20
-> [snip]
->=20
-> > > diff --git a/scripts/simpletrace-rust/.rustfmt.toml b/scripts/simplet=
-race-rust/.rustfmt.toml
-> > > new file mode 100644
-> > > index 000000000000..97a97c24ebfb
-> > > --- /dev/null
-> > > +++ b/scripts/simpletrace-rust/.rustfmt.toml
-> > > @@ -0,0 +1,9 @@
-> > > +brace_style =3D "AlwaysNextLine"
-> > > +comment_width =3D 80
-> > > +edition =3D "2021"
-> > > +group_imports =3D "StdExternalCrate"
-> > > +imports_granularity =3D "item"
-> > > +max_width =3D 80
-> > > +use_field_init_shorthand =3D true
-> > > +use_try_shorthand =3D true
-> > > +wrap_comments =3D true
-> >=20
-> > There should be QEMU-wide policy. That said, why is it necessary to cus=
-tomize rustfmt?
->=20
-> Indeed, but QEMU's style for Rust is currently undefined, so I'm trying
-> to add this to make it easier to check the style...I will separate it
-> out as a style policy proposal.
+Glenn
 
-Why is a config file necessary? QEMU should use the default Rust style.
-
-Stefan
-
---dio/WzXmXdOFsWee
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZV5qkACgkQnKSrs4Gr
-c8jjzwgAmRqu6LMO7NFyY9BFQPLKVffuB2cafuN/p70YeCfuoCBrd4+bgeJbkzAJ
-Sx2jlUcTd+wbe5W8AxXNfcpR+2og0jMdImEpXndf3RENqj95BxHjl02kjxJw4/CJ
-WnrDb2EhiAX+b6C2/aNEmwcYqQAt6+HeQFR6yIPqqPQYweva7/rgb5+mJqoyHI/l
-z/yAvPfSqPWjeeqf0b069IKdwbR8xC/51UI+mKCpP8r2NUAgzr6NomgwnzbC2885
-ndQJVAiUhxBek6AhwG3uRyG2eOMMY4CcpI+1Pg8btjzrwFlIzL1cUs+zKNmkBLpI
-M38Poi8VAu1ushiv2A0iNr1617jSOg==
-=KO2k
------END PGP SIGNATURE-----
-
---dio/WzXmXdOFsWee--
+On Tue, 2024-05-28 at 16:20 +1000, Nicholas Piggin wrote:
+> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+> 
+> The LPC HC irq status register bits are set when an LPC IRQSER input
+> is
+> asserted. These irq status bits drive the PSI irq to the CPU
+> interrupt
+> controller. The LPC HC irq status bits are cleared by software
+> writing
+> to the register with 1's for the bits to clear.
+> 
+> Existing register write was clearing the irq status bits even when
+> the
+> input was asserted, this results in interrupts being lost.
+> 
+> This fix changes the behavior to keep track of the device IRQ status
+> in internal state that is separate from the irq status register, and
+> only allowing the irq status bits to be cleared if the associated
+> input is not asserted.
+> 
+> [np: rebased before P9 PSI SERIRQ patch, adjust changelog/comments]
+> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  include/hw/ppc/pnv_lpc.h |  3 +++
+>  hw/ppc/pnv_lpc.c         | 22 +++++++++++++++++++---
+>  2 files changed, 22 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/hw/ppc/pnv_lpc.h b/include/hw/ppc/pnv_lpc.h
+> index 5d22c45570..97c6872c3f 100644
+> --- a/include/hw/ppc/pnv_lpc.h
+> +++ b/include/hw/ppc/pnv_lpc.h
+> @@ -73,6 +73,9 @@ struct PnvLpcController {
+>      uint32_t opb_irq_pol;
+>      uint32_t opb_irq_input;
+>  
+> +    /* LPC device IRQ state */
+> +    uint32_t lpc_hc_irq_inputs;
+> +
+>      /* LPC HC registers */
+>      uint32_t lpc_hc_fw_seg_idsel;
+>      uint32_t lpc_hc_fw_rd_acc_size;
+> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+> index d692858bee..252690dcaa 100644
+> --- a/hw/ppc/pnv_lpc.c
+> +++ b/hw/ppc/pnv_lpc.c
+> @@ -505,7 +505,14 @@ static void lpc_hc_write(void *opaque, hwaddr
+> addr, uint64_t val,
+>          pnv_lpc_eval_irqs(lpc);
+>          break;
+>      case LPC_HC_IRQSTAT:
+> -        lpc->lpc_hc_irqstat &= ~val;
+> +        /*
+> +         * This register is write-to-clear for the IRQSER (LPC
+> device IRQ)
+> +         * status. However if the device has not de-asserted its
+> interrupt
+> +         * that will just raise this IRQ status bit again. Model
+> this by
+> +         * keeping track of the inputs and only clearing if the
+> inputs are
+> +         * deasserted.
+> +         */
+> +        lpc->lpc_hc_irqstat &= ~(val & ~lpc->lpc_hc_irq_inputs);
+>          pnv_lpc_eval_irqs(lpc);
+>          break;
+>      case LPC_HC_ERROR_ADDRESS:
+> @@ -803,11 +810,20 @@ static void pnv_lpc_isa_irq_handler_cpld(void
+> *opaque, int n, int level)
+>  static void pnv_lpc_isa_irq_handler(void *opaque, int n, int level)
+>  {
+>      PnvLpcController *lpc = PNV_LPC(opaque);
+> +    uint32_t irq_bit = LPC_HC_IRQ_SERIRQ0 >> n;
+>  
+> -    /* The Naples HW latches the 1 levels, clearing is done by SW */
+>      if (level) {
+> -        lpc->lpc_hc_irqstat |= LPC_HC_IRQ_SERIRQ0 >> n;
+> +        lpc->lpc_hc_irq_inputs |= irq_bit;
+> +
+> +        /*
+> +	 * The LPC HC in Naples and later latches LPC IRQ into a bit
+> field in
+> +	 * the IRQSTAT register, and that drives the PSI IRQ to the IC.
+> +	 * Software clears this bit manually (see LPC_HC_IRQSTAT
+> handler).
+> +         */
+> +        lpc->lpc_hc_irqstat |= irq_bit;
+>          pnv_lpc_eval_irqs(lpc);
+> +    } else {
+> +        lpc->lpc_hc_irq_inputs &= ~irq_bit;
+>      }
+>  }
+>  
 
 
