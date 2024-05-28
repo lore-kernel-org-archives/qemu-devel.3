@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D284C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 01:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE450C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 01:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBlCr-000644-EE; Mon, 27 May 2024 21:00:49 -0400
+	id 1sBlJO-0000Ei-Pl; Mon, 27 May 2024 21:07:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sBlCm-00061U-25; Mon, 27 May 2024 21:00:45 -0400
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sBlCk-0004eU-H3; Mon, 27 May 2024 21:00:43 -0400
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-3738690172eso1565205ab.1; 
- Mon, 27 May 2024 18:00:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716858040; x=1717462840; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tI9I6u1VQya1iy09UqPXi4TC8EcIba/kIaOodkYl1tE=;
- b=jQd5pYUWmGnSxKMOQfp3qt4867eTwoTZ+aBAtJrlmLZ8Do+hoRP/NQwAej0vtsEj3a
- O+3Zsl0vKOa0CK68rmsiQGbTFYrC4o+Zvvq4+3z2xitg32NO/mdkV1QvweOMKVnB2gGn
- Q+0Wy3PJSg+uj1Y/GtiyUTyGtzqRzEYpHJ7STwASo2r+Nvxn1XZdh9OI0EjW2QsAk0mw
- iqlxsHlNzt4ZiPjQhhJDwYHvMUzQQpkiPAAVN6dcoN7KI4STnMAoryyVY7kBlJ+hYtGc
- RZ7+RjhQC0Lj24ltZEb/7X5QrdEo8XfTSjd3jCwSrtZlW974OW3Fbp3atbCJEcZG8DVS
- z3hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716858040; x=1717462840;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tI9I6u1VQya1iy09UqPXi4TC8EcIba/kIaOodkYl1tE=;
- b=jRj93yH0w7XjlF9VcFipcYzmaNv11STWMvrYoaxSdUQJpksE6SgnXrTcx+spAKCM5o
- jSEXRgm2nDcHx1Ljo2wEPiRnZffrzXQxa0quFBhkI1XzQVdkgpMMgHFdkVurgn2WgkvE
- 6CFF8iCwfw26p3y1k94L4GqdErdUMVtQ+UH8OoaOTk8CsMXoHZImcdAzA3Cma78CMtqD
- RKflwYzVu5dU3axpZvXEl+rXRs4C5xeKHTbK03zavnK4F0RaZ1tbo5n3k61UHvzAgfo1
- VinKhdXTb67n1yBkE3UsYSVTkiAf1U5FEFWnNVcOg6RLVTxxZAPJn2nJ50zDyrMOuBSO
- CjFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHKyhc5QPTipjJdd0qy6gajJ6HFg0tNJrf+Uls5SIKboyhzdde7Oi01BBG89I1i0L10z4B8AUWSvfbQyCGPuuFDv302Lk=
-X-Gm-Message-State: AOJu0YzqQxq7vV5QFGQiL3NrOt9cBzYyBmAoIZRS8fRwcZHspFvrcs3x
- oxX2CYqHUaEJJHB9qWMzwWQBNpSjvEKMHzQ/Xqa/3J2toFiPxB85CSF+hQ==
-X-Google-Smtp-Source: AGHT+IG6zyPmYt+cHX9prq6E2+NKaDlI6+gySCFSe0bs5RFYcdb5ms01hwEjklHb3dHDHcrbs/vBZw==
-X-Received: by 2002:a05:6e02:1567:b0:374:62d1:1472 with SMTP id
- e9e14a558f8ab-37462d1175fmr15454335ab.2.1716858040249; 
- Mon, 27 May 2024 18:00:40 -0700 (PDT)
-Received: from [192.168.0.22] ([210.223.46.112])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6822092a66dsm5581437a12.8.2024.05.27.18.00.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 May 2024 18:00:39 -0700 (PDT)
-Message-ID: <dd406b1d-94d2-4b4e-8053-07d8237994df@gmail.com>
-Date: Tue, 28 May 2024 10:00:35 +0900
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sBlJM-0000ES-Gl
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 21:07:32 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sBlJJ-0005VQ-U6
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 21:07:32 -0400
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8Bx7epLLlVm3nwAAA--.2042S3;
+ Tue, 28 May 2024 09:07:23 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxbcdILlVmCJELAA--.30290S3; 
+ Tue, 28 May 2024 09:07:22 +0800 (CST)
+Subject: Re: [RFC v2 1/2] target/loongarch: Add loongson binary translation
+ feature
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20240527083501.844854-1-maobibo@loongson.cn>
+ <20240527083501.844854-2-maobibo@loongson.cn>
+ <40cad008-6959-495c-97c0-978c0868bf86@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <765c5c3e-5d8f-cf48-6e24-ac027ac834b6@loongson.cn>
+Date: Tue, 28 May 2024 09:07:20 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/ufs: Add support MCQ of UFSHCI 4.0
-To: Minwoo Im <minwoo.im@samsung.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, gost.dev@samsung.com,
- Jeuk Kim <jeuk20.kim@samsung.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>
-References: <20240521110544.258772-1-minwoo.im@samsung.com>
- <CGME20240521111643epcas2p4ab1c2610d26878c405288e9006bc4f92@epcas2p4.samsung.com>
- <20240521110544.258772-3-minwoo.im@samsung.com>
-Content-Language: ko
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-In-Reply-To: <20240521110544.258772-3-minwoo.im@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-il1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <40cad008-6959-495c-97c0-978c0868bf86@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxbcdILlVmCJELAA--.30290S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCw1xtr47Xr4kJw4UKry5Jrc_yoW5Cw4Upr
+ 1kAFW5AFyUJrn3Aw43J345XF98Jr48Jw17XF1fXFyUAF45Gr12vr10qFWvgF1DAw48XF1j
+ gr18JrnruFnrAwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.786,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,41 +86,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for your contribution!
+Hi Philippe,
 
-There are only two minor comments.
+Thanks for reviewing my patch.
+I reply inline.
 
-Please check it and send patch v2.
+On 2024/5/27 下午6:37, Philippe Mathieu-Daudé wrote:
+> Hi Bibo,
+> 
+> On 27/5/24 10:35, Bibo Mao wrote:
+>> Loongson Binary Translation (LBT) is used to accelerate binary
+>> translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
+>> eflags (eflags) and x87 fpu stack pointer (ftop).
+>>
+>> Now LBT feature is added in kvm mode, not supported in TCG mode since
+>> it is not emulated. There are two feature flags such as forced_features
+>> and default_features for each vcpu, the real feature is still in cpucfg.
+>> Flag forced_features is parsed from command line, default_features is
+>> parsed from cpu type.
+>>
+>> Flag forced_features has higher priority than flag default_features,
+>> default_features will be used if there is no command line option for LBT
+>> feature. If the feature is not supported with KVM host, it reports error
+>> and exits if forced_features is set, else it disables feature and 
+>> continues
+>> if default_features is set.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   target/loongarch/cpu.c                | 69 +++++++++++++++++++++++++++
+>>   target/loongarch/cpu.h                | 12 +++++
+>>   target/loongarch/kvm/kvm.c            | 26 ++++++++++
+>>   target/loongarch/kvm/kvm_loongarch.h  | 16 +++++++
+>>   target/loongarch/loongarch-qmp-cmds.c |  2 +-
+>>   5 files changed, 124 insertions(+), 1 deletion(-)
+> 
+> 
+>> +static void loongarch_set_lbt(Object *obj, bool value, Error **errp)
+>> +{
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+>> +
+>> +    if (!kvm_enabled()) {
+> 
+> Either set errp, ...
+> 
+>> +        return;
+>> +    }
+>> +
+>> +    if (value) {
+>> +        /* Enable binary translation for all architectures */
+>> +        cpu->env.forced_features |= BIT_ULL(LOONGARCH_FEATURE_LBT);
+>> +    } else {
+>> +        /* Disable default features also */
+>> +        cpu->env.default_features &= ~BIT_ULL(LOONGARCH_FEATURE_LBT);
+>> +    }
+>> +}
+>> +
+>>   void loongarch_cpu_post_init(Object *obj)
+>>   {
+>>       object_property_add_bool(obj, "lsx", loongarch_get_lsx,
+>>                                loongarch_set_lsx);
+>>       object_property_add_bool(obj, "lasx", loongarch_get_lasx,
+>>                                loongarch_set_lasx);
+> 
+> ... or only add the property if KVM is enabled:
+> 
+>     if (kvm_enabled()) {
+Sure, will do. I think this method is better.
 
+By the way bitmap method forced_features/default_feature is variant
+of OnOffAuto method. Bitmap method uses two bit, OnOffAuto method uses 
+separate feature variable. We do not know which method is better or 
+which is the future trend.
 
-Thank you!
+Regards
+Bibo Mao
+> 
+>> +    object_property_add_bool(obj, "lbt", loongarch_get_lbt,
+>> +                             loongarch_set_lbt);
+>>   }
 
-On 5/21/2024 8:05 PM, Minwoo Im wrote:
-> @@ -1288,12 +1717,21 @@ static void ufs_exit(PCIDevice *pci_dev)
->           ufs_clear_req(&u->req_list[i]);
->       }
->       g_free(u->req_list);
-> +
-> +    for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
-> +        ufs_mcq_delete_sq(u, i);
-
-Isn't it possible that trace_ufs_err_mcq_delete_cq_not_exists is printed 
-even in a normal shutdown situation?
-
-If true, please fix it so that the ufs_err log is not printed in normal 
-situation.
-
-> +    }
-> +    for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
-> +        ufs_mcq_delete_cq(u, i);
-> +    }
->   }
->   
->   static Property ufs_props[] = {
->       DEFINE_PROP_STRING("serial", UfsHc, params.serial),
->       DEFINE_PROP_UINT8("nutrs", UfsHc, params.nutrs, 32),
->       DEFINE_PROP_UINT8("nutmrs", UfsHc, params.nutmrs, 8),
-> +    DEFINE_PROP_BOOL("mcq", UfsHc, params.mcq, false),
-> +    DEFINE_PROP_UINT8("mcq-maxq", UfsHc, params.mcq_maxq, 1),
-Please change this value to a value greater than or equal to 2.
 
