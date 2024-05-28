@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE450C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 01:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A76C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 01:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBlJO-0000Ei-Pl; Mon, 27 May 2024 21:07:34 -0400
+	id 1sBlQD-0003Uw-Og; Mon, 27 May 2024 21:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sBlJM-0000ES-Gl
- for qemu-devel@nongnu.org; Mon, 27 May 2024 21:07:32 -0400
+ id 1sBlQ9-0003UF-IJ
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 21:14:33 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sBlJJ-0005VQ-U6
- for qemu-devel@nongnu.org; Mon, 27 May 2024 21:07:32 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1sBlQ7-0006iR-2J
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 21:14:33 -0400
 Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8Bx7epLLlVm3nwAAA--.2042S3;
- Tue, 28 May 2024 09:07:23 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dxi+rxL1VmuH4AAA--.1913S3;
+ Tue, 28 May 2024 09:14:25 +0800 (CST)
 Received: from [10.20.42.173] (unknown [10.20.42.173])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxbcdILlVmCJELAA--.30290S3; 
- Tue, 28 May 2024 09:07:22 +0800 (CST)
-Subject: Re: [RFC v2 1/2] target/loongarch: Add loongson binary translation
+ AQAAf8DxvsfuL1VmR5MLAA--.30409S3; 
+ Tue, 28 May 2024 09:14:24 +0800 (CST)
+Subject: Re: [RFC v2 0/2] target/loongarch: Add loongson binary translation
  feature
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
  Song Gao <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org
 References: <20240527083501.844854-1-maobibo@loongson.cn>
- <20240527083501.844854-2-maobibo@loongson.cn>
- <40cad008-6959-495c-97c0-978c0868bf86@linaro.org>
+ <83153da8-79e0-4cc0-b9e1-918cc5bf7f87@linaro.org>
 From: maobibo <maobibo@loongson.cn>
-Message-ID: <765c5c3e-5d8f-cf48-6e24-ac027ac834b6@loongson.cn>
-Date: Tue, 28 May 2024 09:07:20 +0800
+Message-ID: <b9663e7d-2eed-d3fe-2f92-2784c8ee8961@loongson.cn>
+Date: Tue, 28 May 2024 09:14:22 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <40cad008-6959-495c-97c0-978c0868bf86@linaro.org>
+In-Reply-To: <83153da8-79e0-4cc0-b9e1-918cc5bf7f87@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxbcdILlVmCJELAA--.30290S3
+X-CM-TRANSID: AQAAf8DxvsfuL1VmR5MLAA--.30409S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCw1xtr47Xr4kJw4UKry5Jrc_yoW5Cw4Upr
- 1kAFW5AFyUJrn3Aw43J345XF98Jr48Jw17XF1fXFyUAF45Gr12vr10qFWvgF1DAw48XF1j
- gr18JrnruFnrAwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7Zw13ArWfGF4DXF1kKF1kXrc_yoW8Wr1fpF
+ W3GrW2yanFqw4UCa18Ar4UGF1rA3ykZr45urWDGFyfZF17Zrn0y340gFy8WayfXrW8AF97
+ AF4Uta1vyrn8AwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
  Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
  xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
  AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
  14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
  kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
  wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
  UUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
@@ -86,84 +85,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
 
-Thanks for reviewing my patch.
-I reply inline.
 
-On 2024/5/27 下午6:37, Philippe Mathieu-Daudé wrote:
+On 2024/5/27 下午6:39, Philippe Mathieu-Daudé wrote:
 > Hi Bibo,
 > 
-> On 27/5/24 10:35, Bibo Mao wrote:
+> On 27/5/24 10:34, Bibo Mao wrote:
 >> Loongson Binary Translation (LBT) is used to accelerate binary
->> translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
->> eflags (eflags) and x87 fpu stack pointer (ftop).
->>
->> Now LBT feature is added in kvm mode, not supported in TCG mode since
->> it is not emulated. There are two feature flags such as forced_features
->> and default_features for each vcpu, the real feature is still in cpucfg.
->> Flag forced_features is parsed from command line, default_features is
->> parsed from cpu type.
->>
->> Flag forced_features has higher priority than flag default_features,
->> default_features will be used if there is no command line option for LBT
->> feature. If the feature is not supported with KVM host, it reports error
->> and exits if forced_features is set, else it disables feature and 
->> continues
->> if default_features is set.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   target/loongarch/cpu.c                | 69 +++++++++++++++++++++++++++
->>   target/loongarch/cpu.h                | 12 +++++
->>   target/loongarch/kvm/kvm.c            | 26 ++++++++++
->>   target/loongarch/kvm/kvm_loongarch.h  | 16 +++++++
->>   target/loongarch/loongarch-qmp-cmds.c |  2 +-
->>   5 files changed, 124 insertions(+), 1 deletion(-)
+>> translation. LBT feature is added in kvm mode, not supported in TCG
+>> mode since it is not emulated. And only LBT feature is added here, LBT
+>> registers saving and restoring is not supported since it depeeds on LBT
+>> feautre implemented in KVM kernel
 > 
-> 
->> +static void loongarch_set_lbt(Object *obj, bool value, Error **errp)
->> +{
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
->> +
->> +    if (!kvm_enabled()) {
-> 
-> Either set errp, ...
-> 
->> +        return;
->> +    }
->> +
->> +    if (value) {
->> +        /* Enable binary translation for all architectures */
->> +        cpu->env.forced_features |= BIT_ULL(LOONGARCH_FEATURE_LBT);
->> +    } else {
->> +        /* Disable default features also */
->> +        cpu->env.default_features &= ~BIT_ULL(LOONGARCH_FEATURE_LBT);
->> +    }
->> +}
->> +
->>   void loongarch_cpu_post_init(Object *obj)
->>   {
->>       object_property_add_bool(obj, "lsx", loongarch_get_lsx,
->>                                loongarch_set_lsx);
->>       object_property_add_bool(obj, "lasx", loongarch_get_lasx,
->>                                loongarch_set_lasx);
-> 
-> ... or only add the property if KVM is enabled:
-> 
->     if (kvm_enabled()) {
-Sure, will do. I think this method is better.
+> How do you test?
+There is a test application using LBT instruction as followings.
 
-By the way bitmap method forced_features/default_feature is variant
-of OnOffAuto method. Bitmap method uses two bit, OnOffAuto method uses 
-separate feature variable. We do not know which method is better or 
-which is the future trend.
+If LBT is not enabled, it reports illegal instruction. And it does not 
+report error during VM migration.
 
 Regards
 Bibo Mao
+
+--------------------------------------------------------------------------
+#include <stdio.h>
+#include <sched.h>
+int main()
+{
+     int a = 0, b = 0;
+     for (;;)
+     {
+         asm(
+             "li.d $t0, 0xff  \n\t"
+             ".word ((0x17<<18)|(0x3f<<10)|(1<<5)|0xc) \n\t" // mtflag
+             ".word ((0x17<<18)|(0x3f<<10)|(0<<5)|0xc) \n\t" // mfflag
+             ".word ((0x17<<18)|(0x3f<<10)|(1<<5)|0xc) \n\t" // mtflag
+             "move %0, $t0 \n\t"
+             : "=r"(a) : : );
+         sched_yield();
+         asm(
+             ".word ((0x17<<18)|(0x3f<<10)|(0<<5)|0xc) \n\t" // mfflag
+             "move %0, $t0 \n\t"
+             : "=r"(b) : :);
+
+         if (a != b)
+         {
+             printf("in: 0x%x <=> out 0x%x \n", a, b);
+             return 1;
+         }
+
+         sched_yield();
+         int top = 0;
+         asm(
+             ".word (0x8008) \n\t"                 // settm
+             ".word ((0x70 << 8) | (5 << 5)) \n\t" // mttop 1
+             ".word (0x8009) \n\t"                 // inctop
+             : : :);
+         sched_yield();
+         asm(
+             ".word ((0x3a0 << 5) | (0xc)) \n\t" // mfftop
+             "move %0, $t0 \n\t"
+             : "=r"(top) : : );
+
+         if (top != 6)
+         {
+             printf("top: %d \n", top);
+             return 1;
+         }
+     }
+     return 0;
+}
+
 > 
->> +    object_property_add_bool(obj, "lbt", loongarch_get_lbt,
->> +                             loongarch_set_lbt);
->>   }
+> Thanks,
+> 
+> Phil.
 
 
