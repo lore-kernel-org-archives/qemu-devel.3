@@ -4,62 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A642C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 10:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2668DC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 10:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBtqz-0000dE-Dj; Tue, 28 May 2024 06:14:49 -0400
+	id 1sBu00-0002Mx-2p; Tue, 28 May 2024 06:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
- id 1sBtqx-0000cI-19; Tue, 28 May 2024 06:14:47 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
- id 1sBtqu-0004Hw-VJ; Tue, 28 May 2024 06:14:46 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VpSzz4lh2z4x23;
- Tue, 28 May 2024 20:14:39 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VpSzs5K2Lz4wbr;
- Tue, 28 May 2024 20:14:33 +1000 (AEST)
-Message-ID: <104095bd-c492-49f2-887b-e97b4a030e5b@kaod.org>
-Date: Tue, 28 May 2024 12:14:30 +0200
+ (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
+ id 1sBtzu-0002MJ-FY; Tue, 28 May 2024 06:24:02 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
+ id 1sBtzs-0005j6-Q2; Tue, 28 May 2024 06:24:02 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6f8e859eb20so484835b3a.0; 
+ Tue, 28 May 2024 03:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716891837; x=1717496637; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WV0J4buDakTlrBzgJ0rNMX1xKXRSU6p21ZGDgZCBtPA=;
+ b=OUGhBusjDPp/lRK0ZHE7P9A6ycPnDAppGfKkBFDDdyUo2CdwXOedTEJOnHKdgSYDcR
+ u2TlzJ/GTQzLimjBCmLRr/lFCjcNCgjQduLd06wVXHDH4NQ9A+D0xbrAf8wUI73daBqZ
+ mBDAgcn8cCYvwbVQ6ooaJzC7/6g1g1ELC3r1zSfsmQ4aGjwvoIMafIcjK7QNMlhqx+Vw
+ a6cHNEYZi8ZZpweSQlQocjfzaOBiMSnoQRKzVl1q7Rtf1xfDMBvZjFuAMsuRgQkLX2yV
+ eWJHEr0yZU7zBlMxiZmliO3VL8sfEHZhACn5hgUWBv08syGPqZIhB86iMOZCZV/W1dJQ
+ T2Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716891837; x=1717496637;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WV0J4buDakTlrBzgJ0rNMX1xKXRSU6p21ZGDgZCBtPA=;
+ b=CCNKW5IZ2/7IHUm3J0DKj9GIJofsUcLIWtb06ZlFsQyE4j5pLvctKKdl6IQx8GXL0W
+ 0acBXjJZhVGGpVFv3pAY6u7ZKKI8jkx/AUFKBqTm2ga8dfMwSvKp7m1QOeO6oaNDak7J
+ 32lBLnL0EUDwV8WK4n0QgVJURLNgkxwSFkDWnaF0HDvodZG7+ZFnF7aMoa0Szt7eFxD5
+ SE4mNL2R+4pJ3YE6r/9877BKISYHZn/rNqwDgHjnmRhWyqYoAQc5N7t6j7Px+/ookmnd
+ LZ+BYcoK2zZvVaOimNZ/zi1TFDxuHLu46MMAgiGQny8zMJG+FrgHaURN3Uq2ZxCNpuO6
+ jm7Q==
+X-Gm-Message-State: AOJu0YwpAht8if5duJe8lX24ukN+Qkncc8hpL/jmcsqDc9Tn/zCnLndD
+ BwOZpacM0fnPyBNTqGA6tPs3T0rnhWlo4XFet72Cn68H8/pnGpS/FslNBg==
+X-Google-Smtp-Source: AGHT+IHo6DDgggILzH0XwlTHwUsrsOAGqGB3pzZ43lnHPDgyMHVR+bSQfGFMfvR2aJzgVieuumBWIg==
+X-Received: by 2002:a05:6a20:d48c:b0:1af:f92c:de8e with SMTP id
+ adf61e73a8af0-1b212f724e1mr12762597637.52.1716891837174; 
+ Tue, 28 May 2024 03:23:57 -0700 (PDT)
+Received: from wijungle.bbrouter ([183.83.55.203])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f8fc36d224sm6144663b3a.83.2024.05.28.03.23.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 May 2024 03:23:56 -0700 (PDT)
+From: Will Gyda <vilhelmgyda@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ Will Gyda <vilhelmgyda@gmail.com>
+Subject: [PATCH] Issue #2294 | Machine microvm doesn't run under Xen accel for
+ x86_64
+Date: Tue, 28 May 2024 15:53:39 +0530
+Message-Id: <20240528102339.106257-1-vilhelmgyda@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/16] Add AST2700 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>
-References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
- <f2c66f47-af78-436b-968c-c267e84b9a18@kaod.org>
- <SI2PR06MB5041C99C448D21D6DB8D8053FCF12@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041C99C448D21D6DB8D8053FCF12@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=HxTW=M7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=vilhelmgyda@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,44 +91,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/24 12:02, Jamin Lin wrote:
-> Hi Cedric,
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@kaod.org>
->> Sent: Tuesday, May 28, 2024 5:56 PM
->> To: Jamin Lin <jamin_lin@aspeedtech.com>; Peter Maydell
->> <peter.maydell@linaro.org>; Andrew Jeffery <andrew@codeconstruct.com.au>;
->> Joel Stanley <joel@jms.id.au>; Alistair Francis <alistair@alistair23.me>; Cleber
->> Rosa <crosa@redhat.com>; Philippe Mathieu-Daudé <philmd@linaro.org>;
->> Wainer dos Santos Moschetta <wainersm@redhat.com>; Beraldo Leal
->> <bleal@redhat.com>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
->> list:All patches CC here <qemu-devel@nongnu.org>
->> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
->> <yunlin.tang@aspeedtech.com>
->> Subject: Re: [PATCH v4 00/16] Add AST2700 support
->>
->> Jamin,
->>
->> I think you should add your self as a Reviewer to the ASPEED BMCs machine in
->> the MAINTAINERS files. Would you agree ?
->>
-> Agree.
-> 
-> Could you please add me, Troy and Steven in the MAINTAINERS files?
-> steven_lee@aspeedtech.com
-> troy_lee@aspeedtech.com
-> jamin_lin@aspeedtech.com
+Issue #2294: Machine microvm doesn't run under Xen accel for qemu-system-x86_64. 
+Solution: microvm is now not build if only Xen is available.
 
-You should send a patch updating the MAINTAINERS file with new names
-and those promoted should reply that they agree, or not.
+Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
 
-See https://qemu.readthedocs.io/en/v9.0.0/devel/maintainers.html for
-more info and the git history of MAINTAINERS also.
+---
+ configs/devices/i386-softmmu/default.mak | 2 +-
+ hw/i386/Kconfig                          | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-Thanks,
-
-C.
-
+diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
+index 598c6646df..6a73aee7dd 100644
+--- a/configs/devices/i386-softmmu/default.mak
++++ b/configs/devices/i386-softmmu/default.mak
+@@ -29,4 +29,4 @@
+ CONFIG_ISAPC=y
+ CONFIG_I440FX=y
+ CONFIG_Q35=y
+-CONFIG_MICROVM=y
++#CONFIG_MICROVM=n
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index a6ee052f9a..f8ec8ebd7a 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -108,6 +108,8 @@ config Q35
+ 
+ config MICROVM
+     bool
++    default y
++    depends on KVM || WHPX || NVMM || HVF
+     select SERIAL_ISA # for serial_hds_isa_init()
+     select ISA_BUS
+     select APIC
+-- 
+2.25.1
 
 
