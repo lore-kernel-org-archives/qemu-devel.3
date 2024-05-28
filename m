@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFD7C25B78
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EDFC25B7E
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sByoh-0004LX-6x; Tue, 28 May 2024 11:32:47 -0400
+	id 1sByoi-0004M2-Cx; Tue, 28 May 2024 11:32:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sByoe-0004L3-Ub
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:32:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sByog-0004LP-7o
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:32:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sByoc-0003WO-Vi
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:32:44 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sByoe-0003WT-1r
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:32:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716910360;
+ s=mimecast20190719; t=1716910361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MQRYFz+BQhOQx9nfKkXXxwn9aJEix4WoIDrkPBIZIns=;
- b=BiEwePe/dJC8pmeN110bX3DxNCaD23ka8yzEx+/NZObt2tB/750Tg9a4FD4zOjlaEjA4hD
- i+aO32B/PW5q13OdxO/jwBxMwWvRb6oN1cM0lm7+jZPc5l26b+BFGsGNj8vm9DNRU+04vu
- 85xUORj/UDW0LK8669VhIc5uhVxk73w=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wQYzV8+rnwRE6otz4sKcjy11R0UGgMrdrlJKihkLPh4=;
+ b=bGfH6Vyi5LNdk3PMuVrv6qPwcclIuS6DTi+pdQ+KS+aPYtslRmyGupbtOcL4wMKYTI8Rvv
+ A0GNketxnbfFt5gTa8mQaMoBv0pD+FTPxmdm3R1kmMIPCOx4Sx5UULh015M49aC8GKKyZV
+ YX/PdPWpnEQ7rALpWxeBsJVAXOrqBqE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-JjANmeydNT6xQnyay-E-xQ-1; Tue, 28 May 2024 11:32:35 -0400
-X-MC-Unique: JjANmeydNT6xQnyay-E-xQ-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5b96a8c5352so376521eaf.2
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:32:34 -0700 (PDT)
+ us-mta-163-QWChCJ0RPvu75AJ5QhZJWw-1; Tue, 28 May 2024 11:32:40 -0400
+X-MC-Unique: QWChCJ0RPvu75AJ5QhZJWw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-354ddb92ad8so577107f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:32:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716910354; x=1717515154;
+ d=1e100.net; s=20230601; t=1716910351; x=1717515151;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MQRYFz+BQhOQx9nfKkXXxwn9aJEix4WoIDrkPBIZIns=;
- b=ZXj7BhR6eEwW5ggI8niIL6w02dADheoQrhknCP+vhcsclTh0XQ1rb+Lt8qtNm8sepb
- dUglhzeWcNSY9rceHHZrWTYfU0tILeX0+vqsHspWd94DPwM76ZCs3INU3i838GoErXrf
- dTcm1auzhmR01mwGMDa31f7sPkYM0uZJxHt0azb9Mm/G4bG91yWSTYuoF28j1coG04qc
- JHzrsyOjmxU4ZTY9y0FkVYLvrvCypY/xnpVttV8P6jm/LuCY0s+dmDj4I19lm2WF/0Dc
- h6EW46sLGJMDjccBzSLzaxwtPBqAGKmp8yJ5YPx/6KjWuSI5uKfflinye9nddsW0pQGw
- zkDA==
+ bh=wQYzV8+rnwRE6otz4sKcjy11R0UGgMrdrlJKihkLPh4=;
+ b=FhHXv224pY8isMORuALvp+WQOInJHLIq+bYF8Uqp+zd0QcttwneoZ7G0UoBmyZj1b2
+ cGkZ/jvS0PCA0QMQ+T/RNpYxCj6OBnesHxHEkyGmq5Z7hUeo/hw68qY83Ma81YquQgBt
+ 1cyWZcqc8U6PvhBMybtykbTDkWaIV32JX8qXZopgUWWp7gaEaAZoN4oAB46QNup025ha
+ asmwWsXaXA3mBCAlCvbkEdIuhe8l0zvE/APSEWbPFvtqM0JPVKMflw7+M9f1zyWAtCt4
+ OCJCm+eO/QEKUyaFc3sg7LdYXOw3VS2ZzoC6Mgqf6MjiBOEZmJMTM5whu6ESlQe/Z8UQ
+ MqyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4bPrJqinwtjfCIQ5vR0WP6LSykrIYCniNIgKpLGmpeqwqy6J1C5pArahrT14lBiVRRZpyAdgErdOEtE0RNpgyN0siXTo=
-X-Gm-Message-State: AOJu0YwrKqTcJUZHUoSImYQcdL/dkMNVDBeTFFryn4HdwetY+5X9fpJ8
- pmGMvtUQ+cNoM4XmtqEpnBK/VnEao1Ao/9uDLYU9PzuuoiNuqVotHwS/nt9Obx/MsvUpaJTN/Kn
- iGjWsNaaLH57tF45XwhtDHyCVyldsBWtUExB6hwrRiGsgvyHJDsjn
-X-Received: by 2002:a05:6359:458a:b0:192:2980:ddf1 with SMTP id
- e5c5f4694b2df-197e50c84d1mr1357250655d.1.1716910353478; 
- Tue, 28 May 2024 08:32:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf9KiigBg2ZUes7BVR2zzKHPydEFbHImp6JTtklfWSgCg6BNU/yKyDzhl2HQta4tSWE4isNw==
-X-Received: by 2002:a05:6359:458a:b0:192:2980:ddf1 with SMTP id
- e5c5f4694b2df-197e50c84d1mr1357244255d.1.1716910352582; 
- Tue, 28 May 2024 08:32:32 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ac070dc53bsm45502126d6.41.2024.05.28.08.32.31
+ AJvYcCWorp9ZrJ7IYXv9b8oU3IYlxNCmLiDzHsmdvx9LwuVDzFjZWiEI/87j76kRzJ60aJksc0rv58OehDMmjfcUkdJ3r/xj4Pk=
+X-Gm-Message-State: AOJu0Yyo3SjLuhUW3EnoZwSSI4IiU7d94T/btFWX44uAL6LKbewFv/1g
+ KJ3y5IGaxvX6VQ3nVcnUPUfLIJ95QBvbv4VUn0EwcHfvGvU/PzyK7p+GFZImrWoGGFXIfQX5tV7
+ En1eBqKy0V3yDlThqH9ScNYEJf+XUxvrPgZvzTxuRtVKvcEkhdI9s
+X-Received: by 2002:adf:ce91:0:b0:351:dab1:1c72 with SMTP id
+ ffacd0b85a97d-3552fe19370mr7599684f8f.47.1716910350880; 
+ Tue, 28 May 2024 08:32:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+EjJbYml9ZPC1EA4nrJl4u7loDzN/rMkcvHeIKA6mRGkBXRNj6/MHL15gIjJC+iJKkn6TJg==
+X-Received: by 2002:adf:ce91:0:b0:351:dab1:1c72 with SMTP id
+ ffacd0b85a97d-3552fe19370mr7599660f8f.47.1716910350510; 
+ Tue, 28 May 2024 08:32:30 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-109.retail.telecomitalia.it.
+ [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35579d7db23sm12333075f8f.23.2024.05.28.08.32.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 08:32:32 -0700 (PDT)
-Date: Tue, 28 May 2024 11:32:30 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Liu, Yuan1" <yuan1.liu@intel.com>
-Cc: "farosas@suse.de" <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Zou, Nanhai" <nanhai.zou@intel.com>
-Subject: Re: [PATCH v6 2/7] migration/multifd: put IOV initialization into
- compression method
-Message-ID: <ZlX5DrANcMhYUFrW@x1n>
-References: <20240505165751.2392198-1-yuan1.liu@intel.com>
- <20240505165751.2392198-3-yuan1.liu@intel.com>
- <ZlTyLrRrSYkHjutG@x1n>
- <PH7PR11MB5941D090A40858C20DF9AED2A3F12@PH7PR11MB5941.namprd11.prod.outlook.com>
+ Tue, 28 May 2024 08:32:30 -0700 (PDT)
+Date: Tue, 28 May 2024 17:32:26 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Halil Pasic <pasic@linux.ibm.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
+ Marc Hartmayer <mhartmay@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>
+Subject: Re: [PATCH 1/1] vhost-vsock: add VIRTIO_F_RING_PACKED to feaure_bits
+Message-ID: <glq3neyd4vyzu4wgdrlq2a2ws7h4tn35dg2xaw4klc73zfj25k@pwotfsysvgqr>
+References: <20240429113334.2454197-1-pasic@linux.ibm.com>
+ <ps5dukcjk6yh3an3hlkynr227r7kcln7b5dxgwope62avz5ceo@decy6vkuu56j>
+ <20240527132710.4a7c372f.pasic@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <PH7PR11MB5941D090A40858C20DF9AED2A3F12@PH7PR11MB5941.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240527132710.4a7c372f.pasic@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,228 +108,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 28, 2024 at 01:36:38PM +0000, Liu, Yuan1 wrote:
-> > -----Original Message-----
-> > From: Peter Xu <peterx@redhat.com>
-> > Sent: Tuesday, May 28, 2024 4:51 AM
-> > To: Liu, Yuan1 <yuan1.liu@intel.com>
-> > Cc: farosas@suse.de; qemu-devel@nongnu.org; Zou, Nanhai
-> > <nanhai.zou@intel.com>
-> > Subject: Re: [PATCH v6 2/7] migration/multifd: put IOV initialization into
-> > compression method
-> > 
-> > On Mon, May 06, 2024 at 12:57:46AM +0800, Yuan Liu wrote:
-> > > Different compression methods may require different numbers of IOVs.
-> > > Based on streaming compression of zlib and zstd, all pages will be
-> > > compressed to a data block, so two IOVs are needed for packet header
-> > > and compressed data block.
-> > >
-> > > Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> > > Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-> > > ---
-> > >  migration/multifd-zlib.c |  7 +++++++
-> > >  migration/multifd-zstd.c |  8 +++++++-
-> > >  migration/multifd.c      | 22 ++++++++++++----------
-> > >  3 files changed, 26 insertions(+), 11 deletions(-)
-> > >
-> > > diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-> > > index 737a9645d2..2ced69487e 100644
-> > > --- a/migration/multifd-zlib.c
-> > > +++ b/migration/multifd-zlib.c
-> > > @@ -70,6 +70,10 @@ static int zlib_send_setup(MultiFDSendParams *p,
-> > Error **errp)
-> > >          goto err_free_zbuff;
-> > >      }
-> > >      p->compress_data = z;
-> > > +
-> > > +    /* Needs 2 IOVs, one for packet header and one for compressed data
-> > */
-> > > +    p->iov = g_new0(struct iovec, 2);
-> > > +
-> > >      return 0;
-> > >
-> > >  err_free_zbuff:
-> > > @@ -101,6 +105,9 @@ static void zlib_send_cleanup(MultiFDSendParams *p,
-> > Error **errp)
-> > >      z->buf = NULL;
-> > >      g_free(p->compress_data);
-> > >      p->compress_data = NULL;
-> > > +
-> > > +    g_free(p->iov);
-> > > +    p->iov = NULL;
-> > >  }
-> > >
-> > >  /**
-> > > diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-> > > index 256858df0a..ca17b7e310 100644
-> > > --- a/migration/multifd-zstd.c
-> > > +++ b/migration/multifd-zstd.c
-> > > @@ -52,7 +52,6 @@ static int zstd_send_setup(MultiFDSendParams *p, Error
-> > **errp)
-> > >      struct zstd_data *z = g_new0(struct zstd_data, 1);
-> > >      int res;
-> > >
-> > > -    p->compress_data = z;
-> > >      z->zcs = ZSTD_createCStream();
-> > >      if (!z->zcs) {
-> > >          g_free(z);
-> > > @@ -77,6 +76,10 @@ static int zstd_send_setup(MultiFDSendParams *p,
-> > Error **errp)
-> > >          error_setg(errp, "multifd %u: out of memory for zbuff", p->id);
-> > >          return -1;
-> > >      }
-> > > +    p->compress_data = z;
-> > > +
-> > > +    /* Needs 2 IOVs, one for packet header and one for compressed data
-> > */
-> > > +    p->iov = g_new0(struct iovec, 2);
-> > >      return 0;
-> > >  }
-> > >
-> > > @@ -98,6 +101,9 @@ static void zstd_send_cleanup(MultiFDSendParams *p,
-> > Error **errp)
-> > >      z->zbuff = NULL;
-> > >      g_free(p->compress_data);
-> > >      p->compress_data = NULL;
-> > > +
-> > > +    g_free(p->iov);
-> > > +    p->iov = NULL;
-> > >  }
-> > >
-> > >  /**
-> > > diff --git a/migration/multifd.c b/migration/multifd.c
-> > > index f317bff077..d82885fdbb 100644
-> > > --- a/migration/multifd.c
-> > > +++ b/migration/multifd.c
-> > > @@ -137,6 +137,13 @@ static int nocomp_send_setup(MultiFDSendParams *p,
-> > Error **errp)
-> > >          p->write_flags |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
-> > >      }
-> > >
-> > > +    if (multifd_use_packets()) {
-> > > +        /* We need one extra place for the packet header */
-> > > +        p->iov = g_new0(struct iovec, p->page_count + 1);
-> > > +    } else {
-> > > +        p->iov = g_new0(struct iovec, p->page_count);
-> > > +    }
-> > > +
-> > >      return 0;
-> > >  }
-> > >
-> > > @@ -150,6 +157,8 @@ static int nocomp_send_setup(MultiFDSendParams *p,
-> > Error **errp)
-> > >   */
-> > >  static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
-> > >  {
-> > > +    g_free(p->iov);
-> > > +    p->iov = NULL;
-> > >      return;
-> > >  }
-> > >
-> > > @@ -228,6 +237,7 @@ static int nocomp_send_prepare(MultiFDSendParams *p,
-> > Error **errp)
-> > >   */
-> > >  static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
-> > >  {
-> > > +    p->iov = g_new0(struct iovec, p->page_count);
-> > >      return 0;
-> > >  }
-> > >
-> > > @@ -240,6 +250,8 @@ static int nocomp_recv_setup(MultiFDRecvParams *p,
-> > Error **errp)
-> > >   */
-> > >  static void nocomp_recv_cleanup(MultiFDRecvParams *p)
-> > >  {
-> > > +    g_free(p->iov);
-> > > +    p->iov = NULL;
-> > >  }
-> > 
-> > Are recv_setup()/recv_cleanup() for zstd/zlib missing?
-> 
-> Zstd/zlib does not request the IOVs on the receiving side.
-> The zstd/zlib reads the compressed data into the buffer directly
-> 
-> qio_channel_read_all(p->c, (void *)z->zbuff, in_size, errp);
+On Mon, May 27, 2024 at 01:27:10PM GMT, Halil Pasic wrote:
+>On Thu, 16 May 2024 10:39:42 +0200
+>Stefano Garzarella <sgarzare@redhat.com> wrote:
+>
+>[..]
+>> >---
+>> >
+>> >This is a minimal fix, that follows the current patterns in the
+>> >codebase, and not necessarily the best one.
+>>
+>> Yeah, I did something similar with commit 562a7d23bf ("vhost: mask
+>> VIRTIO_F_RING_RESET for vhost and vhost-user devices") so I think for
+>> now is the right approach.
+>>
+>> I suggest to check also other devices like we did in that commit (e.g.
+>> hw/scsi/vhost-scsi.c, hw/scsi/vhost-user-scsi.c, etc. )
+>
+>Hi Stefano!
+>
+>Thank you for chiming in, and sorry for the late response. I was hoping
+>that Michael is going to chime in and that I can base my reply on his
+>take. Anyway here I  go.
+>
+>A very valid observation! I do agree that we need this for
+>basically every vhost device, and since:
+>* net/vhost-vdpa.c
+>* hw/net/vhost_net.c
+>* hw/virtio/vhost-user-fs.c
+>already have it, that translates to shotgun it to the rest. Which
+>isn't nice in my opinion, which is why I am hoping for a discussion
+>on this topic, and a better solution (even if it turns out to be
+>something like a common macro).
 
-Hmm indeed, thanks.
+Yeah, I see your point and I agree on a better solution.
 
-> 
-> > If the iov will be managed by the compressors, I'm wondering whether we
-> > should start assert(p->iov) after send|recv_setup(), and assert(!p->iov)
-> > after send|recv_cleanup().  That'll guard all these.
-> 
-> Yes, I agree with adding a check of IOV in multifd.c since different compressors 
-> may have different requirements for IOV.
-> 
-> We can add assert(p->iov) after send_setup, not recv_setup. The sending side always
-> uses IOV to send pages by qio_channel_writev_full_all in multifd.c, but the receiving
-> side may not require the IOV for reading pages.
-> 
-> It is better to add assert(!p->iov) after send|recv_cleanup()
+>[..]
+>> >
+>> >The documentation however does kind of state, that feature_bits is
+>> >supposed to contain the supported features. And under the assumption
+>> >that feature bit not in feature_bits implies that the corresponding bit
+>> >must not be set in the 3rd argument (features), then even with the
+>> >current implementation we do end up with the intersection of the three
+>> >as stated. And then vsock would be at fault for violating that
+>> >assumption, and my fix would be the best thing to do -- I guess.
+>> >
+>> >Is the implementation the way it is for a good reason, I can't judge
+>> >that with certainty for myself.
+>>
+>> Yes, I think we should fix the documentation, and after a few years of
+>> not looking at it I'm confused again about what it does.
+>>
+>
+>I would prefer to fix the algorithm and make whole thing less fragile.
+>
+>> But re-reading my commit for VIRTIO_F_RING_RESET, it seems that I had
+>> interpreted `feature_bits` (2nd argument) as a list of features that
+>> QEMU doesn't know how to emulate and therefore are required by the
+>> backend (vhost/vhost-user/vdpa). Because the problem is that `features`
+>> (3rd argument) is a set of features required by the driver that can be
+>> provided by both QEMU and the backend.
+>
+>Hm. I would say, this does sound like the sanest explanation, that might
+>justify the current code, but I will argue that for me, it isn't sane
+>enough.
+>
+>Here comes my argument.
+>
+>1) The uses is explicitly asking for a vhost device and giving the user
+>a non vhost device is not an option.
 
-In that case maybe we should at some time move iov out of MultiFDRecvParams
-as that's not a shared object, making MultiFDSendParams.compress_data
-points to iov for nocomp case.  But we can leave that for later.
+I didn't get this point :-( can you elaborate?
 
-Then I've no question on this patch, feel free to take (with/without the
-conditional assertions):
+>
+>2) The whole purpose of vhost is that at least the data plane is
+>implemented outside of QEMU (I am maybe a little sloppy here with
+>dataplane). That means a rather substantial portion of the device
+>implementation is not in QEMU, while QEMU remains in charge of the
+>setup.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Yep
+
+>
+>3) Thus I would argue, that all the "transport feature bits" from 24 to
+>40 should have a corresponding vhost feature because the vhost part needs
+>some sort of a support.
+>
+>What do we have there in bits from 24 to 40 according to the spec?
+>* VIRTIO_F_INDIRECT_DESC
+>* VIRTIO_F_EVENT_IDX
+>* VIRTIO_F_VERSION_1
+>* VIRTIO_F_ACCESS_PLATFORM
+>* VIRTIO_F_RING_PACKED
+>* VIRTIO_F_IN_ORDER
+>* VIRTIO_F_ORDER_PLATFORM
+>* VIRTIO_F_SR_IOV
+>* VIRTIO_F_NOTIFICATION_DATA
+>* VIRTIO_F_NOTIF_CONFIG_DATA
+>* VIRTIO_F_RING_RESET
+>and for transitional:
+>* VIRTIO_F_NOTIFY_ON_EMPTY
+>* VIRTIO_F_ANY_LAYOUT
+>* UNUSED
+>
+>I would say, form these only VIRTIO_F_SR_IOV and
+>VIRTIO_F_NOTIF_CONFIG_DATA look iffy in a sense things may work out
+>for vhost devices without the vhost part doing something for it. And
+>even there, I don't think it would hurt to make vhost part of the
+>negotiation (I don't think those are supported by QEMU at this point).
+>
+>I would very much prefer having a consolidated and safe handling for
+>these.
+
+I completely agree on this!
+
+>
+>4) I would also argue that a bunch of the device specific feature bits
+>should have vhost feature bits as well for the same reason:
+>features are also such that for a vhost device, the vhost part needs
+>some sort of a support.
+>
+>Looking through all of these would require a lot of time, so instead
+>of that, let me use SCSI as an example. The features are:
+>* VIRTIO_SCSI_F_INOUT
+>* VIRTIO_SCSI_F_HOTPLUG
+>* VIRTIO_SCSI_F_CHANGE
+>* VIRTIO_SCSI_F_T10_PI
+>
+>The in the Linux kernel we have
+>        VHOST_SCSI_FEATURES = VHOST_FEATURES | (1ULL << VIRTIO_SCSI_F_HOTPLUG) |
+>                                               (1ULL << VIRTIO_SCSI_F_T10_PI)
+>but in QEMU kernel_feature_bits does not have
+>VIRTIO_SCSI_F_T10_PI which together does not make much sense to me. And I would
+>also expect VIRTIO_SCSI_F_INOUT to be a part of the negotiation, because
+>to me that the side that is processing the queue is the one that should
+>care about it, but I don't think it is supported by QEMU at all, and
+>then not negotiating it is fine. VIRTIO_SCSI_F_HOTPLUG is in QEMU's
+>kernel_feature_bits and thus negotiated. in  So the only one that can be
+>done purely in QEMU seems to be VIRTIO_SCSI_F_CHANGE.
+>
+>And for vsock we have
+>VIRTIO_VSOCK_F_SEQPACKET and VIRTIO_VSOCK_F_STREAM, with VIRTIO_VSOCK_F_STREAM
+>being strange in a sense that the spec says "If no feature bit is set,
+>only stream socket type is supported. If VIRTIO_VSOCK_F_SEQPACKET has
+>been negotiated, the device MAY act as if VIRTIO_VSOCK_F_STREAM has also
+>been negotiated."
+
+Yes, this was a problem we introduced with F_SEQPACKET. Unfortunately, 
+when we added that feature, we didn't define F_STREAM well because the 
+devices always supported it. So we had to resort to this workaround.
+
+>
+>VIRTIO_VSOCK_F_SEQPACKET is negotiated with vhost.
+>
+>It seems for whatever reason we just assume that the vhost device
+>supports VIRTIO_VSOCK_F_STREAM and that is why we don't negotiate it. I
+>would assume based on what I see that the feature VIRTIO_VSOCK_F_STREAM
+>was retrofitted, and that is what we ended up with. Thus I guess now
+>we have an implicit rule that any QEMU compatible vhost-vsock
+>implementation would have to support that. But in practice we care only
+>about Linux, and thus it does not matter.
+
+Yep, is this, but I have in my todo to fix this somehow.
+
+>
+>5) Based on the following, I would very much prefer a per device list of
+>features with the semantic "hey QEMU can do that feature without any
+>specialized vhost-device support (e.g. like VIRTIO_SCSI_F_CHANGE)" over
+>the current list with the semantics "these are the features that
+>need vhost backend support, and anything else will just work out". That
+>way if an omission is made, we would end up with the usually safer
+>under-indication  instead of the current over-indication.
+
+Makes sense to me!
+
+>
+>
+>@Michael, Jason: Could you guys chime in?
+>
+>>
+>> >
+>> >But I'm pretty convinced that the current approach is fragile,
+>> >especially for the feature bits form the range 24 to 40, as those are
+>> >not specific to a device.
+>> >
+>> >BTW vsock also lacks VIRTIO_F_ACCESS_PLATFORM, and VIRTIO_F_RING_RESET
+>> >as well while vhost-net has both.
+>>
+>> VIRTIO_F_RING_RESET is just above the line added by this patch.
+>>
+>
+>My bad! :)
+>> >
+>
+>> >If our design is indeed to make the individual devices responsible for
+>> >having a complete list of possible features in feature_bits, then at
+>> >least having a common macro for the non-device specific features would
+>> >make sense to me.
+>>
+>> Yeah, I agree on this!
+>
+>I guess, "possible features" shifted towards "possible features that QEMU
+>can not provide without the vhost backend".
+>
+>But some sort of a common list does seem viable. I would however prefer
+>a can do without list, or maybe even two ("can do without because I do it
+>myself and alone" and "can do without, because although I must rely on a
+>vhost capability to provide that feature, the presence of that capability
+>is not indicated via the feature bits and based on knowing how things are
+>I'm assuming the capability is there although not specifically
+>indicated".
+>
+>>
+>> >
+>> >On the other hand, I'm also very happy to send a patch which changes the
+>> >behavior of vhost_get_features(), should the community decide that the
+>> >current behavior does not make all that much sense -- I lean towards:
+>> >probably it does not make much sense, but things like
+>> >VIRTIO_F_ACCESS_PLATFORM, which are mandatory feature bits, need careful
+>> >consideration, because there vhost can't do so we just won't offer it
+>> >and proceed on our merry way is not the right behavior.
+>> >
+>> >Please comment!
+>>
+>> Maybe we should discuss it in another thread, but I agree that we should
+>> fix it in someway. Thank you for raising this discussion!
+>>
+>
+>Hm, I ended up replying in this thread because we still don't have
+>closure on this patch. But if you think it makes, feel free to start a
+>different thread, and please do include me.
+
+I see, this thread is fine!
+
+>
+>
+>> >
+>> >Regards,
+>> >Halil
+>> >---
+>> > hw/virtio/vhost-vsock-common.c | 1 +
+>> > 1 file changed, 1 insertion(+)
+>>
+>> This patch LGTM, but as I mention we should fix other devices as well,
+>> but maybe we can do with the common macro you suggested in another
+>> patch.
+>
+>I agree, this should be definitely another patch or even series
+>depending on how the discussion pans out.
+
+Ack!
 
 Thanks,
-
-> 
-> > >
-> > >  /**
-> > > @@ -783,8 +795,6 @@ static bool
-> > multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-> > >      p->packet_len = 0;
-> > >      g_free(p->packet);
-> > >      p->packet = NULL;
-> > > -    g_free(p->iov);
-> > > -    p->iov = NULL;
-> > >      multifd_send_state->ops->send_cleanup(p, errp);
-> > >
-> > >      return *errp == NULL;
-> > > @@ -1179,11 +1189,6 @@ bool multifd_send_setup(void)
-> > >              p->packet = g_malloc0(p->packet_len);
-> > >              p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
-> > >              p->packet->version = cpu_to_be32(MULTIFD_VERSION);
-> > > -
-> > > -            /* We need one extra place for the packet header */
-> > > -            p->iov = g_new0(struct iovec, page_count + 1);
-> > > -        } else {
-> > > -            p->iov = g_new0(struct iovec, page_count);
-> > >          }
-> > >          p->name = g_strdup_printf("multifdsend_%d", i);
-> > >          p->page_size = qemu_target_page_size();
-> > > @@ -1353,8 +1358,6 @@ static void
-> > multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-> > >      p->packet_len = 0;
-> > >      g_free(p->packet);
-> > >      p->packet = NULL;
-> > > -    g_free(p->iov);
-> > > -    p->iov = NULL;
-> > >      g_free(p->normal);
-> > >      p->normal = NULL;
-> > >      g_free(p->zero);
-> > > @@ -1602,7 +1605,6 @@ int multifd_recv_setup(Error **errp)
-> > >              p->packet = g_malloc0(p->packet_len);
-> > >          }
-> > >          p->name = g_strdup_printf("multifdrecv_%d", i);
-> > > -        p->iov = g_new0(struct iovec, page_count);
-> > >          p->normal = g_new0(ram_addr_t, page_count);
-> > >          p->zero = g_new0(ram_addr_t, page_count);
-> > >          p->page_count = page_count;
-> > > --
-> > > 2.39.3
-> > >
-> > 
-> > --
-> > Peter Xu
-> 
-
--- 
-Peter Xu
+Stefano
 
 
