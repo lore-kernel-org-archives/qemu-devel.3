@@ -4,61 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7154CC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D64FC27C43
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBrDW-0007ll-2D; Tue, 28 May 2024 03:25:54 -0400
+	id 1sBrIu-0003eH-6b; Tue, 28 May 2024 03:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
- id 1sBrDT-0007kc-C7; Tue, 28 May 2024 03:25:51 -0400
-Received: from zg8tmja2lje4os43os4xodqa.icoremail.net ([206.189.79.184])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <duchao@eswincomputing.com>)
- id 1sBrDN-0000UX-MO; Tue, 28 May 2024 03:25:51 -0400
-Received: from localhost.localdomain (unknown [10.12.130.31])
- by app2 (Coremail) with SMTP id TQJkCgCHjLlhhlVmgzQNAA--.46423S4;
- Tue, 28 May 2024 15:23:13 +0800 (CST)
-From: Chao Du <duchao@eswincomputing.com>
-To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- ajones@ventanamicro.com, alistair23@gmail.com, bin.meng@windriver.com,
- liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, anup@brainfault.org,
- duchao713@qq.com
-Subject: [PATCH v2 0/3] target/riscv/kvm: QEMU support for KVM Guest Debug on
- RISC-V
-Date: Tue, 28 May 2024 07:20:45 +0000
-Message-Id: <20240528072048.25529-1-duchao@eswincomputing.com>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: TQJkCgCHjLlhhlVmgzQNAA--.46423S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zw1xZryDZr1UKr1xtw18Zrb_yoW8Xr4Dpa
- 1F9F98CrZIqrWfG3ySk3WkWr15Zws5Cr1UZw1xZw4Sqr45ZayrArn2g398Wr17A3y8GFyj
- kFnI9r9F9F1qvrJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvIb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwV
- C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
- 0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
- 1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4IIrI8v6xkF7I0E8cxan2IY
- 04v7MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s
- 026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_
- Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20x
- vEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE
- 14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf
- 9x07j04E_UUUUU=
-X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/
-Received-SPF: pass client-ip=206.189.79.184;
- envelope-from=duchao@eswincomputing.com;
- helo=zg8tmja2lje4os43os4xodqa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sBrIs-0003dV-3x
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 03:31:26 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sBrIq-0001fF-Lg
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 03:31:25 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6f850ff30c0so388987b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 00:31:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1716881482; x=1717486282; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CjhHPP7vOg4Je4fWmMAQqc6bZgvVI0+REKHt2VsCjAE=;
+ b=cpWzqzT/C8oWMG4FnHggiapJtVuKvitCFxDE7ajW8jHRfnKPuvVYk12Nd4jr6ZkCbz
+ Znt+pKlTaM6p+Oa4FtbVVmbA9V0nviC8DX1wFjpDDIC+vMZOH9lOZ7Q8n6ciD9v+Wx0J
+ 5uYajpk/CvnlErWirmgkkyngxQB0iIfnRWBT1kkIfOTW0yoROhGLKWCm/PeE4qCgWEZ7
+ ti3Hz1TfuLOc/+tVZsqggpr3ohVjb3bwu/FmFlcFfSWXYGzKAsdwhn1S+JWfCDegGiU/
+ VWwSnxBy+WZvuVHTREgaZjm+wkIJfW/yzWi6CcvoT17lPbJ6sNV6m7hw3cpB0cH7IrC/
+ q7Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716881482; x=1717486282;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CjhHPP7vOg4Je4fWmMAQqc6bZgvVI0+REKHt2VsCjAE=;
+ b=xPwy8RUyaRUeX7BYcRYoPnsU4vgBmRsnVoj+Fqm+eRPbHnj++ZrzgeGI5skcB2EdXS
+ xZjk6Wgk60tK7NDmYzlCKRoIlMvL3hqt0S07Zgu4N9JdtCs6Yig5ZgqAHszuALUnDDX4
+ zJjb18EhDZzHF3oR7ikVFPJpVAHaFrXIAq9PW75I0tLiluydQgeSbfYZFE4VhkRVrsTh
+ GI7PxdUgwb1qe+p6urOujorsAo7klm22WhzQMrg0XRZES194a68F/Fb+26sniCpdT+up
+ oESEalkg5Sb1wJDbQ0rvl9VOagET6zMY+uhKgQRwWn7IG6Rp8lfUHcM5NdorHuDYzG8a
+ b31A==
+X-Gm-Message-State: AOJu0YxQBUBUwBFteDRjrU5ZtTLVUkMtYma9OSzKOQ7v8h0nppITgj6V
+ v3U6IXo32iQ94sBsTfOjVAowELKIDMrHaMRqUXF70HOS/XDZG1+yY9xQ+/3dDmIohsZ88MOWJAK
+ OXnM=
+X-Google-Smtp-Source: AGHT+IHYK0ZPPN4VaxpomOg8fdu+YLnB+8841SSBGz3Z+UQro/bIcIuQzWMMW+pdnTk22S5murylDA==
+X-Received: by 2002:a05:6a00:6c9f:b0:6f8:ec8e:a273 with SMTP id
+ d2e1a72fcca58-6f8f38f9588mr13609241b3a.19.1716881482121; 
+ Tue, 28 May 2024 00:31:22 -0700 (PDT)
+Received: from sunil-pc.Dlink ([106.51.188.31])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f8fd4d51a2sm5881080b3a.189.2024.05.28.00.31.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 May 2024 00:31:21 -0700 (PDT)
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>
+Subject: [PATCH 3/3] hw/riscv/virt-acpi-build.c: Update the HID of RISC-V UART
+Date: Tue, 28 May 2024 13:01:03 +0530
+Message-Id: <20240528073103.1075812-4-sunilvl@ventanamicro.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
+References: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,46 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implements QEMU KVM Guest Debug on RISC-V, with which we
-could debug RISC-V KVM guest from the host side, using software
-breakpoints.
+RISC-V is going to use new HID RSCV0003 for generi UART. So, update the
+HID.
 
-This series is based on riscv-to-apply.next branch (v9.0.0) and is also
-available at:
-https://github.com/Du-Chao/alistair23-qemu/tree/riscv-to-apply.next.0528
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+---
+ hw/riscv/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The corresponding KVM side patches have been merged already:
-https://lore.kernel.org/kvm/20240402062628.5425-1-duchao@eswincomputing.com/
-
-A TODO list which will be added later:
-1. HW breakpoints support
-2. A 'corner case' in which the debug exception is not inserted by the
-debugger, need to be re-injected to the guest.
-
-v1->v2:
-- squash patch #2 into #1
-- check the instruction length from the tail two bits, instead of passing the
-  length information by parameters.
-
-RFC->v1:
-- Rebased on riscv-to-apply.next
-- use configs/ definition to conditionalize debug support
-
-v1 link:
-https://lore.kernel.org/qemu-riscv/20240527021916.12953-1-duchao@eswincomputing.com/
-RFC link:
-https://lore.kernel.org/qemu-riscv/20231221094923.7349-1-duchao@eswincomputing.com/
-
-Chao Du (3):
-  target/riscv/kvm: add software breakpoints support
-  target/riscv/kvm: handle the exit with debug reason
-  target/riscv/kvm: define TARGET_KVM_HAVE_GUEST_DEBUG
-
- configs/targets/riscv64-softmmu.mak |  1 +
- target/riscv/kvm/kvm-cpu.c          | 89 +++++++++++++++++++++++++++++
- 2 files changed, 90 insertions(+)
-
---
-2.17.1
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 47ec78e432..7f80368415 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -192,7 +192,7 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+                     uint32_t uart_irq)
+ {
+     Aml *dev = aml_device("COM0");
+-    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
++    aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0003")));
+     aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+ 
+     Aml *crs = aml_resource_template();
+-- 
+2.40.1
 
 
