@@ -4,66 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5A6C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 09:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23FA2C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 09:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBtVm-00077z-Lg; Tue, 28 May 2024 05:52:55 -0400
+	id 1sBtYC-0008Dm-77; Tue, 28 May 2024 05:55:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
- id 1sBtVb-00076g-1T; Tue, 28 May 2024 05:52:43 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBtYA-0008Cs-92
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 05:55:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
- id 1sBtVZ-00013w-7c; Tue, 28 May 2024 05:52:42 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VpSVW54HQz4x2k;
- Tue, 28 May 2024 19:52:35 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sBtXz-0001Th-Sv
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 05:55:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716890109;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VbjWTX0IAyGFh5ROBlKm+brQjNdOElgFKhl1FyIFjwM=;
+ b=cD989NCIsElO/ri6xSQ+0nVnB4yrXqmxxUbEVRhZ3QBc2D2lI5tqjed50a+37hW4PeTgrZ
+ 9U5yUbBzD+GbNwDm3fo/gZW/CEY9tVtp3uZEjGgKol838AESNHefZxnz3SHN+KYRwLR6BN
+ KjhBrwHZzfyCJD/kAGrzPhxUXjUnFvo=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-oNxVmxAsNNqV0F2uhqS7oA-1; Tue,
+ 28 May 2024 05:55:05 -0400
+X-MC-Unique: oNxVmxAsNNqV0F2uhqS7oA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VpSVP736Bz4wyw;
- Tue, 28 May 2024 19:52:29 +1000 (AEST)
-Message-ID: <1d927a59-8bd5-4407-b3bc-b50bfa0fe93d@kaod.org>
-Date: Tue, 28 May 2024 11:52:25 +0200
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 027B53806711;
+ Tue, 28 May 2024 09:55:05 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.232])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8C97440004D;
+ Tue, 28 May 2024 09:55:04 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 1EC491800DFF; Tue, 28 May 2024 11:55:00 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 4/4] usb/hub: deprecate, don't build by default
+Date: Tue, 28 May 2024 11:54:59 +0200
+Message-ID: <20240528095459.896594-5-kraxel@redhat.com>
+In-Reply-To: <20240528095459.896594-1-kraxel@redhat.com>
+References: <20240528095459.896594-1-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/16] aspeed/sdmc: Add AST2700 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
- <20240527080231.1576609-6-jamin_lin@aspeedtech.com>
- <9476cfcc-5a7c-4b76-a684-1361463bd161@linaro.org>
- <b01604af-5fa7-469f-98e9-c23b3a668a2e@kaod.org>
- <933822dc-de0e-4180-90f9-d951aed30aec@linaro.org>
- <SI2PR06MB5041CD54D31762371A757C48FCF12@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <9dfa5ca2-56a9-49c4-a651-044dc952f67b@kaod.org>
- <SI2PR06MB5041A8BD40F5BEC60A4A3A76FCF12@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041A8BD40F5BEC60A4A3A76FCF12@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=HxTW=M7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,32 +84,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[ ... ]
+The hub supports only USB 1.1.  When running out of usb ports it is in
+almost all cases the much better choice to add another usb host adapter
+(or increase the number of root ports when using xhci) instead of using
+the usb hub.
 
->> I don't think this is necessary to do so now. Possibly, increase the version
->> number in the vmstate when resending a v5.
->>
-> If I understand your request, do you mean to change as following in this patch?
-> 
-> static const VMStateDescription vmstate_aspeed_sdmc = {
->      .name = "aspeed.sdmc",
->      .version_id = 1,  ---> Change 2
->      .minimum_version_id = 1, ---> Change 2
-> };
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ hw/usb/dev-hub.c | 1 +
+ hw/usb/Kconfig   | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-yes.
+diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
+index 06e9537d0356..68444d39534f 100644
+--- a/hw/usb/dev-hub.c
++++ b/hw/usb/dev-hub.c
+@@ -686,6 +686,7 @@ static void usb_hub_class_initfn(ObjectClass *klass, void *data)
+     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+     dc->fw_name = "hub";
+     dc->vmsd = &vmstate_usb_hub;
++    klass->deprecation_note = "use more root ports or additional hostadapters instead";
+     device_class_set_props(dc, usb_hub_properties);
+ }
+ 
+diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+index c4a6ea5a687f..a8644c43296b 100644
+--- a/hw/usb/Kconfig
++++ b/hw/usb/Kconfig
+@@ -66,7 +66,6 @@ config TUSB6010
+ 
+ config USB_HUB
+     bool
+-    default y
+     depends on USB
+ 
+ config USB_HID
+-- 
+2.45.1
 
-
->> Also, all Aspeed models should be addressed and that's beyond the scope of
->> this series.
->>
-> 
-> And create a new patch series to update all vmstate version for all ASPEED models?
-
-That would be to remove migration support for Aspeed machines. For later.
-Let's address AST2700 first.
-
-Thanks,
-
-C.
 
