@@ -4,65 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9105FC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8493AC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:53:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBsVq-00019P-H4; Tue, 28 May 2024 04:48:54 -0400
+	id 1sBsa0-0005ID-5i; Tue, 28 May 2024 04:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sBsVo-00017c-Hi
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:48:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sBsZx-0005HZ-Q0; Tue, 28 May 2024 04:53:09 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sBsVm-00070F-Vu
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:48:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716886129;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=r2xaqvTHatNhvayC0GM+AOV1LR8/BeWZG02iVIpy+A8=;
- b=g9EFw4K06h99/WTBc9ed84CBRyMqeGNaYNhTQL574sNYdjbZ8RjMJhab5aHX7B/nYQ3JSP
- dl9fwhu9FdCQQO/j0YlEme8ErHzJmzqQyeaUSaViQepyUyjMJYCmLbV6Uh8DfXnKDBNQIU
- j5wlOurks3098/3LsxY2OLoCVyTKbUM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-d5QEKLr-MLKT7CdP_O0o_Q-1; Tue, 28 May 2024 04:48:47 -0400
-X-MC-Unique: d5QEKLr-MLKT7CdP_O0o_Q-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DD2B580028D;
- Tue, 28 May 2024 08:48:46 +0000 (UTC)
-Received: from server.redhat.com (unknown [10.72.112.68])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E1F152818;
- Tue, 28 May 2024 08:48:43 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH v2] virtio-pci: Fix the failure process in
- kvm_virtio_pci_vector_use_one()
-Date: Tue, 28 May 2024 16:48:15 +0800
-Message-ID: <20240528084840.194538-1-lulu@redhat.com>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sBsZw-0007rb-7F; Tue, 28 May 2024 04:53:09 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44S8eW7E001756; Tue, 28 May 2024 08:52:59 GMT
+DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
+ _d=3Dibm.com; _h=3Dcc?=
+ =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
+ =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3DUvX?=
+ =?UTF-8?Q?VtoOG6UaBYz+sXFrhBhPFVX3FFYKTYsvfwZKRs5g=3D;_b=3DMd3YZq2fdgvemq?=
+ =?UTF-8?Q?QkETw5oLuea2mV1nRY8dn9H4yBe6R2An37qh3AZi2qqBBx2hb/oDpF_AUiDvLdW?=
+ =?UTF-8?Q?I55wU6GF8yW8IoiEstmix4hoofV3DavZ7eeWojYPIa8x/9VxD4QASoaMB42W_v6?=
+ =?UTF-8?Q?7bGQ+lJlZhgl0QXKzhftxNMGv+CDplqr8m4XFL4znKIdm8yJw3FBjuNv2NChnhz?=
+ =?UTF-8?Q?3Un_oN+zHOHe9gWBTlDPHezL0vgbNEJM2KKnSWcYzSdp4s3eG6U9GgIWfea1SUd?=
+ =?UTF-8?Q?a1pMznMNv_NZgbxl+3ZarqFxo/QJdsVis5ro48NrRzsNhjI5qFaKUpdBfx47T18?=
+ =?UTF-8?Q?xDp9mGm9CmK7FTM_kw=3D=3D_?=
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd9048h16-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 08:52:58 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44S8qwxq021979;
+ Tue, 28 May 2024 08:52:58 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd9048h14-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 08:52:58 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44S61AMr004511; Tue, 28 May 2024 08:52:57 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ybuanwujn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 May 2024 08:52:57 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44S8qsB217433270
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 May 2024 08:52:57 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B553D58059;
+ Tue, 28 May 2024 08:52:54 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62AFA58043;
+ Tue, 28 May 2024 08:52:52 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 May 2024 08:52:52 +0000 (GMT)
+Message-ID: <e18f4a73-055c-4fc9-bad8-26a9a70fe081@linux.ibm.com>
+Date: Tue, 28 May 2024 14:22:51 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 06/10] ppc: Add a core_index to CPUPPCState for SMT
+ vCPUs
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+References: <20240526122612.473476-1-npiggin@gmail.com>
+ <20240526122612.473476-7-npiggin@gmail.com>
+ <0d8011f6-653f-49fb-9cd8-008fc0029d78@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <0d8011f6-653f-49fb-9cd8-008fc0029d78@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ew4yztaZhC1wrGKQXQLOTFQ_BwF3mOqO
+X-Proofpoint-ORIG-GUID: aj7U-yHPXbBsxzU379u54Re0atiVkpS3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-28_05,2024-05-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=937 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405280064
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,59 +121,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In function kvm_virtio_pci_vector_use_one(), the function will only use
-the irqfd/vector for itself. Therefore, in the undo label, the failing
-process is incorrect.
-To fix this, we can just remove this label.
+corrected typo, it's bitwise.
 
-Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Cindy Lu <lulu@redhat.com>
----
- hw/virtio/virtio-pci.c | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
-
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index b1d02f4b3d..8a9d0f6ef5 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -892,7 +892,7 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
-     }
-     ret = kvm_virtio_pci_vq_vector_use(proxy, vector);
-     if (ret < 0) {
--        goto undo;
-+        return ret;
-     }
-     /*
-      * If guest supports masking, set up irqfd now.
-@@ -902,25 +902,11 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
-         ret = kvm_virtio_pci_irqfd_use(proxy, n, vector);
-         if (ret < 0) {
-             kvm_virtio_pci_vq_vector_release(proxy, vector);
--            goto undo;
-+            return ret;
-         }
-     }
- 
-     return 0;
--undo:
--
--    vector = virtio_queue_vector(vdev, queue_no);
--    if (vector >= msix_nr_vectors_allocated(dev)) {
--        return ret;
--    }
--    if (vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
--        ret = virtio_pci_get_notifier(proxy, queue_no, &n, &vector);
--        if (ret < 0) {
--            return ret;
--        }
--        kvm_virtio_pci_irqfd_release(proxy, n, vector);
--    }
--    return ret;
- }
- static int kvm_virtio_pci_vector_vq_use(VirtIOPCIProxy *proxy, int nvqs)
- {
--- 
-2.43.0
-
+On 5/28/24 14:18, Harsh Prateek Bora wrote:
+>> -    (POWERPC_CPU(cs)->env.spr_cb[SPR_PIR].default_value & 
+>> ~(cs->nr_threads - 1))
+>> +    (POWERPC_CPU(cs)->env.core_index)
+> 
+> Dont we want to keep the bitwise & with ~(cs->nr_threads - 1) ?
+> How's it taken care ?
 
