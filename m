@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E4FC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13503C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBmqs-00075l-Qu; Mon, 27 May 2024 22:46:16 -0400
+	id 1sBmqP-0006Rt-Hr; Mon, 27 May 2024 22:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmqF-00062A-CY
- for qemu-devel@nongnu.org; Mon, 27 May 2024 22:45:43 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1sBmqA-0005vL-HC; Mon, 27 May 2024 22:45:32 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmqD-00045N-Fc
- for qemu-devel@nongnu.org; Mon, 27 May 2024 22:45:35 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6fbbd937719so241728b3a.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 19:45:33 -0700 (PDT)
+ id 1sBmq8-00043J-OF; Mon, 27 May 2024 22:45:30 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1f4c7b022f8so2375945ad.1; 
+ Mon, 27 May 2024 19:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716864332; x=1717469132; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716864326; x=1717469126; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b2k2JrhvujZewE6TU0J5JDl6R03TzuPE/F+i9deQBKY=;
- b=nhoWgsmRtOrXM0ToJIn6UIrUrqInSIoRfnvFppZZeCVrl/jPNmePGJOWafOgm2SNRe
- 77cnFKoZxoe/8GPMxkIcPWyRRQ1jRk3zflUR9YUEpyTyCQg/EUBBObpldLan7SsLa+Mk
- W8vQDVQB0EtGn9vSzgMNVwYGYuGcx2NEyVo0OfBg7FVk/ffzmCo7ez3NO3XaL5O/wOSR
- WuVQ8MZGJXHjshOA4vUpw2IF0U07NeSPWDxPCh65sUf4PyuS0pnSt00oovhBAWzXb+lB
- e4zylc95RcYlGSPVpFjfLXkI/HgWP2gR5e2r+8zdEW1TWdgT3NRMwQyNkl97bayoAwel
- 3GSw==
+ bh=yN3SL80ZeNYtdgHnSA4EmYhdmlHM54QOJLaD6qM4+6Q=;
+ b=Exg18F5tMK73OaxP3bNlTlhrnSNuifOaypvwpimkoXwWTfi/vK5EeTsoVb107dV03W
+ 2fEV+b5Fw0z5oruh/mFSW3FzCnZ//+jPWvuB+5vcDxqgNS8nODYew+gVTmLZxEkOJ8d1
+ 9Li0Yl7LQq9YDcT9JL5tORJXZN0lwON+B07tSAag87kEAn6OhR/lMF1tEUocLBzlyVfp
+ GGpaaKWWphZ2FnfmRU8SP76RHujMEbhi2giBs384x0MRmBDKsYPgsHkqSdxuMYbKjws2
+ TTmKWmU9vvpPqL3ARr8957nuboV7fNN5mGlbmqocUzMwa2NF+yIsBE8eCqjDPT7ZaXnX
+ ipBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716864332; x=1717469132;
+ d=1e100.net; s=20230601; t=1716864326; x=1717469126;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b2k2JrhvujZewE6TU0J5JDl6R03TzuPE/F+i9deQBKY=;
- b=t+YXusN/yh4TlCmpvb3+qLPHA9rVjV+PvPfZxjRUkD6Wlt4trUDMoqmL9wFCLdqOGs
- wPUvv/zZqvPZLUvSmE7zbovJaW3kUV+y0T/UV5B92ggg7TKnjzladdFmU+EYl4KdhREQ
- fgED6kjHBsIzhjb+BqUUjTA4OFtNIDY0s8JxmJuZq+g1GLzpT+upy+6e9bWFTv702z6U
- cvsIhySZDSR41cl+jCVrAD6Rajcd4+VWe2XcThuUzMMoweQFHgsK+y67uJb+jD770XX3
- doz6EpK+Pn5zrjfjrF36gfZBa/rtdW2fN3eyG8rUiOL2Vc+bVtNMhzTO8t6X+5mGaXSU
- ghsA==
-X-Gm-Message-State: AOJu0YxpamDCgY7IxmtSgEkzCfSLTiNs7bmtUXNJy6p5v6kvYXGVuW1S
- wBCyBPvoABA29FY+WUfeq9DC+WY/yeS2eypZI4CL4jO9UvqU5rVukuedhQ==
-X-Google-Smtp-Source: AGHT+IHipy1f+6W3GSLixn+9pEXwaqtvUdyqFVajNwwfuW3zR1wnfGlMOVEmG/V2bglD+qPnM+07cg==
-X-Received: by 2002:a05:6a20:9d92:b0:1ae:4264:a324 with SMTP id
- adf61e73a8af0-1b212cc77cdmr13293992637.11.1716864331796; 
- Mon, 27 May 2024 19:45:31 -0700 (PDT)
+ bh=yN3SL80ZeNYtdgHnSA4EmYhdmlHM54QOJLaD6qM4+6Q=;
+ b=UoSruCLoIZZJ69kpaRg29x0fliTNSuucjjDMSM7T7TI9qsY/FtyVBo4QWQF57MydTv
+ O7l6MZkp07G5XxUjdfKOwmK9gLobTYbUOFXURUpUVwNLq7Mcr0877AgQ/qQxaNOq9GIz
+ BRH2t6cnay2PSCQfrgls7jkBEzeXWnO9j9/qUpcKw6LFdCp+y5ONeZgq0jaI8H7U/XlB
+ ridvBlbQYDr79DnKqmcjck2vrdDi1HTVc99E52hb5xudS5z7zakAcOlTzW0dEIlsmpGW
+ qhkELgowmSIf9mqN/RjRSSyvGT5cjHbtO301rb8VJ5cO9Otb63fTIbMZy42dJZjcSnU9
+ O0Dg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsGNDFSOhnxqFctu90I8VhtxyfpCraiPdY9A3FlhRXypcVeftYl6rFE6RRLm+KOA4EYhrkVokv2QAiKbZsdP7eYzZvmQCi
+X-Gm-Message-State: AOJu0YwD3o/JNyLDWlcFxG7h9hdXtSX5uxO5+jHA3DEPyb6tVlOeH3D9
+ PKBLNkKB5yEgSfLZzfd77nsuSu2fxkWEFA5GN0c0OF+xAfDC5znklF5UMQ==
+X-Google-Smtp-Source: AGHT+IE2sA0VgTzSkcni8oDsYxKZiM5vXKZauNaaAQl2WAGLA7Dfo1+LuYCXjx32GnkLfSOyA75bkA==
+X-Received: by 2002:a17:902:d50c:b0:1f4:b313:3e9a with SMTP id
+ d9443c01a7336-1f4b3134380mr31282465ad.65.1716864325829; 
+ Mon, 27 May 2024 19:45:25 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.45.29
+ d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.45.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 19:45:31 -0700 (PDT)
+ Mon, 27 May 2024 19:45:25 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Yu-Ming Chang <yumin686@andestech.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 28/28] target/riscv: raise an exception when CSRRS/CSRRC writes
- a read-only CSR
-Date: Tue, 28 May 2024 12:43:28 +1000
-Message-ID: <20240528024328.246965-29-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Robin Dapp <rdapp.gcc@gmail.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PULL 26/28] riscv,
+ gdbstub.c: fix reg_width in ricsv_gen_dynamic_vector_feature()
+Date: Tue, 28 May 2024 12:43:26 +1000
+Message-ID: <20240528024328.246965-27-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240528024328.246965-1-alistair.francis@wdc.com>
 References: <20240528024328.246965-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,166 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yu-Ming Chang <yumin686@andestech.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Both CSRRS and CSRRC always read the addressed CSR and cause any read side
-effects regardless of rs1 and rd fields. Note that if rs1 specifies a register
-holding a zero value other than x0, the instruction will still attempt to write
-the unmodified value back to the CSR and will cause any attendant side effects.
+Commit 33a24910ae changed 'reg_width' to use 'vlenb', i.e. vector length
+in bytes, when in this context we want 'reg_width' as the length in
+bits.
 
-So if CSRRS or CSRRC tries to write a read-only CSR with rs1 which specifies
-a register holding a zero value, an illegal instruction exception should be
-raised.
+Fix 'reg_width' back to the value in bits like 7cb59921c05a
+("target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'") set
+beforehand.
 
-Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+While we're at it, rename 'reg_width' to 'bitsize' to provide a bit more
+clarity about what the variable represents. 'bitsize' is also used in
+riscv_gen_dynamic_csr_feature() with the same purpose, i.e. as an input to
+gdb_feature_builder_append_reg().
+
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Reported-by: Robin Dapp <rdapp.gcc@gmail.com>
+Fixes: 33a24910ae ("target/riscv: Use GDBFeature for dynamic XML")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240403070823.80897-1-yumin686@andestech.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240517203054.880861-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h       |  4 ++++
- target/riscv/csr.c       | 51 ++++++++++++++++++++++++++++++++++++----
- target/riscv/op_helper.c |  6 ++---
- 3 files changed, 53 insertions(+), 8 deletions(-)
+ target/riscv/gdbstub.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 12d8b5344a..1501868008 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -709,6 +709,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
- void riscv_cpu_update_mask(CPURISCVState *env);
- bool riscv_cpu_is_32bit(RISCVCPU *cpu);
- 
-+RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-+                          target_ulong *ret_value);
- RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-                            target_ulong *ret_value,
-                            target_ulong new_value, target_ulong write_mask);
-@@ -741,6 +743,8 @@ typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
-                                           target_ulong new_value,
-                                           target_ulong write_mask);
- 
-+RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
-+                               Int128 *ret_value);
- RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
-                                 Int128 *ret_value,
-                                 Int128 new_value, Int128 write_mask);
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 58ef7079dc..57f831fedc 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -4322,7 +4322,7 @@ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
- 
- static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
-                                                int csrno,
--                                               bool write_mask)
-+                                               bool write)
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index d0cc5762c2..c07df972f1 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -288,7 +288,7 @@ static GDBFeature *riscv_gen_dynamic_csr_feature(CPUState *cs, int base_reg)
+ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
  {
-     /* check privileges and return RISCV_EXCP_ILLEGAL_INST if check fails */
-     bool read_only = get_field(csrno, 0xC00) == 3;
-@@ -4344,7 +4344,7 @@ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+     RISCVCPU *cpu = RISCV_CPU(cs);
+-    int reg_width = cpu->cfg.vlenb;
++    int bitsize = cpu->cfg.vlenb << 3;
+     GDBFeatureBuilder builder;
+     int i;
+ 
+@@ -298,7 +298,7 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
+ 
+     /* First define types and totals in a whole VL */
+     for (i = 0; i < ARRAY_SIZE(vec_lanes); i++) {
+-        int count = reg_width / vec_lanes[i].size;
++        int count = bitsize / vec_lanes[i].size;
+         gdb_feature_builder_append_tag(
+             &builder, "<vector id=\"%s\" type=\"%s\" count=\"%d\"/>",
+             vec_lanes[i].id, vec_lanes[i].gdb_type, count);
+@@ -316,7 +316,7 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
+     /* Define vector registers */
+     for (i = 0; i < 32; i++) {
+         gdb_feature_builder_append_reg(&builder, g_strdup_printf("v%d", i),
+-                                       reg_width, i, "riscv_vector", "vector");
++                                       bitsize, i, "riscv_vector", "vector");
      }
  
-     /* read / write check */
--    if (write_mask && read_only) {
-+    if (write && read_only) {
-         return RISCV_EXCP_ILLEGAL_INST;
-     }
- 
-@@ -4431,11 +4431,22 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-+                           target_ulong *ret_value)
-+{
-+    RISCVException ret = riscv_csrrw_check(env, csrno, false);
-+    if (ret != RISCV_EXCP_NONE) {
-+        return ret;
-+    }
-+
-+    return riscv_csrrw_do64(env, csrno, ret_value, 0, 0);
-+}
-+
- RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-                            target_ulong *ret_value,
-                            target_ulong new_value, target_ulong write_mask)
- {
--    RISCVException ret = riscv_csrrw_check(env, csrno, write_mask);
-+    RISCVException ret = riscv_csrrw_check(env, csrno, true);
-     if (ret != RISCV_EXCP_NONE) {
-         return ret;
-     }
-@@ -4483,13 +4494,45 @@ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
-+                               Int128 *ret_value)
-+{
-+    RISCVException ret;
-+
-+    ret = riscv_csrrw_check(env, csrno, false);
-+    if (ret != RISCV_EXCP_NONE) {
-+        return ret;
-+    }
-+
-+    if (csr_ops[csrno].read128) {
-+        return riscv_csrrw_do128(env, csrno, ret_value,
-+                                 int128_zero(), int128_zero());
-+    }
-+
-+    /*
-+     * Fall back to 64-bit version for now, if the 128-bit alternative isn't
-+     * at all defined.
-+     * Note, some CSRs don't need to extend to MXLEN (64 upper bits non
-+     * significant), for those, this fallback is correctly handling the
-+     * accesses
-+     */
-+    target_ulong old_value;
-+    ret = riscv_csrrw_do64(env, csrno, &old_value,
-+                           (target_ulong)0,
-+                           (target_ulong)0);
-+    if (ret == RISCV_EXCP_NONE && ret_value) {
-+        *ret_value = int128_make64(old_value);
-+    }
-+    return ret;
-+}
-+
- RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
-                                 Int128 *ret_value,
-                                 Int128 new_value, Int128 write_mask)
- {
-     RISCVException ret;
- 
--    ret = riscv_csrrw_check(env, csrno, int128_nz(write_mask));
-+    ret = riscv_csrrw_check(env, csrno, true);
-     if (ret != RISCV_EXCP_NONE) {
-         return ret;
-     }
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 2baf5bc3ca..84fb2a35e5 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -51,7 +51,7 @@ target_ulong helper_csrr(CPURISCVState *env, int csr)
-     }
- 
-     target_ulong val = 0;
--    RISCVException ret = riscv_csrrw(env, csr, &val, 0, 0);
-+    RISCVException ret = riscv_csrr(env, csr, &val);
- 
-     if (ret != RISCV_EXCP_NONE) {
-         riscv_raise_exception(env, ret, GETPC());
-@@ -84,9 +84,7 @@ target_ulong helper_csrrw(CPURISCVState *env, int csr,
- target_ulong helper_csrr_i128(CPURISCVState *env, int csr)
- {
-     Int128 rv = int128_zero();
--    RISCVException ret = riscv_csrrw_i128(env, csr, &rv,
--                                          int128_zero(),
--                                          int128_zero());
-+    RISCVException ret = riscv_csrr_i128(env, csr, &rv);
- 
-     if (ret != RISCV_EXCP_NONE) {
-         riscv_raise_exception(env, ret, GETPC());
+     gdb_feature_builder_end(&builder);
 -- 
 2.45.1
 
