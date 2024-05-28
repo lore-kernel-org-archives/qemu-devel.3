@@ -4,68 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 866BDC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 16:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3357FC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 16:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBzTv-0003Ta-Ps; Tue, 28 May 2024 12:15:23 -0400
+	id 1sBzVZ-0006lc-TL; Tue, 28 May 2024 12:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sBzTu-0003St-Mh
- for qemu-devel@nongnu.org; Tue, 28 May 2024 12:15:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sBzTt-0001ir-5U
- for qemu-devel@nongnu.org; Tue, 28 May 2024 12:15:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716912920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0bOdMPqUA+lkNbcV85HXskFJU4DMfBPjohOMFYIhyoQ=;
- b=PHq/RjAjrXLDuM9zvZ27BhNGegdj9mTA00c5UJ6Bau6of+iWvdC/8vspS7lTs3dd3fkHEf
- 0vo1WIPhV6r2i6e9o7UUlvaOpp5Q8ndAdbm2w+veK4o+juERyFZN4BLUmZ30rJNuwY6lvM
- r8XsO9ymlwRbEONPu1n84+mn/otYhU0=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-6eNjhpCPOwCxwV3KYzG0Tw-1; Tue,
- 28 May 2024 12:15:17 -0400
-X-MC-Unique: 6eNjhpCPOwCxwV3KYzG0Tw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4CEA51C0512D
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 16:15:17 +0000 (UTC)
-Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7B1A7C15BB9;
- Tue, 28 May 2024 16:15:16 +0000 (UTC)
-From: Michal Privoznik <mprivozn@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: david@redhat.com,
-	imammedo@redhat.com
-Subject: [PATCH 2/3] backends/hostmem: Warn on qemu_madvise() failures
-Date: Tue, 28 May 2024 18:15:08 +0200
-Message-ID: <b51b2a1cda33115b3370a8b3a4a4e6e9c10566d2.1716912651.git.mprivozn@redhat.com>
-In-Reply-To: <cover.1716912651.git.mprivozn@redhat.com>
-References: <cover.1716912651.git.mprivozn@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sBzVX-0006iq-8F
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 12:17:03 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sBzVV-0001nw-HR
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 12:17:02 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-57864327f6eso1746709a12.1
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 09:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716913020; x=1717517820; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tBgieR/viPTn3U2zbnH1Ut5T/F5fwHVCaQDR/eJLJv4=;
+ b=dYuY5nD+LosIUXPuFo3WUSJmsw2DQuoj8Okax3jE8wswtQ5drfEHhIuo+FDwEcRPiJ
+ wtSvShPLg72di9q4xJXZ5FnUAm4cNRLRd9hW1n4Wd784B+5mHXSn44pgmpQdYB/3nETE
+ o33oGjPyEiWtfiJF7GNsoidd5M0QITGhF9K098HMKvRdtfxLG0bCwByR5veYe2F5UBE/
+ tm9iV3DgM1A/Po3zM1FAJUFzMpfI8zwT/PSyfVD+odbO5sYRHyWcHi+Cv/pdQTUwvmmV
+ /NhC2cIZofrUEb0xa1QIeDpRhk+6h8EYGhYv8J+KEZD9hKoEmtu8LNeDov7zjsgOAoE9
+ d1qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716913020; x=1717517820;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tBgieR/viPTn3U2zbnH1Ut5T/F5fwHVCaQDR/eJLJv4=;
+ b=SHKUTD2dMlPVcnPi+LkvpRhS1OlxcAqIFGAfwM8df4ApWXbRmXjCYb2P2GowaoIPAE
+ zNbBgIb6aPIDV06UVrEvgy9+tX2D5AIOUnoHS0jogjdloyQa5X84jAUeIhgldxUGM9tA
+ bp+4x/Hf89MnugKlwvocVEZiV4AYqIVfcLcdJbql7VuotmdQaHXkupYGu33lSL+I2cvH
+ AfRw2/trkIJ3XFFO1Vp+bYe4oLRHDO9MWa5m82G/AWG+k0RuvlY8eXCyq4dGBVsemWX6
+ hJ6yuE1uXxrZWG6113EmmgIAHlU/17qmxtjI7NeNb9Llkmo3iQNxlysQ9N0fIBNThrJe
+ /R8g==
+X-Gm-Message-State: AOJu0YxpeBz3DJ8yk/ao7fb52LwIeRYZYHipiHm+mxDUFEe67M+yv/Dm
+ IRngqiHGikq7YYH4g2TvNec8F62/IsDaapLHAa8ug23lX+JwQ/0KbJfeXL3plxf826rCQxqhA71
+ GWQ91JoWO+QHBlJ6qqPDdPUTtdir/NtiB9S+I9zUNLa0F1tNU
+X-Google-Smtp-Source: AGHT+IE2M6rJnB28/7uqqzMZGf1SFad8gMYd0MO8LIgQ0TzbmcrGwawnfxk/MOmeQHWxjrZKjTx9NtThA0lnXlMv4Ig=
+X-Received: by 2002:a50:8e5a:0:b0:579:a157:81c6 with SMTP id
+ 4fb4d7f45d1cf-579a1578959mr7600609a12.8.1716913020083; Tue, 28 May 2024
+ 09:17:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240524232121.284515-1-richard.henderson@linaro.org>
+ <20240524232121.284515-68-richard.henderson@linaro.org>
+In-Reply-To: <20240524232121.284515-68-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 May 2024 17:16:49 +0100
+Message-ID: <CAFEAcA-e+80XkzD_cRnyJNZiqqDuZ-bdm8aCVg78jKVtqbFxug@mail.gmail.com>
+Subject: Re: [PATCH v2 67/67] target/arm: Convert FCSEL to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,78 +88,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If user sets .merge or .dump attributes qemu_madvise() is called
-with corresponding advice. But it is never checked for failure
-which may mislead users into thinking the attribute is set
-correctly.I believe at this point it's too late to report errors
-in that case but let's report a warning at least.
+On Sat, 25 May 2024 at 00:32, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
----
- backends/hostmem.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index eb9682b4a8..1a6fd1c714 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -14,6 +14,7 @@
- #include "sysemu/hostmem.h"
- #include "hw/boards.h"
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qapi/qapi-builtin-visit.h"
- #include "qapi/visitor.h"
- #include "qemu/config-file.h"
-@@ -178,8 +179,11 @@ static void host_memory_backend_set_merge(Object *obj, bool value, Error **errp)
-         void *ptr = memory_region_get_ram_ptr(&backend->mr);
-         uint64_t sz = memory_region_size(&backend->mr);
- 
--        qemu_madvise(ptr, sz,
--                     value ? QEMU_MADV_MERGEABLE : QEMU_MADV_UNMERGEABLE);
-+        if (qemu_madvise(ptr, sz,
-+                         value ? QEMU_MADV_MERGEABLE : QEMU_MADV_UNMERGEABLE)) {
-+            warn_report("Couldn't change property 'merge' on '%s': %s",
-+                        object_get_typename(obj), strerror(errno));
-+        }
-         backend->merge = value;
-     }
- }
-@@ -204,8 +208,11 @@ static void host_memory_backend_set_dump(Object *obj, bool value, Error **errp)
-         void *ptr = memory_region_get_ram_ptr(&backend->mr);
-         uint64_t sz = memory_region_size(&backend->mr);
- 
--        qemu_madvise(ptr, sz,
--                     value ? QEMU_MADV_DODUMP : QEMU_MADV_DONTDUMP);
-+        if (qemu_madvise(ptr, sz,
-+                         value ? QEMU_MADV_DODUMP : QEMU_MADV_DONTDUMP)) {
-+            warn_report("Couldn't change property 'dump' on '%s': %s",
-+                        object_get_typename(obj), strerror(errno));
-+        }
-         backend->dump = value;
-     }
- }
-@@ -337,11 +344,15 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
-     ptr = memory_region_get_ram_ptr(&backend->mr);
-     sz = memory_region_size(&backend->mr);
- 
--    if (backend->merge) {
--        qemu_madvise(ptr, sz, QEMU_MADV_MERGEABLE);
-+    if (backend->merge &&
-+        qemu_madvise(ptr, sz, QEMU_MADV_MERGEABLE)) {
-+        warn_report("Couldn't set property 'merge' on '%s': %s",
-+                    object_get_typename(OBJECT(uc)), strerror(errno));
-     }
--    if (!backend->dump) {
--        qemu_madvise(ptr, sz, QEMU_MADV_DONTDUMP);
-+    if (!backend->dump &&
-+        qemu_madvise(ptr, sz, QEMU_MADV_DONTDUMP)) {
-+        warn_report("Couldn't set property 'dump' on '%s': %s",
-+                    object_get_typename(OBJECT(uc)), strerror(errno));
-     }
- #ifdef CONFIG_NUMA
-     unsigned long lastbit = find_last_bit(backend->host_nodes, MAX_NODES);
--- 
-2.44.1
-
+thanks
+-- PMM
 
