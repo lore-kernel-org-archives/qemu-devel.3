@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5554C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 18:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739EEC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 18:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC1Ph-0005x0-Cn; Tue, 28 May 2024 14:19:09 -0400
+	id 1sC1S1-0007Xk-VK; Tue, 28 May 2024 14:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jojing64@gmail.com>)
- id 1sC1Pf-0005wY-MZ; Tue, 28 May 2024 14:19:07 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jojing64@gmail.com>)
- id 1sC1Pd-0001oe-VG; Tue, 28 May 2024 14:19:07 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7007324a568so882956b3a.3; 
- Tue, 28 May 2024 11:19:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716920343; x=1717525143; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2qcRzbrJfzFhar3JXjeEwkJ+x1ObCKv/9QMmr3jD/cM=;
- b=iKhDFugyEDKt+ZTc27+vWoRlSfUKqEW2OzPIaA4Au2eHK1oyMSJrqxYsqt2LJ6F/7D
- 62nutyVqBs602Tz62sLTRXjRoAW5kCpR6zQoeQfJv3GWgBt79A6xYz8NJdE1sxGjuZI3
- ADQqSKsVwZ+w9b8XtEPmCvxF22O+/YyDVczIjw+lhIyY47r3K54Jg6rMIUlWbMwNEgUd
- g80EAofntGvZ921fQt3Dd5gPjY3KcdzjpkSPRmG7+EABqGEdI5OluXlurWMLpQ/CgU9R
- ESMGAahRBjNdKGi/rDLvzn6YM2CGg9jej+kIzpZz5dU6oHpg8yQdTsTvFXTxbkHLvsDV
- RXbw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sC1S0-0007Wz-AV
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 14:21:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sC1Ry-0002AP-Gc
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 14:21:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716920489;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GxOWPoYM75SZZUawGN2+WbmYHezm0tW5YX6QxhPmKGQ=;
+ b=UGMGwZw+9ckp22WjpxohckIfIbDxIFKyTZdKEIy5zB952gAAvlwO3OxOOs+yYcRSwhA2by
+ I+benKxUqqUvfZZHIAxYeZu2muSpeeUJ9m/5pXEjUGsxgj5ssFQDyGfMxMRb4b1qen3uev
+ JlT1NpK9aXxtxe3XJ4by8XrY+LPSHxo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-64-3bwiD3pjOVSALPltPsCo0g-1; Tue, 28 May 2024 14:21:28 -0400
+X-MC-Unique: 3bwiD3pjOVSALPltPsCo0g-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6ab8ca6df0bso2980016d6.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 11:21:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716920343; x=1717525143;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2qcRzbrJfzFhar3JXjeEwkJ+x1ObCKv/9QMmr3jD/cM=;
- b=SP5nDh5hLhosKbNmG7cj3EN4dD9w+A32sji8fzArbCsMmmku9POZPo0IE5w+4gqJFt
- qpFfViq/vUiojiWmOSRC2rPz8BFRy50qzL1c4VQo6Qi5qpovUctY5JifsnNF/Fs81wlD
- kWLlBoLOoNi01lXEvlFOtYa/54OXyq5zcB1vbufGgyzHgPYonFymGM7nXKf2tI28WPj6
- kwBBBAi9bm+v2MlohNam/rv9PcE9x3A1wVdJBmQdVywu1YTMnyEwHohkPy91L8JaB/wN
- Zl/LhN/pqXwPoCQ+UfHkzVKOPQLNqi9PxWDViY22maiCS1MFCukeIhGcHB6h8stjpddH
- BJhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNM88ilq43FOgQZds0o/lPy+5x5324ZFXXMEltRserUDG/u/u38ByA7mVnd2Ku51ebtSo5sJ4N/8YM2FCda/+2BqUS1Vg=
-X-Gm-Message-State: AOJu0YzcCvbtdxw/MgrLjCouOtWRGoU+0OE7u8sBcaLXgkej7awQu+6o
- 8G8QUvrnWLbRCVNsZw0iCNgNcwruXJoJjq9Mm0hu0GH95sw2bBq7
-X-Google-Smtp-Source: AGHT+IH7U/WOeTO7bxvcrsxP9X6aGX1SNFv6xqhujVqZNLwGIm5OutT012HUSglZPhlBIPyAvaOVBw==
-X-Received: by 2002:a05:6a21:622:b0:1b1:f322:4c81 with SMTP id
- adf61e73a8af0-1b212d42ea6mr12858802637.36.1716920343362; 
- Tue, 28 May 2024 11:19:03 -0700 (PDT)
-Received: from ?IPV6:2001:569:590e:4600:1ea1:182:f195:fb52?
- ([2001:569:590e:4600:1ea1:182:f195:fb52])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-701d60b06e3sm1247134b3a.191.2024.05.28.11.19.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 11:19:02 -0700 (PDT)
-Message-ID: <fb2ea759-1a7e-4c0e-ab0d-3ec4c04dc503@gmail.com>
-Date: Tue, 28 May 2024 11:19:01 -0700
+ d=1e100.net; s=20230601; t=1716920486; x=1717525286;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GxOWPoYM75SZZUawGN2+WbmYHezm0tW5YX6QxhPmKGQ=;
+ b=BvY/JQhBpXUeI2En/KMPF2oiK6TidYIPdz/D4UnF1Zpo1vFePbvAQlgqk22ex+Kilj
+ sOmC7Lh/NlBAzwLGyHzPgfRotvNO0QnPhyrFo3Nu3F/hacf1Bz9+7nJj21KbJJQ+phWs
+ zLv+ZN8D12sDZ1uN+sgqvI0vzP53+3x3/nnKmbhSzjKhGvkj/JYuAVNzJTrSngSh9F+t
+ PBUdXg5RYTfVAf+5P0zq8o/Rxbu4bxeZrALABAXKWytVHJr6wxgu2s2eEcVnya2Utdig
+ kRUUglqrLMaUNVVb0T7hshMKF5/zy9f4/pCCLgIXFZ40k2I/ONAGC1jp0MVy09JK2QJt
+ pYZQ==
+X-Gm-Message-State: AOJu0YxJV/SwZ9Ua1vlwtP/5CR8mC5y/Nxr4DWRGcjEEEsxf0aOz3zpn
+ FJcciTrMofqTaigthvuJtBXZ1cvc255LxOd26fYUyMk5nb/0SoeAqLIWrkFJNTZTrYqjOPbFrKT
+ Cl+rdTGpGsYSQyxlw5wbmqjTgqoC8r0xOWR/jzdtelzLLnIz7rSE3
+X-Received: by 2002:a05:622a:1650:b0:43e:e6e:21de with SMTP id
+ d75a77b69052e-43fb0e79634mr136657861cf.2.1716920486273; 
+ Tue, 28 May 2024 11:21:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHi/MKEZU1c/ym1EvWwaLSXuLS7VfPdFWO/Xi4jPuUSehwJxIvR3sV6wQrAnWvGMNqTnJuYgQ==
+X-Received: by 2002:a05:622a:1650:b0:43e:e6e:21de with SMTP id
+ d75a77b69052e-43fb0e79634mr136657491cf.2.1716920485523; 
+ Tue, 28 May 2024 11:21:25 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43fb18b0e3bsm44921731cf.68.2024.05.28.11.21.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 May 2024 11:21:25 -0700 (PDT)
+Date: Tue, 28 May 2024 14:21:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V1 08/26] migration: vmstate_info_void_ptr
+Message-ID: <ZlYgo0UupFdQJ95L@x1n>
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+ <1714406135-451286-9-git-send-email-steven.sistare@oracle.com>
+ <ZlTRgsNatkvsLKpL@x1n>
+ <f0d4b6af-a3eb-451d-b131-62addb72f3ef@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: block snapshot issue with RBD
-To: Ilya Dryomov <idryomov@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
- pl@kamp.de, hreitz@redhat.com, peterx@redhat.com, farosas@suse.de
-References: <8b639179-e567-469c-bd04-ee8dee12d7d2@gmail.com>
- <0e01a8e2-a543-4524-939c-05413fd99e86@gmail.com>
- <756f9dcb-4e9c-4c2f-bc8a-dcc7420a1839@gmail.com>
- <CAOi1vP8nJVsvvsmG5Ac4sd+9NPA8v8t=7Sao0f7-qNb129p=OA@mail.gmail.com>
-Content-Language: en-US
-From: Jin Cao <jojing64@gmail.com>
-In-Reply-To: <CAOi1vP8nJVsvvsmG5Ac4sd+9NPA8v8t=7Sao0f7-qNb129p=OA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=jojing64@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f0d4b6af-a3eb-451d-b131-62addb72f3ef@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,80 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ilya
-
-On 5/28/24 11:13 AM, Ilya Dryomov wrote:
-> On Mon, May 27, 2024 at 9:06 PM Jin Cao <jojing64@gmail.com> wrote:
->>
->> Supplementary info: VM is paused after "migrate" command. After being
->> resumed with "cont", snapshot_delete_blkdev_internal works again, which
->> is confusing, as disk snapshot generally recommend I/O is paused, and a
->> frozen VM satisfy this requirement.
+On Tue, May 28, 2024 at 11:10:16AM -0400, Steven Sistare wrote:
+> On 5/27/2024 2:31 PM, Peter Xu wrote:
+> > On Mon, Apr 29, 2024 at 08:55:17AM -0700, Steve Sistare wrote:
+> > > Define VMSTATE_VOID_PTR so the value of a pointer (but not its target)
+> > > can be saved in the migration stream.  This will be needed for CPR.
+> > > 
+> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > 
+> > This is really tricky.
+> > 
+> >  From a first glance, I don't think migrating a VA is valid at all for
+> > migration even if with exec.. and looks insane to me for a cross-process
+> > migration, which seems to be allowed to use as a generic VMSD helper.. as
+> > VA is the address space barrier for different processes and I think it
+> > normally even apply to generic execve(), and we're trying to jailbreak for
+> > some reason..
+> > 
+> > It definitely won't work for any generic migration as sizeof(void*) can be
+> > different afaict between hosts, e.g. 32bit -> 64bit migrations.
+> > 
+> > Some description would be really helpful in this commit message,
+> > e.g. explain the users and why.  Do we need to poison that for generic VMSD
+> > use (perhaps with prefixed underscores)?  I think I'll need to read on the
+> > rest to tell..
 > 
-> Hi Jin,
+> Short answer: we never dereference the void* in the new process.  And must not.
 > 
-> This doesn't seem to be related to RBD.  Given that the same error is
-> observed when using the RBD driver with the raw format, I would dig in
-> the direction of migration somehow "installing" the raw format (which
-> is on-disk compatible with the rbd format).
+> Longer answer:
 > 
-
-Thanks for the hint.
-
-> Also, did you mean to say "snapshot_blkdev_internal" instead of
-> "snapshot_delete_blkdev_internal" in both instances?
-
-Sorry for my copy-and-paste mistake. Yes, it's snapshot_blkdev_internal.
-
---
-Sincerely,
-Jin Cao
-
+> During CPR for vfio, each mapped DMA region is re-registered in the new
+> process using the new VA.  The ioctl to re-register identifies the mapping
+> by IOVA and length.
 > 
-> Thanks,
+> The same requirement holds for CPR of iommufd devices.  However, in the
+> iommufd framework, IOVA does not uniquely identify a dma mapping, and we
+> need to use the old VA as the unique identifier.  The new process
+> re-registers each mapping, passing the old VA and new VA to the kernel.
+> The old VA is never dereferenced in the new process, we just need its value.
 > 
->                  Ilya
-> 
->>
->> --
->> Sincerely
->> Jin Cao
->>
->> On 5/27/24 10:56 AM, Jin Cao wrote:
->>> CC block and migration related address.
->>>
->>> On 5/27/24 12:03 AM, Jin Cao wrote:
->>>> Hi,
->>>>
->>>> I encountered RBD block snapshot issue after doing migration.
->>>>
->>>> Steps
->>>> -----
->>>>
->>>> 1. Start QEMU with:
->>>> ./qemu-system-x86_64 -name VM -machine q35 -accel kvm -cpu
->>>> host,migratable=on -m 2G -boot menu=on,strict=on
->>>> rbd:image/ubuntu-22.04-server-cloudimg-amd64.raw -net nic -net user
->>>> -cdrom /home/my/path/of/cloud-init.iso -monitor stdio
->>>>
->>>> 2. Do block snapshot in monitor cmd: snapshot_delete_blkdev_internal.
->>>> It works as expected: the snapshot is visable with command`rbd snap ls
->>>> pool_name/image_name`.
->>>>
->>>> 3. Do pseudo migration with monitor cmd: migrate -d exec:cat>/tmp/vm.out
->>>>
->>>> 4. Do block snapshot again with snapshot_delete_blkdev_internal, then
->>>> I get:
->>>>      Error: Block format 'raw' used by device 'ide0-hd0' does not
->>>> support internal snapshots
->>>>
->>>> I was hoping to do the second block snapshot successfully, and it
->>>> feels abnormal the RBD block snapshot function is disrupted after
->>>> migration.
->>>>
->>>> BTW, I get the same block snapshot error when I start QEMU with:
->>>>       "-drive format=raw,file=rbd:pool_name/image_name"
->>>>
->>>> My questions is: how could I proceed with RBD block snapshot after the
->>>> pseudo migration?
+> I suspected that the void* which must not be dereferenced might make people
+> uncomfortable.  I have an older version of my code which adds a uint64_t
+> field to RAMBlock for recording and migrating the old VA.  The saving and
+> loading code is slightly less elegant, but no big deal.  Would you prefer
+> that?
+
+I see, thanks for explaining.  Yes that sounds better to me.  Re the
+ugliness: is that about a pre_save() plus one extra uint64_t field?  In
+that case it looks better comparing to migrating "void*".
+
+I'm trying to read some context on the vaddr remap thing from you, and I
+found this:
+
+https://lore.kernel.org/all/Y90bvBnrvRAcEQ%2F%2F@nvidia.com/
+
+So it will work with iommufd now?  Meanwhile, what's the status for mdev?
+Looks like it isn't supported yet for both.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
