@@ -4,106 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BCA7C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 06:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41ADCC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 06:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBqfT-0007t0-6s; Tue, 28 May 2024 02:50:43 -0400
+	id 1sBqin-0001GL-VS; Tue, 28 May 2024 02:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sBqfR-0007sj-Px; Tue, 28 May 2024 02:50:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
+ id 1sBqiU-0001DG-Qh; Tue, 28 May 2024 02:53:50 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sBqfP-00021T-D8; Tue, 28 May 2024 02:50:41 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S64Voo003891; Tue, 28 May 2024 06:50:29 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Dibm.com; _h=3Dcc?=
- =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
- =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3D5M5?=
- =?UTF-8?Q?JwSZb94a2QU8jxyu6Pzmkc89+pad4WPpVjzww1iI=3D;_b=3DFxHDq8u9f52wKF?=
- =?UTF-8?Q?PfecUEWyWwpWkb+2V/5cfpBHqCplilkYgfRkcM/6nx5RKAUK6ClD5u_5V9vEJar?=
- =?UTF-8?Q?LJOH8NlM6XEKsP355B489Jpbfq5h1R33Y26QTzOSWWjyoPtBAtPwjG5o++V4_to?=
- =?UTF-8?Q?34VkRcCjbL2oIw47jeSZGCLsb0gbBF7OmVbF1HLVtyT4P76/l+3iGS7Tt3Ccwm1?=
- =?UTF-8?Q?Oys_GeSV3S+VqRrk7njUo3LvPvut0iunwNFjCE9Cz/uYoFyPuDvUJHiqM8VvYyG?=
- =?UTF-8?Q?2JaJbecxM_Dysck068xOCOtixbZDPXfPBbJtehHIWRkNCOIrR+ta7bp5YBzj6QG?=
- =?UTF-8?Q?ZXLrKtrss+xt2zY_FA=3D=3D_?=
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd9e204yb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 06:50:28 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44S6oSZH018282;
- Tue, 28 May 2024 06:50:28 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd9e204ya-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 06:50:28 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S6h8o2032160; Tue, 28 May 2024 06:50:27 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ybutm5758-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 06:50:27 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44S6oOkl22741708
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 May 2024 06:50:26 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A97A958061;
- Tue, 28 May 2024 06:50:24 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5304858059;
- Tue, 28 May 2024 06:50:22 +0000 (GMT)
-Received: from [9.109.242.165] (unknown [9.109.242.165])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 May 2024 06:50:22 +0000 (GMT)
-Message-ID: <eed27a5e-6b32-45e0-8d76-51371fadc976@linux.ibm.com>
-Date: Tue, 28 May 2024 12:20:20 +0530
+ (Exim 4.90_1) (envelope-from <SRS0=HxTW=M7=kaod.org=clg@ozlabs.org>)
+ id 1sBqiS-0002J4-2K; Tue, 28 May 2024 02:53:50 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VpNX66Gf7z4x2d;
+ Tue, 28 May 2024 16:53:42 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VpNX13BlGz4wyj;
+ Tue, 28 May 2024 16:53:37 +1000 (AEST)
+Message-ID: <4cc3df8f-6d61-4c70-a7ce-94e2cbf96a7d@kaod.org>
+Date: Tue, 28 May 2024 08:53:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/10] target/ppc: Improve SPR indirect registers
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-4-npiggin@gmail.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240526122612.473476-4-npiggin@gmail.com>
+Subject: Re: [SPAM] Re: [PATCH v4 08/16] aspeed/smc: support 64 bits dma dram
+ address
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-9-jamin_lin@aspeedtech.com>
+ <2d64463d-0694-4d6e-a8c4-5bfad2cf801d@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <2d64463d-0694-4d6e-a8c4-5bfad2cf801d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: pagRG43Mo5vGRBOrnS2rJNLbgCvaSW64
-X-Proofpoint-GUID: A9i4ZHlpECjQbMhFIWFPvvcu--7rUajs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-28_04,2024-05-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 mlxscore=0 phishscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 spamscore=0
- mlxlogscore=879 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2405010000 definitions=main-2405280048
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=HxTW=M7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,210 +75,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/27/24 18:06, Philippe Mathieu-Daudé wrote:
+> Hi Jamin,
+> 
+> On 27/5/24 10:02, Jamin Lin wrote:
+>> AST2700 support the maximum dram size is 8GiB
+>> and has a "DMA DRAM Side Address High Part(0x7C)"
+>> register to support 64 bits dma dram address.
+>> Add helper routines functions to compute the dma dram
+>> address, new features and update trace-event
+>> to support 64 bits dram address.
+>>
+>> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>> ---
+>>   hw/ssi/aspeed_smc.c         | 52 +++++++++++++++++++++++++++++++------
+>>   hw/ssi/trace-events         |  2 +-
+>>   include/hw/ssi/aspeed_smc.h |  1 +
+>>   3 files changed, 46 insertions(+), 9 deletions(-)
+> 
+> 
+>> +static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
+>> +{
+>> +    return s->regs[R_DMA_DRAM_ADDR] |
+>> +        ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32);
+>> +}
+>> +
+>>   static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
+>>   {
+>>       AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+>> @@ -903,24 +921,34 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
+>>   static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>>   {
+>> +    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+>> +    uint64_t dma_dram_offset;
+>> +    uint64_t dma_dram_addr;
+>>       MemTxResult result;
+>>       uint32_t dma_len;
+>>       uint32_t data;
+>>       dma_len = aspeed_smc_dma_len(s);
+>> +    dma_dram_addr = aspeed_smc_dma_dram_addr(s);
+>> +
+>> +    if (aspeed_smc_has_dma64(asc)) {
+>> +        dma_dram_offset = dma_dram_addr - s->dram_base;
+>> +    } else {
+>> +        dma_dram_offset = dma_dram_addr;
+> 
+> Here s->dram_base is 0x0. Do we really need to check
+> aspeed_smc_has_dma64?
 
-Hi Nick,
+You are right, it could be done as your proposal below. However,
+we should add a comment regarding some values :
 
-On 5/26/24 17:56, Nicholas Piggin wrote:
-> SPRC/SPRD were recently added to all BookS CPUs supported, but
-> they are only tested on POWER9 and POWER10, so restrict them to
-> those CPUs.
+R_DMA_DRAM_ADDR_HIGH and s->dram_base are only set on the AST2700
+SoC and zero on other Aspeed SoCs.
+
+>> +    }
+> 
+> Maybe simplify improving aspeed_smc_dma_dram_addr() as:
+> 
+>    static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
+>    {
+>        return (s->regs[R_DMA_DRAM_ADDR]
+>                | ((uint64_t) s->regs[R_DMA_DRAM_ADDR_HIGH] << 32))
+>                - s->dram_base;
+>    }
+> 
+> Then no need for dma_dram_offset, dma_dram_addr is enough.
+
+we need both, dma_dram_offset for the transaction and dma_dram_addr
+to update the R_DMA_DRAM_ADDR_HIGH reg. A bit cumbersome, I agree.
+
+Thanks,
+
+C.
+
+
+> 
+>>       trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
+>>                               "write" : "read",
+>>                               s->regs[R_DMA_FLASH_ADDR],
+>> -                            s->regs[R_DMA_DRAM_ADDR],
+>> +                            dma_dram_offset,
+>>                               dma_len);
+>>       while (dma_len) {
+>>           if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
+>> -            data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
+>> +            data = address_space_ldl_le(&s->dram_as, dma_dram_offset,
+>>                                           MEMTXATTRS_UNSPECIFIED, &result);
+>>               if (result != MEMTX_OK) {
+>> -                aspeed_smc_error("DRAM read failed @%08x",
+>> -                                 s->regs[R_DMA_DRAM_ADDR]);
+>> +                aspeed_smc_error("DRAM read failed @%" PRIx64,
+>> +                                 dma_dram_offset);
+>>                   return;
+>>               }
+>> @@ -940,11 +968,11 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>>                   return;
+>>               }
+>> -            address_space_stl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
+>> +            address_space_stl_le(&s->dram_as, dma_dram_offset,
+>>                                    data, MEMTXATTRS_UNSPECIFIED, &result);
+>>               if (result != MEMTX_OK) {
+>> -                aspeed_smc_error("DRAM write failed @%08x",
+>> -                                 s->regs[R_DMA_DRAM_ADDR]);
+>> +                aspeed_smc_error("DRAM write failed @%" PRIx64,
+>> +                                 dma_dram_offset);
+>>                   return;
+>>               }
+>>           }
+>> @@ -953,8 +981,12 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
+>>            * When the DMA is on-going, the DMA registers are updated
+>>            * with the current working addresses and length.
+>>            */
+>> +        dma_dram_offset += 4;
+>> +        dma_dram_addr += 4;
+>> +
+>> +        s->regs[R_DMA_DRAM_ADDR_HIGH] = dma_dram_addr >> 32;
+>> +        s->regs[R_DMA_DRAM_ADDR] = dma_dram_addr & 0xffffffff;
+>>           s->regs[R_DMA_FLASH_ADDR] += 4;
+>> -        s->regs[R_DMA_DRAM_ADDR] += 4;
+>>           dma_len -= 4;
+>>           s->regs[R_DMA_LEN] = dma_len;
+>>           s->regs[R_DMA_CHECKSUM] += data;
+>> @@ -1107,6 +1139,9 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+>>       } else if (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN &&
+>>                  aspeed_smc_dma_granted(s)) {
+>>           s->regs[addr] = DMA_LENGTH(value);
+>> +    } else if (aspeed_smc_has_dma(asc) && aspeed_smc_has_dma64(asc) &&
+>> +               addr == R_DMA_DRAM_ADDR_HIGH) {
+>> +        s->regs[addr] = DMA_DRAM_ADDR_HIGH(value);
+>>       } else {
+>>           qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+>>                         __func__, addr);
+>> @@ -1239,6 +1274,7 @@ static const VMStateDescription vmstate_aspeed_smc = {
+>>   static Property aspeed_smc_properties[] = {
+>>       DEFINE_PROP_BOOL("inject-failure", AspeedSMCState, inject_failure, false),
+>> +    DEFINE_PROP_UINT64("dram-base", AspeedSMCState, dram_base, 0),
+>>       DEFINE_PROP_LINK("dram", AspeedSMCState, dram_mr,
+>>                        TYPE_MEMORY_REGION, MemoryRegion *),
+>>       DEFINE_PROP_END_OF_LIST(),
 > 
 
-Hope you mean to restrict to P9/10 for both spapr and pnv or just pnv ?
-
-> SPR indirect scratch registers presently replicated per-CPU like
-> SMT SPRs, but the PnvCore is a better place for them since they
-> are restricted to P9/P10.
-> 
-> Also add SPR indirect read access to core thread state for POWER9
-> since skiboot accesses that when booting to check for big-core
-> mode.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   include/hw/ppc/pnv_core.h |  1 +
->   target/ppc/cpu.h          |  3 --
->   target/ppc/cpu_init.c     | 21 ++++++------
->   target/ppc/misc_helper.c  | 67 ++++++++++++++++++++-------------------
->   4 files changed, 46 insertions(+), 46 deletions(-)
-> 
-> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> index f434c71547..21297262c1 100644
-> --- a/include/hw/ppc/pnv_core.h
-> +++ b/include/hw/ppc/pnv_core.h
-> @@ -53,6 +53,7 @@ struct PnvCore {
->       uint32_t hwid;
->       uint64_t hrmor;
->   
-> +    target_ulong scratch[8]; /* SCRATCH registers */
->       struct pnv_tod_tbst pnv_tod_tbst;
->   
->       PnvChip *chip;
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 1e86658da6..dac13d4dac 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1253,9 +1253,6 @@ struct CPUArchState {
->       ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
->       struct CPUBreakpoint *ciabr_breakpoint;
->       struct CPUWatchpoint *dawr0_watchpoint;
-> -
-> -    /* POWER CPU regs/state */
-> -    target_ulong scratch[8]; /* SCRATCH registers (shared across core) */
->   #endif
->       target_ulong sr[32];   /* segment registers */
->       uint32_t nb_BATs;      /* number of BATs */
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 01e358a4a5..ae483e20c4 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -5759,16 +5759,6 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
->                    SPR_NOACCESS, SPR_NOACCESS,
->                    &spr_read_generic, &spr_core_write_generic,
->                    0x00000000);
-> -    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
-> -                 SPR_NOACCESS, SPR_NOACCESS,
-> -                 SPR_NOACCESS, SPR_NOACCESS,
-> -                 &spr_read_generic, &spr_write_sprc,
-> -                 0x00000000);
-> -    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
-> -                 SPR_NOACCESS, SPR_NOACCESS,
-> -                 SPR_NOACCESS, SPR_NOACCESS,
-> -                 &spr_read_sprd, &spr_write_sprd,
-> -                 0x00000000);
->   #endif
->   }
->   
-> @@ -5781,6 +5771,17 @@ static void register_power9_book4_sprs(CPUPPCState *env)
->                        SPR_NOACCESS, SPR_NOACCESS,
->                        &spr_read_generic, &spr_write_generic,
->                        KVM_REG_PPC_WORT, 0);
-> +    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
-> +    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
-> +                 SPR_NOACCESS, SPR_NOACCESS,
-> +                 SPR_NOACCESS, SPR_NOACCESS,
-> +                 &spr_read_generic, &spr_write_sprc,
-> +                 0x00000000);
-> +    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
-> +                 SPR_NOACCESS, SPR_NOACCESS,
-> +                 SPR_NOACCESS, SPR_NOACCESS,
-> +                 &spr_read_sprd, &spr_write_sprd,
-> +                 0x00000000);
->   #endif
->   }
->   
-> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-> index fa47be2298..46ba3a5584 100644
-> --- a/target/ppc/misc_helper.c
-> +++ b/target/ppc/misc_helper.c
-> @@ -26,6 +26,7 @@
->   #include "qemu/main-loop.h"
->   #include "mmu-book3s-v3.h"
->   #include "hw/ppc/ppc.h"
-> +#include "hw/ppc/pnv_core.h"
->   
->   #include "helper_regs.h"
->   
-> @@ -321,11 +322,25 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
->   
->   target_ulong helper_load_sprd(CPUPPCState *env)
->   {
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    PnvCore *pc = pnv_cpu_state(cpu)->core;
-
-We may want to avoid creating local variable cpu here also like previous 
-patches.
-
-However, is this helper meant to be accessible for spapr as well ?
-
->       target_ulong sprc = env->spr[SPR_POWER_SPRC];
->   
-> -    switch (sprc & 0x3c0) {
-> -    case 0: /* SCRATCH0-7 */
-> -        return env->scratch[(sprc >> 3) & 0x7];
-> +    switch (sprc & 0x3e0) {
-> +    case 0: /* SCRATCH0-3 */
-> +    case 1: /* SCRATCH4-7 */
-> +        return pc->scratch[(sprc >> 3) & 0x7];
-
-If so, will pc be uninitialized in case of spapr ?
-
-> +    case 0x1e0: /* core thread state */
-> +        if (env->excp_model == POWERPC_EXCP_POWER9) {
-> +            /*
-> +             * Only implement for POWER9 because skiboot uses it to check
-> +             * big-core mode. Other bits are unimplemented so we would
-> +             * prefer to get unimplemented message on POWER10 if it were
-> +             * used.
-> +             */
-> +            return 0;
-> +        }
-> +        /* fallthru */
->       default:
->           qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
->                                     TARGET_FMT_lx"\n", sprc);
-> @@ -334,41 +349,27 @@ target_ulong helper_load_sprd(CPUPPCState *env)
->       return 0;
->   }
->   
-> -static void do_store_scratch(CPUPPCState *env, int nr, target_ulong val)
-> -{
-> -    CPUState *cs = env_cpu(env);
-> -    CPUState *ccs;
-> -    uint32_t nr_threads = cs->nr_threads;
-> -
-> -    /*
-> -     * Log stores to SCRATCH, because some firmware uses these for debugging
-> -     * and logging, but they would normally be read by the BMC, which is
-> -     * not implemented in QEMU yet. This gives a way to get at the information.
-> -     * Could also dump these upon checkstop.
-> -     */
-> -    qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
-> -
-> -    if (nr_threads == 1) {
-> -        env->scratch[nr] = val;
-> -        return;
-> -    }
-> -
-> -    THREAD_SIBLING_FOREACH(cs, ccs) {
-> -        CPUPPCState *cenv = &POWERPC_CPU(ccs)->env;
-> -        cenv->scratch[nr] = val;
-> -    }
-> -}
-> -
->   void helper_store_sprd(CPUPPCState *env, target_ulong val)
->   {
->       target_ulong sprc = env->spr[SPR_POWER_SPRC];
-> -
-> -    switch (sprc & 0x3c0) {
-> -    case 0: /* SCRATCH0-7 */
-> -        do_store_scratch(env, (sprc >> 3) & 0x7, val);
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    PnvCore *pc = pnv_cpu_state(cpu)->core;
-
-Ditto?
-
-> +
-> +    switch (sprc & 0x3e0) {
-> +    case 0: /* SCRATCH0-3 */
-> +    case 1: /* SCRATCH4-7 */
-> +        /*
-> +         * Log stores to SCRATCH, because some firmware uses these for
-> +         * debugging and logging, but they would normally be read by the BMC,
-> +	 * which is not implemented in QEMU yet. This gives a way to get at the
-> +	 * information. Could also dump these upon checkstop.
-> +         */
-> +        int nr = (sprc >> 3) & 0x7;
-> +        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
-> +        pc->scratch[nr] = val;
-
-regards,
-Harsh
->           break;
->       default:
-> -        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-> +        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
->                                     TARGET_FMT_lx"\n", sprc);
->           break;
->       }
 
