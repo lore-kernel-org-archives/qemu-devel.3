@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04505C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB25C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxUf-0001UM-Tk; Tue, 28 May 2024 10:08:01 -0400
+	id 1sBxUj-0001X3-Oc; Tue, 28 May 2024 10:08:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUf-0001Tn-3b
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:01 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1sBxUi-0001WJ-Hb
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:04 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUd-00070M-45
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:00 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-354e0cc9c5cso756125f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:07:58 -0700 (PDT)
+ id 1sBxUf-00072B-Jk
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:04 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-354f8a0cd08so769602f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716905277; x=1717510077; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716905280; x=1717510080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EAAlRYMlBTnMK71N/Zu05HtnM34HblCxoLd1v+E1rkk=;
- b=EkGF+zQGRmrzicrr4ZUfs+Fx/hiQnBUEQd0IGzOdvK0Pf3VtPvBIFkaDpkKImKS9uX
- WJc0G2Keh/fRhvl9pemS1XVBQk9uuy4grRbm6dH3dd2FD2isJ3iVJteuloU+EyHq0Bvs
- yBM1KzTDJiTVbjtQUgOzfzGEJDyS+AADxqfQvj2b+C6VPgCSoORByEF940H6wafpgs0h
- ZdCeV5Cvmujlbt5Bqvt53Btm15NIPGaEdar/AblFNK8X2ObxMoJnnHRmKvw3DIQCQKlZ
- eM+NBMx21/m+XWudsMDFaTwzuUFPxuWLj+Hl9DVatAVKpc6av/A/0HRs7H1rWSQN/b2h
- zCAg==
+ :reply-to; bh=LrmhrKaXF0DEYxLjGzXZ63cc61xp2WM9kMJXk0bodfg=;
+ b=YWszOw9aFmfte7SAqYuqpVQChYDVJFF/mh3L8dlE1R3+gQmQZ1mJ4K7h2fjdVX7pAb
+ TI/KqDylk7DsE53ERVaL3stg1lJDRSj0fsb2ylZtcRo6PVNjzN7gwajUQxOg2yhne17k
+ 0Kue2fhUP10vbhNC8gOXL1VbZfDsb3sNylg38gc6UE6NwZSPWze39haBN4EPtRX1fMas
+ qni2vBntF/6+SWhVxIxte98FUxpz/86KeNuykwNjCcc4EWgYpvMjAjRQ6zxcRzeai6f8
+ mRk2vg1tHuEbb32fooKdEaXEfWMshU5jQp2sPAGpJbBtoKk9B9V+XB42mZjVJNNJs5nR
+ ZfUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716905277; x=1717510077;
+ d=1e100.net; s=20230601; t=1716905280; x=1717510080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EAAlRYMlBTnMK71N/Zu05HtnM34HblCxoLd1v+E1rkk=;
- b=qNHijZaUhdHc8ljweMHDA7/i9/9G1ud2qdet/md9cT/o3W578VhwZ5BJnFYkaS2iEg
- 82l7Zr6fn4M/Mi+BxcPNybF6o6Rt/hGK49U00ZwB2wnopB7B0zRjHGFdCXZqGixUhxkx
- TwjpkZL9mSircbUpasT5sfr1YHZKx7CxtRvT6ZEj3SmH5lUcu0r0w8jbktqsBrorTg4w
- rdbCdm+NsYnBfec/5A+JMMmJ3JJzV8wsnqpAbn8OuEcVYPIqapxpe1WOU0LuQAzp1zG6
- 7omDWK5o4qkVPYvllNPEXYUiqc3q6NHMlFgNyW7h87U7ykWVxQcgIfN8KpeeZMS88ra/
- j6BQ==
-X-Gm-Message-State: AOJu0YwFuqQTYECDYLJwwiaAegsSIklyYKouEcRGtx8PvgA1t2p8I6c5
- c+g9LM4WPNgdmoZ5VqOteSSgj3RWayHLaBg6QdEh4I2+qIv5TemW0rDBXO1FI+qZnqyJiK5QcAx
- q
-X-Google-Smtp-Source: AGHT+IF3r5oo6cmZr2OoyOeFQxnyXX8c8F74VC7x5bbnqexqtsx4iELupdBcjnD7ueE2yu4lIUEwtg==
-X-Received: by 2002:a05:6000:1541:b0:359:733c:c8d6 with SMTP id
- ffacd0b85a97d-359733cc9fbmr4982633f8f.67.1716905277685; 
- Tue, 28 May 2024 07:07:57 -0700 (PDT)
+ bh=LrmhrKaXF0DEYxLjGzXZ63cc61xp2WM9kMJXk0bodfg=;
+ b=rsFgM6STJ6lDByjDZTQVBi7iDA4JDlnrtt+W4Uz2RWYWRSYmGRAb7gV12D5V8GwG6W
+ f62J3RA7mIirC693yXvv918TKmfbN4OUEs6+l9Ecdis6DEhwIvnNG/xNywSUi4kQWC82
+ nywP/f5fJ1FH64UVqabzktqbrbTSQ8z5CdJ0Tdji98NvMOqqLuyuE9eCZ+dOWLzwWJNN
+ 6kITQDRWqg9lefCYPB0D+QaTe6uPu536iIR1USWDVnxAXc1w73T6H8fNP5cGf7sPpVaM
+ lYfP0rVETuwRjZhSiDoV0j2kFOmwq1VQRpLCxKpRonVlQF9cCKExc7Wc/U8EI5ijbqqp
+ rdzA==
+X-Gm-Message-State: AOJu0YxbwzK6zlyXjtIGW6U8fgQ4SpUHIAKdvE3QnAACkah0Y6uwcIuX
+ J5QhL25pmdlIxMnnaK4xTeDtfk7Yuhhyi87H7kbwWU4OXyx05crlAgxBm46BMznV1ewlCWpb5c1
+ N
+X-Google-Smtp-Source: AGHT+IEwJCEixa1GBiNRRznyC4n0My/4rz6u/w2sj4zJtk8hCXsCq/XikQ14HvslLYgq3Noa8wPCVA==
+X-Received: by 2002:a05:6000:7:b0:355:49a:3721 with SMTP id
+ ffacd0b85a97d-3552216657cmr8501757f8f.3.1716905279986; 
+ Tue, 28 May 2024 07:07:59 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.07.57
+ ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.07.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 07:07:57 -0700 (PDT)
+ Tue, 28 May 2024 07:07:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/42] hw/arm/npcm7xx: remove setting of mp-affinity
-Date: Tue, 28 May 2024 15:07:14 +0100
-Message-Id: <20240528140753.3620597-4-peter.maydell@linaro.org>
+Subject: [PULL 07/42] hw: arm: Remove use of tabs in some source files
+Date: Tue, 28 May 2024 15:07:18 +0100
+Message-Id: <20240528140753.3620597-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
 References: <20240528140753.3620597-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,36 +93,581 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+From: Tanmay Patil <tanmaynpatil105@gmail.com>
 
-The value of the mp-affinity property being set in npcm7xx_realize is
-always the same as the default value it would have when arm_cpu_realizefn
-is called if the property is not set here. So there is no need to set
-the property value in npcm7xx_realize function.
+Some of the source files for older devices use hardcoded tabs
+instead of our current coding standard's required spaces.
+Fix these in the following files:
+	- hw/arm/boot.c
+	- hw/char/omap_uart.c
+	- hw/gpio/zaurus.c
+	- hw/input/tsc2005.c
 
-Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240504141733.14813-1-dorjoychy111@gmail.com
+This commit is mostly whitespace-only changes; it also
+adds curly-braces to some 'if' statements.
+
+This addresses part of https://gitlab.com/qemu-project/qemu/-/issues/373
+but some other files remain to be handled.
+
+Signed-off-by: Tanmay Patil <tanmaynpatil105@gmail.com>
+Message-id: 20240508081502.88375-1-tanmaynpatil105@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: tweaked commit message]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/npcm7xx.c | 3 ---
- 1 file changed, 3 deletions(-)
+ hw/arm/boot.c       |   8 +--
+ hw/char/omap_uart.c |  49 +++++++++--------
+ hw/gpio/zaurus.c    |  59 ++++++++++----------
+ hw/input/tsc2005.c  | 130 ++++++++++++++++++++++++--------------------
+ 4 files changed, 130 insertions(+), 116 deletions(-)
 
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index 9f2d96c733a..cb7791301b4 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -487,9 +487,6 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 84ea6a807a4..d480a7da02c 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -347,13 +347,13 @@ static void set_kernel_args_old(const struct arm_boot_info *info,
+     WRITE_WORD(p, info->ram_size / 4096);
+     /* ramdisk_size */
+     WRITE_WORD(p, 0);
+-#define FLAG_READONLY	1
+-#define FLAG_RDLOAD	4
+-#define FLAG_RDPROMPT	8
++#define FLAG_READONLY 1
++#define FLAG_RDLOAD   4
++#define FLAG_RDPROMPT 8
+     /* flags */
+     WRITE_WORD(p, FLAG_READONLY | FLAG_RDLOAD | FLAG_RDPROMPT);
+     /* rootdev */
+-    WRITE_WORD(p, (31 << 8) | 0);	/* /dev/mtdblock0 */
++    WRITE_WORD(p, (31 << 8) | 0); /* /dev/mtdblock0 */
+     /* video_num_cols */
+     WRITE_WORD(p, 0);
+     /* video_num_rows */
+diff --git a/hw/char/omap_uart.c b/hw/char/omap_uart.c
+index 6848bddb4e2..c2ef4c137e1 100644
+--- a/hw/char/omap_uart.c
++++ b/hw/char/omap_uart.c
+@@ -61,7 +61,7 @@ struct omap_uart_s *omap_uart_init(hwaddr base,
+     s->fclk = fclk;
+     s->irq = irq;
+     s->serial = serial_mm_init(get_system_memory(), base, 2, irq,
+-                               omap_clk_getrate(fclk)/16,
++                               omap_clk_getrate(fclk) / 16,
+                                chr ?: qemu_chr_new(label, "null", NULL),
+                                DEVICE_NATIVE_ENDIAN);
+     return s;
+@@ -76,27 +76,27 @@ static uint64_t omap_uart_read(void *opaque, hwaddr addr, unsigned size)
+     }
  
-     /* CPUs */
-     for (i = 0; i < nc->num_cpus; i++) {
--        object_property_set_int(OBJECT(&s->cpu[i]), "mp-affinity",
--                                arm_build_mp_affinity(i, NPCM7XX_MAX_NUM_CPUS),
--                                &error_abort);
-         object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
-                                 NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
-         object_property_set_bool(OBJECT(&s->cpu[i]), "reset-hivecs", true,
+     switch (addr) {
+-    case 0x20:	/* MDR1 */
++    case 0x20:  /* MDR1 */
+         return s->mdr[0];
+-    case 0x24:	/* MDR2 */
++    case 0x24:  /* MDR2 */
+         return s->mdr[1];
+-    case 0x40:	/* SCR */
++    case 0x40:  /* SCR */
+         return s->scr;
+-    case 0x44:	/* SSR */
++    case 0x44:  /* SSR */
+         return 0x0;
+-    case 0x48:	/* EBLR (OMAP2) */
++    case 0x48:  /* EBLR (OMAP2) */
+         return s->eblr;
+-    case 0x4C:	/* OSC_12M_SEL (OMAP1) */
++    case 0x4C:  /* OSC_12M_SEL (OMAP1) */
+         return s->clksel;
+-    case 0x50:	/* MVR */
++    case 0x50:  /* MVR */
+         return 0x30;
+-    case 0x54:	/* SYSC (OMAP2) */
++    case 0x54:  /* SYSC (OMAP2) */
+         return s->syscontrol;
+-    case 0x58:	/* SYSS (OMAP2) */
++    case 0x58:  /* SYSS (OMAP2) */
+         return 1;
+-    case 0x5c:	/* WER (OMAP2) */
++    case 0x5c:  /* WER (OMAP2) */
+         return s->wkup;
+-    case 0x60:	/* CFPS (OMAP2) */
++    case 0x60:  /* CFPS (OMAP2) */
+         return s->cfps;
+     }
+ 
+@@ -115,35 +115,36 @@ static void omap_uart_write(void *opaque, hwaddr addr,
+     }
+ 
+     switch (addr) {
+-    case 0x20:	/* MDR1 */
++    case 0x20:  /* MDR1 */
+         s->mdr[0] = value & 0x7f;
+         break;
+-    case 0x24:	/* MDR2 */
++    case 0x24:  /* MDR2 */
+         s->mdr[1] = value & 0xff;
+         break;
+-    case 0x40:	/* SCR */
++    case 0x40:  /* SCR */
+         s->scr = value & 0xff;
+         break;
+-    case 0x48:	/* EBLR (OMAP2) */
++    case 0x48:  /* EBLR (OMAP2) */
+         s->eblr = value & 0xff;
+         break;
+-    case 0x4C:	/* OSC_12M_SEL (OMAP1) */
++    case 0x4C:  /* OSC_12M_SEL (OMAP1) */
+         s->clksel = value & 1;
+         break;
+-    case 0x44:	/* SSR */
+-    case 0x50:	/* MVR */
+-    case 0x58:	/* SYSS (OMAP2) */
++    case 0x44:  /* SSR */
++    case 0x50:  /* MVR */
++    case 0x58:  /* SYSS (OMAP2) */
+         OMAP_RO_REG(addr);
+         break;
+-    case 0x54:	/* SYSC (OMAP2) */
++    case 0x54:  /* SYSC (OMAP2) */
+         s->syscontrol = value & 0x1d;
+-        if (value & 2)
++        if (value & 2) {
+             omap_uart_reset(s);
++        }
+         break;
+-    case 0x5c:	/* WER (OMAP2) */
++    case 0x5c:  /* WER (OMAP2) */
+         s->wkup = value & 0x7f;
+         break;
+-    case 0x60:	/* CFPS (OMAP2) */
++    case 0x60:  /* CFPS (OMAP2) */
+         s->cfps = value & 0xff;
+         break;
+     default:
+diff --git a/hw/gpio/zaurus.c b/hw/gpio/zaurus.c
+index 5884804c589..7342440b958 100644
+--- a/hw/gpio/zaurus.c
++++ b/hw/gpio/zaurus.c
+@@ -49,19 +49,20 @@ struct ScoopInfo {
+     uint16_t isr;
+ };
+ 
+-#define SCOOP_MCR	0x00
+-#define SCOOP_CDR	0x04
+-#define SCOOP_CSR	0x08
+-#define SCOOP_CPR	0x0c
+-#define SCOOP_CCR	0x10
+-#define SCOOP_IRR_IRM	0x14
+-#define SCOOP_IMR	0x18
+-#define SCOOP_ISR	0x1c
+-#define SCOOP_GPCR	0x20
+-#define SCOOP_GPWR	0x24
+-#define SCOOP_GPRR	0x28
++#define SCOOP_MCR       0x00
++#define SCOOP_CDR       0x04
++#define SCOOP_CSR       0x08
++#define SCOOP_CPR       0x0c
++#define SCOOP_CCR       0x10
++#define SCOOP_IRR_IRM   0x14
++#define SCOOP_IMR       0x18
++#define SCOOP_ISR       0x1c
++#define SCOOP_GPCR      0x20
++#define SCOOP_GPWR      0x24
++#define SCOOP_GPRR      0x28
+ 
+-static inline void scoop_gpio_handler_update(ScoopInfo *s) {
++static inline void scoop_gpio_handler_update(ScoopInfo *s)
++{
+     uint32_t level, diff;
+     int bit;
+     level = s->gpio_level & s->gpio_dir;
+@@ -125,8 +126,9 @@ static void scoop_write(void *opaque, hwaddr addr,
+         break;
+     case SCOOP_CPR:
+         s->power = value;
+-        if (value & 0x80)
++        if (value & 0x80) {
+             s->power |= 0x8040;
++        }
+         break;
+     case SCOOP_CCR:
+         s->ccr = value;
+@@ -145,7 +147,7 @@ static void scoop_write(void *opaque, hwaddr addr,
+         scoop_gpio_handler_update(s);
+         break;
+     case SCOOP_GPWR:
+-    case SCOOP_GPRR:	/* GPRR is probably R/O in real HW */
++    case SCOOP_GPRR:    /* GPRR is probably R/O in real HW */
+         s->gpio_level = value & s->gpio_dir;
+         scoop_gpio_handler_update(s);
+         break;
+@@ -166,10 +168,11 @@ static void scoop_gpio_set(void *opaque, int line, int level)
+ {
+     ScoopInfo *s = (ScoopInfo *) opaque;
+ 
+-    if (level)
++    if (level) {
+         s->gpio_level |= (1 << line);
+-    else
++    } else {
+         s->gpio_level &= ~(1 << line);
++    }
+ }
+ 
+ static void scoop_init(Object *obj)
+@@ -203,7 +206,7 @@ static int scoop_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
+-static bool is_version_0 (void *opaque, int version_id)
++static bool is_version_0(void *opaque, int version_id)
+ {
+     return version_id == 0;
+ }
+@@ -265,7 +268,7 @@ type_init(scoop_register_types)
+ 
+ /* Write the bootloader parameters memory area.  */
+ 
+-#define MAGIC_CHG(a, b, c, d)	((d << 24) | (c << 16) | (b << 8) | a)
++#define MAGIC_CHG(a, b, c, d)   ((d << 24) | (c << 16) | (b << 8) | a)
+ 
+ static struct QEMU_PACKED sl_param_info {
+     uint32_t comadj_keyword;
+@@ -286,16 +289,16 @@ static struct QEMU_PACKED sl_param_info {
+     uint32_t phad_keyword;
+     int32_t phadadj;
+ } zaurus_bootparam = {
+-    .comadj_keyword	= MAGIC_CHG('C', 'M', 'A', 'D'),
+-    .comadj		= 125,
+-    .uuid_keyword	= MAGIC_CHG('U', 'U', 'I', 'D'),
+-    .uuid		= { -1 },
+-    .touch_keyword	= MAGIC_CHG('T', 'U', 'C', 'H'),
+-    .touch_xp		= -1,
+-    .adadj_keyword	= MAGIC_CHG('B', 'V', 'A', 'D'),
+-    .adadj		= -1,
+-    .phad_keyword	= MAGIC_CHG('P', 'H', 'A', 'D'),
+-    .phadadj		= 0x01,
++    .comadj_keyword     = MAGIC_CHG('C', 'M', 'A', 'D'),
++    .comadj             = 125,
++    .uuid_keyword       = MAGIC_CHG('U', 'U', 'I', 'D'),
++    .uuid               = { -1 },
++    .touch_keyword      = MAGIC_CHG('T', 'U', 'C', 'H'),
++    .touch_xp           = -1,
++    .adadj_keyword      = MAGIC_CHG('B', 'V', 'A', 'D'),
++    .adadj              = -1,
++    .phad_keyword       = MAGIC_CHG('P', 'H', 'A', 'D'),
++    .phadadj            = 0x01,
+ };
+ 
+ void sl_bootparam_write(hwaddr ptr)
+diff --git a/hw/input/tsc2005.c b/hw/input/tsc2005.c
+index ac7f54eeafb..54a15d24410 100644
+--- a/hw/input/tsc2005.c
++++ b/hw/input/tsc2005.c
+@@ -28,10 +28,10 @@
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ 
+-#define TSC_CUT_RESOLUTION(value, p)	((value) >> (16 - (p ? 12 : 10)))
++#define TSC_CUT_RESOLUTION(value, p)  ((value) >> (16 - (p ? 12 : 10)))
+ 
+ typedef struct {
+-    qemu_irq pint;	/* Combination of the nPENIRQ and DAV signals */
++    qemu_irq pint;  /* Combination of the nPENIRQ and DAV signals */
+     QEMUTimer *timer;
+     uint16_t model;
+ 
+@@ -63,7 +63,7 @@ typedef struct {
+ } TSC2005State;
+ 
+ enum {
+-    TSC_MODE_XYZ_SCAN	= 0x0,
++    TSC_MODE_XYZ_SCAN = 0x0,
+     TSC_MODE_XY_SCAN,
+     TSC_MODE_X,
+     TSC_MODE_Y,
+@@ -82,100 +82,100 @@ enum {
+ };
+ 
+ static const uint16_t mode_regs[16] = {
+-    0xf000,	/* X, Y, Z scan */
+-    0xc000,	/* X, Y scan */
+-    0x8000,	/* X */
+-    0x4000,	/* Y */
+-    0x3000,	/* Z */
+-    0x0800,	/* AUX */
+-    0x0400,	/* TEMP1 */
+-    0x0200,	/* TEMP2 */
+-    0x0800,	/* AUX scan */
+-    0x0040,	/* X test */
+-    0x0020,	/* Y test */
+-    0x0080,	/* Short-circuit test */
+-    0x0000,	/* Reserved */
+-    0x0000,	/* X+, X- drivers */
+-    0x0000,	/* Y+, Y- drivers */
+-    0x0000,	/* Y+, X- drivers */
++    0xf000, /* X, Y, Z scan */
++    0xc000, /* X, Y scan */
++    0x8000, /* X */
++    0x4000, /* Y */
++    0x3000, /* Z */
++    0x0800, /* AUX */
++    0x0400, /* TEMP1 */
++    0x0200, /* TEMP2 */
++    0x0800, /* AUX scan */
++    0x0040, /* X test */
++    0x0020, /* Y test */
++    0x0080, /* Short-circuit test */
++    0x0000, /* Reserved */
++    0x0000, /* X+, X- drivers */
++    0x0000, /* Y+, Y- drivers */
++    0x0000, /* Y+, X- drivers */
+ };
+ 
+-#define X_TRANSFORM(s)			\
++#define X_TRANSFORM(s)      \
+     ((s->y * s->tr[0] - s->x * s->tr[1]) / s->tr[2] + s->tr[3])
+-#define Y_TRANSFORM(s)			\
++#define Y_TRANSFORM(s)      \
+     ((s->y * s->tr[4] - s->x * s->tr[5]) / s->tr[6] + s->tr[7])
+-#define Z1_TRANSFORM(s)			\
++#define Z1_TRANSFORM(s)     \
+     ((400 - ((s)->x >> 7) + ((s)->pressure << 10)) << 4)
+-#define Z2_TRANSFORM(s)			\
++#define Z2_TRANSFORM(s)     \
+     ((4000 + ((s)->y >> 7) - ((s)->pressure << 10)) << 4)
+ 
+-#define AUX_VAL				(700 << 4)	/* +/- 3 at 12-bit */
+-#define TEMP1_VAL			(1264 << 4)	/* +/- 5 at 12-bit */
+-#define TEMP2_VAL			(1531 << 4)	/* +/- 5 at 12-bit */
++#define AUX_VAL       (700 << 4)  /* +/- 3 at 12-bit */
++#define TEMP1_VAL     (1264 << 4) /* +/- 5 at 12-bit */
++#define TEMP2_VAL     (1531 << 4) /* +/- 5 at 12-bit */
+ 
+ static uint16_t tsc2005_read(TSC2005State *s, int reg)
+ {
+     uint16_t ret;
+ 
+     switch (reg) {
+-    case 0x0:	/* X */
++    case 0x0: /* X */
+         s->dav &= ~mode_regs[TSC_MODE_X];
+         return TSC_CUT_RESOLUTION(X_TRANSFORM(s), s->precision) +
+                 (s->noise & 3);
+-    case 0x1:	/* Y */
++    case 0x1: /* Y */
+         s->dav &= ~mode_regs[TSC_MODE_Y];
+-        s->noise ++;
++        s->noise++;
+         return TSC_CUT_RESOLUTION(Y_TRANSFORM(s), s->precision) ^
+                 (s->noise & 3);
+-    case 0x2:	/* Z1 */
++    case 0x2: /* Z1 */
+         s->dav &= 0xdfff;
+         return TSC_CUT_RESOLUTION(Z1_TRANSFORM(s), s->precision) -
+                 (s->noise & 3);
+-    case 0x3:	/* Z2 */
++    case 0x3: /* Z2 */
+         s->dav &= 0xefff;
+         return TSC_CUT_RESOLUTION(Z2_TRANSFORM(s), s->precision) |
+                 (s->noise & 3);
+ 
+-    case 0x4:	/* AUX */
++    case 0x4: /* AUX */
+         s->dav &= ~mode_regs[TSC_MODE_AUX];
+         return TSC_CUT_RESOLUTION(AUX_VAL, s->precision);
+ 
+-    case 0x5:	/* TEMP1 */
++    case 0x5: /* TEMP1 */
+         s->dav &= ~mode_regs[TSC_MODE_TEMP1];
+         return TSC_CUT_RESOLUTION(TEMP1_VAL, s->precision) -
+                 (s->noise & 5);
+-    case 0x6:	/* TEMP2 */
++    case 0x6: /* TEMP2 */
+         s->dav &= 0xdfff;
+         s->dav &= ~mode_regs[TSC_MODE_TEMP2];
+         return TSC_CUT_RESOLUTION(TEMP2_VAL, s->precision) ^
+                 (s->noise & 3);
+ 
+-    case 0x7:	/* Status */
++    case 0x7: /* Status */
+         ret = s->dav | (s->reset << 7) | (s->pdst << 2) | 0x0;
+         s->dav &= ~(mode_regs[TSC_MODE_X_TEST] | mode_regs[TSC_MODE_Y_TEST] |
+                         mode_regs[TSC_MODE_TS_TEST]);
+         s->reset = true;
+         return ret;
+ 
+-    case 0x8:   /* AUX high threshold */
++    case 0x8: /* AUX high threshold */
+         return s->aux_thr[1];
+-    case 0x9:   /* AUX low threshold */
++    case 0x9: /* AUX low threshold */
+         return s->aux_thr[0];
+ 
+-    case 0xa:   /* TEMP high threshold */
++    case 0xa: /* TEMP high threshold */
+         return s->temp_thr[1];
+-    case 0xb:   /* TEMP low threshold */
++    case 0xb: /* TEMP low threshold */
+         return s->temp_thr[0];
+ 
+-    case 0xc:	/* CFR0 */
++    case 0xc: /* CFR0 */
+         return (s->pressure << 15) | ((!s->busy) << 14) |
+-                (s->nextprecision << 13) | s->timing[0]; 
+-    case 0xd:	/* CFR1 */
++                (s->nextprecision << 13) | s->timing[0];
++    case 0xd: /* CFR1 */
+         return s->timing[1];
+-    case 0xe:	/* CFR2 */
++    case 0xe: /* CFR2 */
+         return (s->pin_func << 14) | s->filter;
+ 
+-    case 0xf:	/* Function select status */
++    case 0xf: /* Function select status */
+         return s->function >= 0 ? 1 << s->function : 0;
+     }
+ 
+@@ -200,13 +200,14 @@ static void tsc2005_write(TSC2005State *s, int reg, uint16_t data)
+         s->temp_thr[0] = data;
+         break;
+ 
+-    case 0xc:	/* CFR0 */
++    case 0xc: /* CFR0 */
+         s->host_mode = (data >> 15) != 0;
+         if (s->enabled != !(data & 0x4000)) {
+             s->enabled = !(data & 0x4000);
+             trace_tsc2005_sense(s->enabled ? "enabled" : "disabled");
+-            if (s->busy && !s->enabled)
++            if (s->busy && !s->enabled) {
+                 timer_del(s->timer);
++            }
+             s->busy = s->busy && s->enabled;
+         }
+         s->nextprecision = (data >> 13) & 1;
+@@ -216,10 +217,10 @@ static void tsc2005_write(TSC2005State *s, int reg, uint16_t data)
+                           "tsc2005_write: illegal conversion clock setting\n");
+         }
+         break;
+-    case 0xd:	/* CFR1 */
++    case 0xd: /* CFR1 */
+         s->timing[1] = data & 0xf07;
+         break;
+-    case 0xe:	/* CFR2 */
++    case 0xe: /* CFR2 */
+         s->pin_func = (data >> 14) & 3;
+         s->filter = data & 0x3fff;
+         break;
+@@ -258,10 +259,12 @@ static void tsc2005_pin_update(TSC2005State *s)
+     switch (s->nextfunction) {
+     case TSC_MODE_XYZ_SCAN:
+     case TSC_MODE_XY_SCAN:
+-        if (!s->host_mode && s->dav)
++        if (!s->host_mode && s->dav) {
+             s->enabled = false;
+-        if (!s->pressure)
++        }
++        if (!s->pressure) {
+             return;
++        }
+         /* Fall through */
+     case TSC_MODE_AUX_SCAN:
+         break;
+@@ -269,8 +272,9 @@ static void tsc2005_pin_update(TSC2005State *s)
+     case TSC_MODE_X:
+     case TSC_MODE_Y:
+     case TSC_MODE_Z:
+-        if (!s->pressure)
++        if (!s->pressure) {
+             return;
++        }
+         /* Fall through */
+     case TSC_MODE_AUX:
+     case TSC_MODE_TEMP1:
+@@ -278,8 +282,9 @@ static void tsc2005_pin_update(TSC2005State *s)
+     case TSC_MODE_X_TEST:
+     case TSC_MODE_Y_TEST:
+     case TSC_MODE_TS_TEST:
+-        if (s->dav)
++        if (s->dav) {
+             s->enabled = false;
++        }
+         break;
+ 
+     case TSC_MODE_RESERVED:
+@@ -290,13 +295,14 @@ static void tsc2005_pin_update(TSC2005State *s)
+         return;
+     }
+ 
+-    if (!s->enabled || s->busy)
++    if (!s->enabled || s->busy) {
+         return;
++    }
+ 
+     s->busy = true;
+     s->precision = s->nextprecision;
+     s->function = s->nextfunction;
+-    s->pdst = !s->pnd0;	/* Synchronised on internal clock */
++    s->pdst = !s->pnd0; /* Synchronised on internal clock */
+     expires = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+         (NANOSECONDS_PER_SECOND >> 7);
+     timer_mod(s->timer, expires);
+@@ -331,7 +337,7 @@ static uint8_t tsc2005_txrx_word(void *opaque, uint8_t value)
+     TSC2005State *s = opaque;
+     uint32_t ret = 0;
+ 
+-    switch (s->state ++) {
++    switch (s->state++) {
+     case 0:
+         if (value & 0x80) {
+             /* Command */
+@@ -343,8 +349,9 @@ static uint8_t tsc2005_txrx_word(void *opaque, uint8_t value)
+                 if (s->enabled != !(value & 1)) {
+                     s->enabled = !(value & 1);
+                     trace_tsc2005_sense(s->enabled ? "enabled" : "disabled");
+-                    if (s->busy && !s->enabled)
++                    if (s->busy && !s->enabled) {
+                         timer_del(s->timer);
++                    }
+                     s->busy = s->busy && s->enabled;
+                 }
+                 tsc2005_pin_update(s);
+@@ -368,10 +375,11 @@ static uint8_t tsc2005_txrx_word(void *opaque, uint8_t value)
+         break;
+ 
+     case 1:
+-        if (s->command)
++        if (s->command) {
+             ret = (s->data >> 8) & 0xff;
+-        else
++        } else {
+             s->data |= value << 8;
++        }
+         break;
+ 
+     case 2:
+@@ -412,8 +420,9 @@ static void tsc2005_timer_tick(void *opaque)
+ 
+     /* Timer ticked -- a set of conversions has been finished.  */
+ 
+-    if (!s->busy)
++    if (!s->busy) {
+         return;
++    }
+ 
+     s->busy = false;
+     s->dav |= mode_regs[function];
+@@ -438,8 +447,9 @@ static void tsc2005_touchscreen_event(void *opaque,
+      * signaling TS events immediately, but for now we simulate
+      * the first conversion delay for sake of correctness.
+      */
+-    if (p != s->pressure)
++    if (p != s->pressure) {
+         tsc2005_pin_update(s);
++    }
+ }
+ 
+ static int tsc2005_post_load(void *opaque, int version_id)
 -- 
 2.34.1
 
