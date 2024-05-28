@@ -4,79 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FCAFC25B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 11:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D67C27C44
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 12:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBubR-0002kP-Mx; Tue, 28 May 2024 07:02:49 -0400
+	id 1sBvWO-0002Sr-Ni; Tue, 28 May 2024 08:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBubP-0002k2-Hw
- for qemu-devel@nongnu.org; Tue, 28 May 2024 07:02:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sBvWK-0002P1-TI; Tue, 28 May 2024 08:01:36 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sBubN-0005yW-7j
- for qemu-devel@nongnu.org; Tue, 28 May 2024 07:02:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716894163;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9AeUmwpTzkKJEJoYr/eJWivPL1j8IP8f4hOzvAngFAE=;
- b=PDJIrmXvWgErTwF2GH6+tOyTtI3tRFn++Exd3j0L2LNaqtk31qVnvuDroc0pQKHhlWWbKZ
- olvVUPhJ6dwcT0TcbH6uzP2Tqyc/bvZZFcyfRdyBvWCT57DfedOuOM5pP0wpAQ+e9bLfMb
- A3TVO9/Uew7bwpVFAx01ja9J49FYBkw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-jR9HIjMFPLi7eYGQTNJw7w-1; Tue, 28 May 2024 07:02:39 -0400
-X-MC-Unique: jR9HIjMFPLi7eYGQTNJw7w-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5948B80028D;
- Tue, 28 May 2024 11:02:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 27079105480A;
- Tue, 28 May 2024 11:02:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3D93221E668F; Tue, 28 May 2024 13:02:37 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,  Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Wainer dos
- Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Laurent Vivier
- <lvivier@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 3/4] qapi: Do not cast function pointers
-In-Reply-To: <20240524-xkb-v4-3-2de564e5c859@daynix.com> (Akihiko Odaki's
- message of "Fri, 24 May 2024 14:35:49 +0900")
-References: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
- <20240524-xkb-v4-3-2de564e5c859@daynix.com>
-Date: Tue, 28 May 2024 13:02:37 +0200
-Message-ID: <87r0dmw65u.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sBvWH-0004DL-9l; Tue, 28 May 2024 08:01:36 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id F0922441D8;
+ Tue, 28 May 2024 14:01:18 +0200 (CEST)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, vsementsov@yandex-team.ru,
+ jsnow@redhat.com
+Subject: [PATCH v2 0/2] backup: allow specifying minimum cluster size
+Date: Tue, 28 May 2024 14:01:12 +0200
+Message-Id: <20240528120114.344416-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,35 +54,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+Based-on: https://lore.kernel.org/qemu-devel/20240429115157.2260885-1-vsementsov@yandex-team.ru/
 
-> -fsanitize=undefined complains if function pointers are casted. It
-> also prevents enabling teh strict mode of CFI which is currently
+Discussion for v1:
+https://lore.kernel.org/qemu-devel/20240308155158.830258-1-f.ebner@proxmox.com/
 
-Typo: the
+Changes in v2:
+* Use 'size' type in QAPI.
+* Remove option in cbw_parse_options(), i.e. before parsing generic
+  blockdev options.
+* Reword commit messages hoping to describe the issue in a more
+  straight-forward way.
 
-> disabled with -fsanitize-cfi-icall-generalize-pointers.
+In the context of backup fleecing, discarding the source will not work
+when the fleecing image has a larger granularity than the one used for
+block-copy operations (can happen if the backup target has smaller
+cluster size), because cbw_co_pdiscard_snapshot() will align down the
+discard requests and thus effectively ignore then.
 
-The above describes the problem the patch solves.  Good!  Two
-suggestions:
+To make @discard-source work in such a scenario, allow specifying the
+minimum cluster size used for block-copy operations and thus in
+particular also the granularity for discard requests to the source.
 
-1. Quote the error message.
+Fiona Ebner (2):
+  copy-before-write: allow specifying minimum cluster size
+  backup: add minimum cluster size to performance options
 
-2. Briefly describe the solution as well.  Perhaps:
+ block/backup.c             |  2 +-
+ block/block-copy.c         | 22 ++++++++++++++++++----
+ block/copy-before-write.c  | 18 +++++++++++++++++-
+ block/copy-before-write.h  |  1 +
+ blockdev.c                 |  3 +++
+ include/block/block-copy.h |  1 +
+ qapi/block-core.json       | 17 ++++++++++++++---
+ 7 files changed, 55 insertions(+), 9 deletions(-)
 
-  The problematic casts are necessary to pass visit_type_T() and
-  visit_type_T_members() as callbacks to qapi_clone() and
-  qapi_clone_members(), respectively.  Open-code these two functions to
-  avoid the callbacks, and thus the type casts.
+-- 
+2.39.2
 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2346
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-Always kind of sad to move implementation code to headers, but getting
-rid of the function pointer casts makes sense, and I don't have better
-ideas for doing that.
-
-With an improved commit message
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
