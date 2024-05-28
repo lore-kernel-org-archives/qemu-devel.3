@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4FBC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 00:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335FEC25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 00:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBkvk-0005Fy-F8; Mon, 27 May 2024 20:43:08 -0400
+	id 1sBkwB-0005LV-PK; Mon, 27 May 2024 20:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBkvj-0005Fc-6D; Mon, 27 May 2024 20:43:07 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1sBkw8-0005KT-AX; Mon, 27 May 2024 20:43:32 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sBkvh-0001jR-MH; Mon, 27 May 2024 20:43:06 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6f693fb0ab6so217160b3a.1; 
- Mon, 27 May 2024 17:43:03 -0700 (PDT)
+ id 1sBkw6-0001kO-9K; Mon, 27 May 2024 20:43:32 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-6819b3c92bbso237913a12.2; 
+ Mon, 27 May 2024 17:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716856982; x=1717461782; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hV/Ff4XuDNOr3amt5eEY63kZmhuDX+0RMWIQl2Ft4Ec=;
- b=lwqdla8jLz7eSyshPoazG1aKyWtW0rmpGKUbqTQ6L1t/A0evcIzJhAhl/3I4jx4jIO
- 8Mcpm0op+ZeTK5dW0PrZquozs085PJzTVn6icZZZnI5e+HObrtjejYrJX4hOnQBO3KpA
- 0fCnG7LOmZcUK9uHo1KegwcaG/DiwKFC0Tks1goxiOI4o2ivF0YV5Wdw03Pf8/4pM2L5
- 9tSNvq32A6GES7PKKvPn4fK55d1Jc8eEaydtpXn9xZFVSWeDXkf5+0oHXumFWKbsELHf
- CS6mYrDyPWSLYhHTF/RA9UY7B7ITBsM6auLQ9DmdwsZZZLh3oIeJeSR1sWYv9ooRsGv1
- 4zFA==
+ d=gmail.com; s=20230601; t=1716857007; x=1717461807; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3mPEcT8P6LlsNxCea2gf8+eejmJ05T1RMXKOf/aIwTk=;
+ b=C7Q823NIkmUvjUMQvT6bJfo3NVILYcJydMNUL9MD85PtcsxVYWG1iWAHyCifNZ9v+/
+ 2L1s5au+o4hCjBuM4oztKXAjvVXIBBhXp1EUMl0z56jg40k6xygop+uHMkMZkrRIIvxh
+ l9lEzWpy7SEkL7o5klMgQRRgTboaa93nOF7IUW4AqsWApmiTZQbmNI94AvZzYRhgK35k
+ /39zMEMyihj4hJgw07EA1Cl/jhoGlNIufUTJcbsxDIb+x1wWPLKRwNZCA4gslnAcp/ja
+ TBNc8GQ0D99Y69JgEcDBdzIkmMpRsIJoNo3Cg2ImB+leSGqzq9zRYYSE0cKDgkZzhSpb
+ OwpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716856982; x=1717461782;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hV/Ff4XuDNOr3amt5eEY63kZmhuDX+0RMWIQl2Ft4Ec=;
- b=Dtc3rGBN5MYYTi0N0CwC75HncpjBEl0TcaLcYHSaZDjaR5aX+MmsZ+kT1c/XzFUonN
- T4iMhrjnorEJEy3n5ZpnYgImUPVFDngjiFyKNCYtOUHE4Qkk7F8FCJbuFbhOEGwM8riC
- pjmxdO3E8D37xlFTf/+K+bkKM71NUx4/TWC6DuranWhRSr68S8Yc3NwlwpFVRNsSLYdd
- maaC/UCktnrW6EBadgTFLi3mgw4RJU/SYRVeTn0jRHSNnqIgnyOmkWxEp1Adg1rCDbh5
- ypLTiRQJXQhsoJ0CGnU0iOhbAD5J021ilzTHnkvWgPfoRBC3SOG3Dv/gsEY01UnJb7s9
- kwtg==
+ d=1e100.net; s=20230601; t=1716857007; x=1717461807;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3mPEcT8P6LlsNxCea2gf8+eejmJ05T1RMXKOf/aIwTk=;
+ b=pPd8SrZFoe1KL8UEOW9KUVhIQN3BqcWIwf8zWunGKkl5WmjVHi+F68UQd3aSh1URRO
+ DkNBoo7TeKORROvfTJfTBybySzlQlF148RrkhiWrqygVrdwEMZN/jglAp8ztSn3jwOhB
+ /FiQQeF5vJltu46/NmbkE+IXkRyaICcNtFReC8h74syfDB6pZVjkVCjonc5uQBZFJl9E
+ rbPKyvgIBzmou2DDls/e+t2AXElxgER4YI3I1VgCyaGEki4Y6SRj6nLBRk0aVD4cffqe
+ AZZgpS5s8vOmdcR7XZKznFlHptbg95VyQp8TJwDCOMwcKUABo9Je747nJeI42U/2uxIg
+ RqjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8i8oYv4G3OYqkpwcapU4OhZt1HY71tFnhu3NSPV8OLAo4lc1rFz401f2xLmA921bqJ0b5nRa/P05ZOQoGsoLURdop
-X-Gm-Message-State: AOJu0YzQBt5UnLEdFKkYCdLbrGj0L5Y0NRO12ql82p30WFa7DaXkjzLz
- K+6EzR78pMmXdGBu01psN6QA3NigHJwiXGzbAn2VOG3AiBcF3N3bwJcpKg==
-X-Google-Smtp-Source: AGHT+IF16yS6qGilLmRCukaw3CVELDjCEYb5J35GbDgru/YoPSB/d0zZgAZJIh80DvET+cex1JRfJQ==
-X-Received: by 2002:a05:6a20:9493:b0:1b0:18d1:c46c with SMTP id
- adf61e73a8af0-1b212d39517mr9088002637.27.1716856982106; 
- Mon, 27 May 2024 17:43:02 -0700 (PDT)
+ AJvYcCVEeJIppNTrClPQeEWiTDjbQiVdTlmO8dR5NkhYetJw6FV32kAGOqJXMuBwrUN5Rronv+pxhFGBBGEKez69yCVPYc6+
+X-Gm-Message-State: AOJu0YwUuKskgqpJ/gxx8XMspTAaydpjtTPO0rtei03TUGMMnJAWONjK
+ q61Lb+Y/DYOaOg1bgsdg4fuAcOG3w+Xn7xy+/jFU6joSSwAsRFipPthPQQ==
+X-Google-Smtp-Source: AGHT+IHqoFnHHbxx0Q63S8Sqvhn9jmI40SjLAPh8Vzn/zHVttsK5p2xvIBVaelNFNPF2Q/2xliuefA==
+X-Received: by 2002:a17:903:1c3:b0:1f4:6dca:234e with SMTP id
+ d9443c01a7336-1f46dca265cmr101261155ad.25.1716857007105; 
+ Mon, 27 May 2024 17:43:27 -0700 (PDT)
 Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c75783asm67613595ad.23.2024.05.27.17.42.48
+ d9443c01a7336-1f44c75783asm67613595ad.23.2024.05.27.17.43.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 17:43:01 -0700 (PDT)
+ Mon, 27 May 2024 17:43:26 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org
-Subject: [PATCH v2 0/6] tests/qtest/migration-test: Improve and enable on ppc64
-Date: Tue, 28 May 2024 10:42:04 +1000
-Message-ID: <20240528004211.564010-1-npiggin@gmail.com>
+ qemu-ppc@nongnu.org, Yury Kotov <yury-kotov@yandex-team.ru>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>
+Subject: [PATCH v2 2/6] tests/qtest/migration-test: Fix and enable
+ test_ignore_shared
+Date: Tue, 28 May 2024 10:42:06 +1000
+Message-ID: <20240528004211.564010-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240528004211.564010-1-npiggin@gmail.com>
+References: <20240528004211.564010-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,44 +98,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Added "TCG" in subject since it is enabling for TCG
-- Enable test_mode_reboot with checking GITLAB_CI env that Fabiano
-  suggested.
-- Move test_ignore_shared patch out of the s390 fix series to here
-  and use GITLAB_CI for it too.
-- Move ppc64 pseries machine options out of libqos-spapr.h to a
-  new general qtest ppc header.
-- Adjust remaining s390x comment to explain the problem.
+This test is already starting to bitrot, so first remove it from ifdef
+and fix compile issues. ppc64 transfers about 2MB, so bump the size
+threshold too.
 
-Thanks,
-Nick
+It was said to be broken on aarch64 but it may have been the limited shm
+size under gitlab CI. The test is now excluded from running on CI so it
+shouldn't cause too much annoyance.
 
-Nicholas Piggin (6):
-  tests/qtest/migration: Run test_mode_reboot outside gitlab CI
-  tests/qtest/migration-test: Fix and enable test_ignore_shared
-  tests/qtest: Move common define from libqos-spapr.h to new ppc-util.h
-  tests/qtest/migration-test: Quieten ppc64 QEMU warnigns
-  tests/qtest/migration-test: Enable on ppc64 TCG
-  tests/qtest/migration-test: Use custom asm bios for ppc64
+So let's try enable it.
 
- tests/migration/migration-test.h   |  1 +
- tests/migration/ppc64/a-b-kernel.h | 42 +++++++++++++++
- tests/qtest/libqos/libqos-spapr.h  |  7 ---
- tests/qtest/ppc-util.h             | 19 +++++++
- tests/qtest/boot-serial-test.c     |  2 +-
- tests/qtest/migration-test.c       | 85 ++++++++++--------------------
- tests/qtest/prom-env-test.c        |  2 +-
- tests/qtest/pxe-test.c             |  2 +-
- tests/migration/Makefile           |  2 +-
- tests/migration/ppc64/Makefile     | 15 ++++++
- tests/migration/ppc64/a-b-kernel.S | 66 +++++++++++++++++++++++
- 11 files changed, 174 insertions(+), 69 deletions(-)
- create mode 100644 tests/migration/ppc64/a-b-kernel.h
- create mode 100644 tests/qtest/ppc-util.h
- create mode 100644 tests/migration/ppc64/Makefile
- create mode 100644 tests/migration/ppc64/a-b-kernel.S
+Cc: Yury Kotov <yury-kotov@yandex-team.ru>
+Cc: Dr. David Alan Gilbert <dgilbert@redhat.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ tests/qtest/migration-test.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 04bf1c0092..8247ed98f2 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1893,14 +1893,15 @@ static void test_precopy_unix_tls_x509_override_host(void)
+ #endif /* CONFIG_TASN1 */
+ #endif /* CONFIG_GNUTLS */
+ 
+-#if 0
+-/* Currently upset on aarch64 TCG */
+ static void test_ignore_shared(void)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
++    MigrateStart args = {
++        .use_shmem = true,
++    };
+ 
+-    if (test_migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
++    if (test_migrate_start(&from, &to, uri, &args)) {
+         return;
+     }
+ 
+@@ -1925,11 +1926,11 @@ static void test_ignore_shared(void)
+     wait_for_migration_complete(from);
+ 
+     /* Check whether shared RAM has been really skipped */
+-    g_assert_cmpint(read_ram_property_int(from, "transferred"), <, 1024 * 1024);
++    g_assert_cmpint(read_ram_property_int(from, "transferred"), <,
++                                                   4 * 1024 * 1024);
+ 
+     test_migrate_end(from, to, true);
+ }
+-#endif
+ 
+ static void *
+ test_migrate_xbzrle_start(QTestState *from,
+@@ -3580,7 +3581,8 @@ int main(int argc, char **argv)
+ #endif /* CONFIG_TASN1 */
+ #endif /* CONFIG_GNUTLS */
+ 
+-    /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
++    migration_test_add("/migration/ignore_shared", test_ignore_shared);
++
+ #ifndef _WIN32
+     migration_test_add("/migration/precopy/fd/tcp",
+                        test_migrate_precopy_fd_socket);
 -- 
 2.43.0
 
