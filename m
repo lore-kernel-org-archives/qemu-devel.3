@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A21A4C25B79
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D833EC25B79
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 08:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBs59-0005qU-2U; Tue, 28 May 2024 04:21:19 -0400
+	id 1sBs5v-0006eV-U5; Tue, 28 May 2024 04:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sBs57-0005q8-FX
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:21:17 -0400
+ id 1sBs5r-0006dm-OV
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:22:04 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sBs4s-00028R-R0
- for qemu-devel@nongnu.org; Tue, 28 May 2024 04:21:17 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1sBs5m-0002Dj-A0
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 04:22:03 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxUPDmk1VmoZsAAA--.2733S3;
- Tue, 28 May 2024 16:20:54 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxFPAklFVms5sAAA--.2668S3;
+ Tue, 28 May 2024 16:21:56 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxHMflk1VmYcQLAA--.31056S2; 
- Tue, 28 May 2024 16:20:53 +0800 (CST)
+ AQAAf8AxDMcjlFVmd8QLAA--.30963S2; 
+ Tue, 28 May 2024 16:21:56 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
+To: Thomas Huth <thuth@redhat.com>,
+	Laurent Vivier <lvivier@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH] tests/libqos: Add loongarch virt machine node
-Date: Tue, 28 May 2024 16:20:53 +0800
-Message-Id: <20240528082053.938564-1-maobibo@loongson.cn>
+Subject: [PATCH] tests/qtest: Add numa test for loongarch system
+Date: Tue, 28 May 2024 16:21:55 +0800
+Message-Id: <20240528082155.938586-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxHMflk1VmYcQLAA--.31056S2
+X-CM-TRANSID: AQAAf8AxDMcjlFVmd8QLAA--.30963S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,177 +64,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add loongarch virt machine to the graph. It is a modified copy of
-the existing riscv virtmachine in riscv-virt-machine.c
-
-It contains a generic-pcihost controller, and an extra function
-loongarch_config_qpci_bus() to configure GPEX pci host controller
-information, such as ecam and pio_base addresses.
-
-Also hotplug handle checking about TYPE_VIRTIO_IOMMU_PCI device is
-added on loongarch virt machine, since virtio_mmu_pci device requires
-it.
+Add numa test case for loongarch system, it passes to run
+with command "make check-qtest".
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/loongarch/virt.c                         |   2 +
- tests/qtest/libqos/loongarch-virt-machine.c | 114 ++++++++++++++++++++
- tests/qtest/libqos/meson.build              |   1 +
- 3 files changed, 117 insertions(+)
- create mode 100644 tests/qtest/libqos/loongarch-virt-machine.c
+ tests/qtest/meson.build |  2 +-
+ tests/qtest/numa-test.c | 53 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 3e6e93edf3..2d7f718570 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -45,6 +45,7 @@
- #include "sysemu/tpm.h"
- #include "sysemu/block-backend.h"
- #include "hw/block/flash.h"
-+#include "hw/virtio/virtio-iommu.h"
- #include "qemu/error-report.h"
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b98fae6a6d..12792948ff 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -140,7 +140,7 @@ qtests_hppa = ['boot-serial-test'] + \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
  
- static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
-@@ -1213,6 +1214,7 @@ static HotplugHandler *virt_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
+ qtests_loongarch64 = qtests_filter + \
+-  ['boot-serial-test']
++  ['boot-serial-test', 'numa-test']
  
-     if (device_is_dynamic_sysbus(mc, dev) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-         memhp_type_supported(dev)) {
-         return HOTPLUG_HANDLER(machine);
+ qtests_m68k = ['boot-serial-test'] + \
+   qtests_filter
+diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
+index 7aa262dbb9..5518f6596b 100644
+--- a/tests/qtest/numa-test.c
++++ b/tests/qtest/numa-test.c
+@@ -265,6 +265,54 @@ static void aarch64_numa_cpu(const void *data)
+     qtest_quit(qts);
+ }
+ 
++static void loongarch64_numa_cpu(const void *data)
++{
++    QDict *resp;
++    QList *cpus;
++    QObject *e;
++    QTestState *qts;
++    g_autofree char *cli = NULL;
++
++    cli = make_cli(data, "-machine "
++        "smp.cpus=2,smp.sockets=2,smp.cores=1,smp.threads=1 "
++        "-numa node,nodeid=0,memdev=ram -numa node,nodeid=1 "
++        "-numa cpu,node-id=0,socket-id=1,core-id=0,thread-id=0 "
++        "-numa cpu,node-id=1,socket-id=0,core-id=0,thread-id=0");
++    qts = qtest_init(cli);
++    cpus = get_cpus(qts, &resp);
++    g_assert(cpus);
++
++    while ((e = qlist_pop(cpus))) {
++        QDict *cpu, *props;
++        int64_t socket, core, thread, node;
++
++        cpu = qobject_to(QDict, e);
++        g_assert(qdict_haskey(cpu, "props"));
++        props = qdict_get_qdict(cpu, "props");
++
++        g_assert(qdict_haskey(props, "node-id"));
++        node = qdict_get_int(props, "node-id");
++        g_assert(qdict_haskey(props, "socket-id"));
++        socket = qdict_get_int(props, "socket-id");
++        g_assert(qdict_haskey(props, "core-id"));
++        core = qdict_get_int(props, "core-id");
++        g_assert(qdict_haskey(props, "thread-id"));
++        thread = qdict_get_int(props, "thread-id");
++
++        if (socket == 0 && core == 0 && thread == 0) {
++            g_assert_cmpint(node, ==, 1);
++        } else if (socket == 1 && core == 0 && thread == 0) {
++            g_assert_cmpint(node, ==, 0);
++        } else {
++            g_assert(false);
++        }
++        qobject_unref(e);
++    }
++
++    qobject_unref(resp);
++    qtest_quit(qts);
++}
++
+ static void pc_dynamic_cpu_cfg(const void *data)
+ {
+     QObject *e;
+@@ -593,6 +641,11 @@ int main(int argc, char **argv)
+                             aarch64_numa_cpu);
      }
-diff --git a/tests/qtest/libqos/loongarch-virt-machine.c b/tests/qtest/libqos/loongarch-virt-machine.c
-new file mode 100644
-index 0000000000..c12089c015
---- /dev/null
-+++ b/tests/qtest/libqos/loongarch-virt-machine.c
-@@ -0,0 +1,114 @@
-+/*
-+ * libqos driver framework
-+ *
-+ * Copyright (c) 2018 Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License version 2.1 as published by the Free Software Foundation.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "../libqtest.h"
-+#include "qemu/module.h"
-+#include "libqos-malloc.h"
-+#include "qgraph.h"
-+#include "virtio-mmio.h"
-+#include "generic-pcihost.h"
-+#include "hw/pci/pci_regs.h"
-+
-+#define LOONGARCH_PAGE_SIZE               0x1000
-+#define LOONGARCH_VIRT_RAM_ADDR           0x100000
-+#define LOONGARCH_VIRT_RAM_SIZE           0xFF00000
-+
-+#define LOONGARCH_VIRT_PIO_BASE           0x18000000
-+#define LOONGARCH_VIRT_PCIE_PIO_OFFSET    0x4000
-+#define LOONGARCH_VIRT_PCIE_PIO_LIMIT     0x10000
-+#define LOONGARCH_VIRT_PCIE_ECAM_BASE     0x20000000
-+#define LOONGARCH_VIRT_PCIE_MMIO32_BASE   0x40000000
-+#define LOONGARCH_VIRT_PCIE_MMIO32_LIMIT  0x80000000
-+
-+typedef struct QVirtMachine QVirtMachine;
-+
-+struct QVirtMachine {
-+    QOSGraphObject obj;
-+    QGuestAllocator alloc;
-+    QVirtioMMIODevice virtio_mmio;
-+    QGenericPCIHost bridge;
-+};
-+
-+static void virt_destructor(QOSGraphObject *obj)
-+{
-+    QVirtMachine *machine = (QVirtMachine *) obj;
-+    alloc_destroy(&machine->alloc);
-+}
-+
-+static void *virt_get_driver(void *object, const char *interface)
-+{
-+    QVirtMachine *machine = object;
-+    if (!g_strcmp0(interface, "memory")) {
-+        return &machine->alloc;
-+    }
-+
-+    fprintf(stderr, "%s not present in loongarch/virtio\n", interface);
-+    g_assert_not_reached();
-+}
-+
-+static QOSGraphObject *virt_get_device(void *obj, const char *device)
-+{
-+    QVirtMachine *machine = obj;
-+    if (!g_strcmp0(device, "generic-pcihost")) {
-+        return &machine->bridge.obj;
-+    } else if (!g_strcmp0(device, "virtio-mmio")) {
-+        return &machine->virtio_mmio.obj;
-+    }
-+
-+    fprintf(stderr, "%s not present in loongarch/virt\n", device);
-+    g_assert_not_reached();
-+}
-+
-+static void loongarch_config_qpci_bus(QGenericPCIBus *qpci)
-+{
-+    qpci->gpex_pio_base = LOONGARCH_VIRT_PIO_BASE;
-+    qpci->bus.pio_alloc_ptr = LOONGARCH_VIRT_PCIE_PIO_OFFSET;
-+    qpci->bus.pio_limit = LOONGARCH_VIRT_PCIE_PIO_LIMIT;
-+    qpci->bus.mmio_alloc_ptr = LOONGARCH_VIRT_PCIE_MMIO32_BASE;
-+    qpci->bus.mmio_limit = LOONGARCH_VIRT_PCIE_MMIO32_LIMIT;
-+    qpci->ecam_alloc_ptr = LOONGARCH_VIRT_PCIE_ECAM_BASE;
-+}
-+
-+static void *qos_create_machine_loongarch_virt(QTestState *qts)
-+{
-+    QVirtMachine *machine = g_new0(QVirtMachine, 1);
-+
-+    alloc_init(&machine->alloc, 0,
-+               LOONGARCH_VIRT_RAM_ADDR,
-+               LOONGARCH_VIRT_RAM_ADDR + LOONGARCH_VIRT_RAM_SIZE,
-+               LOONGARCH_PAGE_SIZE);
-+
-+    qos_create_generic_pcihost(&machine->bridge, qts, &machine->alloc);
-+    loongarch_config_qpci_bus(&machine->bridge.pci);
-+
-+    machine->obj.get_device = virt_get_device;
-+    machine->obj.get_driver = virt_get_driver;
-+    machine->obj.destructor = virt_destructor;
-+    return machine;
-+}
-+
-+static void virt_machine_register_nodes(void)
-+{
-+    qos_node_create_machine_args("loongarch64/virt",
-+                                 qos_create_machine_loongarch_virt,
-+                                 " -cpu la464");
-+    qos_node_contains("loongarch64/virt", "generic-pcihost", NULL);
-+}
-+
-+libqos_init(virt_machine_register_nodes);
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 3aed6efcb8..558eb4c24b 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -61,6 +61,7 @@ libqos_srcs = files(
-         'ppc64_pseries-machine.c',
-         'x86_64_pc-machine.c',
-         'riscv-virt-machine.c',
-+        'loongarch-virt-machine.c',
- )
  
- if have_virtfs
++    if (!strcmp(arch, "loongarch64")) {
++        qtest_add_data_func("/numa/loongarch64/cpu/explicit", args,
++                            loongarch64_numa_cpu);
++    }
++
+ out:
+     return g_test_run();
+ }
 -- 
 2.39.3
 
