@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 158BFC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F1BC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBrDW-0007mt-VU; Tue, 28 May 2024 03:25:55 -0400
+	id 1sBrDZ-0007oQ-QY; Tue, 28 May 2024 03:25:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
- id 1sBrDU-0007lD-RM; Tue, 28 May 2024 03:25:52 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1sBrDU-0007l6-EH; Tue, 28 May 2024 03:25:52 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <duchao@eswincomputing.com>)
- id 1sBrDP-0000Ut-Fg; Tue, 28 May 2024 03:25:52 -0400
+ id 1sBrDO-0000Uu-Oj; Tue, 28 May 2024 03:25:52 -0400
 Received: from localhost.localdomain (unknown [10.12.130.31])
- by app2 (Coremail) with SMTP id TQJkCgCHjLlhhlVmgzQNAA--.46423S6;
- Tue, 28 May 2024 15:23:23 +0800 (CST)
+ by app2 (Coremail) with SMTP id TQJkCgCHjLlhhlVmgzQNAA--.46423S7;
+ Tue, 28 May 2024 15:23:26 +0800 (CST)
 From: Chao Du <duchao@eswincomputing.com>
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
  ajones@ventanamicro.com, alistair23@gmail.com, bin.meng@windriver.com,
  liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, anup@brainfault.org,
  duchao713@qq.com
-Subject: [PATCH v2 2/3] target/riscv/kvm: handle the exit with debug reason
-Date: Tue, 28 May 2024 07:20:47 +0000
-Message-Id: <20240528072048.25529-3-duchao@eswincomputing.com>
+Subject: [PATCH v2 3/3] target/riscv/kvm: define TARGET_KVM_HAVE_GUEST_DEBUG
+Date: Tue, 28 May 2024 07:20:48 +0000
+Message-Id: <20240528072048.25529-4-duchao@eswincomputing.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240528072048.25529-1-duchao@eswincomputing.com>
 References: <20240528072048.25529-1-duchao@eswincomputing.com>
-X-CM-TRANSID: TQJkCgCHjLlhhlVmgzQNAA--.46423S6
-X-Coremail-Antispam: 1UD129KBjvJXoW7uw4kJF4UCryUWr4rWF47XFb_yoW8GF1kpF
- 45uayYkrs3J347G3ySyFWkAF13Ars7uFsxJ3y7Ga4agw4aqr4rWr1vg39xKFWrGFZ3uF1a
- yF42vr1fuF4Utr7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUP2b7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
- 8067AKxVWUXwA2048vs2IY020Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28CjxkF
- 64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcV
- CY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv
- 6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c
- 02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE
- 4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc2
- xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8Zw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU866
- wtUUUUU==
+X-CM-TRANSID: TQJkCgCHjLlhhlVmgzQNAA--.46423S7
+X-Coremail-Antispam: 1UD129KBjvdXoWrKFyrJr1UXF48XFWxXryrJFb_yoWfWFX_GF
+ W5Jw4I9rW5Xay09Fy8ZrZ8ur1rAayrAF1fGanrKFs0gr4UWF1UAw4kKa1kAFyUuw4xAr1x
+ urZ3XFyxCrnxtjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbq8YjsxI4VWxJwAYFVCjjxCrM7AC8VAFwI0_Wr0E3s1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7
+ IE14v26r1rM28IrcIa0xkI8VCY1x0267AKxVW5JVCq3wA2ocxC64kIII0Yj41l84x0c7CE
+ w4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6x
+ kF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIE
+ c7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I
+ 8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCF
+ s4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY02
+ Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU7Zjj
+ DUUUU
 X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/
-Received-SPF: permerror client-ip=129.150.39.64;
- envelope-from=duchao@eswincomputing.com; helo=sgoci-sdnproxy-4.icoremail.net
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=duchao@eswincomputing.com;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL=1.31, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL=1.31, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,53 +76,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the breakpoint belongs to the userspace then set the ret value.
+To enable the KVM GUEST DEBUG for RISC-V at QEMU side.
 
 Signed-off-by: Chao Du <duchao@eswincomputing.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ configs/targets/riscv64-softmmu.mak | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index c50f058aff..bbde86c3a4 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1555,6 +1555,21 @@ static int kvm_riscv_handle_csr(CPUState *cs, struct kvm_run *run)
-     return ret;
- }
- 
-+static bool kvm_riscv_handle_debug(CPUState *cs)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+    CPURISCVState *env = &cpu->env;
-+
-+    /* Ensure PC is synchronised */
-+    kvm_cpu_synchronize_state(cs);
-+
-+    if (kvm_find_sw_breakpoint(cs, env->pc)) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
- {
-     int ret = 0;
-@@ -1565,6 +1580,11 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-     case KVM_EXIT_RISCV_CSR:
-         ret = kvm_riscv_handle_csr(cs, run);
-         break;
-+    case KVM_EXIT_DEBUG:
-+        if (kvm_riscv_handle_debug(cs)) {
-+            ret = EXCP_DEBUG;
-+        }
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
-                       __func__, run->exit_reason);
+diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
+index f688ffa7bc..917980e63e 100644
+--- a/configs/targets/riscv64-softmmu.mak
++++ b/configs/targets/riscv64-softmmu.mak
+@@ -1,6 +1,7 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_SUPPORTS_MTTCG=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
 -- 
 2.17.1
 
