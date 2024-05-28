@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46796C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B32C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBqzM-0007a8-Up; Tue, 28 May 2024 03:11:16 -0400
+	id 1sBqzR-0007fe-0T; Tue, 28 May 2024 03:11:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sBqzL-0007Zl-Pb; Tue, 28 May 2024 03:11:15 -0400
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sBqzP-0007dx-57; Tue, 28 May 2024 03:11:19 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sBqz4-0006Cz-8y; Tue, 28 May 2024 03:11:15 -0400
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sBqys-00068N-2n; Tue, 28 May 2024 03:11:18 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S6oYJ7025153; Tue, 28 May 2024 07:10:49 GMT
+ 44S6B25f028000; Tue, 28 May 2024 07:10:41 GMT
 DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
  _d=3Dibm.com; _h=3Dcc?=
  =?UTF-8?Q?:content-transfer-encoding:content-type:date:from:in-reply-to:m?=
- =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3D0jg?=
- =?UTF-8?Q?tKrYf5jfhF77+OmWmxZ1folxqtx9UGc4ste1RsPI=3D;_b=3DcNB04K8FL/q6iV?=
- =?UTF-8?Q?99jXLB/Z+5ACcK7VvVyrXbube3ksOZqh5CReB4p9/aa1pTUuTlEp09_KtozMvrJ?=
- =?UTF-8?Q?/RrgOc37cHKwx/je4unN88E1bbnubp8lB58QrA3RzRfUaX5ehHAeDmRbQyOH_vm?=
- =?UTF-8?Q?hpHZD5vpY7DqGOhog7U47iwX7ibAqAdM+QhrxeAYjwt3K64N9jGRwhvE+T4x8fe?=
- =?UTF-8?Q?Z7D_e3xnJNZrOs8VDFB1CrYZnDA8RvGAc9dDoAyEDjte7pV7w3Hi2+prLh0+YgZ?=
- =?UTF-8?Q?4ns9mcNkd_WiEDcEzhc8rCNFlj9L1A3L4FS0q/WeWNwJvBXdaNR3+ZAlYPSTbDJ?=
- =?UTF-8?Q?C/O4ilnTibPxKkm_nA=3D=3D_?=
+ =?UTF-8?Q?essage-id:mime-version:references:subject:to;_s=3Dpp1;_bh=3DR+o?=
+ =?UTF-8?Q?+EhoV+QNJPB1uilihNH6qMUUh8Nj+M68ydAyzdb8=3D;_b=3DEm2f1COEaiFAuZ?=
+ =?UTF-8?Q?nirYrEIRXDsut2QeprGn7+apQo8VoESPAAy9YWn1xIekN9ATgmMUvt_Z5SyTcoF?=
+ =?UTF-8?Q?RVr45/No+9fGhYDDoIt2G5DKW1KdCb92jy7qISNlvv2oJrLhY6aAPect+pDH_c5?=
+ =?UTF-8?Q?bRbkscj8JXzDGmdy8avuMs77W9jTcvPJ+QJkJxF6rriblor3DCPmRRNxOgtnRNa?=
+ =?UTF-8?Q?bSc_pfbqrz6BY+o6K1ll/pDiR9UxHMQcbQuZREQiqcNWUG7EcBPhDDwsYuXMMA0?=
+ =?UTF-8?Q?AX+gFrKFe_z92ZtdQNEgkjLJfI1z3io4JPf8Hf05RhLdA+7yfBUmD59YUPaRp7P?=
+ =?UTF-8?Q?b/qH6fb9heP5UBb_BA=3D=3D_?=
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ydabrr1fd-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd8wsr94m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 07:10:49 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44S7Amlp021069;
- Tue, 28 May 2024 07:10:48 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ydabrr1fa-1
+ Tue, 28 May 2024 07:10:40 +0000
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44S7AeZa022898;
+ Tue, 28 May 2024 07:10:40 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yd8wsr94k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 07:10:48 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44S6FvRe004505; Tue, 28 May 2024 07:05:48 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ybuanwe84-1
+ Tue, 28 May 2024 07:10:40 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44S4tNpE006696; Tue, 28 May 2024 07:10:39 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ybtatdrcy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 May 2024 07:05:47 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44S75gAW29360802
+ Tue, 28 May 2024 07:10:39 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44S7AbXe25952834
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 May 2024 07:05:44 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3715E20040;
- Tue, 28 May 2024 07:05:42 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B00120043;
- Tue, 28 May 2024 07:05:40 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
- [9.109.199.72]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 May 2024 07:05:39 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH v4 10/11] ppc/pnv: Add SBE model for Power11
-Date: Tue, 28 May 2024 12:35:14 +0530
-Message-ID: <20240528070515.117160-11-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240528070515.117160-1-adityag@linux.ibm.com>
-References: <20240528070515.117160-1-adityag@linux.ibm.com>
+ Tue, 28 May 2024 07:10:39 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1072F58065;
+ Tue, 28 May 2024 07:10:37 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5C4258043;
+ Tue, 28 May 2024 07:10:34 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 May 2024 07:10:34 +0000 (GMT)
+Message-ID: <721d6b4b-0026-44c9-a97b-a007cc1ff5eb@linux.ibm.com>
+Date: Tue, 28 May 2024 12:40:33 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 04/10] ppc/pnv: specialise init for powernv8/9/10
+ machines
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+References: <20240526122612.473476-1-npiggin@gmail.com>
+ <20240526122612.473476-5-npiggin@gmail.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20240526122612.473476-5-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: eMysfFWgAU2jDMH0cA4f2-M1WEb6HgtI
-X-Proofpoint-ORIG-GUID: Nf9-Zm0qFCM9VgJpVFE7Ll2vhohAhO8t
+X-Proofpoint-ORIG-GUID: glsrTNuJaAgwWD33QqTNnv2BEMur73ew
+X-Proofpoint-GUID: a_P1HbLNczXsZDI1K7coJETmyAU-6C8M
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-28_04,2024-05-27_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- mlxlogscore=992 suspectscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 mlxscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxscore=0 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ spamscore=0 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2405010000 definitions=main-2405280051
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
@@ -118,68 +120,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power11 core is same as Power10, reuse PNV10_SBER initialisation, by
-declaring PNV11_PSI as child class of PNV10_PSI
+Hi Nick,
 
-Cc: Cédric Le Goater <clg@kaod.org>
-Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- hw/ppc/pnv_sbe.c         | 15 +++++++++++++++
- include/hw/ppc/pnv_sbe.h |  2 ++
- 2 files changed, 17 insertions(+)
+On 5/26/24 17:56, Nicholas Piggin wrote:
+> This will allow different settings and checks for different
+> machine types with later changes.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   hw/ppc/pnv.c | 35 ++++++++++++++++++++++++++++++-----
+>   1 file changed, 30 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 6e3a5ccdec..a706de2e36 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -976,11 +976,6 @@ static void pnv_init(MachineState *machine)
+>       pnv->num_chips =
+>           machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
+>   
+> -    if (machine->smp.threads > 8) {
+> -        error_report("Cannot support more than 8 threads/core "
+> -                     "on a powernv machine");
+> -        exit(1);
+> -    }
+>       if (!is_power_of_2(machine->smp.threads)) {
+>           error_report("Cannot support %d threads/core on a powernv"
+>                        "machine because it must be a power of 2",
+> @@ -1076,6 +1071,33 @@ static void pnv_init(MachineState *machine)
+>       }
+>   }
+>   
+> +static void pnv_power8_init(MachineState *machine)
+> +{
+> +    if (machine->smp.threads > 8) {
+> +        error_report("Cannot support more than 8 threads/core "
+> +                     "on a powernv POWER8 machine");
 
-diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
-index 74cee4eea7ad..a655cc7f8c9e 100644
---- a/hw/ppc/pnv_sbe.c
-+++ b/hw/ppc/pnv_sbe.c
-@@ -366,6 +366,20 @@ static const TypeInfo pnv_sbe_power10_type_info = {
-     .name          = TYPE_PNV10_SBE,
-     .parent        = TYPE_PNV9_SBE,
-     .class_init    = pnv_sbe_power10_class_init,
-+    .class_base_init = pnv_sbe_power10_class_init,
-+};
-+
-+static void pnv_sbe_power11_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "PowerNV SBE Controller (POWER11)";
-+}
-+
-+static const TypeInfo pnv_sbe_power11_type_info = {
-+    .name          = TYPE_PNV11_SBE,
-+    .parent        = TYPE_PNV10_SBE,
-+    .class_init    = pnv_sbe_power11_class_init,
- };
- 
- static void pnv_sbe_realize(DeviceState *dev, Error **errp)
-@@ -409,6 +423,7 @@ static void pnv_sbe_register_types(void)
-     type_register_static(&pnv_sbe_type_info);
-     type_register_static(&pnv_sbe_power9_type_info);
-     type_register_static(&pnv_sbe_power10_type_info);
-+    type_register_static(&pnv_sbe_power11_type_info);
- }
- 
- type_init(pnv_sbe_register_types);
-diff --git a/include/hw/ppc/pnv_sbe.h b/include/hw/ppc/pnv_sbe.h
-index b6b378ad14c7..09073a1256d6 100644
---- a/include/hw/ppc/pnv_sbe.h
-+++ b/include/hw/ppc/pnv_sbe.h
-@@ -29,6 +29,8 @@ OBJECT_DECLARE_TYPE(PnvSBE, PnvSBEClass, PNV_SBE)
- DECLARE_INSTANCE_CHECKER(PnvSBE, PNV9_SBE, TYPE_PNV9_SBE)
- #define TYPE_PNV10_SBE TYPE_PNV_SBE "-POWER10"
- DECLARE_INSTANCE_CHECKER(PnvSBE, PNV10_SBE, TYPE_PNV10_SBE)
-+#define TYPE_PNV11_SBE TYPE_PNV_SBE "-POWER11"
-+DECLARE_INSTANCE_CHECKER(PnvSBE, PNV11_SBE, TYPE_PNV11_SBE)
- 
- struct PnvSBE {
-     DeviceState xd;
--- 
-2.45.1
+We could use mc->desc for machine name above, so that ..
 
+> +        exit(1);
+> +    }
+
+with this patch, we can reuse p8 init for both p9 and p10 (and not just 
+reuse p9 for p10 with hard coded string?).
+
+With that,
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+> +
+> +    pnv_init(machine);
+> +}
+> +
+> +static void pnv_power9_init(MachineState *machine)
+> +{
+> +    if (machine->smp.threads > 8) {
+> +        error_report("Cannot support more than 8 threads/core "
+> +                     "on a powernv9/10 machine");
+> +        exit(1);
+> +    }
+> +
+> +    pnv_init(machine);
+> +}
+> +
+> +static void pnv_power10_init(MachineState *machine)
+> +{
+> +    pnv_power9_init(machine);
+> +}
+> +
+>   /*
+>    *    0:21  Reserved - Read as zeros
+>    *   22:24  Chip ID
+> @@ -2423,6 +2445,7 @@ static void pnv_machine_power8_class_init(ObjectClass *oc, void *data)
+>       };
+>   
+>       mc->desc = "IBM PowerNV (Non-Virtualized) POWER8";
+> +    mc->init = pnv_power8_init;
+>       mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power8_v2.0");
+>       compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+>   
+> @@ -2449,6 +2472,7 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
+>       };
+>   
+>       mc->desc = "IBM PowerNV (Non-Virtualized) POWER9";
+> +    mc->init = pnv_power9_init;
+>       mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
+>       compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+>   
+> @@ -2473,6 +2497,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+>           { TYPE_PNV_PHB_ROOT_PORT, "version", "5" },
+>       };
+>   
+> +    mc->init = pnv_power10_init;
+>       mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
+>       compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
+>   
 
