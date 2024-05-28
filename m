@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83516C27C43
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFE6C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sByJ2-0000Y7-24; Tue, 28 May 2024 11:00:04 -0400
+	id 1sByJA-0000dK-Pv; Tue, 28 May 2024 11:00:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sByIz-0000X1-VK
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:00:02 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sByJ8-0000bB-C2
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:00:10 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sByIx-0006ov-BU
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:00:01 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-52965199234so1081600e87.2
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:59:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sByJ6-00074i-IZ
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:00:10 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-57857e0f45cso1129090a12.1
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716908396; x=1717513196; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mTKuvHP1QSNGLlDZjOj7K/EbEPOmCMuDO5B33J0CCSg=;
- b=cNVaqva0huvawL8G6yI6cnGurgQglSqgYP6mIWvxwv1TSkyoIqtzX09JUhBSxaqdTh
- U6bwCl9zw2xnByCJJIByp95wOVx1FO0oriapocWNHFG+/1lb3Gz4t0174Cgh61EFEvGj
- Uj+XCwzO5RLM2M6BHBZHgIF6LtyaOyPxrgAFXn62IEsMFJL44AOVffyAGZYSsqUzjCFH
- azZXgklfxx6gpk4X3T7MPHb63D4jzo3+GKd3KeBfKM1MrT8xG6WWJNqsa5RHHcfwBV/D
- /oypzlxhL28VUJDWBzA15XQ+kAkF+1rMhDiKdqO/oR+03nZfa1TQVDztlIdPGibDXIlU
- TSNQ==
+ d=linaro.org; s=google; t=1716908407; x=1717513207; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MXSsU3bC3/S4MPVHakO32DgE7Q0Emp+SarB3ZR8O4Ck=;
+ b=W7XO3NKOwshww8oCZVx82B5CBgBryccqf9NKChMeaVwX+pwrhbRBIKRoVOy1Foettt
+ rIN8KSU22lzCaOLkCV2dBvvJp6M61eZWVYoGnBWfmONWR0d6Ghui2VoldyrJddKxm+K+
+ vGmfImPjdika6a+Ml8EwotWm32t/UKiMo9qstbSevtpdlCu3cMCsLUfAQyNy1VQHLJGE
+ bhH5j2zwpifUQ3cg7UhKKb3vcIEe+kl/sv0vFBT9WLBgCxZXWwsCFzPuw9QPyvrjuPcs
+ hgCXL13Y9wt9P1KxtdFfkzabGhPK/NaQ98PGpqdJLQaU0xx20pJhUJfmECAIdRpXjlbx
+ AMVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716908396; x=1717513196;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mTKuvHP1QSNGLlDZjOj7K/EbEPOmCMuDO5B33J0CCSg=;
- b=Qdw1LMxOmV2GfhacFPB57NEwIT3nZrq40SJzErpnVO1rnXVnuLaHxIweJO8Uwhwyxq
- Mf3zAt4dOD1M3xlDE47e+5i2ym8e0GDPYPBPbSOea+bidqz4Zx7olg5upcuRzX39+FbQ
- 2aLZxzuMHYVZi1kQCrN5IywpL50y6z045emYDA/E9ne5OwdojtRq9t59li5kQkSM0cw+
- UMC653kkMp5zOCKoRSZLMo//+hE69iPSF4pZbIl+jmwSw9HO9qkGoeXBvOVwL66Oh4Wx
- mK+VdCwQFHKla8uhMRLNnsNiMZygVn6wU/wedw/u94m4SUdb5K5ILZBDNJA3gz8/xN0c
- ecpQ==
-X-Gm-Message-State: AOJu0Yw9xFMqQfToazlbf3LpSMM1L9s+WQfSNKEddHxyMWioZyD0WXUU
- s3NbXJzZFDuBU1mgg4aMxfo/Lb6x9yvqAs1rXjD8J7BMSAqXY4VvDTapShNnyRYNGbhWpYg7a2X
- o
-X-Google-Smtp-Source: AGHT+IF01p8a8gw+bDHhH0j3c6sqhu3FJ3KneeiSvPu0QMEp2sI2zaTwNsccJNzr8YAPgmbcCUK99Q==
-X-Received: by 2002:a05:6512:1112:b0:529:b717:2a0e with SMTP id
- 2adb3069b0e04-529b7172ce6mr2957608e87.18.1716908395810; 
- Tue, 28 May 2024 07:59:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716908407; x=1717513207;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MXSsU3bC3/S4MPVHakO32DgE7Q0Emp+SarB3ZR8O4Ck=;
+ b=YFdnQH1WqLqZxX9mmeENGNmkucjIl/dIOHs3SbU572wDmjbq5i17o0RR7ezbRY3JMR
+ xo+9ngcgrm/o14b1WiNF0LtEo+7gKa7CM3bMupUj23T8FaaRrZomxIpwiF28CJiOqVMI
+ ExPx0+mpZk99iNwiABZ5B/9wk7jdOOoWiK5//o17hdltRP0mMISFBdSgcDFIAALKpORK
+ HlyBuOno+p/iQGKtbNoGN2JqxjtYvCGE8LpNcsCyWYHnbYNQ65GYofico2YXZId1/DOE
+ spUO6XHgRx3JeQTEcd8/B+Rv08oyqPx84JE5zSR/IfRTvSlhaNu3qHoApg40CKQfe6wz
+ nouw==
+X-Gm-Message-State: AOJu0YwqOhfkv2h8tHjR5vdRClSuFCR6AxL/JQYJabbMt3EZ4709X0ka
+ PtmWZEK6afkmb1hrLdqvGM6oChmuQdKgKw86SfJHthhKENsNZW5Z2so6/Snja7VpHAL6hu/eXYU
+ X
+X-Google-Smtp-Source: AGHT+IH20g+nR0V3xBOKczGAmmt451eBuXIlzPVINdDInP0pzqV2o2taOh3ZtgQDnsp6+iBpPcsyqw==
+X-Received: by 2002:a50:c04d:0:b0:578:572d:8d1e with SMTP id
+ 4fb4d7f45d1cf-578572d8e3amr7798101a12.6.1716908406774; 
+ Tue, 28 May 2024 08:00:06 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.214.26])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-579cd4c85c7sm3688721a12.20.2024.05.28.07.59.54
+ 4fb4d7f45d1cf-579db5406a7sm2242454a12.63.2024.05.28.08.00.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 May 2024 07:59:55 -0700 (PDT)
+ Tue, 28 May 2024 08:00:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -63,15 +64,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 0/6] accel: Restrict TCG plugin (un)registration to TCG accel
-Date: Tue, 28 May 2024 16:59:46 +0200
-Message-ID: <20240528145953.65398-1-philmd@linaro.org>
+Subject: [PATCH 2/6] accel/tcg: Move common declarations to 'internal-common.h'
+Date: Tue, 28 May 2024 16:59:48 +0200
+Message-ID: <20240528145953.65398-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240528145953.65398-1-philmd@linaro.org>
+References: <20240528145953.65398-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,48 +97,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+'internal-target.h' is meant for target-specific declarations,
+while 'internal-common.h' for common ones. Move common declarations
+to it.
 
-TL;DR; this series remove TCG plugin code from generic accel code.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/internal-common.h | 15 +++++++++++++++
+ accel/tcg/internal-target.h | 14 --------------
+ accel/tcg/tcg-all.c         |  2 +-
+ 3 files changed, 16 insertions(+), 15 deletions(-)
 
-Since the introduction of the scoreboard in plugins, the INIT
-hook use the vCPU index, which is only available somewhere
-during the vCPU REALIZE() step (see below for call tree).
-
-In order to clarify that, we split accel_cpu_common_[un]realize
-as *unassigned and *assigned steps. This allow to remove the
-plugin [un]registration code from common accel code.
-
-Another approach suggested by rth is to add a PostRealize()
-handler in DeviceClass. This was already experimented here:
-https://lore.kernel.org/qemu-devel/20240209123226.32576-1-philmd@linaro.org/
-Since it is a change harder to sell, I took this simplified
-path which just make the vCPU REALIZE a bit more complex,
-but not really an concern since the current call tree is
-https://etherpad.opendev.org/p/QEMU_vCPU_life.
-
-Philippe Mathieu-Daudé (6):
-  system/runstate: Remove unused 'qemu/plugin.h' header
-  accel/tcg: Move common declarations to 'internal-common.h'
-  accel: Clarify accel_cpu_common_[un]realize() use unassigned vCPU
-  accel: Introduce accel_cpu_common_[un]realize_assigned() handlers
-  accel: Restrict TCG plugin (un)registration to TCG accel
-  accel/tcg: Move qemu_plugin_vcpu_init__async() to plugins/
-
- accel/tcg/internal-common.h | 17 ++++++++++++++++
- accel/tcg/internal-target.h | 14 -------------
- include/qemu/accel.h        | 39 ++++++++++++++++++++++++++++++-------
- include/qemu/plugin.h       |  6 ------
- accel/accel-target.c        | 34 +++++++++++++++++++++++++++-----
- accel/tcg/cpu-exec-common.c | 20 +++++++++++++++++++
- accel/tcg/cpu-exec.c        |  4 ++--
- accel/tcg/tcg-all.c         |  8 +++++---
- cpu-target.c                | 10 ++++++++--
- hw/core/cpu-common.c        | 25 ------------------------
- plugins/core.c              |  8 +++++++-
- system/runstate.c           |  1 -
- 12 files changed, 120 insertions(+), 66 deletions(-)
-
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index cff43d221b..a8fc3db774 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -15,6 +15,8 @@
+ extern int64_t max_delay;
+ extern int64_t max_advance;
+ 
++extern bool one_insn_per_tb;
++
+ /*
+  * Return true if CS is not running in parallel with other cpus, either
+  * because there are no other cpus or we are within an exclusive context.
+@@ -41,4 +43,17 @@ static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
+ #endif
+ }
+ 
++TranslationBlock *tb_gen_code(CPUState *cpu, vaddr pc,
++                              uint64_t cs_base, uint32_t flags,
++                              int cflags);
++void page_init(void);
++void tb_htable_init(void);
++void tb_reset_jump(TranslationBlock *tb, int n);
++TranslationBlock *tb_link_page(TranslationBlock *tb);
++void cpu_restore_state_from_tb(CPUState *cpu, TranslationBlock *tb,
++                               uintptr_t host_pc);
++
++bool tcg_exec_realizefn(CPUState *cpu, Error **errp);
++void tcg_exec_unrealizefn(CPUState *cpu);
++
+ #endif
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 4e36cf858e..fe109724c6 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -69,19 +69,7 @@ void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+ #endif /* CONFIG_SOFTMMU */
+ 
+-TranslationBlock *tb_gen_code(CPUState *cpu, vaddr pc,
+-                              uint64_t cs_base, uint32_t flags,
+-                              int cflags);
+-void page_init(void);
+-void tb_htable_init(void);
+-void tb_reset_jump(TranslationBlock *tb, int n);
+-TranslationBlock *tb_link_page(TranslationBlock *tb);
+ bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc);
+-void cpu_restore_state_from_tb(CPUState *cpu, TranslationBlock *tb,
+-                               uintptr_t host_pc);
+-
+-bool tcg_exec_realizefn(CPUState *cpu, Error **errp);
+-void tcg_exec_unrealizefn(CPUState *cpu);
+ 
+ /* Return the current PC from CPU, which may be cached in TB. */
+ static inline vaddr log_pc(CPUState *cpu, const TranslationBlock *tb)
+@@ -93,8 +81,6 @@ static inline vaddr log_pc(CPUState *cpu, const TranslationBlock *tb)
+     }
+ }
+ 
+-extern bool one_insn_per_tb;
+-
+ /**
+  * tcg_req_mo:
+  * @type: TCGBar
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index c6619f5b98..2090907dba 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -38,7 +38,7 @@
+ #if !defined(CONFIG_USER_ONLY)
+ #include "hw/boards.h"
+ #endif
+-#include "internal-target.h"
++#include "internal-common.h"
+ 
+ struct TCGState {
+     AccelState parent_obj;
 -- 
 2.41.0
 
