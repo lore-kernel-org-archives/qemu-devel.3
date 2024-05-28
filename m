@@ -4,70 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7851C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 18:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5554C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 18:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC1O0-0004qh-HF; Tue, 28 May 2024 14:17:24 -0400
+	id 1sC1Ph-0005x0-Cn; Tue, 28 May 2024 14:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1sC1Nu-0004gy-Hk; Tue, 28 May 2024 14:17:18 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1sC1Ns-0001gN-GE; Tue, 28 May 2024 14:17:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716920237; x=1748456237;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=ZOwIjjXPtrApLzL7oZpHcOhTAraK3uir0bWfE7zfeEY=;
- b=Gtq0HTkMFNLLEMVi5242mlmiDNVJtTQu7EC0uMUGcS8H+uW0JHfh79ki
- V+O/dn2jWXdioJLw++n/hPbn+4qWfR5GRBNjdfrRnowSPgDIQpDIDuYSp
- iqV/eciky2VYM8FRI3QakPxMAIF3fHIupnxhpXcXVzM3k8eLzSEt7poOg
- S5gjUycXqm0jlmvuIsB/O1X9oRgUCwfQXTQ3TEYw4vZzv90cZOJRRGP+8
- 33DPCejjqOBOGo7YxtLSN65m0OgqaWLEbmANTq98UPw2ScICsOg3BWX3L
- 476n2a+t/xhz3lgcSePkbYmuDeE3CycdN7gDFKcruNMb20I2j1tjOy/5G A==;
-X-CSE-ConnectionGUID: 9gDGe8mbR1qGF/3lzHfe3w==
-X-CSE-MsgGUID: 61cUCNbDQduD7gEZgsNvKg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="30810548"
-X-IronPort-AV: E=Sophos;i="6.08,196,1712646000"; d="scan'208";a="30810548"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 May 2024 11:17:13 -0700
-X-CSE-ConnectionGUID: GJbmfcQlQBukV0di5FvkmQ==
-X-CSE-MsgGUID: 4ui2EA6PROKl5OmcESTiCw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,196,1712646000"; d="scan'208";a="39578098"
-Received: from soc-cp83kr3.jf.intel.com (HELO [10.24.10.51]) ([10.24.10.51])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 May 2024 11:17:12 -0700
-Message-ID: <29944dba-7005-496d-81ff-1cbc77c67f15@intel.com>
-Date: Tue, 28 May 2024 11:16:59 -0700
+ (Exim 4.90_1) (envelope-from <jojing64@gmail.com>)
+ id 1sC1Pf-0005wY-MZ; Tue, 28 May 2024 14:19:07 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jojing64@gmail.com>)
+ id 1sC1Pd-0001oe-VG; Tue, 28 May 2024 14:19:07 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7007324a568so882956b3a.3; 
+ Tue, 28 May 2024 11:19:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716920343; x=1717525143; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2qcRzbrJfzFhar3JXjeEwkJ+x1ObCKv/9QMmr3jD/cM=;
+ b=iKhDFugyEDKt+ZTc27+vWoRlSfUKqEW2OzPIaA4Au2eHK1oyMSJrqxYsqt2LJ6F/7D
+ 62nutyVqBs602Tz62sLTRXjRoAW5kCpR6zQoeQfJv3GWgBt79A6xYz8NJdE1sxGjuZI3
+ ADQqSKsVwZ+w9b8XtEPmCvxF22O+/YyDVczIjw+lhIyY47r3K54Jg6rMIUlWbMwNEgUd
+ g80EAofntGvZ921fQt3Dd5gPjY3KcdzjpkSPRmG7+EABqGEdI5OluXlurWMLpQ/CgU9R
+ ESMGAahRBjNdKGi/rDLvzn6YM2CGg9jej+kIzpZz5dU6oHpg8yQdTsTvFXTxbkHLvsDV
+ RXbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716920343; x=1717525143;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2qcRzbrJfzFhar3JXjeEwkJ+x1ObCKv/9QMmr3jD/cM=;
+ b=SP5nDh5hLhosKbNmG7cj3EN4dD9w+A32sji8fzArbCsMmmku9POZPo0IE5w+4gqJFt
+ qpFfViq/vUiojiWmOSRC2rPz8BFRy50qzL1c4VQo6Qi5qpovUctY5JifsnNF/Fs81wlD
+ kWLlBoLOoNi01lXEvlFOtYa/54OXyq5zcB1vbufGgyzHgPYonFymGM7nXKf2tI28WPj6
+ kwBBBAi9bm+v2MlohNam/rv9PcE9x3A1wVdJBmQdVywu1YTMnyEwHohkPy91L8JaB/wN
+ Zl/LhN/pqXwPoCQ+UfHkzVKOPQLNqi9PxWDViY22maiCS1MFCukeIhGcHB6h8stjpddH
+ BJhA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNM88ilq43FOgQZds0o/lPy+5x5324ZFXXMEltRserUDG/u/u38ByA7mVnd2Ku51ebtSo5sJ4N/8YM2FCda/+2BqUS1Vg=
+X-Gm-Message-State: AOJu0YzcCvbtdxw/MgrLjCouOtWRGoU+0OE7u8sBcaLXgkej7awQu+6o
+ 8G8QUvrnWLbRCVNsZw0iCNgNcwruXJoJjq9Mm0hu0GH95sw2bBq7
+X-Google-Smtp-Source: AGHT+IH7U/WOeTO7bxvcrsxP9X6aGX1SNFv6xqhujVqZNLwGIm5OutT012HUSglZPhlBIPyAvaOVBw==
+X-Received: by 2002:a05:6a21:622:b0:1b1:f322:4c81 with SMTP id
+ adf61e73a8af0-1b212d42ea6mr12858802637.36.1716920343362; 
+ Tue, 28 May 2024 11:19:03 -0700 (PDT)
+Received: from ?IPV6:2001:569:590e:4600:1ea1:182:f195:fb52?
+ ([2001:569:590e:4600:1ea1:182:f195:fb52])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-701d60b06e3sm1247134b3a.191.2024.05.28.11.19.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 May 2024 11:19:02 -0700 (PDT)
+Message-ID: <fb2ea759-1a7e-4c0e-ab0d-3ec4c04dc503@gmail.com>
+Date: Tue, 28 May 2024 11:19:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/3] improve -overcommit cpu-pm=on|off
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
- thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
- qemu-trivial@nongnu.org
-References: <20240524200017.150339-1-zide.chen@intel.com>
- <20240528112327.634e95a6@imammedo.users.ipa.redhat.com>
+Subject: Re: block snapshot issue with RBD
+To: Ilya Dryomov <idryomov@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
+ pl@kamp.de, hreitz@redhat.com, peterx@redhat.com, farosas@suse.de
+References: <8b639179-e567-469c-bd04-ee8dee12d7d2@gmail.com>
+ <0e01a8e2-a543-4524-939c-05413fd99e86@gmail.com>
+ <756f9dcb-4e9c-4c2f-bc8a-dcc7420a1839@gmail.com>
+ <CAOi1vP8nJVsvvsmG5Ac4sd+9NPA8v8t=7Sao0f7-qNb129p=OA@mail.gmail.com>
 Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20240528112327.634e95a6@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zide.chen@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Jin Cao <jojing64@gmail.com>
+In-Reply-To: <CAOi1vP8nJVsvvsmG5Ac4sd+9NPA8v8t=7Sao0f7-qNb129p=OA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=jojing64@gmail.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,36 +101,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Ilya
 
-
-On 5/28/2024 2:23 AM, Igor Mammedov wrote:
-> On Fri, 24 May 2024 13:00:14 -0700
-> Zide Chen <zide.chen@intel.com> wrote:
+On 5/28/24 11:13 AM, Ilya Dryomov wrote:
+> On Mon, May 27, 2024 at 9:06 PM Jin Cao <jojing64@gmail.com> wrote:
+>>
+>> Supplementary info: VM is paused after "migrate" command. After being
+>> resumed with "cont", snapshot_delete_blkdev_internal works again, which
+>> is confusing, as disk snapshot generally recommend I/O is paused, and a
+>> frozen VM satisfy this requirement.
 > 
->> Currently, if running "-overcommit cpu-pm=on" on hosts that don't
->> have MWAIT support, the MWAIT/MONITOR feature is advertised to the
->> guest and executing MWAIT/MONITOR on the guest triggers #UD.
+> Hi Jin,
 > 
-> this is missing proper description how do you trigger issue
-> with reproducer and detailed description why guest sees MWAIT
-> when it's not supported by host.
+> This doesn't seem to be related to RBD.  Given that the same error is
+> observed when using the RBD driver with the raw format, I would dig in
+> the direction of migration somehow "installing" the raw format (which
+> is on-disk compatible with the rbd format).
+> 
 
-If "overcommit cpu-pm=on" and "-cpu hpst" are present, as shown in the
-following, CPUID_EXT_MONITOR is set after x86_cpu_filter_features(), so
-that it doesn't have a chance to check MWAIT against host features and
-will be advertised to the guest regardless of whether it's supported by
-the host or not.
+Thanks for the hint.
 
-x86_cpu_realizefn()
-  x86_cpu_filter_features()
-  cpu_exec_realizefn()
-    kvm_cpu_realizefn
-      host_cpu_realizefn
-        host_cpu_enable_cpu_pm
-          env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
+> Also, did you mean to say "snapshot_blkdev_internal" instead of
+> "snapshot_delete_blkdev_internal" in both instances?
 
+Sorry for my copy-and-paste mistake. Yes, it's snapshot_blkdev_internal.
 
-If it's not supported by the host, executing MONITOR or MWAIT
-instructions from the guest triggers #UD, no matter MWAIT_EXITING
-control is set or not.
+--
+Sincerely,
+Jin Cao
+
+> 
+> Thanks,
+> 
+>                  Ilya
+> 
+>>
+>> --
+>> Sincerely
+>> Jin Cao
+>>
+>> On 5/27/24 10:56 AM, Jin Cao wrote:
+>>> CC block and migration related address.
+>>>
+>>> On 5/27/24 12:03 AM, Jin Cao wrote:
+>>>> Hi,
+>>>>
+>>>> I encountered RBD block snapshot issue after doing migration.
+>>>>
+>>>> Steps
+>>>> -----
+>>>>
+>>>> 1. Start QEMU with:
+>>>> ./qemu-system-x86_64 -name VM -machine q35 -accel kvm -cpu
+>>>> host,migratable=on -m 2G -boot menu=on,strict=on
+>>>> rbd:image/ubuntu-22.04-server-cloudimg-amd64.raw -net nic -net user
+>>>> -cdrom /home/my/path/of/cloud-init.iso -monitor stdio
+>>>>
+>>>> 2. Do block snapshot in monitor cmd: snapshot_delete_blkdev_internal.
+>>>> It works as expected: the snapshot is visable with command`rbd snap ls
+>>>> pool_name/image_name`.
+>>>>
+>>>> 3. Do pseudo migration with monitor cmd: migrate -d exec:cat>/tmp/vm.out
+>>>>
+>>>> 4. Do block snapshot again with snapshot_delete_blkdev_internal, then
+>>>> I get:
+>>>>      Error: Block format 'raw' used by device 'ide0-hd0' does not
+>>>> support internal snapshots
+>>>>
+>>>> I was hoping to do the second block snapshot successfully, and it
+>>>> feels abnormal the RBD block snapshot function is disrupted after
+>>>> migration.
+>>>>
+>>>> BTW, I get the same block snapshot error when I start QEMU with:
+>>>>       "-drive format=raw,file=rbd:pool_name/image_name"
+>>>>
+>>>> My questions is: how could I proceed with RBD block snapshot after the
+>>>> pseudo migration?
 
