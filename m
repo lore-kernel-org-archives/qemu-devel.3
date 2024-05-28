@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D40C27C44
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B23C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxUh-0001VT-MX; Tue, 28 May 2024 10:08:03 -0400
+	id 1sBxUt-0001e0-PZ; Tue, 28 May 2024 10:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUf-0001Ts-7R
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:01 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1sBxUr-0001cP-Q1
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:13 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUc-00070A-FA
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:00 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-351da5838fcso810467f8f.1
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:07:58 -0700 (PDT)
+ id 1sBxUn-00074V-Ix
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:13 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-35502a992c9so908610f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716905277; x=1717510077; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716905288; x=1717510088; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AsQRQeKjgMaSSmYepAKdEFvTM+lwKQ9eFt3DVA5Soas=;
- b=kI5ggoQj2nP6FxdUW0bGZ9XzdctSvs8aV1H1+IqyY1ElSwQnqwcr0lq1VHtrIdndOU
- TOydKExB68kFUL9mlZd+Sg1co1FOmj9doZtPw3CxCOpvgeHJqhgQs5TAdo7dS6ooJoF6
- DNvLkoYHoEGgfs5+TkQ2SQ6G6BK+X8ZX7X3NC+kn9Eqg4MT/998CbKc68er+RRkE/pNc
- WR/gguHGyIr4atKpbIMVlxEBWfyeMFavOCO0ZSBWDmob25D/gBGpk4A8Gg8bzPOv50lZ
- PXcszROAgU8Q297b1R5jqVm/uwixpEZIvjK4qtN3UQ91HDd/G1joN5xag1Js9P+HhLow
- 3QFA==
+ :reply-to; bh=T9M0UZJDFFcR7IKXfZzYHCl9cYvAnk5miuB+Cg9H1ls=;
+ b=HqRSsyZnTe6Yw1QJCKM99VarIps6lv4MhmrqBWph8Lpsl8RStAFQlqZfswCZEBpKOt
+ K71+fqZgySX7tE6icClW7gyuiiIvPEhqU1QyL9nqEcyHxwsCRa2ZbRHrLyEpK1A2YTo6
+ X67spcNJx/+BwBhKqDjanJHANYTOaeSbyiM4Y1SYhH0wB/luakzhHVQnmkIOo/QKAKcW
+ FLHhGA5Pp06ZCANKy8o7XGFy9F7i/r7Pqo7MR86NtOBDbpkuhhwh7qVJhpLbSu0atuxU
+ 1e27tQGlxbNQ3Ac+e6/0t0kqVZGXcf+ZNSdxlJxNxy6d1W1IxV49d/zdlRoPB2CYMBIC
+ EGYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716905277; x=1717510077;
+ d=1e100.net; s=20230601; t=1716905288; x=1717510088;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AsQRQeKjgMaSSmYepAKdEFvTM+lwKQ9eFt3DVA5Soas=;
- b=PQfYb++MzOtTQvHeVal//o62NEDV/sfrcxX0RU/gBU/BrlenzJDl+/hDTYkAIlOQyZ
- Ubt7nglr27U160JWgeRCh5DxvYdcU6/yFzKj2L4BOBGJnPdqMzr2XuIkDDWqSp4iv0CK
- 8gt/VE+trEd2RICKPQ7aEiTEqnrS5ZHpNkfG0Uz/DDioFQHXskm9PzA+wh/pHtjUUFit
- DAihZxPr5b3067hGGc5oCR53VYP/QPb9xKTu8icddGnY3t4PfqR13/pACOSASIQ5aO+D
- tALkD1JDE62rGHqfiQI0KVeyucWR1Fy3uBKPO5ZZazgUZr9QQ3eGpuEnO+kz6VbZijQn
- r8bQ==
-X-Gm-Message-State: AOJu0YzQiQ28uDaVNYGdruL6VgeVsKe/zJCsE3ImCWikI/1ay+teQyM8
- 9HMtuy3XS5oriHeXhaCuaa7XqmZ2TAPdRsVpkGRtZrjLNdAYqpZ2zip106HH/SBGC+ONI7kffGu
- i
-X-Google-Smtp-Source: AGHT+IGObDU/9tlRDrCmdPRw4PtsxoyjrxRN09hGnbXhAYtT466X9qsNLnxuPxnohZ4z/TsULLo4/w==
-X-Received: by 2002:a5d:4f8b:0:b0:355:2c1:cbba with SMTP id
- ffacd0b85a97d-3552217f5c2mr8805791f8f.16.1716905276615; 
- Tue, 28 May 2024 07:07:56 -0700 (PDT)
+ bh=T9M0UZJDFFcR7IKXfZzYHCl9cYvAnk5miuB+Cg9H1ls=;
+ b=qSxLUM+09N4BV8I/3kNzpGzAjm0RojpQtQuJrIBl3Q8XZ34lGS2eArJBACWAInNK7R
+ F3tYprwj+TO/VT3QeA9TfyDJ9AAEMqidUnHDAD84081c+YiQxfB8O3ZFJA4F40+o1PXV
+ 53jfb0hYz/Sx3XP++jq2y1gP4XrVspm9Iazh5RSrzJu4eVPLT/CJc+Jo8os8rG/YS27t
+ 8Mr4Jr9sJG65ca88gYEh71wlmLZ8Sbo8LMP16it1ZKh/LCGEqOpXgJDD6xm2JwVO9uD8
+ S5HRs8eKgd9unvVohzGpArnUuVMlAT8QOAn2dfF58I8q4At1+6dh1+oWSWuUaHthIzzm
+ rzQw==
+X-Gm-Message-State: AOJu0YxIKnz3gEYEun0rfBDeEAgFYrjhCueanIQLGzNGDcAigcThpRAb
+ 22E71Kx96iUQXdoDjpOA0+J+BovmCFUzwFlFiKUAGp7Useo5hgtcNxIdw947MqMcskNLiZXXw7Z
+ 1
+X-Google-Smtp-Source: AGHT+IEgx6EPpp6gzEu/WS+9dpqWCslDop32pX/HmTYQqnouzrHfVH7pgb0C8y0XXmrIpXDHXy+iOQ==
+X-Received: by 2002:a5d:408d:0:b0:355:4cb:5048 with SMTP id
+ ffacd0b85a97d-3552fe02949mr10638527f8f.43.1716905288217; 
+ Tue, 28 May 2024 07:08:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.07.56
+ ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.08.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 07:07:56 -0700 (PDT)
+ Tue, 28 May 2024 07:08:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/42] xlnx_dpdma: fix descriptor endianness bug
-Date: Tue, 28 May 2024 15:07:12 +0100
-Message-Id: <20240528140753.3620597-2-peter.maydell@linaro.org>
+Subject: [PULL 21/42] target/arm: Convert Cryptographic 3-register,
+ imm2 to decodetree
+Date: Tue, 28 May 2024 15:07:32 +0100
+Message-Id: <20240528140753.3620597-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
 References: <20240528140753.3620597-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,120 +94,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add xlnx_dpdma_read_descriptor() and
-xlnx_dpdma_write_descriptor() functions.
-xlnx_dpdma_read_descriptor() combines reading a
-descriptor from desc_addr by calling dma_memory_read()
-and swapping the desc fields from guest memory order
-to host memory order. xlnx_dpdma_write_descriptor()
-performs similar actions when writing a descriptor.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d3c6369a96 ("introduce xlnx-dpdma")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-[PMM: tweaked indent, dropped behaviour change for write-failure case]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240524232121.284515-16-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/dma/xlnx_dpdma.c | 68 ++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 64 insertions(+), 4 deletions(-)
+ target/arm/tcg/a64.decode      | 10 ++++++++
+ target/arm/tcg/translate-a64.c | 43 ++++++++++------------------------
+ 2 files changed, 22 insertions(+), 31 deletions(-)
 
-diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
-index 530717d1885..dde4aeca401 100644
---- a/hw/dma/xlnx_dpdma.c
-+++ b/hw/dma/xlnx_dpdma.c
-@@ -614,6 +614,65 @@ static void xlnx_dpdma_register_types(void)
-     type_register_static(&xlnx_dpdma_info);
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index ef6902e86a5..1292312a7f9 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -644,3 +644,13 @@ SM4E            1100 1110 110 00000 100001 ..... .....  @r2r_q1e0
+ EOR3            1100 1110 000 ..... 0 ..... ..... ..... @rrrr_q1e3
+ BCAX            1100 1110 001 ..... 0 ..... ..... ..... @rrrr_q1e3
+ SM3SS1          1100 1110 010 ..... 0 ..... ..... ..... @rrrr_q1e3
++
++### Cryptographic three-register, imm2
++
++&crypto3i       rd rn rm imm
++@crypto3i       ........ ... rm:5 .. imm:2 .. rn:5 rd:5 &crypto3i
++
++SM3TT1A         11001110 010 ..... 10 .. 00 ..... ..... @crypto3i
++SM3TT1B         11001110 010 ..... 10 .. 01 ..... ..... @crypto3i
++SM3TT2A         11001110 010 ..... 10 .. 10 ..... ..... @crypto3i
++SM3TT2B         11001110 010 ..... 10 .. 11 ..... ..... @crypto3i
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 2951e7eb59e..cf3a7dfa99f 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -4676,6 +4676,18 @@ static bool trans_SM3SS1(DisasContext *s, arg_SM3SS1 *a)
+     return true;
  }
  
-+static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMAState *s,
-+                                              uint64_t desc_addr,
-+                                              DPDMADescriptor *desc)
++static bool do_crypto3i(DisasContext *s, arg_crypto3i *a, gen_helper_gvec_3 *fn)
 +{
-+    MemTxResult res = dma_memory_read(&address_space_memory, desc_addr,
-+                                      &desc, sizeof(DPDMADescriptor),
-+                                      MEMTXATTRS_UNSPECIFIED);
-+    if (res) {
-+        return res;
++    if (fp_access_check(s)) {
++        gen_gvec_op3_ool(s, true, a->rd, a->rn, a->rm, a->imm, fn);
 +    }
-+
-+    /* Convert from LE into host endianness.  */
-+    desc->control = le32_to_cpu(desc->control);
-+    desc->descriptor_id = le32_to_cpu(desc->descriptor_id);
-+    desc->xfer_size = le32_to_cpu(desc->xfer_size);
-+    desc->line_size_stride = le32_to_cpu(desc->line_size_stride);
-+    desc->timestamp_lsb = le32_to_cpu(desc->timestamp_lsb);
-+    desc->timestamp_msb = le32_to_cpu(desc->timestamp_msb);
-+    desc->address_extension = le32_to_cpu(desc->address_extension);
-+    desc->next_descriptor = le32_to_cpu(desc->next_descriptor);
-+    desc->source_address = le32_to_cpu(desc->source_address);
-+    desc->address_extension_23 = le32_to_cpu(desc->address_extension_23);
-+    desc->address_extension_45 = le32_to_cpu(desc->address_extension_45);
-+    desc->source_address2 = le32_to_cpu(desc->source_address2);
-+    desc->source_address3 = le32_to_cpu(desc->source_address3);
-+    desc->source_address4 = le32_to_cpu(desc->source_address4);
-+    desc->source_address5 = le32_to_cpu(desc->source_address5);
-+    desc->crc = le32_to_cpu(desc->crc);
-+
-+    return res;
++    return true;
 +}
++TRANS_FEAT(SM3TT1A, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt1a)
++TRANS_FEAT(SM3TT1B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt1b)
++TRANS_FEAT(SM3TT2A, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2a)
++TRANS_FEAT(SM3TT2B, aa64_sm3, do_crypto3i, a, gen_helper_crypto_sm3tt2b)
 +
-+static MemTxResult xlnx_dpdma_write_descriptor(uint64_t desc_addr,
-+                                               DPDMADescriptor *desc)
-+{
-+    DPDMADescriptor tmp_desc = *desc;
-+
-+    /* Convert from host endianness into LE.  */
-+    tmp_desc.control = cpu_to_le32(tmp_desc.control);
-+    tmp_desc.descriptor_id = cpu_to_le32(tmp_desc.descriptor_id);
-+    tmp_desc.xfer_size = cpu_to_le32(tmp_desc.xfer_size);
-+    tmp_desc.line_size_stride = cpu_to_le32(tmp_desc.line_size_stride);
-+    tmp_desc.timestamp_lsb = cpu_to_le32(tmp_desc.timestamp_lsb);
-+    tmp_desc.timestamp_msb = cpu_to_le32(tmp_desc.timestamp_msb);
-+    tmp_desc.address_extension = cpu_to_le32(tmp_desc.address_extension);
-+    tmp_desc.next_descriptor = cpu_to_le32(tmp_desc.next_descriptor);
-+    tmp_desc.source_address = cpu_to_le32(tmp_desc.source_address);
-+    tmp_desc.address_extension_23 = cpu_to_le32(tmp_desc.address_extension_23);
-+    tmp_desc.address_extension_45 = cpu_to_le32(tmp_desc.address_extension_45);
-+    tmp_desc.source_address2 = cpu_to_le32(tmp_desc.source_address2);
-+    tmp_desc.source_address3 = cpu_to_le32(tmp_desc.source_address3);
-+    tmp_desc.source_address4 = cpu_to_le32(tmp_desc.source_address4);
-+    tmp_desc.source_address5 = cpu_to_le32(tmp_desc.source_address5);
-+    tmp_desc.crc = cpu_to_le32(tmp_desc.crc);
-+
-+    return dma_memory_write(&address_space_memory, desc_addr, &tmp_desc,
-+                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED);
-+}
-+
- size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-                                     bool one_desc)
- {
-@@ -651,8 +710,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             desc_addr = xlnx_dpdma_descriptor_next_address(s, channel);
-         }
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -13604,36 +13616,6 @@ static void disas_crypto_xar(DisasContext *s, uint32_t insn)
+                  vec_full_reg_size(s));
+ }
  
--        if (dma_memory_read(&address_space_memory, desc_addr, &desc,
--                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED)) {
-+        if (xlnx_dpdma_read_descriptor(s, desc_addr, &desc)) {
-             s->registers[DPDMA_EISR] |= ((1 << 1) << channel);
-             xlnx_dpdma_update_irq(s);
-             s->operation_finished[channel] = true;
-@@ -755,8 +813,10 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             /* The descriptor need to be updated when it's completed. */
-             DPRINTF("update the descriptor with the done flag set.\n");
-             xlnx_dpdma_desc_set_done(&desc);
--            dma_memory_write(&address_space_memory, desc_addr, &desc,
--                             sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED);
-+            if (xlnx_dpdma_write_descriptor(desc_addr, &desc)) {
-+                DPRINTF("Can't write the descriptor.\n");
-+                /* TODO: check hardware behaviour for memory write failure */
-+            }
-         }
- 
-         if (xlnx_dpdma_desc_completion_interrupt(&desc)) {
+-/* Crypto three-reg imm2
+- *  31                   21 20  16 15  14 13 12  11  10  9    5 4    0
+- * +-----------------------+------+-----+------+--------+------+------+
+- * | 1 1 0 0 1 1 1 0 0 1 0 |  Rm  | 1 0 | imm2 | opcode |  Rn  |  Rd  |
+- * +-----------------------+------+-----+------+--------+------+------+
+- */
+-static void disas_crypto_three_reg_imm2(DisasContext *s, uint32_t insn)
+-{
+-    static gen_helper_gvec_3 * const fns[4] = {
+-        gen_helper_crypto_sm3tt1a, gen_helper_crypto_sm3tt1b,
+-        gen_helper_crypto_sm3tt2a, gen_helper_crypto_sm3tt2b,
+-    };
+-    int opcode = extract32(insn, 10, 2);
+-    int imm2 = extract32(insn, 12, 2);
+-    int rm = extract32(insn, 16, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int rd = extract32(insn, 0, 5);
+-
+-    if (!dc_isar_feature(aa64_sm3, s)) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    gen_gvec_op3_ool(s, true, rd, rn, rm, imm2, fns[opcode]);
+-}
+-
+ /* C3.6 Data processing - SIMD, inc Crypto
+  *
+  * As the decode gets a little complex we are using a table based
+@@ -13663,7 +13645,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
+     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
+     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
+     { 0xce800000, 0xffe00000, disas_crypto_xar },
+-    { 0xce408000, 0xffe0c000, disas_crypto_three_reg_imm2 },
+     { 0x0e400400, 0x9f60c400, disas_simd_three_reg_same_fp16 },
+     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
+     { 0x5e400400, 0xdf60c400, disas_simd_scalar_three_reg_same_fp16 },
 -- 
 2.34.1
 
