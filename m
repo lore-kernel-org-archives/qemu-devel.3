@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1CCC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E4FC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBmq1-0005gV-Qw; Mon, 27 May 2024 22:45:23 -0400
+	id 1sBmqs-00075l-Qu; Mon, 27 May 2024 22:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmpt-0005Wd-Hj; Mon, 27 May 2024 22:45:13 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1sBmqF-00062A-CY
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 22:45:43 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmpq-00041k-HS; Mon, 27 May 2024 22:45:12 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-6819d785528so246636a12.3; 
- Mon, 27 May 2024 19:45:09 -0700 (PDT)
+ id 1sBmqD-00045N-Fc
+ for qemu-devel@nongnu.org; Mon, 27 May 2024 22:45:35 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6fbbd937719so241728b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 27 May 2024 19:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716864308; x=1717469108; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716864332; x=1717469132; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xv5zByHXrMR6OVpxVCKjSat3U6+gmlv5WCvdVnmoelg=;
- b=TWEpryTkxKGXNjsDQzkVOiRwuoLVNTim8cq8lOclqV9UQUt7a9bBE6dVH0n2c2JqTq
- Mp0Mk1j4JbruZ9tpOjnXW7rKIIDQNPZWArPO+caj0jgaQ9Fz80GDzwExubiK/wVCkLyE
- ZMi+GrLnc7SbrdzBlOy7Bj2ZF/e8vQHjwIJ/9vaQRzZ/OBErS1Y0k3ghNhgQPEKXncJY
- T+bktFC7QtsdpN2beTwudKw77DfWL60P8iEsDgpxyEgnq/sSzQhslpvqrmBTiJy4Dmza
- sqgdiCvmSbOKhbegLzAJknmybhv/s0Ff/3X+uz1fu4YWqBeEN7Ud86NGyDOax9Xf5KyM
- TtMQ==
+ bh=b2k2JrhvujZewE6TU0J5JDl6R03TzuPE/F+i9deQBKY=;
+ b=nhoWgsmRtOrXM0ToJIn6UIrUrqInSIoRfnvFppZZeCVrl/jPNmePGJOWafOgm2SNRe
+ 77cnFKoZxoe/8GPMxkIcPWyRRQ1jRk3zflUR9YUEpyTyCQg/EUBBObpldLan7SsLa+Mk
+ W8vQDVQB0EtGn9vSzgMNVwYGYuGcx2NEyVo0OfBg7FVk/ffzmCo7ez3NO3XaL5O/wOSR
+ WuVQ8MZGJXHjshOA4vUpw2IF0U07NeSPWDxPCh65sUf4PyuS0pnSt00oovhBAWzXb+lB
+ e4zylc95RcYlGSPVpFjfLXkI/HgWP2gR5e2r+8zdEW1TWdgT3NRMwQyNkl97bayoAwel
+ 3GSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716864308; x=1717469108;
+ d=1e100.net; s=20230601; t=1716864332; x=1717469132;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xv5zByHXrMR6OVpxVCKjSat3U6+gmlv5WCvdVnmoelg=;
- b=Al1D1E8pxta73RO9iCwnLsVw8vLkRogJ6/836ynsEPpkC9/4R5qcwNEAKnmZisUCpr
- sHmrH+Rqphiaq9swOQaqP1d0pWbRY5T9js++39yybLdzmbC4I9g+OFiAb7y1Phh4V5Xq
- YSKzIXWDmayzfGFN886oO/CBERHr6Z74pAA2T0mNXtiyHcSt5h/Acbf8LRVfBuRDM32y
- t1RhXsWWaYkoMdRIBzVG6J78CYYC6MwKBcK5fm0qWrgPRJV1mhY8hZJ5QSj6blN/Tnro
- zbv4OXi+AGLX5xtIoifSShC+1OKVGENePv/2X1LNjWeEjVNrhzk0fqV92Ai+tFPYZ5Na
- Lv9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkfmcSbaODWZPPFiWGY0HJkh7yHIEn4Ddmd3D4+XTA5JxrtTQdfy1fyTPX/bG4Alta8Ifzp70gVodEjOArRSalOiWbn0FX
-X-Gm-Message-State: AOJu0YxzK8saXD0Ad4K+xvoxKidzsseH5f0zAC8rEBH8cQ6PcsotdPU1
- STu3eV5Wjq6U6sgaO1efZg4F0WrmWM0Mxg94rS8eokEpzucleAhEANYpXA==
-X-Google-Smtp-Source: AGHT+IGyjNhVDLV7wP2cTb0MykOtOadn6UrXBIbLFt1w1Fo5jBfmvaQK/H170C4ZpKL11CA+R1IuWA==
-X-Received: by 2002:a05:6a20:914c:b0:1ad:90dc:4a65 with SMTP id
- adf61e73a8af0-1b212d3a7ffmr11815750637.27.1716864307765; 
- Mon, 27 May 2024 19:45:07 -0700 (PDT)
+ bh=b2k2JrhvujZewE6TU0J5JDl6R03TzuPE/F+i9deQBKY=;
+ b=t+YXusN/yh4TlCmpvb3+qLPHA9rVjV+PvPfZxjRUkD6Wlt4trUDMoqmL9wFCLdqOGs
+ wPUvv/zZqvPZLUvSmE7zbovJaW3kUV+y0T/UV5B92ggg7TKnjzladdFmU+EYl4KdhREQ
+ fgED6kjHBsIzhjb+BqUUjTA4OFtNIDY0s8JxmJuZq+g1GLzpT+upy+6e9bWFTv702z6U
+ cvsIhySZDSR41cl+jCVrAD6Rajcd4+VWe2XcThuUzMMoweQFHgsK+y67uJb+jD770XX3
+ doz6EpK+Pn5zrjfjrF36gfZBa/rtdW2fN3eyG8rUiOL2Vc+bVtNMhzTO8t6X+5mGaXSU
+ ghsA==
+X-Gm-Message-State: AOJu0YxpamDCgY7IxmtSgEkzCfSLTiNs7bmtUXNJy6p5v6kvYXGVuW1S
+ wBCyBPvoABA29FY+WUfeq9DC+WY/yeS2eypZI4CL4jO9UvqU5rVukuedhQ==
+X-Google-Smtp-Source: AGHT+IHipy1f+6W3GSLixn+9pEXwaqtvUdyqFVajNwwfuW3zR1wnfGlMOVEmG/V2bglD+qPnM+07cg==
+X-Received: by 2002:a05:6a20:9d92:b0:1ae:4264:a324 with SMTP id
+ adf61e73a8af0-1b212cc77cdmr13293992637.11.1716864331796; 
+ Mon, 27 May 2024 19:45:31 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.45.04
+ d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.45.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 19:45:07 -0700 (PDT)
+ Mon, 27 May 2024 19:45:31 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Joseph Chan <jchan@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: [PULL 21/28] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
-Date: Tue, 28 May 2024 12:43:21 +1000
-Message-ID: <20240528024328.246965-22-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Yu-Ming Chang <yumin686@andestech.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 28/28] target/riscv: raise an exception when CSRRS/CSRRC writes
+ a read-only CSR
+Date: Tue, 28 May 2024 12:43:28 +1000
+Message-ID: <20240528024328.246965-29-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240528024328.246965-1-alistair.francis@wdc.com>
 References: <20240528024328.246965-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,88 +99,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Yu-Ming Chang <yumin686@andestech.com>
 
-raise_mmu_exception(), as is today, is prioritizing guest page faults by
-checking first if virt_enabled && !first_stage, and then considering the
-regular inst/load/store faults.
+Both CSRRS and CSRRC always read the addressed CSR and cause any read side
+effects regardless of rs1 and rd fields. Note that if rs1 specifies a register
+holding a zero value other than x0, the instruction will still attempt to write
+the unmodified value back to the CSR and will cause any attendant side effects.
 
-There's no mention in the spec about guest page fault being a higher
-priority that PMP faults. In fact, privileged spec section 3.7.1 says:
+So if CSRRS or CSRRC tries to write a read-only CSR with rs1 which specifies
+a register holding a zero value, an illegal instruction exception should be
+raised.
 
-"Attempting to fetch an instruction from a PMP region that does not have
-execute permissions raises an instruction access-fault exception.
-Attempting to execute a load or load-reserved instruction which accesses
-a physical address within a PMP region without read permissions raises a
-load access-fault exception. Attempting to execute a store,
-store-conditional, or AMO instruction which accesses a physical address
-within a PMP region without write permissions raises a store
-access-fault exception."
-
-So, in fact, we're doing it wrong - PMP faults should always be thrown,
-regardless of also being a first or second stage fault.
-
-The way riscv_cpu_tlb_fill() and get_physical_address() work is
-adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
-reflected in the 'pmp_violation' flag. What we need is to change
-raise_mmu_exception() to prioritize it.
-
-Reported-by: Joseph Chan <jchan@ventanamicro.com>
-Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240413105929.7030-1-alexei.filippov@syntacore.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240403070823.80897-1-yumin686@andestech.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_helper.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ target/riscv/cpu.h       |  4 ++++
+ target/riscv/csr.c       | 51 ++++++++++++++++++++++++++++++++++++----
+ target/riscv/op_helper.c |  6 ++---
+ 3 files changed, 53 insertions(+), 8 deletions(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index d71245a8cb..574886a694 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1177,28 +1177,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 12d8b5344a..1501868008 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -709,6 +709,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+ void riscv_cpu_update_mask(CPURISCVState *env);
+ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
  
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (env->virt_enabled && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-+        } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
--                RISCV_EXCP_STORE_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
-         }
-         break;
-     default:
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                          target_ulong *ret_value);
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask);
+@@ -741,6 +743,8 @@ typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+                                           target_ulong new_value,
+                                           target_ulong write_mask);
+ 
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value);
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+                                 Int128 *ret_value,
+                                 Int128 new_value, Int128 write_mask);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 58ef7079dc..57f831fedc 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -4322,7 +4322,7 @@ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+ 
+ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+                                                int csrno,
+-                                               bool write_mask)
++                                               bool write)
+ {
+     /* check privileges and return RISCV_EXCP_ILLEGAL_INST if check fails */
+     bool read_only = get_field(csrno, 0xC00) == 3;
+@@ -4344,7 +4344,7 @@ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+     }
+ 
+     /* read / write check */
+-    if (write_mask && read_only) {
++    if (write && read_only) {
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
+@@ -4431,11 +4431,22 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                           target_ulong *ret_value)
++{
++    RISCVException ret = riscv_csrrw_check(env, csrno, false);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    return riscv_csrrw_do64(env, csrno, ret_value, 0, 0);
++}
++
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask)
+ {
+-    RISCVException ret = riscv_csrrw_check(env, csrno, write_mask);
++    RISCVException ret = riscv_csrrw_check(env, csrno, true);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
+@@ -4483,13 +4494,45 @@ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value)
++{
++    RISCVException ret;
++
++    ret = riscv_csrrw_check(env, csrno, false);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    if (csr_ops[csrno].read128) {
++        return riscv_csrrw_do128(env, csrno, ret_value,
++                                 int128_zero(), int128_zero());
++    }
++
++    /*
++     * Fall back to 64-bit version for now, if the 128-bit alternative isn't
++     * at all defined.
++     * Note, some CSRs don't need to extend to MXLEN (64 upper bits non
++     * significant), for those, this fallback is correctly handling the
++     * accesses
++     */
++    target_ulong old_value;
++    ret = riscv_csrrw_do64(env, csrno, &old_value,
++                           (target_ulong)0,
++                           (target_ulong)0);
++    if (ret == RISCV_EXCP_NONE && ret_value) {
++        *ret_value = int128_make64(old_value);
++    }
++    return ret;
++}
++
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+                                 Int128 *ret_value,
+                                 Int128 new_value, Int128 write_mask)
+ {
+     RISCVException ret;
+ 
+-    ret = riscv_csrrw_check(env, csrno, int128_nz(write_mask));
++    ret = riscv_csrrw_check(env, csrno, true);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 2baf5bc3ca..84fb2a35e5 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -51,7 +51,7 @@ target_ulong helper_csrr(CPURISCVState *env, int csr)
+     }
+ 
+     target_ulong val = 0;
+-    RISCVException ret = riscv_csrrw(env, csr, &val, 0, 0);
++    RISCVException ret = riscv_csrr(env, csr, &val);
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
+@@ -84,9 +84,7 @@ target_ulong helper_csrrw(CPURISCVState *env, int csr,
+ target_ulong helper_csrr_i128(CPURISCVState *env, int csr)
+ {
+     Int128 rv = int128_zero();
+-    RISCVException ret = riscv_csrrw_i128(env, csr, &rv,
+-                                          int128_zero(),
+-                                          int128_zero());
++    RISCVException ret = riscv_csrr_i128(env, csr, &rv);
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
 -- 
 2.45.1
 
