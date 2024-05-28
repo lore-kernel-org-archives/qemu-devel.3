@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79015C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D2EC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 15:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBz6k-0000XW-SJ; Tue, 28 May 2024 11:51:26 -0400
+	id 1sBz7V-0001Fh-0n; Tue, 28 May 2024 11:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBz6j-0000Ws-Dq
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:51:25 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1sBz7T-0001F8-EU
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:52:11 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBz6h-0006Iq-S9
- for qemu-devel@nongnu.org; Tue, 28 May 2024 11:51:25 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5788eaf5366so1199160a12.2
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:51:23 -0700 (PDT)
+ id 1sBz7R-0006Tr-W3
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 11:52:11 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-578972defb3so1223189a12.2
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 08:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716911482; x=1717516282; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716911528; x=1717516328; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=So98Jf54H8IWI3ia4EdVZYW+FWjhfKCBBI/z9EMCibA=;
- b=oeD3m48xcNLKHELmyHMjGh1V3JubvfRGWT7S2PXQqhmCFT8Bipb3kFf6qEfyB89zTE
- IRALMjCkhWf24mb+h9JWvIxmAexRMUx9FiEbGFYBvjOat14KGGrSDwiE8/7QOJYnuvJ2
- v4yTMZI48gMLdlNXzNar73q2+1tHCUi8Y7UrlJ6GxT9E0E6EhH+vawEafDhMlD7D+OGR
- HdOOWLwWNkamxiTowQ3gFHwOTeAb3ePLj0GpS+/qR4NHQ/xDHLsZho57t+dLTzjbLpsT
- KUKzQxN8DLEHKZA4ykVjclPqxHdIkotMmkobeuJz35P3xmp8YF/qWu+pngo1NhZnVlSG
- 77bA==
+ bh=SlgBElTCsYex3FAMidcSlf36AqdT+FUpJCgxTFrJZGo=;
+ b=K5YglK3pEmGD68pc4qAGCgFmeCVZAwXkS33SPgDI4PVz8q46pFivC1eJtvHDogHCRJ
+ TTu170CC57/DNBaJrmkoz1gME4VoyJSGZ4jdSHbUhzPDWwiIRdhmI38owYBcoZo8SDgt
+ v43oLmaSIc1vxXDakIZbJlLwxFzt09rDCIoQHYgfqJzSge2cMGE+z8b4uRUwjL5JSg7r
+ 2/jEIvBG2h0WwtsBwIUelbqIJ5qHTxcyaecEJtx69ORq3O7ybhS7HmGLAy4b5KiTGGfT
+ 837jfK0hTmEcm2TQtIauI403XHmXAwEIYUkZhirjaF7tL7I6R45aAu41oHASY2KIqeyY
+ WcVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716911482; x=1717516282;
+ d=1e100.net; s=20230601; t=1716911528; x=1717516328;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=So98Jf54H8IWI3ia4EdVZYW+FWjhfKCBBI/z9EMCibA=;
- b=Gmf2dYMDO1gpNZ6TL8tEXQpcE/u9ZnYvBUqDrMlRwwvAw5nLlGvBD2x2GwR2fJutYr
- t1KG+7Ip+xLAPoS2quPD//vg5wFWke+v4UrCiAJXRysO71uhsmQVlp79t8Vmwq87QR9Q
- m+6FkbH7PHH6tpIhnlJEOZxJpXf65hd7SVc9X+s/htGDX/wwPSu31fF6SH2H4tRsyE5Z
- E9R3aTmww2b57arB78XkEeAvf50qvpyn8FkoEFYcpxZctb2Iac21jTEZhJrMaQUF5PKR
- 6RS7lxef0Ea5Ltmxhccv+e791EM25I7JpUXjLdJavJGCTcPp0NxOIKO5Ml1RCFCQxpnR
- VUyQ==
-X-Gm-Message-State: AOJu0YzcnUD1sEBkz9BOB6aXET/6cAqhcfZTP5DzWoYIAwktgaJA1FGK
- C9xd1gahhaeW3OvXJr7bP+3TEuUC+lUjnoaaT70d74KL2BlXravZMAvw7y7TrwJjE38YG1UbIdQ
- WTwpzbveaMa3mcCOH3v8Jm+tXY08iLwN6LaxN0FSGgVsEhK/1
-X-Google-Smtp-Source: AGHT+IFDEAwTB/wElchOuAZis8ZJqO8NrXiAZGnwAioF6N66yoeJVCXe78IOz3OqTO62g+nUDxbwuQfgbpyueIYYAMg=
-X-Received: by 2002:a50:cdce:0:b0:579:f196:45ac with SMTP id
- 4fb4d7f45d1cf-579f196473cmr1533213a12.7.1716911482000; Tue, 28 May 2024
- 08:51:22 -0700 (PDT)
+ bh=SlgBElTCsYex3FAMidcSlf36AqdT+FUpJCgxTFrJZGo=;
+ b=M3fn/gGTudwAo1dzg2+Zyr8mV90YYIeANtmGPsRy6auElTo1dlM56x0LUMS9XEa/9G
+ PKaUZK7yxCFbBy7vhrah6LRtWVHXz1GOAqxMttJxNRhesPJ5uqYTxLL+jUjYs/c59/P3
+ aaEduRarJ4yq+F3cUaGLmal/uHvUdlxPRDeG9DxO15LhPprnkYN15n/kAKiDiBPztHSw
+ YuLYXLGcLJIAeeHr+WIzeX5Ul9nRCTq214kKhtcT82fZ1UFxchZQXPzxv5NI/KYBiD/G
+ YXE9IJSfJkGvRtNb/sC8GRgrgSSBtNbUzPU1HQ2eRI/nqBGVjnVDPMO/0N7+6HaKUxz4
+ ciWw==
+X-Gm-Message-State: AOJu0YzsPS/Tdvku9dj3FKIYoIaZkBpNG5/H52TXQ5MuM+5eCwiFTq2Y
+ Oz2DYI6N6aef06gvVrJrULdBuM1o2VgzHhus3DcXkLeUcbafOwDRGTRRTtxmYYyN7nVPUM2Fg36
+ RlyaArqKneFtex7of58ZlUADZt3bzQPash9z4FSw8BD4XDoNv
+X-Google-Smtp-Source: AGHT+IGrjbs60FWnW+HlE+JQAqw9Yy1uN11l70ZfDw+HoiI4qbX68WcYtkGr07YHW2XvdQK5AhjvuEb3zcouDXqxGCs=
+X-Received: by 2002:a50:cc8f:0:b0:572:d1e1:b4b3 with SMTP id
+ 4fb4d7f45d1cf-578519709eamr8335479a12.7.1716911528611; Tue, 28 May 2024
+ 08:52:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240524232121.284515-1-richard.henderson@linaro.org>
- <20240524232121.284515-45-richard.henderson@linaro.org>
-In-Reply-To: <20240524232121.284515-45-richard.henderson@linaro.org>
+ <20240524232121.284515-46-richard.henderson@linaro.org>
+In-Reply-To: <20240524232121.284515-46-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 May 2024 16:51:11 +0100
-Message-ID: <CAFEAcA-4xMXjVZFGbDjefNabHn2MW=4jFaYD79iq5oV4qyXafA@mail.gmail.com>
-Subject: Re: [PATCH v2 44/67] target/arm: Convert SRSHL and URSHL (register)
- to gvec
+Date: Tue, 28 May 2024 16:51:57 +0100
+Message-ID: <CAFEAcA_W739Q9jpnO-ozg9p-41XzhcjgbwQ408XR9XJkQvx0Sw@mail.gmail.com>
+Subject: Re: [PATCH v2 45/67] target/arm: Convert SRSHL, URSHL to decodetree
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,40 +88,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 25 May 2024 at 00:27, Richard Henderson
+On Sat, 25 May 2024 at 00:29, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/helper.h             | 10 +++++++++
->  target/arm/tcg/translate.h      |  4 ++++
->  target/arm/tcg/neon-dp.decode   | 10 ++-------
->  target/arm/tcg/gengvec.c        | 22 +++++++++++++++++++
->  target/arm/tcg/neon_helper.c    | 38 ++++++++++++++++++++++++++++++++-
->  target/arm/tcg/translate-a64.c  | 17 ++++++---------
->  target/arm/tcg/translate-neon.c |  6 ++----
->  7 files changed, 84 insertions(+), 23 deletions(-)
-
-
->  uint32_t HELPER(glue(neon_,name))(CPUARMState *env, uint32_t arg1, uint32_t arg2) \
->  NEON_VOP_BODY(vtype, n)
+>  target/arm/tcg/a64.decode      |  4 ++++
+>  target/arm/tcg/translate-a64.c | 22 +++++++---------------
+>  2 files changed, 11 insertions(+), 15 deletions(-)
 >
-> +#define NEON_GVEC_VOP2(name, vtype) \
-> +void HELPER(name)(void *vd, void *vn, void *vm, uint32_t desc) \
-> +{                                                               \
-> +    intptr_t i, opr_sz = simd_oprsz(desc);                      \
-> +    vtype *d = vd, *n = vn, *m = vm;                            \
-> +    for (i = 0; i < opr_sz / sizeof(vtype); i++) {              \
-> +        NEON_FN(d[i], n[i], m[i]);                              \
 
-Does this need H macros for the bigendian case ? It looks
-like we use it for smaller-than-64-bit element cases.
-
-
-> +    }                                                           \
-> +    clear_tail(d, opr_sz, simd_maxsz(desc));                    \
-> +}
-> +
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
