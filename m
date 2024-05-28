@@ -4,89 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC5EC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 12:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027FFC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 12:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBw7w-0003wT-Du; Tue, 28 May 2024 08:40:28 -0400
+	id 1sBwFi-00061N-Gy; Tue, 28 May 2024 08:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBw7n-0003s2-Po
- for qemu-devel@nongnu.org; Tue, 28 May 2024 08:40:21 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sBwFa-000617-Iz
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 08:48:22 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sBw7h-0006jE-0p
- for qemu-devel@nongnu.org; Tue, 28 May 2024 08:40:15 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2e9819a6327so9176831fa.1
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 05:40:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sBwFW-0000Ci-OL
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 08:48:20 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-57869599ed5so940026a12.2
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 05:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716900010; x=1717504810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BxvUUpbUGxOXZOk1HUQWJh0qCUJCPLPx6QBHYn2ClBY=;
- b=SP9N/c8L4MOdzsw/LWwK5qE3u32KrXi/cOwY5M2x5Kf6D8BkLtn32zlE/XRvHCS6Ef
- fvymaKxh2pXx+1XRLlbdSjPb+AfALcvRHeTNi7xneRgXAMo7LshT1NEeY7lSX3gYLC2t
- IqdmIXQkGfZqoEndLVhG4Rp4/DP4U+B2Nw7JlKIA3Cly7Z9cccEjZYPlNpjdoruJPg2o
- k2zN6hRgT95eEmGyrObf1JpLPQEyCa9Mj9Me3yHcP2jYHIbE8PARADxfylbt9wt198aS
- fhCVdiI7cc4W97Kp+O2fI6sARRreJEf+WKsfP2j1m4mTGj8Dy0eV35mChNS0SADRNKgC
- C4+A==
+ d=linaro.org; s=google; t=1716900496; x=1717505296; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zcol2jmXKa9f1VEV+cxuSqXh63Fmp1Jcz/riDhFlBa8=;
+ b=s4OcXNaXYLr5N7I+R5GpU09ynysdrEhNGdLZibQ2bL0G1jWYg1wzyldgvE0V76qLaI
+ Ek5jSL6DQIPnS+rmprQHy2GWIp9tDE3DfPju8iKWNBePB4M6A65hQ2zOwf/I2yDjyjXT
+ QVEp76b/YUypi1csYT3Y1AxTzIOLmVfa9c3oSGerZ3r9bJ+8Zzc/5ZN2IiTtBa9STYKA
+ W0AB6XcVf4u8wrz5bWJMUZz1cy9D5rUrJel+WSLYtE2wTeZg08rPtjmExVA+GOuwJlO3
+ 2KkZQ0pupugcbrwWvenAaebsL5uS1D2BAgGdJlgBQ/KLhSP6frugfGVgN1qOlqCXtzGy
+ cOQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716900010; x=1717504810;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BxvUUpbUGxOXZOk1HUQWJh0qCUJCPLPx6QBHYn2ClBY=;
- b=TCWNLfyHQnMK4aFdQvjWOXeWCqf/otaFa42IouCY3E781OnqllA3jc9G8sZEQtlKzq
- Q9NkJBQuNoD+JJPwBGxCrm7JMJ48CIRAyCoEy8Khi+Ci1WBVHVIxl+OiWn70Lragh5Xj
- LkcOFfE3uh3tPJU0275DIrRTnf/x53lRj7MzaBGCTda7SmJkK7fkQo5/T/OVNSgF3ZMI
- Vu+i/TNmeAFge7kKWYoVSBxRw/PWe2ZPoOaK8NekAlpLzYO384QdeHyppgbnLTMdfx+l
- 3gZO/hhww5CiwPqp/AM4GJGpVk5aeBA0sFN7yiJFkJuxto01iylaJj2lkqGS4WOTEAiA
- wfjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbyTZ86dt2NCy4QkhqyUNA1+WdwYHtCjLcc0awckLhcSGk7p8Xx2rMZKHEtlOF2Vh57QqgfrK/1CRIzFbwSgOZ1JBC0Og=
-X-Gm-Message-State: AOJu0Ywi9whwXSIdx7a8k2ENMH9pIX9bbzbLMW4l7zLncqEX35Iyl/7z
- DQH8z1uWfUYCpebbnZRRs0GorQEbEG3e6rp5liAaSrU+/1CQdM9rHNCoTzOYGpc=
-X-Google-Smtp-Source: AGHT+IH9F2kmwYW0qZOYWHPoua5sg5eXh9HJCAgtFEfHOHqZeX1ag2YKpP2PjrYoCztassnb9If/ag==
-X-Received: by 2002:a2e:3308:0:b0:2df:fa4a:ef15 with SMTP id
- 38308e7fff4ca-2e95b24dec7mr77064961fa.39.1716900010504; 
- Tue, 28 May 2024 05:40:10 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.214.26])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100fad6ccsm173571545e9.32.2024.05.28.05.40.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 05:40:09 -0700 (PDT)
-Message-ID: <f3c1220a-c613-4c05-82a9-c99850a2a8c7@linaro.org>
-Date: Tue, 28 May 2024 14:40:07 +0200
+ d=1e100.net; s=20230601; t=1716900496; x=1717505296;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zcol2jmXKa9f1VEV+cxuSqXh63Fmp1Jcz/riDhFlBa8=;
+ b=sKdtmXLRu399xzHbN9Re9SzG8rYuMcRrSfDOF46j28bC4tYR7rPDRdOZwiZFnGxgcj
+ Jiy7d+14CXXE46SEJ+VBUlVN33AcFMwMpFuKFoKu7PUDwc0vU+pFvI/6JceRouwcLA2Q
+ 7DcjR/HzpFJDsP3ivYUEHpEc6Tw9Zf0Qyt+mU/d4FhMU14HYBzEPC3URp1LYHWrzndet
+ J+StncsRSWiBh2/DdmkCYbHfnSaMWNtc1fowWBL+iOfw3xxl3AHYBlG6iMjC7p52YZvd
+ NqlZhvlqakaxJZCq1beJrv50NCZUQip7iUTM+uXQHOmJR5SHHQhygyd2IwctOkyUmqM1
+ lorw==
+X-Gm-Message-State: AOJu0YyijMBykw4vCD0iMoNs7L/sj0t8iudf2qGhDFuUahI6q6ZHGhhd
+ tK0ehMeAwavOxWFYMpV7O+LZ28Nn7mfft2G/85wzPIWFhv+MuoBeJX232OLhUtbYvU9X5FDSRxd
+ 6sgGHldxUBKhv6xrYFT9t0PV4i298BQMQG7gTKg==
+X-Google-Smtp-Source: AGHT+IHaozM7SCg0ldQV0oLaVnUtzzwnp9LyaeOXkbfSrmzHEi2KlZSdhw548wnDHPCH+Cyp9HAqaGwy7QQVodqeQ4Y=
+X-Received: by 2002:a50:9b0d:0:b0:570:374:fbf5 with SMTP id
+ 4fb4d7f45d1cf-57851a23abfmr9212037a12.39.1716900496602; Tue, 28 May 2024
+ 05:48:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 12/12] tests/qtest/vhost-user-test: add a test case for
- memory-backend-shm
-To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, gmaglione@redhat.com,
- Raphael Norwitz <raphael@enfabrica.net>, Laurent Vivier
- <lvivier@redhat.com>, Brad Smith <brad@comstyle.com>, slp@redhat.com,
- stefanha@redhat.com, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, David Hildenbrand <david@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240528103543.145412-1-sgarzare@redhat.com>
- <20240528103836.146338-1-sgarzare@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240528103836.146338-1-sgarzare@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+References: <20240524232121.284515-1-richard.henderson@linaro.org>
+ <20240524232121.284515-5-richard.henderson@linaro.org>
+In-Reply-To: <20240524232121.284515-5-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 May 2024 13:48:05 +0100
+Message-ID: <CAFEAcA-EEaKCGsdURrLqTcJj5p=NuSGyU4YCF5ppRVvQfZ0-kw@mail.gmail.com>
+Subject: Re: [PATCH v2 04/67] target/arm: Zero-extend writeback for fp16
+ FCVTZS (scalar, integer)
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,18 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/5/24 12:38, Stefano Garzarella wrote:
-> `memory-backend-shm` can be used with vhost-user devices, so let's
-> add a new test case for it.
-> 
-> Acked-by: Thomas Huth <thuth@redhat.com>
-> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+On Sat, 25 May 2024 at 00:23, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Fixes RISU mismatch for "fcvtzs h31, h0, #14".
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tests/qtest/vhost-user-test.c | 23 +++++++++++++++++++++++
->   1 file changed, 23 insertions(+)
+>  target/arm/tcg/translate-a64.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index 4126aaa27e..d97acdbaf9 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -8707,6 +8707,9 @@ static void handle_simd_shift_fpint_conv(DisasContext *s, bool is_scalar,
+>              read_vec_element_i32(s, tcg_op, rn, pass, size);
+>              fn(tcg_op, tcg_op, tcg_shift, tcg_fpstatus);
+>              if (is_scalar) {
+> +                if (size == MO_16 && !is_u) {
+> +                    tcg_gen_ext16u_i32(tcg_op, tcg_op);
+> +                }
+>                  write_fp_sreg(s, rd, tcg_op);
+>              } else {
+>                  write_vec_element_i32(s, tcg_op, rd, pass, size);
+> --
+> 2.34.1
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
