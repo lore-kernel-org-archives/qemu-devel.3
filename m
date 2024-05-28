@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1A5C41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54673C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 07:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBrIq-0003cm-89; Tue, 28 May 2024 03:31:24 -0400
+	id 1sBrPv-0007YL-3X; Tue, 28 May 2024 03:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sBrIo-0003c9-Jf
- for qemu-devel@nongnu.org; Tue, 28 May 2024 03:31:22 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sBrIn-0001ej-0d
- for qemu-devel@nongnu.org; Tue, 28 May 2024 03:31:22 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6f8eba8dcfcso366689b3a.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 00:31:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1716881479; x=1717486279; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U1C+cXXjZTBdG34i2THVAeaMfMT5wPu2gPry985wW58=;
- b=pgeKSql60m9P1zbaI/zWZjJujlFu8lghZlNsHlcddWA1/s2w597a/n7mmI5g0kDfZZ
- UQgglSLy9xNdwqfPfZJ2aEk6kHB6JCHofKJ1Qgjfnik3qeV+yXqxbTj+kf8Eol5pgH91
- pDeDeiBQ3vE0k7xLUG3UEw+7LRhtePdE4073hkGvs096z/sLnMhRTKFrBe0JGDAwLsW3
- dsJlggka9w22NIlZzr4Mk3o8kOIGRYw4TKjwHaSbBkWMI9h3X7u4yk6VbxXvt6G0d+Q+
- OHMvoy4ocwB6F0wEHZ552+3aWlEEFwEkz+Ne/8mwhpyIX1FyQbrBpCiicpKaS2MJ3KIK
- 2EUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716881479; x=1717486279;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U1C+cXXjZTBdG34i2THVAeaMfMT5wPu2gPry985wW58=;
- b=mdFgTPcc2dbRN5nO78g+yLy1KP4NjEEc8f4kmNrSTA9acz7EGHtTxWlEPxbTTWf/ye
- Jwf8ycgn7J2HgMBRXAiIkh1jqTEQF2OwGrsEkwBs6Ksvb6QnipfenxVUbHFsq4OT5npo
- uN6ZqjuwRgPAMtwJ4H+mJ4mysg0KvYAlzh6ufA7xW444yPJU8UUfVVAYkSRNIWfuhT3/
- BX4taiReqNL0sI9/I/Lsw5X4AfOH6bNjJDRm8/CR4tjCJCXKx+SabiShklW6zexQS75t
- 0juU72d3zh8Al08zXQdWkZG4Qy+KKibj4fCEA9t8YJynDJX2SdXAEhLiuQkb9YO3YCWB
- VFgA==
-X-Gm-Message-State: AOJu0Yxot28JCUSTKif9+b9pYJtXbu+EeB/gUq5bz3u/ZQN4Z8hAiA1Q
- qHthdKg3chH4W2LGVbE7+NGpjoS1mh3xHoeghGMP1E4qTxC7ntFitoU2LqXotZBB5+QWAiIopxJ
- 9dXc=
-X-Google-Smtp-Source: AGHT+IGC+C/jnVXPXbn7EPctvy3oeDf6LPx7fOANzHa7O8iZTJMRogUuyTO6E6mnsNWkjRaOQl4EwA==
-X-Received: by 2002:a05:6a00:1f12:b0:6f6:7c6a:2c14 with SMTP id
- d2e1a72fcca58-6f8f2c56e53mr11720460b3a.4.1716881478728; 
- Tue, 28 May 2024 00:31:18 -0700 (PDT)
-Received: from sunil-pc.Dlink ([106.51.188.31])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fd4d51a2sm5881080b3a.189.2024.05.28.00.31.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 00:31:18 -0700 (PDT)
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Sunil V L <sunilvl@ventanamicro.com>
-Subject: [PATCH 2/3] hw/riscv/virt-acpi-build.c: Add namespace devices for
- PLIC and APLIC
-Date: Tue, 28 May 2024 13:01:02 +0530
-Message-Id: <20240528073103.1075812-3-sunilvl@ventanamicro.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
-References: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBrPs-0007Xp-Uq
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 03:38:41 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sBrPr-0002lX-8I
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 03:38:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716881919; x=1748417919;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=abu0sUee0cafc3kc0rYR7Esah/4YT8PWmQd8qxoclRA=;
+ b=Q5a0X/xGWVWN62hsFrPC2UCAVvDUu2OWheF8HzybVNPHKmZExjbGSfYl
+ 7I2/sD79i9RisCkv+HB2/3wgYJZBVDQRDK802m6NmsMKBnducDTVJnQCf
+ vk0WyOw+lKi7n5aivdFkbv6ZVxc2wcC3gYZEd5rkiU4qrhhdZJ+RzwvCS
+ OY5rkDQ4srDBVRgcjcDjWpaOn/q31Zh0Mfj2D0pzJ4Nldy9QsOJRIBsSi
+ XQdvY7l+C5q8Bz3Oi+RQWLEEkiAQco5azWNNWXCM9wDu66CvPnrLhzU79
+ BRD4vj1+wrS+VNuy41OaDkI/pt9AZUIgDxa4Y3m1vb8Zj53Lve0sr/nT+ g==;
+X-CSE-ConnectionGUID: ZxEK40ltTUiENYRysHDeSA==
+X-CSE-MsgGUID: slIJOV9tTw2xJmOmRAwF2Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="35724262"
+X-IronPort-AV: E=Sophos;i="6.08,194,1712646000"; d="scan'208";a="35724262"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 May 2024 00:38:34 -0700
+X-CSE-ConnectionGUID: CVlRLBfrQXCK8FN/Fwoe4g==
+X-CSE-MsgGUID: l4j3CWuUTsawWcgfwF/VOA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,194,1712646000"; d="scan'208";a="35584999"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa007.jf.intel.com with ESMTP; 28 May 2024 00:38:32 -0700
+Date: Tue, 28 May 2024 15:53:55 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo framework
+Message-ID: <ZlWNk46MF5uNa+ZC@intel.com>
+References: <20240527081421.2258624-1-zhao1.liu@intel.com>
+ <20240527081421.2258624-2-zhao1.liu@intel.com>
+ <20240527200504.GB913874@fedora.redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240527200504.GB913874@fedora.redhat.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,80 +89,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PLIC and APLIC should be in namespace as well. So, add them using the
-defined HID.
+Hi Stefan,
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
----
- hw/riscv/virt-acpi-build.c | 47 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+[snip]
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 832a3acb8d..47ec78e432 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -141,6 +141,52 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
-     }
- }
- 
-+static void acpi_dsdt_add_plic_aplic(Aml *scope, RISCVVirtState *s)
-+{
-+    MachineState *ms = MACHINE(s);
-+    uint64_t plic_aplic_addr;
-+    uint32_t gsi_base;
-+    uint8_t  socket;
-+
-+    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
-+        /* PLICs */
-+        for (socket = 0; socket < riscv_socket_count(ms); socket++) {
-+            plic_aplic_addr = s->memmap[VIRT_PLIC].base +
-+                         s->memmap[VIRT_PLIC].size * socket;
-+            gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
-+            Aml *dev = aml_device("IC%.02X", socket);
-+            aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0001")));
-+            aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-+            aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-+
-+            Aml *crs = aml_resource_template();
-+            aml_append(crs, aml_memory32_fixed(plic_aplic_addr,
-+                                               s->memmap[VIRT_PLIC].size,
-+                                               AML_READ_WRITE));
-+            aml_append(dev, aml_name_decl("_CRS", crs));
-+            aml_append(scope, dev);
-+        }
-+    } else {
-+        /* APLICs */
-+        for (socket = 0; socket < riscv_socket_count(ms); socket++) {
-+            plic_aplic_addr = s->memmap[VIRT_APLIC_S].base +
-+                             s->memmap[VIRT_APLIC_S].size * socket;
-+            gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
-+            Aml *dev = aml_device("IC%.02X", socket);
-+            aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0002")));
-+            aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-+            aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-+
-+            Aml *crs = aml_resource_template();
-+            aml_append(crs, aml_memory32_fixed(plic_aplic_addr,
-+                                               s->memmap[VIRT_APLIC_S].size,
-+                                               AML_READ_WRITE));
-+            aml_append(dev, aml_name_decl("_CRS", crs));
-+            aml_append(scope, dev);
-+        }
-+    }
-+}
-+
- static void
- acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
-                     uint32_t uart_irq)
-@@ -411,6 +457,7 @@ static void build_dsdt(GArray *table_data,
- 
-     socket_count = riscv_socket_count(ms);
- 
-+    acpi_dsdt_add_plic_aplic(scope, s);
-     acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
- 
-     if (socket_count == 1) {
--- 
-2.40.1
+> > diff --git a/scripts/simpletrace-rust/.rustfmt.toml b/scripts/simpletrace-rust/.rustfmt.toml
+> > new file mode 100644
+> > index 000000000000..97a97c24ebfb
+> > --- /dev/null
+> > +++ b/scripts/simpletrace-rust/.rustfmt.toml
+> > @@ -0,0 +1,9 @@
+> > +brace_style = "AlwaysNextLine"
+> > +comment_width = 80
+> > +edition = "2021"
+> > +group_imports = "StdExternalCrate"
+> > +imports_granularity = "item"
+> > +max_width = 80
+> > +use_field_init_shorthand = true
+> > +use_try_shorthand = true
+> > +wrap_comments = true
+> 
+> There should be QEMU-wide policy. That said, why is it necessary to customize rustfmt?
 
+Indeed, but QEMU's style for Rust is currently undefined, so I'm trying
+to add this to make it easier to check the style...I will separate it
+out as a style policy proposal.
+
+[snip]
+
+> > +trait Analyzer
+> > +{
+> 
+> The Python version treats this as an API so that users can write trace
+> analysis scripts. I see below that you're using non-doc comments. That
+> suggests you don't see this as a public API that people can write trace
+> analysis scripts against?
+
+Yes, for the initial version, I'm not exposing it for now. It could be
+exposed later if needed and then we can support multiple script builds
+by defining multiple workspaces in cargo.
+
+Thanks,
+Zhao
+
+> > +    /* Called at the start of the trace. */
+> > +    fn begin(&self) {}
+> > +
+> > +    /* Called if no specific method for processing a trace event. */
+> > +    fn catchall(
+> > +        &mut self,
+> > +        rec_args: &[EventArgPayload],
+> > +        event: &Event,
+> > +        timestamp_ns: u64,
+> > +        pid: u32,
+> > +        event_id: u64,
+> > +    ) -> Result<String>;
+> > +
+> > +    /* Called at the end of the trace. */
+> > +    fn end(&self) {}
+> > +
+> > +    /*
+> > +     * TODO: Support "variable" parameters (i.e. variants of process_event()
+> > +     * with different parameters, like **kwargs in python), when we need a
+> > +     * simpletrace rust module.
+> > +     */
+> > +    fn process_event(
+> > +        &mut self,
+> > +        rec_args: &[EventArgPayload],
+> > +        event: &Event,
+> > +        event_id: u64,
+> > +        timestamp_ns: u64,
+> > +        pid: u32,
+> > +    ) -> Result<String>
+> > +    {
+> > +        self.catchall(rec_args, event, timestamp_ns, pid, event_id)
+> > +
+> > +        /*
+> > +         * TODO: Support custom function hooks (like getattr() in python),
+> > +         * when we need a simpletrace rust module.
+> > +         */
+> > +    }
+> > +}
 
