@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52D18C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB221C25B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 14:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBxUr-0001cQ-U4; Tue, 28 May 2024 10:08:13 -0400
+	id 1sBxae-0001KG-Q5; Tue, 28 May 2024 10:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUq-0001bj-P4
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:12 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sBxUm-00074H-PU
- for qemu-devel@nongnu.org; Tue, 28 May 2024 10:08:12 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-420180b58c5so6690615e9.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 07:08:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716905287; x=1717510087; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xlqr8OCRH9VlaXuwhAgRGhxeV6jrq6Fx27rZAA3V29g=;
- b=VtUJiIuKaQN1TTp0BjAQYsVDeeQj/+UdU31Qnysy7gYAp0XiAporrnzl2ieDGIeyoL
- 0hJdSm12A5kcxtPXG2Q1ZLNnYJqjk2lLVQ1HapZDF5Nc6M4TWAxN1TwBV8VBvEncvJvt
- pna9qh/pt75QwblMyYvbzcUMWlGI1Z9sBL+fHdjR9lLnYKBviXlX7XQrLNpMZ+LQykE9
- S82NcdtNC0IotmQjkJ9WRd8R+0zgGB6e5CwktKgCoUROAxj18m9W2y/WiTdhrUudp4ul
- H+qLZ6Xpszfl7vz+dnuYNgkExr9rD4Q3xlZOdLn8M98jFDE7pci2YDITkOCmOMdS7hH1
- oypQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716905287; x=1717510087;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xlqr8OCRH9VlaXuwhAgRGhxeV6jrq6Fx27rZAA3V29g=;
- b=Nahsvyhmc7QVz+szarJCqyUuhkXNGUa8sbAMoRaQAXXzJ5kwODPpeLmk58t5BrrLne
- m9XbBgYlnPPtXMUnv/mMzcZ5Ob9msgSKLDAAqHrB+QnwV2FT34IaZqXdTj82a0JkBE9D
- lKmLccgE9odTEKguWJ/J0TqFP8/7hB3G7paVUv6GV2gZVC3DkpaZ9c5PKnl2vrc/f3fn
- ++AD6TapKgRtrsGBfDCW/zQ+skXJmkVrYUBONd/kau0+3iGe55V3tGpCGeAQxP/kLFlD
- fbo7PE9TrOlGsntkrjJ7lerdw4NWfCvD8W1Xtg8wZyz34zudmuXD16Ap/sPcNMEHIHfg
- WNqQ==
-X-Gm-Message-State: AOJu0Yyw9kOSkzeVwJNeCDsW8WIkY+aVCZFDFN8gXE2qE4vIp/Xd/sbx
- YnDVdSiJK2tRpJVmirls8ZJ64a/qi9gRnZhw/eKblq3jS3Pguij3BGHTrJKDXYK01t6ogY994Is
- p
-X-Google-Smtp-Source: AGHT+IFmsDI5jTOKRjrBTGkcw8ZeFPmw34ao+y+8KYhTizcFxvNUYjCtJxeWMM8JdBkys+eTG1Bhsg==
-X-Received: by 2002:a05:600c:1d21:b0:41f:e56c:ef81 with SMTP id
- 5b1f17b1804b1-421089b1b4dmr109249355e9.1.1716905287219; 
- Tue, 28 May 2024 07:08:07 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3564afc3577sm11361473f8f.102.2024.05.28.07.08.06
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 07:08:06 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 19/42] target/arm: Convert Cryptographic 2-register SHA512 to
- decodetree
-Date: Tue, 28 May 2024 15:07:30 +0100
-Message-Id: <20240528140753.3620597-20-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
-References: <20240528140753.3620597-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sBxad-0001JS-3I
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:14:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sBxab-00087o-Lc
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 10:14:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716905648;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=m7Ud10jNcbkX6MYTfuXp5eL+xOHOvA4Pk/yEuZidcVY=;
+ b=Bu0tm+9GRWa43m2qc6ww5tHW3h48Qta5oLeq+8t48nM6kjeoKOVavoRUVVODef+KudW7SZ
+ QeZYO/Lw3MH9xIWoZ7HcNaec/KuXXPlI9vczDl9eyyujHm9VIsofX3dchhfSchYxg99m+C
+ nSIuczbOn32F/U0vVcAHz1/1aYKeUvg=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-aCFrG2PtNHCtZN8irSNSng-1; Tue,
+ 28 May 2024 10:14:03 -0400
+X-MC-Unique: aCFrG2PtNHCtZN8irSNSng-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4B30D29AA382;
+ Tue, 28 May 2024 14:14:03 +0000 (UTC)
+Received: from localhost (unknown [10.39.195.73])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id BEAB73C27;
+ Tue, 28 May 2024 14:14:02 +0000 (UTC)
+Date: Tue, 28 May 2024 10:14:01 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo framework
+Message-ID: <20240528141401.GB993828@fedora.redhat.com>
+References: <20240527081421.2258624-1-zhao1.liu@intel.com>
+ <20240527081421.2258624-2-zhao1.liu@intel.com>
+ <20240527200504.GB913874@fedora.redhat.com>
+ <ZlWNk46MF5uNa+ZC@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="dio/WzXmXdOFsWee"
+Content-Disposition: inline
+In-Reply-To: <ZlWNk46MF5uNa+ZC@intel.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,106 +91,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240524232121.284515-14-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/a64.decode      |  5 ++++
- target/arm/tcg/translate-a64.c | 50 ++--------------------------------
- 2 files changed, 8 insertions(+), 47 deletions(-)
+--dio/WzXmXdOFsWee
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index c342c276089..5a46205751c 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -631,3 +631,8 @@ RAX1            1100 1110 011 ..... 100011 ..... .....  @rrr_q1e3
- SM3PARTW1       1100 1110 011 ..... 110000 ..... .....  @rrr_q1e0
- SM3PARTW2       1100 1110 011 ..... 110001 ..... .....  @rrr_q1e0
- SM4EKEY         1100 1110 011 ..... 110010 ..... .....  @rrr_q1e0
-+
-+### Cryptographic two-register SHA512
-+
-+SHA512SU0       1100 1110 110 00000 100000 ..... .....  @rr_q1e0
-+SM4E            1100 1110 110 00000 100001 ..... .....  @r2r_q1e0
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 77b24cd52ed..eed0abe9121 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4629,6 +4629,9 @@ TRANS_FEAT(SM3PARTW1, aa64_sm3, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm3part
- TRANS_FEAT(SM3PARTW2, aa64_sm3, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm3partw2)
- TRANS_FEAT(SM4EKEY, aa64_sm4, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm4ekey)
- 
-+TRANS_FEAT(SHA512SU0, aa64_sha512, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha512su0)
-+TRANS_FEAT(SM4E, aa64_sm4, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm4e)
-+
- 
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-@@ -13530,52 +13533,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     }
- }
- 
--/* Crypto two-reg SHA512
-- *  31                                     12  11  10  9    5 4    0
-- * +-----------------------------------------+--------+------+------+
-- * | 1 1 0 0 1 1 1 0 1 1 0 0 0 0 0 0 1 0 0 0 | opcode |  Rn  |  Rd  |
-- * +-----------------------------------------+--------+------+------+
-- */
--static void disas_crypto_two_reg_sha512(DisasContext *s, uint32_t insn)
--{
--    int opcode = extract32(insn, 10, 2);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--    bool feature;
--
--    switch (opcode) {
--    case 0: /* SHA512SU0 */
--        feature = dc_isar_feature(aa64_sha512, s);
--        break;
--    case 1: /* SM4E */
--        feature = dc_isar_feature(aa64_sm4, s);
--        break;
--    default:
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!feature) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    switch (opcode) {
--    case 0: /* SHA512SU0 */
--        gen_gvec_op2_ool(s, true, rd, rn, 0, gen_helper_crypto_sha512su0);
--        break;
--    case 1: /* SM4E */
--        gen_gvec_op3_ool(s, true, rd, rd, rn, 0, gen_helper_crypto_sm4e);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
- /* Crypto four-register
-  *  31               23 22 21 20  16 15  14  10 9    5 4    0
-  * +-------------------+-----+------+---+------+------+------+
-@@ -13750,7 +13707,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
-     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
--    { 0xcec08000, 0xfffff000, disas_crypto_two_reg_sha512 },
-     { 0xce000000, 0xff808000, disas_crypto_four_reg },
-     { 0xce800000, 0xffe00000, disas_crypto_xar },
-     { 0xce408000, 0xffe0c000, disas_crypto_three_reg_imm2 },
--- 
-2.34.1
+On Tue, May 28, 2024 at 03:53:55PM +0800, Zhao Liu wrote:
+> Hi Stefan,
+>=20
+> [snip]
+>=20
+> > > diff --git a/scripts/simpletrace-rust/.rustfmt.toml b/scripts/simplet=
+race-rust/.rustfmt.toml
+> > > new file mode 100644
+> > > index 000000000000..97a97c24ebfb
+> > > --- /dev/null
+> > > +++ b/scripts/simpletrace-rust/.rustfmt.toml
+> > > @@ -0,0 +1,9 @@
+> > > +brace_style =3D "AlwaysNextLine"
+> > > +comment_width =3D 80
+> > > +edition =3D "2021"
+> > > +group_imports =3D "StdExternalCrate"
+> > > +imports_granularity =3D "item"
+> > > +max_width =3D 80
+> > > +use_field_init_shorthand =3D true
+> > > +use_try_shorthand =3D true
+> > > +wrap_comments =3D true
+> >=20
+> > There should be QEMU-wide policy. That said, why is it necessary to cus=
+tomize rustfmt?
+>=20
+> Indeed, but QEMU's style for Rust is currently undefined, so I'm trying
+> to add this to make it easier to check the style...I will separate it
+> out as a style policy proposal.
+
+Why is a config file necessary? QEMU should use the default Rust style.
+
+Stefan
+
+--dio/WzXmXdOFsWee
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZV5qkACgkQnKSrs4Gr
+c8jjzwgAmRqu6LMO7NFyY9BFQPLKVffuB2cafuN/p70YeCfuoCBrd4+bgeJbkzAJ
+Sx2jlUcTd+wbe5W8AxXNfcpR+2og0jMdImEpXndf3RENqj95BxHjl02kjxJw4/CJ
+WnrDb2EhiAX+b6C2/aNEmwcYqQAt6+HeQFR6yIPqqPQYweva7/rgb5+mJqoyHI/l
+z/yAvPfSqPWjeeqf0b069IKdwbR8xC/51UI+mKCpP8r2NUAgzr6NomgwnzbC2885
+ndQJVAiUhxBek6AhwG3uRyG2eOMMY4CcpI+1Pg8btjzrwFlIzL1cUs+zKNmkBLpI
+M38Poi8VAu1ushiv2A0iNr1617jSOg==
+=KO2k
+-----END PGP SIGNATURE-----
+
+--dio/WzXmXdOFsWee--
 
 
