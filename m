@@ -4,83 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95DAFC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 18:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7B1C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 18:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC1Ya-000181-MF; Tue, 28 May 2024 14:28:20 -0400
+	id 1sC1Zo-00020t-Rf; Tue, 28 May 2024 14:29:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sC1YY-00016B-7W
- for qemu-devel@nongnu.org; Tue, 28 May 2024 14:28:18 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sC1YT-00037S-3E
- for qemu-devel@nongnu.org; Tue, 28 May 2024 14:28:17 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6f8eba8f25eso976236b3a.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 11:28:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716920891; x=1717525691; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=24D/AylI4Ovd0nmyAgowCpokU5ulkH7aJ8RdI9TBq5c=;
- b=EiHNjf3Kr1HSVPIdFVJCQs4fgIt4BaKRCeYwzXTJSj6RDsq3W1PRbhy7dCiU4W9oo0
- whOV/Xey/5UpAYbH0ZZZUpNiSG+cq7OlfphOHgwSR4yXbpu8d0S38dZHaLG4Gx4c9vOD
- y31NwB23GQ68yQeM6GZ1oA+34nAZXZCr5BJlNk9FjxqDXBsvXiCjhK9oi1oA7jTNZgPh
- 1CsSZaVxAKTUbXRkBwbC0R82icBTOSlpTuA9U3XIDrEk3KxPo6tiiXt2LGcK9uJjtADq
- pT4T4XDmvYY3xpp6tKsKeoC+HdRjvgssR+jMO50DWLSaccXcf/orF8BLbhhfUH7WMCkn
- YJQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716920891; x=1717525691;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=24D/AylI4Ovd0nmyAgowCpokU5ulkH7aJ8RdI9TBq5c=;
- b=AuEn0tQRMT/5J0VM87pW8tLudmTgmF6nR+X9HgyW+4jIZ7iG0izf12rBgiz0d2HXnM
- xtZwpPrD8llvn3u0YynQ70MaaPG4w88vKJwET0L4G65jcZMFTBGqKH3sNxDCLVhwOklN
- 0vbyiBUi1bphBSUdAj4OMX6AIxuxWhjqSLFz15n5D5eIaRo3QuRqkB6i3TSYBb/1H8Jh
- 5zkLYeTaHVzMik2xykXUyrKEpDrgNXSGXOTC5rrHsCJiO5Zey8aG54QFeegVZDmmLeRn
- AChYYpmzxim0nCFzW3tLCZT2Xk/VS7xhHFAWvRZhRYZS5oY/x4RwPM5GQsMPeKgCvun7
- Hb4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoy5uMm3/D5wbBwp4dr/ljWZr6dySdEWbW031DAC9Cin1ncozFXUtmBbNpTKr8MxxasVgrOUzYfD46GSBCKztLGUbudXo=
-X-Gm-Message-State: AOJu0Yygd0oL/L2iRppna1Hnnt6pwc3Lh4FB7V2d3zqZ4mS8t3mTI0cI
- gNH4f4HVBn0WHXgpMj/AADt9Zny1gJck5T/OiffVDQReHMYIiWNbj8BT84eKRS0=
-X-Google-Smtp-Source: AGHT+IFsJ4DcepCW9pzIAv186EcJPVvoBmyJz+JwiQ2Mc3eNQRWFcckm9klD+lVlAMtj3LtIlfBewg==
-X-Received: by 2002:a05:6a00:f90:b0:6f8:d51b:1ccf with SMTP id
- d2e1a72fcca58-6f8f2b49154mr15289219b3a.6.1716920890912; 
- Tue, 28 May 2024 11:28:10 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fcfe64a4sm6721728b3a.158.2024.05.28.11.28.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 11:28:10 -0700 (PDT)
-Message-ID: <8f0f50c1-da9a-42fe-9877-c61cc49318d7@linaro.org>
-Date: Tue, 28 May 2024 11:28:08 -0700
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sC1Zl-0001wd-9K; Tue, 28 May 2024 14:29:33 -0400
+Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sC1Zj-0003D3-Hz; Tue, 28 May 2024 14:29:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 56AD8260836;
+ Tue, 28 May 2024 20:29:28 +0200 (CEST)
+X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
+Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
+ by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
+ with ESMTP id DyBjQKf_3Flr; Tue, 28 May 2024 20:29:26 +0200 (CEST)
+Received: from applejack.lan (83.11.37.15.ipv4.supernova.orange.pl
+ [83.11.37.15])
+ by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 528BC2600C6;
+ Tue, 28 May 2024 20:29:25 +0200 (CEST)
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Subject: [PATCH 1/1] tests/avocado: update sbsa-ref firmware
+Date: Tue, 28 May 2024 20:29:17 +0200
+Message-ID: <20240528182917.91027-1-marcin.juszkiewicz@linaro.org>
+X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/42] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240528140753.3620597-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240528140753.3620597-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: softfail client-ip=213.251.184.221;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=muminek.juszkiewicz.com.pl
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_SOFTFAIL=0.665, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,47 +66,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/24 07:07, Peter Maydell wrote:
-> Hi; most of this is the first half of the A64 simd decodetree
-> conversion; the rest is a mix of fixes from the last couple of weeks.
-> 
-> v2 uses patches from the v2 decodetree series to avoid a few
-> regressions in some A32 insns.
-> 
-> (Richard: I'm still planning to review the second half of the
-> v2 decodetree series; I just wanted to get the respin of this
-> pullreq out today...)
-> 
-> thanks
-> -- PMM
-> 
-> The following changes since commit ad10b4badc1dd5b28305f9b9f1168cf0aa3ae946:
-> 
->    Merge tag 'pull-error-2024-05-27' ofhttps://repo.or.cz/qemu/armbru  into staging (2024-05-27 06:40:42 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://git.linaro.org/people/pmaydell/qemu-arm.git  tags/pull-target-arm-20240528
-> 
-> for you to fetch changes up to f240df3c31b40e4cf1af1f156a88efc1a1df406c:
-> 
->    target/arm: Convert disas_simd_3same_logic to decodetree (2024-05-28 14:29:01 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * xlnx_dpdma: fix descriptor endianness bug
->   * hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug System registers
->   * hw/arm/npcm7xx: remove setting of mp-affinity
->   * hw/char: Correct STM32L4x5 usart register CR2 field ADD_0 size
->   * hw/intc/arm_gic: Fix handling of NS view of GICC_APR<n>
->   * hw/input/tsc2005: Fix -Wchar-subscripts warning in tsc2005_txrx()
->   * hw: arm: Remove use of tabs in some source files
->   * docs/system: Remove ADC from raspi documentation
->   * target/arm: Start of the conversion of A64 SIMD to decodetree
+Partial support for NUMA setup:
+- cpu nodes
+- memory nodes
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Used versions:
 
+- Trusted Firmware v2.11.0
+- Tianocore EDK2 stable202405
+- Tianocore EDK2 Platforms code commit 4bbd0ed
 
-r~
+Firmware is built using Debian 'bookworm' cross toolchain (gcc 12.2.0).
+---
+ tests/avocado/machine_aarch64_sbsaref.py | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
+index 98c76c1ff7..6bb82f2a03 100644
+--- a/tests/avocado/machine_aarch64_sbsaref.py
++++ b/tests/avocado/machine_aarch64_sbsaref.py
+@@ -37,18 +37,18 @@ def fetch_firmware(self):
+ 
+         Used components:
+ 
+-        - Trusted Firmware 2.10.2
+-        - Tianocore EDK2 stable202402
+-        - Tianocore EDK2-platforms commit 085c2fb
++        - Trusted Firmware 2.11.0
++        - Tianocore EDK2 stable202405
++        - Tianocore EDK2-platforms commit 4bbd0ed
+ 
+         """
+ 
+         # Secure BootRom (TF-A code)
+         fs0_xz_url = (
+             "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
+-            "20240313-116475/edk2/SBSA_FLASH0.fd.xz"
++            "20240528-140808/edk2/SBSA_FLASH0.fd.xz"
+         )
+-        fs0_xz_hash = "637593749cc307dea7dc13265c32e5d020267552f22b18a31850b8429fc5e159"
++        fs0_xz_hash = "fa6004900b67172914c908b78557fec4d36a5f784f4c3dd08f49adb75e1892a9"
+         tar_xz_path = self.fetch_asset(fs0_xz_url, asset_hash=fs0_xz_hash,
+                                       algorithm='sha256')
+         archive.extract(tar_xz_path, self.workdir)
+@@ -57,9 +57,9 @@ def fetch_firmware(self):
+         # Non-secure rom (UEFI and EFI variables)
+         fs1_xz_url = (
+             "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
+-            "20240313-116475/edk2/SBSA_FLASH1.fd.xz"
++            "20240528-140808/edk2/SBSA_FLASH1.fd.xz"
+         )
+-        fs1_xz_hash = "cb0a5e8cf5e303c5d3dc106cfd5943ffe9714b86afddee7164c69ee1dd41991c"
++        fs1_xz_hash = "5f3747d4000bc416d9641e33ff4ac60c3cc8cb74ca51b6e932e58531c62eb6f7"
+         tar_xz_path = self.fetch_asset(fs1_xz_url, asset_hash=fs1_xz_hash,
+                                       algorithm='sha256')
+         archive.extract(tar_xz_path, self.workdir)
+@@ -98,15 +98,15 @@ def test_sbsaref_edk2_firmware(self):
+ 
+         # AP Trusted ROM
+         wait_for_console_pattern(self, "Booting Trusted Firmware")
+-        wait_for_console_pattern(self, "BL1: v2.10.2(release):")
++        wait_for_console_pattern(self, "BL1: v2.11.0(release):")
+         wait_for_console_pattern(self, "BL1: Booting BL2")
+ 
+         # Trusted Boot Firmware
+-        wait_for_console_pattern(self, "BL2: v2.10.2(release)")
++        wait_for_console_pattern(self, "BL2: v2.11.0(release)")
+         wait_for_console_pattern(self, "Booting BL31")
+ 
+         # EL3 Runtime Software
+-        wait_for_console_pattern(self, "BL31: v2.10.2(release)")
++        wait_for_console_pattern(self, "BL31: v2.11.0(release)")
+ 
+         # Non-trusted Firmware
+         wait_for_console_pattern(self, "UEFI firmware (version 1.0")
+-- 
+2.45.1
 
 
