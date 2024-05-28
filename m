@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E235C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B18FAC25B74
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 02:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sBmpN-0003Wl-BV; Mon, 27 May 2024 22:44:41 -0400
+	id 1sBmr7-0008Ni-3O; Mon, 27 May 2024 22:46:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmpL-0003HE-9N
- for qemu-devel@nongnu.org; Mon, 27 May 2024 22:44:39 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sBmqE-000610-Po; Mon, 27 May 2024 22:45:36 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sBmpH-0003li-U9
- for qemu-devel@nongnu.org; Mon, 27 May 2024 22:44:38 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f48e9414e9so12396265ad.0
- for <qemu-devel@nongnu.org>; Mon, 27 May 2024 19:44:35 -0700 (PDT)
+ id 1sBmqB-00043X-8J; Mon, 27 May 2024 22:45:34 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-681bee6bb13so2319631a12.1; 
+ Mon, 27 May 2024 19:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716864274; x=1717469074; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1716864329; x=1717469129; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ISj/DJX6sVw1fF9xt8oQxJPLcdsC6nSxbO5ABU6lBG8=;
- b=MOQ6zlwtOPFWnzO4DEjuRrd2r6DDt+0EMmzcWjMx1ST7cyOuw3roXUpJ5UM6U2FWmz
- W2+J9Rmx23aEpxM+GQvJEIy8CfLRcrBS5u7O2/4eoDrJik1B4EGxYWKEsRk8r9n47EXd
- za4yuzv8ifCZc/sGPSmshcfZ7HO5ipqWMkmqhUR5wbo5fvsta6yQDDBGG8moZLSRI76f
- xhfWCrjur7OBUe8Q2AtIzkZ8USycnxiWS0zmlG6Ul/VBpZadmc6wD70M3okhljIMhHUA
- 6i+0droFrKlMyC2oj7ht3r12OkQsjds4P6foE5SRl+/c3+bJ31iIqeyOer+Q+2lwYZWI
- b4iw==
+ bh=J5jhBOyEYmtoTJBDh000o1EH0VVoye2sH2+Q4KCgR/U=;
+ b=RAbWoRJHCj95iZgADV193LMOE+7Y8BCIxZaPaW9EXmB9kAPYjNNYVwdv0p4T76zeGz
+ XOvYaEfxnl0NO9syjqGIENOI7NC5TXhZfgartWrMr3u/bo/zHYLX3kY/1eyoE35PLFsR
+ xtBWjEo70IKR7JYb7h7UQym1w/W2SvBIpLBYwblrZE+A90VcMUzsGQg5vFMawNpRl0SZ
+ 2z3HtDZSFkyRkNYWw8uSwVT0ux9LoCGe/Gdlax2sKQ7AJpovWFYbOxujr3rgNbNmcS2o
+ bCUyPCpc6lDOCb11A66MSZB4Zl6rPRUMpps61O2xWUu5G5tgdchdoVL0wGjnwSfrg7hC
+ +A/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716864274; x=1717469074;
+ d=1e100.net; s=20230601; t=1716864329; x=1717469129;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ISj/DJX6sVw1fF9xt8oQxJPLcdsC6nSxbO5ABU6lBG8=;
- b=Iys2+Pn5NakAui9QxWZ7V6RdDHxJM0B0/GZZNjAnYu2UTeqkbaQl+pv1G8DTNRUhag
- LkmmJQX2Ohvllc+2jVsif6TSe8FyZHrsdHPp07JirhKAqJ2LB76RCEBUMKXr05AD2ED/
- XfcBdVBxm+ZmxbRzEf27uWo/ojUHPYye7MZ0wIhDVM3xmWBueFx0s2WZvpVJce48b11U
- XxKOExiwxAy+pw2NsIrlmo9/rWV+2LMgKf9Qk24788Sa3+X8zZyxGiMkJe0veqGqvEW6
- NnJnFi/2/gnqrMSJ7ruGnC/P/XaJXyqIQTiDd1sNkK9BvM/t+5F2MK8pZSUrwjSzqQEY
- oPNA==
-X-Gm-Message-State: AOJu0Yw41c6LKH+ccvsUZ2wELYFbZrLqCmCKhh/+GVeaVDI6dZPrBNwe
- moRD/pCPs1l1Vp7Jb/3kW5iXfpnUxlxl9hD8xjrg+QaRKMGnsa9I8XHSUg==
-X-Google-Smtp-Source: AGHT+IFDW5zCXUXVK5Oh8L2bMzAtmPBdLvPsoDE/IdgqnwmhQ6KVjjhXrwR5WwPJGIubWbixEDcnnA==
-X-Received: by 2002:a17:903:1245:b0:1f2:fbe5:7d62 with SMTP id
- d9443c01a7336-1f339f602aemr174250415ad.33.1716864273867; 
- Mon, 27 May 2024 19:44:33 -0700 (PDT)
+ bh=J5jhBOyEYmtoTJBDh000o1EH0VVoye2sH2+Q4KCgR/U=;
+ b=w8jnEw46/hfwAiNmIxuyV7xuFGLU7ZwSYLjgBC9jxSjYfrDpyIz+uzMhb03hZuxuEt
+ +aTdkWzKs3NyNwcPWTU7rzBQNjz4r+XA5qO6O3RPF2c/F0Fl0cNWx2WQ7gzLvoeITd/k
+ I+nQYF9PRIbUbRPb0KoMMuCOsv9I8nwPkJaLgyTB1fPnQbZ5LPSuXLzilIYvVqv4gF6K
+ Co+lbRGVYt0D5XUuGdhuEgkOsEWPrHa643nyXxoYkUvHrXltLB1X9zVs5o/HK6UPSjls
+ 3Loozt2bp7dhBqVD5FeSqoIZ/TbujfLLsyD1RYj6CncMwRYgmw327JZ5RlHXhxChyXKU
+ HrqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1MZVGqonqod5Z5gTv0xck7aNhLYHnyZK4EZvEvG79rR+ObZUa1/puTMx85B9cGiXzrFp/0sQP18rnSU3Fc5NHlwqBV6mn
+X-Gm-Message-State: AOJu0YzecSbqJnJ2YzNpzoGk8HsV3PLeMi95ASLrFCy1WdfTJXrUrTzR
+ v/uKhYlRkwyJuGmIRIQDcrDT+o3Amt8r9pM7bTExTaQrMq+zhznglsElOg==
+X-Google-Smtp-Source: AGHT+IGMtkHie2+p7yc4Q1tiVjUxxUGzzd2HPR9bp5uQkxDSTAgDpOHkmT8N5DvuF21AuC1VvdYtnA==
+X-Received: by 2002:a17:90a:888:b0:2bd:efc4:a9b with SMTP id
+ 98e67ed59e1d1-2bdefc40ad6mr17075822a91.8.1716864329102; 
+ Mon, 27 May 2024 19:45:29 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.44.30
+ d9443c01a7336-1f44c970ca0sm70733225ad.142.2024.05.27.19.45.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 May 2024 19:44:33 -0700 (PDT)
+ Mon, 27 May 2024 19:45:28 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
- Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
+Cc: alistair23@gmail.com, Eric DeVolder <eric_devolder@yahoo.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/28] target/riscv: Add support for Zve64x extension
-Date: Tue, 28 May 2024 12:43:11 +1000
-Message-ID: <20240528024328.246965-12-alistair.francis@wdc.com>
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PULL 27/28] disas/riscv: Decode all of the pmpcfg and pmpaddr CSRs
+Date: Tue, 28 May 2024 12:43:27 +1000
+Message-ID: <20240528024328.246965-28-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240528024328.246965-1-alistair.francis@wdc.com>
 References: <20240528024328.246965-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,100 +100,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jason Chien <jason.chien@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
 
-Add support for Zve64x extension. Enabling Zve64f enables Zve64x and
-enabling Zve64x enables Zve32x according to their dependency.
+Previously we only listed a single pmpcfg CSR and the first 16 pmpaddr
+CSRs. This patch fixes this to list all 16 pmpcfg and all 64 pmpaddr
+CSRs are part of the disassembly.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2107
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
+Reported-by: Eric DeVolder <eric_devolder@yahoo.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Fixes: ea10325917 ("RISC-V Disassembler")
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240328022343.6871-3-jason.chien@sifive.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240514051615.330979-1-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h     |  1 +
- target/riscv/cpu.c         |  2 ++
- target/riscv/tcg/tcg-cpu.c | 17 +++++++++++------
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ disas/riscv.c | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index dce49050c0..e1e4f32698 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -94,6 +94,7 @@ struct RISCVCPUConfig {
-     bool ext_zve32x;
-     bool ext_zve64f;
-     bool ext_zve64d;
-+    bool ext_zve64x;
-     bool ext_zvbb;
-     bool ext_zvbc;
-     bool ext_zvkb;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d744594cc4..a74f0eb29c 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -156,6 +156,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zve32x, PRIV_VERSION_1_10_0, ext_zve32x),
-     ISA_EXT_DATA_ENTRY(zve64f, PRIV_VERSION_1_10_0, ext_zve64f),
-     ISA_EXT_DATA_ENTRY(zve64d, PRIV_VERSION_1_10_0, ext_zve64d),
-+    ISA_EXT_DATA_ENTRY(zve64x, PRIV_VERSION_1_10_0, ext_zve64x),
-     ISA_EXT_DATA_ENTRY(zvfbfmin, PRIV_VERSION_1_12_0, ext_zvfbfmin),
-     ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
-     ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
-@@ -1476,6 +1477,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zve32x", ext_zve32x, false),
-     MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
-     MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
-+    MULTI_EXT_CFG_BOOL("zve64x", ext_zve64x, false),
-     MULTI_EXT_CFG_BOOL("zvfbfmin", ext_zvfbfmin, false),
-     MULTI_EXT_CFG_BOOL("zvfbfwma", ext_zvfbfwma, false),
-     MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index e2cf5f429d..fedc035313 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -498,17 +498,22 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
- 
-     /* The Zve64d extension depends on the Zve64f extension */
-     if (cpu->cfg.ext_zve64d) {
-+        if (!riscv_has_ext(env, RVD)) {
-+            error_setg(errp, "Zve64d/V extensions require D extension");
-+            return;
-+        }
-         cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64f), true);
-     }
- 
--    /* The Zve64f extension depends on the Zve32f extension */
-+    /* The Zve64f extension depends on the Zve64x and Zve32f extensions */
-     if (cpu->cfg.ext_zve64f) {
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64x), true);
-         cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32f), true);
-     }
- 
--    if (cpu->cfg.ext_zve64d && !riscv_has_ext(env, RVD)) {
--        error_setg(errp, "Zve64d/V extensions require D extension");
--        return;
-+    /* The Zve64x extension depends on the Zve32x extension */
-+    if (cpu->cfg.ext_zve64x) {
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
-     }
- 
-     /* The Zve32f extension depends on the Zve32x extension */
-@@ -670,10 +675,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
--    if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64f) {
-+    if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64x) {
-         error_setg(
-             errp,
--            "Zvbc and Zvknhb extensions require V or Zve64{f,d} extensions");
-+            "Zvbc and Zvknhb extensions require V or Zve64x extensions");
-         return;
-     }
- 
+diff --git a/disas/riscv.c b/disas/riscv.c
+index e236c8b5b7..297cfa2f63 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2190,7 +2190,22 @@ static const char *csr_name(int csrno)
+     case 0x0383: return "mibound";
+     case 0x0384: return "mdbase";
+     case 0x0385: return "mdbound";
+-    case 0x03a0: return "pmpcfg3";
++    case 0x03a0: return "pmpcfg0";
++    case 0x03a1: return "pmpcfg1";
++    case 0x03a2: return "pmpcfg2";
++    case 0x03a3: return "pmpcfg3";
++    case 0x03a4: return "pmpcfg4";
++    case 0x03a5: return "pmpcfg5";
++    case 0x03a6: return "pmpcfg6";
++    case 0x03a7: return "pmpcfg7";
++    case 0x03a8: return "pmpcfg8";
++    case 0x03a9: return "pmpcfg9";
++    case 0x03aa: return "pmpcfg10";
++    case 0x03ab: return "pmpcfg11";
++    case 0x03ac: return "pmpcfg12";
++    case 0x03ad: return "pmpcfg13";
++    case 0x03ae: return "pmpcfg14";
++    case 0x03af: return "pmpcfg15";
+     case 0x03b0: return "pmpaddr0";
+     case 0x03b1: return "pmpaddr1";
+     case 0x03b2: return "pmpaddr2";
+@@ -2207,6 +2222,54 @@ static const char *csr_name(int csrno)
+     case 0x03bd: return "pmpaddr13";
+     case 0x03be: return "pmpaddr14";
+     case 0x03bf: return "pmpaddr15";
++    case 0x03c0: return "pmpaddr16";
++    case 0x03c1: return "pmpaddr17";
++    case 0x03c2: return "pmpaddr18";
++    case 0x03c3: return "pmpaddr19";
++    case 0x03c4: return "pmpaddr20";
++    case 0x03c5: return "pmpaddr21";
++    case 0x03c6: return "pmpaddr22";
++    case 0x03c7: return "pmpaddr23";
++    case 0x03c8: return "pmpaddr24";
++    case 0x03c9: return "pmpaddr25";
++    case 0x03ca: return "pmpaddr26";
++    case 0x03cb: return "pmpaddr27";
++    case 0x03cc: return "pmpaddr28";
++    case 0x03cd: return "pmpaddr29";
++    case 0x03ce: return "pmpaddr30";
++    case 0x03cf: return "pmpaddr31";
++    case 0x03d0: return "pmpaddr32";
++    case 0x03d1: return "pmpaddr33";
++    case 0x03d2: return "pmpaddr34";
++    case 0x03d3: return "pmpaddr35";
++    case 0x03d4: return "pmpaddr36";
++    case 0x03d5: return "pmpaddr37";
++    case 0x03d6: return "pmpaddr38";
++    case 0x03d7: return "pmpaddr39";
++    case 0x03d8: return "pmpaddr40";
++    case 0x03d9: return "pmpaddr41";
++    case 0x03da: return "pmpaddr42";
++    case 0x03db: return "pmpaddr43";
++    case 0x03dc: return "pmpaddr44";
++    case 0x03dd: return "pmpaddr45";
++    case 0x03de: return "pmpaddr46";
++    case 0x03df: return "pmpaddr47";
++    case 0x03e0: return "pmpaddr48";
++    case 0x03e1: return "pmpaddr49";
++    case 0x03e2: return "pmpaddr50";
++    case 0x03e3: return "pmpaddr51";
++    case 0x03e4: return "pmpaddr52";
++    case 0x03e5: return "pmpaddr53";
++    case 0x03e6: return "pmpaddr54";
++    case 0x03e7: return "pmpaddr55";
++    case 0x03e8: return "pmpaddr56";
++    case 0x03e9: return "pmpaddr57";
++    case 0x03ea: return "pmpaddr58";
++    case 0x03eb: return "pmpaddr59";
++    case 0x03ec: return "pmpaddr60";
++    case 0x03ed: return "pmpaddr61";
++    case 0x03ee: return "pmpaddr62";
++    case 0x03ef: return "pmpaddr63";
+     case 0x0780: return "mtohost";
+     case 0x0781: return "mfromhost";
+     case 0x0782: return "mreset";
 -- 
 2.45.1
 
