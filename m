@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AEC1C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 19:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF63C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 19:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC2TO-0001xy-Cu; Tue, 28 May 2024 15:27:02 -0400
+	id 1sC2wk-0000ov-F1; Tue, 28 May 2024 15:57:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sC2TM-0001xa-Sh
- for qemu-devel@nongnu.org; Tue, 28 May 2024 15:27:00 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sC2wi-0000mN-IF
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 15:57:20 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sC2TK-0003IT-5A
- for qemu-devel@nongnu.org; Tue, 28 May 2024 15:27:00 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2bfffa3c748so1080741a91.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 12:26:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sC2we-0007MA-7X
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 15:57:19 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3588cb76276so88948f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 12:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716924415; x=1717529215; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sGyk6MYmOlqofQoSvc53mfmV8d5l7qtypTF1eoxXGsM=;
- b=NOtDHn2xGDmkFuru5gR1sB52V4WKjBNCKd28g5PWLWxTgBonzCHoRIX0bPs3J1hSYx
- ZgRoGcOhL2sZ4LCNenxL9RhKUV25K3zMaU88plOBobFDtcHG/WkAb1Ru+WIu4hiEEa/E
- sNI1cn60VKFHj79Fil4bl5QeIWM8tPvbydQs6UOz2LoSmzUmTJVEEQryWPSVupOUhO3l
- fLEne+zfbFwB2Z2j9RUVnPuaK3gY8JCy+4pCWlQM5d4dNO0USWC36smuYWcVGPLX3FKR
- ug4KonZRhNntbgCJ0R7o4lr49cVOgL0QXf3q6mXGtP8ANscygA/lrb3T7cLB3bCq9I1O
- Urlw==
+ d=linaro.org; s=google; t=1716926234; x=1717531034; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=loJnqRoXwAJBy77/Xf70klM5MeBBOVxRqR8mX3ERrsc=;
+ b=D1DXhgcEYwYXXbfcrS66nzu7+cRf5L72lty747YCE6NrfeQqs0bLEXqFN6p8u7f4W/
+ mvQPUpXTGFi0Xsz4EV/xvrJjseP3jGRgquMf4r0blVQ8u9yF30ibr+23sGSugAp00gH0
+ mYABF3tEWLfOjLwxWgY9VtTEtYN3oOL7iODlXUMDBrlpCO8kf0oSrLsSh8ddQsTthPon
+ m+zeNORkASzJ5LgWhyI+AgkhU2Wtc5rc1nROImuwsshsNwwzua2qZxKlSkpWOWdDlqB5
+ hlEwQ2jamyaaYhAY6PD1ACknnriD00Dq7B1+d4l10pPvFVFlTNCOPrhE3so/gR0irTOx
+ 4fdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716924415; x=1717529215;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sGyk6MYmOlqofQoSvc53mfmV8d5l7qtypTF1eoxXGsM=;
- b=ox7eafgMTx4OYdS89EgRbrBO93Culsr8BiNOHHFPkNfawQQnJ7VP6NSYcUOc678vq2
- bhzUmB4x1Zty6DAO4rBEXdQqwyhVNXWYeEmhxDzPu92Bwls1cFNkc8uIxF8lNJ12pbud
- 1fpoccFRJvkQkkEnxCfUIuvngUi6pjoJBHRVlqECVzIeM2Xknegc9exNlxTPC/Kxbt9U
- w6cgRdDPNpPKROVj2OaamRsfwMC+Lsg0Wus1H31y6lGHhoGMX7OSwrfmOX7TrgcO1Ipy
- A/pAESm98QjPFrlV1iKbqj0G2l3twaMa6zwc7+PV+I6C5SSRzTH3xsrPFAZ9CIhBvWTC
- +BTA==
-X-Gm-Message-State: AOJu0Yy5Df6lYAXml6ifzmHhQCKUbvK28gkMsbhzEDQ8fu0uEr+XQ3o5
- 7gvP1BCNNR0DqPntJ3Q+rZAVuwE6z19yDGN4v+OigZHLX1uU8uf8hK27Uh+ZLQY=
-X-Google-Smtp-Source: AGHT+IFc8RExifOi5j4hX1FZrJaJ38I1BW1egu99hSalNAE2IwvV1m0cjxu4/yq6XU2FI2gOfHKFYw==
-X-Received: by 2002:a17:90b:204:b0:2bd:f049:932a with SMTP id
- 98e67ed59e1d1-2bf5f5186f9mr13681405a91.34.1716924415208; 
- Tue, 28 May 2024 12:26:55 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bdd9ece047sm9995665a91.12.2024.05.28.12.26.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 12:26:54 -0700 (PDT)
-Message-ID: <42db6c5a-d3a2-4ae4-aba2-6cb1eb6f35ba@linaro.org>
-Date: Tue, 28 May 2024 12:26:53 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ d=1e100.net; s=20230601; t=1716926234; x=1717531034;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=loJnqRoXwAJBy77/Xf70klM5MeBBOVxRqR8mX3ERrsc=;
+ b=E7S+puudsxmPCaawtEQZ8JU8jvmmOat9lHzKKMB5OtDgIHkYWyulsQ2fmO3Li7U1Dv
+ yFDcXQHEcZlfsO3r+Ff48s26Ug2lxY3Ap4yNwExzFnaa4WPum3wu45FmWiZw4WlEQC0e
+ XJc7ePOM4zUXukWqEOpI/xcgbJCOfNfuX+q2d72sn1CbLjopeZ0ALOFBwfNIXbmUC7yM
+ svRQ9lnZlkaeFRRHW9XdRY4hOLHe/Jq9If/CgZuRrwvTz9NoXYYzY5uG0P1ikiK3X5qo
+ bMt/THdf93ZNZ8mwv8g4ZFbfG2VXIsMKMtV/VLo8NfB/GvluR0E9st6inkbhoOe/rnTC
+ Oc+A==
+X-Gm-Message-State: AOJu0YyeasZb2sbdxtk3JSPQSVGyVgc1wRKgtpCZB0zlcjOdUraip/jZ
+ 4g3Adi5Pg3+UFdrDdNfTvwFEr5Z5zKjHFAZj36lhN2qYFbvQcqFCAPzP1uGV5CM=
+X-Google-Smtp-Source: AGHT+IHCxSSNABx8tNUY9xmQjXLLX4uA8LM01V7Db3BU9g2BPtmWxaArG8VT9WvkLQe5mz/BTqLyDA==
+X-Received: by 2002:a5d:6dce:0:b0:357:8a96:4eef with SMTP id
+ ffacd0b85a97d-35c7c1bbfd6mr58937f8f.31.1716926233541; 
+ Tue, 28 May 2024 12:57:13 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3564afc3577sm12242371f8f.102.2024.05.28.12.57.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 May 2024 12:57:13 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A9B135F88D;
+ Tue, 28 May 2024 20:57:12 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
+ <lvivier@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Alexandre
+ Iooss <erdnaxe@crans.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH 5/5] contrib/plugins: add ips plugin example for cost
  modeling
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <42db6c5a-d3a2-4ae4-aba2-6cb1eb6f35ba@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 28 May 2024 12:26:53 -0700")
 References: <20240516222047.1853459-1-pierrick.bouvier@linaro.org>
  <20240516222047.1853459-6-pierrick.bouvier@linaro.org>
  <874jahg34h.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <874jahg34h.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+ <42db6c5a-d3a2-4ae4-aba2-6cb1eb6f35ba@linaro.org>
+Date: Tue, 28 May 2024 20:57:12 +0100
+Message-ID: <87zfs9emlj.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,341 +102,483 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNS8yOC8yNCAxMjoxNCwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
-aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBUaGlz
-IHBsdWdpbiB1c2VzIHRoZSBuZXcgdGltZSBjb250cm9sIGludGVyZmFjZSB0byBtYWtlIGRl
-Y2lzaW9ucw0KPj4gYWJvdXQgdGhlIHN0YXRlIG9mIHRpbWUgZHVyaW5nIHRoZSBlbXVsYXRp
-b24uIFRoZSBhbGdvcml0aG0gaXMNCj4+IGN1cnJlbnRseSB2ZXJ5IHNpbXBsZS4gVGhlIHVz
-ZXIgc3BlY2lmaWVzIGFuIGlwcyByYXRlIHdoaWNoIGFwcGxpZXMNCj4+IHBlciBjb3JlLiBJ
-ZiB0aGUgY29yZSBydW5zIGFoZWFkIG9mIGl0cyBhbGxvY2F0ZWQgZXhlY3V0aW9uIHRpbWUg
-dGhlDQo+PiBwbHVnaW4gc2xlZXBzIGZvciBhIGJpdCB0byBsZXQgcmVhbCB0aW1lIGNhdGNo
-IHVwLiBFaXRoZXIgd2F5IHRpbWUgaXMNCj4+IHVwZGF0ZWQgZm9yIHRoZSBlbXVsYXRpb24g
-YXMgYSBmdW5jdGlvbiBvZiB0b3RhbCBleGVjdXRlZCBpbnN0cnVjdGlvbnMNCj4+IHdpdGgg
-c29tZSBhZGp1c3RtZW50cyBmb3IgY29yZXMgdGhhdCBpZGxlLg0KPj4NCj4+IEV4YW1wbGVz
-DQo+PiAtLS0tLS0tLQ0KPj4NCj4+IFNsb3cgZG93biBleGVjdXRpb24gb2YgL2Jpbi90cnVl
-Og0KPj4gJCBudW1faW5zbj0kKC4vYnVpbGQvcWVtdS14ODZfNjQgLXBsdWdpbiAuL2J1aWxk
-L3Rlc3RzL3BsdWdpbi9saWJpbnNuLnNvIC1kIHBsdWdpbiAvYmluL3RydWUgfCYgZ3JlcCB0
-b3RhbCB8IHNlZCAtZSAncy8uKjogLy8nKQ0KPj4gJCB0aW1lIC4vYnVpbGQvcWVtdS14ODZf
-NjQgLXBsdWdpbiAuL2J1aWxkL2NvbnRyaWIvcGx1Z2lucy9saWJpcHMuc28saXBzPSQoKCRu
-dW1faW5zbi80KSkgL2Jpbi90cnVlDQo+PiByZWFsIDQuMDAwcw0KPj4NCj4+IEJvb3QgYSBM
-aW51eCBrZXJuZWwgc2ltdWxhdGluZyBhIDI1ME1IeiBjcHU6DQo+PiAkIC9idWlsZC9xZW11
-LXN5c3RlbS14ODZfNjQgLWtlcm5lbCAvYm9vdC92bWxpbnV6LTYuMS4wLTIxLWFtZDY0IC1h
-cHBlbmQgImNvbnNvbGU9dHR5UzAiIC1wbHVnaW4gLi9idWlsZC9jb250cmliL3BsdWdpbnMv
-bGliaXBzLnNvLGlwcz0kKCgyNTAqMTAwMCoxMDAwKSkgLXNtcCAxIC1tIDUxMg0KPj4gY2hl
-Y2sgdGltZSB1bnRpbCBrZXJuZWwgcGFuaWMgb24gc2VyaWFsMA0KPj4NCj4+IFNpZ25lZC1v
-ZmYtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4N
-Cj4+IC0tLQ0KPj4gICBjb250cmliL3BsdWdpbnMvaXBzLmMgICAgfCAyMzkgKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+PiAgIGNvbnRyaWIvcGx1Z2lucy9N
-YWtlZmlsZSB8ICAgMSArDQo+PiAgIDIgZmlsZXMgY2hhbmdlZCwgMjQwIGluc2VydGlvbnMo
-KykNCj4+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGNvbnRyaWIvcGx1Z2lucy9pcHMuYw0KPj4N
-Cj4+IGRpZmYgLS1naXQgYS9jb250cmliL3BsdWdpbnMvaXBzLmMgYi9jb250cmliL3BsdWdp
-bnMvaXBzLmMNCj4+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0DQo+PiBpbmRleCAwMDAwMDAwMDAw
-MC4uY2YzMTU5ZGYzOTENCj4+IC0tLSAvZGV2L251bGwNCj4+ICsrKyBiL2NvbnRyaWIvcGx1
-Z2lucy9pcHMuYw0KPj4gQEAgLTAsMCArMSwyMzkgQEANCj4+ICsvKg0KPj4gKyAqIGlwcyBy
-YXRlIGxpbWl0aW5nIHBsdWdpbi4NCj4+ICsgKg0KPj4gKyAqIFRoaXMgcGx1Z2luIGNhbiBi
-ZSB1c2VkIHRvIHJlc3RyaWN0IHRoZSBleGVjdXRpb24gb2YgYSBzeXN0ZW0gdG8gYQ0KPj4g
-KyAqIHBhcnRpY3VsYXIgbnVtYmVyIG9mIEluc3RydWN0aW9ucyBQZXIgU2Vjb25kIChpcHMp
-LiBUaGlzIGNvbnRyb2xzDQo+PiArICogdGltZSBhcyBzZWVuIGJ5IHRoZSBndWVzdCBzbyB3
-aGlsZSB3YWxsLWNsb2NrIHRpbWUgbWF5IGJlIGxvbmdlcg0KPj4gKyAqIGZyb20gdGhlIGd1
-ZXN0cyBwb2ludCBvZiB2aWV3IHRpbWUgd2lsbCBwYXNzIGF0IHRoZSBub3JtYWwgcmF0ZS4N
-Cj4+ICsgKg0KPj4gKyAqIFRoaXMgdXNlcyB0aGUgbmV3IHBsdWdpbiBBUEkgd2hpY2ggYWxs
-b3dzIHRoZSBwbHVnaW4gdG8gY29udHJvbA0KPj4gKyAqIHN5c3RlbSB0aW1lLg0KPj4gKyAq
-DQo+PiArICogQ29weXJpZ2h0IChjKSAyMDIzIExpbmFybyBMdGQNCj4+ICsgKg0KPj4gKyAq
-IFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyDQo+PiArICovDQo+
-PiArDQo+PiArI2luY2x1ZGUgPHN0ZGlvLmg+DQo+PiArI2luY2x1ZGUgPGdsaWIuaD4NCj4+
-ICsjaW5jbHVkZSA8cWVtdS1wbHVnaW4uaD4NCj4+ICsNCj4+ICtRRU1VX1BMVUdJTl9FWFBP
-UlQgaW50IHFlbXVfcGx1Z2luX3ZlcnNpb24gPSBRRU1VX1BMVUdJTl9WRVJTSU9OOw0KPj4g
-Kw0KPj4gKy8qIGhvdyBtYW55IHRpbWVzIGRvIHdlIHVwZGF0ZSB0aW1lIHBlciBzZWMgKi8N
-Cj4+ICsjZGVmaW5lIE5VTV9USU1FX1VQREFURV9QRVJfU0VDIDEwDQo+PiArI2RlZmluZSBO
-U0VDX0lOX09ORV9TRUMgKDEwMDAgKiAxMDAwICogMTAwMCkNCj4+ICsNCj4+ICtzdGF0aWMg
-R011dGV4IGdsb2JhbF9zdGF0ZV9sb2NrOw0KPj4gKw0KPj4gK3N0YXRpYyB1aW50NjRfdCBp
-bnNuX3Blcl9zZWNvbmQgPSAxMDAwICogMTAwMDsgLyogaXBzIHBlciBjb3JlLCBwZXIgc2Vj
-b25kICovDQo+PiArc3RhdGljIHVpbnQ2NF90IGluc25fcXVhbnR1bTsgLyogdHJhcCBldmVy
-eSBOIGluc3RydWN0aW9ucyAqLw0KPj4gK3N0YXRpYyBib29sIHByZWNpc2VfZXhlY3V0aW9u
-OyAvKiBjb3VudCBldmVyeSBpbnN0cnVjdGlvbiAqLw0KPj4gK3N0YXRpYyBpbnQ2NF90IHN0
-YXJ0X3RpbWVfbnM7IC8qIHRpbWUgKG5zIHNpbmNlIGVwb2NoKSBmaXJzdCB2Q1BVIHN0YXJ0
-ZWQgKi8NCj4+ICtzdGF0aWMgaW50NjRfdCB2aXJ0dWFsX3RpbWVfbnM7IC8qIGxhc3Qgc2V0
-IHZpcnR1YWwgdGltZSAqLw0KPj4gKw0KPj4gK3N0YXRpYyBjb25zdCB2b2lkICp0aW1lX2hh
-bmRsZTsNCj4+ICsNCj4+ICt0eXBlZGVmIGVudW0gew0KPj4gKyAgICBVTktOT1dOID0gMCwN
-Cj4+ICsgICAgRVhFQ1VUSU5HLA0KPj4gKyAgICBJRExFLA0KPj4gKyAgICBGSU5JU0hFRA0K
-Pj4gK30gdkNQVVN0YXRlOw0KPj4gKw0KPj4gK3R5cGVkZWYgc3RydWN0IHsNCj4+ICsgICAg
-dWludDY0X3QgY291bnRlcjsNCj4+ICsgICAgdWludDY0X3QgdHJhY2tfaW5zbjsNCj4+ICsg
-ICAgdkNQVVN0YXRlIHN0YXRlOw0KPj4gKyAgICAvKiB0aW1lc3RhbXAgd2hlbiB2Q1BVIGVu
-dGVyZWQgc3RhdGUgKi8NCj4+ICsgICAgaW50NjRfdCBsYXN0X3N0YXRlX3RpbWU7DQo+PiAr
-fSB2Q1BVVGltZTsNCj4+ICsNCj4+ICtzdHJ1Y3QgcWVtdV9wbHVnaW5fc2NvcmVib2FyZCAq
-dmNwdXM7DQo+PiArDQo+PiArLyogcmV0dXJuIGVwb2NoIHRpbWUgaW4gbnMgKi8NCj4+ICtz
-dGF0aWMgaW50NjRfdCBub3dfbnModm9pZCkNCj4+ICt7DQo+PiArICAgIHJldHVybiBnX2dl
-dF9yZWFsX3RpbWUoKSAqIDEwMDA7DQo+PiArfQ0KPj4gKw0KPj4gK3N0YXRpYyB1aW50NjRf
-dCBudW1faW5zbl9kdXJpbmcoaW50NjRfdCBlbGFwc2VkX25zKQ0KPj4gK3sNCj4+ICsgICAg
-ZG91YmxlIG51bV9zZWNzID0gZWxhcHNlZF9ucyAvIChkb3VibGUpIE5TRUNfSU5fT05FX1NF
-QzsNCj4+ICsgICAgcmV0dXJuIG51bV9zZWNzICogKGRvdWJsZSkgaW5zbl9wZXJfc2Vjb25k
-Ow0KPj4gK30NCj4+ICsNCj4+ICtzdGF0aWMgaW50NjRfdCB0aW1lX2Zvcl9pbnNuKHVpbnQ2
-NF90IG51bV9pbnNuKQ0KPj4gK3sNCj4+ICsgICAgZG91YmxlIG51bV9zZWNzID0gKGRvdWJs
-ZSkgbnVtX2luc24gLyAoZG91YmxlKSBpbnNuX3Blcl9zZWNvbmQ7DQo+PiArICAgIHJldHVy
-biBudW1fc2VjcyAqIChkb3VibGUpIE5TRUNfSU5fT05FX1NFQzsNCj4+ICt9DQo+PiArDQo+
-PiArc3RhdGljIGludDY0X3QgdXB0aW1lX25zKHZvaWQpDQo+PiArew0KPj4gKyAgICBpbnQ2
-NF90IG5vdyA9IG5vd19ucygpOw0KPj4gKyAgICBnX2Fzc2VydChub3cgPj0gc3RhcnRfdGlt
-ZV9ucyk7DQo+PiArICAgIHJldHVybiBub3cgLSBzdGFydF90aW1lX25zOw0KPj4gK30NCj4+
-ICsNCj4+ICtzdGF0aWMgdm9pZCB2Y3B1X3NldF9zdGF0ZSh2Q1BVVGltZSAqdmNwdSwgdkNQ
-VVN0YXRlIG5ld19zdGF0ZSkNCj4+ICt7DQo+PiArICAgIHZjcHUtPmxhc3Rfc3RhdGVfdGlt
-ZSA9IG5vd19ucygpOw0KPj4gKyAgICB2Y3B1LT5zdGF0ZSA9IG5ld19zdGF0ZTsNCj4+ICt9
-DQo+PiArDQo+PiArc3RhdGljIHZvaWQgdXBkYXRlX3N5c3RlbV90aW1lKHZDUFVUaW1lICp2
-Y3B1KQ0KPj4gK3sNCj4+ICsgICAgLyogZmx1c2ggcmVtYWluaW5nIGluc3RydWN0aW9ucyAq
-Lw0KPj4gKyAgICB2Y3B1LT5jb3VudGVyICs9IHZjcHUtPnRyYWNrX2luc247DQo+PiArICAg
-IHZjcHUtPnRyYWNrX2luc24gPSAwOw0KPj4gKw0KPj4gKyAgICBpbnQ2NF90IHVwdGltZSA9
-IHVwdGltZV9ucygpOw0KPj4gKyAgICB1aW50NjRfdCBleHBlY3RlZF9pbnNuID0gbnVtX2lu
-c25fZHVyaW5nKHVwdGltZSk7DQo+PiArDQo+PiArICAgIGlmICh2Y3B1LT5jb3VudGVyID49
-IGV4cGVjdGVkX2luc24pIHsNCj4+ICsgICAgICAgIC8qIHRoaXMgdmNwdSByYW4gZmFzdGVy
-IHRoYW4gZXhwZWN0ZWQsIHNvIGl0IGhhcyB0byBzbGVlcCAqLw0KPj4gKyAgICAgICAgdWlu
-dDY0X3QgaW5zbl9hZHZhbmNlID0gdmNwdS0+Y291bnRlciAtIGV4cGVjdGVkX2luc247DQo+
-PiArICAgICAgICB1aW50NjRfdCB0aW1lX2FkdmFuY2VfbnMgPSB0aW1lX2Zvcl9pbnNuKGlu
-c25fYWR2YW5jZSk7DQo+PiArICAgICAgICBpbnQ2NF90IHNsZWVwX3VzID0gdGltZV9hZHZh
-bmNlX25zIC8gMTAwMDsNCj4+ICsgICAgICAgIGdfdXNsZWVwKHNsZWVwX3VzKTsNCj4+ICsg
-ICAgfQ0KPj4gKw0KPj4gKyAgICAvKiBiYXNlZCBvbiBudW1iZXIgb2YgaW5zdHJ1Y3Rpb25z
-LCB3aGF0IHNob3VsZCBiZSB0aGUgbmV3IHRpbWU/ICovDQo+PiArICAgIGludDY0X3QgbmV3
-X3ZpcnR1YWxfdGltZSA9IHRpbWVfZm9yX2luc24odmNwdS0+Y291bnRlcik7DQo+PiArDQo+
-PiArICAgIGdfbXV0ZXhfbG9jaygmZ2xvYmFsX3N0YXRlX2xvY2spOw0KPj4gKw0KPj4gKyAg
-ICAvKiBUaW1lIG9ubHkgbW92ZXMgZm9yd2FyZC4gQW5vdGhlciB2Y3B1IG1pZ2h0IGhhdmUg
-dXBkYXRlZCBpdCBhbHJlYWR5LiAqLw0KPj4gKyAgICBpZiAobmV3X3ZpcnR1YWxfdGltZSA+
-IHZpcnR1YWxfdGltZV9ucykgew0KPj4gKyAgICAgICAgcWVtdV9wbHVnaW5fdXBkYXRlX25z
-KHRpbWVfaGFuZGxlLCBuZXdfdmlydHVhbF90aW1lKTsNCj4+ICsgICAgICAgIHZpcnR1YWxf
-dGltZV9ucyA9IG5ld192aXJ0dWFsX3RpbWU7DQo+PiArICAgIH0NCj4+ICsNCj4+ICsgICAg
-Z19tdXRleF91bmxvY2soJmdsb2JhbF9zdGF0ZV9sb2NrKTsNCj4+ICt9DQo+PiArDQo+PiAr
-c3RhdGljIHZvaWQgc2V0X3N0YXJ0X3RpbWUoKQ0KPj4gK3sNCj4+ICsgICAgZ19tdXRleF9s
-b2NrKCZnbG9iYWxfc3RhdGVfbG9jayk7DQo+PiArICAgIGlmICghc3RhcnRfdGltZV9ucykg
-ew0KPj4gKyAgICAgICAgc3RhcnRfdGltZV9ucyA9IG5vd19ucygpOw0KPj4gKyAgICB9DQo+
-PiArICAgIGdfbXV0ZXhfdW5sb2NrKCZnbG9iYWxfc3RhdGVfbG9jayk7DQo+PiArfQ0KPj4g
-Kw0KPj4gK3N0YXRpYyB2b2lkIHZjcHVfaW5pdChxZW11X3BsdWdpbl9pZF90IGlkLCB1bnNp
-Z25lZCBpbnQgY3B1X2luZGV4KQ0KPj4gK3sNCj4+ICsgICAgdkNQVVRpbWUgKnZjcHUgPSBx
-ZW11X3BsdWdpbl9zY29yZWJvYXJkX2ZpbmQodmNwdXMsIGNwdV9pbmRleCk7DQo+PiArICAg
-IC8qIGVuc3VyZSBzdGFydCB0aW1lIGlzIHNldCBmaXJzdCAqLw0KPj4gKyAgICBzZXRfc3Rh
-cnRfdGltZSgpOw0KPj4gKyAgICAvKiBzdGFydCBjb3VudGVyIGZyb20gYWJzb2x1dGUgdGlt
-ZSByZWZlcmVuY2UgKi8NCj4+ICsgICAgdmNwdS0+Y291bnRlciA9IG51bV9pbnNuX2R1cmlu
-Zyh1cHRpbWVfbnMoKSk7DQo+PiArICAgIHZjcHVfc2V0X3N0YXRlKHZjcHUsIEVYRUNVVElO
-Ryk7DQo+PiArfQ0KPj4gKw0KPj4gK3N0YXRpYyB2b2lkIHZjcHVfaWRsZShxZW11X3BsdWdp
-bl9pZF90IGlkLCB1bnNpZ25lZCBpbnQgY3B1X2luZGV4KQ0KPj4gK3sNCj4+ICsgICAgdkNQ
-VVRpbWUgKnZjcHUgPSBxZW11X3BsdWdpbl9zY29yZWJvYXJkX2ZpbmQodmNwdXMsIGNwdV9p
-bmRleCk7DQo+PiArICAgIHZjcHVfc2V0X3N0YXRlKHZjcHUsIElETEUpOw0KPj4gK30NCj4+
-ICsNCj4+ICtzdGF0aWMgdm9pZCB2Y3B1X3Jlc3VtZShxZW11X3BsdWdpbl9pZF90IGlkLCB1
-bnNpZ25lZCBpbnQgY3B1X2luZGV4KQ0KPj4gK3sNCj4+ICsgICAgdkNQVVRpbWUgKnZjcHUg
-PSBxZW11X3BsdWdpbl9zY29yZWJvYXJkX2ZpbmQodmNwdXMsIGNwdV9pbmRleCk7DQo+PiAr
-ICAgIGdfYXNzZXJ0KHZjcHUtPnN0YXRlID09IElETEUpOw0KPiANCj4gSSdtIHRyaWdnZXJp
-bmcgYSB3ZWlyZCByYWNlIGhlcmU6DQo+IA0KPiAgICAoZ2RiKSBiIHZjcHVfaW5pdA0KPiAg
-ICBCcmVha3BvaW50IDEgYXQgMHg3ZmZmZjdmYTE1Zjc6IGZpbGUgL2hvbWUvYWxleC9sc3Jj
-L3FlbXUuZ2l0L2NvbnRyaWIvcGx1Z2lucy9pcHMuYywgbGluZSAxMjcuDQo+ICAgIChnZGIp
-IHINCj4gICAgVGhlIHByb2dyYW0gYmVpbmcgZGVidWdnZWQgaGFzIGJlZW4gc3RhcnRlZCBh
-bHJlYWR5Lg0KPiAgICBTdGFydCBpdCBmcm9tIHRoZSBiZWdpbm5pbmc/ICh5IG9yIG4pIHkN
-Cj4gICAgU3RhcnRpbmcgcHJvZ3JhbTogL2hvbWUvYWxleC9sc3JjL3FlbXUuZ2l0L2J1aWxk
-cy9hcm0uZGVidWcvcWVtdS1zeXN0ZW0tYWFyY2g2NCAtbWFjaGluZSB0eXBlPXZpcnQsdmly
-dHVhbGl6YXRpb249b24scGZsYXNoMD1yb20scGZsYXNoMT1lZml2YXJzIC1jcHUgY29ydGV4
-LWE1NyAtc21wIDMyIC1hY2NlbCB0Y2cgLWRldmljZSB2aXJ0aW8tbmV0LXBjaSxuZXRkZXY9
-dW5ldCAtZGV2aWNlIHZpcnRpby1zY3NpLXBjaSAtZGV2aWNlIHNjc2ktaGQsZHJpdmU9aGQg
-LW5ldGRldiB1c2VyLGlkPXVuZXQsaG9zdGZ3ZD10Y3A6OjIyMjItOjIyIC1ibG9ja2RldiBk
-cml2ZXI9cmF3LG5vZGUtbmFtZT1oZCxmaWxlLmRyaXZlcj1ob3N0X2RldmljZSxmaWxlLmZp
-bGVuYW1lPS9kZXYvemVuLXNzZDIvdHJpeGllLWFybTY0LGRpc2NhcmQ9dW5tYXAgLXNlcmlh
-bCBtb246c3RkaW8gLWJsb2NrZGV2IG5vZGUtbmFtZT1yb20sZHJpdmVyPWZpbGUsZmlsZW5h
-bWU9L2hvbWUvYWxleC9sc3JjL3FlbXUuZ2l0L2J1aWxkcy9hcm0uZGVidWcvcGMtYmlvcy9l
-ZGsyLWFhcmNoNjQtY29kZS5mZCxyZWFkLW9ubHk9dHJ1ZSAtYmxvY2tkZXYgbm9kZS1uYW1l
-PWVmaXZhcnMsZHJpdmVyPWZpbGUsZmlsZW5hbWU9L2hvbWUvYWxleC9pbWFnZXMvcWVtdS1h
-cm02NC1lZml2YXJzIC1tIDgxOTIgLW9iamVjdCBtZW1vcnktYmFja2VuZC1tZW1mZCxpZD1t
-ZW0sc2l6ZT04RyxzaGFyZT1vbiAta2VybmVsIC9ob21lL2FsZXgvbHNyYy9saW51eC5naXQv
-YnVpbGRzL2FybTY0L2FyY2gvYXJtNjQvYm9vdC9JbWFnZSAtYXBwZW5kIHJvb3Q9L2Rldi9z
-ZGEyXCBjb25zb2xlPXR0eUFNQTAgLXBsdWdpbiBjb250cmliL3BsdWdpbnMvbGliaXBzLnNv
-LGlwcz0xMDAwMDAwMDAwDQo+ICAgIFtUaHJlYWQgZGVidWdnaW5nIHVzaW5nIGxpYnRocmVh
-ZF9kYiBlbmFibGVkXQ0KPiAgICBVc2luZyBob3N0IGxpYnRocmVhZF9kYiBsaWJyYXJ5ICIv
-bGliL3g4Nl82NC1saW51eC1nbnUvbGlidGhyZWFkX2RiLnNvLjEiLg0KPiAgICBbTmV3IFRo
-cmVhZCAweDdmZmZlNzIwMDZjMCAoTFdQIDM2MDUzOCldDQo+ICAgIFtOZXcgVGhyZWFkIDB4
-N2ZmZmU2ODAwNmMwIChMV1AgMzYwNTQwKV0NCj4gICAgW05ldyBUaHJlYWQgMHg3ZmZmZTVl
-MDA2YzAgKExXUCAzNjA1NDEpXQ0KPiAgICBbTmV3IFRocmVhZCAweDdmZmZlNTQwMDZjMCAo
-TFdQIDM2MDU0MildDQo+ICAgIFtOZXcgVGhyZWFkIDB4N2ZmZmU0YTAwNmMwIChMV1AgMzYw
-NTQzKV0NCj4gICAgW05ldyBUaHJlYWQgMHg3ZmZmZGZlMDA2YzAgKExXUCAzNjA1NDQpXQ0K
-PiAgICBbTmV3IFRocmVhZCAweDdmZmZkZjQwMDZjMCAoTFdQIDM2MDU0NSldDQo+ICAgIFtO
-ZXcgVGhyZWFkIDB4N2ZmZmRlYTAwNmMwIChMV1AgMzYwNTQ2KV0NCj4gICAgW1N3aXRjaGlu
-ZyB0byBUaHJlYWQgMHg3ZmZmZGY0MDA2YzAgKExXUCAzNjA1NDUpXQ0KPiANCj4gICAgVGhy
-ZWFkIDggInFlbXUtc3lzdGVtLWFhciIgaGl0IEJyZWFrcG9pbnQgMSwgdmNwdV9pbml0IChp
-ZD0xMDQ1NzkwODU2OTM1MjIwMjA1OCwgY3B1X2luZGV4PTApIGF0IC9ob21lL2FsZXgvbHNy
-Yy9xZW11LmdpdC9jb250cmliL3BsdWdpbnMvaXBzLmM6MTI3DQo+ICAgIDEyNyAgICAgICAg
-IHZDUFVUaW1lICp2Y3B1ID0gcWVtdV9wbHVnaW5fc2NvcmVib2FyZF9maW5kKHZjcHVzLCBj
-cHVfaW5kZXgpOw0KPiAgICAoZ2RiKSBjDQo+ICAgIENvbnRpbnVpbmcuDQo+ICAgIFtOZXcg
-VGhyZWFkIDB4N2ZmZmRlMDAwNmMwIChMV1AgMzYwNTQ4KV0NCj4gICAgW1N3aXRjaGluZyB0
-byBUaHJlYWQgMHg3ZmZmZGVhMDA2YzAgKExXUCAzNjA1NDYpXQ0KPiANCj4gICAgVGhyZWFk
-IDkgInFlbXUtc3lzdGVtLWFhciIgaGl0IEJyZWFrcG9pbnQgMSwgdmNwdV9pbml0IChpZD0x
-MDQ1NzkwODU2OTM1MjIwMjA1OCwgY3B1X2luZGV4PTEpIGF0IC9ob21lL2FsZXgvbHNyYy9x
-ZW11LmdpdC9jb250cmliL3BsdWdpbnMvaXBzLmM6MTI3DQo+ICAgIDEyNyAgICAgICAgIHZD
-UFVUaW1lICp2Y3B1ID0gcWVtdV9wbHVnaW5fc2NvcmVib2FyZF9maW5kKHZjcHVzLCBjcHVf
-aW5kZXgpOw0KPiAgICAoZ2RiKQ0KPiAgICBDb250aW51aW5nLg0KPiAgICBbTmV3IFRocmVh
-ZCAweDdmZmZkZDYwMDZjMCAoTFdQIDM2MDU0OSldDQo+ICAgIFtTd2l0Y2hpbmcgdG8gVGhy
-ZWFkIDB4N2ZmZmRlMDAwNmMwIChMV1AgMzYwNTQ4KV0NCj4gDQo+ICAgIFRocmVhZCAxMCAi
-cWVtdS1zeXN0ZW0tYWFyIiBoaXQgQnJlYWtwb2ludCAxLCB2Y3B1X2luaXQgKGlkPTEwNDU3
-OTA4NTY5MzUyMjAyMDU4LCBjcHVfaW5kZXg9MikgYXQgL2hvbWUvYWxleC9sc3JjL3FlbXUu
-Z2l0L2NvbnRyaWIvcGx1Z2lucy9pcHMuYzoxMjcNCj4gICAgMTI3ICAgICAgICAgdkNQVVRp
-bWUgKnZjcHUgPSBxZW11X3BsdWdpbl9zY29yZWJvYXJkX2ZpbmQodmNwdXMsIGNwdV9pbmRl
-eCk7DQo+ICAgIChnZGIpDQo+ICAgIENvbnRpbnVpbmcuDQo+ICAgIFtOZXcgVGhyZWFkIDB4
-N2ZmZmRjYzAwNmMwIChMV1AgMzYwNTUwKV0NCj4gICAgW1N3aXRjaGluZyB0byBUaHJlYWQg
-MHg3ZmZmZGQ2MDA2YzAgKExXUCAzNjA1NDkpXQ0KPiANCj4gICAgVGhyZWFkIDExICJxZW11
-LXN5c3RlbS1hYXIiIGhpdCBCcmVha3BvaW50IDEsIHZjcHVfaW5pdCAoaWQ9MTA0NTc5MDg1
-NjkzNTIyMDIwNTgsIGNwdV9pbmRleD0zKSBhdCAvaG9tZS9hbGV4L2xzcmMvcWVtdS5naXQv
-Y29udHJpYi9wbHVnaW5zL2lwcy5jOjEyNw0KPiAgICAxMjcgICAgICAgICB2Q1BVVGltZSAq
-dmNwdSA9IHFlbXVfcGx1Z2luX3Njb3JlYm9hcmRfZmluZCh2Y3B1cywgY3B1X2luZGV4KTsN
-Cj4gICAgKGdkYikNCj4gICAgQ29udGludWluZy4NCj4gICAgW05ldyBUaHJlYWQgMHg3ZmZm
-ZDNlMDA2YzAgKExXUCAzNjA1NTEpXQ0KPiAgICBbU3dpdGNoaW5nIHRvIFRocmVhZCAweDdm
-ZmZkY2MwMDZjMCAoTFdQIDM2MDU1MCldDQo+IA0KPiAgICBUaHJlYWQgMTIgInFlbXUtc3lz
-dGVtLWFhciIgaGl0IEJyZWFrcG9pbnQgMSwgdmNwdV9pbml0IChpZD0xMDQ1NzkwODU2OTM1
-MjIwMjA1OCwgY3B1X2luZGV4PTQpIGF0IC9ob21lL2FsZXgvbHNyYy9xZW11LmdpdC9jb250
-cmliL3BsdWdpbnMvaXBzLmM6MTI3DQo+ICAgIDEyNyAgICAgICAgIHZDUFVUaW1lICp2Y3B1
-ID0gcWVtdV9wbHVnaW5fc2NvcmVib2FyZF9maW5kKHZjcHVzLCBjcHVfaW5kZXgpOw0KPiAg
-ICAoZ2RiKSBuDQo+ICAgIDEyOSAgICAgICAgIHNldF9zdGFydF90aW1lKCk7DQo+ICAgIChn
-ZGIpDQo+ICAgIDEzMSAgICAgICAgIHZjcHUtPmNvdW50ZXIgPSBudW1faW5zbl9kdXJpbmco
-dXB0aW1lX25zKCkpOw0KPiAgICAoZ2RiKQ0KPiAgICAxMzIgICAgICAgICB2Y3B1X3NldF9z
-dGF0ZSh2Y3B1LCBFWEVDVVRJTkcpOw0KPiAgICAoZ2RiKQ0KPiAgICAxMzMgICAgIH0NCj4g
-ICAgKGdkYikgcCB2Y3B1LT5zdGF0ZQ0KPiAgICAkMSA9IEVYRUNVVElORw0KPiAgICAoZ2Ri
-KSBwICZ2Y3B1LT5zdGF0ZQ0KPiAgICAkMiA9ICh2Q1BVU3RhdGUgKikgMHg1NTU1NTdjNmI1
-ZDANCj4gICAgKGdkYikgd2F0Y2ggKih2Q1BVU3RhdGUgKikgMHg1NTU1NTdjNmI1ZDANCj4g
-ICAgSGFyZHdhcmUgd2F0Y2hwb2ludCAyOiAqKHZDUFVTdGF0ZSAqKSAweDU1NTU1N2M2YjVk
-MA0KPiAgICAoZ2RiKSBjDQo+ICAgIENvbnRpbnVpbmcuDQo+ICAgIFtUaHJlYWQgMHg3ZmZm
-ZGZlMDA2YzAgKExXUCAzNjA1NDQpIGV4aXRlZF0NCj4gICAgW1RocmVhZCAweDdmZmZlNWUw
-MDZjMCAoTFdQIDM2MDU0MSkgZXhpdGVkXQ0KPiANCj4gICAgVGhyZWFkIDEyICJxZW11LXN5
-c3RlbS1hYXIiIGhpdCBIYXJkd2FyZSB3YXRjaHBvaW50IDI6ICoodkNQVVN0YXRlICopIDB4
-NTU1NTU3YzZiNWQwDQo+IA0KPiAgICBPbGQgdmFsdWUgPSBFWEVDVVRJTkcNCj4gICAgTmV3
-IHZhbHVlID0gSURMRQ0KPiAgICB2Y3B1X3NldF9zdGF0ZSAodmNwdT0weDU1NTU1N2M2YjVj
-MCwgbmV3X3N0YXRlPUlETEUpIGF0IC9ob21lL2FsZXgvbHNyYy9xZW11LmdpdC9jb250cmli
-L3BsdWdpbnMvaXBzLmM6ODMNCj4gICAgODMgICAgICB9DQo+ICAgIChnZGIpIGMNCj4gICAg
-Q29udGludWluZy4NCj4gICAgW05ldyBUaHJlYWQgMHg3ZmZmZGZlMDA2YzAgKExXUCAzNjA1
-OTEpXQ0KPiAgICBbTmV3IFRocmVhZCAweDdmZmZlNWUwMDZjMCAoTFdQIDM2MDU5MildDQo+
-ICAgIFtOZXcgVGhyZWFkIDB4N2ZmZmQzNDAwNmMwIChMV1AgMzYwNTkzKV0NCj4gICAgW1N3
-aXRjaGluZyB0byBUaHJlYWQgMHg3ZmZmZGZlMDA2YzAgKExXUCAzNjA1OTEpXQ0KPiANCj4g
-ICAgVGhyZWFkIDE0ICJxZW11LXN5c3RlbS1hYXIiIGhpdCBCcmVha3BvaW50IDEsIHZjcHVf
-aW5pdCAoaWQ9MTA0NTc5MDg1NjkzNTIyMDIwNTgsIGNwdV9pbmRleD02KSBhdCAvaG9tZS9h
-bGV4L2xzcmMvcWVtdS5naXQvY29udHJpYi9wbHVnaW5zL2lwcy5jOjEyNw0KPiAgICAxMjcg
-ICAgICAgICB2Q1BVVGltZSAqdmNwdSA9IHFlbXVfcGx1Z2luX3Njb3JlYm9hcmRfZmluZCh2
-Y3B1cywgY3B1X2luZGV4KTsNCj4gICAgKGdkYikNCj4gICAgQ29udGludWluZy4NCj4gICAg
-W05ldyBUaHJlYWQgMHg3ZmZmZDJhMDA2YzAgKExXUCAzNjA1OTQpXQ0KPiAgICAqKg0KPiAg
-ICBFUlJPUjovaG9tZS9hbGV4L2xzcmMvcWVtdS5naXQvY29udHJpYi9wbHVnaW5zL2lwcy5j
-OjE0NDp2Y3B1X3Jlc3VtZTogYXNzZXJ0aW9uIGZhaWxlZDogKHZjcHUtPnN0YXRlID09IElE
-TEUpDQo+ICAgIEJhaWwgb3V0ISBFUlJPUjovaG9tZS9hbGV4L2xzcmMvcWVtdS5naXQvY29u
-dHJpYi9wbHVnaW5zL2lwcy5jOjE0NDp2Y3B1X3Jlc3VtZTogYXNzZXJ0aW9uIGZhaWxlZDog
-KHZjcHUtPnN0YXRlID09IElETEUpDQo+IA0KPiAgICBUaHJlYWQgMTMgInFlbXUtc3lzdGVt
-LWFhciIgcmVjZWl2ZWQgc2lnbmFsIFNJR0FCUlQsIEFib3J0ZWQuDQo+ICAgIFtTd2l0Y2hp
-bmcgdG8gVGhyZWFkIDB4N2ZmZmQzZTAwNmMwIChMV1AgMzYwNTUxKV0NCj4gICAgX19wdGhy
-ZWFkX2tpbGxfaW1wbGVtZW50YXRpb24gKHRocmVhZGlkPTxvcHRpbWl6ZWQgb3V0Piwgc2ln
-bm89c2lnbm9AZW50cnk9Niwgbm9fdGlkPW5vX3RpZEBlbnRyeT0wKSBhdCAuL25wdGwvcHRo
-cmVhZF9raWxsLmM6NDQNCj4gICAgNDQgICAgICAuL25wdGwvcHRocmVhZF9raWxsLmM6IE5v
-IHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkuDQo+ICAgIChnZGIpIGJ0DQo+ICAgICMwICBfX3B0
-aHJlYWRfa2lsbF9pbXBsZW1lbnRhdGlvbiAodGhyZWFkaWQ9PG9wdGltaXplZCBvdXQ+LCBz
-aWdubz1zaWdub0BlbnRyeT02LCBub190aWQ9bm9fdGlkQGVudHJ5PTApIGF0IC4vbnB0bC9w
-dGhyZWFkX2tpbGwuYzo0NA0KPiAgICAjMSAgMHgwMDAwN2ZmZmY0Y2E5ZThmIGluIF9fcHRo
-cmVhZF9raWxsX2ludGVybmFsIChzaWdubz02LCB0aHJlYWRpZD08b3B0aW1pemVkIG91dD4p
-IGF0IC4vbnB0bC9wdGhyZWFkX2tpbGwuYzo3OA0KPiAgICAjMiAgMHgwMDAwN2ZmZmY0YzVh
-ZmIyIGluIF9fR0lfcmFpc2UgKHNpZz1zaWdAZW50cnk9NikgYXQgLi4vc3lzZGVwcy9wb3Np
-eC9yYWlzZS5jOjI2DQo+ICAgICMzICAweDAwMDA3ZmZmZjRjNDU0NzIgaW4gX19HSV9hYm9y
-dCAoKSBhdCAuL3N0ZGxpYi9hYm9ydC5jOjc5DQo+ICAgICM0ICAweDAwMDA3ZmZmZjZlNDZl
-YzggaW4gICgpIGF0IC9saWIveDg2XzY0LWxpbnV4LWdudS9saWJnbGliLTIuMC5zby4wDQo+
-ICAgICM1ICAweDAwMDA3ZmZmZjZlYTZlMWEgaW4gZ19hc3NlcnRpb25fbWVzc2FnZV9leHBy
-ICgpIGF0IC9saWIveDg2XzY0LWxpbnV4LWdudS9saWJnbGliLTIuMC5zby4wDQo+ICAgICM2
-ICAweDAwMDA3ZmZmZjdmYTE2ZTIgaW4gdmNwdV9yZXN1bWUgKGlkPTEwNDU3OTA4NTY5MzUy
-MjAyMDU4LCBjcHVfaW5kZXg9NSkgYXQgL2hvbWUvYWxleC9sc3JjL3FlbXUuZ2l0L2NvbnRy
-aWIvcGx1Z2lucy9pcHMuYzoxNDQNCj4gICAgIzcgIDB4MDAwMDU1NTU1NjJjMzIwMiBpbiBw
-bHVnaW5fdmNwdV9jYl9fc2ltcGxlIChjcHU9MHg1NTU1NTgzZDk1NDAsIGV2PVFFTVVfUExV
-R0lOX0VWX1ZDUFVfUkVTVU1FKSBhdCAuLi8uLi9wbHVnaW5zL2NvcmUuYzoxMTENCj4gICAg
-IzggIDB4MDAwMDU1NTU1NjJjNDNmNyBpbiBxZW11X3BsdWdpbl92Y3B1X3Jlc3VtZV9jYiAo
-Y3B1PTB4NTU1NTU4M2Q5NTQwKSBhdCAuLi8uLi9wbHVnaW5zL2NvcmUuYzo1MjMNCj4gICAg
-IzkgIDB4MDAwMDU1NTU1NWQ5MTUwZSBpbiBxZW11X3dhaXRfaW9fZXZlbnQgKGNwdT0weDU1
-NTU1ODNkOTU0MCkgYXQgLi4vLi4vc3lzdGVtL2NwdXMuYzo0NjUNCj4gICAgIzEwIDB4MDAw
-MDU1NTU1NjJjNjdkMCBpbiBtdHRjZ19jcHVfdGhyZWFkX2ZuIChhcmc9MHg1NTU1NTgzZDk1
-NDApIGF0IC4uLy4uL2FjY2VsL3RjZy90Y2ctYWNjZWwtb3BzLW10dGNnLmM6MTE4DQo+ICAg
-ICMxMSAweDAwMDA1NTU1NTY1MTIwZmYgaW4gcWVtdV90aHJlYWRfc3RhcnQgKGFyZ3M9MHg1
-NTU1NTg0NzE2ZTApIGF0IC4uLy4uL3V0aWwvcWVtdS10aHJlYWQtcG9zaXguYzo1NDENCj4g
-ICAgIzEyIDB4MDAwMDdmZmZmNGNhODEzNCBpbiBzdGFydF90aHJlYWQgKGFyZz08b3B0aW1p
-emVkIG91dD4pIGF0IC4vbnB0bC9wdGhyZWFkX2NyZWF0ZS5jOjQ0Mg0KPiAgICAjMTMgMHgw
-MDAwN2ZmZmY0ZDI4N2RjIGluIGNsb25lMyAoKSBhdCAuLi9zeXNkZXBzL3VuaXgvc3lzdi9s
-aW51eC94ODZfNjQvY2xvbmUzLlM6ODENCj4gICAgKGdkYikNCj4gDQo+IEJ1dCBJIGRvbid0
-IHVuZGVyc3RhbmQgaG93IHdlIGNhbiBldmVyIGhpdCB0aGUgaWRsZSBjYWxsYmFjayB3aXRo
-b3V0DQo+IGZpcnN0IGhpdHRpbmcgdGhlIGluaXQgY2FsbGJhY2suDQo+IA0KDQpNb3JlIGV4
-YWN0bHksIHRoZSBhc3NlcnQgd2UgaGl0IG1lYW5zIHRoYXQgdGhlIGlkbGUgY2FsbGJhY2ss
-IHdhcyBub3QgDQpjYWxsZWQgYmVmb3JlIHRoZSByZXN1bWUgY2FsbGJhY2suDQpBbnkgY2hh
-bmNlIHlvdSBjYW4gY2hlY2sgd2hhdCBpcyB0aGUgY3VycmVudCB2Y3B1LT5zdGF0ZSB2YWx1
-ZT8gSSB3b25kZXIgDQppZiBpdCdzIG5vdCBhbiBleGl0ZWQgY3B1LCB0aGF0IGdldHMgcmVz
-dW1lZCBhZnRlci4NCg0KVGhhbmtzLA0KUGllcnJpY2sNCg0KPj4gKyAgICBpbnQ2NF90IGlk
-bGVfdGltZSA9IG5vd19ucygpIC0gdmNwdS0+bGFzdF9zdGF0ZV90aW1lOw0KPj4gKyAgICAv
-KiBhY2N1bXVsYXRlIGV4cGVjdGVkIG51bWJlciBvZiBpbnN0cnVjdGlvbnMgKi8NCj4+ICsg
-ICAgdmNwdS0+Y291bnRlciArPSBudW1faW5zbl9kdXJpbmcoaWRsZV90aW1lKTsNCj4+ICsg
-ICAgdmNwdV9zZXRfc3RhdGUodmNwdSwgRVhFQ1VUSU5HKTsNCj4+ICt9DQo+PiArDQo+PiAr
-c3RhdGljIHZvaWQgdmNwdV9leGl0KHFlbXVfcGx1Z2luX2lkX3QgaWQsIHVuc2lnbmVkIGlu
-dCBjcHVfaW5kZXgpDQo+PiArew0KPj4gKyAgICB2Q1BVVGltZSAqdmNwdSA9IHFlbXVfcGx1
-Z2luX3Njb3JlYm9hcmRfZmluZCh2Y3B1cywgY3B1X2luZGV4KTsNCj4+ICsgICAgdmNwdV9z
-ZXRfc3RhdGUodmNwdSwgRklOSVNIRUQpOw0KPj4gKyAgICB1cGRhdGVfc3lzdGVtX3RpbWUo
-dmNwdSk7DQo+PiArICAgIHZjcHUtPmNvdW50ZXIgPSAwOw0KPj4gK30NCj4+ICsNCj4+ICtz
-dGF0aWMgdm9pZCBldmVyeV9pbnNuX3F1YW50dW0odW5zaWduZWQgaW50IGNwdV9pbmRleCwg
-dm9pZCAqdWRhdGEpDQo+PiArew0KPj4gKyAgICB2Q1BVVGltZSAqdmNwdSA9IHFlbXVfcGx1
-Z2luX3Njb3JlYm9hcmRfZmluZCh2Y3B1cywgY3B1X2luZGV4KTsNCj4+ICsgICAgZ19hc3Nl
-cnQodmNwdS0+dHJhY2tfaW5zbiA+PSBpbnNuX3F1YW50dW0pOw0KPj4gKyAgICB1cGRhdGVf
-c3lzdGVtX3RpbWUodmNwdSk7DQo+PiArfQ0KPj4gKw0KPj4gK3N0YXRpYyB2b2lkIHZjcHVf
-dGJfdHJhbnMocWVtdV9wbHVnaW5faWRfdCBpZCwgc3RydWN0IHFlbXVfcGx1Z2luX3RiICp0
-YikNCj4+ICt7DQo+PiArICAgIHNpemVfdCBuX2luc25zID0gcWVtdV9wbHVnaW5fdGJfbl9p
-bnNucyh0Yik7DQo+PiArICAgIHFlbXVfcGx1Z2luX3U2NCB0cmFja19pbnNuID0NCj4+ICsg
-ICAgICAgIHFlbXVfcGx1Z2luX3Njb3JlYm9hcmRfdTY0X2luX3N0cnVjdCh2Y3B1cywgdkNQ
-VVRpbWUsIHRyYWNrX2luc24pOw0KPj4gKyAgICBpZiAocHJlY2lzZV9leGVjdXRpb24pIHsN
-Cj4+ICsgICAgICAgIC8qIGNvdW50IChhbmQgZXZlbnR1YWxseSB0cmFwKSBvbiBldmVyeSBp
-bnN0cnVjdGlvbiAqLw0KPj4gKyAgICAgICAgZm9yIChpbnQgaWR4ID0gMDsgaWR4IDwgcWVt
-dV9wbHVnaW5fdGJfbl9pbnNucyh0Yik7ICsraWR4KSB7DQo+PiArICAgICAgICAgICAgc3Ry
-dWN0IHFlbXVfcGx1Z2luX2luc24gKmluc24gPSBxZW11X3BsdWdpbl90Yl9nZXRfaW5zbih0
-YiwgaWR4KTsNCj4+ICsgICAgICAgICAgICBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X2lu
-c25fZXhlY19pbmxpbmVfcGVyX3ZjcHUoDQo+PiArICAgICAgICAgICAgICAgIGluc24sIFFF
-TVVfUExVR0lOX0lOTElORV9BRERfVTY0LCB0cmFja19pbnNuLCAxKTsNCj4+ICsgICAgICAg
-ICAgICBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X2luc25fZXhlY19jb25kX2NiKA0KPj4g
-KyAgICAgICAgICAgICAgICBpbnNuLCBldmVyeV9pbnNuX3F1YW50dW0sDQo+PiArICAgICAg
-ICAgICAgICAgIFFFTVVfUExVR0lOX0NCX05PX1JFR1MsIFFFTVVfUExVR0lOX0NPTkRfR0Us
-DQo+PiArICAgICAgICAgICAgICAgIHRyYWNrX2luc24sIGluc25fcXVhbnR1bSwgTlVMTCk7
-DQo+PiArICAgICAgICB9DQo+PiArICAgIH0gZWxzZSB7DQo+PiArICAgICAgICAvKiBjb3Vu
-dCAoYW5kIGV2ZW50dWFsbHkgdHJhcCkgb25jZSBwZXIgdGIgKi8NCj4+ICsgICAgICAgIHFl
-bXVfcGx1Z2luX3JlZ2lzdGVyX3ZjcHVfdGJfZXhlY19pbmxpbmVfcGVyX3ZjcHUoDQo+PiAr
-ICAgICAgICAgICAgdGIsIFFFTVVfUExVR0lOX0lOTElORV9BRERfVTY0LCB0cmFja19pbnNu
-LCBuX2luc25zKTsNCj4+ICsgICAgICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVyX3ZjcHVfdGJf
-ZXhlY19jb25kX2NiKA0KPj4gKyAgICAgICAgICAgIHRiLCBldmVyeV9pbnNuX3F1YW50dW0s
-DQo+PiArICAgICAgICAgICAgUUVNVV9QTFVHSU5fQ0JfTk9fUkVHUywgUUVNVV9QTFVHSU5f
-Q09ORF9HRSwNCj4+ICsgICAgICAgICAgICB0cmFja19pbnNuLCBpbnNuX3F1YW50dW0sIE5V
-TEwpOw0KPj4gKyAgICB9DQo+PiArfQ0KPj4gKw0KPj4gK3N0YXRpYyB2b2lkIHBsdWdpbl9l
-eGl0KHFlbXVfcGx1Z2luX2lkX3QgaWQsIHZvaWQgKnVkYXRhKQ0KPj4gK3sNCj4+ICsgICAg
-cWVtdV9wbHVnaW5fc2NvcmVib2FyZF9mcmVlKHZjcHVzKTsNCj4+ICt9DQo+PiArDQo+PiAr
-UUVNVV9QTFVHSU5fRVhQT1JUIGludCBxZW11X3BsdWdpbl9pbnN0YWxsKHFlbXVfcGx1Z2lu
-X2lkX3QgaWQsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIGNvbnN0IHFlbXVfaW5mb190ICppbmZvLCBpbnQgYXJnYywNCj4+ICsgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY2hhciAqKmFyZ3YpDQo+PiArew0K
-Pj4gKyAgICBmb3IgKGludCBpID0gMDsgaSA8IGFyZ2M7IGkrKykgew0KPj4gKyAgICAgICAg
-Y2hhciAqb3B0ID0gYXJndltpXTsNCj4+ICsgICAgICAgIGdfYXV0byhHU3RydikgdG9rZW5z
-ID0gZ19zdHJzcGxpdChvcHQsICI9IiwgMik7DQo+PiArICAgICAgICBpZiAoZ19zdHJjbXAw
-KHRva2Vuc1swXSwgImlwcyIpID09IDApIHsNCj4+ICsgICAgICAgICAgICBpbnNuX3Blcl9z
-ZWNvbmQgPSBnX2FzY2lpX3N0cnRvdWxsKHRva2Vuc1sxXSwgTlVMTCwgMTApOw0KPj4gKyAg
-ICAgICAgICAgIGlmICghaW5zbl9wZXJfc2Vjb25kICYmIGVycm5vKSB7DQo+PiArICAgICAg
-ICAgICAgICAgIGZwcmludGYoc3RkZXJyLCAiJXM6IGNvdWxkbid0IHBhcnNlICVzICglcylc
-biIsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgX19mdW5jX18sIHRva2Vuc1sxXSwg
-Z19zdHJlcnJvcihlcnJubykpOw0KPj4gKyAgICAgICAgICAgICAgICByZXR1cm4gLTE7DQo+
-PiArICAgICAgICAgICAgfQ0KPj4gKw0KPj4gKyAgICAgICAgfSBlbHNlIGlmIChnX3N0cmNt
-cDAodG9rZW5zWzBdLCAicHJlY2lzZSIpID09IDApIHsNCj4+ICsgICAgICAgICAgICBpZiAo
-IXFlbXVfcGx1Z2luX2Jvb2xfcGFyc2UodG9rZW5zWzBdLCB0b2tlbnNbMV0sDQo+PiArICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICZwcmVjaXNlX2V4ZWN1dGlv
-bikpIHsNCj4+ICsgICAgICAgICAgICAgICAgZnByaW50ZihzdGRlcnIsICJib29sZWFuIGFy
-Z3VtZW50IHBhcnNpbmcgZmFpbGVkOiAlc1xuIiwgb3B0KTsNCj4+ICsgICAgICAgICAgICAg
-ICAgcmV0dXJuIC0xOw0KPj4gKyAgICAgICAgICAgIH0NCj4+ICsgICAgICAgIH0gZWxzZSB7
-DQo+PiArICAgICAgICAgICAgZnByaW50ZihzdGRlcnIsICJvcHRpb24gcGFyc2luZyBmYWls
-ZWQ6ICVzXG4iLCBvcHQpOw0KPj4gKyAgICAgICAgICAgIHJldHVybiAtMTsNCj4+ICsgICAg
-ICAgIH0NCj4+ICsgICAgfQ0KPj4gKw0KPj4gKyAgICB2Y3B1cyA9IHFlbXVfcGx1Z2luX3Nj
-b3JlYm9hcmRfbmV3KHNpemVvZih2Q1BVVGltZSkpOw0KPj4gKyAgICBpbnNuX3F1YW50dW0g
-PSBpbnNuX3Blcl9zZWNvbmQgLyBOVU1fVElNRV9VUERBVEVfUEVSX1NFQzsNCj4+ICsNCj4+
-ICsgICAgdGltZV9oYW5kbGUgPSBxZW11X3BsdWdpbl9yZXF1ZXN0X3RpbWVfY29udHJvbCgp
-Ow0KPj4gKyAgICBnX2Fzc2VydCh0aW1lX2hhbmRsZSk7DQo+PiArDQo+PiArICAgIHFlbXVf
-cGx1Z2luX3JlZ2lzdGVyX3ZjcHVfdGJfdHJhbnNfY2IoaWQsIHZjcHVfdGJfdHJhbnMpOw0K
-Pj4gKyAgICBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X2luaXRfY2IoaWQsIHZjcHVfaW5p
-dCk7DQo+PiArICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVyX3ZjcHVfaWRsZV9jYihpZCwgdmNw
-dV9pZGxlKTsNCj4+ICsgICAgcWVtdV9wbHVnaW5fcmVnaXN0ZXJfdmNwdV9yZXN1bWVfY2Io
-aWQsIHZjcHVfcmVzdW1lKTsNCj4+ICsgICAgcWVtdV9wbHVnaW5fcmVnaXN0ZXJfdmNwdV9l
-eGl0X2NiKGlkLCB2Y3B1X2V4aXQpOw0KPj4gKyAgICBxZW11X3BsdWdpbl9yZWdpc3Rlcl9h
-dGV4aXRfY2IoaWQsIHBsdWdpbl9leGl0LCBOVUxMKTsNCj4+ICsNCj4+ICsgICAgcmV0dXJu
-IDA7DQo+PiArfQ0KPj4gZGlmZiAtLWdpdCBhL2NvbnRyaWIvcGx1Z2lucy9NYWtlZmlsZSBi
-L2NvbnRyaWIvcGx1Z2lucy9NYWtlZmlsZQ0KPj4gaW5kZXggMGI2NGQyYzFlM2EuLjQ0OWVh
-ZDExMzA1IDEwMDY0NA0KPj4gLS0tIGEvY29udHJpYi9wbHVnaW5zL01ha2VmaWxlDQo+PiAr
-KysgYi9jb250cmliL3BsdWdpbnMvTWFrZWZpbGUNCj4+IEBAIC0yNyw2ICsyNyw3IEBAIGVu
-ZGlmDQo+PiAgIE5BTUVTICs9IGh3cHJvZmlsZQ0KPj4gICBOQU1FUyArPSBjYWNoZQ0KPj4g
-ICBOQU1FUyArPSBkcmNvdg0KPj4gK05BTUVTICs9IGlwcw0KPj4gICANCj4+ICAgaWZlcSAo
-JChDT05GSUdfV0lOMzIpLHkpDQo+PiAgIFNPX1NVRkZJWCA6PSAuZGxsDQo+IA0K
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> On 5/28/24 12:14, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>=20
+>>> This plugin uses the new time control interface to make decisions
+>>> about the state of time during the emulation. The algorithm is
+>>> currently very simple. The user specifies an ips rate which applies
+>>> per core. If the core runs ahead of its allocated execution time the
+>>> plugin sleeps for a bit to let real time catch up. Either way time is
+>>> updated for the emulation as a function of total executed instructions
+>>> with some adjustments for cores that idle.
+>>>
+>>> Examples
+>>> --------
+>>>
+>>> Slow down execution of /bin/true:
+>>> $ num_insn=3D$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn=
+.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
+>>> $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ip=
+s=3D$(($num_insn/4)) /bin/true
+>>> real 4.000s
+>>>
+>>> Boot a Linux kernel simulating a 250MHz cpu:
+>>> $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -appen=
+d "console=3DttyS0" -plugin ./build/contrib/plugins/libips.so,ips=3D$((250*=
+1000*1000)) -smp 1 -m 512
+>>> check time until kernel panic on serial0
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>   contrib/plugins/ips.c    | 239 +++++++++++++++++++++++++++++++++++++++
+>>>   contrib/plugins/Makefile |   1 +
+>>>   2 files changed, 240 insertions(+)
+>>>   create mode 100644 contrib/plugins/ips.c
+>>>
+>>> diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+>>> new file mode 100644
+>>> index 00000000000..cf3159df391
+>>> --- /dev/null
+>>> +++ b/contrib/plugins/ips.c
+>>> @@ -0,0 +1,239 @@
+>>> +/*
+>>> + * ips rate limiting plugin.
+>>> + *
+>>> + * This plugin can be used to restrict the execution of a system to a
+>>> + * particular number of Instructions Per Second (ips). This controls
+>>> + * time as seen by the guest so while wall-clock time may be longer
+>>> + * from the guests point of view time will pass at the normal rate.
+>>> + *
+>>> + * This uses the new plugin API which allows the plugin to control
+>>> + * system time.
+>>> + *
+>>> + * Copyright (c) 2023 Linaro Ltd
+>>> + *
+>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>> + */
+>>> +
+>>> +#include <stdio.h>
+>>> +#include <glib.h>
+>>> +#include <qemu-plugin.h>
+>>> +
+>>> +QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
+>>> +
+>>> +/* how many times do we update time per sec */
+>>> +#define NUM_TIME_UPDATE_PER_SEC 10
+>>> +#define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
+>>> +
+>>> +static GMutex global_state_lock;
+>>> +
+>>> +static uint64_t insn_per_second =3D 1000 * 1000; /* ips per core, per =
+second */
+>>> +static uint64_t insn_quantum; /* trap every N instructions */
+>>> +static bool precise_execution; /* count every instruction */
+>>> +static int64_t start_time_ns; /* time (ns since epoch) first vCPU star=
+ted */
+>>> +static int64_t virtual_time_ns; /* last set virtual time */
+>>> +
+>>> +static const void *time_handle;
+>>> +
+>>> +typedef enum {
+>>> +    UNKNOWN =3D 0,
+>>> +    EXECUTING,
+>>> +    IDLE,
+>>> +    FINISHED
+>>> +} vCPUState;
+>>> +
+>>> +typedef struct {
+>>> +    uint64_t counter;
+>>> +    uint64_t track_insn;
+>>> +    vCPUState state;
+>>> +    /* timestamp when vCPU entered state */
+>>> +    int64_t last_state_time;
+>>> +} vCPUTime;
+>>> +
+>>> +struct qemu_plugin_scoreboard *vcpus;
+>>> +
+>>> +/* return epoch time in ns */
+>>> +static int64_t now_ns(void)
+>>> +{
+>>> +    return g_get_real_time() * 1000;
+>>> +}
+>>> +
+>>> +static uint64_t num_insn_during(int64_t elapsed_ns)
+>>> +{
+>>> +    double num_secs =3D elapsed_ns / (double) NSEC_IN_ONE_SEC;
+>>> +    return num_secs * (double) insn_per_second;
+>>> +}
+>>> +
+>>> +static int64_t time_for_insn(uint64_t num_insn)
+>>> +{
+>>> +    double num_secs =3D (double) num_insn / (double) insn_per_second;
+>>> +    return num_secs * (double) NSEC_IN_ONE_SEC;
+>>> +}
+>>> +
+>>> +static int64_t uptime_ns(void)
+>>> +{
+>>> +    int64_t now =3D now_ns();
+>>> +    g_assert(now >=3D start_time_ns);
+>>> +    return now - start_time_ns;
+>>> +}
+>>> +
+>>> +static void vcpu_set_state(vCPUTime *vcpu, vCPUState new_state)
+>>> +{
+>>> +    vcpu->last_state_time =3D now_ns();
+>>> +    vcpu->state =3D new_state;
+>>> +}
+>>> +
+>>> +static void update_system_time(vCPUTime *vcpu)
+>>> +{
+>>> +    /* flush remaining instructions */
+>>> +    vcpu->counter +=3D vcpu->track_insn;
+>>> +    vcpu->track_insn =3D 0;
+>>> +
+>>> +    int64_t uptime =3D uptime_ns();
+>>> +    uint64_t expected_insn =3D num_insn_during(uptime);
+>>> +
+>>> +    if (vcpu->counter >=3D expected_insn) {
+>>> +        /* this vcpu ran faster than expected, so it has to sleep */
+>>> +        uint64_t insn_advance =3D vcpu->counter - expected_insn;
+>>> +        uint64_t time_advance_ns =3D time_for_insn(insn_advance);
+>>> +        int64_t sleep_us =3D time_advance_ns / 1000;
+>>> +        g_usleep(sleep_us);
+>>> +    }
+>>> +
+>>> +    /* based on number of instructions, what should be the new time? */
+>>> +    int64_t new_virtual_time =3D time_for_insn(vcpu->counter);
+>>> +
+>>> +    g_mutex_lock(&global_state_lock);
+>>> +
+>>> +    /* Time only moves forward. Another vcpu might have updated it alr=
+eady. */
+>>> +    if (new_virtual_time > virtual_time_ns) {
+>>> +        qemu_plugin_update_ns(time_handle, new_virtual_time);
+>>> +        virtual_time_ns =3D new_virtual_time;
+>>> +    }
+>>> +
+>>> +    g_mutex_unlock(&global_state_lock);
+>>> +}
+>>> +
+>>> +static void set_start_time()
+>>> +{
+>>> +    g_mutex_lock(&global_state_lock);
+>>> +    if (!start_time_ns) {
+>>> +        start_time_ns =3D now_ns();
+>>> +    }
+>>> +    g_mutex_unlock(&global_state_lock);
+>>> +}
+>>> +
+>>> +static void vcpu_init(qemu_plugin_id_t id, unsigned int cpu_index)
+>>> +{
+>>> +    vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu_index);
+>>> +    /* ensure start time is set first */
+>>> +    set_start_time();
+>>> +    /* start counter from absolute time reference */
+>>> +    vcpu->counter =3D num_insn_during(uptime_ns());
+>>> +    vcpu_set_state(vcpu, EXECUTING);
+>>> +}
+>>> +
+>>> +static void vcpu_idle(qemu_plugin_id_t id, unsigned int cpu_index)
+>>> +{
+>>> +    vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu_index);
+>>> +    vcpu_set_state(vcpu, IDLE);
+>>> +}
+>>> +
+>>> +static void vcpu_resume(qemu_plugin_id_t id, unsigned int cpu_index)
+>>> +{
+>>> +    vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu_index);
+>>> +    g_assert(vcpu->state =3D=3D IDLE);
+>> I'm triggering a weird race here:
+>>    (gdb) b vcpu_init
+>>    Breakpoint 1 at 0x7ffff7fa15f7: file /home/alex/lsrc/qemu.git/contrib=
+/plugins/ips.c, line 127.
+>>    (gdb) r
+>>    The program being debugged has been started already.
+>>    Start it from the beginning? (y or n) y
+>>    Starting program:
+>> /home/alex/lsrc/qemu.git/builds/arm.debug/qemu-system-aarch64
+>> -machine type=3Dvirt,virtualization=3Don,pflash0=3Drom,pflash1=3Defivars
+>> -cpu cortex-a57 -smp 32 -accel tcg -device
+>> virtio-net-pci,netdev=3Dunet -device virtio-scsi-pci -device
+>> scsi-hd,drive=3Dhd -netdev user,id=3Dunet,hostfwd=3Dtcp::2222-:22
+>> -blockdev
+>> driver=3Draw,node-name=3Dhd,file.driver=3Dhost_device,file.filename=3D/d=
+ev/zen-ssd2/trixie-arm64,discard=3Dunmap
+>> -serial mon:stdio -blockdev
+>> node-name=3Drom,driver=3Dfile,filename=3D/home/alex/lsrc/qemu.git/builds=
+/arm.debug/pc-bios/edk2-aarch64-code.fd,read-only=3Dtrue
+>> -blockdev
+>> node-name=3Defivars,driver=3Dfile,filename=3D/home/alex/images/qemu-arm6=
+4-efivars
+>> -m 8192 -object memory-backend-memfd,id=3Dmem,size=3D8G,share=3Don -kern=
+el
+>> /home/alex/lsrc/linux.git/builds/arm64/arch/arm64/boot/Image -append
+>> root=3D/dev/sda2\ console=3DttyAMA0 -plugin
+>> contrib/plugins/libips.so,ips=3D1000000000
+>>    [Thread debugging using libthread_db enabled]
+>>    Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.s=
+o.1".
+>>    [New Thread 0x7fffe72006c0 (LWP 360538)]
+>>    [New Thread 0x7fffe68006c0 (LWP 360540)]
+>>    [New Thread 0x7fffe5e006c0 (LWP 360541)]
+>>    [New Thread 0x7fffe54006c0 (LWP 360542)]
+>>    [New Thread 0x7fffe4a006c0 (LWP 360543)]
+>>    [New Thread 0x7fffdfe006c0 (LWP 360544)]
+>>    [New Thread 0x7fffdf4006c0 (LWP 360545)]
+>>    [New Thread 0x7fffdea006c0 (LWP 360546)]
+>>    [Switching to Thread 0x7fffdf4006c0 (LWP 360545)]
+>>    Thread 8 "qemu-system-aar" hit Breakpoint 1, vcpu_init
+>> (id=3D10457908569352202058, cpu_index=3D0) at
+>> /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:127
+>>    127         vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu=
+_index);
+>>    (gdb) c
+>>    Continuing.
+>>    [New Thread 0x7fffde0006c0 (LWP 360548)]
+>>    [Switching to Thread 0x7fffdea006c0 (LWP 360546)]
+>>    Thread 9 "qemu-system-aar" hit Breakpoint 1, vcpu_init
+>> (id=3D10457908569352202058, cpu_index=3D1) at
+>> /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:127
+>>    127         vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu=
+_index);
+>>    (gdb)
+>>    Continuing.
+>>    [New Thread 0x7fffdd6006c0 (LWP 360549)]
+>>    [Switching to Thread 0x7fffde0006c0 (LWP 360548)]
+>>    Thread 10 "qemu-system-aar" hit Breakpoint 1, vcpu_init
+>> (id=3D10457908569352202058, cpu_index=3D2) at
+>> /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:127
+>>    127         vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu=
+_index);
+>>    (gdb)
+>>    Continuing.
+>>    [New Thread 0x7fffdcc006c0 (LWP 360550)]
+>>    [Switching to Thread 0x7fffdd6006c0 (LWP 360549)]
+>>    Thread 11 "qemu-system-aar" hit Breakpoint 1, vcpu_init
+>> (id=3D10457908569352202058, cpu_index=3D3) at
+>> /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:127
+>>    127         vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu=
+_index);
+>>    (gdb)
+>>    Continuing.
+>>    [New Thread 0x7fffd3e006c0 (LWP 360551)]
+>>    [Switching to Thread 0x7fffdcc006c0 (LWP 360550)]
+>>    Thread 12 "qemu-system-aar" hit Breakpoint 1, vcpu_init
+>> (id=3D10457908569352202058, cpu_index=3D4) at
+>> /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:127
+>>    127         vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu=
+_index);
+>>    (gdb) n
+>>    129         set_start_time();
+>>    (gdb)
+>>    131         vcpu->counter =3D num_insn_during(uptime_ns());
+>>    (gdb)
+>>    132         vcpu_set_state(vcpu, EXECUTING);
+>>    (gdb)
+>>    133     }
+>>    (gdb) p vcpu->state
+>>    $1 =3D EXECUTING
+>>    (gdb) p &vcpu->state
+>>    $2 =3D (vCPUState *) 0x555557c6b5d0
+>>    (gdb) watch *(vCPUState *) 0x555557c6b5d0
+>>    Hardware watchpoint 2: *(vCPUState *) 0x555557c6b5d0
+>>    (gdb) c
+>>    Continuing.
+>>    [Thread 0x7fffdfe006c0 (LWP 360544) exited]
+>>    [Thread 0x7fffe5e006c0 (LWP 360541) exited]
+>>    Thread 12 "qemu-system-aar" hit Hardware watchpoint 2:
+>> *(vCPUState *) 0x555557c6b5d0
+>>    Old value =3D EXECUTING
+>>    New value =3D IDLE
+>>    vcpu_set_state (vcpu=3D0x555557c6b5c0, new_state=3DIDLE) at /home/ale=
+x/lsrc/qemu.git/contrib/plugins/ips.c:83
+>>    83      }
+>>    (gdb) c
+>>    Continuing.
+>>    [New Thread 0x7fffdfe006c0 (LWP 360591)]
+>>    [New Thread 0x7fffe5e006c0 (LWP 360592)]
+>>    [New Thread 0x7fffd34006c0 (LWP 360593)]
+>>    [Switching to Thread 0x7fffdfe006c0 (LWP 360591)]
+>>    Thread 14 "qemu-system-aar" hit Breakpoint 1, vcpu_init
+>> (id=3D10457908569352202058, cpu_index=3D6) at
+>> /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:127
+>>    127         vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu=
+_index);
+>>    (gdb)
+>>    Continuing.
+>>    [New Thread 0x7fffd2a006c0 (LWP 360594)]
+>>    **
+>>    ERROR:/home/alex/lsrc/qemu.git/contrib/plugins/ips.c:144:vcpu_resume:=
+ assertion failed: (vcpu->state =3D=3D IDLE)
+>>    Bail out! ERROR:/home/alex/lsrc/qemu.git/contrib/plugins/ips.c:144:vc=
+pu_resume: assertion failed: (vcpu->state =3D=3D IDLE)
+>>    Thread 13 "qemu-system-aar" received signal SIGABRT, Aborted.
+>>    [Switching to Thread 0x7fffd3e006c0 (LWP 360551)]
+>>    __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Dsi=
+gno@entry=3D6, no_tid=3Dno_tid@entry=3D0) at ./nptl/pthread_kill.c:44
+>>    44      ./nptl/pthread_kill.c: No such file or directory.
+>>    (gdb) bt
+>>    #0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=
+=3Dsigno@entry=3D6, no_tid=3Dno_tid@entry=3D0) at ./nptl/pthread_kill.c:44
+>>    #1  0x00007ffff4ca9e8f in __pthread_kill_internal (signo=3D6, threadi=
+d=3D<optimized out>) at ./nptl/pthread_kill.c:78
+>>    #2  0x00007ffff4c5afb2 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysd=
+eps/posix/raise.c:26
+>>    #3  0x00007ffff4c45472 in __GI_abort () at ./stdlib/abort.c:79
+>>    #4  0x00007ffff6e46ec8 in  () at /lib/x86_64-linux-gnu/libglib-2.0.so=
+.0
+>>    #5  0x00007ffff6ea6e1a in g_assertion_message_expr () at /lib/x86_64-=
+linux-gnu/libglib-2.0.so.0
+>>    #6  0x00007ffff7fa16e2 in vcpu_resume (id=3D10457908569352202058, cpu=
+_index=3D5) at /home/alex/lsrc/qemu.git/contrib/plugins/ips.c:144
+>>    #7  0x00005555562c3202 in plugin_vcpu_cb__simple (cpu=3D0x5555583d954=
+0, ev=3DQEMU_PLUGIN_EV_VCPU_RESUME) at ../../plugins/core.c:111
+>>    #8  0x00005555562c43f7 in qemu_plugin_vcpu_resume_cb (cpu=3D0x5555583=
+d9540) at ../../plugins/core.c:523
+>>    #9  0x0000555555d9150e in qemu_wait_io_event (cpu=3D0x5555583d9540) a=
+t ../../system/cpus.c:465
+>>    #10 0x00005555562c67d0 in mttcg_cpu_thread_fn (arg=3D0x5555583d9540) =
+at ../../accel/tcg/tcg-accel-ops-mttcg.c:118
+>>    #11 0x00005555565120ff in qemu_thread_start (args=3D0x5555584716e0) a=
+t ../../util/qemu-thread-posix.c:541
+>>    #12 0x00007ffff4ca8134 in start_thread (arg=3D<optimized out>) at ./n=
+ptl/pthread_create.c:442
+>>    #13 0x00007ffff4d287dc in clone3 () at ../sysdeps/unix/sysv/linux/x86=
+_64/clone3.S:81
+>>    (gdb)
+>> But I don't understand how we can ever hit the idle callback without
+>> first hitting the init callback.
+>>=20
+>
+> More exactly, the assert we hit means that the idle callback, was not
+> called before the resume callback.
+> Any chance you can check what is the current vcpu->state value? I
+> wonder if it's not an exited cpu, that gets resumed after.
+
+No when I looked at it it was set as UNKNOWN. Unfortunately it doesn't
+trigger if I stick breakpoints in or run under rr.
+
+>
+> Thanks,
+> Pierrick
+>
+>>> +    int64_t idle_time =3D now_ns() - vcpu->last_state_time;
+>>> +    /* accumulate expected number of instructions */
+>>> +    vcpu->counter +=3D num_insn_during(idle_time);
+>>> +    vcpu_set_state(vcpu, EXECUTING);
+>>> +}
+>>> +
+>>> +static void vcpu_exit(qemu_plugin_id_t id, unsigned int cpu_index)
+>>> +{
+>>> +    vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu_index);
+>>> +    vcpu_set_state(vcpu, FINISHED);
+>>> +    update_system_time(vcpu);
+>>> +    vcpu->counter =3D 0;
+>>> +}
+>>> +
+>>> +static void every_insn_quantum(unsigned int cpu_index, void *udata)
+>>> +{
+>>> +    vCPUTime *vcpu =3D qemu_plugin_scoreboard_find(vcpus, cpu_index);
+>>> +    g_assert(vcpu->track_insn >=3D insn_quantum);
+>>> +    update_system_time(vcpu);
+>>> +}
+>>> +
+>>> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *=
+tb)
+>>> +{
+>>> +    size_t n_insns =3D qemu_plugin_tb_n_insns(tb);
+>>> +    qemu_plugin_u64 track_insn =3D
+>>> +        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, track_in=
+sn);
+>>> +    if (precise_execution) {
+>>> +        /* count (and eventually trap) on every instruction */
+>>> +        for (int idx =3D 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
+>>> +            struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(=
+tb, idx);
+>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>> +                insn, QEMU_PLUGIN_INLINE_ADD_U64, track_insn, 1);
+>>> +            qemu_plugin_register_vcpu_insn_exec_cond_cb(
+>>> +                insn, every_insn_quantum,
+>>> +                QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
+>>> +                track_insn, insn_quantum, NULL);
+>>> +        }
+>>> +    } else {
+>>> +        /* count (and eventually trap) once per tb */
+>>> +        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>> +            tb, QEMU_PLUGIN_INLINE_ADD_U64, track_insn, n_insns);
+>>> +        qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>> +            tb, every_insn_quantum,
+>>> +            QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
+>>> +            track_insn, insn_quantum, NULL);
+>>> +    }
+>>> +}
+>>> +
+>>> +static void plugin_exit(qemu_plugin_id_t id, void *udata)
+>>> +{
+>>> +    qemu_plugin_scoreboard_free(vcpus);
+>>> +}
+>>> +
+>>> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>>> +                                           const qemu_info_t *info, in=
+t argc,
+>>> +                                           char **argv)
+>>> +{
+>>> +    for (int i =3D 0; i < argc; i++) {
+>>> +        char *opt =3D argv[i];
+>>> +        g_auto(GStrv) tokens =3D g_strsplit(opt, "=3D", 2);
+>>> +        if (g_strcmp0(tokens[0], "ips") =3D=3D 0) {
+>>> +            insn_per_second =3D g_ascii_strtoull(tokens[1], NULL, 10);
+>>> +            if (!insn_per_second && errno) {
+>>> +                fprintf(stderr, "%s: couldn't parse %s (%s)\n",
+>>> +                        __func__, tokens[1], g_strerror(errno));
+>>> +                return -1;
+>>> +            }
+>>> +
+>>> +        } else if (g_strcmp0(tokens[0], "precise") =3D=3D 0) {
+>>> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
+>>> +                                        &precise_execution)) {
+>>> +                fprintf(stderr, "boolean argument parsing failed: %s\n=
+", opt);
+>>> +                return -1;
+>>> +            }
+>>> +        } else {
+>>> +            fprintf(stderr, "option parsing failed: %s\n", opt);
+>>> +            return -1;
+>>> +        }
+>>> +    }
+>>> +
+>>> +    vcpus =3D qemu_plugin_scoreboard_new(sizeof(vCPUTime));
+>>> +    insn_quantum =3D insn_per_second / NUM_TIME_UPDATE_PER_SEC;
+>>> +
+>>> +    time_handle =3D qemu_plugin_request_time_control();
+>>> +    g_assert(time_handle);
+>>> +
+>>> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>>> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+>>> +    qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle);
+>>> +    qemu_plugin_register_vcpu_resume_cb(id, vcpu_resume);
+>>> +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
+>>> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>>> +
+>>> +    return 0;
+>>> +}
+>>> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+>>> index 0b64d2c1e3a..449ead11305 100644
+>>> --- a/contrib/plugins/Makefile
+>>> +++ b/contrib/plugins/Makefile
+>>> @@ -27,6 +27,7 @@ endif
+>>>   NAMES +=3D hwprofile
+>>>   NAMES +=3D cache
+>>>   NAMES +=3D drcov
+>>> +NAMES +=3D ips
+>>>     ifeq ($(CONFIG_WIN32),y)
+>>>   SO_SUFFIX :=3D .dll
+>>=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
