@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB78C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 09:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C79C27C44
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 09:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCFsV-0005JD-Cc; Wed, 29 May 2024 05:45:51 -0400
+	id 1sCFsI-00056a-Ed; Wed, 29 May 2024 05:45:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sCFsP-0005Hc-Mc
- for qemu-devel@nongnu.org; Wed, 29 May 2024 05:45:47 -0400
+ id 1sCFs5-00050o-Jw
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 05:45:27 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sCFsM-0000UN-Rh
- for qemu-devel@nongnu.org; Wed, 29 May 2024 05:45:44 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vq4CB6bTQz6K6kr;
- Wed, 29 May 2024 17:41:26 +0800 (CST)
+ id 1sCFs1-0000Qy-Sl
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 05:45:24 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vq4GV4FsPz6K9FL;
+ Wed, 29 May 2024 17:44:18 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 34BDA140AA7;
- Wed, 29 May 2024 17:45:40 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 19632140A35;
+ Wed, 29 May 2024 17:45:19 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.202.227.28) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 29 May 2024 10:45:34 +0100
+ 15.1.2507.39; Wed, 29 May 2024 10:45:13 +0100
 To: <peterx@redhat.com>, <farosas@suse.de>, <yuan1.liu@intel.com>
 CC: <qemu-devel@nongnu.org>, <linuxarm@huawei.com>,
  <linwenkai6@hisilicon.com>, <zhangfei.gao@linaro.org>,
  <huangchenghai2@huawei.com>
-Subject: [PATCH 4/7] migration/multifd: Add UADK initialization
-Date: Wed, 29 May 2024 10:44:24 +0100
-Message-ID: <20240529094435.11140-5-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH 1/7] docs/migration: add uadk compression feature
+Date: Wed, 29 May 2024 10:44:21 +0100
+Message-ID: <20240529094435.11140-2-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
 References: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.202.227.28]
 X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  lhrpeml500005.china.huawei.com (7.191.163.240)
@@ -71,234 +72,165 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize UADK session and allocate buffers required. The actual
-compression/decompression will only be done in a subsequent patch.
+Document UADK(User Space Accelerator Development Kit) library details
+and how to use that for migration.
 
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- migration/multifd-uadk.c | 207 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 206 insertions(+), 1 deletion(-)
+ docs/devel/migration/uadk-compression.rst | 144 ++++++++++++++++++++++
+ 1 file changed, 144 insertions(+)
+ create mode 100644 docs/devel/migration/uadk-compression.rst
 
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index c2bb07535b..3172e4d5ca 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -12,9 +12,214 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "migration.h"
-+#include "multifd.h"
-+#include "options.h"
-+#include "uadk/wd_comp.h"
-+#include "uadk/wd_sched.h"
+diff --git a/docs/devel/migration/uadk-compression.rst b/docs/devel/migration/uadk-compression.rst
+new file mode 100644
+index 0000000000..988b92631e
+--- /dev/null
++++ b/docs/devel/migration/uadk-compression.rst
+@@ -0,0 +1,144 @@
++=========================================================
++User Space Accelerator Development Kit (UADK) Compression
++=========================================================
++UADK is a general-purpose user space accelerator framework that uses shared
++virtual addressing (SVA) to provide a unified programming interface for
++hardware acceleration of cryptographic and compression algorithms.
 +
-+struct wd_data {
-+    handle_t handle;
-+    uint8_t *buf;
-+    uint32_t *buf_hdr;
-+};
++UADK includes Unified/User-space-access-intended Accelerator Framework (UACCE),
++which enables hardware accelerators from different vendors that support SVA to
++adapt to UADK.
 +
-+static bool uadk_hw_initialised(void)
-+{
-+    char alg[] = "zlib";
-+    int ret;
++Currently, HiSilicon Kunpeng hardware accelerators have been registered with
++UACCE. Through the UADK framework, users can run cryptographic and compression
++algorithms using hardware accelerators instead of CPUs, freeing up CPU
++computing power and improving computing performance.
 +
-+    ret = wd_comp_init2(alg, SCHED_POLICY_RR, TASK_HW);
-+    if (ret && ret != -WD_EEXIST) {
-+        return false;
-+    } else {
-+        return true;
-+    }
-+}
++https://github.com/Linaro/uadk/tree/master/docs
 +
-+static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-+                                              uint32_t page_size,
-+                                              bool compress, Error **errp)
-+{
-+    struct wd_comp_sess_setup ss = {0};
-+    struct sched_params param = {0};
-+    uint32_t size = count * page_size;
-+    struct wd_data *wd;
++UADK Framework
++==============
++UADK consists of UACCE, vendors' drivers, and an algorithm layer. UADK requires
++the hardware accelerator to support SVA, and the operating system to support
++IOMMU and SVA. Hardware accelerators from different vendors are registered as
++different character devices with UACCE by using kernel-mode drivers of the
++vendors. A user can access the hardware accelerators by performing user-mode
++operations on the character devices.
 +
-+    if (!uadk_hw_initialised()) {
-+        error_setg(errp, "multifd: UADK hardware not available");
-+        return NULL;
-+    }
++::
 +
-+    wd = g_new0(struct wd_data, 1);
-+    ss.alg_type = WD_ZLIB;
-+    if (compress) {
-+        ss.op_type = WD_DIR_COMPRESS;
-+        /* Add an additional page for handling output > input */
-+        size += page_size;
-+    } else {
-+        ss.op_type = WD_DIR_DECOMPRESS;
-+    }
-+    param.type = ss.op_type;
-+    ss.sched_param = &param;
++          +----------------------------------+
++          |                apps              |
++          +----+------------------------+----+
++               |                        |
++               |                        |
++       +-------+--------+       +-------+-------+
++       |   scheduler    |       | alg libraries |
++       +-------+--------+       +-------+-------+
++               |                         |
++               |                         |
++               |                         |
++               |                +--------+------+
++               |                | vendor drivers|
++               |                +-+-------------+
++               |                  |
++               |                  |
++            +--+------------------+--+
++            |         libwd          |
++    User    +----+-------------+-----+
++    --------------------------------------------------
++    Kernel    +--+-----+   +------+
++              | uacce  |   | smmu |
++              +---+----+   +------+
++                  |
++              +---+------------------+
++              | vendor kernel driver |
++              +----------------------+
++    --------------------------------------------------
++             +----------------------+
++             |   HW Accelerators    |
++             +----------------------+
 +
-+    wd->handle = wd_comp_alloc_sess(&ss);
-+    if (!wd->handle) {
-+        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
-+        goto out;
-+    }
++UADK Installation
++-----------------
++Build UADK
++^^^^^^^^^^
 +
-+    wd->buf = g_try_malloc(size);
-+    if (!wd->buf) {
-+        error_setg(errp, "multifd: out of mem for uadk buf");
-+        goto out_free_sess;
-+    }
-+    wd->buf_hdr = g_new0(uint32_t, count);
-+    return wd;
++.. code-block:: shell
 +
-+out_free_sess:
-+    wd_comp_free_sess(wd->handle);
-+out:
-+    wd_comp_uninit2();
-+    g_free(wd);
-+    return NULL;
-+}
++    git clone https://github.com/Linaro/uadk.git
++    cd uadk
++    mkdir build
++    ./autogen.sh
++    ./configure --prefix=$PWD/build
++    make
++    make install
 +
-+static void multifd_uadk_uninit_sess(struct wd_data *wd)
-+{
-+    wd_comp_free_sess(wd->handle);
-+    wd_comp_uninit2();
-+    g_free(wd->buf);
-+    g_free(wd->buf_hdr);
-+    g_free(wd);
-+}
++Without --prefix, UADK will be installed to /usr/local/lib by default.
++If get error:"cannot find -lnuma", please install the libnuma-dev
 +
-+/**
-+ * multifd_uadk_send_setup: setup send side
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
-+{
-+    struct wd_data *wd;
++Run pkg-config libwd to ensure env is setup correctly
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-+    wd = multifd_uadk_init_sess(p->page_count, p->page_size, true, errp);
-+    if (!wd) {
-+        return -1;
-+    }
++* export PKG_CONFIG_PATH=$PWD/build/lib/pkgconfig
++* pkg-config libwd --cflags --libs
++  -I/usr/local/include -L/usr/local/lib -lwd
 +
-+    p->compress_data = wd;
-+    assert(p->iov == NULL);
-+    /*
-+     * Each page will be compressed independently and sent using an IOV. The
-+     * additional two IOVs are used to store packet header and compressed data
-+     * length
-+     */
++* export PKG_CONFIG_PATH is required on demand.
++  Not required if UADK is installed to /usr/local/lib
 +
-+    p->iov = g_new0(struct iovec, p->page_count + 2);
-+    return 0;
-+}
++UADK Host Kernel Requirements
++-----------------------------
++User needs to make sure that ``UACCE`` is already supported in Linux kernel.
++The kernel version should be at least v5.9 with SVA (Shared Virtual
++Addressing) enabled.
 +
-+/**
-+ * multifd_uadk_send_cleanup: cleanup send side
-+ *
-+ * Close the channel and return memory.
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
-+{
-+    struct wd_data *wd = p->compress_data;
++Kernel Configuration
++^^^^^^^^^^^^^^^^^^^^
 +
-+    multifd_uadk_uninit_sess(wd);
-+    p->compress_data = NULL;
-+}
++``UACCE`` could be built as module or built-in.
 +
-+/**
-+ * multifd_uadk_send_prepare: prepare data to be able to send
-+ *
-+ * Create a compressed buffer with all the pages that we are going to
-+ * send.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-+{
-+    return -1;
-+}
++Here's an example to enable UACCE with hardware accelerator in HiSilicon
++Kunpeng platform.
 +
-+/**
-+ * multifd_uadk_recv_setup: setup receive side
-+ *
-+ * Create the compressed channel and buffer.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
-+{
-+    struct wd_data *wd;
++*    CONFIG_IOMMU_SVA_LIB=y
++*    CONFIG_ARM_SMMU=y
++*    CONFIG_ARM_SMMU_V3=y
++*    CONFIG_ARM_SMMU_V3_SVA=y
++*    CONFIG_PCI_PASID=y
++*    CONFIG_UACCE=y
++*    CONFIG_CRYPTO_DEV_HISI_QM=y
++*    CONFIG_CRYPTO_DEV_HISI_ZIP=y
 +
-+    wd = multifd_uadk_init_sess(p->page_count, p->page_size, false, errp);
-+    if (!wd) {
-+        return -1;
-+    }
-+    p->compress_data = wd;
-+    return 0;
-+}
++Make sure all these above kernel configurations are selected.
 +
-+/**
-+ * multifd_uadk_recv_cleanup: setup receive side
-+ *
-+ * For no compression this function does nothing.
-+ *
-+ * @p: Params for the channel that we are using
-+ */
-+static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
-+{
-+    struct wd_data *wd = p->compress_data;
++Accelerator dev node permissions
++--------------------------------
++Harware accelerators(eg: HiSilicon Kunpeng Zip accelerator) gets registered to
++UADK and char devices are created in dev directory. In order to access resources
++on hardware accelerator devices, write permission should be provided to user.
 +
-+    multifd_uadk_uninit_sess(wd);
-+    p->compress_data = NULL;
-+}
++.. code-block:: shell
 +
-+/**
-+ * multifd_uadk_recv: read the data from the channel into actual pages
-+ *
-+ * Read the compressed buffer, and uncompress it into the actual
-+ * pages.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
-+{
-+    return -1;
-+}
++    $ sudo chmod 777 /dev/hisi_zip-*
 +
-+static MultiFDMethods multifd_uadk_ops = {
-+    .send_setup = multifd_uadk_send_setup,
-+    .send_cleanup = multifd_uadk_send_cleanup,
-+    .send_prepare = multifd_uadk_send_prepare,
-+    .recv_setup = multifd_uadk_recv_setup,
-+    .recv_cleanup = multifd_uadk_recv_cleanup,
-+    .recv = multifd_uadk_recv,
-+};
- 
- static void multifd_uadk_register(void)
- {
--    /* noop for now */
-+    multifd_register_ops(MULTIFD_COMPRESSION_UADK, &multifd_uadk_ops);
- }
- migration_init(multifd_uadk_register);
++How To Use UADK Compression In Qemu Migration
++---------------------------------------------
++* Make sure UADK is installed as above
++* Build ``Qemu`` with ``--enable-uadk`` parameter
++
++  E.g. configure --target-list=aarch64-softmmu --enable-kvm ``--enable-uadk``
++
++* Enable ``UADK`` compression during migration
++
++  Set ``migrate_set_parameter multifd-compression uadk``
++
++Since UADK uses Shared Virtual Addressing(SVA) and device access virtual memory
++directly it is possible that SMMUv3 may enounter page faults while walking the
++IO page tables. This may impact the performance. In order to mitigate this,
++please make sure to specify ``-mem-prealloc`` parameter to the destination VM
++boot parameters.
++
++Though both UADK and ZLIB are based on the deflate compression algorithm, UADK
++is not fully compatible with ZLIB. Hence, please make sure to use ``uadk`` on
++both source and destination during migration.
 -- 
 2.17.1
 
