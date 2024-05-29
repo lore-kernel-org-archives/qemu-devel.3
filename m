@@ -4,77 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22F7C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 04:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92242C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 04:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCAgz-0005Yp-2e; Wed, 29 May 2024 00:13:37 -0400
+	id 1sCB0a-00081W-ET; Wed, 29 May 2024 00:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCAgx-0005YZ-R1
- for qemu-devel@nongnu.org; Wed, 29 May 2024 00:13:35 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1sCB0W-00080i-F4
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 00:33:49 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCAgv-0004uE-T7
- for qemu-devel@nongnu.org; Wed, 29 May 2024 00:13:35 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-24cbb884377so766757fac.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 21:13:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1sCB0U-0007SK-4n
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 00:33:48 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-57857e0f463so808071a12.0
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 21:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716956011; x=1717560811; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Y78cQbaG49gfAp5lAUthC7sJF/QkcqO5aFiUYCrDG3E=;
- b=Pim/9etZlWAKiP/ybnjALx0Qcj3z899lzOTK/7YLvgM6TQ4Vd5O1UNVRJXkhQCGChZ
- VHOgYV/QB359S/PAlmgch8IF1xJwMCi84eAP+VSMVU8nOMSekJxeGtLH6Mc1q3khFzs9
- XmaUKnGgD67oR9nGk8H+bHIbsgT8X/4UfPErXydZ25KS0otb6BFUUMyMw3gap3vCt/R2
- lNxV3OX80JZ5f++56euHoxJ89mhqfaC9LApWusjDZFVz6U6TLX12+pjSafKGpHGmy5Vc
- /qxMgV/HqrpG14xDQ/Ad6Tv9yGGWQfpbpAoohbduMM8H7v8uNxG/IawtT8jj6M4n5STr
- CO1w==
+ d=ionos.com; s=google; t=1716957223; x=1717562023; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Vgbrgm9oN3J4LdRd0FzNOIpeae3tCUcQtmI86SumNi8=;
+ b=bHA0JbneClUo7IqCEUT42yISqzUhUVxsU0FRQmaiRCjqolKngW4jCVOQU9Qnr+ZzxF
+ 6SDqacVbijMKKnEECBzI37NNR0EXViWxlcqbHT/Hr1BUWLA5xLJxeajWA5ydjcWyz1Bp
+ G2BibxQgVVZmhOPkbdYM7NA1+S/tnQOl1MgNK0RssCaRBIaU2BaYFgJXoSXYSNu6Rmt+
+ A9KQlq3OkRVZmdI0y/1Z3Xotwu5sjLzP8BUUCiQRAVm5SCZqBrt/oBGOUZD6C2jHwxla
+ oIYNf9BmTv+nZMDqRPWRW5YgRI8clTxCceQUcRqHMzNun4E49Dq/RVYWx9+tYB0Fwpym
+ DZkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716956011; x=1717560811;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y78cQbaG49gfAp5lAUthC7sJF/QkcqO5aFiUYCrDG3E=;
- b=g7WngzNBXlDskECB83RoU/+EdUIP4tFDHiG4iAZGJ6UjlmhxUm7T1eIhV0Kj21FWiY
- BtWfvd8FliWATU2xFm/Qb4ZSBO1q+RtxSV+R/CPgtBeIhNFaKW1N+FfRe7TMr7REEO7x
- hmw2mWQkGguh3hhlEe09bx5+TZJ6LALKhL3Vz+cqkaTdYSv9fzv7OaEnEZPSmTwgYhPr
- jv/DnkPpRtP6WRuBF1ZQI33YHpB580yeTU0XKhhPRpXNPJPK4y39FgKRp84N5WsP8SCS
- vAZb56vdFcVG9+6KLZ2YEutB3ZGDeoCrgccb3eARWnSjNFJnR0Uzg28aSPLe2z9FlOqs
- yuIg==
-X-Gm-Message-State: AOJu0Yw3sk76CwQlHCv7neiqWSEnWLMcaz+wtJWuvRnB4TKUfRX0lqji
- KE8GrhsYoeIP6jnzALXzqW9Xl+Zr+XoZDTb1I7zMaL7oSqpPewFL26dZ4g==
-X-Google-Smtp-Source: AGHT+IH1rJE9lXS9o6fY4HKSVI0TX51RjW+KAlpBuMGgcvzUuwDAM9IF9GyQDNCKwxKl4ba0eLC3mQ==
-X-Received: by 2002:a05:6870:35d4:b0:23e:7764:7795 with SMTP id
- 586e51a60fabf-24ca12e174bmr14907257fac.28.1716956010900; 
- Tue, 28 May 2024 21:13:30 -0700 (PDT)
-Received: from wheely.local0.net (110-175-65-7.tpgi.com.au. [110.175.65.7])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fcbeac22sm7202743b3a.113.2024.05.28.21.13.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 May 2024 21:13:30 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] tests/qtest/migrate-test: Add a postcopy memfile test
-Date: Wed, 29 May 2024 14:13:21 +1000
-Message-ID: <20240529041322.701525-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1716957223; x=1717562023;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Vgbrgm9oN3J4LdRd0FzNOIpeae3tCUcQtmI86SumNi8=;
+ b=PFTd77NKsHkKZnfmQNcO0fgrOxDAwlqt+uAUqCXqJq+fZtFqEFpdqNlINE/mVUWcaE
+ +TgBl+XsdYQK3QU+AqvtEQJ8VtV/9qhKi0RTGerbaAkA2ms6I50OeVwIKZB1Mz1RfYUE
+ T20IVjHiN0M626hn1qoNw//LcXzhUUyx7g0pbaJO57FsDdka2ib2J6lsGHrbApapOlqi
+ dbIeiOA15q93N6vSz0WfWbyNeZ0mHoBftRS1lzIe0ITtfmmtOrqQeiOvSf6HIUShUzGw
+ L4kpAhoc67yN4zc6NNczYjfe1Puxbu4klpmavwR7ncrdOAhMdfGF3PH5TG/jaNIgvwns
+ OaVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXnxhcFny434PW6zzdnF2Lp+AX0ryHHOOEi2k/BknTN07opPkD0cKrrhgsf41Fpc0E5+rgUVRFfML31c8phVj9y/+pYSgk=
+X-Gm-Message-State: AOJu0YymXD0P1ogmXz90W+eLFjaGmNSP5Pu/SaWCj20oV6y1zsyhzHc4
+ POqEnhe5kj0q7oTIuLkyYHaJ27lGFdnrzMUyiuzGU1A+9/JCyslG7fZTT0xhXWm+0lvCl1wkJFM
+ gkuQzKL2j6woFqfa6HC9C+aGdVhsIvyqH/ppbIg==
+X-Google-Smtp-Source: AGHT+IGAryn3arceUC635cfwoAvOXPpWFnbmIdw+E8kjjK6Wq/qFCx+Tv9/wBRf6Jag06COBE4amUVuEf9vRktTeJ98=
+X-Received: by 2002:a50:d49e:0:b0:578:5dc5:a4fb with SMTP id
+ 4fb4d7f45d1cf-5785dc5a6f2mr9117151a12.32.1716957223300; Tue, 28 May 2024
+ 21:33:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2a.google.com
+References: <Zjj0xa-3KrFHTK0S@x1n>
+ <addaa8d094904315a466533763689ead@huawei.com>
+ <ZjpWmG2aUJLkYxJm@x1n> <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com>
+ <ZjzaIAMgUHV8zdNz@x1n>
+ <CAHEcVy48Mcup3d3FgYh_oPtV-M9CZBVr4G_9jyg2K+8Esi0WGA@mail.gmail.com>
+ <04769507-ac37-495d-a797-e05084d73e64@akamai.com>
+ <CAHEcVy4d7uJENZ1hRx2FBzbw22qN4Qm0TwtxvM5DLw3s81Zp_g@mail.gmail.com>
+ <Zk0c51D1Oo6NdIxR@x1n> <2308a8b894244123b638038e40a33990@huawei.com>
+ <ZlX-Swq4Hi-0iHeh@x1n> <7bf81ccee4bd4b0e81e3893ef43502a8@huawei.com>
+In-Reply-To: <7bf81ccee4bd4b0e81e3893ef43502a8@huawei.com>
+From: Jinpu Wang <jinpu.wang@ionos.com>
+Date: Wed, 29 May 2024 06:33:32 +0200
+Message-ID: <CAMGffEmGDDxttMhYWCBWwhb_VmjU+ZeOCzwaJyZOTi=yH_jKRg@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: Peter Xu <peterx@redhat.com>, Yu Zhang <yu.zhang@ionos.com>, 
+ Michael Galaxy <mgalaxy@akamai.com>, Elmar Gerdes <elmar.gerdes@ionos.com>, 
+ zhengchuan <zhengchuan@huawei.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>, 
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, 
+ Pannengyuan <pannengyuan@huawei.com>, Xiexiangyou <xiexiangyou@huawei.com>, 
+ Fabiano Rosas <farosas@suse.de>, RDMA mailing list <linux-rdma@vger.kernel.org>,
+ shefty@nvidia.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::534;
+ envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,144 +122,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Postcopy requires userfaultfd support, which requires tmpfs if a memory
-file is used.
+On Wed, May 29, 2024 at 4:43=E2=80=AFAM Gonglei (Arei) <arei.gonglei@huawei=
+.com> wrote:
+>
+> Hi,
+>
+> > -----Original Message-----
+> > From: Peter Xu [mailto:peterx@redhat.com]
+> > Sent: Tuesday, May 28, 2024 11:55 PM
+> > > > > Exactly, not so compelling, as I did it first only on servers
+> > > > > widely used for production in our data center. The network
+> > > > > adapters are
+> > > > >
+> > > > > Ethernet controller: Broadcom Inc. and subsidiaries NetXtreme
+> > > > > BCM5720 2-port Gigabit Ethernet PCIe
+> > > >
+> > > > Hmm... I definitely thinks Jinpu's Mellanox ConnectX-6 looks more
+> > reasonable.
+> > > >
+> > > >
+> > https://lore.kernel.org/qemu-devel/CAMGffEn-DKpMZ4tA71MJYdyemg0Zda15
+> > > > wVAqk81vXtKzx-LfJQ@mail.gmail.com/
+> > > >
+> > > > Appreciate a lot for everyone helping on the testings.
+> > > >
+> > > > > InfiniBand controller: Mellanox Technologies MT27800 Family
+> > > > > [ConnectX-5]
+> > > > >
+> > > > > which doesn't meet our purpose. I can choose RDMA or TCP for VM
+> > > > > migration. RDMA traffic is through InfiniBand and TCP through
+> > > > > Ethernet on these two hosts. One is standby while the other is ac=
+tive.
+> > > > >
+> > > > > Now I'll try on a server with more recent Ethernet and InfiniBand
+> > > > > network adapters. One of them has:
+> > > > > BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller (rev 01)
+> > > > >
+> > > > > The comparison between RDMA and TCP on the same NIC could make
+> > > > > more
+> > > > sense.
+> > > >
+> > > > It looks to me NICs are powerful now, but again as I mentioned I
+> > > > don't think it's a reason we need to deprecate rdma, especially if
+> > > > QEMU's rdma migration has the chance to be refactored using rsocket=
+.
+> > > >
+> > > > Is there anyone who started looking into that direction?  Would it
+> > > > make sense we start some PoC now?
+> > > >
+> > >
+> > > My team has finished the PoC refactoring which works well.
+> > >
+> > > Progress:
+> > > 1.  Implement io/channel-rdma.c,
+> > > 2.  Add unit test tests/unit/test-io-channel-rdma.c and verifying it
+> > > is successful, 3.  Remove the original code from migration/rdma.c, 4.
+> > > Rewrite the rdma_start_outgoing_migration and
+> > > rdma_start_incoming_migration logic, 5.  Remove all rdma_xxx function=
+s
+> > > from migration/ram.c. (to prevent RDMA live migration from polluting =
+the
+> > core logic of live migration), 6.  The soft-RoCE implemented by softwar=
+e is
+> > used to test the RDMA live migration. It's successful.
+> > >
+> > > We will be submit the patchset later.
+> >
+> > That's great news, thank you!
+> >
+> > --
+> > Peter Xu
+>
+> For rdma programming, the current mainstream implementation is to use rdm=
+a_cm to establish a connection, and then use verbs to transmit data.
+>
+> rdma_cm and ibverbs create two FDs respectively. The two FDs have differe=
+nt responsibilities. rdma_cm fd is used to notify connection establishment =
+events,
+> and verbs fd is used to notify new CQEs. When poll/epoll monitoring is di=
+rectly performed on the rdma_cm fd, only a pollin event can be monitored, w=
+hich means
+> that an rdma_cm event occurs. When the verbs fd is directly polled/epolle=
+d, only the pollin event can be listened, which indicates that a new CQE is=
+ generated.
+>
+> Rsocket is a sub-module attached to the rdma_cm library and provides rdma=
+ calls that are completely similar to socket interfaces. However, this libr=
+ary returns
+> only the rdma_cm fd for listening to link setup-related events and does n=
+ot expose the verbs fd (readable and writable events for listening to data)=
+. Only the rpoll
+> interface provided by the RSocket can be used to listen to related events=
+. However, QEMU uses the ppoll interface to listen to the rdma_cm fd (gotte=
+n by raccept API).
+> And cannot listen to the verbs fd event. Only some hacking methods can be=
+ used to address this problem.
+>
+> Do you guys have any ideas? Thanks.
++cc linux-rdma
++cc Sean
 
-This adds back support for /dev/shm memory files, but adds preallocation
-to skip environments where that mount is limited in size.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
 
-How about this? This goes on top of the reset of the patches
-(I'll re-send them all as a series if we can get to some agreement).
-
-This adds back the /dev/shm option with preallocation and adds a test
-case that requires tmpfs.
-
-Thanks,
-Nick
-
- tests/qtest/migration-test.c | 63 +++++++++++++++++++++++++++++++-----
- 1 file changed, 55 insertions(+), 8 deletions(-)
-
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 86eace354e..7fd9bbdc18 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -11,6 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/cutils.h"
- 
- #include "libqtest.h"
- #include "qapi/qmp/qdict.h"
-@@ -553,6 +554,7 @@ typedef struct {
-      */
-     bool hide_stderr;
-     bool use_memfile;
-+    bool use_uffd_memfile;
-     /* only launch the target process */
-     bool only_target;
-     /* Use dirty ring if true; dirty logging otherwise */
-@@ -739,7 +741,48 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-         ignore_stderr = "";
-     }
- 
--    if (args->use_memfile) {
-+    if (!qtest_has_machine(machine_alias)) {
-+        g_autofree char *msg = g_strdup_printf("machine %s not supported",
-+                                               machine_alias);
-+        g_test_skip(msg);
-+        return -1;
-+    }
-+
-+    if (args->use_uffd_memfile) {
-+#if defined(__NR_userfaultfd) && defined(__linux__)
-+        int fd;
-+        uint64_t size;
-+
-+        if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
-+            g_test_skip("/dev/shm does not exist or is not a directory");
-+            return -1;
-+        }
-+
-+        /*
-+         * Pre-create and allocate the file here, because /dev/shm/
-+         * is known to be limited in size in some places (e.g., Gitlab CI).
-+         */
-+        memfile_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
-+        fd = open(memfile_path, O_WRONLY | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
-+        if (fd == -1) {
-+            g_test_skip("/dev/shm file could not be created");
-+            return -1;
-+        }
-+
-+        g_assert(qemu_strtosz(memory_size, NULL, &size) == 0);
-+        size += 64*1024; /* QEMU may map a bit more memory for a guard page */
-+
-+        if (fallocate(fd, 0, 0, size) == -1) {
-+            unlink(memfile_path);
-+            perror("could not alloc"); exit(1);
-+            g_test_skip("Could not allocate machine memory in /dev/shm");
-+            return -1;
-+        }
-+        close(fd);
-+#else
-+        g_test_skip("userfaultfd is not supported");
-+#endif
-+    } else if (args->use_memfile) {
-         memfile_path = g_strdup_printf("/%s/qemu-%d", tmpfs, getpid());
-         memfile_opts = g_strdup_printf(
-             "-object memory-backend-file,id=mem0,size=%s"
-@@ -751,12 +794,6 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-         kvm_opts = ",dirty-ring-size=4096";
-     }
- 
--    if (!qtest_has_machine(machine_alias)) {
--        g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
--        g_test_skip(msg);
--        return -1;
--    }
--
-     machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
-                                       QEMU_ENV_DST);
- 
-@@ -807,7 +844,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-      * Remove shmem file immediately to avoid memory leak in test failed case.
-      * It's valid because QEMU has already opened this file
-      */
--    if (args->use_memfile) {
-+    if (args->use_memfile || args->use_uffd_memfile) {
-         unlink(memfile_path);
-     }
- 
-@@ -1275,6 +1312,15 @@ static void test_postcopy(void)
-     test_postcopy_common(&args);
- }
- 
-+static void test_postcopy_memfile(void)
-+{
-+    MigrateCommon args = {
-+        .start.use_uffd_memfile = true,
-+    };
-+
-+    test_postcopy_common(&args);
-+}
-+
- static void test_postcopy_suspend(void)
- {
-     MigrateCommon args = {
-@@ -3441,6 +3487,7 @@ int main(int argc, char **argv)
- 
-     if (has_uffd) {
-         migration_test_add("/migration/postcopy/plain", test_postcopy);
-+        migration_test_add("/migration/postcopy/memfile", test_postcopy_memfile);
-         migration_test_add("/migration/postcopy/recovery/plain",
-                            test_postcopy_recovery);
-         migration_test_add("/migration/postcopy/preempt/plain",
--- 
-2.43.0
-
+>
+>
+> Regards,
+> -Gonglei
 
