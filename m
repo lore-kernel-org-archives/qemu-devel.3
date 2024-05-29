@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9320C25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 17:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F8BC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 17:26:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCN1T-00022Y-LG; Wed, 29 May 2024 13:23:35 -0400
+	id 1sCN3n-00037P-Br; Wed, 29 May 2024 13:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCN1P-00021Z-Vd
- for qemu-devel@nongnu.org; Wed, 29 May 2024 13:23:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCN3k-00036Z-JY
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 13:25:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCN1M-0007Nw-2Y
- for qemu-devel@nongnu.org; Wed, 29 May 2024 13:23:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCN3X-0007o9-Up
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 13:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717003406;
+ s=mimecast20190719; t=1717003543;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HBjU4joLtZ34MoUVP0vLFjD8Sxz8XBWhYTUauOTxx88=;
- b=V4z99o/swDXiGWJ5C5xGNOJau9HzX93c4gwJoCw4/p64dA7et54b49CLth/zS9ddwpIinJ
- JWq/xE68bftrfJb44nPITO409YROWljLd/M2SdCZ0gGMNdcfdN3ZfXoknj1dnXTWev4N6y
- dIIPFmg+OOeyRFP41mT/cl1eHPll+Vw=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VVOadCbIuLTvmklCU9CuaQvEFU730xLGTZdD6H1Oo2c=;
+ b=azJuoNd6c5vUAYFDlhNZ7My6K0RtiYOa0M4FqB60UKg+acKw1ywYcCIc9rDp11DgXzYOBk
+ 8OaGXjZGAQvGfj+72MyRSHnFqidTMjS8AmtSJx3dqROw1FcZ/GLOWCrMFLNRBQ4vBRmtUc
+ 1KlJJ1mWvfN5M8AMoaSg5Ooxavz2V4s=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-uin5HaNpNHq58EDS2-wVsA-1; Wed, 29 May 2024 13:23:24 -0400
-X-MC-Unique: uin5HaNpNHq58EDS2-wVsA-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-792bd1dc658so30101285a.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 10:23:24 -0700 (PDT)
+ us-mta-622-a2CxAV2fO0uR9DR96IZZAg-1; Wed, 29 May 2024 13:25:41 -0400
+X-MC-Unique: a2CxAV2fO0uR9DR96IZZAg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6265d3cb71so104769066b.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 10:25:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717003404; x=1717608204;
+ d=1e100.net; s=20230601; t=1717003540; x=1717608340;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HBjU4joLtZ34MoUVP0vLFjD8Sxz8XBWhYTUauOTxx88=;
- b=S/LSwMzWt/p5Fv4fmvgDYNMDtIz4N863yJG1VMkY+UNrX1dk2K0YxK9X/wetV3eW4N
- H2y6+qlVLvAf6CTcSTnjVtFLW3NPKH7LrDjwhZ7EpGPJrMecctlIaxrYZeIWxqmp9B4v
- 7pMDhiAu5bxMcNR29e6/S2njrazk9Ked4dOo12nrmsC98H6pfbjpAHnukom/E1/7Du53
- JexaiqHYvAEEX1/uC5FldyKyfQ3sLEmpEUkM+vxzok/MpEDkjzKOf+z80D6GQrPY7BYl
- W+lgyVqc1A7ZwGhiSF6x3vy3qAU8UIIUS6ou+oJ44xhwy8dOkPd99YmmNHekBJnAGGHr
- QqLQ==
+ bh=VVOadCbIuLTvmklCU9CuaQvEFU730xLGTZdD6H1Oo2c=;
+ b=C84d8gN3CY90CpwJSx4KDjjPRLReCJoh9h+yRToinl5lAVovf4V2cNbuEcUxH8dby/
+ QmHJX8o2TLvpdWCMVRoqUqnbUUGwMLcKtFaVXzwFwHote/icUHIcDKbyx+A6922gW9pX
+ mw23okCPBz1K893RZzaLefTyUjpPcbYJO/RMRc5s5wVmZWVY6tC7KXzLz6OBU72bzVkZ
+ 3ddCMl8fq1GUs76dYcfBym9wHPL2O4nvFVAx0CnG0hqjRgu+eD8PwZbHU71I5BnZ42sD
+ oZtKgbSqB5m4VSN1cvw38NnSO5ooxQsoZzhnl12mStRXXyYVmhzCPw7C3wPLSk3Zr/t0
+ iXsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqe+gOIHKwpaoVvmTg9VAqfrE+tSZQDGmYknkS6EFkHubzy7UKHBNoFuEycOIMMYfB7LpmXnUWC8dpcxroVBsU3WuDHEw=
-X-Gm-Message-State: AOJu0Yw88L2NRKczrMjSLF0poxgJQaXfmZ68MyPrTmsevOV80aQ7iqLW
- 3WyhNmvBHpCgiU360hUecUu07nozYUBHNCoyyAxr0SgZtIr3l8KFADm4colm83yR6FJiUhg50qL
- C8RAPNR986oJfQSAflRVC44B7hhSQl51ktnC8YvuUR1APcgIGEEi1
-X-Received: by 2002:a05:620a:1a29:b0:790:8656:8427 with SMTP id
- af79cd13be357-794dfb6bc9cmr474596985a.7.1717003404314; 
- Wed, 29 May 2024 10:23:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyDxo/hFFTmuye8aK3vFGM0w/ysGFlnNdfR4PBXiGACwZxKPhkyuwzh8IZajBqnzMvmmdC/Q==
-X-Received: by 2002:a05:620a:1a29:b0:790:8656:8427 with SMTP id
- af79cd13be357-794dfb6bc9cmr474591885a.7.1717003403837; 
- Wed, 29 May 2024 10:23:23 -0700 (PDT)
+ AJvYcCWznOJsttmCHRhBnjsep2s6Z6cyuBYvssA521UL3zGuz8YEnbLwHxU1d3cDnwntZHWeRzofwkcE0zyBF8NgrbtQQDtIVKU=
+X-Gm-Message-State: AOJu0YyLAIl6bXfVhHXCVnJq0prIHvMu50kMaQN5iN9hPtSmPtrhf3FO
+ Bxg2wroN+fFF7Sek2cBiiOV03N3/RTZG6ToM7f/Wh3I6StYK24zOkt8w5IUmlvJpzEoTgASN3G6
+ XHJZWcQxUoXTvBrzfc0qh2+kyqvQaSRQPlwOgEZDDpONOtAeeQAG8
+X-Received: by 2002:a17:906:5902:b0:a65:cea9:dd5c with SMTP id
+ a640c23a62f3a-a65cea9dee2mr84023366b.40.1717003540559; 
+ Wed, 29 May 2024 10:25:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQIx+ynVwwaX+SRQQHJUp1JEWvlz71y8SDnJZcCxzTNUd8tHwp2HYUYg/ary6LlKJALXTPBw==
+X-Received: by 2002:a17:906:5902:b0:a65:cea9:dd5c with SMTP id
+ a640c23a62f3a-a65cea9dee2mr84021066b.40.1717003540087; 
+ Wed, 29 May 2024 10:25:40 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
  [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43fe5e25ee9sm4999961cf.33.2024.05.29.10.23.17
+ a640c23a62f3a-a626cda8cc5sm733897766b.222.2024.05.29.10.25.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 10:23:23 -0700 (PDT)
-Message-ID: <8a71fea1-9446-458a-a30e-4b98ab75c410@redhat.com>
-Date: Wed, 29 May 2024 19:23:15 +0200
+ Wed, 29 May 2024 10:25:39 -0700 (PDT)
+Message-ID: <99b9a660-cefb-4394-ab49-c8e0b6364753@redhat.com>
+Date: Wed, 29 May 2024 19:25:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] tests/lcitool: bump to latest version
+Subject: Re: [PATCH 02/10] docs/devel: update references to centos to
+ non-versioned container
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Cleber Rosa <crosa@redhat.com>
+ qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Beraldo Leal <bleal@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Leif Lindholm <quic_llindhol@quicinc.com>, John Snow <jsnow@redhat.com>,
@@ -84,14 +85,14 @@ Cc: Laurent Vivier <lvivier@redhat.com>,
  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-arm@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Aurelien Jarno <aurelien@aurel32.net>,
+ qemu-arm@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Joel Stanley <joel@jms.id.au>, Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
  Radoslaw Biernacki <rad@semihalf.com>
 References: <20240529160934.982373-1-alex.bennee@linaro.org>
- <20240529160934.982373-8-alex.bennee@linaro.org>
+ <20240529160934.982373-3-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -136,19 +137,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240529160934.982373-8-alex.bennee@linaro.org>
+In-Reply-To: <20240529160934.982373-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,32 +165,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/05/2024 18.09, Alex Bennée wrote:
-> We have to simultaneously update a few bits on our side as lcitool has
-> already deprecated fedora-38, alpine-3.18 and centos-8-stream. However
-> there is no change to the package list yet.
+>>From the website:
 > 
+> "After May 31, 2024, CentOS Stream 8 will be archived and no further
+> updates will be provided."
+> 
+> We have updated a few bits but there are still references that need
+> fixing. Rather than bump I've replaced them with references to the
+> Debian image so we don't have to bump at the next update.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-Have you tried a CI run with these changes? I don't think this will work 
-yet. There are various issues with Fedora 40 that we need to solve first. 
-Some of them are addressed with patches in my pull request from today, but 
-others need more work first:
-
-- Avocado v88 is broken on Fedora 40 due to the missing "imp" package.
-   I've got a pull request for lci-tool pending, but it is not merged yet:
-   https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/489
-
-- The "clang-system" jobs are failing due to the new -fsanitize=undefined
-   errors that it discovers. Question is whether we want to fix all of them,
-   or whether we disable the error detection instead.
-
-- build-oss-fuzz job was failing, but that should get fixed with the
-   patches from my PR from today (thanks to Alexander Bulekov for the
-   patches)
-
-So unless I missed something, you've got to postpone this patch a little bit.
-
-  Thomas
-
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
