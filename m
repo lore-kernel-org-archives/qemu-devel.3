@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52366C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94CDC27C43
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCJie-0006SD-RU; Wed, 29 May 2024 09:51:56 -0400
+	id 1sCJj1-0006wV-4X; Wed, 29 May 2024 09:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sCJic-0006Ri-6M
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:51:54 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sCJiX-00037A-JD
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:51:53 -0400
-Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:4495:0:640:1311:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E220B60CDE;
- Wed, 29 May 2024 16:51:42 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b733::1:10] (unknown
- [2a02:6b8:b081:b733::1:10])
- by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id fpR6WH0Ib0U0-lfvzYYfQ; Wed, 29 May 2024 16:51:42 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1716990702;
- bh=fFGH9OzDe10QkAY9LLFssfuNyIAg3RuHWHlOQ9k7/8c=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=vMUT37k6vewzhwBrm4jkb3ElfD2MrNWNNcbpeOCOZyPrOyIVfGCsnQ6o8Z3FWb1LB
- PVQLp/TjnIu4Wi33oMeYfNKP5vqtbEp8iuAgJsPRtkwMowIcNaqqyEid5z7ziCLUG1
- wujW9tQ98A2/O9BAkUxymMsGNyh9pGAHCbzZUi/A=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru>
-Date: Wed, 29 May 2024 16:51:42 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCJiy-0006qZ-DW
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:16 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCJiw-00038I-MD
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:16 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-529b4011070so2546796e87.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716990733; x=1717595533; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d9YpsjaIZLNwdQwS/D25zq3vVF2SnGjIO0zM0Ve47k0=;
+ b=K1jdoC2QCVWD30w9up2VOi4IvPKjgAk0/Un0LXsz1740gSbzyjmJALLf79G3n5Y/Lf
+ wYWXmYz3yNHtOjPdGGx9JrvxN8iuIs1FkAOMBh5SQntbVBPJ9RnrIHxjIDH5P1ZtcitW
+ 1Qelx+qlzp2TM8EO1ROFcmSrA5NwcVGWI/CsmZdwZXq5Q/rRAG/vTZMO8E/eFbltIoQe
+ 2+hKTOxAD1D7SHRL6QrGlJcEwBBR4xNO/ukmzfpsfG+CCv3WwOBH8GEvdyiT3kzq29xQ
+ oF1VL+hKLGVmxy4mGLw5si4fBuCZGGDEBF6acD9SVlg6AbudVdWGxJ+TSeCmCbmvO74Q
+ McBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716990733; x=1717595533;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d9YpsjaIZLNwdQwS/D25zq3vVF2SnGjIO0zM0Ve47k0=;
+ b=FJfMeVSVnAqlGo1j/RnP/qhQrKQK0C9RvhIxXrLGQqrFoY/9raVrKZISlgRYxR+oXU
+ 9Pto9dD9hWg18DP6dQ9J14/mQNiY8DNF+kh3pr8np2vZH1jeYZ6LLYrTYQZsf4NdOqEL
+ mEQOc4Ngfd6Lv6hKy3Dxi+uldHsKinsCYzEZWpbhoigpL7Xe7UZUJQ9WriK46Jcku2sI
+ hrxzNPKELeaOmLkY8qaZTxtH1o+1Fy69/iDPakIj0sn7gJwGZDEcrfdIGEODyv5gf1in
+ Cvyd5wJvCorTWokFFQyLlbjc2wwAZFaMkMz2MHuDzaeZV43L0psvQgJlvrFRQBhjedRm
+ BMnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1EA+swg+DKp0glj5g72PsGvykhKkBdKxWjJwOYo2bwk4jWJzNpRO9niMHcTMZUA3gYa+AoqC71CzozAkagLPKoJAgZ8E=
+X-Gm-Message-State: AOJu0YxziK3jV4EyBKKCLmZar7rhWGy168OD7SphUuj8rTIpukgSGiw/
+ Q+ETrLRn9G9+MglQCyNAffHs8VPBbsbe8BnWwx9oIoTgbJRJXqWTIV+TyNYqavE=
+X-Google-Smtp-Source: AGHT+IFxa7v6SVRYVrtiKvHZogCQOfleuuMtO1ebVcpxT1OW4EDawz+C/Ib38ksF/E+2kIpY3JXGng==
+X-Received: by 2002:a05:6512:48c3:b0:52b:51f9:a37d with SMTP id
+ 2adb3069b0e04-52b51f9a3d6mr864470e87.56.1716990731822; 
+ Wed, 29 May 2024 06:52:11 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42100ef1207sm211566765e9.10.2024.05.29.06.52.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 May 2024 06:52:11 -0700 (PDT)
+Message-ID: <219da54c-7c9d-4baf-ba0c-d4afb6101cbe@linaro.org>
+Date: Wed, 29 May 2024 15:52:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
- QMP
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
- <87mso8n7tw.fsf@pond.sub.org>
- <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
- <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
- <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
+Subject: Re: [PATCH] hw/net: prevent potential NULL dereference
+To: Oleg Sviridov <oleg.sviridov@red-soft.ru>,
+ Nicholas Piggin <npiggin@gmail.com>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Jason Wang
+ <jasowang@redhat.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+References: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
 Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,97 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/24 4:39 PM, Philippe Mathieu-Daudé wrote:
+On 29/5/24 13:07, Oleg Sviridov wrote:
+> Pointer, returned from function 'spapr_vio_find_by_reg', may be NULL and is dereferenced immediately after.
+> 
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> 
+> Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+> ---
+>   hw/net/spapr_llan.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
+> index ecb30b7c76..f40b733229 100644
+> --- a/hw/net/spapr_llan.c
+> +++ b/hw/net/spapr_llan.c
+> @@ -770,6 +770,10 @@ static target_ulong h_change_logical_lan_mac(PowerPCCPU *cpu,
+>       SpaprVioVlan *dev = VIO_SPAPR_VLAN_DEVICE(sdev);
+>       int i;
+>   
 
-> On 29/5/24 14:43, Daniil Tatianin wrote:
->> On 5/29/24 3:36 PM, Philippe Mathieu-Daudé wrote:
->>
->>> On 29/5/24 14:03, Markus Armbruster wrote:
->>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>>>
->>>>> This can be used to force-synchronize the time in guest after a long
->>>>> stop-cont pause, which can be useful for serverless-type workload.
->>>>>
->>>>> Also add a comment to highlight the fact that this (and one other QMP
->>>>> command) only works for the MC146818 RTC controller.
->>>>>
->>>>> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>>>> ---
->>>>>
->>>>> Changes since v0:
->>>>> - Rename to rtc-inject-irq to match other similar API
->>>>> - Add a comment to highlight that this only works for the I386 RTC
->>>>>
->>>>> Changes since v1:
->>>>> - Added a description below the QMP command to explain how it can be
->>>>>    used and what it does.
->>>>>
->>>>> Changes since v2:
->>>>> - Add a 'broadcast' suffix.
->>>>> - Change the comments to explain the flags we're setting.
->>>>> - Change the command description to fix styling & explain that 
->>>>> it's a broadcast command.
->>>>>
->>>>> Changes since v3:
->>>>> - Fix checkpatch complaints about usage of C99 comments
->>>>>
->>>>> ---
->>>>>   hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
->>>>>   include/hw/rtc/mc146818rtc.h |  1 +
->>>>>   qapi/misc-target.json        | 19 +++++++++++++++++++
->>>>>   3 files changed, 40 insertions(+)
->
->
->>>>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->>>>> index 4e0a6492a9..7d388a3753 100644
->>>>> --- a/qapi/misc-target.json
->>>>> +++ b/qapi/misc-target.json
->>>>> @@ -19,6 +19,25 @@
->>>>>   { 'command': 'rtc-reset-reinjection',
->>>>>     'if': 'TARGET_I386' }
->>>>>   +##
->>>>> +# @rtc-inject-irq-broadcast:
->>>>> +#
->>>>> +# Inject an RTC interrupt for all existing RTCs on the system.
->>>>> +# The interrupt forces the guest to synchronize the time with RTC.
->>>>> +# This is useful after a long stop-cont pause, which is common for
->>>>> +# serverless-type workload.
->>>
->>> In previous version you said:
->>>
->>>   > This isn't really related to migration though. Serverless is based
->>>   > on constantly stopping and resuming the VM on e.g. every HTTP
->>>   > request to an endpoint.
->>>
->>> Which made some sense. Maybe mention HTTP? And point to that use case
->>> (possibly with QMP commands) in the commit description?
->>
->> Hmm, maybe it would be helpful for people who don't know what 
->> serverless means.
->>
->> How about:
->>      This is useful after a long stop-const pause, which is common 
->> for serverless-type workloads,
->>      e.g. stopping/resuming the VM on every HTTP request to an 
->> endpoint, which might involve
->>      a long pause in between the requests, causing time drift in the 
->> guest.
->
-> Please help me understand your workflow. Your management layer call
-> @stop and @cont QMP commands, is that right?
+Trying to change a MAC when no NIC is present is dubious, we could
+at least report this using qemu_log_mask(LOG_GUEST_ERROR).
 
-Yes, that is correct.
+> +    if (!dev) {
+> +        return H_PARAMETER;
+> +    }
+> +
+>       for (i = 0; i < ETH_ALEN; i++) {
+>           dev->nicconf.macaddr.a[ETH_ALEN - i - 1] = macaddr & 0xff;
+>           macaddr >>= 8;
 
-> @cont will emit a @RESUME event.
->
-> If we could listen to QAPI events from C code, we could have the
-> mc146818rtc device automatically sync on VM resume, and no need for
-> this async command.
-
-Perhaps? I'm not sure how that would be implemented, but let's see what 
-Markus has to say.
-
->
-> I'll let our QAPI expert enlighten me on this :)
 
