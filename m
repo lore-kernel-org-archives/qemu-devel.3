@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 880FBC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B27C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM7U-0001ud-Oc; Wed, 29 May 2024 12:25:44 -0400
+	id 1sCM7X-00020x-4D; Wed, 29 May 2024 12:25:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM7A-0001Ku-IX
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:25 -0400
+ id 1sCM74-0001Hu-1N
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:23 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM74-0006Nr-GT
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:24 -0400
+ id 1sCM71-0006Mo-Up
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:17 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6t-006CRU-Ct;
- Wed, 29 May 2024 17:25:07 +0100
+ (envelope-from <movement@movementarian.org>) id 1sCM6l-006CQA-3Z;
+ Wed, 29 May 2024 17:24:59 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
  thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 26/26] vfio-user: add coalesced posted writes
-Date: Wed, 29 May 2024 17:23:19 +0100
-Message-Id: <20240529162319.1476680-27-levon@movementarian.org>
+Subject: [PATCH 20/26] vfio-user: proxy container connect/disconnect
+Date: Wed, 29 May 2024 17:23:13 +0100
+Message-Id: <20240529162319.1476680-21-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
@@ -61,323 +61,211 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
-Add new message to send multiple writes to server.
-Prevents the outgoing queue from overflowing when
-a long latency operation is followed by a series
-of posted writes.
-
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/trace-events    |   1 +
- hw/vfio/user-protocol.h |  21 +++++++
- hw/vfio/user.c          | 130 +++++++++++++++++++++++++++++++++++++++-
- hw/vfio/user.h          |   7 +++
- 4 files changed, 157 insertions(+), 2 deletions(-)
+ hw/vfio/container.c           |  4 ++-
+ hw/vfio/user-container.c      | 52 ++++++++++++++++++++++++++++-------
+ hw/vfio/user-protocol.h       |  2 ++
+ hw/vfio/user.c                |  4 +++
+ hw/vfio/user.h                | 10 +++++++
+ include/hw/vfio/vfio-common.h |  1 +
+ 6 files changed, 62 insertions(+), 11 deletions(-)
 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 387751bd7f..2e6f0e6240 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -188,6 +188,7 @@ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index
- vfio_user_region_rw(uint32_t region, uint64_t off, uint32_t count) " region %d offset 0x%"PRIx64" count %d"
- vfio_user_get_irq_info(uint32_t index, uint32_t flags, uint32_t count) " index %d flags 0x%x count %d"
- vfio_user_set_irqs(uint32_t index, uint32_t start, uint32_t count, uint32_t flags) " index %d start %d count %d flags 0x%x"
-+vfio_user_wrmulti(const char *s, uint64_t wr_cnt) " %s count 0x%"PRIx64
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 7e1a1a010a..e60e92066d 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -914,7 +914,9 @@ void vfio_put_base_device(VFIODevice *vbasedev)
+     QLIST_REMOVE(vbasedev, next);
+     vbasedev->group = NULL;
+     trace_vfio_put_base_device(vbasedev->fd);
+-    close(vbasedev->fd);
++    if (vbasedev->fd != -1) {
++        close(vbasedev->fd);
++    }
+ }
  
- # user-container.c
- vfio_user_dma_map(uint64_t iova, uint64_t size, uint64_t off, uint32_t flags, bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" off 0x%"PRIx64" flags 0x%x async_ops %d"
+ static int vfio_device_groupid(VFIODevice *vbasedev, Error **errp)
+diff --git a/hw/vfio/user-container.c b/hw/vfio/user-container.c
+index f1218560a4..f0414509d5 100644
+--- a/hw/vfio/user-container.c
++++ b/hw/vfio/user-container.c
+@@ -56,34 +56,62 @@ static int vfio_user_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+ 
+ static bool vfio_user_setup(VFIOContainerBase *bcontainer, Error **errp)
+ {
+-    error_setg_errno(errp, ENOTSUP, "Not supported");
+-    return -ENOTSUP;
++    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
++                                                bcontainer);
++
++    assert(container->proxy->dma_pgsizes != 0);
++    bcontainer->pgsizes = container->proxy->dma_pgsizes;
++    bcontainer->dma_max_mappings = container->proxy->max_dma;
++
++    /* No live migration support yet. */
++    bcontainer->dirty_pages_supported = false;
++    bcontainer->max_dirty_bitmap_size = container->proxy->max_bitmap;
++    bcontainer->dirty_pgsizes = container->proxy->migr_pgsize;
++
++    return true;
+ }
+ 
+ /*
+  * Try to mirror vfio_connect_container() as much as possible.
+  */
+ static VFIOUserContainer *
+-vfio_connect_user_container(AddressSpace *as, Error **errp)
++vfio_connect_user_container(AddressSpace *as, VFIODevice *vbasedev,
++                            Error **errp)
+ {
+-    VFIOAddressSpace *space;
+-    VFIOUserContainer *container;
+     VFIOContainerBase *bcontainer;
++    VFIOUserContainer *container;
++    const VFIOIOMMUClass *ops;
++    VFIOAddressSpace *space;
++    int ret;
+ 
+     space = vfio_get_address_space(as);
+ 
+     container = g_malloc0(sizeof(*container));
+-
++    container->proxy = vbasedev->proxy;
+     bcontainer = &container->bcontainer;
+ 
++    ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_USER));
++
++    vfio_container_init(&container->bcontainer, space, ops);
++
+     if (!vfio_cpr_register_container(bcontainer, errp)) {
+         goto free_container_exit;
+     }
+ 
++    /*
++     * VFIO user allows the device server to map guest memory so it has the same
++     * issue with discards as a local IOMMU has.
++     */
++    ret = ram_block_uncoordinated_discard_disable(true);
++    if (ret) {
++        error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
++        goto unregister_container_exit;
++    }
++
+     assert(bcontainer->ops->setup);
+ 
+     if (!bcontainer->ops->setup(bcontainer, errp)) {
+-        goto unregister_container_exit;
++        goto enable_discards_exit;
+     }
+ 
+     QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
+@@ -109,6 +137,9 @@ listener_release_exit:
+         bcontainer->ops->release(bcontainer);
+     }
+ 
++enable_discards_exit:
++    ram_block_uncoordinated_discard_disable(false);
++
+ unregister_container_exit:
+     vfio_cpr_unregister_container(bcontainer);
+ 
+@@ -123,14 +154,15 @@ free_container_exit:
+ static void vfio_disconnect_user_container(VFIOUserContainer *container)
+ {
+     VFIOContainerBase *bcontainer = &container->bcontainer;
++    VFIOAddressSpace *space = bcontainer->space;
++
++    ram_block_uncoordinated_discard_disable(false);
+ 
+     memory_listener_unregister(&bcontainer->listener);
+     if (bcontainer->ops->release) {
+         bcontainer->ops->release(bcontainer);
+     }
+ 
+-    VFIOAddressSpace *space = bcontainer->space;
+-
+     vfio_container_destroy(bcontainer);
+ 
+     vfio_cpr_unregister_container(bcontainer);
+@@ -166,7 +198,7 @@ static bool vfio_user_attach_device(const char *name, VFIODevice *vbasedev,
+ {
+     VFIOUserContainer *container;
+ 
+-    container = vfio_connect_user_container(as, errp);
++    container = vfio_connect_user_container(as, vbasedev, errp);
+     if (container == NULL) {
+         error_prepend(errp, "failed to connect proxy");
+         return false;
 diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
-index 607e0f4b7f..22e3265f58 100644
+index 48dd475ab3..87e43ddc72 100644
 --- a/hw/vfio/user-protocol.h
 +++ b/hw/vfio/user-protocol.h
-@@ -42,6 +42,7 @@ enum vfio_user_command {
-     VFIO_USER_DMA_WRITE                 = 12,
-     VFIO_USER_DEVICE_RESET              = 13,
-     VFIO_USER_DIRTY_PAGES               = 14,
-+    VFIO_USER_REGION_WRITE_MULTI        = 15,
-     VFIO_USER_MAX,
- };
+@@ -16,6 +16,8 @@
+  * region and offset info for read and write commands.
+  */
  
-@@ -75,6 +76,7 @@ typedef struct {
- #define VFIO_USER_CAP_PGSIZES   "pgsizes"
- #define VFIO_USER_CAP_MAP_MAX   "max_dma_maps"
- #define VFIO_USER_CAP_MIGR      "migration"
-+#define VFIO_USER_CAP_MULTI     "write_multiple"
- 
- /* "migration" members */
- #define VFIO_USER_CAP_PGSIZE            "pgsize"
-@@ -221,4 +223,23 @@ typedef struct {
-     char data[];
- } VFIOUserBitmap;
- 
-+/*
-+ * VFIO_USER_REGION_WRITE_MULTI
-+ */
-+#define VFIO_USER_MULTI_DATA  8
-+#define VFIO_USER_MULTI_MAX   200
++#include <stdint.h>
 +
-+typedef struct {
-+    uint64_t offset;
-+    uint32_t region;
-+    uint32_t count;
-+    char data[VFIO_USER_MULTI_DATA];
-+} VFIOUserWROne;
-+
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint64_t wr_cnt;
-+    VFIOUserWROne wrs[VFIO_USER_MULTI_MAX];
-+} VFIOUserWRMulti;
-+
- #endif /* VFIO_USER_PROTOCOL_H */
+ typedef struct {
+     uint16_t id;
+     uint16_t command;
 diff --git a/hw/vfio/user.c b/hw/vfio/user.c
-index f13381f310..b866c84b4c 100644
+index 352c10d37b..224b5febd8 100644
 --- a/hw/vfio/user.c
 +++ b/hw/vfio/user.c
-@@ -61,6 +61,7 @@ static void vfio_user_request(void *opaque);
- static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                                  VFIOUserFDs *fds);
-+static void vfio_user_flush_multi(VFIOUserProxy *proxy);
- 
- static inline void vfio_user_set_error(VFIOUserHdr *hdr, uint32_t err)
- {
-@@ -465,6 +466,11 @@ static void vfio_user_send(void *opaque)
-         }
-         qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-                                        vfio_user_recv, NULL, NULL, proxy);
-+
-+        /* queue empty - send any pending multi write msgs */
-+        if (proxy->wr_multi != NULL) {
-+            vfio_user_flush_multi(proxy);
-+        }
-     }
- }
- 
-@@ -485,6 +491,7 @@ static int vfio_user_send_one(VFIOUserProxy *proxy)
-     }
- 
-     QTAILQ_REMOVE(&proxy->outgoing, msg, next);
-+    proxy->num_outgoing--;
-     if (msg->type == VFIO_MSG_ASYNC) {
-         vfio_user_recycle(proxy, msg);
-     } else {
-@@ -592,11 +599,18 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
- {
-     int ret;
- 
-+    /* older coalesced writes go first */
-+    if (proxy->wr_multi != NULL &&
-+        ((msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REQUEST)) {
-+        vfio_user_flush_multi(proxy);
-+    }
-+
-     /*
-      * Unsent outgoing msgs - add to tail
-      */
-     if (!QTAILQ_EMPTY(&proxy->outgoing)) {
-         QTAILQ_INSERT_TAIL(&proxy->outgoing, msg, next);
-+        proxy->num_outgoing++;
-         return 0;
-     }
- 
-@@ -610,6 +624,7 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
-     }
-     if (ret == QIO_CHANNEL_ERR_BLOCK) {
-         QTAILQ_INSERT_HEAD(&proxy->outgoing, msg, next);
-+        proxy->num_outgoing = 1;
-         qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-                                        vfio_user_recv, proxy->ctx,
-                                        vfio_user_send, proxy);
-@@ -1149,12 +1164,27 @@ static bool check_migr(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-     return caps_parse(proxy, qdict, caps_migr, errp);
- }
- 
-+static bool check_multi(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QBool *qb = qobject_to(QBool, qobj);
-+
-+    if (qb == NULL) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MULTI);
-+        return false;
-+    }
-+    if (qbool_get_bool(qb)) {
-+        proxy->flags |= VFIO_PROXY_USE_MULTI;
-+    }
-+    return true;
-+}
-+
- static struct cap_entry caps_cap[] = {
-     { VFIO_USER_CAP_MAX_FDS, check_max_fds },
-     { VFIO_USER_CAP_MAX_XFER, check_max_xfer },
-     { VFIO_USER_CAP_PGSIZES, check_pgsizes },
-     { VFIO_USER_CAP_MAP_MAX, check_max_dma },
-     { VFIO_USER_CAP_MIGR, check_migr },
-+    { VFIO_USER_CAP_MULTI, check_multi },
-     { NULL }
- };
- 
-@@ -1213,6 +1243,7 @@ static GString *caps_json(void)
-     qdict_put_int(capdict, VFIO_USER_CAP_MAX_XFER, VFIO_USER_DEF_MAX_XFER);
-     qdict_put_int(capdict, VFIO_USER_CAP_PGSIZES, VFIO_USER_DEF_PGSIZE);
-     qdict_put_int(capdict, VFIO_USER_CAP_MAP_MAX, VFIO_USER_DEF_MAP_MAX);
-+    qdict_put_bool(capdict, VFIO_USER_CAP_MULTI, true);
- 
-     qdict_put_obj(dict, VFIO_USER_CAP, QOBJECT(capdict));
- 
-@@ -1481,19 +1512,114 @@ static int vfio_user_region_read(VFIOUserProxy *proxy, uint8_t index,
-     return msgp->count;
- }
- 
-+static void vfio_user_flush_multi(VFIOUserProxy *proxy)
-+{
-+    VFIOUserMsg *msg;
-+    VFIOUserWRMulti *wm = proxy->wr_multi;
-+    int ret;
-+
-+    proxy->wr_multi = NULL;
-+
-+    /* adjust size for actual # of writes */
-+    wm->hdr.size -= (VFIO_USER_MULTI_MAX - wm->wr_cnt) * sizeof(VFIOUserWROne);
-+
-+    msg = vfio_user_getmsg(proxy, &wm->hdr, NULL);
-+    msg->id = wm->hdr.id;
-+    msg->rsize = 0;
-+    msg->type = VFIO_MSG_ASYNC;
-+    trace_vfio_user_wrmulti("flush", wm->wr_cnt);
-+
-+    ret = vfio_user_send_queued(proxy, msg);
-+    if (ret < 0) {
-+        vfio_user_recycle(proxy, msg);
-+    }
-+}
-+
-+static void vfio_user_create_multi(VFIOUserProxy *proxy)
-+{
-+    VFIOUserWRMulti *wm;
-+
-+    wm = g_malloc0(sizeof(*wm));
-+    vfio_user_request_msg(&wm->hdr, VFIO_USER_REGION_WRITE_MULTI,
-+                          sizeof(*wm), VFIO_USER_NO_REPLY);
-+    proxy->wr_multi = wm;
-+}
-+
-+static void vfio_user_add_multi(VFIOUserProxy *proxy, uint8_t index,
-+                                off_t offset, uint32_t count, void *data)
-+{
-+    VFIOUserWRMulti *wm = proxy->wr_multi;
-+    VFIOUserWROne *w1 = &wm->wrs[wm->wr_cnt];
-+
-+    w1->offset = offset;
-+    w1->region = index;
-+    w1->count = count;
-+    memcpy(&w1->data, data, count);
-+
-+    wm->wr_cnt++;
-+    trace_vfio_user_wrmulti("add", wm->wr_cnt);
-+    if (wm->wr_cnt == VFIO_USER_MULTI_MAX ||
-+        proxy->num_outgoing < VFIO_USER_OUT_LOW) {
-+        vfio_user_flush_multi(proxy);
-+    }
-+}
-+
- static int vfio_user_region_write(VFIOUserProxy *proxy, uint8_t index,
-                                   off_t offset, uint32_t count, void *data,
-                                   bool post)
- {
-     VFIOUserRegionRW *msgp = NULL;
--    int flags = post ? VFIO_USER_NO_REPLY : 0;
-+    int flags;
-     int size = sizeof(*msgp) + count;
-+    bool can_multi;
-     int ret;
- 
-     if (count > proxy->max_xfer_size) {
-         return -EINVAL;
-     }
- 
-+    if (proxy->flags & VFIO_PROXY_NO_POST) {
-+        post = false;
-+    }
-+
-+    /* write eligible to be in a WRITE_MULTI msg ? */
-+    can_multi = (proxy->flags & VFIO_PROXY_USE_MULTI) && post &&
-+        count <= VFIO_USER_MULTI_DATA;
-+
-+    /*
-+     * This should be a rare case, so first check without the lock,
-+     * if we're wrong, vfio_send_queued() will flush any posted writes
-+     * we missed here
-+     */
-+    if (proxy->wr_multi != NULL ||
-+        (proxy->num_outgoing > VFIO_USER_OUT_HIGH && can_multi)) {
-+
-+        /*
-+         * re-check with lock
-+         *
-+         * if already building a WRITE_MULTI msg,
-+         *  add this one if possible else flush pending before
-+         *  sending the current one
-+         *
-+         * else if outgoing queue is over the highwater,
-+         *  start a new WRITE_MULTI message
-+         */
-+        WITH_QEMU_LOCK_GUARD(&proxy->lock) {
-+            if (proxy->wr_multi != NULL) {
-+                if (can_multi) {
-+                    vfio_user_add_multi(proxy, index, offset, count, data);
-+                    return count;
-+                }
-+                vfio_user_flush_multi(proxy);
-+            } else if (proxy->num_outgoing > VFIO_USER_OUT_HIGH && can_multi) {
-+                vfio_user_create_multi(proxy);
-+                vfio_user_add_multi(proxy, index, offset, count, data);
-+                return count;
-+            }
-+        }
-+    }
-+
-+    flags = post ? VFIO_USER_NO_REPLY : 0;
-     msgp = g_malloc0(size);
-     vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_WRITE, size, flags);
-     msgp->offset = offset;
-@@ -1503,7 +1629,7 @@ static int vfio_user_region_write(VFIOUserProxy *proxy, uint8_t index,
-     trace_vfio_user_region_rw(msgp->region, msgp->offset, msgp->count);
- 
-     /* async send will free msg after it's sent */
--    if (post && !(proxy->flags & VFIO_PROXY_NO_POST)) {
-+    if (post) {
-         vfio_user_send_async(proxy, &msgp->hdr, NULL);
-         return count;
-     }
+@@ -18,10 +18,14 @@
+ #include "qemu/lockable.h"
+ #include "hw/hw.h"
+ #include "hw/vfio/vfio-common.h"
++#include "exec/address-spaces.h"
++#include "exec/memory.h"
++#include "exec/ram_addr.h"
+ #include "qemu/sockets.h"
+ #include "io/channel.h"
+ #include "io/channel-socket.h"
+ #include "io/channel-util.h"
++#include "sysemu/reset.h"
+ #include "sysemu/iothread.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qjson.h"
 diff --git a/hw/vfio/user.h b/hw/vfio/user.h
-index ff2aa005eb..dc4d41cc0e 100644
+index 1f99a976d6..9039e96069 100644
 --- a/hw/vfio/user.h
 +++ b/hw/vfio/user.h
-@@ -90,6 +90,8 @@ typedef struct VFIOUserProxy {
-     VFIOUserMsg *last_nowait;
-     VFIOUserMsg *part_recv;
-     size_t recv_left;
-+    VFIOUserWRMulti *wr_multi;
-+    int num_outgoing;
-     enum proxy_state state;
- } VFIOUserProxy;
+@@ -11,7 +11,17 @@
+  *
+  */
  
-@@ -98,6 +100,11 @@ typedef struct VFIOUserProxy {
- #define VFIO_PROXY_NO_MMAP       0x2
- #define VFIO_PROXY_FORCE_QUEUED  0x4
- #define VFIO_PROXY_NO_POST       0x8
-+#define VFIO_PROXY_USE_MULTI     0x10
++#include <stdbool.h>
 +
-+/* coalescing high and low water marks for VFIOProxy num_outgoing */
-+#define VFIO_USER_OUT_HIGH       1024
-+#define VFIO_USER_OUT_LOW        128
++#include "glib-compat.h"
+ #include "user-protocol.h"
++#include "qemu/osdep.h"
++#include "qemu/typedefs.h"
++#include "qemu/queue.h"
++#include "qemu/sockets.h"
++#include "qemu/thread.h"
++
++typedef struct VFIODevice VFIODevice;
  
- typedef struct VFIODevice VFIODevice;
+ typedef struct {
+     int send_fds;
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 747b343596..c06099edce 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -90,6 +90,7 @@ typedef struct VFIOContainer {
+ /* MMU container sub-class for vfio-user. */
+ typedef struct VFIOUserContainer {
+     VFIOContainerBase bcontainer;
++    VFIOUserProxy *proxy;
+ } VFIOUserContainer;
  
+ typedef struct VFIOHostDMAWindow {
 -- 
 2.34.1
 
