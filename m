@@ -4,124 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1CE1C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CB3C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:55:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCIow-0007Bj-QI; Wed, 29 May 2024 08:54:22 -0400
+	id 1sCIpJ-0007Mu-LT; Wed, 29 May 2024 08:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
- id 1sCIor-000782-FB
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:54:17 -0400
-Received: from mailout4.samsung.com ([203.254.224.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
- id 1sCIoi-0008Il-N3
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:54:16 -0400
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20240529125358epoutp0417ff4e9ee3fa5c8324b6aca84317ed83~T9svImTFd2500325003epoutp04b
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 12:53:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20240529125358epoutp0417ff4e9ee3fa5c8324b6aca84317ed83~T9svImTFd2500325003epoutp04b
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1716987238;
- bh=4UqckNa3SBolRT98q8YcZiBZPFFmi/MfRyXlY1dqzW0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pIJMzwgzV1wdLlFFbbW8AWP3UNpHPbeQPl4ULlO4CZN7uihn1TmSxIBGKBerlZb6B
- luC5eX8tBE9Jqhu2tCgbwKsMzdOgctseNFP53Ur7H8N2CvqMkrF2CiaMeTwgNFKqEB
- eYzWmm0t1qX3rtw2mOqUM4+1mX+XbL9Ji9qufJDU=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
- epcas2p1.samsung.com (KnoxPortal) with ESMTP id
- 20240529125357epcas2p138f6648af3b1674729552ec99b040d88~T9suwLEmR0515505155epcas2p13;
- Wed, 29 May 2024 12:53:57 +0000 (GMT)
-Received: from epsmges2p4.samsung.com (unknown [182.195.36.88]) by
- epsnrtp2.localdomain (Postfix) with ESMTP id 4Vq8TK2RHKz4x9Pv; Wed, 29 May
- 2024 12:53:57 +0000 (GMT)
-Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
- epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
- 8C.E6.09479.56527566; Wed, 29 May 2024 21:53:57 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
- epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
- 20240529125356epcas2p218eee16c01039ef5f0d5c8706825485d~T9suHfgRu0038900389epcas2p2Q;
- Wed, 29 May 2024 12:53:56 +0000 (GMT)
-Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
- epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
- 20240529125356epsmtrp2d5418d6fd3b5933b0725e682d48dbe5a~T9suE5hbS1667216672epsmtrp2E;
- Wed, 29 May 2024 12:53:56 +0000 (GMT)
-X-AuditID: b6c32a48-ea7ff70000002507-e6-6657256564c3
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
- epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
- 69.3A.18846.46527566; Wed, 29 May 2024 21:53:56 +0900 (KST)
-Received: from localhost.dsn.sec.samsung.com (unknown [10.229.54.230]) by
- epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20240529125356epsmtip25bc1477f69fa5f1f32a9bb55fff374ff~T9st7Iwvf1461914619epsmtip2P;
- Wed, 29 May 2024 12:53:56 +0000 (GMT)
-From: Minwoo Im <minwoo.im@samsung.com>
-To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, minwoo.im@samsung.com,
- gost.dev@samsung.com, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v4 4/4] hw/nvme: Expand VI/VQ resource to uint32
-Date: Wed, 29 May 2024 21:42:34 +0900
-Message-Id: <20240529124234.1430707-5-minwoo.im@samsung.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240529124234.1430707-1-minwoo.im@samsung.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sCIpE-0007JU-Mq
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:54:41 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sCIpA-0008PU-SE
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:54:39 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9E53420549;
+ Wed, 29 May 2024 12:54:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1716987273; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FxnW1kTIL/kESlJLXbxMFxOOdBCLGBggie/ToXHz7gE=;
+ b=JzXIjjpyuuvYQJDJvXTp48/C5FT6COqUvujtxc81NkS5WC7sNKtvVTrB02NgwPPGQJhuis
+ czYNsZH9k5GuNDbOOa5wSTn4Rx+8e5noJZsXWsDJYWP904u0DqtI0fcn7vsysiU3DscIU9
+ fK1FYi4rSviGKdau8X9SMK78idJCSPA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1716987273;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FxnW1kTIL/kESlJLXbxMFxOOdBCLGBggie/ToXHz7gE=;
+ b=NiTx1XVD+38sGiSeLpUp68V1wrg35CDj9TNvZpHskWntVlSG5R8SDG6aDfYNrjLptrAw2x
+ mZyoBcTdk9PMVCBw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1716987273; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FxnW1kTIL/kESlJLXbxMFxOOdBCLGBggie/ToXHz7gE=;
+ b=JzXIjjpyuuvYQJDJvXTp48/C5FT6COqUvujtxc81NkS5WC7sNKtvVTrB02NgwPPGQJhuis
+ czYNsZH9k5GuNDbOOa5wSTn4Rx+8e5noJZsXWsDJYWP904u0DqtI0fcn7vsysiU3DscIU9
+ fK1FYi4rSviGKdau8X9SMK78idJCSPA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1716987273;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FxnW1kTIL/kESlJLXbxMFxOOdBCLGBggie/ToXHz7gE=;
+ b=NiTx1XVD+38sGiSeLpUp68V1wrg35CDj9TNvZpHskWntVlSG5R8SDG6aDfYNrjLptrAw2x
+ mZyoBcTdk9PMVCBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2B85013A6B;
+ Wed, 29 May 2024 12:54:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id HHnqOIglV2YdPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 May 2024 12:54:32 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] tests/qtest/migrate-test: Add a postcopy memfile test
+In-Reply-To: <20240529041322.701525-1-npiggin@gmail.com>
+References: <20240529041322.701525-1-npiggin@gmail.com>
+Date: Wed, 29 May 2024 09:54:30 -0300
+Message-ID: <875xuwg4mx.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnk+LIzCtJLcpLzFFi42LZdljTXDdVNTzNYPF1QYsTU8Isbh7YyWSx
- /+A3VouTjXtYLSYdusZo8ez0AWaLWe/a2SyO9+5gceDwmDLtGrvHuR3n2T02repk83hybTOT
- R9+WVYwBrFHZNhmpiSmpRQqpecn5KZl56bZK3sHxzvGmZgaGuoaWFuZKCnmJuam2Si4+Abpu
- mTlAtygplCXmlAKFAhKLi5X07WyK8ktLUhUy8otLbJVSC1JyCswL9IoTc4tL89L18lJLrAwN
- DIxMgQoTsjNO/ZvAXrCMv+LYS7MGxjvcXYycHBICJhLLp05l7GLk4hAS2MEo8XnvNyjnE6NE
- +9FjbHDOx5Zl7DAtszY+h6raySjRfGsPO4Tzm1Fix5zvTCBVbALqEg1TX7GA2CICORL9K0Hi
- XBzMAi2MEt3nbjGDJIQFHCSOz9jICGKzCKhK/Fi3HCzOK2AjsfDyZDaIdfIS+w+eBYtzCthK
- dM15ww5RIyhxcuYTsAXMQDXNW2czQ9S/ZJfoaquEsF0kuhf1M0LYwhKvjm+BekFK4vO7vVDz
- yyV+vpkEVVMhcXDWbaA4B5BtL3HteQqIySygKbF+lz5EVFniyC2opXwSHYf/skOEeSU62oQg
- ZihLfDx0COoWSYnll15D7fGQWNC+kgkSUhMYJWYsX84+gVFhFpJfZiH5ZRbC4gWMzKsYxVIL
- inPTU4uNCkzg8Zucn7uJEZwytTx2MM5++0HvECMTB+MhRgkOZiUR3jOTQtOEeFMSK6tSi/Lj
- i0pzUosPMZoCQ3ois5Rocj4waeeVxBuaWBqYmJkZmhuZGpgrifPea52bIiSQnliSmp2aWpBa
- BNPHxMEp1cA08bm3wanSxqL1iQWfGaM72zcapRhUqbxhdOyV+hfYbTgvv2Pvr5eNajfv725V
- ExD0dC68JNvz7Mj5CHU35qU7Li98teT+yk9Sz73PSm15/ur7Z5npgSFirvuFV8je237Hsmrp
- vdK3q37OuiWx+PKkiROZfHxyhUsCcv88n/5U/kPC3y3r/Xc4d9cdUmOp6E7jfChcMEH2kI/+
- g1+e3wvWWnlc/L+fI+ZRe7SunpD6yzg5idO2a9e/kP2/ozS/Z11fryxHwQpb4+WpAUFJF14v
- MWa4/3jVmQur7B+dmRJyfur59pQVRxguqUkkSU35OKk4rDb+45/uGkuX5F/sO6N+nu20VRFa
- O+fLL8n00wdFlFiKMxINtZiLihMB3Ibf5CIEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOLMWRmVeSWpSXmKPExsWy7bCSvG6KaniawfNfxhYnpoRZ3Dywk8li
- /8FvrBYnG/ewWkw6dI3R4tnpA8wWs961s1kc793B4sDhMWXaNXaPczvOs3tsWtXJ5vHk2mYm
- j74tqxgDWKO4bFJSczLLUov07RK4Mk79m8BesIy/4thLswbGO9xdjJwcEgImErM2PmfsYuTi
- EBLYzijx9tkDZoiEpMS+0zdZIWxhifstR8BsIYGfjBKfrkqB2GwC6hINU1+xgNgiAnkS114u
- YQYZxCzQxSgx6+JUsEHCAg4Sx2dsZASxWQRUJX6sWw4W5xWwkVh4eTIbxAJ5if0Hz4LFOQVs
- JbrmvGGHWGYjsejxb3aIekGJkzOfgC1jBqpv3jqbeQKjwCwkqVlIUgsYmVYxiqYWFOem5yYX
- GOoVJ+YWl+al6yXn525iBIe1VtAOxmXr/+odYmTiYDzEKMHBrCTCe2ZSaJoQb0piZVVqUX58
- UWlOavEhRmkOFiVxXuWczhQhgfTEktTs1NSC1CKYLBMHp1QDU2XQ59aS+Dt9LffX+OQKnD+r
- e+uZfH9LauH9h4J3lCNmsxUtbEpkKpC4ealIOqBljv7pJhHbIwFGOZH7g9b9imHVmSOwe2PO
- i4W31ROO+/KfV3zG2rh+m7dD5Sy/6Wmtu24sO9WbICVkFe7tLLbEfsb85y6dy3XEDx1M/yzT
- GCOzVeIG88U7Xv/2HPjmnCofm83LEnpmlW/zxydxbXssZnLFnfq5KY5x5YQdr891qQvs/rR8
- fryNafRf4yl9h4p+H2S1ijTd8qcx4O4yjhjfIx72qX777sUwbT7+9nn/pgS+uc8uJeXsuHLp
- 9x2/jExx85qCC3scu+69jJzKsqWvUSbhjeWDg+Hr5N7M5vjSp8RSnJFoqMVcVJwIANtkL9/a
- AgAA
-X-CMS-MailID: 20240529125356epcas2p218eee16c01039ef5f0d5c8706825485d
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240529125356epcas2p218eee16c01039ef5f0d5c8706825485d
-References: <20240529124234.1430707-1-minwoo.im@samsung.com>
- <CGME20240529125356epcas2p218eee16c01039ef5f0d5c8706825485d@epcas2p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=minwoo.im@samsung.com; helo=mailout4.samsung.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_CC(0.00)[gmail.com,redhat.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; RCPT_COUNT_SEVEN(0.00)[7];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,55 +117,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VI and VQ resources cover queue resources in each VFs in SR-IOV.
-Current maximum I/O queue pair size is 0xffff, we can expand them to
-cover the full number of I/O queue pairs.
+Nicholas Piggin <npiggin@gmail.com> writes:
 
-This patch also fixed Identify Secondary Controller List overflow due to
-expand of number of secondary controllers.
+> Postcopy requires userfaultfd support, which requires tmpfs if a memory
+> file is used.
+>
+> This adds back support for /dev/shm memory files, but adds preallocation
+> to skip environments where that mount is limited in size.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>
+> How about this? This goes on top of the reset of the patches
+> (I'll re-send them all as a series if we can get to some agreement).
+>
+> This adds back the /dev/shm option with preallocation and adds a test
+> case that requires tmpfs.
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
----
- hw/nvme/ctrl.c | 8 ++++----
- hw/nvme/nvme.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+Peter has stronger opinions on this than I do. I'll leave it to him to
+decide.
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 90a58e71bd..b957debdc3 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8460,10 +8460,10 @@ static Property nvme_props[] = {
-                        params.sriov_vq_flexible, 0),
-     DEFINE_PROP_UINT16("sriov_vi_flexible", NvmeCtrl,
-                        params.sriov_vi_flexible, 0),
--    DEFINE_PROP_UINT8("sriov_max_vi_per_vf", NvmeCtrl,
--                      params.sriov_max_vi_per_vf, 0),
--    DEFINE_PROP_UINT8("sriov_max_vq_per_vf", NvmeCtrl,
--                      params.sriov_max_vq_per_vf, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vi_per_vf", NvmeCtrl,
-+                       params.sriov_max_vi_per_vf, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vq_per_vf", NvmeCtrl,
-+                       params.sriov_max_vq_per_vf, 0),
-     DEFINE_PROP_BOOL("msix-exclusive-bar", NvmeCtrl, params.msix_exclusive_bar,
-                      false),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index d8ec4bad6a..b0b2739802 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -534,8 +534,8 @@ typedef struct NvmeParams {
-     uint16_t  sriov_max_vfs;
-     uint16_t sriov_vq_flexible;
-     uint16_t sriov_vi_flexible;
--    uint8_t  sriov_max_vq_per_vf;
--    uint8_t  sriov_max_vi_per_vf;
-+    uint32_t  sriov_max_vq_per_vf;
-+    uint32_t  sriov_max_vi_per_vf;
-     bool     msix_exclusive_bar;
- } NvmeParams;
- 
--- 
-2.34.1
+Just note that now we're making the CI less deterministic in relation to
+the migration tests. When a test that uses shmem fails, we'll not be
+able to consistently reproduce because the test might not even run
+depending on what has consumed the shmem first.
 
+Let's also take care that the other consumers of shmem (I think just
+ivshmem-test) are able to cope with the migration-test taking all the
+space, otherwise the CI will still break.
+
+>
+> Thanks,
+> Nick
+>
+>  tests/qtest/migration-test.c | 63 +++++++++++++++++++++++++++++++-----
+>  1 file changed, 55 insertions(+), 8 deletions(-)
+>
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index 86eace354e..7fd9bbdc18 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -11,6 +11,7 @@
+>   */
+>  
+>  #include "qemu/osdep.h"
+> +#include "qemu/cutils.h"
+>  
+>  #include "libqtest.h"
+>  #include "qapi/qmp/qdict.h"
+> @@ -553,6 +554,7 @@ typedef struct {
+>       */
+>      bool hide_stderr;
+>      bool use_memfile;
+> +    bool use_uffd_memfile;
+>      /* only launch the target process */
+>      bool only_target;
+>      /* Use dirty ring if true; dirty logging otherwise */
+> @@ -739,7 +741,48 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>          ignore_stderr = "";
+>      }
+>  
+> -    if (args->use_memfile) {
+> +    if (!qtest_has_machine(machine_alias)) {
+> +        g_autofree char *msg = g_strdup_printf("machine %s not supported",
+> +                                               machine_alias);
+> +        g_test_skip(msg);
+> +        return -1;
+> +    }
+> +
+> +    if (args->use_uffd_memfile) {
+> +#if defined(__NR_userfaultfd) && defined(__linux__)
+> +        int fd;
+> +        uint64_t size;
+> +
+> +        if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
+> +            g_test_skip("/dev/shm does not exist or is not a directory");
+> +            return -1;
+> +        }
+> +
+> +        /*
+> +         * Pre-create and allocate the file here, because /dev/shm/
+> +         * is known to be limited in size in some places (e.g., Gitlab CI).
+> +         */
+> +        memfile_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
+> +        fd = open(memfile_path, O_WRONLY | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
+> +        if (fd == -1) {
+> +            g_test_skip("/dev/shm file could not be created");
+> +            return -1;
+> +        }
+> +
+> +        g_assert(qemu_strtosz(memory_size, NULL, &size) == 0);
+> +        size += 64*1024; /* QEMU may map a bit more memory for a guard page */
+> +
+> +        if (fallocate(fd, 0, 0, size) == -1) {
+> +            unlink(memfile_path);
+> +            perror("could not alloc"); exit(1);
+> +            g_test_skip("Could not allocate machine memory in /dev/shm");
+> +            return -1;
+> +        }
+> +        close(fd);
+> +#else
+> +        g_test_skip("userfaultfd is not supported");
+> +#endif
+> +    } else if (args->use_memfile) {
+>          memfile_path = g_strdup_printf("/%s/qemu-%d", tmpfs, getpid());
+>          memfile_opts = g_strdup_printf(
+>              "-object memory-backend-file,id=mem0,size=%s"
+> @@ -751,12 +794,6 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>          kvm_opts = ",dirty-ring-size=4096";
+>      }
+>  
+> -    if (!qtest_has_machine(machine_alias)) {
+> -        g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
+> -        g_test_skip(msg);
+> -        return -1;
+> -    }
+> -
+>      machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
+>                                        QEMU_ENV_DST);
+>  
+> @@ -807,7 +844,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>       * Remove shmem file immediately to avoid memory leak in test failed case.
+>       * It's valid because QEMU has already opened this file
+>       */
+> -    if (args->use_memfile) {
+> +    if (args->use_memfile || args->use_uffd_memfile) {
+>          unlink(memfile_path);
+>      }
+>  
+> @@ -1275,6 +1312,15 @@ static void test_postcopy(void)
+>      test_postcopy_common(&args);
+>  }
+>  
+> +static void test_postcopy_memfile(void)
+> +{
+> +    MigrateCommon args = {
+> +        .start.use_uffd_memfile = true,
+> +    };
+> +
+> +    test_postcopy_common(&args);
+> +}
+> +
+>  static void test_postcopy_suspend(void)
+>  {
+>      MigrateCommon args = {
+> @@ -3441,6 +3487,7 @@ int main(int argc, char **argv)
+>  
+>      if (has_uffd) {
+>          migration_test_add("/migration/postcopy/plain", test_postcopy);
+> +        migration_test_add("/migration/postcopy/memfile", test_postcopy_memfile);
+>          migration_test_add("/migration/postcopy/recovery/plain",
+>                             test_postcopy_recovery);
+>          migration_test_add("/migration/postcopy/preempt/plain",
 
