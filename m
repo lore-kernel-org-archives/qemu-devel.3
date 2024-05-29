@@ -4,67 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD78BC27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B2AC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCIex-0001bh-HP; Wed, 29 May 2024 08:44:03 -0400
+	id 1sCIhc-00036V-42; Wed, 29 May 2024 08:46:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sCIev-0001aj-1O
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:44:01 -0400
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCIhZ-00035J-5K
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:46:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sCIeq-0006zx-WE
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:44:00 -0400
-Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:5d80:0:640:e743:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 44FD160CB3;
- Wed, 29 May 2024 15:43:51 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:7214::1:2e] (unknown
- [2a02:6b8:b081:7214::1:2e])
- by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id nhQ5MI0Id8c0-QjMOBj0Q; Wed, 29 May 2024 15:43:50 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1716986630;
- bh=0Zy+fITGIhHgPhqPoW/vO7WOI+K562oyl1bzcupk0JY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=yn6feLsVXIjnifDOzH4uHYFSa1yy2Bbqb5liiRhEPWdUuJZJOBnZ8RpSaPs9Y9PNz
- jcGa9hrUHMCWj43+pWct/4MzbR/KdEOcdegkSJMdddyVRfllkvHrna7YOILxXY7vE1
- mKjfG9bFdRhBHITIsSMLx+mLETqh4naszn9Uj/dY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
-Date: Wed, 29 May 2024 15:43:50 +0300
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCIhW-0007W6-E8
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:46:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716986800;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uVMDKm04epXl+SRHoDfd5QIbcdAd2LbbZjlVtYq7c6Y=;
+ b=DArfmSmpmSAolCD1x4XbofVY69qsBUuhmRXkHgRYPVj2TCRItrS1PV1Cd9wezA+8eiQtOu
+ ucTd9I2jwAT1izeqw/OS/Wur4i1SG2574QvdVATDnBT5s4gx/UH++SO2vNUCTsfguejnpr
+ FZxYWEPWQ1Y3zfU9ZE3Vkp1CUkRDQlo=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-658-D9SAnpr0M2aKFVOb4lS0mA-1; Wed, 29 May 2024 08:46:38 -0400
+X-MC-Unique: D9SAnpr0M2aKFVOb4lS0mA-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2e95ad43650so13207061fa.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 05:46:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716986797; x=1717591597;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uVMDKm04epXl+SRHoDfd5QIbcdAd2LbbZjlVtYq7c6Y=;
+ b=XlzUZXyRn+OYWBRBB19tBiYywj4QfwL4yxIXUVEXH5R+M5m8dHoILV1RTamoBSBxkE
+ T3BqZa7SUQJrjmNNkZPGjiuarzQ9bKL7FMFeYvXRaIx3wjsOgnFUQX/dFMe2I5qhNjIl
+ lOd7ib8PmPXODlftyoq3gHHJ/KFnpOMZfUkzheww7KjC/zxRlSxgBMrFj+Jr0+zmpFsj
+ YQ0EAAvdvg0sbH4Kf6zEauhpbD+2TwWh92ZuIZlGir2bq9QNsgzn0/4QkVFhkpRcKj+n
+ rK6kV8qWMClz/IdzNS50cBFj1uwDY7X2/zKxw+rk4NagCTVUYJuh2R7C7rSk0ndtvfIK
+ 72Gw==
+X-Gm-Message-State: AOJu0Yy5WHvfZXeOpbJZuk+QgV9lnhiTr2hQstxFehgas+fxwWArzISu
+ 4MuSlz+6Qf7PEjfCWK58V4XexW7tEZiQBMRA0vHW3yjnucZBxxH3O26FG6e6WkXgIjbWffQ5W/6
+ baqkPGtVt3AkWJqki7P67ZeGZ0oEpCbUCnAUaFDrjvhsQiDI57FMc
+X-Received: by 2002:a05:651c:20f:b0:2e9:8833:adf2 with SMTP id
+ 38308e7fff4ca-2e98833b01amr31841931fa.8.1716986797346; 
+ Wed, 29 May 2024 05:46:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNPfkBRBLPfW91C+KFvrGA4fXlvgZatsqhvKrg7oItxt91tvdnWQ5gQRFSE5xUnnS79dLBFQ==
+X-Received: by 2002:a05:651c:20f:b0:2e9:8833:adf2 with SMTP id
+ 38308e7fff4ca-2e98833b01amr31841721fa.8.1716986796874; 
+ Wed, 29 May 2024 05:46:36 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42108970967sm179653065e9.17.2024.05.29.05.46.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 05:46:36 -0700 (PDT)
+Date: Wed, 29 May 2024 14:46:34 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Chen, Zide" <zide.chen@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH V2 0/3] improve -overcommit cpu-pm=on|off
+Message-ID: <20240529144634.40aa597f@imammedo.users.ipa.redhat.com>
+In-Reply-To: <29944dba-7005-496d-81ff-1cbc77c67f15@intel.com>
+References: <20240524200017.150339-1-zide.chen@intel.com>
+ <20240528112327.634e95a6@imammedo.users.ipa.redhat.com>
+ <29944dba-7005-496d-81ff-1cbc77c67f15@intel.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
- QMP
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
- <87mso8n7tw.fsf@pond.sub.org>
- <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
-Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,186 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/24 3:36 PM, Philippe Mathieu-Daudé wrote:
+On Tue, 28 May 2024 11:16:59 -0700
+"Chen, Zide" <zide.chen@intel.com> wrote:
 
-> On 29/5/24 14:03, Markus Armbruster wrote:
->> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>
->>> This can be used to force-synchronize the time in guest after a long
->>> stop-cont pause, which can be useful for serverless-type workload.
->>>
->>> Also add a comment to highlight the fact that this (and one other QMP
->>> command) only works for the MC146818 RTC controller.
->>>
->>> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>> ---
->>>
->>> Changes since v0:
->>> - Rename to rtc-inject-irq to match other similar API
->>> - Add a comment to highlight that this only works for the I386 RTC
->>>
->>> Changes since v1:
->>> - Added a description below the QMP command to explain how it can be
->>>    used and what it does.
->>>
->>> Changes since v2:
->>> - Add a 'broadcast' suffix.
->>> - Change the comments to explain the flags we're setting.
->>> - Change the command description to fix styling & explain that it's 
->>> a broadcast command.
->>>
->>> Changes since v3:
->>> - Fix checkpatch complaints about usage of C99 comments
->>>
->>> ---
->>>   hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
->>>   include/hw/rtc/mc146818rtc.h |  1 +
->>>   qapi/misc-target.json        | 19 +++++++++++++++++++
->>>   3 files changed, 40 insertions(+)
->>>
->>> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
->>> index 3379f92748..96ecd43036 100644
->>> --- a/hw/rtc/mc146818rtc.c
->>> +++ b/hw/rtc/mc146818rtc.c
->>> @@ -107,6 +107,11 @@ static void 
->>> rtc_coalesced_timer_update(MC146818RtcState *s)
->>>   static QLIST_HEAD(, MC146818RtcState) rtc_devices =
->>>       QLIST_HEAD_INITIALIZER(rtc_devices);
->>>   +/*
->>> + * NOTE:
->>> + * The two QMP functions below are _only_ implemented for the 
->>> MC146818.
->>> + * All other RTC devices ignore this.
->>> + */
->>>   void qmp_rtc_reset_reinjection(Error **errp)
->>>   {
->>>       MC146818RtcState *s;
->>> @@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->>>       }
->>>   }
->>>   +void qmp_rtc_inject_irq_broadcast(Error **errp)
->>> +{
->>> +    MC146818RtcState *s;
->>> +
->>> +    QLIST_FOREACH(s, &rtc_devices, link) {
->>> +        /* Update-ended interrupt enable */
->>> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
->>> +
->>> +        /* Interrupt request flag | update interrupt flag */
->>> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
->>> +
->>> +        qemu_irq_raise(s->irq);
->>> +    }
->>> +}
->>> +
->>>   static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
->>>   {
->>>       kvm_reset_irq_delivered();
->>> diff --git a/include/hw/rtc/mc146818rtc.h 
->>> b/include/hw/rtc/mc146818rtc.h
->>> index 97cec0b3e8..e9dd0f9c72 100644
->>> --- a/include/hw/rtc/mc146818rtc.h
->>> +++ b/include/hw/rtc/mc146818rtc.h
->>> @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, 
->>> int base_year,
->>>   void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int 
->>> val);
->>>   int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
->>>   void qmp_rtc_reset_reinjection(Error **errp);
->>> +void qmp_rtc_inject_irq_broadcast(Error **errp);
->>>     #endif /* HW_RTC_MC146818RTC_H */
->>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->>> index 4e0a6492a9..7d388a3753 100644
->>> --- a/qapi/misc-target.json
->>> +++ b/qapi/misc-target.json
->>> @@ -19,6 +19,25 @@
->>>   { 'command': 'rtc-reset-reinjection',
->>>     'if': 'TARGET_I386' }
->>>   +##
->>> +# @rtc-inject-irq-broadcast:
->>> +#
->>> +# Inject an RTC interrupt for all existing RTCs on the system.
->>> +# The interrupt forces the guest to synchronize the time with RTC.
->>> +# This is useful after a long stop-cont pause, which is common for
->>> +# serverless-type workload.
->
-> In previous version you said:
->
->   > This isn't really related to migration though. Serverless is based
->   > on constantly stopping and resuming the VM on e.g. every HTTP
->   > request to an endpoint.
->
-> Which made some sense. Maybe mention HTTP? And point to that use case
-> (possibly with QMP commands) in the commit description?
+> On 5/28/2024 2:23 AM, Igor Mammedov wrote:
+> > On Fri, 24 May 2024 13:00:14 -0700
+> > Zide Chen <zide.chen@intel.com> wrote:
+> >   
+> >> Currently, if running "-overcommit cpu-pm=on" on hosts that don't
+> >> have MWAIT support, the MWAIT/MONITOR feature is advertised to the
+> >> guest and executing MWAIT/MONITOR on the guest triggers #UD.  
+> > 
+> > this is missing proper description how do you trigger issue
+> > with reproducer and detailed description why guest sees MWAIT
+> > when it's not supported by host.  
+> 
+> If "overcommit cpu-pm=on" and "-cpu hpst" are present, as shown in the
+it's bette to provide full QEMU CLI and host/guest kernels used and what
+hardware was used if it's relevant so others can reproduce problem.
 
-Hmm, maybe it would be helpful for people who don't know what serverless 
-means.
+> following, CPUID_EXT_MONITOR is set after x86_cpu_filter_features(), so
+> that it doesn't have a chance to check MWAIT against host features and
+> will be advertised to the guest regardless of whether it's supported by
+> the host or not.
+> 
+> x86_cpu_realizefn()
+>   x86_cpu_filter_features()
+>   cpu_exec_realizefn()
+>     kvm_cpu_realizefn
+>       host_cpu_realizefn
+>         host_cpu_enable_cpu_pm
+>           env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
+> 
+> 
+> If it's not supported by the host, executing MONITOR or MWAIT
+> instructions from the guest triggers #UD, no matter MWAIT_EXITING
+> control is set or not.
 
-How about:
-     This is useful after a long stop-const pause, which is common for 
-serverless-type workloads,
-     e.g. stopping/resuming the VM on every HTTP request to an endpoint, 
-which might involve
-     a long pause in between the requests, causing time drift in the guest.
+If I recall right, kvm was able to emulate mwait/monitor.
+So question is why it leads to exception instead?
 
->> Make that "workloads".
->>
->> "For all existing RTCs" is a lie.  It's really just all mc146818s.  The
->> command works as documented only as long as the VM has no other RTCs.
->
-> @rtc-mc146818-force-sync-broadcast sounds clearer & safer;
-> IIUC the command goal, mentioning IRQ injection is irrelevant
-> (implementation detail).
->
-I like this if Markus is okay with that. If we go with this, would it 
-make sense to drop the "Bug" clause?
-
-> (I'm trying to not spread the problems we already have with
-> @rtc-reset-reinjection).
->
->>> +#
->>> +# Since: 9.1
->>> +#
->>> +# Example:
->>> +#
->>> +#     -> { "execute": "rtc-inject-irq-broadcast" }
->>> +#     <- { "return": {} }
->>> +#
->>> +##
->>> +{ 'command': 'rtc-inject-irq-broadcast',
->>> +  'if': 'TARGET_I386' }
->>
->> The conditional kind-of-sort-of ensures "VM has no other RTCs":
->> TARGET_I386 compiles only this file in hw/rtc/, and therefore can't have
->> other RTCs (unless they're hiding in some other directory). Brittle.
->>
->> When we move to single binary, we will compile in other RTCs. How can
->> we ensure "VM has no nother RTCs" then?  What if one of these other RTCs
->> can be added with -device or device_add?
->>
->> When this falls apart because the VM does have other RTCs, it can only
->> do so silently: the command can't tell us for which RTCs it actually
->> injected an interrupt.
->>
->> Documentation making promises the implementation doesn't actually
->> deliver can only end in tears.  The only reason I'm not rejecting this
->> patch out of hand is the existing and similarly broken
->> rtc-reset-reinjection.
->>
->> I'm willing to reluctantly accept it with honest documentation.
->> Perhaps: "Bug: RTCs other than mc146818rtc are silently ignored."
->>
->> Much, much better would be an interface that's actually usable with
->> multiple RTCs.  We'd have to talk how interrupt injection could be used
->> with such a machine.
->>
->> Anything less will likely need to be replaced later on.
->>
->>> +
->>>   ##
->>>   # @SevState:
->>>   #
->>
->
 
