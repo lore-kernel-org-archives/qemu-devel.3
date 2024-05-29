@@ -4,76 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFA9C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50EF0C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCK5h-0003k1-OZ; Wed, 29 May 2024 10:15:46 -0400
+	id 1sCK75-0004vG-KK; Wed, 29 May 2024 10:17:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCK5f-0003hl-B3
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:15:43 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
+ id 1sCK73-0004sF-Eb
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:17:09 -0400
+Received: from galois.linutronix.de ([193.142.43.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCK5a-0007CQ-BL
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:15:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716992138; x=1748528138;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=rq7qUQw+6YPbN653UzNcnJO+2pudvt9/l/MkBb7BKP4=;
- b=QL6VzaaB6AZZjMYYxuaS5TEWDlD0IVDh+pSLV5pOIB2WUsgh/EPs0bw1
- GqkKmrUzmZNgr8ViLFGWy5MYbHBwjGr1bkRm3UzbRAsOlQxaRnoyK1S0o
- EkMN4GLGXzwLGOAU5/m/aW1pfY7UPYWvNjNmVz8vTS2FaP6J3YNgLp1ed
- ZQnzCQieZKdoWC231mIoQVpd1bqEbGCVmy5yEESu8ljVag6qJbmqcoq1Y
- xaQPwRb4+W3F3RnMmCZNXiOVw4FsB2t/RSqMlBaXAnbbiwwI38Fn+yUSt
- ipbSOhHagCbQblMc/65hkhz4u8TurNrqdn6cbEUpUXG11KxKDKeuZ/IHp A==;
-X-CSE-ConnectionGUID: Zt37hfBpQ5qHG52Q6QPkXw==
-X-CSE-MsgGUID: USlJQ586Qwq7HiZV0wepaA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11087"; a="13628214"
-X-IronPort-AV: E=Sophos;i="6.08,198,1712646000"; d="scan'208";a="13628214"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2024 07:14:54 -0700
-X-CSE-ConnectionGUID: r3JnROW/RvSs96xiGowwww==
-X-CSE-MsgGUID: rRQELzb1RLmdq8Ximav1UA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,198,1712646000"; d="scan'208";a="66316099"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 29 May 2024 07:14:49 -0700
-Date: Wed, 29 May 2024 22:30:13 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo framework
-Message-ID: <Zlc79ZhJavATdvSs@intel.com>
-References: <20240527081421.2258624-1-zhao1.liu@intel.com>
- <20240527081421.2258624-2-zhao1.liu@intel.com>
- <20240527200504.GB913874@fedora.redhat.com>
- <ZlWNk46MF5uNa+ZC@intel.com>
- <20240528141401.GB993828@fedora.redhat.com>
+ (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
+ id 1sCK71-0007Ne-Df
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:17:09 -0400
+Date: Wed, 29 May 2024 16:16:57 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020; t=1716992224;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IU4QDPVV+TvrRGyJ9C6Myuy63yhSyOwEvHiQykxJhd8=;
+ b=3h5MHbAApS9fcRDOHFTJYadlFmIgoBKHB3/muqqZuyOXuPjaakkcbhilDrW071iaAyxVDT
+ 6UXa+SwdZyKtbG36QbufyNILZpTFa+Pviq6ZNvdD0batYfufnr0dyejGWbBi1m01QX+4n+
+ bQtYbAGbDuXNnrvhtaI6Ya1OrySL+lkhWKm11p7SC7bd41IYMdRhyKp97UvnZgWH156EBe
+ LiFq/DtIFPDc+DQsA0Patuuk9cGmQCrmuvrXuNNs5hUN/kdByYP5H52zFhV/6rWCnRnI2d
+ RrW1ejW0jRs3PuvkgtoOBXhovoiygnEhGRnqZ2J11sKkOe7cav6tYSEh8Dhp0w==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020e; t=1716992224;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IU4QDPVV+TvrRGyJ9C6Myuy63yhSyOwEvHiQykxJhd8=;
+ b=yNY1ShW/oGs3B9wz/YerlN+lgbo6yKORHd6HZFunUoI1AKH9aozBMVPMcYzsNerXbnbprf
+ NW0sKwSESZr3twDw==
+From: Nam Cao <namcao@linutronix.de>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] pci-bridge/xio3130_downstream: fix invalid link speed
+ and link width
+Message-ID: <20240529141657.cGpjgEmN@linutronix.de>
+References: <20240529132125.106790-1-namcao@linutronix.de>
+ <fc0338d2-9a4d-4770-8a9c-c9e077415b29@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240528141401.GB993828@fedora.redhat.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fc0338d2-9a4d-4770-8a9c-c9e077415b29@linaro.org>
+Received-SPF: pass client-ip=193.142.43.55; envelope-from=namcao@linutronix.de;
+ helo=galois.linutronix.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,58 +81,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan,
-
-On Tue, May 28, 2024 at 10:14:01AM -0400, Stefan Hajnoczi wrote:
-> Date: Tue, 28 May 2024 10:14:01 -0400
-> From: Stefan Hajnoczi <stefanha@redhat.com>
-> Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo
->  framework
-> 
-> On Tue, May 28, 2024 at 03:53:55PM +0800, Zhao Liu wrote:
-> > Hi Stefan,
+On Wed, May 29, 2024 at 03:50:14PM +0200, Philippe Mathieu-Daudé wrote:
+> On 29/5/24 15:21, Nam Cao wrote:
+> > Set link width to x1 and link speed to 2.5 Gb/s as specified by the
+> > datasheet. Without this, these fields in the link status register read
+> > zero, which is incorrect.
 > > 
-> > [snip]
+> > This problem appeared since 3d67447fe7c2 ("pcie: Fill PCIESlot link fields
+> > to support higher speeds and widths"), which allows PCIe slot to set link
+> > width and link speed. However, if PCIe slot does not explicitly set these
+> > properties, they will be zero. Before this commit, the width and speed
+> > default to x1 and 2.5 Gb/s.
 > > 
-> > > > diff --git a/scripts/simpletrace-rust/.rustfmt.toml b/scripts/simpletrace-rust/.rustfmt.toml
-> > > > new file mode 100644
-> > > > index 000000000000..97a97c24ebfb
-> > > > --- /dev/null
-> > > > +++ b/scripts/simpletrace-rust/.rustfmt.toml
-> > > > @@ -0,0 +1,9 @@
-> > > > +brace_style = "AlwaysNextLine"
-> > > > +comment_width = 80
-> > > > +edition = "2021"
-> > > > +group_imports = "StdExternalCrate"
-> > > > +imports_granularity = "item"
-> > > > +max_width = 80
-> > > > +use_field_init_shorthand = true
-> > > > +use_try_shorthand = true
-> > > > +wrap_comments = true
-> > > 
-> > > There should be QEMU-wide policy. That said, why is it necessary to customize rustfmt?
+> > Fixes: 3d67447fe7c2 ("pcie: Fill PCIESlot link fields to support higher speeds and widths")
+> > Signed-off-by: Nam Cao <namcao@linutronix.de>
+> > ---
+> >   hw/pci-bridge/xio3130_downstream.c | 8 ++++++++
+> >   1 file changed, 8 insertions(+)
 > > 
-> > Indeed, but QEMU's style for Rust is currently undefined, so I'm trying
-> > to add this to make it easier to check the style...I will separate it
-> > out as a style policy proposal.
+> > diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+> > index 38a2361fa2..d949431191 100644
+> > --- a/hw/pci-bridge/xio3130_downstream.c
+> > +++ b/hw/pci-bridge/xio3130_downstream.c
+> > @@ -172,10 +172,18 @@ static void xio3130_downstream_class_init(ObjectClass *klass, void *data)
+> >       device_class_set_props(dc, xio3130_downstream_props);
+> >   }
+> > +static void xio3130_downstream_instance_post_init(Object *obj)
+> > +{
+> > +    PCIESlot *s = PCIE_SLOT(obj);
+> > +    s->speed = QEMU_PCI_EXP_LNK_2_5GT;
+> > +    s->width = QEMU_PCI_EXP_LNK_X1;
 > 
-> Why is a config file necessary? QEMU should use the default Rust style.
-> 
+> - You ignore previous value and overwrite
+> - You don't warn the user about missing config value
 
-There are some that may be overdone, but I think some basic may still
-be necessary, like "comment_width = 80", "max_width = 80",
-"wrap_comments". Is it necessary to specify the width? As C.
+Users cannot set speed/width for this device. At the moment, only PCI root
+port supports that.
 
-And, "group_imports" and "imports_granularity" (refered from crosvm),
-can also be used to standardize including styles and improve
-readability, since importing can be done in many different styles.
+It wouldn't make sense for users to set these properties nonetheless, these
+properties are fixed according to datasheet.
 
-This fmt config is something like ./script/check_patch.pl for QEMU/linux.
-Different programs have different practices, so I feel like that's an
-open too!
+> Is post_init() the correct way to deal with that? Usually
+> this is done in realize(), where you can set *errp to
+> notify the user of invalid values.
 
-This certainly also depends on the maintainer's/your preferences, ;-)
-in what way looks more comfortable/convenient that is the best,
-completely according to the default is also good.
+I stole this from hw/pci-bridge/cxl_downstream.c and
+hw/pci-bridge/pcie_root_port.c. So I think it's correct.
+
+I am new to QEMU code, so please tell me if you think this is not the best
+approach.
+
+Best regards,
+Nam
 
 
