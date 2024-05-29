@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE3F6C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CCAC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC73M-0005J3-Kj; Tue, 28 May 2024 20:20:28 -0400
+	id 1sC77a-0006ks-U4; Tue, 28 May 2024 20:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sC72w-0005Bp-TN; Tue, 28 May 2024 20:20:03 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1sC77Y-0006k5-Mm; Tue, 28 May 2024 20:24:48 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sC72u-0000Wv-R5; Tue, 28 May 2024 20:20:02 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2bfb6668ad5so1205090a91.0; 
- Tue, 28 May 2024 17:19:59 -0700 (PDT)
+ id 1sC77W-000186-VC; Tue, 28 May 2024 20:24:48 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6f693fb0ad4so1213501b3a.1; 
+ Tue, 28 May 2024 17:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716941999; x=1717546799; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=gmail.com; s=20230601; t=1716942285; x=1717547085; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y3IUFNgFjlJrSgFyuJHlPykVuBvjwdB4vnJNYiukNmg=;
- b=KGYZk+dUumxozGKjKaGr1OHvwA/CSkxTDfiOWsjw4pzAiKwNv4g/O2rlwCSCa5u/6q
- 0cshxY9Ku/yaDwUgKyBX9sXeVf8U4XLdk2DAQVy94szlnF/5oDdN50eexxNtITL8FAJB
- O413l1cQTUB5S9eJCEYd224QJrwgg4JC4nbPjRmuBFNtGERJxg7Ox3TWpLl8S81f9xv4
- Xa896wy/MD9NgDOdpu+C6K53jUUERxTo6lCMzUMSJWzRhus72mJeKsBskICw9R7J49c/
- BslO69K1r38jEc2X4/HlMWW/fUWa0cS907HzT6P8Oflhd15kMquEAfijwpQyzKmoVFWu
- +FRg==
+ bh=xhG+YegobqS05mUNKlgPplskXbsE48G2QNKL6TYgg5Y=;
+ b=bakOe0y8Cu1rxxJhoM5IiFQJBrPB6geQji+OE1WVcdsW2ReV1dPF1LEASRfEXFZUsA
+ etL36g+XBkyB5Z0e09cBErgB5nomMFBjWzA7pGGl95s4tldjMAgJg/IhW4y9Jh7uvXsp
+ 7Eld13YDuvCK3r9yD2QKuyB0uT+69KDo9I9v6xsKwx4G5vgKxk+zapQRN9K1KMNlnwc8
+ KmW09fue6rVrm9FQVViT/7PsjSPc7JdtMFNkECa466yxj0v2LcPnpD8COClSqBARoON/
+ UtSL9nm+D+r2tmvhczWlfJzs3d9VAKFqa1XygbJLcyTV/wi7mLH8ybb+DoirFwg9QjD8
+ SfjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716941999; x=1717546799;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=1e100.net; s=20230601; t=1716942285; x=1717547085;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=y3IUFNgFjlJrSgFyuJHlPykVuBvjwdB4vnJNYiukNmg=;
- b=ou1hUp6zmsnR61kCHyuTosKJuyeBMHhkXxneOyRRWmFjBb/G4yebxcSDcjhK2lbGkF
- 3zPNmqIu8pJW8mZHxL8/4ooFSbQFBvwto3OoqlSQYbqmQvufeTAkvQJj2uzafNSlldph
- QVdMJaacIHOx27Hy5ggD52aAaCM87MzIEIohK/ZFSnL+a4dKuYHtPwFLx2TC63HeCcpg
- 8GB2C+V6cWqVQKzz/rvVsUaKa/7zkKI4nt2c3cUQ1dzHvVGmdiEG7nH9XOnqA/3QhuYl
- 1ijn3U9uYDePrFB7OBDvU6S73k5ioTzuqSTsCDjfVBDYFx+0foxa8KIBpUYkLCae8raf
- orbw==
+ bh=xhG+YegobqS05mUNKlgPplskXbsE48G2QNKL6TYgg5Y=;
+ b=Eae87WQOWdcOsvzSzRCLykZq73egvlZlf2Jzo0doeJFoEMesAIcDQlUFNo5BOCWw3p
+ n0y/KcyLdpC8y0hJ6Q3mQzmRSVMBm5nLvJpUtgg5hwYhEgWYVLGaBSiHfgZiKGHQDGlC
+ 8kAxUOl8dzuhf8VmrUgcUodQKUX4JYHhxE+XFDSNyWvx9qLJE4K1l/ZZejw5bdMyXXN4
+ sFPj2cBACI6GIuWVCGBWhhn1BHLq1Tp1lWou+2MtSDeobR6x877G3udlPUbE7WG7+ncs
+ eDdItRH0hafZOUBPu94loCcIuqODtIuGubm8nswKPZ5Z0oQdYdsu8qZAn0NSUbfC0T8C
+ nG7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSV3Jb7PaE0rxRvbpUEYsL56Kk0R8HzboIX1BhJK+qRDdacRTA8nvKWq71TVeuJHOahqhyty0UxSp1irO3JwCpwPrIu0FS/h9+K0IBJx4TKZs8CStZzie4EW8=
-X-Gm-Message-State: AOJu0YznwTqlSKJO6Rc7EumoBNVghC9YPW7JERnmlcr1LzHOHjgzapMw
- a2yd6O2BlEa4xuoxsTwMp50d1zhPebULXN4+haDjheM40Xi93oWY
-X-Google-Smtp-Source: AGHT+IHsA2rIsMMkOXu/om7XY2jKihQdsOPGE9vHBqJouCqoA1ZswHoi3UtIGNfmcfWi1HYwEwPVPw==
-X-Received: by 2002:a17:90a:e295:b0:2bf:1962:ea08 with SMTP id
- 98e67ed59e1d1-2bf5f74d855mr10743035a91.45.1716941998225; 
- Tue, 28 May 2024 17:19:58 -0700 (PDT)
+ AJvYcCUw4A6WZ8EV2IRpJQwxUmiPjjz9BEsi5iEK4GIAhV+81X6YdHc30SXPT3FmvYpgfnbfDdIygSD29hior4VGHdPniU2BlyHPOFFzVrQsOJL/YTVFQu6Jl8AWjWo=
+X-Gm-Message-State: AOJu0Yy3x3K3qrK4R7KytCEmIZlJQNiM4C+Ws/NpLxX92ngJYXjcfmkG
+ 8w4i8BvNDSiy6ZUs95UJz1cFo1gwA5VzXIMF2X0nzoU+YOb4KZYQ
+X-Google-Smtp-Source: AGHT+IG2NTihMBK4+T8X4QSgqL8u4A7+ehOiDSa99mL+T3jZL47+/jiq9ysuj+jlFdeaNbn48hr4mw==
+X-Received: by 2002:a05:6a20:841c:b0:1a9:b3e9:a62c with SMTP id
+ adf61e73a8af0-1b212e1c902mr16198594637.48.1716942285068; 
+ Tue, 28 May 2024 17:24:45 -0700 (PDT)
 Received: from localhost (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2bf5f989871sm8265182a91.40.2024.05.28.17.19.55
+ d2e1a72fcca58-6f8fcbea8a9sm6991825b3a.139.2024.05.28.17.24.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 17:19:57 -0700 (PDT)
+ Tue, 28 May 2024 17:24:44 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 29 May 2024 10:19:52 +1000
-Message-Id: <D1LP52PCE3NS.71SEY8XILT96@gmail.com>
-To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, "Harsh Prateek Bora"
- <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+Date: Wed, 29 May 2024 10:24:39 +1000
+Message-Id: <D1LP8QHR9GGW.2QAD6R00QARSG@gmail.com>
 Cc: "Caleb Schlossin" <calebs@linux.vnet.ibm.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
  Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH 02/10] ppc/pnv: Move timebase state into PnvCore
+Subject: Re: [RFC PATCH 05/10] ppc/pnv: Extend chip_pir class method to TIR
+ as well
 From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-3-npiggin@gmail.com>
- <5876e49c-9912-4979-9613-c60d40eabd41@linux.ibm.com>
- <c70671b1-26e7-46a6-8651-99777ae27f36@kaod.org>
-In-Reply-To: <c70671b1-26e7-46a6-8651-99777ae27f36@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+ <20240526122612.473476-6-npiggin@gmail.com>
+ <39e4ac93-256b-424b-8ecb-7ed87afeb048@linux.ibm.com>
+In-Reply-To: <39e4ac93-256b-424b-8ecb-7ed87afeb048@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,73 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue May 28, 2024 at 5:52 PM AEST, C=C3=A9dric Le Goater wrote:
-> On 5/28/24 08:28, Harsh Prateek Bora wrote:
-> >=20
-> >=20
-> > On 5/26/24 17:56, Nicholas Piggin wrote:
-> >> The timebase state machine is per per-core state and can be driven
-> >> by any thread in the core. It is currently implemented as a hack
-> >> where the state is in a CPU structure and only thread 0's state is
-> >> accessed by the chiptod, which limits programming the timebase
-> >> side of the state machine to thread 0 of a core.
-> >>
-> >> Move the state out into PnvCore and share it among all threads.
-> >>
-> >> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> >> ---
-> >> =C2=A0 include/hw/ppc/pnv_core.h=C2=A0=C2=A0=C2=A0 | 17 ++++++++++++
-> >> =C2=A0 target/ppc/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 20 --------------
-> >> =C2=A0 hw/ppc/pnv_chiptod.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0 6 ++--
-> >> =C2=A0 target/ppc/timebase_helper.c | 53 ++++++++++++++++++++---------=
--------
-> >> =C2=A0 4 files changed, 49 insertions(+), 47 deletions(-)
-> >>
-> >> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> >> index 30c1e5b1a3..f434c71547 100644
-> >> --- a/include/hw/ppc/pnv_core.h
-> >> +++ b/include/hw/ppc/pnv_core.h
-> >> @@ -25,6 +25,20 @@
-> >> =C2=A0 #include "hw/ppc/pnv.h"
-> >> =C2=A0 #include "qom/object.h"
-> >> +/* ChipTOD and TimeBase State Machine */
-> >> +struct pnv_tod_tbst {
-> >> +=C2=A0=C2=A0=C2=A0 int tb_ready_for_tod; /* core TB ready to receive =
-TOD from chiptod */
-> >> +=C2=A0=C2=A0=C2=A0 int tod_sent_to_tb;=C2=A0=C2=A0 /* chiptod sent TO=
-D to the core TB */
-> >> +
-> >> +=C2=A0=C2=A0=C2=A0 /*
-> >> +=C2=A0=C2=A0=C2=A0=C2=A0 * "Timers" for async TBST events are simulat=
-ed by mfTFAC because TFAC
-> >> +=C2=A0=C2=A0=C2=A0=C2=A0 * is polled for such events. These are just =
-used to ensure firmware
-> >> +=C2=A0=C2=A0=C2=A0=C2=A0 * performs the polling at least a few times.
-> >> +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> >> +=C2=A0=C2=A0=C2=A0 int tb_state_timer;
-> >> +=C2=A0=C2=A0=C2=A0 int tb_sync_pulse_timer;
-> >> +};
-> >> +
-> >> =C2=A0 #define TYPE_PNV_CORE "powernv-cpu-core"
-> >> =C2=A0 OBJECT_DECLARE_TYPE(PnvCore, PnvCoreClass,
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 PNV_CORE)
-> >> @@ -38,6 +52,9 @@ struct PnvCore {
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t pir;
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t hwid;
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint64_t hrmor;
-> >> +
-> >> +=C2=A0=C2=A0=C2=A0 struct pnv_tod_tbst pnv_tod_tbst;
-> >> +
-> >=20
-> > Now that it is part of struct PnvCore itself, we can drop pnv_ prefix
-> > and just call the member variable as tod_tbst ?
+On Tue May 28, 2024 at 6:32 PM AEST, Harsh Prateek Bora wrote:
 >
-> yes and rename pnv_tod_tbst using CamelCase please.
+>
+> On 5/26/24 17:56, Nicholas Piggin wrote:
+> > The chip_pir chip class method allows the platform to set the PIR
+> > processor identification register. Extend this to a more general
+> > ID function which also allows the TIR to be set. This is in
+> > preparation for "big core", which is a more complicated topology
+> > of cores and threads.
+> >=20
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >   include/hw/ppc/pnv_chip.h |  3 +-
+> >   hw/ppc/pnv.c              | 61 ++++++++++++++++++++++++--------------=
+-
+> >   hw/ppc/pnv_core.c         | 10 ++++---
+> >   3 files changed, 45 insertions(+), 29 deletions(-)
+> >=20
+> > diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> > index 8589f3291e..679723926a 100644
+> > --- a/include/hw/ppc/pnv_chip.h
+> > +++ b/include/hw/ppc/pnv_chip.h
+> > @@ -147,7 +147,8 @@ struct PnvChipClass {
+> >  =20
+> >       DeviceRealize parent_realize;
+> >  =20
+> > -    uint32_t (*chip_pir)(PnvChip *chip, uint32_t core_id, uint32_t thr=
+ead_id);
+> > +    void (*processor_id)(PnvChip *chip, uint32_t core_id, uint32_t thr=
+ead_id,
+> > +                         uint32_t *pir, uint32_t *tir);
+>
+> Should it be named get_chip_core_thread_regs() ?
 
-Okay will do. That'll look nicer.
+Yeah, the name isn't great. It is getting the regs, but the regs are the
+"pervasive id" used as well... but maybe that's not too relevant here.
+What about we drop chip_ since we have the chip and no other methods use
+such prefix, then call it get_thread_pir_tir()?
+
+> > @@ -155,7 +155,7 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, =
+void *fdt)
+> >       char *nodename;
+> >       int cpus_offset =3D get_cpus_node(fdt);
+> >  =20
+> > -    pir =3D pnv_cc->chip_pir(chip, pc->hwid, 0);
+> > +    pnv_cc->processor_id(chip, pc->hwid, 0, &pir, &tir);
+>
+> As a generic helper API and potentially expandable, it should allow=20
+> passing NULL for registers whose values are not really sought to avoid=20
+> having to create un-necessary local variables by the caller.
+
+I'll do that.
 
 Thanks,
 Nick
