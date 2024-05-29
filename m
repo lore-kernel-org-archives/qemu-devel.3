@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9B3C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06016C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCL8M-0001de-7q; Wed, 29 May 2024 11:22:34 -0400
+	id 1sCLCv-00046n-7B; Wed, 29 May 2024 11:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCL8L-0001dS-8T
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:22:33 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLCt-000447-Th
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:27:16 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCL8J-0001nS-6M
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:22:32 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2e9819a630fso5280941fa.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:22:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLCr-00037Y-S6
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:27:15 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42121d27861so11180525e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716996149; x=1717600949; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fTksdLPLiWK2it8kbCH0j2Wz6G5Oz9kxuWwnHiWElfQ=;
- b=L4XcBMv4gzLkB6c6XgYzQJuxc66ORCjFJ2aS0Gdu68Mc6OVDlsi8fnwXQ35S0iQNNA
- jR6XzRmsdsiSjavWooXvWxw+g0I0EQm+v5EF0NWIh8mEHdzXB6OUK3cHs1Z3Xn81PPcf
- pDYzgcBdx8YInuMcWvYoUtJam7PCnT2lWaT9L0pNE67pxkHry+EhgqXTLb+Vk822nLV6
- 4PLWe8uk2lxcPMk+t00R7FS/Nd1G0qzwBjOXHf5JieZlTonsTsbxsI3A1J7iY0BuPSUk
- NApVllyHSKq4C7f2cGa1fh6KAY6sRMHqOplAg/JEhAA6SJfooGwZ/mLl0bhjzrhRqCZ/
- zQBQ==
+ d=linaro.org; s=google; t=1716996432; x=1717601232; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KL6/48lMKMyM88/740NKIvrmdIpcIj8sipweUnjEcM4=;
+ b=zlYE8X2gFU0/gyolTaHqskdcW2xcd5N01+8QkDPXNYM6m3gr/5mYYvf/haEg+MHlEW
+ FzpAzZURgKzLLtrha0QtkEf4+fJe+dJHqad1zFdQ2OY9ymVP46JM3HugU0Mtao0xAjdo
+ qhubNEgrs3zf80XkAaxOKmBdW5VCN+dshSWCV9hV6/3EInrpbEdQjelUc7RBXAoZAmkq
+ dSgPDgjOf0jeA2nREecAQ5dGA9JG5Wnqmm+/ekhXdYnvhWnBqPM9koCVzT8zbDg1oqe6
+ usFoaMoE3fc0Guf5BVkNJDWMmr4Xdppp3bkJr75yMx+ZVNucMGU/egpuWKd3lHsj08uM
+ 4OXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716996149; x=1717600949;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fTksdLPLiWK2it8kbCH0j2Wz6G5Oz9kxuWwnHiWElfQ=;
- b=SxtsX1YWTlMEuWH47ex5Elcrr9V3VTUNNabXptXZElx4jb9rpcbDe/dlNDPO2vP98u
- zz8EoLfTycAdTvetxjfiYLaqmS8N3OTjcC7di1lZ/Etrd96uUSCkLPGyxdOxkIxUx3IS
- Q6YMVEuQz+9/clkuNvBh4DvBjkb0m8XUJ6EjTK5s1f6UiibdjPtCyVHbdBKKyA5l9GoJ
- ViL4O/yQJfTYDbOJTYeAVGgrIdIpSJBDzH3BCKT5v8w+fbrc5gvzIe98n1es6NGkH++I
- EYnTee6sOLvCYZJwrUT00/mXVOGpbDJ+OhZxmKTIx0YL8bS5ciDgGmA5BPbC+pOOq50G
- fN9A==
-X-Gm-Message-State: AOJu0YzmkADj2YjFE95tZbvKq5fHRgDnRHThLQlq3f6x6D1iXZqJallX
- OPJ9XYYXQ4hHcngZNrFozTof6yMVosOLQMlbzv8yf7iy+ziKVcRVPm3i/q8LYb0=
-X-Google-Smtp-Source: AGHT+IF5eR4sWKw2z3eI3paegCXz0ZAlCdgc4BX3+0dZMQOdhcHihMAJr7wN5cgxSi5s8PekT+RA8A==
-X-Received: by 2002:a2e:804b:0:b0:2ea:8163:5f4f with SMTP id
- 38308e7fff4ca-2ea816360bcmr4005311fa.41.1716996148999; 
- Wed, 29 May 2024 08:22:28 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626cda31b4sm729528466b.191.2024.05.29.08.22.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 08:22:28 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 081345F760;
- Wed, 29 May 2024 16:22:28 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [RFC PATCH] cpus: split qemu_init_vcpu and delay vCPU thread creation
-Date: Wed, 29 May 2024 16:22:19 +0100
-Message-Id: <20240529152219.825680-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ d=1e100.net; s=20230601; t=1716996432; x=1717601232;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KL6/48lMKMyM88/740NKIvrmdIpcIj8sipweUnjEcM4=;
+ b=oPG6GYl4k434zLwNtLpYQU6C/KkaEfioZmzEGdKxEedXO6IH1brl369+sdVo5I7UwI
+ MPr1iJK6kMDskskKxwyHWvLwlZtrpaD6Vp6ox1koFZV9F45mlhQc7Z7E5nt0D/tTGHe0
+ 9wQZF+qXNQ/sEc+Xwa6yE/ikJpfT19ick3Hl4REyu8eCiuwkbQlUB8R5svyimEQM9vkS
+ M1CZXIANVDMiytltG99NYfLqynxiMqAHBUFrKnTrimctEUHVLUJX7ktcV7f9tEXF5Ezb
+ Gc7OO78a0yOR1PKIIyD6ilrDtD3F9m1DYaGHxmUj1U38DuE2bw4HYe4E/lYvPVlaYmQv
+ xJow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCdEm/evHHQaOtmJ0tisC4Hv4xzKmRYF9q1CZa5ceV+yX9OqWI8TAbzAaIxN9bXC5+0qbpOn+BESxketMYpyPgaD8iNtk=
+X-Gm-Message-State: AOJu0Yyg/sOB2PJV4seI9oFMgwX8NaCeC/QWCyfmQTuKR8dsuFn41ZD7
+ xgKmMAWljaLGoVx1PljPshJIzCTThTNItAOz3scHMiX+POO19VneEnZwHx7VpQg=
+X-Google-Smtp-Source: AGHT+IHdBCyTGwAufLUD7w+2KDKF7+36MUndKRTBPCZUQftC/O5k+6hcyw+yk6FRLyfGqaMUnDGxog==
+X-Received: by 2002:a05:600c:3ba1:b0:41b:e4dd:e320 with SMTP id
+ 5b1f17b1804b1-42108a1fa58mr120408935e9.26.1716996431812; 
+ Wed, 29 May 2024 08:27:11 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-421089708edsm183819665e9.16.2024.05.29.08.27.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 May 2024 08:27:11 -0700 (PDT)
+Message-ID: <a585832f-87ff-4416-be3c-9f5513e99876@linaro.org>
+Date: Wed, 29 May 2024 17:27:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
+ QMP
+To: Markus Armbruster <armbru@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
+ <87mso8n7tw.fsf@pond.sub.org>
+ <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
+ <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
+ <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
+ <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru>
+ <874jaglm9x.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <874jaglm9x.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,133 +104,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This ensures we don't start the thread until cpu_common_realizefn has
-finished. This ensures that plugins will always run
-qemu_plugin_vcpu_init__async first before any other states. It doesn't
-totally eliminate the race that plugin_cpu_update__locked has to work
-around though. I found this while reviewing the ips plugin which makes
-heavy use of the vcpu phase callbacks.
+On 29/5/24 16:34, Markus Armbruster wrote:
+> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+> 
+>> On 5/29/24 4:39 PM, Philippe Mathieu-Daudé wrote:
+>>
+>>> On 29/5/24 14:43, Daniil Tatianin wrote:
+>>>> On 5/29/24 3:36 PM, Philippe Mathieu-Daudé wrote:
+>>>>
+>>>>> On 29/5/24 14:03, Markus Armbruster wrote:
+>>>>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+>>>>>>
+>>>>>>> This can be used to force-synchronize the time in guest after a long
+>>>>>>> stop-cont pause, which can be useful for serverless-type workload.
+>>>>>>>
+>>>>>>> Also add a comment to highlight the fact that this (and one other QMP
+>>>>>>> command) only works for the MC146818 RTC controller.
+>>>>>>>
+>>>>>>> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>>>>>>> ---
+>>>>>>>
+>>>>>>> Changes since v0:
+>>>>>>> - Rename to rtc-inject-irq to match other similar API
+>>>>>>> - Add a comment to highlight that this only works for the I386 RTC
+>>>>>>>
+>>>>>>> Changes since v1:
+>>>>>>> - Added a description below the QMP command to explain how it can be
+>>>>>>>     used and what it does.
+>>>>>>>
+>>>>>>> Changes since v2:
+>>>>>>> - Add a 'broadcast' suffix.
+>>>>>>> - Change the comments to explain the flags we're setting.
+>>>>>>> - Change the command description to fix styling & explain that it's a broadcast command.
+>>>>>>>
+>>>>>>> Changes since v3:
+>>>>>>> - Fix checkpatch complaints about usage of C99 comments
+>>>>>>>
+>>>>>>> ---
+>>>>>>>    hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
+>>>>>>>    include/hw/rtc/mc146818rtc.h |  1 +
+>>>>>>>    qapi/misc-target.json        | 19 +++++++++++++++++++
+>>>>>>>    3 files changed, 40 insertions(+)
+>>>
+>>>
+>>>>>>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+>>>>>>> index 4e0a6492a9..7d388a3753 100644
+>>>>>>> --- a/qapi/misc-target.json
+>>>>>>> +++ b/qapi/misc-target.json
+>>>>>>> @@ -19,6 +19,25 @@
+>>>>>>>    { 'command': 'rtc-reset-reinjection',
+>>>>>>>      'if': 'TARGET_I386' }
+>>>>>>>    +##
+>>>>>>> +# @rtc-inject-irq-broadcast:
+>>>>>>> +#
+>>>>>>> +# Inject an RTC interrupt for all existing RTCs on the system.
+>>>>>>> +# The interrupt forces the guest to synchronize the time with RTC.
+>>>>>>> +# This is useful after a long stop-cont pause, which is common for
+>>>>>>> +# serverless-type workload.
+>>>>>
+>>>>> In previous version you said:
+>>>>>
+>>>>>    > This isn't really related to migration though. Serverless is based
+>>>>>    > on constantly stopping and resuming the VM on e.g. every HTTP
+>>>>>    > request to an endpoint.
+>>>>>
+>>>>> Which made some sense. Maybe mention HTTP? And point to that use case
+>>>>> (possibly with QMP commands) in the commit description?
+>>>>
+>>>> Hmm, maybe it would be helpful for people who don't know what serverless means.
+>>>>
+>>>> How about:
+>>>>       This is useful after a long stop-const pause, which is common for serverless-type workloads,
+>>>>       e.g. stopping/resuming the VM on every HTTP request to an endpoint, which might involve
+>>>>       a long pause in between the requests, causing time drift in the guest.
+>>>
+>>> Please help me understand your workflow. Your management layer call
+>>> @stop and @cont QMP commands, is that right?
+>>
+>> Yes, that is correct.
+>>
+>>> @cont will emit a @RESUME event.
+>>>
+>>> If we could listen to QAPI events from C code, we could have the
+>>> mc146818rtc device automatically sync on VM resume, and no need for
+>>> this async command.
+>>
+>> Perhaps? I'm not sure how that would be implemented, but let's see what Markus has to say.
+> 
+> You can't listen on an event in QEMU itself.  You can only hook into the
+> place that generates the event.
 
-An alternative might be to move the explicit creation of vCPU threads
-to qdev_machine_creation_done()? It doesn't affect user-mode which
-already has a thread to execute in and ensures the QOM object has
-completed creation in cpu_create() before continuing.
+Apparently "qemu/notify.h" could be use for QAPI events (currently
+only used by migration). Big change, to be discussed later.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/core/cpu.h      |  8 ++++++++
- accel/tcg/user-exec-stub.c |  5 +++++
- hw/core/cpu-common.c       |  7 ++++++-
- plugins/core.c             |  5 +++++
- system/cpus.c              | 15 ++++++++++-----
- 5 files changed, 34 insertions(+), 6 deletions(-)
+> The RESUME event is sent from vm_prepare_start() in system/cpus.c.
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index bb398e8237..6920699585 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -1041,6 +1041,14 @@ void end_exclusive(void);
-  */
- void qemu_init_vcpu(CPUState *cpu);
- 
-+/**
-+ * qemu_start_vcpu:
-+ * @cpu: The vCPU to start.
-+ *
-+ * Create the vCPU thread and start it running.
-+ */
-+void qemu_start_vcpu(CPUState *cpu);
-+
- #define SSTEP_ENABLE  0x1  /* Enable simulated HW single stepping */
- #define SSTEP_NOIRQ   0x2  /* Do not use IRQ while single stepping */
- #define SSTEP_NOTIMER 0x4  /* Do not Timers while single stepping */
-diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
-index 4fbe2dbdc8..162bb72bbe 100644
---- a/accel/tcg/user-exec-stub.c
-+++ b/accel/tcg/user-exec-stub.c
-@@ -18,6 +18,11 @@ void cpu_exec_reset_hold(CPUState *cpu)
- {
- }
- 
-+void qemu_start_vcpu(CPUState *cpu)
-+{
-+    /* NOP for user-mode, we already have a thread */
-+}
-+
- /* User mode emulation does not support record/replay yet.  */
- 
- bool replay_exception(void)
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 0f0a247f56..68895ddd59 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -230,7 +230,12 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
-     }
- #endif
- 
--    /* NOTE: latest generic point where the cpu is fully realized */
-+    /*
-+     * With everything set up we can finally start the vCPU thread.
-+     * This is a NOP for linux-user.
-+     * NOTE: latest generic point where the cpu is fully realized
-+     */
-+    qemu_start_vcpu(cpu);
- }
- 
- static void cpu_common_unrealizefn(DeviceState *dev)
-diff --git a/plugins/core.c b/plugins/core.c
-index 0726bc7f25..1e5da7853b 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -65,6 +65,11 @@ static void plugin_cpu_update__locked(gpointer k, gpointer v, gpointer udata)
-     CPUState *cpu = container_of(k, CPUState, cpu_index);
-     run_on_cpu_data mask = RUN_ON_CPU_HOST_ULONG(*plugin.mask);
- 
-+    /*
-+     * There is a race condition between the starting of the vCPU
-+     * thread at the end of cpu_common_realizefn and when realized is
-+     * finally set.
-+     */
-     if (DEVICE(cpu)->realized) {
-         async_run_on_cpu(cpu, plugin_cpu_update__async, mask);
-     } else {
-diff --git a/system/cpus.c b/system/cpus.c
-index d3640c9503..7dd8464c5e 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -488,11 +488,13 @@ void cpus_kick_thread(CPUState *cpu)
- 
- void qemu_cpu_kick(CPUState *cpu)
- {
--    qemu_cond_broadcast(cpu->halt_cond);
--    if (cpus_accel->kick_vcpu_thread) {
--        cpus_accel->kick_vcpu_thread(cpu);
--    } else { /* default */
--        cpus_kick_thread(cpu);
-+    if (cpu->halt_cond) {
-+        qemu_cond_broadcast(cpu->halt_cond);
-+        if (cpus_accel->kick_vcpu_thread) {
-+            cpus_accel->kick_vcpu_thread(cpu);
-+        } else { /* default */
-+            cpus_kick_thread(cpu);
-+        }
-     }
- }
- 
-@@ -674,7 +676,10 @@ void qemu_init_vcpu(CPUState *cpu)
-         cpu->num_ases = 1;
-         cpu_address_space_init(cpu, 0, "cpu-memory", cpu->memory);
-     }
-+}
- 
-+void qemu_start_vcpu(CPUState *cpu)
-+{
-     /* accelerators all implement the AccelOpsClass */
-     g_assert(cpus_accel != NULL && cpus_accel->create_vcpu_thread != NULL);
-     cpus_accel->create_vcpu_thread(cpu);
--- 
-2.39.2
+Good spot, it is where we call synchronize_pre_resume() for vCPUs,
+which is exactly what Daniil wants for RTC devices.
 
+I'd rather we call here rtc_synchronize_pre_resume(), which would
+mostly be qmp_rtc_inject_irq_broadcast() content, without using QMP
+at all.
+
+But for back-compat we need some CLI option "sync-rtc-on-resume"
+default to false. Preferably a mc146818rtc property to KISS.
+
+That would solve Daniil problem and make Markus/myself happier.
+
+Paolo, any objection?
+
+Regards,
+
+Phil.
 
