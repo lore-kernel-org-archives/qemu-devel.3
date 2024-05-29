@@ -4,24 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8835CC25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367A0C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM6v-000199-Pw; Wed, 29 May 2024 12:25:10 -0400
+	id 1sCM6x-00019b-TC; Wed, 29 May 2024 12:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6s-00017G-48
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:06 -0400
+ id 1sCM6s-00017P-Mn
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:07 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6l-0006Kk-7G
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:05 -0400
+ id 1sCM6l-0006Kb-6u
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:06 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6j-006CP9-9I;
+ (envelope-from <movement@movementarian.org>) id 1sCM6j-006CP6-80;
  Wed, 29 May 2024 17:24:57 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
@@ -29,13 +29,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
  thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 13/26] vfio-user: define socket send functions
-Date: Wed, 29 May 2024 17:23:06 +0100
-Message-Id: <20240529162319.1476680-14-levon@movementarian.org>
+Subject: [PATCH 12/26] vfio-user: define socket receive functions
+Date: Wed, 29 May 2024 17:23:05 +0100
+Message-Id: <20240529162319.1476680-13-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=139.162.205.133;
  envelope-from=movement@movementarian.org; helo=movementarian.org
@@ -61,767 +62,626 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
-Also negotiate protocol version with remote server
+Add infrastructure needed to receive incoming messages
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/trace-events    |   2 +
- hw/vfio/user-pci.c      |  18 +-
- hw/vfio/user-protocol.h |  62 +++++
- hw/vfio/user.c          | 511 ++++++++++++++++++++++++++++++++++++++++
- hw/vfio/user.h          |   9 +
- 5 files changed, 600 insertions(+), 2 deletions(-)
+ hw/vfio/trace-events    |   5 +
+ hw/vfio/user-pci.c      |  11 ++
+ hw/vfio/user-protocol.h |  54 ++++++
+ hw/vfio/user.c          | 408 ++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/user.h          |  10 +
+ 5 files changed, 488 insertions(+)
+ create mode 100644 hw/vfio/user-protocol.h
 
 diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index a5a5a34198..68fe6f5689 100644
+index 64161bf6f4..a5a5a34198 100644
 --- a/hw/vfio/trace-events
 +++ b/hw/vfio/trace-events
-@@ -181,3 +181,5 @@ iommufd_cdev_pci_hot_reset_dep_devices(int domain, int bus, int slot, int functi
- vfio_user_recv_hdr(const char *name, uint16_t id, uint16_t cmd, uint32_t size, uint32_t flags) " (%s) id 0x%x cmd 0x%x size 0x%x flags 0x%x"
- vfio_user_recv_read(uint16_t id, int read) " id 0x%x read 0x%x"
- vfio_user_recv_request(uint16_t cmd) " command 0x%x"
-+vfio_user_send_write(uint16_t id, int wrote) " id 0x%x wrote 0x%x"
-+vfio_user_version(uint16_t major, uint16_t minor, const char *caps) " major %d minor %d caps: %s"
+@@ -176,3 +176,8 @@ iommufd_cdev_fail_attach_existing_container(const char *msg) " %s"
+ iommufd_cdev_alloc_ioas(int iommufd, int ioas_id) " [iommufd=%d] new IOMMUFD container with ioasid=%d"
+ iommufd_cdev_device_info(char *name, int devfd, int num_irqs, int num_regions, int flags) " %s (%d) num_irqs=%d num_regions=%d flags=%d"
+ iommufd_cdev_pci_hot_reset_dep_devices(int domain, int bus, int slot, int function, int dev_id) "\t%04x:%02x:%02x.%x devid %d"
++
++# user.c
++vfio_user_recv_hdr(const char *name, uint16_t id, uint16_t cmd, uint32_t size, uint32_t flags) " (%s) id 0x%x cmd 0x%x size 0x%x flags 0x%x"
++vfio_user_recv_read(uint16_t id, int read) " id 0x%x read 0x%x"
++vfio_user_recv_request(uint16_t cmd) " command 0x%x"
 diff --git a/hw/vfio/user-pci.c b/hw/vfio/user-pci.c
-index 350e957132..fe98048aad 100644
+index 8c66833118..350e957132 100644
 --- a/hw/vfio/user-pci.c
 +++ b/hw/vfio/user-pci.c
-@@ -40,6 +40,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
- struct VFIOUserPCIDevice {
-     VFIOPCIDevice device;
+@@ -42,6 +42,16 @@ struct VFIOUserPCIDevice {
      char *sock_name;
-+    bool send_queued;   /* all sends are queued */
  };
  
++/*
++ * Incoming request message callback.
++ *
++ * Runs off main loop, so BQL held.
++ */
++static void vfio_user_pci_process_req(void *opaque, VFIOUserMsg *msg)
++{
++
++}
++
  /*
-@@ -99,6 +100,14 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+  * Emulated devices don't use host hot reset
+  */
+@@ -87,6 +97,7 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         return;
+     }
      vbasedev->proxy = proxy;
-     vfio_user_set_handler(vbasedev, vfio_user_pci_process_req, vdev);
++    vfio_user_set_handler(vbasedev, vfio_user_pci_process_req, vdev);
  
-+    if (udev->send_queued) {
-+        proxy->flags |= VFIO_PROXY_FORCE_QUEUED;
-+    }
-+
-+    if (!vfio_user_validate_version(proxy, errp)) {
-+        goto error;
-+    }
-+
      vbasedev->name = g_strdup_printf("VFIO user <%s>", udev->sock_name);
      vbasedev->ops = &vfio_user_pci_ops;
-     vbasedev->type = VFIO_DEVICE_TYPE_PCI;
-@@ -108,9 +117,13 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
-     if (!vfio_attach_device_by_iommu_type(TYPE_VFIO_IOMMU_USER,
-                                           vbasedev->name, vbasedev,
-                                           as, errp)) {
--        error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
--        return;
-+        goto error;
-     }
-+
-+    return;
-+
-+error:
-+    error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
- }
- 
- static void vfio_user_instance_init(Object *obj)
-@@ -153,6 +166,7 @@ static void vfio_user_instance_finalize(Object *obj)
- 
- static Property vfio_user_pci_dev_properties[] = {
-     DEFINE_PROP_STRING("socket", VFIOUserPCIDevice, sock_name),
-+    DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
 diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
-index d23877c958..5de5b2030c 100644
---- a/hw/vfio/user-protocol.h
+new file mode 100644
+index 0000000000..d23877c958
+--- /dev/null
 +++ b/hw/vfio/user-protocol.h
-@@ -51,4 +51,66 @@ enum vfio_user_command {
- #define VFIO_USER_NO_REPLY      0x10
- #define VFIO_USER_ERROR         0x20
- 
+@@ -0,0 +1,54 @@
++#ifndef VFIO_USER_PROTOCOL_H
++#define VFIO_USER_PROTOCOL_H
 +
 +/*
-+ * VFIO_USER_VERSION
++ * vfio protocol over a UNIX socket.
++ *
++ * Copyright © 2018, 2021 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2.  See
++ * the COPYING file in the top-level directory.
++ *
++ * Each message has a standard header that describes the command
++ * being sent, which is almost always a VFIO ioctl().
++ *
++ * The header may be followed by command-specific data, such as the
++ * region and offset info for read and write commands.
 + */
++
 +typedef struct {
-+    VFIOUserHdr hdr;
-+    uint16_t major;
-+    uint16_t minor;
-+    char capabilities[];
-+} VFIOUserVersion;
++    uint16_t id;
++    uint16_t command;
++    uint32_t size;
++    uint32_t flags;
++    uint32_t error_reply;
++} VFIOUserHdr;
 +
-+#define VFIO_USER_MAJOR_VER     0
-+#define VFIO_USER_MINOR_VER     0
++/* VFIOUserHdr commands */
++enum vfio_user_command {
++    VFIO_USER_VERSION                   = 1,
++    VFIO_USER_DMA_MAP                   = 2,
++    VFIO_USER_DMA_UNMAP                 = 3,
++    VFIO_USER_DEVICE_GET_INFO           = 4,
++    VFIO_USER_DEVICE_GET_REGION_INFO    = 5,
++    VFIO_USER_DEVICE_GET_REGION_IO_FDS  = 6,
++    VFIO_USER_DEVICE_GET_IRQ_INFO       = 7,
++    VFIO_USER_DEVICE_SET_IRQS           = 8,
++    VFIO_USER_REGION_READ               = 9,
++    VFIO_USER_REGION_WRITE              = 10,
++    VFIO_USER_DMA_READ                  = 11,
++    VFIO_USER_DMA_WRITE                 = 12,
++    VFIO_USER_DEVICE_RESET              = 13,
++    VFIO_USER_DIRTY_PAGES               = 14,
++    VFIO_USER_MAX,
++};
 +
-+#define VFIO_USER_CAP           "capabilities"
++/* VFIOUserHdr flags */
++#define VFIO_USER_REQUEST       0x0
++#define VFIO_USER_REPLY         0x1
++#define VFIO_USER_TYPE          0xF
 +
-+/* "capabilities" members */
-+#define VFIO_USER_CAP_MAX_FDS   "max_msg_fds"
-+#define VFIO_USER_CAP_MAX_XFER  "max_data_xfer_size"
-+#define VFIO_USER_CAP_PGSIZES   "pgsizes"
-+#define VFIO_USER_CAP_MAP_MAX   "max_dma_maps"
-+#define VFIO_USER_CAP_MIGR      "migration"
++#define VFIO_USER_NO_REPLY      0x10
++#define VFIO_USER_ERROR         0x20
 +
-+/* "migration" members */
-+#define VFIO_USER_CAP_PGSIZE            "pgsize"
-+#define VFIO_USER_CAP_MAX_BITMAP        "max_bitmap_size"
-+
-+/*
-+ * Max FDs mainly comes into play when a device supports multiple interrupts
-+ * where each ones uses an eventfd to inject it into the guest.
-+ * It is clamped by the the number of FDs the qio channel supports in a
-+ * single message.
-+ */
-+#define VFIO_USER_DEF_MAX_FDS   8
-+#define VFIO_USER_MAX_MAX_FDS   16
-+
-+/*
-+ * Max transfer limits the amount of data in region and DMA messages.
-+ * Region R/W will be very small (limited by how much a single instruction
-+ * can process) so just use a reasonable limit here.
-+ */
-+#define VFIO_USER_DEF_MAX_XFER  (1024 * 1024)
-+#define VFIO_USER_MAX_MAX_XFER  (64 * 1024 * 1024)
-+
-+/*
-+ * Default pagesizes supported is 4k.
-+ */
-+#define VFIO_USER_DEF_PGSIZE    4096
-+
-+/*
-+ * Default max number of DMA mappings is stolen from the
-+ * linux kernel "dma_entry_limit"
-+ */
-+#define VFIO_USER_DEF_MAP_MAX   65535
-+
-+/*
-+ * Default max bitmap size is also take from the linux kernel,
-+ * where usage of signed ints limits the VA range to 2^31 bytes.
-+ * Dividing that by the number of bits per byte yields 256MB
-+ */
-+#define VFIO_USER_DEF_MAX_BITMAP (256 * 1024 * 1024)
-+
- #endif /* VFIO_USER_PROTOCOL_H */
++#endif /* VFIO_USER_PROTOCOL_H */
 diff --git a/hw/vfio/user.c b/hw/vfio/user.c
-index 998816b97d..aa561fdba3 100644
+index 91501f625c..998816b97d 100644
 --- a/hw/vfio/user.c
 +++ b/hw/vfio/user.c
-@@ -23,12 +23,20 @@
- #include "io/channel-socket.h"
+@@ -24,11 +24,27 @@
  #include "io/channel-util.h"
  #include "sysemu/iothread.h"
-+#include "qapi/qmp/qdict.h"
-+#include "qapi/qmp/qjson.h"
-+#include "qapi/qmp/qnull.h"
-+#include "qapi/qmp/qstring.h"
-+#include "qapi/qmp/qnum.h"
-+#include "qapi/qmp/qbool.h"
  #include "user.h"
- #include "trace.h"
++#include "trace.h"
  
-+static int wait_time = 5000;   /* wait up to 5 sec for busy servers */
  static IOThread *vfio_user_iothread;
  
  static void vfio_user_shutdown(VFIOUserProxy *proxy);
-+static int vfio_user_send_qio(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                                      VFIOUserFDs *fds);
- static VFIOUserFDs *vfio_user_getfds(int numfds);
-@@ -36,9 +44,16 @@ static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg);
++static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
++                                     VFIOUserFDs *fds);
++static VFIOUserFDs *vfio_user_getfds(int numfds);
++static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg);
  
- static void vfio_user_recv(void *opaque);
- static int vfio_user_recv_one(VFIOUserProxy *proxy);
-+static void vfio_user_send(void *opaque);
-+static int vfio_user_send_one(VFIOUserProxy *proxy);
- static void vfio_user_cb(void *opaque);
++static void vfio_user_recv(void *opaque);
++static int vfio_user_recv_one(VFIOUserProxy *proxy);
++static void vfio_user_cb(void *opaque);
++
++static void vfio_user_request(void *opaque);
++
++static inline void vfio_user_set_error(VFIOUserHdr *hdr, uint32_t err)
++{
++    hdr->flags |= VFIO_USER_ERROR;
++    hdr->error_reply = err;
++}
  
- static void vfio_user_request(void *opaque);
-+static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg);
-+static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                                VFIOUserFDs *fds, int rsize);
-+static void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
-+                                  uint32_t size, uint32_t flags);
- 
- static inline void vfio_user_set_error(VFIOUserHdr *hdr, uint32_t err)
- {
-@@ -57,6 +72,35 @@ static void vfio_user_shutdown(VFIOUserProxy *proxy)
+ /*
+  * Functions called by main, CPU, or iothread threads
+@@ -41,10 +57,340 @@ static void vfio_user_shutdown(VFIOUserProxy *proxy)
                                     proxy->ctx, NULL, NULL);
  }
  
-+static int vfio_user_send_qio(VFIOUserProxy *proxy, VFIOUserMsg *msg)
++static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
++                                     VFIOUserFDs *fds)
 +{
-+    VFIOUserFDs *fds =  msg->fds;
-+    struct iovec iov = {
-+        .iov_base = msg->hdr,
-+        .iov_len = msg->hdr->size,
-+    };
-+    size_t numfds = 0;
-+    int ret, *fdp = NULL;
-+    Error *local_err = NULL;
++    VFIOUserMsg *msg;
 +
-+    if (fds != NULL && fds->send_fds != 0) {
-+        numfds = fds->send_fds;
-+        fdp = fds->fds;
++    msg = QTAILQ_FIRST(&proxy->free);
++    if (msg != NULL) {
++        QTAILQ_REMOVE(&proxy->free, msg, next);
++    } else {
++        msg = g_malloc0(sizeof(*msg));
++        qemu_cond_init(&msg->cv);
 +    }
 +
-+    ret = qio_channel_writev_full(proxy->ioc, &iov, 1, fdp, numfds, 0,
-+                                  &local_err);
-+
-+    if (ret == -1) {
-+        vfio_user_set_error(msg->hdr, EIO);
-+        vfio_user_shutdown(proxy);
-+        error_report_err(local_err);
-+    }
-+    trace_vfio_user_send_write(msg->hdr->id, ret);
-+
-+    return ret;
++    msg->hdr = hdr;
++    msg->fds = fds;
++    return msg;
 +}
 +
- static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                                      VFIOUserFDs *fds)
- {
-@@ -97,6 +141,7 @@ static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg)
-     msg->hdr = NULL;
-     msg->fds = NULL;
-     msg->complete = false;
-+    msg->pending = false;
-     QTAILQ_INSERT_HEAD(&proxy->free, msg, next);
- }
- 
-@@ -391,6 +436,54 @@ err:
-     return -1;
- }
++/*
++ * Recycle a message list entry to the free list.
++ */
++static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg)
++{
++    if (msg->type == VFIO_MSG_NONE) {
++        error_printf("vfio_user_recycle - freeing free msg\n");
++        return;
++    }
++
++    /* free msg buffer if no one is waiting to consume the reply */
++    if (msg->type == VFIO_MSG_NOWAIT || msg->type == VFIO_MSG_ASYNC) {
++        g_free(msg->hdr);
++        if (msg->fds != NULL) {
++            g_free(msg->fds);
++        }
++    }
++
++    msg->type = VFIO_MSG_NONE;
++    msg->hdr = NULL;
++    msg->fds = NULL;
++    msg->complete = false;
++    QTAILQ_INSERT_HEAD(&proxy->free, msg, next);
++}
++
++static VFIOUserFDs *vfio_user_getfds(int numfds)
++{
++    VFIOUserFDs *fds = g_malloc0(sizeof(*fds) + (numfds * sizeof(int)));
++
++    fds->fds = (int *)((char *)fds + sizeof(*fds));
++
++    return fds;
++}
++
+ /*
+  * Functions only called by iothread
+  */
  
 +/*
-+ * Send messages from outgoing queue when the socket buffer has space.
-+ * If we deplete 'outgoing', remove ourselves from the poll list.
++ * Process a received message.
 + */
-+static void vfio_user_send(void *opaque)
++static void vfio_user_process(VFIOUserProxy *proxy, VFIOUserMsg *msg,
++                              bool isreply)
++{
++
++    /*
++     * Replies signal a waiter, if none just check for errors
++     * and free the message buffer.
++     *
++     * Requests get queued for the BH.
++     */
++    if (isreply) {
++        msg->complete = true;
++        if (msg->type == VFIO_MSG_WAIT) {
++            qemu_cond_signal(&msg->cv);
++        } else {
++            if (msg->hdr->flags & VFIO_USER_ERROR) {
++                error_printf("vfio_user_process: error reply on async ");
++                error_printf("request command %x error %s\n",
++                             msg->hdr->command,
++                             strerror(msg->hdr->error_reply));
++            }
++            /* youngest nowait msg has been ack'd */
++            if (proxy->last_nowait == msg) {
++                proxy->last_nowait = NULL;
++            }
++            vfio_user_recycle(proxy, msg);
++        }
++    } else {
++        QTAILQ_INSERT_TAIL(&proxy->incoming, msg, next);
++        qemu_bh_schedule(proxy->req_bh);
++    }
++}
++
++/*
++ * Complete a partial message read
++ */
++static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
++{
++    VFIOUserMsg *msg = proxy->part_recv;
++    size_t msgleft = proxy->recv_left;
++    bool isreply;
++    char *data;
++    int ret;
++
++    data = (char *)msg->hdr + (msg->hdr->size - msgleft);
++    while (msgleft > 0) {
++        ret = qio_channel_read(proxy->ioc, data, msgleft, errp);
++
++        /* error or would block */
++        if (ret <= 0) {
++            /* try for rest on next iternation */
++            if (ret == QIO_CHANNEL_ERR_BLOCK) {
++                proxy->recv_left = msgleft;
++            }
++            return ret;
++        }
++        trace_vfio_user_recv_read(msg->hdr->id, ret);
++
++        msgleft -= ret;
++        data += ret;
++    }
++
++    /*
++     * Read complete message, process it.
++     */
++    proxy->part_recv = NULL;
++    proxy->recv_left = 0;
++    isreply = (msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REPLY;
++    vfio_user_process(proxy, msg, isreply);
++
++    /* return positive value */
++    return 1;
++}
++
++static void vfio_user_recv(void *opaque)
 +{
 +    VFIOUserProxy *proxy = opaque;
 +
 +    QEMU_LOCK_GUARD(&proxy->lock);
 +
 +    if (proxy->state == VFIO_PROXY_CONNECTED) {
-+        while (!QTAILQ_EMPTY(&proxy->outgoing)) {
-+            if (vfio_user_send_one(proxy) < 0) {
-+                return;
-+            }
++        while (vfio_user_recv_one(proxy) == 0) {
++            ;
 +        }
-+        qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-+                                       vfio_user_recv, NULL, NULL, proxy);
 +    }
 +}
 +
 +/*
-+ * Send a single message.
++ * Receive and process one incoming message.
 + *
-+ * Sent async messages are freed, others are moved to pending queue.
++ * For replies, find matching outgoing request and wake any waiters.
++ * For requests, queue in incoming list and run request BH.
 + */
-+static int vfio_user_send_one(VFIOUserProxy *proxy)
++static int vfio_user_recv_one(VFIOUserProxy *proxy)
 +{
-+    VFIOUserMsg *msg;
-+    int ret;
++    VFIOUserMsg *msg = NULL;
++    g_autofree int *fdp = NULL;
++    VFIOUserFDs *reqfds;
++    VFIOUserHdr hdr;
++    struct iovec iov = {
++        .iov_base = &hdr,
++        .iov_len = sizeof(hdr),
++    };
++    bool isreply = false;
++    int i, ret;
++    size_t msgleft, numfds = 0;
++    char *data = NULL;
++    char *buf = NULL;
++    Error *local_err = NULL;
 +
-+    msg = QTAILQ_FIRST(&proxy->outgoing);
-+    ret = vfio_user_send_qio(proxy, msg);
-+    if (ret < 0) {
++    /*
++     * Complete any partial reads
++     */
++    if (proxy->part_recv != NULL) {
++        ret = vfio_user_complete(proxy, &local_err);
++
++        /* still not complete, try later */
++        if (ret == QIO_CHANNEL_ERR_BLOCK) {
++            return ret;
++        }
++
++        if (ret <= 0) {
++            goto fatal;
++        }
++        /* else fall into reading another msg */
++    }
++
++    /*
++     * Read header
++     */
++    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, &fdp, &numfds, 0,
++                                 &local_err);
++    if (ret == QIO_CHANNEL_ERR_BLOCK) {
 +        return ret;
 +    }
 +
-+    QTAILQ_REMOVE(&proxy->outgoing, msg, next);
-+    if (msg->type == VFIO_MSG_ASYNC) {
-+        vfio_user_recycle(proxy, msg);
-+    } else {
-+        QTAILQ_INSERT_TAIL(&proxy->pending, msg, next);
-+        msg->pending = true;
++    /* read error or other side closed connection */
++    if (ret <= 0) {
++        goto fatal;
 +    }
 +
++    if (ret < sizeof(msg)) {
++        error_setg(&local_err, "short read of header");
++        goto fatal;
++    }
++
++    /*
++     * Validate header
++     */
++    if (hdr.size < sizeof(VFIOUserHdr)) {
++        error_setg(&local_err, "bad header size");
++        goto fatal;
++    }
++    switch (hdr.flags & VFIO_USER_TYPE) {
++    case VFIO_USER_REQUEST:
++        isreply = false;
++        break;
++    case VFIO_USER_REPLY:
++        isreply = true;
++        break;
++    default:
++        error_setg(&local_err, "unknown message type");
++        goto fatal;
++    }
++    trace_vfio_user_recv_hdr(proxy->sockname, hdr.id, hdr.command, hdr.size,
++                             hdr.flags);
++
++    /*
++     * For replies, find the matching pending request.
++     * For requests, reap incoming FDs.
++     */
++    if (isreply) {
++        QTAILQ_FOREACH(msg, &proxy->pending, next) {
++            if (hdr.id == msg->id) {
++                break;
++            }
++        }
++        if (msg == NULL) {
++            error_setg(&local_err, "unexpected reply");
++            goto err;
++        }
++        QTAILQ_REMOVE(&proxy->pending, msg, next);
++
++        /*
++         * Process any received FDs
++         */
++        if (numfds != 0) {
++            if (msg->fds == NULL || msg->fds->recv_fds < numfds) {
++                error_setg(&local_err, "unexpected FDs");
++                goto err;
++            }
++            msg->fds->recv_fds = numfds;
++            memcpy(msg->fds->fds, fdp, numfds * sizeof(int));
++        }
++    } else {
++        if (numfds != 0) {
++            reqfds = vfio_user_getfds(numfds);
++            memcpy(reqfds->fds, fdp, numfds * sizeof(int));
++        } else {
++            reqfds = NULL;
++        }
++    }
++
++    /*
++     * Put the whole message into a single buffer.
++     */
++    if (isreply) {
++        if (hdr.size > msg->rsize) {
++            error_setg(&local_err, "reply larger than recv buffer");
++            goto err;
++        }
++        *msg->hdr = hdr;
++        data = (char *)msg->hdr + sizeof(hdr);
++    } else {
++        buf = g_malloc0(hdr.size);
++        memcpy(buf, &hdr, sizeof(hdr));
++        data = buf + sizeof(hdr);
++        msg = vfio_user_getmsg(proxy, (VFIOUserHdr *)buf, reqfds);
++        msg->type = VFIO_MSG_REQ;
++    }
++
++    /*
++     * Read rest of message.
++     */
++    msgleft = hdr.size - sizeof(hdr);
++    while (msgleft > 0) {
++        ret = qio_channel_read(proxy->ioc, data, msgleft, &local_err);
++
++        /* prepare to complete read on next iternation */
++        if (ret == QIO_CHANNEL_ERR_BLOCK) {
++            proxy->part_recv = msg;
++            proxy->recv_left = msgleft;
++            return ret;
++        }
++
++        if (ret <= 0) {
++            goto fatal;
++        }
++        trace_vfio_user_recv_read(hdr.id, ret);
++
++        msgleft -= ret;
++        data += ret;
++    }
++
++    vfio_user_process(proxy, msg, isreply);
 +    return 0;
++
++    /*
++     * fatal means the other side closed or we don't trust the stream
++     * err means this message is corrupt
++     */
++fatal:
++    vfio_user_shutdown(proxy);
++    proxy->state = VFIO_PROXY_ERROR;
++
++    /* set error if server side closed */
++    if (ret == 0) {
++        error_setg(&local_err, "server closed socket");
++    }
++
++err:
++    for (i = 0; i < numfds; i++) {
++        close(fdp[i]);
++    }
++    if (isreply && msg != NULL) {
++        /* force an error to keep sending thread from hanging */
++        vfio_user_set_error(msg->hdr, EINVAL);
++        msg->complete = true;
++        qemu_cond_signal(&msg->cv);
++    }
++    error_prepend(&local_err, "vfio_user_recv_one: ");
++    error_report_err(local_err);
++    return -1;
 +}
 +
  static void vfio_user_cb(void *opaque)
  {
      VFIOUserProxy *proxy = opaque;
-@@ -452,6 +545,133 @@ static void vfio_user_request(void *opaque)
-     }
- }
+@@ -60,6 +406,53 @@ static void vfio_user_cb(void *opaque)
+  * Functions called by main or CPU threads
+  */
  
 +/*
-+ * Messages are queued onto the proxy's outgoing list.
++ * Process incoming requests.
 + *
-+ * It handles 3 types of messages:
++ * The bus-specific callback has the form:
++ *    request(opaque, msg)
++ * where 'opaque' was specified in vfio_user_set_handler
++ * and 'msg' is the inbound message.
 + *
-+ * async messages - replies and posted writes
++ * The callback is responsible for disposing of the message buffer,
++ * usually by re-using it when calling vfio_send_reply or vfio_send_error,
++ * both of which free their message buffer when the reply is sent.
 + *
-+ * There will be no reply from the server, so message
-+ * buffers are freed after they're sent.
-+ *
-+ * nowait messages - map/unmap during address space transactions
-+ *
-+ * These are also sent async, but a reply is expected so that
-+ * vfio_wait_reqs() can wait for the youngest nowait request.
-+ * They transition from the outgoing list to the pending list
-+ * when sent, and are freed when the reply is received.
-+ *
-+ * wait messages - all other requests
-+ *
-+ * The reply to these messages is waited for by their caller.
-+ * They also transition from outgoing to pending when sent, but
-+ * the message buffer is returned to the caller with the reply
-+ * contents.  The caller is responsible for freeing these messages.
-+ *
-+ * As an optimization, if the outgoing list and the socket send
-+ * buffer are empty, the message is sent inline instead of being
-+ * added to the outgoing list.  The rest of the transitions are
-+ * unchanged.
-+ *
-+ * returns 0 if the message was sent or queued
-+ * returns -1 on send error
++ * If the callback uses a new buffer, it needs to free the old one.
 + */
-+static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
++static void vfio_user_request(void *opaque)
 +{
-+    int ret;
++    VFIOUserProxy *proxy = opaque;
++    VFIOUserMsgQ new, free;
++    VFIOUserMsg *msg, *m1;
 +
-+    /*
-+     * Unsent outgoing msgs - add to tail
-+     */
-+    if (!QTAILQ_EMPTY(&proxy->outgoing)) {
-+        QTAILQ_INSERT_TAIL(&proxy->outgoing, msg, next);
-+        return 0;
-+    }
-+
-+    /*
-+     * Try inline - if blocked, queue it and kick send poller
-+     */
-+    if (proxy->flags & VFIO_PROXY_FORCE_QUEUED) {
-+        ret = QIO_CHANNEL_ERR_BLOCK;
-+    } else {
-+        ret = vfio_user_send_qio(proxy, msg);
-+    }
-+    if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+        QTAILQ_INSERT_HEAD(&proxy->outgoing, msg, next);
-+        qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-+                                       vfio_user_recv, proxy->ctx,
-+                                       vfio_user_send, proxy);
-+        return 0;
-+    }
-+    if (ret == -1) {
-+        return ret;
-+    }
-+
-+    /*
-+     * Sent - free async, add others to pending
-+     */
-+    if (msg->type == VFIO_MSG_ASYNC) {
-+        vfio_user_recycle(proxy, msg);
-+    } else {
-+        QTAILQ_INSERT_TAIL(&proxy->pending, msg, next);
-+        msg->pending = true;
-+    }
-+
-+    return 0;
-+}
-+
-+static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                                VFIOUserFDs *fds, int rsize)
-+{
-+    VFIOUserMsg *msg;
-+    bool iolock = false;
-+    int ret;
-+
-+    if (hdr->flags & VFIO_USER_NO_REPLY) {
-+        error_printf("vfio_user_send_wait on async message\n");
-+        vfio_user_set_error(hdr, EINVAL);
-+        return;
-+    }
-+
-+    /*
-+     * We may block later, so use a per-proxy lock and drop
-+     * BQL while we sleep.
-+     */
-+    qemu_mutex_lock(&proxy->lock);
-+
-+    iolock = bql_locked();
-+    if (iolock) {
-+        bql_unlock();
-+    }
-+
-+    msg = vfio_user_getmsg(proxy, hdr, fds);
-+    msg->id = hdr->id;
-+    msg->rsize = rsize ? rsize : hdr->size;
-+    msg->type = VFIO_MSG_WAIT;
-+
-+    ret = vfio_user_send_queued(proxy, msg);
-+
-+    if (ret == 0) {
-+        while (!msg->complete) {
-+            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
-+                VFIOUserMsgQ *list;
-+
-+                list = msg->pending ? &proxy->pending : &proxy->outgoing;
-+                QTAILQ_REMOVE(list, msg, next);
-+                vfio_user_set_error(hdr, ETIMEDOUT);
-+                break;
-+            }
++    /* reap all incoming */
++    QTAILQ_INIT(&new);
++    WITH_QEMU_LOCK_GUARD(&proxy->lock) {
++        QTAILQ_FOREACH_SAFE(msg, &proxy->incoming, next, m1) {
++            QTAILQ_REMOVE(&proxy->incoming, msg, next);
++            QTAILQ_INSERT_TAIL(&new, msg, next);
 +        }
 +    }
-+    vfio_user_recycle(proxy, msg);
 +
-+    /* lock order is BQL->proxy - don't hold proxy when getting BQL */
-+    qemu_mutex_unlock(&proxy->lock);
-+    if (iolock) {
-+        bql_lock();
++    /* process list */
++    QTAILQ_INIT(&free);
++    QTAILQ_FOREACH_SAFE(msg, &new, next, m1) {
++        QTAILQ_REMOVE(&new, msg, next);
++        trace_vfio_user_recv_request(msg->hdr->command);
++        proxy->request(proxy->req_arg, msg);
++        QTAILQ_INSERT_HEAD(&free, msg, next);
++    }
++
++    /* free list */
++    WITH_QEMU_LOCK_GUARD(&proxy->lock) {
++        QTAILQ_FOREACH_SAFE(msg, &free, next, m1) {
++            vfio_user_recycle(proxy, msg);
++        }
 +    }
 +}
- 
++
++
  static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
      QLIST_HEAD_INITIALIZER(vfio_user_sockets);
-@@ -480,6 +700,15 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-     proxy = g_malloc0(sizeof(VFIOUserProxy));
-     proxy->sockname = g_strdup_printf("unix:%s", sockname);
-     proxy->ioc = ioc;
-+
-+    /* init defaults */
-+    proxy->max_xfer_size = VFIO_USER_DEF_MAX_XFER;
-+    proxy->max_send_fds = VFIO_USER_DEF_MAX_FDS;
-+    proxy->max_dma = VFIO_USER_DEF_MAP_MAX;
-+    proxy->dma_pgsizes = VFIO_USER_DEF_PGSIZE;
-+    proxy->max_bitmap = VFIO_USER_DEF_MAX_BITMAP;
-+    proxy->migr_pgsize = VFIO_USER_DEF_PGSIZE;
-+
-     proxy->flags = VFIO_PROXY_CLIENT;
-     proxy->state = VFIO_PROXY_CONNECTED;
  
-@@ -577,3 +806,285 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
-     g_free(proxy->sockname);
-     g_free(proxy);
+@@ -98,6 +491,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     }
+ 
+     proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
++    proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
+ 
+     QTAILQ_INIT(&proxy->outgoing);
+     QTAILQ_INIT(&proxy->incoming);
+@@ -108,6 +502,18 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     return proxy;
  }
-+
-+static void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
-+                                  uint32_t size, uint32_t flags)
+ 
++void vfio_user_set_handler(VFIODevice *vbasedev,
++                           void (*handler)(void *opaque, VFIOUserMsg *msg),
++                           void *req_arg)
 +{
-+    static uint16_t next_id;
++    VFIOUserProxy *proxy = vbasedev->proxy;
 +
-+    hdr->id = qatomic_fetch_inc(&next_id);
-+    hdr->command = cmd;
-+    hdr->size = size;
-+    hdr->flags = (flags & ~VFIO_USER_TYPE) | VFIO_USER_REQUEST;
-+    hdr->error_reply = 0;
++    proxy->request = handler;
++    proxy->req_arg = req_arg;
++    qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
++                                   vfio_user_recv, NULL, NULL, proxy);
 +}
 +
-+struct cap_entry {
-+    const char *name;
-+    bool (*check)(VFIOUserProxy *proxy, QObject *qobj, Error **errp);
-+};
-+
-+static bool caps_parse(VFIOUserProxy *proxy, QDict *qdict,
-+                       struct cap_entry caps[], Error **errp)
-+{
-+    QObject *qobj;
-+    struct cap_entry *p;
-+
-+    for (p = caps; p->name != NULL; p++) {
-+        qobj = qdict_get(qdict, p->name);
-+        if (qobj != NULL) {
-+            if (!p->check(proxy, qobj, errp)) {
-+                return false;
-+            }
-+            qdict_del(qdict, p->name);
-+        }
-+    }
-+
-+    /* warning, for now */
-+    if (qdict_size(qdict) != 0) {
-+        warn_report("spurious capabilities");
-+    }
-+    return true;
-+}
-+
-+static bool check_migr_pgsize(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QNum *qn = qobject_to(QNum, qobj);
-+    uint64_t pgsize;
-+
-+    if (qn == NULL || !qnum_get_try_uint(qn, &pgsize)) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_PGSIZE);
-+        return false;
-+    }
-+
-+    /* must be larger than default */
-+    if (pgsize & (VFIO_USER_DEF_PGSIZE - 1)) {
-+        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsize);
-+        return false;
-+    }
-+
-+    proxy->migr_pgsize = pgsize;
-+    return true;
-+}
-+
-+static bool check_bitmap(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QNum *qn = qobject_to(QNum, qobj);
-+    uint64_t bitmap_size;
-+
-+    if (qn == NULL || !qnum_get_try_uint(qn, &bitmap_size)) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAX_BITMAP);
-+        return false;
-+    }
-+
-+    /* can only lower it */
-+    if (bitmap_size > VFIO_USER_DEF_MAX_BITMAP) {
-+        error_setg(errp, "%s too large", VFIO_USER_CAP_MAX_BITMAP);
-+        return false;
-+    }
-+
-+    proxy->max_bitmap = bitmap_size;
-+    return true;
-+}
-+
-+static struct cap_entry caps_migr[] = {
-+    { VFIO_USER_CAP_PGSIZE, check_migr_pgsize },
-+    { VFIO_USER_CAP_MAX_BITMAP, check_bitmap },
-+    { NULL }
-+};
-+
-+static bool check_max_fds(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QNum *qn = qobject_to(QNum, qobj);
-+    uint64_t max_send_fds;
-+
-+    if (qn == NULL || !qnum_get_try_uint(qn, &max_send_fds) ||
-+        max_send_fds > VFIO_USER_MAX_MAX_FDS) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAX_FDS);
-+        return false;
-+    }
-+    proxy->max_send_fds = max_send_fds;
-+    return true;
-+}
-+
-+static bool check_max_xfer(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QNum *qn = qobject_to(QNum, qobj);
-+    uint64_t max_xfer_size;
-+
-+    if (qn == NULL || !qnum_get_try_uint(qn, &max_xfer_size) ||
-+        max_xfer_size > VFIO_USER_MAX_MAX_XFER) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAX_XFER);
-+        return false;
-+    }
-+    proxy->max_xfer_size = max_xfer_size;
-+    return true;
-+}
-+
-+static bool check_pgsizes(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QNum *qn = qobject_to(QNum, qobj);
-+    uint64_t pgsizes;
-+
-+    if (qn == NULL || !qnum_get_try_uint(qn, &pgsizes)) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_PGSIZES);
-+        return false;
-+    }
-+
-+    /* must be larger than default */
-+    if (pgsizes & (VFIO_USER_DEF_PGSIZE - 1)) {
-+        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsizes);
-+        return false;
-+    }
-+
-+    proxy->dma_pgsizes = pgsizes;
-+    return true;
-+}
-+
-+static bool check_max_dma(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QNum *qn = qobject_to(QNum, qobj);
-+    uint64_t max_dma;
-+
-+    if (qn == NULL || !qnum_get_try_uint(qn, &max_dma)) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAP_MAX);
-+        return false;
-+    }
-+
-+    /* can only lower it */
-+    if (max_dma > VFIO_USER_DEF_MAP_MAX) {
-+        error_setg(errp, "%s too large", VFIO_USER_CAP_MAP_MAX);
-+        return false;
-+    }
-+
-+    proxy->max_dma = max_dma;
-+    return true;
-+}
-+
-+static bool check_migr(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QDict *qdict = qobject_to(QDict, qobj);
-+
-+    if (qdict == NULL) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAX_FDS);
-+        return true;
-+    }
-+    return caps_parse(proxy, qdict, caps_migr, errp);
-+}
-+
-+static struct cap_entry caps_cap[] = {
-+    { VFIO_USER_CAP_MAX_FDS, check_max_fds },
-+    { VFIO_USER_CAP_MAX_XFER, check_max_xfer },
-+    { VFIO_USER_CAP_PGSIZES, check_pgsizes },
-+    { VFIO_USER_CAP_MAP_MAX, check_max_dma },
-+    { VFIO_USER_CAP_MIGR, check_migr },
-+    { NULL }
-+};
-+
-+static bool check_cap(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+   QDict *qdict = qobject_to(QDict, qobj);
-+
-+    if (qdict == NULL) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP);
-+        return false;
-+    }
-+    return caps_parse(proxy, qdict, caps_cap, errp);
-+}
-+
-+static struct cap_entry ver_0_0[] = {
-+    { VFIO_USER_CAP, check_cap },
-+    { NULL }
-+};
-+
-+static bool caps_check(VFIOUserProxy *proxy, int minor, const char *caps,
-+                       Error **errp)
-+{
-+    QObject *qobj;
-+    QDict *qdict;
-+    bool ret;
-+
-+    qobj = qobject_from_json(caps, NULL);
-+    if (qobj == NULL) {
-+        error_setg(errp, "malformed capabilities %s", caps);
-+        return false;
-+    }
-+    qdict = qobject_to(QDict, qobj);
-+    if (qdict == NULL) {
-+        error_setg(errp, "capabilities %s not an object", caps);
-+        qobject_unref(qobj);
-+        return false;
-+    }
-+    ret = caps_parse(proxy, qdict, ver_0_0, errp);
-+
-+    qobject_unref(qobj);
-+    return ret;
-+}
-+
-+static GString *caps_json(void)
-+{
-+    QDict *dict = qdict_new();
-+    QDict *capdict = qdict_new();
-+    QDict *migdict = qdict_new();
-+    GString *str;
-+
-+    qdict_put_int(migdict, VFIO_USER_CAP_PGSIZE, VFIO_USER_DEF_PGSIZE);
-+    qdict_put_int(migdict, VFIO_USER_CAP_MAX_BITMAP, VFIO_USER_DEF_MAX_BITMAP);
-+    qdict_put_obj(capdict, VFIO_USER_CAP_MIGR, QOBJECT(migdict));
-+
-+    qdict_put_int(capdict, VFIO_USER_CAP_MAX_FDS, VFIO_USER_MAX_MAX_FDS);
-+    qdict_put_int(capdict, VFIO_USER_CAP_MAX_XFER, VFIO_USER_DEF_MAX_XFER);
-+    qdict_put_int(capdict, VFIO_USER_CAP_PGSIZES, VFIO_USER_DEF_PGSIZE);
-+    qdict_put_int(capdict, VFIO_USER_CAP_MAP_MAX, VFIO_USER_DEF_MAP_MAX);
-+
-+    qdict_put_obj(dict, VFIO_USER_CAP, QOBJECT(capdict));
-+
-+    str = qobject_to_json(QOBJECT(dict));
-+    qobject_unref(dict);
-+    return str;
-+}
-+
-+bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
-+{
-+    g_autofree VFIOUserVersion *msgp = NULL;
-+    GString *caps;
-+    char *reply;
-+    int size, caplen;
-+
-+    caps = caps_json();
-+    caplen = caps->len + 1;
-+    size = sizeof(*msgp) + caplen;
-+    msgp = g_malloc0(size);
-+
-+    vfio_user_request_msg(&msgp->hdr, VFIO_USER_VERSION, size, 0);
-+    msgp->major = VFIO_USER_MAJOR_VER;
-+    msgp->minor = VFIO_USER_MINOR_VER;
-+    memcpy(&msgp->capabilities, caps->str, caplen);
-+    g_string_free(caps, true);
-+    trace_vfio_user_version(msgp->major, msgp->minor, msgp->capabilities);
-+
-+    vfio_user_send_wait(proxy, &msgp->hdr, NULL, 0);
-+    if (msgp->hdr.flags & VFIO_USER_ERROR) {
-+        error_setg_errno(errp, msgp->hdr.error_reply, "version reply");
-+        return false;
-+    }
-+
-+    if (msgp->major != VFIO_USER_MAJOR_VER ||
-+        msgp->minor > VFIO_USER_MINOR_VER) {
-+        error_setg(errp, "incompatible server version");
-+        return false;
-+    }
-+
-+    reply = msgp->capabilities;
-+    if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
-+        error_setg(errp, "corrupt version reply");
-+        return false;
-+    }
-+
-+    if (!caps_check(proxy, msgp->minor, reply, errp)) {
-+        return false;
-+    }
-+
-+    trace_vfio_user_version(msgp->major, msgp->minor, msgp->capabilities);
-+    return true;
-+}
+ void vfio_user_disconnect(VFIOUserProxy *proxy)
+ {
+     VFIOUserMsg *r1, *r2;
+@@ -123,6 +529,8 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+     }
+     object_unref(OBJECT(proxy->ioc));
+     proxy->ioc = NULL;
++    qemu_bh_delete(proxy->req_bh);
++    proxy->req_bh = NULL;
+ 
+     proxy->state = VFIO_PROXY_CLOSING;
+     QTAILQ_FOREACH_SAFE(r1, &proxy->outgoing, next, r2) {
 diff --git a/hw/vfio/user.h b/hw/vfio/user.h
-index 30cf35d3e4..9c3b279839 100644
+index ac7d15dfa8..30cf35d3e4 100644
 --- a/hw/vfio/user.h
 +++ b/hw/vfio/user.h
-@@ -35,6 +35,7 @@ typedef struct VFIOUserMsg {
-     uint32_t id;
-     QemuCond cv;
-     bool complete;
-+    bool pending;
-     enum msg_type type;
- } VFIOUserMsg;
+@@ -11,6 +11,8 @@
+  *
+  */
  
-@@ -54,6 +55,12 @@ typedef struct VFIOUserProxy {
-     struct QIOChannel *ioc;
-     void (*request)(void *opaque, VFIOUserMsg *msg);
-     void *req_arg;
-+    uint64_t max_xfer_size;
-+    uint64_t max_send_fds;
-+    uint64_t max_dma;
-+    uint64_t dma_pgsizes;
-+    uint64_t max_bitmap;
-+    uint64_t migr_pgsize;
-     int flags;
-     QemuCond close_cv;
-     AioContext *ctx;
-@@ -76,6 +83,7 @@ typedef struct VFIOUserProxy {
++#include "user-protocol.h"
++
+ typedef struct {
+     int send_fds;
+     int recv_fds;
+@@ -27,6 +29,7 @@ enum msg_type {
+ 
+ typedef struct VFIOUserMsg {
+     QTAILQ_ENTRY(VFIOUserMsg) next;
++    VFIOUserHdr *hdr;
+     VFIOUserFDs *fds;
+     uint32_t rsize;
+     uint32_t id;
+@@ -66,13 +69,20 @@ typedef struct VFIOUserProxy {
+     VFIOUserMsgQ incoming;
+     VFIOUserMsgQ outgoing;
+     VFIOUserMsg *last_nowait;
++    VFIOUserMsg *part_recv;
++    size_t recv_left;
+     enum proxy_state state;
+ } VFIOUserProxy;
  
  /* VFIOProxy flags */
  #define VFIO_PROXY_CLIENT        0x1
-+#define VFIO_PROXY_FORCE_QUEUED  0x4
  
- typedef struct VFIODevice VFIODevice;
- 
-@@ -84,5 +92,6 @@ void vfio_user_disconnect(VFIOUserProxy *proxy);
- void vfio_user_set_handler(VFIODevice *vbasedev,
-                            void (*handler)(void *opaque, VFIOUserMsg *msg),
-                            void *reqarg);
-+bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp);
++typedef struct VFIODevice VFIODevice;
++
+ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp);
+ void vfio_user_disconnect(VFIOUserProxy *proxy);
++void vfio_user_set_handler(VFIODevice *vbasedev,
++                           void (*handler)(void *opaque, VFIOUserMsg *msg),
++                           void *reqarg);
  
  #endif /* VFIO_USER_H */
 -- 
