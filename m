@@ -4,137 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57CB3C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EDAC25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCCQL-0005rg-FP; Wed, 29 May 2024 02:04:33 -0400
+	id 1sCCQJ-0005f0-MH; Wed, 29 May 2024 02:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCCQI-0005az-MJ
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sCCQH-0005aq-HX
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:29 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCCQA-0002vV-Ln
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716962661;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4DaMXJTCGuXq1Bo+NDDHWrRmsLGpWN12/mUw1Yt8gSc=;
- b=Pp6o/WqJSXB0xKsSQjRpJpGgZdl1q7+BN/IBEJi25CF5WPMokXcqPKTMEQPOJQMPzJqS9K
- JrJdFz4nOPMNpiTH5mGNgfxQXdTHiDlh69Orm8BSbabgifKG/zinw7FzkMF7HrHhecHpOH
- KbobvZg5HKL8nA/VERxNUW6bYmNw1LY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-JFLHkw8WNV2KXgW8NRMV9g-1; Wed, 29 May 2024 02:04:19 -0400
-X-MC-Unique: JFLHkw8WNV2KXgW8NRMV9g-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42110ebbd0fso12722645e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 23:04:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716962658; x=1717567458;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4DaMXJTCGuXq1Bo+NDDHWrRmsLGpWN12/mUw1Yt8gSc=;
- b=H9QsUqxrNGrfl6dlP7msMPUIZBq4c1GejCevgWgN17zH0q28vjMhh3FyBraIsy76RZ
- BloiHph0T3ymkKdkbfrIzOGmYoJDtgQ6idAYwDmQ6vHeHZqIVhLz3SWfLJWBgxB225Nw
- vUvNEKie4+bys44D38/TMpkwp1GJQfiwrWDBy1AFnorbcjWualeo3NXViUGgXNxs4SjI
- ebhZEuI9qOuSnMikBqLQrjCm3eWKq215I6puE2TnLnncA7LtHFfC5WMPMycJH71yI2yn
- 42a7Q2tLfC0ucu0yXl9sisKShFleuqMoDBPfogpDqXGMoAHORtt0WuAXiX0lxDUSPMlo
- FqSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvRh0MoG6Gw1jVt+n3hKoLFXJ5NjPisgVfFbVAUI2ipzXiA2wDIyDohEjixBYAERilKRBrrsYPCcI3xA56NQ+CvY1+55E=
-X-Gm-Message-State: AOJu0YyloS36z0jCuiwexvKJfo8AqqJLAl0HpBFgiOiC8/g38xyG62u1
- 6AVHygcqO48sOVJBmaVT3YIfvu+P7PJNBNgvysINFV27Io5naOs/0gux/syVIpdzstCv7mGqSSL
- KfE37oCeMul5Asq2JDjMHUu8tMyFycREGfoLillfhmlNhOOMC/6Po
-X-Received: by 2002:a05:600c:198e:b0:420:fe60:c387 with SMTP id
- 5b1f17b1804b1-42108a12ab4mr116623495e9.38.1716962657241; 
- Tue, 28 May 2024 23:04:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHKmYKtJsYfWRBueFmstW9DiW8F6gcpK64fBMk1djSV22miTJChRv2wnD3XDQUJaeoKmeWI3w==
-X-Received: by 2002:a05:600c:198e:b0:420:fe60:c387 with SMTP id
- 5b1f17b1804b1-42108a12ab4mr116623335e9.38.1716962656789; 
- Tue, 28 May 2024 23:04:16 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
- [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7dd33sm13741958f8f.11.2024.05.28.23.04.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 23:04:16 -0700 (PDT)
-Message-ID: <b0f77dbc-23c4-4ccc-b926-3cf072894889@redhat.com>
-Date: Wed, 29 May 2024 08:04:15 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/23] hw/i386/pc: Simplify DEFINE_I440FX_MACHINE()
- macro
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sCCQF-0002vg-9j
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1716962668; x=1748498668;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=2vBh3IfNwbawhYc++Jw/OuUr0v/+Zup3/Ru69BmBxJY=;
+ b=XZ612HnBIcRDa48BrnWCHW5YWy5WvgYx7POn5/hsrUk4KNibJnoirkwD
+ /RimfPc/YHuW35nLq8NW9W1jSgGzpgBbJzzecP6tJ3jrFhteCtgsaBKke
+ U1HsZCMtdObxXw8qAjh3aCrej5ya7b4ijEAL8mlFpmgyET4yKA9jBUMol
+ l9lQBdcmcKT+YR7md0V/3QCWE3gTCQWSOVRzEFho/ltWPc8oi5RgGIgX5
+ BnidGJjuBfBQ/U/xQm9mMW5VNNOdWgLnv3HKscRCnVXppyq6mmYQPm9Dg
+ e/fTbF6pet2QOSfEMiie3TCXPZfOvJMp81ZZWe/o+jRYq8ffrPky77qL/ Q==;
+X-CSE-ConnectionGUID: jvjBDkJ1Q/e8izCNuLFzJQ==
+X-CSE-MsgGUID: RlKZhJAyTnWrOs4mHf+F0w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="13187514"
+X-IronPort-AV: E=Sophos;i="6.08,197,1712646000"; d="scan'208";a="13187514"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 May 2024 23:04:26 -0700
+X-CSE-ConnectionGUID: PKDxyjSFS2GFoLIMhNEEnQ==
+X-CSE-MsgGUID: q5cuhUeDTpKRHskcoAX6/A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,197,1712646000"; d="scan'208";a="40144779"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 28 May 2024 23:04:23 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-22-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240529051539.71210-22-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Yongwei Ma <yongwei.ma@intel.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 8/8] tests/unit/test-smp-parse: Test the full 8-levels
+ topology hierarchy
+Date: Wed, 29 May 2024 14:19:25 +0800
+Message-Id: <20240529061925.350323-9-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240529061925.350323-1-zhao1.liu@intel.com>
+References: <20240529061925.350323-1-zhao1.liu@intel.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,17 +86,311 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/05/2024 07.15, Philippe Mathieu-Daudé wrote:
-> Last commit removed the last non-NULL use of DEFINE_I440FX_MACHINE
-> 3rd parameter. 'compatfn' is now obsolete, remove it.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/i386/pc_piix.c | 62 ++++++++++++++++++++++-------------------------
->   1 file changed, 29 insertions(+), 33 deletions(-)
+With module level, QEMU now support 8-levels topology hierarchy.
+Cover "modules" in SMP_CONFIG_WITH_FULL_TOPO related cases.
 
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ tests/unit/test-smp-parse.c | 129 ++++++++++++++++++++++++------------
+ 1 file changed, 85 insertions(+), 44 deletions(-)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index 2ca8530e935e..f9bccb56abc7 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -94,11 +94,11 @@
+         }
+ 
+ /*
+- * Currently QEMU supports up to a 7-level topology hierarchy, which is the
++ * Currently QEMU supports up to a 8-level topology hierarchy, which is the
+  * QEMU's unified abstract representation of CPU topology.
+- *  -drawers/books/sockets/dies/clusters/cores/threads
++ *  -drawers/books/sockets/dies/clusters/modules/cores/threads
+  */
+-#define SMP_CONFIG_WITH_FULL_TOPO(a, b, c, d, e, f, g, h, i)    \
++#define SMP_CONFIG_WITH_FULL_TOPO(a, b, c, d, e, f, g, h, i, j) \
+         {                                                       \
+             .has_cpus     = true, .cpus     = a,                \
+             .has_drawers  = true, .drawers  = b,                \
+@@ -106,9 +106,10 @@
+             .has_sockets  = true, .sockets  = d,                \
+             .has_dies     = true, .dies     = e,                \
+             .has_clusters = true, .clusters = f,                \
+-            .has_cores    = true, .cores    = g,                \
+-            .has_threads  = true, .threads  = h,                \
+-            .has_maxcpus  = true, .maxcpus  = i,                \
++            .has_modules  = true, .modules  = g,                \
++            .has_cores    = true, .cores    = h,                \
++            .has_threads  = true, .threads  = i,                \
++            .has_maxcpus  = true, .maxcpus  = j,                \
+         }
+ 
+ /**
+@@ -336,10 +337,10 @@ static const struct SMPTestData data_generic_valid[] = {
+         /*
+          * Unsupported parameters are always allowed to be set to '1'
+          * config:
+-         *   -smp 8,drawers=1,books=1,sockets=2,dies=1,clusters=1,cores=2,\
+-         *        threads=2,maxcpus=8
++         *   -smp 8,drawers=1,books=1,sockets=2,dies=1,clusters=1,modules=1,\
++         *        cores=2,threads=2,maxcpus=8
+          * expect: cpus=8,sockets=2,cores=2,threads=2,maxcpus=8 */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 2, 2, 8),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 1, 2, 2, 8),
+         .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
+         .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
+     },
+@@ -561,32 +562,37 @@ static const struct SMPTestData data_full_topo_invalid[] = {
+     {
+         /*
+          * config: -smp 200,drawers=3,books=5,sockets=2,dies=4,\
+-         *              clusters=2,cores=7,threads=2,maxcpus=200
++         *              clusters=2,modules=3,cores=7,threads=2,\
++         *              maxcpus=200
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(200, 3, 5, 2, 4, 2, 7, 2, 200),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(200, 3, 5, 2, 4, 2, 3, 7, 2, 200),
+         .expect_error = "Invalid CPU topology: "
+                         "product of the hierarchy must match maxcpus: "
+                         "drawers (3) * books (5) * sockets (2) * dies (4) * "
+-                        "clusters (2) * cores (7) * threads (2) "
++                        "clusters (2) * modules (3) * cores (7) * threads (2) "
+                         "!= maxcpus (200)",
+     }, {
+         /*
+-         * config: -smp 3361,drawers=3,books=5,sockets=2,dies=4,\
+-         *              clusters=2,cores=7,threads=2,maxcpus=3360
++         * config: -smp 2881,drawers=3,books=5,sockets=2,dies=4,\
++         *              clusters=2,modules=3,cores=2,threads=2,
++         *              maxcpus=2880
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(3361, 3, 5, 2, 4, 2, 7, 2, 3360),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(2881, 3, 5, 2, 4,
++                                            2, 3, 2, 2, 2880),
+         .expect_error = "Invalid CPU topology: "
+                         "maxcpus must be equal to or greater than smp: "
+-                        "drawers (3) * books (5) * sockets (2) * dies (4) * "
+-                        "clusters (2) * cores (7) * threads (2) "
+-                        "== maxcpus (3360) < smp_cpus (3361)",
++                        "drawers (3) * books (5) * sockets (2) * "
++                        "dies (4) * clusters (2) * modules (3) * "
++                        "cores (2) * threads (2) == maxcpus (2880) "
++                        "< smp_cpus (2881)",
+     }, {
+         /*
+          * config: -smp 1,drawers=3,books=5,sockets=2,dies=4,\
+-         *              clusters=2,cores=7,threads=3,maxcpus=5040
++         *              clusters=2,modules=3,cores=3,threads=3,\
++         *              maxcpus=6480
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 3, 5, 2, 4, 2, 7, 3, 5040),
+-        .expect_error = "Invalid SMP CPUs 5040. The max CPUs supported "
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 3, 5, 2, 4, 2, 3, 3, 3, 6480),
++        .expect_error = "Invalid SMP CPUs 6480. The max CPUs supported "
+                         "by machine '" SMP_MACHINE_NAME "' is 4096",
+     },
+ };
+@@ -596,81 +602,100 @@ static const struct SMPTestData data_zero_topo_invalid[] = {
+         /*
+          * Test "cpus=0".
+          * config: -smp 0,drawers=1,books=1,sockets=1,dies=1,\
+-         *              clusters=1,cores=1,threads=1,maxcpus=1
++         *              clusters=1,modules=1,cores=1,threads=1,\
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(0, 1, 1, 1, 1, 1, 1, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(0, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "drawers=0".
+          * config: -smp 1,drawers=0,books=1,sockets=1,dies=1,\
+-         *              clusters=1,cores=1,threads=1,maxcpus=1
++         *              clusters=1,modules=1,cores=1,threads=1,\
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 0, 1, 1, 1, 1, 1, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 0, 1, 1, 1, 1, 1, 1, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "books=0".
+          * config: -smp 1,drawers=1,books=0,sockets=1,dies=1,\
+-         *              clusters=1,cores=1,threads=1,maxcpus=1
++         *              clusters=1,modules=1,cores=1,threads=1,\
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 0, 1, 1, 1, 1, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 0, 1, 1, 1, 1, 1, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "sockets=0".
+          * config: -smp 1,drawers=1,books=1,sockets=0,dies=1,\
+-         *              clusters=1,cores=1,threads=1,maxcpus=1
++         *              clusters=1,modules=1,cores=1,threads=1,
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 0, 1, 1, 1, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 0, 1, 1, 1, 1, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "dies=0".
+          * config: -smp 1,drawers=1,books=1,sockets=1,dies=0,\
+-         *              clusters=1,cores=1,threads=1,maxcpus=1
++         *              clusters=1,modules=1,cores=1,threads=1,\
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 0, 1, 1, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 0, 1, 1, 1, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "clusters=0".
+          * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
+-         *              clusters=0,cores=1,threads=1,maxcpus=1
++         *              clusters=0,modules=1,cores=1,threads=1,\
++         *              maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 0, 1, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "modules=0".
++         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
++         *              clusters=1,modules=0,cores=1,threads=1,\
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 0, 1, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 0, 1, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "cores=0".
+          * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
+-         *              clusters=1,cores=0,threads=1,maxcpus=1
++         *              clusters=1,modules=1,cores=0,threads=1,
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 0, 1, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 0, 1, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "threads=0".
+          * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
+-         *              clusters=1,cores=1,threads=0,maxcpus=1
++         *              clusters=1,modules=1,cores=1,threads=0,\
++         *              maxcpus=1
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 0, 1),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 1, 0, 1),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     }, {
+         /*
+          * Test "maxcpus=0".
+          * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
+-         *              clusters=1,cores=1,threads=1,maxcpus=0
++         *              clusters=1,modules=1,cores=1,threads=1,\
++         *              maxcpus=0
+          */
+-        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 1, 0),
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
+         .expect_error = "Invalid CPU topology: CPU topology parameters must "
+                         "be greater than zero",
+     },
+@@ -977,6 +1002,7 @@ static void machine_full_topo_class_init(ObjectClass *oc, void *data)
+     mc->smp_props.books_supported = true;
+     mc->smp_props.dies_supported = true;
+     mc->smp_props.clusters_supported = true;
++    mc->smp_props.modules_supported = true;
+ }
+ 
+ static void test_generic_valid(const void *opaque)
+@@ -1396,30 +1422,41 @@ static void test_full_topo(const void *opaque)
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+     SMPTestData data = {};
+-    unsigned int drawers = 5, books = 3, dies = 2, clusters = 7, multiplier;
++    unsigned int drawers, books, dies, clusters, modules, multiplier;
+     int i;
+ 
+-    multiplier = drawers * books * dies * clusters;
++    drawers = 5;
++    books = 3;
++    dies = 2;
++    clusters = 3;
++    modules = 2;
++
++    multiplier = drawers * books * dies * clusters * modules;
+     for (i = 0; i < ARRAY_SIZE(data_generic_valid); i++) {
+         data = data_generic_valid[i];
+         unsupported_params_init(mc, &data);
+ 
+         /*
+-         * when drawers, books, dies and clusters parameters are omitted,
+-         * they will be set as 1.
++         * when drawers, books, dies, clusters and modules parameters are
++         * omitted, they will be set as 1.
+          */
+         data.expect_prefer_sockets.drawers = 1;
+         data.expect_prefer_sockets.books = 1;
+         data.expect_prefer_sockets.dies = 1;
+         data.expect_prefer_sockets.clusters = 1;
++        data.expect_prefer_sockets.modules = 1;
+         data.expect_prefer_cores.drawers = 1;
+         data.expect_prefer_cores.books = 1;
+         data.expect_prefer_cores.dies = 1;
+         data.expect_prefer_cores.clusters = 1;
++        data.expect_prefer_cores.modules = 1;
+ 
+         smp_parse_test(ms, &data, true);
+ 
+-        /* when drawers, books, dies and clusters parameters are specified. */
++        /*
++         * when drawers, books, dies, clusters and modules parameters
++         * are specified.
++         */
+         data.config.has_drawers = true;
+         data.config.drawers = drawers;
+         data.config.has_books = true;
+@@ -1428,6 +1465,8 @@ static void test_full_topo(const void *opaque)
+         data.config.dies = dies;
+         data.config.has_clusters = true;
+         data.config.clusters = clusters;
++        data.config.has_modules = true;
++        data.config.modules = modules;
+ 
+         if (data.config.has_cpus) {
+             data.config.cpus *= multiplier;
+@@ -1440,6 +1479,7 @@ static void test_full_topo(const void *opaque)
+         data.expect_prefer_sockets.books = books;
+         data.expect_prefer_sockets.dies = dies;
+         data.expect_prefer_sockets.clusters = clusters;
++        data.expect_prefer_sockets.modules = modules;
+         data.expect_prefer_sockets.cpus *= multiplier;
+         data.expect_prefer_sockets.max_cpus *= multiplier;
+ 
+@@ -1447,6 +1487,7 @@ static void test_full_topo(const void *opaque)
+         data.expect_prefer_cores.books = books;
+         data.expect_prefer_cores.dies = dies;
+         data.expect_prefer_cores.clusters = clusters;
++        data.expect_prefer_cores.modules = modules;
+         data.expect_prefer_cores.cpus *= multiplier;
+         data.expect_prefer_cores.max_cpus *= multiplier;
+ 
+-- 
+2.34.1
 
 
