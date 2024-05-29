@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BB5C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7588C25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCCmW-0002Gt-3H; Wed, 29 May 2024 02:27:28 -0400
+	id 1sCCoZ-00034S-0y; Wed, 29 May 2024 02:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCCmU-0002Fw-6U
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:27:26 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCCoW-000342-Mf
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:29:32 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCCmS-0005vh-Lj
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:27:25 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a62ef52e837so179344466b.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 23:27:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCCoV-00063T-4f
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:29:32 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a62972c88a9so206644766b.1
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 23:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716964043; x=1717568843; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716964167; x=1717568967; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PPpsvwIIM/9rhJtSqKc0KQFiyKVA/H6AMru5rb7zErE=;
- b=pbvnAn//hEFunF5Z1vCtOuichJSH2XUSyTxaAhb+fMK8IBfOiqee/ulGJrYyuEyG9i
- 1F9r+1/m40djs2QCT6wZE/nHQbYLm78Szc0CMS0rYNPGXPo0Rzz1pTrDXLqOHkjxrK35
- JfxGcbNgs5P5aA1v1yttJltFLuC/BijdpaJJn7Kw+o64wamIfNMxZ+zDXCsZf8bH7EE8
- g+xSURVgmLxg7HnP6v8dVC7TVdEPp0XRIF+GkypL4sYKv7gRdIgu723xy0i5mGLttL7U
- XUJgaKmzjNFFxIKNB9gHOd02ziE+V4+/kRXZULezTES7+4tQv6uap6Qrf510bL16u4R4
- BaeQ==
+ bh=ZzJ4uOqB+i4ABBaqSYZOOF8LNBWUA9jQNVV04Yu/4Tc=;
+ b=WBrhy2vbcz8zrryNgbaN8ynkGNSz+p4MxyA2Gl0Ob0FAT0Fxt92ryUJt03xekoVxOa
+ eaMBlTVsLrStxKhNsplXy6V6OlaZezPzZq+q6QrKTwRMg44ZaQuDZvt8NxKx72FfVbJY
+ qLueGISXCovi+g9GdTvqKTPIm2qsWLixVf/PnNNkFx2JD9wPW6eRNV9uwP/xqPt1/7cn
+ 4EYN/2aMCSJ6OsHpxx64TTGetMV56h8neXDl1haIyudrMWkqdDY4QCqBwwNzdvsK2vv/
+ l5io1ouCXdYFei1Lqsz2U5rgGTmNwPa5Dy2SDbio0D8ig6d9xuqURwECBv2loGjQL3ku
+ 91uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716964043; x=1717568843;
+ d=1e100.net; s=20230601; t=1716964167; x=1717568967;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PPpsvwIIM/9rhJtSqKc0KQFiyKVA/H6AMru5rb7zErE=;
- b=HInDvvFXzzqapopK+d852PS1YO8p/pJIFs2GVBn10EyFdLPMqNR58cn6RXVNIjRjX1
- B405C5nWDsbfeC9cPD9nhoAvZMI8dJUhAdJdCEfPRHnoUxSLiJSpVkqrDppzHcrwbclZ
- p8WrVBkYAQcoIN771UUrL6ZpWLoevVMC5xbhHbgwZ07yUN/5wWVuieWDIu7gzLyvvNYT
- 4dZpKwj1iuU/xgmHknTT31Ipc1qUlCe6Q0WaPh0J9p0qNnioKoLaQ+kDs9gRxe4NmEmu
- NR/O1TIIIeNt0ObiolusVFRJIwUiJPaCiER9qORvY4vgCzumxYtTb/vOO2T06C9XYuVD
- 1xjA==
+ bh=ZzJ4uOqB+i4ABBaqSYZOOF8LNBWUA9jQNVV04Yu/4Tc=;
+ b=f1uz+umSbpGaE47SolvVU1/B0kMJVnHiAV0pn4LWLTZK7oM5zxWGsNjdtTl6dJejXx
+ x9T7Z4mQhuOWi26nThXmxQ4jk5qq6pbdj765v2cMaEgtzQxP8Tu+UmHNBdyhWSkvyOLj
+ rul2m69fX2D69QcO0QvDu2uxw9oPEnAks30Sb21JcgoQM3z/5Zd6NmsMvpNjhoabuVnv
+ 1ol4i/NK2yQWfZMGnXyDB6NmvNBlKdLbSIqwHbL2YsBx3BIwk38yFhq+OtRrqhC1ZZPH
+ DNaE6/5n7MdteuYGV5n1aFsotRLgJFlEtCpny13TPNhFeiQs54hYdRnTsDyYM5Ad1Oey
+ L1/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5zK3LWYc3L/WgAz0SiYRenxrho0UysZfZOiyEZY1LvFnm4N+rZdzzIaMoz5+aCxG87sWivvbfWmpSjEYtde1OvbdFEyg=
-X-Gm-Message-State: AOJu0YyOsLJ1AkCeRbCaOB4ld8ubEaWjU6e+J+hZEAyzvlOccoOc0XBh
- fLhcJjCtOj+nloBp59b57T4HRuaOzHG6na6XGNzq3MNvAY/1PSyxE88Cpn82H8s=
-X-Google-Smtp-Source: AGHT+IFs98FdTZGkXttf9aGjEnJQxjJEhUAhbqLbmeNxEMiuBbckShJkOtFX3BkFIK36OBREyQueyQ==
-X-Received: by 2002:a17:907:984c:b0:a62:a63c:18f0 with SMTP id
- a640c23a62f3a-a62a63c1a10mr756880366b.1.1716964042967; 
- Tue, 28 May 2024 23:27:22 -0700 (PDT)
+ AJvYcCXD7CgL5NMh5fwfO7hBWz416PDLb68Z/pc7lXATI/o3cDxpn25Ka1Xup5dhnqUXhKdLqJJiq92yD+6g5lBwEfZarXcCU7w=
+X-Gm-Message-State: AOJu0YzOvunKB5NvcKiUMvDVaOjvaPS/+vEILOJvgSLK80Pu3prx1LBk
+ BULtQShTMzbfmDhXbyHQnV74bZpi79T+3lYtX/hjrrwEChNIpE5h0rKskH3a4x859O0vI9fe3Sz
+ S
+X-Google-Smtp-Source: AGHT+IEK70ktaXUf+bHcCU22wK85S2cQKY9kTV8KzSnBQlqZM1QWUDBQsZXQuSnuBpAlfbvGAL+qKg==
+X-Received: by 2002:a17:906:6854:b0:a59:d4f0:cfc3 with SMTP id
+ a640c23a62f3a-a6264f0162dmr972290366b.59.1716964167183; 
+ Tue, 28 May 2024 23:29:27 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.204.141])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a635b2b7cdcsm83720266b.139.2024.05.28.23.27.21
+ a640c23a62f3a-a626cda6d74sm680795266b.201.2024.05.28.23.29.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 23:27:22 -0700 (PDT)
-Message-ID: <c22df582-735c-457e-a9aa-cd931e0beadf@linaro.org>
-Date: Wed, 29 May 2024 08:27:20 +0200
+ Tue, 28 May 2024 23:29:26 -0700 (PDT)
+Message-ID: <ce04cd88-8098-4737-b85b-61405d015d04@linaro.org>
+Date: Wed, 29 May 2024 08:29:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] hw/misc: Create STM32L4x5 SYSCFG clock
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Damien Hedde
- <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
- Luc Michel <luc@lmichel.fr>, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Thomas Huth <thuth@redhat.com>
-References: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
- <20240523194441.21036-2-ines.varhol@telecom-paris.fr>
+Subject: Re: [PATCH 04/18] tcg/loongarch64: Support TCG_TYPE_V64
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: git@xen0n.name, gaosong@loongson.cn
+References: <20240527211912.14060-1-richard.henderson@linaro.org>
+ <20240527211912.14060-5-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240523194441.21036-2-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240527211912.14060-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +97,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/5/24 21:41, Inès Varhol wrote:
-> This commit creates a clock in STM32L4x5 SYSCFG and wires it up to the
-> corresponding clock from STM32L4x5 RCC.
+On 27/5/24 23:18, Richard Henderson wrote:
+> We can implement this with fld_d, fst_d for load and store,
+> and then use the normal v128 operations in registers.
+> This will improve support for guests which use v64.
 > 
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/hw/misc/stm32l4x5_syscfg.h |  1 +
->   hw/arm/stm32l4x5_soc.c             |  2 ++
->   hw/misc/stm32l4x5_syscfg.c         | 19 +++++++++++++++++--
->   3 files changed, 20 insertions(+), 2 deletions(-)
+>   tcg/loongarch64/tcg-target.h     | 2 +-
+>   tcg/loongarch64/tcg-target.c.inc | 8 ++++++--
+>   2 files changed, 7 insertions(+), 3 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
