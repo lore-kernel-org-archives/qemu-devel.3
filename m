@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B504DC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB8AC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCCQ5-0005We-Td; Wed, 29 May 2024 02:04:17 -0400
+	id 1sCCQ7-0005XH-Bz; Wed, 29 May 2024 02:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCCQ3-0005W9-E3
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:15 -0400
+ id 1sCCQ6-0005Wt-Bj
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:18 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCCQ1-0002tM-UT
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:15 -0400
+ id 1sCCQ4-0002te-Mf
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:04:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1716962654; x=1748498654;
+ t=1716962657; x=1748498657;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RsdXYkRRI3rmURZbis55cmiquR+HjVYZWgtL+XP6yNo=;
- b=OnbJjY3R6FaRVc8o742OIr4/zXe8Icr+ojGvLq0mzOllAsk2We5y3tcj
- WA5JInqPUVMluyXgEDdS3q7Hd5pwAYixurODca2Y7NnHgFN3UjQpELcuN
- 0qrmHEpq2jAlhPAYdR06siwzE5IMwBNLBU26B9DtnwcPYpqtZf5M3l0a9
- aW228M+RJlRRoKdg92sX/RT2JKSUBN6utY/eZH2iDlpW1R0J9SYX/mfwW
- 8EtW1rJgmNdjKFIfjvwcE8eOO1sjzSVm6foZhp2MqncCCUIUFZPIM+pjd
- f//ZzJh9vVBvVKUpN316AMyqeW5t/rn4R7Ev5jn6idqBBtIfNtJ0eRIOp w==;
-X-CSE-ConnectionGUID: UYTqTGcyThSWeXnLHei4OQ==
-X-CSE-MsgGUID: vcEFS4RMTGm9vFZx1XJrKg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="13187477"
-X-IronPort-AV: E=Sophos;i="6.08,197,1712646000"; d="scan'208";a="13187477"
+ bh=1fiX4Z8+nFmItgDfCemdyuD7iTt8rkgiZ1jp71LLNzs=;
+ b=BAN2PREgdx64jyNhk8m1UAKTDP5M6njmjRUUZ28572cJ5YcOsUnhe8J9
+ TbQVdpsANqq3Fou6a7ITn3KyNo81he8aWewbhxdV7GXaI0E2LMHE9Vm+c
+ id3s/CZy5I3mDK187rMEOV3DOpEzES8oaCwJyvmdXo9CX0FsMram8DT/Z
+ aplbCQGdVhyLm1bflwFWWE3gOheMWCLDDWj9+tf0zBRCdER6iSh5/rlKF
+ PeKOLuQiPKECP+hbHh3GbEP8/MKGx4j91ONJk1KqZoyngPPAqww/iiP85
+ xnwZBuVRXEeqTJ83tx1rDYGPd7RBb9cinAUDZKl8IYW+sZo6Fdr7RCSft A==;
+X-CSE-ConnectionGUID: IYkLDzD1Th+Jw9Hb1lqmyQ==
+X-CSE-MsgGUID: C6WcqmulSGK5Lpa2Nz3nAw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="13187486"
+X-IronPort-AV: E=Sophos;i="6.08,197,1712646000"; d="scan'208";a="13187486"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 May 2024 23:04:13 -0700
-X-CSE-ConnectionGUID: JcT+zxvFRAq4CHZumOWong==
-X-CSE-MsgGUID: zK/fwobnRyCMKmWnShNNDQ==
+ 28 May 2024 23:04:16 -0700
+X-CSE-ConnectionGUID: z7JNqKDORSaQx9kjO+i7RQ==
+X-CSE-MsgGUID: 7ZTrkwWwQQmRzZTIrNwQKA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,197,1712646000"; d="scan'208";a="40144707"
+X-IronPort-AV: E=Sophos;i="6.08,197,1712646000"; d="scan'208";a="40144722"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 28 May 2024 23:04:11 -0700
+ by orviesa003.jf.intel.com with ESMTP; 28 May 2024 23:04:13 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -53,9 +53,10 @@ To: Eduardo Habkost <eduardo@habkost.net>,
  qemu-devel@nongnu.org
 Cc: Yongwei Ma <yongwei.ma@intel.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 3/8] tests/unit/test-smp-parse: Fix an invalid topology case
-Date: Wed, 29 May 2024 14:19:20 +0800
-Message-Id: <20240529061925.350323-4-zhao1.liu@intel.com>
+Subject: [PATCH 4/8] tests/unit/test-smp-parse: Use default parameters=0 when
+ not set in -smp
+Date: Wed, 29 May 2024 14:19:21 +0800
+Message-Id: <20240529061925.350323-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529061925.350323-1-zhao1.liu@intel.com>
 References: <20240529061925.350323-1-zhao1.liu@intel.com>
@@ -85,26 +86,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adjust the "cpus" parameter to match the comment configuration.
+Since -smp allows parameters=1 whether the level is supported by
+machine, to avoid the test scenarios where the parameter defaults to 1
+cause some errors to be masked, explicitly set undesired parameters to
+0.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- tests/unit/test-smp-parse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/test-smp-parse.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index c9cbc89c21b9..5d99e0d9234c 100644
+index 5d99e0d9234c..e3a0a9d12d05 100644
 --- a/tests/unit/test-smp-parse.c
 +++ b/tests/unit/test-smp-parse.c
-@@ -528,7 +528,7 @@ static const struct SMPTestData data_full_topo_invalid[] = {
-          * config: -smp 1,drawers=3,books=5,sockets=2,dies=4,\
-          *              clusters=2,cores=7,threads=3,maxcpus=5040
-          */
--        .config = SMP_CONFIG_WITH_FULL_TOPO(3361, 3, 5, 2, 4, 2, 7, 3, 5040),
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 3, 5, 2, 4, 2, 7, 3, 5040),
-         .expect_error = "Invalid SMP CPUs 5040. The max CPUs supported "
-                         "by machine '" SMP_MACHINE_NAME "' is 4096",
-     },
+@@ -436,7 +436,7 @@ static const struct SMPTestData data_with_clusters_invalid[] = {
+ static const struct SMPTestData data_with_books_invalid[] = {
+     {
+         /* config: -smp 16,books=2,sockets=2,cores=4,threads=2,maxcpus=16 */
+-        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, F, 1, T, 2, T,
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, F, 0, T, 2, T,
+                                                 2, T, 4, T, 2, T, 16),
+         .expect_error = "Invalid CPU topology: "
+                         "product of the hierarchy must match maxcpus: "
+@@ -444,7 +444,7 @@ static const struct SMPTestData data_with_books_invalid[] = {
+                         "!= maxcpus (16)",
+     }, {
+         /* config: -smp 34,books=2,sockets=2,cores=4,threads=2,maxcpus=32 */
+-        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, F, 1, T, 2, T,
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, F, 0, T, 2, T,
+                                                 2, T, 4, T, 2, T, 32),
+         .expect_error = "Invalid CPU topology: "
+                         "maxcpus must be equal to or greater than smp: "
+@@ -456,7 +456,7 @@ static const struct SMPTestData data_with_books_invalid[] = {
+ static const struct SMPTestData data_with_drawers_invalid[] = {
+     {
+         /* config: -smp 16,drawers=2,sockets=2,cores=4,threads=2,maxcpus=16 */
+-        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, T, 2, F, 1, T,
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, T, 2, F, 0, T,
+                                                 2, T, 4, T, 2, T, 16),
+         .expect_error = "Invalid CPU topology: "
+                         "product of the hierarchy must match maxcpus: "
+@@ -464,7 +464,7 @@ static const struct SMPTestData data_with_drawers_invalid[] = {
+                         "!= maxcpus (16)",
+     }, {
+         /* config: -smp 34,drawers=2,sockets=2,cores=4,threads=2,maxcpus=32 */
+-        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, T, 2, F, 1, T,
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, T, 2, F, 0, T,
+                                                 2, T, 4, T, 2, T, 32),
+         .expect_error = "Invalid CPU topology: "
+                         "maxcpus must be equal to or greater than smp: "
 -- 
 2.34.1
 
