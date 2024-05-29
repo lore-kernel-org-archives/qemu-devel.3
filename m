@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94CDC27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3ED0C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCJj1-0006wV-4X; Wed, 29 May 2024 09:52:19 -0400
+	id 1sCJjO-0007Vx-DY; Wed, 29 May 2024 09:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCJiy-0006qZ-DW
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:16 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCJiw-00038I-MD
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:16 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-529b4011070so2546796e87.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716990733; x=1717595533; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=d9YpsjaIZLNwdQwS/D25zq3vVF2SnGjIO0zM0Ve47k0=;
- b=K1jdoC2QCVWD30w9up2VOi4IvPKjgAk0/Un0LXsz1740gSbzyjmJALLf79G3n5Y/Lf
- wYWXmYz3yNHtOjPdGGx9JrvxN8iuIs1FkAOMBh5SQntbVBPJ9RnrIHxjIDH5P1ZtcitW
- 1Qelx+qlzp2TM8EO1ROFcmSrA5NwcVGWI/CsmZdwZXq5Q/rRAG/vTZMO8E/eFbltIoQe
- 2+hKTOxAD1D7SHRL6QrGlJcEwBBR4xNO/ukmzfpsfG+CCv3WwOBH8GEvdyiT3kzq29xQ
- oF1VL+hKLGVmxy4mGLw5si4fBuCZGGDEBF6acD9SVlg6AbudVdWGxJ+TSeCmCbmvO74Q
- McBg==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCJjL-0007Uj-TR
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCJjJ-0003GE-41
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716990756;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6hn/LWj1JSK6CC2Hv+m3XDN7fkwLw+vCRab4TeNvPmU=;
+ b=UUlJQ+YcN/Dg7g6Opw8ZqmjBbvkqA/HB6Tr62MqXpcM9aMVv57EZRcWEySkUByOciBSLaz
+ u8sHTXhXlS+ZUKtAyeZ2uu9tKzuA5l6CzZmKEL+Rd4nvCQrqsAZWtOajdKBgeMfDsWZmtX
+ ogJxz5EX69dMWvGlPM79OFrBvFkvi/k=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-PqhZwX99Mhqgc-TvVxLglQ-1; Wed, 29 May 2024 09:52:35 -0400
+X-MC-Unique: PqhZwX99Mhqgc-TvVxLglQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-354ddb92ad8so1272974f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:52:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716990733; x=1717595533;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d9YpsjaIZLNwdQwS/D25zq3vVF2SnGjIO0zM0Ve47k0=;
- b=FJfMeVSVnAqlGo1j/RnP/qhQrKQK0C9RvhIxXrLGQqrFoY/9raVrKZISlgRYxR+oXU
- 9Pto9dD9hWg18DP6dQ9J14/mQNiY8DNF+kh3pr8np2vZH1jeYZ6LLYrTYQZsf4NdOqEL
- mEQOc4Ngfd6Lv6hKy3Dxi+uldHsKinsCYzEZWpbhoigpL7Xe7UZUJQ9WriK46Jcku2sI
- hrxzNPKELeaOmLkY8qaZTxtH1o+1Fy69/iDPakIj0sn7gJwGZDEcrfdIGEODyv5gf1in
- Cvyd5wJvCorTWokFFQyLlbjc2wwAZFaMkMz2MHuDzaeZV43L0psvQgJlvrFRQBhjedRm
- BMnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1EA+swg+DKp0glj5g72PsGvykhKkBdKxWjJwOYo2bwk4jWJzNpRO9niMHcTMZUA3gYa+AoqC71CzozAkagLPKoJAgZ8E=
-X-Gm-Message-State: AOJu0YxziK3jV4EyBKKCLmZar7rhWGy168OD7SphUuj8rTIpukgSGiw/
- Q+ETrLRn9G9+MglQCyNAffHs8VPBbsbe8BnWwx9oIoTgbJRJXqWTIV+TyNYqavE=
-X-Google-Smtp-Source: AGHT+IFxa7v6SVRYVrtiKvHZogCQOfleuuMtO1ebVcpxT1OW4EDawz+C/Ib38ksF/E+2kIpY3JXGng==
-X-Received: by 2002:a05:6512:48c3:b0:52b:51f9:a37d with SMTP id
- 2adb3069b0e04-52b51f9a3d6mr864470e87.56.1716990731822; 
- Wed, 29 May 2024 06:52:11 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.204.141])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100ef1207sm211566765e9.10.2024.05.29.06.52.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 06:52:11 -0700 (PDT)
-Message-ID: <219da54c-7c9d-4baf-ba0c-d4afb6101cbe@linaro.org>
-Date: Wed, 29 May 2024 15:52:09 +0200
+ d=1e100.net; s=20230601; t=1716990754; x=1717595554;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6hn/LWj1JSK6CC2Hv+m3XDN7fkwLw+vCRab4TeNvPmU=;
+ b=ivvf9b9pc+eZTovCqkeybp5HTMRIfe4T3QunQ1+fajA7zys49ds7+DrL72E9MfhUOL
+ cZfbSzAkt8b2dgZGoQBCx5MJdSmGaP+vwhSBAJ6/gKOXxczuIwGf/hFT5BaumSBbhSaz
+ TR+HrrSIvHUvYX4icLKPianueZAozhMzxvndqKQLTQnWmHhZDI3syMmZ5PayLXMo4KEQ
+ Km6eEfL7VEc34CdehEzUHROnj4ajEQI1j2+Qum3QGsIBQLqZ632bEepqHVLVLgWVZiur
+ gXW0/giOSlxGK4Wwxa9Wgu1uPbNcWTr0icfnht7VN11kvtmsBVN4XW6WlpI1CZlQSguW
+ QBlQ==
+X-Gm-Message-State: AOJu0Yw4ct3axAiUGlPxJsmcbE31Z0+mrrSnbDsPuAxgS1i9K6fflVy2
+ XOFH1JM+IklCyBN3WKFZFQ5loIbuTAvPPm1nh36zeTiFSas1zx46bgp1SVEAbtgL/Yy4fMBlxts
+ sdS87rx4Sj4kro1vEOXyW0hizrb6lLjJIWY6iL12M66o0nTzHyeKf
+X-Received: by 2002:a5d:688d:0:b0:354:fbb4:dcb with SMTP id
+ ffacd0b85a97d-3552fdc0b39mr8966713f8f.40.1716990753849; 
+ Wed, 29 May 2024 06:52:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9ZHvM1t5m3faVpTWnlYUHG13woX5Nt95PYLPsSIKDwqEy4ggxMxXyy8uPk5wXUTYpOr4ifA==
+X-Received: by 2002:a5d:688d:0:b0:354:fbb4:dcb with SMTP id
+ ffacd0b85a97d-3552fdc0b39mr8966692f8f.40.1716990753406; 
+ Wed, 29 May 2024 06:52:33 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-359bc20cbdbsm7733763f8f.22.2024.05.29.06.52.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 06:52:32 -0700 (PDT)
+Date: Wed, 29 May 2024 15:52:31 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH v5 06/23] hw/acpi/ich9: Remove 'memory-hotplug-support'
+ property
+Message-ID: <20240529155231.65d316b5@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240529051539.71210-7-philmd@linaro.org>
+References: <20240529051539.71210-1-philmd@linaro.org>
+ <20240529051539.71210-7-philmd@linaro.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net: prevent potential NULL dereference
-To: Oleg Sviridov <oleg.sviridov@red-soft.ru>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Jason Wang
- <jasowang@redhat.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,34 +107,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/5/24 13:07, Oleg Sviridov wrote:
-> Pointer, returned from function 'spapr_vio_find_by_reg', may be NULL and is dereferenced immediately after.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+On Wed, 29 May 2024 07:15:22 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+
+> No external code sets the 'memory-hotplug-support'
+> property, remove it.
+>=20
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+
 > ---
->   hw/net/spapr_llan.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
-> index ecb30b7c76..f40b733229 100644
-> --- a/hw/net/spapr_llan.c
-> +++ b/hw/net/spapr_llan.c
-> @@ -770,6 +770,10 @@ static target_ulong h_change_logical_lan_mac(PowerPCCPU *cpu,
->       SpaprVioVlan *dev = VIO_SPAPR_VLAN_DEVICE(sdev);
->       int i;
->   
-
-Trying to change a MAC when no NIC is present is dubious, we could
-at least report this using qemu_log_mask(LOG_GUEST_ERROR).
-
-> +    if (!dev) {
-> +        return H_PARAMETER;
-> +    }
-> +
->       for (i = 0; i < ETH_ALEN; i++) {
->           dev->nicconf.macaddr.a[ETH_ALEN - i - 1] = macaddr & 0xff;
->           macaddr >>= 8;
+>  hw/acpi/ich9.c | 18 ------------------
+>  1 file changed, 18 deletions(-)
+>=20
+> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+> index 573d032e8e..9b605af21a 100644
+> --- a/hw/acpi/ich9.c
+> +++ b/hw/acpi/ich9.c
+> @@ -351,21 +351,6 @@ static void ich9_pm_get_gpe0_blk(Object *obj, Visito=
+r *v, const char *name,
+>      visit_type_uint32(v, name, &value, errp);
+>  }
+> =20
+> -static bool ich9_pm_get_memory_hotplug_support(Object *obj, Error **errp)
+> -{
+> -    ICH9LPCState *s =3D ICH9_LPC_DEVICE(obj);
+> -
+> -    return s->pm.acpi_memory_hotplug.is_enabled;
+> -}
+> -
+> -static void ich9_pm_set_memory_hotplug_support(Object *obj, bool value,
+> -                                               Error **errp)
+> -{
+> -    ICH9LPCState *s =3D ICH9_LPC_DEVICE(obj);
+> -
+> -    s->pm.acpi_memory_hotplug.is_enabled =3D value;
+> -}
+> -
+>  static bool ich9_pm_get_cpu_hotplug_legacy(Object *obj, Error **errp)
+>  {
+>      ICH9LPCState *s =3D ICH9_LPC_DEVICE(obj);
+> @@ -445,9 +430,6 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMReg=
+s *pm)
+>                          NULL, NULL, pm);
+>      object_property_add_uint32_ptr(obj, ACPI_PM_PROP_GPE0_BLK_LEN,
+>                                     &gpe0_len, OBJ_PROP_FLAG_READ);
+> -    object_property_add_bool(obj, "memory-hotplug-support",
+> -                             ich9_pm_get_memory_hotplug_support,
+> -                             ich9_pm_set_memory_hotplug_support);
+>      object_property_add_bool(obj, "cpu-hotplug-legacy",
+>                               ich9_pm_get_cpu_hotplug_legacy,
+>                               ich9_pm_set_cpu_hotplug_legacy);
 
 
