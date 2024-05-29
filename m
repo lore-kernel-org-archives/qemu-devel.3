@@ -4,134 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACB2C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2514C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCGNP-0001lI-DO; Wed, 29 May 2024 06:17:49 -0400
+	id 1sCGXf-0003sZ-8T; Wed, 29 May 2024 06:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGN9-0001jG-64
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:17:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGN7-0004x5-5p
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:17:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716977847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pqZu1IADoLJOhrk35EB+CT9B7LTJZKCE6zdgbylAQ3I=;
- b=Vd21WqEfAp2c1sxrLV6c4V4QXJb7CsKqpud3Axuqcn6FC7AtmNjK9nwLzpFFPBvMQxuxbL
- Lhv7Y+NPIolwG4BLd5tJ14q5cSNfTACU3IyP2jXPlbLtM6awRO89HXl19TRwXV+L6qr0hU
- I3rF9BtSsF7KVrL0I08cQYqRpYr+VNs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-iRyHfoQMMZWXk6p_UYOMRA-1; Wed, 29 May 2024 06:17:24 -0400
-X-MC-Unique: iRyHfoQMMZWXk6p_UYOMRA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35507e4c41dso579727f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 03:17:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sCGXe-0003sD-1y
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:28:22 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sCGXc-0006vR-6F
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:28:21 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-354be94c874so1534991f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 03:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716978498; x=1717583298; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=veksHZG8ToetqWrM4ivblkbjvQQeHXcyu43Kx+l+0Zc=;
+ b=nF0ZglrI3XGiCnsP5VIHmfq/oqPKOFzetygzp3GSTJC/6JHl21uY9UuBifNcaGg+Y9
+ TXw7yta80xlRNiL9N4CbFuIvuqh9xCWkUcf72VK0o+me5YMy5fJL6qRB2SUmCnsQZDJE
+ dbSfOwb52T9BaEb2vaoEk5q7i3/+t9zb7NdqCNBr/82oTALzrhIBEHscU33rocxmezXK
+ X50VoVEPwgVTZ8tP7vxuop6c/LCBPBmd9qw0R4AdlBe1FQLUt2uI2myMsAmBuZRANywJ
+ UXTOzGgnwXkJpsXQpTqQ9uk+ZMGIUoB4pzzr22OopT7Q4vr6eP4NTkq7XWA8JAWEETlE
+ QcsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716977843; x=1717582643;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pqZu1IADoLJOhrk35EB+CT9B7LTJZKCE6zdgbylAQ3I=;
- b=xC1OfT3qgvxLxsbVExQiaGbJX4ofBQHie/RH769gXjnYo0jPLX1KEk8xAljDX486Rq
- LlnaOb43Q/iu9TWB9cY5wuch4fwUrhQzXMXClBGvYreXpk5yQVWjw+BozzADeveTKhQN
- Dwx1e6nemVNKnPObv6/KR5xI6S7IRzbQLmGpKWqesAHGk7y8oN4WnyE4aESK3PoJ1H/x
- FDNhJYpLfDWodPRdVjT7uz4BzJIERNVijJA5U40nBEjt5yvAAzWuMWAsPC5tsYVs0UbK
- /mk1CK+z5LfxkEYYtmRg4+A+rTcfRZ8gzR9hwvgm8KLzBmtB+ZVHXoNIbEq/eKxcnOw6
- 7cIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEx7ugg+7/rvz/A2TVAyMx5CX94GONBWudrQ9fNKqrUWaP77FLMiYTOFN0VCFKqHAFnskoFRBCpTiDUgifrHIKn0TcvAs=
-X-Gm-Message-State: AOJu0Yzi3ow/3cBnSTxY5rjcI/zpj3xLnXNzsOI9ee18fqrUZ6QERknx
- r0Slv/Qj7YJNXm30D9oJojbNzwej3ghLV+p8d/Tx9Wn+m1kOazqUbqyPVH9hLRig+0KVlrKto6y
- ZO0taRmTD3N2mY/8xPlKA8QU5SkAFKzW1CA3qas35mrcxTMTmiRWY
-X-Received: by 2002:a5d:458a:0:b0:34c:7ed4:55a with SMTP id
- ffacd0b85a97d-35c7c2b5562mr1275853f8f.33.1716977843047; 
- Wed, 29 May 2024 03:17:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzAEEqxnDIiJOpl9Xd52ni9WWNv67nqnBY4Vi33k6s8lAYQEzsusOJfrMnu+PRBIJMLwC71Q==
-X-Received: by 2002:a5d:458a:0:b0:34c:7ed4:55a with SMTP id
- ffacd0b85a97d-35c7c2b5562mr1275828f8f.33.1716977842578; 
- Wed, 29 May 2024 03:17:22 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
- [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100ee806esm206628125e9.3.2024.05.29.03.17.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 03:17:22 -0700 (PDT)
-Message-ID: <851411c2-7c15-4f4a-85e5-e49d11251ba1@redhat.com>
-Date: Wed, 29 May 2024 12:17:20 +0200
+ d=1e100.net; s=20230601; t=1716978498; x=1717583298;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=veksHZG8ToetqWrM4ivblkbjvQQeHXcyu43Kx+l+0Zc=;
+ b=n2ucNKCfL8zKjOJh8cG6Fffv52jYLFSZNinONXpsEAJSUxYe0YVVqQ15PXs1Z1GWtn
+ FTaOHNNgNeyie4fpTJ5CPBcdmd+bJd56s8WhjtQlbSIWlVeJsq7xihmNvRZ9b0WJbIoW
+ tDlPwgc9nbgYTRu/wwG5vBl1Nvrt0lLtxK3Cc023Kgz1hvAOnkPWgWHzAcU8TSFNhdzr
+ LstMXXgZHPx+kLdZiSTaeZ6NKY16Xuuzf4cL2czGE2z4o/6lYdtmZa4750jJvRjJshoo
+ X073w6RqjALsQMjl474R122c9awi91WQCPnvLci9C3iilL94d9P60bOosDz7qqi/b+T6
+ LfjA==
+X-Gm-Message-State: AOJu0Yyh0GhNLY0hZBJ/UTq8LZ94GL0rAZ/xVWvXpJaHlPE7eNKZWU1B
+ Y2JAo0zPQzHxtpZWUzDY2XpRrk9OKkQMjBDqLrAOAVHSi0L7rtbd5pmRw/M22KaJRGfGs2Xg8tM
+ 2uEQ=
+X-Google-Smtp-Source: AGHT+IHHf74QYC0Md/lZUqrg5qp1aVjOalfhfVqCOVusiHaSQUGwQO7s1X3Q2HcyWJpnbfAo/5iMcw==
+X-Received: by 2002:adf:f4ce:0:b0:354:e021:51d5 with SMTP id
+ ffacd0b85a97d-355245df173mr13784379f8f.13.1716978498315; 
+ Wed, 29 May 2024 03:28:18 -0700 (PDT)
+Received: from meli-email.org (adsl-49.37.6.163.tellas.gr. [37.6.163.49])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3587724c6f4sm9510473f8f.28.2024.05.29.03.28.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 03:28:18 -0700 (PDT)
+Date: Wed, 29 May 2024 13:12:39 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Will Gyda <vilhelmgyda@gmail.com>
+Cc: qemu-trivial@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ Will Gyda <vilhelmgyda@gmail.com>
+Subject: Re: [PATCH] Issue #2294 | Machine microvm doesn't run under Xen accel
+ for x86_64
+User-Agent: meli 0.8.5
+References: <20240528102339.106257-1-vilhelmgyda@gmail.com>
+In-Reply-To: <20240528102339.106257-1-vilhelmgyda@gmail.com>
+Message-ID: <e8t34.08zb3hciwfl@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/14] target/s390x: Simplify per_ifetch,
- per_check_exception
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, iii@linux.ibm.com, david@redhat.com
-References: <20240502054417.234340-1-richard.henderson@linaro.org>
- <20240502054417.234340-13-richard.henderson@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240502054417.234340-13-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,94 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/05/2024 07.44, Richard Henderson wrote:
-> Set per_address and ilen in per_ifetch; this is valid for
-> all PER exceptions and will last until the end of the
-> instruction.  Therefore we don't need to give the same
-> data to per_check_exception.
+On Tue, 28 May 2024 13:23, Will Gyda <vilhelmgyda@gmail.com> wrote:
+>Issue #2294: Machine microvm doesn't run under Xen accel for qemu-system-x86_64. 
+>Solution: microvm is now not build if only Xen is available.
+>
+>Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
+>
+
+
+I suggest rewording the commit title to something like
+
+"i386: remove microvm from default build"
+
+And adding a commit message that explains that the microvm does not work 
+on Xen, hence if only Xen is available it should not be built.
+
+Also, you can add a
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2294
+
+line before your Signed-off-by. See 
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+
+But, seeing the issue itself, it's about the microvm being stuck under 
+Xen. So the commit that resolves this would either make it non-stuck or 
+make it impossible to start the vm to begin with.
+
+
+>---
+> configs/devices/i386-softmmu/default.mak | 2 +-
+> hw/i386/Kconfig                          | 2 ++
+> 2 files changed, 3 insertions(+), 1 deletion(-)
+>
+>diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
+>index 598c6646df..6a73aee7dd 100644
+>--- a/configs/devices/i386-softmmu/default.mak
+>+++ b/configs/devices/i386-softmmu/default.mak
+>@@ -29,4 +29,4 @@
+> CONFIG_ISAPC=y
+> CONFIG_I440FX=y
+> CONFIG_Q35=y
+>-CONFIG_MICROVM=y
+>+#CONFIG_MICROVM=n
+
+Better remove this altogether since it's not a default anymore.
+
+>diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+>index a6ee052f9a..f8ec8ebd7a 100644
+>--- a/hw/i386/Kconfig
+>+++ b/hw/i386/Kconfig
+>@@ -108,6 +108,8 @@ config Q35
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> # Conflicts:
-> #	target/s390x/tcg/misc_helper.c
-> ---
->   target/s390x/helper.h          |  4 ++--
->   target/s390x/tcg/misc_helper.c | 23 +++++++++--------------
->   target/s390x/tcg/translate.c   | 20 ++++++++++++--------
->   3 files changed, 23 insertions(+), 24 deletions(-)
-> 
-> diff --git a/target/s390x/helper.h b/target/s390x/helper.h
-> index 31bd193322..1a8a76abb9 100644
-> --- a/target/s390x/helper.h
-> +++ b/target/s390x/helper.h
-> @@ -359,9 +359,9 @@ DEF_HELPER_FLAGS_4(ipte, TCG_CALL_NO_RWG, void, env, i64, i64, i32)
->   DEF_HELPER_FLAGS_1(ptlb, TCG_CALL_NO_RWG, void, env)
->   DEF_HELPER_FLAGS_1(purge, TCG_CALL_NO_RWG, void, env)
->   DEF_HELPER_3(lra, i64, env, i64, i64)
-> -DEF_HELPER_FLAGS_3(per_check_exception, TCG_CALL_NO_WG, void, env, i64, i32)
-> +DEF_HELPER_FLAGS_1(per_check_exception, TCG_CALL_NO_WG, void, env)
->   DEF_HELPER_FLAGS_3(per_branch, TCG_CALL_NO_WG, void, env, i64, i32)
-> -DEF_HELPER_FLAGS_2(per_ifetch, TCG_CALL_NO_WG, void, env, i64)
-> +DEF_HELPER_FLAGS_2(per_ifetch, TCG_CALL_NO_WG, void, env, i32)
->   DEF_HELPER_FLAGS_2(per_store_real, TCG_CALL_NO_WG, noreturn, env, i32)
->   DEF_HELPER_FLAGS_1(stfl, TCG_CALL_NO_RWG, void, env)
->   
-> diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-> index 5f1efc6a32..f5e674a26e 100644
-> --- a/target/s390x/tcg/misc_helper.c
-> +++ b/target/s390x/tcg/misc_helper.c
-> @@ -604,12 +604,10 @@ G_NORETURN static void per_raise_exception_log(CPUS390XState *env)
->       per_raise_exception(env);
->   }
->   
-> -void HELPER(per_check_exception)(CPUS390XState *env, uint64_t next_pc,
-> -                                 uint32_t ilen)
-> +void HELPER(per_check_exception)(CPUS390XState *env)
->   {
-> +    /* psw_addr, per_address and int_pgm_ilen are already set. */
->       if (unlikely(env->per_perc_atmid)) {
-> -        env->psw.addr = next_pc;
-> -        env->int_pgm_ilen = ilen;
->           per_raise_exception_log(env);
->       }
->   }
-> @@ -639,23 +637,20 @@ void HELPER(per_branch)(CPUS390XState *env, uint64_t dest, uint32_t ilen)
->       per_raise_exception_log(env);
->   }
->   
-> -void HELPER(per_ifetch)(CPUS390XState *env, uint64_t addr)
-> +void HELPER(per_ifetch)(CPUS390XState *env, uint32_t ilen)
->   {
-> -    if (get_per_in_range(env, addr)) {
-> -        env->per_address = addr;
-> +    if (get_per_in_range(env, env->psw.addr)) {
-> +        env->per_address = env->psw.addr;
-> +        env->int_pgm_ilen = ilen;
->           env->per_perc_atmid = PER_CODE_EVENT_IFETCH | get_per_atmid(env);
->   
->           /* If the instruction has to be nullified, trigger the
->              exception immediately. */
->           if (env->cregs[9] & PER_CR9_EVENT_IFETCH_NULLIFICATION) {
-> -            CPUState *cs = env_cpu(env);
-> -
->               env->per_perc_atmid |= PER_CODE_EVENT_NULLIFICATION;
-> -            env->int_pgm_code = PGM_PER;
-> -            env->int_pgm_ilen = get_ilen(cpu_ldub_code(env, addr));
-> -
-> -            cs->exception_index = EXCP_PGM;
-> -            cpu_loop_exit(cs);
-> +            qemu_log_mask(CPU_LOG_INT, "PER interrupt before %#" PRIx64 "\n",
-> +                          env->per_address);
+> config MICROVM
+>     bool
+>+    default y
+>+    depends on KVM || WHPX || NVMM || HVF
 
-FYI, checkpatch.pl complains:
+What about TCG? Will it be available if we only build with tcg?
 
-ERROR: Don't use '#' flag of printf format ('%#') in format strings, use 
-'0x' prefix instead
-#84: FILE: target/s390x/tcg/misc_helper.c:651:
-+            qemu_log_mask(CPU_LOG_INT, "PER interrupt before %#" PRIx64
-
-I'll fix it up while picking up your patch.
-
-  Thomas
-
+>     select SERIAL_ISA # for serial_hds_isa_init()
+>     select ISA_BUS
+>     select APIC
+>-- 
+>2.25.1
+>
+>
 
