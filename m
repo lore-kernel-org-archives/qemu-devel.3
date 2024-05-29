@@ -4,94 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C981C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D785C41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:00:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCItX-0002lo-5L; Wed, 29 May 2024 08:59:07 -0400
+	id 1sCIu7-0002yz-G2; Wed, 29 May 2024 08:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCItV-0002lR-Af
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:59:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
+ id 1sCIu5-0002xf-1E
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:59:41 -0400
+Received: from mailout2.samsung.com ([203.254.224.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCItT-0000oq-1d
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:59:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716987540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gMkPNv9OyzkFSwmKeREyA8Y+7JB9Qq8gyfH+oydj9zI=;
- b=dXKSKq+E2dHW+XAnO8TPVgDQejgbIJAhzL22DV75exN2ClKYkLmVy1PwFWdLiyey6Wd4jy
- Plw1diuBzQ4X7S77zawD1OYAEbsRXjy5j0M/qykSo+ss48raH3elVJAjv/PjSL6hgT8F1I
- Yj0zR0LRR8m7y6N4EPd49+u/JpeiRPs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-gfRJZT8HMjOHmuccVbwqgQ-1; Wed, 29 May 2024 08:58:58 -0400
-X-MC-Unique: gfRJZT8HMjOHmuccVbwqgQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4206b3500f5so17487055e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 05:58:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716987537; x=1717592337;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gMkPNv9OyzkFSwmKeREyA8Y+7JB9Qq8gyfH+oydj9zI=;
- b=o8GETxlmLR/G0sQtYo1nD4h/Dhe/ZsjS+u/39gl3Yimz6cx+dlhG0DgZ6O5aNNjJ4F
- lJhig/1uZ8FQ+E6dUKKr6OwvzAhIYKqNa2sM+EXp2TrWu5xhdddWrzVovrqDMMLu+ble
- 3sv8qrgP/5TUFkN0JrXDyS6/NNvFv9Of9JVbT+5Pxa3UcOsUbY937TcBmd+EHl4zVvdd
- AHVmhl0Pi6r4CiDug5Uj8kjyEPC+bOhJv6bvFp7VhT29HvygzyJRoaXIDIrkZ2avb6wu
- Ss48/jRjvps65lhAK32zNzkyv4RlEf0jVAxGQ7IIh/jfiRBMlsWqFtpcda5YLFbWpc0i
- ktsQ==
-X-Gm-Message-State: AOJu0YwxEl7a35EpOHxsUYTco//pSP6pPICuqg+kyubBfxnxxcIQqOk9
- nS095poSViRUMIAQPtN4LfvgjDohWx6A5YJHSQ6+qW8oxYbLS3GOhubUAKQ2iaDjK6GkhdhGAdd
- DvPR5J7ZWeITRC2mhWBjGho+byDEO9mtocmgb/7io47gDIfMwZH+M
-X-Received: by 2002:a05:600c:4f4e:b0:421:1717:2cf0 with SMTP id
- 5b1f17b1804b1-42117172daemr77951715e9.24.1716987537306; 
- Wed, 29 May 2024 05:58:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEf7yL1Qquv4Yzgu+DMK+2xPJ79zMWUl5+pmp9vmWMgx06Df54B4qf7uHWUDn1LpK0DX+ZTPQ==
-X-Received: by 2002:a05:600c:4f4e:b0:421:1717:2cf0 with SMTP id
- 5b1f17b1804b1-42117172daemr77951485e9.24.1716987536906; 
- Wed, 29 May 2024 05:58:56 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557dcf001esm14898812f8f.97.2024.05.29.05.58.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 05:58:56 -0700 (PDT)
-Date: Wed, 29 May 2024 14:58:54 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 02/23] hw/i386/pc: Remove deprecated pc-i440fx-2.0
- machine
-Message-ID: <20240529145854.5c51f2c6@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-3-philmd@linaro.org>
-References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-3-philmd@linaro.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
+ id 1sCItz-0000tZ-Kn
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:59:39 -0400
+Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
+ by mailout2.samsung.com (KnoxPortal) with ESMTP id
+ 20240529125358epoutp0233074278e2218019ab036f15add2317a~T9svUs01v0033000330epoutp02X
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 12:53:58 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
+ 20240529125358epoutp0233074278e2218019ab036f15add2317a~T9svUs01v0033000330epoutp02X
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1716987238;
+ bh=XOSTDNnpBFlIvv8h6EZ6WZyo1wZw3QEABDyzLGvi40U=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=UH0EahHsV0hMZxW7z0WwFpSnBAzqwd7cyLTczJ8FzOgDrh1mCw16YTi8pNWWOiWyj
+ VN/hMSQGRzNwR7sidkbu7SBh9vtEqBkc7H0enGX7s7RaeDHMuxPZKpqE3pfHhNF80T
+ pmMqWesz59IM7sVJB7BwQsRrVaUk+h1DpEyGbhVs=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+ epcas2p2.samsung.com (KnoxPortal) with ESMTP id
+ 20240529125357epcas2p2c572eb49de1515c530477cef8136d560~T9su_pUr70039000390epcas2p2K;
+ Wed, 29 May 2024 12:53:57 +0000 (GMT)
+Received: from epsmges2p4.samsung.com (unknown [182.195.36.101]) by
+ epsnrtp3.localdomain (Postfix) with ESMTP id 4Vq8TK2Nthz4x9Pr; Wed, 29 May
+ 2024 12:53:57 +0000 (GMT)
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+ epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 7C.E6.09479.56527566; Wed, 29 May 2024 21:53:57 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+ epcas2p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20240529125356epcas2p12d3250098243e6271bccd6519fb79cff~T9suH8vo-0504005040epcas2p1_;
+ Wed, 29 May 2024 12:53:56 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+ epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+ 20240529125356epsmtrp2f03cf2cf65e360b28fcc6ab2802b65fe~T9suEQYhm1667216672epsmtrp2D;
+ Wed, 29 May 2024 12:53:56 +0000 (GMT)
+X-AuditID: b6c32a48-105fa70000002507-e5-66572565054e
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 33.6A.08622.46527566; Wed, 29 May 2024 21:53:56 +0900 (KST)
+Received: from localhost.dsn.sec.samsung.com (unknown [10.229.54.230]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20240529125356epsmtip262463068c0cf8c8aeb39f549be251957~T9st44-o60854208542epsmtip2B;
+ Wed, 29 May 2024 12:53:56 +0000 (GMT)
+From: Minwoo Im <minwoo.im@samsung.com>
+To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, minwoo.im@samsung.com,
+ gost.dev@samsung.com
+Subject: [PATCH v4 3/4] hw/nvme: Allocate sec-ctrl-list as a dynamic array
+Date: Wed, 29 May 2024 21:42:33 +0900
+Message-Id: <20240529124234.1430707-4-minwoo.im@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240529124234.1430707-1-minwoo.im@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupik+LIzCtJLcpLzFFi42LZdljTQjdVNTzNoOMOv8WJKWEWNw/sZLLY
+ f/Abq8WkQ9cYLZ6dPsBsMetdO5vF8d4dLA7sHlOmXWP3OLfjPLvHplWdbB5Prm1m8ujbsoox
+ gDUq2yYjNTEltUghNS85PyUzL91WyTs43jne1MzAUNfQ0sJcSSEvMTfVVsnFJ0DXLTMH6Awl
+ hbLEnFKgUEBicbGSvp1NUX5pSapCRn5xia1SakFKToF5gV5xYm5xaV66Xl5qiZWhgYGRKVBh
+ QnbGp+Y2loL74hX/rws2MDYKdTFyckgImEg07bnM3sXIxSEksINRYub8I2wQzidGiQNrNjFB
+ ON8YJW6d2s4G07JoaTNUYi+jxPPVa6FafjNK/N19ngWkik1AXaJh6iswW0QgR6J/5XcmEJtZ
+ IF7i+Yof7CC2sICXxLx/H1hBbBYBVYmZP24ygti8AjYSByc9Y4TYJi+x/+BZZhCbU8BWomvO
+ G3aIGkGJkzOfsEDMlJdo3jqbGeQICYGX7BJ/ug6wQzS7SHTPaIGyhSVeHd8CZUtJfH63F+qd
+ comfbyZBLauQODjrNlCcA8i2l7j2PAXEZBbQlFi/Sx8iqixx5BbUVj6JjsN/2SHCvBIdbdAQ
+ VZb4eOgQM4QtKbH80muoPR4ST/Zsgob0BEaJpnnX2CcwKsxC8swsJM/MQli8gJF5FaNYakFx
+ bnpqsVGBCTx+k/NzNzGCE6WWxw7G2W8/6B1iZOJgPMQowcGsJMJ7ZlJomhBvSmJlVWpRfnxR
+ aU5q8SFGU2BQT2SWEk3OB6bqvJJ4QxNLAxMzM0NzI1MDcyVx3nutc1OEBNITS1KzU1MLUotg
+ +pg4OKUamNYftv5w/Pf0I7UHUxcYxf+qYbaakRa+qHzz37K069Y/mlSr1KZvjutSudAfKrbm
+ xWvtItnv5hKfCoS3MHooXChhmbZr84Ey+RI9wwk/tv7W3LXf9fvmnW+mZBhdYZk774OVkfbc
+ Q7W9qzU12rsF94tz+XV7iBav35kxseyr46POkyzHY1bvnblF0JyrI8zw7u2i+wosO3ZYBofO
+ sz4x2WkKz9M/W5k9JjN+8rizomnXtcUVT/8/LTsVaxEe3X8ls8JiWqza1NI9AjWLGZtWmX7l
+ +1E6vURI71Tehsr9x77sXc+u6+O9jNtN01LtusIWDob1Ov+zpc4/iVgsUlzh/13lYMI7qQyx
+ YJ6u963u/5RYijMSDbWYi4oTAXGB9U0dBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGLMWRmVeSWpSXmKPExsWy7bCSvG6KaniawcFfhhYnpoRZ3Dywk8li
+ /8FvrBaTDl1jtHh2+gCzxax37WwWx3t3sDiwe0yZdo3d49yO8+wem1Z1snk8ubaZyaNvyyrG
+ ANYoLpuU1JzMstQifbsEroxPzW0sBffFK/5fF2xgbBTqYuTkkBAwkVi0tJmpi5GLQ0hgN6PE
+ 8sUT2SESkhL7Tt9khbCFJe63HGGFKPrJKLGl4xJYgk1AXaJh6isWEFtEIE/i2sslzCA2s0Cy
+ xPFlM8DiwgJeEvP+fQCrZxFQlZj54yYjiM0rYCNxcNIzRogF8hL7D54F6+UUsJXomvMG7Agh
+ oJpFj3+zQ9QLSpyc+YQFYr68RPPW2cwTGAVmIUnNQpJawMi0ilEytaA4Nz232LDAKC+1XK84
+ Mbe4NC9dLzk/dxMjOKi1tHYw7ln1Qe8QIxMH4yFGCQ5mJRHeM5NC04R4UxIrq1KL8uOLSnNS
+ iw8xSnOwKInzfnvdmyIkkJ5YkpqdmlqQWgSTZeLglGpguvzgacrbFhkZlRm+S55azLAosDs4
+ 5fvvTH25yi2X7lbKBGhrmxvbSeetWKPaLsZX/C951u3LefdX/jBsCfq6d8G1Fe36d3bsbuD9
+ 1aR9u2btO6dex/aVR+Tq3hvda572aMm572LLZspd//Ctbnbn7fvrCi/va5tb8P8JU5HH7vSI
+ m29+rFjxf8ORS3zuTxxu/jzvvqmNP/Nu4L9wsbCNX18pXk2XbBG7xZkg2urgsfSnE2/DIrun
+ bw9dbFtSv/6b+KTGFmWzzw4PeRPnHpy5a97sG78iZHk5Dmz4sjAmcv7Z8nXhJkc3BIjGCu7c
+ 9LfN/ejOuMhZjdEPlu52vtm5ov6y07IKBgWd12vfvSmWq29VYinOSDTUYi4qTgQAhN/x+NkC
+ AAA=
+X-CMS-MailID: 20240529125356epcas2p12d3250098243e6271bccd6519fb79cff
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240529125356epcas2p12d3250098243e6271bccd6519fb79cff
+References: <20240529124234.1430707-1-minwoo.im@samsung.com>
+ <CGME20240529125356epcas2p12d3250098243e6271bccd6519fb79cff@epcas2p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.25;
+ envelope-from=minwoo.im@samsung.com; helo=mailout2.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,157 +138,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:18 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+To prevent further bumping up the number of maximum VF te support, this
+patch allocates a dynamic array (NvmeCtrl *)->sec_ctrl_list based on
+number of VF supported by sriov_max_vfs property.
 
-> The pc-i440fx-2.0 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+---
+ hw/nvme/ctrl.c   | 8 +-------
+ hw/nvme/nvme.h   | 5 ++---
+ hw/nvme/subsys.c | 2 ++
+ 3 files changed, 5 insertions(+), 10 deletions(-)
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  docs/about/deprecated.rst       |  2 +-
->  docs/about/removed-features.rst |  2 +-
->  include/hw/i386/pc.h            |  3 ---
->  hw/i386/pc.c                    | 15 -------------
->  hw/i386/pc_piix.c               | 37 ---------------------------------
->  5 files changed, 2 insertions(+), 57 deletions(-)
->=20
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 7ff52bdd8e..629f6a1566 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -228,7 +228,7 @@ deprecated; use the new name ``dtb-randomness`` inste=
-ad. The new name
->  better reflects the way this property affects all random data within
->  the device tree blob, not just the ``kaslr-seed`` node.
-> =20
-> -``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
-4`` up to ``pc-i440fx-2.12`` (since 9.1)
-> +``pc-i440fx-2.1`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
-4`` up to ``pc-i440fx-2.12`` (since 9.1)
->  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''=
-''''''''''''''''''''''''''''''''''''''''
-> =20
->  These old machine types are quite neglected nowadays and thus might have
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-feature=
-s.rst
-> index fba0cfb0b0..5f0c2d8ec2 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -925,7 +925,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
-> =20
->  This machine has been renamed ``fuloong2e``.
-> =20
-> -``pc-0.10`` up to ``pc-i440fx-1.7`` (removed in 4.0 up to 8.2)
-> +``pc-0.10`` up to ``pc-i440fx-2.0`` (removed in 4.0 up to 9.0)
->  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> =20
->  These machine types were very old and likely could not be used for live
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index ad9c3d9ba8..7347636d47 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -290,9 +290,6 @@ extern const size_t pc_compat_2_2_len;
->  extern GlobalProperty pc_compat_2_1[];
->  extern const size_t pc_compat_2_1_len;
-> =20
-> -extern GlobalProperty pc_compat_2_0[];
-> -extern const size_t pc_compat_2_0_len;
-> -
->  #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
->      static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *=
-data) \
->      { \
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 7b638da7aa..11182e09ce 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -319,21 +319,6 @@ GlobalProperty pc_compat_2_1[] =3D {
->  };
->  const size_t pc_compat_2_1_len =3D G_N_ELEMENTS(pc_compat_2_1);
-> =20
-> -GlobalProperty pc_compat_2_0[] =3D {
-> -    PC_CPU_MODEL_IDS("2.0.0")
-> -    { "virtio-scsi-pci", "any_layout", "off" },
-> -    { "PIIX4_PM", "memory-hotplug-support", "off" },
-> -    { "apic", "version", "0x11" },
-> -    { "nec-usb-xhci", "superspeed-ports-first", "off" },
-> -    { "nec-usb-xhci", "force-pcie-endcap", "on" },
-> -    { "pci-serial", "prog_if", "0" },
-> -    { "pci-serial-2x", "prog_if", "0" },
-> -    { "pci-serial-4x", "prog_if", "0" },
-> -    { "virtio-net-pci", "guest_announce", "off" },
-> -    { "ICH9-LPC", "memory-hotplug-support", "off" },
-> -};
-> -const size_t pc_compat_2_0_len =3D G_N_ELEMENTS(pc_compat_2_0);
-> -
->  GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
->  {
->      GSIState *s;
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 02878060d0..a750a0e6ab 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -441,11 +441,6 @@ static void pc_compat_2_1_fn(MachineState *machine)
->      x86_cpu_change_kvm_default("svm", NULL);
->  }
-> =20
-> -static void pc_compat_2_0_fn(MachineState *machine)
-> -{
-> -    pc_compat_2_1_fn(machine);
-> -}
-> -
->  #ifdef CONFIG_ISAPC
->  static void pc_init_isa(MachineState *machine)
->  {
-> @@ -887,38 +882,6 @@ static void pc_i440fx_2_1_machine_options(MachineCla=
-ss *m)
->  DEFINE_I440FX_MACHINE(v2_1, "pc-i440fx-2.1", pc_compat_2_1_fn,
->                        pc_i440fx_2_1_machine_options);
-> =20
-> -static void pc_i440fx_2_0_machine_options(MachineClass *m)
-> -{
-> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
-> -
-> -    pc_i440fx_2_1_machine_options(m);
-> -    m->hw_version =3D "2.0.0";
-> -    compat_props_add(m->compat_props, pc_compat_2_0, pc_compat_2_0_len);
-> -    pcmc->smbios_legacy_mode =3D true;
-> -    pcmc->has_reserved_memory =3D false;
-> -    /* This value depends on the actual DSDT and SSDT compiled into
-> -     * the source QEMU; unfortunately it depends on the binary and
-> -     * not on the machine type, so we cannot make pc-i440fx-1.7 work on
-> -     * both QEMU 1.7 and QEMU 2.0.
-> -     *
-> -     * Large variations cause migration to fail for more than one
-> -     * consecutive value of the "-smp" maxcpus option.
-> -     *
-> -     * For small variations of the kind caused by different iasl version=
-s,
-> -     * the 4k rounding usually leaves slack.  However, there could be st=
-ill
-> -     * one or two values that break.  For QEMU 1.7 and QEMU 2.0 the
-> -     * slack is only ~10 bytes before one "-smp maxcpus" value breaks!
-> -     *
-> -     * 6652 is valid for QEMU 2.0, the right value for pc-i440fx-1.7 on
-> -     * QEMU 1.7 it is 6414.  For RHEL/CentOS 7.0 it is 6418.
-> -     */
-> -    pcmc->legacy_acpi_table_size =3D 6652;
-> -    pcmc->acpi_data_size =3D 0x10000;
-> -}
-> -
-> -DEFINE_I440FX_MACHINE(v2_0, "pc-i440fx-2.0", pc_compat_2_0_fn,
-> -                      pc_i440fx_2_0_machine_options);
-> -
->  #ifdef CONFIG_ISAPC
->  static void isapc_machine_options(MachineClass *m)
->  {
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 7cf1e8e384..90a58e71bd 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7863,12 +7863,6 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+             return false;
+         }
+ 
+-        if (params->sriov_max_vfs > NVME_MAX_VFS) {
+-            error_setg(errp, "sriov_max_vfs must be between 0 and %d",
+-                       NVME_MAX_VFS);
+-            return false;
+-        }
+-
+         if (params->cmb_size_mb) {
+             error_setg(errp, "CMB is not supported with SR-IOV");
+             return false;
+@@ -8461,7 +8455,7 @@ static Property nvme_props[] = {
+     DEFINE_PROP_UINT8("zoned.zasl", NvmeCtrl, params.zasl, 0),
+     DEFINE_PROP_BOOL("zoned.auto_transition", NvmeCtrl,
+                      params.auto_transition_zones, true),
+-    DEFINE_PROP_UINT8("sriov_max_vfs", NvmeCtrl, params.sriov_max_vfs, 0),
++    DEFINE_PROP_UINT16("sriov_max_vfs", NvmeCtrl, params.sriov_max_vfs, 0),
+     DEFINE_PROP_UINT16("sriov_vq_flexible", NvmeCtrl,
+                        params.sriov_vq_flexible, 0),
+     DEFINE_PROP_UINT16("sriov_vi_flexible", NvmeCtrl,
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 485b42c104..d8ec4bad6a 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -26,7 +26,6 @@
+ 
+ #define NVME_MAX_CONTROLLERS 256
+ #define NVME_MAX_NAMESPACES  256
+-#define NVME_MAX_VFS 127
+ #define NVME_EUI64_DEFAULT ((uint64_t)0x5254000000000000)
+ #define NVME_FDP_MAX_EVENTS 63
+ #define NVME_FDP_MAXPIDS 128
+@@ -532,7 +531,7 @@ typedef struct NvmeParams {
+     bool     auto_transition_zones;
+     bool     legacy_cmb;
+     bool     ioeventfd;
+-    uint8_t  sriov_max_vfs;
++    uint16_t  sriov_max_vfs;
+     uint16_t sriov_vq_flexible;
+     uint16_t sriov_vi_flexible;
+     uint8_t  sriov_max_vq_per_vf;
+@@ -614,7 +613,7 @@ typedef struct NvmeCtrl {
+ 
+     NvmePriCtrlCap  pri_ctrl_cap;
+     uint32_t nr_sec_ctrls;
+-    NvmeSecCtrlEntry sec_ctrl_list[NVME_MAX_VFS];
++    NvmeSecCtrlEntry *sec_ctrl_list;
+     struct {
+         uint16_t    vqrfap;
+         uint16_t    virfap;
+diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+index 561ed04a53..77deaf2c2c 100644
+--- a/hw/nvme/subsys.c
++++ b/hw/nvme/subsys.c
+@@ -61,6 +61,8 @@ int nvme_subsys_register_ctrl(NvmeCtrl *n, Error **errp)
+     if (pci_is_vf(&n->parent_obj)) {
+         cntlid = le16_to_cpu(sctrl->scid);
+     } else {
++        n->sec_ctrl_list = g_new0(NvmeSecCtrlEntry, num_vfs);
++
+         for (cntlid = 0; cntlid < ARRAY_SIZE(subsys->ctrls); cntlid++) {
+             if (!subsys->ctrls[cntlid]) {
+                 break;
+-- 
+2.34.1
 
 
