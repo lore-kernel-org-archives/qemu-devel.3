@@ -4,93 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026EDC27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80702C27C43
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCIm6-0005Vx-QU; Wed, 29 May 2024 08:51:26 -0400
+	id 1sCIor-000784-Qm; Wed, 29 May 2024 08:54:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCIm4-0005VM-1r
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:51:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
+ id 1sCIop-00077J-VZ
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:54:15 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCIlq-00084Q-Vb
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:51:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716987068;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vq72rFv/+nztBx0v343vSYFPzl75WogeWX20Ado6ZGc=;
- b=DeF/DK59UHWkf31WgiRgSmoEyLEZ+JtglXQDSTlQc4rkNNv+IoPsQptMyuztZR9cvN//c4
- 93+KApZpUyNVCWwNuG8vNHmNLX0glc7zk1J3fTTHt4Ir8F92PVlVR/Pr4aTP8o4kp5scAW
- REMb51/o0TARy85U0/ySlXZggIDMWkM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-148-e_OaabaVO3Os1cHWkFJbNg-1; Wed, 29 May 2024 08:51:06 -0400
-X-MC-Unique: e_OaabaVO3Os1cHWkFJbNg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35508103145so1630435f8f.3
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 05:51:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716987066; x=1717591866;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Vq72rFv/+nztBx0v343vSYFPzl75WogeWX20Ado6ZGc=;
- b=YzOSQHn7FPsd3VkTM8paPewBz7jRkJzHae6suDmP6Kxi9Euq+2r1RZNMKCiKkcvJ9x
- UOrIx9NIL6WEKnDElZU9hFvVl3Iv5W2PSsezrPVxtUMPSn7wxY3NREpjbVwCqgruUO8L
- 3l5rGerBSX7HcrKfpbweWc4f+rsnNYpeGzFpx910L7HVtdgrzL/rx6APhpdv59M58QQe
- AFkEwJH6j2B1yVJgYArEUojamii/fI4Jcjv3/Ba/85uEQHcrNcx1zaGZBBoUNPKdWAVq
- C4t48aUirjJeraVvK9NCsbK5MxzL2adliQBigk+DMaXzFvH0VjokCk8OKC2ERECfIATy
- dzsw==
-X-Gm-Message-State: AOJu0YyrPJvI46oyArGTSyJ0AZbmN5eI6OnCs6F/Yu6SvXfYBDW/Ev3O
- w19Wdhj/CmumrL3Q5KVsSGyjQIFHtKerb9H8MUV6JriGhOh1mk0x9o8ybZvJmbCm3RpWfb/vHJm
- 2Ps9r2r3Px1QK9shWn48stAgJpwFUcp1Qo+2p23kFbp8e2oIE5hZp
-X-Received: by 2002:adf:ea8e:0:b0:346:bc1b:4e7c with SMTP id
- ffacd0b85a97d-3552fda821fmr12786277f8f.35.1716987065832; 
- Wed, 29 May 2024 05:51:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTkl5Li04LvWzN4qOa2bq5hdeAFVr2TpGwmYOJ/NP0oFSu8WGcM1GjGDa5DkHoZ7XivVPhYg==
-X-Received: by 2002:adf:ea8e:0:b0:346:bc1b:4e7c with SMTP id
- ffacd0b85a97d-3552fda821fmr12786254f8f.35.1716987065361; 
- Wed, 29 May 2024 05:51:05 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-421088f9d3csm180431595e9.0.2024.05.29.05.51.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 05:51:04 -0700 (PDT)
-Date: Wed, 29 May 2024 14:51:04 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 01/23] hw/i386/pc: Deprecate 2.4 to 2.12 pc-i440fx
- machines
-Message-ID: <20240529145104.3955ba82@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-2-philmd@linaro.org>
-References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-2-philmd@linaro.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
+ id 1sCIoj-0008Ir-2I
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:54:13 -0400
+Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20240529125358epoutp04c3931a4a4c1ac46f45020f9d6e9b3496~T9svllXSs2526525265epoutp04W
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 12:53:58 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20240529125358epoutp04c3931a4a4c1ac46f45020f9d6e9b3496~T9svllXSs2526525265epoutp04W
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1716987238;
+ bh=rf73xYsjOK+oCcrNHdi2Wh/JkLrL9ZINsaGLF1SE6pI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ZvTLKqdJZavDqnFA5BLBw4n/Tjmp+KHugwQY23StB8GS55wCdUXuGq+jxJuO75Ifg
+ INH0QX2LN/k1+W4jhn7k/tk88580UDBKffAsux01nfPmdbsQws9WZ2IXiorsX9Z0YO
+ e9ykPvNc9XnmTK6fUbjTAqJQ1AH/oyDbpuX8UBTE=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+ epcas2p3.samsung.com (KnoxPortal) with ESMTP id
+ 20240529125358epcas2p3734d60e63720ea47818aea9520ed4c09~T9svOeTbJ1740717407epcas2p3_;
+ Wed, 29 May 2024 12:53:58 +0000 (GMT)
+Received: from epsmgec2p1-new.samsung.com (unknown [182.195.36.99]) by
+ epsnrtp1.localdomain (Postfix) with ESMTP id 4Vq8TK4SRhz4x9Py; Wed, 29 May
+ 2024 12:53:57 +0000 (GMT)
+Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
+ epsmgec2p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 8B.D5.18956.56527566; Wed, 29 May 2024 21:53:57 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+ epcas2p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20240529125356epcas2p1f29357582a7cb7a922f950fb41f0df17~T9suEPKy40504005040epcas2p19;
+ Wed, 29 May 2024 12:53:56 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+ epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+ 20240529125356epsmtrp2ac3c724eb80c50f6099880f06e67088b~T9suC_6_n1667216672epsmtrp2B;
+ Wed, 29 May 2024 12:53:56 +0000 (GMT)
+X-AuditID: b6c32a4d-f95ff70000004a0c-57-665725651c51
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 02.AC.08336.46527566; Wed, 29 May 2024 21:53:56 +0900 (KST)
+Received: from localhost.dsn.sec.samsung.com (unknown [10.229.54.230]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20240529125356epsmtip261d983f030f65a2f7c48dc8cf167eee7~T9stztg_j1281412814epsmtip25;
+ Wed, 29 May 2024 12:53:56 +0000 (GMT)
+From: Minwoo Im <minwoo.im@samsung.com>
+To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, minwoo.im@samsung.com,
+ gost.dev@samsung.com, Klaus Jensen <k.jensen@samsung.com>
+Subject: [PATCH v4 1/4] hw/nvme: add Identify Endurance Group List
+Date: Wed, 29 May 2024 21:42:31 +0900
+Message-Id: <20240529124234.1430707-2-minwoo.im@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240529124234.1430707-1-minwoo.im@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEJsWRmVeSWpSXmKPExsWy7bCmmW6qaniawZ9OZYsTU8Isbh7YyWSx
+ /+A3VouTjXtYLSYdusZo8ez0AWaLWe/a2SyO9+5gceDwmDLtGrvHuR3n2T02repk83hybTOT
+ R9+WVYwBrFHZNhmpiSmpRQqpecn5KZl56bZK3sHxzvGmZgaGuoaWFuZKCnmJuam2Si4+Abpu
+ mTlAtygplCXmlAKFAhKLi5X07WyK8ktLUhUy8otLbJVSC1JyCswL9IoTc4tL89L18lJLrAwN
+ DIxMgQoTsjMu/z3IXrBTpGLKwqgGxk6BLkZODgkBE4ndq/eydjFycQgJ7GGUuDnhAAuE84lR
+ 4mLbZ0YI5xujxPa7P5hgWqZ1LYJq2csosf7ASqiW34wSX59dZgapYhNQl2iY+ooFxBYRyJHo
+ X/mdCaSIWaCFUaL73C2wImEBJ4meV++ARnFwsAioSrzcowAS5hWwkfh77SnUNnmJ/QfPgpVz
+ CthKdM15ww5RIyhxcuYTsPnMQDXNW2czg8yXEHjLLnGj9SMbRLOLxOeWyywQtrDEq+Nb2CFs
+ KYnP7/ZC1ZRL/HwziRHCrpA4OOs2G8g9EgL2Eteep4CYzAKaEut36UNElSWO3ILayifRcfgv
+ O0SYV6KjTQhihrLEx0OHmCFsSYnll15D7fGQ6Li8H+wpIYEJjBKvDtVOYFSYheSXWUh+mYWw
+ dwEj8ypGqdSC4tz01GSjAkPdvNRyeBQn5+duYgQnTi3fHYyv1//VO8TIxMF4iFGCg1lJhPfM
+ pNA0Id6UxMqq1KL8+KLSnNTiQ4ymwMCeyCwlmpwPTN15JfGGJpYGJmZmhuZGpgbmSuK891rn
+ pggJpCeWpGanphakFsH0MXFwSjUwqab+C3ZzmMHRMH8h070f/CK9h07kzVkd9a2Q+6Hie4vS
+ GIFD77eePBM0v8WsIewij1fEXlWX2rN1ppMips/fkpV3x/mM+M09j/KDgpyK5GqvPjdnUNpT
+ wdO3Kqm3/mXb5ZTbsU6Ghq+Zdi6LlZWdzmbxd9K88MNz29auPRVdnhsm/utFqmaQmcuEkzX7
+ 3E2W//nUdkNRfOHK7E/hvwJM9Q4F/jKeHHltH9PTDW7LHn6IvKeQ/WPut4URVXOMZgvM2KOl
+ kHa/OOXbqjt/l181WXjgu5T5LIVjgUxJgvcOmX970KD26eIkPosLz5bu9XFc/VtBSvbVtqii
+ b+d+rdfcYfVisuPO1Qv66nkLYpV1o5VYijMSDbWYi4oTAYeqd78lBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNLMWRmVeSWpSXmKPExsWy7bCSvG6KaniawY0mXYsTU8Isbh7YyWSx
+ /+A3VouTjXtYLSYdusZo8ez0AWaLWe/a2SyO9+5gceDwmDLtGrvHuR3n2T02repk83hybTOT
+ R9+WVYwBrFFcNimpOZllqUX6dglcGZf/HmQv2ClSMWVhVANjp0AXIyeHhICJxLSuRaxdjFwc
+ QgK7GSW+Xp/JBJGQlNh3+iYrhC0scb/lCFTRT0aJ06cmgBWxCahLNEx9xQJiiwjkSVx7uYQZ
+ pIgZaLbErItTmUESwgJOEj2v3gF1c3CwCKhKvNyjABLmFbCR+HvtKdQyeYn9B8+ClXMK2Ep0
+ zXnDDmILAdUsevybHaJeUOLkzCdgu5iB6pu3zmaewCgwC0lqFpLUAkamVYySqQXFuem5xYYF
+ hnmp5XrFibnFpXnpesn5uZsYweGtpbmDcfuqD3qHGJk4GA8xSnAwK4nwnpkUmibEm5JYWZVa
+ lB9fVJqTWnyIUZqDRUmcV/xFb4qQQHpiSWp2ampBahFMlomDU6qBaWKIrEl24YoXpR9UQ8VO
+ 7pvs0H/sn9OsANXH58OmN8yVqGyYeuhbRuijIKnH921SZMyCwntF0naxv5/F9l4pZ//OgE9l
+ Bcv2HHFQ2qrh7ulwz8ZEflX//A8rj2Rv3t/Jf/hVi2T0pW6zS8+2dpk2rd7rulXK593E+/vT
+ EtNfmzywYtpj0M5Tz1p4WF6a63XdrBaGX6ppywKNW9lsRVpv3L5R1nm/6WP1q8vCgf4nuNY1
+ z+VMSVb2k2VeILpL8JB/UNl8hveCRf98urvnOoU/+GvvHP0+otT7Wn7QK8PlqpdKT5wyy36f
+ +oVt+YSU+U4rFZ1K5rodmjDvpL4h3zNH+TaRX+VV99tOz7c49EVaiaU4I9FQi7moOBEAP1z/
+ sN4CAAA=
+X-CMS-MailID: 20240529125356epcas2p1f29357582a7cb7a922f950fb41f0df17
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240529125356epcas2p1f29357582a7cb7a922f950fb41f0df17
+References: <20240529124234.1430707-1-minwoo.im@samsung.com>
+ <CGME20240529125356epcas2p1f29357582a7cb7a922f950fb41f0df17@epcas2p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=minwoo.im@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,67 +138,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:17 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+Commit 73064edfb864 ("hw/nvme: flexible data placement emulation")
+intorudced NVMe FDP feature to nvme-subsys and nvme-ctrl with a
+single endurance group #1 supported.  This means that controller should
+return proper identify data to host with Identify Endurance Group List
+(CNS 19h).  But, yes, only just for the endurance group #1.  This patch
+allows host applications to ask for which endurance group is available
+and utilize FDP through that endurance group.
 
-> Similarly to the commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated",
-> deprecate the 2.4 to 2.12 machines.
->=20
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+---
+ hw/nvme/ctrl.c       | 22 ++++++++++++++++++++++
+ include/block/nvme.h |  1 +
+ 2 files changed, 23 insertions(+)
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  docs/about/deprecated.rst | 4 ++--
->  hw/i386/pc_piix.c         | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
->=20
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 40585ca7d5..7ff52bdd8e 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -228,8 +228,8 @@ deprecated; use the new name ``dtb-randomness`` inste=
-ad. The new name
->  better reflects the way this property affects all random data within
->  the device tree blob, not just the ``kaslr-seed`` node.
-> =20
-> -``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2)
-> -'''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
-4`` up to ``pc-i440fx-2.12`` (since 9.1)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''=
-''''''''''''''''''''''''''''''''''''''''
-> =20
->  These old machine types are quite neglected nowadays and thus might have
->  various pitfalls with regards to live migration. Use a newer machine type
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index ebb51de380..02878060d0 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -742,6 +742,7 @@ DEFINE_I440FX_MACHINE(v3_0, "pc-i440fx-3.0", NULL,
->  static void pc_i440fx_2_12_machine_options(MachineClass *m)
->  {
->      pc_i440fx_3_0_machine_options(m);
-> +    m->deprecation_reason =3D "old and unattended - use a newer version =
-instead";
->      compat_props_add(m->compat_props, hw_compat_2_12, hw_compat_2_12_len=
-);
->      compat_props_add(m->compat_props, pc_compat_2_12, pc_compat_2_12_len=
-);
->  }
-> @@ -847,7 +848,6 @@ static void pc_i440fx_2_3_machine_options(MachineClas=
-s *m)
->  {
->      pc_i440fx_2_4_machine_options(m);
->      m->hw_version =3D "2.3.0";
-> -    m->deprecation_reason =3D "old and unattended - use a newer version =
-instead";
->      compat_props_add(m->compat_props, hw_compat_2_3, hw_compat_2_3_len);
->      compat_props_add(m->compat_props, pc_compat_2_3, pc_compat_2_3_len);
->  }
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 127c3d2383..18672f6619 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -5629,6 +5629,26 @@ static uint16_t nvme_identify_nslist_csi(NvmeCtrl *n, NvmeRequest *req,
+     return nvme_c2h(n, list, data_len, req);
+ }
+ 
++static uint16_t nvme_endurance_group_list(NvmeCtrl *n, NvmeRequest *req)
++{
++    uint16_t list[NVME_CONTROLLER_LIST_SIZE] = {};
++    uint16_t *nr_ids = &list[0];
++    uint16_t *ids = &list[1];
++    uint16_t endgid = le32_to_cpu(req->cmd.cdw11) & 0xffff;
++
++    /*
++     * The current nvme-subsys only supports Endurance Group #1.
++     */
++    if (!endgid) {
++        *nr_ids = 1;
++        ids[0] = 1;
++    } else {
++        *nr_ids = 0;
++    }
++
++    return nvme_c2h(n, list, sizeof(list), req);
++}
++
+ static uint16_t nvme_identify_ns_descr_list(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeNamespace *ns;
+@@ -5744,6 +5764,8 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
+         return nvme_identify_nslist(n, req, false);
+     case NVME_ID_CNS_CS_NS_ACTIVE_LIST:
+         return nvme_identify_nslist_csi(n, req, true);
++    case NVME_ID_CNS_ENDURANCE_GROUP_LIST:
++        return nvme_endurance_group_list(n, req);
+     case NVME_ID_CNS_CS_NS_PRESENT_LIST:
+         return nvme_identify_nslist_csi(n, req, false);
+     case NVME_ID_CNS_NS_DESCR_LIST:
+diff --git a/include/block/nvme.h b/include/block/nvme.h
+index bb231d0b9a..7c77d38174 100644
+--- a/include/block/nvme.h
++++ b/include/block/nvme.h
+@@ -1074,6 +1074,7 @@ enum NvmeIdCns {
+     NVME_ID_CNS_CTRL_LIST             = 0x13,
+     NVME_ID_CNS_PRIMARY_CTRL_CAP      = 0x14,
+     NVME_ID_CNS_SECONDARY_CTRL_LIST   = 0x15,
++    NVME_ID_CNS_ENDURANCE_GROUP_LIST  = 0x19,
+     NVME_ID_CNS_CS_NS_PRESENT_LIST    = 0x1a,
+     NVME_ID_CNS_CS_NS_PRESENT         = 0x1b,
+     NVME_ID_CNS_IO_COMMAND_SET        = 0x1c,
+-- 
+2.34.1
 
 
