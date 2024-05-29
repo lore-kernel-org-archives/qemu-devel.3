@@ -4,46 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229BEC27C44
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7E5C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM6r-00015d-F2; Wed, 29 May 2024 12:25:05 -0400
+	id 1sCMFk-00026H-VL; Wed, 29 May 2024 12:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6n-00013e-1N
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:01 -0400
-Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCMFO-000208-Ta
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:33:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6l-0006KY-45
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:00 -0400
-Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6i-006COn-W9;
- Wed, 29 May 2024 17:24:56 +0100
-From: John Levon <levon@movementarian.org>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
- thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- John Levon <john.levon@nutanix.com>
-Subject: [PATCH 06/26] vfio: add region cache
-Date: Wed, 29 May 2024 17:22:59 +0100
-Message-Id: <20240529162319.1476680-7-levon@movementarian.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
-References: <20240529162319.1476680-1-levon@movementarian.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCMF9-00081a-Uo
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:33:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717000419;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q83Ax70Y6mL6GdzmZMznygmN4/ad+En2XXA86ctM0yA=;
+ b=BExXl5MssnCKCnYrj98jIvA01S9oJBUbMxqzBtGyYRLc2pXvWougC5vd0OxzIT/qrlaIUI
+ 4lIjNw63NxOyiLbYjnQzsCiJ+C5AbDC0/LHJYVHHqA6Qxw0+0jVsAbu95F1G5Izq6sRqnO
+ mCTiLVuVKTatsosMxSw54rPHKbVGGEE=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-rO0lUHVdOYKHbg07ZuBCcA-1; Wed, 29 May 2024 12:33:38 -0400
+X-MC-Unique: rO0lUHVdOYKHbg07ZuBCcA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-43fd537e6a6so2558711cf.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 09:33:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717000416; x=1717605216;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q83Ax70Y6mL6GdzmZMznygmN4/ad+En2XXA86ctM0yA=;
+ b=EICs5pQ9mPl+KMeKEqLZXkLRshUZ1ryRZ5D611eQIyM37kerg3mqhmFDyjKUfpoucL
+ 8le6qXv7lmoPbria2u5fMneIGli84NaFc12Xavg4js/DmELcF2broXg77P6qB2qU1Lev
+ Pc/QoM2ITuE+TwWz9bXc+98oe+eJWrICAuzCsQMRD+7v9brVHFLjn5553Ekrgpo/TPSf
+ f+l2jYiskO3hiaWhGwHgr9z/0K9XsxVxP4awhuAPXIL5q7/7NUwnXS6juWbJaKmCtLwB
+ qqlI/ctNk+2TXCvLomRsKvqcKLYRwi8A/L5BopDDv+ET1oGi4NjGl8lS9/aAPKewJNuE
+ V22Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLzPtka6dVuIXfSrAJXKZbBimjmzFCpOTLISZAEE45wT/9WxxNargou1FOKQK5ObpGlYOljMRRVpCbVFjj8iS0UQASJco=
+X-Gm-Message-State: AOJu0Yww1WTtofftv5PZoH/xA1U4rmGe81Q7u1Mkc/qC48iYwuaQvH0+
+ X8tKrRvy+CKPzV3MgYfPkSY8M2IvvJDY3VmyQMXphrit4llJfk9Ox4ZrrmZI0bGs7xylx/rYaCw
+ puna6DIe1cAb0EzmBDi5hcekF0dzDdP0MA+UUuHBxdqvzu3hat6B9
+X-Received: by 2002:a05:620a:46a0:b0:793:17f:18ae with SMTP id
+ af79cd13be357-794ab110986mr2014051385a.3.1717000415992; 
+ Wed, 29 May 2024 09:33:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqRAnaLgkCWeq3t/B7pVYdlNTNS2ZP5xz8Yi0+67QiRBmq1zwFtzgQMe/NfXtu/qOUseQ/1w==
+X-Received: by 2002:a05:620a:46a0:b0:793:17f:18ae with SMTP id
+ af79cd13be357-794ab110986mr2014044985a.3.1717000415211; 
+ Wed, 29 May 2024 09:33:35 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-794c87c3b06sm216804185a.73.2024.05.29.09.33.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 09:33:34 -0700 (PDT)
+Date: Wed, 29 May 2024 12:33:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: Yu Zhang <yu.zhang@ionos.com>, Michael Galaxy <mgalaxy@akamai.com>,
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pannengyuan <pannengyuan@huawei.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <ZldY21xVExtiMddB@x1n>
+References: <ZjpWmG2aUJLkYxJm@x1n>
+ <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com>
+ <ZjzaIAMgUHV8zdNz@x1n>
+ <CAHEcVy48Mcup3d3FgYh_oPtV-M9CZBVr4G_9jyg2K+8Esi0WGA@mail.gmail.com>
+ <04769507-ac37-495d-a797-e05084d73e64@akamai.com>
+ <CAHEcVy4d7uJENZ1hRx2FBzbw22qN4Qm0TwtxvM5DLw3s81Zp_g@mail.gmail.com>
+ <Zk0c51D1Oo6NdIxR@x1n>
+ <2308a8b894244123b638038e40a33990@huawei.com>
+ <ZlX-Swq4Hi-0iHeh@x1n>
+ <7bf81ccee4bd4b0e81e3893ef43502a8@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.162.205.133;
- envelope-from=movement@movementarian.org; helo=movementarian.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7bf81ccee4bd4b0e81e3893ef43502a8@huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,259 +129,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jagannathan Raman <jag.raman@oracle.com>
+Lei,
 
-cache VFIO_DEVICE_GET_REGION_INFO results to reduce
-memory alloc/free cycles and as prep work for vfio-user
+On Wed, May 29, 2024 at 02:43:46AM +0000, Gonglei (Arei) wrote:
+> For rdma programming, the current mainstream implementation is to use
+> rdma_cm to establish a connection, and then use verbs to transmit data.
+> rdma_cm and ibverbs create two FDs respectively. The two FDs have
+> different responsibilities. rdma_cm fd is used to notify connection
+> establishment events, and verbs fd is used to notify new CQEs. When
+> poll/epoll monitoring is directly performed on the rdma_cm fd, only a
+> pollin event can be monitored, which means that an rdma_cm event
+> occurs. When the verbs fd is directly polled/epolled, only the pollin
+> event can be listened, which indicates that a new CQE is generated.
+>
+> Rsocket is a sub-module attached to the rdma_cm library and provides
+> rdma calls that are completely similar to socket interfaces. However,
+> this library returns only the rdma_cm fd for listening to link
+> setup-related events and does not expose the verbs fd (readable and
+> writable events for listening to data). Only the rpoll interface provided
+> by the RSocket can be used to listen to related events. However, QEMU
+> uses the ppoll interface to listen to the rdma_cm fd (gotten by raccept
+> API).  And cannot listen to the verbs fd event. Only some hacking methods
+> can be used to address this problem.  Do you guys have any ideas? Thanks.
 
-Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: John Levon <john.levon@nutanix.com>
----
- hw/vfio/ccw.c                 |  5 -----
- hw/vfio/common.c              | 12 ++++++++++++
- hw/vfio/container.c           | 10 ++++++++++
- hw/vfio/helpers.c             | 21 ++++++++++++++++-----
- hw/vfio/igd.c                 |  8 ++++----
- hw/vfio/pci.c                 |  8 ++++----
- include/hw/vfio/vfio-common.h |  1 +
- 7 files changed, 47 insertions(+), 18 deletions(-)
+I saw that you mentioned this elsewhere:
 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 2600e62e37..315449c1b1 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -510,7 +510,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
- 
-     vcdev->io_region_offset = info->offset;
-     vcdev->io_region = g_malloc0(info->size);
--    g_free(info);
- 
-     /* check for the optional async command region */
-     ret = vfio_get_dev_region_info(vdev, VFIO_REGION_TYPE_CCW,
-@@ -523,7 +522,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-         }
-         vcdev->async_cmd_region_offset = info->offset;
-         vcdev->async_cmd_region = g_malloc0(info->size);
--        g_free(info);
-     }
- 
-     ret = vfio_get_dev_region_info(vdev, VFIO_REGION_TYPE_CCW,
-@@ -536,7 +534,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-         }
-         vcdev->schib_region_offset = info->offset;
-         vcdev->schib_region = g_malloc(info->size);
--        g_free(info);
-     }
- 
-     ret = vfio_get_dev_region_info(vdev, VFIO_REGION_TYPE_CCW,
-@@ -550,7 +547,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
-         }
-         vcdev->crw_region_offset = info->offset;
-         vcdev->crw_region = g_malloc(info->size);
--        g_free(info);
-     }
- 
-     return true;
-@@ -560,7 +556,6 @@ out_err:
-     g_free(vcdev->schib_region);
-     g_free(vcdev->async_cmd_region);
-     g_free(vcdev->io_region);
--    g_free(info);
-     return false;
- }
- 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 81f4c88f2d..1a71c3be05 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1542,6 +1542,16 @@ retry:
-     return info;
- }
- 
-+static void vfio_get_all_regions(VFIODevice *vbasedev)
-+{
-+    struct vfio_region_info *info;
-+    int i;
-+
-+    for (i = 0; i < vbasedev->num_regions; i++) {
-+        vfio_get_region_info(vbasedev, i, &info);
-+    }
-+}
-+
- void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-                          VFIOGroup *group, struct vfio_device_info *info)
- {
-@@ -1559,6 +1569,8 @@ void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-     }
- 
-     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
-+
-+    vfio_get_all_regions(vbasedev);
- }
- 
- bool vfio_attach_device_by_iommu_type(const char *iommu_type, char *name,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 1bbcbaa874..6c70f95f04 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -891,6 +891,16 @@ static bool vfio_get_device(VFIOGroup *group, const char *name,
- 
- static void vfio_put_base_device(VFIODevice *vbasedev)
- {
-+    if (vbasedev->regions != NULL) {
-+        int i;
-+
-+        for (i = 0; i < vbasedev->num_regions; i++) {
-+            g_free(vbasedev->regions[i]);
-+        }
-+        g_free(vbasedev->regions);
-+        vbasedev->regions = NULL;
-+    }
-+
-     if (!vbasedev->group) {
-         return;
-     }
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 27ea26aa48..cdc7eb5bd5 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -343,7 +343,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
- int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-                       int index, const char *name)
- {
--    g_autofree struct vfio_region_info *info = NULL;
-+    struct vfio_region_info *info = NULL;
-     int ret;
- 
-     ret = vfio_get_region_info(vbasedev, index, &info);
-@@ -533,6 +533,17 @@ int vfio_get_region_info(VFIODevice *vbasedev, int index,
- {
-     size_t argsz = sizeof(struct vfio_region_info);
- 
-+    /* create region cache */
-+    if (vbasedev->regions == NULL) {
-+        vbasedev->regions = g_new0(struct vfio_region_info *,
-+                                   vbasedev->num_regions);
-+    }
-+    /* check cache */
-+    if (vbasedev->regions[index] != NULL) {
-+        *info = vbasedev->regions[index];
-+        return 0;
-+    }
-+
-     *info = g_malloc0(argsz);
- 
-     (*info)->index = index;
-@@ -552,6 +563,9 @@ retry:
-         goto retry;
-     }
- 
-+    /* fill cache */
-+    vbasedev->regions[index] = *info;
-+
-     return 0;
- }
- 
-@@ -570,7 +584,6 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
- 
-         hdr = vfio_get_region_info_cap(*info, VFIO_REGION_INFO_CAP_TYPE);
-         if (!hdr) {
--            g_free(*info);
-             continue;
-         }
- 
-@@ -582,8 +595,6 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
-         if (cap_type->type == type && cap_type->subtype == subtype) {
-             return 0;
-         }
--
--        g_free(*info);
-     }
- 
-     *info = NULL;
-@@ -592,7 +603,7 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
- 
- bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
- {
--    g_autofree struct vfio_region_info *info = NULL;
-+    struct vfio_region_info *info = NULL;
-     bool ret = false;
- 
-     if (!vfio_get_region_info(vbasedev, region, &info)) {
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index d320d032a7..34d8a41dd3 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -367,10 +367,10 @@ static const MemoryRegionOps vfio_igd_index_quirk = {
- 
- void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
- {
--    g_autofree struct vfio_region_info *rom = NULL;
--    g_autofree struct vfio_region_info *opregion = NULL;
--    g_autofree struct vfio_region_info *host = NULL;
--    g_autofree struct vfio_region_info *lpc = NULL;
-+    struct vfio_region_info *rom = NULL;
-+    struct vfio_region_info *opregion = NULL;
-+    struct vfio_region_info *host = NULL;
-+    struct vfio_region_info *lpc = NULL;
-     VFIOQuirk *quirk;
-     VFIOIGDQuirk *igd;
-     PCIDevice *lpc_bridge;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 74a79bdf61..470fb3502a 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -879,7 +879,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
- 
- static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
- {
--    g_autofree struct vfio_region_info *reg_info = NULL;
-+    struct vfio_region_info *reg_info = NULL;
-     uint64_t size;
-     off_t off = 0;
-     ssize_t bytes;
-@@ -2666,7 +2666,7 @@ static VFIODeviceOps vfio_pci_ops = {
- bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    g_autofree struct vfio_region_info *reg_info = NULL;
-+    struct vfio_region_info *reg_info = NULL;
-     int ret;
- 
-     ret = vfio_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
-@@ -2731,7 +2731,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
- static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    g_autofree struct vfio_region_info *reg_info = NULL;
-+    struct vfio_region_info *reg_info = NULL;
-     struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
-     int i, ret = -1;
- 
-@@ -3135,7 +3135,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
- 
-     if (!vdev->igd_opregion &&
-         vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) {
--        g_autofree struct vfio_region_info *opregion = NULL;
-+        struct vfio_region_info *opregion = NULL;
- 
-         if (vdev->pdev.qdev.hotplugged) {
-             error_setg(errp,
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index ee022c9cbd..2428c7d80c 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -128,6 +128,7 @@ typedef struct VFIODevice {
-     bool dirty_tracking;
-     int devid;
-     IOMMUFDBackend *iommufd;
-+    struct vfio_region_info **regions;
- } VFIODevice;
- 
- struct VFIODeviceOps {
+> Right. But the question is QEMU do not use rpoll but gilb's ppoll. :(
+
+So what I'm thinking may not make much sense, as I mentioned I don't think
+I know rdma at all.. and my idea also has involvement on coroutine stuff
+which I also don't know well. But just in case it shed some light in some
+form.
+
+IIUC we do iochannel blockings with this no matter for read/write:
+
+        if (len == QIO_CHANNEL_ERR_BLOCK) {
+            if (qemu_in_coroutine()) {
+                qio_channel_yield(ioc, G_IO_XXX);
+            } else {
+                qio_channel_wait(ioc, G_IO_XXX);
+            }
+            continue;
+        }
+
+One thing I'm wondering is whether we can provide a new feature bit for
+qiochannel, e.g., QIO_CHANNEL_FEATURE_POLL, so that the iochannel can
+define its own poll routine rather than using the default when possible.
+
+I think it may not work if it's in a coroutine, as I guess that'll block
+other fds from being waked up.  Hence it should look like this:
+
+        if (len == QIO_CHANNEL_ERR_BLOCK) {
+            if (qemu_in_coroutine()) {
+                qio_channel_yield(ioc, G_IO_XXX);
+            } else if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_POLL)) {
+                qio_channel_poll(ioc, G_IO_XXX);
+            } else {
+                qio_channel_wait(ioc, G_IO_XXX);
+            }
+            continue;
+        }
+
+Maybe we even want to forbid such channel to be used in coroutine already,
+as when QIO_CHANNEL_FEATURE_POLL set it may mean that this iochannel simply
+won't work with poll() like in rdma's use case.
+
+Then rdma iochannel can implement qio_channel_poll() using rpoll().
+
+There's one other dependent issue here in that I _think_ the migration recv
+side is still in a coroutine.. so we may need to move that into a thread
+first.  IIRC we don't yet have a major blocker to do that, but I didn't
+further check either.  I've put that issue aside just to see whether this
+may or may not make sense.
+
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
