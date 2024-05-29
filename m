@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB798C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 04:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50ABC25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 04:56:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCBIh-000231-58; Wed, 29 May 2024 00:52:35 -0400
+	id 1sCBMN-0003c0-UQ; Wed, 29 May 2024 00:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCBIb-0001wj-Sp
- for qemu-devel@nongnu.org; Wed, 29 May 2024 00:52:31 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCBMJ-0003ZS-8X
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 00:56:19 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCBIZ-0001ed-Kr
- for qemu-devel@nongnu.org; Wed, 29 May 2024 00:52:29 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-5238b5c07efso1838484e87.3
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 21:52:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCBMH-00023N-6u
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 00:56:19 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-52961b77655so1854385e87.2
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 21:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716958344; x=1717563144; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716958574; x=1717563374; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ttD9JcPHEi0saWEidrIvE6SiGSP0+pQ/uWKx0BiEiXY=;
- b=d3efm5exuPi7/t0aHz0ul9CqArXUO7OPkGcayFXyTS0y1hzjZAVtp8oVLXpTmF5BA0
- yV9JakAnH2/oYtN1IhwUmvJ0rU6Ra8DfRGQwXimfoOqDtzZODzA755lHg7LgICCy73JJ
- t0UjjMKVRUxr/Dj4ir1rD8QDniGUOvqZy8S0gcFMINLZSDJI+R5B2mUzIALcAMOOnExe
- E8oHXGYpnS/e3sygY1dGYUoTpzMxsYWdJvDiUe1MH9P+UJXIC0GfPDcvjSb010wAknqa
- dcEHpgX2Z0uDLzb3jCBb4XXgSll1BqX/8J3vMpna1v00JkSDyNHPmpHMsQdnyjLgZJg4
- 2Iiw==
+ bh=RjQLcO+jti6a0l4UzCHBRgK9x2OIJpQajNqtYvux1Gs=;
+ b=px88/112qtgkdEjwCJFE2RZob5/EDRhmThq+MqYONT45zzexaPPiSceuXEfV7Dp3Cv
+ 6ujvc9gCxxGnyTugdJVogpDFbHPDKXkLhmmH3jJmiO0SRc+HMqqxcbw8Q5why4FDAhuZ
+ dMzn4ANZvPdPPknbsU7uhS+8qy4rdo18b+CiAy7jQWLqx6NNrm5OIey6tPkv03VNcVpX
+ X+IewI3gjDxCropJJTfavi7l9uiDo2wv1HmH+/On04FOL/OHIaqVIW9N/SJYFah+3Ssu
+ x/BER5ES9IYBw/TJOITfYIDgSrEZG2kVucFtBig6wae75ibQS7Snq8eAZck7Yz+wz602
+ Gz5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716958344; x=1717563144;
+ d=1e100.net; s=20230601; t=1716958574; x=1717563374;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ttD9JcPHEi0saWEidrIvE6SiGSP0+pQ/uWKx0BiEiXY=;
- b=tFlwLMU+/8fPWYHSsxh3mUi9lOorQXdjZVmQruQrBqrki5Qn9KIfhdcQinmXKYKdX3
- 17y9U5xN6Up81aDtC82mMEZr/AIrU77uFuk5pmbC1Zs1pG2y2Q4Xvzl0C1hhaqyhjgMl
- Gr2HiYgD1c7eXtCiHPBdSDKyQVvxwREJndIUtWWP8LEqFSCKzOixtT9fFQeASKvNrqdG
- xj+hgCLP9O7XKP8W+k0KSCHL065W88ESdIX323uliXYIUMVqZeLPmk4xQ4bVJ8VPE2dA
- pJBhOgwHw7IRZvyrDEyFksWL9nffkpsxzj7Wlf/dvMPLJEApaRDM2+nN7WASlBFZV6hp
- RjjQ==
-X-Gm-Message-State: AOJu0YyXFAZGauuzDGfyST7Kz8siRFf3JLDW5m0e+IfI7JFQkK8Tn3G6
- WUZCglK35VMIjr/vJTf0EL4jhA1S5AB/E2EbwgR3K7Zd2pkqZOz+nLPu2IG3sDM=
-X-Google-Smtp-Source: AGHT+IFL1lqRpJDtYeh9SPV6OdldksILmgvc8Femh3uqPBCCsV8ouo3X3Vh9dmt6loRfXCO7nm2xJQ==
-X-Received: by 2002:a19:7406:0:b0:523:90df:a9ce with SMTP id
- 2adb3069b0e04-529667cfa1amr7917970e87.49.1716958344329; 
- Tue, 28 May 2024 21:52:24 -0700 (PDT)
+ bh=RjQLcO+jti6a0l4UzCHBRgK9x2OIJpQajNqtYvux1Gs=;
+ b=PSz6sKgl74hvHl1JNnPc181oi+ewCUpKMPprqkzYqNgRnUf5Z0Cox8PdFINzgHg5YY
+ IEIDKwqazuTkCwkwSN4UZoqnVUa+qLXs1T+wM0KEerksYkx477iSPGGurcbE6ag+GOdd
+ qV9vPz35FtxyfzUpcqyWoHZG/LJsgFYy+Nv6VNGmllbGjhFDbWNMGDzSeH32j370y4L3
+ B7pvOICOhjDCRgwSq3cCenK4hl9cBoCNC2FlzfRP9AkKYwpkJVVhL9Z1l73sE7uMLmZT
+ u9RhBZFnQR3MCmxHDEfCtC0PiMcpN+yLde7D6HlqQGM+IPn1rPxAd6cm+zqdT/Gzl9Se
+ UQcw==
+X-Gm-Message-State: AOJu0YzVdoWpzK1Z7o0cJDIC1g+ZCIbUmarWnJSXeeRjYtFrsIVMbvoS
+ QMTZXkJEgy+6Cm8Q006eMg0i7MSUtqgKkVBHEDrElfoOZtA8q08OQS0+V48Pn5/AGDTjOecK3dm
+ i
+X-Google-Smtp-Source: AGHT+IFcL7ZWs9vLZjW7XUeP+QY60hoD+A5njo8CuJalM3wyzhhx7mp4aZRhDsZ4kCV/FBefAulNsg==
+X-Received: by 2002:a05:6512:3096:b0:523:87b6:2ac2 with SMTP id
+ 2adb3069b0e04-52965199527mr11586460e87.40.1716958574179; 
+ Tue, 28 May 2024 21:56:14 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.204.141])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-578524bb5ddsm7880225a12.93.2024.05.28.21.52.23
+ a640c23a62f3a-a626c9776e2sm681725966b.91.2024.05.28.21.56.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 21:52:23 -0700 (PDT)
-Message-ID: <7d746f7d-60b3-4513-bd95-5bec7e799b67@linaro.org>
-Date: Wed, 29 May 2024 06:52:22 +0200
+ Tue, 28 May 2024 21:56:13 -0700 (PDT)
+Message-ID: <fcbe4473-b460-4eae-ab33-e6e1ed723878@linaro.org>
+Date: Wed, 29 May 2024 06:56:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/input/tsc2005: Fix -Wchar-subscripts warning in
- tsc2005_txrx()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20240508143513.44996-1-philmd@linaro.org>
- <CAFEAcA-apsUZeNdpC9QfJm+Xqr8Z-LhfZXiv6YxcSXo2bKsocQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Use get_address() to get address with
+ Zicbom extensions
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Bin Meng <bin.meng@windriver.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <cmuellner@linux.com>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
+ Palmer Dabbelt <palmer@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Zhiwei Jiang <jiangzw@tecorigin.com>
+References: <20240419110514.69697-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-apsUZeNdpC9QfJm+Xqr8Z-LhfZXiv6YxcSXo2bKsocQ@mail.gmail.com>
+In-Reply-To: <20240419110514.69697-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,43 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/24 14:49, Peter Maydell wrote:
-> On Wed, 8 May 2024 at 15:35, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Check the function index is in range and use an unsigned
->> variable to avoid the following warning with GCC 13.2.0:
->>
->>    [666/5358] Compiling C object libcommon.fa.p/hw_input_tsc2005.c.o
->>    hw/input/tsc2005.c: In function 'tsc2005_timer_tick':
->>    hw/input/tsc2005.c:416:26: warning: array subscript has type 'char' [-Wchar-subscripts]
->>      416 |     s->dav |= mode_regs[s->function];
->>          |                         ~^~~~~~~~~~
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> v2: Use Peter suggestion
->> ---
->>   hw/input/tsc2005.c | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/input/tsc2005.c b/hw/input/tsc2005.c
->> index 941f163d36..8d35892c09 100644
->> --- a/hw/input/tsc2005.c
->> +++ b/hw/input/tsc2005.c
->> @@ -406,6 +406,9 @@ uint32_t tsc2005_txrx(void *opaque, uint32_t value, int len)
->>   static void tsc2005_timer_tick(void *opaque)
->>   {
->>       TSC2005State *s = opaque;
->> +    unsigned int function = s->function;
->> +
->> +    assert(function < ARRAY_SIZE(mode_regs);
+ping?
+
+On 19/4/24 13:05, Philippe Mathieu-Daudé wrote:
+> We need to use get_address() to get an address from cpu_gpr[],
+> since $zero is "special" (NULL).
 > 
-> Missing ')' -- this doesn't compile ;-)
-
-Oops I apologize for not even build-testing :/
-
-> Applied to target-arm.next with the typo fixed, thanks.
-
-Thanks!
+> Fixes: e05da09b7c ("target/riscv: implement Zicbom extension")
+> Reported-by: Zhiwei Jiang (姜智伟) <jiangzw@tecorigin.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/riscv/insn_trans/trans_rvzicbo.c.inc | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+> index d5d7095903..6f6b29598d 100644
+> --- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+> @@ -31,27 +31,27 @@
+>   static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+>   {
+>       REQUIRE_ZICBOM(ctx);
+> -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
+> +    gen_helper_cbo_clean_flush(tcg_env, get_address(ctx, a->rs1, 0));
+>       return true;
+>   }
+>   
+>   static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
+>   {
+>       REQUIRE_ZICBOM(ctx);
+> -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
+> +    gen_helper_cbo_clean_flush(tcg_env, get_address(ctx, a->rs1, 0));
+>       return true;
+>   }
+>   
+>   static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
+>   {
+>       REQUIRE_ZICBOM(ctx);
+> -    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
+> +    gen_helper_cbo_inval(tcg_env, get_address(ctx, a->rs1, 0));
+>       return true;
+>   }
+>   
+>   static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
+>   {
+>       REQUIRE_ZICBOZ(ctx);
+> -    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
+> +    gen_helper_cbo_zero(tcg_env, get_address(ctx, a->rs1, 0));
+>       return true;
+>   }
 
 
