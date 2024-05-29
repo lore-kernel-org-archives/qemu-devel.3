@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A923EC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 09:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8231BC27C43
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 09:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCFss-0005iq-GC; Wed, 29 May 2024 05:46:14 -0400
+	id 1sCFsK-0005Bd-0V; Wed, 29 May 2024 05:45:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sCFsm-0005a1-UE
- for qemu-devel@nongnu.org; Wed, 29 May 2024 05:46:10 -0400
+ id 1sCFsG-00053W-73
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 05:45:36 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sCFsk-0000WJ-97
- for qemu-devel@nongnu.org; Wed, 29 May 2024 05:46:08 -0400
+ id 1sCFs8-0000T7-B3
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 05:45:32 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vq4Cd3Fh7z6K6lP;
- Wed, 29 May 2024 17:41:49 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vq4CC6jFZz6JB59;
+ Wed, 29 May 2024 17:41:27 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id B718614065B;
- Wed, 29 May 2024 17:46:02 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 9D887140A30;
+ Wed, 29 May 2024 17:45:26 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.202.227.28) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 29 May 2024 10:45:57 +0100
+ 15.1.2507.39; Wed, 29 May 2024 10:45:20 +0100
 To: <peterx@redhat.com>, <farosas@suse.de>, <yuan1.liu@intel.com>
 CC: <qemu-devel@nongnu.org>, <linuxarm@huawei.com>,
  <linwenkai6@hisilicon.com>, <zhangfei.gao@linaro.org>,
  <huangchenghai2@huawei.com>
-Subject: [PATCH 7/7] tests/migration-test: add uadk compression test
-Date: Wed, 29 May 2024 10:44:27 +0100
-Message-ID: <20240529094435.11140-8-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH 2/7] configure: Add uadk option
+Date: Wed, 29 May 2024 10:44:22 +0100
+Message-ID: <20240529094435.11140-3-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
 References: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
@@ -71,59 +71,90 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add --enable-uadk and --disable-uadk options to enable and disable
+UADK compression accelerator. This is for using UADK based hardware
+accelerators for live migration.
+
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- tests/qtest/migration-test.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ meson.build                   | 14 ++++++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 0f75ed7c49..4104b41f66 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2785,6 +2785,14 @@ test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-     return test_migrate_precopy_tcp_multifd_start_common(from, to, "qpl");
- }
- #endif /* CONFIG_QPL */
-+#ifdef CONFIG_UADK
-+static void *
-+test_migrate_precopy_tcp_multifd_uadk_start(QTestState *from,
-+                                            QTestState *to)
-+{
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "uadk");
-+}
-+#endif /* CONFIG_UADK */
+diff --git a/meson.build b/meson.build
+index 2a8d8385fe..f4ed29d876 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1210,6 +1210,18 @@ if not get_option('qpl').auto() or have_system
+                     required: get_option('qpl'),
+                     method: 'pkg-config')
+ endif
++uadk = not_found
++if not get_option('uadk').auto() or have_system
++  libwd = dependency('libwd', version: '>=2.6',
++                      required: get_option('uadk'),
++                      method: 'pkg-config')
++  libwd_comp = dependency('libwd_comp', version: '>=2.6',
++                           required: get_option('uadk'),
++                           method: 'pkg-config')
++  if libwd.found() and libwd_comp.found()
++     uadk = declare_dependency(dependencies: [libwd, libwd_comp])
++  endif
++endif
+ virgl = not_found
  
- static void test_multifd_tcp_uri_none(void)
- {
-@@ -2877,6 +2885,17 @@ static void test_multifd_tcp_qpl(void)
+ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+@@ -2316,6 +2328,7 @@ config_host_data.set('CONFIG_STATX', has_statx)
+ config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+ config_host_data.set('CONFIG_ZSTD', zstd.found())
+ config_host_data.set('CONFIG_QPL', qpl.found())
++config_host_data.set('CONFIG_UADK', uadk.found())
+ config_host_data.set('CONFIG_FUSE', fuse.found())
+ config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
+ config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
+@@ -4444,6 +4457,7 @@ summary_info += {'bzip2 support':     libbzip2}
+ summary_info += {'lzfse support':     liblzfse}
+ summary_info += {'zstd support':      zstd}
+ summary_info += {'Query Processing Library support': qpl}
++summary_info += {'UADK Library support': uadk}
+ summary_info += {'NUMA host support': numa}
+ summary_info += {'capstone':          capstone}
+ summary_info += {'libpmem support':   libpmem}
+diff --git a/meson_options.txt b/meson_options.txt
+index 562db29ab4..d327eba593 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -261,6 +261,8 @@ option('zstd', type : 'feature', value : 'auto',
+        description: 'zstd compression support')
+ option('qpl', type : 'feature', value : 'auto',
+        description: 'Query Processing Library support')
++option('uadk', type : 'feature', value : 'auto',
++       description: 'UADK Library support')
+ option('fuse', type: 'feature', value: 'auto',
+        description: 'FUSE block device export')
+ option('fuse_lseek', type : 'feature', value : 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 26bf9e21fd..4aea75e9a5 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -223,6 +223,7 @@ meson_options_help() {
+   printf "%s\n" '  xkbcommon       xkbcommon support'
+   printf "%s\n" '  zstd            zstd compression support'
+   printf "%s\n" '  qpl             Query Processing Library support'
++  printf "%s\n" '  uadk            UADK Library support'
  }
- #endif
- 
-+#ifdef CONFIG_UADK
-+static void test_multifd_tcp_uadk(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_uadk_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
-+
- #ifdef CONFIG_GNUTLS
- static void *
- test_migrate_multifd_tcp_tls_psk_start_match(QTestState *from,
-@@ -3784,6 +3803,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/qpl",
-                        test_multifd_tcp_qpl);
- #endif
-+#ifdef CONFIG_UADK
-+    migration_test_add("/migration/multifd/tcp/plain/uadk",
-+                       test_multifd_tcp_uadk);
-+#endif
- #ifdef CONFIG_GNUTLS
-     migration_test_add("/migration/multifd/tcp/tls/psk/match",
-                        test_multifd_tcp_tls_psk_match);
+ _meson_option_parse() {
+   case $1 in
+@@ -565,6 +566,8 @@ _meson_option_parse() {
+     --disable-zstd) printf "%s" -Dzstd=disabled ;;
+     --enable-qpl) printf "%s" -Dqpl=enabled ;;
+     --disable-qpl) printf "%s" -Dqpl=disabled ;;
++    --enable-uadk) printf "%s" -Duadk=enabled ;;
++    --disable-uadk) printf "%s" -Duadk=disabled ;;
+     *) return 1 ;;
+   esac
+ }
 -- 
 2.17.1
 
