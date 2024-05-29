@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF44C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:57:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC40AC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 08:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCEAg-0001Nv-Ul; Wed, 29 May 2024 03:56:30 -0400
+	id 1sCEKB-0004rm-BL; Wed, 29 May 2024 04:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sCEAf-0001Ni-HS; Wed, 29 May 2024 03:56:29 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1sCEAd-0001iQ-GH; Wed, 29 May 2024 03:56:28 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-6f8cd25ebd5so727368a34.1; 
- Wed, 29 May 2024 00:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716969385; x=1717574185; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qCDc0qSIrx+gT7/2fYqupgGbWDRahVb7zLFLhhmMUDY=;
- b=eh9TcBTwvsx8+E+75yLXrbdoWYFWu63bd7F9rjeFyB7n/uOw6/MDhk6mhwO+1S0fqW
- 614T+iAtB0LQwdNwlQemNfzaTGEtnmCG6gkm0jY+UlHrRvM+jxk7YikyrOFJ7LAlkN6G
- 7OBZ/jXWqIan17QpzCPl9pIL9Wa16GsUimyivgn2/Q6trPZwyZdHx1cRacsp4qsoVOjz
- ngizM+EC79xNyVWyz7mafrB2Fg3b/suOHKyflY31f2nyjp6CpTOUlrv0xoiTlBLTAHIK
- jdmiQIjU/uZ577Sd5MQTVqG8ptBigaDK8PCnBz3nj0ul0Yr87HNuM45WqXvraen53zcv
- Yn8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716969385; x=1717574185;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qCDc0qSIrx+gT7/2fYqupgGbWDRahVb7zLFLhhmMUDY=;
- b=r5JGtKVwoqzedmcsB7zYXAqbJCHb4Pg3OGscA2P9PDPjyxR/m1FWW57opm9MBnPywc
- m0WV2US8zlS/qk5EICeuC87dk29HuY3/D776jP8MeVHnxQv8UwvpIqWWgbaLrfWanJ5V
- SR05t2YUY82Is8GgM852Hvi1WAQGc83X82JFhyOCLP8Z4WdLjXnXOV98BGBj7je48j3U
- t3nUMIfgHVFJesAYzxttW6K+yETSIjO2gWSlRjiP8eZHuKh5D6i4CUEuK6Hrgy/5Ybtp
- yWuJwskLfpL2B9BMeFdHGA78bcpuOTyGk/GFbUmVLvlTsQl4pMttwH+UNnuH2kOiGIF/
- 1KIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnaNUqOjHy4yf/Wv03/iRJzIxGsXAUYW9AOGp7YiVOkMdlYm18Q/2i/wMOTLmYc8ieCBK0SrFo47M0aVVlAKsIjDd0K8xy7w==
-X-Gm-Message-State: AOJu0YwuAJsid42Z9NXVj2qWES6OhIr2gJYu3WRFbvoghp18oLrY60Uz
- eiqlu2gKgclxkMA3HeMsTpLx4eVYcydsiC34v6NfrDdrOvWo/WmFSmNQOuAn/wR0jt/reBFTuK2
- y/meA9YqZ/bW/iL/CvjcmFedvthmDLEUJ
-X-Google-Smtp-Source: AGHT+IEW3pHZ5PPPpE/CMFk51jXTjX4t7+ixwZgJJd9rcCK5Yr0cOre1Jyznv/NedrZoi35Dv085UsJiiRpuqISf8pM=
-X-Received: by 2002:a05:6870:818e:b0:24f:d448:c97a with SMTP id
- 586e51a60fabf-24fd448cae1mr10707167fac.42.1716969385120; Wed, 29 May 2024
- 00:56:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sCEK8-0004rV-Kx
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 04:06:16 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sCEK5-0003Ce-Ms
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 04:06:16 -0400
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8CxL_Dn4VZm3gsBAA--.4568S3;
+ Wed, 29 May 2024 16:05:59 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Dxvsfk4VZm8bwMAA--.33476S3; 
+ Wed, 29 May 2024 16:05:58 +0800 (CST)
+Subject: Re: [PATCH] tests/libqos: Add loongarch virt machine node
+To: Thomas Huth <thuth@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>
+References: <20240528082053.938564-1-maobibo@loongson.cn>
+ <e10e39b9-f000-4b61-80b8-7ff78b1c176d@redhat.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <2333de16-927f-a37f-6816-0627c36ea617@loongson.cn>
+Date: Wed, 29 May 2024 16:05:55 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240423152438.19841-2-mvogt@redhat.com>
-In-Reply-To: <20240423152438.19841-2-mvogt@redhat.com>
-From: Michael Vogt <michael.vogt@gmail.com>
-Date: Wed, 29 May 2024 09:56:14 +0200
-Message-ID: <CAPOxN2FyxFp+BJzgFa=EkxDkrctBg5TZWWW1x7r0tKONLHJ7Jg@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Add ioctl for BLKBSZSET
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org
-Cc: Michael Vogt <mvogt@redhat.com>, qemu-trivial@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004a5bb30619931669"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=michael.vogt@gmail.com; helo=mail-ot1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <e10e39b9-f000-4b61-80b8-7ff78b1c176d@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Dxvsfk4VZm8bwMAA--.33476S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXF1Utw43JF13KrW3WFWkKrX_yoW5XFy7pF
+ W8Aa90kryUWrn3J3sxJa4UWFy5Jrs7Ga42gF1IqF40kF9xWr1jvr1Fv34j93ZxJw48Xr4j
+ vw1kJr13ZF1YvagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.786,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,83 +85,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004a5bb30619931669
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thomas,
 
-Friendly ping
+Thanks for reviewing the patch.
 
-I tested the patch as part of cross architecture build (using qemu-user)
-with bootc-image-builder in
-https://github.com/osbuild/bootc-image-builder/pull/342 (not sure that is
-relevant, but I wanted to mention that it is working for my test-case).
+On 2024/5/29 下午3:10, Thomas Huth wrote:
+> On 28/05/2024 10.20, Bibo Mao wrote:
+>> Add loongarch virt machine to the graph. It is a modified copy of
+>> the existing riscv virtmachine in riscv-virt-machine.c
+>>
+>> It contains a generic-pcihost controller, and an extra function
+>> loongarch_config_qpci_bus() to configure GPEX pci host controller
+>> information, such as ecam and pio_base addresses.
+>>
+>> Also hotplug handle checking about TYPE_VIRTIO_IOMMU_PCI device is
+>> added on loongarch virt machine, since virtio_mmu_pci device requires
+>> it.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c                         |   2 +
+>>   tests/qtest/libqos/loongarch-virt-machine.c | 114 ++++++++++++++++++++
+>>   tests/qtest/libqos/meson.build              |   1 +
+>>   3 files changed, 117 insertions(+)
+>>   create mode 100644 tests/qtest/libqos/loongarch-virt-machine.c
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 3e6e93edf3..2d7f718570 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -45,6 +45,7 @@
+>>   #include "sysemu/tpm.h"
+>>   #include "sysemu/block-backend.h"
+>>   #include "hw/block/flash.h"
+>> +#include "hw/virtio/virtio-iommu.h"
+>>   #include "qemu/error-report.h"
+>>   static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
+>> @@ -1213,6 +1214,7 @@ static HotplugHandler 
+>> *virt_get_hotplug_handler(MachineState *machine,
+>>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>>       if (device_is_dynamic_sysbus(mc, dev) ||
+>> +        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+>>           memhp_type_supported(dev)) {
+>>           return HOTPLUG_HANDLER(machine);
+>>       }
+>> diff --git a/tests/qtest/libqos/loongarch-virt-machine.c 
+>> b/tests/qtest/libqos/loongarch-virt-machine.c
+>> new file mode 100644
+>> index 0000000000..c12089c015
+>> --- /dev/null
+>> +++ b/tests/qtest/libqos/loongarch-virt-machine.c
+>> @@ -0,0 +1,114 @@
+>> +/*
+>> + * libqos driver framework
+>> + *
+>> + * Copyright (c) 2018 Emanuele Giuseppe Esposito 
+>> <e.emanuelegiuseppe@gmail.com>
+>> + *
+> 
+> Don't you want to add your information here, too?
+Will add in next version.
 
-On Tue, Apr 23, 2024 at 5:25=E2=80=AFPM Michael Vogt <michael.vogt@gmail.co=
-m> wrote:
+> 
+> Anyway:
+> Acked-by: Thomas Huth <thuth@redhat.com>
+> 
+> I assume this will go through the loongarch tree. Let me know if you 
+> want to get this merged through the qtest tree instead.
+yes, I think it will go through the loongarch tree.
 
-> Tiny patch to add the ioctl wrapper definition for BLKBSZSET.
->
-> Signed-off-by: Michael Vogt <mvogt@redhat.com>
-> ---
->  linux-user/ioctls.h | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-> index d508d0c04a..3b41128fd7 100644
-> --- a/linux-user/ioctls.h
-> +++ b/linux-user/ioctls.h
-> @@ -102,6 +102,7 @@
->       IOCTL(BLKRAGET, IOC_R, MK_PTR(TYPE_LONG))
->       IOCTL(BLKSSZGET, IOC_R, MK_PTR(TYPE_INT))
->       IOCTL(BLKBSZGET, IOC_R, MK_PTR(TYPE_INT))
-> +     IOCTL(BLKBSZSET, IOC_W, MK_PTR(TYPE_INT))
->       IOCTL_SPECIAL(BLKPG, IOC_W, do_ioctl_blkpg,
->                     MK_PTR(MK_STRUCT(STRUCT_blkpg_ioctl_arg)))
->
-> --
-> 2.43.0
->
->
+Regards
+Bibo Mao
 
---0000000000004a5bb30619931669
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Friendly ping</div><div><br></div><div>I tested the p=
-atch as part of cross architecture build (using qemu-user) with bootc-image=
--builder in <a href=3D"https://github.com/osbuild/bootc-image-builder/pull/=
-342">https://github.com/osbuild/bootc-image-builder/pull/342</a> (not sure =
-that is relevant, but I wanted to mention that it is working for my test-ca=
-se).</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
-ail_attr">On Tue, Apr 23, 2024 at 5:25=E2=80=AFPM Michael Vogt &lt;<a href=
-=3D"mailto:michael.vogt@gmail.com">michael.vogt@gmail.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">Tiny patch to add =
-the ioctl wrapper definition for BLKBSZSET.<br>
-<br>
-Signed-off-by: Michael Vogt &lt;<a href=3D"mailto:mvogt@redhat.com" target=
-=3D"_blank">mvogt@redhat.com</a>&gt;<br>
----<br>
-=C2=A0linux-user/ioctls.h | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h<br>
-index d508d0c04a..3b41128fd7 100644<br>
---- a/linux-user/ioctls.h<br>
-+++ b/linux-user/ioctls.h<br>
-@@ -102,6 +102,7 @@<br>
-=C2=A0 =C2=A0 =C2=A0 IOCTL(BLKRAGET, IOC_R, MK_PTR(TYPE_LONG))<br>
-=C2=A0 =C2=A0 =C2=A0 IOCTL(BLKSSZGET, IOC_R, MK_PTR(TYPE_INT))<br>
-=C2=A0 =C2=A0 =C2=A0 IOCTL(BLKBSZGET, IOC_R, MK_PTR(TYPE_INT))<br>
-+=C2=A0 =C2=A0 =C2=A0IOCTL(BLKBSZSET, IOC_W, MK_PTR(TYPE_INT))<br>
-=C2=A0 =C2=A0 =C2=A0 IOCTL_SPECIAL(BLKPG, IOC_W, do_ioctl_blkpg,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MK_PT=
-R(MK_STRUCT(STRUCT_blkpg_ioctl_arg)))<br>
-<br>
--- <br>
-2.43.0<br>
-<br>
-</blockquote></div>
-
---0000000000004a5bb30619931669--
 
