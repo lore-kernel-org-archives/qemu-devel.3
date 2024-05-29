@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D85C27C44
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A82C27C43
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCKYN-0006XE-GB; Wed, 29 May 2024 10:45:23 -0400
+	id 1sCKZL-0007V1-Fv; Wed, 29 May 2024 10:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCKYK-0006UO-Ln
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:45:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
+ id 1sCKZI-0007QH-R2
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:46:20 -0400
+Received: from galois.linutronix.de ([193.142.43.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCKYI-0003h8-O1
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:45:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716993917;
+ (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
+ id 1sCKZG-0003qZ-LN
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:46:20 -0400
+Date: Wed, 29 May 2024 16:46:09 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020; t=1716993974;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o5Odp+T+mRZtEDIu05Xn/N9Z+srPwdU7O3B+gRAvI3w=;
- b=FbazRL/t1gAulTk2yNyN3u7vh9NtFNE47AisMGBcjbyNRZpIqCEBqLZ5PRdo3dJENlWDAS
- 4rWsm6fh5gJxBkhRyy+u4LvCZb6bpu+Yi9rqKIWW/vjoOscT2eE/dmFx45KHRTLfXh7thF
- 4/ELvzj11NlNdDtMVX2gzmRFdR9o1oY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-iZ-gh1jiPKOCUAieDzLsvg-1; Wed, 29 May 2024 10:45:15 -0400
-X-MC-Unique: iZ-gh1jiPKOCUAieDzLsvg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-35507fa2570so1571241f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:45:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716993914; x=1717598714;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=o5Odp+T+mRZtEDIu05Xn/N9Z+srPwdU7O3B+gRAvI3w=;
- b=X4+bk7BwDEa5PRUHMy1khwOmTZMvgOrCGWaTHxDO7ki2UcFHlctUU1nF1dBuwgT5fA
- hx36UJHFuEVBzXxZ6ApeCYXEs6Hig4md4z5zwnXvqeTl3x1aSHD19ocTcPbDdxszSd9f
- oeYoY8GvcW1+O7XWixeIytr7bUU93la0ATNAypvFjgHmxdLMnr7FUa3sHe5dp0YJrGeI
- IW0pZVfj3z6z+ReyrkHMzD/NbrS3jhz1W22fQ52U5FZmKJ1n8CVM1dbm25kBmzgqd/xx
- QoxR6pW+QOyGp76IfSLOoYnneN3ag1Q85ysUInAue0QsTZAwHcFfXOezYv9gQHlWv99K
- Jwig==
-X-Gm-Message-State: AOJu0Yymrm0PMnlLJdlPAVldOUs0dn1Xh7BN3Nva7J/ltFyX2mxZUXfQ
- eiETxeDRLTIzMcR6+6Jekud2ywc9gYYBXpquxJ1vLf4SSsn3fulVaM5lK61o3AcLp/BgjCK1/82
- hLvzStOzNv5NbY73P9jlA0PNlB3uavpoFx4Nh6GddnxQhv1pCIGQX
-X-Received: by 2002:a5d:58f1:0:b0:34c:65ba:5d43 with SMTP id
- ffacd0b85a97d-3552fde04c5mr11117031f8f.46.1716993914282; 
- Wed, 29 May 2024 07:45:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFoOwNGtlEQNg3OuBKtcBuun/p8SpkjkSdNpZBDnbr99kjfwtZMCR/ZU3n3xpIFQs7D0hVww==
-X-Received: by 2002:a5d:58f1:0:b0:34c:65ba:5d43 with SMTP id
- ffacd0b85a97d-3552fde04c5mr11117011f8f.46.1716993913792; 
- Wed, 29 May 2024 07:45:13 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557a09091csm14931158f8f.50.2024.05.29.07.45.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 07:45:13 -0700 (PDT)
-Date: Wed, 29 May 2024 16:45:12 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 16/23] hw/i386/pc: Remove deprecated pc-i440fx-2.2
- machine
-Message-ID: <20240529164512.72684081@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-17-philmd@linaro.org>
-References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-17-philmd@linaro.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ bh=UdJryuivT7oBQG28J345Baw446DorrrrG8E6W5weLxM=;
+ b=4ccrn2oPs0CR8EOP61g5rrg6ttGt+5KAWbDWDJFdq7rp2G17oI4xoU7OoQchMuGqcQ4xCz
+ z49dj/rAAADq94gWp9zPGCDbHLr7gQd8E95Bz5swUrAPC2tfEYY+DT2VdZKYQro/w0YE78
+ fsd/ndxQz8qaT/4aBq25lJl8mUsXA5X+UOGtUw0ORa8eTbjH39XoayHAAJenwhvOXXzvSq
+ /buVN6GcEgkOhuMT/tIlWW01wIMkt4WgfsCOAeSG/kM3/8Yjp3qwuiaEMYJ3Z4cQ7HsIBg
+ ceblc7dYHTtV4s20WCjXbR24nZvjnmuwRKfA1ICJcIyu4Ma2WYJaDq4xJnT5zQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020e; t=1716993974;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UdJryuivT7oBQG28J345Baw446DorrrrG8E6W5weLxM=;
+ b=sZ6W9ZrzzB9aA9fYRkTQoIWzs1C92n7I2vL/kRMY9+VaSwQYmueVQE0TK3Fqt6jBurYb2s
+ z0KCLyOIbtKAk9BQ==
+From: Nam Cao <namcao@linutronix.de>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] pci-bridge/xio3130_downstream: fix invalid link speed
+ and link width
+Message-ID: <20240529144609.sg5p-ssg@linutronix.de>
+References: <20240529132125.106790-1-namcao@linutronix.de>
+ <fc0338d2-9a4d-4770-8a9c-c9e077415b29@linaro.org>
+ <20240529141657.cGpjgEmN@linutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240529141657.cGpjgEmN@linutronix.de>
+Received-SPF: pass client-ip=193.142.43.55; envelope-from=namcao@linutronix.de;
+ helo=galois.linutronix.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,148 +82,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:32 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+On Wed, May 29, 2024 at 04:17:04PM +0200, Nam Cao wrote:
+> On Wed, May 29, 2024 at 03:50:14PM +0200, Philippe Mathieu-Daudé wrote:
+> > On 29/5/24 15:21, Nam Cao wrote:
+> > > Set link width to x1 and link speed to 2.5 Gb/s as specified by the
+> > > datasheet. Without this, these fields in the link status register read
+> > > zero, which is incorrect.
+> > > 
+> > > This problem appeared since 3d67447fe7c2 ("pcie: Fill PCIESlot link fields
+> > > to support higher speeds and widths"), which allows PCIe slot to set link
+> > > width and link speed. However, if PCIe slot does not explicitly set these
+> > > properties, they will be zero. Before this commit, the width and speed
+> > > default to x1 and 2.5 Gb/s.
+> > > 
+> > > Fixes: 3d67447fe7c2 ("pcie: Fill PCIESlot link fields to support higher speeds and widths")
+> > > Signed-off-by: Nam Cao <namcao@linutronix.de>
+> > > ---
+> > >   hw/pci-bridge/xio3130_downstream.c | 8 ++++++++
+> > >   1 file changed, 8 insertions(+)
+> > > 
+> > > diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+> > > index 38a2361fa2..d949431191 100644
+> > > --- a/hw/pci-bridge/xio3130_downstream.c
+> > > +++ b/hw/pci-bridge/xio3130_downstream.c
+> > > @@ -172,10 +172,18 @@ static void xio3130_downstream_class_init(ObjectClass *klass, void *data)
+> > >       device_class_set_props(dc, xio3130_downstream_props);
+> > >   }
+> > > +static void xio3130_downstream_instance_post_init(Object *obj)
+> > > +{
+> > > +    PCIESlot *s = PCIE_SLOT(obj);
+> > > +    s->speed = QEMU_PCI_EXP_LNK_2_5GT;
+> > > +    s->width = QEMU_PCI_EXP_LNK_X1;
+> > 
+> > - You ignore previous value and overwrite
+> > - You don't warn the user about missing config value
+> 
+> Users cannot set speed/width for this device. At the moment, only PCI root
+> port supports that.
+> 
+> It wouldn't make sense for users to set these properties nonetheless, these
+> properties are fixed according to datasheet.
+> 
+> > Is post_init() the correct way to deal with that? Usually
+> > this is done in realize(), where you can set *errp to
+> > notify the user of invalid values.
+> 
+> I stole this from hw/pci-bridge/cxl_downstream.c and
+> hw/pci-bridge/pcie_root_port.c. So I think it's correct.
 
-> The pc-i440fx-2.2 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Ah wait, now I read those files again, I think those devices do it this way
+because they want to have default values.
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+For this case, I think you are right that realize() is the more suitable
+place because I am not setting the default, I am setting the fixed values.
 
-> ---
->  docs/about/deprecated.rst       |  2 +-
->  docs/about/removed-features.rst |  2 +-
->  include/hw/i386/pc.h            |  3 ---
->  hw/i386/pc.c                    | 23 -----------------------
->  hw/i386/pc_piix.c               | 21 ---------------------
->  5 files changed, 2 insertions(+), 49 deletions(-)
->=20
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 5b4753e5dc..0fa45aba8b 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -228,7 +228,7 @@ deprecated; use the new name ``dtb-randomness`` inste=
-ad. The new name
->  better reflects the way this property affects all random data within
->  the device tree blob, not just the ``kaslr-seed`` node.
-> =20
-> -``pc-i440fx-2.2`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
-4`` up to ``pc-i440fx-2.12`` (since 9.1)
-> +``pc-i440fx-2.3`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
-4`` up to ``pc-i440fx-2.12`` (since 9.1)
->  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''=
-''''''''''''''''''''''''''''''''''''''''
-> =20
->  These old machine types are quite neglected nowadays and thus might have
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-feature=
-s.rst
-> index 9b0e2f11de..5d7bb4354b 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -925,7 +925,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
-> =20
->  This machine has been renamed ``fuloong2e``.
-> =20
-> -``pc-0.10`` up to ``pc-i440fx-2.1`` (removed in 4.0 up to 9.0)
-> +``pc-0.10`` up to ``pc-i440fx-2.2`` (removed in 4.0 up to 9.0)
->  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> =20
->  These machine types were very old and likely could not be used for live
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 1351e73ee0..996495985e 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -279,9 +279,6 @@ extern const size_t pc_compat_2_4_len;
->  extern GlobalProperty pc_compat_2_3[];
->  extern const size_t pc_compat_2_3_len;
-> =20
-> -extern GlobalProperty pc_compat_2_2[];
-> -extern const size_t pc_compat_2_2_len;
-> -
->  #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
->      static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *=
-data) \
->      { \
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index c7d44420a5..ccfcb92605 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -289,29 +289,6 @@ GlobalProperty pc_compat_2_3[] =3D {
->  };
->  const size_t pc_compat_2_3_len =3D G_N_ELEMENTS(pc_compat_2_3);
-> =20
-> -GlobalProperty pc_compat_2_2[] =3D {
-> -    PC_CPU_MODEL_IDS("2.2.0")
-> -    { "kvm64" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "kvm32" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Conroe" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Penryn" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Nehalem" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Westmere" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "SandyBridge" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Haswell" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Broadwell" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Opteron_G1" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Opteron_G2" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Opteron_G3" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Opteron_G4" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Opteron_G5" "-" TYPE_X86_CPU, "vme", "off" },
-> -    { "Haswell" "-" TYPE_X86_CPU, "f16c", "off" },
-> -    { "Haswell" "-" TYPE_X86_CPU, "rdrand", "off" },
-> -    { "Broadwell" "-" TYPE_X86_CPU, "f16c", "off" },
-> -    { "Broadwell" "-" TYPE_X86_CPU, "rdrand", "off" },
-> -};
-> -const size_t pc_compat_2_2_len =3D G_N_ELEMENTS(pc_compat_2_2);
-> -
->  GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
->  {
->      GSIState *s;
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index e0b421dd51..1343fd93e7 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -429,11 +429,6 @@ static void pc_compat_2_3_fn(MachineState *machine)
->      }
->  }
-> =20
-> -static void pc_compat_2_2_fn(MachineState *machine)
-> -{
-> -    pc_compat_2_3_fn(machine);
-> -}
-> -
->  #ifdef CONFIG_ISAPC
->  static void pc_init_isa(MachineState *machine)
->  {
-> @@ -843,22 +838,6 @@ static void pc_i440fx_2_3_machine_options(MachineCla=
-ss *m)
->  DEFINE_I440FX_MACHINE(v2_3, "pc-i440fx-2.3", pc_compat_2_3_fn,
->                        pc_i440fx_2_3_machine_options);
-> =20
-> -static void pc_i440fx_2_2_machine_options(MachineClass *m)
-> -{
-> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
-> -
-> -    pc_i440fx_2_3_machine_options(m);
-> -    m->hw_version =3D "2.2.0";
-> -    m->default_machine_opts =3D "firmware=3Dbios-256k.bin,suppress-vmdes=
-c=3Don";
-> -    compat_props_add(m->compat_props, hw_compat_2_2, hw_compat_2_2_len);
-> -    compat_props_add(m->compat_props, pc_compat_2_2, pc_compat_2_2_len);
-> -    pcmc->rsdp_in_ram =3D false;
-> -    pcmc->resizable_acpi_blob =3D false;
-> -}
-> -
-> -DEFINE_I440FX_MACHINE(v2_2, "pc-i440fx-2.2", pc_compat_2_2_fn,
-> -                      pc_i440fx_2_2_machine_options);
-> -
->  #ifdef CONFIG_ISAPC
->  static void isapc_machine_options(MachineClass *m)
->  {
+I can send a v2 with that change, unless you have other comments?
 
+Best regards,
+Nam
+
+> I am new to QEMU code, so please tell me if you think this is not the best
+> approach.
+> 
+> Best regards,
+> Nam
+> 
 
