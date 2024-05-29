@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF5BC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 May 2024 23:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44EAC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC61a-0007Ez-Pv; Tue, 28 May 2024 19:14:34 -0400
+	id 1sC6p6-0008UY-64; Tue, 28 May 2024 20:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sC61Z-0007Ek-Rx; Tue, 28 May 2024 19:14:33 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sC6p5-0008UH-30; Tue, 28 May 2024 20:05:43 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sC61W-0000eb-Jq; Tue, 28 May 2024 19:14:33 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f47784a2adso10550605ad.1; 
- Tue, 28 May 2024 16:14:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sC6p3-0007Nh-7B; Tue, 28 May 2024 20:05:42 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f32b1b5429so10564665ad.2; 
+ Tue, 28 May 2024 17:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716938069; x=1717542869; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rgDRUApwjHELlJBi3de/ejRg84WPG/VZw+fQVa7YjoY=;
- b=iCwhgm7Ud+WA2bi62+dG70W+VS4JQjqD3QdIbXPJ9UJlG0jX8+XuntAqInRWO+u5/d
- U+3c5kNBvjRHgSvCcLk1wWw8xCrQcCdKJye+eXIC6q7N8WrT34EUYuy1KQ9IhsNyRUx7
- eJ8gWDs6CE006RjOqs2Zgna5dJhrv8kBrGq8jIe3oh/ijLgwq5zzprUYnPqQFRsFeVf4
- 2bQyS+CMvKlXDYF4mCRFZY3ILpwSIDBacKzoCBU7bH3V0iQIbJuIuGKvYftI5+++kSFD
- g+5QAARnyQNVwS0pZNpDSLMrgdkQ7rPgmX4FD8KTPTe/C/yzhTj+WOMR2ods1c8r8RZT
- L3cg==
+ d=gmail.com; s=20230601; t=1716941138; x=1717545938; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vfyQUKByS9pJkQ3di9eRjiDadh18UVkVWkObAg4lTxQ=;
+ b=Y4zzXr03eyTpWgOFpNBCZsW70iLsx0wDS9j9XZFjz5SHQFye5J+CZHS6X4YwlVB/Et
+ 29W4WN5uvg0R0qWDPFVi22h01YJsbLikd1apFvZXqGcKhr0cLKLMRm1a6RlEI1ahxtUx
+ 2iikbRPkh2yPC8TfYKY4UTnOOiQGrjv8s3C+A2JiJ1geSAXVhFD40uialKdKFEhMMrsG
+ A7LYHX0zTwwf+t1uwqrYKPdXh0i7SvpDA5WRLrxMqT1cRTWsEHVJI8d84yPk3LVAuOiB
+ OsVFOFfqFq5/CT5HxHOdNqUjJBGS6mYXTG0aiqyQzqbUcHO4A/BZMsLf6ca5NNdrV9VO
+ dWRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716938069; x=1717542869;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rgDRUApwjHELlJBi3de/ejRg84WPG/VZw+fQVa7YjoY=;
- b=sOLoAlxeUWjuG5ynFhsiTdsgBSp1tLSC38+wZhZChah/4zcCMZtpe5hC4GzeUQ35bU
- bN/weriWF3nhdSv6HCNK8ScwZXy5sQib4E5bPn5MRXmRmR1OXeW2GfhtejuST4OGqfSB
- Qa+nSrp578xzTxNCVh/jeHVnrMNv5xkXc8SzmFkiCkUjymA5+vVNCC8zkXUWaZv7YTcZ
- FxdX8iykXXYd80MW8r1eBYsYJOkyQqPDLjVXN8gxY3G/DE1WgxkjKExVjNmHMyUNdmdP
- fMIW1U/GjNwOM7BPFEG9SFIEjBv0aKyEY4S1ui/zPsszJergl86RUE9AtME2+QORtu+k
- dAww==
+ d=1e100.net; s=20230601; t=1716941138; x=1717545938;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=vfyQUKByS9pJkQ3di9eRjiDadh18UVkVWkObAg4lTxQ=;
+ b=BQVFBlREVgEhrF1JXbIo4C+f3rN+g5YztcQfOjM5C3NtU70D3uSKsqSftv40dte8nk
+ ORs+hp4fyAIUrRlYSPvyyM+joqQX56gSVRDCVfakiaRRYH6YkSaNvKnZx6ZpuLACeypB
+ M72xL6jT3Db5VK+yYGLKUyL64snUqiyNQRjpJxpWFQKlWjXNReMI3MkVylGzZUjDyAUt
+ 9+LMde7FOGszSe/TRIokHUKKGf21iILEhf2t12aUZDq1aPXYE9lpYg8WbSS8mUX67a3c
+ vbINzIWbU3DYmAf+q01HnCfV81byh0/MjyaoPcvwOHlaQaL8Jdv/p/N2SnVSaJUcppci
+ bt3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/I23jKbz7XyV8EV25xL6ehGPkIEBCMKczEAkMjU4eO19FBZDDddvsmCf25guhc2jZVBOCvMW4YtTFCA/SRXIAEg+Ua/ViInoc1o/SGZLFJNLkiDbrkvB4S/p/rg==
-X-Gm-Message-State: AOJu0YziKZauFKYHNzMcFFwJ3e9+nQslvkdT4RdEHvvqPgOEHuiL7YTz
- BakRTsJFaTAeLmStimgaqraGQIPKmRw9msciJ9/4Kg6r1+GRgqnP
-X-Google-Smtp-Source: AGHT+IHIGO+yqYbL5qD1Mas7pqBiI46htZGFVuGmxYKpfuABpYXd1ZXk9he3JzfHwyTOv9lkS64hsQ==
-X-Received: by 2002:a17:902:e5cb:b0:1f4:71c5:c78 with SMTP id
- d9443c01a7336-1f471c50fbfmr94591975ad.39.1716938068799; 
- Tue, 28 May 2024 16:14:28 -0700 (PDT)
-Received: from [192.168.0.22] ([210.223.46.112])
+ AJvYcCWT2cjP6zYaGEJpJS8Szi15Gi/aSdAmNTId7cTZ/QTLzcxt6v9NmsgCjMqH0pG6wq2cSMCN4SQWCjGdWgkV5N+w9+ox
+X-Gm-Message-State: AOJu0YxF9P4HQVVZ1pduxWxEoDdjWl5ts7ReMx0K1C4azUsY8UsvJl2w
+ uPSLLcz2E747SlmqgZzY3DDZ4Z1FHt4A9oPMaz7j6UFZ2CFc6FT+
+X-Google-Smtp-Source: AGHT+IF4fb9doq5P9S5pbmlThP1fbKhbVUX/b/ys32BjD72OobqmZ7tT48Xcep61spPpHNpgtdQ7cA==
+X-Received: by 2002:a17:902:db07:b0:1f4:8ad1:3672 with SMTP id
+ d9443c01a7336-1f48ad13b52mr92527965ad.22.1716941138179; 
+ Tue, 28 May 2024 17:05:38 -0700 (PDT)
+Received: from localhost (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f471f127c2sm66271925ad.13.2024.05.28.16.14.26
+ d9443c01a7336-1f44c9a683asm86746605ad.225.2024.05.28.17.05.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 16:14:28 -0700 (PDT)
-Message-ID: <b6231f60-db8a-4dc0-a5db-b1d608059e6e@gmail.com>
-Date: Wed, 29 May 2024 08:14:24 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/2] hw/ufs: Add support MCQ of UFSHCI 4.0
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
- jeuk20.kim@samsung.com, j-young.choi@samsung.com, minwoo.im@samsung.com
-References: <cover.1716876237.git.jeuk20.kim@samsung.com>
- <71a82d3f0555e65c98df129ce0e38b2aa5681ec0.1716876237.git.jeuk20.kim@samsung.com>
- <19857a64-0f57-4f7c-877e-c4d0e884c4f1@linaro.org>
-Content-Language: ko
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-In-Reply-To: <19857a64-0f57-4f7c-877e-c4d0e884c4f1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x633.google.com
+ Tue, 28 May 2024 17:05:37 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 29 May 2024 10:05:32 +1000
+Message-Id: <D1LOU3F9ZD3Q.3KYRK41PZT98O@gmail.com>
+To: "Peter Xu" <peterx@redhat.com>
+Cc: <qemu-devel@nongnu.org>, "Fabiano Rosas" <farosas@suse.de>, "Thomas
+ Huth" <thuth@redhat.com>, "Laurent Vivier" <lvivier@redhat.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, <qemu-ppc@nongnu.org>
+Subject: Re: [PATCH] tests/qtest/migrate-test: Use regular file file for
+ shared-memory tests
+From: "Nicholas Piggin" <npiggin@gmail.com>
+X-Mailer: aerc 0.17.0
+References: <20240528042758.621589-1-npiggin@gmail.com>
+ <ZlXdmi7PqKJdv3fP@x1n> <ZlYAvIFodnTrQIkX@x1n>
+In-Reply-To: <ZlYAvIFodnTrQIkX@x1n>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,61 +98,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed May 29, 2024 at 2:05 AM AEST, Peter Xu wrote:
+> On Tue, May 28, 2024 at 09:35:22AM -0400, Peter Xu wrote:
+> > On Tue, May 28, 2024 at 02:27:57PM +1000, Nicholas Piggin wrote:
+> > > There is no need to use /dev/shm for file-backed memory devices, and
+> > > it is too small to be usable in gitlab CI. Switch to using a regular
+> > > file in /tmp/ which will usually have more space available.
+> > >=20
+> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > > ---
+> > > Am I missing something? AFAIKS there is not even any point using
+> > > /dev/shm aka tmpfs anyway, there is not much special about it as a
+> > > filesystem. This applies on top of the series just sent, and passes
+> > > gitlab CI qtests including aarch64.
+> >=20
+> > I think it's just that /dev/shm guarantees shmem usage, while the var
+> > "tmpfs" implies g_dir_make_tmp() which may be another non-ram based fil=
+e
+> > system, while that'll be slightly different comparing to what a real us=
+er
+> > would use - we don't suggest user to put guest RAM on things like btrfs=
+.
 
-On 5/29/2024 2:06 AM, Richard Henderson wrote:
-> On 5/27/24 23:12, Jeuk Kim wrote:
->> From: Minwoo Im <minwoo.im@samsung.com>
->>
->> This patch adds support for MCQ defined in UFSHCI 4.0.  This patch
->> utilized the legacy I/O codes as much as possible to support MCQ.
->>
->> MCQ operation & runtime register is placed at 0x1000 offset of UFSHCI
->> register statically with no spare space among four registers (48B):
->>
->>     UfsMcqSqReg, UfsMcqSqIntReg, UfsMcqCqReg, UfsMcqCqIntReg
->>
->> The maxinum number of queue is 32 as per spec, and the default
->> MAC(Multiple Active Commands) are 32 in the device.
->>
->> Example:
->>     -device ufs,serial=foo,id=ufs0,mcq=true,mcq-maxq=8
->>
->> Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
->> Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
->> Message-Id: <20240528023106.856777-3-minwoo.im@samsung.com>
->> Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
->> ---
->>   hw/ufs/trace-events |  17 ++
->>   hw/ufs/ufs.c        | 475 ++++++++++++++++++++++++++++++++++++++++++--
->>   hw/ufs/ufs.h        |  98 ++++++++-
->>   include/block/ufs.h |  23 ++-
->>   4 files changed, 593 insertions(+), 20 deletions(-)
->
-> Fails build:
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/6960270722
->
-> In file included from trace/trace-hw_ufs.c:5:
-> ../hw/ufs/trace-events:28:24: error: format specifies type 'unsigned 
-> char' but the argument has type 'uint32_t' (aka 'unsigned int') 
-> [-Werror,-Wformat]
->                      , cqid, addr);
->                        ^~~~
-> ../hw/ufs/trace-events:25:112: error: format specifies type 'unsigned 
-> char' but the argument has type 'uint32_t' (aka 'unsigned int') 
-> [-Werror,-Wformat]
->             qemu_log("ufs_err_dma_write_cq " "failed to write cq 
-> entry. cqid %"PRIu8", hwaddr %"PRIu64"" "\n", cqid, addr);
-> ~~~~~~~                      ^~~~
-> 2 errors generated.
->
->
->
-> r~
+Right, these days I think /tmp usually is not tmpfs but just a regular
+filesystem. For these tests that's okay though. And it gets us working
+with gitlab CI. The ignore-shared test works and is verified to skip the
+copy (according to counters and some tracing I did) so I think it's a
+good step.
 
+> >=20
+> > One real implication is if we add a postcopy test it'll fail with
+> > g_dir_make_tmp() when it is not pointing to a shmem mount, as
+> > UFFDIO_REGISTER will fail there.  But that test doesn't yet exist as th=
+e
+> > QEMU paths should be the same even if Linux will trigger different path=
+s
+> > when different types of mem is used (anonymous v.s. shmem).
 
-Sorry about that.
+Ah okay userfault. I guess that would require real tmpfs. We could just
+add a new option to the harness for require_uffd when it comes up?
 
-I'll fix it and send it back to you.
+> > If the goal here is to properly handle the case where tmpfs doesn't hav=
+e
+> > enough space, how about what I suggested in the other email?
+> >=20
+> > https://lore.kernel.org/r/ZlSppKDE6wzjCF--@x1n
+> >=20
+> > IOW, try populate the shmem region before starting the guest, skip if
+> > population failed.  Would that work?
 
+I think that's good if you _need_ shm (e.g., for a uffd test), but
+we should permit tests that only require a memory file.
+
+Thanks,
+Nick
 
