@@ -4,89 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A57C27C44
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B34C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCLYC-0003M8-FS; Wed, 29 May 2024 11:49:18 -0400
+	id 1sCLbF-0004st-GV; Wed, 29 May 2024 11:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCLY4-0003Kk-UU
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:49:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCLY1-0007lM-WF
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:49:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716997744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qIq4sT9qoD04V3my5vqGCekTfJw8GrcOvSo7H00yX/E=;
- b=EoFoyXGfHvNIXVItFrS5upg6m4Y0uzvRo0Zx3dwqptnUhVl2dMlsbO1WNI/MuxMw0QKxtF
- e0+3Kq8wh6K7yHYkiPNc5q/lPXd3uPChvm78pH9n/arVKevhI1K3benDR8fHHBUuPr4LOe
- 54A4BhT/zIrWx3LyHHvmMsq/jRki39k=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-266--OrCsc5zMZ6q-pA5waIRlg-1; Wed, 29 May 2024 11:49:02 -0400
-X-MC-Unique: -OrCsc5zMZ6q-pA5waIRlg-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-5b3332ae946so641904eaf.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:49:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLbC-0004rf-Vu
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:52:23 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLbB-0000Kj-5Z
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:52:22 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-35507a3a038so1426431f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716997938; x=1717602738; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GQkwYYE8hIz6lkjcirvUNJ8jsRUmv18Y8rHqkzlLzrE=;
+ b=v6YYKOEdu7F4Zm0I4Q9DOe2N+zeaBYRh40BnwQvL3OQBvRJ7qIN3lz070L5rXl4kaH
+ ma2VZ+tIAnMxsyg0nDgaAknPxowXV9PPBdDUeo7SSXhYg3Lz/oEUsey3RPT1whjj783L
+ Aq3heYPP4GBeMp+4okCK7xyflWuJ7OtwXMvGBobJxd4azEy8Z0AIkqqrCMkCtc4M6ooC
+ 9Vwy3peJodcD+CId5Wg6sqXaRCL5r5p+cNb/wbb0r8cErfnTUIU83deQriKQt/zf1G+a
+ +Dub2IJ0jlWTtoILk5RTckQzYUmf2W9OX8OoJKnq2dKPOGTT8KRsGZR0Rlfy/zW3VilD
+ Rh5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716997742; x=1717602542;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qIq4sT9qoD04V3my5vqGCekTfJw8GrcOvSo7H00yX/E=;
- b=MBjQEePjvFAMCR5eJVqo6lzdk4cgaIbU5m7+bliZf97mfKnI8niQ7Lp3VWVM4eu5hw
- E18U9zDME0F/5gVns07XCczC4oLfvSTCz1OLYuMnc65BV+UvreFikeR12OzGfRCuuM2F
- YDueqNOuO+rBMzZpI4zA0OseqMOLL2ynZua4IHQP51QUO6Shw2gw3NiUpvQYhtrRoeaT
- o7lDPdm9KaE5JTpz+HCugiU2bn9QNm5GOALah/CkKjlec6pMtnRsNGViFZimI+xrhZf7
- vHN2nn7jmWO/z3isqpz7Cz0MGhct57sXDxZD+IUSBHffNc4P2bjbHh3F4mVmTkpXwG4a
- 4vrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4IN9va6oT1ZBwXe3IF4pBT2S9ec2bFkjXJjYfVYhdYUTLgII7XSGYey+Mr0/p9S7N+RntZF60eQsJoGbhNVtjA+epLT8=
-X-Gm-Message-State: AOJu0YxF3rz/Tgs90pYCRN7H3Qk0bjk5ZnCCYPohd6P9yoZRj8mFuOiw
- eSXYlIBRcktDyP2PNp9NZFi4YHTMM2RSwwmGLKpsH1MHzyFyXFl5tc+qUqsYCQj/vU8aULVJ7xu
- AeN/rLq0jrs13iW9YIB/f0SERnlxe6FQPATzlappwXJGCI9kLaPb4
-X-Received: by 2002:a4a:ba86:0:b0:5b2:8017:fb68 with SMTP id
- 006d021491bc7-5b95cde3ec5mr17116967eaf.0.1716997741803; 
- Wed, 29 May 2024 08:49:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2c2zCmehW+44rAlMjMRbTVxIEmKuelLZ5JcfjXZCMhjQjjn6G1zKvKHxWjO19QcLImYRBHA==
-X-Received: by 2002:a4a:ba86:0:b0:5b2:8017:fb68 with SMTP id
- 006d021491bc7-5b95cde3ec5mr17116935eaf.0.1716997741100; 
- Wed, 29 May 2024 08:49:01 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43fb18327f6sm55170661cf.58.2024.05.29.08.49.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 08:49:00 -0700 (PDT)
-Date: Wed, 29 May 2024 11:48:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests/qtest/migrate-test: Add a postcopy memfile test
-Message-ID: <ZldOal1YdAWLB5pj@x1n>
-References: <20240529041322.701525-1-npiggin@gmail.com>
- <875xuwg4mx.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1716997938; x=1717602738;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GQkwYYE8hIz6lkjcirvUNJ8jsRUmv18Y8rHqkzlLzrE=;
+ b=JItxuTkvfCdWPIDlmW91KEqRdQpBBSCAGmViAa4GPOCJulYKKL6IBgWTtxZ/IAXwlX
+ axu27YcwV+A2OeSMIUOWLeIyAL+5NsfBe2mxCXqZJz2yeY39PFH7uKrTtKpylXnQd8kk
+ 7pUFdSe/Pe/Ew99QAgaN9fdmnzERJJwYfKJAp0vOJc0T0bq+lQM19Gk0GYi/fLeZPRV6
+ 2LDo5zxOujMT5fzLAKsh71dJ2g1LJ4PqdevZcDyfCVJmBt1zWf49VIMzFyxifqrp7LtN
+ xMaPW6o98y1Cgk60R3R8MRZhiKgzLKuLWiFnLmkIcZ3ShqOIo3OrwdL+0zag+JNsyByC
+ GinA==
+X-Gm-Message-State: AOJu0Yya4qpZg3BQH9cJxw5/oIIppN0TyUzsBfEhvyk9grGAy3zmbafq
+ d1Np75lWjkq5PPjkHIZLr7+zYTdzqN63c9CqzvinhW52sNd1Lg+Wev8ozOTxZlte0N94aF8As3U
+ a
+X-Google-Smtp-Source: AGHT+IH5yYE8c9UD7FnNki8S0vbViOdEkDdJ9cttpImwaByzcQTCQ5vv1apWe84YZ8ncq9W2cJZV8g==
+X-Received: by 2002:adf:ea90:0:b0:354:faec:c9e4 with SMTP id
+ ffacd0b85a97d-3552fdef9c0mr15572717f8f.60.1716997938659; 
+ Wed, 29 May 2024 08:52:18 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35c19618fa3sm3502563f8f.52.2024.05.29.08.52.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 29 May 2024 08:52:18 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH] target/mips: Remove unused 'hw/misc/mips_itu.h' header
+Date: Wed, 29 May 2024 17:52:16 +0200
+Message-ID: <20240529155216.5574-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <875xuwg4mx.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,68 +93,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 09:54:30AM -0300, Fabiano Rosas wrote:
-> Nicholas Piggin <npiggin@gmail.com> writes:
-> 
-> > Postcopy requires userfaultfd support, which requires tmpfs if a memory
-> > file is used.
-> >
-> > This adds back support for /dev/shm memory files, but adds preallocation
-> > to skip environments where that mount is limited in size.
-> >
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >
-> > How about this? This goes on top of the reset of the patches
-> > (I'll re-send them all as a series if we can get to some agreement).
-> >
-> > This adds back the /dev/shm option with preallocation and adds a test
-> > case that requires tmpfs.
-> 
-> Peter has stronger opinions on this than I do. I'll leave it to him to
-> decide.
+Since commit e1152f8166 ("target/mips: Remove helpers accessing
+SAAR registers") this header is not needed.
 
-Sorry if I gave that feeling; it's more of a stronger willingness to at
-some point enable shmem for QEMU migration, rather than wanting to push
-back what Nicholas was trying to do.  Enabling more arch for migration
-tests is definitely worthwhile on its own.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/tcg/sysemu/cp0_helper.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Shmem is just some blank spot that IMHO we should start to think about
-better coverarge. E.g. it is the only sane way to boot the VM that is able
-to do fast qemu upgrades using ignore-shared, that was true even before
-Steve's cpr-exec work, which would be much easier than anonymous. And it's
-also possible shmem can be (in the next 3-5 years) the 1G page provider to
-replace hugetlb for postcopy's sake - this one is far beyond our current
-discussion so I won't extend..
-
-IMHO shmem should just be a major backend just like anonymous, and the only
-possible file backend we can test in CI - as hugetlb is harder to manage
-there.
-
-> 
-> Just note that now we're making the CI less deterministic in relation to
-> the migration tests. When a test that uses shmem fails, we'll not be
-> able to consistently reproduce because the test might not even run
-> depending on what has consumed the shmem first.
-> 
-> Let's also take care that the other consumers of shmem (I think just
-> ivshmem-test) are able to cope with the migration-test taking all the
-> space, otherwise the CI will still break.
-
-Looks like ivshmem-test only uses 1MB shmem constantly so probably that
-will succeed if the migration test will, but true they face the same
-challenge and they interfere with each other..  that test sidently pass
-(instead of skip) if mktempshm() fails.  I guess we don't have a way to
-solidly test shmem as shmem simply may not be around.
-
-For this patch alone personally I'd avoid using "use_uffd_memfile" as the
-name, as that's definitely confusing, since shmem can be tested in other
-setups too without uffd.  Nicolas, please feel free to move ahead with your
-arch enablement series with /tmp if you want to separate the shmem issue.
-
-Thanks,
-
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index ded6c78e9a..79a5c833ce 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -28,7 +28,6 @@
+ #include "qemu/host-utils.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
+-#include "hw/misc/mips_itu.h"
+ 
+ 
+ /* SMP helpers.  */
 -- 
-Peter Xu
+2.41.0
 
 
