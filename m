@@ -4,47 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1331C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED348C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCGsq-0002NN-J6; Wed, 29 May 2024 06:50:16 -0400
+	id 1sCGxu-0004lR-MF; Wed, 29 May 2024 06:55:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sCGsp-0002N5-2s; Wed, 29 May 2024 06:50:15 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxs-0004jH-Hr
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sCGsm-0001vr-Sm; Wed, 29 May 2024 06:50:14 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7E986443A7;
- Wed, 29 May 2024 12:50:09 +0200 (CEST)
-Message-ID: <94b38346-7ad7-4fa4-b7e8-3ba00cc72f16@proxmox.com>
-Date: Wed, 29 May 2024 12:50:08 +0200
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxq-0003II-PK
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716980126;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nkKDc76J51Qy7WIb1m+w4mnGxgDf9WFrHs7jMDtsBg8=;
+ b=FKa7J5ImAFYBz21l8SmAQ6mJGjwo8sZrb6DvsvmpUTGRmCK5CJd1nhBpig/N/DY2UaHBsm
+ 3YOh10Ps2qyDWfjfPu5AOAwbR/6Y2SsCBPxKnKqMjd9sS4LZjv5M8XQSsClk7KOHhX/9+G
+ HwEzxKRpUWTu8sOuCPRwxkgXM0Zipo4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-230-k8HMvFfmPwepiMvVr3FH8g-1; Wed, 29 May 2024 06:55:22 -0400
+X-MC-Unique: k8HMvFfmPwepiMvVr3FH8g-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6097781227E;
+ Wed, 29 May 2024 10:55:22 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.109])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4E71E105480A;
+ Wed, 29 May 2024 10:55:20 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-s390x@nongnu.org
+Subject: [PULL 13/22] target/s390x: Adjust check of noreturn in translate_one
+Date: Wed, 29 May 2024 12:54:45 +0200
+Message-ID: <20240529105454.1149225-14-thuth@redhat.com>
+In-Reply-To: <20240529105454.1149225-1-thuth@redhat.com>
+References: <20240529105454.1149225-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 6/9] virtio-gpu: fix v2 migration
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable@nongnu.org
-References: <20240522222034.4001-1-farosas@suse.de>
- <20240522222034.4001-7-farosas@suse.de>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20240522222034.4001-7-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,110 +80,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CC-ing stable, because this already is an issue in 9.0.0
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Am 23.05.24 um 00:20 schrieb Fabiano Rosas:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Commit dfcf74fa ("virtio-gpu: fix scanout migration post-load") broke
-> forward/backward version migration. Versioning of nested VMSD structures
-> is not straightforward, as the wire format doesn't have nested
-> structures versions. Introduce x-scanout-vmstate-version and a field
-> test to save/load appropriately according to the machine version.
-> 
-> Fixes: dfcf74fa ("virtio-gpu: fix scanout migration post-load")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-> [fixed long lines]
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  hw/core/machine.c              |  1 +
->  hw/display/virtio-gpu.c        | 30 ++++++++++++++++++++++--------
->  include/hw/virtio/virtio-gpu.h |  1 +
->  3 files changed, 24 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index c7ceb11501..8d6dc69f0e 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -42,6 +42,7 @@ GlobalProperty hw_compat_8_2[] = {
->      { "migration", "zero-page-detection", "legacy"},
->      { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
->      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-> +    { "virtio-gpu-device", "x-scanout-vmstate-version", "1" },
->  };
->  const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
->  
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index ae831b6b3e..d60b1b2973 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1166,10 +1166,17 @@ static void virtio_gpu_cursor_bh(void *opaque)
->      virtio_gpu_handle_cursor(&g->parent_obj.parent_obj, g->cursor_vq);
->  }
->  
-> +static bool scanout_vmstate_after_v2(void *opaque, int version)
-> +{
-> +    struct VirtIOGPUBase *base = container_of(opaque, VirtIOGPUBase, scanout);
-> +    struct VirtIOGPU *gpu = container_of(base, VirtIOGPU, parent_obj);
-> +
-> +    return gpu->scanout_vmstate_version >= 2;
-> +}
-> +
->  static const VMStateDescription vmstate_virtio_gpu_scanout = {
->      .name = "virtio-gpu-one-scanout",
-> -    .version_id = 2,
-> -    .minimum_version_id = 1,
-> +    .version_id = 1,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINT32(resource_id, struct virtio_gpu_scanout),
->          VMSTATE_UINT32(width, struct virtio_gpu_scanout),
-> @@ -1181,12 +1188,18 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
->          VMSTATE_UINT32(cursor.hot_y, struct virtio_gpu_scanout),
->          VMSTATE_UINT32(cursor.pos.x, struct virtio_gpu_scanout),
->          VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
-> -        VMSTATE_UINT32_V(fb.format, struct virtio_gpu_scanout, 2),
-> -        VMSTATE_UINT32_V(fb.bytes_pp, struct virtio_gpu_scanout, 2),
-> -        VMSTATE_UINT32_V(fb.width, struct virtio_gpu_scanout, 2),
-> -        VMSTATE_UINT32_V(fb.height, struct virtio_gpu_scanout, 2),
-> -        VMSTATE_UINT32_V(fb.stride, struct virtio_gpu_scanout, 2),
-> -        VMSTATE_UINT32_V(fb.offset, struct virtio_gpu_scanout, 2),
-> +        VMSTATE_UINT32_TEST(fb.format, struct virtio_gpu_scanout,
-> +                            scanout_vmstate_after_v2),
-> +        VMSTATE_UINT32_TEST(fb.bytes_pp, struct virtio_gpu_scanout,
-> +                            scanout_vmstate_after_v2),
-> +        VMSTATE_UINT32_TEST(fb.width, struct virtio_gpu_scanout,
-> +                            scanout_vmstate_after_v2),
-> +        VMSTATE_UINT32_TEST(fb.height, struct virtio_gpu_scanout,
-> +                            scanout_vmstate_after_v2),
-> +        VMSTATE_UINT32_TEST(fb.stride, struct virtio_gpu_scanout,
-> +                            scanout_vmstate_after_v2),
-> +        VMSTATE_UINT32_TEST(fb.offset, struct virtio_gpu_scanout,
-> +                            scanout_vmstate_after_v2),
->          VMSTATE_END_OF_LIST()
->      },
->  };
-> @@ -1659,6 +1672,7 @@ static Property virtio_gpu_properties[] = {
->      DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
->                      VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
->      DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
-> +    DEFINE_PROP_UINT8("x-scanout-vmstate-version", VirtIOGPU, scanout_vmstate_version, 2),
->      DEFINE_PROP_END_OF_LIST(),
->  };
->  
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-> index 56d6e821bf..7a59379f5a 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -177,6 +177,7 @@ typedef struct VGPUDMABuf {
->  struct VirtIOGPU {
->      VirtIOGPUBase parent_obj;
->  
-> +    uint8_t scanout_vmstate_version;
->      uint64_t conf_max_hostmem;
->  
->      VirtQueue *ctrl_vq;
+If help_op is not set, ret == DISAS_NEXT.
+Shift the test up from surrounding help_wout, help_cout
+to skipping to out, as we do elsewhere in the function.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240502054417.234340-14-richard.henderson@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ target/s390x/tcg/translate.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index c9a5a1687e..c81e035dea 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -6341,15 +6341,16 @@ static DisasJumpType translate_one(CPUS390XState *env, DisasContext *s)
+     }
+     if (insn->help_op) {
+         ret = insn->help_op(s, &o);
+-    }
+-    if (ret != DISAS_NORETURN) {
+-        if (insn->help_wout) {
+-            insn->help_wout(s, &o);
+-        }
+-        if (insn->help_cout) {
+-            insn->help_cout(s, &o);
++        if (ret == DISAS_NORETURN) {
++            goto out;
+         }
+     }
++    if (insn->help_wout) {
++        insn->help_wout(s, &o);
++    }
++    if (insn->help_cout) {
++        insn->help_cout(s, &o);
++    }
+ 
+     /* io should be the last instruction in tb when icount is enabled */
+     if (unlikely(icount && ret == DISAS_NEXT)) {
+-- 
+2.45.1
 
 
