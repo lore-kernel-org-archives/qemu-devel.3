@@ -4,94 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7015C25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA102C25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM1n-0007CE-Gg; Wed, 29 May 2024 12:19:51 -0400
+	id 1sCM5X-0000C4-TX; Wed, 29 May 2024 12:23:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sCM1m-0007C1-Qj
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:19:50 -0400
-Received: from wfout6-smtp.messagingengine.com ([64.147.123.149])
+ (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
+ id 1sCM5S-0000Al-5f
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:23:38 -0400
+Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sCM1W-0005EF-Pd
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:19:50 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfout.west.internal (Postfix) with ESMTP id 3C2211C0012B;
- Wed, 29 May 2024 12:19:28 -0400 (EDT)
-Received: from imap44 ([10.202.2.94])
- by compute3.internal (MEProxy); Wed, 29 May 2024 12:19:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1716999567;
- x=1717085967; bh=KkM33jHfzKesOcTu8BJUyBoVikj1zMh49WvGhby1YwQ=; b=
- xInFYeqnG5QUnRPNVuFPziOScQQ7CoGMsA6NxXuU+GcMVvM4pdCV9uMPY+GnMVaH
- ZsgNvtlJE2I7hRCqs4a/MIlLlObjYORicmzM6qmgeTXflyKu0kwUnQmKgLd+x6uO
- 7sjfLylQvOr0SGfb03W+YseYO+wS/s0g9vDyeU5azL00rV3oufWGuAgjPB+jsswB
- zuqXVuI7JdwQO9eobk/iUoDx/B3ukz0fZf8MrUfW4HaMxbVKzv/Hl9m/XwUVB8RZ
- xmLFGXlvrN7GHE/Fj1P69uSeWc1cKSC5H6wnwLqiB4oHQmRhbeZRHOZND3NJJa9K
- AjGGLbM5fRLEJ8IH2o2vjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1716999567; x=
- 1717085967; bh=KkM33jHfzKesOcTu8BJUyBoVikj1zMh49WvGhby1YwQ=; b=k
- nMLXpcKufSr79/D8fvNV6i+UNbG0/mhniblGbEgtaLPDlBAyUcKCaWpJ5E3Gmzb+
- Q7ZX5vz14eu6DMnEPN3q1tiqSFSXP4Ia4pWedM6M3TqCIiqd/t/GENvXeZSQOSpL
- dx+/yiQ8LMVxWUCLTmkHCX5E2p0FPRV5qGAVbIKGmUMsGEYTDWMGoGtoq4VPag0K
- Y4a/K6l/SAzP4Ny4u6/VvzqYo/wCkUVCBMeUle7QFAn3Mq0KWDt63RzINkAvlNhP
- I4EyRHgPKIx+/FwK070l8JJIM7EoXWPjK9h/2MsBFwcT1+k46C+MiX8N8u3Wwtms
- p0k2K9nDCWPRdBFSp/pwg==
-X-ME-Sender: <xms:j1VXZoYEmoG5_Z3qc7CzpfC0TAyWjtMLWDHIwhGetANWac-nvZP0MQ>
- <xme:j1VXZjZtIjYC6Rm_269S_b605YUYTiOySeC1tR1caIdil6vqa6PEAFVGHMpgy3jWu
- g6_HiEvFWNe0Q_2Cag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekuddgleekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
- ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
- hmqeenucggtffrrghtthgvrhhnpedufeegfeetudeghefftdehfefgveffleefgfehhfej
- ueegveethfduuddvieehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:j1VXZi9c73NHTPuRD-pRT0V4q6olbHbFU-OF9XRzSrhFQV6mxPSdwA>
- <xmx:j1VXZirm82sf1KEDzc5HcX1KDFcrxM83qZsSZRq0OhEJzpRSebGRpA>
- <xmx:j1VXZjqAnu4xBGBd86YKUFZ8H66Z7Y0LH8p5r0qQnqDxB-rPoMkhmw>
- <xmx:j1VXZgRRDwOpUQharfcWHBZFO1ek7VKrwvAcYpTCEY32rQPdiCHq5w>
- <xmx:j1VXZiVTh_-wm5qRz0qUHgVqYZrdocOe5Q1gZkcPNP58k0yTXpgAWwVM>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 7072436A0074; Wed, 29 May 2024 12:19:27 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-491-g033e30d24-fm-20240520.001-g033e30d2
+ (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
+ id 1sCM5K-0005xM-2v
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:23:37 -0400
+Received: from movement by movementarian.org with local (Exim 4.95)
+ (envelope-from <movement@movementarian.org>) id 1sCM5C-006CAe-9t;
+ Wed, 29 May 2024 17:23:22 +0100
+From: John Levon <levon@movementarian.org>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
+ thanos.makatos@nutanix.com
+Subject: [RFC v6 00/26] vfio-user client
+Date: Wed, 29 May 2024 17:22:53 +0100
+Message-Id: <20240529162319.1476680-1-levon@movementarian.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Message-Id: <c547af8d-2abd-46bd-9a8d-b36fb0061619@app.fastmail.com>
-In-Reply-To: <20240529155216.5574-1-philmd@linaro.org>
-References: <20240529155216.5574-1-philmd@linaro.org>
-Date: Wed, 29 May 2024 17:19:07 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Aleksandar Rikalo" <arikalo@gmail.com>,
- "Aurelien Jarno" <aurelien@aurel32.net>
-Subject: Re: [PATCH] target/mips: Remove unused 'hw/misc/mips_itu.h' header
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=64.147.123.149;
- envelope-from=jiaxun.yang@flygoat.com; helo=wfout6-smtp.messagingengine.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_LOW=-0.7, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=139.162.205.133;
+ envelope-from=movement@movementarian.org; helo=movementarian.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,37 +55,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello,
+
+This is the 6th revision of the vfio-user client implementation.
+
+First of all, thank you for your time reviewing the previous versions.
+
+The vfio-user framework consists of 3 parts:
+ 1) The VFIO user protocol specification.
+ 2) A client - the VFIO device in QEMU that encapsulates VFIO messages
+    and sends them to the server.
+ 3) A server - a remote process that emulates a device.
+
+This patchset implements parts 1 and 2.
+
+It has been lightly tested against libvfio-user test servers as well as SPDK.
+
+Contributors:
+
+John G Johnson <john.g.johnson@oracle.com>
+John Levon <john.levon@nutanix.com>
+Thanos Makatos <thanos.makatos@nutanix.com>
+Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Jagannathan Raman <jag.raman@oracle.com>
+
+Changes from v5->v6:
+
+ - various generic changes split out from vfio-user specific patches
+ - full refactoring of vfio-user PCI implementation on top of new
+   VFIOUserContainer
+ - lots of minor code improvements
+
+Changes from v4->v5:
+
+  vfio-user: introduce vfio-user protocol specification
+    Removed VFIO v1 migration support - it will be added back when v2 goes upstream
+    Fixed typos
+
+  vfio-user: add VFIO base abstract class
+  vfio-user: add container IO ops vector
+    No v5 specific changes
+
+  vfio-user: add region cache
+    Deleted spurious g_free() calls
+
+  vfio-user: add device IO ops vector
+  vfio-user: Define type vfio_user_pci_dev_info
+  vfio-user: connect vfio proxy to remote server
+    No v5 specific changes
+
+  vfio-user: define socket receive functions
+    Handle partial reads of server messages
+
+  vfio-user: define socket send functions
+    No v5 specific changes
+
+  vfio-user: get device info
+    Return an error if the device reply has an inordinate number of regions or IRQs
+
+  vfio-user: get region info
+  vfio-user: region read/write
+  vfio-user: pci_user_realize PCI setup
+  vfio-user: get and set IRQs
+  vfio-user: proxy container connect/disconnect
+  vfio-user: dma map/unmap operations
+  vfio-user: secure DMA support
+  vfio-user: dma read/write operations
+  vfio-user: pci reset
+    No v5 specific changes
+
+Added to v5:
+
+  vfio-user: forward msix BAR accesses to server
+  vfio-user: add 'x-msg-timeout' option that specifies msg wait times
+  vfio-user: add tracing to send/recv paths
+  vfio-user: add dirty_bitmap stub until it support migration
+
+Removed from v5:
+
+  vfio-user: migration support
+  Only set qemu file error if saving state if the file exists
 
 
-=E5=9C=A82024=E5=B9=B45=E6=9C=8829=E6=97=A5=E4=BA=94=E6=9C=88 =E4=B8=8B=E5=
-=8D=884:52=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
-> Since commit e1152f8166 ("target/mips: Remove helpers accessing
-> SAAR registers") this header is not needed.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Changes from v3->v4:
 
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+ vfio-user: introduce vfio-user protocol specification
+   No v4 specific changess
 
-> ---
->  target/mips/tcg/sysemu/cp0_helper.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/target/mips/tcg/sysemu/cp0_helper.c=20
-> b/target/mips/tcg/sysemu/cp0_helper.c
-> index ded6c78e9a..79a5c833ce 100644
-> --- a/target/mips/tcg/sysemu/cp0_helper.c
-> +++ b/target/mips/tcg/sysemu/cp0_helper.c
-> @@ -28,7 +28,6 @@
->  #include "qemu/host-utils.h"
->  #include "exec/helper-proto.h"
->  #include "exec/exec-all.h"
-> -#include "hw/misc/mips_itu.h"
->=20
->=20
->  /* SMP helpers.  */
-> --=20
-> 2.41.0
+ vfio-user: add VFIO base abstract class
+   Put all properties except those specific to the ioctl() implementation in the base class 
 
---=20
-- Jiaxun
+ vfio-user: add container IO ops vector
+   Move will_commit support to dma map/unmap patch below
+   Use ternary return expression in IO ops vectors
+
+ vfio-user: add region cache
+   New patch with only region cache support
+   Make vfio_get_region_info return region reference instead of a copy
+
+ vfio-user: add device IO ops vector
+   Move posted write support to region read/write patch below
+   Move FD receiving code to get region info patch below
+   Add VDEV_CONFIG_READ/WRITE macros to pci.c for convenient access to PCI config space
+   Use ternary return expression in IO ops vectors
+
+ vfio-user: Define type vfio_user_pci_dev_info
+   Move secure DMA support to separate patch below
+   Remove dummy function for vfio_hot_reset_multi ops vector
+   Add vfio_user_instance_finalize code from connect proxy patch below
+
+ vfio-user: connect vfio proxy to remote server
+   Move vfio_user_instance_finalize code to define type patch above
+
+ vfio-user: define socket receive functions
+   Handle kernel splitting message from server into multiple read()s
+   Fix incoming message queue handling in vfio_user_request()
+   Move secure DMA support to separate patch below
+   Move MAX_FDS and MAX_XFER defines to socket send patch below
+
+ vfio-user: define socket send functions
+   Free pending messages when the reply times out
+   Add MAX_FDS and MAX_XFER defines from socket recv patch above
+   Don't set error twice on a capabilities parsing error
+
+ vfio-user: get device info
+   Add vfio_get_all_regions() call
+   Validate device info return values from server
+
+ vfio-user: get region info
+   Add FD receiving code from device IO ops patch above
+   Add a generic FD to VFIORegion for mapping device regions
+   Validate region info return values from server
+
+ vfio-user: region read/write
+   Add posted write support from device IO ops patch above
+   Check region read/write count against max_xfer
+
+ vfio-user: pci_user_realize PCI setup
+    Refactor realize functions to use common setup functions
+
+ vfio-user: get and set IRQs
+   Validate irq return values from server
+
+ vfio-user: proxy container connect/disconnect
+   No v4 specific changes
+
+ vfio-user: dma map/unmap operations
+   Add wlll_commit support from container IO ops patch above
+   Rename will_commit to async_ops to describe its operation better
+   Pass memory region to dma_map op so only vfio-user needs to look up FD
+   Free pending messages when the reply times out
+   Move secure DMA support to separate patch below
+   Set argz in dma_unmap message according to spec
+
+ vfio-user: secure DMA support
+   New patch consolidating all secure DMA support
+
+ vfio-user: dma read/write operations
+ vfio-user: pci reset
+   No v4 specific changes
+
+ vfio-user: migration support
+   Move qemu file errors fix to its own patch below
+   Set argz in get_dirty_bitmap message according to spec
+
+ Only set qemu file error if saving state if the file exists
+   New patch with just this fix found during vfio-user development
+
+Removed from v4:
+
+ Add validation ops vector
+   Generic checking moved to the corresponding vfio-user function
+
+
+Changes from v2->v3:
+
+  vfio-user: introduce vfio-user protocol specification
+    Spec specifies host endiannes instead of always LE
+    Fixed grammar error
+
+  vfio-user: add VFIO base abstract class
+    Moved common vfio pci cli options to base class
+
+  Add container IO ops vector
+    Added ops vectors to decide to use ioctl() or socket implementation
+
+  Add device IO ops vector
+    Added ops vectors to decide to use ioctl() or socket implementation
+
+  Add validation ops vector
+    Added validation vector to check user replies
+
+  vfio-user: Define type vfio_user_pci_dev_info
+    Added separate VFIO_USER_PCI config element to control whether vfio-user is compiled
+    Fix scalar spelling
+
+  vfio-user: connect vfio proxy to remote server
+    Made socket IO non-blocking
+    Use g_strdup_printf to save socket name
+
+  vfio-user: define socket receive functions
+    Made socket IO non-blocking
+    Process inbound commands in main loop thread to avoid BQL interactions with recv
+    Added comment describing inbound command callback usage
+    Use true/false instead of 1/0 for booleans
+
+  vfio-user: define socket send functions
+    Made socket IO non-blocking
+    Added version string NULL termination check
+
+  vfio-user: get device info
+    Added ops vectors to decide to use ioctl() or socket implementation
+    Added validation vector to check user replies
+
+  vfio-user: get region info
+    Added ops vectors to decide to use ioctl() or socket implementation
+    Added validation vector to check user replies
+    Remove merge bug that filled region cache twice
+
+  vfio-user: region read/write
+    Added ops vectors to decide to use ioctl() or socket implementation
+    Added validation vector to check user replies
+    Made posted write conditional on region not mapped
+
+  vfio-user: pci_user_realize PCI setup
+    Moved common vfio pci cli options to base class
+
+  vfio-user: get and set IRQs
+    Added ops vectors to decide to use ioctl() or socket implementation
+    Added validation vector to check user replies
+    Fixed %m usage when not using syscall
+
+  vfio-user: proxy container connect/disconnect
+    Added separate VFIO_USER_PCI config element to control whether vfio-user is compiled
+    Use true/false instead of 1/0 for booleans
+
+  vfio-user: dma map/unmap operations
+    Added ops vectors to decide to use ioctl() or socket implementation
+    Use BQL instead of iolock in comments
+    Fixed %m usage when not using syscall
+
+  vfio-user: dma read/write operations
+    Added header checking before loading DMA message content
+    Added error handling if DMA fails
+
+  vfio-user: pci reset
+    no r3-specific changes
+
+  vfio-user: migration support
+    generic fix: only set qemu file error if there is a file
+
 
