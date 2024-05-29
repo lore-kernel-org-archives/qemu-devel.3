@@ -4,121 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A6C5C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD6FC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCDPr-0008Er-TQ; Wed, 29 May 2024 03:08:09 -0400
+	id 1sCDSU-0000jb-FL; Wed, 29 May 2024 03:10:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCDPl-0008ES-4p
- for qemu-devel@nongnu.org; Wed, 29 May 2024 03:08:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDSS-0000j8-VZ
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 03:10:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCDPb-0003kj-R9
- for qemu-devel@nongnu.org; Wed, 29 May 2024 03:07:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDSN-00047Z-Hl
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 03:10:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716966470;
+ s=mimecast20190719; t=1716966641;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XBqjefz8LaYrHiYPXOrPEzPq73XyjiyDYdu+8QLT3H4=;
- b=MJG6hB48YvkT68oCMuJipOVL0q6eAi+QgrCkjAHs+NrKw8pBQSS9a3EGMxA7GHEWrqMn/i
- 2FJn6FFyTJ+/q7u3v4wweZVpgz8C18isGNJnUo+ZNLB78ch8DIrFszSPcschjcLRkmziIj
- V+Kzc22pdfOd5IV0y+5d2eJhViNcbPY=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0wR+PuEnjtXXy26U6gdnhg2xY/l2t8Cvxegx6rfnfJM=;
+ b=FpA23RNVo2+8ewccNMgB/IYcov8a1IvN2GFOe6hdD0iP0xIs8/N65GLVEhMJ3455ai0+SA
+ Q0g5frO70ycvHAXn/fljezFlmfaVSb0/nvpUcGKi/SLNtzZzEQw6FCIbsPFe85XoFyMAyv
+ CwJ6kOkw+hDYb7mThbePxPL1F3OzhwQ=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-FeiUNciMMBSI2lqI4SioRg-1; Wed, 29 May 2024 03:07:48 -0400
-X-MC-Unique: FeiUNciMMBSI2lqI4SioRg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a635b551919so40641066b.2
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 00:07:48 -0700 (PDT)
+ us-mta-687-cjkk4dA-MwWuatC0_8AP1A-1; Wed, 29 May 2024 03:10:39 -0400
+X-MC-Unique: cjkk4dA-MwWuatC0_8AP1A-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2e97f963e09so12752491fa.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 00:10:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716966467; x=1717571267;
+ d=1e100.net; s=20230601; t=1716966637; x=1717571437;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XBqjefz8LaYrHiYPXOrPEzPq73XyjiyDYdu+8QLT3H4=;
- b=wI0G2STj39L0lxy4eparN2+l7jk6Oa96r7Dbrnm/Z83vcWH3R+wb3S1XiIdh7LxkTW
- j0t7zZJHCXcx5bRAEWEIrP+TCSqiFT5B7V7dDTwzdl72CS4uI+1RsYoKZx/QdLexbCHh
- GjgDqXpFl899ifRnGsaQyWIbUQ4OktCcZi65RK5HnNP5WPju5JOGI46ZPbA5aMiA21K1
- t77QbJSSKRItTLX66+fJIRRibJF1sXsAYDcxy1kyc4tmAag8dn8Zq+aX4WMNqvTpyh42
- UdtFsb+H7cA4kuY76I8yBaX1q6u/3cMVlhgq2iTV7jJpv5NnAuP6aeE/JQDGTTQbjDdC
- be9Q==
+ bh=0wR+PuEnjtXXy26U6gdnhg2xY/l2t8Cvxegx6rfnfJM=;
+ b=txLlFkfY6Xi5/tmPgYzVqyLuUXZQeJKaVGS34qZxII4sXCzN9o7TziTnezxXjuk4Tn
+ dnnSnxnw3ZRuPT9jm1YGEBuziWngDRTlpfzyK9/zsuuipj+0GgE4GD1duK26hMIKpQk9
+ oTXBjW4KhTAjtjsww7F78e/S4jwOxHP0DbwDT1kmDiuwGId68mxFOhhJuk5f2UgqJEek
+ yyecMycbKdC1/nDiiG6OuoozHewK6bSYda9v3agQP4WAj7atVilPJSlTWf+gHA7njGCU
+ CbWDOSJD0Y3IjdKKLED5Z+Yv6NDXVLJn5d9o4H0tB2mMkDQGZ2K0VYeqtaX18zw70GsT
+ YuAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWY9MJIfwkbbdLCOGF+CfeuEYfACfDsL9yA8jkDp9/D9JGFcktvQuPbnskQlK7F8uqENeFWdbH0IHlNP/YsU3EqnZ1McxE=
-X-Gm-Message-State: AOJu0YzEHa2VmP5PPYDn2QAEmy3ewH/83/svYhgZkqE2b7JWZa/4Rjm9
- rP/knF/NMccE6uHAuZ1Q8G76c8NpA+GjTQytxQNIInM+dGJ3RtETXM5y3mI2/hpDZ9rXYyoveUi
- 6uxEy6gj9WsSaHhK1iQOqmNF99mI8yIqanp0siFFzERZBRph+DyWg
-X-Received: by 2002:a17:906:eb4a:b0:a63:4e00:aa39 with SMTP id
- a640c23a62f3a-a634e00aabfmr196495766b.24.1716966467226; 
- Wed, 29 May 2024 00:07:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzcKYUV8CPeIkYaWzTxqFaaysF2HZ0QzuU3j3d51Vz/BplCgOLaA1QIQOpWMk+PmfEiT7M8g==
-X-Received: by 2002:a17:906:eb4a:b0:a63:4e00:aa39 with SMTP id
- a640c23a62f3a-a634e00aabfmr196493766b.24.1716966466822; 
- Wed, 29 May 2024 00:07:46 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.155.52])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-a626cc8adf3sm686211566b.152.2024.05.29.00.07.45
+ AJvYcCVHNWedfFgrsdhpEOhUtlOo/hCyGmxy1cCplYOB0fUbuvv9QCCqAjlzLS/GeJ5iLi2fYeqRZc/JeEZ0L+vVNQS/MJL8RRo=
+X-Gm-Message-State: AOJu0Yy1CpS2l0yAlZHjwSmbquDtaQOU/K1GpmpqyFLsMFX2+PFy6HoN
+ h8hsSmlt0SSky1DdRWnFFdhAPKlQZokp3k1Zytq/aKDfHVlYGX85xRpEHXdFW2LfG2Gn9RHEbSI
+ PRVErr1jukTN+Q66gqS0b9t2VMeKJZEkFbz/xZg6kl0AgyxIURPJU
+X-Received: by 2002:a2e:a7ca:0:b0:2e1:a15b:b504 with SMTP id
+ 38308e7fff4ca-2e95b2564fbmr98394651fa.37.1716966637537; 
+ Wed, 29 May 2024 00:10:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMe5nXUEFYWKbzk3OVytSRk4hbDN0fBAGZOcp261NtH+grKqN1f1IGjFlpJn1kjPam4z/n6A==
+X-Received: by 2002:a2e:a7ca:0:b0:2e1:a15b:b504 with SMTP id
+ 38308e7fff4ca-2e95b2564fbmr98394431fa.37.1716966637075; 
+ Wed, 29 May 2024 00:10:37 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
+ [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-421089708edsm169062515e9.16.2024.05.29.00.10.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 00:07:46 -0700 (PDT)
-Message-ID: <c5e14ee6-1ea7-4deb-be37-8d6b4de9f388@redhat.com>
-Date: Wed, 29 May 2024 09:07:34 +0200
+ Wed, 29 May 2024 00:10:36 -0700 (PDT)
+Message-ID: <e10e39b9-f000-4b61-80b8-7ff78b1c176d@redhat.com>
+Date: Wed, 29 May 2024 09:10:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Issue #2294 | Machine microvm doesn't run under Xen accel
- for x86_64
-To: Will Gyda <vilhelmgyda@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org, 
- eduardo@habkost.net
-References: <20240528102339.106257-1-vilhelmgyda@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] tests/libqos: Add loongarch virt machine node
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>
+References: <20240528082053.938564-1-maobibo@loongson.cn>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20240528102339.106257-1-vilhelmgyda@gmail.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240528082053.938564-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -126,8 +131,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,44 +148,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/24 12:23, Will Gyda wrote:
-> Issue #2294: Machine microvm doesn't run under Xen accel for qemu-system-x86_64.
-> Solution: microvm is now not build if only Xen is available.
-
-This does not fix the issue that microvm does not start with a Xen 
-accelerator.  I think it would be better to try and make it work instead.
-
-Paolo
-
-> Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
+On 28/05/2024 10.20, Bibo Mao wrote:
+> Add loongarch virt machine to the graph. It is a modified copy of
+> the existing riscv virtmachine in riscv-virt-machine.c
 > 
+> It contains a generic-pcihost controller, and an extra function
+> loongarch_config_qpci_bus() to configure GPEX pci host controller
+> information, such as ecam and pio_base addresses.
+> 
+> Also hotplug handle checking about TYPE_VIRTIO_IOMMU_PCI device is
+> added on loongarch virt machine, since virtio_mmu_pci device requires
+> it.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   configs/devices/i386-softmmu/default.mak | 2 +-
->   hw/i386/Kconfig                          | 2 ++
->   2 files changed, 3 insertions(+), 1 deletion(-)
+>   hw/loongarch/virt.c                         |   2 +
+>   tests/qtest/libqos/loongarch-virt-machine.c | 114 ++++++++++++++++++++
+>   tests/qtest/libqos/meson.build              |   1 +
+>   3 files changed, 117 insertions(+)
+>   create mode 100644 tests/qtest/libqos/loongarch-virt-machine.c
 > 
-> diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-> index 598c6646df..6a73aee7dd 100644
-> --- a/configs/devices/i386-softmmu/default.mak
-> +++ b/configs/devices/i386-softmmu/default.mak
-> @@ -29,4 +29,4 @@
->   CONFIG_ISAPC=y
->   CONFIG_I440FX=y
->   CONFIG_Q35=y
-> -CONFIG_MICROVM=y
-> +#CONFIG_MICROVM=n
-> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-> index a6ee052f9a..f8ec8ebd7a 100644
-> --- a/hw/i386/Kconfig
-> +++ b/hw/i386/Kconfig
-> @@ -108,6 +108,8 @@ config Q35
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 3e6e93edf3..2d7f718570 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -45,6 +45,7 @@
+>   #include "sysemu/tpm.h"
+>   #include "sysemu/block-backend.h"
+>   #include "hw/block/flash.h"
+> +#include "hw/virtio/virtio-iommu.h"
+>   #include "qemu/error-report.h"
 >   
->   config MICROVM
->       bool
-> +    default y
-> +    depends on KVM || WHPX || NVMM || HVF
->       select SERIAL_ISA # for serial_hds_isa_init()
->       select ISA_BUS
->       select APIC
+>   static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
+> @@ -1213,6 +1214,7 @@ static HotplugHandler *virt_get_hotplug_handler(MachineState *machine,
+>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>   
+>       if (device_is_dynamic_sysbus(mc, dev) ||
+> +        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+>           memhp_type_supported(dev)) {
+>           return HOTPLUG_HANDLER(machine);
+>       }
+> diff --git a/tests/qtest/libqos/loongarch-virt-machine.c b/tests/qtest/libqos/loongarch-virt-machine.c
+> new file mode 100644
+> index 0000000000..c12089c015
+> --- /dev/null
+> +++ b/tests/qtest/libqos/loongarch-virt-machine.c
+> @@ -0,0 +1,114 @@
+> +/*
+> + * libqos driver framework
+> + *
+> + * Copyright (c) 2018 Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>
+> + *
+
+Don't you want to add your information here, too?
+
+Anyway:
+Acked-by: Thomas Huth <thuth@redhat.com>
+
+I assume this will go through the loongarch tree. Let me know if you want to 
+get this merged through the qtest tree instead.
 
 
