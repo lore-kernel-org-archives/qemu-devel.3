@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694CBC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E6DAC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC6wO-0001vX-OI; Tue, 28 May 2024 20:13:16 -0400
+	id 1sC709-0003MJ-OT; Tue, 28 May 2024 20:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sC6wM-0001uo-DA; Tue, 28 May 2024 20:13:15 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sC708-0003Lz-1q; Tue, 28 May 2024 20:17:08 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sC6wK-0008IN-GR; Tue, 28 May 2024 20:13:13 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f4a52b9589so13236695ad.3; 
- Tue, 28 May 2024 17:13:11 -0700 (PDT)
+ id 1sC706-0000OQ-8D; Tue, 28 May 2024 20:17:07 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2bdf3f4d5ffso1190323a91.3; 
+ Tue, 28 May 2024 17:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716941591; x=1717546391; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1716941824; x=1717546624; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N5gho23C2tN+BCaVzSD0iLE+yNArfa25MZzAKPqJl68=;
- b=QbYpeIarhkTusx8GuH/TFRYkSJXB7MfAcz34xR592hTb65fsHyAJ8/Q0xS9GhQx6Rv
- IZi+EjSiGVUjR9keKYte8aKyi9MKbVpNOUn+20O5s+mghCtXb3SOyi0wLyenpQVGZtXY
- qz0atcto9T7jd1jOup/ILizS7n95qUwOn4F/VSmc+C8Raw+aX7+1jwny6J6180QYWBwB
- RNh4Aw7YiGB9e9ONPHWAqX3rydv0ll03SvRUx5k/9HSpRdZYMiB7Jg9DlywpRx7gNNZV
- I8zCLN8QohryOsSxmIw4kdeUqNhCDv0QTDNaAPD8RHU6kw63i6cphxTT+qQAYk1agvb0
- cUAg==
+ bh=E/IIhxLm0bdauQm+U/mwl2+Ph2brwdY0aU3xObzJMxI=;
+ b=QY6qRAi3vequcX6IZ588cBVnlZmgIOzSUCa7U1XjY6H71iYFjLh+IEqRHYXReq/ufq
+ 9MQ0UBHu09NtzAfG316x/2/0haiUzmabjt9FMcKq7+pFazsMXvT2W/8mRZkpdffqNJjK
+ d/TPuxRfxRGCVtquM/uBZUkXhNlEC+1LWhrjbyBrU3jf15+pmLU+sIs301RCrPobFjXe
+ JRsWWK/FJ47fJrNWB1vtMjlq9JDbeNiWffNKp8yUrg6KivoNDWUVbtowiMcY3StOil/C
+ ens74weYT4qopfBsuVt31W5WsL0n5QhUfaCmxMwx2Vyk+JznoJYexk1+Ze8k+EvrMVUh
+ 4sHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716941591; x=1717546391;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1716941824; x=1717546624;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=N5gho23C2tN+BCaVzSD0iLE+yNArfa25MZzAKPqJl68=;
- b=lf2dAbbG4RYJeKTCIJFtlYqfDxAes/Ur/u9ewv3VV/i0GiWE2cUWW47ZD+tX0mU87O
- WzeVkSprw5/CaEuDU3fsE+VuWhRiQ1xCNqd84xnlIEacSo0OwxuaVtUdk9wbkjUe7Hzp
- XY6+v3KL7hlF4/EA5Vc+dgXtnNuFjsGWgrt8jAGpQ0HaCcimoR0TkuqEEsxVaPDOr+hY
- 4tKPfrCLb8XHaveXRWQZIhybja6T9QaYtiq4xHa1wpSynZ52XoSqADU++Ikw0g6V0jQO
- /4XMh9jrASdrDQNhJ2u8Au5Huqu+UjqhnMvE/+KUv8fvIr1cYngMFiJK4KGfRZJEi9Qc
- RxgA==
+ bh=E/IIhxLm0bdauQm+U/mwl2+Ph2brwdY0aU3xObzJMxI=;
+ b=mNI1pe4sv5ZLv+zyZoeKuWl8FQPsLbxRcVVQlUP+OtMHZ6vmHGL6SLyX/E9lBX+UMn
+ T1sSPts3k2WRbgywWvK1Md7ECwb/amKFsSdQb/iUhpNy3RqUxam8PcMexNrZj7JRoMeE
+ VImbX6fqn3Ha9y7FgLQfrf8ZGyj0trT/kQfosyCi5l1tZWKk+MP4X43YDMny7OBQ+//h
+ jfl8we99p6jUNAN1wNYbqbTRTB77QCveCJd74Md4NtTjUBRI4pCj4TKBqptSUGxStS1u
+ Gzr6mnxHYqhtZqQjyw+MrXyFcW0SFFyj5phD4NG6sZHyvPEf2yHQH9YoN0OSIomkU3Qa
+ k1Og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCHWlKSbEJ4j2I8tDlta2jEY5LElNTY5RX3qOi4FIG1zYiWSln2VuFuTIq9zTMjXUfltIb0WvDRBYrxIsUYvw2W1pytSmhO4CHQGE5Yr2ylAj+E9Nk08r+c+4=
-X-Gm-Message-State: AOJu0Yxe/nTUFrlUoJ7HZtMrwxbqbL7CPeMPyKA9NRCeAKSgjHEAJCJz
- CgLRZcvacPwTr/9slz9RBKYv6xoC2qzKh5a6de+2PwmbdaiuMKcEAXEmoQ==
-X-Google-Smtp-Source: AGHT+IE3mJ33+cyYSPJ/duntszT/ryZiW9lnSPbTFRVeZ0ueMkftn39XVr7eDOFWSmg64GHFdzQq+w==
-X-Received: by 2002:a17:902:da85:b0:1f0:8bbd:34db with SMTP id
- d9443c01a7336-1f44873d4aamr127876545ad.34.1716941590640; 
- Tue, 28 May 2024 17:13:10 -0700 (PDT)
+ AJvYcCVeXagsy1GE0ZEPpvqWgiGS3uYXYHiJzyYbywhptc/sWnIrrQ6Ct1YzYcnmVC65ZgMg8WqO+xgqtHnzsFfqDWir11bG
+X-Gm-Message-State: AOJu0Yxq6fPGM2hGbUSHG5XgycQi04Uf2yWJJAoSvfVW4Cu6xltjbIj4
+ PDqFudpjL5Aaa6WB5QY1PN//f2I2Lehqr+lozlPDiJMgJddFKIoA
+X-Google-Smtp-Source: AGHT+IEYcTIfUxHrbDHC5a9VT9CkLXhH/ZVJjzjeVzS8IDeG6GSD2MZvcfDKly1Racw3P7rRMYFymg==
+X-Received: by 2002:a17:90a:e7c6:b0:2bf:8f9f:4adb with SMTP id
+ 98e67ed59e1d1-2bf8f9f4c62mr8341852a91.1.1716941824066; 
+ Tue, 28 May 2024 17:17:04 -0700 (PDT)
 Received: from localhost (110-175-65-7.tpgi.com.au. [110.175.65.7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f44c9dae6asm85781975ad.296.2024.05.28.17.13.07
+ 98e67ed59e1d1-2bfcf3f3ccdsm4378898a91.47.2024.05.28.17.17.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 17:13:10 -0700 (PDT)
+ Tue, 28 May 2024 17:17:03 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 29 May 2024 10:13:04 +1000
-Message-Id: <D1LOZVAI9RGP.315U4KSV0NNW@gmail.com>
-Cc: "Caleb Schlossin" <calebs@linux.vnet.ibm.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
- Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH 03/10] target/ppc: Improve SPR indirect registers
+Date: Wed, 29 May 2024 10:16:58 +1000
+Message-Id: <D1LP2UJ14DJ2.B5J6N64F9URO@gmail.com>
+Subject: Re: [PATCH v4 11/11] ppc/pnv: Update skiboot.lid to support Power11
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, "Aditya Gupta"
+ <adityag@linux.ibm.com>, "Mahesh J Salgaonkar" <mahesh@linux.ibm.com>,
+ "Madhavan Srinivasan" <maddy@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Joel Stanley"
+ <joel@jms.id.au>
 X-Mailer: aerc 0.17.0
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-4-npiggin@gmail.com>
- <eed27a5e-6b32-45e0-8d76-51371fadc976@linux.ibm.com>
-In-Reply-To: <eed27a5e-6b32-45e0-8d76-51371fadc976@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
+References: <20240528070515.117160-1-adityag@linux.ibm.com>
+ <20240528070515.117160-12-adityag@linux.ibm.com>
+ <968da156-8621-4509-a0b2-726411e71b5e@kaod.org>
+In-Reply-To: <968da156-8621-4509-a0b2-726411e71b5e@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,42 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue May 28, 2024 at 4:50 PM AEST, Harsh Prateek Bora wrote:
->
-> Hi Nick,
->
-> On 5/26/24 17:56, Nicholas Piggin wrote:
-> > SPRC/SPRD were recently added to all BookS CPUs supported, but
-> > they are only tested on POWER9 and POWER10, so restrict them to
-> > those CPUs.
+On Tue May 28, 2024 at 5:15 PM AEST, C=C3=A9dric Le Goater wrote:
+> On 5/28/24 09:05, Aditya Gupta wrote:
+> > Skiboot/OPAL patches are in discussion upstream [1], with corresponding
+> > commits in github repository [2].
 > >=20
+> > Update skiboot.lid, with binary built from 'upstream_power11' branch
+> > of skiboot repository with Power11 enablement patches [2].
+> >=20
+> > ---
+> > This patch can be skipped for now, if need to wait for patches to be
+> > merged in open-power/skiboot. Have updated the skiboot.lid to aid in
+> > testing this patch series.
 >
-> Hope you mean to restrict to P9/10 for both spapr and pnv or just pnv ?
+> When is the merge in skiboot planned ? QEMU 9.1 freeze is in ~2 months.
 
-For pnv, but they are hypervisor registers so they can not be
-accessed with spapr.
-
-[...]
-
-> > @@ -321,11 +322,25 @@ void helper_store_sprc(CPUPPCState *env, target_u=
-long val)
-> >  =20
-> >   target_ulong helper_load_sprd(CPUPPCState *env)
-> >   {
-> > +    PowerPCCPU *cpu =3D env_archcpu(env);
-> > +    PnvCore *pc =3D pnv_cpu_state(cpu)->core;
->
-> We may want to avoid creating local variable cpu here also like previous=
-=20
-> patches.
-
-Since we have a maze of pointers and types, sometimes I like to
-write the types down, but maybe that's just me :P
-
-> However, is this helper meant to be accessible for spapr as well ?
-
-Right, it's not. I *think* it should be okay to do this since it
-should never be reached by spapr.
+I think I will try to get spapr bits in for 9.1, but may just skip pnv
+for this round since there's a bunch of other stuff including some pnv
+churn I'd like to get in 9.1.
 
 Thanks,
 Nick
