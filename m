@@ -4,48 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D242EC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACB2C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:18:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCGK0-0000Fz-Vy; Wed, 29 May 2024 06:14:17 -0400
+	id 1sCGNP-0001lI-DO; Wed, 29 May 2024 06:17:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sCGJx-0000En-3H; Wed, 29 May 2024 06:14:13 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGN9-0001jG-64
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:17:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sCGJu-0004U7-3z; Wed, 29 May 2024 06:14:12 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 373FE4437F;
- Wed, 29 May 2024 12:14:07 +0200 (CEST)
-Message-ID: <5993acdc-f8ec-4fa8-bb97-952c3a56ae6d@proxmox.com>
-Date: Wed, 29 May 2024 12:14:02 +0200
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGN7-0004x5-5p
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:17:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716977847;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=pqZu1IADoLJOhrk35EB+CT9B7LTJZKCE6zdgbylAQ3I=;
+ b=Vd21WqEfAp2c1sxrLV6c4V4QXJb7CsKqpud3Axuqcn6FC7AtmNjK9nwLzpFFPBvMQxuxbL
+ Lhv7Y+NPIolwG4BLd5tJ14q5cSNfTACU3IyP2jXPlbLtM6awRO89HXl19TRwXV+L6qr0hU
+ I3rF9BtSsF7KVrL0I08cQYqRpYr+VNs=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-412-iRyHfoQMMZWXk6p_UYOMRA-1; Wed, 29 May 2024 06:17:24 -0400
+X-MC-Unique: iRyHfoQMMZWXk6p_UYOMRA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35507e4c41dso579727f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 03:17:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716977843; x=1717582643;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pqZu1IADoLJOhrk35EB+CT9B7LTJZKCE6zdgbylAQ3I=;
+ b=xC1OfT3qgvxLxsbVExQiaGbJX4ofBQHie/RH769gXjnYo0jPLX1KEk8xAljDX486Rq
+ LlnaOb43Q/iu9TWB9cY5wuch4fwUrhQzXMXClBGvYreXpk5yQVWjw+BozzADeveTKhQN
+ Dwx1e6nemVNKnPObv6/KR5xI6S7IRzbQLmGpKWqesAHGk7y8oN4WnyE4aESK3PoJ1H/x
+ FDNhJYpLfDWodPRdVjT7uz4BzJIERNVijJA5U40nBEjt5yvAAzWuMWAsPC5tsYVs0UbK
+ /mk1CK+z5LfxkEYYtmRg4+A+rTcfRZ8gzR9hwvgm8KLzBmtB+ZVHXoNIbEq/eKxcnOw6
+ 7cIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEx7ugg+7/rvz/A2TVAyMx5CX94GONBWudrQ9fNKqrUWaP77FLMiYTOFN0VCFKqHAFnskoFRBCpTiDUgifrHIKn0TcvAs=
+X-Gm-Message-State: AOJu0Yzi3ow/3cBnSTxY5rjcI/zpj3xLnXNzsOI9ee18fqrUZ6QERknx
+ r0Slv/Qj7YJNXm30D9oJojbNzwej3ghLV+p8d/Tx9Wn+m1kOazqUbqyPVH9hLRig+0KVlrKto6y
+ ZO0taRmTD3N2mY/8xPlKA8QU5SkAFKzW1CA3qas35mrcxTMTmiRWY
+X-Received: by 2002:a5d:458a:0:b0:34c:7ed4:55a with SMTP id
+ ffacd0b85a97d-35c7c2b5562mr1275853f8f.33.1716977843047; 
+ Wed, 29 May 2024 03:17:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzAEEqxnDIiJOpl9Xd52ni9WWNv67nqnBY4Vi33k6s8lAYQEzsusOJfrMnu+PRBIJMLwC71Q==
+X-Received: by 2002:a5d:458a:0:b0:34c:7ed4:55a with SMTP id
+ ffacd0b85a97d-35c7c2b5562mr1275828f8f.33.1716977842578; 
+ Wed, 29 May 2024 03:17:22 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
+ [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42100ee806esm206628125e9.3.2024.05.29.03.17.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 May 2024 03:17:22 -0700 (PDT)
+Message-ID: <851411c2-7c15-4f4a-85e5-e49d11251ba1@redhat.com>
+Date: Wed, 29 May 2024 12:17:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: block snapshot issue with RBD
-To: Jin Cao <jojing64@gmail.com>, Ilya Dryomov <idryomov@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
- pl@kamp.de, hreitz@redhat.com, peterx@redhat.com, farosas@suse.de
-References: <8b639179-e567-469c-bd04-ee8dee12d7d2@gmail.com>
- <0e01a8e2-a543-4524-939c-05413fd99e86@gmail.com>
- <756f9dcb-4e9c-4c2f-bc8a-dcc7420a1839@gmail.com>
- <CAOi1vP8nJVsvvsmG5Ac4sd+9NPA8v8t=7Sao0f7-qNb129p=OA@mail.gmail.com>
- <fb2ea759-1a7e-4c0e-ab0d-3ec4c04dc503@gmail.com>
+Subject: Re: [PATCH 12/14] target/s390x: Simplify per_ifetch,
+ per_check_exception
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, iii@linux.ibm.com, david@redhat.com
+References: <20240502054417.234340-1-richard.henderson@linaro.org>
+ <20240502054417.234340-13-richard.henderson@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <fb2ea759-1a7e-4c0e-ab0d-3ec4c04dc503@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240502054417.234340-13-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,113 +148,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 02/05/2024 07.44, Richard Henderson wrote:
+> Set per_address and ilen in per_ifetch; this is valid for
+> all PER exceptions and will last until the end of the
+> instruction.  Therefore we don't need to give the same
+> data to per_check_exception.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> # Conflicts:
+> #	target/s390x/tcg/misc_helper.c
+> ---
+>   target/s390x/helper.h          |  4 ++--
+>   target/s390x/tcg/misc_helper.c | 23 +++++++++--------------
+>   target/s390x/tcg/translate.c   | 20 ++++++++++++--------
+>   3 files changed, 23 insertions(+), 24 deletions(-)
+> 
+> diff --git a/target/s390x/helper.h b/target/s390x/helper.h
+> index 31bd193322..1a8a76abb9 100644
+> --- a/target/s390x/helper.h
+> +++ b/target/s390x/helper.h
+> @@ -359,9 +359,9 @@ DEF_HELPER_FLAGS_4(ipte, TCG_CALL_NO_RWG, void, env, i64, i64, i32)
+>   DEF_HELPER_FLAGS_1(ptlb, TCG_CALL_NO_RWG, void, env)
+>   DEF_HELPER_FLAGS_1(purge, TCG_CALL_NO_RWG, void, env)
+>   DEF_HELPER_3(lra, i64, env, i64, i64)
+> -DEF_HELPER_FLAGS_3(per_check_exception, TCG_CALL_NO_WG, void, env, i64, i32)
+> +DEF_HELPER_FLAGS_1(per_check_exception, TCG_CALL_NO_WG, void, env)
+>   DEF_HELPER_FLAGS_3(per_branch, TCG_CALL_NO_WG, void, env, i64, i32)
+> -DEF_HELPER_FLAGS_2(per_ifetch, TCG_CALL_NO_WG, void, env, i64)
+> +DEF_HELPER_FLAGS_2(per_ifetch, TCG_CALL_NO_WG, void, env, i32)
+>   DEF_HELPER_FLAGS_2(per_store_real, TCG_CALL_NO_WG, noreturn, env, i32)
+>   DEF_HELPER_FLAGS_1(stfl, TCG_CALL_NO_RWG, void, env)
+>   
+> diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+> index 5f1efc6a32..f5e674a26e 100644
+> --- a/target/s390x/tcg/misc_helper.c
+> +++ b/target/s390x/tcg/misc_helper.c
+> @@ -604,12 +604,10 @@ G_NORETURN static void per_raise_exception_log(CPUS390XState *env)
+>       per_raise_exception(env);
+>   }
+>   
+> -void HELPER(per_check_exception)(CPUS390XState *env, uint64_t next_pc,
+> -                                 uint32_t ilen)
+> +void HELPER(per_check_exception)(CPUS390XState *env)
+>   {
+> +    /* psw_addr, per_address and int_pgm_ilen are already set. */
+>       if (unlikely(env->per_perc_atmid)) {
+> -        env->psw.addr = next_pc;
+> -        env->int_pgm_ilen = ilen;
+>           per_raise_exception_log(env);
+>       }
+>   }
+> @@ -639,23 +637,20 @@ void HELPER(per_branch)(CPUS390XState *env, uint64_t dest, uint32_t ilen)
+>       per_raise_exception_log(env);
+>   }
+>   
+> -void HELPER(per_ifetch)(CPUS390XState *env, uint64_t addr)
+> +void HELPER(per_ifetch)(CPUS390XState *env, uint32_t ilen)
+>   {
+> -    if (get_per_in_range(env, addr)) {
+> -        env->per_address = addr;
+> +    if (get_per_in_range(env, env->psw.addr)) {
+> +        env->per_address = env->psw.addr;
+> +        env->int_pgm_ilen = ilen;
+>           env->per_perc_atmid = PER_CODE_EVENT_IFETCH | get_per_atmid(env);
+>   
+>           /* If the instruction has to be nullified, trigger the
+>              exception immediately. */
+>           if (env->cregs[9] & PER_CR9_EVENT_IFETCH_NULLIFICATION) {
+> -            CPUState *cs = env_cpu(env);
+> -
+>               env->per_perc_atmid |= PER_CODE_EVENT_NULLIFICATION;
+> -            env->int_pgm_code = PGM_PER;
+> -            env->int_pgm_ilen = get_ilen(cpu_ldub_code(env, addr));
+> -
+> -            cs->exception_index = EXCP_PGM;
+> -            cpu_loop_exit(cs);
+> +            qemu_log_mask(CPU_LOG_INT, "PER interrupt before %#" PRIx64 "\n",
+> +                          env->per_address);
 
-Am 28.05.24 um 20:19 schrieb Jin Cao:
-> Hi Ilya
-> 
-> On 5/28/24 11:13 AM, Ilya Dryomov wrote:
->> On Mon, May 27, 2024 at 9:06 PM Jin Cao <jojing64@gmail.com> wrote:
->>>
->>> Supplementary info: VM is paused after "migrate" command. After being
->>> resumed with "cont", snapshot_delete_blkdev_internal works again, which
->>> is confusing, as disk snapshot generally recommend I/O is paused, and a
->>> frozen VM satisfy this requirement.
->>
->> Hi Jin,
->>
->> This doesn't seem to be related to RBD.  Given that the same error is
->> observed when using the RBD driver with the raw format, I would dig in
->> the direction of migration somehow "installing" the raw format (which
->> is on-disk compatible with the rbd format).
->>
-> 
-> Thanks for the hint.
-> 
->> Also, did you mean to say "snapshot_blkdev_internal" instead of
->> "snapshot_delete_blkdev_internal" in both instances?
-> 
-> Sorry for my copy-and-paste mistake. Yes, it's snapshot_blkdev_internal.
-> 
-> -- 
-> Sincerely,
-> Jin Cao
-> 
->>
->> Thanks,
->>
->>                  Ilya
->>
->>>
->>> -- 
->>> Sincerely
->>> Jin Cao
->>>
->>> On 5/27/24 10:56 AM, Jin Cao wrote:
->>>> CC block and migration related address.
->>>>
->>>> On 5/27/24 12:03 AM, Jin Cao wrote:
->>>>> Hi,
->>>>>
->>>>> I encountered RBD block snapshot issue after doing migration.
->>>>>
->>>>> Steps
->>>>> -----
->>>>>
->>>>> 1. Start QEMU with:
->>>>> ./qemu-system-x86_64 -name VM -machine q35 -accel kvm -cpu
->>>>> host,migratable=on -m 2G -boot menu=on,strict=on
->>>>> rbd:image/ubuntu-22.04-server-cloudimg-amd64.raw -net nic -net user
->>>>> -cdrom /home/my/path/of/cloud-init.iso -monitor stdio
->>>>>
->>>>> 2. Do block snapshot in monitor cmd: snapshot_delete_blkdev_internal.
->>>>> It works as expected: the snapshot is visable with command`rbd snap ls
->>>>> pool_name/image_name`.
->>>>>
->>>>> 3. Do pseudo migration with monitor cmd: migrate -d
->>>>> exec:cat>/tmp/vm.out
->>>>>
->>>>> 4. Do block snapshot again with snapshot_delete_blkdev_internal, then
->>>>> I get:
->>>>>      Error: Block format 'raw' used by device 'ide0-hd0' does not
->>>>> support internal snapshots
->>>>>
->>>>> I was hoping to do the second block snapshot successfully, and it
->>>>> feels abnormal the RBD block snapshot function is disrupted after
->>>>> migration.
->>>>>
->>>>> BTW, I get the same block snapshot error when I start QEMU with:
->>>>>       "-drive format=raw,file=rbd:pool_name/image_name"
->>>>>
->>>>> My questions is: how could I proceed with RBD block snapshot after the
->>>>> pseudo migration?
-> 
-> 
+FYI, checkpatch.pl complains:
 
-I bisected this issue to d3007d348a ("block: Fix crash when loading
-snapshot on inactive node").
+ERROR: Don't use '#' flag of printf format ('%#') in format strings, use 
+'0x' prefix instead
+#84: FILE: target/s390x/tcg/misc_helper.c:651:
++            qemu_log_mask(CPU_LOG_INT, "PER interrupt before %#" PRIx64
 
-> diff --git a/block/snapshot.c b/block/snapshot.c
-> index ec8cf4810b..c4d40e80dd 100644
-> --- a/block/snapshot.c
-> +++ b/block/snapshot.c
-> @@ -196,8 +196,10 @@ bdrv_snapshot_fallback(BlockDriverState *bs)
->  int bdrv_can_snapshot(BlockDriverState *bs)
->  {
->      BlockDriver *drv = bs->drv;
-> +
->      GLOBAL_STATE_CODE();
-> -    if (!drv || !bdrv_is_inserted(bs) || bdrv_is_read_only(bs)) {
-> +
-> +    if (!drv || !bdrv_is_inserted(bs) || !bdrv_is_writable(bs)) {
->          return 0;
->      }
->  
+I'll fix it up while picking up your patch.
 
-So I guess the issue is that the blockdev is not writable when
-"postmigrate" state?
-
-Best Regards,
-Fiona
+  Thomas
 
 
