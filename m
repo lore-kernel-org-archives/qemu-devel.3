@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF38C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9261C27C44
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCKDW-0001jW-SM; Wed, 29 May 2024 10:23:51 -0400
+	id 1sCKEu-0003A4-2M; Wed, 29 May 2024 10:25:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCKDR-0001iU-U8
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:23:46 -0400
+ id 1sCKEs-00039A-9Z
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:25:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCKDP-0000GO-Gf
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:23:45 -0400
+ id 1sCKEq-0000iT-Jg
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:25:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716992622;
+ s=mimecast20190719; t=1716992711;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uLHSSzEkKQa//WnfxsNbDnkLzcKOi8i3sxjHdngeMlM=;
- b=Rg5T+S+u1wDNDV2MRpSn7mnq13SfeBTSOlrYp3En9t7Uw2C7RDt2TrxGeJi+5Dg/JnjuMf
- xImtCjEbpt5rx7297hMr0FYS0iUCyAfEwF2rOwDS4fgP/X08bfxKfbSBq1JlTwlQ7TlbJQ
- u9v7sYtjOQvrOMrTtGvvLdLVdFIj/Rs=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/A0bLw0dQZCy82eziqf4lwnP9FTduc9V5MirNSMdl7U=;
+ b=N9ygdIulZPmkKFLanV/b8WcjXGOHi7KzHNTLSDavv4VaJYcKr6S/1SWkTbaX9HCPTRRKwh
+ J1ITDnFMiUzA+mGXhXqblGMNPS5j15pvAofrwFgSrlZUNevX9vdYy+0KsgEMG6XbPlHKaF
+ 82NpAj/oX3W94wLAv4binlq14y1a1Zs=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-eb1KHFJ5M9ih8w0cS22_vg-1; Wed, 29 May 2024 10:23:40 -0400
-X-MC-Unique: eb1KHFJ5M9ih8w0cS22_vg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42109a85f5cso18398655e9.2
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:23:40 -0700 (PDT)
+ us-mta-689-NgVUh908PtWW1MsjlfwwHw-1; Wed, 29 May 2024 10:25:09 -0400
+X-MC-Unique: NgVUh908PtWW1MsjlfwwHw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35508103145so1729550f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:25:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716992619; x=1717597419;
+ d=1e100.net; s=20230601; t=1716992708; x=1717597508;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uLHSSzEkKQa//WnfxsNbDnkLzcKOi8i3sxjHdngeMlM=;
- b=oMcrVZ3N8jhl+CXSXCgXTLZSDv4Zl49H2WRa9nu9jgP6taTeN9nyW5D4ttdZqwwqqT
- iC0lFtkFGTQw5jRQFNBYYOfaFii1YbZ13e0EZf4VfHa0PcX+mB+46Uswhbbzk/Lczbl2
- 2/e0cIbt8qhEITZcFekOVWa0730vpKRHJ7rzuhME3N727C4Xu5DnPst48d6GuCtjdU0N
- 7aYwDMDfZ2EeggzjtYMtAZEe6+sQ/bXulWAryR3qqk1dcTn+ILc8gnGIjKx7S9wW7aaD
- c/vjkD2Jq3qrrT/xarenOko9ufGmwtcvNTnyBDdPexhSkJYnBKNXFzrzDAi56Mgn3WNX
- u8Sw==
-X-Gm-Message-State: AOJu0Yxm6zIzKZJrsphEYjqpxdFEvt+4ocFzCuheO0W1XRHxaTDd/QHG
- a6ad3RGjjPstBDl3wzvTy5kYNE1eQxEajwLn0tUiYD/9m4gix8rryHhe4sH+X8+8xFaJ6NM2lDf
- LwDpCbGsUHXUsuDXnERBGzwDa1Q0y24kl5g6a62ncSqA38egAFRcA
-X-Received: by 2002:a05:600c:1c02:b0:41c:23f3:65fa with SMTP id
- 5b1f17b1804b1-42108a99cf6mr136990335e9.28.1716992619297; 
- Wed, 29 May 2024 07:23:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSZIJ/YrdZ0udBcnHuMu/JDcyXye8rX7FpnecL+2/+ckU7F8Xf8ijE+17MK5hmnLNV/ySg4g==
-X-Received: by 2002:a05:600c:1c02:b0:41c:23f3:65fa with SMTP id
- 5b1f17b1804b1-42108a99cf6mr136990015e9.28.1716992618875; 
- Wed, 29 May 2024 07:23:38 -0700 (PDT)
+ bh=/A0bLw0dQZCy82eziqf4lwnP9FTduc9V5MirNSMdl7U=;
+ b=HAJBYY8R0+UyUvpzPM5rKR5pC/IvpCFF+2RdaKrYdXUdFqhtj+8GB2l+BtUACgVjbk
+ pic5eS+jVYQnW1WQ/qyALnovaARYjyWOinYFJDm5XbYlUw66C52R9DT+suUBtfn45jE6
+ CUgGbGyxz+kOw6k382hFvktJjAhT3d9FHbhMC1UYfd66VRGt6ilE9BtwUHVX1yeCvPSE
+ aaq1foZMT9a8JoGnft0sRo9M4hzwFIgDY7hs5UJ85ALs/NrWKch8cbbqBj9YV67sAiUN
+ KMt1AmhxF0Aml5OS6/SpfEZQIgBz2NVZFOJws6EtMdpbxRYKxd5NYuCcCN2dghib3Z4H
+ sZ+w==
+X-Gm-Message-State: AOJu0YzRqayrvC4//lE0wM04OZFADk1njG/YrVlBl1t2Qy9DAR/YU/v+
+ wqvPAH64vVLkTNhBYmjd7Q4D5UdpB44ZFd2jGmJIc0VH/FrN6f2Hn2PJwO67rN9pXEqgPTlhiZM
+ 0DJPCnJuiACSIQxdBOUZp0QTX/VwDpszQY/sBqpZHlxeGpyPsJjZY
+X-Received: by 2002:a5d:570e:0:b0:35c:5202:face with SMTP id
+ ffacd0b85a97d-35c52123e27mr2222086f8f.9.1716992708749; 
+ Wed, 29 May 2024 07:25:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWBlpvHCtEtNlGXHafgdLVvMefEh5EB22U1C8Zdzg92gMNAEkN37YWDAU3hdM5UFJIdnsKpw==
+X-Received: by 2002:a5d:570e:0:b0:35c:5202:face with SMTP id
+ ffacd0b85a97d-35c52123e27mr2222069f8f.9.1716992708418; 
+ Wed, 29 May 2024 07:25:08 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4210896676bsm183917165e9.4.2024.05.29.07.23.38
+ ffacd0b85a97d-3557dcf0871sm15316180f8f.110.2024.05.29.07.25.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 07:23:38 -0700 (PDT)
-Date: Wed, 29 May 2024 16:23:37 +0200
+ Wed, 29 May 2024 07:25:08 -0700 (PDT)
+Date: Wed, 29 May 2024 16:25:07 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
  <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
  =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
  <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 09/23] target/i386/kvm: Remove
- x86_cpu_change_kvm_default() and 'kvm-cpu.h'
-Message-ID: <20240529162337.30755055@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-10-philmd@linaro.org>
+Subject: Re: [PATCH v5 11/23] hw/smbios: Remove 'uuid_encoded' argument from
+ smbios_set_defaults()
+Message-ID: <20240529162507.7fee65b0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240529051539.71210-12-philmd@linaro.org>
 References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-10-philmd@linaro.org>
+ <20240529051539.71210-12-philmd@linaro.org>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -107,95 +107,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:25 +0200
+On Wed, 29 May 2024 07:15:27 +0200
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> x86_cpu_change_kvm_default() was only used out of kvm-cpu.c by
-> the pc-i440fx-2.1 machine, which got removed. Make it static,
-> and remove its declaration. "kvm-cpu.h" is now empty, remove it.
+> 'uuid_encoded' is always true, remove it.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
 > ---
->  target/i386/kvm/kvm-cpu.h | 41 ---------------------------------------
->  target/i386/kvm/kvm-cpu.c |  3 +--
->  2 files changed, 1 insertion(+), 43 deletions(-)
->  delete mode 100644 target/i386/kvm/kvm-cpu.h
+>  include/hw/firmware/smbios.h | 3 +--
+>  hw/arm/virt.c                | 3 +--
+>  hw/i386/fw_cfg.c             | 2 +-
+>  hw/loongarch/virt.c          | 2 +-
+>  hw/riscv/virt.c              | 2 +-
+>  hw/smbios/smbios.c           | 6 ++----
+>  6 files changed, 7 insertions(+), 11 deletions(-)
 >=20
-> diff --git a/target/i386/kvm/kvm-cpu.h b/target/i386/kvm/kvm-cpu.h
-> deleted file mode 100644
-> index e858ca21e5..0000000000
-> --- a/target/i386/kvm/kvm-cpu.h
-> +++ /dev/null
-> @@ -1,41 +0,0 @@
-> -/*
-> - * i386 KVM CPU type and functions
-> - *
-> - *  Copyright (c) 2003 Fabrice Bellard
-> - *
-> - * This library is free software; you can redistribute it and/or
-> - * modify it under the terms of the GNU Lesser General Public
-> - * License as published by the Free Software Foundation; either
-> - * version 2 of the License, or (at your option) any later version.
-> - *
-> - * This library is distributed in the hope that it will be useful,
-> - * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> - * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> - * Lesser General Public License for more details.
-> - *
-> - * You should have received a copy of the GNU Lesser General Public
-> - * License along with this library; if not, see <http://www.gnu.org/lice=
-nses/>.
-> - */
-> -
-> -#ifndef KVM_CPU_H
-> -#define KVM_CPU_H
-> -
-> -#ifdef CONFIG_KVM
-> -/*
-> - * Change the value of a KVM-specific default
-> - *
-> - * If value is NULL, no default will be set and the original
-> - * value from the CPU model table will be kept.
-> - *
-> - * It is valid to call this function only for properties that
-> - * are already present in the kvm_default_props table.
-> - */
-> -void x86_cpu_change_kvm_default(const char *prop, const char *value);
-> -
-> -#else /* !CONFIG_KVM */
-> -
-> -#define x86_cpu_change_kvm_default(a, b)
-> -
-> -#endif /* CONFIG_KVM */
-> -
-> -#endif /* KVM_CPU_H */
-> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-> index f76972e47e..f9b99b5f50 100644
-> --- a/target/i386/kvm/kvm-cpu.c
-> +++ b/target/i386/kvm/kvm-cpu.c
-> @@ -10,7 +10,6 @@
->  #include "qemu/osdep.h"
->  #include "cpu.h"
->  #include "host-cpu.h"
-> -#include "kvm-cpu.h"
->  #include "qapi/error.h"
->  #include "sysemu/sysemu.h"
->  #include "hw/boards.h"
-> @@ -178,7 +177,7 @@ static PropValue kvm_default_props[] =3D {
+> diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
+> index 8d3fb2fb3b..f066ab7262 100644
+> --- a/include/hw/firmware/smbios.h
+> +++ b/include/hw/firmware/smbios.h
+> @@ -331,8 +331,7 @@ void smbios_add_usr_blob_size(size_t size);
+>  void smbios_entry_add(QemuOpts *opts, Error **errp);
+>  void smbios_set_cpuid(uint32_t version, uint32_t features);
+>  void smbios_set_defaults(const char *manufacturer, const char *product,
+> -                         const char *version,
+> -                         bool uuid_encoded);
+> +                         const char *version);
+>  void smbios_set_default_processor_family(uint16_t processor_family);
+>  uint8_t *smbios_get_table_legacy(size_t *length, Error **errp);
+>  void smbios_get_tables(MachineState *ms,
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 3c93c0c0a6..268b25e332 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -1677,8 +1677,7 @@ static void virt_build_smbios(VirtMachineState *vms)
+>      }
+> =20
+>      smbios_set_defaults("QEMU", product,
+> -                        vmc->smbios_old_sys_ver ? "1.0" : mc->name,
+> -                        true);
+> +                        vmc->smbios_old_sys_ver ? "1.0" : mc->name);
+> =20
+>      /* build the array of physical mem area from base_memmap */
+>      mem_array.address =3D vms->memmap[VIRT_MEM].base;
+> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+> index f9e8af3bf5..7c43c325ef 100644
+> --- a/hw/i386/fw_cfg.c
+> +++ b/hw/i386/fw_cfg.c
+> @@ -63,7 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgSta=
+te *fw_cfg,
+> =20
+>      if (pcmc->smbios_defaults) {
+>          /* These values are guest ABI, do not change */
+> -        smbios_set_defaults("QEMU", mc->desc, mc->name, true);
+> +        smbios_set_defaults("QEMU", mc->desc, mc->name);
+>      }
+> =20
+>      /* tell smbios about cpuid version and features */
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 3e6e93edf3..6a12659583 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -529,7 +529,7 @@ static void virt_build_smbios(LoongArchVirtMachineSta=
+te *lvms)
+>          return;
+>      }
+> =20
+> -    smbios_set_defaults("QEMU", product, mc->name, true);
+> +    smbios_set_defaults("QEMU", product, mc->name);
+> =20
+>      smbios_get_tables(ms, SMBIOS_ENTRY_POINT_TYPE_64,
+>                        NULL, 0,
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 4fdb660525..5676d66d12 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -1277,7 +1277,7 @@ static void virt_build_smbios(RISCVVirtState *s)
+>          product =3D "KVM Virtual Machine";
+>      }
+> =20
+> -    smbios_set_defaults("QEMU", product, mc->name, true);
+> +    smbios_set_defaults("QEMU", product, mc->name);
+> =20
+>      if (riscv_is_32bit(&s->soc[0])) {
+>          smbios_set_default_processor_family(0x200);
+> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> index eed5787b15..8261eb716f 100644
+> --- a/hw/smbios/smbios.c
+> +++ b/hw/smbios/smbios.c
+> @@ -30,7 +30,7 @@
+>  #include "hw/pci/pci_device.h"
+>  #include "smbios_build.h"
+> =20
+> -static bool smbios_uuid_encoded =3D true;
+> +static const bool smbios_uuid_encoded =3D true;
 >  /*
->   * Only for builtin_x86_defs models initialized with x86_register_cpudef=
-_types.
+>   * SMBIOS tables provided by user with '-smbios file=3D<foo>' option
 >   */
-> -void x86_cpu_change_kvm_default(const char *prop, const char *value)
-> +static void x86_cpu_change_kvm_default(const char *prop, const char *val=
-ue)
+> @@ -1017,11 +1017,9 @@ void smbios_set_default_processor_family(uint16_t =
+processor_family)
+>  }
+> =20
+>  void smbios_set_defaults(const char *manufacturer, const char *product,
+> -                         const char *version,
+> -                         bool uuid_encoded)
+> +                         const char *version)
 >  {
->      PropValue *pv;
->      for (pv =3D kvm_default_props; pv->prop; pv++) {
+>      smbios_have_defaults =3D true;
+> -    smbios_uuid_encoded =3D uuid_encoded;
+> =20
+>      SMBIOS_SET_DEFAULT(smbios_type1.manufacturer, manufacturer);
+>      SMBIOS_SET_DEFAULT(smbios_type1.product, product);
 
 
