@@ -4,79 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB38C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E03C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCJQ3-0002CT-NJ; Wed, 29 May 2024 09:32:43 -0400
+	id 1sCJRZ-0003cH-GO; Wed, 29 May 2024 09:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCJQ1-0002BZ-51
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:32:41 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCJPy-0007be-L7
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:32:40 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-57883b25b50so2384698a12.2
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:32:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716989556; x=1717594356; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yulUsyJIQ8oW6NmMzCSNnuTWpI0hdThdokzV/awQcLo=;
- b=xJVNfqCHeDGbA/bMsTWaDEht2wUHY21rXBQNkU2TCCeUPJI20s2uRUKuDb5L84Ey1W
- q8BZmoLMOa5dwo8wUu/PJI5OsHg4NH+tpRT8EH3g39tb5JXbQgPO3L0MRKSKq+8NfpiM
- UWkrBFc7Z6Rv0UT5XsuglG5uq3rk/4gwkNwedXJ7kwPx2kQ/hDgTQn/3wN4tu/ho3yxS
- tDeDVpAW6m3/F2di0/2jYa7hYNfbApwEkcY5qBEX1qqC48hkBGspFgyhqEb2+tzP0Ukj
- EyAOtPrvLQ32ttT8Keh8kmlQOYsjIUQ4BCx1d9LwjrpfWHfnl5fPlLf2x0wfQW4wbRp9
- WPAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716989556; x=1717594356;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yulUsyJIQ8oW6NmMzCSNnuTWpI0hdThdokzV/awQcLo=;
- b=aIWYBsSsRrDsH4EWCxemyLsGk7aQ5/Wxsx/HeX/TnZklanMxzOe1t/OQEFHxXts4vU
- eahExh7hOCVNUjkS+ce301Ods834bIBb5YLiPJG7lseqLSDWYhFFO3OyNwMR1kaB8hWj
- EUu7mVbafANtsC6mbVZJ0RrxUix5mU5xKPpyKeVHwB0NPwa3oyr09QqHb4hvMjsNo4bP
- prTmUrD0w8Z+uJSyx8EbOvvJe8ODDum2uwnDEeWzoVLesrR+jzXgSLBucL8iREvWFhBI
- vgNmetGfVuOXHf1ZrivA2OPfaicBVdWZEBGaInsC7BiFB6xrcELMMl3AVO9WVIrTSHgs
- BkpQ==
-X-Gm-Message-State: AOJu0YwPrdnI1bJcwewhGcHbqbLLpOVtUgvAJhPTivrNxa0y6lQ2Vug8
- g6Fa6ojuI11enCsiiNOzEQINUnr/CE5+xyOQQbh6K9f4XH7vkcmgtLqO+wX07KltpbevH04bByd
- kDPusZAYi0cb5MsCFixJukv61nfnWS+bu8jS8WQ==
-X-Google-Smtp-Source: AGHT+IGI3KNfZhwy1r1YW3spaLMvSnC+J9ZmDmbxH3rcvC5OtGZWj+sNT2R+x9Q8aYrRTersCi7kwRMKgrQet50b94s=
-X-Received: by 2002:a50:8a9b:0:b0:578:59a8:f36c with SMTP id
- 4fb4d7f45d1cf-57859a8f421mr7817249a12.42.1716989556269; Wed, 29 May 2024
- 06:32:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <oleg.sviridov@red-soft.ru>)
+ id 1sCHAj-0005NF-5P; Wed, 29 May 2024 07:08:45 -0400
+Received: from red-soft.ru ([188.246.186.2] helo=gw.red-soft.ru)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <oleg.sviridov@red-soft.ru>)
+ id 1sCHAf-0005iq-Mb; Wed, 29 May 2024 07:08:43 -0400
+Received: from localhost.localdomain.biz (unknown [10.81.100.51])
+ by gw.red-soft.ru (Postfix) with ESMTPA id 7B8713E1A85;
+ Wed, 29 May 2024 14:08:36 +0300 (MSK)
+From: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oleg Sviridov <oleg.sviridov@red-soft.ru>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] hw/net: prevent potential NULL dereference
+Date: Wed, 29 May 2024 14:07:18 +0300
+Message-ID: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-References: <20240524232121.284515-1-richard.henderson@linaro.org>
- <20240524232121.284515-4-richard.henderson@linaro.org>
- <CAFEAcA89_nWDXhXKds3gezUyXdXfO61bMNgSn=em166ufgQAbQ@mail.gmail.com>
- <3f1baa61-c623-4b5b-b724-15bb68a2df3f@linaro.org>
-In-Reply-To: <3f1baa61-c623-4b5b-b724-15bb68a2df3f@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 29 May 2024 14:32:22 +0100
-Message-ID: <CAFEAcA9ySeup4wE6BwtLYHi53PcktT1AME2Pg7CwgQsAJzb6WA@mail.gmail.com>
-Subject: Re: [PATCH v2 03/67] target/arm: Reject incorrect operands to PLD,
- PLDW, PLI
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-KLMS-Rule-ID: 1
+X-KLMS-Message-Action: clean
+X-KLMS-AntiSpam-Lua-Profiles: 185580 [May 29 2024]
+X-KLMS-AntiSpam-Version: 6.1.0.4
+X-KLMS-AntiSpam-Envelope-From: oleg.sviridov@red-soft.ru
+X-KLMS-AntiSpam-Rate: 0
+X-KLMS-AntiSpam-Status: not_detected
+X-KLMS-AntiSpam-Method: none
+X-KLMS-AntiSpam-Auth: dkim=none
+X-KLMS-AntiSpam-Info: LuaCore: 20 0.3.20
+ 743589a8af6ec90b529f2124c2bbfc3ce1d2f20f, {Tracking_arrow_text},
+ {Tracking_from_domain_doesnt_match_to}, 127.0.0.199:7.1.2; red-soft.ru:7.1.1;
+ d41d8cd98f00b204e9800998ecf8427e.com:7.1.1, FromAlignment: s
+X-MS-Exchange-Organization-SCL: -1
+X-KLMS-AntiSpam-Interceptor-Info: scan successful
+X-KLMS-AntiPhishing: Clean, bases: 2024/05/29 09:57:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30,
+ bases: 2024/05/29 05:10:00 #25335358
+X-KLMS-AntiVirus-Status: Clean, skipped
+Received-SPF: pass client-ip=188.246.186.2;
+ envelope-from=oleg.sviridov@red-soft.ru; helo=gw.red-soft.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 29 May 2024 09:34:10 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,48 +77,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 May 2024 at 18:36, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 5/28/24 06:18, Peter Maydell wrote:
-> > On Sat, 25 May 2024 at 00:25, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> For all, rm == 15 is invalid.
-> >> Prior to v8, thumb with rm == 13 is invalid.
-> >> For PLDW, rn == 15 is invalid.
-> >
-> >> Fixes a RISU mismatch for the HINTSPACE pattern in t32.risu
-> >> compared to a neoverse-n1 host.
-> >
-> > These are UNPREDICTABLE cases, not invalid. In general
-> > we don't try to match a specific implementation's
-> > UNPREDICTABLE choices.
-> >
-> > I think we're better off avoiding the mismatch by improving
-> > the risu patterns to avoid the UNPREDICTABLE cases.
->
-> We do plenty of other treatments of UNPREDICTABLE as UNDEF (e.g. STREX).  Why is this case
-> any different?
+Pointer, returned from function 'spapr_vio_find_by_reg', may be NULL and is dereferenced immediately after.
 
-It just seems like a lot of effort to go to. Sometimes we
-UNDEF for UNPREDICTABLEs, but quite often we say "the
-behaviour we get for free is fine, so no need to write
-extra code".
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-In this particular case, also:
- * we'd need to go back and cross-check against older
-   architecture manuals and also look at whether M-profile
-   and A-profile are doing the same thing here
- * the "v8 loosens the UNPREDICTABLE case for m = 13 T1
-   encoding" looks suspiciously to me like a "nobody ever
-   actually made this do anything except behave like the A1
-   encoding, so make T1 and A1 the same" kind of relaxation
+Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+---
+ hw/net/spapr_llan.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Basically, it would take me probably 15+ minutes to review
-the changes against the various versions of the docs and
-I don't think it's worth the effort :-)
+diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
+index ecb30b7c76..f40b733229 100644
+--- a/hw/net/spapr_llan.c
++++ b/hw/net/spapr_llan.c
+@@ -770,6 +770,10 @@ static target_ulong h_change_logical_lan_mac(PowerPCCPU *cpu,
+     SpaprVioVlan *dev = VIO_SPAPR_VLAN_DEVICE(sdev);
+     int i;
+ 
++    if (!dev) {
++        return H_PARAMETER;
++    }
++
+     for (i = 0; i < ETH_ALEN; i++) {
+         dev->nicconf.macaddr.a[ETH_ALEN - i - 1] = macaddr & 0xff;
+         macaddr >>= 8;
+-- 
+2.44.0
 
-thanks
--- PMM
 
