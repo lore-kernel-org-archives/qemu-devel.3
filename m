@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F55C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB03FC25B7E
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCLee-0006Yr-M3; Wed, 29 May 2024 11:55:56 -0400
+	id 1sCLi2-0001YT-LQ; Wed, 29 May 2024 11:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLed-0006YA-9Z
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:55:55 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLi1-0001Wy-Iw
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:59:25 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLeb-0001C8-DA
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:55:55 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-572c65cea55so225858a12.0
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:55:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLi0-0001ad-0g
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:59:25 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5788eaf5320so2647958a12.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716998151; x=1717602951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716998361; x=1717603161; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MEfV/LHTtxknexC1VCl/NQG/4BOPKASY1nM/6kx47Gc=;
- b=wajPMbqULDjaeHQbeW69vuMdr0OdIR5C43WifQ+OQWlHv+1rtgLDe0lBXxRH7UZdT+
- h2ow4N1YDPOVUzjUJtxaxgK94A7KYpvuFQvx/n888K+Ti78SJhEmvAQcr9k+5iYOtC9+
- yWAmSUTh8C3zg55Kyl+FI7/P4rN+HTApS8Dg8k3Zi60zAHjEauc9SiQWQhupa13haQBa
- QWUqsQde5WqERQy9BxlA2nxuV7yazFFpUVaMv7pSFYuu1lEHw4MnGc0InxkvD+goTESe
- l84fy4JbtIqgvovv5rBvHebRE4GNA8UneQXrwuVNnbOw2zfMhZlOiMhzfjg16vwWHH6E
- R0Ww==
+ bh=l2RowXhHBbxrob+0bISMh+r0iXs06Afi5Oflt9v9bTM=;
+ b=Byt6XeU3+sXdnt4xqp9RBMenGNNGA6BS2wQFeVrZRDVUGTRwTaH9msto6xD9CwPFxO
+ DE9iFSemWV5SNHySLiHDCZGJz0VktJ+mm7VfTKEwkwNB9kDfEWSBTWXm/SnALab0xSXj
+ Ex3hr+wNz7knKjBRs87tefrANLOVTH22FO39FG4rGrsLS8AN2PPLBOYgwT+BCqYYTP4U
+ vrVTbExq+jA20WbGODmyMK3YW6Y+2slCALLySqvQIBv2h9/CrQ+5TRrvN+FFPCe8Hwnz
+ t+Ox5NydrMIRTQFJe+9FIBI5zm+m2cp0HxeeC3PSYibfdzCoS4wycFyTxd8HnhiRkErF
+ vQgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716998151; x=1717602951;
+ d=1e100.net; s=20230601; t=1716998361; x=1717603161;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MEfV/LHTtxknexC1VCl/NQG/4BOPKASY1nM/6kx47Gc=;
- b=WHdelwCUflLtXYX7/deBw4F0iT0y/UbcTIMGpzBOxKPLJZWHqyTwi688EGA9Ib+2Sc
- FPntkxdKaMub3yhP81RY6IeEQXD6QatsIXF1e0NJ2COMtY3SomcpUafh/RiRykOJHXaD
- 1hQcNvl9LTdkAEKalSq7ubX1FwU8IQVhVDEz9Hgup5D+XqYHceAe+PJimSPDcLxKUqy6
- pwBqsywYcud4xY5j+KFDx7rFaW/+j/yc3sGWptnWXh5Gv6afk+ZfU80l2K9VdJxxD+dD
- zyG3Coeumj9bDaVvQB/a7t3vTORjvcBJrz9RzCx2fmWkATveb8r7nRezewweYZ20BvON
- Vi2g==
-X-Gm-Message-State: AOJu0YzVAx2VFvqqngNw2taWQzsMtSOVCfjMhk//2PnkxnAlqcrIbjHt
- 8WqxIUScwk8S+Fah2rrGNTBiZbeRUU24YQziHfjSbXkw+Uth5DfBvYCgRvYQ2e2vDND7mTMYF3K
- /
-X-Google-Smtp-Source: AGHT+IF2zXEH/FzFWK7yCrYJVFZ8FP4wvdf0M0a5GUAJXJHHid1EkqT3KLHnyL1pFclPTClj8dyaBQ==
-X-Received: by 2002:a50:9996:0:b0:579:d34c:396a with SMTP id
- 4fb4d7f45d1cf-57a03f7ec17mr2160355a12.11.1716998151227; 
- Wed, 29 May 2024 08:55:51 -0700 (PDT)
+ bh=l2RowXhHBbxrob+0bISMh+r0iXs06Afi5Oflt9v9bTM=;
+ b=fQ1927byyGBsrAnNHCOe0UoQRWQxdOptuqdrhqUQ7oGXfRQXrQ3qyQSKNUvmh4SabV
+ 8WVjVjTKOhGWlCYdxYdslbMCNBQeoj5zUJWBJt1UIYAEFt718UIZpxm7gVx3MWXRrgfc
+ mf8l375Ee0Sifu8duQZ8fRpb1CuaiXrcna2DJ5nRJs/L7iMQkoKL6wSOZBQWdCV2iZSk
+ s5z2fcqL53LegZtNcr34iZPJuyasaI0DQXZ05x+k845zZ3Q5Eo97UJ1EE4FTjVIzeqaa
+ ybQudWOO5s/9gq7Gev9OpK2BogJz0BODWFha0LxuVsxAD2vIOFq+haijE0d2OweemX3Q
+ VQNQ==
+X-Gm-Message-State: AOJu0Yw0N2AMtJKAvyGg3jW1sYHjQ95LlGayo7K+VvaWUV14/1SiafLC
+ ewbku979MiKvBVufod2mBpxKWL38foxEWhnLW96KVZeOOiTP/MbssQ5LqqWuCU9HTEKh1Mvf+sb
+ I
+X-Google-Smtp-Source: AGHT+IFcuNO1RSdGuGzraSWcMfaRtInk53BI9nXYPpEA9l2ujhM6/vcBG/3wjP8uDmADKc3KCuMcMw==
+X-Received: by 2002:a17:906:280a:b0:a59:dd90:baeb with SMTP id
+ a640c23a62f3a-a6264f0ef79mr1168884866b.48.1716998361018; 
+ Wed, 29 May 2024 08:59:21 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.204.141])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57860a2eab3sm7462003a12.28.2024.05.29.08.55.50
+ a640c23a62f3a-a626cc519cesm728607366b.113.2024.05.29.08.59.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 29 May 2024 08:55:50 -0700 (PDT)
+ Wed, 29 May 2024 08:59:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/3] semihosting: Restrict to TCG
-Date: Wed, 29 May 2024 17:55:45 +0200
-Message-ID: <20240529155548.5878-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] accel: Restrict probe_access*() functions to TCG
+Date: Wed, 29 May 2024 17:59:18 +0200
+Message-ID: <20240529155918.6221-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,18 +93,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is pointless to build semihosting when TCG is not available.
+This API is specific to TCG (already handled by hardware
+accelerators), so restrict it with #ifdef'ry. Remove
+unnecessary stubs.
 
-Philippe Mathieu-Daudé (3):
-  target/mips: Restrict semihosting to TCG
-  target/riscv: Restrict semihosting to TCG
-  semihosting: Restrict to TCG
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20240529155548.5878-1-philmd@linaro.org>
+---
+ include/exec/exec-all.h |  7 ++++++-
+ accel/stubs/tcg-stub.c  | 14 --------------
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
- semihosting/Kconfig  | 1 +
- target/mips/Kconfig  | 2 +-
- target/riscv/Kconfig | 4 ++--
- 3 files changed, 4 insertions(+), 3 deletions(-)
-
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index b6b46ad13c..72240ef426 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -301,6 +301,9 @@ static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+ {
+ }
+ #endif
++
++#if defined(CONFIG_TCG)
++
+ /**
+  * probe_access:
+  * @env: CPUArchState
+@@ -357,6 +360,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+                        bool nonfault, void **phost, uintptr_t retaddr);
+ 
+ #ifndef CONFIG_USER_ONLY
++
+ /**
+  * probe_access_full:
+  * Like probe_access_flags, except also return into @pfull.
+@@ -392,7 +396,8 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+                           MMUAccessType access_type, int mmu_idx,
+                           void **phost, CPUTLBEntryFull **pfull);
+ 
+-#endif
++#endif /* !CONFIG_USER_ONLY */
++#endif /* CONFIG_TCG */
+ 
+ static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
+ {
+diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
+index dd890d6cf6..7f4208fddf 100644
+--- a/accel/stubs/tcg-stub.c
++++ b/accel/stubs/tcg-stub.c
+@@ -18,20 +18,6 @@ void tb_flush(CPUState *cpu)
+ {
+ }
+ 
+-int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+-                       MMUAccessType access_type, int mmu_idx,
+-                       bool nonfault, void **phost, uintptr_t retaddr)
+-{
+-     g_assert_not_reached();
+-}
+-
+-void *probe_access(CPUArchState *env, vaddr addr, int size,
+-                   MMUAccessType access_type, int mmu_idx, uintptr_t retaddr)
+-{
+-     /* Handled by hardware accelerator. */
+-     g_assert_not_reached();
+-}
+-
+ G_NORETURN void cpu_loop_exit(CPUState *cpu)
+ {
+     g_assert_not_reached();
 -- 
 2.41.0
 
