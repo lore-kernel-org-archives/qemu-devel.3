@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B771C25B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B980FC41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCLsH-0000f2-5f; Wed, 29 May 2024 12:10:01 -0400
+	id 1sCLsL-0000nn-7D; Wed, 29 May 2024 12:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCLsD-0000d9-Oo
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:09:58 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1sCLsI-0000jE-95
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:10:02 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCLrx-0003IL-Vh
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:09:57 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a61b70394c0so265127366b.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 09:09:41 -0700 (PDT)
+ id 1sCLs0-0003Jo-7B
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:10:00 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-52ad8230bb9so1088527e87.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 09:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716998980; x=1717603780; darn=nongnu.org;
+ d=linaro.org; s=google; t=1716998982; x=1717603782; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uLMfOIC0M6UjEiTjbHQfPonFA1Fbh58cXgqyObzz2H0=;
- b=DsLEgT+LeP5vwy+DFlqew/KR2R6dXZWPn8+XPxhx106d2xOLzaBoxUWAfsMoyIMzEW
- 330TjaR7FuyFCLy6HwVUVMHhyl23CGx0gRl2ko06RIZO8T10B0kJdJbXV91GwlAuVCk0
- yKhipM+RRYDtXyeqQjaX40jiGkN1g2j6tqFCNM1Sta5/DNrGPtry5K1u3POONxc4kg0P
- tQm8ueKch+u7cPbSo3adm+WUhHTXrDp9O4GNHtMvgDJv1PW2Ld+HZkHoNmdT4d5PboXS
- uLA8YLPqG7elDL1BZABa3mG53wADCQRAlRgW6n+k5p/794ec0DmNKefyHGN17Q99yXk8
- DLBA==
+ bh=/qJ7xDiNWdg4bRPzfstpnmSMAmVg6rR997URbUEFLNQ=;
+ b=lRk/hi54fIATeGFKcp1IGJyrUncJI8v0c76cYg34s5wL8UDhV9QG7KSpzBnoS7ndi+
+ PmCAbgMJhZ4XhUWSQENqbT7kY0SBGZvuRFCkNPgWewCZ0Yn20F5jXfx4vYHbI8aVP8Sy
+ pnvb2NlOMkcPPhMQcdY9SRWd1fo8oXsI+LC2bhtbBnIpbFy8c9KKECQzjiKIWPp60w5d
+ osXunwKhuflZ3Oyxb8viwcwTH9b6i8be678q72jO2uQeTpWObCYVhuo72r+MQmWX96/n
+ yef0+qVunFEsTh5VNk9UbhqMBpOxWw/kHCt5plLE91KiWjFPN+gc0btLeoXgBKhWywwF
+ OhTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716998980; x=1717603780;
+ d=1e100.net; s=20230601; t=1716998982; x=1717603782;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uLMfOIC0M6UjEiTjbHQfPonFA1Fbh58cXgqyObzz2H0=;
- b=GY70xL5kIPsmpTVuMmx3xzkVlz5ycsiBGX84rzu00OlwJ9kwtAoMifv9RPMWtJZKn3
- x0wWRxyAyRXpAspyyPwVw1FwLEiVtoZGZjVWFAEvHhoC4nmdnGWHmbIXGUhblO99xIsd
- XeLJMrxViZ9ZWgMraHb7xAF2kQfIiMkfMDulZzZdUpdeIo0LJq/QqzIRwyWBsbqHpYrW
- daJRj7ptvu2S8d9JVEQw/Ll/wdQ6NT/QRWVzrQK/0ur8QZq6BLZfx1pL4+b4LYGQwnNw
- w9c8vitqm1gux9GwArG72kNd9krFhSWy4B3N3QE4Egdc/NSY4SZGUFm+UtfnNzmq3RER
- 42ow==
-X-Gm-Message-State: AOJu0Ywy2tvxVC5HBqkf4qsRaGpbfPk2Hya3W4QhBfjKrKfAXE3cyZCd
- 9bIb7IWzqNtEpp7fpDovFrIS9dF1wjrXJjB+Dz9mWGGD+u+POxtPmis8X9gC0kg=
-X-Google-Smtp-Source: AGHT+IGibP4ee9T4MPCyGEUiuvCqTiuPAc1oiOIKTjz/WIGnHqyNN02usNxYINKIHESZhVmkeDpmYQ==
-X-Received: by 2002:a17:906:fb03:b0:a62:415b:b5c with SMTP id
- a640c23a62f3a-a62641a2a26mr966637966b.5.1716998980355; 
+ bh=/qJ7xDiNWdg4bRPzfstpnmSMAmVg6rR997URbUEFLNQ=;
+ b=ZMAtR+87CW3Fr4AJx2NJWHwd42CCehUSY/+mi7mJPgxwfkluH+johj4We6RN5AqHxj
+ wvowFMy6PaNX9quU2sVicvmSdTapR03Xwp9tFrjil2MRhxOAnVHMpldvhTN54LaVpujZ
+ UfZTkwDafj84ALczTjUazZq8y4x9xRmeJ5v8RIvHVKnVx8vdY4uh94+dbaUAcgo+e06p
+ NsyKDEHmoaIeQyzam/tZIcXJdjusARXcPO0hK4s6cpnAxqpbV2GlUE3wQyJkJ88u/l/X
+ veHgrBT/4q1lg+c6tIg5f8PXA8VLFrXxiDKOwdfgucK/QwI14oMaGVCUeVVoLW0cVmYZ
+ 3tuQ==
+X-Gm-Message-State: AOJu0YwqdmjbDkfXX1TvGFRU2GjUuu+B3cv8xKBUoGilol9wyStbRoqY
+ WzIToiRE1tPmp7GVEsGj7R5rKc1wWMEy7E+LAK7AnHdMxqrVdA0c3IaD20m7Q6w=
+X-Google-Smtp-Source: AGHT+IEwderT+q3O8iYlmC30u+S23KECjoGwC6m/uDArvq4roozqGxTlhhFI4gabd8hrVhcnho3D3w==
+X-Received: by 2002:ac2:5dca:0:b0:51e:150e:2c45 with SMTP id
+ 2adb3069b0e04-52966e9ac88mr9614472e87.63.1716998980558; 
  Wed, 29 May 2024 09:09:40 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626c934fd8sm727651966b.47.2024.05.29.09.09.37
+ 4fb4d7f45d1cf-5798d861b05sm5993830a12.25.2024.05.29.09.09.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 29 May 2024 09:09:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 06C3F5FA95;
- Wed, 29 May 2024 17:09:36 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id E4DE55FA94;
+ Wed, 29 May 2024 17:09:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>,
@@ -80,24 +80,25 @@ Cc: Laurent Vivier <lvivier@redhat.com>,
  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
  Radoslaw Biernacki <rad@semihalf.com>
-Subject: [PATCH 10/10] tests/avocado: update sbsa-ref firmware
-Date: Wed, 29 May 2024 17:09:34 +0100
-Message-Id: <20240529160934.982373-11-alex.bennee@linaro.org>
+Subject: [PATCH 09/10] scripts/ci: drive ubuntu/build-environment.yml from
+ lcitool
+Date: Wed, 29 May 2024 17:09:33 +0100
+Message-Id: <20240529160934.982373-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240529160934.982373-1-alex.bennee@linaro.org>
 References: <20240529160934.982373-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,87 +114,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Now lcitool can write the package list for us we no longer need to
+duplicate the information directly in build-environment.
 
-Partial support for NUMA setup:
-- cpu nodes
-- memory nodes
-
-Used versions:
-
-- Trusted Firmware v2.11.0
-- Tianocore EDK2 stable202405
-- Tianocore EDK2 Platforms code commit 4bbd0ed
-
-Firmware is built using Debian 'bookworm' cross toolchain (gcc 12.2.0).
-
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Reviewed-by: Leif Lindholm <quic_llindhol@quicinc.com>
-Message-Id: <20240528182917.91027-1-marcin.juszkiewicz@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/avocado/machine_aarch64_sbsaref.py | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ scripts/ci/setup/ubuntu/build-environment.yml | 131 +-----------------
+ 1 file changed, 7 insertions(+), 124 deletions(-)
 
-diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-index 98c76c1ff7..6bb82f2a03 100644
---- a/tests/avocado/machine_aarch64_sbsaref.py
-+++ b/tests/avocado/machine_aarch64_sbsaref.py
-@@ -37,18 +37,18 @@ def fetch_firmware(self):
+diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
+index e82097b465..edf1900b3e 100644
+--- a/scripts/ci/setup/ubuntu/build-environment.yml
++++ b/scripts/ci/setup/ubuntu/build-environment.yml
+@@ -32,135 +32,18 @@
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
  
-         Used components:
+-    # lcitool variables -f json ubuntu-2204 qemu | jq -r '.pkgs[]' | xargs -n 1 echo "-"
+-    - name: Install basic packages to build QEMU on Ubuntu 22.04
+-      package:
+-        name:
+-          - bash
+-          - bc
+-          - bison
+-          - bsdextrautils
+-          - bzip2
+-          - ca-certificates
+-          - ccache
+-          - clang
+-          - dbus
+-          - debianutils
+-          - diffutils
+-          - exuberant-ctags
+-          - findutils
+-          - flex
+-          - g++
+-          - gcc
+-          - gcovr
+-          - genisoimage
+-          - gettext
+-          - git
+-          - hostname
+-          - libaio-dev
+-          - libasan5
+-          - libasound2-dev
+-          - libattr1-dev
+-          - libbpf-dev
+-          - libbrlapi-dev
+-          - libbz2-dev
+-          - libc6-dev
+-          - libcacard-dev
+-          - libcap-ng-dev
+-          - libcapstone-dev
+-          - libcmocka-dev
+-          - libcurl4-gnutls-dev
+-          - libdaxctl-dev
+-          - libdrm-dev
+-          - libepoxy-dev
+-          - libfdt-dev
+-          - libffi-dev
+-          - libgbm-dev
+-          - libgcrypt20-dev
+-          - libglib2.0-dev
+-          - libglusterfs-dev
+-          - libgnutls28-dev
+-          - libgtk-3-dev
+-          - libibumad-dev
+-          - libibverbs-dev
+-          - libiscsi-dev
+-          - libjemalloc-dev
+-          - libjpeg-turbo8-dev
+-          - libjson-c-dev
+-          - liblttng-ust-dev
+-          - liblzo2-dev
+-          - libncursesw5-dev
+-          - libnfs-dev
+-          - libnuma-dev
+-          - libpam0g-dev
+-          - libpcre2-dev
+-          - libpixman-1-dev
+-          - libpng-dev
+-          - libpulse-dev
+-          - librbd-dev
+-          - librdmacm-dev
+-          - libsasl2-dev
+-          - libsdl2-dev
+-          - libsdl2-image-dev
+-          - libseccomp-dev
+-          - libslirp-dev
+-          - libsnappy-dev
+-          - libspice-protocol-dev
+-          - libssh-dev
+-          - libsystemd-dev
+-          - libtasn1-6-dev
+-          - libubsan1
+-          - libudev-dev
+-          - liburing-dev
+-          - libusb-1.0-0-dev
+-          - libusbredirhost-dev
+-          - libvdeplug-dev
+-          - libvirglrenderer-dev
+-          - libvte-2.91-dev
+-          - libxml2-dev
+-          - libzstd-dev
+-          - llvm
+-          - locales
+-          - make
+-          - meson
+-          - multipath-tools
+-          - ncat
+-          - nettle-dev
+-          - ninja-build
+-          - openssh-client
+-          - pkgconf
+-          - python3
+-          - python3-numpy
+-          - python3-opencv
+-          - python3-pillow
+-          - python3-pip
+-          - python3-sphinx
+-          - python3-sphinx-rtd-theme
+-          - python3-venv
+-          - python3-yaml
+-          - rpm2cpio
+-          - sed
+-          - sparse
+-          - systemtap-sdt-dev
+-          - tar
+-          - tesseract-ocr
+-          - tesseract-ocr-eng
+-          - texinfo
+-          - xfslibs-dev
+-          - zlib1g-dev
+-        state: present
++    # the package lists are updated by "make lcitool-refresh"
++    - name: Include package lists based on OS and architecture
++      include_vars:
++        file: "ubuntu-2204-{{ ansible_facts['architecture'] }}.yaml"
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
++        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
  
--        - Trusted Firmware 2.10.2
--        - Tianocore EDK2 stable202402
--        - Tianocore EDK2-platforms commit 085c2fb
-+        - Trusted Firmware 2.11.0
-+        - Tianocore EDK2 stable202405
-+        - Tianocore EDK2-platforms commit 4bbd0ed
- 
-         """
- 
-         # Secure BootRom (TF-A code)
-         fs0_xz_url = (
-             "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
--            "20240313-116475/edk2/SBSA_FLASH0.fd.xz"
-+            "20240528-140808/edk2/SBSA_FLASH0.fd.xz"
-         )
--        fs0_xz_hash = "637593749cc307dea7dc13265c32e5d020267552f22b18a31850b8429fc5e159"
-+        fs0_xz_hash = "fa6004900b67172914c908b78557fec4d36a5f784f4c3dd08f49adb75e1892a9"
-         tar_xz_path = self.fetch_asset(fs0_xz_url, asset_hash=fs0_xz_hash,
-                                       algorithm='sha256')
-         archive.extract(tar_xz_path, self.workdir)
-@@ -57,9 +57,9 @@ def fetch_firmware(self):
-         # Non-secure rom (UEFI and EFI variables)
-         fs1_xz_url = (
-             "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
--            "20240313-116475/edk2/SBSA_FLASH1.fd.xz"
-+            "20240528-140808/edk2/SBSA_FLASH1.fd.xz"
-         )
--        fs1_xz_hash = "cb0a5e8cf5e303c5d3dc106cfd5943ffe9714b86afddee7164c69ee1dd41991c"
-+        fs1_xz_hash = "5f3747d4000bc416d9641e33ff4ac60c3cc8cb74ca51b6e932e58531c62eb6f7"
-         tar_xz_path = self.fetch_asset(fs1_xz_url, asset_hash=fs1_xz_hash,
-                                       algorithm='sha256')
-         archive.extract(tar_xz_path, self.workdir)
-@@ -98,15 +98,15 @@ def test_sbsaref_edk2_firmware(self):
- 
-         # AP Trusted ROM
-         wait_for_console_pattern(self, "Booting Trusted Firmware")
--        wait_for_console_pattern(self, "BL1: v2.10.2(release):")
-+        wait_for_console_pattern(self, "BL1: v2.11.0(release):")
-         wait_for_console_pattern(self, "BL1: Booting BL2")
- 
-         # Trusted Boot Firmware
--        wait_for_console_pattern(self, "BL2: v2.10.2(release)")
-+        wait_for_console_pattern(self, "BL2: v2.11.0(release)")
-         wait_for_console_pattern(self, "Booting BL31")
- 
-         # EL3 Runtime Software
--        wait_for_console_pattern(self, "BL31: v2.10.2(release)")
-+        wait_for_console_pattern(self, "BL31: v2.11.0(release)")
- 
-         # Non-trusted Firmware
-         wait_for_console_pattern(self, "UEFI firmware (version 1.0")
+-    # not all packages are available for all architectures
+-    - name: Install additional packages to build QEMU on Ubuntu 22.04
++    - name: Install packages for QEMU on Ubuntu 22.04
+       package:
+-        name:
+-          - libpmem-dev
+-          - libspice-server-dev
+-          - libxen-dev
+-        state: present
++        name: "{{ packages }}"
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
 -- 
 2.39.2
 
