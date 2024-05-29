@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD2EC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D11C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCGxd-0004Zx-2p; Wed, 29 May 2024 06:55:13 -0400
+	id 1sCGy5-0004zw-D2; Wed, 29 May 2024 06:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxb-0004Yn-BH
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxy-0004rt-Rr
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxY-00037w-QD
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxw-0003KR-Ak
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716980108;
+ s=mimecast20190719; t=1716980131;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rJ+27ZTIPKuiVc0o8qZqa52r5nGNmKQfLzK98i0xub4=;
- b=cFpVfds3iVKw3VikrvMnDAQKTDJoTuSvKSdVcsFFSp94nvttqjE0YPd9gZCeHHBVJmpeOY
- 9EWEtT2SXasKjGR3qA1wRM2prbSSj+kNpV76lkH2+E5Y6q6YLMbpaI0wlBQo3A27wtl6RP
- dxfJZ+1cD/MK0vXGT9hw8p1UQmjLcPw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-198-AAcK9wkiOtGBcoFIcmcMMw-1; Wed, 29 May 2024 06:55:04 -0400
-X-MC-Unique: AAcK9wkiOtGBcoFIcmcMMw-1
+ bh=rGb/RILBhYMAN7fWJUVgnqoFXHbHayxm0agE2VkqDQE=;
+ b=h/Utd7L74mTcjEA/FaDZu7fZ0EvHbufHcrMNIgZR8D3UPnIxpzS3uleuZ0Izy8NyypUuvh
+ lnTyPxc6lPP4TcZ2M8CXAcdY7ugqoS2INkmmkBdS6e0XTm84cIljmWggdz+6pMM4uzycVe
+ Tr+JE7O/14u5TtHwJ8W0PTiOG/ajUsQ=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-bub8m2oSMQ-9XNniAS4ABg-1; Wed,
+ 29 May 2024 06:55:30 -0400
+X-MC-Unique: bub8m2oSMQ-9XNniAS4ABg-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 32A2685A58C;
- Wed, 29 May 2024 10:55:04 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D39B43806701;
+ Wed, 29 May 2024 10:55:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.109])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AB974105480A;
- Wed, 29 May 2024 10:55:02 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 33E63105480A;
+ Wed, 29 May 2024 10:55:28 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-s390x@nongnu.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 05/22] target/s390x: Disable conditional branch-to-next for PER
-Date: Wed, 29 May 2024 12:54:37 +0200
-Message-ID: <20240529105454.1149225-6-thuth@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 17/22] hw/s390x: Remove unused macro VMSTATE_ADAPTER_ROUTES
+Date: Wed, 29 May 2024 12:54:49 +0200
+Message-ID: <20240529105454.1149225-18-thuth@redhat.com>
 In-Reply-To: <20240529105454.1149225-1-thuth@redhat.com>
 References: <20240529105454.1149225-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -81,46 +83,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+It's not used anywhere, so let's simply remove it.
 
-For PER, we require a conditional call to helper_per_branch
-for the conditional branch.  Fold the remaining optimization
-into a call to helper_goto_direct, which will take care of
-the remaining gbea adjustment.
-
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240502054417.234340-6-richard.henderson@linaro.org>
+Message-ID: <20240527121351.211266-1-thuth@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/tcg/translate.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/hw/s390x/s390_flic.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index de98115c4d..07620948ae 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -1131,13 +1131,13 @@ static DisasJumpType help_branch(DisasContext *s, DisasCompare *c,
-         goto egress;
-     }
-     if (is_imm) {
--        if (dest == s->pc_tmp) {
--            /* Branch to next.  */
--            per_branch(s, true);
--            ret = DISAS_NEXT;
--            goto egress;
--        }
--        if (c->cond == TCG_COND_ALWAYS) {
-+        /*
-+         * Do not optimize a conditional branch if PER enabled, because we
-+         * still need a conditional call to helper_per_branch.
-+         */
-+        if (c->cond == TCG_COND_ALWAYS
-+            || (dest == s->pc_tmp &&
-+                !(s->base.tb->flags & FLAG_MASK_PER_BRANCH))) {
-             ret = help_goto_direct(s, dest);
-             goto egress;
-         }
+diff --git a/include/hw/s390x/s390_flic.h b/include/hw/s390x/s390_flic.h
+index bcb081def5..382d9833f1 100644
+--- a/include/hw/s390x/s390_flic.h
++++ b/include/hw/s390x/s390_flic.h
+@@ -35,9 +35,6 @@ typedef struct AdapterRoutes {
+ 
+ extern const VMStateDescription vmstate_adapter_routes;
+ 
+-#define VMSTATE_ADAPTER_ROUTES(_f, _s) \
+-    VMSTATE_STRUCT(_f, _s, 1, vmstate_adapter_routes, AdapterRoutes)
+-
+ #define TYPE_S390_FLIC_COMMON "s390-flic"
+ OBJECT_DECLARE_TYPE(S390FLICState, S390FLICStateClass,
+                     S390_FLIC_COMMON)
 -- 
 2.45.1
 
