@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5564EC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BB5C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:27:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCCli-0001fJ-5x; Wed, 29 May 2024 02:26:38 -0400
+	id 1sCCmW-0002Gt-3H; Wed, 29 May 2024 02:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sCClg-0001eo-HG
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:26:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sCCle-0005sM-KH
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:26:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716963993;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5o65ZxxHtLh+QTTdQSSYj01W9SQJYxql/oLicv2uXDY=;
- b=Ca+sdwtBn1Nc4nUNyOoEjJDneSP+BuX10vSVydfUgMZ6kDYrZjwN1oRFRcs2EX3MMljqhk
- 63PftEbmtCCfDEflQoBymCJzJKjKmBpyceJmZgiu3ypPHmornGfsp94Dg010Gvz8JKYv+v
- 71GTpwvN2RCFlPJmxqMq0sZAAtUX4Z8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-363-5gI7Z8YzN9Ob3mcuvAgrUA-1; Wed, 29 May 2024 02:26:29 -0400
-X-MC-Unique: 5gI7Z8YzN9Ob3mcuvAgrUA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 34EBC800CA5;
- Wed, 29 May 2024 06:26:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BF4E3286E;
- Wed, 29 May 2024 06:26:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A9C1B21E668F; Wed, 29 May 2024 08:26:27 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  Alex Williamson <alex.williamson@redhat.com>,  Avihai
- Horon <avihaih@nvidia.com>,  Eric Auger <eric.auger@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v7 1/9] vfio: Add Error** argument to
- .set_dirty_page_tracking() handler
-In-Reply-To: <20240516124658.850504-2-clg@redhat.com> (=?utf-8?Q?=22C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater"'s
- message of "Thu, 16 May 2024 14:46:50 +0200")
-References: <20240516124658.850504-1-clg@redhat.com>
- <20240516124658.850504-2-clg@redhat.com>
-Date: Wed, 29 May 2024 08:26:27 +0200
-Message-ID: <878qztp20c.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCCmU-0002Fw-6U
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:27:26 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCCmS-0005vh-Lj
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:27:25 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a62ef52e837so179344466b.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 23:27:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716964043; x=1717568843; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PPpsvwIIM/9rhJtSqKc0KQFiyKVA/H6AMru5rb7zErE=;
+ b=pbvnAn//hEFunF5Z1vCtOuichJSH2XUSyTxaAhb+fMK8IBfOiqee/ulGJrYyuEyG9i
+ 1F9r+1/m40djs2QCT6wZE/nHQbYLm78Szc0CMS0rYNPGXPo0Rzz1pTrDXLqOHkjxrK35
+ JfxGcbNgs5P5aA1v1yttJltFLuC/BijdpaJJn7Kw+o64wamIfNMxZ+zDXCsZf8bH7EE8
+ g+xSURVgmLxg7HnP6v8dVC7TVdEPp0XRIF+GkypL4sYKv7gRdIgu723xy0i5mGLttL7U
+ XUJgaKmzjNFFxIKNB9gHOd02ziE+V4+/kRXZULezTES7+4tQv6uap6Qrf510bL16u4R4
+ BaeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716964043; x=1717568843;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PPpsvwIIM/9rhJtSqKc0KQFiyKVA/H6AMru5rb7zErE=;
+ b=HInDvvFXzzqapopK+d852PS1YO8p/pJIFs2GVBn10EyFdLPMqNR58cn6RXVNIjRjX1
+ B405C5nWDsbfeC9cPD9nhoAvZMI8dJUhAdJdCEfPRHnoUxSLiJSpVkqrDppzHcrwbclZ
+ p8WrVBkYAQcoIN771UUrL6ZpWLoevVMC5xbhHbgwZ07yUN/5wWVuieWDIu7gzLyvvNYT
+ 4dZpKwj1iuU/xgmHknTT31Ipc1qUlCe6Q0WaPh0J9p0qNnioKoLaQ+kDs9gRxe4NmEmu
+ NR/O1TIIIeNt0ObiolusVFRJIwUiJPaCiER9qORvY4vgCzumxYtTb/vOO2T06C9XYuVD
+ 1xjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5zK3LWYc3L/WgAz0SiYRenxrho0UysZfZOiyEZY1LvFnm4N+rZdzzIaMoz5+aCxG87sWivvbfWmpSjEYtde1OvbdFEyg=
+X-Gm-Message-State: AOJu0YyOsLJ1AkCeRbCaOB4ld8ubEaWjU6e+J+hZEAyzvlOccoOc0XBh
+ fLhcJjCtOj+nloBp59b57T4HRuaOzHG6na6XGNzq3MNvAY/1PSyxE88Cpn82H8s=
+X-Google-Smtp-Source: AGHT+IFs98FdTZGkXttf9aGjEnJQxjJEhUAhbqLbmeNxEMiuBbckShJkOtFX3BkFIK36OBREyQueyQ==
+X-Received: by 2002:a17:907:984c:b0:a62:a63c:18f0 with SMTP id
+ a640c23a62f3a-a62a63c1a10mr756880366b.1.1716964042967; 
+ Tue, 28 May 2024 23:27:22 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a635b2b7cdcsm83720266b.139.2024.05.28.23.27.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 May 2024 23:27:22 -0700 (PDT)
+Message-ID: <c22df582-735c-457e-a9aa-cd931e0beadf@linaro.org>
+Date: Wed, 29 May 2024 08:27:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] hw/misc: Create STM32L4x5 SYSCFG clock
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Damien Hedde
+ <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>,
+ Luc Michel <luc@lmichel.fr>, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240523194441.21036-1-ines.varhol@telecom-paris.fr>
+ <20240523194441.21036-2-ines.varhol@telecom-paris.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240523194441.21036-2-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,170 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I had a look at this before I realized it's already in.  I'm sending
-this out not to demand any change, but only to point out an issue to be
-avoided in future work.
-
-C=C3=A9dric Le Goater <clg@redhat.com> writes:
-
-> We will use the Error object to improve error reporting in the
-> .log_global*() handlers of VFIO. Add documentation while at it.
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+On 23/5/24 21:41, Inès Varhol wrote:
+> This commit creates a clock in STM32L4x5 SYSCFG and wires it up to the
+> corresponding clock from STM32L4x5 RCC.
+> 
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
 > ---
->  include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
->  hw/vfio/common.c                      |  4 ++--
->  hw/vfio/container-base.c              |  4 ++--
->  hw/vfio/container.c                   |  6 +++---
->  4 files changed, 23 insertions(+), 9 deletions(-)
->
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio=
--container-base.h
-> index 3582d5f97a37877b2adfc0d0b06996c82403f8b7..326ceea52a2030eec9dad289a=
-9845866c4a8c090 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -82,7 +82,7 @@ int vfio_container_add_section_window(VFIOContainerBase=
- *bcontainer,
->  void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
->                                         MemoryRegionSection *section);
->  int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-> -                                           bool start);
-> +                                           bool start, Error **errp);
->  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontaine=
-r,
->                                        VFIOBitmap *vbmap,
->                                        hwaddr iova, hwaddr size);
-> @@ -121,9 +121,23 @@ struct VFIOIOMMUClass {
->      int (*attach_device)(const char *name, VFIODevice *vbasedev,
->                           AddressSpace *as, Error **errp);
->      void (*detach_device)(VFIODevice *vbasedev);
-> +
->      /* migration feature */
-> +
-> +    /**
-> +     * @set_dirty_page_tracking
-> +     *
-> +     * Start or stop dirty pages tracking on VFIO container
-> +     *
-> +     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
-> +     *              page tracking
-> +     * @start: indicates whether to start or stop dirty pages tracking
-> +     * @errp: pointer to Error*, to store an error if it happens.
-> +     *
-> +     * Returns zero to indicate success and negative for error
-> +     */
->      int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
-> -                                   bool start);
-> +                                   bool start, Error **errp);
+>   include/hw/misc/stm32l4x5_syscfg.h |  1 +
+>   hw/arm/stm32l4x5_soc.c             |  2 ++
+>   hw/misc/stm32l4x5_syscfg.c         | 19 +++++++++++++++++--
+>   3 files changed, 20 insertions(+), 2 deletions(-)
 
-Note for later: this is always called via
-vfio_container_set_dirty_page_tracking().
-
->      int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
->                                VFIOBitmap *vbmap,
->                                hwaddr iova, hwaddr size);
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 8f9cbdc0264044ce587877a7d19d14b28527291b..485e53916491f1164d29e739f=
-b7106c0c77df737 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1076,7 +1076,7 @@ static bool vfio_listener_log_global_start(MemoryLi=
-stener *listener,
->      if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
->          ret =3D vfio_devices_dma_logging_start(bcontainer);
->      } else {
-> -        ret =3D vfio_container_set_dirty_page_tracking(bcontainer, true);
-> +        ret =3D vfio_container_set_dirty_page_tracking(bcontainer, true,=
- NULL);
->      }
->=20=20
->      if (ret) {
-> @@ -1096,7 +1096,7 @@ static void vfio_listener_log_global_stop(MemoryLis=
-tener *listener)
->      if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
->          vfio_devices_dma_logging_stop(bcontainer);
->      } else {
-> -        ret =3D vfio_container_set_dirty_page_tracking(bcontainer, false=
-);
-> +        ret =3D vfio_container_set_dirty_page_tracking(bcontainer, false=
-, NULL);
->      }
->=20=20
->      if (ret) {
-
-Note for later: all callers pass NULL to ignore the new Error.
-
-> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-> index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e36=
-8d7dff78a6d65aa 100644
-> --- a/hw/vfio/container-base.c
-> +++ b/hw/vfio/container-base.c
-> @@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerB=
-ase *bcontainer,
->  }
->=20=20
->  int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-> -                                           bool start)
-> +                                           bool start, Error **errp)
->  {
->      if (!bcontainer->dirty_pages_supported) {
->          return 0;
->      }
->=20=20
->      g_assert(bcontainer->ops->set_dirty_page_tracking);
-> -    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
-> +    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, e=
-rrp);
->  }
->=20=20
->  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontaine=
-r,
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 77bdec276ec49cb9cd767c0de42ec801b4421572..c35221fbe7dc5453050f97cd1=
-86fc958e24f28f7 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -209,7 +209,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBas=
-e *bcontainer, hwaddr iova,
->=20=20
->  static int
->  vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
-> -                                    bool start)
-> +                                    bool start, Error **errp)
->  {
->      const VFIOContainer *container =3D container_of(bcontainer, VFIOCont=
-ainer,
->                                                    bcontainer);
-> @@ -227,8 +227,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContain=
-erBase *bcontainer,
->      ret =3D ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
->      if (ret) {
->          ret =3D -errno;
-> -        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
-> -                     dirty.flags, errno);
-> +        error_setg_errno(errp, errno, "Failed to set dirty tracking flag=
- 0x%x",
-> +                         dirty.flags);
-
-Silent improvement: errno is now reported symbolically (like "Operation
-not permitted") instead of numerically (like "1").  Worth mentioning in
-the commit message.
-
-Since the callers pass NULL to ignore the Error, this error condition is
-now silent, I believe.
-
-I figure you correct this in later patches.  If we accept temporary loss
-of error reporting, the commit message should mention it.  Loss of error
-reporting is easy enough to avoid, though: have the callers pass a
-pointer to a local @err, and on failure report it with
-error_report_err().
-
->      }
->=20=20
->      return ret;
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
