@@ -4,72 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD4CCC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 18:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF14C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 18:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCNkb-0005W2-Sb; Wed, 29 May 2024 14:10:13 -0400
+	id 1sCNmU-0006at-A1; Wed, 29 May 2024 14:12:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sCNka-0005VN-8B
- for qemu-devel@nongnu.org; Wed, 29 May 2024 14:10:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sCNkX-0006a7-GF
- for qemu-devel@nongnu.org; Wed, 29 May 2024 14:10:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717006208;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JWJW1o0DQzIrkUsT+YH+wpBB8gEKuyl7IM2U817gIYU=;
- b=ab6c65q8/poscO82aePdnHZGwRa7pd9FR8tjYg2j2swz///whcBqV0Qr83Wd7T7n3FsVbU
- hva/s0uNtynjOtGfw+zryErPD+bjPPTkW/WqnQXNPAwioLseokhNVLhZFcGFCi0ZOekWeA
- aOiKSwFTXLXw242t75j08Z0qHjc4Mwc=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-_IsWFdNtNqSU4h0G37qUXg-1; Wed,
- 29 May 2024 14:10:04 -0400
-X-MC-Unique: _IsWFdNtNqSU4h0G37qUXg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8A0331C0513D;
- Wed, 29 May 2024 18:10:03 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.15])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E26FB28E5;
- Wed, 29 May 2024 18:10:02 +0000 (UTC)
-Date: Wed, 29 May 2024 14:10:01 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH 0/2] block/crypto: do not require number of threads upfront
-Message-ID: <20240529181001.GA1203999@fedora.redhat.com>
-References: <20240527155851.892885-1-stefanha@redhat.com>
- <Zldc2nY8pMciuvmB@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sCNmS-0006Zh-At
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 14:12:08 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sCNmP-0006v8-4x
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 14:12:08 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-57a033c2e8eso20478a12.3
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 11:12:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717006323; x=1717611123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=JKfuKxYZMtCyiFGKAW/HXBYYWxb55If/KdtPPMsmovc=;
+ b=WO2LBASZxk1Vd6gYwcefUE5vlvQkerKnjTAvE/BfXCNNSCYWTZ2fVSuUsTU4kfB1w/
+ hv4dl3syBFQ01BVHeV+I87NA+ICAQ8aDNdC6mJbUhQlkKoybHKzCkq6jnLEj90u/XVZk
+ wxQtOX06rA/wWefiLjXAS+JX/an6K3txk3pPMfXZnN963x0hNIfamHGUQwDumF2AgAZy
+ Pg6Hi80SnsB7Td0d9oZSe8r9PezY2JT79ijjq2s2ag5J3pLrOCjUdumHSt0PL2yHD0xn
+ YvKNsg04fEfAuNgMrM/1qbzLkxTOwNGQHQ8Uo7ppp6yPThTeXfept0EYa8dGXM1VsKiR
+ iPVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717006323; x=1717611123;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JKfuKxYZMtCyiFGKAW/HXBYYWxb55If/KdtPPMsmovc=;
+ b=szxaWBaXkACrb7l8qfX8T/epasBDWzxHw7UYNUN0JEEsgZF3EH25tJl9MTUgpWdzl+
+ bEBaS1EamvjQImAopNc8bbt9WytY8AV7RIpso/7faaqjPQjP2fwILHIHUozx/nRSad/E
+ fmeNLx4OG/UHPLSlAQSCPagwJ1K9CGxfuDu7UYMRQj80tNsfi7f4+uXfuvh4Gel5d6Cy
+ y4m7+KlG9NdiWpuaDKdUeqbE0+I0NM2tSkh0eFhgYwbzC33WoG5Csw0hofJMhdPs/WXi
+ p0H7PeXbFX4QMtLGCEA7Rg3nJaawDvNr8WdfAGNONVzPJz3onDTWhoinmbQW7EoUPqDa
+ z49w==
+X-Gm-Message-State: AOJu0YxHCgOYshXHcIYCmS/CyXYoOM/bJDaXUzlK53sYZBQMf3yt43Dm
+ DZ1EafbW9qDsK/lxvw1tsOSqbmN1R7rBYL6jK97eT1gOJSMFYMWbrv4a8Kd6jm8=
+X-Google-Smtp-Source: AGHT+IHggDZ1RY5VVsKNvnw6ycK96qXKgPVEl12of1HOWw7eZ8arB6M+7TypY0j1rMJ0U4n11DCAfg==
+X-Received: by 2002:a50:aa84:0:b0:56d:c928:ad76 with SMTP id
+ 4fb4d7f45d1cf-57851a8daebmr10155675a12.26.1717006323191; 
+ Wed, 29 May 2024 11:12:03 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-579d0d5aba4sm4758485a12.71.2024.05.29.11.12.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 11:12:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 092405F760;
+ Wed, 29 May 2024 19:12:02 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
+ <bleal@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,  John Snow <jsnow@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Pavel Dovgalyuk
+ <pavel.dovgaluk@ispras.ru>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,  qemu-arm@nongnu.org,  Joel
+ Stanley <joel@jms.id.au>,  Aurelien Jarno <aurelien@aurel32.net>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Marcin
+ Juszkiewicz <marcin.juszkiewicz@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-s390x@nongnu.org,  Radoslaw Biernacki
+ <rad@semihalf.com>
+Subject: Re: [PATCH 07/10] tests/lcitool: bump to latest version
+In-Reply-To: <8a71fea1-9446-458a-a30e-4b98ab75c410@redhat.com> (Thomas Huth's
+ message of "Wed, 29 May 2024 19:23:15 +0200")
+References: <20240529160934.982373-1-alex.bennee@linaro.org>
+ <20240529160934.982373-8-alex.bennee@linaro.org>
+ <8a71fea1-9446-458a-a30e-4b98ab75c410@redhat.com>
+Date: Wed, 29 May 2024 19:12:01 +0100
+Message-ID: <87cyp4ebda.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="8ioxNlhJl1w/Hjmw"
-Content-Disposition: inline
-In-Reply-To: <Zldc2nY8pMciuvmB@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,54 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Thomas Huth <thuth@redhat.com> writes:
 
---8ioxNlhJl1w/Hjmw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 29/05/2024 18.09, Alex Benn=C3=A9e wrote:
+>> We have to simultaneously update a few bits on our side as lcitool has
+>> already deprecated fedora-38, alpine-3.18 and centos-8-stream. However
+>> there is no change to the package list yet.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> Have you tried a CI run with these changes? I don't think this will
+> work yet. There are various issues with Fedora 40 that we need to
+> solve first. Some of them are addressed with patches in my pull
+> request from today, but others need more work first:
+>
+> - Avocado v88 is broken on Fedora 40 due to the missing "imp" package.
+>   I've got a pull request for lci-tool pending, but it is not merged yet:
+>   https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/489
+>
+> - The "clang-system" jobs are failing due to the new -fsanitize=3Dundefin=
+ed
+>   errors that it discovers. Question is whether we want to fix all of the=
+m,
+>   or whether we disable the error detection instead.
+>
+> - build-oss-fuzz job was failing, but that should get fixed with the
+>   patches from my PR from today (thanks to Alexander Bulekov for the
+>   patches)
+>
+> So unless I missed something, you've got to postpone this patch a
+> little bit.
 
-On Wed, May 29, 2024 at 06:50:34PM +0200, Kevin Wolf wrote:
-> Am 27.05.2024 um 17:58 hat Stefan Hajnoczi geschrieben:
-> > The block layer does not know how many threads will perform I/O. It is =
-possible
-> > to exceed the number of threads that is given to qcrypto_block_open() a=
-nd this
-> > can trigger an assertion failure in qcrypto_block_pop_cipher().
-> >=20
-> > This patch series removes the n_threads argument and instead handles an
-> > arbitrary number of threads.
-> > ---
-> > Is it secure to store the key in QCryptoBlock? In this series I assumed=
- the
-> > answer is yes since the QCryptoBlock's cipher state is equally sensitiv=
-e, but
-> > I'm not familiar with this code or a crypto expert.
->=20
-> I would assume the same, but I'm not merging this yet because I think
-> you said you'd like to have input from danpb?
->=20
-> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Ahh yes I see failures for:
 
-Yes, please wait until Dan comments.
+  build-oss-fuzz
+  clang-system
 
-Thanks,
-Stefan
+https://gitlab.com/stsquad/qemu/-/pipelines/1310569965/failures
 
---8ioxNlhJl1w/Hjmw
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+>  Thomas
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZXb3kACgkQnKSrs4Gr
-c8jogggAnZJmjLakaRgSFZwu3CDyHOb3n+jR4cVlH/MGFr8yhzOXsja3abpf0JNs
-NeLpHB5cGNl2i8sOpU0AxfpY7VghBhnWU5epzjtciOIDgo24q+HMpweqFtEoJCV4
-zX2G4licdckdXQPfYRPDcRuRHMfHb5XdJckLyqt5bA2aSxPVHweN0ckktP2HAzvD
-Wix0EvwsBq82hUu3y8GvIaTpDsHCl+fuLVQLNmg5SY4yDl0zjE1mYSImat6WeaIC
-U/sMB+hvj+UNwElnJncQN7rE8F9RDuVPwekE+Z+ISlEPVHiHnNotN7r7ty+R7tpz
-tXlSViPfcmf7KyjjWFIycB/1VlE7PA==
-=yep8
------END PGP SIGNATURE-----
-
---8ioxNlhJl1w/Hjmw--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
