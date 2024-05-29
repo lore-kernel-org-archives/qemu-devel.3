@@ -4,135 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8D2C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF44C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCDxx-0006Uq-50; Wed, 29 May 2024 03:43:21 -0400
+	id 1sCEAg-0001Nv-Ul; Wed, 29 May 2024 03:56:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDxr-0006UP-02
- for qemu-devel@nongnu.org; Wed, 29 May 2024 03:43:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDxo-0008KZ-Gy
- for qemu-devel@nongnu.org; Wed, 29 May 2024 03:43:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716968591;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VfQi7oDkOYGPbydfrlzBDuP1SXl4kxiefUA99Bxi+us=;
- b=dlFa017Yd2OhNFBWLyc854FmgnwZPpiNnut8A+bkjYURFbfPHdWZYd2xWFJddhGHl6cH4/
- PQMVy/R2OdjW763T4v+cnrBPrO4l9BY+ly/QSB/aQpi8KPZWg69H2okDjuVjdJcfjfu5jZ
- Tu5UYf9UKdzLbhqrNq9gPkZ0iUHxf30=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-DTT8Za70NqO4gecz3an3QQ-1; Wed, 29 May 2024 03:43:09 -0400
-X-MC-Unique: DTT8Za70NqO4gecz3an3QQ-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2e95a655afcso12631181fa.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 00:43:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
+ id 1sCEAf-0001Ni-HS; Wed, 29 May 2024 03:56:29 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
+ id 1sCEAd-0001iQ-GH; Wed, 29 May 2024 03:56:28 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-6f8cd25ebd5so727368a34.1; 
+ Wed, 29 May 2024 00:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716969385; x=1717574185; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qCDc0qSIrx+gT7/2fYqupgGbWDRahVb7zLFLhhmMUDY=;
+ b=eh9TcBTwvsx8+E+75yLXrbdoWYFWu63bd7F9rjeFyB7n/uOw6/MDhk6mhwO+1S0fqW
+ 614T+iAtB0LQwdNwlQemNfzaTGEtnmCG6gkm0jY+UlHrRvM+jxk7YikyrOFJ7LAlkN6G
+ 7OBZ/jXWqIan17QpzCPl9pIL9Wa16GsUimyivgn2/Q6trPZwyZdHx1cRacsp4qsoVOjz
+ ngizM+EC79xNyVWyz7mafrB2Fg3b/suOHKyflY31f2nyjp6CpTOUlrv0xoiTlBLTAHIK
+ jdmiQIjU/uZ577Sd5MQTVqG8ptBigaDK8PCnBz3nj0ul0Yr87HNuM45WqXvraen53zcv
+ Yn8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716968588; x=1717573388;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VfQi7oDkOYGPbydfrlzBDuP1SXl4kxiefUA99Bxi+us=;
- b=D32qw61TRwyRnBOYJtq9DQivQajNW7vI48OvXnZW74eueP9o3zxKzr3lfGJ7ydTwr/
- PMzvKJRlslteca1otQ6K/5ab258gnEmN6vfFJYY4bb0qvRskAENF4EROYdlxJztL90Qn
- 5WQXHypSsUx7DZCvd8pMF382A6DTjU+NB5x9qO9dWVkI1wAWzvqPWAwpomj5jBQcAH+w
- /Jn7/aiC/27QDptBpwun7Qa3pqchWPTYQdhfkLKyDQtRSO4SQTSLjHIQuYK9OCEcFXxa
- VuM7gsJdQ4h0HZVE+fW5ZmsJpDeMToWby8eKI+UaKoYjJNkRgQ9agc305XYuTtFLpi/V
- FUMA==
+ d=1e100.net; s=20230601; t=1716969385; x=1717574185;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qCDc0qSIrx+gT7/2fYqupgGbWDRahVb7zLFLhhmMUDY=;
+ b=r5JGtKVwoqzedmcsB7zYXAqbJCHb4Pg3OGscA2P9PDPjyxR/m1FWW57opm9MBnPywc
+ m0WV2US8zlS/qk5EICeuC87dk29HuY3/D776jP8MeVHnxQv8UwvpIqWWgbaLrfWanJ5V
+ SR05t2YUY82Is8GgM852Hvi1WAQGc83X82JFhyOCLP8Z4WdLjXnXOV98BGBj7je48j3U
+ t3nUMIfgHVFJesAYzxttW6K+yETSIjO2gWSlRjiP8eZHuKh5D6i4CUEuK6Hrgy/5Ybtp
+ yWuJwskLfpL2B9BMeFdHGA78bcpuOTyGk/GFbUmVLvlTsQl4pMttwH+UNnuH2kOiGIF/
+ 1KIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUwO2W3S6AdgVSPfypKvLdmK/8P8gp5QLAsLMaE25IWpU3KBDiw/8xYbpoSarfcOQoe7BeOlXvOHuqorcGRCu3UOGrlsM=
-X-Gm-Message-State: AOJu0YzpsHrKX46GXBakgJsXYRWW09AaU4QbM6YFoLTTfC/AW9BABeu4
- jLD7pMxd/Zo5fTkQoEJHrXBz4py2pSpY4vfJm76oLWjdGe6SzHZ6bVx4+2xNqD4SlJshdqEtdJa
- pLWtwlymuGVsP19wO+ER8IYB3ZKFGha9CopP7wEaISX/W9D7SYV6l
-X-Received: by 2002:a2e:bc08:0:b0:2e5:15d0:511c with SMTP id
- 38308e7fff4ca-2e95b287586mr121075651fa.40.1716968588013; 
- Wed, 29 May 2024 00:43:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKCDdV+Y8NDK+ovpjmdcPSgOjsYI4urASf404yKT28B02l1mzubVZ4UnjKK/L4sB0RFWG1Xw==
-X-Received: by 2002:a2e:bc08:0:b0:2e5:15d0:511c with SMTP id
- 38308e7fff4ca-2e95b287586mr121075511fa.40.1716968587510; 
- Wed, 29 May 2024 00:43:07 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
- [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-421089708edsm170022525e9.16.2024.05.29.00.43.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 00:43:07 -0700 (PDT)
-Message-ID: <160efc49-7994-44ec-a019-b3123bc15492@redhat.com>
-Date: Wed, 29 May 2024 09:43:05 +0200
+ AJvYcCXnaNUqOjHy4yf/Wv03/iRJzIxGsXAUYW9AOGp7YiVOkMdlYm18Q/2i/wMOTLmYc8ieCBK0SrFo47M0aVVlAKsIjDd0K8xy7w==
+X-Gm-Message-State: AOJu0YwuAJsid42Z9NXVj2qWES6OhIr2gJYu3WRFbvoghp18oLrY60Uz
+ eiqlu2gKgclxkMA3HeMsTpLx4eVYcydsiC34v6NfrDdrOvWo/WmFSmNQOuAn/wR0jt/reBFTuK2
+ y/meA9YqZ/bW/iL/CvjcmFedvthmDLEUJ
+X-Google-Smtp-Source: AGHT+IEW3pHZ5PPPpE/CMFk51jXTjX4t7+ixwZgJJd9rcCK5Yr0cOre1Jyznv/NedrZoi35Dv085UsJiiRpuqISf8pM=
+X-Received: by 2002:a05:6870:818e:b0:24f:d448:c97a with SMTP id
+ 586e51a60fabf-24fd448cae1mr10707167fac.42.1716969385120; Wed, 29 May 2024
+ 00:56:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fuzz: disable leak-detection for oss-fuzz builds
-To: Alexander Bulekov <alxndr@bu.edu>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Darren Kenny
- <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
-References: <20240527150001.325565-1-alxndr@bu.edu>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240527150001.325565-1-alxndr@bu.edu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240423152438.19841-2-mvogt@redhat.com>
+In-Reply-To: <20240423152438.19841-2-mvogt@redhat.com>
+From: Michael Vogt <michael.vogt@gmail.com>
+Date: Wed, 29 May 2024 09:56:14 +0200
+Message-ID: <CAPOxN2FyxFp+BJzgFa=EkxDkrctBg5TZWWW1x7r0tKONLHJ7Jg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: Add ioctl for BLKBSZSET
+To: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Cc: Michael Vogt <mvogt@redhat.com>, qemu-trivial@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000004a5bb30619931669"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=michael.vogt@gmail.com; helo=mail-ot1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,33 +87,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/05/2024 16.59, Alexander Bulekov wrote:
-> When we are building for OSS-Fuzz, we want to ensure that the fuzzer
-> targets are actually created, regardless of leaks. Leaks will be
-> detected by the subsequent tests of the individual fuzz-targets.
-> 
-> Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+--0000000000004a5bb30619931669
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Friendly ping
+
+I tested the patch as part of cross architecture build (using qemu-user)
+with bootc-image-builder in
+https://github.com/osbuild/bootc-image-builder/pull/342 (not sure that is
+relevant, but I wanted to mention that it is working for my test-case).
+
+On Tue, Apr 23, 2024 at 5:25=E2=80=AFPM Michael Vogt <michael.vogt@gmail.co=
+m> wrote:
+
+> Tiny patch to add the ioctl wrapper definition for BLKBSZSET.
+>
+> Signed-off-by: Michael Vogt <mvogt@redhat.com>
 > ---
->   scripts/oss-fuzz/build.sh | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
-> index 5238f83343..7398298173 100755
-> --- a/scripts/oss-fuzz/build.sh
-> +++ b/scripts/oss-fuzz/build.sh
-> @@ -92,6 +92,7 @@ make install DESTDIR=$DEST_DIR/qemu-bundle
->   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/bin
->   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/libexec
->   
-> +export ASAN_OPTIONS=detect_leaks=0
->   targets=$(./qemu-fuzz-i386 | grep generic-fuzz | awk '$1 ~ /\*/  {print $2}')
->   base_copy="$DEST_DIR/qemu-fuzz-i386-target-$(echo "$targets" | head -n 1)"
+>  linux-user/ioctls.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+> index d508d0c04a..3b41128fd7 100644
+> --- a/linux-user/ioctls.h
+> +++ b/linux-user/ioctls.h
+> @@ -102,6 +102,7 @@
+>       IOCTL(BLKRAGET, IOC_R, MK_PTR(TYPE_LONG))
+>       IOCTL(BLKSSZGET, IOC_R, MK_PTR(TYPE_INT))
+>       IOCTL(BLKBSZGET, IOC_R, MK_PTR(TYPE_INT))
+> +     IOCTL(BLKBSZSET, IOC_W, MK_PTR(TYPE_INT))
+>       IOCTL_SPECIAL(BLKPG, IOC_W, do_ioctl_blkpg,
+>                     MK_PTR(MK_STRUCT(STRUCT_blkpg_ioctl_arg)))
+>
+> --
+> 2.43.0
+>
+>
 
-I've applied your patch, but it seems the leak is not detected later in the 
-individual fuzz-targets anymore. That's strange... did you have a closer 
-look already where this leak here comes from?
+--0000000000004a5bb30619931669
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  Thomas
+<div dir=3D"ltr"><div>Friendly ping</div><div><br></div><div>I tested the p=
+atch as part of cross architecture build (using qemu-user) with bootc-image=
+-builder in <a href=3D"https://github.com/osbuild/bootc-image-builder/pull/=
+342">https://github.com/osbuild/bootc-image-builder/pull/342</a> (not sure =
+that is relevant, but I wanted to mention that it is working for my test-ca=
+se).</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
+ail_attr">On Tue, Apr 23, 2024 at 5:25=E2=80=AFPM Michael Vogt &lt;<a href=
+=3D"mailto:michael.vogt@gmail.com">michael.vogt@gmail.com</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left:1px solid rgb(204,204,204);padding-left:1ex">Tiny patch to add =
+the ioctl wrapper definition for BLKBSZSET.<br>
+<br>
+Signed-off-by: Michael Vogt &lt;<a href=3D"mailto:mvogt@redhat.com" target=
+=3D"_blank">mvogt@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0linux-user/ioctls.h | 1 +<br>
+=C2=A01 file changed, 1 insertion(+)<br>
+<br>
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h<br>
+index d508d0c04a..3b41128fd7 100644<br>
+--- a/linux-user/ioctls.h<br>
++++ b/linux-user/ioctls.h<br>
+@@ -102,6 +102,7 @@<br>
+=C2=A0 =C2=A0 =C2=A0 IOCTL(BLKRAGET, IOC_R, MK_PTR(TYPE_LONG))<br>
+=C2=A0 =C2=A0 =C2=A0 IOCTL(BLKSSZGET, IOC_R, MK_PTR(TYPE_INT))<br>
+=C2=A0 =C2=A0 =C2=A0 IOCTL(BLKBSZGET, IOC_R, MK_PTR(TYPE_INT))<br>
++=C2=A0 =C2=A0 =C2=A0IOCTL(BLKBSZSET, IOC_W, MK_PTR(TYPE_INT))<br>
+=C2=A0 =C2=A0 =C2=A0 IOCTL_SPECIAL(BLKPG, IOC_W, do_ioctl_blkpg,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MK_PT=
+R(MK_STRUCT(STRUCT_blkpg_ioctl_arg)))<br>
+<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div>
 
-
+--0000000000004a5bb30619931669--
 
