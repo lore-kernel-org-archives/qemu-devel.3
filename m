@@ -4,113 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79506C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 17:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB58C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 17:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCNCq-0000qT-Cq; Wed, 29 May 2024 13:35:20 -0400
+	id 1sCNDz-0001eG-NY; Wed, 29 May 2024 13:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sCNCo-0000pu-Pb
- for qemu-devel@nongnu.org; Wed, 29 May 2024 13:35:18 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sCNDy-0001e0-3B
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 13:36:30 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sCNCj-0000o0-BM
- for qemu-devel@nongnu.org; Wed, 29 May 2024 13:35:18 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8CCEE205DF;
- Wed, 29 May 2024 17:35:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717004110; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qCKv8CDRY9QXBGA+dc7XkLhnOWR2elbfYdevVZyYQVg=;
- b=rWx0sKWlF3lZRjpxfgk14v8lhtTYED/T2BHdOrGliMSzXfAz+3IoIMNzP1us+vOF0P7TPc
- HnlMcwaV7hqUEXzdEKp0dhjAJ+R5bEe+it7rs5tRobBkJU5/UYFeW9srSGV1p0/uUuDrgy
- 4nvWWrsZZdp0gO2wz1Khs7XZpOtPevs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717004110;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qCKv8CDRY9QXBGA+dc7XkLhnOWR2elbfYdevVZyYQVg=;
- b=1w77JGmczG9cXr426pDyi+HJd7ebDICdTLVKmxwM37GX9VWsdsz+wa7TaHq/qGEBkwwL05
- 4CzVh0iVQa6kAZCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rWx0sKWl;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1w77JGmc
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717004110; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qCKv8CDRY9QXBGA+dc7XkLhnOWR2elbfYdevVZyYQVg=;
- b=rWx0sKWlF3lZRjpxfgk14v8lhtTYED/T2BHdOrGliMSzXfAz+3IoIMNzP1us+vOF0P7TPc
- HnlMcwaV7hqUEXzdEKp0dhjAJ+R5bEe+it7rs5tRobBkJU5/UYFeW9srSGV1p0/uUuDrgy
- 4nvWWrsZZdp0gO2wz1Khs7XZpOtPevs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717004110;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qCKv8CDRY9QXBGA+dc7XkLhnOWR2elbfYdevVZyYQVg=;
- b=1w77JGmczG9cXr426pDyi+HJd7ebDICdTLVKmxwM37GX9VWsdsz+wa7TaHq/qGEBkwwL05
- 4CzVh0iVQa6kAZCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 184A013A6B;
- Wed, 29 May 2024 17:35:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SzTjM01nV2awGwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 May 2024 17:35:09 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests/qtest/migrate-test: Add a postcopy memfile test
-In-Reply-To: <ZldOal1YdAWLB5pj@x1n>
-References: <20240529041322.701525-1-npiggin@gmail.com>
- <875xuwg4mx.fsf@suse.de> <ZldOal1YdAWLB5pj@x1n>
-Date: Wed, 29 May 2024 14:35:07 -0300
-Message-ID: <87zfs8ed2s.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sCNDw-0001dT-HZ
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 13:36:29 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-681907af6a8so1879623a12.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 10:36:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717004187; x=1717608987; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=I/+lHjJMmybcT4W+784daRuxyy90MIVVzPTYXumJvT4=;
+ b=vPrdVxp40kBr5qqN+yiY+CeWr0a6AvbPLDiZkxHcuNyAENT1+uz6/ySUrEKkU7itDt
+ A14XeSV85EwfEVVCjHdLxvaFuRQNDUbHB7TkLUgnL/dVCXSOzOUY6Za8fQ/7uovix1Mv
+ rFw7oQKdOR/nLg6MjMxm2zWOpuTIEeS9qAKP+tpM1wg9bq85peMR8xlRFlnmuYJJj7/+
+ BlkDEj65VlnIgqWTXViPxKQ+ix6L3FVlGIm0SqEKdEX+JJghOjaPzGpn8pMqtNPC0wQ9
+ Njd6fDpX0ZVn6hGb+XO6xUWj4U2NG2acRWfdfgAvf+DWr1AN0RJj/eh/KgNQqu7sDxRV
+ 4c8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717004187; x=1717608987;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I/+lHjJMmybcT4W+784daRuxyy90MIVVzPTYXumJvT4=;
+ b=LKUAeW7iUmWAcAx6zzABubNe9UZv+/bbOQ0vn7XA4NaMCeh/k1uXk0K86y9zaDnH7s
+ E+iaaWaNumHRDzy5nrPOXxHDLFO+Kyj2t9uHmdJhnNMEiWL+jxdR3Wq8cWhpl45MxUwm
+ VRPGPLFc5z68bP8R9JnsUVvS+WckqO+Vt8ROII3LnMnwC77I/GGOfIWQ0uhW0skEJ45R
+ N4EAt+jzmE4NPlkAffZhyyW2E9yMSLxyG2n/DvPqkDHNNTbOTw5nnhTxbeVV0zwf/Ge9
+ 1/GDtgbq4Nkp/eAA6pSf7BGH+iaB0UB/RyI7ZGR43zXQKuEsQBbttoUQflX25hlBh1s/
+ DUew==
+X-Gm-Message-State: AOJu0YyEOxxIXKh8MPf8AYklP1zh8FY42gGKzw49yvWBT6dTr9FJRSGc
+ ImImf8Z6EiUnbhIO8GjoI3/KPtG7LCS1NRKvbESy49J+Kwbf4fASR8t5/l/Jw4Lh0DD+htw9tsA
+ 6
+X-Google-Smtp-Source: AGHT+IG2j3gWmRqc3HpvFrzJzHRcptX93sEfRlMT4tCrKkxirTfWzZmfINxheTAX2yskbOmSTLGEgQ==
+X-Received: by 2002:a17:902:ce84:b0:1f4:aa72:1c7 with SMTP id
+ d9443c01a7336-1f4aa72038fmr100468815ad.26.1717004186838; 
+ Wed, 29 May 2024 10:36:26 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f44c967cd2sm101704155ad.166.2024.05.29.10.36.26
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 10:36:26 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH RISU] risugen/arm: Refine prefetch and memory hintspace
+ patterns
+Date: Wed, 29 May 2024 10:36:25 -0700
+Message-Id: <20240529173625.800102-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 8CCEE205DF
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; MID_RHS_MATCH_FROM(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com,nongnu.org,redhat.com];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,83 +91,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Avoid prefetch patterns that are UNPREDICTABLE.
 
-> On Wed, May 29, 2024 at 09:54:30AM -0300, Fabiano Rosas wrote:
->> Nicholas Piggin <npiggin@gmail.com> writes:
->> 
->> > Postcopy requires userfaultfd support, which requires tmpfs if a memory
->> > file is used.
->> >
->> > This adds back support for /dev/shm memory files, but adds preallocation
->> > to skip environments where that mount is limited in size.
->> >
->> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> > ---
->> >
->> > How about this? This goes on top of the reset of the patches
->> > (I'll re-send them all as a series if we can get to some agreement).
->> >
->> > This adds back the /dev/shm option with preallocation and adds a test
->> > case that requires tmpfs.
->> 
->> Peter has stronger opinions on this than I do. I'll leave it to him to
->> decide.
->
-> Sorry if I gave that feeling; it's more of a stronger willingness to at
-> some point enable shmem for QEMU migration, rather than wanting to push
-> back what Nicholas was trying to do.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ thumb.risu | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-Of course, I didn't mean to imply that. I just saying that using /tmp
-would have been fine with me and I don't want to get in the way.
+diff --git a/thumb.risu b/thumb.risu
+index 357b791..6a05bf2 100644
+--- a/thumb.risu
++++ b/thumb.risu
+@@ -33,7 +33,20 @@ SMMUL T1 11111 0110 101 rn:4 1111 rd:4 000 r rm:4
+ # preload and memory hint space (in the byte and halfword
+ # load space, where Rt == 15).
+ # The constraint is to avoid UNPREDICTABLE space
+-HINTSPACE T1 111 1100 op1:2 0 z 1 y:4 1111 op2:6 any:6 { ($y == 15) || (($op1 & 1) != 0) || !((($op2 & 0x24) == 0x24) || (($op2 & 0x3c) == 0x38)) ; }
++PLD_pi        TI 1111 1000 10 w 1 rn:4 1111 imm:12            { $rn != 0xf; }
++PLD_ni        TI 1111 1000 00 w 1 rn:4 1111 1100 imm:8        { $rn != 0xf; }
++PLD_li        TI 1111 1000 u 00 1 1111 1111 imm:12
++PLD_rr        TI 1111 1000 00 w 1 rn:4 1111 000000 imm:2 rm:4 \
++              { $rn != 0xf && $rm != 0xf; }
++PLI_pi        TI 1111 1001 1 00 1 rn:4 1111 imm:12            { $rn != 0xf; }
++PLI_ni        TI 1111 1001 0 00 1 rn:4 1111 1100 imm:8        { $rn != 0xf; }
++PLI_li        TI 1111 1001 u 00 1 1111 1111 imm:12
++PLI_rr        TI 1111 1001 0 00 1 rn:4 1111 000000 imm:2 rm:4 \
++              { $rn != 0xf && $rm != 0xf; }
++HINTSPACE_rr  T1 1111 1001 0011 rn:4 1111 000000 imm:2 rm:4   { $rn != 0xf; }
++HINTSPACE_ni  T1 1111 1001 0011 rn:4 1111 1100 imm:8          { $rn != 0xf; }
++HINTSPACE_pi  T1 1111 1001 1011 rn:4 1111 imm:12              { $rn != 0xf; }
++HINTSPACE_li  T1 1111 1001 u 011 1111 1111 imm:12
+ 
+ # VMLAL, VMLSL, VQDMLAL, VQDMLSL, VMULL, VQDMULL
+ # NB that enc T1 is actually VMLA/VMLS only, T2 is VMLAL/VMLSL only
+-- 
+2.34.1
 
-> Enabling more arch for migration
-> tests is definitely worthwhile on its own.
->
-> Shmem is just some blank spot that IMHO we should start to think about
-> better coverarge. E.g. it is the only sane way to boot the VM that is able
-> to do fast qemu upgrades using ignore-shared, that was true even before
-> Steve's cpr-exec work, which would be much easier than anonymous. And it's
-> also possible shmem can be (in the next 3-5 years) the 1G page provider to
-> replace hugetlb for postcopy's sake - this one is far beyond our current
-> discussion so I won't extend..
-
-Interesting, good to know.
-
->
-> IMHO shmem should just be a major backend just like anonymous, and the only
-> possible file backend we can test in CI - as hugetlb is harder to manage
-> there.
->
->> 
->> Just note that now we're making the CI less deterministic in relation to
->> the migration tests. When a test that uses shmem fails, we'll not be
->> able to consistently reproduce because the test might not even run
->> depending on what has consumed the shmem first.
->> 
->> Let's also take care that the other consumers of shmem (I think just
->> ivshmem-test) are able to cope with the migration-test taking all the
->> space, otherwise the CI will still break.
->
-> Looks like ivshmem-test only uses 1MB shmem constantly so probably that
-> will succeed if the migration test will, but true they face the same
-> challenge and they interfere with each other..  that test sidently pass
-> (instead of skip) if mktempshm() fails.  I guess we don't have a way to
-> solidly test shmem as shmem simply may not be around.
-
-Here we have each of the 5 migration archs taking up some amount of
-memory + each of the 3 supported arches for ivshmem. They all could be
-running in parallel through make check. In practice there's maybe less
-overlap due to timing and not all CI jobs building all archs, but still.
-
->
-> For this patch alone personally I'd avoid using "use_uffd_memfile" as the
-> name, as that's definitely confusing, since shmem can be tested in other
-> setups too without uffd.  Nicolas, please feel free to move ahead with your
-> arch enablement series with /tmp if you want to separate the shmem issue.
-
-Or just leave ignore_shared untouched for the ppc series.
-
->
-> Thanks,
 
