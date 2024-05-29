@@ -4,93 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3ED0C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5005CC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCJjO-0007Vx-DY; Wed, 29 May 2024 09:52:42 -0400
+	id 1sCJjq-0008Ox-Fk; Wed, 29 May 2024 09:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCJjL-0007Uj-TR
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCJjJ-0003GE-41
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:52:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716990756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6hn/LWj1JSK6CC2Hv+m3XDN7fkwLw+vCRab4TeNvPmU=;
- b=UUlJQ+YcN/Dg7g6Opw8ZqmjBbvkqA/HB6Tr62MqXpcM9aMVv57EZRcWEySkUByOciBSLaz
- u8sHTXhXlS+ZUKtAyeZ2uu9tKzuA5l6CzZmKEL+Rd4nvCQrqsAZWtOajdKBgeMfDsWZmtX
- ogJxz5EX69dMWvGlPM79OFrBvFkvi/k=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-PqhZwX99Mhqgc-TvVxLglQ-1; Wed, 29 May 2024 09:52:35 -0400
-X-MC-Unique: PqhZwX99Mhqgc-TvVxLglQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-354ddb92ad8so1272974f8f.3
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:52:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCJjh-0008Cz-7r
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:53:01 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCJjV-0003Ge-93
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:53:00 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-354cd8da8b9so1990112f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:52:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716990767; x=1717595567; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8MrRRWivmOQ1cKlrRdTgFV+Gu0PH+odEUxHHhgnLeRw=;
+ b=WE8QVLhc4WkyR0HfoxdXlN2Jdklds6SkihcGyynJr4nbMfTKmXC+8Crp3t2woxW0qR
+ 9VJkJiJJDTIiA+ArIO78gNR2F7BWSJg7IzhBSVy1uWKSujlCPYIrBgPmGXbrYf5rovb3
+ us4JfdIRJN4A1qmwxxI2PhD4Km26ID2eVcUn5shU6tPbvK5czXTAkhwRTcm2Wk9BJJcR
+ vhIwKMfmO2agdtPrKjbPxKKSGrnmu0iAwi0o1as/b623RYhe4nf9w27sGUO1c9x5jY1Q
+ Kpyx613sSctehcni0ZAC1chwnfTY2+VFpMjCNZV0KY2UYuEnamc3qvXMEhAh2VFUxRvD
+ wWqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716990754; x=1717595554;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6hn/LWj1JSK6CC2Hv+m3XDN7fkwLw+vCRab4TeNvPmU=;
- b=ivvf9b9pc+eZTovCqkeybp5HTMRIfe4T3QunQ1+fajA7zys49ds7+DrL72E9MfhUOL
- cZfbSzAkt8b2dgZGoQBCx5MJdSmGaP+vwhSBAJ6/gKOXxczuIwGf/hFT5BaumSBbhSaz
- TR+HrrSIvHUvYX4icLKPianueZAozhMzxvndqKQLTQnWmHhZDI3syMmZ5PayLXMo4KEQ
- Km6eEfL7VEc34CdehEzUHROnj4ajEQI1j2+Qum3QGsIBQLqZ632bEepqHVLVLgWVZiur
- gXW0/giOSlxGK4Wwxa9Wgu1uPbNcWTr0icfnht7VN11kvtmsBVN4XW6WlpI1CZlQSguW
- QBlQ==
-X-Gm-Message-State: AOJu0Yw4ct3axAiUGlPxJsmcbE31Z0+mrrSnbDsPuAxgS1i9K6fflVy2
- XOFH1JM+IklCyBN3WKFZFQ5loIbuTAvPPm1nh36zeTiFSas1zx46bgp1SVEAbtgL/Yy4fMBlxts
- sdS87rx4Sj4kro1vEOXyW0hizrb6lLjJIWY6iL12M66o0nTzHyeKf
-X-Received: by 2002:a5d:688d:0:b0:354:fbb4:dcb with SMTP id
- ffacd0b85a97d-3552fdc0b39mr8966713f8f.40.1716990753849; 
- Wed, 29 May 2024 06:52:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9ZHvM1t5m3faVpTWnlYUHG13woX5Nt95PYLPsSIKDwqEy4ggxMxXyy8uPk5wXUTYpOr4ifA==
-X-Received: by 2002:a5d:688d:0:b0:354:fbb4:dcb with SMTP id
- ffacd0b85a97d-3552fdc0b39mr8966692f8f.40.1716990753406; 
- Wed, 29 May 2024 06:52:33 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-359bc20cbdbsm7733763f8f.22.2024.05.29.06.52.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 06:52:32 -0700 (PDT)
-Date: Wed, 29 May 2024 15:52:31 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 06/23] hw/acpi/ich9: Remove 'memory-hotplug-support'
- property
-Message-ID: <20240529155231.65d316b5@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-7-philmd@linaro.org>
-References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-7-philmd@linaro.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1716990767; x=1717595567;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8MrRRWivmOQ1cKlrRdTgFV+Gu0PH+odEUxHHhgnLeRw=;
+ b=AX1gJs+x6HTeh3UFRot5hMa2c7TMpfT+eLU2+0tiGTifbgbAovWTu0qSozcX38zqv6
+ 2bkx8FSxk1DA+h4N8KviRfZDtu3f8B7x2+C/5hB8xIsKPg0B3JAUfHTdGmUtqWbbecm8
+ kspvXWdnujTxNU+hI/akc9m3xIXWVSQb9NLfTax4eeNR2Q4/CmWroxKnKAHuQgWfEFqk
+ PN7d8OUD6FWrCSbrUDTKkRQ8/qdzTUqmw3fjTSABnCCCaspOtuPV9h9ALMRu8xOIigi9
+ JL8gainCi9m8GOgV5Zspj3H492sYcK1du/LRA5YUyADjU1vt0ms88krtLTZZS+3bnIuA
+ DWyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7VfoL950gYO9FkONsSB1lYXMOJROVkiTJEHv6JypHQ1ipnm+V4+s3CuSkQaTsVhZ+e1v+NDOwqMtvbNcEeDfPG37dp7I=
+X-Gm-Message-State: AOJu0Yy+PE7T8ptM1VnTHYc53RTh1fZawsZfKDvIXaSBc91jQjGd0pGH
+ nXOks4+F8VTjqcKJwRXGfsVXzy/xAhS3X6wuV2cSw5KsOPcYp2j2wCOMWDh6NfE=
+X-Google-Smtp-Source: AGHT+IHE873LmpFWOLlFZQJ8G6vGYeVnS/psJoVyiK/BtPbrF6cHNxjaRc/9L4rb4UDShANy7Cw5Aw==
+X-Received: by 2002:adf:eb8f:0:b0:35d:a660:4dfc with SMTP id
+ ffacd0b85a97d-35da6604ed9mr335475f8f.60.1716990767329; 
+ Wed, 29 May 2024 06:52:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35579f96519sm14826063f8f.26.2024.05.29.06.52.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 May 2024 06:52:46 -0700 (PDT)
+Message-ID: <93e2d304-7a57-4faa-825b-97c5db09f492@linaro.org>
+Date: Wed, 29 May 2024 15:52:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] io/channel-socket: Fix -fsanitize=undefined problem with
+ latest Clang
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240529133106.1224866-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240529133106.1224866-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,59 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:22 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
-
-> No external code sets the 'memory-hotplug-support'
-> property, remove it.
->=20
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
+On 29/5/24 15:31, Thomas Huth wrote:
+> Casting function pointers from one type to another causes undefined
+> behavior errors when compiling with -fsanitize=undefined with Clang v18:
+> 
+>   $ QTEST_QEMU_BINARY=./qemu-system-mips64 tests/qtest/netdev-socket
+>   TAP version 13
+>   # random seed: R02S4424f4f460de783fdd3d72c5571d3adc
+>   1..10
+>   # Start of mips64 tests
+>   # Start of netdev tests
+>   # Start of stream tests
+>   # starting QEMU: exec ./qemu-system-mips64 -qtest unix:/tmp/qtest-1213196.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-1213196.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -nodefaults -M none -netdev stream,id=st0,addr.type=fd,addr.str=3 -accel qtest
+>   ../io/task.c:78:13: runtime error: call to function qapi_free_SocketAddress through pointer to incorrect function type 'void (*)(void *)'
+>   /tmp/qemu-sanitize/qapi/qapi-types-sockets.c:170: note: qapi_free_SocketAddress defined here
+>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../io/task.c:78:13
+> 
+> Add a wrapper function to avoid the problem.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/acpi/ich9.c | 18 ------------------
->  1 file changed, 18 deletions(-)
->=20
-> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-> index 573d032e8e..9b605af21a 100644
-> --- a/hw/acpi/ich9.c
-> +++ b/hw/acpi/ich9.c
-> @@ -351,21 +351,6 @@ static void ich9_pm_get_gpe0_blk(Object *obj, Visito=
-r *v, const char *name,
->      visit_type_uint32(v, name, &value, errp);
->  }
-> =20
-> -static bool ich9_pm_get_memory_hotplug_support(Object *obj, Error **errp)
-> -{
-> -    ICH9LPCState *s =3D ICH9_LPC_DEVICE(obj);
-> -
-> -    return s->pm.acpi_memory_hotplug.is_enabled;
-> -}
-> -
-> -static void ich9_pm_set_memory_hotplug_support(Object *obj, bool value,
-> -                                               Error **errp)
-> -{
-> -    ICH9LPCState *s =3D ICH9_LPC_DEVICE(obj);
-> -
-> -    s->pm.acpi_memory_hotplug.is_enabled =3D value;
-> -}
-> -
->  static bool ich9_pm_get_cpu_hotplug_legacy(Object *obj, Error **errp)
->  {
->      ICH9LPCState *s =3D ICH9_LPC_DEVICE(obj);
-> @@ -445,9 +430,6 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMReg=
-s *pm)
->                          NULL, NULL, pm);
->      object_property_add_uint32_ptr(obj, ACPI_PM_PROP_GPE0_BLK_LEN,
->                                     &gpe0_len, OBJ_PROP_FLAG_READ);
-> -    object_property_add_bool(obj, "memory-hotplug-support",
-> -                             ich9_pm_get_memory_hotplug_support,
-> -                             ich9_pm_set_memory_hotplug_support);
->      object_property_add_bool(obj, "cpu-hotplug-legacy",
->                               ich9_pm_get_cpu_hotplug_legacy,
->                               ich9_pm_set_cpu_hotplug_legacy);
+>   io/channel-socket.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
