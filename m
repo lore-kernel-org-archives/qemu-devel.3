@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1073C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB161C3DA40
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCLsF-0000dZ-9j; Wed, 29 May 2024 12:09:59 -0400
+	id 1sCLsI-0000jH-BW; Wed, 29 May 2024 12:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCLsC-0000aq-Jb
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:09:56 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1sCLsF-0000dg-9l
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:09:59 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCLrx-0003IG-P3
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:09:53 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a634e03339dso279882966b.3
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 09:09:41 -0700 (PDT)
+ id 1sCLry-0003IZ-E8
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:09:59 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a5dcb5a0db4so287915166b.2
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 09:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1716998980; x=1717603780; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zMVF59L9ibXy7bBTe6+ECf11kLQqf1Mdij1G/dOwXd0=;
- b=CtC1rMtEHxCgYpgfyShq0qNLjV/xownJaHfZQfXCdO0yZd6D2IFkOS3t2qITg0OTgK
- RVIE/Z88yax2kJGGCH8RT5ah2Cu2BtKJIS837Sbe0yVES/pXIcbtBCPBzH0HVN8sUIeO
- z9NUpiFZ9NejL38OhF8whtMcIIf5m/R/P8TsbpXCkCmDB4y28oN8NVYz2ZGMHTMrg7m4
- gT+K8Q/zvzcwHw/T7z4ugujaEUjDFsIdy5j9VWocGfCAMkysBRGlhI66BWHOPlBjdDyO
- HelbVqWgy6hDJ8ykXptyVJasj+TSfUUdrX+k7Y59YlNpvNjmdBkYplM3xpow7qcPMgQa
- 5CNw==
+ bh=F4c+mzXCPJbcGknUfyxudyAM0HmL0zBvdg6RSd3UrhQ=;
+ b=PbMYAr2W+ed4qP8+osUWsE4FAJzReh94RQmv/yX07TSbnrsh4h8CxxczRO2xuZMX+Y
+ eDQOTSePmi+WysrJyc6E9EhSbOhtcRMNe2+SY3ctAZeztloGLembUCHPxZRR9Hfy5sty
+ +0GRSAMh5sDQuE9EU/y7hDbUpSU0PtHveDOL5aV+s2Cj4Q71bdNzW/TusyZfShOjiwgY
+ AFUg/MQIBBGa3dj+DbVpS3eI61c6I2lwnTsrzpD1DVRZu/wJ7HOgUJDUvd8KXdmebxq/
+ lLKgNl9isbfP/GBylNuXamJM0NURPLhXktqA8KX8lkFpLjJghkEQHD2fuNwSwc5kGNkm
+ dl9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1716998980; x=1717603780;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zMVF59L9ibXy7bBTe6+ECf11kLQqf1Mdij1G/dOwXd0=;
- b=qDiMrRXc24hWtl6bkOI/SLQouUAlM6J5vLu9TR/JkBGXr26/YCyt8uxdT/ijcjjFbj
- Ra9y+CXndQCqfnxBf0b52KrQSbEHV3Sc5I2lVmILW+XsE6bb23+tJe8GmhMtmtS5gSYP
- w/qAbRaSOg/UJxpXToYV/OT/DqxBjUcZSVJGlo/fH1Q25/GEk1q2+PZxWW+hNAsIbE5t
- l11E9AlFTXIrRAhXIIFAEBmGmahpI6zr4SlcQ2lbu3WnGPzmZO4z7wKroBjgZYKudj/T
- QzGxFHGDqpJdVaPPWAUUljFybgceI/mf1HlumFjlYkWMOX0GzoBJ7dW+/Vt5mIqZzYN6
- XLMA==
-X-Gm-Message-State: AOJu0Yw89CnJFO1JOml4cqiOXQB44i2VKJ1l4HCtuK9nMil25twcf7KR
- jVFfC5Lq0geRSvq3GwgHHRQAxbutsNYtDhuiEjp4dYJIhyiYcBffhWSsbwEVFnU=
-X-Google-Smtp-Source: AGHT+IFbzDKxV/c9Ia5sYHtXk39yw4sS/mGtOFNvGdAr6IAie9nukAftRBfYtZRCRoBub635zWIpZg==
-X-Received: by 2002:a17:906:adcb:b0:a62:8ee2:16c1 with SMTP id
- a640c23a62f3a-a628ee217f7mr816037366b.54.1716998979999; 
- Wed, 29 May 2024 09:09:39 -0700 (PDT)
+ bh=F4c+mzXCPJbcGknUfyxudyAM0HmL0zBvdg6RSd3UrhQ=;
+ b=Ly4n2xMklqC6fE1AbU0a4rZkmvra+qyNvPHQGM5QjleksQTMRdjV1tk8N0HH8XOcGH
+ DE4+baQ6ZWDe0QCE1OghxYJhfUAOIOGEOvbRnZ8YFXs/b4t8E0zav4iGaFmbeJlJEufG
+ 6V4DiJFKYcRbsH9OVzWIIjYqb3V6tvPCKgmE4uLyY3z5W3KviKKwTC7y/hFQXEVGhcyf
+ /S6UnCIzGwOssVQ7PKDJR17AfQUmS/b115j3LEaQdAHDMxFjCgjeIvOOrODSBTPlNAm3
+ jiA6p/r5l2seV7P0N5UFWrIfR7nFG4ymkypxrhyZDP6XfhR6qbNqTI+F371Q4fYUBoaK
+ YrwQ==
+X-Gm-Message-State: AOJu0Yx0GXbIE7i+z4qHHt2ozuzT2npCvvsky45cCS0ZXLjHzkvhkaDc
+ 8d2fs/Gmj/X9NzMWXgVYHaQTgC0ZYVOosPZvZt9onfbH34s4yuySidVivcj71OQ=
+X-Google-Smtp-Source: AGHT+IGuVbshIz6YFklaT35fPuLhovUMpF10xcqsW2MIcqNhMxSfcJhIjb+XHO+Y4nE2UWu7Ktjh6w==
+X-Received: by 2002:a17:906:168d:b0:a5d:1334:da86 with SMTP id
+ a640c23a62f3a-a6264f12a22mr843322666b.62.1716998980298; 
+ Wed, 29 May 2024 09:09:40 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626cc500a1sm730713466b.125.2024.05.29.09.09.37
+ a640c23a62f3a-a626cc8c1a1sm729659166b.166.2024.05.29.09.09.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 29 May 2024 09:09:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B65815FA92;
+ by draig.lan (Postfix) with ESMTP id CF14D5FA93;
  Wed, 29 May 2024 17:09:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,17 +80,17 @@ Cc: Laurent Vivier <lvivier@redhat.com>,
  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
  Radoslaw Biernacki <rad@semihalf.com>
-Subject: [PATCH 07/10] tests/lcitool: bump to latest version
-Date: Wed, 29 May 2024 17:09:31 +0100
-Message-Id: <20240529160934.982373-8-alex.bennee@linaro.org>
+Subject: [PATCH 08/10] tests/lcitool: generate package lists for ansible
+Date: Wed, 29 May 2024 17:09:32 +0100
+Message-Id: <20240529160934.982373-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240529160934.982373-1-alex.bennee@linaro.org>
 References: <20240529160934.982373-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,119 +113,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have to simultaneously update a few bits on our side as lcitool has
-already deprecated fedora-38, alpine-3.18 and centos-8-stream. However
-there is no change to the package list yet.
+This includes updating libvirt-ci to the currently in-flight MR:
+
+  https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/488
+
+With the new ability to output YAML we can build the package list for
+our ansible setup scripts. We will integrate them in the next commit.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
 v2
-  - fix typo s/lci-tool/lcitool/
+  - updated to latest revision of MR
 ---
- tests/docker/dockerfiles/alpine.docker             | 4 ++--
- tests/docker/dockerfiles/fedora-win64-cross.docker | 4 ++--
- tests/docker/dockerfiles/fedora.docker             | 4 ++--
- tests/lcitool/libvirt-ci                           | 2 +-
- tests/lcitool/refresh                              | 6 +++---
- tests/lcitool/targets/centos-stream-8.yml          | 3 ---
- 6 files changed, 10 insertions(+), 13 deletions(-)
- delete mode 100644 tests/lcitool/targets/centos-stream-8.yml
+ .../ci/setup/ubuntu/ubuntu-2204-aarch64.yaml  | 127 ++++++++++++++++++
+ .../ci/setup/ubuntu/ubuntu-2204-s390x.yaml    | 125 +++++++++++++++++
+ tests/lcitool/libvirt-ci                      |   2 +-
+ tests/lcitool/refresh                         |  16 ++-
+ 4 files changed, 268 insertions(+), 2 deletions(-)
+ create mode 100644 scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+ create mode 100644 scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
 
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index 554464f31e..b76cc2a35e 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all alpine-318 qemu
-+#  $ lcitool dockerfile --layers all alpine-320 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
- 
--FROM docker.io/library/alpine:3.18
-+FROM docker.io/library/alpine:3.20
- 
- RUN apk update && \
-     apk upgrade && \
-diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
-index 0f78711876..cce6739613 100644
---- a/tests/docker/dockerfiles/fedora-win64-cross.docker
-+++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all --cross-arch mingw64 fedora-38 qemu,qemu-win-installer
-+#  $ lcitool dockerfile --layers all --cross-arch mingw64 fedora-40 qemu,qemu-win-installer
- #
- # https://gitlab.com/libvirt/libvirt-ci
- 
--FROM registry.fedoraproject.org/fedora:38
-+FROM registry.fedoraproject.org/fedora:40
- 
- RUN dnf install -y nosync && \
-     printf '#!/bin/sh\n\
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 098c894d10..bd51e1e149 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all fedora-38 qemu
-+#  $ lcitool dockerfile --layers all fedora-40 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
- 
--FROM registry.fedoraproject.org/fedora:38
-+FROM registry.fedoraproject.org/fedora:40
- 
- RUN dnf install -y nosync && \
-     printf '#!/bin/sh\n\
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+new file mode 100644
+index 0000000000..8d7d8725fb
+--- /dev/null
++++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+@@ -0,0 +1,127 @@
++# THIS FILE WAS AUTO-GENERATED
++#
++#  $ lcitool variables --host-arch aarch64 ubuntu-2204 qemu
++#
++# https://gitlab.com/libvirt/libvirt-ci
++
++packages:
++  - bash
++  - bc
++  - bison
++  - bsdextrautils
++  - bzip2
++  - ca-certificates
++  - ccache
++  - clang
++  - dbus
++  - debianutils
++  - diffutils
++  - exuberant-ctags
++  - findutils
++  - flex
++  - gcc
++  - gcovr
++  - gettext
++  - git
++  - hostname
++  - libaio-dev
++  - libasan6
++  - libasound2-dev
++  - libattr1-dev
++  - libbpf-dev
++  - libbrlapi-dev
++  - libbz2-dev
++  - libc6-dev
++  - libcacard-dev
++  - libcap-ng-dev
++  - libcapstone-dev
++  - libcmocka-dev
++  - libcurl4-gnutls-dev
++  - libdaxctl-dev
++  - libdrm-dev
++  - libepoxy-dev
++  - libfdt-dev
++  - libffi-dev
++  - libfuse3-dev
++  - libgbm-dev
++  - libgcrypt20-dev
++  - libglib2.0-dev
++  - libglusterfs-dev
++  - libgnutls28-dev
++  - libgtk-3-dev
++  - libibumad-dev
++  - libibverbs-dev
++  - libiscsi-dev
++  - libjemalloc-dev
++  - libjpeg-turbo8-dev
++  - libjson-c-dev
++  - liblttng-ust-dev
++  - liblzo2-dev
++  - libncursesw5-dev
++  - libnfs-dev
++  - libnuma-dev
++  - libpam0g-dev
++  - libpcre2-dev
++  - libpipewire-0.3-dev
++  - libpixman-1-dev
++  - libpng-dev
++  - libpulse-dev
++  - librbd-dev
++  - librdmacm-dev
++  - libsasl2-dev
++  - libsdl2-dev
++  - libsdl2-image-dev
++  - libseccomp-dev
++  - libselinux1-dev
++  - libslirp-dev
++  - libsnappy-dev
++  - libsndio-dev
++  - libspice-protocol-dev
++  - libspice-server-dev
++  - libssh-dev
++  - libsystemd-dev
++  - libtasn1-6-dev
++  - libubsan1
++  - libudev-dev
++  - liburing-dev
++  - libusb-1.0-0-dev
++  - libusbredirhost-dev
++  - libvdeplug-dev
++  - libvirglrenderer-dev
++  - libvte-2.91-dev
++  - libxen-dev
++  - libzstd-dev
++  - llvm
++  - locales
++  - make
++  - meson
++  - mtools
++  - multipath-tools
++  - ncat
++  - nettle-dev
++  - ninja-build
++  - openssh-client
++  - pkgconf
++  - python3
++  - python3-numpy
++  - python3-opencv
++  - python3-pillow
++  - python3-pip
++  - python3-sphinx
++  - python3-sphinx-rtd-theme
++  - python3-tomli
++  - python3-venv
++  - python3-yaml
++  - rpm2cpio
++  - sed
++  - socat
++  - sparse
++  - swtpm
++  - systemtap-sdt-dev
++  - tar
++  - tesseract-ocr
++  - tesseract-ocr-eng
++  - xorriso
++  - zlib1g-dev
++  - zstd
++
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
+new file mode 100644
+index 0000000000..16050a5058
+--- /dev/null
++++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
+@@ -0,0 +1,125 @@
++# THIS FILE WAS AUTO-GENERATED
++#
++#  $ lcitool variables --host-arch s390x ubuntu-2204 qemu
++#
++# https://gitlab.com/libvirt/libvirt-ci
++
++packages:
++  - bash
++  - bc
++  - bison
++  - bsdextrautils
++  - bzip2
++  - ca-certificates
++  - ccache
++  - clang
++  - dbus
++  - debianutils
++  - diffutils
++  - exuberant-ctags
++  - findutils
++  - flex
++  - gcc
++  - gcovr
++  - gettext
++  - git
++  - hostname
++  - libaio-dev
++  - libasan6
++  - libasound2-dev
++  - libattr1-dev
++  - libbpf-dev
++  - libbrlapi-dev
++  - libbz2-dev
++  - libc6-dev
++  - libcacard-dev
++  - libcap-ng-dev
++  - libcapstone-dev
++  - libcmocka-dev
++  - libcurl4-gnutls-dev
++  - libdaxctl-dev
++  - libdrm-dev
++  - libepoxy-dev
++  - libfdt-dev
++  - libffi-dev
++  - libfuse3-dev
++  - libgbm-dev
++  - libgcrypt20-dev
++  - libglib2.0-dev
++  - libglusterfs-dev
++  - libgnutls28-dev
++  - libgtk-3-dev
++  - libibumad-dev
++  - libibverbs-dev
++  - libiscsi-dev
++  - libjemalloc-dev
++  - libjpeg-turbo8-dev
++  - libjson-c-dev
++  - liblttng-ust-dev
++  - liblzo2-dev
++  - libncursesw5-dev
++  - libnfs-dev
++  - libnuma-dev
++  - libpam0g-dev
++  - libpcre2-dev
++  - libpipewire-0.3-dev
++  - libpixman-1-dev
++  - libpng-dev
++  - libpulse-dev
++  - librbd-dev
++  - librdmacm-dev
++  - libsasl2-dev
++  - libsdl2-dev
++  - libsdl2-image-dev
++  - libseccomp-dev
++  - libselinux1-dev
++  - libslirp-dev
++  - libsnappy-dev
++  - libsndio-dev
++  - libspice-protocol-dev
++  - libssh-dev
++  - libsystemd-dev
++  - libtasn1-6-dev
++  - libubsan1
++  - libudev-dev
++  - liburing-dev
++  - libusb-1.0-0-dev
++  - libusbredirhost-dev
++  - libvdeplug-dev
++  - libvirglrenderer-dev
++  - libvte-2.91-dev
++  - libzstd-dev
++  - llvm
++  - locales
++  - make
++  - meson
++  - mtools
++  - multipath-tools
++  - ncat
++  - nettle-dev
++  - ninja-build
++  - openssh-client
++  - pkgconf
++  - python3
++  - python3-numpy
++  - python3-opencv
++  - python3-pillow
++  - python3-pip
++  - python3-sphinx
++  - python3-sphinx-rtd-theme
++  - python3-tomli
++  - python3-venv
++  - python3-yaml
++  - rpm2cpio
++  - sed
++  - socat
++  - sparse
++  - swtpm
++  - systemtap-sdt-dev
++  - tar
++  - tesseract-ocr
++  - tesseract-ocr-eng
++  - xorriso
++  - zlib1g-dev
++  - zstd
++
 diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-index cec6703971..a300a26c0d 160000
+index a300a26c0d..6e8fa79119 160000
 --- a/tests/lcitool/libvirt-ci
 +++ b/tests/lcitool/libvirt-ci
 @@ -1 +1 @@
--Subproject commit cec67039719becbfbab866f9c23574f389cf9559
-+Subproject commit a300a26c0d7f48544c40af268b3245ebd63c7351
+-Subproject commit a300a26c0d7f48544c40af268b3245ebd63c7351
++Subproject commit 6e8fa79119d131d95502b20051dd84353be57816
 diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 789acefb75..ace4d08364 100755
+index ace4d08364..3577a411a6 100755
 --- a/tests/lcitool/refresh
 +++ b/tests/lcitool/refresh
-@@ -124,11 +124,11 @@ try:
-     #
-     # Standard native builds
-     #
--    generate_dockerfile("alpine", "alpine-318")
-+    generate_dockerfile("alpine", "alpine-320")
-     generate_dockerfile("centos9", "centos-stream-9")
-     generate_dockerfile("debian", "debian-12",
-                         trailer="".join(debian12_extras))
--    generate_dockerfile("fedora", "fedora-38")
-+    generate_dockerfile("fedora", "fedora-40")
-     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
-     generate_dockerfile("ubuntu2204", "ubuntu-2204")
+@@ -80,7 +80,7 @@ def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None):
  
-@@ -191,7 +191,7 @@ try:
-                         trailer=cross_build("s390x-linux-gnu-",
-                                             "s390x-softmmu,s390x-linux-user"))
+ def generate_cirrus(target, trailer=None):
+     filename = Path(src_dir, ".gitlab-ci.d", "cirrus", target + ".vars")
+-    cmd = lcitool_cmd + ["variables", target, "qemu"]
++    cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
+     generate(filename, cmd, trailer)
  
--    generate_dockerfile("fedora-win64-cross", "fedora-38",
-+    generate_dockerfile("fedora-win64-cross", "fedora-40",
-                         project='qemu,qemu-win-installer',
-                         cross="mingw64",
-                         trailer=cross_build("x86_64-w64-mingw32-",
-diff --git a/tests/lcitool/targets/centos-stream-8.yml b/tests/lcitool/targets/centos-stream-8.yml
-deleted file mode 100644
-index 6b11160fd1..0000000000
---- a/tests/lcitool/targets/centos-stream-8.yml
-+++ /dev/null
-@@ -1,3 +0,0 @@
--paths:
--  pip3: /usr/bin/pip3.8
--  python: /usr/bin/python3.8
+ 
+@@ -90,6 +90,13 @@ def generate_pkglist(vm, target):
+     generate(filename, cmd, None)
+ 
+ 
++def generate_yaml(os, target, arch, trailer=None):
++    filename = Path(src_dir, "scripts", "ci", "setup", os, f"{target}-{arch}.yaml")
++    cmd = lcitool_cmd + ["variables", "--format", "yaml", "-a",
++                         arch, target, "qemu"]
++    generate(filename, cmd, trailer)
++
++
+ # Netmap still needs to be manually built as it is yet to be packaged
+ # into a distro. We also add cscope and gtags which are used in the CI
+ # test
+@@ -209,6 +216,13 @@ try:
+     #
+     generate_pkglist("freebsd", "freebsd-13")
+ 
++    #
++    # Ansible package lists
++    #
++    generate_yaml("ubuntu", "ubuntu-2204", "aarch64")
++    generate_yaml("ubuntu", "ubuntu-2204", "s390x")
++
++
+     sys.exit(0)
+ except Exception as ex:
+     print(str(ex), file=sys.stderr)
 -- 
 2.39.2
 
