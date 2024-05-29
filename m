@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86590C25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:01:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1F7C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 06:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCCNI-0003X5-NL; Wed, 29 May 2024 02:01:24 -0400
+	id 1sCCOj-0004kF-8B; Wed, 29 May 2024 02:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCCNF-0003SB-SX
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:01:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCCOc-0004jY-8H
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:02:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCCND-0002jT-JE
- for qemu-devel@nongnu.org; Wed, 29 May 2024 02:01:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCCOa-0002pB-Sf
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 02:02:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716962477;
+ s=mimecast20190719; t=1716962564;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=w42FI7cwVzRyHEEXnvWmel7GiHWALQA7IKLHDlziYb8=;
- b=PHIXFKKvWASArJOoO41OJnSTrhfryLGprSeECaU+bDgeGI7n3nUOFQOHlSG+lvkdXGEwW1
- ZHGi6WtqHsPl/TDEoYUhVyoP/DjUS3WlEo9kgC/pyN/7eaOs5q5guzaKcKpuB2mKk9tqaa
- whTeshw9mQFGTwnAU6/ZP8S7b5KtXNw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gUyFkFBGi5y/sthV7GiTPT4bAs6upQ9ZQwAd6b2aRas=;
+ b=RplBm5BifTN4XiysfEgsvaOfVJboEjhP/N69O9PzxVTf+CZ6xZdwzxB7MExz696U3wuuSo
+ 09KC7VRTRebm2Rv1r0pWZMdyuikWt5+5wD/HKSEXFv/oR4poQomZMxKNtelBdWuReJUITw
+ KOA/cdvKTbQYu8nvOeP14VFwtBnPFLE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-xW2ItAufNbuMsFTGvD7CSg-1; Wed, 29 May 2024 02:01:15 -0400
-X-MC-Unique: xW2ItAufNbuMsFTGvD7CSg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35858762c31so353007f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 May 2024 23:01:15 -0700 (PDT)
+ us-mta-478-NXlmZ5oJOf-wpa_TDw2URw-1; Wed, 29 May 2024 02:02:40 -0400
+X-MC-Unique: NXlmZ5oJOf-wpa_TDw2URw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4206b3500f5so14074855e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 23:02:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716962474; x=1717567274;
+ d=1e100.net; s=20230601; t=1716962559; x=1717567359;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w42FI7cwVzRyHEEXnvWmel7GiHWALQA7IKLHDlziYb8=;
- b=vQMaQ5fnnOtkUY6TqtTDXsRXBZrU63fPPjET13s5pryDkjqVIBZ5lrkA/x5uXTQdTe
- 9GhRLzDevGhNxHNEHCzU0g1ZRR+ZfzlAn0zfgFfEW1LrQaiFV8ZoqlaEe0ur7J6CavM0
- W64O2aCNjbdQCALv4QOCsgmH1Pp9gYsa1M92XZtsaUBYcwl47tbBD1UNlWDQ8HVGuLtK
- GLfNosiWhnE/fcNSx9ehOKecqxyIA/vmU+QafX7iInPjz97k7nTfpjVsWX3rA0AmalNw
- zFSKdzNAnMrJMUzYN33vnp+8iP8PyECbGlxuMq8+C/SBwocxotK5L4mBZA7x4Cm/0MFA
- gijQ==
+ bh=gUyFkFBGi5y/sthV7GiTPT4bAs6upQ9ZQwAd6b2aRas=;
+ b=IDMeiwaec5BNjNLAZ0mcHnG2aA1SL49JMrUJVZJTK/iWCWLQJyk2xGgThpYS9MSbZf
+ 1YCiXsfEQVTY71AqKV0kTNNe9KATq2VOqMEVtApeBrvzqcknOn8Q+jgcMNgM+B+FCHEz
+ UP8VgqU//waVuoHNwsWzpU7t6NuCwziemMnITi0zO0pT+RX7RrtdB2xUo33jxcLrHB/w
+ SBEvI1ejFbwP6q8qNTvbwjhKGZmiz5y1U0oMDqNBk0Zo5rCxe5P+okyLy954fzrlOn52
+ +LOmfnIz4UwZKq6PsVEKVd4bMM16kjQIr2aAz7C6j+npwOny1tQJdCRDWiizCO6oRoXQ
+ jDPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUg4hqbc5yZG7h0FHLpp+Y/ohp7/qJjmDUcgH7m79zIzpeUSRF4UeKHewrVDJktXHWrPa6ZRNrnoGU72i7bPQx4kl4DGTg=
-X-Gm-Message-State: AOJu0YzKynkVkE8wVwoeIVjrtWcVyQMZeC5k6b2h8NkuqdBNCDLFdAXn
- YhfhsaZypjDIDYuQ0CJNPj+RX596G7FMk9xl724XmV2hQGeusFjHwDxKSkxJSWuhgCV7d5gaOSN
- +A2FAOkTFFgEFzhx4egxHuPjDNVK8+o0ACT2jp1D4BLUiBxvxk09n
-X-Received: by 2002:a05:6000:10a:b0:354:f729:c3e7 with SMTP id
- ffacd0b85a97d-35c7c2b5325mr656479f8f.34.1716962474212; 
- Tue, 28 May 2024 23:01:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzk8VdCLPqIyBAcytaEh37KJHeNQ0VrRmQ1jrtyN6/xvVtSPykryMwmYIVq89j6uiXxgpHUQ==
-X-Received: by 2002:a05:6000:10a:b0:354:f729:c3e7 with SMTP id
- ffacd0b85a97d-35c7c2b5325mr656448f8f.34.1716962473779; 
- Tue, 28 May 2024 23:01:13 -0700 (PDT)
+ AJvYcCWplJaYakIYEMSI0P5cTqD/P2OUclKMeh2We4e0oTARSyKAoEg8PKmqLDsEuW4fbgtByGQbep61vbM64rpcxzQtJTKv9XM=
+X-Gm-Message-State: AOJu0YyvM0VdiEqHak95nmwRT14xWJOiUZkFD7ot7KwK4gvJX+AXpys8
+ +5Q0Aaka/xmwhlS33w1osg+Eigx+1uWfU7OfSQJzjIQ2BlPgIADU7tVXoA5VkEcneSAaFf+341K
+ gREn/fF5CDgnp5E/TdIIDdOqmHeMKhf2KFsDI3zNMIeVrMRolnB2b
+X-Received: by 2002:a05:600c:1f92:b0:421:1e47:62d3 with SMTP id
+ 5b1f17b1804b1-4211e476353mr41776345e9.3.1716962559306; 
+ Tue, 28 May 2024 23:02:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTmoUp+E6gq06WVuGGvQwQKLrH2e7Hb6NMwquPoGNj3rHdzmRh6Wq978EnfMvvcHsiXWVHKA==
+X-Received: by 2002:a05:600c:1f92:b0:421:1e47:62d3 with SMTP id
+ 5b1f17b1804b1-4211e476353mr41776155e9.3.1716962558926; 
+ Tue, 28 May 2024 23:02:38 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
  [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-358093ede7fsm9448983f8f.37.2024.05.28.23.01.12
+ 5b1f17b1804b1-42100ee7f1dsm200312375e9.7.2024.05.28.23.02.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 23:01:13 -0700 (PDT)
-Message-ID: <c34f9009-65a4-4c9d-a99a-1633e8f6fe88@redhat.com>
-Date: Wed, 29 May 2024 08:01:11 +0200
+ Tue, 28 May 2024 23:02:38 -0700 (PDT)
+Message-ID: <2459706c-06d6-4ff8-9861-244d6d8845af@redhat.com>
+Date: Wed, 29 May 2024 08:02:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fuzz: disable leak-detection for oss-fuzz builds
-To: Alexander Bulekov <alxndr@bu.edu>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Darren Kenny
- <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
-References: <20240527150001.325565-1-alxndr@bu.edu>
+Subject: Re: [PATCH v5 20/23] hw/i386/pc: Remove deprecated pc-i440fx-2.3
+ machine
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20240529051539.71210-1-philmd@linaro.org>
+ <20240529051539.71210-21-philmd@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -120,9 +123,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240527150001.325565-1-alxndr@bu.edu>
+In-Reply-To: <20240529051539.71210-21-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -148,31 +151,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/05/2024 16.59, Alexander Bulekov wrote:
-> When we are building for OSS-Fuzz, we want to ensure that the fuzzer
-> targets are actually created, regardless of leaks. Leaks will be
-> detected by the subsequent tests of the individual fuzz-targets.
+On 29/05/2024 07.15, Philippe Mathieu-Daudé wrote:
+> The pc-i440fx-2.3 machine was deprecated for the 8.2
+> release (see commit c7437f0ddb "docs/about: Mark the
+> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
+> time to remove it.
 > 
-> Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   scripts/oss-fuzz/build.sh | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
-> index 5238f83343..7398298173 100755
-> --- a/scripts/oss-fuzz/build.sh
-> +++ b/scripts/oss-fuzz/build.sh
-> @@ -92,6 +92,7 @@ make install DESTDIR=$DEST_DIR/qemu-bundle
->   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/bin
->   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/libexec
->   
-> +export ASAN_OPTIONS=detect_leaks=0
->   targets=$(./qemu-fuzz-i386 | grep generic-fuzz | awk '$1 ~ /\*/  {print $2}')
->   base_copy="$DEST_DIR/qemu-fuzz-i386-target-$(echo "$targets" | head -n 1)"
+>   docs/about/deprecated.rst       |  4 ++--
+>   docs/about/removed-features.rst |  2 +-
+>   hw/i386/pc.c                    | 25 -------------------------
+>   hw/i386/pc_piix.c               | 19 -------------------
+>   4 files changed, 3 insertions(+), 47 deletions(-)
 
-Would it maybe also make sense to check that $targets is not empty and error 
-out in case it is?
 
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
