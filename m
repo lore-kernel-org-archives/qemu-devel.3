@@ -4,68 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB95C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29456C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCGy3-0004vz-5A; Wed, 29 May 2024 06:55:39 -0400
+	id 1sCGzG-00025u-Un; Wed, 29 May 2024 06:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxx-0004lt-1g
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCGxu-0003Jz-Jy
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:55:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716980130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ngGf/SQd5QMjCLjCV3lBUt7ZAu8XYK+UDWz45TEjZKA=;
- b=TQ2CJwkHm+2+mgNScr/IMSYbpLrS1BEFXkahZvhc/UQOSA4SZGcGyoIBni86q3lbwD9ogq
- UsG6ABqOjpnGMgyyH9dNctB93fDS4h/D6jQenYwtZh+KXHQGH4D9AhULVatBNO/P6XYMHu
- 5oaLtnULa7I2fpftxnlu8ZONpBvqNnw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-244-TqatjgWWMnuH9nsLYWTR1w-1; Wed, 29 May 2024 06:55:25 -0400
-X-MC-Unique: TqatjgWWMnuH9nsLYWTR1w-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9F1C5101A525;
- Wed, 29 May 2024 10:55:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.109])
- by smtp.corp.redhat.com (Postfix) with ESMTP id BA0B0105480A;
- Wed, 29 May 2024 10:55:22 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-s390x@nongnu.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 14/22] tests/tcg/s390x: Add per.S
-Date: Wed, 29 May 2024 12:54:46 +0200
-Message-ID: <20240529105454.1149225-15-thuth@redhat.com>
-In-Reply-To: <20240529105454.1149225-1-thuth@redhat.com>
-References: <20240529105454.1149225-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
+ id 1sCGzF-0001pm-7S; Wed, 29 May 2024 06:56:53 -0400
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
+ id 1sCGzD-0003Ue-7K; Wed, 29 May 2024 06:56:52 -0400
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-7e2188592c2so88384639f.0; 
+ Wed, 29 May 2024 03:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1716980209; x=1717585009; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pQHi1PWThwn93/8aqyNGE+J8DVO5qnNISfkfl9kvFfk=;
+ b=JDzenT0Q+xrlefn0knkKhA00iKQoY00ENxNfem4fxN5yQEd1AZlBqmI67TCuxVDg79
+ xX77nlEaJcbsIAUQQIEX3qTUx1aWeg8iFtsR1Dyud91AVyHq+SNUBw3VSB0v5NY9kZjv
+ ARt0Tisqne3NOijX/9AIRmyBzZY3nNX7lMPzBSKUnIHKb+iHs+m2pSgOkixMkc2FhNev
+ yzrM61DFZAber6mK2NMKR3dp9kQR8D8kBtbtD/2CA5aphgbkVyCCzh7gDQKaObBSm8db
+ kOt3U0FzIeGMX8apW4j1zK+KptfWH0dbkBDcLjA2YkgOldSGWhwpNeLDvg0lx3YU1dqE
+ PEdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716980209; x=1717585009;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pQHi1PWThwn93/8aqyNGE+J8DVO5qnNISfkfl9kvFfk=;
+ b=JsEaghoAMZHO+APi4A5LTfp//q4WVxyKMYAjh4iLi6tikddIfsjHIx6gzk4GdixAX0
+ 5SrMgTfsOov7UkmWwgOFWMzltkNpTO9XfKtxbfiVf9mnF0E4JJkBXLCMJ76t50fllePo
+ fVcZVxfdGCOgSDh2DIg/X1Bod2sTTCl+3Dy+PRMX5cxK/Tp2j/tq5mDmVxJKrUr+j2ma
+ GykhAidxisHs62zMB43BNCgWuv5Yg+lPGdFxTxADvBGqxkZXxOOSM2F7F6vSihtzr1qq
+ 5qeo0fTsUEHxA0UArM0AQBlKqPi52eru6F1DD90kLu6vXrTkUjvoEUpaQGduYwej8RU3
+ e23A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSwT/ZXzNPEcHwUyVtb9IjWOboKqRYh6EHLMyfbWd8iDXSU5A7v6KFSbhrpATP0oaThBkDGhYJ8MZ6WJnzlPqyPTy1aTHq5w==
+X-Gm-Message-State: AOJu0Yw/nbNCVxmVj4Im+nXeeOqWz3mObrKUiIRuehnZKc+nlMWFWF0L
+ rmR2qRemsoRJzGwbM4g3ZCWesm4fBcUnXC1SNjcPfQEj/2hwq2IbWIxNarvSIAp2fU5oAYzZf5u
+ XKmajDnqs7eAswRTr0XqTu79CsSE=
+X-Google-Smtp-Source: AGHT+IGbVc3gmIo1BfkjHlYlr13Ba1jPY5gnhpnceh+BrY2g+0aTk8gUfdzuX+uC1nNM1+Cw0irAwhZ4ZlZTq8m+b1M=
+X-Received: by 2002:a5e:9807:0:b0:7e1:7b55:ad28 with SMTP id
+ ca18e2360f4ac-7e8c480b57amr1648807639f.3.1716980209319; Wed, 29 May 2024
+ 03:56:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240528102339.106257-1-vilhelmgyda@gmail.com>
+ <e8t34.08zb3hciwfl@linaro.org>
+In-Reply-To: <e8t34.08zb3hciwfl@linaro.org>
+From: Vilhelm Gyda <vilhelmgyda@gmail.com>
+Date: Wed, 29 May 2024 16:26:38 +0530
+Message-ID: <CADe4k3Ke0Lc2roLkupO78KoTkJY46LG6jJdBAoCKsLcA98g3Uw@mail.gmail.com>
+Subject: Re: [PATCH] Issue #2294 | Machine microvm doesn't run under Xen accel
+ for x86_64
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, philmd@linaro.org, 
+ pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=vilhelmgyda@gmail.com; helo=mail-io1-xd33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,122 +92,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Wed, May 29, 2024 at 3:58=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+> What about TCG? Will it be available if we only build with tcg?
 
-Add a small test to avoid regressions.
+I will try doing this, and report back, and will make the suggested
+changes, and re-submit.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20240502054417.234340-15-richard.henderson@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/tcg/s390x/Makefile.softmmu-target |  1 +
- tests/tcg/s390x/per.S                   | 82 +++++++++++++++++++++++++
- 2 files changed, 83 insertions(+)
- create mode 100644 tests/tcg/s390x/per.S
 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index 1a1f088b28..80159cccf5 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -25,6 +25,7 @@ ASM_TESTS =                                                                    \
-     lpswe-early                                                                \
-     lra                                                                        \
-     mc                                                                         \
-+    per                                                                        \
-     precise-smc-softmmu                                                        \
-     ssm-early                                                                  \
-     stosm-early                                                                \
-diff --git a/tests/tcg/s390x/per.S b/tests/tcg/s390x/per.S
-new file mode 100644
-index 0000000000..79e704a6ff
---- /dev/null
-+++ b/tests/tcg/s390x/per.S
-@@ -0,0 +1,82 @@
-+	.org	0x8d
-+ilc:
-+	.org	0x8e
-+program_interruption_code:
-+	.org	0x96
-+per_code:
-+	.org	0x98
-+per_address:
-+	.org	0x150
-+program_old_psw:
-+	.org	0x1d0
-+program_new_psw:
-+	.quad	0, pgm_handler
-+
-+	.org	0x200			/* exit lowcore */
-+
-+per_on_psw:
-+	.quad	0x4000000000000000, start_per
-+per_on_regs:
-+	.quad	0x80000000, 0, -1	/* successful-branching everywhere */
-+per_off_regs:
-+	.quad	0, 0 ,0
-+success_psw:
-+	.quad	0x2000000000000, 0xfff	/* see is_special_wait_psw() */
-+failure_psw:
-+	.quad	0x2000000000000, 0	/* disabled wait */
-+
-+	.org	0x2000			/* exit lowcore pages */
-+
-+	.globl _start
-+_start:
-+	lpswe	per_on_psw
-+start_per:
-+	lctlg	%c9, %c11, per_on_regs
-+
-+/* Test unconditional relative branch. */
-+	larl	%r0, j1
-+	larl	%r1, d1
-+	lhi	%r2, 0
-+j1:	j	d1
-+	lpswe	failure_psw
-+d1:
-+
-+/* Test unconditional indirect branch. */
-+	larl	%r0, j2
-+	larl	%r1, d2
-+j2:	br	%r1
-+	lpswe	failure_psw
-+d2:
-+
-+/* Test conditional relative branch. */
-+	larl	%r0, j3
-+	larl	%r1, d3
-+	clr	%r1, %r2	/* d3 != 0 */
-+j3:	jne	d3
-+	lpswe	failure_psw
-+d3:
-+
-+/* Test conditional register branch. */
-+	larl	%r0, j4
-+	larl	%r1, d4
-+	clr	%r1, %r2	/* d4 != 0 */
-+j4:	bner	%r1
-+	lpswe	failure_psw
-+d4:
-+
-+/* Success! */
-+	nop
-+	lpswe	success_psw
-+
-+pgm_handler:
-+	chhsi	program_interruption_code, 0x80	/* PER event? */
-+	jne	fail
-+	cli	per_code, 0x80		/* successful-branching event? */
-+	jne	fail
-+	clg	%r0, per_address	/* per_address == jump insn? */
-+	jne	fail
-+	clg	%r1, program_old_psw+8	/* psw.addr updated to dest? */
-+	jne	fail
-+	lpswe	program_old_psw
-+fail:
-+	lpswe	failure_psw
--- 
-2.45.1
-
+On Wed, May 29, 2024 at 3:58=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> On Tue, 28 May 2024 13:23, Will Gyda <vilhelmgyda@gmail.com> wrote:
+> >Issue #2294: Machine microvm doesn't run under Xen accel for qemu-system=
+-x86_64.
+> >Solution: microvm is now not build if only Xen is available.
+> >
+> >Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
+> >
+>
+>
+> I suggest rewording the commit title to something like
+>
+> "i386: remove microvm from default build"
+>
+> And adding a commit message that explains that the microvm does not work
+> on Xen, hence if only Xen is available it should not be built.
+>
+> Also, you can add a
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2294
+>
+> line before your Signed-off-by. See
+> https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+>
+> But, seeing the issue itself, it's about the microvm being stuck under
+> Xen. So the commit that resolves this would either make it non-stuck or
+> make it impossible to start the vm to begin with.
+>
+>
+> >---
+> > configs/devices/i386-softmmu/default.mak | 2 +-
+> > hw/i386/Kconfig                          | 2 ++
+> > 2 files changed, 3 insertions(+), 1 deletion(-)
+> >
+> >diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/=
+i386-softmmu/default.mak
+> >index 598c6646df..6a73aee7dd 100644
+> >--- a/configs/devices/i386-softmmu/default.mak
+> >+++ b/configs/devices/i386-softmmu/default.mak
+> >@@ -29,4 +29,4 @@
+> > CONFIG_ISAPC=3Dy
+> > CONFIG_I440FX=3Dy
+> > CONFIG_Q35=3Dy
+> >-CONFIG_MICROVM=3Dy
+> >+#CONFIG_MICROVM=3Dn
+>
+> Better remove this altogether since it's not a default anymore.
+>
+> >diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> >index a6ee052f9a..f8ec8ebd7a 100644
+> >--- a/hw/i386/Kconfig
+> >+++ b/hw/i386/Kconfig
+> >@@ -108,6 +108,8 @@ config Q35
+> >
+> > config MICROVM
+> >     bool
+> >+    default y
+> >+    depends on KVM || WHPX || NVMM || HVF
+>
+> What about TCG? Will it be available if we only build with tcg?
+>
+> >     select SERIAL_ISA # for serial_hds_isa_init()
+> >     select ISA_BUS
+> >     select APIC
+> >--
+> >2.25.1
+> >
+> >
 
