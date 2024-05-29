@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D1DAC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56A4C25B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM7T-0001mb-JY; Wed, 29 May 2024 12:25:43 -0400
+	id 1sCM7W-00020K-Gg; Wed, 29 May 2024 12:25:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM76-0001IX-Fe
+ id 1sCM77-0001JU-Gm
  for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:23 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM73-0006LT-Pw
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:19 -0400
+ id 1sCM74-0006NI-JN
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:21 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6k-006CPy-PO;
- Wed, 29 May 2024 17:24:58 +0100
+ (envelope-from <movement@movementarian.org>) id 1sCM6r-006CR5-DS;
+ Wed, 29 May 2024 17:25:05 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
  thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 18/26] vfio-user: get and set IRQs
-Date: Wed, 29 May 2024 17:23:11 +0100
-Message-Id: <20240529162319.1476680-19-levon@movementarian.org>
+Subject: [PATCH 23/26] vfio-user: dma read/write operations
+Date: Wed, 29 May 2024 17:23:16 +0100
+Message-Id: <20240529162319.1476680-24-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
@@ -61,242 +61,260 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
+Messages from server to client that perform device DMA.
+
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/pci.c           |   3 +-
- hw/vfio/trace-events    |   2 +
- hw/vfio/user-protocol.h |  25 +++++++
- hw/vfio/user.c          | 140 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 169 insertions(+), 1 deletion(-)
+ hw/vfio/user-pci.c      | 110 ++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/user-protocol.h |  13 ++++-
+ hw/vfio/user.c          |  57 +++++++++++++++++++++
+ hw/vfio/user.h          |   3 ++
+ 4 files changed, 182 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d1da64383e..56bfb17eec 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -772,7 +772,8 @@ retry:
-     ret = vfio_enable_vectors(vdev, false);
-     if (ret) {
-         if (ret < 0) {
--            error_report("vfio: Error: Failed to setup MSI fds: %m");
-+            error_report("vfio: Error: Failed to setup MSI fds: %s",
-+                         strerror(-ret));
-         } else {
-             error_report("vfio: Error: Failed to enable %d "
-                          "MSI vectors, retry with %d", vdev->nr_vectors, ret);
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index a65d530557..73661db9d9 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -186,3 +186,5 @@ vfio_user_version(uint16_t major, uint16_t minor, const char *caps) " major %d m
- vfio_user_get_info(uint32_t nregions, uint32_t nirqs) " #regions %d #irqs %d"
- vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index %d flags 0x%x size 0x%"PRIx64
- vfio_user_region_rw(uint32_t region, uint64_t off, uint32_t count) " region %d offset 0x%"PRIx64" count %d"
-+vfio_user_get_irq_info(uint32_t index, uint32_t flags, uint32_t count) " index %d flags 0x%x count %d"
-+vfio_user_set_irqs(uint32_t index, uint32_t start, uint32_t count, uint32_t flags) " index %d start %d count %d flags 0x%x"
-diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
-index 6987435e96..48dd475ab3 100644
---- a/hw/vfio/user-protocol.h
-+++ b/hw/vfio/user-protocol.h
-@@ -139,6 +139,31 @@ typedef struct {
-     uint64_t offset;
- } VFIOUserRegionInfo;
+diff --git a/hw/vfio/user-pci.c b/hw/vfio/user-pci.c
+index 19fbcf77ab..9fb6ae5142 100644
+--- a/hw/vfio/user-pci.c
++++ b/hw/vfio/user-pci.c
+@@ -101,6 +101,95 @@ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
+     vdev->msix->pba_region = NULL;
+ }
  
-+/*
-+ * VFIO_USER_DEVICE_GET_IRQ_INFO
-+ * imported from struct vfio_irq_info
-+ */
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint32_t argsz;
-+    uint32_t flags;
-+    uint32_t index;
-+    uint32_t count;
-+} VFIOUserIRQInfo;
++static void vfio_user_dma_read(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
++{
++    PCIDevice *pdev = &vdev->pdev;
++    VFIOUserProxy *proxy = vdev->vbasedev.proxy;
++    VFIOUserDMARW *res;
++    MemTxResult r;
++    size_t size;
 +
-+/*
-+ * VFIO_USER_DEVICE_SET_IRQS
-+ * imported from struct vfio_irq_set
-+ */
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint32_t argsz;
-+    uint32_t flags;
-+    uint32_t index;
-+    uint32_t start;
-+    uint32_t count;
-+} VFIOUserIRQSet;
++    if (msg->hdr.size < sizeof(*msg)) {
++        vfio_user_send_error(proxy, &msg->hdr, EINVAL);
++        return;
++    }
++    if (msg->count > proxy->max_xfer_size) {
++        vfio_user_send_error(proxy, &msg->hdr, E2BIG);
++        return;
++    }
++
++    /* switch to our own message buffer */
++    size = msg->count + sizeof(VFIOUserDMARW);
++    res = g_malloc0(size);
++    memcpy(res, msg, sizeof(*res));
++    g_free(msg);
++
++    r = pci_dma_read(pdev, res->offset, &res->data, res->count);
++
++    switch (r) {
++    case MEMTX_OK:
++        if (res->hdr.flags & VFIO_USER_NO_REPLY) {
++            g_free(res);
++            return;
++        }
++        vfio_user_send_reply(proxy, &res->hdr, size);
++        break;
++    case MEMTX_ERROR:
++        vfio_user_send_error(proxy, &res->hdr, EFAULT);
++        break;
++    case MEMTX_DECODE_ERROR:
++        vfio_user_send_error(proxy, &res->hdr, ENODEV);
++        break;
++    case MEMTX_ACCESS_ERROR:
++        vfio_user_send_error(proxy, &res->hdr, EPERM);
++        break;
++    default:
++        error_printf("vfio_user_dma_read unknown error %d\n", r);
++        vfio_user_send_error(vdev->vbasedev.proxy, &res->hdr, EINVAL);
++    }
++}
++
++static void vfio_user_dma_write(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
++{
++    PCIDevice *pdev = &vdev->pdev;
++    VFIOUserProxy *proxy = vdev->vbasedev.proxy;
++    MemTxResult r;
++
++    if (msg->hdr.size < sizeof(*msg)) {
++        vfio_user_send_error(proxy, &msg->hdr, EINVAL);
++        return;
++    }
++    /* make sure transfer count isn't larger than the message data */
++    if (msg->count > msg->hdr.size - sizeof(*msg)) {
++        vfio_user_send_error(proxy, &msg->hdr, E2BIG);
++        return;
++    }
++
++    r = pci_dma_write(pdev, msg->offset, &msg->data, msg->count);
++
++    switch (r) {
++    case MEMTX_OK:
++        if ((msg->hdr.flags & VFIO_USER_NO_REPLY) == 0) {
++            vfio_user_send_reply(proxy, &msg->hdr, sizeof(msg->hdr));
++        } else {
++            g_free(msg);
++        }
++        break;
++    case MEMTX_ERROR:
++        vfio_user_send_error(proxy, &msg->hdr, EFAULT);
++        break;
++    case MEMTX_DECODE_ERROR:
++        vfio_user_send_error(proxy, &msg->hdr, ENODEV);
++        break;
++    case MEMTX_ACCESS_ERROR:
++        vfio_user_send_error(proxy, &msg->hdr, EPERM);
++        break;
++    default:
++        error_printf("vfio_user_dma_write unknown error %d\n", r);
++        vfio_user_send_error(vdev->vbasedev.proxy, &msg->hdr, EINVAL);
++    }
++}
 +
  /*
-  * VFIO_USER_REGION_READ
-  * VFIO_USER_REGION_WRITE
+  * Incoming request message callback.
+  *
+@@ -108,7 +197,28 @@ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
+  */
+ static void vfio_user_pci_process_req(void *opaque, VFIOUserMsg *msg)
+ {
++    VFIOPCIDevice *vdev = opaque;
++    VFIOUserHdr *hdr = msg->hdr;
++
++    /* no incoming PCI requests pass FDs */
++    if (msg->fds != NULL) {
++        vfio_user_send_error(vdev->vbasedev.proxy, hdr, EINVAL);
++        vfio_user_putfds(msg);
++        return;
++    }
+ 
++    switch (hdr->command) {
++    case VFIO_USER_DMA_READ:
++        vfio_user_dma_read(vdev, (VFIOUserDMARW *)hdr);
++        break;
++    case VFIO_USER_DMA_WRITE:
++        vfio_user_dma_write(vdev, (VFIOUserDMARW *)hdr);
++        break;
++    default:
++        error_printf("vfio_user_pci_process_req unknown cmd %d\n",
++                     hdr->command);
++        vfio_user_send_error(vdev->vbasedev.proxy, hdr, ENOSYS);
++    }
+ }
+ 
+ /*
+diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
+index 9b569156fa..607e0f4b7f 100644
+--- a/hw/vfio/user-protocol.h
++++ b/hw/vfio/user-protocol.h
+@@ -203,7 +203,18 @@ typedef struct {
+     char data[];
+ } VFIOUserRegionRW;
+ 
+-/*imported from struct vfio_bitmap */
++/*
++ * VFIO_USER_DMA_READ
++ * VFIO_USER_DMA_WRITE
++ */
++typedef struct {
++    VFIOUserHdr hdr;
++    uint64_t offset;
++    uint32_t count;
++    char data[];
++} VFIOUserDMARW;
++
++/* imported from struct vfio_bitmap */
+ typedef struct {
+     uint64_t pgsize;
+     uint64_t size;
 diff --git a/hw/vfio/user.c b/hw/vfio/user.c
-index 9bb1ee8880..352c10d37b 100644
+index adecd9a68a..a383922601 100644
 --- a/hw/vfio/user.c
 +++ b/hw/vfio/user.c
-@@ -1195,6 +1195,122 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
-     return 0;
+@@ -383,6 +383,10 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy)
+         *msg->hdr = hdr;
+         data = (char *)msg->hdr + sizeof(hdr);
+     } else {
++        if (hdr.size > proxy->max_xfer_size + sizeof(VFIOUserDMARW)) {
++            error_setg(&local_err, "vfio_user_recv request larger than max");
++            goto err;
++        }
+         buf = g_malloc0(hdr.size);
+         memcpy(buf, &hdr, sizeof(hdr));
+         data = buf + sizeof(hdr);
+@@ -792,6 +796,59 @@ void vfio_user_wait_reqs(VFIOUserProxy *proxy)
+     }
  }
  
-+static int vfio_user_get_irq_info(VFIOUserProxy *proxy,
-+                                  struct vfio_irq_info *info)
++/*
++ * Reply to an incoming request.
++ */
++void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size)
 +{
-+    VFIOUserIRQInfo msg;
 +
-+    memset(&msg, 0, sizeof(msg));
-+    vfio_user_request_msg(&msg.hdr, VFIO_USER_DEVICE_GET_IRQ_INFO,
-+                          sizeof(msg), 0);
-+    msg.argsz = info->argsz;
-+    msg.index = info->index;
-+
-+    vfio_user_send_wait(proxy, &msg.hdr, NULL, 0);
-+    if (msg.hdr.flags & VFIO_USER_ERROR) {
-+        return -msg.hdr.error_reply;
-+    }
-+    trace_vfio_user_get_irq_info(msg.index, msg.flags, msg.count);
-+
-+    memcpy(info, &msg.argsz, sizeof(*info));
-+    return 0;
-+}
-+
-+static int irq_howmany(int *fdp, uint32_t cur, uint32_t max)
-+{
-+    int n = 0;
-+
-+    if (fdp[cur] != -1) {
-+        do {
-+            n++;
-+        } while (n < max && fdp[cur + n] != -1);
-+    } else {
-+        do {
-+            n++;
-+        } while (n < max && fdp[cur + n] == -1);
-+    }
-+
-+    return n;
-+}
-+
-+static int vfio_user_set_irqs(VFIOUserProxy *proxy, struct vfio_irq_set *irq)
-+{
-+    g_autofree VFIOUserIRQSet *msgp = NULL;
-+    uint32_t size, nfds, send_fds, sent_fds, max;
-+
-+    if (irq->argsz < sizeof(*irq)) {
-+        error_printf("vfio_user_set_irqs argsz too small\n");
-+        return -EINVAL;
++    if (size < sizeof(VFIOUserHdr)) {
++        error_printf("vfio_user_send_reply - size too small\n");
++        g_free(hdr);
++        return;
 +    }
 +
 +    /*
-+     * Handle simple case
++     * convert header to associated reply
 +     */
-+    if ((irq->flags & VFIO_IRQ_SET_DATA_EVENTFD) == 0) {
-+        size = sizeof(VFIOUserHdr) + irq->argsz;
-+        msgp = g_malloc0(size);
++    hdr->flags = VFIO_USER_REPLY;
++    hdr->size = size;
 +
-+        vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_SET_IRQS, size, 0);
-+        msgp->argsz = irq->argsz;
-+        msgp->flags = irq->flags;
-+        msgp->index = irq->index;
-+        msgp->start = irq->start;
-+        msgp->count = irq->count;
-+        trace_vfio_user_set_irqs(msgp->index, msgp->start, msgp->count,
-+                                 msgp->flags);
-+
-+        vfio_user_send_wait(proxy, &msgp->hdr, NULL, 0);
-+        if (msgp->hdr.flags & VFIO_USER_ERROR) {
-+            return -msgp->hdr.error_reply;
-+        }
-+
-+        return 0;
-+    }
-+
-+    /*
-+     * Calculate the number of FDs to send
-+     * and adjust argsz
-+     */
-+    nfds = (irq->argsz - sizeof(*irq)) / sizeof(int);
-+    irq->argsz = sizeof(*irq);
-+    msgp = g_malloc0(sizeof(*msgp));
-+    /*
-+     * Send in chunks if over max_send_fds
-+     */
-+    for (sent_fds = 0; nfds > sent_fds; sent_fds += send_fds) {
-+        VFIOUserFDs *arg_fds, loop_fds;
-+
-+        /* must send all valid FDs or all invalid FDs in single msg */
-+        max = nfds - sent_fds;
-+        if (max > proxy->max_send_fds) {
-+            max = proxy->max_send_fds;
-+        }
-+        send_fds = irq_howmany((int *)irq->data, sent_fds, max);
-+
-+        vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_SET_IRQS,
-+                              sizeof(*msgp), 0);
-+        msgp->argsz = irq->argsz;
-+        msgp->flags = irq->flags;
-+        msgp->index = irq->index;
-+        msgp->start = irq->start + sent_fds;
-+        msgp->count = send_fds;
-+        trace_vfio_user_set_irqs(msgp->index, msgp->start, msgp->count,
-+                                 msgp->flags);
-+
-+        loop_fds.send_fds = send_fds;
-+        loop_fds.recv_fds = 0;
-+        loop_fds.fds = (int *)irq->data + sent_fds;
-+        arg_fds = loop_fds.fds[0] != -1 ? &loop_fds : NULL;
-+
-+        vfio_user_send_wait(proxy, &msgp->hdr, arg_fds, 0);
-+        if (msgp->hdr.flags & VFIO_USER_ERROR) {
-+            return -msgp->hdr.error_reply;
-+        }
-+    }
-+
-+    return 0;
++    vfio_user_send_async(proxy, hdr, NULL);
 +}
 +
- static int vfio_user_region_read(VFIOUserProxy *proxy, uint8_t index,
-                                  off_t offset, uint32_t count, void *data)
- {
-@@ -1291,6 +1407,28 @@ static int vfio_user_io_get_region_info(VFIODevice *vbasedev,
-     return 0;
- }
++/*
++ * Send an error reply to an incoming request.
++ */
++void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error)
++{
++
++    /*
++     * convert header to associated reply
++     */
++    hdr->flags = VFIO_USER_REPLY;
++    hdr->flags |= VFIO_USER_ERROR;
++    hdr->error_reply = error;
++    hdr->size = sizeof(*hdr);
++
++    vfio_user_send_async(proxy, hdr, NULL);
++}
++
++/*
++ * Close FDs erroneously received in an incoming request.
++ */
++void vfio_user_putfds(VFIOUserMsg *msg)
++{
++    VFIOUserFDs *fds = msg->fds;
++    int i;
++
++    for (i = 0; i < fds->recv_fds; i++) {
++        close(fds->fds[i]);
++    }
++    g_free(fds);
++    msg->fds = NULL;
++}
++
+ static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
+     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
  
-+static int vfio_user_io_get_irq_info(VFIODevice *vbasedev,
-+                                     struct vfio_irq_info *irq)
-+{
-+    int ret;
-+
-+    ret = vfio_user_get_irq_info(vbasedev->proxy, irq);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    if (irq->index > vbasedev->num_irqs) {
-+        return -EINVAL;
-+    }
-+    return 0;
-+}
-+
-+static int vfio_user_io_set_irqs(VFIODevice *vbasedev,
-+                                 struct vfio_irq_set *irqs)
-+{
-+    return vfio_user_set_irqs(vbasedev->proxy, irqs);
-+}
-+
- static int vfio_user_io_region_read(VFIODevice *vbasedev, uint8_t index,
-                                     off_t off, uint32_t size, void *data)
- {
-@@ -1307,6 +1445,8 @@ static int vfio_user_io_region_write(VFIODevice *vbasedev, uint8_t index,
+diff --git a/hw/vfio/user.h b/hw/vfio/user.h
+index fe24a881f2..fa6bc9a9d6 100644
+--- a/hw/vfio/user.h
++++ b/hw/vfio/user.h
+@@ -116,5 +116,8 @@ void vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                            VFIOUserFDs *fds, int rsize);
+ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                          VFIOUserFDs *fds, int rsize);
++void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size);
++void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error);
++void vfio_user_putfds(VFIOUserMsg *msg);
  
- VFIODeviceIO vfio_dev_io_sock = {
-     .get_region_info = vfio_user_io_get_region_info,
-+    .get_irq_info = vfio_user_io_get_irq_info,
-+    .set_irqs = vfio_user_io_set_irqs,
-     .region_read = vfio_user_io_region_read,
-     .region_write = vfio_user_io_region_write,
- };
+ #endif /* VFIO_USER_H */
 -- 
 2.34.1
 
