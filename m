@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368D5C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D85C27C44
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCKO6-0001NN-Qo; Wed, 29 May 2024 10:34:46 -0400
+	id 1sCKYN-0006XE-GB; Wed, 29 May 2024 10:45:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sCKO4-0001L5-IN
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:34:44 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCKYK-0006UO-Ln
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:45:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sCKO2-0001qz-Qz
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:34:44 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCKYI-0003h8-O1
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:45:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716993282;
+ s=mimecast20190719; t=1716993917;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4tbmm0b0IxMJdUEUhFD3+xi87OTMUHeROW/rrSw+Zwg=;
- b=QJ1lYFTolyHJTHZrpMbUk+P3z4WfcSdK9/Sz3zVN/yJbTypvZpzF6XolvyozPNEJqfc4I1
- HIgVhW5Cs1mOPcrkVoytSqLzGRXihFoVfQkDnERANg3sgK2guzuNyQ9mIsaO1HnCvopzPx
- 5bKhKz9FsY2TDQ6k4ca5SXdsnqv3sPU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=o5Odp+T+mRZtEDIu05Xn/N9Z+srPwdU7O3B+gRAvI3w=;
+ b=FbazRL/t1gAulTk2yNyN3u7vh9NtFNE47AisMGBcjbyNRZpIqCEBqLZ5PRdo3dJENlWDAS
+ 4rWsm6fh5gJxBkhRyy+u4LvCZb6bpu+Yi9rqKIWW/vjoOscT2eE/dmFx45KHRTLfXh7thF
+ 4/ELvzj11NlNdDtMVX2gzmRFdR9o1oY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-BQxl-r11OXSlQYjap0TxpA-1; Wed, 29 May 2024 10:34:35 -0400
-X-MC-Unique: BQxl-r11OXSlQYjap0TxpA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7BB3B812296;
- Wed, 29 May 2024 14:34:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 435B5200B3A1;
- Wed, 29 May 2024 14:34:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 34DB321E681D; Wed, 29 May 2024 16:34:34 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Markus
- Armbruster
- <armbru@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts
- via QMP
-In-Reply-To: <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru> (Daniil
- Tatianin's message of "Wed, 29 May 2024 16:51:42 +0300")
-References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
- <87mso8n7tw.fsf@pond.sub.org>
- <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
- <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
- <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
- <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru>
-Date: Wed, 29 May 2024 16:34:34 +0200
-Message-ID: <874jaglm9x.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ us-mta-606-iZ-gh1jiPKOCUAieDzLsvg-1; Wed, 29 May 2024 10:45:15 -0400
+X-MC-Unique: iZ-gh1jiPKOCUAieDzLsvg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35507fa2570so1571241f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:45:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716993914; x=1717598714;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=o5Odp+T+mRZtEDIu05Xn/N9Z+srPwdU7O3B+gRAvI3w=;
+ b=X4+bk7BwDEa5PRUHMy1khwOmTZMvgOrCGWaTHxDO7ki2UcFHlctUU1nF1dBuwgT5fA
+ hx36UJHFuEVBzXxZ6ApeCYXEs6Hig4md4z5zwnXvqeTl3x1aSHD19ocTcPbDdxszSd9f
+ oeYoY8GvcW1+O7XWixeIytr7bUU93la0ATNAypvFjgHmxdLMnr7FUa3sHe5dp0YJrGeI
+ IW0pZVfj3z6z+ReyrkHMzD/NbrS3jhz1W22fQ52U5FZmKJ1n8CVM1dbm25kBmzgqd/xx
+ QoxR6pW+QOyGp76IfSLOoYnneN3ag1Q85ysUInAue0QsTZAwHcFfXOezYv9gQHlWv99K
+ Jwig==
+X-Gm-Message-State: AOJu0Yymrm0PMnlLJdlPAVldOUs0dn1Xh7BN3Nva7J/ltFyX2mxZUXfQ
+ eiETxeDRLTIzMcR6+6Jekud2ywc9gYYBXpquxJ1vLf4SSsn3fulVaM5lK61o3AcLp/BgjCK1/82
+ hLvzStOzNv5NbY73P9jlA0PNlB3uavpoFx4Nh6GddnxQhv1pCIGQX
+X-Received: by 2002:a5d:58f1:0:b0:34c:65ba:5d43 with SMTP id
+ ffacd0b85a97d-3552fde04c5mr11117031f8f.46.1716993914282; 
+ Wed, 29 May 2024 07:45:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFoOwNGtlEQNg3OuBKtcBuun/p8SpkjkSdNpZBDnbr99kjfwtZMCR/ZU3n3xpIFQs7D0hVww==
+X-Received: by 2002:a5d:58f1:0:b0:34c:65ba:5d43 with SMTP id
+ ffacd0b85a97d-3552fde04c5mr11117011f8f.46.1716993913792; 
+ Wed, 29 May 2024 07:45:13 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3557a09091csm14931158f8f.50.2024.05.29.07.45.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 07:45:13 -0700 (PDT)
+Date: Wed, 29 May 2024 16:45:12 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH v5 16/23] hw/i386/pc: Remove deprecated pc-i440fx-2.2
+ machine
+Message-ID: <20240529164512.72684081@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240529051539.71210-17-philmd@linaro.org>
+References: <20240529051539.71210-1-philmd@linaro.org>
+ <20240529051539.71210-17-philmd@linaro.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,107 +107,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+On Wed, 29 May 2024 07:15:32 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> On 5/29/24 4:39 PM, Philippe Mathieu-Daud=C3=A9 wrote:
->
->> On 29/5/24 14:43, Daniil Tatianin wrote:
->>> On 5/29/24 3:36 PM, Philippe Mathieu-Daud=C3=A9 wrote:
->>>
->>>> On 29/5/24 14:03, Markus Armbruster wrote:
->>>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>>>>
->>>>>> This can be used to force-synchronize the time in guest after a long
->>>>>> stop-cont pause, which can be useful for serverless-type workload.
->>>>>>
->>>>>> Also add a comment to highlight the fact that this (and one other QMP
->>>>>> command) only works for the MC146818 RTC controller.
->>>>>>
->>>>>> Acked-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>>>>> ---
->>>>>>
->>>>>> Changes since v0:
->>>>>> - Rename to rtc-inject-irq to match other similar API
->>>>>> - Add a comment to highlight that this only works for the I386 RTC
->>>>>>
->>>>>> Changes since v1:
->>>>>> - Added a description below the QMP command to explain how it can be
->>>>>> =C2=A0=C2=A0 used and what it does.
->>>>>>
->>>>>> Changes since v2:
->>>>>> - Add a 'broadcast' suffix.
->>>>>> - Change the comments to explain the flags we're setting.
->>>>>> - Change the command description to fix styling & explain that it's =
-a broadcast command.
->>>>>>
->>>>>> Changes since v3:
->>>>>> - Fix checkpatch complaints about usage of C99 comments
->>>>>>
->>>>>> ---
->>>>>> =C2=A0 hw/rtc/mc146818rtc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 20 ++++++++++++++++++++
->>>>>> =C2=A0 include/hw/rtc/mc146818rtc.h |=C2=A0 1 +
->>>>>> =C2=A0 qapi/misc-target.json=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 | 19 +++++++++++++++++++
->>>>>> =C2=A0 3 files changed, 40 insertions(+)
->>
->>
->>>>>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->>>>>> index 4e0a6492a9..7d388a3753 100644
->>>>>> --- a/qapi/misc-target.json
->>>>>> +++ b/qapi/misc-target.json
->>>>>> @@ -19,6 +19,25 @@
->>>>>> =C2=A0 { 'command': 'rtc-reset-reinjection',
->>>>>> =C2=A0=C2=A0=C2=A0 'if': 'TARGET_I386' }
->>>>>> =C2=A0 +##
->>>>>> +# @rtc-inject-irq-broadcast:
->>>>>> +#
->>>>>> +# Inject an RTC interrupt for all existing RTCs on the system.
->>>>>> +# The interrupt forces the guest to synchronize the time with RTC.
->>>>>> +# This is useful after a long stop-cont pause, which is common for
->>>>>> +# serverless-type workload.
->>>>
->>>> In previous version you said:
->>>>
->>>> =C2=A0 > This isn't really related to migration though. Serverless is =
-based
->>>> =C2=A0 > on constantly stopping and resuming the VM on e.g. every HTTP
->>>> =C2=A0 > request to an endpoint.
->>>>
->>>> Which made some sense. Maybe mention HTTP? And point to that use case
->>>> (possibly with QMP commands) in the commit description?
->>>
->>> Hmm, maybe it would be helpful for people who don't know what serverles=
-s means.
->>>
->>> How about:
->>> =C2=A0=C2=A0=C2=A0=C2=A0 This is useful after a long stop-const pause, =
-which is common for serverless-type workloads,
->>> =C2=A0=C2=A0=C2=A0=C2=A0 e.g. stopping/resuming the VM on every HTTP re=
-quest to an endpoint, which might involve
->>> =C2=A0=C2=A0=C2=A0=C2=A0 a long pause in between the requests, causing =
-time drift in the guest.
->>
->> Please help me understand your workflow. Your management layer call
->> @stop and @cont QMP commands, is that right?
->
-> Yes, that is correct.
->
->> @cont will emit a @RESUME event.
->>
->> If we could listen to QAPI events from C code, we could have the
->> mc146818rtc device automatically sync on VM resume, and no need for
->> this async command.
->
-> Perhaps? I'm not sure how that would be implemented, but let's see what M=
-arkus has to say.
+> The pc-i440fx-2.2 machine was deprecated for the 8.2
+> release (see commit c7437f0ddb "docs/about: Mark the
+> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
+> time to remove it.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-You can't listen on an event in QEMU itself.  You can only hook into the
-place that generates the event.
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-The RESUME event is sent from vm_prepare_start() in system/cpus.c.
-
->> I'll let our QAPI expert enlighten me on this :)
+> ---
+>  docs/about/deprecated.rst       |  2 +-
+>  docs/about/removed-features.rst |  2 +-
+>  include/hw/i386/pc.h            |  3 ---
+>  hw/i386/pc.c                    | 23 -----------------------
+>  hw/i386/pc_piix.c               | 21 ---------------------
+>  5 files changed, 2 insertions(+), 49 deletions(-)
+>=20
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 5b4753e5dc..0fa45aba8b 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -228,7 +228,7 @@ deprecated; use the new name ``dtb-randomness`` inste=
+ad. The new name
+>  better reflects the way this property affects all random data within
+>  the device tree blob, not just the ``kaslr-seed`` node.
+> =20
+> -``pc-i440fx-2.2`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
+4`` up to ``pc-i440fx-2.12`` (since 9.1)
+> +``pc-i440fx-2.3`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.=
+4`` up to ``pc-i440fx-2.12`` (since 9.1)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''=
+''''''''''''''''''''''''''''''''''''''''
+> =20
+>  These old machine types are quite neglected nowadays and thus might have
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-feature=
+s.rst
+> index 9b0e2f11de..5d7bb4354b 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -925,7 +925,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
+> =20
+>  This machine has been renamed ``fuloong2e``.
+> =20
+> -``pc-0.10`` up to ``pc-i440fx-2.1`` (removed in 4.0 up to 9.0)
+> +``pc-0.10`` up to ``pc-i440fx-2.2`` (removed in 4.0 up to 9.0)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> =20
+>  These machine types were very old and likely could not be used for live
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index 1351e73ee0..996495985e 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -279,9 +279,6 @@ extern const size_t pc_compat_2_4_len;
+>  extern GlobalProperty pc_compat_2_3[];
+>  extern const size_t pc_compat_2_3_len;
+> =20
+> -extern GlobalProperty pc_compat_2_2[];
+> -extern const size_t pc_compat_2_2_len;
+> -
+>  #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+>      static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *=
+data) \
+>      { \
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index c7d44420a5..ccfcb92605 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -289,29 +289,6 @@ GlobalProperty pc_compat_2_3[] =3D {
+>  };
+>  const size_t pc_compat_2_3_len =3D G_N_ELEMENTS(pc_compat_2_3);
+> =20
+> -GlobalProperty pc_compat_2_2[] =3D {
+> -    PC_CPU_MODEL_IDS("2.2.0")
+> -    { "kvm64" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "kvm32" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Conroe" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Penryn" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Nehalem" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Westmere" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "SandyBridge" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Haswell" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Broadwell" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Opteron_G1" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Opteron_G2" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Opteron_G3" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Opteron_G4" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Opteron_G5" "-" TYPE_X86_CPU, "vme", "off" },
+> -    { "Haswell" "-" TYPE_X86_CPU, "f16c", "off" },
+> -    { "Haswell" "-" TYPE_X86_CPU, "rdrand", "off" },
+> -    { "Broadwell" "-" TYPE_X86_CPU, "f16c", "off" },
+> -    { "Broadwell" "-" TYPE_X86_CPU, "rdrand", "off" },
+> -};
+> -const size_t pc_compat_2_2_len =3D G_N_ELEMENTS(pc_compat_2_2);
+> -
+>  GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
+>  {
+>      GSIState *s;
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index e0b421dd51..1343fd93e7 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -429,11 +429,6 @@ static void pc_compat_2_3_fn(MachineState *machine)
+>      }
+>  }
+> =20
+> -static void pc_compat_2_2_fn(MachineState *machine)
+> -{
+> -    pc_compat_2_3_fn(machine);
+> -}
+> -
+>  #ifdef CONFIG_ISAPC
+>  static void pc_init_isa(MachineState *machine)
+>  {
+> @@ -843,22 +838,6 @@ static void pc_i440fx_2_3_machine_options(MachineCla=
+ss *m)
+>  DEFINE_I440FX_MACHINE(v2_3, "pc-i440fx-2.3", pc_compat_2_3_fn,
+>                        pc_i440fx_2_3_machine_options);
+> =20
+> -static void pc_i440fx_2_2_machine_options(MachineClass *m)
+> -{
+> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
+> -
+> -    pc_i440fx_2_3_machine_options(m);
+> -    m->hw_version =3D "2.2.0";
+> -    m->default_machine_opts =3D "firmware=3Dbios-256k.bin,suppress-vmdes=
+c=3Don";
+> -    compat_props_add(m->compat_props, hw_compat_2_2, hw_compat_2_2_len);
+> -    compat_props_add(m->compat_props, pc_compat_2_2, pc_compat_2_2_len);
+> -    pcmc->rsdp_in_ram =3D false;
+> -    pcmc->resizable_acpi_blob =3D false;
+> -}
+> -
+> -DEFINE_I440FX_MACHINE(v2_2, "pc-i440fx-2.2", pc_compat_2_2_fn,
+> -                      pc_i440fx_2_2_machine_options);
+> -
+>  #ifdef CONFIG_ISAPC
+>  static void isapc_machine_options(MachineClass *m)
+>  {
 
 
