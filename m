@@ -4,24 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367A0C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D2FC25B7C
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM6x-00019b-TC; Wed, 29 May 2024 12:25:11 -0400
+	id 1sCM7S-0001cy-L0; Wed, 29 May 2024 12:25:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6s-00017P-Mn
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:07 -0400
+ id 1sCM6y-0001A9-1r
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:12 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6l-0006Kb-6u
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:06 -0400
+ id 1sCM6v-0006Kx-Dj
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:11 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6j-006CP6-80;
+ (envelope-from <movement@movementarian.org>) id 1sCM6j-006CPq-JC;
  Wed, 29 May 2024 17:24:57 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
@@ -29,14 +29,13 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
  thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 12/26] vfio-user: define socket receive functions
-Date: Wed, 29 May 2024 17:23:05 +0100
-Message-Id: <20240529162319.1476680-13-levon@movementarian.org>
+Subject: [PATCH 16/26] vfio-user: region read/write
+Date: Wed, 29 May 2024 17:23:09 +0100
+Message-Id: <20240529162319.1476680-17-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=139.162.205.133;
  envelope-from=movement@movementarian.org; helo=movementarian.org
@@ -62,628 +61,356 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
-Add infrastructure needed to receive incoming messages
+Add support for posted writes on remote devices
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/trace-events    |   5 +
- hw/vfio/user-pci.c      |  11 ++
- hw/vfio/user-protocol.h |  54 ++++++
- hw/vfio/user.c          | 408 ++++++++++++++++++++++++++++++++++++++++
- hw/vfio/user.h          |  10 +
- 5 files changed, 488 insertions(+)
- create mode 100644 hw/vfio/user-protocol.h
+ hw/vfio/helpers.c             |  20 ++++--
+ hw/vfio/pci.c                 |   5 +-
+ hw/vfio/trace-events          |   1 +
+ hw/vfio/user-pci.c            |   5 ++
+ hw/vfio/user-protocol.h       |  12 ++++
+ hw/vfio/user.c                | 120 ++++++++++++++++++++++++++++++++++
+ hw/vfio/user.h                |   1 +
+ include/hw/vfio/vfio-common.h |   3 +-
+ 8 files changed, 158 insertions(+), 9 deletions(-)
 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 64161bf6f4..a5a5a34198 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -176,3 +176,8 @@ iommufd_cdev_fail_attach_existing_container(const char *msg) " %s"
- iommufd_cdev_alloc_ioas(int iommufd, int ioas_id) " [iommufd=%d] new IOMMUFD container with ioasid=%d"
- iommufd_cdev_device_info(char *name, int devfd, int num_irqs, int num_regions, int flags) " %s (%d) num_irqs=%d num_regions=%d flags=%d"
- iommufd_cdev_pci_hot_reset_dep_devices(int domain, int bus, int slot, int function, int dev_id) "\t%04x:%02x:%02x.%x devid %d"
-+
-+# user.c
-+vfio_user_recv_hdr(const char *name, uint16_t id, uint16_t cmd, uint32_t size, uint32_t flags) " (%s) id 0x%x cmd 0x%x size 0x%x flags 0x%x"
-+vfio_user_recv_read(uint16_t id, int read) " id 0x%x read 0x%x"
-+vfio_user_recv_request(uint16_t cmd) " command 0x%x"
-diff --git a/hw/vfio/user-pci.c b/hw/vfio/user-pci.c
-index 8c66833118..350e957132 100644
---- a/hw/vfio/user-pci.c
-+++ b/hw/vfio/user-pci.c
-@@ -42,6 +42,16 @@ struct VFIOUserPCIDevice {
-     char *sock_name;
- };
- 
-+/*
-+ * Incoming request message callback.
-+ *
-+ * Runs off main loop, so BQL held.
-+ */
-+static void vfio_user_pci_process_req(void *opaque, VFIOUserMsg *msg)
-+{
-+
-+}
-+
- /*
-  * Emulated devices don't use host hot reset
-  */
-@@ -87,6 +97,7 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
-         return;
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index d0f1db30da..b2a5d7d1ba 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -182,12 +182,15 @@ void vfio_region_write(void *opaque, hwaddr addr,
+         break;
      }
-     vbasedev->proxy = proxy;
-+    vfio_user_set_handler(vbasedev, vfio_user_pci_process_req, vdev);
  
-     vbasedev->name = g_strdup_printf("VFIO user <%s>", udev->sock_name);
-     vbasedev->ops = &vfio_user_pci_ops;
-diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
-new file mode 100644
-index 0000000000..d23877c958
---- /dev/null
-+++ b/hw/vfio/user-protocol.h
-@@ -0,0 +1,54 @@
-+#ifndef VFIO_USER_PROTOCOL_H
-+#define VFIO_USER_PROTOCOL_H
+-    ret = vbasedev->io->region_write(vbasedev, region->nr, addr, size, &buf);
++    ret = vbasedev->io->region_write(vbasedev, region->nr, addr, size, &buf,
++                                     region->post_wr);
+     if (ret != size) {
++        const char *errmsg = ret < 0 ? strerror(-ret) : "short write";
 +
-+/*
-+ * vfio protocol over a UNIX socket.
-+ *
-+ * Copyright © 2018, 2021 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2.  See
-+ * the COPYING file in the top-level directory.
-+ *
-+ * Each message has a standard header that describes the command
-+ * being sent, which is almost always a VFIO ioctl().
-+ *
-+ * The header may be followed by command-specific data, such as the
-+ * region and offset info for read and write commands.
-+ */
-+
-+typedef struct {
-+    uint16_t id;
-+    uint16_t command;
-+    uint32_t size;
-+    uint32_t flags;
-+    uint32_t error_reply;
-+} VFIOUserHdr;
-+
-+/* VFIOUserHdr commands */
-+enum vfio_user_command {
-+    VFIO_USER_VERSION                   = 1,
-+    VFIO_USER_DMA_MAP                   = 2,
-+    VFIO_USER_DMA_UNMAP                 = 3,
-+    VFIO_USER_DEVICE_GET_INFO           = 4,
-+    VFIO_USER_DEVICE_GET_REGION_INFO    = 5,
-+    VFIO_USER_DEVICE_GET_REGION_IO_FDS  = 6,
-+    VFIO_USER_DEVICE_GET_IRQ_INFO       = 7,
-+    VFIO_USER_DEVICE_SET_IRQS           = 8,
-+    VFIO_USER_REGION_READ               = 9,
-+    VFIO_USER_REGION_WRITE              = 10,
-+    VFIO_USER_DMA_READ                  = 11,
-+    VFIO_USER_DMA_WRITE                 = 12,
-+    VFIO_USER_DEVICE_RESET              = 13,
-+    VFIO_USER_DIRTY_PAGES               = 14,
-+    VFIO_USER_MAX,
-+};
-+
-+/* VFIOUserHdr flags */
-+#define VFIO_USER_REQUEST       0x0
-+#define VFIO_USER_REPLY         0x1
-+#define VFIO_USER_TYPE          0xF
-+
-+#define VFIO_USER_NO_REPLY      0x10
-+#define VFIO_USER_ERROR         0x20
-+
-+#endif /* VFIO_USER_PROTOCOL_H */
-diff --git a/hw/vfio/user.c b/hw/vfio/user.c
-index 91501f625c..998816b97d 100644
---- a/hw/vfio/user.c
-+++ b/hw/vfio/user.c
-@@ -24,11 +24,27 @@
- #include "io/channel-util.h"
- #include "sysemu/iothread.h"
- #include "user.h"
-+#include "trace.h"
+         error_report("%s(%s:region%d+0x%"HWADDR_PRIx", 0x%"PRIx64
+-                     ",%d) failed: %m",
++                     ",%d) failed: %s",
+                      __func__, vbasedev->name, region->nr,
+-                     addr, data, size);
++                     addr, data, size, errmsg);
+     }
  
- static IOThread *vfio_user_iothread;
+     trace_vfio_region_write(vbasedev->name, region->nr, addr, data, size);
+@@ -219,9 +222,11 @@ uint64_t vfio_region_read(void *opaque,
  
- static void vfio_user_shutdown(VFIOUserProxy *proxy);
-+static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                                     VFIOUserFDs *fds);
-+static VFIOUserFDs *vfio_user_getfds(int numfds);
-+static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- 
-+static void vfio_user_recv(void *opaque);
-+static int vfio_user_recv_one(VFIOUserProxy *proxy);
-+static void vfio_user_cb(void *opaque);
+     ret = vbasedev->io->region_read(vbasedev, region->nr, addr, size, &buf);
+     if (ret != size) {
+-        error_report("%s(%s:region%d+0x%"HWADDR_PRIx", %d) failed: %m",
++        const char *errmsg = ret < 0 ? strerror(-ret) : "short read";
 +
-+static void vfio_user_request(void *opaque);
++        error_report("%s(%s:region%d+0x%"HWADDR_PRIx", %d) failed: %s",
+                      __func__, vbasedev->name, region->nr,
+-                     addr, size);
++                     addr, size, errmsg);
+         return (uint64_t)-1;
+     }
+     switch (size) {
+@@ -363,13 +368,14 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+     region->size = info->size;
+     region->fd_offset = info->offset;
+     region->nr = index;
++    region->post_wr = false;
 +
-+static inline void vfio_user_set_error(VFIOUserHdr *hdr, uint32_t err)
-+{
-+    hdr->flags |= VFIO_USER_ERROR;
-+    hdr->error_reply = err;
-+}
+     if (vbasedev->regfds != NULL) {
+         region->fd = vbasedev->regfds[index];
+     } else {
+         region->fd = vbasedev->fd;
+     }
  
- /*
-  * Functions called by main, CPU, or iothread threads
-@@ -41,10 +57,340 @@ static void vfio_user_shutdown(VFIOUserProxy *proxy)
-                                    proxy->ctx, NULL, NULL);
+-
+     if (region->size) {
+         region->mem = g_new0(MemoryRegion, 1);
+         memory_region_init_io(region->mem, obj, &vfio_region_ops,
+@@ -757,7 +763,7 @@ static int vfio_io_region_read(VFIODevice *vbasedev, uint8_t index, off_t off,
  }
  
-+static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                                     VFIOUserFDs *fds)
+ static int vfio_io_region_write(VFIODevice *vbasedev, uint8_t index, off_t off,
+-                                uint32_t size, void *data)
++                                uint32_t size, void *data, bool post)
+ {
+     struct vfio_region_info *info = vbasedev->regions[index];
+     int ret;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 50a22b6986..c69716f2df 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -51,7 +51,7 @@
+                                  (off), (size), (data)))
+ #define VDEV_CONFIG_WRITE(vbasedev, off, size, data) \
+     ((vbasedev)->io->region_write((vbasedev), VFIO_PCI_CONFIG_REGION_INDEX, \
+-                                  (off), (size), (data)))
++                                  (off), (size), (data), false))
+ 
+ #define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
+ 
+@@ -1780,6 +1780,9 @@ static void vfio_bar_prepare(VFIOPCIDevice *vdev, int nr)
+     bar->type = pci_bar & (bar->ioport ? ~PCI_BASE_ADDRESS_IO_MASK :
+                                          ~PCI_BASE_ADDRESS_MEM_MASK);
+     bar->size = bar->region.size;
++
++    /* IO regions are sync, memory can be async */
++    bar->region.post_wr = (bar->ioport == 0);
+ }
+ 
+ static void vfio_bars_prepare(VFIOPCIDevice *vdev)
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 3bfb625ee3..a65d530557 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -185,3 +185,4 @@ vfio_user_send_write(uint16_t id, int wrote) " id 0x%x wrote 0x%x"
+ vfio_user_version(uint16_t major, uint16_t minor, const char *caps) " major %d minor %d caps: %s"
+ vfio_user_get_info(uint32_t nregions, uint32_t nirqs) " #regions %d #irqs %d"
+ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index %d flags 0x%x size 0x%"PRIx64
++vfio_user_region_rw(uint32_t region, uint64_t off, uint32_t count) " region %d offset 0x%"PRIx64" count %d"
+diff --git a/hw/vfio/user-pci.c b/hw/vfio/user-pci.c
+index 3c2d145812..54b19b68d0 100644
+--- a/hw/vfio/user-pci.c
++++ b/hw/vfio/user-pci.c
+@@ -41,6 +41,7 @@ struct VFIOUserPCIDevice {
+     VFIOPCIDevice device;
+     char *sock_name;
+     bool send_queued;   /* all sends are queued */
++    bool no_post;       /* all regions write are sync */
+ };
+ 
+ /*
+@@ -103,6 +104,9 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+     if (udev->send_queued) {
+         proxy->flags |= VFIO_PROXY_FORCE_QUEUED;
+     }
++    if (udev->no_post) {
++        proxy->flags |= VFIO_PROXY_NO_POST;
++    }
+ 
+     if (!vfio_user_validate_version(proxy, errp)) {
+         goto error;
+@@ -169,6 +173,7 @@ static void vfio_user_instance_finalize(Object *obj)
+ static Property vfio_user_pci_dev_properties[] = {
+     DEFINE_PROP_STRING("socket", VFIOUserPCIDevice, sock_name),
+     DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
++    DEFINE_PROP_BOOL("x-no-posted-writes", VFIOUserPCIDevice, no_post, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
+index 6f70a48905..6987435e96 100644
+--- a/hw/vfio/user-protocol.h
++++ b/hw/vfio/user-protocol.h
+@@ -139,4 +139,16 @@ typedef struct {
+     uint64_t offset;
+ } VFIOUserRegionInfo;
+ 
++/*
++ * VFIO_USER_REGION_READ
++ * VFIO_USER_REGION_WRITE
++ */
++typedef struct {
++    VFIOUserHdr hdr;
++    uint64_t offset;
++    uint32_t region;
++    uint32_t count;
++    char data[];
++} VFIOUserRegionRW;
++
+ #endif /* VFIO_USER_PROTOCOL_H */
+diff --git a/hw/vfio/user.c b/hw/vfio/user.c
+index e9a89df82a..9bb1ee8880 100644
+--- a/hw/vfio/user.c
++++ b/hw/vfio/user.c
+@@ -57,6 +57,8 @@ static void vfio_user_cb(void *opaque);
+ 
+ static void vfio_user_request(void *opaque);
+ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg);
++static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
++                                 VFIOUserFDs *fds);
+ static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                                 VFIOUserFDs *fds, int rsize);
+ static void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
+@@ -628,6 +630,33 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
+     return 0;
+ }
+ 
++/*
++ * async send - msg can be queued, but will be freed when sent
++ */
++static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
++                                 VFIOUserFDs *fds)
 +{
 +    VFIOUserMsg *msg;
++    int ret;
 +
-+    msg = QTAILQ_FIRST(&proxy->free);
-+    if (msg != NULL) {
-+        QTAILQ_REMOVE(&proxy->free, msg, next);
-+    } else {
-+        msg = g_malloc0(sizeof(*msg));
-+        qemu_cond_init(&msg->cv);
-+    }
-+
-+    msg->hdr = hdr;
-+    msg->fds = fds;
-+    return msg;
-+}
-+
-+/*
-+ * Recycle a message list entry to the free list.
-+ */
-+static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg)
-+{
-+    if (msg->type == VFIO_MSG_NONE) {
-+        error_printf("vfio_user_recycle - freeing free msg\n");
++    if (!(hdr->flags & (VFIO_USER_NO_REPLY | VFIO_USER_REPLY))) {
++        error_printf("vfio_user_send_async on sync message\n");
 +        return;
 +    }
 +
-+    /* free msg buffer if no one is waiting to consume the reply */
-+    if (msg->type == VFIO_MSG_NOWAIT || msg->type == VFIO_MSG_ASYNC) {
-+        g_free(msg->hdr);
-+        if (msg->fds != NULL) {
-+            g_free(msg->fds);
-+        }
-+    }
-+
-+    msg->type = VFIO_MSG_NONE;
-+    msg->hdr = NULL;
-+    msg->fds = NULL;
-+    msg->complete = false;
-+    QTAILQ_INSERT_HEAD(&proxy->free, msg, next);
-+}
-+
-+static VFIOUserFDs *vfio_user_getfds(int numfds)
-+{
-+    VFIOUserFDs *fds = g_malloc0(sizeof(*fds) + (numfds * sizeof(int)));
-+
-+    fds->fds = (int *)((char *)fds + sizeof(*fds));
-+
-+    return fds;
-+}
-+
- /*
-  * Functions only called by iothread
-  */
- 
-+/*
-+ * Process a received message.
-+ */
-+static void vfio_user_process(VFIOUserProxy *proxy, VFIOUserMsg *msg,
-+                              bool isreply)
-+{
-+
-+    /*
-+     * Replies signal a waiter, if none just check for errors
-+     * and free the message buffer.
-+     *
-+     * Requests get queued for the BH.
-+     */
-+    if (isreply) {
-+        msg->complete = true;
-+        if (msg->type == VFIO_MSG_WAIT) {
-+            qemu_cond_signal(&msg->cv);
-+        } else {
-+            if (msg->hdr->flags & VFIO_USER_ERROR) {
-+                error_printf("vfio_user_process: error reply on async ");
-+                error_printf("request command %x error %s\n",
-+                             msg->hdr->command,
-+                             strerror(msg->hdr->error_reply));
-+            }
-+            /* youngest nowait msg has been ack'd */
-+            if (proxy->last_nowait == msg) {
-+                proxy->last_nowait = NULL;
-+            }
-+            vfio_user_recycle(proxy, msg);
-+        }
-+    } else {
-+        QTAILQ_INSERT_TAIL(&proxy->incoming, msg, next);
-+        qemu_bh_schedule(proxy->req_bh);
-+    }
-+}
-+
-+/*
-+ * Complete a partial message read
-+ */
-+static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
-+{
-+    VFIOUserMsg *msg = proxy->part_recv;
-+    size_t msgleft = proxy->recv_left;
-+    bool isreply;
-+    char *data;
-+    int ret;
-+
-+    data = (char *)msg->hdr + (msg->hdr->size - msgleft);
-+    while (msgleft > 0) {
-+        ret = qio_channel_read(proxy->ioc, data, msgleft, errp);
-+
-+        /* error or would block */
-+        if (ret <= 0) {
-+            /* try for rest on next iternation */
-+            if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+                proxy->recv_left = msgleft;
-+            }
-+            return ret;
-+        }
-+        trace_vfio_user_recv_read(msg->hdr->id, ret);
-+
-+        msgleft -= ret;
-+        data += ret;
-+    }
-+
-+    /*
-+     * Read complete message, process it.
-+     */
-+    proxy->part_recv = NULL;
-+    proxy->recv_left = 0;
-+    isreply = (msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REPLY;
-+    vfio_user_process(proxy, msg, isreply);
-+
-+    /* return positive value */
-+    return 1;
-+}
-+
-+static void vfio_user_recv(void *opaque)
-+{
-+    VFIOUserProxy *proxy = opaque;
-+
 +    QEMU_LOCK_GUARD(&proxy->lock);
 +
-+    if (proxy->state == VFIO_PROXY_CONNECTED) {
-+        while (vfio_user_recv_one(proxy) == 0) {
-+            ;
-+        }
++    msg = vfio_user_getmsg(proxy, hdr, fds);
++    msg->id = hdr->id;
++    msg->rsize = 0;
++    msg->type = VFIO_MSG_ASYNC;
++
++    ret = vfio_user_send_queued(proxy, msg);
++    if (ret < 0) {
++        vfio_user_recycle(proxy, msg);
 +    }
 +}
 +
-+/*
-+ * Receive and process one incoming message.
-+ *
-+ * For replies, find matching outgoing request and wake any waiters.
-+ * For requests, queue in incoming list and run request BH.
-+ */
-+static int vfio_user_recv_one(VFIOUserProxy *proxy)
-+{
-+    VFIOUserMsg *msg = NULL;
-+    g_autofree int *fdp = NULL;
-+    VFIOUserFDs *reqfds;
-+    VFIOUserHdr hdr;
-+    struct iovec iov = {
-+        .iov_base = &hdr,
-+        .iov_len = sizeof(hdr),
-+    };
-+    bool isreply = false;
-+    int i, ret;
-+    size_t msgleft, numfds = 0;
-+    char *data = NULL;
-+    char *buf = NULL;
-+    Error *local_err = NULL;
-+
-+    /*
-+     * Complete any partial reads
-+     */
-+    if (proxy->part_recv != NULL) {
-+        ret = vfio_user_complete(proxy, &local_err);
-+
-+        /* still not complete, try later */
-+        if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+            return ret;
-+        }
-+
-+        if (ret <= 0) {
-+            goto fatal;
-+        }
-+        /* else fall into reading another msg */
-+    }
-+
-+    /*
-+     * Read header
-+     */
-+    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, &fdp, &numfds, 0,
-+                                 &local_err);
-+    if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+        return ret;
-+    }
-+
-+    /* read error or other side closed connection */
-+    if (ret <= 0) {
-+        goto fatal;
-+    }
-+
-+    if (ret < sizeof(msg)) {
-+        error_setg(&local_err, "short read of header");
-+        goto fatal;
-+    }
-+
-+    /*
-+     * Validate header
-+     */
-+    if (hdr.size < sizeof(VFIOUserHdr)) {
-+        error_setg(&local_err, "bad header size");
-+        goto fatal;
-+    }
-+    switch (hdr.flags & VFIO_USER_TYPE) {
-+    case VFIO_USER_REQUEST:
-+        isreply = false;
-+        break;
-+    case VFIO_USER_REPLY:
-+        isreply = true;
-+        break;
-+    default:
-+        error_setg(&local_err, "unknown message type");
-+        goto fatal;
-+    }
-+    trace_vfio_user_recv_hdr(proxy->sockname, hdr.id, hdr.command, hdr.size,
-+                             hdr.flags);
-+
-+    /*
-+     * For replies, find the matching pending request.
-+     * For requests, reap incoming FDs.
-+     */
-+    if (isreply) {
-+        QTAILQ_FOREACH(msg, &proxy->pending, next) {
-+            if (hdr.id == msg->id) {
-+                break;
-+            }
-+        }
-+        if (msg == NULL) {
-+            error_setg(&local_err, "unexpected reply");
-+            goto err;
-+        }
-+        QTAILQ_REMOVE(&proxy->pending, msg, next);
-+
-+        /*
-+         * Process any received FDs
-+         */
-+        if (numfds != 0) {
-+            if (msg->fds == NULL || msg->fds->recv_fds < numfds) {
-+                error_setg(&local_err, "unexpected FDs");
-+                goto err;
-+            }
-+            msg->fds->recv_fds = numfds;
-+            memcpy(msg->fds->fds, fdp, numfds * sizeof(int));
-+        }
-+    } else {
-+        if (numfds != 0) {
-+            reqfds = vfio_user_getfds(numfds);
-+            memcpy(reqfds->fds, fdp, numfds * sizeof(int));
-+        } else {
-+            reqfds = NULL;
-+        }
-+    }
-+
-+    /*
-+     * Put the whole message into a single buffer.
-+     */
-+    if (isreply) {
-+        if (hdr.size > msg->rsize) {
-+            error_setg(&local_err, "reply larger than recv buffer");
-+            goto err;
-+        }
-+        *msg->hdr = hdr;
-+        data = (char *)msg->hdr + sizeof(hdr);
-+    } else {
-+        buf = g_malloc0(hdr.size);
-+        memcpy(buf, &hdr, sizeof(hdr));
-+        data = buf + sizeof(hdr);
-+        msg = vfio_user_getmsg(proxy, (VFIOUserHdr *)buf, reqfds);
-+        msg->type = VFIO_MSG_REQ;
-+    }
-+
-+    /*
-+     * Read rest of message.
-+     */
-+    msgleft = hdr.size - sizeof(hdr);
-+    while (msgleft > 0) {
-+        ret = qio_channel_read(proxy->ioc, data, msgleft, &local_err);
-+
-+        /* prepare to complete read on next iternation */
-+        if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+            proxy->part_recv = msg;
-+            proxy->recv_left = msgleft;
-+            return ret;
-+        }
-+
-+        if (ret <= 0) {
-+            goto fatal;
-+        }
-+        trace_vfio_user_recv_read(hdr.id, ret);
-+
-+        msgleft -= ret;
-+        data += ret;
-+    }
-+
-+    vfio_user_process(proxy, msg, isreply);
-+    return 0;
-+
-+    /*
-+     * fatal means the other side closed or we don't trust the stream
-+     * err means this message is corrupt
-+     */
-+fatal:
-+    vfio_user_shutdown(proxy);
-+    proxy->state = VFIO_PROXY_ERROR;
-+
-+    /* set error if server side closed */
-+    if (ret == 0) {
-+        error_setg(&local_err, "server closed socket");
-+    }
-+
-+err:
-+    for (i = 0; i < numfds; i++) {
-+        close(fdp[i]);
-+    }
-+    if (isreply && msg != NULL) {
-+        /* force an error to keep sending thread from hanging */
-+        vfio_user_set_error(msg->hdr, EINVAL);
-+        msg->complete = true;
-+        qemu_cond_signal(&msg->cv);
-+    }
-+    error_prepend(&local_err, "vfio_user_recv_one: ");
-+    error_report_err(local_err);
-+    return -1;
-+}
-+
- static void vfio_user_cb(void *opaque)
+ static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                                 VFIOUserFDs *fds, int rsize)
  {
-     VFIOUserProxy *proxy = opaque;
-@@ -60,6 +406,53 @@ static void vfio_user_cb(void *opaque)
-  * Functions called by main or CPU threads
-  */
+@@ -1155,9 +1184,84 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
+     trace_vfio_user_get_region_info(msgp->index, msgp->flags, msgp->size);
  
-+/*
-+ * Process incoming requests.
-+ *
-+ * The bus-specific callback has the form:
-+ *    request(opaque, msg)
-+ * where 'opaque' was specified in vfio_user_set_handler
-+ * and 'msg' is the inbound message.
-+ *
-+ * The callback is responsible for disposing of the message buffer,
-+ * usually by re-using it when calling vfio_send_reply or vfio_send_error,
-+ * both of which free their message buffer when the reply is sent.
-+ *
-+ * If the callback uses a new buffer, it needs to free the old one.
-+ */
-+static void vfio_user_request(void *opaque)
-+{
-+    VFIOUserProxy *proxy = opaque;
-+    VFIOUserMsgQ new, free;
-+    VFIOUserMsg *msg, *m1;
+     memcpy(info, &msgp->argsz, info->argsz);
 +
-+    /* reap all incoming */
-+    QTAILQ_INIT(&new);
-+    WITH_QEMU_LOCK_GUARD(&proxy->lock) {
-+        QTAILQ_FOREACH_SAFE(msg, &proxy->incoming, next, m1) {
-+            QTAILQ_REMOVE(&proxy->incoming, msg, next);
-+            QTAILQ_INSERT_TAIL(&new, msg, next);
++    /* read-after-write hazard if guest can directly access region */
++    if (info->flags & VFIO_REGION_INFO_FLAG_MMAP) {
++        WITH_QEMU_LOCK_GUARD(&proxy->lock) {
++            proxy->flags |= VFIO_PROXY_NO_POST;
 +        }
 +    }
 +
-+    /* process list */
-+    QTAILQ_INIT(&free);
-+    QTAILQ_FOREACH_SAFE(msg, &new, next, m1) {
-+        QTAILQ_REMOVE(&new, msg, next);
-+        trace_vfio_user_recv_request(msg->hdr->command);
-+        proxy->request(proxy->req_arg, msg);
-+        QTAILQ_INSERT_HEAD(&free, msg, next);
-+    }
-+
-+    /* free list */
-+    WITH_QEMU_LOCK_GUARD(&proxy->lock) {
-+        QTAILQ_FOREACH_SAFE(msg, &free, next, m1) {
-+            vfio_user_recycle(proxy, msg);
-+        }
-+    }
-+}
-+
-+
- static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
-     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
- 
-@@ -98,6 +491,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-     }
- 
-     proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
-+    proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
- 
-     QTAILQ_INIT(&proxy->outgoing);
-     QTAILQ_INIT(&proxy->incoming);
-@@ -108,6 +502,18 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
-     return proxy;
+     return 0;
  }
  
-+void vfio_user_set_handler(VFIODevice *vbasedev,
-+                           void (*handler)(void *opaque, VFIOUserMsg *msg),
-+                           void *req_arg)
++static int vfio_user_region_read(VFIOUserProxy *proxy, uint8_t index,
++                                 off_t offset, uint32_t count, void *data)
 +{
-+    VFIOUserProxy *proxy = vbasedev->proxy;
++    g_autofree VFIOUserRegionRW *msgp = NULL;
++    int size = sizeof(*msgp) + count;
 +
-+    proxy->request = handler;
-+    proxy->req_arg = req_arg;
-+    qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-+                                   vfio_user_recv, NULL, NULL, proxy);
++    if (count > proxy->max_xfer_size) {
++        return -EINVAL;
++    }
++
++    msgp = g_malloc0(size);
++    vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_READ, sizeof(*msgp), 0);
++    msgp->offset = offset;
++    msgp->region = index;
++    msgp->count = count;
++    trace_vfio_user_region_rw(msgp->region, msgp->offset, msgp->count);
++
++    vfio_user_send_wait(proxy, &msgp->hdr, NULL, size);
++    if (msgp->hdr.flags & VFIO_USER_ERROR) {
++        return -msgp->hdr.error_reply;
++    } else if (msgp->count > count) {
++        return -E2BIG;
++    } else {
++        memcpy(data, &msgp->data, msgp->count);
++    }
++
++    return msgp->count;
 +}
 +
- void vfio_user_disconnect(VFIOUserProxy *proxy)
- {
-     VFIOUserMsg *r1, *r2;
-@@ -123,6 +529,8 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
-     }
-     object_unref(OBJECT(proxy->ioc));
-     proxy->ioc = NULL;
-+    qemu_bh_delete(proxy->req_bh);
-+    proxy->req_bh = NULL;
++static int vfio_user_region_write(VFIOUserProxy *proxy, uint8_t index,
++                                  off_t offset, uint32_t count, void *data,
++                                  bool post)
++{
++    VFIOUserRegionRW *msgp = NULL;
++    int flags = post ? VFIO_USER_NO_REPLY : 0;
++    int size = sizeof(*msgp) + count;
++    int ret;
++
++    if (count > proxy->max_xfer_size) {
++        return -EINVAL;
++    }
++
++    msgp = g_malloc0(size);
++    vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_WRITE, size, flags);
++    msgp->offset = offset;
++    msgp->region = index;
++    msgp->count = count;
++    memcpy(&msgp->data, data, count);
++    trace_vfio_user_region_rw(msgp->region, msgp->offset, msgp->count);
++
++    /* async send will free msg after it's sent */
++    if (post && !(proxy->flags & VFIO_PROXY_NO_POST)) {
++        vfio_user_send_async(proxy, &msgp->hdr, NULL);
++        return count;
++    }
++
++    vfio_user_send_wait(proxy, &msgp->hdr, NULL, 0);
++    if (msgp->hdr.flags & VFIO_USER_ERROR) {
++        ret = -msgp->hdr.error_reply;
++    } else {
++        ret = count;
++    }
++
++    g_free(msgp);
++    return ret;
++}
++
  
-     proxy->state = VFIO_PROXY_CLOSING;
-     QTAILQ_FOREACH_SAFE(r1, &proxy->outgoing, next, r2) {
+ /*
+  * Socket-based io_ops
+@@ -1187,6 +1291,22 @@ static int vfio_user_io_get_region_info(VFIODevice *vbasedev,
+     return 0;
+ }
+ 
++static int vfio_user_io_region_read(VFIODevice *vbasedev, uint8_t index,
++                                    off_t off, uint32_t size, void *data)
++{
++    return vfio_user_region_read(vbasedev->proxy, index, off, size, data);
++}
++
++static int vfio_user_io_region_write(VFIODevice *vbasedev, uint8_t index,
++                                     off_t off, unsigned size, void *data,
++                                     bool post)
++{
++    return vfio_user_region_write(vbasedev->proxy, index, off, size, data,
++                                  post);
++}
++
+ VFIODeviceIO vfio_dev_io_sock = {
+     .get_region_info = vfio_user_io_get_region_info,
++    .region_read = vfio_user_io_region_read,
++    .region_write = vfio_user_io_region_write,
+ };
 diff --git a/hw/vfio/user.h b/hw/vfio/user.h
-index ac7d15dfa8..30cf35d3e4 100644
+index 18a5a40073..1f99a976d6 100644
 --- a/hw/vfio/user.h
 +++ b/hw/vfio/user.h
-@@ -11,6 +11,8 @@
-  *
-  */
- 
-+#include "user-protocol.h"
-+
- typedef struct {
-     int send_fds;
-     int recv_fds;
-@@ -27,6 +29,7 @@ enum msg_type {
- 
- typedef struct VFIOUserMsg {
-     QTAILQ_ENTRY(VFIOUserMsg) next;
-+    VFIOUserHdr *hdr;
-     VFIOUserFDs *fds;
-     uint32_t rsize;
-     uint32_t id;
-@@ -66,13 +69,20 @@ typedef struct VFIOUserProxy {
-     VFIOUserMsgQ incoming;
-     VFIOUserMsgQ outgoing;
-     VFIOUserMsg *last_nowait;
-+    VFIOUserMsg *part_recv;
-+    size_t recv_left;
-     enum proxy_state state;
- } VFIOUserProxy;
- 
+@@ -84,6 +84,7 @@ typedef struct VFIOUserProxy {
  /* VFIOProxy flags */
  #define VFIO_PROXY_CLIENT        0x1
+ #define VFIO_PROXY_FORCE_QUEUED  0x4
++#define VFIO_PROXY_NO_POST       0x8
  
-+typedef struct VFIODevice VFIODevice;
-+
- VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp);
- void vfio_user_disconnect(VFIOUserProxy *proxy);
-+void vfio_user_set_handler(VFIODevice *vbasedev,
-+                           void (*handler)(void *opaque, VFIOUserMsg *msg),
-+                           void *reqarg);
+ typedef struct VFIODevice VFIODevice;
  
- #endif /* VFIO_USER_H */
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 85c3fec3b9..617891c4fe 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -58,6 +58,7 @@ typedef struct VFIORegion {
+     VFIOMmap *mmaps;
+     uint8_t nr; /* cache the region number for debug */
+     int fd; /* fd to mmap() region */
++    bool post_wr; /* writes can be posted */
+ } VFIORegion;
+ 
+ typedef struct VFIOMigration {
+@@ -193,7 +194,7 @@ struct VFIODeviceIO {
+     int (*region_read)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
+                        void *data);
+     int (*region_write)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
+-                        void *data);
++                        void *data, bool post);
+ };
+ 
+ extern VFIODeviceIO vfio_dev_io_ioctl;
 -- 
 2.34.1
 
