@@ -4,60 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7795EC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 20:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDF6C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 22:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCPkn-0004fE-QL; Wed, 29 May 2024 16:18:34 -0400
+	id 1sCS1F-0000qT-3D; Wed, 29 May 2024 18:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
- id 1sCPkm-0004f2-Hq
- for qemu-devel@nongnu.org; Wed, 29 May 2024 16:18:32 -0400
-Received: from galois.linutronix.de ([2a0a:51c0:0:12e:550::1])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sCS1D-0000q6-74
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 18:43:39 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
- id 1sCPki-0003XT-ND
- for qemu-devel@nongnu.org; Wed, 29 May 2024 16:18:31 -0400
-From: Nam Cao <namcao@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1717013904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=7IxJc24fACtJXlyugdTpfcmj+Qk7md0pb0vnSv8vz5o=;
- b=H3SJB7kOImifqkRX5O91c3GSCGrrgBx7/TaMTbH0UxY74JkmgXtLReFXc3ec8aO2Gsa/v8
- qNVutdLfYw9uVi4E4MbmaMy2NEw5snS0be/nlgoSpMwVz12BlsITRUldIvtmtkFLwFqmqn
- LNfEVear2rYGz+WcythhQ4Ex8iq41fqRXjMrGqfnWAnDNyaIK/D3mV1hXWTeTwj6vZPtom
- 1W1hQRELtpmLf1j4mjKjbO/+d9m6XPH1K7HvVplOklS+FwtaxK1ky0QZQ3pnaLTCDT5I1S
- SPmxvOtOzNGrYE+S9drRKmw1F8D3tjVDbZkby1fauXmj55hlcLxE39EY89pB/Q==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1717013904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=7IxJc24fACtJXlyugdTpfcmj+Qk7md0pb0vnSv8vz5o=;
- b=bUuPe29GkQP6OnthIj9dvzKNCaQjuZWy5zfnE6IP8nghk46C/w4b9mKpyCHQTtT7kvQXGw
- NZ191Q3S7T+05vAA==
-To: Alex Williamson <alex.williamson@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nam Cao <namcao@linutronix.de>
-Subject: [PATCH v2] pci-bridge/xio3130_downstream: fix invalid link speed and
- link width
-Date: Wed, 29 May 2024 22:17:44 +0200
-Message-Id: <20240529201744.15420-1-namcao@linutronix.de>
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sCS1A-0003RR-CE
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 18:43:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717022617; x=1748558617;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=o6eJoGEQ4cHDf0gdjpwQZU0x3c/RoKpA2c+dWeUMxvQ=;
+ b=TsRNcMLKhsR7aBB82Hra8lOoTipS8lCX1uAOprQwx6rM7nJZxXW3Gkpz
+ doPbyvNRyXO3h6OEWFeUpl4wtkTDza/rXIcmxrroBn9uBfua2iaHEA0ug
+ Q9JUYq5dM3Aum/xgYn9cC/hlVol7/H+CoFaOGqvYIfwyH4R2lPLbwPhGq
+ 3xvQ8xHR+7L1YDPUNgdoO6dLSner8p1LYGdXfz0iqNBxBfRlKKma7CU7r
+ rEHgaZCGcP8TdHxYa/pjwS74oJlulHYwCWTRQK/dA+y0aUzxB/e1FEfoC
+ WoRidFr9agEEtPSnytw6XRLEN65fIzG/bwOP8r4dyPLGdxLeVyRf17leW Q==;
+X-CSE-ConnectionGUID: I2tTRlT+RSy734jOQj2njQ==
+X-CSE-MsgGUID: MZyXvLcXQAizTgVFV8jf5g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11087"; a="17254099"
+X-IronPort-AV: E=Sophos;i="6.08,199,1712646000"; d="scan'208";a="17254099"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 May 2024 15:43:31 -0700
+X-CSE-ConnectionGUID: GzZu+FxqRzi694/eW8w2oA==
+X-CSE-MsgGUID: LlyM9BTJT3WGHu8/oL+ZIg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,199,1712646000"; d="scan'208";a="35633795"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by fmviesa006.fm.intel.com with ESMTP; 29 May 2024 15:43:30 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH] ui/gtk: Wait until the current guest frame is rendered before
+ switching to RUN_STATE_SAVE_VM
+Date: Wed, 29 May 2024 15:42:52 -0700
+Message-Id: <20240529224252.80395-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a0a:51c0:0:12e:550::1;
- envelope-from=namcao@linutronix.de; helo=galois.linutronix.de
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=dongwon.kim@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,42 +79,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set link width to x1 and link speed to 2.5 Gb/s as specified by the
-datasheet. Without this, these fields in the link status register read
-zero, which is incorrect.
+From: Dongwon <dongwon.kim@intel.com>
 
-This problem appeared since 3d67447fe7c2 ("pcie: Fill PCIESlot link fields
-to support higher speeds and widths"), which allows PCIe slot to set link
-width and link speed. However, if PCIe slot does not explicitly set these
-properties, they will be zero. Before this commit, the width and speed
-default to x1 and 2.5 Gb/s.
+Make sure rendering of the current frame is finished before switching
+the run state to RUN_STATE_SAVE_VM by waiting for egl-sync object to be
+signaled.
 
-Fixes: 3d67447fe7c2 ("pcie: Fill PCIESlot link fields to support higher spe=
-eds and widths")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
-v2: implement this in .realize() instead
----
- hw/pci-bridge/xio3130_downstream.c | 3 +++
- 1 file changed, 3 insertions(+)
+ ui/egl-helpers.c |  2 --
+ ui/gtk.c         | 19 +++++++++++++++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_dow=
-nstream.c
-index 38a2361fa2..2df1ee203d 100644
---- a/hw/pci-bridge/xio3130_downstream.c
-+++ b/hw/pci-bridge/xio3130_downstream.c
-@@ -72,6 +72,9 @@ static void xio3130_downstream_realize(PCIDevice *d, Erro=
-r **errp)
-     pci_bridge_initfn(d, TYPE_PCIE_BUS);
-     pcie_port_init_reg(d);
-=20
-+    s->speed =3D QEMU_PCI_EXP_LNK_2_5GT;
-+    s->width =3D QEMU_PCI_EXP_LNK_X1;
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 99b2ebbe23..dafeb36074 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -396,8 +396,6 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
+         fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
+                                               sync);
+         qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
+-        eglDestroySyncKHR(qemu_egl_display, sync);
+-        qemu_dmabuf_set_sync(dmabuf, NULL);
+     }
+ }
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 93b13b7a30..cf0dd6abed 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -600,9 +600,12 @@ void gd_hw_gl_flushed(void *vcon)
+ 
+     fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
+     if (fence_fd >= 0) {
++        void *sync = qemu_dmabuf_get_sync(dmabuf);
+         qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
+         close(fence_fd);
+         qemu_dmabuf_set_fence_fd(dmabuf, -1);
++        eglDestroySyncKHR(qemu_egl_display, sync);
++        qemu_dmabuf_set_sync(dmabuf, NULL);
+         graphic_hw_gl_block(vc->gfx.dcl.con, false);
+     }
+ }
+@@ -682,6 +685,22 @@ static const DisplayGLCtxOps egl_ctx_ops = {
+ static void gd_change_runstate(void *opaque, bool running, RunState state)
+ {
+     GtkDisplayState *s = opaque;
++    QemuDmaBuf *dmabuf;
++    int i;
 +
-     rc =3D msi_init(d, XIO3130_MSI_OFFSET, XIO3130_MSI_NR_VECTOR,
-                   XIO3130_MSI_SUPPORTED_FLAGS & PCI_MSI_FLAGS_64BIT,
-                   XIO3130_MSI_SUPPORTED_FLAGS & PCI_MSI_FLAGS_MASKBIT,
---=20
-2.39.2
++    if (state == RUN_STATE_SAVE_VM) {
++        for (i = 0; i < s->nb_vcs; i++) {
++            VirtualConsole *vc = &s->vc[i];
++            dmabuf = vc->gfx.guest_fb.dmabuf;
++            if (dmabuf && qemu_dmabuf_get_fence_fd(dmabuf) >= 0) {
++                /* wait for the rendering to be completed */
++                eglClientWaitSync(qemu_egl_display,
++                                  qemu_dmabuf_get_sync(dmabuf),
++                                  EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
++                                  1000000000);
++            }
++        }
++    }
+ 
+     gd_update_caption(s);
+ }
+-- 
+2.34.1
 
 
