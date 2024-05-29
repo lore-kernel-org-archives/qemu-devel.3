@@ -4,134 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E612C25B7E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 23:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9C4C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 23:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCSnx-0004aZ-RP; Wed, 29 May 2024 19:34:01 -0400
+	id 1sCSxR-0006pB-Tx; Wed, 29 May 2024 19:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1sCSnw-0004ZT-2H
- for qemu-devel@nongnu.org; Wed, 29 May 2024 19:34:00 -0400
-Received: from mail-dm6nam04on2045.outbound.protection.outlook.com
- ([40.107.102.45] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sCSxO-0006o0-Kc; Wed, 29 May 2024 19:43:46 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1sCSnt-0003Hg-7y
- for qemu-devel@nongnu.org; Wed, 29 May 2024 19:33:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fe1Is4NDB/ZVmefyqvkPW/C2r1RRHyWv5eZO5xowZVyNKycma92Q8mjOQ11cSWwO4/MYZLMrw4pHt6O9E6g1yTno3FDUTrhdOcYGJ8XYrrukm+uFAzAKVJVPCO/dn4OeyfzWtsz3IYCjMpb6sxltKVsfIGXI0YJAjvaCUfupiyaVxr2X4GFYJpD4NVTrTaDij3uNV9a1spvvnnuUDPipR7RGUXCYyZZfqhxfIbWX3dehTW69X5n+Npxu7NQ+9zuefd7nTLXXfv5Fz+vAJ7fiyDN0LoXxf0m551cw4Adi0S9CH2LQeox4e2LeocbCtU6VlbPlje8vwQc36svpUXSF1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d8yM2gbAVrv20rysuUcrYFfZ7OAWIqxWK7g9t6HioKk=;
- b=JFlAEOV+nOMgV55/tnjJ3WfAAr5dI9o6cAIJV+rhDiWFvLraH4mu+sBhOGV3HRK/OXkPomz3Xud/NU4OsAxtEF7NN/OR43hWg6d9hx5MUYbL3k/sGxyJzWMm2h5mwOTSS/d3V+Mganx4P+qGf5zBRxi+/YTGSkhUrUyPqQbnaCHtIbKAF/WGHOlAmypPJ6zgJIgNnUwPbzw0Rn6WxXdRkc58BsC2C8zrWrsFHKYvWxxI++2rpIwo3SzyHQyYChr5V7gjyn6OLOXlQICJkuottV2SRoZETbXKGxmMKHUDN90c38UJs0Xj/rSULu8AQpJnr6CLhkxwNlSxjUnq/JzM5A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d8yM2gbAVrv20rysuUcrYFfZ7OAWIqxWK7g9t6HioKk=;
- b=G/6wdPoAiR6SSvUM1J9aSNaTPSSADz9BUQV+xqo6Hes7vO9zgMO6df1rbUmDLtSGJxD82u8a+md/DBbw98+NsFNZeFGtrFMRdFY5MWlCgWS1KuVL9IWnR/uvFohHfuHdzwiRU02i5BmtMlWkCv6EpEzcf4ki0MCXE1woLyyGmF8=
-Received: from BL6PEPF00013DF8.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:22e:400:0:1001:0:b) by CY8PR12MB7707.namprd12.prod.outlook.com
- (2603:10b6:930:86::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.30; Wed, 29 May
- 2024 23:28:47 +0000
-Received: from BL6PEPF00020E62.namprd04.prod.outlook.com
- (2a01:111:f403:c901::1) by BL6PEPF00013DF8.outlook.office365.com
- (2603:1036:903:4::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.18 via Frontend
- Transport; Wed, 29 May 2024 23:28:47 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL6PEPF00020E62.mail.protection.outlook.com (10.167.249.23) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7633.15 via Frontend Transport; Wed, 29 May 2024 23:28:47 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 29 May
- 2024 18:28:46 -0500
-Date: Wed, 29 May 2024 18:28:28 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Thomas Huth <thuth@redhat.com>
-CC: Cornelia Huck <cohuck@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, <qemu-devel@nongnu.org>,
- <pankaj.gupta@amd.com>
-Subject: Re: [PATCH] scripts/update-linux-headers.sh: Fix the path of
- setup_data.h
-Message-ID: <ktatuml4vbb757of4cgwsur6dh2fudcggd54wsrkvkzi2tv7tj@bcx4enlebbrm>
-References: <20240527060126.12578-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sCSxL-0004v3-3O; Wed, 29 May 2024 19:43:46 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VqQnt4s7vz6K5lJ;
+ Thu, 30 May 2024 07:39:14 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
+ by mail.maildlp.com (Postfix) with ESMTPS id C5B951400D7;
+ Thu, 30 May 2024 07:43:29 +0800 (CST)
+Received: from 00293818-MRGF.china.huawei.com (10.195.246.47) by
+ lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 30 May 2024 00:43:09 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
+ <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
+ <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
+ <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
+ <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
+ <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
+ <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
+ <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
+ <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
+ <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
+ <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
+ <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
+ <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
+ <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>
+Subject: [PATCH V12 0/8] Add architecture agnostic code to support vCPU Hotplug
+Date: Thu, 30 May 2024 00:42:33 +0100
+Message-ID: <20240529234241.205053-1-salil.mehta@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240527060126.12578-1-thuth@redhat.com>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00020E62:EE_|CY8PR12MB7707:EE_
-X-MS-Office365-Filtering-Correlation-Id: 51d2fac7-e257-43ae-b46e-08dc803716c7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230031|1800799015|376005|36860700004|82310400017; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?d4sO1i+K/dEfWvLxDf4elVWpXH/ARNP5q4PX/6cOgDT/5daJgEUi86us4Y/m?=
- =?us-ascii?Q?lZlufZg3lHVKUTtkjKdH83hTlgT+tw1nBFYRJpLqQ3yw9EjDdUw7VZoOuSqp?=
- =?us-ascii?Q?C4TPy+fWUXGl0QZVf+e5O/Q8cDPUzsS7jd2M3P7Ff1SMxDefxdrWSJNk+R2F?=
- =?us-ascii?Q?Y8FGPyVQnW7EcahGrpeRLoX/d4BjnGMHmX1uHsiu77UW8Y/68NgXNp7Mv2Ih?=
- =?us-ascii?Q?EVpjhz2mbBCij3wxzU8Hu8WX3Gr6alDkly74hTH0qHurnTnT0V1LqpSoTNCc?=
- =?us-ascii?Q?GzhRM1aYmSf+rz/tNnTARfWFqu+7I+PReyQLqJSppCKIWvjqoB4w8lHuE7wd?=
- =?us-ascii?Q?JHsZmIIqTCdshj1q5RsbMK7RU0xtotKzW8OCiftX4JdtcP0cxKpgK49pPZzv?=
- =?us-ascii?Q?L/RKCUd9vBkTKzheKz28WSEIYgpBTz9Ha4TmmJaeYjrg8udSDDmAxVWj5LyK?=
- =?us-ascii?Q?cG7cCJSVfw0IIoMa6Q3N4ekOd8KrpH9X0b7CZCf05P2bpjWPmBxkoxv7E47a?=
- =?us-ascii?Q?eWluVg3nWrnNcq1uQAB4oEp/1DFdckjOCtWAUNqllKbMWoJ8itAR3fpK6EuG?=
- =?us-ascii?Q?1pRAQXwusM+kBZ0qre5K4gmi/KZStknEtYROKALNt3uP+zB5LzSATdHITR3p?=
- =?us-ascii?Q?SF+4x9vkS9t3Z/5RjnhO0dr+AQxDRtzM0AoKCTO5/s1Uz0DtaA0uOffSOAnq?=
- =?us-ascii?Q?Yug/dQr/0gbZpNGHhrGJUkMGwixsqXMmCHlrnRN4KbMklJ3CZzPQzGsBQotT?=
- =?us-ascii?Q?LCYiZNGpB0H+s4Us6g5dL9OsFVmGZmDeFBzJQgwG65PsNJQpZf7Qg/yPfFQn?=
- =?us-ascii?Q?tZ5vH3LK2ZegEisS/0ZHzdQggjm6UXWDTe5kliGRt3yp9PzXtKYhBUGYqX+e?=
- =?us-ascii?Q?mWv34tOqoeArPBRroHAf4RgG32/58hTBeXT0IhsJAJ61vz3fZjoXOmJzK6pq?=
- =?us-ascii?Q?SmBUCJS73rvXrIcCtEwLKgRQkHislL4ZNBgfp71ySiQS+WQxtGEP7vrFHehf?=
- =?us-ascii?Q?r98xGGw72NQsNgxGnkXIriehos/QEzsQQROA1vot0um0ck2R+ZkzgOoHoFKh?=
- =?us-ascii?Q?1XbkcBfxrKPWMV0M9InCoLbN1iOBfDK3pLhoaWDFZLxzn7Zl62W4mn9sYfNo?=
- =?us-ascii?Q?d7nmUcB22dbHfPinNR1+x3yUpYljEhD1OW2m0DSLpZPSKP2tljzPR1elbrWy?=
- =?us-ascii?Q?Hbcbge7NaSCWUCRLN2mtFNCXRkeErDyl2p8iR+DYu/jovZD0HHC9iUu6iYju?=
- =?us-ascii?Q?iZm5BRLI2OgPOhLXnZVj870X7vS82IRlIE9DiQg2YZpqJKj1vtN3Cfpe2OPn?=
- =?us-ascii?Q?otAlmk956MJz0Z4jXmieJFYvD3muWCE3QNa3sQcHAjM+iMhtpbfDloOugIn1?=
- =?us-ascii?Q?H7OxrO/tLsEqYhC4Xny9CHyJBgZQ?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(1800799015)(376005)(36860700004)(82310400017); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 May 2024 23:28:47.3198 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51d2fac7-e257-43ae-b46e-08dc803716c7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E62.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7707
-Received-SPF: permerror client-ip=40.107.102.45;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.195.246.47]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ lhrpeml500001.china.huawei.com (7.191.163.213)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,40 +73,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 08:01:26AM +0200, Thomas Huth wrote:
-> When running the update-linx-headers.sh script, it currently fails with:
-> 
-> scripts/update-linux-headers.sh: line 73: .../qemu/standard-headers/asm-x86/setup_data.h: No such file or directory
-> 
-> The "include" folder is obviously missing here - no clue how this could
-> have worked before?
-> 
-> Fixes: 66210a1a30 ("scripts/update-linux-headers: Add setup_data.h to import list")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Virtual CPU hotplug support is being added across various architectures[1][3].
+This series adds various code bits common across all architectures:
 
-Tested-by: Michael Roth <michael.roth@amd.com>
+1. vCPU creation and Parking code refactor [Patch 1]
+2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
+3. ACPI CPUs AML code change [Patch 4,5]
+4. Helper functions to support unrealization of CPU objects [Patch 6,7]
+5. Docs [Patch 8]
 
-> ---
->  scripts/update-linux-headers.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-> index fbf7e119bc..23afe8c08a 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -159,7 +159,7 @@ for arch in $ARCHLIST; do
->          cp_portable "$hdrdir/bootparam.h" \
->                      "$output/include/standard-headers/asm-$arch"
->          cp_portable "$hdrdir/include/asm/setup_data.h" \
-> -                    "$output/standard-headers/asm-x86"
-> +                    "$output/include/standard-headers/asm-x86"
->      fi
->      if [ $arch = riscv ]; then
->          cp "$hdrdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
-> -- 
-> 2.45.1
-> 
+
+Repository:
+
+[*] https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3.arch.agnostic.v12
+
+NOTE: This series is meant to work in conjunction with Architecture specific patch-set.
+For ARM, this will work in combination of the architecture specific part based on
+RFC V2 [1]. This architecture specific patch-set RFC V3 shall be floated soon and is
+present at below location
+
+[*] https://github.com/salil-mehta/qemu/tree/virt-cpuhp-armv8/rfc-v3-rc1
+
+
+Revision History:
+
+Patch-set  V11 -> V12
+1. Addressed Harsh Prateek Bora's (IBM) comment
+   - Changed @cpu to @vcpu_id in the kvm_unpark_vcpu protoype header/
+2. Added Zhao Liu's (Intel) Tested-by for whole series
+   - Qtest does not breaks on Intel platforms now.
+3. Added Zhao Liu's (Intel) Reviewed-by for [PATCH V11 {1/8 - 3/8}]
+Link: https://lore.kernel.org/qemu-devel/ZlRSPuJGBgyEUW6w@intel.com/
+Link: https://lore.kernel.org/qemu-devel/a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com/
+
+Patch-set  V10 -> V11
+1. Addressed Nicholas Piggin's (IBM) comment
+   - moved the traces in kvm_unpark_vcpu and kvm_create_vcpu at the end
+   - Added the Reviewed-by Tag for [PATCH V10 1/8]
+2.  Addressed Alex Bennée's (Linaro) comments
+   - Added a note explaining dependency of the [PATCH V10 7/8] on Arch specific patch-set
+Link: https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/ 
+Link: https://lore.kernel.org/qemu-devel/87frubi402.fsf@draig.linaro.org/
+
+Patch-set  V9 -> V10
+1. Addressed Nicholas Piggin's (IBM) & Philippe Mathieu-Daudé (Linaro) comments
+   - carved out kvm_unpark_vcpu and added its trace
+   - Widened the scope of the kvm_unpark_vcpu so that it can be used by generic framework
+     being thought out
+Link: https://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@huawei.com/
+Link: https://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@linaro.org/
+
+Patch-set  V8 -> V9
+1. Addressed Vishnu Pajjuri's (Ampere) comments
+   - Added kvm_fd to trace in kvm_create_vcpu
+   - Some clean ups: arch vcpu-id and sbd variable
+   - Added the missed initialization of cpu->gdb_num_regs
+2. Addressed the commnet from Zhao Liu (Intel)
+   - Make initialization of CPU Hotplug state conditional (possible_cpu_arch_ids!=NULL)
+Link: https://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@huawei.com/
+
+Patch-set V7 -> V8
+1. Rebased and Fixed the conflicts
+
+Patch-set  V6 -> V7
+1. Addressed Alex Bennée's comments
+   - Updated the docs
+2. Addressed Igor Mammedov's comments
+   - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/9]
+   - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]     
+3. Added Shaoqin Huang's Reviewed-by tags for whole series.
+Link: https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.com/
+
+Patch-set  V5 -> V6
+1. Addressed Gavin Shan's comments
+   - Fixed the assert() ranges of address spaces
+   - Rebased the patch-set to latest changes in the qemu.git
+   - Added Reviewed-by tags for patches {8,9}
+2. Addressed Jonathan Cameron's comments
+   - Updated commit-log for [Patch V5 1/9] with mention of trace events
+   - Added Reviewed-by tags for patches {1,5}
+3. Added Tested-by tags from Xianglai Li
+4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9] 
+Link: https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.com/
+
+Patch-set  V4 -> V5
+1. Addressed Gavin Shan's comments
+   - Fixed the trace events print string for kvm_{create,get,park,destroy}_vcpu
+   - Added Reviewed-by tag for patch {1}
+2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
+3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
+4. Dropped the ARM specific [Patch V4 10/10]
+Link: https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.com/
+
+Patch-set  V3 -> V4
+1. Addressed David Hilderbrand's comments
+   - Fixed the wrong doc comment of kvm_park_vcpu API prototype
+   - Added Reviewed-by tags for patches {2,4}
+Link: https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.com/
+
+Patch-set  V2 -> V3
+1. Addressed Jonathan Cameron's comments
+   - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to 'integer'
+   - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
+   - Updated [Patch V2 3/10] commit-log with details of ACPI_CPU_SCAN_METHOD macro
+   - Updated [Patch V2 5/10] commit-log with details of conditional event handler method
+   - Added Reviewed-by tags for patches {2,3,4,6,7}
+2. Addressed Gavin Shan's comments
+   - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
+   - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
+   - Reset the value of 'gdb_num_g_regs' in gdb_unregister_coprocessor_all
+   - Fixed the kvm_{create,park}_vcpu prototypes docs
+   - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
+3. Addressed one earlier missed comment by Alex Bennée in RFC V1
+   - Added traces instead of DPRINTF in the newly added and some existing functions
+Link: https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com/
+
+Patch-set V1 -> V2
+1. Addressed Alex Bennée's comments
+   - Refactored the kvm_create_vcpu logic to get rid of goto
+   - Added the docs for kvm_{create,park}_vcpu prototypes
+   - Splitted the gdbstub and AddressSpace destruction change into separate patches
+   - Added Reviewed-by tags for patches {2,10}
+Link: https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.com/
+
+References:
+
+[1] https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com/
+[2] https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
+[3] https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/
+
+
+
+Salil Mehta (8):
+  accel/kvm: Extract common KVM vCPU {creation,parking} code
+  hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
+  hw/acpi: Update ACPI GED framework to support vCPU Hotplug
+  hw/acpi: Update GED _EVT method AML with CPU scan
+  hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
+  physmem: Add helper function to destroy CPU AddressSpace
+  gdbstub: Add helper function to unregister GDB register space
+  docs/specs/acpi_hw_reduced_hotplug: Add the CPU Hotplug Event Bit
+
+ accel/kvm/kvm-all.c                    | 95 +++++++++++++++++---------
+ accel/kvm/kvm-cpus.h                   | 23 +++++++
+ accel/kvm/trace-events                 |  5 +-
+ docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
+ gdbstub/gdbstub.c                      | 13 ++++
+ hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++
+ hw/acpi/cpu.c                          | 33 ++++++---
+ hw/acpi/generic_event_device.c         | 21 ++++++
+ hw/core/cpu-common.c                   |  1 -
+ hw/i386/acpi-build.c                   |  3 +-
+ include/exec/cpu-common.h              |  8 +++
+ include/exec/gdbstub.h                 |  6 ++
+ include/hw/acpi/cpu.h                  |  5 +-
+ include/hw/acpi/cpu_hotplug.h          |  4 ++
+ include/hw/acpi/generic_event_device.h |  4 ++
+ include/hw/core/cpu.h                  |  1 +
+ system/physmem.c                       | 29 ++++++++
+ 17 files changed, 212 insertions(+), 48 deletions(-)
+
+-- 
+2.34.1
+
 
