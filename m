@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0FF0C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF38C27C43
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCKE3-0001u1-Qf; Wed, 29 May 2024 10:24:23 -0400
+	id 1sCKDW-0001jW-SM; Wed, 29 May 2024 10:23:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCKE1-0001rR-1L
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:24:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sCKDR-0001iU-U8
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:23:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCKDy-0000Rh-3B
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:24:20 -0400
+ id 1sCKDP-0000GO-Gf
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:23:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716992657;
+ s=mimecast20190719; t=1716992622;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mM/RHyJ3d0Ax7YBhuhwDkeF91rodivdCaH9bhnvYQiA=;
- b=B4wcGm5Ncsgfl52unbYXHJUIv/9ghcSa/sbyTOU3jgqUC+uvY4rrIEYDTbXAtEmWax41a8
- fDg56Tusj6MJI8FZzFBVnNiQDo+YG3uD38/0d8YdFWJOnpsZC6jjNOYPIH+ig77d5cTAbs
- fGdq9msVJ7PKsDfrPgWvNsUsGVgsmLs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uLHSSzEkKQa//WnfxsNbDnkLzcKOi8i3sxjHdngeMlM=;
+ b=Rg5T+S+u1wDNDV2MRpSn7mnq13SfeBTSOlrYp3En9t7Uw2C7RDt2TrxGeJi+5Dg/JnjuMf
+ xImtCjEbpt5rx7297hMr0FYS0iUCyAfEwF2rOwDS4fgP/X08bfxKfbSBq1JlTwlQ7TlbJQ
+ u9v7sYtjOQvrOMrTtGvvLdLVdFIj/Rs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-LUsBXDwgNPSah28hwaOs5Q-1; Wed, 29 May 2024 10:24:16 -0400
-X-MC-Unique: LUsBXDwgNPSah28hwaOs5Q-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-354f7a278efso1408959f8f.2
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:24:15 -0700 (PDT)
+ us-mta-357-eb1KHFJ5M9ih8w0cS22_vg-1; Wed, 29 May 2024 10:23:40 -0400
+X-MC-Unique: eb1KHFJ5M9ih8w0cS22_vg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42109a85f5cso18398655e9.2
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:23:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716992655; x=1717597455;
+ d=1e100.net; s=20230601; t=1716992619; x=1717597419;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mM/RHyJ3d0Ax7YBhuhwDkeF91rodivdCaH9bhnvYQiA=;
- b=A2bX9mkqnkNUA/qi3ceVQV4xZfV/nj+aFJlwDWeYflM1fHtAqp7leQgGUTgacsbPMQ
- gFJoMHUfGASkwgHWtLdoHOB+aFzFF2go2fwqaQ8makkyy/7bUe8h/9SMicjgD4R7mg/0
- NeECDP0OfCNoPSx60kXeaGmHpPbozguRg8Y2FBBy4+exbyC+ZqS2ofsZOvcfXUALhkAd
- 3KCRnlvrqDn3xshzoi2i0tOojGMOfe+qRQp65nclwAZmKSTHl7dBij5M6mysJ2X9kKc4
- z3+6WBFCw79ARd5arsR4fxCfNsxIZCKWT1Tfwf2C1mfo65fixlv0PT6djI09fxCHUQtz
- helw==
-X-Gm-Message-State: AOJu0YxjRIwJuOJd7TOlY9UzZ6WNB8767lO0V1Y2ae0aLE7dJP2uG65d
- 1tI9zDot1oARdJlIFEJaju/vN2e8IE+ezYyc+4ET+3BaB60FsYvxzH5gDVGIg9lu4B7gYmABJhQ
- WEOxoD6tgvlP0AJ1bPfj4MlfZmG81mtR28ClqYuiWuf9rPvqRrOY4
-X-Received: by 2002:a5d:4f04:0:b0:354:f6ea:3f88 with SMTP id
- ffacd0b85a97d-35526c15563mr10544749f8f.1.1716992654835; 
- Wed, 29 May 2024 07:24:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaKCrG6COjcuOyJZ3jIJTLuuytKMMmg746yw3TlvpSRJIx7kIcjnLyNuuqox805XhaHmjpDQ==
-X-Received: by 2002:a5d:4f04:0:b0:354:f6ea:3f88 with SMTP id
- ffacd0b85a97d-35526c15563mr10544723f8f.1.1716992654333; 
- Wed, 29 May 2024 07:24:14 -0700 (PDT)
+ bh=uLHSSzEkKQa//WnfxsNbDnkLzcKOi8i3sxjHdngeMlM=;
+ b=oMcrVZ3N8jhl+CXSXCgXTLZSDv4Zl49H2WRa9nu9jgP6taTeN9nyW5D4ttdZqwwqqT
+ iC0lFtkFGTQw5jRQFNBYYOfaFii1YbZ13e0EZf4VfHa0PcX+mB+46Uswhbbzk/Lczbl2
+ 2/e0cIbt8qhEITZcFekOVWa0730vpKRHJ7rzuhME3N727C4Xu5DnPst48d6GuCtjdU0N
+ 7aYwDMDfZ2EeggzjtYMtAZEe6+sQ/bXulWAryR3qqk1dcTn+ILc8gnGIjKx7S9wW7aaD
+ c/vjkD2Jq3qrrT/xarenOko9ufGmwtcvNTnyBDdPexhSkJYnBKNXFzrzDAi56Mgn3WNX
+ u8Sw==
+X-Gm-Message-State: AOJu0Yxm6zIzKZJrsphEYjqpxdFEvt+4ocFzCuheO0W1XRHxaTDd/QHG
+ a6ad3RGjjPstBDl3wzvTy5kYNE1eQxEajwLn0tUiYD/9m4gix8rryHhe4sH+X8+8xFaJ6NM2lDf
+ LwDpCbGsUHXUsuDXnERBGzwDa1Q0y24kl5g6a62ncSqA38egAFRcA
+X-Received: by 2002:a05:600c:1c02:b0:41c:23f3:65fa with SMTP id
+ 5b1f17b1804b1-42108a99cf6mr136990335e9.28.1716992619297; 
+ Wed, 29 May 2024 07:23:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSZIJ/YrdZ0udBcnHuMu/JDcyXye8rX7FpnecL+2/+ckU7F8Xf8ijE+17MK5hmnLNV/ySg4g==
+X-Received: by 2002:a05:600c:1c02:b0:41c:23f3:65fa with SMTP id
+ 5b1f17b1804b1-42108a99cf6mr136990015e9.28.1716992618875; 
+ Wed, 29 May 2024 07:23:38 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-359bc20cbdbsm7811232f8f.22.2024.05.29.07.24.13
+ 5b1f17b1804b1-4210896676bsm183917165e9.4.2024.05.29.07.23.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 07:24:13 -0700 (PDT)
-Date: Wed, 29 May 2024 16:24:13 +0200
+ Wed, 29 May 2024 07:23:38 -0700 (PDT)
+Date: Wed, 29 May 2024 16:23:37 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
  <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
  =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
  <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 10/23] hw/i386/pc: Remove
- PCMachineClass::smbios_uuid_encoded
-Message-ID: <20240529162413.0fc11032@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-11-philmd@linaro.org>
+Subject: Re: [PATCH v5 09/23] target/i386/kvm: Remove
+ x86_cpu_change_kvm_default() and 'kvm-cpu.h'
+Message-ID: <20240529162337.30755055@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240529051539.71210-10-philmd@linaro.org>
 References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-11-philmd@linaro.org>
+ <20240529051539.71210-10-philmd@linaro.org>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -107,64 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:26 +0200
+On Wed, 29 May 2024 07:15:25 +0200
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> PCMachineClass::smbios_uuid_encoded was only used by the
-> pc-i440fx-2.1 machine, which got removed. It is now always
-> true, remove it.
+> x86_cpu_change_kvm_default() was only used out of kvm-cpu.c by
+> the pc-i440fx-2.1 machine, which got removed. Make it static,
+> and remove its declaration. "kvm-cpu.h" is now empty, remove it.
 >=20
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
 > ---
->  include/hw/i386/pc.h | 1 -
->  hw/i386/fw_cfg.c     | 3 +--
->  hw/i386/pc.c         | 1 -
->  3 files changed, 1 insertion(+), 4 deletions(-)
+>  target/i386/kvm/kvm-cpu.h | 41 ---------------------------------------
+>  target/i386/kvm/kvm-cpu.c |  3 +--
+>  2 files changed, 1 insertion(+), 43 deletions(-)
+>  delete mode 100644 target/i386/kvm/kvm-cpu.h
 >=20
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index db0f8e0e36..bbbf58bd42 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -109,7 +109,6 @@ struct PCMachineClass {
->      /* SMBIOS compat: */
->      bool smbios_defaults;
->      bool smbios_legacy_mode;
-> -    bool smbios_uuid_encoded;
->      SmbiosEntryPointType default_smbios_ep_type;
-> =20
->      /* RAM / address space compat: */
-> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-> index 6e0d9945d0..f9e8af3bf5 100644
-> --- a/hw/i386/fw_cfg.c
-> +++ b/hw/i386/fw_cfg.c
-> @@ -63,8 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgSta=
-te *fw_cfg,
-> =20
->      if (pcmc->smbios_defaults) {
->          /* These values are guest ABI, do not change */
-> -        smbios_set_defaults("QEMU", mc->desc, mc->name,
-> -                            pcmc->smbios_uuid_encoded);
-> +        smbios_set_defaults("QEMU", mc->desc, mc->name, true);
->      }
-> =20
->      /* tell smbios about cpuid version and features */
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index f27c9fd98c..4b2a29bf08 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1790,7 +1790,6 @@ static void pc_machine_class_init(ObjectClass *oc, =
-void *data)
->      pcmc->has_acpi_build =3D true;
->      pcmc->rsdp_in_ram =3D true;
->      pcmc->smbios_defaults =3D true;
-> -    pcmc->smbios_uuid_encoded =3D true;
->      pcmc->gigabyte_align =3D true;
->      pcmc->has_reserved_memory =3D true;
->      pcmc->enforce_aligned_dimm =3D true;
+> diff --git a/target/i386/kvm/kvm-cpu.h b/target/i386/kvm/kvm-cpu.h
+> deleted file mode 100644
+> index e858ca21e5..0000000000
+> --- a/target/i386/kvm/kvm-cpu.h
+> +++ /dev/null
+> @@ -1,41 +0,0 @@
+> -/*
+> - * i386 KVM CPU type and functions
+> - *
+> - *  Copyright (c) 2003 Fabrice Bellard
+> - *
+> - * This library is free software; you can redistribute it and/or
+> - * modify it under the terms of the GNU Lesser General Public
+> - * License as published by the Free Software Foundation; either
+> - * version 2 of the License, or (at your option) any later version.
+> - *
+> - * This library is distributed in the hope that it will be useful,
+> - * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> - * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> - * Lesser General Public License for more details.
+> - *
+> - * You should have received a copy of the GNU Lesser General Public
+> - * License along with this library; if not, see <http://www.gnu.org/lice=
+nses/>.
+> - */
+> -
+> -#ifndef KVM_CPU_H
+> -#define KVM_CPU_H
+> -
+> -#ifdef CONFIG_KVM
+> -/*
+> - * Change the value of a KVM-specific default
+> - *
+> - * If value is NULL, no default will be set and the original
+> - * value from the CPU model table will be kept.
+> - *
+> - * It is valid to call this function only for properties that
+> - * are already present in the kvm_default_props table.
+> - */
+> -void x86_cpu_change_kvm_default(const char *prop, const char *value);
+> -
+> -#else /* !CONFIG_KVM */
+> -
+> -#define x86_cpu_change_kvm_default(a, b)
+> -
+> -#endif /* CONFIG_KVM */
+> -
+> -#endif /* KVM_CPU_H */
+> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+> index f76972e47e..f9b99b5f50 100644
+> --- a/target/i386/kvm/kvm-cpu.c
+> +++ b/target/i386/kvm/kvm-cpu.c
+> @@ -10,7 +10,6 @@
+>  #include "qemu/osdep.h"
+>  #include "cpu.h"
+>  #include "host-cpu.h"
+> -#include "kvm-cpu.h"
+>  #include "qapi/error.h"
+>  #include "sysemu/sysemu.h"
+>  #include "hw/boards.h"
+> @@ -178,7 +177,7 @@ static PropValue kvm_default_props[] =3D {
+>  /*
+>   * Only for builtin_x86_defs models initialized with x86_register_cpudef=
+_types.
+>   */
+> -void x86_cpu_change_kvm_default(const char *prop, const char *value)
+> +static void x86_cpu_change_kvm_default(const char *prop, const char *val=
+ue)
+>  {
+>      PropValue *pv;
+>      for (pv =3D kvm_default_props; pv->prop; pv++) {
 
 
