@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B28CC25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D1DAC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM7W-0001zV-3r; Wed, 29 May 2024 12:25:46 -0400
+	id 1sCM7T-0001mb-JY; Wed, 29 May 2024 12:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM7P-0001Ud-MU
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:39 -0400
+ id 1sCM76-0001IX-Fe
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:23 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM7J-0006S2-LX
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:35 -0400
+ id 1sCM73-0006LT-Pw
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:19 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6r-006CQF-29;
- Wed, 29 May 2024 17:25:05 +0100
+ (envelope-from <movement@movementarian.org>) id 1sCM6k-006CPy-PO;
+ Wed, 29 May 2024 17:24:58 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
- thanos.makatos@nutanix.com, John Levon <levon@movementarian.org>,
- John Johnson <john.g.johnson@oracle.com>,
+ thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 21/26] vfio-user: dma map/unmap operations
-Date: Wed, 29 May 2024 17:23:14 +0100
-Message-Id: <20240529162319.1476680-22-levon@movementarian.org>
+Subject: [PATCH 18/26] vfio-user: get and set IRQs
+Date: Wed, 29 May 2024 17:23:11 +0100
+Message-Id: <20240529162319.1476680-19-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
@@ -60,395 +59,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement DMA map/unmap for the vfio-user container.
-
-Add ability to do async operations during memory transactions.
+From: Jagannathan Raman <jag.raman@oracle.com>
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/trace-events     |   4 ++
- hw/vfio/user-container.c | 114 ++++++++++++++++++++++++++++++++++++++-
- hw/vfio/user-protocol.h  |  32 +++++++++++
- hw/vfio/user.c           |  99 ++++++++++++++++++++++++++++++----
- hw/vfio/user.h           |  10 ++++
- 5 files changed, 247 insertions(+), 12 deletions(-)
+ hw/vfio/pci.c           |   3 +-
+ hw/vfio/trace-events    |   2 +
+ hw/vfio/user-protocol.h |  25 +++++++
+ hw/vfio/user.c          | 140 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 169 insertions(+), 1 deletion(-)
 
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index d1da64383e..56bfb17eec 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -772,7 +772,8 @@ retry:
+     ret = vfio_enable_vectors(vdev, false);
+     if (ret) {
+         if (ret < 0) {
+-            error_report("vfio: Error: Failed to setup MSI fds: %m");
++            error_report("vfio: Error: Failed to setup MSI fds: %s",
++                         strerror(-ret));
+         } else {
+             error_report("vfio: Error: Failed to enable %d "
+                          "MSI vectors, retry with %d", vdev->nr_vectors, ret);
 diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 73661db9d9..387751bd7f 100644
+index a65d530557..73661db9d9 100644
 --- a/hw/vfio/trace-events
 +++ b/hw/vfio/trace-events
-@@ -188,3 +188,7 @@ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index
+@@ -186,3 +186,5 @@ vfio_user_version(uint16_t major, uint16_t minor, const char *caps) " major %d m
+ vfio_user_get_info(uint32_t nregions, uint32_t nirqs) " #regions %d #irqs %d"
+ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index %d flags 0x%x size 0x%"PRIx64
  vfio_user_region_rw(uint32_t region, uint64_t off, uint32_t count) " region %d offset 0x%"PRIx64" count %d"
- vfio_user_get_irq_info(uint32_t index, uint32_t flags, uint32_t count) " index %d flags 0x%x count %d"
- vfio_user_set_irqs(uint32_t index, uint32_t start, uint32_t count, uint32_t flags) " index %d start %d count %d flags 0x%x"
-+
-+# user-container.c
-+vfio_user_dma_map(uint64_t iova, uint64_t size, uint64_t off, uint32_t flags, bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" off 0x%"PRIx64" flags 0x%x async_ops %d"
-+vfio_user_dma_unmap(uint64_t iova, uint64_t size, uint32_t flags,  bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" flags 0x%x async_ops %d"
-diff --git a/hw/vfio/user-container.c b/hw/vfio/user-container.c
-index f0414509d5..213861fb5d 100644
---- a/hw/vfio/user-container.c
-+++ b/hw/vfio/user-container.c
-@@ -24,18 +24,126 @@
- #include "qapi/error.h"
- #include "pci.h"
++vfio_user_get_irq_info(uint32_t index, uint32_t flags, uint32_t count) " index %d flags 0x%x count %d"
++vfio_user_set_irqs(uint32_t index, uint32_t start, uint32_t count, uint32_t flags) " index %d start %d count %d flags 0x%x"
+diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
+index 6987435e96..48dd475ab3 100644
+--- a/hw/vfio/user-protocol.h
++++ b/hw/vfio/user-protocol.h
+@@ -139,6 +139,31 @@ typedef struct {
+     uint64_t offset;
+ } VFIOUserRegionInfo;
  
 +/*
-+ * When DMA space is the physical address space, the region add/del listeners
-+ * will fire during memory update transactions.  These depend on BQL being held,
-+ * so do any resulting map/demap ops async while keeping BQL.
++ * VFIO_USER_DEVICE_GET_IRQ_INFO
++ * imported from struct vfio_irq_info
 + */
-+static void vfio_user_listener_begin(VFIOContainerBase *bcontainer)
-+{
-+    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
-+                                                 bcontainer);
++typedef struct {
++    VFIOUserHdr hdr;
++    uint32_t argsz;
++    uint32_t flags;
++    uint32_t index;
++    uint32_t count;
++} VFIOUserIRQInfo;
 +
-+    container->proxy->async_ops = true;
++/*
++ * VFIO_USER_DEVICE_SET_IRQS
++ * imported from struct vfio_irq_set
++ */
++typedef struct {
++    VFIOUserHdr hdr;
++    uint32_t argsz;
++    uint32_t flags;
++    uint32_t index;
++    uint32_t start;
++    uint32_t count;
++} VFIOUserIRQSet;
++
+ /*
+  * VFIO_USER_REGION_READ
+  * VFIO_USER_REGION_WRITE
+diff --git a/hw/vfio/user.c b/hw/vfio/user.c
+index 9bb1ee8880..352c10d37b 100644
+--- a/hw/vfio/user.c
++++ b/hw/vfio/user.c
+@@ -1195,6 +1195,122 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
+     return 0;
+ }
+ 
++static int vfio_user_get_irq_info(VFIOUserProxy *proxy,
++                                  struct vfio_irq_info *info)
++{
++    VFIOUserIRQInfo msg;
++
++    memset(&msg, 0, sizeof(msg));
++    vfio_user_request_msg(&msg.hdr, VFIO_USER_DEVICE_GET_IRQ_INFO,
++                          sizeof(msg), 0);
++    msg.argsz = info->argsz;
++    msg.index = info->index;
++
++    vfio_user_send_wait(proxy, &msg.hdr, NULL, 0);
++    if (msg.hdr.flags & VFIO_USER_ERROR) {
++        return -msg.hdr.error_reply;
++    }
++    trace_vfio_user_get_irq_info(msg.index, msg.flags, msg.count);
++
++    memcpy(info, &msg.argsz, sizeof(*info));
++    return 0;
 +}
 +
-+static void vfio_user_listener_commit(VFIOContainerBase *bcontainer)
++static int irq_howmany(int *fdp, uint32_t cur, uint32_t max)
 +{
-+    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
-+                                            bcontainer);
++    int n = 0;
 +
-+    /* wait here for any async requests sent during the transaction */
-+    container->proxy->async_ops = false;
-+    vfio_user_wait_reqs(container->proxy);
++    if (fdp[cur] != -1) {
++        do {
++            n++;
++        } while (n < max && fdp[cur + n] != -1);
++    } else {
++        do {
++            n++;
++        } while (n < max && fdp[cur + n] == -1);
++    }
++
++    return n;
 +}
 +
- static int vfio_user_dma_unmap(const VFIOContainerBase *bcontainer,
-                                hwaddr iova, ram_addr_t size,
-                                IOMMUTLBEntry *iotlb, int flags)
- {
--    return -ENOTSUP;
-+    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
-+                                            bcontainer);
++static int vfio_user_set_irqs(VFIOUserProxy *proxy, struct vfio_irq_set *irq)
++{
++    g_autofree VFIOUserIRQSet *msgp = NULL;
++    uint32_t size, nfds, send_fds, sent_fds, max;
 +
-+    struct {
-+        VFIOUserDMAUnmap msg;
-+        VFIOUserBitmap bitmap;
-+    } *msgp = NULL;
-+    int msize, rsize;
++    if (irq->argsz < sizeof(*irq)) {
++        error_printf("vfio_user_set_irqs argsz too small\n");
++        return -EINVAL;
++    }
 +
-+    msize = rsize = sizeof(VFIOUserDMAUnmap);
-+    msgp = g_malloc0(rsize);
++    /*
++     * Handle simple case
++     */
++    if ((irq->flags & VFIO_IRQ_SET_DATA_EVENTFD) == 0) {
++        size = sizeof(VFIOUserHdr) + irq->argsz;
++        msgp = g_malloc0(size);
 +
-+    vfio_user_request_msg(&msgp->msg.hdr, VFIO_USER_DMA_UNMAP, msize, 0);
-+    msgp->msg.argsz = rsize - sizeof(VFIOUserHdr);
-+    msgp->msg.flags = flags;
-+    msgp->msg.iova = iova;
-+    msgp->msg.size = size;
-+    trace_vfio_user_dma_unmap(msgp->msg.iova, msgp->msg.size, msgp->msg.flags,
-+                              container->proxy->async_ops);
++        vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_SET_IRQS, size, 0);
++        msgp->argsz = irq->argsz;
++        msgp->flags = irq->flags;
++        msgp->index = irq->index;
++        msgp->start = irq->start;
++        msgp->count = irq->count;
++        trace_vfio_user_set_irqs(msgp->index, msgp->start, msgp->count,
++                                 msgp->flags);
 +
-+    if (container->proxy->async_ops) {
-+        vfio_user_send_nowait(container->proxy, &msgp->msg.hdr, NULL, rsize);
++        vfio_user_send_wait(proxy, &msgp->hdr, NULL, 0);
++        if (msgp->hdr.flags & VFIO_USER_ERROR) {
++            return -msgp->hdr.error_reply;
++        }
++
 +        return 0;
 +    }
 +
-+    vfio_user_send_wait(container->proxy, &msgp->msg.hdr, NULL, rsize);
-+    if (msgp->msg.hdr.flags & VFIO_USER_ERROR) {
-+        return -msgp->msg.hdr.error_reply;
++    /*
++     * Calculate the number of FDs to send
++     * and adjust argsz
++     */
++    nfds = (irq->argsz - sizeof(*irq)) / sizeof(int);
++    irq->argsz = sizeof(*irq);
++    msgp = g_malloc0(sizeof(*msgp));
++    /*
++     * Send in chunks if over max_send_fds
++     */
++    for (sent_fds = 0; nfds > sent_fds; sent_fds += send_fds) {
++        VFIOUserFDs *arg_fds, loop_fds;
++
++        /* must send all valid FDs or all invalid FDs in single msg */
++        max = nfds - sent_fds;
++        if (max > proxy->max_send_fds) {
++            max = proxy->max_send_fds;
++        }
++        send_fds = irq_howmany((int *)irq->data, sent_fds, max);
++
++        vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_SET_IRQS,
++                              sizeof(*msgp), 0);
++        msgp->argsz = irq->argsz;
++        msgp->flags = irq->flags;
++        msgp->index = irq->index;
++        msgp->start = irq->start + sent_fds;
++        msgp->count = send_fds;
++        trace_vfio_user_set_irqs(msgp->index, msgp->start, msgp->count,
++                                 msgp->flags);
++
++        loop_fds.send_fds = send_fds;
++        loop_fds.recv_fds = 0;
++        loop_fds.fds = (int *)irq->data + sent_fds;
++        arg_fds = loop_fds.fds[0] != -1 ? &loop_fds : NULL;
++
++        vfio_user_send_wait(proxy, &msgp->hdr, arg_fds, 0);
++        if (msgp->hdr.flags & VFIO_USER_ERROR) {
++            return -msgp->hdr.error_reply;
++        }
 +    }
 +
-+    g_free(msgp);
 +    return 0;
- }
- 
- static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-                              ram_addr_t size, void *vaddr, bool readonly,
-                              MemoryRegion *mrp)
- {
--    return -ENOTSUP;
-+    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
-+                                                bcontainer);
-+
-+    VFIOUserProxy *proxy = container->proxy;
-+    int fd = memory_region_get_fd(mrp);
-+    int ret;
-+
-+    VFIOUserFDs *fds = NULL;
-+    VFIOUserDMAMap *msgp = g_malloc0(sizeof(*msgp));
-+
-+    vfio_user_request_msg(&msgp->hdr, VFIO_USER_DMA_MAP, sizeof(*msgp), 0);
-+    msgp->argsz = sizeof(struct vfio_iommu_type1_dma_map);
-+    msgp->flags = VFIO_DMA_MAP_FLAG_READ;
-+    msgp->offset = 0;
-+    msgp->iova = iova;
-+    msgp->size = size;
-+
-+    /*
-+     * vaddr enters as a QEMU process address; make it either a file offset
-+     * for mapped areas or leave as 0.
-+     */
-+    if (fd != -1) {
-+        msgp->offset = qemu_ram_block_host_offset(mrp->ram_block, vaddr);
-+    }
-+
-+    if (!readonly) {
-+        msgp->flags |= VFIO_DMA_MAP_FLAG_WRITE;
-+    }
-+
-+    trace_vfio_user_dma_map(msgp->iova, msgp->size, msgp->offset, msgp->flags,
-+                            container->proxy->async_ops);
-+
-+    /*
-+     * The async_ops case sends without blocking or dropping BQL.
-+     * They're later waited for in vfio_send_wait_reqs.
-+     */
-+    if (container->proxy->async_ops) {
-+        /* can't use auto variable since we don't block */
-+        if (fd != -1) {
-+            fds = vfio_user_getfds(1);
-+            fds->send_fds = 1;
-+            fds->fds[0] = fd;
-+        }
-+        vfio_user_send_nowait(proxy, &msgp->hdr, fds, 0);
-+        ret = 0;
-+    } else {
-+        VFIOUserFDs local_fds = { 1, 0, &fd };
-+
-+        fds = fd != -1 ? &local_fds : NULL;
-+        vfio_user_send_wait(proxy, &msgp->hdr, fds, 0);
-+        ret = (msgp->hdr.flags & VFIO_USER_ERROR) ? -msgp->hdr.error_reply : 0;
-+        g_free(msgp);
-+    }
-+
-+    return ret;
- }
- 
- static int
-@@ -230,6 +338,8 @@ static void vfio_iommu_user_class_init(ObjectClass *klass, void *data)
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
- 
-     vioc->setup = vfio_user_setup;
-+    vioc->listener_begin = vfio_user_listener_begin,
-+    vioc->listener_commit = vfio_user_listener_commit,
-     vioc->dma_map = vfio_user_dma_map;
-     vioc->dma_unmap = vfio_user_dma_unmap;
-     vioc->attach_device = vfio_user_attach_device;
-diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
-index 87e43ddc72..9b569156fa 100644
---- a/hw/vfio/user-protocol.h
-+++ b/hw/vfio/user-protocol.h
-@@ -115,6 +115,31 @@ typedef struct {
-  */
- #define VFIO_USER_DEF_MAX_BITMAP (256 * 1024 * 1024)
- 
-+/*
-+ * VFIO_USER_DMA_MAP
-+ * imported from struct vfio_iommu_type1_dma_map
-+ */
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint32_t argsz;
-+    uint32_t flags;
-+    uint64_t offset;    /* FD offset */
-+    uint64_t iova;
-+    uint64_t size;
-+} VFIOUserDMAMap;
-+
-+/*
-+ * VFIO_USER_DMA_UNMAP
-+ * imported from struct vfio_iommu_type1_dma_unmap
-+ */
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint32_t argsz;
-+    uint32_t flags;
-+    uint64_t iova;
-+    uint64_t size;
-+} VFIOUserDMAUnmap;
-+
- /*
-  * VFIO_USER_DEVICE_GET_INFO
-  * imported from struct vfio_device_info
-@@ -178,4 +203,11 @@ typedef struct {
-     char data[];
- } VFIOUserRegionRW;
- 
-+/*imported from struct vfio_bitmap */
-+typedef struct {
-+    uint64_t pgsize;
-+    uint64_t size;
-+    char data[];
-+} VFIOUserBitmap;
-+
- #endif /* VFIO_USER_PROTOCOL_H */
-diff --git a/hw/vfio/user.c b/hw/vfio/user.c
-index 224b5febd8..adecd9a68a 100644
---- a/hw/vfio/user.c
-+++ b/hw/vfio/user.c
-@@ -50,7 +50,6 @@ static void vfio_user_shutdown(VFIOUserProxy *proxy);
- static int vfio_user_send_qio(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                                      VFIOUserFDs *fds);
--static VFIOUserFDs *vfio_user_getfds(int numfds);
- static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- 
- static void vfio_user_recv(void *opaque);
-@@ -63,10 +62,6 @@ static void vfio_user_request(void *opaque);
- static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                                  VFIOUserFDs *fds);
--static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
--                                VFIOUserFDs *fds, int rsize);
--static void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
--                                  uint32_t size, uint32_t flags);
- 
- static inline void vfio_user_set_error(VFIOUserHdr *hdr, uint32_t err)
- {
-@@ -158,7 +153,7 @@ static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg)
-     QTAILQ_INSERT_HEAD(&proxy->free, msg, next);
- }
- 
--static VFIOUserFDs *vfio_user_getfds(int numfds)
-+VFIOUserFDs *vfio_user_getfds(int numfds)
- {
-     VFIOUserFDs *fds = g_malloc0(sizeof(*fds) + (numfds * sizeof(int)));
- 
-@@ -661,8 +656,38 @@ static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-     }
- }
- 
--static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
--                                VFIOUserFDs *fds, int rsize)
-+/*
-+ * nowait send - vfio_wait_reqs() can wait for it later
-+ */
-+void vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                           VFIOUserFDs *fds, int rsize)
-+{
-+    VFIOUserMsg *msg;
-+    int ret;
-+
-+    if (hdr->flags & VFIO_USER_NO_REPLY) {
-+        error_printf("vfio_user_send_nowait on async message\n");
-+        return;
-+    }
-+
-+    QEMU_LOCK_GUARD(&proxy->lock);
-+
-+    msg = vfio_user_getmsg(proxy, hdr, fds);
-+    msg->id = hdr->id;
-+    msg->rsize = rsize ? rsize : hdr->size;
-+    msg->type = VFIO_MSG_NOWAIT;
-+
-+    ret = vfio_user_send_queued(proxy, msg);
-+    if (ret < 0) {
-+        vfio_user_recycle(proxy, msg);
-+        return;
-+    }
-+
-+    proxy->last_nowait = msg;
 +}
 +
-+void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                         VFIOUserFDs *fds, int rsize)
+ static int vfio_user_region_read(VFIOUserProxy *proxy, uint8_t index,
+                                  off_t offset, uint32_t count, void *data)
  {
-     VFIOUserMsg *msg;
-     bool iolock = false;
-@@ -713,6 +738,60 @@ static void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-     }
+@@ -1291,6 +1407,28 @@ static int vfio_user_io_get_region_info(VFIODevice *vbasedev,
+     return 0;
  }
  
-+void vfio_user_wait_reqs(VFIOUserProxy *proxy)
++static int vfio_user_io_get_irq_info(VFIODevice *vbasedev,
++                                     struct vfio_irq_info *irq)
 +{
-+    VFIOUserMsg *msg;
-+    bool iolock = false;
++    int ret;
 +
-+    /*
-+     * Any DMA map/unmap requests sent in the middle
-+     * of a memory region transaction were sent nowait.
-+     * Wait for them here.
-+     */
-+    qemu_mutex_lock(&proxy->lock);
-+    if (proxy->last_nowait != NULL) {
-+        iolock = bql_locked();
-+        if (iolock) {
-+            bql_unlock();
-+        }
-+
-+        /*
-+         * Change type to WAIT to wait for reply
-+         */
-+        msg = proxy->last_nowait;
-+        msg->type = VFIO_MSG_WAIT;
-+        proxy->last_nowait = NULL;
-+        while (!msg->complete) {
-+            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
-+                VFIOUserMsgQ *list;
-+
-+                list = msg->pending ? &proxy->pending : &proxy->outgoing;
-+                QTAILQ_REMOVE(list, msg, next);
-+                error_printf("vfio_wait_reqs - timed out\n");
-+                break;
-+            }
-+        }
-+
-+        if (msg->hdr->flags & VFIO_USER_ERROR) {
-+            error_printf("vfio_user_wait_reqs - error reply on async ");
-+            error_printf("request: command %x error %s\n", msg->hdr->command,
-+                         strerror(msg->hdr->error_reply));
-+        }
-+
-+        /*
-+         * Change type back to NOWAIT to free
-+         */
-+        msg->type = VFIO_MSG_NOWAIT;
-+        vfio_user_recycle(proxy, msg);
++    ret = vfio_user_get_irq_info(vbasedev->proxy, irq);
++    if (ret) {
++        return ret;
 +    }
 +
-+    /* lock order is BQL->proxy - don't hold proxy when getting BQL */
-+    qemu_mutex_unlock(&proxy->lock);
-+    if (iolock) {
-+        bql_lock();
++    if (irq->index > vbasedev->num_irqs) {
++        return -EINVAL;
 +    }
++    return 0;
 +}
 +
- static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
-     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
- 
-@@ -847,8 +926,8 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
-     g_free(proxy);
- }
- 
--static void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
--                                  uint32_t size, uint32_t flags)
-+void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
-+                           uint32_t size, uint32_t flags)
- {
-     static uint16_t next_id;
- 
-diff --git a/hw/vfio/user.h b/hw/vfio/user.h
-index 9039e96069..31d2c5abd9 100644
---- a/hw/vfio/user.h
-+++ b/hw/vfio/user.h
-@@ -75,6 +75,7 @@ typedef struct VFIOUserProxy {
-     QemuCond close_cv;
-     AioContext *ctx;
-     QEMUBH *req_bh;
-+    bool async_ops;
- 
-     /*
-      * above only changed when BQL is held
-@@ -106,4 +107,13 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
- bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp);
- int vfio_user_get_info(VFIOUserProxy *proxy, struct vfio_device_info *info);
- 
-+VFIOUserFDs *vfio_user_getfds(int numfds);
-+void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
-+                           uint32_t size, uint32_t flags);
-+void vfio_user_wait_reqs(VFIOUserProxy *proxy);
-+void vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                           VFIOUserFDs *fds, int rsize);
-+void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                         VFIOUserFDs *fds, int rsize);
++static int vfio_user_io_set_irqs(VFIODevice *vbasedev,
++                                 struct vfio_irq_set *irqs)
++{
++    return vfio_user_set_irqs(vbasedev->proxy, irqs);
++}
 +
- #endif /* VFIO_USER_H */
+ static int vfio_user_io_region_read(VFIODevice *vbasedev, uint8_t index,
+                                     off_t off, uint32_t size, void *data)
+ {
+@@ -1307,6 +1445,8 @@ static int vfio_user_io_region_write(VFIODevice *vbasedev, uint8_t index,
+ 
+ VFIODeviceIO vfio_dev_io_sock = {
+     .get_region_info = vfio_user_io_get_region_info,
++    .get_irq_info = vfio_user_io_get_irq_info,
++    .set_irqs = vfio_user_io_set_irqs,
+     .region_read = vfio_user_io_region_read,
+     .region_write = vfio_user_io_region_write,
+ };
 -- 
 2.34.1
 
