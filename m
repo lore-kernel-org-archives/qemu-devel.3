@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4296C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B56C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCITE-0005X2-JJ; Wed, 29 May 2024 08:31:56 -0400
+	id 1sCIXy-0007CR-8i; Wed, 29 May 2024 08:36:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sCIT4-0005TJ-6g
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:31:47 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sCISz-0004s2-JC
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:31:44 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B45AB60D34;
- Wed, 29 May 2024 15:31:31 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:7214::1:2e] (unknown
- [2a02:6b8:b081:7214::1:2e])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id TVQUXG0iCSw0-cqLukbxd; Wed, 29 May 2024 15:31:31 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1716985891;
- bh=idTG4nXLoq1ecpE2FByiKf7lSYTMSavvRJSma+N5zIA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=EqiNJ5/cjyJEc4X6i+3wFekRiwwH142KYkIgMqqzkNgWGNGzFAX9UXSw0IkrSuU0t
- qLnkNm5x3P49kPO4gHMfNxK5OlzKHb8lTLS0yrIe4qTYWhcMUb0GslJzeE9U+z1Ab/
- 4XR/TUTH17ZRJMovMh/nna/eHCCPEhyF4927CvjU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <adf92e81-623d-41a7-9f17-13596077e873@yandex-team.ru>
-Date: Wed, 29 May 2024 15:31:30 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCIXw-0007Bq-1x
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:36:48 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCIXu-00067b-2U
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:36:47 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52961b77655so2338018e87.2
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 05:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1716986204; x=1717591004; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kqg2JzGUhgWUhAFaiputSjjSKAZ0odJavNOfbsJvLxk=;
+ b=jxHyc1p5KCiBjUuGyhrP5XXHG/7+tsvX0+NY23le9wXFEwVVUzgMkt/nJOq4fuWDIc
+ 3QhyU/qq6KHqFGApWzwaSvV5/p6gFSToyCqoClZC+Z0bg16eqtAaQJ/8SZzZr8XlljbE
+ vjKXiiBLC1rh24PLphf4cOanaude8N+4Nkp6zKn0phite9LBRqh+d4ieEF6tPY2etWG0
+ fLOwZi/D5Hd/6cGs9iCUSExIlmAH4wakewr22ziYEFjalcu+BumKn+GlNvDqspIz/gzA
+ Sge0u+p2CwF9PYovbRK9CgG4waGhtEVOPhQ6QC/Of4xxNE1fG8jfKhozS71tBtpsR5bb
+ 6DSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716986204; x=1717591004;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kqg2JzGUhgWUhAFaiputSjjSKAZ0odJavNOfbsJvLxk=;
+ b=XMc2Rp/Xn7y/3zcbcZI0KudhXaLLjFbc5pK3P7X/uto3R0PbXbv8E6OoIFQLKJDAAf
+ D2w43yD3WYtqGCIw9EpSbknQMRrr+1KVH3S2kOxwuTLWUst3WHgIRNhGCwJ8LdRKBsD6
+ ah5DjAV8/Xle4EyTP5HgbQGsWxNGoLGha7otbkTG7idb1SWmMCyfffgE/VTrvl6zEHqY
+ y1qOwBc20VnoFt+Cw6rwyvzfGZSNzmDcfRmJmZ78t0gmP0qpMB8aW3AC56S6Bu69Tm8p
+ YNYU+qD8DwnaVxko0k5PbsZytgdRNA5OiUGTz4swMGw3owEpoyRMlyHeusAcmMnciZXh
+ 5Q/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQdGWPj8TsJ9K1b9DjOd1y1sU8fCb60TYD0WtZoWJBnqB1IZMceogUDPW9L2BjPDY6DY9Hu+GIrzrVb9m5S3ydwZ1XW2s=
+X-Gm-Message-State: AOJu0YxWye+/raL2xtxqRQvOhRB1/GKGYMRzlsXCLhPV4wiVUERrEbef
+ QRNIwMwv1eHOOiIDBVknouKlPsTJuNFqgtKCo8T97v7qxSWnTAmSkOk5kt5Rayc=
+X-Google-Smtp-Source: AGHT+IFhanoyYHYYuUiIJju8RVNxlqdHa8oCt+n/3gvlhjMtZzmSxkKbUcsM/iecAWMOK76rAgrBpw==
+X-Received: by 2002:a19:6448:0:b0:52a:fbcc:b358 with SMTP id
+ 2adb3069b0e04-52afbccb3ebmr957488e87.13.1716986203808; 
+ Wed, 29 May 2024 05:36:43 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42100f55264sm205840505e9.21.2024.05.29.05.36.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 May 2024 05:36:43 -0700 (PDT)
+Message-ID: <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
+Date: Wed, 29 May 2024 14:36:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
  QMP
-To: Markus Armbruster <armbru@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org, philmd@linaro.org
+ <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
 References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
  <87mso8n7tw.fsf@pond.sub.org>
 Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <87mso8n7tw.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,13 +99,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the review Markus!
-
-I will fix the wording and add a "Bug:" clause for the next revision.
-
-On 5/29/24 3:03 PM, Markus Armbruster wrote:
+On 29/5/24 14:03, Markus Armbruster wrote:
 > Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->
+> 
 >> This can be used to force-synchronize the time in guest after a long
 >> stop-cont pause, which can be useful for serverless-type workload.
 >>
@@ -184,11 +198,28 @@ On 5/29/24 3:03 PM, Markus Armbruster wrote:
 >> +# The interrupt forces the guest to synchronize the time with RTC.
 >> +# This is useful after a long stop-cont pause, which is common for
 >> +# serverless-type workload.
+
+In previous version you said:
+
+   > This isn't really related to migration though. Serverless is based
+   > on constantly stopping and resuming the VM on e.g. every HTTP
+   > request to an endpoint.
+
+Which made some sense. Maybe mention HTTP? And point to that use case
+(possibly with QMP commands) in the commit description?
+
 > Make that "workloads".
->
+> 
 > "For all existing RTCs" is a lie.  It's really just all mc146818s.  The
 > command works as documented only as long as the VM has no other RTCs.
->
+
+@rtc-mc146818-force-sync-broadcast sounds clearer & safer;
+IIUC the command goal, mentioning IRQ injection is irrelevant
+(implementation detail).
+
+(I'm trying to not spread the problems we already have with
+@rtc-reset-reinjection).
+
 >> +#
 >> +# Since: 9.1
 >> +#
@@ -200,34 +231,37 @@ On 5/29/24 3:03 PM, Markus Armbruster wrote:
 >> +##
 >> +{ 'command': 'rtc-inject-irq-broadcast',
 >> +  'if': 'TARGET_I386' }
+> 
 > The conditional kind-of-sort-of ensures "VM has no other RTCs":
 > TARGET_I386 compiles only this file in hw/rtc/, and therefore can't have
 > other RTCs (unless they're hiding in some other directory).  Brittle.
->
+> 
 > When we move to single binary, we will compile in other RTCs.  How can
 > we ensure "VM has no nother RTCs" then?  What if one of these other RTCs
 > can be added with -device or device_add?
->
+> 
 > When this falls apart because the VM does have other RTCs, it can only
 > do so silently: the command can't tell us for which RTCs it actually
 > injected an interrupt.
->
+> 
 > Documentation making promises the implementation doesn't actually
 > deliver can only end in tears.  The only reason I'm not rejecting this
 > patch out of hand is the existing and similarly broken
 > rtc-reset-reinjection.
->
+> 
 > I'm willing to reluctantly accept it with honest documentation.
 > Perhaps: "Bug: RTCs other than mc146818rtc are silently ignored."
->
+> 
 > Much, much better would be an interface that's actually usable with
 > multiple RTCs.  We'd have to talk how interrupt injection could be used
 > with such a machine.
->
+> 
 > Anything less will likely need to be replaced later on.
->
+> 
 >> +
 >>   ##
 >>   # @SevState:
 >>   #
+> 
+
 
