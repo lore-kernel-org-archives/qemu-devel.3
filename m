@@ -4,32 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50247C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70889C41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM6y-0001AS-6J; Wed, 29 May 2024 12:25:12 -0400
+	id 1sCM72-0001HG-Kh; Wed, 29 May 2024 12:25:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6o-00015X-F3
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:05 -0400
+ id 1sCM6x-00019t-QR
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:11 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6l-0006KW-9I
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:02 -0400
+ id 1sCM6v-0006Ki-C9
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:11 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6i-006COh-U8;
+ (envelope-from <movement@movementarian.org>) id 1sCM6i-006COe-St;
  Wed, 29 May 2024 17:24:56 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
- thanos.makatos@nutanix.com, John Levon <john.levon@nutanix.com>
-Subject: [PATCH 04/26] vfio: add vfio_attach_device_by_iommu_type()
-Date: Wed, 29 May 2024 17:22:57 +0100
-Message-Id: <20240529162319.1476680-5-levon@movementarian.org>
+ thanos.makatos@nutanix.com, John Levon <john.levon@nutanix.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Subject: [PATCH 03/26] vfio/container: support VFIO_DMA_UNMAP_FLAG_ALL
+Date: Wed, 29 May 2024 17:22:56 +0100
+Message-Id: <20240529162319.1476680-4-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
@@ -59,73 +61,235 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Levon <john.levon@nutanix.com>
 
-Allow attachment by explicitly passing a TYPE_VFIO_IOMMU_* string;
-vfio-user will use this later.
+Some containers can directly implement unmapping all regions;
+add a new flag to support this.
 
+Originally-by: John Johnson <john.g.johnson@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/common.c              | 25 ++++++++++++++++++-------
- include/hw/vfio/vfio-common.h |  3 +++
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ hw/vfio/common.c                      | 24 +++++++----------
+ hw/vfio/container-base.c              |  4 +--
+ hw/vfio/container.c                   | 38 +++++++++++++++++++++++++--
+ hw/vfio/iommufd.c                     | 19 +++++++++++++-
+ include/hw/vfio/vfio-common.h         |  1 +
+ include/hw/vfio/vfio-container-base.h |  4 +--
+ 6 files changed, 68 insertions(+), 22 deletions(-)
 
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index ac89bc4b02..8c3b6ad75a 100644
+index a18af7a94f..ac89bc4b02 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -1542,21 +1542,32 @@ retry:
-     return info;
- }
+@@ -330,7 +330,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+         }
+     } else {
+         ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                       iotlb->addr_mask + 1, iotlb);
++                                       iotlb->addr_mask + 1, iotlb, 0);
+         if (ret) {
+             error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+                          "0x%"HWADDR_PRIx") = %d (%s)",
+@@ -354,7 +354,7 @@ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
+     int ret;
  
--bool vfio_attach_device(char *name, VFIODevice *vbasedev,
--                        AddressSpace *as, Error **errp)
-+bool vfio_attach_device_by_iommu_type(const char *iommu_type, char *name,
-+                                      VFIODevice *vbasedev, AddressSpace *as,
-+                                      Error **errp)
- {
--    const VFIOIOMMUClass *ops =
--        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
-+    const VFIOIOMMUClass *ops;
+     /* Unmap with a single call. */
+-    ret = vfio_container_dma_unmap(bcontainer, iova, size , NULL);
++    ret = vfio_container_dma_unmap(bcontainer, iova, size, NULL, 0);
+     if (ret) {
+         error_report("%s: vfio_container_dma_unmap() failed: %s", __func__,
+                      strerror(-ret));
+@@ -806,21 +806,15 @@ static void vfio_listener_region_del(MemoryListener *listener,
+     }
  
--    if (vbasedev->iommufd) {
--        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
--    }
-+    ops = VFIO_IOMMU_CLASS(object_class_by_name(iommu_type));
- 
-     assert(ops);
- 
-     return ops->attach_device(name, vbasedev, as, errp);
- }
- 
-+bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-+                       AddressSpace *as, Error **errp)
-+{
-+    const char *iommu_type = TYPE_VFIO_IOMMU_LEGACY;
+     if (try_unmap) {
++        int flags = 0;
 +
-+    if (vbasedev->iommufd) {
-+        iommu_type = TYPE_VFIO_IOMMU_IOMMUFD;
+         if (int128_eq(llsize, int128_2_64())) {
+-            /* The unmap ioctl doesn't accept a full 64-bit span. */
+-            llsize = int128_rshift(llsize, 1);
+-            ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                           int128_get64(llsize), NULL);
+-            if (ret) {
+-                error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+-                             "0x%"HWADDR_PRIx") = %d (%s)",
+-                             bcontainer, iova, int128_get64(llsize), ret,
+-                             strerror(-ret));
+-            }
+-            iova += int128_get64(llsize);
++            flags = VFIO_DMA_UNMAP_FLAG_ALL;
+         }
+-        ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                       int128_get64(llsize), NULL);
++
++        ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
++                                       NULL, flags);
++
+         if (ret) {
+             error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+                          "0x%"HWADDR_PRIx") = %d (%s)",
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index f16766f490..3b2d3f38d5 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -26,10 +26,10 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+ 
+ int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+                              hwaddr iova, ram_addr_t size,
+-                             IOMMUTLBEntry *iotlb)
++                             IOMMUTLBEntry *iotlb, int flags)
+ {
+     g_assert(bcontainer->ops->dma_unmap);
+-    return bcontainer->ops->dma_unmap(bcontainer, iova, size, iotlb);
++    return bcontainer->ops->dma_unmap(bcontainer, iova, size, iotlb, flags);
+ }
+ 
+ bool vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 6e6308382f..27ddb894e9 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -118,7 +118,7 @@ unmap_exit:
+  */
+ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+                                  hwaddr iova, ram_addr_t size,
+-                                 IOMMUTLBEntry *iotlb)
++                                 IOMMUTLBEntry *iotlb, int flags)
+ {
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+@@ -141,6 +141,34 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+         need_dirty_sync = true;
+     }
+ 
++    /* use unmap all if supported */
++    if (flags & VFIO_DMA_UNMAP_FLAG_ALL) {
++        unmap.iova = 0;
++        unmap.size = 0;
++        if (container->unmap_all_supported) {
++            ret = ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, unmap);
++        } else {
++            /* unmap in halves */
++            Int128 llsize = int128_rshift(int128_2_64(), 1);
++
++            unmap.size = int128_get64(llsize);
++
++            ret = ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, unmap);
++
++            if (ret == 0) {
++                unmap.iova += int128_get64(llsize);
++
++                ret = ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, unmap);
++            }
++        }
++
++        if (ret != 0) {
++            return -errno;
++        }
++
++        goto out;
 +    }
 +
-+    return vfio_attach_device_by_iommu_type(iommu_type, name, vbasedev,
-+                                            as, errp);
-+}
+     while (ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, &unmap)) {
+         /*
+          * The type1 backend has an off-by-one bug in the kernel (71a7d3d78e3c
+@@ -164,6 +192,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+         return -errno;
+     }
+ 
++out:
+     if (need_dirty_sync) {
+         ret = vfio_get_dirty_bitmap(bcontainer, iova, size,
+                                     iotlb->translated_addr, &local_err);
+@@ -201,7 +230,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+      */
+     if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map) == 0 ||
+         (errno == EBUSY &&
+-         vfio_legacy_dma_unmap(bcontainer, iova, size, NULL) == 0 &&
++         vfio_legacy_dma_unmap(bcontainer, iova, size, NULL, 0) == 0 &&
+          ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map) == 0)) {
+         return 0;
+     }
+@@ -533,6 +562,11 @@ static bool vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
+     vfio_get_info_iova_range(info, bcontainer);
+ 
+     vfio_get_iommu_info_migration(container, info);
 +
- void vfio_detach_device(VFIODevice *vbasedev)
++    ret = ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL);
++
++    container->unmap_all_supported = (ret != 0);
++
+     return true;
+ }
+ 
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 3d08a4f2dc..7bcadacd0b 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -40,11 +40,28 @@ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+ 
+ static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+                               hwaddr iova, ram_addr_t size,
+-                              IOMMUTLBEntry *iotlb)
++                              IOMMUTLBEntry *iotlb, int flags)
  {
-     if (!vbasedev->bcontainer) {
+     const VFIOIOMMUFDContainer *container =
+         container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+ 
++    /* unmap in halves */
++    if (flags & VFIO_DMA_UNMAP_FLAG_ALL) {
++        Int128 llsize = int128_rshift(int128_2_64(), 1);
++        int ret;
++
++        ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
++                                        iova, int128_get64(llsize));
++        iova += int128_get64(llsize);
++
++        if (ret == 0) {
++            ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
++                                            iova, int128_get64(llsize));
++        }
++
++        return ret;
++    }
++
+     /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+     return iommufd_backend_unmap_dma(container->be,
+                                      container->ioas_id, iova, size);
 diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index d112c9b72f..8e13d30d2c 100644
+index 4cb1ab8645..d112c9b72f 100644
 --- a/include/hw/vfio/vfio-common.h
 +++ b/include/hw/vfio/vfio-common.h
-@@ -225,6 +225,9 @@ void vfio_reset_handler(void *opaque);
- struct vfio_device_info *vfio_get_device_info(int fd);
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-                         AddressSpace *as, Error **errp);
-+bool vfio_attach_device_by_iommu_type(const char *iommu_type, char *name,
-+                                      VFIODevice *vbasedev, AddressSpace *as,
-+                                      Error **errp);
- void vfio_detach_device(VFIODevice *vbasedev);
+@@ -79,6 +79,7 @@ typedef struct VFIOContainer {
+     VFIOContainerBase bcontainer;
+     int fd; /* /dev/vfio/vfio, empowered by the attached groups */
+     unsigned iommu_type;
++    bool unmap_all_supported;
+     QLIST_HEAD(, VFIOGroup) group_list;
+ } VFIOContainer;
  
- int vfio_kvm_device_add_fd(int fd, Error **errp);
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index e9b59c179e..c2c1af70ac 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -75,7 +75,7 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+                            void *vaddr, bool readonly, MemoryRegion *mrp);
+ int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+                              hwaddr iova, ram_addr_t size,
+-                             IOMMUTLBEntry *iotlb);
++                             IOMMUTLBEntry *iotlb, int flags);
+ bool vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+                                        MemoryRegionSection *section,
+                                        Error **errp);
+@@ -118,7 +118,7 @@ struct VFIOIOMMUClass {
+                    void *vaddr, bool readonly, MemoryRegion *mrp);
+     int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+                      hwaddr iova, ram_addr_t size,
+-                     IOMMUTLBEntry *iotlb);
++                     IOMMUTLBEntry *iotlb, int flags);
+     bool (*attach_device)(const char *name, VFIODevice *vbasedev,
+                           AddressSpace *as, Error **errp);
+     void (*detach_device)(VFIODevice *vbasedev);
 -- 
 2.34.1
 
