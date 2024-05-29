@@ -4,83 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CFAC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D242EC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 10:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCGFd-0007RH-IR; Wed, 29 May 2024 06:09:45 -0400
+	id 1sCGK0-0000Fz-Vy; Wed, 29 May 2024 06:14:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sCGFa-0007Qk-7K
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:09:42 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sCGFY-0003tN-47
- for qemu-devel@nongnu.org; Wed, 29 May 2024 06:09:41 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-578517c7ae9so2254286a12.3
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 03:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716977377; x=1717582177; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XV3prPJYsg9INgPiJMwsNdqvgeHqmLfHaBWgp9S+Bi4=;
- b=VWDrajXu+YGW7tdXtGaEMYXnCl8bEuzMk+JIlWWCetUyywHdmgTwrwt6t/jL3PDpWP
- +hm/njwWQ3oiKTbO7fuf6OxbruzG/aOES0PsbsdLHGLt7RNXUAPW7c6u0lrHcYMwZMnB
- DyfmSCggBPy4z20yRpXt/w5p2PqhWMS7VuJjNhq/Ygu/eM8Q7d2bX37FM9DhNoi1tukv
- q6gfuhYhXd/hk+PsCGCUHOsYKS8o8U3eg5VtuIdumvDRiykL0j0ehWBSwLrQHpd5U/nU
- aulw7LiuhSOYcj1Fafz3XvaagdrAMM5E9acge1v09YobIy1kACgruaG+RpUMijxZVDwq
- 87mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716977377; x=1717582177;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XV3prPJYsg9INgPiJMwsNdqvgeHqmLfHaBWgp9S+Bi4=;
- b=LoLGui74sD6juXEKKv3qdaawPm6mwvE8YGCdt0NeozKwmO+kYS9bsvTLq9RMcfsN7W
- ip5fTamsK05ukNkCbD3itam0w93pOZUnt+FAo1vfjGY9v4vexCkRNqHwlXdCkqBjNw9+
- r7Na+MsElmcd0QSytCcFVYU+0UgAXprBn62RRHQ8ZVHQdY1VqGNlTxkaWRPGPnuut2B1
- p65lpMp60yNM09HhH2qM5jChz08UeZMygFaUIU0ZvfCUiW38LxUA3meqM87yNGE/e4zP
- kzxpJ4kAit2ce0yhisudWof+Sek+TOIQVbOAJLwZ1TidsKfKvhPA4ypZ8+NZmCY2YQfD
- ARlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX69evN1fMrne6twEP4icXpkZ3OGOyYJ8+pqjpuRTC3CJ8YYh2SnXiifR9tHNzkh8ykmMaQNralsst4HvGvB8gzOA/lYlQ=
-X-Gm-Message-State: AOJu0YxXIUYA0MzrgShyXOePChPwQYuRAvhBlJEt2lNIk/+ovPhxL7Wk
- 2aIMJO7xJSirz7QnrAFQikc5DIjgBIFWOIfxOFZHYJdyhcGFlHeL/G53330hi7A1PalvJq5hfq1
- 7Uxo7YIk0+9MHZx25FcKHVKhh8zfOJLn1Vv4WUg==
-X-Google-Smtp-Source: AGHT+IEOt5g5vURQtO1bLs0ybOgeJAHvJtapuIAUN8M0uIr4wv2am2UsM4nkEYa4DHISOnzJkfofhs7Nl+ZGoPKGHdw=
-X-Received: by 2002:a17:906:f581:b0:a62:9068:3f3 with SMTP id
- a640c23a62f3a-a629068056emr1028705166b.41.1716977376711; Wed, 29 May 2024
- 03:09:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sCGJx-0000En-3H; Wed, 29 May 2024 06:14:13 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sCGJu-0004U7-3z; Wed, 29 May 2024 06:14:12 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 373FE4437F;
+ Wed, 29 May 2024 12:14:07 +0200 (CEST)
+Message-ID: <5993acdc-f8ec-4fa8-bb97-952c3a56ae6d@proxmox.com>
+Date: Wed, 29 May 2024 12:14:02 +0200
 MIME-Version: 1.0
-References: <20240528102339.106257-1-vilhelmgyda@gmail.com>
- <c5e14ee6-1ea7-4deb-be37-8d6b4de9f388@redhat.com>
- <CADe4k3J9W-STUL5VvYM--7O+1WGnowqn3wUOy2QJo5nvZjLBuQ@mail.gmail.com>
-In-Reply-To: <CADe4k3J9W-STUL5VvYM--7O+1WGnowqn3wUOy2QJo5nvZjLBuQ@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 29 May 2024 13:09:20 +0300
-Message-ID: <CAAjaMXafs8fg9uPoksn_Nui7pvBfXDfvRAwuEGJr1RUC07taLw@mail.gmail.com>
-Subject: Re: [PATCH] Issue #2294 | Machine microvm doesn't run under Xen accel
- for x86_64
-To: Vilhelm Gyda <vilhelmgyda@gmail.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, 
- philmd@linaro.org, richard.henderson@linaro.org, eduardo@habkost.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: block snapshot issue with RBD
+To: Jin Cao <jojing64@gmail.com>, Ilya Dryomov <idryomov@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
+ pl@kamp.de, hreitz@redhat.com, peterx@redhat.com, farosas@suse.de
+References: <8b639179-e567-469c-bd04-ee8dee12d7d2@gmail.com>
+ <0e01a8e2-a543-4524-939c-05413fd99e86@gmail.com>
+ <756f9dcb-4e9c-4c2f-bc8a-dcc7420a1839@gmail.com>
+ <CAOi1vP8nJVsvvsmG5Ac4sd+9NPA8v8t=7Sao0f7-qNb129p=OA@mail.gmail.com>
+ <fb2ea759-1a7e-4c0e-ab0d-3ec4c04dc503@gmail.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <fb2ea759-1a7e-4c0e-ab0d-3ec4c04dc503@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,72 +61,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 at 11:25, Vilhelm Gyda <vilhelmgyda@gmail.com> wrote:
->
-> @philmd commented on gitlab: Discussed with @epilys on IRC, only Xen
-> machines (xenpv/xenfv) configure Xen so can run under it.
->
-> But if we want to make it work under Xen. Any ideas how to move in
-> that direction?
+Hi,
 
-We'd have to specify what "works under Xen" means; xen as a type 1
-hypervisor? I am trying to think if it makes sense, Xen machines in
-qemu already provide PV devices analogously to what microvm promises
-to support. What would be the use case for a  "hypervisor agnostic"
-microvm machine?
+Am 28.05.24 um 20:19 schrieb Jin Cao:
+> Hi Ilya
+> 
+> On 5/28/24 11:13 AM, Ilya Dryomov wrote:
+>> On Mon, May 27, 2024 at 9:06 PM Jin Cao <jojing64@gmail.com> wrote:
+>>>
+>>> Supplementary info: VM is paused after "migrate" command. After being
+>>> resumed with "cont", snapshot_delete_blkdev_internal works again, which
+>>> is confusing, as disk snapshot generally recommend I/O is paused, and a
+>>> frozen VM satisfy this requirement.
+>>
+>> Hi Jin,
+>>
+>> This doesn't seem to be related to RBD.  Given that the same error is
+>> observed when using the RBD driver with the raw format, I would dig in
+>> the direction of migration somehow "installing" the raw format (which
+>> is on-disk compatible with the rbd format).
+>>
+> 
+> Thanks for the hint.
+> 
+>> Also, did you mean to say "snapshot_blkdev_internal" instead of
+>> "snapshot_delete_blkdev_internal" in both instances?
+> 
+> Sorry for my copy-and-paste mistake. Yes, it's snapshot_blkdev_internal.
+> 
+> -- 
+> Sincerely,
+> Jin Cao
+> 
+>>
+>> Thanks,
+>>
+>>                  Ilya
+>>
+>>>
+>>> -- 
+>>> Sincerely
+>>> Jin Cao
+>>>
+>>> On 5/27/24 10:56 AM, Jin Cao wrote:
+>>>> CC block and migration related address.
+>>>>
+>>>> On 5/27/24 12:03 AM, Jin Cao wrote:
+>>>>> Hi,
+>>>>>
+>>>>> I encountered RBD block snapshot issue after doing migration.
+>>>>>
+>>>>> Steps
+>>>>> -----
+>>>>>
+>>>>> 1. Start QEMU with:
+>>>>> ./qemu-system-x86_64 -name VM -machine q35 -accel kvm -cpu
+>>>>> host,migratable=on -m 2G -boot menu=on,strict=on
+>>>>> rbd:image/ubuntu-22.04-server-cloudimg-amd64.raw -net nic -net user
+>>>>> -cdrom /home/my/path/of/cloud-init.iso -monitor stdio
+>>>>>
+>>>>> 2. Do block snapshot in monitor cmd: snapshot_delete_blkdev_internal.
+>>>>> It works as expected: the snapshot is visable with command`rbd snap ls
+>>>>> pool_name/image_name`.
+>>>>>
+>>>>> 3. Do pseudo migration with monitor cmd: migrate -d
+>>>>> exec:cat>/tmp/vm.out
+>>>>>
+>>>>> 4. Do block snapshot again with snapshot_delete_blkdev_internal, then
+>>>>> I get:
+>>>>>      Error: Block format 'raw' used by device 'ide0-hd0' does not
+>>>>> support internal snapshots
+>>>>>
+>>>>> I was hoping to do the second block snapshot successfully, and it
+>>>>> feels abnormal the RBD block snapshot function is disrupted after
+>>>>> migration.
+>>>>>
+>>>>> BTW, I get the same block snapshot error when I start QEMU with:
+>>>>>       "-drive format=raw,file=rbd:pool_name/image_name"
+>>>>>
+>>>>> My questions is: how could I proceed with RBD block snapshot after the
+>>>>> pseudo migration?
+> 
+> 
 
->
-> On Wed, May 29, 2024 at 12:37=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.c=
-om> wrote:
-> >
-> > On 5/28/24 12:23, Will Gyda wrote:
-> > > Issue #2294: Machine microvm doesn't run under Xen accel for qemu-sys=
-tem-x86_64.
-> > > Solution: microvm is now not build if only Xen is available.
-> >
-> > This does not fix the issue that microvm does not start with a Xen
-> > accelerator.  I think it would be better to try and make it work instea=
-d.
-> >
-> > Paolo
-> >
-> > > Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
-> > >
-> > > ---
-> > >   configs/devices/i386-softmmu/default.mak | 2 +-
-> > >   hw/i386/Kconfig                          | 2 ++
-> > >   2 files changed, 3 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devic=
-es/i386-softmmu/default.mak
-> > > index 598c6646df..6a73aee7dd 100644
-> > > --- a/configs/devices/i386-softmmu/default.mak
-> > > +++ b/configs/devices/i386-softmmu/default.mak
-> > > @@ -29,4 +29,4 @@
-> > >   CONFIG_ISAPC=3Dy
-> > >   CONFIG_I440FX=3Dy
-> > >   CONFIG_Q35=3Dy
-> > > -CONFIG_MICROVM=3Dy
-> > > +#CONFIG_MICROVM=3Dn
-> > > diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-> > > index a6ee052f9a..f8ec8ebd7a 100644
-> > > --- a/hw/i386/Kconfig
-> > > +++ b/hw/i386/Kconfig
-> > > @@ -108,6 +108,8 @@ config Q35
-> > >
-> > >   config MICROVM
-> > >       bool
-> > > +    default y
-> > > +    depends on KVM || WHPX || NVMM || HVF
-> > >       select SERIAL_ISA # for serial_hds_isa_init()
-> > >       select ISA_BUS
-> > >       select APIC
-> >
->
+I bisected this issue to d3007d348a ("block: Fix crash when loading
+snapshot on inactive node").
 
+> diff --git a/block/snapshot.c b/block/snapshot.c
+> index ec8cf4810b..c4d40e80dd 100644
+> --- a/block/snapshot.c
+> +++ b/block/snapshot.c
+> @@ -196,8 +196,10 @@ bdrv_snapshot_fallback(BlockDriverState *bs)
+>  int bdrv_can_snapshot(BlockDriverState *bs)
+>  {
+>      BlockDriver *drv = bs->drv;
+> +
+>      GLOBAL_STATE_CODE();
+> -    if (!drv || !bdrv_is_inserted(bs) || bdrv_is_read_only(bs)) {
+> +
+> +    if (!drv || !bdrv_is_inserted(bs) || !bdrv_is_writable(bs)) {
+>          return 0;
+>      }
+>  
 
+So I guess the issue is that the blockdev is not writable when
+"postmigrate" state?
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+Best Regards,
+Fiona
+
 
