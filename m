@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9D83C27C44
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3418C25B75
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 15:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCLKA-0000fP-Ku; Wed, 29 May 2024 11:34:46 -0400
+	id 1sCLK4-0000c0-Nz; Wed, 29 May 2024 11:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCLK8-0000du-HD
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:34:44 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLK2-0000b9-8n
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:34:38 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCLK5-0005pB-UX
- for qemu-devel@nongnu.org; Wed, 29 May 2024 11:34:44 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5755fafa5a7so2810461a12.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:34:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCLK0-0005oj-9p
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 11:34:38 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2e95a7545bdso24315951fa.2
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 08:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1716996880; x=1717601680; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=t/nO7Qv/O211c3rOVd7gOtNAMX8/BFciFS9PfRHH7Bc=;
- b=V1LaJNkaSikFsFuvJBlNBU8i1i9z1n2FWxEKeaVN0MvJoZzDnHddOfryELkBMzEyWG
- TZAYFhf/nyPcTjQZckSD7Z/NSgrq2lOEC84JiWAMnQAFLjAFJ/kDP9zj8KTbCC37THcq
- HMcWZ28qLGkalbuma9Lv7pk+5M/+bXmyZawTzMR3Vu4+A2XvktmbtvaNq5PL6sAvtMTb
- S6uH2WQmVpYuDcdH54LO9EHsZ/DL36gluOQK8RAjfzHbyInN9JOvmglZQzoycL2h01BS
- i1DB1D66d4WUmBUVBkBin745sOSt+KtLfucvlQgqRwg6g5g01LvgbbRDH0gR3K2edzgy
- guJA==
+ d=linaro.org; s=google; t=1716996874; x=1717601674; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5OcVCa51iUK/qcfAIdbmVeHiVzVTtE47QaRCEnOel/U=;
+ b=Y2m47dOeh0F5wjZWmbeybUvW7y2R/kkyeFG2meLRhGvcrdkmvHXZ1MwjQZUo4zk93v
+ xaIMCW/fK7dZa63WkBGeDAzv5b+rK+MTxKxkIs5RkWb9bokHPeng16nDObxi9Kitqe2Z
+ aZQdILPCn7hc6k5Ri1/AUxPG3tDQP+adQKMVsZ7phC+lZsSEwn1KPgBJKAixrXxO5AmR
+ HJnSYs9bT3w/8HEMpBa0T8Bbdf6P1/WkNg7Kamu6f6gpOOmUVIaA87OIKV7l3k+BmmKV
+ sQQbRus0WDhwoUemPy4ghT77vI1jfuCFrgTMReRh0IKnaynusMlJHEXfH8fbqkrAdgAr
+ q6sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716996880; x=1717601680;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t/nO7Qv/O211c3rOVd7gOtNAMX8/BFciFS9PfRHH7Bc=;
- b=Qmwspg7xzZWr0781+4aEwUtmczn14BWSeQ4ZlEoro0QygV2dPlm5nyjlpKHsSxq+ju
- 8lA6/ItUS/VuTIID76/UITNRGnlQHqGgAPgtLKU6is2ueoXMcagEMOEiyGTGMNsrcwKf
- SYvvzylwdS5ZMAwKSiLUku+8rKtfj2eftFV3zpYylWbQrKZQnOcoritjOBxhp2jjM3GB
- wrGNPIikiA/aKCvahW3ipxAc8DvLsfwxeRogazTAJq1a0l82p0nemJ1GPUPBAmRY8tpF
- aZDNKZpDSRwtAH/PIowye1RC7Fh+5nxaRVHF0LYwDhLr9+ThP+2DEh5LA/DLWanIGJKw
- 9DuQ==
-X-Gm-Message-State: AOJu0Yx7EtdHGPRiB2DucE44FWozxmodYGZHRlNpJDDBVvwMY1Yklv/k
- ZD4EqSVJaYpfxYQtp5BSDbBTZh+WOYLs5nNpqTzuZ2dgaTY6pDeEz7JKpuFFiEo=
-X-Google-Smtp-Source: AGHT+IHYdtqJJq2pgFwy425k6a+FaOatar9GGCA95l9MkqXfAiB2ponzCv3dH0gw1A/CiYeDqJs7Kw==
-X-Received: by 2002:a17:907:86a2:b0:a62:c2a5:cff5 with SMTP id
- a640c23a62f3a-a62c2a5d017mr931562066b.56.1716996880279; 
- Wed, 29 May 2024 08:34:40 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a626cda8f98sm725508366b.218.2024.05.29.08.34.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 08:34:40 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8B75B5F760;
- Wed, 29 May 2024 16:34:39 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Leif Lindholm
- <quic_llindhol@quicinc.com>,  Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Wainer
- dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
- <bleal@redhat.com>
-Subject: Re: [PATCH 1/1] tests/avocado: update sbsa-ref firmware
-In-Reply-To: <20240528182917.91027-1-marcin.juszkiewicz@linaro.org> (Marcin
- Juszkiewicz's message of "Tue, 28 May 2024 20:29:17 +0200")
-References: <20240528182917.91027-1-marcin.juszkiewicz@linaro.org>
-Date: Wed, 29 May 2024 16:34:39 +0100
-Message-ID: <87r0dkeink.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1716996874; x=1717601674;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5OcVCa51iUK/qcfAIdbmVeHiVzVTtE47QaRCEnOel/U=;
+ b=gqseDCs1B1i2MD8hLqd/xtUig/xjFPX6qJbOHJ2qtvsztrt3xXfdRH+6trjqIDDK+8
+ 0fdI/xyrLJxzqnXoDdV6qIM94n/Rx27D4aQ1AAn1h9GDpqEKw8GSb+lzPGeYkdoBO5kG
+ p7jHUaPSJiucfHRO4nnsG0+W4HnijA/sB+7eeBU8kHhoJx2Dj1cjynko2S1YkJ//EI5K
+ 8Cbu+wQYdJXNfZZ3svG4T1wyFmfWqLYNxhgUUr9pINLigJs710557FOuEzVjiy6LpVYF
+ DQcaxcIdRPB1CLF179FfSzoTg7FRPf4v1eZMW+/e1rPzZsx7YDf/27MxpsjGDoiaMsOU
+ zRzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyphj1Jxni6+SI1+fxM150drgKBZazZ2A31TGx3iHttdTIaRZw8tpcU0a8/qv7nPJNhFGwUKEXxolhXqzrJLtKQccSftQ=
+X-Gm-Message-State: AOJu0YxBLl9N80HwuN/QJuIfpYiN7VX5BXoNSu4lKP36Sw8NZzyjwp9R
+ TcPTO6zhI1QIKtjxe9yd9Qcma04Re6Srr7DzdxEgPqasUoarAJJ3WPmJL6irItc=
+X-Google-Smtp-Source: AGHT+IF7nytmZHyG376PQnSq14DG/z7VsCn5nvmwa37uuIWklGGzxvDfqCN6A34dxQn55bGQO/aGMg==
+X-Received: by 2002:a2e:97c3:0:b0:2d9:f00c:d2d5 with SMTP id
+ 38308e7fff4ca-2e95b27b08amr87541401fa.46.1716996874269; 
+ Wed, 29 May 2024 08:34:34 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.204.141])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42108966642sm183325785e9.7.2024.05.29.08.34.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 May 2024 08:34:33 -0700 (PDT)
+Message-ID: <c98aeb97-e229-4b97-874c-5cc2deceeaf9@linaro.org>
+Date: Wed, 29 May 2024 17:34:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] cpus: split qemu_init_vcpu and delay vCPU thread
+ creation
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240529152219.825680-1-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240529152219.825680-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,24 +103,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> writes:
+Hi Alex,
 
-> Partial support for NUMA setup:
-> - cpu nodes
-> - memory nodes
->
-> Used versions:
->
-> - Trusted Firmware v2.11.0
-> - Tianocore EDK2 stable202405
-> - Tianocore EDK2 Platforms code commit 4bbd0ed
->
-> Firmware is built using Debian 'bookworm' cross toolchain (gcc
-> 12.2.0).
+On 29/5/24 17:22, Alex Bennée wrote:
+> This ensures we don't start the thread until cpu_common_realizefn has
+> finished. This ensures that plugins will always run
+> qemu_plugin_vcpu_init__async first before any other states. It doesn't
+> totally eliminate the race that plugin_cpu_update__locked has to work
+> around though. I found this while reviewing the ips plugin which makes
+> heavy use of the vcpu phase callbacks.
+> 
+> An alternative might be to move the explicit creation of vCPU threads
+> to qdev_machine_creation_done()? It doesn't affect user-mode which
+> already has a thread to execute in and ensures the QOM object has
+> completed creation in cpu_create() before continuing.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/core/cpu.h      |  8 ++++++++
+>   accel/tcg/user-exec-stub.c |  5 +++++
+>   hw/core/cpu-common.c       |  7 ++++++-
+>   plugins/core.c             |  5 +++++
+>   system/cpus.c              | 15 ++++++++++-----
+>   5 files changed, 34 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index bb398e8237..6920699585 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -1041,6 +1041,14 @@ void end_exclusive(void);
+>    */
+>   void qemu_init_vcpu(CPUState *cpu);
+>   
+> +/**
+> + * qemu_start_vcpu:
+> + * @cpu: The vCPU to start.
+> + *
+> + * Create the vCPU thread and start it running.
+> + */
+> +void qemu_start_vcpu(CPUState *cpu);
+> +
+>   #define SSTEP_ENABLE  0x1  /* Enable simulated HW single stepping */
+>   #define SSTEP_NOIRQ   0x2  /* Do not use IRQ while single stepping */
+>   #define SSTEP_NOTIMER 0x4  /* Do not Timers while single stepping */
+> diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
+> index 4fbe2dbdc8..162bb72bbe 100644
+> --- a/accel/tcg/user-exec-stub.c
+> +++ b/accel/tcg/user-exec-stub.c
+> @@ -18,6 +18,11 @@ void cpu_exec_reset_hold(CPUState *cpu)
+>   {
+>   }
+>   
+> +void qemu_start_vcpu(CPUState *cpu)
+> +{
+> +    /* NOP for user-mode, we already have a thread */
+> +}
+> +
+>   /* User mode emulation does not support record/replay yet.  */
+>   
+>   bool replay_exception(void)
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 0f0a247f56..68895ddd59 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -230,7 +230,12 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+>       }
+>   #endif
+>   
+> -    /* NOTE: latest generic point where the cpu is fully realized */
+> +    /*
+> +     * With everything set up we can finally start the vCPU thread.
+> +     * This is a NOP for linux-user.
+> +     * NOTE: latest generic point where the cpu is fully realized
+> +     */
+> +    qemu_start_vcpu(cpu);
+>   }
+>   
+>   static void cpu_common_unrealizefn(DeviceState *dev)
+> diff --git a/plugins/core.c b/plugins/core.c
+> index 0726bc7f25..1e5da7853b 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -65,6 +65,11 @@ static void plugin_cpu_update__locked(gpointer k, gpointer v, gpointer udata)
+>       CPUState *cpu = container_of(k, CPUState, cpu_index);
+>       run_on_cpu_data mask = RUN_ON_CPU_HOST_ULONG(*plugin.mask);
+>   
+> +    /*
+> +     * There is a race condition between the starting of the vCPU
+> +     * thread at the end of cpu_common_realizefn and when realized is
+> +     * finally set.
+> +     */
 
-Queued to testing/next, thanks.
+I'd like we simply assert(DEVICE(cpu)->realized) here;
+I still don't understand when this can be called while
+the vcpu isn't yet realized.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>       if (DEVICE(cpu)->realized) {
+>           async_run_on_cpu(cpu, plugin_cpu_update__async, mask);
+>       } else {
+> diff --git a/system/cpus.c b/system/cpus.c
+> index d3640c9503..7dd8464c5e 100644
+> --- a/system/cpus.c
+> +++ b/system/cpus.c
+> @@ -488,11 +488,13 @@ void cpus_kick_thread(CPUState *cpu)
+>   
+>   void qemu_cpu_kick(CPUState *cpu)
+>   {
+> -    qemu_cond_broadcast(cpu->halt_cond);
+> -    if (cpus_accel->kick_vcpu_thread) {
+> -        cpus_accel->kick_vcpu_thread(cpu);
+> -    } else { /* default */
+> -        cpus_kick_thread(cpu);
+> +    if (cpu->halt_cond) {
+
+cpu->halt_cond = NULL is a bug, why kicking a vcpu not
+yet fully created?
+
+> +        qemu_cond_broadcast(cpu->halt_cond);
+> +        if (cpus_accel->kick_vcpu_thread) {
+> +            cpus_accel->kick_vcpu_thread(cpu);
+> +        } else { /* default */
+> +            cpus_kick_thread(cpu);
+> +        }
+>       }
+>   }
+>   
+> @@ -674,7 +676,10 @@ void qemu_init_vcpu(CPUState *cpu)
+>           cpu->num_ases = 1;
+>           cpu_address_space_init(cpu, 0, "cpu-memory", cpu->memory);
+>       }
+> +}
+>   
+> +void qemu_start_vcpu(CPUState *cpu)
+> +{
+>       /* accelerators all implement the AccelOpsClass */
+>       g_assert(cpus_accel != NULL && cpus_accel->create_vcpu_thread != NULL);
+>       cpus_accel->create_vcpu_thread(cpu);
+
 
