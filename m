@@ -4,95 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD53DC27C44
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 19:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC6EC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 20:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCOvu-0004bH-8B; Wed, 29 May 2024 15:25:58 -0400
+	id 1sCPZn-0000uB-SA; Wed, 29 May 2024 16:07:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCOvt-0004aM-1i
- for qemu-devel@nongnu.org; Wed, 29 May 2024 15:25:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1sCPZl-0000ta-Sb
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 16:07:10 -0400
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCOvr-0002zk-8W
- for qemu-devel@nongnu.org; Wed, 29 May 2024 15:25:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717010754;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7w8j7/43fSCwFnrdWlFQLGNdHvaYDZ9881ed9By6Q+Y=;
- b=Qtdp6C9BLmgO0tUoqVK9KiH4/XQZGdqbz07fyphmzZpbx0BWf3Z88NlUcok5ScBxBRwBYx
- Or5ePlLRPiAwO5ik6UHMei80LejQtGm+15CkxAJsvVhhhitlihTl4TLbrzq0KnDV2So1LL
- 3EK7XjQjoGf/ImwJZ9AFYGUVuWQSEEw=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-NG_0J9EgNcKvUZdnDGq2Zw-1; Wed, 29 May 2024 15:25:53 -0400
-X-MC-Unique: NG_0J9EgNcKvUZdnDGq2Zw-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6ab9836827eso201896d6.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 12:25:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717010751; x=1717615551;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7w8j7/43fSCwFnrdWlFQLGNdHvaYDZ9881ed9By6Q+Y=;
- b=HcBayg0qQi31+1ywMhTytU+yzJdUaPdTU1vBJVt4zKPg27kXS2iQK1SYMoKp4un7wl
- kBhrN4razPoG3rZMPXvqkB5zO7G4sRZiElN/z0+VH3voN3uj4jZN7O8N9/1j2xRIYF5F
- WBiR1KhvjxUyDd6+rxSObghyU688+ElTxqf9topZxZ4tqqqgehfrjpncGG+NtA7yzF3p
- F8x3MRCelh2gMubb1RR1NYsAqHZc+TOkDWrVSKNRmvY65gHzQGrNOimrCNfyx9uQdYkk
- s6vujk694IMDbPGP3gOLP2S7n2vAQFoymxcBU3GldudM47e/bXdJDXjwJGk35qU+B8IU
- 2MKQ==
-X-Gm-Message-State: AOJu0YzWrkQA5chhmfrp9aBiq/RgGH+liI6VYwY7b+yA3EW6KFba9h6R
- cursCiS5fSNPmAZb1FDARToBcOp3b+VYJimjYRqNnNeofehkiVgyyIojEZK+uhL/s9ezIcZtB98
- uw4IJQbci+0IqJfL4vI353oVDAqQxZInC4ZNF2HgqfEv8Mc0ivMCW
-X-Received: by 2002:a05:6214:d0d:b0:6ad:7a01:19c7 with SMTP id
- 6a1803df08f44-6ae0c9ab4bamr1578036d6.0.1717010750929; 
- Wed, 29 May 2024 12:25:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJW57pb8nBEBtubp0kDCmSDcCC2qPAo+8avsZOxsFCUyva074fVVGELwX+A1VGcDWoA6K4zg==
-X-Received: by 2002:a05:6214:d0d:b0:6ad:7a01:19c7 with SMTP id
- 6a1803df08f44-6ae0c9ab4bamr1577686d6.0.1717010750220; 
- Wed, 29 May 2024 12:25:50 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ac070c2f9csm56487726d6.27.2024.05.29.12.25.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 12:25:49 -0700 (PDT)
-Date: Wed, 29 May 2024 15:25:47 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V1 19/26] physmem: preserve ram blocks for cpr
-Message-ID: <ZleBOx6pN6KCn0a2@x1n>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-20-git-send-email-steven.sistare@oracle.com>
- <ZlZQVijf2weEmzYK@x1n>
- <c3f23e83-81d7-469a-aa04-29785fa6f8d7@oracle.com>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1sCPZh-0001uo-Hz
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 16:07:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1717013211; x=1717618011; i=deller@gmx.de;
+ bh=8i6XG+rmTNGfeIZFEvFeAHAvzReELokswebywUBz7CU=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=Hs/t9LJk1xUsjLtDRSZaqqNX0PHdZUeof+I6I2Pk0qubZblXwzz88aAPwryEr1x0
+ ruSASP0xrrnTdyjFKrqWoE+ccA2Uk+/ZTxMjga54oLV69okDbJJ6g4AepEBJoLnho
+ R4chvYy1RKFr7wUcA3NPIjeyQQ2YQJdKK7GVu2c3exCuXg34A/0oHN8+QLAzzuo2W
+ n8t4ntVU7H6Q7LrtZwittDZ/W4Vmhj76CeejCUSXRZsk3f+GD/bzkqmyr6vUnHatw
+ kx9P4xuPuygxpnr1y5zl6pVUsD0YyAA+Zq3lpnxV+W8Z6rvxoEnk1OcPpIRDCrQa1
+ c7HrQhdEr6irIRVMmw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([83.135.217.92]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MO9zH-1rsPq62Bwn-00OY86; Wed, 29
+ May 2024 22:06:51 +0200
+Message-ID: <69caf556-49eb-47aa-82e6-9d20566271fb@gmx.de>
+Date: Wed, 29 May 2024 22:06:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c3f23e83-81d7-469a-aa04-29785fa6f8d7@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] hppa: Add support for an emulated TOC/NMI button.
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Cc: Sven Schnelle <svens@stackframe.org>, Anton Johansson <anjo@rev.ng>
+References: <20220131213529.17404-1-deller@gmx.de>
+ <20220131213529.17404-4-deller@gmx.de>
+ <c6f9b777-4b6f-a71a-ce90-c08e5313e2a8@amsat.org>
+ <d1ded13f-a2bf-4ce0-aabb-22dbdee25ce5@linaro.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <d1ded13f-a2bf-4ce0-aabb-22dbdee25ce5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:V5cMccPU+Haxwql0zqNaVWD6ma4npZH90JtuwGP8LDUW3aBa+I9
+ JLihHm/pL1jUzBNRCLaxtn2Wc8bYSBTttcHQUKbbeIsM7hG4eWNLB/zwH3zAfcxKZSyDyhI
+ mj5X6QDj4S8QUz7W7+aoU1MDrAWkHet53Tvgm0ud8l+I2kYg4Ez4wYvgubnMZxlEJ3oMK4H
+ ZztQJ52Y/YUbvIbwqmfQg==
+UI-OutboundReport: notjunk:1;M01:P0:uDM1b+dTz6M=;tBkHuRrtxfLY/QdG16CxXBLdb6z
+ lgCWtNNLV5XVMNcQGEAvq84/HtxLiBYVo0uyrAnqSQEn5Ux92nsRDFXjG8GTXlR+aTUS/WXHS
+ utHceunSSP+6xZ0VnGkDpVuFjiEJR13tXz4JmhsTbUAmfDSR9bMe335u9X55ipsvB102K6Nye
+ 4uGENbnqlVKTEnqEIgJ1ej4y0u8urTwA7AmI2B2S58MaOfRJYDTGd5caNXmekPITB76r2RHzD
+ 5m68hH7tBwDFaVn3wpGBkocj5RXLs9sHITxkBaRncHh1twheyecMgtOR5WPI8nQuv3SUOgsrh
+ YVqVlFb/8x2UnBmSG391om8sb1huID+8aCObJlqonOVQjF+akPJH3eQRr12Hgu2AgWLligAMh
+ /9U9Z7e9KVXqRKOqlounXUktahZO6Gc/PaXR1737K4llDCNNQsHx7wJmDq5GWIfeJ6m7Z9rK6
+ L6B3qvjSLtegRVQhCNDt1o5+JERW9uAB3atdLk3IKeFqF1s7IllVtUhFU7zXvkySRQ8AnLG48
+ zrLb2k/KBFQdMPmHPiU4YYQKvvXzEAmpmacMNyLqjN/3YfLzdS3EetEMRk8ctDd9iuF0jNyXw
+ QxKrWyGOJ3DOW5hSXTQRDBBY5kSYTxTwbGwJtTWJrWZqBI+k8kQlTgowQ5wlRRO1iJaqF4O1m
+ vmQz8W6YMpwKU19UiGlfMOnV83q7+137WIqVUT6qqkWC46Q387h1uikC1BzrB0Ld1GAM53R7f
+ ZcSHVFz1QZwHUMAwTvtpEHFeLV+KdTxp2ec0CeAlnz+ZKrHLd1tNX/aiuBqCzq860XMs/dzk2
+ gzabcWLjyI1Zh23prKvVCWoXoYFn4lxT8cnJExm7HjTEs=
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,61 +137,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 01:31:53PM -0400, Steven Sistare wrote:
-> On 5/28/2024 5:44 PM, Peter Xu wrote:
-> > On Mon, Apr 29, 2024 at 08:55:28AM -0700, Steve Sistare wrote:
-> > > Preserve fields of RAMBlocks that allocate their host memory during CPR so
-> > > the RAM allocation can be recovered.
-> > 
-> > This sentence itself did not explain much, IMHO.  QEMU can share memory
-> > using fd based memory already of all kinds, as long as the memory backend
-> > is path-based it can be shared by sharing the same paths to dst.
-> > 
-> > This reads very confusing as a generic concept.  I mean, QEMU migration
-> > relies on so many things to work right.  We mostly asks the users to "use
-> > exactly the same cmdline for src/dst QEMU unless you know what you're
-> > doing", otherwise many things can break.  That should also include ramblock
-> > being matched between src/dst due to the same cmdlines provided on both
-> > sides.  It'll be confusing to mention this when we thought the ramblocks
-> > also rely on that fact.
-> > 
-> > So IIUC this sentence should be dropped in the real patch, and I'll try to
-> > guess the real reason with below..
-> 
-> The properties of the implicitly created ramblocks must be preserved.
-> The defaults can and do change between qemu releases, even when the command-line
-> parameters do not change for the explicit objects that cause these implicit
-> ramblocks to be created.
+On 5/29/24 17:11, Philippe Mathieu-Daud=C3=A9 wrote:
+> Hi Helge & Richard,
 
-AFAIU, QEMU relies on ramblocks to be the same before this series.  Do you
-have an example?  Would that already cause issue when migrate?
+Hi Philippe,
 
-> 
-> > > Mirror the mr->align field in the RAMBlock to simplify the vmstate.
-> > > Preserve the old host address, even though it is immediately discarded,
-> > > as it will be needed in the future for CPR with iommufd.  Preserve
-> > > guest_memfd, even though CPR does not yet support it, to maintain vmstate
-> > > compatibility when it becomes supported.
-> > 
-> > .. It could be about the vfio vaddr update feature that you mentioned and
-> > only for iommufd (as IIUC vfio still relies on iova ranges, then it won't
-> > help here)?
-> > 
-> > If so, IMHO we should have this patch (or any variance form) to be there
-> > for your upcoming vfio support.  Keeping this around like this will make
-> > the series harder to review.  Or is it needed even before VFIO?
-> 
-> This patch is needed independently of vfio or iommufd.
-> 
-> guest_memfd is independent of vfio or iommufd.  It is a recent addition
-> which I have not tried to support, but I added this placeholder field
-> to it can be supported in the future without adding a new field later
-> and maintaining backwards compatibility.
+> Nevermind the missed review comments, I'm revisiting this
+> patch while looking at building libtcg-hppa.so.
 
-Is guest_memfd the only user so far, then?  If so, would it be possible we
-split it as a separate effort on top of the base cpr-exec support?
+Ok.
 
--- 
-Peter Xu
+> On 1/2/22 00:56, Philippe Mathieu-Daud=C3=A9 wrote:
+>> On 31/1/22 22:35, Helge Deller wrote:
+>>> Almost all PA-RISC machines have either a button that is labeled with =
+'TOC' or
+>>> a BMC/GSP function to trigger a TOC.=C2=A0 TOC is a non-maskable inter=
+rupt that is
+>>> sent to the processor.=C2=A0 This can be used for diagnostic purposes =
+like obtaining
+>>> a stack trace/register dump or to enter KDB/KGDB in Linux.
+>>>
+>>> This patch adds support for such an emulated TOC button.
+>>>
+>>> It wires up the qemu monitor "nmi" command to trigger a TOC.=C2=A0 For=
+ that it
+>>
+>> s/qemu/QEMU/ (few others).
+>>
+>>> provides the hppa_nmi function which is assigned to the nmi_monitor_ha=
+ndler
+>>> function pointer.=C2=A0 When called it raises the EXCP_TOC hardware in=
+terrupt in the
+>>> hppa_cpu_do_interrupt() function.=C2=A0 The interrupt function then ca=
+lls the
+>>> architecturally defined TOC function in SeaBIOS-hppa firmware (at fixe=
+d address
+>>> 0xf0000000).
+>>>
+>>> According to the PA-RISC PDC specification, the SeaBIOS firmware then =
+writes
+>>> the CPU registers into PIM (processor internal memmory) for later anal=
+ysis.=C2=A0 In
+>>
+>> Typo "memory".
+>>
+>>> order to write all registers it needs to know the contents of the CPU =
+"shadow
+>>> registers" and the IASQ- and IAOQ-back values. The IAOQ/IASQ values ar=
+e
+>>> provided by qemu in shadow registers when entering the SeaBIOS TOC fun=
+ction.
+>>> This patch adds a new aritificial opcode "getshadowregs" (0xfffdead2) =
+which
+>>
+>> Typo "artificial".
+>>
+>>> restores the original values of the shadow registers. With this opcode=
+ SeaBIOS
+>>> can store those registers as well into PIM before calling an OS-provid=
+ed TOC
+>>> handler.
+>>>
+>>> To trigger a TOC, switch to the qemu monitor with Ctrl-A C, and type i=
+n the
+>>> command "nmi".=C2=A0 After the TOC started the OS-debugger, exit the q=
+emu monitor
+>>> with Ctrl-A C.
+>
+> IIUC you are abusing TOC to communicate with SeaBIOS, filling
+> iaoq_f with SeaBIOS-specific 0xf0000000, unrelated to the pa2.0
+> spec; is that correct?
+
+No.
+A TOC on a physical machine sets the instruction pointer (iaoq_f)
+to 0xf0000000 (for 32-bit).
+Real physical firmware (and SeaBIOS) are located at that address
+to be able to boot the machine.
+
+> I'm trying to see how to integrate firmware specific knowledge
+> into libtcg-hppa.so which is supposed to be only architectured
+> parts (usually we handle firmware stuffs in machine code, not
+> translation one).
+
+That reset code is architectured.
+
+Helge
+
+>
+> Regards,
+>
+> Phil.
+>
+>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>> ---
+>>> =C2=A0 hw/hppa/machine.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 3=
+5 ++++++++++++++++++++++++++++++++++-
+>>> =C2=A0 target/hppa/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 2 +-
+>>> =C2=A0 target/hppa/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 5 +++++
+>>> =C2=A0 target/hppa/helper.h=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
+>>> =C2=A0 target/hppa/insns.decode |=C2=A0 1 +
+>>> =C2=A0 target/hppa/int_helper.c | 19 ++++++++++++++++++-
+>>> =C2=A0 target/hppa/op_helper.c=C2=A0 |=C2=A0 7 ++++++-
+>>> =C2=A0 target/hppa/translate.c=C2=A0 | 10 ++++++++++
+>>> =C2=A0 8 files changed, 76 insertions(+), 4 deletions(-)
+>>> +static const TypeInfo machine_hppa_machine_init_typeinfo =3D {
+>>> +=C2=A0=C2=A0=C2=A0 .name =3D ("hppa" "-machine"),
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .name =3D MACHINE_TYPE_NAME(=
+"hppa"),
+>>
+>>> +=C2=A0=C2=A0=C2=A0 .parent =3D "machine",
+>>> +=C2=A0=C2=A0=C2=A0 .class_init =3D machine_hppa_machine_init_class_in=
+it,
+>>> +=C2=A0=C2=A0=C2=A0 .interfaces =3D (InterfaceInfo[]) {
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { TYPE_NMI },
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { }
+>>> +=C2=A0=C2=A0=C2=A0 },
+>>> +};
+>
 
 
