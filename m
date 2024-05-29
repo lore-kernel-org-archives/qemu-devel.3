@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81322C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD05C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 13:16:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCJ9W-000178-9J; Wed, 29 May 2024 09:15:38 -0400
+	id 1sCJAE-0001m7-3V; Wed, 29 May 2024 09:16:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCJ9R-00015S-Pz
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:15:33 -0400
+ id 1sCJAC-0001k4-PD
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:16:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sCJ9P-0004An-Pt
- for qemu-devel@nongnu.org; Wed, 29 May 2024 09:15:33 -0400
+ id 1sCJAB-0004DX-2p
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 09:16:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716988529;
+ s=mimecast20190719; t=1716988578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cMHS5AqILWAeW+3AL6eDxpoqbznbIS1vP56034FIBGc=;
- b=hZSYdU8OU3sIYjqvuZYP8MG0ve89btUEmFLvAkRs8YzxPs6Na+BNFxAvdRvlH58mK7ErL4
- 4xs9EE+0j0UllRWkSMtmV/Bk6D3HF1mGmneIDAINmNFahwaKBlE4fX+aZyDWvcZwGycStW
- L21cByuIbyhyYybgY7gnUuwroCI88iw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=APT3KEyKu0SwI7IlkMP4Pbut9W49r+Ap4Km2fcuRGSY=;
+ b=ZnGrV5oX0nbBK1T68Vdw78ET2+ygTHgdPrTndu4yUii30Qhbx2oOTcSfQ9d2uHHA4lERQo
+ svojzGybBtxXcdvGbS1nk1XUNHyp/OuuW3T4YzAYR7iICPA/HmsXMDDgDbvuL3hsoQ1wMb
+ zWNymZRH2u58t1Sk6Ub3aWBBFZZwIv8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-7MV6HFOePe229wj01fMU9Q-1; Wed, 29 May 2024 09:15:26 -0400
-X-MC-Unique: 7MV6HFOePe229wj01fMU9Q-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4211043b5easo13823285e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:15:26 -0700 (PDT)
+ us-mta-648-LsnPwoVsOGOflNqklHXpxA-1; Wed, 29 May 2024 09:16:16 -0400
+X-MC-Unique: LsnPwoVsOGOflNqklHXpxA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4201f100188so11616755e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 06:16:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716988522; x=1717593322;
+ d=1e100.net; s=20230601; t=1716988573; x=1717593373;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cMHS5AqILWAeW+3AL6eDxpoqbznbIS1vP56034FIBGc=;
- b=ALV/sbgV5qo1BOizBlpAyJUzNDPqEbT7QrLaG5CwplJfv86s30kDcI+zRfVNVWnl27
- S5ZX6imhF7wZvf/LYqAQqTecI/BeMUCyA44eFdPu/iQYRI/dcfJv4/PeywVTrF3RPhTu
- y4/AfFvZwIwm+lyQCaWia9iqCozvyI4cLIcNkegqyVX/rTiqoF3BlGXyNSB/p/tzgJGg
- 7VxshCzqfPwt65H5bXWz4/r99RX3+4husvf39m8OsR8MZJcVWyxIkf2fdNtdM0bYs86d
- rTP/aHF6xHtq7w3KGNcIBgs/bT1QpIXTIKevYSnJLgz6AzEbsc2i4z78pLq3vF/i01Fd
- Ymiw==
-X-Gm-Message-State: AOJu0YwI57EkSaehXFjqv3g6QiaoQjowqUEcjzZJNZBVFZ78VjKKux/m
- OM3ieEMBHC5Ep3fGT9NmuOoj1R/rnQ70vRU28gErZKahC1j2rmWbXk3NVVFPzpWFbjz19NfJoVV
- 6YFACPk5+tVggvEiPNXNVLEyZYyk3ahL3S47muwYXubvOZvuCqfj7
-X-Received: by 2002:a05:600c:1389:b0:421:2049:5d66 with SMTP id
- 5b1f17b1804b1-42120495e3amr31308235e9.21.1716988522432; 
- Wed, 29 May 2024 06:15:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEa2XMSK8X38xqAPHeSDlUm2AqxMYOaMvupPRv/Z07AKUsy02rrt/p2Be6Z6/GvNnXlKBd58w==
-X-Received: by 2002:a05:600c:1389:b0:421:2049:5d66 with SMTP id
- 5b1f17b1804b1-42120495e3amr31308005e9.21.1716988522027; 
- Wed, 29 May 2024 06:15:22 -0700 (PDT)
+ bh=APT3KEyKu0SwI7IlkMP4Pbut9W49r+Ap4Km2fcuRGSY=;
+ b=UjH5CR4Qy3er2HyDn9tslPHIqoCyfNyw0d3S8bcIewGBQa6xX0pbXkFYorpz3a+U/8
+ dujxaMmY6Ii5kk+8Qa+Yu7KPV7S9ORa19DDcEKdHmpyAAUWaNxdntJt9aL5+9aZTFGO6
+ goS1uePeEbPBKpLqCHoxI4cEgtbwI6O02RodiUMYQr+paeB55xSnoDJQJx7tISdj+Byq
+ NDOWSPn3GHbggv2XCGO1sVblKShO7kHn8c9QRGgYAqV3fM96423gHLK/8MxNg1siIMoe
+ hC20xD5uSge0Dvfh3Q5bO+diGzUDHiXG+uzy4pzdlsFn2WVSIDy9zmMsHahd40883WdB
+ cUJQ==
+X-Gm-Message-State: AOJu0Yx80F2zy1vn6rS3c3Uu9OvHNrcdFH8scMjhaB7AUD1GMvFdu2Bz
+ R3hHwxc9m3NUMvMdw8Do/v4zpQX/e126i6bzTTFVN7iye6RWKiZhFAFfFdW/WRGlO4i4dp4DFra
+ l5Mlf+6SwXjW8Cl7YCYDIslGLVN1GW4SN9XUhCCZeXskP4+ERqqn0KYfDNeYy
+X-Received: by 2002:a7b:cb90:0:b0:41f:ef1e:7312 with SMTP id
+ 5b1f17b1804b1-421089f4f38mr102268225e9.14.1716988573487; 
+ Wed, 29 May 2024 06:16:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE95n9EDnu+LFZGujLiuI/4hDLhYf9AO5RGUOLlfkMFrcFtjyzLJgR163Qd1RSvMemj4yRg5w==
+X-Received: by 2002:a7b:cb90:0:b0:41f:ef1e:7312 with SMTP id
+ 5b1f17b1804b1-421089f4f38mr102268015e9.14.1716988573122; 
+ Wed, 29 May 2024 06:16:13 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100ee7f1dsm212637975e9.7.2024.05.29.06.15.21
+ 5b1f17b1804b1-42100f598d7sm208768225e9.23.2024.05.29.06.16.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 May 2024 06:15:21 -0700 (PDT)
-Date: Wed, 29 May 2024 15:15:20 +0200
+ Wed, 29 May 2024 06:16:08 -0700 (PDT)
+Date: Wed, 29 May 2024 15:16:06 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
  <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
  =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
  <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 03/23] hw/usb/hcd-xhci: Remove
- XHCI_FLAG_FORCE_PCIE_ENDCAP flag
-Message-ID: <20240529151520.17a901f9@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240529051539.71210-4-philmd@linaro.org>
+Subject: Re: [PATCH v5 04/23] hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST flag
+Message-ID: <20240529151606.143932db@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240529051539.71210-5-philmd@linaro.org>
 References: <20240529051539.71210-1-philmd@linaro.org>
- <20240529051539.71210-4-philmd@linaro.org>
+ <20240529051539.71210-5-philmd@linaro.org>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -107,12 +106,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 May 2024 07:15:19 +0200
+On Wed, 29 May 2024 07:15:20 +0200
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
-> pc-i440fx-2.0 machine, which got removed. Remove it
-> and simplify usb_xhci_pci_realize().
+> XHCI_FLAG_SS_FIRST was only used by the pc-i440fx-2.0 machine,
+> which got removed. Remove it and simplify various functions in
+> hcd-xhci.c.
 >=20
 > Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
@@ -121,51 +120,137 @@ Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
 > ---
->  hw/usb/hcd-xhci.h     | 1 -
->  hw/usb/hcd-xhci-nec.c | 2 --
->  hw/usb/hcd-xhci-pci.c | 3 +--
->  3 files changed, 1 insertion(+), 5 deletions(-)
+>  hw/usb/hcd-xhci.h     |  3 +--
+>  hw/usb/hcd-xhci-nec.c |  2 --
+>  hw/usb/hcd-xhci-pci.c |  1 -
+>  hw/usb/hcd-xhci.c     | 42 ++++++++----------------------------------
+>  4 files changed, 9 insertions(+), 39 deletions(-)
 >=20
 > diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-> index 98f598382a..1efa4858fb 100644
+> index 1efa4858fb..fe16d7ad05 100644
 > --- a/hw/usb/hcd-xhci.h
 > +++ b/hw/usb/hcd-xhci.h
-> @@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
+> @@ -36,8 +36,7 @@ typedef struct XHCIStreamContext XHCIStreamContext;
+>  typedef struct XHCIEPContext XHCIEPContext;
 > =20
 >  enum xhci_flags {
->      XHCI_FLAG_SS_FIRST =3D 1,
-> -    XHCI_FLAG_FORCE_PCIE_ENDCAP,
->      XHCI_FLAG_ENABLE_STREAMS,
+> -    XHCI_FLAG_SS_FIRST =3D 1,
+> -    XHCI_FLAG_ENABLE_STREAMS,
+> +    XHCI_FLAG_ENABLE_STREAMS =3D 1,
 >  };
 > =20
+>  typedef enum TRBType {
 > diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-> index 328e5bfe7c..5d5b069cf9 100644
+> index 5d5b069cf9..0c063b3697 100644
 > --- a/hw/usb/hcd-xhci-nec.c
 > +++ b/hw/usb/hcd-xhci-nec.c
-> @@ -43,8 +43,6 @@ static Property nec_xhci_properties[] =3D {
+> @@ -41,8 +41,6 @@ struct XHCINecState {
+>  static Property nec_xhci_properties[] =3D {
+>      DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
 >      DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO=
 ),
->      DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
->                      XHCI_FLAG_SS_FIRST, true),
-> -    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
-> -                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
+> -    DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
+> -                    XHCI_FLAG_SS_FIRST, true),
 >      DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
 >      DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
 >      DEFINE_PROP_END_OF_LIST(),
 > diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-> index 4423983308..cbad96f393 100644
+> index cbad96f393..264d7ebb77 100644
 > --- a/hw/usb/hcd-xhci-pci.c
 > +++ b/hw/usb/hcd-xhci-pci.c
-> @@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *de=
-v, Error **errp)
->                       PCI_BASE_ADDRESS_MEM_TYPE_64,
->                       &s->xhci.mem);
+> @@ -242,7 +242,6 @@ static void qemu_xhci_instance_init(Object *obj)
+>      s->msix     =3D ON_OFF_AUTO_AUTO;
+>      xhci->numintrs =3D XHCI_MAXINTRS;
+>      xhci->numslots =3D XHCI_MAXSLOTS;
+> -    xhci_set_flag(xhci, XHCI_FLAG_SS_FIRST);
+>  }
 > =20
-> -    if (pci_bus_is_express(pci_get_bus(dev)) ||
-> -        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
-> +    if (pci_bus_is_express(pci_get_bus(dev))) {
->          ret =3D pcie_endpoint_cap_init(dev, 0xa0);
->          assert(ret > 0);
->      }
+>  static const TypeInfo qemu_xhci_info =3D {
+> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+> index ad40232eb6..b6411f0bda 100644
+> --- a/hw/usb/hcd-xhci.c
+> +++ b/hw/usb/hcd-xhci.c
+> @@ -541,18 +541,10 @@ static XHCIPort *xhci_lookup_port(XHCIState *xhci, =
+struct USBPort *uport)
+>      case USB_SPEED_LOW:
+>      case USB_SPEED_FULL:
+>      case USB_SPEED_HIGH:
+> -        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+> -            index =3D uport->index + xhci->numports_3;
+> -        } else {
+> -            index =3D uport->index;
+> -        }
+> +        index =3D uport->index + xhci->numports_3;
+>          break;
+>      case USB_SPEED_SUPER:
+> -        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+> -            index =3D uport->index;
+> -        } else {
+> -            index =3D uport->index + xhci->numports_2;
+> -        }
+> +        index =3D uport->index;
+>          break;
+>      default:
+>          return NULL;
+> @@ -2779,11 +2771,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr re=
+g, unsigned size)
+>          ret =3D 0x20425355; /* "USB " */
+>          break;
+>      case 0x28: /* Supported Protocol:08 */
+> -        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+> -            ret =3D (xhci->numports_2<<8) | (xhci->numports_3+1);
+> -        } else {
+> -            ret =3D (xhci->numports_2<<8) | 1;
+> -        }
+> +        ret =3D (xhci->numports_2 << 8) | (xhci->numports_3 + 1);
+>          break;
+>      case 0x2c: /* Supported Protocol:0c */
+>          ret =3D 0x00000000; /* reserved */
+> @@ -2795,11 +2783,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr re=
+g, unsigned size)
+>          ret =3D 0x20425355; /* "USB " */
+>          break;
+>      case 0x38: /* Supported Protocol:08 */
+> -        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+> -            ret =3D (xhci->numports_3<<8) | 1;
+> -        } else {
+> -            ret =3D (xhci->numports_3<<8) | (xhci->numports_2+1);
+> -        }
+> +        ret =3D (xhci->numports_3 << 8) | 1;
+>          break;
+>      case 0x3c: /* Supported Protocol:0c */
+>          ret =3D 0x00000000; /* reserved */
+> @@ -3349,13 +3333,8 @@ static void usb_xhci_init(XHCIState *xhci)
+>      for (i =3D 0; i < usbports; i++) {
+>          speedmask =3D 0;
+>          if (i < xhci->numports_2) {
+> -            if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+> -                port =3D &xhci->ports[i + xhci->numports_3];
+> -                port->portnr =3D i + 1 + xhci->numports_3;
+> -            } else {
+> -                port =3D &xhci->ports[i];
+> -                port->portnr =3D i + 1;
+> -            }
+> +            port =3D &xhci->ports[i + xhci->numports_3];
+> +            port->portnr =3D i + 1 + xhci->numports_3;
+>              port->uport =3D &xhci->uports[i];
+>              port->speedmask =3D
+>                  USB_SPEED_MASK_LOW  |
+> @@ -3366,13 +3345,8 @@ static void usb_xhci_init(XHCIState *xhci)
+>              speedmask |=3D port->speedmask;
+>          }
+>          if (i < xhci->numports_3) {
+> -            if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+> -                port =3D &xhci->ports[i];
+> -                port->portnr =3D i + 1;
+> -            } else {
+> -                port =3D &xhci->ports[i + xhci->numports_2];
+> -                port->portnr =3D i + 1 + xhci->numports_2;
+> -            }
+> +            port =3D &xhci->ports[i];
+> +            port->portnr =3D i + 1;
+>              port->uport =3D &xhci->uports[i];
+>              port->speedmask =3D USB_SPEED_MASK_SUPER;
+>              assert(i < XHCI_MAXPORTS);
 
 
