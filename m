@@ -4,68 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A82C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D11DC25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 14:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCKZL-0007V1-Fv; Wed, 29 May 2024 10:46:23 -0400
+	id 1sCKce-0001a3-53; Wed, 29 May 2024 10:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
- id 1sCKZI-0007QH-R2
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:46:20 -0400
-Received: from galois.linutronix.de ([193.142.43.55])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCKcd-0001Zf-6B
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:49:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namcao@linutronix.de>)
- id 1sCKZG-0003qZ-LN
- for qemu-devel@nongnu.org; Wed, 29 May 2024 10:46:20 -0400
-Date: Wed, 29 May 2024 16:46:09 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1716993974;
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sCKcb-0004Yn-Aa
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 10:49:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716994184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UdJryuivT7oBQG28J345Baw446DorrrrG8E6W5weLxM=;
- b=4ccrn2oPs0CR8EOP61g5rrg6ttGt+5KAWbDWDJFdq7rp2G17oI4xoU7OoQchMuGqcQ4xCz
- z49dj/rAAADq94gWp9zPGCDbHLr7gQd8E95Bz5swUrAPC2tfEYY+DT2VdZKYQro/w0YE78
- fsd/ndxQz8qaT/4aBq25lJl8mUsXA5X+UOGtUw0ORa8eTbjH39XoayHAAJenwhvOXXzvSq
- /buVN6GcEgkOhuMT/tIlWW01wIMkt4WgfsCOAeSG/kM3/8Yjp3qwuiaEMYJ3Z4cQ7HsIBg
- ceblc7dYHTtV4s20WCjXbR24nZvjnmuwRKfA1ICJcIyu4Ma2WYJaDq4xJnT5zQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1716993974;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UdJryuivT7oBQG28J345Baw446DorrrrG8E6W5weLxM=;
- b=sZ6W9ZrzzB9aA9fYRkTQoIWzs1C92n7I2vL/kRMY9+VaSwQYmueVQE0TK3Fqt6jBurYb2s
- z0KCLyOIbtKAk9BQ==
-From: Nam Cao <namcao@linutronix.de>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] pci-bridge/xio3130_downstream: fix invalid link speed
- and link width
-Message-ID: <20240529144609.sg5p-ssg@linutronix.de>
-References: <20240529132125.106790-1-namcao@linutronix.de>
- <fc0338d2-9a4d-4770-8a9c-c9e077415b29@linaro.org>
- <20240529141657.cGpjgEmN@linutronix.de>
+ bh=xnmQZMiF1RiodqDsVYuN/scesM+R72wJ54PU8s+oiqQ=;
+ b=HXcTVXRpMRvTkUVs/BBUeBxAZDZCYoBmrHd2kula8XayVVltCXU3eGoTC8Ol8HZAOrjmbz
+ fSCDqElAY3YPrPfALVtECO2gmQLzolumgxOBIXNAMQpvugVgn/hLXjxa0g3IVDFG1gL33I
+ T6AWsYnkMqP5dX/fYx6rU6wafAwI4NQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-557-sfSZsZYrP-muZ5EtaUbCVg-1; Wed, 29 May 2024 10:49:42 -0400
+X-MC-Unique: sfSZsZYrP-muZ5EtaUbCVg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-354f28306dfso1880146f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 07:49:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1716994181; x=1717598981;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xnmQZMiF1RiodqDsVYuN/scesM+R72wJ54PU8s+oiqQ=;
+ b=JnuJZg0SBhBwdiWmN4AfOfnf8QMPmNWl4F5Kmj+dOahGsCI2D1ZV5wvwJxXh7Nf5OK
+ ofRJR2xRpKMQmKQ2CTHNchTIM6URX6/jzO0FjMduv763YCm6hQqn3q5M7+iKV6povaPi
+ aEjYltfJ4D0V/iuLOucl0CxjNPHglvrofNObMZHf3gcAzWkBRQIvCfteSyefzn1qG7fM
+ Kv9k/+KswgwTh3dT6MSEB1mGF52tYsB7Y1cyGM2mdYS4J+fIq3skbnRA2Ikt+pJ+OfhT
+ vLJZ6zi+5xoOYL7Qx2GF+b8XpI0aiVpU/kCgwjc4vE4q5amnKA3r6jcWDes8NFY6XX2U
+ ATMA==
+X-Gm-Message-State: AOJu0YwgwT9JhLYY9jttdnNoRcLx6JUC2ZFe30Huj3Ylk5c1lv5KGBXJ
+ NPhSQWOLvxBZahGpO3lsPUiYR6vYiKZHIOrFzS9AXdBXONoewujcav/anGzA8d/SqgQtQa2wvDg
+ OgXbWq8CXO9Cgl+/x0mFycYPmSC8Vzj6HC7NtIJIiF286j9AGNgyX
+X-Received: by 2002:a05:6000:4012:b0:356:9ad2:580b with SMTP id
+ ffacd0b85a97d-3569ad25a38mr11937461f8f.18.1716994181591; 
+ Wed, 29 May 2024 07:49:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhnlKiUGr83hqDiw50LxI7WAFIyCOkecoYRj1bKzKkoMHDVZo2FddRqSgBUdmCR1rkRCqIsA==
+X-Received: by 2002:a05:6000:4012:b0:356:9ad2:580b with SMTP id
+ ffacd0b85a97d-3569ad25a38mr11937438f8f.18.1716994181116; 
+ Wed, 29 May 2024 07:49:41 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35671d03330sm13730517f8f.64.2024.05.29.07.49.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 07:49:40 -0700 (PDT)
+Date: Wed, 29 May 2024 16:49:39 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P .
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH v5 18/23] hw/i386/pc: Remove PCMachineClass::rsdp_in_ram
+Message-ID: <20240529164939.0accfdd0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240529051539.71210-19-philmd@linaro.org>
+References: <20240529051539.71210-1-philmd@linaro.org>
+ <20240529051539.71210-19-philmd@linaro.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240529141657.cGpjgEmN@linutronix.de>
-Received-SPF: pass client-ip=193.142.43.55; envelope-from=namcao@linutronix.de;
- helo=galois.linutronix.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,69 +106,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 04:17:04PM +0200, Nam Cao wrote:
-> On Wed, May 29, 2024 at 03:50:14PM +0200, Philippe Mathieu-Daudé wrote:
-> > On 29/5/24 15:21, Nam Cao wrote:
-> > > Set link width to x1 and link speed to 2.5 Gb/s as specified by the
-> > > datasheet. Without this, these fields in the link status register read
-> > > zero, which is incorrect.
-> > > 
-> > > This problem appeared since 3d67447fe7c2 ("pcie: Fill PCIESlot link fields
-> > > to support higher speeds and widths"), which allows PCIe slot to set link
-> > > width and link speed. However, if PCIe slot does not explicitly set these
-> > > properties, they will be zero. Before this commit, the width and speed
-> > > default to x1 and 2.5 Gb/s.
-> > > 
-> > > Fixes: 3d67447fe7c2 ("pcie: Fill PCIESlot link fields to support higher speeds and widths")
-> > > Signed-off-by: Nam Cao <namcao@linutronix.de>
-> > > ---
-> > >   hw/pci-bridge/xio3130_downstream.c | 8 ++++++++
-> > >   1 file changed, 8 insertions(+)
-> > > 
-> > > diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-> > > index 38a2361fa2..d949431191 100644
-> > > --- a/hw/pci-bridge/xio3130_downstream.c
-> > > +++ b/hw/pci-bridge/xio3130_downstream.c
-> > > @@ -172,10 +172,18 @@ static void xio3130_downstream_class_init(ObjectClass *klass, void *data)
-> > >       device_class_set_props(dc, xio3130_downstream_props);
-> > >   }
-> > > +static void xio3130_downstream_instance_post_init(Object *obj)
-> > > +{
-> > > +    PCIESlot *s = PCIE_SLOT(obj);
-> > > +    s->speed = QEMU_PCI_EXP_LNK_2_5GT;
-> > > +    s->width = QEMU_PCI_EXP_LNK_X1;
-> > 
-> > - You ignore previous value and overwrite
-> > - You don't warn the user about missing config value
-> 
-> Users cannot set speed/width for this device. At the moment, only PCI root
-> port supports that.
-> 
-> It wouldn't make sense for users to set these properties nonetheless, these
-> properties are fixed according to datasheet.
-> 
-> > Is post_init() the correct way to deal with that? Usually
-> > this is done in realize(), where you can set *errp to
-> > notify the user of invalid values.
-> 
-> I stole this from hw/pci-bridge/cxl_downstream.c and
-> hw/pci-bridge/pcie_root_port.c. So I think it's correct.
+On Wed, 29 May 2024 07:15:34 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-Ah wait, now I read those files again, I think those devices do it this way
-because they want to have default values.
+> PCMachineClass::rsdp_in_ram was only used by the
+> pc-i440fx-2.2 machine, which got removed. It is
+> now always true. Remove it, simplifying acpi_setup().
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-For this case, I think you are right that realize() is the more suitable
-place because I am not setting the default, I am setting the fixed values.
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-I can send a v2 with that change, unless you have other comments?
+> ---
+>  include/hw/i386/pc.h |  1 -
+>  hw/i386/acpi-build.c | 35 ++++-------------------------------
+>  hw/i386/pc.c         |  1 -
+>  3 files changed, 4 insertions(+), 33 deletions(-)
+>=20
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index 808de4eca7..63568eb9e9 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -100,7 +100,6 @@ struct PCMachineClass {
+> =20
+>      /* ACPI compat: */
+>      bool has_acpi_build;
+> -    bool rsdp_in_ram;
+>      unsigned acpi_data_size;
+>      int pci_root_uid;
+> =20
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index ab2d4d8dcb..ed0adb0e82 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -2495,7 +2495,6 @@ static
+>  void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+>  {
+>      PCMachineState *pcms =3D PC_MACHINE(machine);
+> -    PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
+>      X86MachineState *x86ms =3D X86_MACHINE(machine);
+>      DeviceState *iommu =3D pcms->iommu;
+>      GArray *table_offsets;
+> @@ -2667,16 +2666,6 @@ void acpi_build(AcpiBuildTables *tables, MachineSt=
+ate *machine)
+>              .rsdt_tbl_offset =3D &rsdt,
+>          };
+>          build_rsdp(tables->rsdp, tables->linker, &rsdp_data);
+> -        if (!pcmc->rsdp_in_ram) {
+> -            /* We used to allocate some extra space for RSDP revision 2 =
+but
+> -             * only used the RSDP revision 0 space. The extra bytes were
+> -             * zeroed out and not used.
+> -             * Here we continue wasting those extra 16 bytes to make sur=
+e we
+> -             * don't break migration for machine types 2.2 and older due=
+ to
+> -             * RSDP blob size mismatch.
+> -             */
+> -            build_append_int_noprefix(tables->rsdp, 0, 16);
+> -        }
+>      }
+> =20
+>      /* We'll expose it all to Guest so we want to reduce
+> @@ -2755,7 +2744,6 @@ static const VMStateDescription vmstate_acpi_build =
+=3D {
+>  void acpi_setup(void)
+>  {
+>      PCMachineState *pcms =3D PC_MACHINE(qdev_get_machine());
+> -    PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
+>      X86MachineState *x86ms =3D X86_MACHINE(pcms);
+>      AcpiBuildTables tables;
+>      AcpiBuildState *build_state;
+> @@ -2817,25 +2805,10 @@ void acpi_setup(void)
+>                             tables.vmgenid);
+>      }
+> =20
+> -    if (!pcmc->rsdp_in_ram) {
+> -        /*
+> -         * Keep for compatibility with old machine types.
+> -         * Though RSDP is small, its contents isn't immutable, so
+> -         * we'll update it along with the rest of tables on guest access.
+> -         */
+> -        uint32_t rsdp_size =3D acpi_data_len(tables.rsdp);
+> -
+> -        build_state->rsdp =3D g_memdup(tables.rsdp->data, rsdp_size);
+> -        fw_cfg_add_file_callback(x86ms->fw_cfg, ACPI_BUILD_RSDP_FILE,
+> -                                 acpi_build_update, NULL, build_state,
+> -                                 build_state->rsdp, rsdp_size, true);
+> -        build_state->rsdp_mr =3D NULL;
+> -    } else {
+> -        build_state->rsdp =3D NULL;
+> -        build_state->rsdp_mr =3D acpi_add_rom_blob(acpi_build_update,
+> -                                                 build_state, tables.rsd=
+p,
+> -                                                 ACPI_BUILD_RSDP_FILE);
+> -    }
+> +    build_state->rsdp =3D NULL;
+> +    build_state->rsdp_mr =3D acpi_add_rom_blob(acpi_build_update,
+> +                                             build_state, tables.rsdp,
+> +                                             ACPI_BUILD_RSDP_FILE);
+> =20
+>      qemu_register_reset(acpi_build_reset, build_state);
+>      acpi_build_reset(build_state);
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index fae21f75aa..8e51d1f1bb 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1757,7 +1757,6 @@ static void pc_machine_class_init(ObjectClass *oc, =
+void *data)
+> =20
+>      pcmc->pci_enabled =3D true;
+>      pcmc->has_acpi_build =3D true;
+> -    pcmc->rsdp_in_ram =3D true;
+>      pcmc->smbios_defaults =3D true;
+>      pcmc->gigabyte_align =3D true;
+>      pcmc->has_reserved_memory =3D true;
 
-Best regards,
-Nam
-
-> I am new to QEMU code, so please tell me if you think this is not the best
-> approach.
-> 
-> Best regards,
-> Nam
-> 
 
