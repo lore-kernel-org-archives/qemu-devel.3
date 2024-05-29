@@ -4,24 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624F3C25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72150C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM7T-0001o1-PF; Wed, 29 May 2024 12:25:43 -0400
+	id 1sCM7U-0001t4-Cf; Wed, 29 May 2024 12:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM75-0001IB-4I
+ id 1sCM77-0001Id-6r
  for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:23 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM72-0006N6-Nt
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:18 -0400
+ id 1sCM75-0006NW-0v
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:20 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6r-006CR0-9r;
+ (envelope-from <movement@movementarian.org>) id 1sCM6r-006CR8-TE;
  Wed, 29 May 2024 17:25:05 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
@@ -29,9 +29,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
  thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 22/26] vfio-user: no-mmap DMA support
-Date: Wed, 29 May 2024 17:23:15 +0100
-Message-Id: <20240529162319.1476680-23-levon@movementarian.org>
+Subject: [PATCH 24/26] vfio-user: pci reset
+Date: Wed, 29 May 2024 17:23:17 +0100
+Message-Id: <20240529162319.1476680-25-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
@@ -61,74 +61,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
-Force remote process to use DMA r/w messages instead
-of directly mapping guest memory.
+Message to tell the server to reset the device.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/user-container.c | 2 +-
- hw/vfio/user-pci.c       | 5 +++++
- hw/vfio/user.h           | 1 +
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ hw/vfio/user-pci.c | 15 +++++++++++++++
+ hw/vfio/user.c     | 12 ++++++++++++
+ hw/vfio/user.h     |  1 +
+ 3 files changed, 28 insertions(+)
 
-diff --git a/hw/vfio/user-container.c b/hw/vfio/user-container.c
-index 213861fb5d..1f6710e0b7 100644
---- a/hw/vfio/user-container.c
-+++ b/hw/vfio/user-container.c
-@@ -110,7 +110,7 @@ static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-      * vaddr enters as a QEMU process address; make it either a file offset
-      * for mapped areas or leave as 0.
-      */
--    if (fd != -1) {
-+    if (fd != -1 && !(container->proxy->flags & VFIO_PROXY_NO_MMAP)) {
-         msgp->offset = qemu_ram_block_host_offset(mrp->ram_block, vaddr);
-     }
- 
 diff --git a/hw/vfio/user-pci.c b/hw/vfio/user-pci.c
-index 9514f6e2fa..19fbcf77ab 100644
+index 9fb6ae5142..b473cbc404 100644
 --- a/hw/vfio/user-pci.c
 +++ b/hw/vfio/user-pci.c
-@@ -40,6 +40,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
- struct VFIOUserPCIDevice {
-     VFIOPCIDevice device;
-     char *sock_name;
-+    bool no_direct_dma; /* disable shared mem for DMA */
-     bool send_queued;   /* all sends are queued */
-     bool no_post;       /* all regions write are sync */
- };
-@@ -158,6 +159,9 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
-     vbasedev->proxy = proxy;
-     vfio_user_set_handler(vbasedev, vfio_user_pci_process_req, vdev);
- 
-+    if (udev->no_direct_dma) {
-+        proxy->flags |= VFIO_PROXY_NO_MMAP;
-+    }
-     if (udev->send_queued) {
-         proxy->flags |= VFIO_PROXY_FORCE_QUEUED;
+@@ -389,6 +389,20 @@ static void vfio_user_instance_finalize(Object *obj)
      }
-@@ -277,6 +281,7 @@ static void vfio_user_instance_finalize(Object *obj)
+ }
  
++static void vfio_user_pci_reset(DeviceState *dev)
++{
++    VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
++    VFIODevice *vbasedev = &vdev->vbasedev;
++
++    vfio_pci_pre_reset(vdev);
++
++    if (vbasedev->reset_works) {
++        vfio_user_reset(vbasedev->proxy);
++    }
++
++    vfio_pci_post_reset(vdev);
++}
++
  static Property vfio_user_pci_dev_properties[] = {
      DEFINE_PROP_STRING("socket", VFIOUserPCIDevice, sock_name),
-+    DEFINE_PROP_BOOL("no-direct-dma", VFIOUserPCIDevice, no_direct_dma, false),
-     DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
-     DEFINE_PROP_BOOL("x-no-posted-writes", VFIOUserPCIDevice, no_post, false),
-     DEFINE_PROP_END_OF_LIST(),
+     DEFINE_PROP_BOOL("no-direct-dma", VFIOUserPCIDevice, no_direct_dma, false),
+@@ -402,6 +416,7 @@ static void vfio_user_pci_dev_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+ 
++    dc->reset = vfio_user_pci_reset;
+     device_class_set_props(dc, vfio_user_pci_dev_properties);
+     dc->desc = "VFIO over socket PCI device assignment";
+     pdc->realize = vfio_user_pci_realize;
+diff --git a/hw/vfio/user.c b/hw/vfio/user.c
+index a383922601..3a38aa5543 100644
+--- a/hw/vfio/user.c
++++ b/hw/vfio/user.c
+@@ -1518,6 +1518,18 @@ static int vfio_user_region_write(VFIOUserProxy *proxy, uint8_t index,
+     return ret;
+ }
+ 
++void vfio_user_reset(VFIOUserProxy *proxy)
++{
++    VFIOUserHdr msg;
++
++    vfio_user_request_msg(&msg, VFIO_USER_DEVICE_RESET, sizeof(msg), 0);
++
++    vfio_user_send_wait(proxy, &msg, NULL, 0);
++    if (msg.flags & VFIO_USER_ERROR) {
++        error_printf("reset reply error %d\n", msg.error_reply);
++    }
++}
++
+ 
+ /*
+  * Socket-based io_ops
 diff --git a/hw/vfio/user.h b/hw/vfio/user.h
-index 31d2c5abd9..fe24a881f2 100644
+index fa6bc9a9d6..d9aa1759df 100644
 --- a/hw/vfio/user.h
 +++ b/hw/vfio/user.h
-@@ -94,6 +94,7 @@ typedef struct VFIOUserProxy {
+@@ -119,5 +119,6 @@ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+ void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size);
+ void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error);
+ void vfio_user_putfds(VFIOUserMsg *msg);
++void vfio_user_reset(VFIOUserProxy *proxy);
  
- /* VFIOProxy flags */
- #define VFIO_PROXY_CLIENT        0x1
-+#define VFIO_PROXY_NO_MMAP       0x2
- #define VFIO_PROXY_FORCE_QUEUED  0x4
- #define VFIO_PROXY_NO_POST       0x8
- 
+ #endif /* VFIO_USER_H */
 -- 
 2.34.1
 
