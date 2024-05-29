@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD57C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E96AC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 00:48:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sC7E7-0000kQ-L8; Tue, 28 May 2024 20:31:35 -0400
+	id 1sC7T5-0004b7-9W; Tue, 28 May 2024 20:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sC7E5-0000jT-Fe; Tue, 28 May 2024 20:31:33 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sC7E3-0002E3-C0; Tue, 28 May 2024 20:31:33 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6f4603237e0so286663b3a.0; 
- Tue, 28 May 2024 17:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716942689; x=1717547489; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uyTsky4jI5zz7g9luSPJ19DijDmERwSrOrQtvwCE5VI=;
- b=ADfxXP9AFqN+e04WQ0Tglmza2ui6vWfKPuXJPnbyMMHENTQbU1IrZoIO4jjEzPffFD
- 4vs2dW/xoelMIHLMFFQWYN+9yjVP6t/AyRcuP8JDkjaH0mSghRq155KCeq/sZ5VT9kYD
- AQ59DPqqAf1/5Ae36aaGGLvb4QFGJ/Hsq6RzhgXfYqa05kLfGRWKc3iQDiadcKGFa9KZ
- ATaKPIIQcgQz28uKAmtCXGRniQ/A9hZ6jqccelS6nAXOkPapkit3hQoWcdAbRCBr1nuj
- ErYF3w3/AOK2uZ7a6xQmF8s2fsxAWu2rJZRGxZ1Prjgg/g2m4eR+BK0tKzXa4XXLc+0X
- VBJw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sC7T3-0004af-33
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 20:47:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sC7T1-0004Pr-Kn
+ for qemu-devel@nongnu.org; Tue, 28 May 2024 20:47:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1716943618;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yY8xpkG4AR/dbkFJ19RA9OR84yURWFnjrIYDMJxJm6Y=;
+ b=Zw4Hljeq/V2N7BkoEGWVxkbbztTAeZ5wZg2pUoRdMywUZiwW/bzP53bh8JPAQtgtGpRfxw
+ 5LJ9JKfAFwFhlvFdIuOcq1+s5KkyWUpFKu3vGmvC+PKPXvjiWrAs50u0pbsHRpC37wN+C7
+ Pmynf3LD5oxyipoQ1xg68QN4V69k1H8=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-UnBnsdSJOvG_FHJIorzf_Q-1; Tue, 28 May 2024 20:46:56 -0400
+X-MC-Unique: UnBnsdSJOvG_FHJIorzf_Q-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6ad674e609fso3725866d6.3
+ for <qemu-devel@nongnu.org>; Tue, 28 May 2024 17:46:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716942689; x=1717547489;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uyTsky4jI5zz7g9luSPJ19DijDmERwSrOrQtvwCE5VI=;
- b=lhr3NO2qdtuF1uvsMGd9Y+HidXOe6SiERi/GQp2/YYE79HH6CDkgWGSenE6WXF486a
- TH48FP8LGwevvzPYpXfaDwmml2Z/ErcNo3mu41GJyTyr0kFR2KEku5RXBiR/cnxb+1sg
- 9QC2mS3Z+qLw7+ew/fAUolexncZhTH10Nm3zDFNuhaEr+uKD4nhbcUoVRzcwIld21HYj
- uVrBRRLzouPPBMuowMnOUlGCsqsumcBuUe5WtSYfyzafMN6QuIdK0tbEVpL6YPLbpyWp
- 59rSUyBh2S8dzT3NpUzW+up4nEZlkYgBPinHrH6OAP4fWg6I+psLeF/V3eNxNXtqCUYj
- puug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmoV4podfKwQB8OTbvGml4vGjphTqiEMMgiEjcP1PHg6iAUoE4eqRgsFPSUBfXZHXUH8L5Y22hLnhSbT9eNIVio5kbRin+lde5t7vJjNpZXEfyXw63hZfeVKM=
-X-Gm-Message-State: AOJu0YwvzOmU/8i/RmbRt+S2xkjFerNNCHA/ANLDRgpI2LJeW04il/EI
- KkB2er0uEL8b4pP/aDZdjKkXxtqS9qYRbQv1GCsVzT626iYJqwZx
-X-Google-Smtp-Source: AGHT+IFcQC9S90gtTWCahlCUzoDtONN0UEdNXN140V2FkK+L2boEpvl9Y2CjE/nJpNslqRC+FNuWEw==
-X-Received: by 2002:a05:6a00:90a8:b0:6f8:b8d7:1123 with SMTP id
- d2e1a72fcca58-702029d689amr1018980b3a.1.1716942689233; 
- Tue, 28 May 2024 17:31:29 -0700 (PDT)
-Received: from localhost (110-175-65-7.tpgi.com.au. [110.175.65.7])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f8fc2584dfsm7004504b3a.76.2024.05.28.17.31.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 May 2024 17:31:28 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 29 May 2024 10:31:23 +1000
-Message-Id: <D1LPDW58FUJ2.10TPCAQT8CHZ5@gmail.com>
-Cc: "Caleb Schlossin" <calebs@linux.vnet.ibm.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
- Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH 07/10] target/ppc: Add helpers to check for SMT
- sibling threads
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-8-npiggin@gmail.com>
- <1f9c8eb6-aa4f-4740-89a6-20b510b21d7d@linux.ibm.com>
-In-Reply-To: <1f9c8eb6-aa4f-4740-89a6-20b510b21d7d@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1716943616; x=1717548416;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yY8xpkG4AR/dbkFJ19RA9OR84yURWFnjrIYDMJxJm6Y=;
+ b=olMGOPmlT5lEPY82LV1TOluSaie7yDvwzodQtR6IailLgj6DhAJQJDpBW+vt4SCYy+
+ hEhJhRzypryA3+OT1jOD+G+amwctE7XbOq3wBsKupMCcitJmx/nElA7j9xAMYy4mpyjS
+ lgqQR0Q6rLDn6mrJddDpuNJ7DWJP4eKNrGVyKOpifqCCmnNnHF73btJ26nDLKwOxz23t
+ PbKd1TtqWCjt3O5+aoVFtvapi3AumDxbEyf0UZI2xyr1zUyFXglE2gH8BgEnU8L/52wg
+ SI/c38281IXlazZMDP6AHKHMSWhn+bK/eJSa6SF7gfSt5tOeOLNH7wH5pPNQU0uisHeY
+ hoeg==
+X-Gm-Message-State: AOJu0YxmNLjdrqE0hFi/oCLEFDmwriPimLzXUOv5HXZWgpgblZTtivFc
+ Z/YZPsNDx2EmM2Fz0mBATaSQyIROGZPo1wO7PmnULqJuj+GswCzrVEo7fooypF5EUFNddQ7UJj6
+ /hoI1q4Pu3ZcQ8C5ZwlFRgmC7xCWU8JkpMsCDb0TJ4qwFMO5eiiDq
+X-Received: by 2002:ac8:590c:0:b0:43d:89f6:9104 with SMTP id
+ d75a77b69052e-43fb0e6e8c7mr163643151cf.1.1716943615785; 
+ Tue, 28 May 2024 17:46:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFx7XvZ+cFqwSasVmTfuzVc22/BmHmPTcmED+e0LSgMq/Et91ZmB603+AjUm9XEvIFAx8JXyw==
+X-Received: by 2002:ac8:590c:0:b0:43d:89f6:9104 with SMTP id
+ d75a77b69052e-43fb0e6e8c7mr163642781cf.1.1716943614963; 
+ Tue, 28 May 2024 17:46:54 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43fb17f6ac8sm47372121cf.42.2024.05.28.17.46.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 May 2024 17:46:54 -0700 (PDT)
+Date: Tue, 28 May 2024 20:46:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH] tests/qtest/migrate-test: Use regular file file for
+ shared-memory tests
+Message-ID: <ZlZ6_cJmxMkMmVKo@x1n>
+References: <20240528042758.621589-1-npiggin@gmail.com> <ZlXdmi7PqKJdv3fP@x1n>
+ <ZlYAvIFodnTrQIkX@x1n> <D1LOU3F9ZD3Q.3KYRK41PZT98O@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <D1LOU3F9ZD3Q.3KYRK41PZT98O@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.034,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,283 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue May 28, 2024 at 7:16 PM AEST, Harsh Prateek Bora wrote:
->
->
-> On 5/26/24 17:56, Nicholas Piggin wrote:
-> > Add helpers for TCG code to determine if there are SMT siblings
-> > sharing per-core and per-lpar registers. This simplifies the
-> > callers and makes SMT register topology simpler to modify with
-> > later changes.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   target/ppc/cpu.h             |  7 +++++++
-> >   target/ppc/cpu_init.c        |  2 +-
-> >   target/ppc/excp_helper.c     | 16 +++++++---------
-> >   target/ppc/misc_helper.c     | 27 ++++++---------------------
-> >   target/ppc/timebase_helper.c | 20 +++++++-------------
-> >   5 files changed, 28 insertions(+), 44 deletions(-)
-> >=20
-> > diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> > index 9a89083932..8fd6ade471 100644
-> > --- a/target/ppc/cpu.h
-> > +++ b/target/ppc/cpu.h
-> > @@ -1406,6 +1406,13 @@ struct CPUArchState {
-> >       uint64_t pmu_base_time;
-> >   };
-> >  =20
-> > +#define PPC_CPU_HAS_CORE_SIBLINGS(cs)                           \
-> > +    (cs->nr_threads > 1)
-> > +
-> > +#define PPC_CPU_HAS_LPAR_SIBLINGS(cs)                           \
-> > +    ((POWERPC_CPU(cs)->env.flags & POWERPC_FLAG_SMT_1LPAR) &&   \
-> > +     PPC_CPU_HAS_CORE_SIBLINGS(cs))
-> > +
-> >   #define _CORE_ID(cs)                                            \
-> >       (POWERPC_CPU(cs)->env.core_index)
-> >  =20
-> > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> > index ae483e20c4..e71ee008ed 100644
-> > --- a/target/ppc/cpu_init.c
-> > +++ b/target/ppc/cpu_init.c
-> > @@ -6975,7 +6975,7 @@ static void ppc_cpu_realize(DeviceState *dev, Err=
-or **errp)
-> >  =20
-> >       pcc->parent_realize(dev, errp);
-> >  =20
-> > -    if (env_cpu(env)->nr_threads > 1) {
-> > +    if (PPC_CPU_HAS_CORE_SIBLINGS(cs)) {
-> >           env->flags |=3D POWERPC_FLAG_SMT;
-> >       }
-> >  =20
-> > diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> > index 0cd542675f..fd45da0f2b 100644
-> > --- a/target/ppc/excp_helper.c
-> > +++ b/target/ppc/excp_helper.c
-> > @@ -3029,7 +3029,7 @@ void helper_book3s_msgsnd(CPUPPCState *env, targe=
-t_ulong rb)
-> >           brdcast =3D true;
-> >       }
-> >  =20
-> > -    if (cs->nr_threads =3D=3D 1 || !brdcast) {
-> > +    if (!PPC_CPU_HAS_CORE_SIBLINGS(cs) || !brdcast) {
->
-> Since there are multiple usage of above macro in negation below as well,=
-=20
-> we may probably want to introduce another macro PPC_CPU_HAS_SINGLE_CORE
+On Wed, May 29, 2024 at 10:05:32AM +1000, Nicholas Piggin wrote:
+> I think that's good if you _need_ shm (e.g., for a uffd test), but
+> we should permit tests that only require a memory file.
 
-Ah, you mean SINGLE_THREAD. Yes it would read a bit better.
+Yes there's no reason to forbid that, it's just that we're not adding new
+tests but we can potentially change any future use_shmem to not test shmem
+anymore.. instead we test something we don't suggest users to use..
+
+The only concern is a small /dev/shm mount, am I right?  Would it work if
+switch to memory-backend-memfd,shared=on?
 
 Thanks,
-Nick
 
-> which checks only for nr_threads =3D=3D 1. Anyways,
->
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->
->
-> >           ppc_set_irq(cpu, PPC_INTERRUPT_HDOORBELL, 1);
-> >           return;
-> >       }
-> > @@ -3067,21 +3067,19 @@ void helper_book3s_msgsndp(CPUPPCState *env, ta=
-rget_ulong rb)
-> >       CPUState *cs =3D env_cpu(env);
-> >       PowerPCCPU *cpu =3D env_archcpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >       int ttir =3D rb & PPC_BITMASK(57, 63);
-> >  =20
-> >       helper_hfscr_facility_check(env, HFSCR_MSGP, "msgsndp", HFSCR_IC_=
-MSGP);
-> >  =20
-> > -    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-> > -        nr_threads =3D 1; /* msgsndp behaves as 1-thread in LPAR-per-t=
-hread mode*/
-> > -    }
-> > -
-> > -    if (!dbell_type_server(rb) || ttir >=3D nr_threads) {
-> > +    if (!dbell_type_server(rb)) {
-> >           return;
-> >       }
-> >  =20
-> > -    if (nr_threads =3D=3D 1) {
-> > -        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, 1);
-> > +    /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> > +        if (ttir =3D=3D 0) {
-> > +            ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, 1);
-> > +        }
-> >           return;
-> >       }
-> >  =20
-> > diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-> > index 46ba3a5584..598c956cdd 100644
-> > --- a/target/ppc/misc_helper.c
-> > +++ b/target/ppc/misc_helper.c
-> > @@ -49,9 +49,8 @@ void helper_spr_core_write_generic(CPUPPCState *env, =
-uint32_t sprn,
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1) {
-> > +    if (!PPC_CPU_HAS_CORE_SIBLINGS(cs)) {
-> >           env->spr[sprn] =3D val;
-> >           return;
-> >       }
-> > @@ -196,7 +195,7 @@ void helper_store_ptcr(CPUPPCState *env, target_ulo=
-ng val)
-> >               return;
-> >           }
-> >  =20
-> > -        if (cs->nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT=
-_1LPAR)) {
-> > +        if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >               env->spr[SPR_PTCR] =3D val;
-> >               tlb_flush(cs);
-> >           } else {
-> > @@ -243,16 +242,12 @@ target_ulong helper_load_dpdes(CPUPPCState *env)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >       target_ulong dpdes =3D 0;
-> >  =20
-> >       helper_hfscr_facility_check(env, HFSCR_MSGP, "load DPDES", HFSCR_=
-IC_MSGP);
-> >  =20
-> > -    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-> > -        nr_threads =3D 1; /* DPDES behaves as 1-thread in LPAR-per-thr=
-ead mode */
-> > -    }
-> > -
-> > -    if (nr_threads =3D=3D 1) {
-> > +    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
-> >               dpdes =3D 1;
-> >           }
-> > @@ -279,21 +274,11 @@ void helper_store_dpdes(CPUPPCState *env, target_=
-ulong val)
-> >       PowerPCCPU *cpu =3D env_archcpu(env);
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> >       helper_hfscr_facility_check(env, HFSCR_MSGP, "store DPDES", HFSCR=
-_IC_MSGP);
-> >  =20
-> > -    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-> > -        nr_threads =3D 1; /* DPDES behaves as 1-thread in LPAR-per-thr=
-ead mode */
-> > -    }
-> > -
-> > -    if (val & ~(nr_threads - 1)) {
-> > -        qemu_log_mask(LOG_GUEST_ERROR, "Invalid DPDES register value "
-> > -                      TARGET_FMT_lx"\n", val);
-> > -        val &=3D (nr_threads - 1); /* Ignore the invalid bits */
-> > -    }
-> > -
-> > -    if (nr_threads =3D=3D 1) {
-> > +    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & 0x1);
-> >           return;
-> >       }
-> > diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.=
-c
-> > index 788c498d63..abe7b95696 100644
-> > --- a/target/ppc/timebase_helper.c
-> > +++ b/target/ppc/timebase_helper.c
-> > @@ -63,9 +63,8 @@ void helper_store_purr(CPUPPCState *env, target_ulong=
- val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR))=
- {
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           cpu_ppc_store_purr(env, val);
-> >           return;
-> >       }
-> > @@ -82,9 +81,8 @@ void helper_store_tbl(CPUPPCState *env, target_ulong =
-val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR))=
- {
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           cpu_ppc_store_tbl(env, val);
-> >           return;
-> >       }
-> > @@ -99,9 +97,8 @@ void helper_store_tbu(CPUPPCState *env, target_ulong =
-val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR))=
- {
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           cpu_ppc_store_tbu(env, val);
-> >           return;
-> >       }
-> > @@ -141,9 +138,8 @@ void helper_store_hdecr(CPUPPCState *env, target_ul=
-ong val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR))=
- {
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           cpu_ppc_store_hdecr(env, val);
-> >           return;
-> >       }
-> > @@ -158,9 +154,8 @@ void helper_store_vtb(CPUPPCState *env, target_ulon=
-g val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR))=
- {
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           cpu_ppc_store_vtb(env, val);
-> >           return;
-> >       }
-> > @@ -175,9 +170,8 @@ void helper_store_tbu40(CPUPPCState *env, target_ul=
-ong val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >       CPUState *ccs;
-> > -    uint32_t nr_threads =3D cs->nr_threads;
-> >  =20
-> > -    if (nr_threads =3D=3D 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR))=
- {
-> > +    if (!PPC_CPU_HAS_LPAR_SIBLINGS(cs)) {
-> >           cpu_ppc_store_tbu40(env, val);
-> >           return;
-> >       }
-> > @@ -288,7 +282,7 @@ static void write_tfmr(CPUPPCState *env, target_ulo=
-ng val)
-> >   {
-> >       CPUState *cs =3D env_cpu(env);
-> >  =20
-> > -    if (cs->nr_threads =3D=3D 1) {
-> > +    if (!PPC_CPU_HAS_CORE_SIBLINGS(cs)) {
-> >           env->spr[SPR_TFMR] =3D val;
-> >       } else {
-> >           CPUState *ccs;
+-- 
+Peter Xu
 
 
