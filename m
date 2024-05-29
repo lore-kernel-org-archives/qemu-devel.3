@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8548C25B75
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A2E3C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 16:26:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCM7R-0001VF-4m; Wed, 29 May 2024 12:25:41 -0400
+	id 1sCM6u-00018C-G2; Wed, 29 May 2024 12:25:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6y-0001AY-6k
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:12 -0400
+ id 1sCM6o-00015b-TJ
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:05 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1sCM6v-0006Kh-C8
- for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:11 -0400
+ id 1sCM6l-0006KV-6k
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 12:25:02 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1sCM6j-006COq-1A;
- Wed, 29 May 2024 17:24:57 +0100
+ (envelope-from <movement@movementarian.org>) id 1sCM6i-006COY-QZ;
+ Wed, 29 May 2024 17:24:56 +0100
 From: John Levon <levon@movementarian.org>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, jag.raman@oracle.com,
  thanos.makatos@nutanix.com, John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 07/26] vfio: add VFIO base abstract class
-Date: Wed, 29 May 2024 17:23:00 +0100
-Message-Id: <20240529162319.1476680-8-levon@movementarian.org>
+Subject: [PATCH 01/26] vfio/container: pass MemoryRegion to DMA operations
+Date: Wed, 29 May 2024 17:22:54 +0100
+Message-Id: <20240529162319.1476680-2-levon@movementarian.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240529162319.1476680-1-levon@movementarian.org>
 References: <20240529162319.1476680-1-levon@movementarian.org>
@@ -61,305 +61,225 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
-Add an abstract base class both the kernel driver
-and user socket implementations can use to share code.
+Pass through the MemoryRegion to DMA operation handlers of vfio
+containers. The vfio-user container will need this later.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/pci.c | 108 ++++++++++++++++++++++++++++++--------------------
- hw/vfio/pci.h |  16 +++++++-
- 2 files changed, 80 insertions(+), 44 deletions(-)
+ hw/vfio/common.c                      | 17 ++++++++++-------
+ hw/vfio/container-base.c              |  5 +++--
+ hw/vfio/container.c                   |  3 ++-
+ hw/vfio/iommufd.c                     |  3 ++-
+ hw/virtio/vhost-vdpa.c                |  2 +-
+ include/exec/memory.h                 |  4 +++-
+ include/hw/vfio/vfio-container-base.h |  4 ++--
+ system/memory.c                       |  7 ++++++-
+ 8 files changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 470fb3502a..99783d3cd4 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -239,7 +239,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
- 
- static void vfio_intx_routing_notifier(PCIDevice *pdev)
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index f9619a1dfb..8eb2ed50dd 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -254,12 +254,12 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+ /* Called with rcu_read_lock held.  */
+ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                                ram_addr_t *ram_addr, bool *read_only,
+-                               Error **errp)
++                               MemoryRegion **mrp, Error **errp)
  {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     PCIINTxRoute route;
+     bool ret, mr_has_discard_manager;
  
-     if (vdev->interrupt != VFIO_INT_INTx) {
-@@ -514,7 +514,7 @@ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
- static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-                                    MSIMessage *msg, IOHandler *handler)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     VFIOMSIVector *vector;
+     ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+-                               &mr_has_discard_manager, errp);
++                               &mr_has_discard_manager, mrp, errp);
+     if (ret && mr_has_discard_manager) {
+         /*
+          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+@@ -287,6 +287,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+     VFIOContainerBase *bcontainer = giommu->bcontainer;
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
++    MemoryRegion *mrp;
+     void *vaddr;
      int ret;
-     bool resizing = !!(vdev->nr_vectors < nr + 1);
-@@ -619,7 +619,7 @@ static int vfio_msix_vector_use(PCIDevice *pdev,
+     Error *local_err = NULL;
+@@ -306,7 +307,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
  
- static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
+-        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
++        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &mrp,
++                                &local_err)) {
+             error_report_err(local_err);
+             goto out;
+         }
+@@ -319,7 +321,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+          */
+         ret = vfio_container_dma_map(bcontainer, iova,
+                                      iotlb->addr_mask + 1, vaddr,
+-                                     read_only);
++                                     read_only, mrp);
+         if (ret) {
+             error_report("vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+                          "0x%"HWADDR_PRIx", %p) = %d (%s)",
+@@ -384,7 +386,7 @@ static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
+         vaddr = memory_region_get_ram_ptr(section->mr) + start;
+ 
+         ret = vfio_container_dma_map(bcontainer, iova, next - start,
+-                                     vaddr, section->readonly);
++                                     vaddr, section->readonly, section->mr);
+         if (ret) {
+             /* Rollback */
+             vfio_ram_discard_notify_discard(rdl, section);
+@@ -686,7 +688,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
+     }
+ 
+     ret = vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
+-                                 vaddr, section->readonly);
++                                 vaddr, section->readonly, section->mr);
+     if (ret) {
+         error_setg(&err, "vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+                    "0x%"HWADDR_PRIx", %p) = %d (%s)",
+@@ -1231,7 +1233,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     }
+ 
+     rcu_read_lock();
+-    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
++    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, NULL,
++                            &local_err)) {
+         error_report_err(local_err);
+         goto out_unlock;
+     }
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 760d9d0622..f16766f490 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -17,10 +17,11 @@
+ 
+ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+                            hwaddr iova, ram_addr_t size,
+-                           void *vaddr, bool readonly)
++                           void *vaddr, bool readonly, MemoryRegion *mrp)
  {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
+     g_assert(bcontainer->ops->dma_map);
+-    return bcontainer->ops->dma_map(bcontainer, iova, size, vaddr, readonly);
++    return bcontainer->ops->dma_map(bcontainer, iova, size, vaddr,
++                                    readonly, mrp);
+ }
  
-     trace_vfio_msix_vector_release(vdev->vbasedev.name, nr);
-@@ -1168,7 +1168,7 @@ static const MemoryRegionOps vfio_vga_ops = {
+ int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 096cc97258..6e6308382f 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -177,7 +177,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+ }
+ 
+ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+-                               ram_addr_t size, void *vaddr, bool readonly)
++                               ram_addr_t size, void *vaddr, bool readonly,
++                               MemoryRegion *mrp)
+ {
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 554f9a6292..3d08a4f2dc 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -27,7 +27,8 @@
+ #include "pci.h"
+ 
+ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+-                            ram_addr_t size, void *vaddr, bool readonly)
++                            ram_addr_t size, void *vaddr, bool readonly,
++                            MemoryRegion *mrp)
+ {
+     const VFIOIOMMUFDContainer *container =
+         container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index ed99ab8745..9b5fb384dd 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -228,7 +228,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
+ 
+-        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
++        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL, NULL,
+                                   &local_err)) {
+             error_report_err(local_err);
+             return;
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 9cdd64e9c6..81c6d1488a 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -783,13 +783,15 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+  * @read_only: indicates if writes are allowed
+  * @mr_has_discard_manager: indicates memory is controlled by a
+  *                          RamDiscardManager
++ * @mrp: if non-NULL, fill in with MemoryRegion
+  * @errp: pointer to Error*, to store an error if it happens.
+  *
+  * Return: true on success, else false setting @errp with error.
   */
- static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager, Error **errp);
++                          bool *mr_has_discard_manager, MemoryRegion **mrp,
++                          Error **errp);
+ 
+ typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+ typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 2776481fc9..129e742643 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -72,7 +72,7 @@ typedef struct VFIORamDiscardListener {
+ 
+ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+                            hwaddr iova, ram_addr_t size,
+-                           void *vaddr, bool readonly);
++                           void *vaddr, bool readonly, MemoryRegion *mrp);
+ int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+                              hwaddr iova, ram_addr_t size,
+                              IOMMUTLBEntry *iotlb);
+@@ -113,7 +113,7 @@ struct VFIOIOMMUClass {
+     bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
+     int (*dma_map)(const VFIOContainerBase *bcontainer,
+                    hwaddr iova, ram_addr_t size,
+-                   void *vaddr, bool readonly);
++                   void *vaddr, bool readonly, MemoryRegion *mrp);
+     int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+                      hwaddr iova, ram_addr_t size,
+                      IOMMUTLBEntry *iotlb);
+diff --git a/system/memory.c b/system/memory.c
+index 9540caa8a1..d6574a88c1 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2179,7 +2179,8 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+ /* Called with rcu_read_lock held.  */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager, Error **errp)
++                          bool *mr_has_discard_manager, MemoryRegion **mrp,
++                          Error **errp)
  {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     VFIORegion *region = &vdev->bars[bar].region;
-     MemoryRegion *mmap_mr, *region_mr, *base_mr;
-     PCIIORegion *r;
-@@ -1214,7 +1214,7 @@ static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
-  */
- uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     uint32_t emu_bits = 0, emu_val = 0, phys_val = 0, val;
+     MemoryRegion *mr;
+     hwaddr xlat;
+@@ -2244,6 +2245,10 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+         *read_only = !writable || mr->readonly;
+     }
  
-     memcpy(&emu_bits, vdev->emulated_config_bits + addr, len);
-@@ -1247,7 +1247,7 @@ uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
- void vfio_pci_write_config(PCIDevice *pdev,
-                            uint32_t addr, uint32_t val, int len)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     uint32_t val_le = cpu_to_le32(val);
- 
-     trace_vfio_pci_write_config(vdev->vbasedev.name, addr, val, len);
-@@ -2961,7 +2961,7 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
- static void vfio_realize(PCIDevice *pdev, Error **errp)
- {
-     ERRP_GUARD();
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     char *subsys;
-     int i, ret;
-@@ -3247,7 +3247,7 @@ error:
- 
- static void vfio_instance_finalize(Object *obj)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
- 
-     vfio_display_finalize(vdev);
-     vfio_bars_finalize(vdev);
-@@ -3265,7 +3265,7 @@ static void vfio_instance_finalize(Object *obj)
- 
- static void vfio_exitfn(PCIDevice *pdev)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
- 
-     vfio_unregister_req_notifier(vdev);
-     vfio_unregister_err_notifier(vdev);
-@@ -3285,7 +3285,7 @@ static void vfio_exitfn(PCIDevice *pdev)
- 
- static void vfio_pci_reset(DeviceState *dev)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI(dev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
- 
-     trace_vfio_pci_reset(vdev->vbasedev.name);
- 
-@@ -3325,7 +3325,7 @@ post_reset:
- static void vfio_instance_init(Object *obj)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(obj);
--    VFIOPCIDevice *vdev = VFIO_PCI(obj);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-     VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     device_add_bootindex_property(obj, &vdev->bootindex,
-@@ -3346,25 +3346,12 @@ static void vfio_instance_init(Object *obj)
-     pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
++    if (mrp != NULL) {
++        *mrp = mr;
++    }
++
+     return true;
  }
  
--static Property vfio_pci_dev_properties[] = {
--    DEFINE_PROP_PCI_HOST_DEVADDR("host", VFIOPCIDevice, host),
--    DEFINE_PROP_UUID_NODEFAULT("vf-token", VFIOPCIDevice, vf_token),
--    DEFINE_PROP_STRING("sysfsdev", VFIOPCIDevice, vbasedev.sysfsdev),
-+static Property vfio_pci_base_dev_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("x-pre-copy-dirty-page-tracking", VFIOPCIDevice,
-                             vbasedev.pre_copy_dirty_page_tracking,
-                             ON_OFF_AUTO_ON),
--    DEFINE_PROP_ON_OFF_AUTO("display", VFIOPCIDevice,
--                            display, ON_OFF_AUTO_OFF),
--    DEFINE_PROP_UINT32("xres", VFIOPCIDevice, display_xres, 0),
--    DEFINE_PROP_UINT32("yres", VFIOPCIDevice, display_yres, 0),
-     DEFINE_PROP_UINT32("x-intx-mmap-timeout-ms", VFIOPCIDevice,
-                        intx.mmap_timeout, 1100),
--    DEFINE_PROP_BIT("x-vga", VFIOPCIDevice, features,
--                    VFIO_FEATURE_ENABLE_VGA_BIT, false),
--    DEFINE_PROP_BIT("x-req", VFIOPCIDevice, features,
--                    VFIO_FEATURE_ENABLE_REQ_BIT, true),
--    DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
--                    VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
-                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-@@ -3375,8 +3362,6 @@ static Property vfio_pci_dev_properties[] = {
-     DEFINE_PROP_BOOL("x-no-kvm-intx", VFIOPCIDevice, no_kvm_intx, false),
-     DEFINE_PROP_BOOL("x-no-kvm-msi", VFIOPCIDevice, no_kvm_msi, false),
-     DEFINE_PROP_BOOL("x-no-kvm-msix", VFIOPCIDevice, no_kvm_msix, false),
--    DEFINE_PROP_BOOL("x-no-geforce-quirks", VFIOPCIDevice,
--                     no_geforce_quirks, false),
-     DEFINE_PROP_BOOL("x-no-kvm-ioeventfd", VFIOPCIDevice, no_kvm_ioeventfd,
-                      false),
-     DEFINE_PROP_BOOL("x-no-vfio-ioeventfd", VFIOPCIDevice, no_vfio_ioeventfd,
-@@ -3387,12 +3372,58 @@ static Property vfio_pci_dev_properties[] = {
-                        sub_vendor_id, PCI_ANY_ID),
-     DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
-                        sub_device_id, PCI_ANY_ID),
-+    DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
-+                                OFF_AUTOPCIBAR_OFF),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+
-+static void vfio_pci_base_dev_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
-+
-+    device_class_set_props(dc, vfio_pci_base_dev_properties);
-+    dc->desc = "VFIO PCI base device";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    pdc->exit = vfio_exitfn;
-+    pdc->config_read = vfio_pci_read_config;
-+    pdc->config_write = vfio_pci_write_config;
-+}
-+
-+static const TypeInfo vfio_pci_base_dev_info = {
-+    .name = TYPE_VFIO_PCI_BASE,
-+    .parent = TYPE_PCI_DEVICE,
-+    .instance_size = 0,
-+    .abstract = true,
-+    .class_init = vfio_pci_base_dev_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { INTERFACE_PCIE_DEVICE },
-+        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+        { }
-+    },
-+};
-+
-+static Property vfio_pci_dev_properties[] = {
-+    DEFINE_PROP_PCI_HOST_DEVADDR("host", VFIOPCIDevice, host),
-+    DEFINE_PROP_UUID_NODEFAULT("vf-token", VFIOPCIDevice, vf_token),
-+    DEFINE_PROP_STRING("sysfsdev", VFIOPCIDevice, vbasedev.sysfsdev),
-+    DEFINE_PROP_ON_OFF_AUTO("display", VFIOPCIDevice,
-+                            display, ON_OFF_AUTO_OFF),
-+    DEFINE_PROP_UINT32("xres", VFIOPCIDevice, display_xres, 0),
-+    DEFINE_PROP_UINT32("yres", VFIOPCIDevice, display_yres, 0),
-+    DEFINE_PROP_BIT("x-vga", VFIOPCIDevice, features,
-+                    VFIO_FEATURE_ENABLE_VGA_BIT, false),
-+    DEFINE_PROP_BIT("x-req", VFIOPCIDevice, features,
-+                    VFIO_FEATURE_ENABLE_REQ_BIT, true),
-+    DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
-+                    VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-+    DEFINE_PROP_BOOL("x-no-geforce-quirks", VFIOPCIDevice,
-+                     no_geforce_quirks, false),
-     DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
-     DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
-                                    nv_gpudirect_clique,
-                                    qdev_prop_nv_gpudirect_clique, uint8_t),
--    DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
--                                OFF_AUTOPCIBAR_OFF),
- #ifdef CONFIG_IOMMUFD
-     DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
-                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
-@@ -3404,7 +3435,8 @@ static Property vfio_pci_dev_properties[] = {
- #ifdef CONFIG_IOMMUFD
- static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
- {
--    vfio_device_set_fd(&VFIO_PCI(obj)->vbasedev, str, errp);
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-+    vfio_device_set_fd(&vdev->vbasedev, str, errp);
- }
- #endif
- 
-@@ -3419,25 +3451,16 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-     object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
- #endif
-     dc->desc = "VFIO-based PCI device assignment";
--    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-     pdc->realize = vfio_realize;
--    pdc->exit = vfio_exitfn;
--    pdc->config_read = vfio_pci_read_config;
--    pdc->config_write = vfio_pci_write_config;
- }
- 
- static const TypeInfo vfio_pci_dev_info = {
-     .name = TYPE_VFIO_PCI,
--    .parent = TYPE_PCI_DEVICE,
--    .instance_size = sizeof(VFIOPCIDevice),
-+    .parent = TYPE_VFIO_PCI_BASE,
-+    .instance_size = sizeof(VFIOKernelPCIDevice),
-     .class_init = vfio_pci_dev_class_init,
-     .instance_init = vfio_instance_init,
-     .instance_finalize = vfio_instance_finalize,
--    .interfaces = (InterfaceInfo[]) {
--        { INTERFACE_PCIE_DEVICE },
--        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
--        { }
--    },
- };
- 
- static Property vfio_pci_dev_nohotplug_properties[] = {
-@@ -3458,12 +3481,13 @@ static void vfio_pci_nohotplug_dev_class_init(ObjectClass *klass, void *data)
- static const TypeInfo vfio_pci_nohotplug_dev_info = {
-     .name = TYPE_VFIO_PCI_NOHOTPLUG,
-     .parent = TYPE_VFIO_PCI,
--    .instance_size = sizeof(VFIOPCIDevice),
-+    .instance_size = sizeof(VFIOKernelPCIDevice),
-     .class_init = vfio_pci_nohotplug_dev_class_init,
- };
- 
- static void register_vfio_pci_dev_type(void)
- {
-+    type_register_static(&vfio_pci_base_dev_info);
-     type_register_static(&vfio_pci_dev_info);
-     type_register_static(&vfio_pci_nohotplug_dev_info);
- }
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index bf67df2fbc..770448155e 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -116,8 +116,13 @@ typedef struct VFIOMSIXInfo {
-     bool noresize;
- } VFIOMSIXInfo;
- 
--#define TYPE_VFIO_PCI "vfio-pci"
--OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI)
-+/*
-+ * TYPE_VFIO_PCI_BASE is an abstract type used to share code
-+ * between VFIO implementations that use a kernel driver
-+ * with those that use user sockets.
-+ */
-+#define TYPE_VFIO_PCI_BASE "vfio-pci-base"
-+OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
- 
- struct VFIOPCIDevice {
-     PCIDevice pdev;
-@@ -182,6 +187,13 @@ struct VFIOPCIDevice {
-     Notifier irqchip_change_notifier;
- };
- 
-+#define TYPE_VFIO_PCI "vfio-pci"
-+OBJECT_DECLARE_SIMPLE_TYPE(VFIOKernelPCIDevice, VFIO_PCI)
-+
-+struct VFIOKernelPCIDevice {
-+    VFIOPCIDevice device;
-+};
-+
- /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot match hw */
- static inline bool vfio_pci_is(VFIOPCIDevice *vdev, uint32_t vendor, uint32_t device)
- {
 -- 
 2.34.1
 
