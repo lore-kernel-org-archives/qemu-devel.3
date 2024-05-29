@@ -4,142 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AB6C27C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4296C27C43
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 12:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCISG-0004Jf-LF; Wed, 29 May 2024 08:30:56 -0400
+	id 1sCITE-0005X2-JJ; Wed, 29 May 2024 08:31:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sCISF-0004Hg-1O
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:30:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1sCIT4-0005TJ-6g
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:31:47 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sCIS9-0004lT-MA
- for qemu-devel@nongnu.org; Wed, 29 May 2024 08:30:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716985847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rbBdhQhm/uqGe7RLXvABuoXrBqU73BjuA0oq49zaLy0=;
- b=EZp0EbGmq9e+qqfoTGBoPMo1HN2R8u4GVYbGXEEIhIL5+3d4ZqL4v30ICVIwq1GCV8DLPG
- P19tTUI7jTavsh2CN5PAh+3gudKmSd9legrPMHEZJDZvBqC6fV6KSBrpQZGohRWtx4Lta2
- MFVO0ymFVQYlr1tvhb1M7g+zDQz8vRg=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646-TOKgLJu0PEqU1cNfl3l_Ig-1; Wed, 29 May 2024 08:30:45 -0400
-X-MC-Unique: TOKgLJu0PEqU1cNfl3l_Ig-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2e95a1eba87so19033761fa.0
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 05:30:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716985843; x=1717590643;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rbBdhQhm/uqGe7RLXvABuoXrBqU73BjuA0oq49zaLy0=;
- b=E+2uyE1y8jcECpkAsng+9FcXx7QepfCn9QRfgVGwi9iO293QvTEi/GSH0UGSB89MOo
- SmGUQZB/FdHFwKKiZvORgGmi3ow+hIh/wHp85OofVibJ/V4fY2SHcC2iH4PZdH2z0Tdg
- zepqaCwT87Po7Wrk6VYA+GQuoryKJCDHvTuMGIefvRYnDVB+kAdCSGwBbX0YHTKSDumT
- EJ30C7bO0isg0Tb7xamMqaIOP2jYXcMd3yqXl/AcQ0ARLxOGeiOVqdjK/362IXuk9QZ3
- hht3kp4YgLgNhUWGVaHKEzcZsSPWwECAc2bmUKEdIX+MBR+pLF4Vt1YmZ2bcyudsExdh
- qxkQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwSylcqwBQo+S1JTRHOTHKKphRSHwLGIb7z0mPVklMxchx1iJSFade9z4yurBDWjE3VgfDjK6Ql0SkhOllEHo/W9X2jiA=
-X-Gm-Message-State: AOJu0YzFas9gtitW2Yw07puMaarQ7xmDTLs4eJDCBnRyjFX29hjBGc4D
- fhlIZzduQkME6otdhN8lxQvDf3ozRFTz6XpMyj+9Nj9Beayd0sHzJ68z0uD6kM935u61zAg715P
- rprNO3Xh7Tp9nR6t8UTLWFtAR4C2domE+h20KO4Z9qvxzmXzRj9UT
-X-Received: by 2002:a2e:a168:0:b0:2d4:3e82:117e with SMTP id
- 38308e7fff4ca-2e95b240160mr100682121fa.32.1716985843711; 
- Wed, 29 May 2024 05:30:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQCfY6Am50JQkiGOWadzmhDU3qE5xAF/vOJTvRp2nYXoTYVJpKkCPa7MIpNs+mQbeNV4bevg==
-X-Received: by 2002:a2e:a168:0:b0:2d4:3e82:117e with SMTP id
- 38308e7fff4ca-2e95b240160mr100681891fa.32.1716985843127; 
- Wed, 29 May 2024 05:30:43 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c70c:3c00:686e:317c:3ed4:d7b8?
- (p200300cbc70c3c00686e317c3ed4d7b8.dip0.t-ipconnect.de.
- [2003:cb:c70c:3c00:686e:317c:3ed4:d7b8])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42100fad7fasm211103415e9.38.2024.05.29.05.30.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 05:30:42 -0700 (PDT)
-Message-ID: <8a446e76-238f-410f-ad43-1821117b6e94@redhat.com>
-Date: Wed, 29 May 2024 14:30:41 +0200
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1sCISz-0004s2-JC
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 08:31:44 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B45AB60D34;
+ Wed, 29 May 2024 15:31:31 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:7214::1:2e] (unknown
+ [2a02:6b8:b081:7214::1:2e])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id TVQUXG0iCSw0-cqLukbxd; Wed, 29 May 2024 15:31:31 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1716985891;
+ bh=idTG4nXLoq1ecpE2FByiKf7lSYTMSavvRJSma+N5zIA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=EqiNJ5/cjyJEc4X6i+3wFekRiwwH142KYkIgMqqzkNgWGNGzFAX9UXSw0IkrSuU0t
+ qLnkNm5x3P49kPO4gHMfNxK5OlzKHb8lTLS0yrIe4qTYWhcMUb0GslJzeE9U+z1Ab/
+ 4XR/TUTH17ZRJMovMh/nna/eHCCPEhyF4927CvjU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <adf92e81-623d-41a7-9f17-13596077e873@yandex-team.ru>
+Date: Wed, 29 May 2024 15:31:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] backends/hostmem: Round up memory size for
- qemu_madvise() and mbind()
-To: =?UTF-8?B?TWljaGFsIFByw612b3puw61r?= <mprivozn@redhat.com>,
- qemu-devel@nongnu.org
-Cc: imammedo@redhat.com
-References: <cover.1716912651.git.mprivozn@redhat.com>
- <bd03706d336e9be360dd53cf125c27fbeb26acf7.1716912651.git.mprivozn@redhat.com>
- <57fabde4-3282-4d10-aaa6-e14c2169d893@redhat.com>
- <2b46e524-15b3-4c47-af50-1baa2b4c160d@redhat.com>
+Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
+ QMP
+To: Markus Armbruster <armbru@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-devel@nongnu.org, philmd@linaro.org
+References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
+ <87mso8n7tw.fsf@pond.sub.org>
 Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <2b46e524-15b3-4c47-af50-1baa2b4c160d@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+In-Reply-To: <87mso8n7tw.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,75 +81,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.05.24 08:48, Michal Prívozník wrote:
-> On 5/28/24 18:47, David Hildenbrand wrote:
->> Am 28.05.24 um 18:15 schrieb Michal Privoznik:
->>> ./build/qemu-system-x86_64 \ -m
->>> size=8389632k,slots=16,maxmem=25600000k \ -object
->>> '{"qom-type":"memory-backend-file","id":"ram-node0","mem-path":"hugepages2M","prealloc":true,"size":8590983168,"host-nodes":[0],"policy":"bind"}' \ -numa node,nodeid=0,cpus=0,memdev=ram-node0
->>
->> For DIMMs and friends we now (again) enforce that the size must be
->> aligned to the page size:
->>
->> commit 540a1abbf0b243e4cfb4333c5d30a041f7080ba4
->> Author: David Hildenbrand <david@redhat.com>
->> Date:   Wed Jan 17 14:55:54 2024 +0100
->>
->>      memory-device: reintroduce memory region size check
->>
->>      We used to check that the memory region size is multiples of the
->> overall
->>      requested address alignment for the device memory address.
->>
->>      We removed that check, because there are cases (i.e., hv-balloon) where
->>      devices unconditionally request an address alignment that has a very
->> large
->>      alignment (i.e., 32 GiB), but the actual memory device size might
->> not be
->>      multiples of that alignment.
->>
->>      However, this change:
->>
->>      (a) allows for some practically impossible DIMM sizes, like "1GB+1
->> byte".
->>      (b) allows for DIMMs that partially cover hugetlb pages, previously
->>          reported in [1].
->> ...
->>
->> Partial hugetlb pages do not particularly make sense; wasting memory. Do
->> we expect people to actually ave working setup that we might break when
->> disallowing such configurations? Or would we actually help them identify
->> that something non-sensical is happening?
->>
->> When using memory-backend-memfd, we already do get a proper error:
->>
->>   ./build/qemu-system-x86_64 -m 2047m -object
->> memory-backend-memfd,id=ram-node0,hugetlb=on,size=2047m,reserve=off
->> -numa node,nodeid=0,cpus=0,memdev=ram-node0 -S
->> qemu-system-x86_64: failed to resize memfd to 2146435072: Invalid argument
->>
->> So this only applies to memory-backend-file, where we maybe should fail
->> in a similar way?
->>
-> 
-> Yeah, let's fail in that case. But non-aligned length is just one of
-> many reasons madvise()/mbind() can fail. What about the others? Should
-> we make them report an error or just a warning?
+Thanks for the review Markus!
 
-Regarding madvise(), we should report at least a warning.
+I will fix the wording and add a "Bug:" clause for the next revision.
 
-In qemu_ram_setup_dump() we print an error if QEMU_MADV_DONTDUMP failed.
-
-But we swallow any errors from memory_try_enable_merging() ... in 
-general, we likely have to distinguish the "not supported by the OS" 
-case from " actually supported but failed" case.
-
-In the second patch, maybe we should really fail if something unexpected 
-happens, instead of fake-changing the properties.
-
--- 
-Cheers,
-
-David / dhildenb
-
+On 5/29/24 3:03 PM, Markus Armbruster wrote:
+> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+>
+>> This can be used to force-synchronize the time in guest after a long
+>> stop-cont pause, which can be useful for serverless-type workload.
+>>
+>> Also add a comment to highlight the fact that this (and one other QMP
+>> command) only works for the MC146818 RTC controller.
+>>
+>> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>> ---
+>>
+>> Changes since v0:
+>> - Rename to rtc-inject-irq to match other similar API
+>> - Add a comment to highlight that this only works for the I386 RTC
+>>
+>> Changes since v1:
+>> - Added a description below the QMP command to explain how it can be
+>>    used and what it does.
+>>
+>> Changes since v2:
+>> - Add a 'broadcast' suffix.
+>> - Change the comments to explain the flags we're setting.
+>> - Change the command description to fix styling & explain that it's a broadcast command.
+>>
+>> Changes since v3:
+>> - Fix checkpatch complaints about usage of C99 comments
+>>
+>> ---
+>>   hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
+>>   include/hw/rtc/mc146818rtc.h |  1 +
+>>   qapi/misc-target.json        | 19 +++++++++++++++++++
+>>   3 files changed, 40 insertions(+)
+>>
+>> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+>> index 3379f92748..96ecd43036 100644
+>> --- a/hw/rtc/mc146818rtc.c
+>> +++ b/hw/rtc/mc146818rtc.c
+>> @@ -107,6 +107,11 @@ static void rtc_coalesced_timer_update(MC146818RtcState *s)
+>>   static QLIST_HEAD(, MC146818RtcState) rtc_devices =
+>>       QLIST_HEAD_INITIALIZER(rtc_devices);
+>>   
+>> +/*
+>> + * NOTE:
+>> + * The two QMP functions below are _only_ implemented for the MC146818.
+>> + * All other RTC devices ignore this.
+>> + */
+>>   void qmp_rtc_reset_reinjection(Error **errp)
+>>   {
+>>       MC146818RtcState *s;
+>> @@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
+>>       }
+>>   }
+>>   
+>> +void qmp_rtc_inject_irq_broadcast(Error **errp)
+>> +{
+>> +    MC146818RtcState *s;
+>> +
+>> +    QLIST_FOREACH(s, &rtc_devices, link) {
+>> +        /* Update-ended interrupt enable */
+>> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
+>> +
+>> +        /* Interrupt request flag | update interrupt flag */
+>> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
+>> +
+>> +        qemu_irq_raise(s->irq);
+>> +    }
+>> +}
+>> +
+>>   static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
+>>   {
+>>       kvm_reset_irq_delivered();
+>> diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
+>> index 97cec0b3e8..e9dd0f9c72 100644
+>> --- a/include/hw/rtc/mc146818rtc.h
+>> +++ b/include/hw/rtc/mc146818rtc.h
+>> @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
+>>   void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
+>>   int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
+>>   void qmp_rtc_reset_reinjection(Error **errp);
+>> +void qmp_rtc_inject_irq_broadcast(Error **errp);
+>>   
+>>   #endif /* HW_RTC_MC146818RTC_H */
+>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+>> index 4e0a6492a9..7d388a3753 100644
+>> --- a/qapi/misc-target.json
+>> +++ b/qapi/misc-target.json
+>> @@ -19,6 +19,25 @@
+>>   { 'command': 'rtc-reset-reinjection',
+>>     'if': 'TARGET_I386' }
+>>   
+>> +##
+>> +# @rtc-inject-irq-broadcast:
+>> +#
+>> +# Inject an RTC interrupt for all existing RTCs on the system.
+>> +# The interrupt forces the guest to synchronize the time with RTC.
+>> +# This is useful after a long stop-cont pause, which is common for
+>> +# serverless-type workload.
+> Make that "workloads".
+>
+> "For all existing RTCs" is a lie.  It's really just all mc146818s.  The
+> command works as documented only as long as the VM has no other RTCs.
+>
+>> +#
+>> +# Since: 9.1
+>> +#
+>> +# Example:
+>> +#
+>> +#     -> { "execute": "rtc-inject-irq-broadcast" }
+>> +#     <- { "return": {} }
+>> +#
+>> +##
+>> +{ 'command': 'rtc-inject-irq-broadcast',
+>> +  'if': 'TARGET_I386' }
+> The conditional kind-of-sort-of ensures "VM has no other RTCs":
+> TARGET_I386 compiles only this file in hw/rtc/, and therefore can't have
+> other RTCs (unless they're hiding in some other directory).  Brittle.
+>
+> When we move to single binary, we will compile in other RTCs.  How can
+> we ensure "VM has no nother RTCs" then?  What if one of these other RTCs
+> can be added with -device or device_add?
+>
+> When this falls apart because the VM does have other RTCs, it can only
+> do so silently: the command can't tell us for which RTCs it actually
+> injected an interrupt.
+>
+> Documentation making promises the implementation doesn't actually
+> deliver can only end in tears.  The only reason I'm not rejecting this
+> patch out of hand is the existing and similarly broken
+> rtc-reset-reinjection.
+>
+> I'm willing to reluctantly accept it with honest documentation.
+> Perhaps: "Bug: RTCs other than mc146818rtc are silently ignored."
+>
+> Much, much better would be an interface that's actually usable with
+> multiple RTCs.  We'd have to talk how interrupt injection could be used
+> with such a machine.
+>
+> Anything less will likely need to be replaced later on.
+>
+>> +
+>>   ##
+>>   # @SevState:
+>>   #
 
