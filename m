@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259B8C25B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8D2C25B75
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 May 2024 07:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCDuH-000532-UB; Wed, 29 May 2024 03:39:33 -0400
+	id 1sCDxx-0006Uq-50; Wed, 29 May 2024 03:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDuE-00052t-PH
- for qemu-devel@nongnu.org; Wed, 29 May 2024 03:39:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDxr-0006UP-02
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 03:43:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDuC-0007vv-Ri
- for qemu-devel@nongnu.org; Wed, 29 May 2024 03:39:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCDxo-0008KZ-Gy
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 03:43:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1716968366;
+ s=mimecast20190719; t=1716968591;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6D/3tiwCtcDhEIer0+xCrdhhQWJab7qYxRKO6MTrWmU=;
- b=G4rKmI8Jt+c5/IwFnX7pC+vhx2bX8AiSM0pFpLiXOtxQm2eDQ01s00YFSpaFuSs0BtK0+Y
- mpH2/8QFlDuewxo9aqR5ibZ8cwMLsHyLoX0a9Bc/4RFRv9tLUrB9AuI1lxIYM0NYHO/ay/
- uhr4jfPfesO9lAtmiSQHcybDJdqJYbU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VfQi7oDkOYGPbydfrlzBDuP1SXl4kxiefUA99Bxi+us=;
+ b=dlFa017Yd2OhNFBWLyc854FmgnwZPpiNnut8A+bkjYURFbfPHdWZYd2xWFJddhGHl6cH4/
+ PQMVy/R2OdjW763T4v+cnrBPrO4l9BY+ly/QSB/aQpi8KPZWg69H2okDjuVjdJcfjfu5jZ
+ Tu5UYf9UKdzLbhqrNq9gPkZ0iUHxf30=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-5v3o-0SxMk66EUl23qy8Lg-1; Wed, 29 May 2024 03:39:24 -0400
-X-MC-Unique: 5v3o-0SxMk66EUl23qy8Lg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-357766bb14fso1202289f8f.2
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 00:39:24 -0700 (PDT)
+ us-mta-318-DTT8Za70NqO4gecz3an3QQ-1; Wed, 29 May 2024 03:43:09 -0400
+X-MC-Unique: DTT8Za70NqO4gecz3an3QQ-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2e95a655afcso12631181fa.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 00:43:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716968363; x=1717573163;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6D/3tiwCtcDhEIer0+xCrdhhQWJab7qYxRKO6MTrWmU=;
- b=NNcM5Ljy/L+ro2wu+MCnFSH2HaXH15bq8l8g/Ah/3hUdOFttWZH4uuT+piI7ypbb8x
- 6CpeKKJxA0WRV5iK1iLsUu2hxG0uafoS0sZUqyfoEKe8x2DySI1VhOlJd821aCNcECS/
- aT0tW+PuKv2zHJcDDNyAzW5IiabrM0qRdXc4EKNx6hWnspriDrFwQsfXKeaivfbYmm68
- z4V9dJykL/wtYWktdAYpuwUWbmYH10oODzbsXo/CE0mmJvHg6I1MYOQUnvmSleiJFffq
- sxy66uOzkQEUgwFsQi6gkNDPnsBXj85OuXkRSrw63FHmL1hxIE9GfNtho9bFQMqQCyIT
- lyDA==
-X-Gm-Message-State: AOJu0Yy3Z2RkmUkvx9vrimtBQT35eZXUutm4fn8Veqie+qolXpnQgBlG
- LTHUYj/oBpgydRtNIudLkFortR1mN8NcnQYyNH3p7N878mU7rTxaqyRLgrLDvIHZFBOxfm5OC6T
- sM2+U/uZQ0F3vT3BiFrUe6mPW0ZRaXY/sLIXYZ/pC/vNJDmi6jLlb
-X-Received: by 2002:adf:e642:0:b0:354:fca5:4190 with SMTP id
- ffacd0b85a97d-35526c6f4a3mr10105042f8f.41.1716968363395; 
- Wed, 29 May 2024 00:39:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFV/gvdg+F/9a/DW8AwNlUwN2d/PJJkaYk6qtOGNsCwdD6WKzdy/oaCn3REAiKyTNpreVwyRA==
-X-Received: by 2002:adf:e642:0:b0:354:fca5:4190 with SMTP id
- ffacd0b85a97d-35526c6f4a3mr10105016f8f.41.1716968362910; 
- Wed, 29 May 2024 00:39:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1716968588; x=1717573388;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VfQi7oDkOYGPbydfrlzBDuP1SXl4kxiefUA99Bxi+us=;
+ b=D32qw61TRwyRnBOYJtq9DQivQajNW7vI48OvXnZW74eueP9o3zxKzr3lfGJ7ydTwr/
+ PMzvKJRlslteca1otQ6K/5ab258gnEmN6vfFJYY4bb0qvRskAENF4EROYdlxJztL90Qn
+ 5WQXHypSsUx7DZCvd8pMF382A6DTjU+NB5x9qO9dWVkI1wAWzvqPWAwpomj5jBQcAH+w
+ /Jn7/aiC/27QDptBpwun7Qa3pqchWPTYQdhfkLKyDQtRSO4SQTSLjHIQuYK9OCEcFXxa
+ VuM7gsJdQ4h0HZVE+fW5ZmsJpDeMToWby8eKI+UaKoYjJNkRgQ9agc305XYuTtFLpi/V
+ FUMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUwO2W3S6AdgVSPfypKvLdmK/8P8gp5QLAsLMaE25IWpU3KBDiw/8xYbpoSarfcOQoe7BeOlXvOHuqorcGRCu3UOGrlsM=
+X-Gm-Message-State: AOJu0YzpsHrKX46GXBakgJsXYRWW09AaU4QbM6YFoLTTfC/AW9BABeu4
+ jLD7pMxd/Zo5fTkQoEJHrXBz4py2pSpY4vfJm76oLWjdGe6SzHZ6bVx4+2xNqD4SlJshdqEtdJa
+ pLWtwlymuGVsP19wO+ER8IYB3ZKFGha9CopP7wEaISX/W9D7SYV6l
+X-Received: by 2002:a2e:bc08:0:b0:2e5:15d0:511c with SMTP id
+ 38308e7fff4ca-2e95b287586mr121075651fa.40.1716968588013; 
+ Wed, 29 May 2024 00:43:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKCDdV+Y8NDK+ovpjmdcPSgOjsYI4urASf404yKT28B02l1mzubVZ4UnjKK/L4sB0RFWG1Xw==
+X-Received: by 2002:a2e:bc08:0:b0:2e5:15d0:511c with SMTP id
+ 38308e7fff4ca-2e95b287586mr121075511fa.40.1716968587510; 
+ Wed, 29 May 2024 00:43:07 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
  [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7db8csm13998367f8f.8.2024.05.29.00.39.21
+ 5b1f17b1804b1-421089708edsm170022525e9.16.2024.05.29.00.43.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 00:39:22 -0700 (PDT)
-Message-ID: <ad1ea27a-9ecd-4c72-a9a6-b11e5eeb1293@redhat.com>
-Date: Wed, 29 May 2024 09:39:20 +0200
+ Wed, 29 May 2024 00:43:07 -0700 (PDT)
+Message-ID: <160efc49-7994-44ec-a019-b3123bc15492@redhat.com>
+Date: Wed, 29 May 2024 09:43:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Fix sanitizer errors with clang 18.1.1
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev
- <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] fuzz: disable leak-detection for oss-fuzz builds
+To: Alexander Bulekov <alxndr@bu.edu>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Darren Kenny
+ <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
+References: <20240527150001.325565-1-alxndr@bu.edu>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,9 +120,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240524-xkb-v4-0-2de564e5c859@daynix.com>
+In-Reply-To: <20240527150001.325565-1-alxndr@bu.edu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -154,56 +148,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/05/2024 07.35, Akihiko Odaki wrote:
-> I upgraded my Fedora Asahi Remix from 39 to 40 and found new sanitizer
-> errors with clang it ships so here are fixes.
+On 27/05/2024 16.59, Alexander Bulekov wrote:
+> When we are building for OSS-Fuzz, we want to ensure that the fuzzer
+> targets are actually created, regardless of leaks. Leaks will be
+> detected by the subsequent tests of the individual fuzz-targets.
 > 
-> The patch "meson: Drop the .fa library prefix" may have a broad impact
-> to the build system so please tell me if you have a concern with it.
-> 
-> To: Michael Tokarev <mjt@tls.msk.ru>
-> To: Laurent Vivier <laurent@vivier.eu>
-> To: Paolo Bonzini <pbonzini@redhat.com>
-> To: Marc-André Lureau <marcandre.lureau@redhat.com>
-> To: Daniel P. Berrangé <berrange@redhat.com>
-> To: Thomas Huth <thuth@redhat.com>
-> To: Philippe Mathieu-Daudé <philmd@linaro.org>
-> To: Alex Bennée <alex.bennee@linaro.org>
-> To: Wainer dos Santos Moschetta <wainersm@redhat.com>
-> To: Beraldo Leal <bleal@redhat.com>
-> To: Richard Henderson <richard.henderson@linaro.org>
-> To: Laurent Vivier <lvivier@redhat.com>
-> Cc: qemu-devel@nongnu.org
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> 
-> Changes in v4:
-> - Fixed function pointer problems instead of ignoring them.
-> - Made references to allocations static instead of incompletely freeing
->    them for qemu-keymap.
-> - s/prefix/suffix/ for patch "meson: Drop the .fa library suffix".
-> - Link to v3: https://lore.kernel.org/r/20240522-xkb-v3-0-c429de860fa1@daynix.com
-> 
-> Changes in v3:
-> - Moved changes that should belong to patch "meson: Drop the .fa library
->    prefix" from patch "meson: Add -fno-sanitize=function".
-> - Link to v2: https://lore.kernel.org/r/20240522-xkb-v2-0-67b54fa7c98f@daynix.com
-> 
-> Changes in v2:
-> - Added more patches and converted them to a series.
-> - Link to v1: https://lore.kernel.org/r/20240501-xkb-v1-1-f046d8e11a2b@daynix.com
-> 
+> Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
 > ---
-> Akihiko Odaki (4):
->        qemu-keymap: Make references to allocations static
->        lockable: Do not cast function pointers
->        qapi: Do not cast function pointers
->        meson: Drop the .fa library suffix
+>   scripts/oss-fuzz/build.sh | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/scripts/oss-fuzz/build.sh b/scripts/oss-fuzz/build.sh
+> index 5238f83343..7398298173 100755
+> --- a/scripts/oss-fuzz/build.sh
+> +++ b/scripts/oss-fuzz/build.sh
+> @@ -92,6 +92,7 @@ make install DESTDIR=$DEST_DIR/qemu-bundle
+>   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/bin
+>   rm -rf $DEST_DIR/qemu-bundle/opt/qemu-oss-fuzz/libexec
+>   
+> +export ASAN_OPTIONS=detect_leaks=0
+>   targets=$(./qemu-fuzz-i386 | grep generic-fuzz | awk '$1 ~ /\*/  {print $2}')
+>   base_copy="$DEST_DIR/qemu-fuzz-i386-target-$(echo "$targets" | head -n 1)"
 
-FYI, I'll try to pick up patches 1 - 3 for my next pull request (updating 
-the commit description of patch 3 according to Markus' suggestions).
-
-Patch 4 does not apply cleanly anymore, so it needs a respin, but I'd also 
-like to see this going through Paolo's meson tree if possible.
+I've applied your patch, but it seems the leak is not detected later in the 
+individual fuzz-targets anymore. That's strange... did you have a closer 
+look already where this leak here comes from?
 
   Thomas
 
