@@ -4,54 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB099C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFF5C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 12:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCe9U-0005C0-DG; Thu, 30 May 2024 07:41:00 -0400
+	id 1sCejr-00010W-79; Thu, 30 May 2024 08:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sCe9S-0005B7-4r
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:40:59 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sCejn-000108-RJ
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 08:18:31 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sCe9P-0006Cs-H4
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:40:57 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 79D4D4E602E;
- Thu, 30 May 2024 13:40:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 66ZQa9ElNk87; Thu, 30 May 2024 13:40:47 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 827564E601B; Thu, 30 May 2024 13:40:47 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 80711746E3B;
- Thu, 30 May 2024 13:40:47 +0200 (CEST)
-Date: Thu, 30 May 2024 13:40:47 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Gerd Hoffmann <kraxel@redhat.com>
-cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 4/4] vga/cirrus: deprecate, don't build by default
-In-Reply-To: <20240530112718.1752905-5-kraxel@redhat.com>
-Message-ID: <3efcf132-dec1-3765-e77e-3fd207224eeb@eik.bme.hu>
-References: <20240530112718.1752905-1-kraxel@redhat.com>
- <20240530112718.1752905-5-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sCejl-00054X-Cy
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 08:18:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=FRYuLk6xHyiy6h4Rc2gioCyPqIhggKP2nulH2gR4j3I=; b=in2vDQWAyI64WU57
+ G1JBgMTIQRNqhj2L9QpmpZLV7A47yN90c08vBFuAAB0KsDdJ9Uypeixs/caofsaw+MV0YD7v7/ehk
+ HFGbNJD4n6idm7XwssVwfqkIYALPwFerZW87hc60QxCGpq7lJ/nexLT2q905/pY0hp/N1m4GaOwbe
+ 8bkFm0dVXPMAF8fJMXMsu68mnaQajAe1/9EXgbLNV69t/ClpSrgegGwr22VahIffAfnwhA28BoxXA
+ dgg3Wen1uDPNuIIVLDGTRemMIMtsk50ZUTWQdlWPdQrF3AQMsiu5KQ4/ahQh8aVZkbIlTc10VmIVz
+ ZUYAwQggRM3CLJ2Nww==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sCeje-003MKk-33;
+ Thu, 30 May 2024 12:18:22 +0000
+Date: Thu, 30 May 2024 12:18:22 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>
+Subject: Re: [PATCH v2 3/4] tests/qtest/migration-test: Fix and enable
+ test_ignore_shared
+Message-ID: <Zlhuju3qX8nTspaL@gallifrey>
+References: <20240530095408.31608-1-npiggin@gmail.com>
+ <20240530095408.31608-4-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20240530095408.31608-4-npiggin@gmail.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 12:17:42 up 21 days, 23:31, 1 user, load average: 0.06, 0.02, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,60 +73,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 May 2024, Gerd Hoffmann wrote:
-> stdvga is the much better option.
->
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+* Nicholas Piggin (npiggin@gmail.com) wrote:
+> This test is already starting to bitrot, so first remove it from ifdef
+> and fix compile issues. ppc64 transfers about 2MB, so bump the size
+> threshold too.
+> 
+> It was said to be broken on aarch64 but it may have been due to the
+> limited shm size under Gitlab CI. Now that it uses /tmp, enable it.
+
+If it does fail, lets see if we can figure out how, i.e. whether it's the
+shm size or something else.
+
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+> Cc: Yury Kotov <yury-kotov@yandex-team.ru>
+> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
-> hw/display/cirrus_vga.c     | 1 +
-> hw/display/cirrus_vga_isa.c | 1 +
-> hw/display/Kconfig          | 1 -
-> 3 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
-> index 150883a97166..81421be1f89d 100644
-> --- a/hw/display/cirrus_vga.c
-> +++ b/hw/display/cirrus_vga.c
-> @@ -3007,6 +3007,7 @@ static void cirrus_vga_class_init(ObjectClass *klass, void *data)
->     dc->vmsd = &vmstate_pci_cirrus_vga;
->     device_class_set_props(dc, pci_vga_cirrus_properties);
->     dc->hotpluggable = false;
-> +    klass->deprecation_note = "use stdvga instead";
-> }
->
-> static const TypeInfo cirrus_vga_info = {
-> diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
-> index 84be51670ed8..3abbf4dddd90 100644
-> --- a/hw/display/cirrus_vga_isa.c
-> +++ b/hw/display/cirrus_vga_isa.c
-> @@ -85,6 +85,7 @@ static void isa_cirrus_vga_class_init(ObjectClass *klass, void *data)
->     dc->realize = isa_cirrus_vga_realizefn;
->     device_class_set_props(dc, isa_cirrus_vga_properties);
->     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-> +    klass->deprecation_note = "use stdvga instead";
-
-Excepr some old OSes work better with this than stdvga so could this be 
-left and not removed? Does it cause a lot of work to keep this device? I 
-thought it's stable already and were not many changes for it lately. If 
-something works why drop it?
-
-Regards,
-BALATON Zoltan
-
-> }
->
-> static const TypeInfo isa_cirrus_vga_info = {
-> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-> index a4552c8ed78d..cd0779396890 100644
-> --- a/hw/display/Kconfig
-> +++ b/hw/display/Kconfig
-> @@ -11,7 +11,6 @@ config FW_CFG_DMA
->
-> config VGA_CIRRUS
->     bool
-> -    default y if PCI_DEVICES
->     depends on PCI
->     select VGA
->
->
+>  tests/qtest/migration-test.c | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index de380757be..86eace354e 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -1855,8 +1855,6 @@ static void test_precopy_unix_tls_x509_override_host(void)
+>  #endif /* CONFIG_TASN1 */
+>  #endif /* CONFIG_GNUTLS */
+>  
+> -#if 0
+> -/* Currently upset on aarch64 TCG */
+>  static void test_ignore_shared(void)
+>  {
+>      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+> @@ -1865,7 +1863,7 @@ static void test_ignore_shared(void)
+>          .use_memfile = true,
+>      };
+>  
+> -    if (test_migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
+> +    if (test_migrate_start(&from, &to, uri, &args)) {
+>          return;
+>      }
+>  
+> @@ -1890,11 +1888,11 @@ static void test_ignore_shared(void)
+>      wait_for_migration_complete(from);
+>  
+>      /* Check whether shared RAM has been really skipped */
+> -    g_assert_cmpint(read_ram_property_int(from, "transferred"), <, 1024 * 1024);
+> +    g_assert_cmpint(read_ram_property_int(from, "transferred"), <,
+> +                                                   4 * 1024 * 1024);
+>  
+>      test_migrate_end(from, to, true);
+>  }
+> -#endif
+>  
+>  static void *
+>  test_migrate_xbzrle_start(QTestState *from,
+> @@ -3535,7 +3533,8 @@ int main(int argc, char **argv)
+>  #endif /* CONFIG_TASN1 */
+>  #endif /* CONFIG_GNUTLS */
+>  
+> -    /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
+> +    migration_test_add("/migration/ignore_shared", test_ignore_shared);
+> +
+>  #ifndef _WIN32
+>      migration_test_add("/migration/precopy/fd/tcp",
+>                         test_migrate_precopy_fd_socket);
+> -- 
+> 2.43.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
