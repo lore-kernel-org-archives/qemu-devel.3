@@ -4,54 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFF5C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 12:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68143C27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 12:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCejr-00010W-79; Thu, 30 May 2024 08:18:35 -0400
+	id 1sCenX-00038X-20; Thu, 30 May 2024 08:22:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sCejn-000108-RJ
- for qemu-devel@nongnu.org; Thu, 30 May 2024 08:18:31 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sCenU-00037s-93
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 08:22:20 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sCejl-00054X-Cy
- for qemu-devel@nongnu.org; Thu, 30 May 2024 08:18:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=FRYuLk6xHyiy6h4Rc2gioCyPqIhggKP2nulH2gR4j3I=; b=in2vDQWAyI64WU57
- G1JBgMTIQRNqhj2L9QpmpZLV7A47yN90c08vBFuAAB0KsDdJ9Uypeixs/caofsaw+MV0YD7v7/ehk
- HFGbNJD4n6idm7XwssVwfqkIYALPwFerZW87hc60QxCGpq7lJ/nexLT2q905/pY0hp/N1m4GaOwbe
- 8bkFm0dVXPMAF8fJMXMsu68mnaQajAe1/9EXgbLNV69t/ClpSrgegGwr22VahIffAfnwhA28BoxXA
- dgg3Wen1uDPNuIIVLDGTRemMIMtsk50ZUTWQdlWPdQrF3AQMsiu5KQ4/ahQh8aVZkbIlTc10VmIVz
- ZUYAwQggRM3CLJ2Nww==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1sCeje-003MKk-33;
- Thu, 30 May 2024 12:18:22 +0000
-Date: Thu, 30 May 2024 12:18:22 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yury Kotov <yury-kotov@yandex-team.ru>
-Subject: Re: [PATCH v2 3/4] tests/qtest/migration-test: Fix and enable
- test_ignore_shared
-Message-ID: <Zlhuju3qX8nTspaL@gallifrey>
-References: <20240530095408.31608-1-npiggin@gmail.com>
- <20240530095408.31608-4-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sCenS-0005iY-LW
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 08:22:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=YYbXSk9ZEcG8UVR5NwRRy6Uj9Uc3oSO/NhcNXe9y9tA=; b=uePL+lBYdoi6G0hyJpvR8Vb5Z2
+ NckV3VTDJwaHgUGPUoQc9tSvV9XBGfs4QZ0UeTiJdjLCrL/PMLT/J/w443f9ujpp5Z0njX6iR1sxy
+ fXht6CXJDvakOuMUpQzZwKNbspAMY9wMY27jz9rht9jXtoAC8uXj8PnxpHz6Vl1kQuFDKcU1tQXXm
+ vu3SrQ1HpQAsUIHReoUWrH+gKqZLsgd2vmyDUbWIyu5wp2Qpf4LwCEie7Q0tOvysNDb4K6uKFDs0z
+ WqXZi7awV0Iw9Iko09Q4+3K+yxUfS7jCOkPBvpK20lo/ljdfGdZZAu1Hn/EjyXu2j6QjvC1vwe4R5
+ tGIlfh+jlBX335Bz4br9egk8IwXy/kLNqAFXuSwoPbrPhEybINpDFNAPWMQud2UpNA0Mqo2Wgz0cF
+ ueW7H7AR5OIFnsS7lUubFeZLrJUNNsQgVIHayf49i+nO0cktFvVloWK6WMbst98Tfhl0Hn+I291eH
+ 6LPH0WckLMOBl3g+maeD/nf0z3j1NJwrP9LH1loJt1hn4BVH8A17MoxwVkU5qdNpNk1jVBl+Ddiyp
+ dSwbJiYTcKEAKKfg+0wWijsz3OSVNbxM5OAH/ZvD/jNSaitJnJwOcBrHDGAbrAn9qT68xJgpxiVkJ
+ fsiyS1AaKC04MRxda38kWQVpZL89SyPG4rKOU7VQA=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sCemC-0000Sh-0t; Thu, 30 May 2024 13:21:00 +0100
+Message-ID: <c928e9e7-21b2-4017-be45-b0a4b91f1d06@ilande.co.uk>
+Date: Thu, 30 May 2024 13:22:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240530095408.31608-4-npiggin@gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 12:17:42 up 21 days, 23:31, 1 user, load average: 0.06, 0.02, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+To: BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20240530112718.1752905-1-kraxel@redhat.com>
+ <20240530112718.1752905-5-kraxel@redhat.com>
+ <3efcf132-dec1-3765-e77e-3fd207224eeb@eik.bme.hu>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <3efcf132-dec1-3765-e77e-3fd207224eeb@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 4/4] vga/cirrus: deprecate, don't build by default
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -73,78 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Nicholas Piggin (npiggin@gmail.com) wrote:
-> This test is already starting to bitrot, so first remove it from ifdef
-> and fix compile issues. ppc64 transfers about 2MB, so bump the size
-> threshold too.
-> 
-> It was said to be broken on aarch64 but it may have been due to the
-> limited shm size under Gitlab CI. Now that it uses /tmp, enable it.
+On 30/05/2024 12:40, BALATON Zoltan wrote:
 
-If it does fail, lets see if we can figure out how, i.e. whether it's the
-shm size or something else.
-
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-
-> Cc: Yury Kotov <yury-kotov@yandex-team.ru>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  tests/qtest/migration-test.c | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
+> On Thu, 30 May 2024, Gerd Hoffmann wrote:
+>> stdvga is the much better option.
+>>
+>> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>> ---
+>> hw/display/cirrus_vga.c     | 1 +
+>> hw/display/cirrus_vga_isa.c | 1 +
+>> hw/display/Kconfig          | 1 -
+>> 3 files changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
+>> index 150883a97166..81421be1f89d 100644
+>> --- a/hw/display/cirrus_vga.c
+>> +++ b/hw/display/cirrus_vga.c
+>> @@ -3007,6 +3007,7 @@ static void cirrus_vga_class_init(ObjectClass *klass, void 
+>> *data)
+>>     dc->vmsd = &vmstate_pci_cirrus_vga;
+>>     device_class_set_props(dc, pci_vga_cirrus_properties);
+>>     dc->hotpluggable = false;
+>> +    klass->deprecation_note = "use stdvga instead";
+>> }
+>>
+>> static const TypeInfo cirrus_vga_info = {
+>> diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
+>> index 84be51670ed8..3abbf4dddd90 100644
+>> --- a/hw/display/cirrus_vga_isa.c
+>> +++ b/hw/display/cirrus_vga_isa.c
+>> @@ -85,6 +85,7 @@ static void isa_cirrus_vga_class_init(ObjectClass *klass, void 
+>> *data)
+>>     dc->realize = isa_cirrus_vga_realizefn;
+>>     device_class_set_props(dc, isa_cirrus_vga_properties);
+>>     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+>> +    klass->deprecation_note = "use stdvga instead";
 > 
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index de380757be..86eace354e 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -1855,8 +1855,6 @@ static void test_precopy_unix_tls_x509_override_host(void)
->  #endif /* CONFIG_TASN1 */
->  #endif /* CONFIG_GNUTLS */
->  
-> -#if 0
-> -/* Currently upset on aarch64 TCG */
->  static void test_ignore_shared(void)
->  {
->      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-> @@ -1865,7 +1863,7 @@ static void test_ignore_shared(void)
->          .use_memfile = true,
->      };
->  
-> -    if (test_migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
-> +    if (test_migrate_start(&from, &to, uri, &args)) {
->          return;
->      }
->  
-> @@ -1890,11 +1888,11 @@ static void test_ignore_shared(void)
->      wait_for_migration_complete(from);
->  
->      /* Check whether shared RAM has been really skipped */
-> -    g_assert_cmpint(read_ram_property_int(from, "transferred"), <, 1024 * 1024);
-> +    g_assert_cmpint(read_ram_property_int(from, "transferred"), <,
-> +                                                   4 * 1024 * 1024);
->  
->      test_migrate_end(from, to, true);
->  }
-> -#endif
->  
->  static void *
->  test_migrate_xbzrle_start(QTestState *from,
-> @@ -3535,7 +3533,8 @@ int main(int argc, char **argv)
->  #endif /* CONFIG_TASN1 */
->  #endif /* CONFIG_GNUTLS */
->  
-> -    /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
-> +    migration_test_add("/migration/ignore_shared", test_ignore_shared);
-> +
->  #ifndef _WIN32
->      migration_test_add("/migration/precopy/fd/tcp",
->                         test_migrate_precopy_fd_socket);
-> -- 
-> 2.43.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+> Excepr some old OSes work better with this than stdvga so could this be left and not 
+> removed? Does it cause a lot of work to keep this device? I thought it's stable 
+> already and were not many changes for it lately. If something works why drop it?
+
+Seconded: whilst stdvga is preferred, there are a lot of older OSs that work well in 
+QEMU using the Cirrus emulation. I appreciate that the code could do with a bit of 
+work, but is there a more specific reason that it should be deprecated?
+
+
+ATB,
+
+Mark.
+
 
