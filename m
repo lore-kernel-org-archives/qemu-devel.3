@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0180FC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 20:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3091FC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 21:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCm0J-0006Dy-NT; Thu, 30 May 2024 16:04:03 -0400
+	id 1sCmxx-0000pN-7b; Thu, 30 May 2024 17:05:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCm0H-0006DS-Vl
- for qemu-devel@nongnu.org; Thu, 30 May 2024 16:04:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCmxv-0000p9-LD
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 17:05:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCm0G-0001Nl-AX
- for qemu-devel@nongnu.org; Thu, 30 May 2024 16:04:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCmxt-0003RV-Kr
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 17:05:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717099438;
+ s=mimecast20190719; t=1717103136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=9IuTAyfSz7KQfpGUHD+ESye4y4YLqREi+H2xn7viX1Y=;
- b=Ccw4z+I3UlAIBa2r54nQ2cXQVLnh30gtSMAuKIbIbj7BRxAMxusJmzXpWgHeBY9FCYac2W
- 423+1zXKD2dKmbSOGwvnyDL3NpX1f/XsHCukSgQV1CTwiKaJmTUBVQo8ztH4R9478+6nc0
- Gk/bXcvNV2IGWB9SBIx5bhkBZ/W35kE=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=a+VeJQQo06fmgpwxBBWZJgUYtsUFjGiDdcla87MqDuk=;
+ b=dwcGpLqdni8Vmvb7MmMZAuOF9X5iCVR3n+hh+tdGefMWBE/941rq8ZUHneC/hMXj3tbcyv
+ WF9wnH9BaA788r6wYR1B+GLAPdy7V17Zig13t9jez9+rywl2cI0AGTRz7Jj5l2k4nG6ysv
+ PA8nvJnG8fycoaoIZdkZs32dbWwzIz4=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-lsrSWVGGNQS7STPZJegwYg-1; Thu, 30 May 2024 16:03:56 -0400
-X-MC-Unique: lsrSWVGGNQS7STPZJegwYg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6ad803bc570so3834336d6.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 13:03:55 -0700 (PDT)
+ us-mta-216-yARBkz1sN2qgsRxE0jukeg-1; Thu, 30 May 2024 17:05:35 -0400
+X-MC-Unique: yARBkz1sN2qgsRxE0jukeg-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-792ed3a15ceso13076985a.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 14:05:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717099434; x=1717704234;
+ d=1e100.net; s=20230601; t=1717103134; x=1717707934;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9IuTAyfSz7KQfpGUHD+ESye4y4YLqREi+H2xn7viX1Y=;
- b=TKPvCyJC9V7Y16bRi+qgx0CrtBFiONZXpvngzd4aEjSOLsNftHLJ/V+KURdGu3EuZO
- 8SJY6FL869rN/zveDcQQjJ6sdBQbbU65AV1XzLMxFWOMP17jwaW2jCt2uXp7Gz++bPET
- dXjOzlzAXRcpVZRYZ8MDk7Sh7QZXX+BWnJGFePdEeMsdzSy9Vj3Sx9UqSF9aaSsUPA6P
- bmXlJKiTwcBx4oEaRKzSaoCCmJFHulFXjMjG6DSNosxStgmV/oxGXQQ8kfnp0VssUhpi
- 2rH4tmZsfRhVd2kxpLwDHQZyYAdDHpGFo45durgnn9FxGVgmIABAf9/hal/f04wU3mta
- rDBA==
-X-Gm-Message-State: AOJu0YxOVHhDJTPWqDKqNLWCOxCO5Hd7npuYPu3+0FUcvnaH1Ji5wCE5
- mMJspGTLwbePe7lLhUI711nFoYbBcoylPsNFeStipJgBJPnBPQfhjHL7qYJa8KmzIcoacximx3r
- Xkg7Bj1lZXS/8aw1kOD531Swh3pJy2NI5TqPIyeqDrkb3VM0aeAIj
-X-Received: by 2002:a05:6214:1c0d:b0:699:2d88:744f with SMTP id
- 6a1803df08f44-6ae0cf5fd79mr34121756d6.4.1717099434208; 
- Thu, 30 May 2024 13:03:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHIaZwXnL8ThyIumoVKwDwUl2QcF7L4fVxYAGe4+fNOOmn4ibFZpWXaso9Cw5lh1b5LXkbUJw==
-X-Received: by 2002:a05:6214:1c0d:b0:699:2d88:744f with SMTP id
- 6a1803df08f44-6ae0cf5fd79mr34121486d6.4.1717099433527; 
- Thu, 30 May 2024 13:03:53 -0700 (PDT)
+ bh=a+VeJQQo06fmgpwxBBWZJgUYtsUFjGiDdcla87MqDuk=;
+ b=w7fth8sGPS2JlBN1Nqbv3kOvIACDohebAUE4MorfMpLWqcy1ZV2lAdlmbLFd2ufORn
+ H5BA4s1iRqBISzTjtAvORuR8m8rZaZTZ7ufRYmUALuRN0jobPiXyH7MEG1qMZBVlqGmr
+ 0KqLzKfm754rcJwr6QfmKg7ZCDmeDLhJTj51MPjuycewWG1Vo1fZOk/2MapipXHWkKqS
+ nGd4Uaz+k/iXOIL3U2sU+eFP55l5CyxXF55TxSSFgdu8m5/OEu/sD49WegdNQdLy+5+t
+ 3fmPN4kwUspnb/6/O5+0oa3WTJTR/G5Vm7vKuuDNw02Zx3Hv61m/+imoGB22JrUXNLH8
+ dy7g==
+X-Gm-Message-State: AOJu0YwiPXYySBlls2uS590JDLhXgAEyn1PfRrc90M/a9Z3wZBZKEqhK
+ dQcDksg5x4W6855QdJw5T1qnTFbpwu/ThSwFdK81hJbwhTLe7ubx9+A8OLHIF0QZ233MjJq2awh
+ rGDgjiNK6BKas6yOfE892o0AhygjILIFpss+o2pttPUJWxgNfALdN
+X-Received: by 2002:a05:620a:408a:b0:794:f4f1:4326 with SMTP id
+ af79cd13be357-794f4f147dcmr17389285a.0.1717103134289; 
+ Thu, 30 May 2024 14:05:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNBZ9kXBvQQYQfti+et/cMa+7Lu5NDFMl8bzzxg+FJVv6J6zNhFFPEFrUaY6dvHor995JP0w==
+X-Received: by 2002:a05:620a:408a:b0:794:f4f1:4326 with SMTP id
+ af79cd13be357-794f4f147dcmr17384685a.0.1717103133511; 
+ Thu, 30 May 2024 14:05:33 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ae4a7462a6sm1366976d6.40.2024.05.30.13.03.52
+ af79cd13be357-794f305f56fsm12313485a.84.2024.05.30.14.05.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 13:03:52 -0700 (PDT)
-Date: Thu, 30 May 2024 16:03:50 -0400
+ Thu, 30 May 2024 14:05:32 -0700 (PDT)
+Date: Thu, 30 May 2024 17:05:30 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v2 05/18] monitor: Introduce monitor_fdset_*free
-Message-ID: <Zljbptai4sXq4Ai5@x1n>
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v2 06/18] monitor: Stop removing non-duplicated fds
+Message-ID: <ZljqGitCeG9-Fi9l@x1n>
 References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-6-farosas@suse.de>
+ <20240523190548.23977-7-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240523190548.23977-6-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240523190548.23977-7-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -100,97 +101,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 23, 2024 at 04:05:35PM -0300, Fabiano Rosas wrote:
-> Introduce two new functions to remove and free no longer used fds and
-> fdsets.
+On Thu, May 23, 2024 at 04:05:36PM -0300, Fabiano Rosas wrote:
+> We've been up until now cleaning up any file descriptors that have
+> been passed into QEMU and never duplicated[1,2]. A file descriptor
+> without duplicates indicates that no part of QEMU has made use of
+> it. This approach is starting to show some cracks now that we're
+> starting to consume fds from the migration code:
 > 
-> We need those to decouple the remove/free routines from
-> monitor_fdset_cleanup() which will go away in the next patches.
+> - Doing cleanup every time the last monitor connection closes works to
+>   reap unused fds, but also has the side effect of forcing the
+>   management layer to pass the file descriptors again in case of a
+>   disconnect/re-connect, if that happened to be the only monitor
+>   connection.
 > 
-> The new functions:
+>   Another side effect is that removing an fd with qmp_remove_fd() is
+>   effectively delayed until the last monitor connection closes.
 > 
-> - monitor_fdset_free() will be used when a monitor connection closes
->   and when an fd is removed to cleanup any fdset that is now empty.
+>   The reliance on mon_refcount is also problematic because it's racy.
 > 
-> - monitor_fdset_fd_free() will be used to remove one or more fds that
->   have been explicitly targeted by qmp_remove_fd().
+> - Checking runstate_is_running() skips the cleanup unless the VM is
+>   running and avoids premature cleanup of the fds, but also has the
+>   side effect of blocking the legitimate removal of an fd via
+>   qmp_remove_fd() if the VM happens to be in another state.
+> 
+>   This affects qmp_remove_fd() and qmp_query_fdsets() in particular
+>   because requesting a removal at a bad time (guest stopped) might
+>   cause an fd to never be removed, or to be removed at a much later
+>   point in time, causing the query command to continue showing the
+>   supposedly removed fd/fdset.
+> 
+> Note that file descriptors that *have* been duplicated are owned by
+> the code that uses them and will be removed after qemu_close() is
+> called. Therefore we've decided that the best course of action to
+> avoid the undesired side-effects is to stop managing non-duplicated
+> file descriptors.
+> 
+> 1- efb87c1697 ("monitor: Clean up fd sets on monitor disconnect")
+> 2- ebe52b592d ("monitor: Prevent removing fd from set during init")
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-One nitpick below.
-
 > ---
->  monitor/fds.c | 26 ++++++++++++++++++--------
->  1 file changed, 18 insertions(+), 8 deletions(-)
+>  monitor/fds.c              | 15 ++++++++-------
+>  monitor/hmp.c              |  2 --
+>  monitor/monitor-internal.h |  1 -
+>  monitor/qmp.c              |  2 --
+>  4 files changed, 8 insertions(+), 12 deletions(-)
 > 
 > diff --git a/monitor/fds.c b/monitor/fds.c
-> index fb9f58c056..101e21720d 100644
+> index 101e21720d..f7b98814fa 100644
 > --- a/monitor/fds.c
 > +++ b/monitor/fds.c
-> @@ -167,6 +167,22 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
->      return -1;
->  }
+> @@ -169,6 +169,11 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
 >  
-> +static void monitor_fdset_free(MonFdset *mon_fdset)
-> +{
-> +    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> +        QLIST_REMOVE(mon_fdset, next);
-> +        g_free(mon_fdset);
-> +    }
-> +}
-
-Would monitor_fdset_free_if_empty() (or similar) slightly better?
-
-static void monitor_fdset_free(MonFdset *mon_fdset)
-{
-    QLIST_REMOVE(mon_fdset, next);
-    g_free(mon_fdset);
-}
-
-static void monitor_fdset_free_if_empty(MonFdset *mon_fdset)
-{
-    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
-        monitor_fdset_free(mon_fdset);
-    }
-}
-
-> +
-> +static void monitor_fdset_fd_free(MonFdsetFd *mon_fdset_fd)
-> +{
-> +    close(mon_fdset_fd->fd);
-> +    g_free(mon_fdset_fd->opaque);
-> +    QLIST_REMOVE(mon_fdset_fd, next);
-> +    g_free(mon_fdset_fd);
-> +}
-> +
->  static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+>  static void monitor_fdset_free(MonFdset *mon_fdset)
 >  {
->      MonFdsetFd *mon_fdset_fd;
-> @@ -176,17 +192,11 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
->          if ((mon_fdset_fd->removed ||
->                  (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
->                  runstate_is_running()) {
-> -            close(mon_fdset_fd->fd);
-> -            g_free(mon_fdset_fd->opaque);
-> -            QLIST_REMOVE(mon_fdset_fd, next);
-> -            g_free(mon_fdset_fd);
-> +            monitor_fdset_fd_free(mon_fdset_fd);
+> +    /*
+> +     * Only remove an empty fdset. The fds are owned by the user and
+> +     * should have been removed with qmp_remove_fd(). The dup_fds are
+> +     * owned by QEMU and should have been removed with qemu_close().
+> +     */
+>      if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
+>          QLIST_REMOVE(mon_fdset, next);
+>          g_free(mon_fdset);
+> @@ -189,9 +194,7 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+>      MonFdsetFd *mon_fdset_fd_next;
+>  
+>      QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
+> -        if ((mon_fdset_fd->removed ||
+> -                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
+> -                runstate_is_running()) {
+> +        if (mon_fdset_fd->removed) {
+
+I don't know the code well, but I like it.
+
+>              monitor_fdset_fd_free(mon_fdset_fd);
 >          }
 >      }
+> @@ -206,7 +209,7 @@ void monitor_fdsets_cleanup(void)
 >  
-> -    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> -        QLIST_REMOVE(mon_fdset, next);
-> -        g_free(mon_fdset);
-> -    }
-> +    monitor_fdset_free(mon_fdset);
+>      QEMU_LOCK_GUARD(&mon_fdsets_lock);
+>      QLIST_FOREACH_SAFE(mon_fdset, &mon_fdsets, next, mon_fdset_next) {
+> -        monitor_fdset_cleanup(mon_fdset);
+> +        monitor_fdset_free(mon_fdset);
+>      }
 >  }
 >  
->  void monitor_fdsets_cleanup(void)
-> -- 
-> 2.35.3
-> 
+> @@ -479,9 +482,7 @@ void monitor_fdset_dup_fd_remove(int dup_fd)
+>              if (mon_fdset_fd_dup->fd == dup_fd) {
+>                  QLIST_REMOVE(mon_fdset_fd_dup, next);
+>                  g_free(mon_fdset_fd_dup);
+> -                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
+> -                    monitor_fdset_cleanup(mon_fdset);
+> -                }
+> +                monitor_fdset_free(mon_fdset);
+
+This and above changes are not crystal clear to me where the _cleanup()
+does extra check "removed" and clean those fds.
+
+I think it'll make it easier for me to understand if this one and the next
+are squashed together.  But maybe it's simply because I didn't fully
+understand.
+
+>                  return;
+>              }
+>          }
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index 69c1b7e98a..460e8832f6 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -1437,11 +1437,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+>              monitor_resume(mon);
+>          }
+>          qemu_mutex_unlock(&mon->mon_lock);
+> -        mon_refcount++;
+>          break;
+>  
+>      case CHR_EVENT_CLOSED:
+> -        mon_refcount--;
+>          monitor_fdsets_cleanup();
+>          break;
+>  
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index 252de85681..cb628f681d 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -168,7 +168,6 @@ extern bool qmp_dispatcher_co_shutdown;
+>  extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+>  extern QemuMutex monitor_lock;
+>  extern MonitorList mon_list;
+> -extern int mon_refcount;
+>  
+>  extern HMPCommand hmp_cmds[];
+>  
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index a239945e8d..5e538f34c0 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -466,7 +466,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>          data = qmp_greeting(mon);
+>          qmp_send_response(mon, data);
+>          qobject_unref(data);
+> -        mon_refcount++;
+>          break;
+>      case CHR_EVENT_CLOSED:
+>          /*
+> @@ -479,7 +478,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>          json_message_parser_destroy(&mon->parser);
+>          json_message_parser_init(&mon->parser, handle_qmp_command,
+>                                   mon, NULL);
+> -        mon_refcount--;
+>          monitor_fdsets_cleanup();
+>          break;
+>      case CHR_EVENT_BREAK:
+
+I like this too when mon_refcount can be dropped.  It turns out I like this
+patch and the next a lot, and I hope nothing will break.
+
+Aside, you seem to have forgot removal of the "int mon_refcount" in
+monitor.c.
 
 -- 
 Peter Xu
