@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23FEAC27C43
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9F5C41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdwS-0006NY-0c; Thu, 30 May 2024 07:27:32 -0400
+	id 1sCdwU-0006P6-W8; Thu, 30 May 2024 07:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwP-0006Lw-Tq
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwP-0006LV-9a
  for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwN-0003eU-HK
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:29 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwK-0003cF-Mi
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717068446;
+ s=mimecast20190719; t=1717068444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vwd70H1PbpqlY2vcizptzp18Ufdhj9422qrYmE21yDk=;
- b=RTuZIjzUspuzuIfcbUr+IJ7NPhmLxupc7HOnY9gC1SN+MmX32P1Ak1oYoB4ChXybch5dVq
- 2VUDNQeU+UVujNmWbOpZM80o7pLKbHWQTfSQfE6IXJCfc4E7vbM0RAfU31N6yljzb24R4g
- oDlIlupdI6U0ddHV35gv8txQiN66nhk=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-dzqdLpF9MkuYwzoLNbKlBA-1; Thu, 30 May 2024 07:27:23 -0400
-X-MC-Unique: dzqdLpF9MkuYwzoLNbKlBA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ bh=Md1MVArHUd05WOeyAIhNVCIfQzrbfrJLv5muxML0fkM=;
+ b=O2AMqvyldhulwzSe59aB5YpPbM0/tN4J/rBgz3H+G9fFSWxGX2q+yU8qrVSU9RkuFj/ejI
+ WEOnnBQlzyXpJWRMFKejbBrzmA+HI4BbIW9ZgmifBb5Ep5BCPjlRwT0mjlKrurUhiJNUCX
+ 9+82+FVFT0YPkQR1JtIa6/BtvEjYev4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-e5_-femtMe2HQbxkt-J_LQ-1; Thu,
+ 30 May 2024 07:27:20 -0400
+X-MC-Unique: e5_-femtMe2HQbxkt-J_LQ-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A4F6D185A780;
- Thu, 30 May 2024 11:27:22 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8A92A29AA381;
+ Thu, 30 May 2024 11:27:20 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.101])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A4C2F286E;
- Thu, 30 May 2024 11:27:21 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1D7C5103A3AA;
+ Thu, 30 May 2024 11:27:19 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 60AD618007A5; Thu, 30 May 2024 13:27:18 +0200 (CEST)
+ id 4FE1E18000B2; Thu, 30 May 2024 13:27:18 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 2/4] usb: add config options for the hub and hid devices
-Date: Thu, 30 May 2024 13:27:15 +0200
-Message-ID: <20240530112718.1752905-3-kraxel@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 1/4] qom: allow to mark objects (including devices) as
+ deprecated.
+Date: Thu, 30 May 2024 13:27:14 +0200
+Message-ID: <20240530112718.1752905-2-kraxel@redhat.com>
 In-Reply-To: <20240530112718.1752905-1-kraxel@redhat.com>
 References: <20240530112718.1752905-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -85,49 +85,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- hw/usb/Kconfig     | 10 ++++++++++
- hw/usb/meson.build |  4 ++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+Add deprecation_note field (string) to ObjectClass.
+Add deprecated bool to ObjectTypeInfo, report in 'qom-list-types'.
+Print the note when listing devices via '-device help'.
 
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index f569ed7eeaa1..84bc7fbe36cd 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -65,6 +65,16 @@ config TUSB6010
-     bool
-     select USB_MUSB
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ include/qom/object.h  | 1 +
+ qom/qom-qmp-cmds.c    | 4 ++++
+ system/qdev-monitor.c | 5 +++++
+ qapi/qom.json         | 4 +++-
+ 4 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 13d3a655ddf9..6c682aa0135f 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -136,6 +136,7 @@ struct ObjectClass
+     ObjectUnparent *unparent;
  
-+config USB_HUB
-+    bool
-+    default y
-+    depends on USB
-+
-+config USB_HID
-+    bool
-+    default y
-+    depends on USB
-+
- config USB_TABLET_WACOM
-     bool
-     default y
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index 23f7f7acb50b..d7de1003e3db 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -35,8 +35,8 @@ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-usb2-ctrl-
- system_ss.add(when: 'CONFIG_XLNX_USB_SUBSYS', if_true: files('xlnx-usb-subsystem.c'))
+     GHashTable *properties;
++    const char *deprecation_note;
+ };
  
- # emulated usb devices
--system_ss.add(when: 'CONFIG_USB', if_true: files('dev-hub.c'))
--system_ss.add(when: 'CONFIG_USB', if_true: files('dev-hid.c'))
-+system_ss.add(when: 'CONFIG_USB_HUB', if_true: files('dev-hub.c'))
-+system_ss.add(when: 'CONFIG_USB_HID', if_true: files('dev-hid.c'))
- system_ss.add(when: 'CONFIG_USB_TABLET_WACOM', if_true: files('dev-wacom.c'))
- system_ss.add(when: 'CONFIG_USB_STORAGE_CORE', if_true: files('dev-storage.c'))
- system_ss.add(when: 'CONFIG_USB_STORAGE_BOT', if_true: files('dev-storage-bot.c'))
+ /**
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index e91a2353472a..43de9c9ae141 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -101,6 +101,10 @@ static void qom_list_types_tramp(ObjectClass *klass, void *data)
+     if (parent) {
+         info->parent = g_strdup(object_class_get_name(parent));
+     }
++    if (klass->deprecation_note) {
++        info->has_deprecated = true;
++        info->deprecated = true;
++    }
+ 
+     QAPI_LIST_PREPEND(*pret, info);
+ }
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 6af6ef7d667f..704be312e1a7 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -144,6 +144,8 @@ static bool qdev_class_has_alias(DeviceClass *dc)
+ 
+ static void qdev_print_devinfo(DeviceClass *dc)
+ {
++    ObjectClass *klass = OBJECT_CLASS(dc);
++
+     qemu_printf("name \"%s\"", object_class_get_name(OBJECT_CLASS(dc)));
+     if (dc->bus_type) {
+         qemu_printf(", bus %s", dc->bus_type);
+@@ -157,6 +159,9 @@ static void qdev_print_devinfo(DeviceClass *dc)
+     if (!dc->user_creatable) {
+         qemu_printf(", no-user");
+     }
++    if (klass->deprecation_note) {
++        qemu_printf(", deprecated \"%s\"", klass->deprecation_note);
++    }
+     qemu_printf("\n");
+ }
+ 
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 38dde6d785ac..bd062feabaf7 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -163,10 +163,12 @@
+ #
+ # @parent: Name of parent type, if any (since 2.10)
+ #
++# @deprecated: the type is deprecated (since 9.1)
++#
+ # Since: 1.1
+ ##
+ { 'struct': 'ObjectTypeInfo',
+-  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str' } }
++  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str', '*deprecated': 'bool' } }
+ 
+ ##
+ # @qom-list-types:
 -- 
 2.45.1
 
