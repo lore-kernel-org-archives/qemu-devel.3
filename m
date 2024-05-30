@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74389C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E15C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:28:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdwR-0006N2-CY; Thu, 30 May 2024 07:27:31 -0400
+	id 1sCdwT-0006OR-Ix; Thu, 30 May 2024 07:27:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwP-0006Lu-TZ
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwP-0006Lv-Tp
  for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwK-0003cL-Uz
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwN-0003fH-SC
  for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717068444;
+ s=mimecast20190719; t=1717068447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bp3NLg4mJW6CGazd17f+zK4QsMU0vLkfWwofjE4kNU4=;
- b=iSa3YQnru3bXrM5IVCUmddwTWZ7wqdiUHcZhy7adcTgHNgeg97KTqSzlg3cN5wuI3hN2kk
- T9KRayDS+YNVg9NODDHS7VljHrYJzZ3jvTaq52pEs5OlwFa8M4QcWw19/l2GY1TRGPqjaY
- 2JlVHDThvOGEg7jn95vLeFPzK1fYiTs=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-iysZqDT0PiSbvaQCCNJsww-1; Thu,
- 30 May 2024 07:27:22 -0400
-X-MC-Unique: iysZqDT0PiSbvaQCCNJsww-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ bh=I7uIuKWn4SHAdlR3t/cPDp5v3iQEMcXdr2vtmVBXePk=;
+ b=IQBvvNMPv3Nk1noL+CDgLRKwMXI5Q+dz/ecYbX78GBpv4zl4jSgWbTSquQ/auxeq61bIdQ
+ uiAL/C2qvPiTM0ucvlYTTDhMpMdNpq17vbbabVAEDojmhQW+MtyTb1i0yJw72T1+1uRTCw
+ 9ApdJzgbML41xg/M3W31DYr7tS4zaQw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-n--zxzSuPDOVVs3_i0Vx-w-1; Thu, 30 May 2024 07:27:24 -0400
+X-MC-Unique: n--zxzSuPDOVVs3_i0Vx-w-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5761029AA381;
- Thu, 30 May 2024 11:27:22 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CF99E812296;
+ Thu, 30 May 2024 11:27:23 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.101])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F36AB103A3AA;
- Thu, 30 May 2024 11:27:21 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6CA062026D68;
+ Thu, 30 May 2024 11:27:23 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7118018009A8; Thu, 30 May 2024 13:27:18 +0200 (CEST)
+ id 83D8D18009B8; Thu, 30 May 2024 13:27:18 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 3/4] usb/hub: deprecate, don't build by default
-Date: Thu, 30 May 2024 13:27:16 +0200
-Message-ID: <20240530112718.1752905-4-kraxel@redhat.com>
+Subject: [PATCH v2 4/4] vga/cirrus: deprecate, don't build by default
+Date: Thu, 30 May 2024 13:27:17 +0200
+Message-ID: <20240530112718.1752905-5-kraxel@redhat.com>
 In-Reply-To: <20240530112718.1752905-1-kraxel@redhat.com>
 References: <20240530112718.1752905-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,41 +84,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hub supports only USB 1.1.  When running out of usb ports it is in
-almost all cases the much better choice to add another usb host adapter
-(or increase the number of root ports when using xhci) instead of using
-the usb hub.
+stdvga is the much better option.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/usb/dev-hub.c | 1 +
- hw/usb/Kconfig   | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ hw/display/cirrus_vga.c     | 1 +
+ hw/display/cirrus_vga_isa.c | 1 +
+ hw/display/Kconfig          | 1 -
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
-index 06e9537d0356..68444d39534f 100644
---- a/hw/usb/dev-hub.c
-+++ b/hw/usb/dev-hub.c
-@@ -686,6 +686,7 @@ static void usb_hub_class_initfn(ObjectClass *klass, void *data)
-     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->fw_name = "hub";
-     dc->vmsd = &vmstate_usb_hub;
-+    klass->deprecation_note = "use more root ports or additional hostadapters instead";
-     device_class_set_props(dc, usb_hub_properties);
+diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
+index 150883a97166..81421be1f89d 100644
+--- a/hw/display/cirrus_vga.c
++++ b/hw/display/cirrus_vga.c
+@@ -3007,6 +3007,7 @@ static void cirrus_vga_class_init(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_pci_cirrus_vga;
+     device_class_set_props(dc, pci_vga_cirrus_properties);
+     dc->hotpluggable = false;
++    klass->deprecation_note = "use stdvga instead";
  }
  
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index 84bc7fbe36cd..b583f5c25d05 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -67,7 +67,6 @@ config TUSB6010
+ static const TypeInfo cirrus_vga_info = {
+diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
+index 84be51670ed8..3abbf4dddd90 100644
+--- a/hw/display/cirrus_vga_isa.c
++++ b/hw/display/cirrus_vga_isa.c
+@@ -85,6 +85,7 @@ static void isa_cirrus_vga_class_init(ObjectClass *klass, void *data)
+     dc->realize = isa_cirrus_vga_realizefn;
+     device_class_set_props(dc, isa_cirrus_vga_properties);
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
++    klass->deprecation_note = "use stdvga instead";
+ }
  
- config USB_HUB
+ static const TypeInfo isa_cirrus_vga_info = {
+diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+index a4552c8ed78d..cd0779396890 100644
+--- a/hw/display/Kconfig
++++ b/hw/display/Kconfig
+@@ -11,7 +11,6 @@ config FW_CFG_DMA
+ 
+ config VGA_CIRRUS
      bool
--    default y
-     depends on USB
+-    default y if PCI_DEVICES
+     depends on PCI
+     select VGA
  
- config USB_HID
 -- 
 2.45.1
 
