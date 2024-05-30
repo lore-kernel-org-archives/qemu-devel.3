@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B409CC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 15:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B3AC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 15:23:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sChLg-0004Ii-Ma; Thu, 30 May 2024 11:05:48 -0400
+	id 1sChbj-0001nv-0f; Thu, 30 May 2024 11:22:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sChLf-0004IV-Se
- for qemu-devel@nongnu.org; Thu, 30 May 2024 11:05:47 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sChLd-0004XO-O3
- for qemu-devel@nongnu.org; Thu, 30 May 2024 11:05:47 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-57a196134d1so989900a12.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 08:05:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717081544; x=1717686344; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=I2GO2Bch22rPWmWecNCqjeQ+ehlXyEbrNWMzTV9ZiHE=;
- b=dwXcSccNmAG+eblZ0rqYbkS2ybVd+XgpATlpUW9jwnMlj75mmhdYg3UHp3YAgu8Gw8
- Fpba47a14jxNi4j8Eg85IqNL0tQ3ZAzeLyT9ToZJng94icfYHMX8hLTBohEJUoz8Fg+a
- qxC+Tp1BEuF/ay1KWis8zgxM/mzvOnW4BQ61sQIJj+W9W4ylsZ2vCBksORlqdsRN5KiT
- cOEjgtORUnEElUsB2ExqJ0k0DiEtANQ4tbbtYd9VUk27j1WN4mC53qgkvndlyMYO/8Ez
- bPXvjmlOBY+06teP/Lisv1YW0Vt4L6s7/C6bgQBseSi4rciebbAIMXMR3A136uEWhxWj
- dQEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717081544; x=1717686344;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I2GO2Bch22rPWmWecNCqjeQ+ehlXyEbrNWMzTV9ZiHE=;
- b=TAcjbeCHrSmuWyXcIjK5pygPY2HoVkd9wUVUy3aJYSB+4EGxw/jcEXyBVNgHlW/kbd
- dcpK5aamNBbn6Voje/Q4RELG9kdHfiR0x+UuKZscYbfFaUQS6q+hAtYHCPLFkpcO/TIF
- ejS6pCkGJgLdw3JrHhKvycHzNL4EwuGLkZ3Gn/HL4I4qRObBPUhUgualT654dRhwf/4K
- wd1AGdMIMxj2rUS0PkNaBPY724FxO77mBy4DIiXM2CZH5ydefnO0jA/WMdKILtPzPicr
- qCG2+Q89fnv5WnPtW5y78PxcXbw+5Pd7w5CUF7JKEM6UBuptqO2peeQVzF7Uzf8JQzkO
- zaMw==
-X-Gm-Message-State: AOJu0YzJgdxSLqNkkmD9nnrRop9Qtr9bZz+sx0NA9MNmTabqZiIzHSEy
- 01DBAI+kWKfBdbWQVa5LDnzgRt2Gh8Cx7tjOJaE23A3ZSVg0QZY4agqlL3PmCSS6ARkpyH62Gib
- N6jdmuP1DjJxqKaPJyiCJVYgAt73u0xi1IbzWOp7RyhitkmQD
-X-Google-Smtp-Source: AGHT+IF1vq8GfwISDKGM1KcZZUJi5ABkG6Wa35fmNAcrAe/LL7IsQSAoSm4fqQAMurtmxfJxO8T+Lrd6LXLFWs2J9HE=
-X-Received: by 2002:a50:9f03:0:b0:578:63b0:5821 with SMTP id
- 4fb4d7f45d1cf-57a17802e70mr1490950a12.25.1717081543836; Thu, 30 May 2024
- 08:05:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sChbf-0001nC-Lb
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 11:22:19 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sChbd-0007nm-GO
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 11:22:19 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44UF8eHD015761;
+ Thu, 30 May 2024 15:22:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 8wBQoSeHQ/uWBQvYi62os4eR33jZjLqvUh8BvP3N9os=; b=Oq6k44OSbMmNO6sS
+ bheJ9gfLetoZfzCxr8u7ujVgWv+39rDgnH/GEYLdY6m5SdTzJDDH40ZHNV642+V/
+ 1MmzEG7wtdSJ0gmtK5kkXeeD3FKOIQtEdhhyWSgnwsTXh7egp89T7Shf91mUvYkk
+ cNyb24A2SLkjNAzIm21ut9VRa1SnIn9IYYT0KnOGg26WxO2FAWy7ZnRFFu5ejYz2
+ 7OKsyivfnErDVED3GXULUkNuxUC0OP3GA440DALUIZT05AeK2E4YTtrNaBnEwT0l
+ oSFVbWQoOReYzBkM9+LNO6fS3paWJZum2gPZQqZMTWLgfevYFneIwY+HqBibbZjN
+ PwbXMA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ydyws429d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 May 2024 15:22:11 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44UFMArW015711
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 May 2024 15:22:10 GMT
+Received: from [10.222.168.90] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 30 May
+ 2024 08:22:09 -0700
+Message-ID: <e6bfd903-566e-4e1d-aeaf-efc798b36a92@quicinc.com>
+Date: Thu, 30 May 2024 10:22:03 -0500
 MIME-Version: 1.0
-References: <20240520232634.317988-1-dmamfmgm@gmail.com>
-In-Reply-To: <20240520232634.317988-1-dmamfmgm@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 May 2024 16:05:32 +0100
-Message-ID: <CAFEAcA8ZLBxRtrmOxvf0nNBJaJOLrSBtdy6ZgbFt8Fw2oZB2Zw@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix ohci_service_td: accept valid TDs
-To: David Hubbard <dmamfmgm@gmail.com>
-Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@linaro.org>, 
- Michael Tokarev <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Semihosting Tests PATCH v2 1/3] .editorconfig: add code
+ conventions for tooling
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>
+CC: <qemu-devel@nongnu.org>
+References: <20240530112332.1439238-1-alex.bennee@linaro.org>
+ <20240530112332.1439238-2-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <20240530112332.1439238-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: YTw2JVKbwEDHxS4n3SWZ6ZXRXm98Hmn6
+X-Proofpoint-GUID: YTw2JVKbwEDHxS4n3SWZ6ZXRXm98Hmn6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-30_11,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405300116
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,29 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 May 2024 at 00:26, David Hubbard <dmamfmgm@gmail.com> wrote:
->
-> From: Cord Amfmgm <dmamfmgm@gmail.com>
->
-> This changes the way the ohci emulation handles a Transfer Descriptor with
-> "Current Buffer Pointer" set to "Buffer End" + 1.
->
-> The OHCI spec 4.3.1.2 Table 4-2 allows td.cbp to be one byte more than td.be
-> to signal the buffer has zero length. Currently qemu only accepts zero-length
-> Transfer Descriptors if the td.cbp is equal to 0, while actual OHCI hardware
-> accepts both cases.
->
-> The qemu ohci emulation has a regression in ohci_service_td. Version 4.2
-> and earlier matched the spec. (I haven't taken the time to bisect exactly
-> where the logic was changed.)
 
-Almost certainly this was commit 1328fe0c32d54 ("hw: usb: hcd-ohci:
-check len and frame_number variables"), which added these bounds
-checks. Prior to that we did no bounds checking at all, which
-meant that we permitted cbp=be+1 to mean a zero length, but also
-that we permitted the guest to overrun host-side buffers by
-specifying completely bogus cbp and be values. The timeframe is
-more or less right (2020), at least.
+On 5/30/2024 6:23 AM, Alex Bennée wrote:
+> It's a pain when you come back to a code base you haven't touched in a
+> while and realise whatever indent settings you were using having
+> carried over. Add an editorconfig and be done with it.
+>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
--- PMM
+
+Adding an editorconfig seems like a great idea IMO.  But I wonder - will 
+it result in unintentional additional changes when saving a file that 
+contains baseline non-conformance?
+
+Related: would a .clang-format file also be useful? git-clang-format can 
+be used to apply formatting changes only on the code that's been changed.
+
+Also: should we consider excluding any exceptional files that we don't 
+expect to conform?
+
+
+> ---
+> v2
+>    - drop mention of custom major modes (not needed here)
+>    - include section for assembly
+> ---
+>   .editorconfig | 29 +++++++++++++++++++++++++++++
+>   1 file changed, 29 insertions(+)
+>   create mode 100644 .editorconfig
+>
+> diff --git a/.editorconfig b/.editorconfig
+> new file mode 100644
+> index 0000000..c72a55c
+> --- /dev/null
+> +++ b/.editorconfig
+> @@ -0,0 +1,29 @@
+> +# EditorConfig is a file format and collection of text editor plugins
+> +# for maintaining consistent coding styles between different editors
+> +# and IDEs. Most popular editors support this either natively or via
+> +# plugin.
+> +#
+> +# Check https://editorconfig.org for details.
+> +#
+> +
+> +root = true
+> +
+> +[*]
+> +end_of_line = lf
+> +insert_final_newline = true
+> +charset = utf-8
+> +
+> +[Makefile*]
+> +indent_style = tab
+> +indent_size = 8
+> +emacs_mode = makefile
+> +
+> +[*.{c,h}]
+> +indent_style = space
+> +indent_size = 4
+> +emacs_mode = c
+> +
+> +[*.{s,S}]
+> +indent_style = tab
+> +indent_size = 8
+> +emacs_mode = asm
 
