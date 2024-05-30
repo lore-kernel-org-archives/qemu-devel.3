@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496BDC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF2BC27C44
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 19:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sClfw-0005cO-Td; Thu, 30 May 2024 15:43:00 -0400
+	id 1sClfz-0005da-90; Thu, 30 May 2024 15:43:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sClfv-0005be-5d
- for qemu-devel@nongnu.org; Thu, 30 May 2024 15:42:59 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1sClfw-0005bo-0J
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 15:43:00 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sClft-0006HL-02
- for qemu-devel@nongnu.org; Thu, 30 May 2024 15:42:58 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a626777f74eso125709766b.3
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 12:42:53 -0700 (PDT)
+ id 1sClft-0006HX-1a
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 15:42:59 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-57a1fe6392eso1177179a12.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 12:42:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717098172; x=1717702972; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717098174; x=1717702974; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=32yQbNKYA/0QpYwGyLEbfW3tqRcvc30vIF3lo+QmN14=;
- b=WvH2LWEQpYp8Q5bSeGBHdDeAgwfgbgSh9s94/RIvygnDz6krOZRgc7hlod6t6GRarT
- ouf/fYcPnbiK6mOuex1lzb1FlB8e45rDhtsUVmlIN2kMwl8xvaUHXpcmrmP8N95aLx1t
- 7c2vilNx65mBHxm1McXKWoRjeRDi2IITcqxhvRJchwoLHWzfdD+shhqwu+EYUH6p8sps
- DGsOiL71Sx6qeskWsFPiW8b2HVkC04ebccCNsHc8pPaWxji9hSylrTSM8SkwkonCi8Mc
- GLEPuA6pYgdUKcIgMwgMJaxBlHrgHrnn18uMSDfduZ/0TqvsvfxpgVGK9hsWOBH5EiRn
- cOiA==
+ bh=fPCSTF6BhpGl/BOGWj8t6sMDRxBkBVgL05/HycPv784=;
+ b=Cpr15LOX3D6CRbGYnptBxBZx07KYsY8FhPeQXNXTvuJAedeA5iL8KqBe/gYmn9P0Ra
+ GywApjV6hl5szGirleSwljmgAdf/PUm6aO1wN8HQaP8+yZqTCB8Hnyfus/H5vS5OxSAT
+ KHRJVywwd13mq0H8endRpFu8Xs9gc0QhBXi/N8SgSmgNKwLtzJhZRVueDoZaBdLSEzrS
+ /cCgj8Al4Wp5AvcMtSwtQXiV+VUFOJrdZcwmQEILL7fGuxNRQvpWo5JGIlFf6QGf65lP
+ IWiHpCt2rMZX34vRt+/rBDdyzRNAA18JRLQTLmtZqUZHYuH5hYbp/GX3OjUGvel0Ol1K
+ mL+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717098172; x=1717702972;
+ d=1e100.net; s=20230601; t=1717098174; x=1717702974;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=32yQbNKYA/0QpYwGyLEbfW3tqRcvc30vIF3lo+QmN14=;
- b=u42D9S0YXCKzhTtC5q5W0hkX9Gwa9BKY3x989wQPLKtjApiWMB7BF1F4cGOtcHMM/U
- +SfaJgiPGaEqNQDC5CXymj/tFptV7IZX65HMkNyrjEWLQthOHoY/dfT1i8sJulXgygh9
- a1o5MB3G1RKS/UpCL62Ib5886DgC3pS7EXgKNPF4oLiRbBGFQ/5PZDQ/sI4yZYsAlW28
- H9rD1wNYjW/tStl/JfjxzKOr9Dr9+kVYUqWL8/Jzw654QhltmhtkFAHFhsu1y9/dnwSr
- 9o/NbbABK8XPMyDkZoqXH6eUANHAVcsropntNhvxol93EGsAi7/0NrrE8gafbP17ELOY
- FJDQ==
-X-Gm-Message-State: AOJu0YxkraqBGYKfTtiG4h9Fk8o1GbcRJvgPuCHxeIEcyXVCs40ad1s7
- 2nrOEdrZzcFCvI1OhlKqhNlnQ/vcJ2YBIve1YjJ+eqQ7xju2/klCHHTjvXeai2o=
-X-Google-Smtp-Source: AGHT+IFTafnXNuDoHGvLjw9aFZh+7U9j0vtTJAyWKnYBLNX81Afkye3DJvtDOKRgz1AGcECBR87nFQ==
-X-Received: by 2002:a17:906:f2d9:b0:a61:42ce:bbe4 with SMTP id
- a640c23a62f3a-a65e8e507f0mr301550166b.27.1717098171970; 
- Thu, 30 May 2024 12:42:51 -0700 (PDT)
+ bh=fPCSTF6BhpGl/BOGWj8t6sMDRxBkBVgL05/HycPv784=;
+ b=tAPftSMohLf0yFYMQSTOme59OKsu6hlGJxLGM0tNPGBwz3DqhmsUOr4baOOB3r8v62
+ Is1SIAO5oEkjaKcvcWmTeZKs9/lcA0gSu2hKUZ9kPsvCu/PystzogdMYG9h3/JQPHkat
+ sGXHTNHAhWUqrm872E39nOLeysb2Yel7wEQgizqT1t7KjS1+YD5UcR6OPTwF318lQH7z
+ cJ9oWkl2U2TRaTh0JyQcUFLJ1lM4GCGAA6Ab5IFv0pLGgsqAuDwS+gz6wjZZchZEFdip
+ 4cniQrjsMMKFEo9RyE9AmtVpu6/6I5a485eORYh+RmjuhrwD94kCavDMNXs4AluqiKs0
+ 2rWA==
+X-Gm-Message-State: AOJu0Yz/5YF6/pBvDuZkmjZbA8WaN5FLsXizzTqMbQZhiWKVx7Pn9nrR
+ w9S7/DD+FNeS9uMYrqSSKZaxG8qjhtLTREGW3AyY6suZPhJwoqXwsIl1p4ixwKQ=
+X-Google-Smtp-Source: AGHT+IE6R76QAmiPveib3Be1Nxuw357LnoAEk7dKHLZ8AdvRVSDfuYn+KOWdz8CdSrBFOQdmXMpLAA==
+X-Received: by 2002:a17:906:7714:b0:a67:da88:149a with SMTP id
+ a640c23a62f3a-a67da881f76mr21672966b.55.1717098173884; 
+ Thu, 30 May 2024 12:42:53 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a67eb34204dsm7560266b.191.2024.05.30.12.42.51
+ a640c23a62f3a-a67eab85c8fsm7754766b.183.2024.05.30.12.42.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 12:42:51 -0700 (PDT)
+ Thu, 30 May 2024 12:42:53 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DA9075F8E5;
- Thu, 30 May 2024 20:42:50 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 16D015F8E9;
+ Thu, 30 May 2024 20:42:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -74,17 +74,18 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Reinoud Zandijk <reinoud@netbsd.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH 3/5] cpu-target: don't set cpu->thread_id to bogus value
-Date: Thu, 30 May 2024 20:42:48 +0100
-Message-Id: <20240530194250.1801701-4-alex.bennee@linaro.org>
+Subject: [PATCH 5/5] core/cpu-common: initialise plugin state before thread
+ creation
+Date: Thu, 30 May 2024 20:42:50 +0100
+Message-Id: <20240530194250.1801701-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240530194250.1801701-1-alex.bennee@linaro.org>
 References: <20240530194250.1801701-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,27 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The thread_id isn't valid until the threads are created. There is no
-point setting it here. The only thing that cares about the thread_id
-is qmp_query_cpus_fast.
+Originally I tried to move where vCPU thread initialisation to later
+in realize. However pulling that thread (sic) got gnarly really
+quickly. It turns out some steps of CPU realization need values that
+can only be determined from the running vCPU thread.
+
+However having moved enough out of the thread creation we can now
+queue work before the thread starts (at least for TCG guests) and
+avoid the race between vcpu_init and other vcpu states a plugin might
+subscribe to.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- cpu-target.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/core/cpu-common.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/cpu-target.c b/cpu-target.c
-index 5af120e8aa..499facf774 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -241,7 +241,6 @@ void cpu_exec_initfn(CPUState *cpu)
-     cpu->num_ases = 0;
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 6cfc01593a..bf1a7b8892 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -222,14 +222,6 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+         cpu_resume(cpu);
+     }
  
- #ifndef CONFIG_USER_ONLY
--    cpu->thread_id = qemu_get_thread_id();
-     cpu->memory = get_system_memory();
-     object_ref(OBJECT(cpu->memory));
- #endif
+-    /* Plugin initialization must wait until the cpu start executing code */
+-#ifdef CONFIG_PLUGIN
+-    if (tcg_enabled()) {
+-        cpu->plugin_state = qemu_plugin_create_vcpu_state();
+-        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
+-    }
+-#endif
+-
+     /* NOTE: latest generic point where the cpu is fully realized */
+ }
+ 
+@@ -273,6 +265,18 @@ static void cpu_common_initfn(Object *obj)
+     QTAILQ_INIT(&cpu->watchpoints);
+ 
+     cpu_exec_initfn(cpu);
++
++    /*
++     * Plugin initialization must wait until the cpu start executing
++     * code, but we must queue this work before the threads are
++     * created to ensure we don't race.
++     */
++#ifdef CONFIG_PLUGIN
++    if (tcg_enabled()) {
++        cpu->plugin_state = qemu_plugin_create_vcpu_state();
++        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
++    }
++#endif
+ }
+ 
+ static void cpu_common_finalize(Object *obj)
 -- 
 2.39.2
 
