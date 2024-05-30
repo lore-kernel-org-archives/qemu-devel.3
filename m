@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15554C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 09:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA38C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 09:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCcUQ-00071P-8l; Thu, 30 May 2024 05:54:30 -0400
+	id 1sCcUL-0006zz-Jr; Thu, 30 May 2024 05:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCcUP-00071H-8C
- for qemu-devel@nongnu.org; Thu, 30 May 2024 05:54:29 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCcUI-0006zF-Hk
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 05:54:22 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCcUN-00026k-Nl
- for qemu-devel@nongnu.org; Thu, 30 May 2024 05:54:28 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-6c104f64ff6so218198a12.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 02:54:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCcUF-00026A-2k
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 05:54:21 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2bf62b121ccso483227a91.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 02:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717062865; x=1717667665; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4pFJzHDtmft5g8RBuvLaR9yxIK0lDH4VCI5JZiV1edk=;
- b=SpFDr0Fdtnl932T7FjegWXs+Pql8yGD3rpZ+yJaBODTF530NdlHuk5z7gMJM7A+3m3
- k9fF7+aCsVyZVdHNKrnuY56tShLpa7h3ZDxNYpkJd7X3LaxVMaR2oDLWn+vAgpRR3qsi
- mGiQ3+EtuFdVD83U6gWqaCxR5hIuwGN0sDXel1O2ZxJtDUx2oVBpIaXhguyD+34Ayy0M
- 6mcxPKLOplTwd1onaYmjK4zC/ZL3zMKq3RyFUhWnO2PhOo9ZoboqlGn0fEYxe3V/kJjc
- siJ4fY3eJpYqYNYow1uec3jlzP880+4hgk7KUSWamsTS53fE4eL84oOLolyKVTY4dyGO
- SmYg==
+ d=gmail.com; s=20230601; t=1717062857; x=1717667657; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fqOQQsWYFsiD427DANQ9dVJoq1lGeoayCWBiRsEqQh8=;
+ b=YdPIk29tmG8uU93eTSl46olc/MolkHddNNpc3/gRIxQT89TQkCHSaFHcb2wJ3EdDDn
+ S6ngmrYuZjwfmHv0OgHgBbAwTtkp9P3+kwhhVETscdxnBz2AbJKuamqAGBg2vzv/t2Jl
+ xyMpfMh7V1zKFQ3eUJuO+xksW1mcqFeiGAVd3mCKR0FgSrmLythJNq+G7w5xBAvUMYa4
+ OyAUa86DJbWncMz0CcnVOUQitizSU3qbLJfJRyDppyqk4j/8mEJ1uyCjK5+p8OYqoPlR
+ qdpwfMKm6+PqVEtXzmiX0bWCIMiFXd/6hv5v7D4bpmddjvrqeei5BBBvHj0WtJ8b5p5I
+ jaqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717062865; x=1717667665;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4pFJzHDtmft5g8RBuvLaR9yxIK0lDH4VCI5JZiV1edk=;
- b=gzzL1jCrIcdHFVBQzicA+zJG9YjCYkdrzPzmAz9gQ6tv4lCwqJRYi9iY+hwt1d4WN9
- C/EgVeKmHsEe+oeDRGWoua++S7WZe2EsyWCWYZlDI+wHAFvGhY+eG5kbDF+LI5aVovh6
- kSPcQyaty+XTyndXYWLB/vTDlYDJLBg85wJYin/6MY6v8/NH8Bc51K4XoOp1hRa7nVC0
- JPLgFEcrB6ZnOBVFDpBfPFWS4F8I4U6eZSu//RYpYqrFg5WCJLXNeYhPHTNNd8fWCkyu
- GfLZ4WBAQqyux/bop9+mvjqYDmVh7QC2MVq1vIsqlsuaQAKvjo1P9BrpX7o0zK2AqIZ0
- Koow==
-X-Gm-Message-State: AOJu0YwLyZOik04czI1IVA8tlE0KfC0k0jpxqNNHzAtE+5b9rgKdvPIF
- 7OG0nASihlJQ/tfGuH5+eJWcGiTp6DsAK21aPKJr4HKNZHL3UfZaTVojOQfE
-X-Google-Smtp-Source: AGHT+IHkxr9RTTmBrPUBp1kRKkAPwkMA2RDNlgQ8Hl5lYwZkSHRcylHxqCfxeg+tx4sGMziZEYO7tA==
-X-Received: by 2002:a17:90a:f195:b0:2bd:d42a:f84e with SMTP id
- 98e67ed59e1d1-2c1abc06547mr1573898a91.7.1717062865492; 
- Thu, 30 May 2024 02:54:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717062857; x=1717667657;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fqOQQsWYFsiD427DANQ9dVJoq1lGeoayCWBiRsEqQh8=;
+ b=H+y77ZsdJjfTYYY+uZEBguq0gsY10TEaOgaY4XdZAsXmg6Zm03aqMhqm9t+3IiGIck
+ Jy+1Nw/iQjGiTrPnS8PhhD6pcjP74QoSUf46qc4DDBl3LqpWGcVtFMbcrhOenYeGQ+8G
+ UQP1zAeN7pHCSLZ9nqPtG0zMthtEKZCRBQn4a3nsFAGKu+QrwPKsPTEAjyHi6XqK5m4F
+ YBGpF4H0h+AG2T2WXjzK0GniatoasiljxEw74ycITiKF9MG4TgWQtRnWbXryA90Zkq+Q
+ 2IkkCpV9WRE/y2U2rDTNfYZV7d8bU234XoLNZnB2fW8VajnmEZXVp/nPyHyg+oaG7xGh
+ JFeQ==
+X-Gm-Message-State: AOJu0Yxw618YWHTtu1Vr5segSGHq4hPdjN0IxYfITe3+mPoQYKzCspF9
+ nNUowf9+qCUWVacntrkIxwvgOSc4rdzVnz+nWnvB3ve/THmUtQ7055YywWGR
+X-Google-Smtp-Source: AGHT+IF9yVV3OUOweh3X7ETmk8qE9VSHpKwbm5qEbphjmfvm3i7pNBoSUH6WK8S7b7Az3KTY+3oeUA==
+X-Received: by 2002:a17:90b:1191:b0:2c1:a9dc:7f07 with SMTP id
+ 98e67ed59e1d1-2c1acc912f9mr2020557a91.18.1717062856982; 
+ Thu, 30 May 2024 02:54:16 -0700 (PDT)
 Received: from wheely.local0.net ([1.146.0.82])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1a775d28asm1183626a91.8.2024.05.30.02.54.21
+ 98e67ed59e1d1-2c1a775d28asm1183626a91.8.2024.05.30.02.54.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 02:54:25 -0700 (PDT)
+ Thu, 30 May 2024 02:54:16 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 2/4] tests/qtest/migration-test: Enable test_mode_reboot
-Date: Thu, 30 May 2024 19:54:05 +1000
-Message-ID: <20240530095408.31608-3-npiggin@gmail.com>
+Subject: [PATCH v2 0/4] tests/qtest/migration-test: Improve shared
+Date: Thu, 30 May 2024 19:54:03 +1000
+Message-ID: <20240530095408.31608-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240530095408.31608-1-npiggin@gmail.com>
-References: <20240530095408.31608-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,38 +90,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano pointed out this test probably is not flaky, just that it could
-not run under Gitlab CI due to very small shm filesystem size in that
-environment.
+These apply on top of the previous ppc series. They are similar
+to what was discussed except the end result does not attempt to
+run /dev/shm tests on Gitlab CI because of concerns about
+consistency of test results if shm becomes exhausted.
 
-Now that it has moved to use /tmp instead of /dev/shm files, enable it.
+Thanks,
+Nick
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/qtest/migration-test.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+Nicholas Piggin (4):
+  tests/qtest/migration-test: Use regular file file for shared-memory
+    tests
+  tests/qtest/migration-test: Enable test_mode_reboot
+  tests/qtest/migration-test: Fix and enable test_ignore_shared
+  tests/qtest/migration-test: Add a postcopy memfile test
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 8bbf45313d..de380757be 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -3469,15 +3469,7 @@ int main(int argc, char **argv)
-                        test_precopy_file_offset);
-     migration_test_add("/migration/precopy/file/offset/bad",
-                        test_precopy_file_offset_bad);
--
--    /*
--     * Our CI system has problems with shared memory.
--     * Don't run this test until we find a workaround.
--     */
--    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
--        migration_test_add("/migration/mode/reboot", test_mode_reboot);
--    }
--
-+    migration_test_add("/migration/mode/reboot", test_mode_reboot);
-     migration_test_add("/migration/precopy/file/mapped-ram",
-                        test_precopy_file_mapped_ram);
-     migration_test_add("/migration/precopy/file/mapped-ram/live",
+ tests/qtest/migration-test.c | 128 ++++++++++++++++++++++++-----------
+ 1 file changed, 88 insertions(+), 40 deletions(-)
+
 -- 
 2.43.0
 
