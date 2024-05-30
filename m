@@ -4,83 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02729C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5AEC27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdsl-00053e-2g; Thu, 30 May 2024 07:23:43 -0400
+	id 1sCdmL-0005xt-2N; Thu, 30 May 2024 07:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCdsj-0004yu-LS
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:23:41 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sCdsf-0002gH-Sq
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:23:41 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-579cd80450fso1781684a12.0
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 04:23:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717068214; x=1717673014; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BUuBTVNvgV45jAw2FZGNm/bzWVNk+iprBbeI4k7zOec=;
- b=b/0VfhQop0ABwzUOeN37WtqewZD7Ng/MdOvCY1DgpJ758/LRA+ksylUh6J3gqKAlZT
- 2wWZbbIEDLO1xdNnbNIn/xY/y7J18d7EdBr/skvnyih1PhAuTPOt/sUgdq9QBMttLPuF
- UP6XYdsYjFHXIN9Y4cDx08DpJFbHEbxx1ELZ9X9oKIRwwGgXGkKMFmZ4X0/smC6PRrmJ
- O0Lg5xk88zoKVikbBfYsS66eVshMcBJ7ZwVBdH68jL++9ad4icJMZ+1H5+yoRJaoCQ+U
- yrJ7OxQNoT5EIQNaJ7XOQ77273Mqxgeire4Z3KUTm9jnSpNw9JiylFVpiwZ+16lTdm0Q
- OpHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717068214; x=1717673014;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BUuBTVNvgV45jAw2FZGNm/bzWVNk+iprBbeI4k7zOec=;
- b=Gq6qQQtGwdfRzfp/5Tj9+JRfHdiY/Sv4++0kl51z2bS+0xsgB5/X007J3a3DFF2l0j
- 0asx2EbCQ31k6eNBXfRglcgnLLnIlMf9NYV4SE9U2Jwbk0xR9Qk1p07KIvYXN44Jd+Pt
- d1BoEXtTGmz0jH2rB0J3s7TdOaxfEtHPm3DuQL0Frs9knyVEWtpBsE4QmmVfObcYvr3q
- d/AQd8nrwt6xva0n3VhgTtNy2eEr4BOku2LYQFIL8ka0J09gjhM21VT/BM28cBUMxuei
- IlJFrvfqGoOw+qgVKxJb22V68RMrzBTvvin8zYnnj7+OdssjQsltqHyJzdezP4drgCFJ
- ESKQ==
-X-Gm-Message-State: AOJu0Yw9wAUqp+UEN/J2st6vIqlOrsUgAg11VR8Ys1ifIzU34VbVA/fL
- Qt/Lye58WKo1GdsrxqXoAr6KHhER+710s9hLIHaYloteYxlhwcC5neEPqg0fI4s=
-X-Google-Smtp-Source: AGHT+IE5JlisWqE5qyrd+TDLIeC43UX5znM6qP91fDIfF4PIgEpDa0/52gBC/PVNObXbvb7tv105Cg==
-X-Received: by 2002:a17:906:1c41:b0:a5a:8cc0:8c23 with SMTP id
- a640c23a62f3a-a65f0bd69cemr132733966b.27.1717068214174; 
- Thu, 30 May 2024 04:23:34 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a667bf48673sm27419066b.60.2024.05.30.04.23.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 04:23:33 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DCD1B5F8E5;
- Thu, 30 May 2024 12:23:32 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [Semihosting Tests PATCH v2 3/3] add SYS_GET_CMDLINE test
-Date: Thu, 30 May 2024 12:23:32 +0100
-Message-Id: <20240530112332.1439238-4-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240530112332.1439238-1-alex.bennee@linaro.org>
-References: <20240530112332.1439238-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1sCdmI-0005vw-Vf
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:02 -0400
+Received: from mail-co1nam11on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::601]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1sCdmD-0001Qy-W2
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SioOTpnvwdHphJ1sp0uHuuWbfDb/sXyY48L6m84zyGTt85e4A5ag/khSexaoOuqPuZoGutK55SuzYPwPO7in8cihcZsPAmrBAaPDbJ7xgGvyTYKxsBHy5ubcXa2tNbXqO6dN99DWOln55nf/8Zo/6yRC75tiRpprjUxKZekS2o9Nl+ces4CrAVEDJl+fHRoEZt55Di3ksCuRgZwCmgmpdkjk4zlmNciqsuBw3F8g6jpNxMM2fIPq/rKXf/A7l8ViOSsYnM1iSbZNTn1ES82tSGjeDlr/b1oUKbScz/yQWKxz7x1QK7WquCM4bfNJWFndIYsTggNNosSeZ3YOeoiM8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0MUj7HUGNMWagF8RJh+gApWGW5TbAFgo1Owe6jlLlh8=;
+ b=J/d4+85NR3EYquQGaLQ9KCJBYpRB76xT0GMqYDpOqRHGeLvuAvkbJwn4fh2n4L7HSSuwrMj0QsRPW+SD3D4L9MvckYQ+osr+pIm/FANd0PH5fS/00+zxL9G4erxbTJl/GdT3U1kqLzV5XNeMweNLp+UcTkBmeYdlD8dd2AFNv25y9JEooMYUGrfpdR0vlEx2Tly0o3ncpZFUXhz9APoe3hxqG2y5CUMOqO/+aiNuaj8lCU/Wt4tSLmjFLuIeEctWXm71nxbL66/x4b2+/TNLqVAqVz2Nm/ZcLqAwfhUOK2us/J1ws3LTp91xUBdwuztiaUgK8Uf0ToHsDHtsFr0ROg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0MUj7HUGNMWagF8RJh+gApWGW5TbAFgo1Owe6jlLlh8=;
+ b=eSCo7WVYKyuIZ3R7KjHsLlC8PVii4XIVEfwUryrZ2HGgT328qsc8f9uNPbMwMvJKOWoCpn/cmfY/+4uH1ZvrIhNtpOUwujjo1CSy/DwUT7ytv4HGFqiTslveJysWpCDcX3vdWt6EM32Rg3Ul8XImOje0OYVPKqEACawp3SQ+MMk=
+Received: from BN1PR14CA0016.namprd14.prod.outlook.com (2603:10b6:408:e3::21)
+ by MW3PR12MB4476.namprd12.prod.outlook.com (2603:10b6:303:2d::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.30; Thu, 30 May
+ 2024 11:16:53 +0000
+Received: from BN2PEPF00004FBC.namprd04.prod.outlook.com
+ (2603:10b6:408:e3:cafe::28) by BN1PR14CA0016.outlook.office365.com
+ (2603:10b6:408:e3::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.30 via Frontend
+ Transport; Thu, 30 May 2024 11:16:53 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ BN2PEPF00004FBC.mail.protection.outlook.com (10.167.243.182) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:16:53 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
+ 2024 06:16:51 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
+ 2024 06:16:51 -0500
+Received: from pankaj-M75q.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
+ Transport; Thu, 30 May 2024 06:16:51 -0500
+From: Pankaj Gupta <pankaj.gupta@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <brijesh.singh@amd.com>, <dovmurik@linux.ibm.com>, <armbru@redhat.com>,
+ <michael.roth@amd.com>, <xiaoyao.li@intel.com>, <pbonzini@redhat.com>,
+ <thomas.lendacky@amd.com>, <isaku.yamahata@intel.com>, <berrange@redhat.com>, 
+ <kvm@vger.kernel.org>, <anisinha@redhat.com>, <pankaj.gupta@amd.com>
+Subject: [PATCH v4 11/31] i386/cpu: Set SEV-SNP CPUID bit when SNP enabled
+Date: Thu, 30 May 2024 06:16:23 -0500
+Message-ID: <20240530111643.1091816-12-pankaj.gupta@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBC:EE_|MW3PR12MB4476:EE_
+X-MS-Office365-Filtering-Correlation-Id: fa116370-f440-4c39-5fc0-08dc809a023d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230031|36860700004|376005|1800799015|82310400017; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ZPh7fvzv+MlEoPZ+Y1Op4PGot8xx3x/IJMq/VlpyVOsKwMAEtpBM/ENFcA1r?=
+ =?us-ascii?Q?QpznHNrKkvQrAhiTqKfk7L9nYE8a2+wtnlqieUW5zK0r53r17taQxGkgVVPS?=
+ =?us-ascii?Q?MqcXd08UaZYZMV0hDIDHYAlupZ2/I5MAgZ9UQPOguom0w2AfijA6M8uhlTNW?=
+ =?us-ascii?Q?cvZBuBBEfvlpZrI9R8nSmA70haCofjKcnD97RAsb6w0snIREoIF3EhEb83U2?=
+ =?us-ascii?Q?Jnmmp+mW2oK3lIVfNkB2BFk0IotIgx6SdweDvulsV4s5x9lYjHQypyBqtPYv?=
+ =?us-ascii?Q?DTXPEdnyKgFCg+yjPCTIJW8v8DzuxUgO8pG/E1UOD1/3Ov/8X2OenfJ+ZbCa?=
+ =?us-ascii?Q?tquThROw4EsCRcC/00fAt3fHUKlLPquQAW+vsuu4L8ZJwDx355rUxTYyGANj?=
+ =?us-ascii?Q?UBCTMlhpKhI+ECd4oAoZRPsdX9PTRZXeHTUS/ZHmwlx7Tt1CkdYcTUvdqdcj?=
+ =?us-ascii?Q?JK2Y328y4BDm0yysRBNWFC5jAovhp+3q47QhRj4goWixa6VEdV1J+X4yEKG0?=
+ =?us-ascii?Q?srZzsk3GOuWaXObc4nsSNsGodqc0Qx0VnSzYQw56diq0481DZOw6cvg+Bqhs?=
+ =?us-ascii?Q?H0pn2hSGvbUhlcNxwmOW9lxeUNXa/yWIAMk+vrWm1/jocAmiumOmXXOGXOah?=
+ =?us-ascii?Q?RGUbnHe5gEJB6bboLwDm3hF4JEvHkEnRFv/BdUUZ1QsuXs7b7IpNz0El4Cdb?=
+ =?us-ascii?Q?xv3mr7q1Pd+c/3a4hTf3OlXevGubXGWTGKFQlihdmIxsAmpsjMxKXgfXrV8A?=
+ =?us-ascii?Q?AGz4LXRD+qKvODoRjzwCRj2W/Ps9f8CFB+XTcPcmhU6RQryzOyZ4cS3BodHy?=
+ =?us-ascii?Q?JQHlSsAuEJh0KtOiuNviOYgLcAxZASbDy8pI4AdxCTg7Q6np1G+rJOidlCAY?=
+ =?us-ascii?Q?7Rz21OI8W7YwPFmRCHCTx3TVskzE77Qacgo6EyEC4QeDkcsfAKhrjrzsVTId?=
+ =?us-ascii?Q?ECMh+RCut/rlsgBterO6H0po2ov9iXWsEsTVu4ALygzPQc/ObW0WJsE9VpQ6?=
+ =?us-ascii?Q?ASkuYx7lUlB5g7ocOkdu8nuGlFkz0VrXOfmuYYo8e07SVlHxX0lbgMotjVK0?=
+ =?us-ascii?Q?LuENcGSj4SGMdd3GYn8Gpndm3tUfsyP0W3KTUC2jE/l1IsvrLp9TCFHSUXR1?=
+ =?us-ascii?Q?MrwDHBcKuGYxXinGgQCr4FDkRjh2P38ZFwlMpGnqwBx+aBz6CGyz9bCqVstR?=
+ =?us-ascii?Q?9mEjwhl7xOQ8yzTb6E7P2wBVvXzkVSkR5MiMgV9pBKcMkhgFtar7TIkJGNwy?=
+ =?us-ascii?Q?raNs/pbEvKDmHiJjRMi25PKREtrr3eSIGKJoGKewMK6ILL0Ak+abk0BbXy33?=
+ =?us-ascii?Q?giKrBLE8ZWcUxdpedAOrYoevNXPJ6t3AkYRsMWLyvsOsoTYvtwRa5M9QJBQr?=
+ =?us-ascii?Q?mVzliuJro2jUWJNQk1ILVGGL77Zm?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(36860700004)(376005)(1800799015)(82310400017); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:16:53.0350 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa116370-f440-4c39-5fc0-08dc809a023d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBC.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4476
+Received-SPF: permerror client-ip=2a01:111:f403:2416::601;
+ envelope-from=Pankaj.Gupta@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,134 +154,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a new test case for the semihosting SYS_GET_CMDLINE call. We can
-use the existing previously unused semi_get_cmdline helper and we then
-verify:
+From: Michael Roth <michael.roth@amd.com>
 
- - the call succeeds
- - the call returns the expected length string
- - the call returns the expected binary name as arg0
+SNP guests will rely on this bit to determine certain feature support.
 
-The most fiddly bit was exposing the binary name into the program so
-we can validate the result.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
 ---
-v2
-  - add return leg on failing test
-  - check returned length is sane
-  - s/could/couldn't/
-  - just let array reference decay to the pointer
-  - rewrite the commit message to be less terse
----
- Makefile   | 22 +++++++++++-----------
- usertest.c | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 11 deletions(-)
+ target/i386/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Makefile b/Makefile
-index 59fd831..f77665f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -85,37 +85,37 @@ systest-srcs = start.S string.c $(usertest-srcs)
- microbit-systest-srcs = start-microbit.S string.c $(usertest-srcs)
- 
- usertest-a32: $(usertest-srcs)
--	$(A32GCC) --static -o $@ $^
-+	$(A32GCC) -DBINARY_NAME="\"$@\"" --static -o $@ $^
- 
- usertest-t32: $(usertest-srcs)
--	$(T32GCC) --static -o $@ $^
-+	$(T32GCC) -DBINARY_NAME="\"$@\"" --static -o $@ $^
- 
- usertest-a32-hlt: $(usertest-srcs)
--	$(A32GCC) -DUSE_HLT --static -o $@ $^
-+	$(A32GCC) -DBINARY_NAME="\"$@\"" -DUSE_HLT --static -o $@ $^
- 
- usertest-t32-hlt: $(usertest-srcs)
--	$(T32GCC) -DUSE_HLT --static -o $@ $^
-+	$(T32GCC) -DBINARY_NAME="\"$@\"" -DUSE_HLT --static -o $@ $^
- 
- usertest-a64: $(usertest-srcs)
--	$(A64GCC) --static -o $@ $^
-+	$(A64GCC) -DBINARY_NAME="\"$@\"" --static -o $@ $^
- 
- systest-a32.axf: $(systest-srcs)
--	$(A32GCC) -o $@ $^ $(A32LINKOPTS)
-+	$(A32GCC) -DBINARY_NAME="\"$@\"" -o $@ $^ $(A32LINKOPTS)
- 
- systest-t32.axf: $(systest-srcs)
--	$(T32GCC) -o $@ $^ $(A32LINKOPTS)
-+	$(T32GCC) -DBINARY_NAME="\"$@\"" -o $@ $^ $(A32LINKOPTS)
- 
- systest-a32-hlt.axf: $(systest-srcs)
--	$(A32GCC) -DUSE_HLT -o $@ $^ $(A32LINKOPTS)
-+	$(A32GCC) -DBINARY_NAME="\"$@\"" -DUSE_HLT -o $@ $^ $(A32LINKOPTS)
- 
- systest-t32-hlt.axf: $(systest-srcs)
--	$(T32GCC) -DUSE_HLT -o $@ $^ $(A32LINKOPTS)
-+	$(T32GCC) -DBINARY_NAME="\"$@\"" -DUSE_HLT -o $@ $^ $(A32LINKOPTS)
- 
- systest-t32-bkpt.axf: $(microbit-systest-srcs)
--	$(V7MGCC) -DUSE_BKPT -o $@ $^ $(AV7MLINKOPTS)
-+	$(V7MGCC) -DBINARY_NAME="\"$@\"" -DUSE_BKPT -o $@ $^ $(AV7MLINKOPTS)
- 
- systest-a64.axf: $(systest-srcs)
--	$(A64GCC) -nostdlib -o $@ $^ $(A64LINKOPTS)
-+	$(A64GCC) -DBINARY_NAME="\"$@\"" -nostdlib -o $@ $^ $(A64LINKOPTS)
- 
- run-usertest-a32: usertest-a32
- 	$(QEMU_ARM) usertest-a32
-diff --git a/usertest.c b/usertest.c
-index 5df95f3..7a12896 100644
---- a/usertest.c
-+++ b/usertest.c
-@@ -315,6 +315,33 @@ static int test_feature_detect(void)
-     return 0;
- }
- 
-+static int test_cmdline(void)
-+{
-+    char cmdline[256];
-+    int actual;
-+    const char *s, *c;
-+
-+    if (semi_get_cmdline(cmdline, sizeof(cmdline), &actual)) {
-+        semi_write0("FAIL couldn't recover command line\n");
-+        return 1;
-+    }
-+
-+    if (strlen(BINARY_NAME) != actual) {
-+        semi_write0("FAIL cmdline length not what expected: ");
-+        semi_write0(cmdline);
-+        return 1;
-+    }
-+
-+    if (strcmp(cmdline, BINARY_NAME) != 0) {
-+        semi_write0("FAIL unexpected command line: ");
-+        semi_write0(cmdline);
-+        return 1;
-+    }
-+
-+    semi_write0("PASS command line test\n");
-+    return 0;
-+}
-+
- int main(void)
- {
-     void *bufp;
-@@ -366,6 +393,10 @@ int main(void)
-         return 1;
-     }
- 
-+    if (test_cmdline()) {
-+        return 1;
-+    }
-+
-     semi_write0("ALL TESTS PASSED\n");
- 
-     /* If we have EXIT_EXTENDED then use it */
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index bc2dceb647..914bef442c 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6979,6 +6979,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         if (sev_enabled()) {
+             *eax = 0x2;
+             *eax |= sev_es_enabled() ? 0x8 : 0;
++            *eax |= sev_snp_enabled() ? 0x10 : 0;
+             *ebx = sev_get_cbit_position() & 0x3f; /* EBX[5:0] */
+             *ebx |= (sev_get_reduced_phys_bits() & 0x3f) << 6; /* EBX[11:6] */
+         }
 -- 
-2.39.2
+2.34.1
 
 
