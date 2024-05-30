@@ -4,93 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CDBC25B78
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E96F2C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCa2a-00046z-TH; Thu, 30 May 2024 03:17:36 -0400
+	id 1sCa4R-0006Uw-Su; Thu, 30 May 2024 03:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa2X-0003lx-75
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:17:33 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa2T-0005Z0-5I
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:17:30 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57a1fe63a98so258772a12.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717053447; x=1717658247; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kvNLJpx/j5Zo3jUuprmrG9QQOioGNCv1AT/8qxYHato=;
- b=xeJyC6XsXA6ZwkQ/9uJ3898wIEn7oo5gk2l1orY+tXb3lVAkyBN9N2fW7G1G18jriS
- VR14WKujPtRbr5GlLT+CFZQllkFn1FwFOXL+QrXZbuLf1I/unxvhzqzE3ztlDbeHPoaU
- 0t/KaSXyq9QiKbcvyX7CCIJzEAT1uFN0HDxp/yTwVFmzUsudc3pRZL+rp2bpbYYwhooy
- UPKH9yoGcmrGwxt3IY9JlKjmOrisksBgwuPVW9zOu/gDmQsV5ObL4DcVzw8aQXP0+7jU
- 2zknAUZ/ydy0xDxExAbcCwhZQsc7p18rVktEY1MKGTnHySqnZj7ZQ8AFAKlejJx2MnD5
- uTWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717053447; x=1717658247;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kvNLJpx/j5Zo3jUuprmrG9QQOioGNCv1AT/8qxYHato=;
- b=ScPMV7GMOy0+Kp03mwwHvlZmjM80H7kQLdfuyyMSBQ2iyUd0/Eijm9nt6O+gRKTXFp
- +WKwLTztwilqx5SXfKWWegIoUGSrO/JyYseF+yodbuCTxTtPDs/68Gj0FQZUqIQjybgQ
- HiGv07BbkEAQtRY+CwJMJP/HZ54h+m/zhL93WxnqFxhtV9ROgxyxlWhPeFM8uJFWZadb
- zZNis1DLKbJmfZOM5VOlm3vnQTCWR/urUVQ4II3DPNhVgpXezV0c3jTYfn42Ni631bt2
- abQZVXGGFdjY4HEpE8hUB8tsbvYkMsRTzJ62BD3fBZr9OqMekmXFNyD4OIwMPgTBcYW+
- cGkA==
-X-Gm-Message-State: AOJu0Ywz7Cxg5mSomO7cZMhpJ1CQ0z2LzyuS5T1TejY69g/PU1cB382d
- FJtNbV151lc70phtcCskfAUr1J4fS9SJIELunsszf8UFyT8oQofgj677q20qrvPjNFb/uNfouwO
- v
-X-Google-Smtp-Source: AGHT+IFd0MQME9y+AdoHJ/L+l9sF0jKQLvOXrwpGfTgPTE2I1eWDnEJvRLUCykaPdAQ6KVrS8JI3zQ==
-X-Received: by 2002:a17:906:28cd:b0:a55:8f2a:950d with SMTP id
- a640c23a62f3a-a65e8d15723mr67171066b.16.1717053447075; 
- Thu, 30 May 2024 00:17:27 -0700 (PDT)
-Received: from m1x-phil.lan (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
- [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557a08a878sm16506109f8f.43.2024.05.30.00.17.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 30 May 2024 00:17:26 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Nicholas Piggin <npiggin@gmail.com>, devel@lists.libvirt.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Mads Ynddal <mads@ynddal.dk>,
- Markus Armbruster <armbru@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
- Greg Kurz <groug@kaod.org>, Yanan Wang <wangyanan55@huawei.com>,
- qemu-ppc@nongnu.org, Eric Blake <eblake@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH 2/2] trace: Remove deprecated 'vcpu' field from QMP trace
- events
-Date: Thu, 30 May 2024 09:15:48 +0200
-Message-ID: <20240530071548.20074-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240530071548.20074-1-philmd@linaro.org>
-References: <20240530071548.20074-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
+ id 1sCa4Q-0006T9-CY; Thu, 30 May 2024 03:19:30 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
+ id 1sCa4J-0005pk-TP; Thu, 30 May 2024 03:19:30 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Vqd0h2vMmz4wyj;
+ Thu, 30 May 2024 17:19:16 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Vqd0c52zLz4wyw;
+ Thu, 30 May 2024 17:19:12 +1000 (AEST)
+Message-ID: <09b4d73e-64a8-41e2-81ca-4e1185abda8a@kaod.org>
+Date: Thu, 30 May 2024 09:19:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/11] ppc/pseries: Add Power11 cpu type
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+References: <20240528070515.117160-1-adityag@linux.ibm.com>
+ <20240528070515.117160-3-adityag@linux.ibm.com>
+ <d584063b-a30e-46f0-a69e-4737c8d6d46a@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <d584063b-a30e-46f0-a69e-4737c8d6d46a@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Otnh=NB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,167 +73,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'vcpu' fields are deprecated since commit 5485e52a33
-("qapi: make the vcpu parameters deprecated for 8.1"),
-time to remove them.
+On 5/30/24 09:06, Harsh Prateek Bora wrote:
+> 
+> 
+> On 5/28/24 12:35, Aditya Gupta wrote:
+>> Add sPAPR CPU Core definition for Power11
+>>
+>> Cc: David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
+>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
+>> Cc: Cédric Le Goater <clg@kaod.org>
+>> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+>> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+>> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+>> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+>> Cc: Nicholas Piggin <npiggin@gmail.com>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> ---
+>>   docs/system/ppc/pseries.rst | 6 +++---
+>>   hw/ppc/spapr_cpu_core.c     | 1 +
+>>   2 files changed, 4 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
+>> index a876d897b6e4..3277564b34c2 100644
+>> --- a/docs/system/ppc/pseries.rst
+>> +++ b/docs/system/ppc/pseries.rst
+>> @@ -15,9 +15,9 @@ Supported devices
+>>   =================
+>>    * Multi processor support for many Power processors generations: POWER7,
+>> -   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
+>> -   but its state is unknown.
+>> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
+>> +   POWER7+, POWER8, POWER8NVL, POWER9, Power10 and Power11. Support for POWER5+
+>> +   exists, but its state is unknown.
+>> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9, Power10, Power11)
+> 
+> I think it would look more cleaner to rephrase as below:
+> 
+>   * Multi processor support for many Power processors generations:
+>     - POWER7, POWER7+
+>     - POWER8, POWER8NVL
+>     - POWER9
+>     - Power10
+>     - Power11.
+>     - Support for POWER5+ exists, but its state is unknown.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/about/deprecated.rst       | 11 -----------
- docs/about/removed-features.rst |  6 ++++++
- qapi/trace.json                 | 27 +++------------------------
- trace/qmp.c                     |  2 --
- trace/trace-hmp-cmds.c          |  4 ++--
- 5 files changed, 11 insertions(+), 39 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 4a61894db6..187c8a3f97 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -148,17 +148,6 @@ accepted incorrect commands will return an error. Users should make sure that
- all arguments passed to ``device_add`` are consistent with the documented
- property types.
- 
--QEMU Machine Protocol (QMP) events
------------------------------------
--
--``vcpu`` trace events (since 8.1)
--'''''''''''''''''''''''''''''''''
--
--The ability to instrument QEMU helper functions with vCPU-aware trace
--points was removed in 7.0. However QMP still exposed the vcpu
--parameter. This argument has now been deprecated and the remaining
--remaining trace points that used it are selected just by name.
--
- Host Architectures
- ------------------
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index f1e70263e2..1e64c27cd8 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -679,6 +679,12 @@ QEMU Machine Protocol (QMP) events
- 
- MEM_UNPLUG_ERROR has been replaced by the more generic ``DEVICE_UNPLUG_GUEST_ERROR`` event.
- 
-+``vcpu`` trace events (removed in 9.1)
-+''''''''''''''''''''''''''''''''''''''
-+
-+The ability to instrument QEMU helper functions with vCPU-aware trace
-+points was removed in 7.0.
-+
- 
- Human Monitor Protocol (HMP) commands
- -------------------------------------
-diff --git a/qapi/trace.json b/qapi/trace.json
-index 043d12f83e..9ebb6d9eaf 100644
---- a/qapi/trace.json
-+++ b/qapi/trace.json
-@@ -35,17 +35,10 @@
- #
- # @state: Tracing state.
- #
--# @vcpu: Whether this is a per-vCPU event (since 2.7).
--#
--# Features:
--#
--# @deprecated: Member @vcpu is deprecated, and always ignored.
--#
- # Since: 2.2
- ##
- { 'struct': 'TraceEventInfo',
--  'data': {'name': 'str', 'state': 'TraceEventState',
--           'vcpu': { 'type': 'bool', 'features': ['deprecated'] } } }
-+  'data': {'name': 'str', 'state': 'TraceEventState' } }
- 
- ##
- # @trace-event-get-state:
-@@ -54,12 +47,6 @@
- #
- # @name: Event name pattern (case-sensitive glob).
- #
--# @vcpu: The vCPU to query (since 2.7).
--#
--# Features:
--#
--# @deprecated: Member @vcpu is deprecated, and always ignored.
--#
- # Returns: a list of @TraceEventInfo for the matching events
- #
- # Since: 2.2
-@@ -71,8 +58,7 @@
- #     <- { "return": [ { "name": "qemu_memalign", "state": "disabled", "vcpu": false } ] }
- ##
- { 'command': 'trace-event-get-state',
--  'data': {'name': 'str',
--           '*vcpu': {'type': 'int', 'features': ['deprecated'] } },
-+  'data': {'name': 'str' },
-   'returns': ['TraceEventInfo'] }
- 
- ##
-@@ -86,12 +72,6 @@
- #
- # @ignore-unavailable: Do not match unavailable events with @name.
- #
--# @vcpu: The vCPU to act upon (all by default; since 2.7).
--#
--# Features:
--#
--# @deprecated: Member @vcpu is deprecated, and always ignored.
--#
- # Since: 2.2
- #
- # Example:
-@@ -101,5 +81,4 @@
- #     <- { "return": {} }
- ##
- { 'command': 'trace-event-set-state',
--  'data': {'name': 'str', 'enable': 'bool', '*ignore-unavailable': 'bool',
--           '*vcpu': {'type': 'int', 'features': ['deprecated'] } } }
-+  'data': {'name': 'str', 'enable': 'bool', '*ignore-unavailable': 'bool' } }
-diff --git a/trace/qmp.c b/trace/qmp.c
-index 3e3971c6a8..074a27b204 100644
---- a/trace/qmp.c
-+++ b/trace/qmp.c
-@@ -48,7 +48,6 @@ static bool check_events(bool ignore_unavailable, bool is_pattern,
- }
- 
- TraceEventInfoList *qmp_trace_event_get_state(const char *name,
--                                              bool has_vcpu, int64_t vcpu,
-                                               Error **errp)
- {
-     TraceEventInfoList *events = NULL;
-@@ -86,7 +85,6 @@ TraceEventInfoList *qmp_trace_event_get_state(const char *name,
- 
- void qmp_trace_event_set_state(const char *name, bool enable,
-                                bool has_ignore_unavailable, bool ignore_unavailable,
--                               bool has_vcpu, int64_t vcpu,
-                                Error **errp)
- {
-     TraceEventIter iter;
-diff --git a/trace/trace-hmp-cmds.c b/trace/trace-hmp-cmds.c
-index 86211fce27..d38dd600de 100644
---- a/trace/trace-hmp-cmds.c
-+++ b/trace/trace-hmp-cmds.c
-@@ -40,7 +40,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict)
-     Error *local_err = NULL;
- 
-     qmp_trace_event_set_state(tp_name, new_state,
--                              true, true, false, 0, &local_err);
-+                              true, true, &local_err);
-     if (local_err) {
-         error_report_err(local_err);
-     }
-@@ -82,7 +82,7 @@ void hmp_info_trace_events(Monitor *mon, const QDict *qdict)
-         name = "*";
-     }
- 
--    events = qmp_trace_event_get_state(name, false, 0, &local_err);
-+    events = qmp_trace_event_get_state(name, &local_err);
-     if (local_err) {
-         error_report_err(local_err);
-         return;
--- 
-2.41.0
+$ /usr/bin/qemu-system-ppc64 -version
+QEMU emulator version 8.1.3 (qemu-8.1.3-5.fc39)
+Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+
+With the correct kernel/userspace, it runs :
+
+# uname -a
+Linux buildroot 6.6.3 #1 SMP Fri Jan  5 00:00:45 CET 2024 ppc64 GNU/Linux
+# cat /proc/cpuinfo
+processor	: 0
+cpu		: POWER5+ (gs)
+clock		: 1000.000000MHz
+revision	: 2.1 (pvr 003b 0201)
+
+timebase	: 512000000
+platform	: pSeries
+model		: IBM pSeries (emulated by qemu)
+machine		: CHRP IBM pSeries (emulated by qemu)
+MMU		: Hash
+
+
+Thanks,
+
+C.
+
+
+
+
+>   * Interrupt Controller
+>      - XICS (POWER8)
+>      - XIVE (Supported by below:)
+>          - POWER9
+>          - Power10
+>          - Power11
+> 
+> So, that every next platform just need to add one line for itself.
+> 
+> With that,
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> 
+> Thanks
+> Harsh
+>>    * vPHB PCIe Host bridge.
+>>    * vscsi and vnet devices, compatible with the same devices available on a
+>>      PowerVM hypervisor with VIOS managing LPARs.
+>> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+>> index e7c9edd033c8..62416b7e0a7e 100644
+>> --- a/hw/ppc/spapr_cpu_core.c
+>> +++ b/hw/ppc/spapr_cpu_core.c
+>> @@ -401,6 +401,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
+>>       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+>>       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+>>       DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
+>> +    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
+>>   #ifdef CONFIG_KVM
+>>       DEFINE_SPAPR_CPU_CORE_TYPE("host"),
+>>   #endif
 
 
