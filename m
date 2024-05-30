@@ -4,59 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3435C25B78
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 08:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C773EC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 09:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCbbJ-0001PK-Pp; Thu, 30 May 2024 04:57:33 -0400
+	id 1sCbhk-000390-Fi; Thu, 30 May 2024 05:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1sCbbH-0001P6-Br; Thu, 30 May 2024 04:57:31 -0400
-Received: from rev.ng ([5.9.113.41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1sCbbF-0000Ep-J0; Thu, 30 May 2024 04:57:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=1PFAnOozbzWTK7DKOfIVavkilWWP+SfBfvp30twQ9aA=; b=ok7605pgklKfxxv
- En5NTE3cscowyUOJZppU8qwVKgQfUAGV2lSsPxbqrgnggrMWCiisitXZ5Ed8G4JNyhgLLbpy5VGy5
- k4a2z8W9M7hEcj0udsGOR6R/nHoIzstRULW/qexRFpH/cSSRTm3K2ynURst4/gw/u3OyXDiFHUCO8
- TU=;
-Date: Thu, 30 May 2024 10:58:30 +0200
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
- David Hildenbrand <david@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
- qemu-s390x@nongnu.org, devel@lists.libvirt.org,
- Eric Farman <farman@linux.ibm.com>, 
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
- deprecate
-Message-ID: <iursuac6hwfpgi447ss7nah3fqczybjvg5ldhttd37jmngjuti@gioyvxzsvftd>
-References: <20240530074544.25444-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCbhg-00038K-VO
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 05:04:10 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCbhd-0001Ky-5g
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 05:04:08 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a5a89787ea4so44271766b.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 02:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717059843; x=1717664643; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=CMxDFH8Hn+LC/xG4AeIYYMgPkRVjo3tO9XHDXoVHIQE=;
+ b=r8yQTlYHu9pvJE/trv6uqTbBP5BCef+vnsdoK1+RXtbpR/QxloQkxb+KPCYtUXAF+d
+ wn+wNY5xJEq5sPClVf4Kin5xOLkqHPQeVq24nV9rJcE3iyd1jjceZ97aI/iVKWfs6inN
+ 0fwH2/iub5tfwkgkwhLETsEubY/1i3g5Do982x9zbhC3xwzXObM8P1kikYFG5Hn9pG6n
+ wzXmDS6bHEHbEcR1P5vVK0ySqN/K+WuLoLrVTTg8Hh6F6sqrlg++JycMMx095MpwDm9y
+ DSGnAyv0Y0w+IN7bIMgOFpR4Do2jOQf8PYyxqEtfIlS/Yk0bwpXTWKy+uWmfZjTkheuR
+ Gidg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717059843; x=1717664643;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CMxDFH8Hn+LC/xG4AeIYYMgPkRVjo3tO9XHDXoVHIQE=;
+ b=NixC1a5Qa6rHAFEdnSNrRfiXVGMrLh3MH5gjI9yTOAsmb8/zY5fABjIXKLz+Uqz9/i
+ iNWxY0QL23IZK8UcwXGyO6tIuC47QEJdLVYwtnc3gI8gzWMMPU5QKNPS/t1sxrme95X+
+ u5JW4AYlnODHUXBt023bqlOt95hptGAkuIpl38TMQxQv6ti31YHUdL9kcBmWlkwdQmV/
+ Nd8qh6QC2Gcp8zzxWVTqahhQ2S1ntG/5HVY4/ugCGDv75h60ytg9khPhFlJvkSw8gWeA
+ zSqI/iGmhpvxd69RzeFXIKeL/pOT5dRrCmlkDQQ4KWmSDhpyh1MQiECQ9QgOgeM3pNUV
+ 37KA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/Jn+pmXxdrZso6KZpqEGK8gS0Phsz8XsbrE8Q73XA/g0Sxd1GnuAf6A6U6xxLF/TauQVnxNOBAWbafQkhODcN34Lg6TU=
+X-Gm-Message-State: AOJu0YxmdlqVqxg5+TxQDCe50vb+fXNut7NE0nT2c6Y+armptexSdG4b
+ ogpgm2QxG7ca3DixftvTOEA1HBMIhE1LdA9re6ryM9eI5xXyGeDBcTheZrLzpLJeYbkPcyJ1tyb
+ J9JajYnbrslFXVstQIRKOMbZBlnu0UwdnC4WxqQ==
+X-Google-Smtp-Source: AGHT+IFmH4NN+LNvzDiqsfE2aFZnHq55mSp5ThAxId4tpAwmL6U6WLSjpVY54QyaEnZew7CIpcWHRHduh/cXWhDcegw=
+X-Received: by 2002:a17:906:3887:b0:a59:c963:82b with SMTP id
+ a640c23a62f3a-a65e8f74c35mr78034366b.33.1717059843243; Thu, 30 May 2024
+ 02:04:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240530074544.25444-1-philmd@linaro.org>
-Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
+References: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
+ <ZlfIU7TOiXnP96Aa@zatzit>
+In-Reply-To: <ZlfIU7TOiXnP96Aa@zatzit>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 May 2024 10:03:51 +0100
+Message-ID: <CAFEAcA8zLOEo09dWioEac2tuPXv+jPYbnTduWZ-MixKbeNBC4g@mail.gmail.com>
+Subject: Re: [PATCH] hw/net: prevent potential NULL dereference
+To: David Gibson <david@gibson.dropbear.id.au>
+Cc: Oleg Sviridov <oleg.sviridov@red-soft.ru>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,25 +91,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/05/24, Philippe Mathieu-Daudé wrote:
-> We are trying to unify all qemu-system-FOO to a single binary.
-> In order to do that we need to remove QAPI target specific code.
-> 
-> @dump-skeys is only available on qemu-system-s390x. This series
-> rename it as @dump-s390-skey, making it available on other
-> binaries. We take care of backward compatibility via deprecation.
-> 
-> Philippe Mathieu-Daudé (4):
->   hw/s390x: Introduce the @dump-s390-skeys QMP command
->   hw/s390x: Introduce the 'dump_s390_skeys' HMP command
->   hw/s390x: Deprecate the HMP 'dump_skeys' command
->   hw/s390x: Deprecate the QMP @dump-skeys command
+On Thu, 30 May 2024 at 01:52, David Gibson <david@gibson.dropbear.id.au> wrote:
+>
+> On Wed, May 29, 2024 at 02:07:18PM +0300, Oleg Sviridov wrote:
+> > Pointer, returned from function 'spapr_vio_find_by_reg', may be NULL and is dereferenced immediately after.
+> >
+> > Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> >
+> > Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+> > ---
+> >  hw/net/spapr_llan.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
+> > index ecb30b7c76..f40b733229 100644
+> > --- a/hw/net/spapr_llan.c
+> > +++ b/hw/net/spapr_llan.c
+> > @@ -770,6 +770,10 @@ static target_ulong h_change_logical_lan_mac(PowerPCCPU *cpu,
+> >      SpaprVioVlan *dev = VIO_SPAPR_VLAN_DEVICE(sdev);
+>
+> Hmm... I thought VIO_SPAPR_VLAN_DEVICE() was supposed to abort if sdev
+> was NULL or not of the right type.  Or have the rules for qom helpers
+> changed since I wrote this.
 
-Series:
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+QOM casts abort if the type is wrong, but a NULL pointer is
+passed through as a NULL pointer.
+
+thanks
+-- PMM
 
