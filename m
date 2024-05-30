@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A3CC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D3BC25B74
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 06:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCYsg-0002uZ-Eq; Thu, 30 May 2024 02:03:18 -0400
+	id 1sCYsZ-0002s8-KF; Thu, 30 May 2024 02:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCYse-0002sc-R6
- for qemu-devel@nongnu.org; Thu, 30 May 2024 02:03:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sCYsY-0002rV-05
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 02:03:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCYsd-0000tm-A3
- for qemu-devel@nongnu.org; Thu, 30 May 2024 02:03:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sCYsS-0000tc-Nd
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 02:03:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717048994;
+ s=mimecast20190719; t=1717048983;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y1cDL2J2SrawhmoKWEkDoQSCddOndDc6IOl3ob92qrg=;
- b=OueitRm258unCf7q/HxwtT4LTZo8Xg0gxfGOYfzPvsioKp9tqu+27DFmUcnLxoKzByFKU0
- i66SF9AnBRtDBYz9SpLMYjcxjmMv7kXEIrM6mYtbuP2w6gv1u+nelYTU9xiiLO6CgNhQKw
- OgBYlmMThRixJzolJVX/FAKgLZUhv/k=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=X1xR87sRpGdB2Y+rEAjNo3TAeYICpNRvIsgyWm9tsdw=;
+ b=STXj0k0yRshFRJjzAUepG+IpUZWDuAPI2udR83Iujevta/obX71pi/1VVk++BmYVOip8O2
+ BViUYCZRd+wgwP7f7nnegmErNFtTAqnf59YfCcza7g7+q6dl13N67hM90YkfPAnAZNcYwd
+ axjSq/4SUUqm34G1NU4SnYA8PMNCUG8=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-lR0yK89YPPSjNmmEjWZs5w-1; Thu, 30 May 2024 02:03:11 -0400
-X-MC-Unique: lR0yK89YPPSjNmmEjWZs5w-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2ea7dbdae13so3198201fa.1
- for <qemu-devel@nongnu.org>; Wed, 29 May 2024 23:03:11 -0700 (PDT)
+ us-mta-665-CwKcj9UfOz2Bs14hLjvLuQ-1; Thu, 30 May 2024 02:03:00 -0400
+X-MC-Unique: CwKcj9UfOz2Bs14hLjvLuQ-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52b80898d50so18467e87.0
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 23:02:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717048990; x=1717653790;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y1cDL2J2SrawhmoKWEkDoQSCddOndDc6IOl3ob92qrg=;
- b=RQpBtQ+1vYm579hu1sPsCHydyXIgOYWf/YE4cX6GJ7j7TyKri0DtPl/gZQmSBc85g+
- A3Frjryrf0AXjD82oq8IeIjTk5BUf/aCk6ex4SLbqq6Z7joYPSurzg4ID2k1Q/j9Pqiz
- IKrdlEBx0IsZi9mV3MsxKsjrQ7XvJwHSEck2fXP03vw6v/c1BvkWs8wi++lYtKaqCfcb
- rJQ2t5AgZb2cmbjpQtRHNttp2HPLiiSe6PCvqVfLMy+c0mJlDj5CB2lWmPJphUP6IKY2
- O6zbcR436UddzvS5sH3b44Ttt5+/VtuLkO9Co3BlYH1k+WXq9RnUrFLrdCVUZWbLnkio
- 4Dwg==
-X-Gm-Message-State: AOJu0YxqoL4Y33tShLOTwZ2X6IHVkBjWe/iNjLqjSt/tHdSwPPUZHRUC
- s3Lozc5iFjaFdqFMmV3+/TT+cbdZzYlz03p23FnEbzaclj8l6sgPv0Q+aejRuKRr+ynT8bcgK5H
- eChs4jwfTE44gfUCQXn9o+2ESjexaaUMHnWU7Jv6/zjsOtUnoJk3dEXwhn3IPxrKj5/xd4LidVA
- E8lYFIaztRM9OavJy/LNemTwyUTAE=
-X-Received: by 2002:a2e:2c0f:0:b0:2ea:7f2e:cee9 with SMTP id
- 38308e7fff4ca-2ea8481b173mr5676711fa.26.1717048990391; 
- Wed, 29 May 2024 23:03:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHVC7HmdhwLTY2COeN12RSlPbwXbQfRi5Tyae6HoU6SqRLrzRbKVkLRF5ZkgpnDzysoCBrLN9KlGZVKp8q/8c=
-X-Received: by 2002:a2e:2c0f:0:b0:2ea:7f2e:cee9 with SMTP id
- 38308e7fff4ca-2ea8481b173mr5676501fa.26.1717048989859; Wed, 29 May 2024
- 23:03:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717048978; x=1717653778;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X1xR87sRpGdB2Y+rEAjNo3TAeYICpNRvIsgyWm9tsdw=;
+ b=age02qGGbJga82koFsmoAOAGcDsg+CkiQUfWUdMeLSAdoJGHnkebjhYM6e2XiSezSW
+ zhwW29QtBtlCxVIpc//k2+GPB2FM8JiowMSzPL8e7m4EhblritoH9KuL+SSIxtrkmtaT
+ xBxFHk4xF94NM40v0jnmLFsrTYt1lOOtkfY6FJfLjmIILwKRFBYMnVsv9Ep4cnNYviva
+ YeF60NgUtALuII50pZGDfv0es/CHvEr4UuoZtssX+XU3dvwU31lydIL51fwdC+y+q8d9
+ 7Tz9z/4lcxPrHPRF0dufc7iyhtmA2C/O7P6ZPQSeT54UkOz55rSz7nLKO1haKhZpTh3p
+ tH7Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoX9tykxD/7QTfKzQvFRsc6a3s90JXa/JOiEyDNE72wXD0hlYIcIV3OXRVkL01IlPTY8PaSEBc8LFboZ2WtpG8mpBb+40=
+X-Gm-Message-State: AOJu0YxdH1NKvQ9OU4gje+nphWqXUVv615mCAm3cTSlw8iBtkJxnbQgI
+ I3j+DEyVEe3PU9bjQiZvkyUA1eCLQi4h1qBQ1OvIAGfaW1Y+QJc4tM0GkOu19c4TlzJpfrlWgAP
+ DmlyMBlVroxBBbtlSMRzdr19xx0YEPiEAN+C02e76jrPPznXOWoua
+X-Received: by 2002:ac2:5ec8:0:b0:51d:7d5a:af05 with SMTP id
+ 2adb3069b0e04-52b7d4323c2mr564506e87.32.1717048978312; 
+ Wed, 29 May 2024 23:02:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHM8nMYGZy+DJH8z6gPgi4giO79/fmHgNqgE9zNsWTLjaNqGmEYxLeWuRDvvM5y3g4MHz9Gyw==
+X-Received: by 2002:ac2:5ec8:0:b0:51d:7d5a:af05 with SMTP id
+ 2adb3069b0e04-52b7d4323c2mr564477e87.32.1717048977690; 
+ Wed, 29 May 2024 23:02:57 -0700 (PDT)
+Received: from redhat.com ([2.55.191.38]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42127059769sm13928555e9.5.2024.05.29.23.02.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 May 2024 23:02:56 -0700 (PDT)
+Date: Thu, 30 May 2024 02:02:53 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH] scripts/update-linux-headers.sh: Fix the path of
+ setup_data.h
+Message-ID: <20240530020213-mutt-send-email-mst@kernel.org>
+References: <20240527060126.12578-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20240529155548.5878-1-philmd@linaro.org>
- <20240529155548.5878-4-philmd@linaro.org>
-In-Reply-To: <20240529155548.5878-4-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 30 May 2024 08:02:57 +0200
-Message-ID: <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] semihosting: Restrict to TCG
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240527060126.12578-1-thuth@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,8 +84,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,36 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 5:56=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
-> It is pointless to build semihosting when TCG is not available.
+On Mon, May 27, 2024 at 08:01:26AM +0200, Thomas Huth wrote:
+> When running the update-linx-headers.sh script, it currently fails with:
+> 
+> scripts/update-linux-headers.sh: line 73: .../qemu/standard-headers/asm-x86/setup_data.h: No such file or directory
+> 
+> The "include" folder is obviously missing here - no clue how this could
+> have worked before?
+> 
+> Fixes: 66210a1a30 ("scripts/update-linux-headers: Add setup_data.h to import list")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Why? I would have naively assumed that a suitable semihosting API
-could be implemented by KVM. The justification (and thus the commit
-message) needs to be different for each architecture if it's a matter
-of instruction set or insufficient KVM userspace API.
 
-Paolo
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+
+
+Paolo you merged the offending patch wanna merge this one?
+
 > ---
->  semihosting/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/semihosting/Kconfig b/semihosting/Kconfig
-> index eaf3a20ef5..fbe6ac87f9 100644
-> --- a/semihosting/Kconfig
-> +++ b/semihosting/Kconfig
-> @@ -1,6 +1,7 @@
->
->  config SEMIHOSTING
->         bool
-> +       depends on TCG
->
->  config ARM_COMPATIBLE_SEMIHOSTING
->         bool
-> --
-> 2.41.0
->
+>  scripts/update-linux-headers.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+> index fbf7e119bc..23afe8c08a 100755
+> --- a/scripts/update-linux-headers.sh
+> +++ b/scripts/update-linux-headers.sh
+> @@ -159,7 +159,7 @@ for arch in $ARCHLIST; do
+>          cp_portable "$hdrdir/bootparam.h" \
+>                      "$output/include/standard-headers/asm-$arch"
+>          cp_portable "$hdrdir/include/asm/setup_data.h" \
+> -                    "$output/standard-headers/asm-x86"
+> +                    "$output/include/standard-headers/asm-x86"
+>      fi
+>      if [ $arch = riscv ]; then
+>          cp "$hdrdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
+> -- 
+> 2.45.1
 
 
