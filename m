@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB14FC41513
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40DFC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCfo0-0000Bv-Sc; Thu, 30 May 2024 09:26:56 -0400
+	id 1sCfoM-00011U-UB; Thu, 30 May 2024 09:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCfny-0008Op-NC
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:26:54 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1sCfoL-0000rt-5f
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:27:17 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCfnw-00013c-Sh
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:26:54 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5295eb47b48so1021184e87.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:26:51 -0700 (PDT)
+ id 1sCfoJ-00017F-Ju
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:27:16 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5785c1e7448so861978a12.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717075609; x=1717680409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717075634; x=1717680434; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tnUbSfkXGgBkPG9+2xtY3r5CVivQAQiWpVO4PTcBPcs=;
- b=wCU3Rqgqlnace/62pNzgOLtThaTGgGdV7ySUx2oQg3qTSSUdzxbzP93yhK7Ei5G9q9
- AxHPMCVu6fugs1aGvBGVAVOcqepBxtEaACzjNvsptoIInBMP9vovz/4jZb4MpeT7MjzP
- VmLT/B0S2yq4rwwuXK2xd6bfWpAGZKk3DAXJ4JHnpT69rPD5LU15UbJvoi40K0eRuFV5
- ozJJFQtyeSahAR+eifEBFxUL4wtk83cx1jo3s4z2Dhyh76UTSiKT2aDO97/WqcbZ8r1I
- ow67aoXIb0bOKBQKRmVNtplP3YCcUODczPnyfUsirdfYdUXuxEtMzmgQKfdGXyPBO/Fg
- dGdg==
+ bh=nvK0Kt2NNELo3256QNX/h5HK9KE6QrWVrfLHacMI0Oc=;
+ b=PTkZWe1TSUux4ByuUEic3kwi1mYae52YhEWE77hrU5d4qY5zJqS8DGslCfQQker2j3
+ +oaO53Wm+ckAm4mt0O0uzf0R49DME6Rae4Lc9uuF4jdYT9NKbw2xxySwDztqPMLAAUZS
+ UrMDMu1tYLhV4gbLGQKdD+JlCWpXR8nuVx9TPfGYL9uHQrsfH69MoOMqiVXAn6BgJ5Eg
+ ypr8RxLG57JqzCguA0Hw30Ka2/88a0QSjvy6XYfCVj8TK1klSwT9HYfCljpfkRg/0dI0
+ 8DHi6PRO/6BrsyEF0OVi5lsbP+eaHImtGiaiBMF81YQf4lB1yvx0nJu3BDe3DWW/fT01
+ WbEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717075609; x=1717680409;
+ d=1e100.net; s=20230601; t=1717075634; x=1717680434;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tnUbSfkXGgBkPG9+2xtY3r5CVivQAQiWpVO4PTcBPcs=;
- b=K7b/L1Wdaq7vp3ymaMfR8j5P4T8eJA+N1guF72/fyf7sSXCj03lSLmuAp2hJqVVrA4
- sx7ORWMto8MlH4+h0U9+VbDiv14hZG99v6qQykVUFi+s+09amImCVPiUdKNOTnWYGc/c
- lxeDG337g54DH1U5SsGUKjEzsk7QG2DDCO/pbSZ5mr4XVsM16j9ttqVyxZIFX/8CDRMp
- 8oLBPObO2Choa4hy9qumZqBDPfsK7TMTl0XU+3NBDT+OobK8INgGt4YelqISBc95itsO
- 1Mjh1y1Ax6hPkcQ9o7XpNS1Ud03uWnDM1UpRqVrSCjPewa7dQTRrcZi13h8UtgE2xUfS
- 1T3A==
-X-Gm-Message-State: AOJu0YzfSuB6ajHoCBL3lLXrR1dpoMgLwOUV+d/fUyh8Hgp+2n75Su8w
- DbGxbo4xHb4mWPOtswvTy06bUnoMF7k3g6mX0cti0HxgUpJ2MosvtSI7EpwOvs2Ou43FtXU1sRf
- vIrFfcgMYCRC06qpmB6jSNxHLHvFom21ltz6INA==
-X-Google-Smtp-Source: AGHT+IGAaiSwbhvmKYNZAhdqMN/B1BwKevI6x7Bo+8/oyE+pHZS4POOKRbuKdnYIAp4eqTli9FGas8n8l63alQwExAw=
-X-Received: by 2002:a05:6512:526:b0:529:9ff8:f45 with SMTP id
- 2adb3069b0e04-52b7d48df4amr1450347e87.57.1717075609577; Thu, 30 May 2024
- 06:26:49 -0700 (PDT)
+ bh=nvK0Kt2NNELo3256QNX/h5HK9KE6QrWVrfLHacMI0Oc=;
+ b=vTCE/tgtvQSFSjPxW7fqLZaRREDwU3FvGL0mCG7ba9StfI7J0TEx1VZBKkoynI1sF5
+ SxWYlxh5UUeUTMM6pxDlqKPb2MWgzh8ojQN7dj4O9yhWwh+qdcLgm4w3c3j6QbIleSY8
+ WEaTCxr2eQ/KUErDzSlguTYKMOX8/2ji8flCSDV3h1dAUrR1aOwVwi4QtDxuiD5k+pvS
+ yq9JgGDarB0StuIjJV7RveEwTmk2GM3gfwiFx/1w31sCSff0uvSZoTcno8PRR22R2/pl
+ XJXb9RV424A++vT3uYUbzGm7BgvYH6uLWQWTbJyxF0ST+jV0x4KVuP3A2s3Ah+a4+gJQ
+ NJ+w==
+X-Gm-Message-State: AOJu0YwPETnvnj2rLffM5oSEIcogPiUzZSSIKgbTor9GbkNsoloCkrgR
+ qVX935fxCtDUSxekK7/+bUjCSDvIiDBTbatW0ijk6Nw5V1bc9sPrekImwXRSIlPm9y7vW9gFKO+
+ HwC8DyaBWRL2FJKvZgjh2yAObiGTEBi0A5fSxrA==
+X-Google-Smtp-Source: AGHT+IFuX7yvVc7/XWNn9ID2K3uAc1jAmpfZKzTyZH8gXXqmzzs/A5t+oTk1l+Keiej3KQZoZGcwLrsI7SJx0N+pgwE=
+X-Received: by 2002:a50:9b56:0:b0:57a:2ccb:b3f2 with SMTP id
+ 4fb4d7f45d1cf-57a2ccbb4eamr275587a12.16.1717075633951; Thu, 30 May 2024
+ 06:27:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240526193637.459064-1-richard.henderson@linaro.org>
- <20240526193637.459064-12-richard.henderson@linaro.org>
-In-Reply-To: <20240526193637.459064-12-richard.henderson@linaro.org>
+References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
+In-Reply-To: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 May 2024 14:26:38 +0100
-Message-ID: <CAFEAcA9_J9dNpkPKcKO34DJ8wSA_PuQXmp2QKvFmqm8S18qELw@mail.gmail.com>
-Subject: Re: [PATCH RISU v2 11/13] sparc64: Add VIS3 instructions
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk
+Date: Thu, 30 May 2024 14:27:02 +0100
+Message-ID: <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Initial support for One-Time Programmable Memory
+ (OTP) in BCM2835
+To: Rayhan Faizel <rayhan.faizel@gmail.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,14 +88,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 26 May 2024 at 20:37, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Sun, 19 May 2024 at 10:42, Rayhan Faizel <rayhan.faizel@gmail.com> wrote:
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+> All BCM2835 boards have on-board OTP memory with 66 32-bit rows. Usually,
+> its contents are accessible via mailbox commands.
+>
+> [Changes in v3]
+>
+> - Forgot to replace constant with macro in one particular spot.
+>
+> [Changes in v2]
+>
+> - Replace read/write with get/set in bcm2835_otp.c.
+> - Use impl instead of valid in bcm2835_otp.c.
+> - Replace all constant values with macros defined in bcm2835_otp.h.
+> - Change memory region size of OTP device to 0x80.
+> - After further testing on a real Raspberry Pi 3, I noticed a few things
+> contrary to my initial assumptions:
+> -- The customer OTP lock bit is bit 6 of row 32, NOT bit 30 of row 30. This is
+> currently undocumented to my knowledge.
+> -- The above lock indeed applies to the private key as well.
+>
+> Rayhan Faizel (3):
+>   hw/nvram: Add BCM2835 OTP device
+>   hw/arm: Connect OTP device to BCM2835
+>   hw/misc: Implement mailbox properties for customer OTP and device
+>     specific private keys
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
+
+Applied to target-arm.next, thanks.
+
 -- PMM
 
