@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C74FC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0624C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCa8O-0000nu-Mg; Thu, 30 May 2024 03:23:41 -0400
+	id 1sCaCV-00037L-BY; Thu, 30 May 2024 03:27:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa8E-0000jF-91
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:23:26 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sCaCU-00036z-4r
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:27:50 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa89-0006oN-J9
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:23:25 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-35dc04717a1so374529f8f.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:23:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sCaCS-0008W8-Hy
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:27:49 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a62ef52e837so43015066b.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717053800; x=1717658600; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vNgVXM+jRmEN5kYnjkXoD2wqjpY/FpiImfgZWVlHIZo=;
- b=u2eFM7d/22H+PURzUwTRc9joC8jylqhZKbZGnT8N4ALP6OZ1WfpUvQNsprJMVHQOgS
- KcC4KscUsY75Wo15Vc/luAyAHr4+pJB/RcYRg+F0VxQklUuKLPRFG4bFZ89AcmgTKOtb
- htE+CSM4Krqe8E2Avqs6IAfWsE+ScuXt/Kc6XuoDB+yGdOGRYjesQfRh8L+YZwhpKDs1
- sABb8P0h59FFaPdgLiCjT2tC5mu2cVy0es0WlYOgzdwrmQuRF9ai2G65dMpSFQHCi2jk
- U0hWg5/yKcFR9jCv0JAreRlFcX/+jpnjTUu/08L47pu6HNa0WwBcFQki93Hhx0yWn++J
- e16Q==
+ d=linaro.org; s=google; t=1717054067; x=1717658867; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=GAyVajqKrZWyG0ODNndrLjXLYAkiSJ2KuYYzxE6coXw=;
+ b=ZwloSTOBryVc4/CsbCoSsojZ3f9EWC4kIEofXD+2KbUI3sWZaz+5APaziqjjXc2wa8
+ GQ8vTARo5TAl5HZlbIXuihZIbe6iaQh4TXQ8WYlYVPtyfoUeaX5fMdjMDrURRAWl3hcH
+ oo5QtUdiRJG1JWr4tbTIm0zzIOjAridXUIKUErRT1xAGi5nQTiQTBiStiAYTUDSXNo6z
+ S45N/+4HsU+n9YyQsJMYn6Nffkon0aTgpHnbDM1/bpVCJuP1MmLgvhNXEwFQ1ZeG6zgT
+ VeNXEDieAEYGoFaumLuexar+ZwIL/CLmvLt3dsItW0iqLwPh+zFttbENtQRzwoi8/yqZ
+ wdEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717053800; x=1717658600;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vNgVXM+jRmEN5kYnjkXoD2wqjpY/FpiImfgZWVlHIZo=;
- b=WWSkqpR2MXOk+ImBWBU1MO7VO38127Crji14uHSwEy2DevtRAJqxLEJ2qJQ+79D6Ei
- ByiMrAjBEdK8HHBCdodMwqOfq1QF8555S02nPORCSYT9bQJaqFkZVR18maEuoKXFiLYl
- jbqFeGfakNvJpiUX2Oj/GEA4w3rFos9Pwe8aP7SarnBGZo28uSIbEoA/UGOoc3awZVb8
- 3dffBGg9Q/K5H7LZDjAq4IY+E/K9UKuKb6OFZNerWYVFbrZsB+YPjfkp68vIszzGldHU
- ExChUredTKAalOaZr5t16NN8e61YPZ8OQ3NeItC6I1sayHg0gsdE5kTJJzmESdKqspkL
- +7yg==
-X-Gm-Message-State: AOJu0YzeNbOcmLr5jwo4dNHq1e3nz8bDc56C27txQmJ7zel1tx4c9bSM
- 6T/wnPkOPzSGDf2JZcyNDb49FuNF7Iy8dzRgNo+TDON7T6BuyK8+DhUGnWRngro=
-X-Google-Smtp-Source: AGHT+IG+EUCTF73/WAi0mfOD435vQmR5wLlbEgjLymwx/Shs12jnaUPkFxA57hg2wUjAPdeTivpZHA==
-X-Received: by 2002:a5d:69ce:0:b0:354:e021:51d5 with SMTP id
- ffacd0b85a97d-35dc0087ecdmr1771754f8f.13.1717053799688; 
- Thu, 30 May 2024 00:23:19 -0700 (PDT)
-Received: from [192.168.69.100] (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
- [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3557a090c20sm16475965f8f.62.2024.05.30.00.23.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 May 2024 00:23:19 -0700 (PDT)
-Message-ID: <8ffbe6ff-b5de-4c8f-af57-11892d9fe72d@linaro.org>
-Date: Thu, 30 May 2024 09:23:17 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] semihosting: Restrict to TCG
-To: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
+ d=1e100.net; s=20230601; t=1717054067; x=1717658867;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GAyVajqKrZWyG0ODNndrLjXLYAkiSJ2KuYYzxE6coXw=;
+ b=LkurB3OvtNiiDcvcN5Gw2jQQ/y9fKfc900Nju2YSVWuZPmptEnVCg+RVTWOqsswoxg
+ m3bnOIm0xYDas2pv1rWcFzjBkFwV6bwPNB694Ixr0V/hC/tB/xMquJSPEEjQ9r8oo4O9
+ Px+kItMqNXO1aAe/61HGon1cbNX0svvfZcI5ACwcLiPXaWRxhFgeV0nq1c6SlihIUWLY
+ W1c/lXCDh9Z5FOkA6AnEWj1jCBvGPu/W0+4TGdIKYhy1mY/nkIFNZItsJ//lwBboxMBQ
+ AHoBm1Sg8phhc/zxZjDK1ZTAqX5aqDDmyn2ww9QJavvOeB5PWmdqMpJMOPOYlTkK3gF5
+ hliA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUswwX+r76m+BXvlz3pR9wsPmepr41LV6YX3kfaKCJ2UgW8iswxwn+ks5TbZgU2sku8T811EFiw6z2iBFKokCbPulokVNM=
+X-Gm-Message-State: AOJu0YyTKCYq/gKa76eLjT4uopOIg04fx31CtHNgPoYeiHS+0MEfW1eT
+ bzOvpFM+QwC4JZJBluHt09m8/1EJvgzfEj2kHfAbanNG2VmRAU9d6AUxKe8u1bI=
+X-Google-Smtp-Source: AGHT+IGIGEbUSZ4xahWwPFA1ujWnKcJ83IGn/8dtw3O4v2udJt0FBMZLbq2a0PXC3hFulMGUtCHF+Q==
+X-Received: by 2002:a17:906:c1d6:b0:a59:c9ce:3389 with SMTP id
+ a640c23a62f3a-a65e9205f3amr76458366b.67.1717054066726; 
+ Thu, 30 May 2024 00:27:46 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a63420e4f36sm254040166b.85.2024.05.30.00.27.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 May 2024 00:27:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DB4715F77F;
+ Thu, 30 May 2024 08:27:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] semihosting: Restrict to TCG
+In-Reply-To: <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
+ (Paolo Bonzini's message of "Thu, 30 May 2024 08:02:57 +0200")
 References: <20240529155548.5878-1-philmd@linaro.org>
- <878qzse8md.fsf@draig.linaro.org>
- <CABgObfZ0P0Frgj6=mTmvgaA9_Ve6x0BeATgSKdVqM0Ku21p=iw@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfZ0P0Frgj6=mTmvgaA9_Ve6x0BeATgSKdVqM0Ku21p=iw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+ <20240529155548.5878-4-philmd@linaro.org>
+ <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
+Date: Thu, 30 May 2024 08:27:45 +0100
+Message-ID: <874jafep3i.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,24 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/5/24 08:03, Paolo Bonzini wrote:
-> On Wed, May 29, 2024 at 9:11 PM Alex Bennée <alex.bennee@linaro.org> wrote:
->>
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> It is pointless to build semihosting when TCG is not available.
->>>
->>> Philippe Mathieu-Daudé (3):
->>>    target/mips: Restrict semihosting to TCG
->>>    target/riscv: Restrict semihosting to TCG
->>>    semihosting: Restrict to TCG
->>
->> Queued to semihosting/next, thanks.
-> 
-> Please don't, at least not in the current form. These are jokes, not
-> commit messages...
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Sorry if it appears to you as a joke, I thought it would be something
-trivial :(
+> On Wed, May 29, 2024 at 5:56=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> <philmd@linaro.org> wrote:
+>> It is pointless to build semihosting when TCG is not available.
+>
+> Why? I would have naively assumed that a suitable semihosting API
+> could be implemented by KVM. The justification (and thus the commit
+> message) needs to be different for each architecture if it's a matter
+> of instruction set or insufficient KVM userspace API.
 
+For Arm at least the HLT instruction is an external debug feature and as
+such not trappable by KVM.
+
+>
+> Paolo
+>
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> ---
+>>  semihosting/Kconfig | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/semihosting/Kconfig b/semihosting/Kconfig
+>> index eaf3a20ef5..fbe6ac87f9 100644
+>> --- a/semihosting/Kconfig
+>> +++ b/semihosting/Kconfig
+>> @@ -1,6 +1,7 @@
+>>
+>>  config SEMIHOSTING
+>>         bool
+>> +       depends on TCG
+>>
+>>  config ARM_COMPATIBLE_SEMIHOSTING
+>>         bool
+>> --
+>> 2.41.0
+>>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
