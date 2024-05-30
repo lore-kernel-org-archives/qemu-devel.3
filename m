@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01077C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 06:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12FCC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 06:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCZea-0001Q9-Ge; Thu, 30 May 2024 02:52:48 -0400
+	id 1sCZfv-0002Np-9c; Thu, 30 May 2024 02:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCZeY-0001PR-9x; Thu, 30 May 2024 02:52:46 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1sCZft-0002NI-JO; Thu, 30 May 2024 02:54:09 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCZeW-0001bA-E9; Thu, 30 May 2024 02:52:46 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2c1afe1751cso138596a91.3; 
- Wed, 29 May 2024 23:52:43 -0700 (PDT)
+ id 1sCZfr-0001gH-Lq; Thu, 30 May 2024 02:54:09 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2bdd8968dabso389658a91.3; 
+ Wed, 29 May 2024 23:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717051962; x=1717656762; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717052046; x=1717656846; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Oj5HRQ5d3C9/ama6wTPDp/cgBgTcR+SpNNWXKNbplZw=;
- b=eCoU3XDY4d+ekKuslBqnlRHK3u/nm3ZB91mumTN2x4KINxeC6ogVHaYs3ANHReZ2Ma
- 94kH/VWwQSrEmxNMg0xS1OFhd9wIHf6tb3JPyXY3fDpcAOvt+ZCMHc1qQPRhzpWlplfr
- GOLIWHivEV5ivZMz8viDlXyxPhF1Fsdo9rnwYIDopFwPQ/lYB4JdYHkU9ytNiMjeXRNx
- wZ4nvRrX43DCayD5BVViR+KQIOLq/AWYOiBTGJsYO8vsncCWyK7Ehlb6fPv9mo1QWTZM
- gz7rhDozq3L3zq323Z/7T8oQW4aLqy1kcXNEh9WVwJCuU0NYymEq3rHfHfBVocFfRE99
- Peqg==
+ bh=zGiqS+hnpRfXvXsah7rwzLP71Wqm6cIVseD8PfOo2AE=;
+ b=l6xTnS+9RaSiwSpwV6CXt2MrqcYr+2VPIecQlkR6aQX+7cQFBrSZoDbJeAL/q6jZi3
+ KMe1JINfs7qabe8rLAjDdyzG6td5o/E3fjZ8nbFKgi74h0oY3Q7KLiuVZE32mKQkGYfQ
+ o8dvvfaLfkF9SsNYpIyCOHVF60K3EelH3yvMcLVEFp1eekk57ynGJZ7s8uqDJjqS90wV
+ RhUxD1fmj1E/VfMiQxURrX2SoKBIFAjBFFeR5PaMEvYKDhIBQicaUaRiCQ1iAD+NRN1O
+ cnjMjmDIWNMfGB0VEQomld2SZiv0V/uwajLh8dLij7dw9cKnvg4R3AtsXOoY7WAngZYe
+ SJ+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717051962; x=1717656762;
+ d=1e100.net; s=20230601; t=1717052046; x=1717656846;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Oj5HRQ5d3C9/ama6wTPDp/cgBgTcR+SpNNWXKNbplZw=;
- b=tn9EC4T2NxSM4W5dyQL7aUCD9yHVmyyg0VkBG3G4VfKCikJzPCYcoud0F52cPKYQM7
- eBu5NYRf1fJ2ZLvDNDx3LYac8wwbEFaXYWp4YR3IAwhrqvyU5MpIf7sYMz+Qo/Q6JKAz
- iuUhmfChl0vHxrq43XRmII1yqz23wWut9ln8CIFaD60VA0lJuwFDclpJJGpBwoNO+lir
- 7ggNb1kv2Tf9dfGqPK/ujr/Yq/xVFZ6nVs8pQFXwj22YQbCHyZ6/I/tjYT9/wraB8ctf
- 0HP2okOqe/jnH7HFcngsWITnTxb8jwMF9VARIpv0KKW0wfG18Rww/7jw/dE+O51z3Gac
- URdw==
+ bh=zGiqS+hnpRfXvXsah7rwzLP71Wqm6cIVseD8PfOo2AE=;
+ b=F9nB46bO5KONuM3knv4ZGPJ8HCCpq+E844gDFnWxZ1CkIptIPSM433hdI9UPNSBQzY
+ PI819xfkbh5bb8fvO0tjV1DcJxzK2SthoUvD3LBP9proI0t5IHnzyVjtgZE68Vj+yhAX
+ MnOedfnty0XeEn9tCgBAvqd2bZmWNw0l5WiifzXCFzfr40MAqhNbYB7HqE41HU9102Oi
+ oYPFJOJZPnxbvN6oBLzz2uAAeDul9JwMeVBgyoaxYFq2PPhWG6U/fRyQNd9QyOpM75zC
+ X6cs+FF11ahUMoG/LVmX+E0GlUUirtRb3/6NHVLQpDT0Dahb/1njIRsfK8cfEwxcYEJs
+ +CZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIBj5u/B4hIRDy6yjengaVG99OrE3TDbaU5HY8YwvYjVofAv7cM34WkHkcfgjDsq4zU4O3heJJnKsff/uqfRlcPQKulRcrJWt5Zn/c0jaJIirV+IrymUYSphE=
-X-Gm-Message-State: AOJu0Yzs3KZU3mI1BSBohgUsh3bBLIY3SgiSecHuCRAOufkj86ntF6zd
- uncOwO3aT1Rff6zWlt6wg82GYYpYwrZy9AKA+FKATJb7dei6F5LE
-X-Google-Smtp-Source: AGHT+IEPUoTCwfusdQtuj+46+PLHA7yHmnwlySQ9UxqKyUvjNjhibHA07r6pLNkZc7aD/z7nx/5Xwg==
-X-Received: by 2002:a17:90a:398a:b0:2af:a2a:ad67 with SMTP id
- 98e67ed59e1d1-2c1abc12489mr1318487a91.4.1717051961950; 
- Wed, 29 May 2024 23:52:41 -0700 (PDT)
+ AJvYcCUvmta3t8Blpj0uTaMpAvTJcmBtuekqDWmANxmAHevTpbkTDDc6ysjaszB3FPtSwGcrcN4n4CgBDMQbii3Mx0ksGC8o2OhEpYAC/3D2H1Rvpv9FRtImDw4YXL0=
+X-Gm-Message-State: AOJu0YxFH6hGHMF5DwW9KXZn+zf8KqAwX3naby8bMZQI+GsAV7fPkdJj
+ YSPYYUSdGLw4iuXr/yVjGlOqlp44LRxzBVouvoOSYNugDs2URu0z
+X-Google-Smtp-Source: AGHT+IFWPHu5j5rRWGLoa/pwBTGqsv6iPV7ii95lSdH8EUj3x3kmFxgvMxNywQTIDOl9rPAY2T1NRA==
+X-Received: by 2002:a17:90a:66cb:b0:2a5:5a2c:6066 with SMTP id
+ 98e67ed59e1d1-2c1abc42fefmr1234946a91.37.1717052045655; 
+ Wed, 29 May 2024 23:54:05 -0700 (PDT)
 Received: from localhost ([1.146.118.54]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1a77a70d8sm918104a91.52.2024.05.29.23.52.38
+ 98e67ed59e1d1-2c02df08078sm1592948a91.0.2024.05.29.23.54.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 May 2024 23:52:41 -0700 (PDT)
+ Wed, 29 May 2024 23:54:05 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 30 May 2024 16:52:36 +1000
-Message-Id: <D1MS4B4OOMP2.URZ3Y2R98BC8@gmail.com>
+Date: Thu, 30 May 2024 16:53:59 +1000
+Message-Id: <D1MS5D7X0YO4.V49CFAJQ7GBN@gmail.com>
 Cc: "Caleb Schlossin" <calebs@linux.vnet.ibm.com>,
  =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
  Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH 08/10] ppc/pnv: Invert the design for big-core
- machine modelling
+Subject: Re: [RFC PATCH 09/10] ppc/pnv: Implement POWER10 PC xscom registers
+ for direct controls
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-9-npiggin@gmail.com>
- <eb04e4c8-26ca-4330-ae32-a58737d2a78b@kaod.org>
-In-Reply-To: <eb04e4c8-26ca-4330-ae32-a58737d2a78b@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1032.google.com
+ <20240526122612.473476-10-npiggin@gmail.com>
+ <7f54afb7-3c2c-44b4-bc00-8b24e0ba51e1@kaod.org>
+In-Reply-To: <7f54afb7-3c2c-44b4-bc00-8b24e0ba51e1@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,184 +98,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed May 29, 2024 at 4:57 PM AEST, C=C3=A9dric Le Goater wrote:
+On Wed May 29, 2024 at 5:00 PM AEST, C=C3=A9dric Le Goater wrote:
 > On 5/26/24 14:26, Nicholas Piggin wrote:
-> > POWER9 and POWER10 machines come in two variants, "big-core" and
-> > "small-core".
+> > The PC unit in the processor core contains xscom registers that provide
+> > low level status and control of the CPU.
 > >=20
-> > Big core machines are SMT8 from the software point of view, but in the
-> > low level platform topology ("xscom registers and pervasive
-> > addressing"), these look more like a pair of small cores ganged
-> > together.
-> >=20
-> > Presently, the way this is modelled is to create an SMT8 PnvCore and
-> > add special cases to xscom and pervasive for big-core mode. This is
-> > becoming too complicated to manage as more of the machine is modelled.
-> > The better approach looks like the inverse, which is creating 2xPnvCore
-> > ganging them together to look like an SMT8 core in TCG. The TCG SMT cod=
+> > This implements "direct controls" sufficient for OPAL (skiboot) firmwar=
 e
-> > is quite simple to do that, and then the xscom and pervasive modelling
-> > does not need to differentiate big and small core modes for the most
-> > part.
+> > use, which is to stop threads and send them non-maskable IPIs in the
+> > form of SRESET interrupts.
 > >=20
-> > device-tree building does need a special case to only build one
-> > CPU node for each big-core because that's what the firmware expects.
-> > And so does a special case workaround in the ChipTOD model.
+> > POWER10 is sufficiently different (particularly QME and special wakeup)
+> > from POWER9 that it is not trivial to implement by reusing the code.
 > >=20
-> > A big-core machine option is added for powernv9 and 10 machines.
->
-> That's another patch.
-
-Okay.
-
-> It is difficult to follow all the changes. I think this patch
-> needs further splitting.
-
-Sure.
-
 > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > > ---
-> >   include/hw/ppc/pnv.h         |   3 +
-> >   include/hw/ppc/pnv_core.h    |   8 ++
-> >   target/ppc/cpu.h             |   4 +-
-> >   hw/ppc/pnv.c                 | 183 ++++++++++++++++++++++++++++------=
+> >   include/hw/core/cpu.h     |  8 ++++
+> >   include/hw/ppc/pnv.h      |  2 +
+> >   include/hw/ppc/pnv_core.h |  3 ++
+> >   hw/ppc/pnv.c              |  7 +++-
+> >   hw/ppc/pnv_core.c         | 88 ++++++++++++++++++++++++++++++++++++--=
 -
-> >   hw/ppc/pnv_core.c            |  20 +++-
-> >   hw/ppc/spapr_cpu_core.c      |   6 +-
-> >   target/ppc/misc_helper.c     |   6 +-
-> >   target/ppc/timebase_helper.c |   9 ++
-> >   8 files changed, 197 insertions(+), 42 deletions(-)
+> >   system/cpus.c             | 10 +++++
+> >   6 files changed, 112 insertions(+), 6 deletions(-)
 > >=20
+> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> > index bb398e8237..52a8fc65cb 100644
+> > --- a/include/hw/core/cpu.h
+> > +++ b/include/hw/core/cpu.h
+> > @@ -974,6 +974,14 @@ void cpu_reset_interrupt(CPUState *cpu, int mask);
+> >    */
+> >   void cpu_exit(CPUState *cpu);
+> >  =20
+> > +/**
+> > + * cpu_pause:
+> > + * @cpu: The CPU to pause.
+> > + *
+> > + * Resumes CPU, i.e. puts CPU into stopped state.
+> > + */
+> > +void cpu_pause(CPUState *cpu);
+> > +
+> >   /**
+> >    * cpu_resume:
+> >    * @cpu: The CPU to resume.
 > > diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> > index 476b136146..93ecb062b4 100644
+> > index 93ecb062b4..bec603f1a8 100644
 > > --- a/include/hw/ppc/pnv.h
 > > +++ b/include/hw/ppc/pnv.h
-> > @@ -100,6 +100,9 @@ struct PnvMachineState {
-> >       PnvPnor      *pnor;
+> > @@ -111,6 +111,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *ph=
+b);
+> >   #define PNV_FDT_ADDR          0x01000000
+> >   #define PNV_TIMEBASE_FREQ     512000000ULL
 > >  =20
-> >       hwaddr       fw_load_addr;
+> > +void pnv_cpu_do_nmi(CPUState *cs);
 > > +
-> > +    bool         big_core;
-> > +    bool         big_core_tbst_quirk;
->
-> I think the quirk should be introduced in its own patch.
-
-Good idea.
-
-> > @@ -157,6 +157,14 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc,=
- void *fdt)
-> >  =20
-> >       pnv_cc->processor_id(chip, pc->hwid, 0, &pir, &tir);
-> >  =20
-> > +    /* Only one DT node per (big) core */
-> > +    if (tir !=3D 0) {
-> > +        g_assert(pc->big_core);
-> > +        g_assert(tir =3D=3D 1);
-> > +        g_assert(pc->hwid & 1);
-> > +        return -1;
->
-> return is -1 but it's not an error. right ?
-
-Not an error just a "no CPU node to insert".
-
-It's a bit ugly. Could return bool for yes/no and take a *offset
-maybe?
-
-> > @@ -1088,10 +1119,37 @@ static void pnv_power8_init(MachineState *machi=
-ne)
-> >  =20
-> >   static void pnv_power9_init(MachineState *machine)
-> >   {
-> > -    if (machine->smp.threads > 8) {
-> > -        error_report("Cannot support more than 8 threads/core "
-> > -                     "on a powernv9/10 machine");
-> > -        exit(1);
-> > +    PnvMachineState *pnv =3D PNV_MACHINE(machine);
-> > +
-> > +    if (pnv->big_core) {
->
-> It would be interesting to have a max_smt machine class attribute too.
-
-Yeah, as we talked about in the other thread. Probably helps
-reduce code.
-
-> > +        if (machine->smp.threads > 8) {
-> > +            error_report("Cannot support more than 8 threads/core "
-> > +                         "on a powernv9/10  machine");
-> > +            exit(1);
-> > +        }
-> > +        if (machine->smp.threads % 2 =3D=3D 1) {
->
-> is_power_of_2()
-
-It does have that check later in pnv_init(), but I wanted
-to be careful that we're dividing by 2 below I think it makes
-it more obvious (and big-core can't have 1 thread per big core).
-
-> > @@ -1099,6 +1157,8 @@ static void pnv_power9_init(MachineState *machine=
+> >   /*
+> >    * BMC helpers
+> >    */
+> > diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+> > index 39f8f33e6c..9599da15ea 100644
+> > --- a/include/hw/ppc/pnv_core.h
+> > +++ b/include/hw/ppc/pnv_core.h
+> > @@ -109,6 +109,9 @@ OBJECT_DECLARE_TYPE(PnvQuad, PnvQuadClass, PNV_QUAD=
 )
+> >   struct PnvQuad {
+> >       DeviceState parent_obj;
 > >  =20
-> >   static void pnv_power10_init(MachineState *machine)
-> >   {
-> > +    PnvMachineState *pnv =3D PNV_MACHINE(machine);
-> > +    pnv->big_core_tbst_quirk =3D true;
-> >       pnv_power9_init(machine);
+> > +    bool special_wakeup_done;
+> > +    bool special_wakeup[4];
+> > +
+> >       uint32_t quad_id;
+> >       MemoryRegion xscom_regs;
+> >       MemoryRegion xscom_qme_regs;
+> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> > index 5364c55bbb..765142965f 100644
+> > --- a/hw/ppc/pnv.c
+> > +++ b/hw/ppc/pnv.c
+> > @@ -2700,12 +2700,17 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs,=
+ run_on_cpu_data arg)
+> >       }
 > >   }
 > >  =20
-> > @@ -1169,9 +1229,15 @@ static void pnv_processor_id_p9(PnvChip *chip,
-> >                                   uint32_t core_id, uint32_t thread_id,
-> >                                   uint32_t *pir, uint32_t *tir)
+> > +void pnv_cpu_do_nmi(CPUState *cs)
+> > +{
+> > +    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
+> > +}
+> > +
+> >   static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
 > >   {
-> > -    if (chip->nr_threads =3D=3D 8) {
-> > -        *pir =3D (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core=
-_id << 3) |
-> > -               (thread_id >> 1);
-> > +    PnvMachineState *pnv =3D PNV_MACHINE(qdev_get_machine());
+> >       CPUState *cs;
+> >  =20
+> >       CPU_FOREACH(cs) {
+> > -        async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
+> > +        pnv_cpu_do_nmi(cs);
+> >       }
+> >   }
 >
-> arg. We should avoid these qdev_get_machine() calls. Could big_core be a
-> chip property instead ?
-
-We could, but per machine probably makes more sense. It's
-funny there seems to be no good way to get machine from CPU.
-Maybe we can just add a machine pointer in PnvChip?
-
-I'l probably leave that for another series and try to convert
-most things.
-
-> > +static bool pnv_machine_get_hb(Object *obj, Error **errp)
-> > +{
-> > +    PnvMachineState *pnv =3D PNV_MACHINE(obj);
-> > +
-> > +    return !!pnv->fw_load_addr;
-> > +}
-> > +
-> > +static void pnv_machine_set_hb(Object *obj, bool value, Error **errp)
-> > +{
-> > +    PnvMachineState *pnv =3D PNV_MACHINE(obj);
-> > +
-> > +    if (value) {
-> > +        pnv->fw_load_addr =3D 0x8000000;
-> > +    }
-> > +}
+> What about ?
 >
-> we might want to get rid of the hostboot mode oneday. This was really
-> experimental stuff.
+> https://lore.kernel.org/qemu-devel/20240424093048.180966-1-clg@redhat.com=
+/
 
-Okay sure, I don't use it. Although we may want to run the
-open source hostboot part of the firmware on QEMU one day,
-we can always add back some options for it.
-
-We do have a PowerVM mode too which tweaks a few things, but
-that's no use for upstream.
-
-> > diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-> > index 059d372c8a..05195527a5 100644
-> > --- a/hw/ppc/spapr_cpu_core.c
-> > +++ b/hw/ppc/spapr_cpu_core.c
->
-> This change should come in another patch preferably
-
-Yeah this might have got into the wrong patch.
+I haven't forgotten it. I just didn't put it in the first PR since
+there was quite a lot of pnv patches to do so I thought I will collect
+most of them for another PR.
 
 Thanks,
 Nick
