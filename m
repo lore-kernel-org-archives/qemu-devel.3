@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08AAC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 14:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C722DC27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 14:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCgva-0001bk-IG; Thu, 30 May 2024 10:38:50 -0400
+	id 1sCh3s-00043C-8Y; Thu, 30 May 2024 10:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oleg.sviridov@red-soft.ru>)
- id 1sCgvZ-0001bB-1K; Thu, 30 May 2024 10:38:49 -0400
-Received: from red-soft.ru ([188.246.186.2] helo=gw.red-soft.ru)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <oleg.sviridov@red-soft.ru>)
- id 1sCgvW-0007lN-MK; Thu, 30 May 2024 10:38:48 -0400
-Received: from [10.81.100.51] (unknown [10.81.100.51])
- by gw.red-soft.ru (Postfix) with ESMTPA id B8A4E3E1C97;
- Thu, 30 May 2024 17:38:40 +0300 (MSK)
-Message-ID: <bc1ccfd3-164f-8179-8209-80af79e41deb@red-soft.ru>
-Date: Thu, 30 May 2024 17:38:40 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCh3q-00042U-Pi
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 10:47:22 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCh3n-0000cn-VK
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 10:47:22 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a66cbe67ce7so17893466b.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 07:47:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717080438; x=1717685238; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uKtEcIZbgbRMJ2tj3UgRE99DmXA0Hpyba50+nYLPawQ=;
+ b=nSufcHPmtPRfvnHc5M3uCDksWQoi7bS0H2xlZZA29WbdlIou1YmzIrlfegljysK+/T
+ bEYu49HgySyXsEu+t/n6Viwq1nhYL/ueI9wYm+BOu74mjHcaoMiKZvBJ3CFuVL+m4b5X
+ jVRX0Yi13+UexHOG+LsAa8+YOmVLbKoDg7TCD01ypeNppXzVJTyKPX42DegsEOM0bVP2
+ 3Su/O3Ud0NHkmM/lmzgqUL+/hCS0eyD42pQu603YJN01WGXlJkhL89VB0bpm6rT64k6Q
+ qJ8+6tPv6YbC4t/b1FgWopuHFdLZz8FlfmBUd5njfcQqbvoh1N/8497oEiRIXIbE1iaI
+ oHrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717080438; x=1717685238;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uKtEcIZbgbRMJ2tj3UgRE99DmXA0Hpyba50+nYLPawQ=;
+ b=f/zZDvy+rey+FC7SW8ezrhiu1BFF2WuC3vlDTUu6odLcuSay1Di4OG4ukKORIpY7pD
+ E1ajReWBiDzehayIba2PZO7KbJwRakSXrsGAiX/17BTiOhHzzUkfn1CK4SHR6J4P8ItV
+ FYVhzo8it4hKfuMowbeofMSu3Rw34ybP5D0PMGPwwLnMWS2rnNIUKYJDoUyut6bshhB6
+ vpYkDbCcarQzd1ettufBjJL086QtMtAYEVjC+r1zndrXmi4OXNNkBPQWD/3Lyg8gvO1L
+ w02l++0T/V5nb7vUgaOH5dno651jUr1NmvgBXyw7O8A6K0Ex+l/w2KQEKCN+PWhVhGCX
+ jRPw==
+X-Gm-Message-State: AOJu0Yz1sNEgmbsFChH4B3ZyEp12GPIHqqPMNVQVZQTPcdeyl+U9TNeS
+ 3uKL2UHSGFlgMV5BOgdr2bjSb2guQ909rTLDYj4SPHDC29A0aNDGq/gLNEuNZMDlbwvpa8YTzJD
+ voq2nxQ/NxvOYpVTPoLpP+TqoAhZ0WO9L/3RnUA==
+X-Google-Smtp-Source: AGHT+IFC3zpZHGWpT7r5ozuTiS3dyG1474c4+zUXIoDvOynX1uUoznx7cz088tSeyICv9ET5beMcBhnP9H791CbYCZ0=
+X-Received: by 2002:a50:8e57:0:b0:579:f196:487f with SMTP id
+ 4fb4d7f45d1cf-57a1793b35amr2083303a12.31.1717080437736; Thu, 30 May 2024
+ 07:47:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH] hw/net: prevent potential NULL dereference
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Jason Wang
- <jasowang@redhat.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20240529110804.3636963-1-oleg.sviridov@red-soft.ru>
- <219da54c-7c9d-4baf-ba0c-d4afb6101cbe@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?B?0J7Qu9C10LMg0KHQstC40YDQuNC00L7Qsg==?=
- <oleg.sviridov@red-soft.ru>
-In-Reply-To: <219da54c-7c9d-4baf-ba0c-d4afb6101cbe@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-KLMS-Rule-ID: 1
-X-KLMS-Message-Action: clean
-X-KLMS-AntiSpam-Lua-Profiles: 185620 [May 30 2024]
-X-KLMS-AntiSpam-Version: 6.1.0.4
-X-KLMS-AntiSpam-Envelope-From: oleg.sviridov@red-soft.ru
-X-KLMS-AntiSpam-Rate: 0
-X-KLMS-AntiSpam-Status: not_detected
-X-KLMS-AntiSpam-Method: none
-X-KLMS-AntiSpam-Auth: dkim=none
-X-KLMS-AntiSpam-Info: LuaCore: 20 0.3.20
- 743589a8af6ec90b529f2124c2bbfc3ce1d2f20f,
- {Tracking_from_domain_doesnt_match_to}, 127.0.0.199:7.1.2; red-soft.ru:7.1.1;
- d41d8cd98f00b204e9800998ecf8427e.com:7.1.1, FromAlignment: s
-X-MS-Exchange-Organization-SCL: -1
-X-KLMS-AntiSpam-Interceptor-Info: scan successful
-X-KLMS-AntiPhishing: Clean, bases: 2024/05/30 13:08:00
-X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30,
- bases: 2024/05/30 00:42:00 #25335358
-X-KLMS-AntiVirus-Status: Clean, skipped
-Received-SPF: pass client-ip=188.246.186.2;
- envelope-from=oleg.sviridov@red-soft.ru; helo=gw.red-soft.ru
-X-Spam_score_int: -61
-X-Spam_score: -6.2
-X-Spam_bar: ------
-X-Spam_report: (-6.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.299,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240526204551.553282-1-richard.henderson@linaro.org>
+In-Reply-To: <20240526204551.553282-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 May 2024 15:47:04 +0100
+Message-ID: <CAFEAcA9i12yZdo3rM2y0+KywJ2EGbcr5ioiygPH83COHa93dnw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Disable SVE extensions when SVE is disabled
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,44 +88,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for review.
+On Sun, 26 May 2024 at 21:46, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+>
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2304
+> Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-Would it be correct to use hcall_dprintf() as in other functions of the 
-module? For example, in h_add_logical_lan_buffer().
+Applied to target-arm.next, thanks.
 
-Best regards,
-Oleg.
+(Looks like we already got this right for SME:
+arm_cpu_sme_finalize() clears ID_AA64SMFR0_EL1 if
+SME is disabled.)
 
-29.05.2024 16:52, Philippe Mathieu-Daudé пишет:
-> On 29/5/24 13:07, Oleg Sviridov wrote:
->> Pointer, returned from function 'spapr_vio_find_by_reg', may be NULL 
->> and is dereferenced immediately after.
->>
->> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->>
->> Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
->> ---
->>   hw/net/spapr_llan.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
->> index ecb30b7c76..f40b733229 100644
->> --- a/hw/net/spapr_llan.c
->> +++ b/hw/net/spapr_llan.c
->> @@ -770,6 +770,10 @@ static target_ulong 
->> h_change_logical_lan_mac(PowerPCCPU *cpu,
->>       SpaprVioVlan *dev = VIO_SPAPR_VLAN_DEVICE(sdev);
->>       int i;
-> 
-> Trying to change a MAC when no NIC is present is dubious, we could
-> at least report this using qemu_log_mask(LOG_GUEST_ERROR).
-> 
->> +    if (!dev) {
->> +        return H_PARAMETER;
->> +    }
->> +
->>       for (i = 0; i < ETH_ALEN; i++) {
->>           dev->nicconf.macaddr.a[ETH_ALEN - i - 1] = macaddr & 0xff;
->>           macaddr >>= 8;
-> 
+-- PMM
 
