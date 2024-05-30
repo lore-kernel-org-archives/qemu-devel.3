@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D12C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1912C27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCgGL-00009L-A7; Thu, 30 May 2024 09:56:13 -0400
+	id 1sCgIY-000195-Uy; Thu, 30 May 2024 09:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCgGJ-000090-LG
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:56:11 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCgGE-0007Gy-MI
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:56:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717077367; x=1748613367;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=NpJoutl0dJN/hW/l+qK2qeqTRKUGSfv5ksmtIGNTEqs=;
- b=e8o8hXNn4PVM58YlmyNcmcpRwaRsimZKWMh2OX62bHTE7G2EdUMvOggY
- IMFAOuTTm3gE8kQ/Zo+OYPxcOvKS12VHPUDPBQTU8qNTHBDqPhEHm38Y9
- B3t8Bw9P1tei+Qy3s0dEUWjERlJU/xi7JRZ9T+YH7hmXBWZ/XEi2yg4+X
- rpfHPVqTSFO1PZLiQRbwvVHj/fXWtWidTE9xCpUTvLFm3qsT9x6srOGH8
- jSxn3IF2C0XnhXHx7+kcWGtQPcrTqDfOtZp70TDkpYer0pcQ2abrq/W5Z
- 0omHUsccNBfiZyNDlShiwPiNSGEMR6rXmwRXipyTmS6rU+Ak+GS6c4Yzu Q==;
-X-CSE-ConnectionGUID: xn6Rjmz2RQOp9lG5HV/EqA==
-X-CSE-MsgGUID: X3cVfc/GSOic3llaMD5PQw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="13438693"
-X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; d="scan'208";a="13438693"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 May 2024 06:56:03 -0700
-X-CSE-ConnectionGUID: LbEfqoURSSWhDbNMaK6t9w==
-X-CSE-MsgGUID: Z9wgVp/4RJiuDy29vcSMiw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; d="scan'208";a="58993357"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 30 May 2024 06:56:02 -0700
-Date: Thu, 30 May 2024 22:11:26 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/2] qapi/qapi-schema: Clarify the dependency relationship
-Message-ID: <ZliJDp4TwCAWO+jH@intel.com>
-References: <20240517062748.782366-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCgIW-00018C-Cb
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:58:29 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCgIU-0007Z4-Jx
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:58:28 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-578517c7ae9so994009a12.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717077504; x=1717682304; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1u47p8ZJCmiehY5hwIdn5YelXPJ+vbS6WtB6PEv4Gw8=;
+ b=NjeLwP11w9GWmfE2m8kfduPzLuzEb2K/Rk8WrGFJ+C/NsuNdYLP0+407p9derRsfGW
+ UkaTrnEg85cimuK3OMPGVhvP/egPBu4w6yhRAj1sABSncbsSyip1KIzZcEdJjIjRbois
+ MXp31taC0G04Y2/WFb46oOICoEKXmZx7N29bNR9uq2U6spk2JLTt9ShplgOsGlB8JXzQ
+ HdNWofFvuf1WaxUxy/G/o6sahxpwxS3BPpMNaFHctKFK7hFV3J4igmoBcchMyTY5gl7P
+ svrZVn68VRH56VWQI9XbkYfRQVVtn6zVftTOeqgpR3xPLEFZ64IU+QZTjy7Z+NO7sm6b
+ TeIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717077504; x=1717682304;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1u47p8ZJCmiehY5hwIdn5YelXPJ+vbS6WtB6PEv4Gw8=;
+ b=lQE+SnjpT1sUVJoEvpWAhIgblHxddoQa1YvaaRmRTBgQ9sDAMqAC8p+r9/f5Rj9NzO
+ N4zdWVZitxqKDkm+rfAz2TjwXYoUZSxYArHWLH/B2LsuBspRKBN7UbCO9G++W9V2+IWb
+ xIy5Kdsl4+Ls6qUN/ChmIt9nNkpobt+io1fcpeVzpxr3HUhexjKEMcRCXbd2yFbAi206
+ nR77cCMa2UPpoZh4AJxAFtl0tnR/7lztkGDFDmUJfAY6VU+8oYOG3NgJIR/urOqj2MOL
+ GkGbw+HgIW9QbaGOB32xoP4idehDHDzyIv2joJW23I9wq2bJghTMcfAQk4Bj0UgNt4rr
+ s9DQ==
+X-Gm-Message-State: AOJu0YzkUBaxpoqqSExJtPLI/fzIwIY1kDVtPk4+/XIB/DgCyBvkw4x6
+ rBuXm8UZZO2MlvhW6+8OWq/Wem0xBBnsoDiMquBSsoFYDXNbT29ggYdE+QMDK7sdgOD3WHzimFE
+ M
+X-Google-Smtp-Source: AGHT+IFV+lWPOxijsaCgE/tkhhu9nIkpdEJoVcgfgc9D2OVVUVAtyZ4o0L0jtQGAxNLPdiTmRNXN2w==
+X-Received: by 2002:a50:99d7:0:b0:57a:259a:489a with SMTP id
+ 4fb4d7f45d1cf-57a259a4aa1mr781099a12.14.1717077503855; 
+ Thu, 30 May 2024 06:58:23 -0700 (PDT)
+Received: from [192.168.69.100] (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
+ [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-579d1f94e72sm5718824a12.24.2024.05.30.06.58.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 May 2024 06:58:23 -0700 (PDT)
+Message-ID: <d2b81c56-a57c-4fbe-a65e-86e9755e7c48@linaro.org>
+Date: Thu, 30 May 2024 15:58:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240517062748.782366-1-zhao1.liu@intel.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] semihosting: Restrict to TCG
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
+References: <20240529155548.5878-1-philmd@linaro.org>
+ <20240529155548.5878-4-philmd@linaro.org>
+ <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
+ <7ce86375-779d-43d6-9871-7f9587c95ba6@linaro.org>
+ <CABgObfbvjG9bBgCwM-kL+YhjhMw1qLnQdQToCEkKW+V3trskoA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfbvjG9bBgCwM-kL+YhjhMw1qLnQdQToCEkKW+V3trskoA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,43 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric and Markus,
+On 30/5/24 09:31, Paolo Bonzini wrote:
+> On Thu, May 30, 2024 at 9:22 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> On 30/5/24 08:02, Paolo Bonzini wrote:
+>>> On Wed, May 29, 2024 at 5:56 PM Philippe Mathieu-Daudé
+>>> <philmd@linaro.org> wrote:
+>>>> It is pointless to build semihosting when TCG is not available.
+>>>
+>>> Why? I would have naively assumed that a suitable semihosting API
+>>> could be implemented by KVM. The justification (and thus the commit
+>>> message) needs to be different for each architecture if it's a matter
+>>> of instruction set or insufficient KVM userspace API.
+>>
+>> I wasn't sure where semihosting could be used so asked on IRC and
+>> Alex told me TCG only. Maybe the current implementation is TCG
+>> only, and I can reword. It certainly need some refactor to work
+>> on KVM, because currently semihosting end calling the TCG probe_access
+>> API, which I'm trying to restrict to TCG in order to ease linking
+>> multiple libtcg for the single binary (see
+>> https://lore.kernel.org/qemu-devel/20240529155918.6221-1-philmd@linaro.org/).
+> 
+> Ok, that goes in the commit message though.
+> 
+> "Semihosting currently uses the TCG probe_access API. It is pointless
+> to have it in the binary when TCG isn't".
+> 
+> and in the first two patches:
+> 
+> "Semihosting currently uses the TCG probe_access API. To prepare for
+> encoding the TCG dependency in Kconfig, do not enable it unless TCG is
+> available".
+> 
+> But then, "select FOO if TCG" mean that it can be compiled out; so
+> perhaps "imply SEMIHOSTING if TCG" is better? Same for RISC-V's
+> "select ARM_COMPATIBLE_SEMIHOSTING if TCG".
 
-Just a gentle poke. What do you think of this ordering?
+You are right. Thanks for reminding me Kconfig "imply" :)
 
-Thanks,
-Zhao
+Regards,
 
-On Fri, May 17, 2024 at 02:27:46PM +0800, Zhao Liu wrote:
-> Date: Fri, 17 May 2024 14:27:46 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: [PATCH 0/2] qapi/qapi-schema: Clarify the dependency relationship
-> X-Mailer: git-send-email 2.34.1
-> 
-> Hi,
-> 
-> At present, the correctness of the dependencies of JSON files is ensured
-> by the order in which they are listed, but in general, the mixing of
-> multiple files and the lack of clear guidelines for ordering them is not
-> friendly to extending and maintaining.
-> 
-> Therefore, I have a proposal to manually categorize and sort JSON files
-> generation order by dependencies/dependency hierarchy, to improve the
-> readability and maintainability of qapi-schema.json.
-> 
-> Welcome your feedback!
-> 
-> Thanks and Best Regards,
-> Zhao
-> ---
-> Zhao Liu (2):
->   qapi: Reorder and categorize json files in qapi-schema.json
->   qapi: List block-core.json in qapi-schema.json
-> 
->  qapi/qapi-schema.json | 100 +++++++++++++++++++++++++++++-------------
->  1 file changed, 69 insertions(+), 31 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
+Phil.
 
