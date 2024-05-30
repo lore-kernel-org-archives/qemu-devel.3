@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40DFC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7AA6C27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCfoM-00011U-UB; Thu, 30 May 2024 09:27:18 -0400
+	id 1sCfrp-00036r-7f; Thu, 30 May 2024 09:30:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCfoL-0000rt-5f
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:27:17 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sCfrc-000363-Lr
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:30:40 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCfoJ-00017F-Ju
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:27:16 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5785c1e7448so861978a12.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:27:15 -0700 (PDT)
+ id 1sCfra-00029v-Qx
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:30:40 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-57a183ad429so1026079a12.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717075634; x=1717680434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717075836; x=1717680636; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nvK0Kt2NNELo3256QNX/h5HK9KE6QrWVrfLHacMI0Oc=;
- b=PTkZWe1TSUux4ByuUEic3kwi1mYae52YhEWE77hrU5d4qY5zJqS8DGslCfQQker2j3
- +oaO53Wm+ckAm4mt0O0uzf0R49DME6Rae4Lc9uuF4jdYT9NKbw2xxySwDztqPMLAAUZS
- UrMDMu1tYLhV4gbLGQKdD+JlCWpXR8nuVx9TPfGYL9uHQrsfH69MoOMqiVXAn6BgJ5Eg
- ypr8RxLG57JqzCguA0Hw30Ka2/88a0QSjvy6XYfCVj8TK1klSwT9HYfCljpfkRg/0dI0
- 8DHi6PRO/6BrsyEF0OVi5lsbP+eaHImtGiaiBMF81YQf4lB1yvx0nJu3BDe3DWW/fT01
- WbEg==
+ bh=NaFgQ5+ryCdBEjXimHPlevJmdxRcKYvcRx6KROGTIAA=;
+ b=c6muQU/0s5B0R/0mLkhBgILJgjeOPxqHprZNkyxTWhw9iODy/6vmI+hrw46GvLSauX
+ pqPgS4L2Iy5SP5D3M7Jv6GjPUh6x1eJR4fcgkYrrhJHX/fv+2BfB6/k81tBU+EqaWzsT
+ RYmVroLbVhZBOyMCfz/XPq3OrIm7RxoOB2DXmriMgJ3al3IgpM1P+HucnSZIt0M1sPSV
+ VsijXG86Vf+w9OHkVMu8RTFgA+N90oaUlexc2xQ9nNIS5gBsBdtOn4cJdDe0aLgUHrzN
+ TRVr1ujVzY1GHWOKgvRnzxyGByRffI/ZFDZXIUFgsbEV5kqnh/sRv2vbUZp0JD30sVz/
+ 57yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717075634; x=1717680434;
+ d=1e100.net; s=20230601; t=1717075836; x=1717680636;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nvK0Kt2NNELo3256QNX/h5HK9KE6QrWVrfLHacMI0Oc=;
- b=vTCE/tgtvQSFSjPxW7fqLZaRREDwU3FvGL0mCG7ba9StfI7J0TEx1VZBKkoynI1sF5
- SxWYlxh5UUeUTMM6pxDlqKPb2MWgzh8ojQN7dj4O9yhWwh+qdcLgm4w3c3j6QbIleSY8
- WEaTCxr2eQ/KUErDzSlguTYKMOX8/2ji8flCSDV3h1dAUrR1aOwVwi4QtDxuiD5k+pvS
- yq9JgGDarB0StuIjJV7RveEwTmk2GM3gfwiFx/1w31sCSff0uvSZoTcno8PRR22R2/pl
- XJXb9RV424A++vT3uYUbzGm7BgvYH6uLWQWTbJyxF0ST+jV0x4KVuP3A2s3Ah+a4+gJQ
- NJ+w==
-X-Gm-Message-State: AOJu0YwPETnvnj2rLffM5oSEIcogPiUzZSSIKgbTor9GbkNsoloCkrgR
- qVX935fxCtDUSxekK7/+bUjCSDvIiDBTbatW0ijk6Nw5V1bc9sPrekImwXRSIlPm9y7vW9gFKO+
- HwC8DyaBWRL2FJKvZgjh2yAObiGTEBi0A5fSxrA==
-X-Google-Smtp-Source: AGHT+IFuX7yvVc7/XWNn9ID2K3uAc1jAmpfZKzTyZH8gXXqmzzs/A5t+oTk1l+Keiej3KQZoZGcwLrsI7SJx0N+pgwE=
-X-Received: by 2002:a50:9b56:0:b0:57a:2ccb:b3f2 with SMTP id
- 4fb4d7f45d1cf-57a2ccbb4eamr275587a12.16.1717075633951; Thu, 30 May 2024
- 06:27:13 -0700 (PDT)
+ bh=NaFgQ5+ryCdBEjXimHPlevJmdxRcKYvcRx6KROGTIAA=;
+ b=ppQoxS/SrCgRoHmF6vzShm2eAZ8WeLr+EVqOg7ULEg6Cv1WC0NGuVy6ZLc1PD7yjZT
+ eDQij21Mn21afaubNgQfGdtxj6QELUomNaSwIAYDm32YrFdi04ItHHnjTQNh/VxDexti
+ Mdkrw3q+0VQrf0b9rH1qY4gpMxTtIFziqvsV5url10IxGLGcNU5TsKLnp46f3IgnwuhB
+ nLACpsSutymcW6bnOTZ8PgwYOaoVNwhuVfcaDqCyFEgZFzl2OYMZvsB4IQnrvzyq++EM
+ /tPIqeIEi8PnSYRNt2pKIo0LE0I3XJ/ej2k9EgrHUpoHaixBYg702dUD7+Mau9z/G/6j
+ wy0Q==
+X-Gm-Message-State: AOJu0Yzk47LCKX0uCFD5otRVatBJF3AJxXr50H1h1pSGEh86Qu1XZRwO
+ fY+BTfvV+AOTx85j2mqZwJFQvmWt4HwryzNfGi+OFRTbqlsZN/D578FVWRzZErRPKvxKC+Y2mWB
+ 0pvdu86/tlfazi4DQcwURokEXsENp91hoxsKPn7qZsM63g9Re
+X-Google-Smtp-Source: AGHT+IFshb92s2yxSDSlvhQfx4OrcJcrfFmrqYZWoGQRdnSqU/4lZVpdWEUA7NmAhrizq73KK2lVEhCMNDX/mvsWWkc=
+X-Received: by 2002:a50:9557:0:b0:57a:2780:e679 with SMTP id
+ 4fb4d7f45d1cf-57a2780e6fbmr623502a12.16.1717075836042; Thu, 30 May 2024
+ 06:30:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
-In-Reply-To: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
+References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
+In-Reply-To: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 May 2024 14:27:02 +0100
-Message-ID: <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Initial support for One-Time Programmable Memory
- (OTP) in BCM2835
-To: Rayhan Faizel <rayhan.faizel@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
+Date: Thu, 30 May 2024 14:30:25 +0100
+Message-ID: <CAFEAcA-Qv-JSH_tAoieh52Es0injZZ9AmMnh9puLOkgrZz6C9w@mail.gmail.com>
+Subject: Re: Unexpected error in rme_configure_one() at
+ ../target/arm/kvm-rme.c:159
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,36 +88,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 19 May 2024 at 10:42, Rayhan Faizel <rayhan.faizel@gmail.com> wrote:
+On Thu, 30 May 2024 at 14:26, Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
 >
-> All BCM2835 boards have on-board OTP memory with 66 32-bit rows. Usually,
-> its contents are accessible via mailbox commands.
+> Hi,
 >
-> [Changes in v3]
+> When I see a Realm VM creation fails with:
 >
-> - Forgot to replace constant with macro in one particular spot.
->
-> [Changes in v2]
->
-> - Replace read/write with get/set in bcm2835_otp.c.
-> - Use impl instead of valid in bcm2835_otp.c.
-> - Replace all constant values with macros defined in bcm2835_otp.h.
-> - Change memory region size of OTP device to 0x80.
-> - After further testing on a real Raspberry Pi 3, I noticed a few things
-> contrary to my initial assumptions:
-> -- The customer OTP lock bit is bit 6 of row 32, NOT bit 30 of row 30. This is
-> currently undocumented to my knowledge.
-> -- The above lock indeed applies to the private key as well.
->
-> Rayhan Faizel (3):
->   hw/nvram: Add BCM2835 OTP device
->   hw/arm: Connect OTP device to BCM2835
->   hw/misc: Implement mailbox properties for customer OTP and device
->     specific private keys
+> Unexpected error in rme_configure_one() at ../target/arm/kvm-rme.c:159:m
+> qemu-system-aarch64: RME: failed to configure SVE: Invalid argument
 
+The file target/arm/kvm-rme.c doesn't exist in upstream QEMU,
+so you must be using a fork or not-yet-committed patchseries.
+I would suggest starting by asking the person who wrote those
+patches...
 
-
-Applied to target-arm.next, thanks.
-
+thanks
 -- PMM
 
