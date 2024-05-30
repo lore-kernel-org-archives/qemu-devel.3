@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06D3C27C44
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94355C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdmP-00062Q-5M; Thu, 30 May 2024 07:17:09 -0400
+	id 1sCdmW-00068P-DG; Thu, 30 May 2024 07:17:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sCdmN-000601-6u
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:07 -0400
-Received: from mail-dm6nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2415::600]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1sCdmV-00067X-7A
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:15 -0400
+Received: from mail-mw2nam04on20609.outbound.protection.outlook.com
+ ([2a01:111:f403:240a::609]
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sCdmJ-0001So-U9
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:06 -0400
+ id 1sCdmT-0001VR-AZ
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:14 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gMqmcpMWjPyrmpBFp9qe6ay2tIKxFYeE47jFMgk3DeZCHFmt4t4RJo0yQ9yorP8IMVcHsUVRthYrTNlvX8mPam3PWIa3gX9bWRHflrn0MaR0S8An4vng/bnnuMnPCk98DHxNzrMNyF5pri/ehQ86Jf5BvWTdGJasUnUXjMFek7VnjTICRQLhoY62cqCo0zJy2aBKgXEIgJuu8REMt8WXgdxWhEKQYvwj3IgzZYi6oWW1h2VMMk56mJGXv6uoerz/NA8rQBlCOZKudUsdpLQc89Rz9trywOvaHljyZ75afjvLNN5t3QJ98iwR83Op07pDSroDV74iwocpMxZv1HF/Ag==
+ b=QVBy77h31i9uKs3hRYSQP9w2xcSCroDL9SRh90fTzmibgv4A0peMeW5/Uc2jXFEU4x9Bk8hk2Fmz+CnD1zFQ6u/gM8Nu0eLVzaeUjD9MJIiiYGUJylF6604yrP/T1riPhtdTlC836g9rpHOjIFqlik9YWRqtDVQ0MopdFftyon+Vf4QX39p3Z1O/Tdjkr2q8T1jG2bEeQ4WhuxZjOn1nXdy/anCG3bUfA5geG/U8of2x+8JQy/duHPkGxyhJ1h9s5PnnFWHCQqq6nhV2qu+aKo0qCWpJctF3KzOxGcW9CSrfuwVGiaiUuQU3gXGqxi9wFBB5Fz5jfFm+FKrtGK6XJw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fep7LfKQwCDtcb1ZlkZHvJQkOvgysAN3qM7LUYrgB3k=;
- b=UTfH7MlzKPjJJ8MNd7k079pNk7HpUriDhJHDHAuuURjR3q5vIQytFufONnd3ZTemYKVNifuTr0ybmTAA97lJTp+UIF9X9IHgit5BrD7CPnzAygWwAKffhBN6uWi19nUdixkTQpkZ3DkCIQZmh+OcR1ovG2wCJZiM2vNB0ov8X0A2YQtoeFWVTFi6f1OjnOxuHzyS/r1EtPqDp6xYt9xIqzreEzylrC6ftz41zty0rS+K5uGihMY0Wv1ATkoiRRKKDD3YTthxYO8yXGmtwTC8XaxcP1lcSXcydlymlcbSps+I1J7daDkmGHJg53ZCW/1XAs0XhBrpl1yCrVmk8CQ/FQ==
+ bh=gQmGneEGIQyCeB+hP5aEHRwAi8ISVe3UdrZExegunhA=;
+ b=ZNyMw2d22qlTrKS/YhiNgTaZydESplIAWHuchGeaC3xuZlJi3O4czt48+jcFXsBMf2g+yPyg3JMbNHSdwXTNJV0DptwyH7N0gFZ4TmybRfr2c0fOQt1s7cYe14WHq7ZMd4L7yZtOoPa65X7CC3cRpPcCLHwbHJC5DYgSDY+q+tJswBymIe4PKU8ihZM86Uu/kITIbuUFXLo7s7I3w/UhIHiVFxeeqfFoR4H/c5t0WvkW+W8+IfUVRo6LNKqTUfL1dtLTPZI7lHiv/hCXf8wcm4F6j731NB9N+H8uO8JgGcMa16rKr8WzkeXTTqlyNm4xHqLoF81JSJsHIz9NwnVhrg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fep7LfKQwCDtcb1ZlkZHvJQkOvgysAN3qM7LUYrgB3k=;
- b=2ab5YwdXUyMjdRoDvB0sUGyNXrlEEEMAXr3r297gtZOi2WdZX83Lnxm545YjzBOvOh8uf0+X5zddFgU3HMCh1AGODZiRBiXgpEE+N5w+IDANo0sj1hin/bFTdWNnSsLaRCCutLgrif8pnpWf3NWbeDqx6ITC3niyRAX9ctbRHuE=
-Received: from BN9PR03CA0668.namprd03.prod.outlook.com (2603:10b6:408:10e::13)
- by DM6PR12MB4220.namprd12.prod.outlook.com (2603:10b6:5:21d::7) with
+ bh=gQmGneEGIQyCeB+hP5aEHRwAi8ISVe3UdrZExegunhA=;
+ b=LcnQOpN7s8FCb7FeAQfJJEcX7tor0/nZcxMHZVbupN1Zp2DzGp+ogV6qRHRBMIIsWEiqzqCZIu1kcD2Vi7NW5kgp9wY1i743/Iw5bJKqX5hykVzKac31URhJv5szmIyMwSXM5IQ0SOjsRSpkp6sDXbYJes4oUWimNB9dx0XnDKA=
+Received: from BN9PR03CA0557.namprd03.prod.outlook.com (2603:10b6:408:138::22)
+ by DM4PR12MB7502.namprd12.prod.outlook.com (2603:10b6:8:112::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.29; Thu, 30 May
- 2024 11:17:00 +0000
-Received: from BN3PEPF0000B077.namprd04.prod.outlook.com
- (2603:10b6:408:10e:cafe::a) by BN9PR03CA0668.outlook.office365.com
- (2603:10b6:408:10e::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.19 via Frontend
- Transport; Thu, 30 May 2024 11:16:59 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.17; Thu, 30 May
+ 2024 11:17:09 +0000
+Received: from BN3PEPF0000B076.namprd04.prod.outlook.com
+ (2603:10b6:408:138:cafe::9b) by BN9PR03CA0557.outlook.office365.com
+ (2603:10b6:408:138::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.18 via Frontend
+ Transport; Thu, 30 May 2024 11:17:09 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,26 +54,26 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B077.mail.protection.outlook.com (10.167.243.122) with Microsoft
+ BN3PEPF0000B076.mail.protection.outlook.com (10.167.243.121) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:16:59 +0000
+ 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:17:08 +0000
 Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
- 2024 06:16:59 -0500
+ 2024 06:17:01 -0500
 Received: from pankaj-M75q.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Thu, 30 May 2024 06:16:59 -0500
+ Transport; Thu, 30 May 2024 06:17:01 -0500
 From: Pankaj Gupta <pankaj.gupta@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <brijesh.singh@amd.com>, <dovmurik@linux.ibm.com>, <armbru@redhat.com>,
  <michael.roth@amd.com>, <xiaoyao.li@intel.com>, <pbonzini@redhat.com>,
  <thomas.lendacky@amd.com>, <isaku.yamahata@intel.com>, <berrange@redhat.com>, 
  <kvm@vger.kernel.org>, <anisinha@redhat.com>, <pankaj.gupta@amd.com>
-Subject: [PATCH v4 24/31] hw/i386/sev: Add support to encrypt BIOS when
- SEV-SNP is enabled
-Date: Thu, 30 May 2024 06:16:36 -0500
-Message-ID: <20240530111643.1091816-25-pankaj.gupta@amd.com>
+Subject: [PATCH v4 28/31] hw/i386: Add support for loading BIOS using
+ guest_memfd
+Date: Thu, 30 May 2024 06:16:40 -0500
+Message-ID: <20240530111643.1091816-29-pankaj.gupta@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240530111643.1091816-1-pankaj.gupta@amd.com>
 References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
@@ -84,53 +84,53 @@ Received-SPF: None (SATLEXMB04.amd.com: pankaj.gupta@amd.com does not
  designate permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B077:EE_|DM6PR12MB4220:EE_
-X-MS-Office365-Filtering-Correlation-Id: 76b14d0e-cf15-4f66-f6b8-08dc809a063f
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B076:EE_|DM4PR12MB7502:EE_
+X-MS-Office365-Filtering-Correlation-Id: 59d19acf-2aca-4483-622d-08dc809a0b73
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230031|36860700004|376005|82310400017|1800799015; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?hqMtJJksQKakdNHX/VFJaaGq2e2NKtNt4rBNPUCRrgja//eVrQLTcO2jHIm5?=
- =?us-ascii?Q?spEwsFjd0FNTOkyImy6vOuLZjTJ9IX2E3Z5hNQa+YumYIvVHFwNu7BPww9YK?=
- =?us-ascii?Q?I0TFJtwXPLlEx/7EmgpF938SzUPjLb98bzDi44zpQu2KcPmx7GcXoJX/8CdW?=
- =?us-ascii?Q?DLQ4Y+DXICXZheIN7Ea+Lvr8VkgT40EF69mmhtLJ7YGb1GvYC6nBHvlLKCUz?=
- =?us-ascii?Q?BH+6YIk0/6ko8CH+D3n+KSLJA3M34iIs9AIDp+fIEgeGiagaltNsnvrqlXPk?=
- =?us-ascii?Q?inVYFtSUqB7zRkPLimaaWO0UK4nSNOTPhc/68J6wJMNnqba88EAOdvFXzWXy?=
- =?us-ascii?Q?vuztsiJdRrRUQxeR5gSKFQCA8ibVpn0M8rB2/4/AVlcpo2RstxcgDhV6etpo?=
- =?us-ascii?Q?74vgD1LSXsMFrITGJtXVRDeL2wGn8e4H6L5FgvomfwRKsdEoAG6MMLU0MMc/?=
- =?us-ascii?Q?989JRAdmLgdKKj1qGMdr/9otIOFAC3RnWlkDv8CjbXp2R3TsBTRKSWVEfeNJ?=
- =?us-ascii?Q?HUWkbWR51ZQ/UnXBnXLqPSf21uFPxI3jMBBZ+Gft3T9PFhbCLMHfvbmqNzQe?=
- =?us-ascii?Q?RuU8jU5IEDVsBfX3sDeR+SgD37GWCAVjJSvlCZ+NJWyuAm0T3GXdN8BrplMF?=
- =?us-ascii?Q?i7TLKe+QGFcXQPkdyLl/3gXrwUeO5UIkXs2IVAN5qQFTH/tofgP6uuFsFYJR?=
- =?us-ascii?Q?/goiU1OqfdiVL29+hgIJpWTs++zLWrvFTZgzPcbSjw4zSQOJgUbtShiqISaa?=
- =?us-ascii?Q?9snvUI6JlqiTIlssqutX9Bf2w7glcnQDrY7h6gn4hdGnf+kZ+f/cXel7Ju3Z?=
- =?us-ascii?Q?JQExxz3kTR5Z9lMVtdHybHOy1dnHST6tBnGHfrun1c8NKwjtNnOQzRNFKaP+?=
- =?us-ascii?Q?WbN9rPztq8g9zHZuKA6hacTJtNJCD9bphGt6Sm77ERxlmuhvZLGPevCbDX+3?=
- =?us-ascii?Q?izBJCL876JT0qAdgTceDYmx7AmmBtTX0u58qVwQBUbx3sgC5JpOQt0QGcySP?=
- =?us-ascii?Q?qo8StU58Mr1+ch/MFVbH0iPW494w4KhPw8x3dq1zMkAvcPvgrX+Cr1M5j/Tg?=
- =?us-ascii?Q?+BUYmAxMrk55iAbljEp+afTeQc3fcqYiwM3hyAfTFJQHFc454R26PfaZzVSf?=
- =?us-ascii?Q?Srsfl4kiOfUip9xq3kYhwepLOksnFj2ngDwz9mAz8xfZz7n+OHI4Lh+Guxjy?=
- =?us-ascii?Q?Fvb/9HjmZTtZvZTWh4l+BYMzSZtgpRQWswK96p4zQss3cP3g6V5Aoq0VCGS1?=
- =?us-ascii?Q?b1SveVoQNUWosiH+uTsGrWcx0V9oJPnKz9k/bx+5C4xP551moIu05m4s7U90?=
- =?us-ascii?Q?9S8GBMj/Esg/92casrPHw3ic5TYBbDjTX4k0l40QrMvBmibl7TW3P991Iht5?=
- =?us-ascii?Q?IIljT7g=3D?=
+ ARA:13230031|36860700004|376005|1800799015|82310400017; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?sM5jLii9Ebf4bsilYj2nRpVpogIdPW1vOgnsu32635DA1Zlie1z7SN7i6U4I?=
+ =?us-ascii?Q?wOZit1cQHdm34feyaxQe+tEftE9IuzaNTC9+TzOxX1ddocFbBitsoFgRd3a8?=
+ =?us-ascii?Q?Dq1Z3rZ72faEre6LQz669UrpA9GpD4Mn2pVUEsOURnei9T+SQOngFLT2BO6q?=
+ =?us-ascii?Q?KSmxHTdr7YSmKBkknOrSoTxWVSmi8GYMP6vFzFBkD3yAosdRRx0hTEV8QvJU?=
+ =?us-ascii?Q?xDMO4XT9UY31QzyiUAyqv7hxrzns39IzRNc+FapQ2622I0weGMCKqPCxHxJV?=
+ =?us-ascii?Q?YRhJ4NlvNZUW/ehmmfLh825qNcfd5Ya+yvYDjnwahSzxEULGfmQIhbY5Ax5p?=
+ =?us-ascii?Q?17FPyrONyzzpTgwZrqAuRPINm92EcvkBSdId7KhlcHbLigZfypRwTCBSAA1L?=
+ =?us-ascii?Q?L6m7wFmPTKdRgcQgorHcBYIHA5s8A4gcQh3dQs7Kz1mIrvCCbQC9t2T53WdX?=
+ =?us-ascii?Q?LWznV0LLNP5Ouhn6RgMhDuLVxw+FcoyXNS297zka0k5HXTmqFjQm9fdbgpEV?=
+ =?us-ascii?Q?UzSjP1jsB2H0020Qn4vAlhfEw5G8bXFkpznKskI+uHSmIzvcEXWW8raDySzO?=
+ =?us-ascii?Q?U4PgPEyXjM0Rr+H4T31/8m0cKP1uuS3rqGDEppLKaz1+tl95L+WptEanEQij?=
+ =?us-ascii?Q?jFuWGYI97N7IEYrXPo2VAP2lyvuMGYzP25BsGf4yIekP8rgHx1m2B7CcAB+m?=
+ =?us-ascii?Q?mXvaSRm/f6HiiyD8Q1NmlmgFmFwGDJbzlKAx555Rfd65D4D9+W7+DLFQiOED?=
+ =?us-ascii?Q?iGmqzxpR6t3l2w4NvOxjQCv8amLqye8LG85TQL+gt9Y5gCdHI2eUMdhxcS2h?=
+ =?us-ascii?Q?thMjvIvBwNKT8SB+hxj3PELUMVJteeAYvMKXdawkDPEZT21ZwiAMM7saJa3A?=
+ =?us-ascii?Q?If4yT1dHDSbWGiT5r/QSDCI3iOIFgRXOawx1tiHtr1SNrAeMiqEQQJhBnT7T?=
+ =?us-ascii?Q?G/cjeVtYA7zY4OKgQZ3uJ9kJ6zVwjTIkEv1f8wlxguQYCMJut4OCxvU6eW1d?=
+ =?us-ascii?Q?LQGFH1X7EfqPO27YiII7nJWioh758uFLjGeUFqtCXGx/VBqcqTbHBEOrWyDc?=
+ =?us-ascii?Q?N+64jZ4/8yniZ/a1l2/DF5zxz5MGujDZVRLv6WrPWSq4/HBDK8CtbbS17ISI?=
+ =?us-ascii?Q?52b2JnEjPQg7zU4i9/lXGx0KRGf/KmFtJF/PAonnyY+hBJtqQqllPWhh5nBc?=
+ =?us-ascii?Q?UySslhbmg9OnAhQYyDX+jqgCXLBhoeFbJD/iP7ZkCTF7sYuXpcRBg7M9BmUS?=
+ =?us-ascii?Q?wHLiksUMKzQcMSpuPhGuhLSGAfaJzBRhBdvdBNk37wlQRJ8mBn3uioJZREuu?=
+ =?us-ascii?Q?9Tj7VhCdjRZJ0oTdxKMtVDEYXW/99D/xFJ5l4CVYM6ccmvQSpQnsroqIBYpA?=
+ =?us-ascii?Q?SYpeVzQ=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(36860700004)(376005)(82310400017)(1800799015); DIR:OUT;
+ SFS:(13230031)(36860700004)(376005)(1800799015)(82310400017); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:16:59.7473 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76b14d0e-cf15-4f66-f6b8-08dc809a063f
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:17:08.4729 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 59d19acf-2aca-4483-622d-08dc809a0b73
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B077.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B076.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4220
-Received-SPF: permerror client-ip=2a01:111:f403:2415::600;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7502
+Received-SPF: permerror client-ip=2a01:111:f403:240a::609;
  envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -153,169 +153,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brijesh Singh <brijesh.singh@amd.com>
+From: Michael Roth <michael.roth@amd.com>
 
-As with SEV, an SNP guest requires that the BIOS be part of the initial
-encrypted/measured guest payload. Extend sev_encrypt_flash() to handle
-the SNP case and plumb through the GPA of the BIOS location since this
-is needed for SNP.
+When guest_memfd is enabled, the BIOS is generally part of the initial
+encrypted guest image and will be accessed as private guest memory. Add
+the necessary changes to set up the associated RAM region with a
+guest_memfd backend to allow for this.
 
-Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
+Current support centers around using -bios to load the BIOS data.
+Support for loading the BIOS via pflash requires additional enablement
+since those interfaces rely on the use of ROM memory regions which make
+use of the KVM_MEM_READONLY memslot flag, which is not supported for
+guest_memfd-backed memslots.
+
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
 ---
- hw/i386/pc_sysfw.c            | 12 +++++++-----
- hw/i386/x86-common.c          |  2 +-
- include/hw/i386/x86.h         |  2 +-
- target/i386/sev-sysemu-stub.c |  2 +-
- target/i386/sev.c             | 15 +++++++++++----
- target/i386/sev.h             |  2 +-
- 6 files changed, 22 insertions(+), 13 deletions(-)
+ hw/i386/x86-common.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 048d0919c1..00464afcb4 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -148,6 +148,8 @@ static void pc_system_flash_map(PCMachineState *pcms,
-     assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
- 
-     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-+        hwaddr gpa;
-+
-         system_flash = pcms->flash[i];
-         blk = pflash_cfi01_get_blk(system_flash);
-         if (!blk) {
-@@ -177,11 +179,11 @@ static void pc_system_flash_map(PCMachineState *pcms,
-         }
- 
-         total_size += size;
-+        gpa = 0x100000000ULL - total_size; /* where the flash is mapped */
-         qdev_prop_set_uint32(DEVICE(system_flash), "num-blocks",
-                              size / FLASH_SECTOR_SIZE);
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(system_flash), &error_fatal);
--        sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0,
--                        0x100000000ULL - total_size);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0, gpa);
- 
-         if (i == 0) {
-             flash_mem = pflash_cfi01_get_memory(system_flash);
-@@ -196,7 +198,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
-             if (sev_enabled()) {
-                 flash_ptr = memory_region_get_ram_ptr(flash_mem);
-                 flash_size = memory_region_size(flash_mem);
--                x86_firmware_configure(flash_ptr, flash_size);
-+                x86_firmware_configure(gpa, flash_ptr, flash_size);
-             }
-         }
-     }
-@@ -249,7 +251,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     pc_system_flash_cleanup_unused(pcms);
- }
- 
--void x86_firmware_configure(void *ptr, int size)
-+void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
- {
-     int ret;
- 
-@@ -270,6 +272,6 @@ void x86_firmware_configure(void *ptr, int size)
-             exit(1);
-         }
- 
--        sev_encrypt_flash(ptr, size, &error_fatal);
-+        sev_encrypt_flash(gpa, ptr, size, &error_fatal);
-     }
- }
 diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index ee9046d9a8..f41cb0a6a8 100644
+index f41cb0a6a8..059de65f36 100644
 --- a/hw/i386/x86-common.c
 +++ b/hw/i386/x86-common.c
-@@ -1013,7 +1013,7 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-          */
-         void *ptr = memory_region_get_ram_ptr(&x86ms->bios);
-         load_image_size(filename, ptr, bios_size);
--        x86_firmware_configure(ptr, bios_size);
-+        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
-     } else {
-         memory_region_set_readonly(&x86ms->bios, !isapc_ram_fw);
-         ret = rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1);
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index b006f16b8d..d43cb3908e 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -154,6 +154,6 @@ void ioapic_init_gsi(GSIState *gsi_state, Object *parent);
- DeviceState *ioapic_init_secondary(GSIState *gsi_state);
- 
- /* pc_sysfw.c */
--void x86_firmware_configure(void *ptr, int size);
-+void x86_firmware_configure(hwaddr gpa, void *ptr, int size);
- 
- #endif
-diff --git a/target/i386/sev-sysemu-stub.c b/target/i386/sev-sysemu-stub.c
-index 96e1c15cc3..6af643e3a1 100644
---- a/target/i386/sev-sysemu-stub.c
-+++ b/target/i386/sev-sysemu-stub.c
-@@ -42,7 +42,7 @@ void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
-     error_setg(errp, "SEV is not available in this QEMU");
- }
- 
--int sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
-+int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
- {
-     g_assert_not_reached();
- }
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 1a78e98751..c5c703bc8d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1522,7 +1522,7 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- }
- 
- int
--sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
-+sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
- {
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
- 
-@@ -1532,7 +1532,14 @@ sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
- 
-     /* if SEV is in update state then encrypt the data else do nothing */
-     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
--        int ret = sev_launch_update_data(SEV_GUEST(sev_common), ptr, len);
-+        int ret;
-+
-+        if (sev_snp_enabled()) {
-+            ret = snp_launch_update_data(gpa, ptr, len,
-+                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
-+        } else {
-+            ret = sev_launch_update_data(SEV_GUEST(sev_common), ptr, len);
-+        }
-         if (ret < 0) {
-             error_setg(errp, "SEV: Failed to encrypt pflash rom");
-             return ret;
-@@ -1902,8 +1909,8 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
+@@ -999,10 +999,18 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
      }
+     if (bios_size <= 0 ||
+         (bios_size % 65536) != 0) {
+-        goto bios_error;
++        if (!machine_require_guest_memfd(MACHINE(x86ms))) {
++                g_warning("%s: Unaligned BIOS size %d", __func__, bios_size);
++                goto bios_error;
++        }
++    }
++    if (machine_require_guest_memfd(MACHINE(x86ms))) {
++        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
++                                           bios_size, &error_fatal);
++    } else {
++        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
++                               bios_size, &error_fatal);
+     }
+-    memory_region_init_ram(&x86ms->bios, NULL, "pc.bios", bios_size,
+-                           &error_fatal);
+     if (sev_enabled()) {
+         /*
+          * The concept of a "reset" simply doesn't exist for
+@@ -1023,9 +1031,11 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+     }
+     g_free(filename);
  
-     if (build_kernel_loader_hashes(padded_ht, ctx, errp)) {
--        if (sev_encrypt_flash((uint8_t *)padded_ht, sizeof(*padded_ht),
--                              errp) < 0) {
-+        if (sev_encrypt_flash(area->base, (uint8_t *)padded_ht,
-+                              sizeof(*padded_ht), errp) < 0) {
-             ret = false;
-         }
-     } else {
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index cc12824dd6..858005a119 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -59,7 +59,7 @@ uint32_t sev_get_cbit_position(void);
- uint32_t sev_get_reduced_phys_bits(void);
- bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
+-    /* map the last 128KB of the BIOS in ISA space */
+-    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+-                      !isapc_ram_fw);
++    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
++        /* map the last 128KB of the BIOS in ISA space */
++        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
++                          !isapc_ram_fw);
++    }
  
--int sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp);
-+int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
- int sev_inject_launch_secret(const char *hdr, const char *secret,
-                              uint64_t gpa, Error **errp);
- 
+     /* map all the bios at the top of memory */
+     memory_region_add_subregion(rom_memory,
 -- 
 2.34.1
 
