@@ -4,68 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE97AC25B74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F5CEC27C44
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCflD-0001O1-NY; Thu, 30 May 2024 09:24:03 -0400
+	id 1sCflD-0001Ny-49; Thu, 30 May 2024 09:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCflC-0001NY-F9; Thu, 30 May 2024 09:24:02 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCflA-0000Mi-61; Thu, 30 May 2024 09:24:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717075440; x=1748611440;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=HUjT5cOPLhJldYMpPflMISWAIexyiKlMnrZHGqUtPik=;
- b=aLjJiCuSJ7CiS1V5OYLeSUldpbLYtegk4kXBDZzI+Z764IKwYO2070wP
- UMnZP6A/yRaeQqg6b5Xq0n8tNAfau2mRmC1HcQQbEeKq+NDzYG/Xg1Yt8
- IuzMj9h6asUKjiAv4/mEpvfwR5IYwoVSpTYXwSSIOQvOjEGzcGsp0mLJG
- CJBNMjnVh0u8E2riwOaVleGa+76CyeMNMa/74uSODH41Gobiv+Ha5OfNM
- kxnuI5ThuXpsQ9H8hgZ+YsNdBxMaBga54au6FHysy9EeftMfRCAJWqBOA
- yVfMdR+qqUyyyox9SvQd49W8+I+X/byeV/SORB/n86WBfBU1tNXMb11ZD A==;
-X-CSE-ConnectionGUID: ijoQTDYSS1eVDMKDbf7gzg==
-X-CSE-MsgGUID: kJaaEkKyTlmZF3anjGvA2w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="11805757"
-X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; d="scan'208";a="11805757"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 May 2024 06:23:57 -0700
-X-CSE-ConnectionGUID: egZ+TJBtRayBM2NCWUWuZA==
-X-CSE-MsgGUID: b1iGvGEbQledJiDKK9HTTA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; d="scan'208";a="35757641"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa010.jf.intel.com with ESMTP; 30 May 2024 06:23:54 -0700
-Date: Thu, 30 May 2024 21:39:18 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Zide Chen <zide.chen@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
- thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH V2 1/3] vl: Allow multiple -overcommit commands
-Message-ID: <ZliBhtmOSju79Liy@intel.com>
-References: <20240524200017.150339-1-zide.chen@intel.com>
- <20240524200017.150339-2-zide.chen@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCflB-0001NF-94
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:24:01 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCfl9-0000Mh-EL
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:24:00 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-57a1fe63a96so535444a12.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717075436; x=1717680236; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=J/MBztJN6ThOSFG8xXp37+4/Hcus86L7wVDlYwV/IH4=;
+ b=vYyiccZVfhbj0V4JgairAvKV8wV6QNyCOqFqHol//eKKkVe1bvK97k7xrj116jX1cA
+ SHxeFFJMizMpbaLuySRxZ2LSTPVFxFvMj9KVfbdRasFKJqpCnNgBpE978UOEXij9kd+W
+ idYjvp2b8IALj6NrWwXSv1KHhv63La2SZnRC8hjAR6s1z813cpqQV52eYPYbjdQpyIBq
+ P8ytD5WvU+jm3EY/QkYtttL7zuVQq9Az3b1jMKwZdWkZcfWsUsdbxdJg/sy88YVtjODu
+ UbVRgdA4FksfkgqooddlObKqVtWBtWatxNUFpmv3zXNaqMYimdY3XObudflufbmKIjru
+ n7xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717075436; x=1717680236;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J/MBztJN6ThOSFG8xXp37+4/Hcus86L7wVDlYwV/IH4=;
+ b=LQ+FXsFg+Mg8z48sAOnb8ZNbuU0h/sbD9koUXdFhy0JmnpsY6sA/QZx7Fk+XO+uh/0
+ djLbSwDB21GS8b4FF96t9fsrT8ehbAD4V2jMQ3dvr/pDkISHvW5wp6oIzxyn8BVf+Szh
+ tLHkimjxHv2P3m7kH6fgHkvxLL0mwKT5P/l9KrFZaECeQ/1Haqy6Lu2ZJ2IBg82uWxX/
+ WRTLV3TmbEr8aecSPS9DJboQ0Euv1YTpFL2Bk+ETDsKIA1y5sL5lOWkxg7wqBEX+bPcJ
+ QaHf6uvE07i4OlzHzBeHJg3jtfO3iqWTrt+CtI7ujWY8+o1FB+elnP5aSiKxXk12CzlM
+ YAdg==
+X-Gm-Message-State: AOJu0YyVvg50NYTRo7WMQcZiQERkkb7abF5cwBSoHh2MS4ddeWnXXmQr
+ 7DzglA/H0d4u9oPGpgSjQr+zLIkWcLLn3/kcoNN7x4Krdbst/YI/PpbVsolNaJRglq++pA7uuOW
+ hVzKr8aCuKgcAUA1+L5yICD8hTYpy5eSKe5hqKg==
+X-Google-Smtp-Source: AGHT+IGwPC8mGB87lwnTNW9WPMsQOb+jLpVgSC8cdd6NyN/eDCCNlsKFElcL6aX0RU2lUCYxLYhW9id6O6Jcxp6JbK4=
+X-Received: by 2002:a50:cc0c:0:b0:57a:212a:a21b with SMTP id
+ 4fb4d7f45d1cf-57a212aa2e3mr1160298a12.7.1717075435680; Thu, 30 May 2024
+ 06:23:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240524200017.150339-2-zide.chen@intel.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240526193637.459064-1-richard.henderson@linaro.org>
+ <20240526193637.459064-7-richard.henderson@linaro.org>
+In-Reply-To: <20240526193637.459064-7-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 May 2024 14:23:44 +0100
+Message-ID: <CAFEAcA-5QQjbJN=JS5MQvL9405eJRsuo1myaAXfN_7p9Lemx9g@mail.gmail.com>
+Subject: Re: [PATCH RISU v2 06/13] risugen: Add sparc64 support
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,38 +88,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 24, 2024 at 01:00:15PM -0700, Zide Chen wrote:
-> Date: Fri, 24 May 2024 13:00:15 -0700
-> From: Zide Chen <zide.chen@intel.com>
-> Subject: [PATCH V2 1/3] vl: Allow multiple -overcommit commands
-> X-Mailer: git-send-email 2.34.1
-> 
-> Both cpu-pm and mem-lock are related to system resource overcommit, but
-> they are separate from each other, in terms of how they are realized,
-> and of course, they are applied to different system resources.
-> 
-> It's tempting to use separate command lines to specify their behavior.
-> e.g., in the following example, the cpu-pm command is quietly
-> overwritten, and it's not easy to notice it without careful inspection.
-> 
->   --overcommit mem-lock=on
->   --overcommit cpu-pm=on
-> 
-> Fixes: c8c9dc42b7ca ("Remove the deprecated -realtime option")
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
+On Sun, 26 May 2024 at 20:38, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> 
-> v2:
-> 
-> Thanks to Thomas' suggestion, changed to this better approach, which
-> is more generic and can handle situations like: "enabled the option in
-> the config file, and now you'd like to disable it on the command line
-> again".
-> 
->  system/vl.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  risugen            |  10 +-
+>  risugen_common.pm  |  50 +++++-
+>  risugen_sparc64.pm | 385 +++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 443 insertions(+), 2 deletions(-)
+>  create mode 100644 risugen_sparc64.pm
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+I'm not super-enthusiastic about making running risugen now
+require an appropriate cross-toolchain for the target.
+Since almost all of what risugen is doing is "write
+these exact values to the test binary" we don't really
+need an assembler to do that.
 
+At any rate, an explanation in the commit message of the
+advantages of doing it this way would be helpful in
+deciding, I think.
+
+> +sub open_asm($)
+> +{
+> +    my ($basename) = @_;
+> +    my $fname = $basename . ".s";
+> +    open(ASM, ">", $fname) or die "can't open $fname: $!";
+> +    select ASM;
+
+I think that using Perl select like this is liable to be
+rather confusing, because it has "action at a distance"
+effects on every other print statement. I would prefer it
+if we passed in the filehandle to the print statements
+explicitly. (We can use a global if handing the filehandle
+around to all the functions is annoying.)
+
+> +}
+> +
+
+> +sub gen_one_insn($)
+
+(One day we should see if we can move most of gen_one_insn and
+write_test_code to common code, because an awful lot of these
+functions is identical across architectures. But that day
+doesn't need to be today :-))
+
+-- PMM
 
