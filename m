@@ -4,108 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B68C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F2B8C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCZvc-0000pf-9K; Thu, 30 May 2024 03:10:24 -0400
+	id 1sCa1R-00033s-34; Thu, 30 May 2024 03:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sCZvW-0000oV-Kf; Thu, 30 May 2024 03:10:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sCZvT-00048p-DE; Thu, 30 May 2024 03:10:17 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44U6YS9R009688; Thu, 30 May 2024 07:10:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc :
- content-transfer-encoding : content-type : date : from : in-reply-to :
- message-id : mime-version : references : subject : to; s=pp1;
- bh=Fn/s79XWa+s8/h5/8r8DOhGUZZQ6a18PMbVPAMPLJ3Y=;
- b=bP5jxDTSWbmM4j8GNdXBoGpDvkfA5VJYCTlzLO/rU3Wl8c9c5Zk/ehP6xNfPoRtwmrug
- 38Oz7sjO5z9I7RGtlBB540npkR1CQm2N72Own5AF/+GIqX5DbEGWoSh4F9f/kEC+zDy7
- aL15A3wmZbJxW/I4a5VmT+yLYTdc9pJIwY9s5OpGp4qAqd3AXw3xke0z/KpwoJnPUyab
- RLobsVIzwfZBn+Q12Vn/Y64LCSpypfckBIueR8oN3kVqniPDmWhfbjh+SlIlInSL3IH6
- PV4RxPjxXH55GK79S6M4w3LtfHUejGv3SEVHehd5GH12ogWqbiZ/FDyxH/mJ9kagipyo RA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yejnhga9x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 May 2024 07:10:02 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44U7A2HC001007;
- Thu, 30 May 2024 07:10:02 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yejnhga7x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 May 2024 07:10:01 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44U4nwAC002437; Thu, 30 May 2024 07:07:07 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ydpb0rhr8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 May 2024 07:07:07 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44U773A727329086
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 May 2024 07:07:06 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C2AA58059;
- Thu, 30 May 2024 07:07:03 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 99F6A5805D;
- Thu, 30 May 2024 07:07:00 +0000 (GMT)
-Received: from [9.109.242.165] (unknown [9.109.242.165])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 May 2024 07:07:00 +0000 (GMT)
-Message-ID: <d584063b-a30e-46f0-a69e-4737c8d6d46a@linux.ibm.com>
-Date: Thu, 30 May 2024 12:36:59 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/11] ppc/pseries: Add Power11 cpu type
-To: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa1N-000316-TZ
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:16:22 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa1K-00050S-AL
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:16:21 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-357d533b744so568366f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717053376; x=1717658176; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=87ltmpgZOJK0YfB8d87dTNrYg88x4T5S2MlOeagZ5vs=;
+ b=dMV4saXwjCmP1Tr+2U9mKurc2d1L+VLUO13fJ027av+5hjEOozHb1BAte5mIpFxYGe
+ R/qeoLBOItb+U+Y8svXkib/d33NyTGz5Yt5x0Yqtd0srabHp4EeahDWQQIA/L86wFe2y
+ DZmKMLYOAsNWi0Yt0/xsiFHT757jWc+7CcGKJCSah6uI/aylowRhpbU0vBG5TbSn5nGS
+ iZtGONGDQ3H8PWXr0hEOUBFofCIvLw87Nj5+5SG71snWd+qj5Tvoq+Ku4BepwiFaeErR
+ OvD0FGHJxE4mEP+4MAWVbJejEvotfUpecxLG3ivn0eoq3Okp99n9/6i0DAB0wUJks60f
+ BFVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717053376; x=1717658176;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=87ltmpgZOJK0YfB8d87dTNrYg88x4T5S2MlOeagZ5vs=;
+ b=eiK56yX0o8XOeCcath/8hJK+yJLu6Cy44EchoDsbjCOIcoBfZbTxZiQxJgmwbd24cv
+ eETMgvM3UZ0v+EUOjZCUr1DoWHXUnub2vUmAttXHNKNqt0BW/EmpI493g97OLWq+3SAx
+ 0j3D5Lbj08GflfTuko2Ebir8LAq60OJ4uX+VtDp4F/JRFWtkrcjzPXCdlqfkIatcDu8O
+ TO5hLPmbFaO+xn4MS1AW9UpI4FcGtOfMI7thcbOr78qopvebRaPhxuVmbzBYprGYbE4z
+ VI8Eo7fO6Jwf0UIy9IMN6zbhI+VDosOjeOTMCj8eJBtbUAuX0FYUmPTDq6zRQTRSCwP4
+ lIMw==
+X-Gm-Message-State: AOJu0YwBYw0/lcxXjNXwif9I9DpDaoLE1tVf74N4+olNINz6cb9Lf4H0
+ KRLbYXji9gxBHOjKds9Cztz+uxObiT6sQBHsGZwbKYOgQf3I6z+36ECsYo09b4sF5ZYEb/baYBq
+ r
+X-Google-Smtp-Source: AGHT+IEI/TjCtdPaqb71PcCD1oCeXvTBiMT9UEVGc7g6211Sa7JwkHh+v9gJlCfkPuKdNOSJlg2rIw==
+X-Received: by 2002:a5d:50c2:0:b0:357:73ca:9c00 with SMTP id
+ ffacd0b85a97d-35dc009a619mr770445f8f.32.1717053376213; 
+ Thu, 30 May 2024 00:16:16 -0700 (PDT)
+Received: from m1x-phil.lan (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
+ [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35579d7db5esm16835193f8f.15.2024.05.30.00.15.59
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 30 May 2024 00:16:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  David Gibson <david@gibson.dropbear.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>, devel@lists.libvirt.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Mads Ynddal <mads@ynddal.dk>,
+ Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
+ Greg Kurz <groug@kaod.org>, Yanan Wang <wangyanan55@huawei.com>,
+ qemu-ppc@nongnu.org, Eric Blake <eblake@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-References: <20240528070515.117160-1-adityag@linux.ibm.com>
- <20240528070515.117160-3-adityag@linux.ibm.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240528070515.117160-3-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH 0/2] qapi: Remove deprecated events
+Date: Thu, 30 May 2024 09:15:46 +0200
+Message-ID: <20240530071548.20074-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VWwmW1Eb2Fe50FZ6YqbIlGEEO74enbjw
-X-Proofpoint-ORIG-GUID: vhfuWYaPWEG10lxpJ9xXbW7MRHZ4pr3P
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-30_04,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 bulkscore=0 phishscore=0 mlxscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 lowpriorityscore=0
- spamscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2405010000 definitions=main-2405300051
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,76 +103,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Remove MEM_UNPLUG_ERROR and 'vcpu' field in TRACE events,
+all deprecated since long enough.
 
+Philippe Mathieu-Daudé (2):
+  hw/acpi: Remove the deprecated QAPI MEM_UNPLUG_ERROR event
+  trace: Remove deprecated 'vcpu' field from QMP trace events
 
-On 5/28/24 12:35, Aditya Gupta wrote:
-> Add sPAPR CPU Core definition for Power11
-> 
-> Cc: David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
-> Cc: Cédric Le Goater <clg@kaod.org>
-> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
-> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   docs/system/ppc/pseries.rst | 6 +++---
->   hw/ppc/spapr_cpu_core.c     | 1 +
->   2 files changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
-> index a876d897b6e4..3277564b34c2 100644
-> --- a/docs/system/ppc/pseries.rst
-> +++ b/docs/system/ppc/pseries.rst
-> @@ -15,9 +15,9 @@ Supported devices
->   =================
->   
->    * Multi processor support for many Power processors generations: POWER7,
-> -   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
-> -   but its state is unknown.
-> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
-> +   POWER7+, POWER8, POWER8NVL, POWER9, Power10 and Power11. Support for POWER5+
-> +   exists, but its state is unknown.
-> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9, Power10, Power11)
+ docs/about/deprecated.rst       | 16 ----------------
+ docs/about/removed-features.rst | 15 +++++++++++++++
+ qapi/machine.json               | 28 ----------------------------
+ qapi/trace.json                 | 27 +++------------------------
+ hw/acpi/memory_hotplug.c        |  8 --------
+ hw/ppc/spapr.c                  | 11 +----------
+ trace/qmp.c                     |  2 --
+ trace/trace-hmp-cmds.c          |  4 ++--
+ 8 files changed, 21 insertions(+), 90 deletions(-)
 
-I think it would look more cleaner to rephrase as below:
+-- 
+2.41.0
 
-  * Multi processor support for many Power processors generations:
-    - POWER7, POWER7+
-    - POWER8, POWER8NVL
-    - POWER9
-    - Power10
-    - Power11.
-    - Support for POWER5+ exists, but its state is unknown.
-  * Interrupt Controller
-     - XICS (POWER8)
-     - XIVE (Supported by below:)
-         - POWER9
-         - Power10
-         - Power11
-
-So, that every next platform just need to add one line for itself.
-
-With that,
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-Thanks
-Harsh
->    * vPHB PCIe Host bridge.
->    * vscsi and vnet devices, compatible with the same devices available on a
->      PowerVM hypervisor with VIOS managing LPARs.
-> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-> index e7c9edd033c8..62416b7e0a7e 100644
-> --- a/hw/ppc/spapr_cpu_core.c
-> +++ b/hw/ppc/spapr_cpu_core.c
-> @@ -401,6 +401,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
->       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
-> +    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
->   #ifdef CONFIG_KVM
->       DEFINE_SPAPR_CPU_CORE_TYPE("host"),
->   #endif
 
