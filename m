@@ -4,97 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E381C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455B5C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 08:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCaec-0004uh-2L; Thu, 30 May 2024 03:56:54 -0400
+	id 1sCaqA-00008a-QD; Thu, 30 May 2024 04:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sCaea-0004uJ-Ix
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:56:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
+ id 1sCaq8-000078-S1; Thu, 30 May 2024 04:08:48 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sCaeY-0005YV-Lj
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:56:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717055809;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=X39WmoL0Dz/4uCVVfpdPegDaHcEpyitnZaV4xhRkJPU=;
- b=AI1IcZ61SdFB6uvGHejdOmOuc1Z6yBX/8LjVrBJzUUVjbD/Fb1hmIYu1YRMOXE7g4ypkUG
- tmvr+bBKgp+Off+bH46Ef67HV8TV+aOgkIjcudPkOBe0QtwE0OokZ7wZFPC9MWWmSWpbt+
- nEytTNwt5iw86BZxbGWXFTzLoBneVQk=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-310-8_Z73csRPTG7KOcJWOmcVw-1; Thu, 30 May 2024 03:56:48 -0400
-X-MC-Unique: 8_Z73csRPTG7KOcJWOmcVw-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43fb05b2932so5922591cf.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:56:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717055807; x=1717660607;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X39WmoL0Dz/4uCVVfpdPegDaHcEpyitnZaV4xhRkJPU=;
- b=KX6a7pi/z9A+R01Si3Iq6EgrWwXRipOsOA2Us34fUlNHRdIH196RbmtJ3ArCOXNHIS
- zTihKpz4xXeumcDgbtxq4mIajkynq4KzEhF6Yq058cz2KUKNMOaTaVjOXRMA5t258K0p
- dGHPKhVosM6lxFqyvj8YPfg0czhU92sySVp0m4VKR+JX7AuCtlW1xQ/gbk6kAbiGl92d
- FKZgBbSzi1BcImFXkLXaVvIoRwCLr+2GSqr/FD8FDWV1QxeXhSaXc96cdqBqKDH/jmfL
- cyFvWz+iNVBz2Vi9LKZ4aoRjmBSR4oOMkCuAAMVJU4M2Lpnt9xlgY7p8gXVLko7NBOUl
- IOBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxH+E8ehp6mXR2YcnFbmClj/z7AF3A5NbLYB+CWA9Ojr8hMEbj13gNrrsxLO0Qst/VBiZsfvWRzbbbRy4naVjC0a2hPGM=
-X-Gm-Message-State: AOJu0Yzsi8SKUkhGURpFktf58Ti0Jgl92U6M+T2ikfyHNvlFUTCBHszQ
- BmzDUxjCvJzskST/fSkK2xipUmmajfsc+oNWNZFg6/86gsPNbahaJToZxxNC41zOo7IFpxTz1LC
- ef86MBjNKB/RlEjR4T3x8/DfherEJjxaGsAqL5aDiImuUrb6ZU6fa
-X-Received: by 2002:a05:622a:48e:b0:43a:ed9c:36f3 with SMTP id
- d75a77b69052e-43fe931d3d4mr16249231cf.42.1717055807465; 
- Thu, 30 May 2024 00:56:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqF5sfn24xV7uxfXLqXuer8GXUCWTZv4Z461lUtI2xBgCV8tgB/QImxFV38O9Acm/47RFzkg==
-X-Received: by 2002:a05:622a:48e:b0:43a:ed9c:36f3 with SMTP id
- d75a77b69052e-43fe931d3d4mr16249121cf.42.1717055806989; 
- Thu, 30 May 2024 00:56:46 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-109.retail.telecomitalia.it.
- [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43fe3772080sm14911561cf.90.2024.05.30.00.56.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 00:56:46 -0700 (PDT)
-Date: Thu, 30 May 2024 09:56:41 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Halil Pasic <pasic@linux.ibm.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
- Marc Hartmayer <mhartmay@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Boris Fiuczynski <fiuczy@linux.ibm.com>
-Subject: Re: [PATCH 1/1] vhost-vsock: add VIRTIO_F_RING_PACKED to feaure_bits
-Message-ID: <22qkoy5dtmd2hrsrybc4mpbso5ve3ijg7eguy5qvrik3vvtwil@rhl2znimtl4y>
-References: <20240429113334.2454197-1-pasic@linux.ibm.com>
- <ps5dukcjk6yh3an3hlkynr227r7kcln7b5dxgwope62avz5ceo@decy6vkuu56j>
- <20240527132710.4a7c372f.pasic@linux.ibm.com>
- <glq3neyd4vyzu4wgdrlq2a2ws7h4tn35dg2xaw4klc73zfj25k@pwotfsysvgqr>
- <20240529144928.182b34b1.pasic@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
+ id 1sCaq6-0007ED-0T; Thu, 30 May 2024 04:08:48 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Vqf5g5RG2z4x0K;
+ Thu, 30 May 2024 18:08:39 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Vqf5Z2KlRz4wyl;
+ Thu, 30 May 2024 18:08:31 +1000 (AEST)
+Message-ID: <39d5e653-da77-40e2-9582-9191f83d8c7f@kaod.org>
+Date: Thu, 30 May 2024 10:08:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20240529144928.182b34b1.pasic@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 14/16] aspeed/soc: fix incorrect dram size for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-15-jamin_lin@aspeedtech.com>
+ <60541d4f-5829-495c-86fb-4fbf82cf98c8@kaod.org>
+ <SI2PR06MB50415DFEDC7D9F091ED36ABAFCF32@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB50415DFEDC7D9F091ED36ABAFCF32@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Otnh=NB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,63 +76,316 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 02:49:28PM GMT, Halil Pasic wrote:
->On Tue, 28 May 2024 17:32:26 +0200
->Stefano Garzarella <sgarzare@redhat.com> wrote:
->
->> >1) The uses is explicitly asking for a vhost device and giving the user
->> >a non vhost device is not an option.
+On 5/30/24 09:42, Jamin Lin wrote:
+> Hi Cedric,
+>> From: Cédric Le Goater <clg@kaod.org>>
+>> Hello Jamin
 >>
->> I didn't get this point :-( can you elaborate?
->
->I was thinking along the lines: QEMU gets told what devices to
->provision, and that includes things like what virtio features,
->and what kind of a backend.
->
->In this example, the default for vsock-vhost is no VIRTIO_F_RING_PACKED,
->but if we tell QEMU to create a vsock-vhost device with the feature
->VIRTIO_F_RING_PACKED, things go south in a not nice way.
->
->Given that vhost not supporting VIRTIO_F_RING_PACKED as of today is a
->fact of life we must accept, there are multiple ways how such a situation
->can be handled.
->
->For instance vhost-net is handling this by the device not offering the
->VIRTIO_F_RING_PACKED feature. This is at least what I think I have
->observed, but I would not mind somebody confirming it. But for the sake
->of the argument, let us look at other options.
->
->The straightforward one would be to not realize the device, because we
->can't provide what we have been asked to provide. And this actually
->makes me think about migration! What would happen, were we to
->eventually introduce, packed to vhost and vhost net, and then attempt to
->migrate between a host that has this new feature and host that has not. I
->guess things would pretty much blow up in a very unpleasant way!
+>> On 5/27/24 10:02, Jamin Lin wrote:
+>>> AST2700 dram size calculation is not back compatible AST2600.
+>>> According to the DDR capacity hardware behavior, if users write the
+>>> data to address which is beyond the ram size, it would write the data
+>>> to address 0.
+>>> For example:
+>>> a. sdram base address "0x4 00000000"
+>>> b. sdram size is 1 GiB
+>>> The available address range is from "0x4 00000000" to "0x4 40000000".
+>>> If users write 0xdeadbeef to address "0x6 00000000", the value of DRAM
+>>> address 0 (base address 0x4 00000000) should be 0xdeadbeef.
+>>>
+>>> Add aspeed_soc_ast2700_dram_init to calculate the dram size and add
+>>> memory I/O whose address range is from max_ram_size - ram_size to
+>>> max_ram_size and its read/write handler to emulate DDR capacity hardware
+>> behavior.
+>>>
+>>> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>> ---
+>>>    hw/arm/aspeed_ast27x0.c     | 94
+>> ++++++++++++++++++++++++++++++++++++-
+>>>    include/hw/arm/aspeed_soc.h |  1 +
+>>>    2 files changed, 94 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c index
+>>> a3a03fc1ca..19380087fa 100644
+>>> --- a/hw/arm/aspeed_ast27x0.c
+>>> +++ b/hw/arm/aspeed_ast27x0.c
+>>> @@ -20,6 +20,7 @@
+>>>    #include "sysemu/sysemu.h"
+>>>    #include "hw/intc/arm_gicv3.h"
+>>>    #include "qapi/qmp/qlist.h"
+>>> +#include "qemu/log.h"
+>>>
+>>>    static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>>>        [ASPEED_DEV_SPI_BOOT]  =  0x400000000, @@ -191,6 +192,97
+>> @@
+>>> static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
+>>>        return qdev_get_gpio_in(a->intc.gic, sc->irqmap[dev]);
+>>>    }
+>>>
+>>> +static uint64_t aspeed_ram_capacity_read(void *opaque, hwaddr addr,
+>>> +                                                    unsigned
+>> int
+>>> +size) {
+>>> +    qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                  "%s: read @%" PRIx64 " out of ram size\n",
+>>> +                   __func__, addr);
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static void aspeed_ram_capacity_write(void *opaque, hwaddr addr,
+>> uint64_t data,
+>>> +                                                unsigned int size)
+>> {
+>>> +    AspeedSoCState *s = ASPEED_SOC(opaque);
+>>> +    uint32_t test_pattern = 0xdeadbeef;
+>>> +    bool invalid_pattern = true;
+>>> +    uint32_t *ram_ptr;
+>>> +    int sz;
+>>> +
+>>> +    ram_ptr = memory_region_get_ram_ptr(s->dram_mr);
+>>> +
+>>> +   /*
+>>> +    * Emulate ddr capacity hardware behavior.
+>>> +    * If writes the test_pattern to address which is beyond the ram size,
+>>> +    * it would write the test_pattern to address 0.
+>>> +    */
+>>> +    for (sz = 4; sz > 0 ; sz--) {
+>>> +        test_pattern = (test_pattern << 4) + sz;
+>>> +        if (data == test_pattern) {
+>>> +            ram_ptr[0] = test_pattern;
+>>> +            invalid_pattern = false;
+>>> +            break;
+>>> +        }
+>>> +    }
+>>> +
+>>> +    if (invalid_pattern) {
+>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                      "%s: write invalid pattern @%" PRIx64
+>>> +                      " to addr @%" HWADDR_PRIx "]\n",
+>>> +                      __func__, data, addr);
+>>> +    }
+>>> +}
+>>
+>>
+>> I would simplify with write transaction on the DRAM memory region of the
+>> SoC.
+>>
+>> For that, initialize a 'dram_as' on top of 'dram_mr' in
+>> aspeed_soc_ast2700_dram_init():
+>>
+>>      address_space_init(&s->dram_as, s->dram_mr, "dram");
+>>
+>> Then, in aspeed_ram_capacity_write(), add :
+>>
+>>     address_space_write(&s->dram_as, addr % ram_size,
+>> MEMTXATTRS_UNSPECIFIED,
+>>                                    &data, size);
+>>
+>> and check returned error.
+>>
+>> It should be enough to detect the RAM size from FW.
+>>
+>>
+>> Thanks,
+>>
+>> C.
+>>
+> Thanks for your suggestion and review.
+> I changed to use address space APIs to write DRAM memory region(s->dram_mr).
+> I have a question about aspeed_ram_capacity_write function implementation.
+> Could you tell me which solution you prefer? Do you want to use solution 1?
 
-Yes, migration with vhost devices implies that the destination host 
-supports at least the same features as the source host. We should 
-consider how migration between 2 QEMUs and the destination doesn't 
-support a required feature, I guess migration can't happen or the device 
-has to be removed and then re-added without that feature.
-
->
->Then for some devices, at least in theory, it might be possible to
->abandon not the feature but the backend. Along the lines we were asked to
->provide the feature X with backend Y but since backend Y does not
->support that feature and backed Z does, we will determistically go
->with backend Z. But IMHO this is a purely theoretical consideration, and
->we shall not go this way.
-
-Yep, I agree!
-
->
->In any case if we are asked to provide with properties such that we
->can't actually do that, something has to go out of the window: either
->some of the properties, or the entire device.
-
-I see.
+I prefer solution 1 because no assumption is made on what software does.
+It simply implements the wraparound HW does on RAM accesses.
 
 Thanks,
-Stefano
+
+C.
+
+
+
+> Thanks-Jamin
+> 
+> Solution 1:
+> static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>                                                  unsigned int size)
+> {
+>      AspeedSoCState *s = ASPEED_SOC(opaque);
+>      ram_addr_t ram_size;
+>      MemTxResult result;
+> 
+>      ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>                                          &error_abort);
+> 
+>      /*
+>       * Emulate ddr capacity hardware behavior.
+>       * If writes the data to the address which is beyond the ram size,
+>       * it would write the data to the "address % ram_size".
+>       */
+>      result = address_space_write(&s->dram_as, addr % ram_size,
+>                                   MEMTXATTRS_UNSPECIFIED, &data, 4);
+>      if (result != MEMTX_OK) {
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "%s: DRAM write failed, addr:0x%" HWADDR_PRIx
+>                        ", data :0x%" PRIx64  "\n",
+>                        __func__, addr % ram_size, data);
+>      }
+> }
+> We don't care the test pattern. If users write the data to the invalid address, the date will be written into the DRAM memory region at "addr % dram_size".
+> Ex: dram size is 1G and the available address range is from "0x4 00000000" to "0x4 3FFFFFFF"
+> 
+> Users write data(0x12345678) at invalid address "0x5 00000000" and the data would be written at address "0x4 00000000"
+> => md 400000000 1
+> 400000000: dbeef432
+> => mw 500000000 12345678
+> => md 400000000 1
+> 400000000: 12345678
+> 
+> Solution 2:
+> static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>                                                  unsigned int size)
+> {
+>      AspeedSoCState *s = ASPEED_SOC(opaque);
+>      uint32_t test_pattern = 0xdeadbeef;
+>      bool invalid_pattern = true;
+>      ram_addr_t ram_size;
+>      MemTxResult result;
+>      int sz;
+> 
+>      ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>                                          &error_abort);
+> 
+>      /*
+>       * Emulate ddr capacity hardware behavior.
+>       * If writes the test_pattern to the address which is beyond the ram size,
+>       * it would write the test_pattern to the "address % ram_size".
+>       */
+>      for (sz = 4; sz > 0 ; sz--) {
+>          test_pattern = (test_pattern << 4) + sz;
+>          if (data == test_pattern) {
+>              result = address_space_write(&s->dram_as, addr % ram_size,
+>                                           MEMTXATTRS_UNSPECIFIED, &data, 4);
+>              if (result != MEMTX_OK) {
+>                  qemu_log_mask(LOG_GUEST_ERROR,
+>                                "%s: DRAM write failed, pattern:0x%" PRIx64
+>                                ", addr:0x%" HWADDR_PRIx "\n",
+>                                __func__, data, addr % ram_size);
+>                  return;
+>              }
+>              invalid_pattern = false;
+>              break;
+>          }
+>      }
+> 
+>      if (invalid_pattern) {
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "%s: DRAM write invalid pattern:0x%" PRIx64
+>                        ", addr:0x%" HWADDR_PRIx "\n",
+>                        __func__, data, addr);
+>      }
+> }
+> It check test patterns. If users write the invalid test pattern to the invalid address, the date will NOT be written into the DRAM memory region at "addr % dram_size".
+> Ex: dram size is 1G and the available address range is from "0x4 00000000" to "0x4 3FFFFFFF"
+> 
+> Users write invalid test pattern (0x12345678) at invalid address "0x5 00000000" and the data would not be written at address "0x4 00000000"
+> 
+> Invalid test pattern
+> => md 400000000 1
+> 400000000: dbeef432
+> => mw 500000000 12345678
+> => md 400000000 1
+> 400000000: dbeef432
+> 
+> Only valid pattern would be written at address "0x4 00000000"
+> Pattern --> (0xdeadbeef << 4) + 4
+> => md 400000000 1
+> 400000000: dbeef432
+> => mw 500000000 deadbeef4
+> => md 400000000 1
+> 400000000: eadbeef4
+>                          
+>>
+>>
+>>
+>>> +static const MemoryRegionOps aspeed_ram_capacity_ops = {
+>>> +    .read = aspeed_ram_capacity_read,
+>>> +    .write = aspeed_ram_capacity_write,
+>>> +    .endianness = DEVICE_LITTLE_ENDIAN,
+>>> +    .valid = {
+>>> +        .min_access_size = 1,
+>>> +        .max_access_size = 8,
+>>> +    },
+>>> +};
+>>> +
+>>> +/*
+>>> + * SDMC should be realized first to get correct RAM size and max size
+>>> + * values
+>>> + */
+>>> +static bool aspeed_soc_ast2700_dram_init(DeviceState *dev, Error
+>>> +**errp) {
+>>> +    ram_addr_t ram_size, max_ram_size;
+>>> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+>>> +    AspeedSoCState *s = ASPEED_SOC(dev);
+>>> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+>>> +
+>>> +    ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>>> +                                        &error_abort);
+>>> +    max_ram_size = object_property_get_uint(OBJECT(&s->sdmc),
+>> "max-ram-size",
+>>> +                                            &error_abort);
+>>> +
+>>> +    memory_region_init(&s->dram_container, OBJECT(s), "ram-container",
+>>> +                       ram_size);
+>>> +    memory_region_add_subregion(&s->dram_container, 0, s->dram_mr);
+>>> +
+>>> +    /*
+>>> +     * Add a memory region beyond the RAM region to emulate
+>>> +     * ddr capacity hardware behavior.
+>>> +     */
+>>> +    if (ram_size < max_ram_size) {
+>>> +        memory_region_init_io(&a->dram_empty, OBJECT(s),
+>>> +                              &aspeed_ram_capacity_ops, s,
+>>> +                              "ram-empty", max_ram_size -
+>> ram_size);
+>>> +
+>>> +        memory_region_add_subregion(s->memory,
+>>> +
+>> sc->memmap[ASPEED_DEV_SDRAM] + ram_size,
+>>> +                                    &a->dram_empty);
+>>> +    }
+>>> +
+>>> +    memory_region_add_subregion(s->memory,
+>>> +                      sc->memmap[ASPEED_DEV_SDRAM],
+>> &s->dram_container);
+>>> +    return true;
+>>> +}
+>>> +
+>>>    static void aspeed_soc_ast2700_init(Object *obj)
+>>>    {
+>>>        Aspeed27x0SoCState *a = ASPEED27X0_SOC(obj); @@ -461,7 +553,7
+>> @@
+>>> static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>>>                        sc->memmap[ASPEED_DEV_SDMC]);
+>>>
+>>>        /* RAM */
+>>> -    if (!aspeed_soc_dram_init(s, errp)) {
+>>> +    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
+>>>            return;
+>>>        }
+>>>
+>>> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+>>> index 9f177b6037..9dbf48f873 100644
+>>> --- a/include/hw/arm/aspeed_soc.h
+>>> +++ b/include/hw/arm/aspeed_soc.h
+>>> @@ -127,6 +127,7 @@ struct Aspeed27x0SoCState {
+>>>
+>>>        ARMCPU cpu[ASPEED_CPUS_NUM];
+>>>        AspeedINTCState intc;
+>>> +    MemoryRegion dram_empty;
+>>>    };
+>>>
+>>>    #define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
+> 
 
 
