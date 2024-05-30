@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE47DC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 08:33:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B935C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 08:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCbDN-0001U3-7C; Thu, 30 May 2024 04:32:49 -0400
+	id 1sCbDk-0002Gl-EF; Thu, 30 May 2024 04:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCbDJ-0001SU-Sj; Thu, 30 May 2024 04:32:46 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sCbDi-0002Dk-PZ
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 04:33:10 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCbDF-0003oX-3a; Thu, 30 May 2024 04:32:43 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1f44b5d0c50so5423985ad.2; 
- Thu, 30 May 2024 01:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sCbDg-0003vU-Ol
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 04:33:10 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-57863a8f4b2so661606a12.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 01:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717057959; x=1717662759; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hNoIougyFXeHrf4PDfXx6RJWj34/924phvj8XNYt5tE=;
- b=gEdeqlYPbxL9nw7wKChL64j/3z2pfETthEjHXdyOQ0oJahW3+HI7xVLbctPqlaqr+V
- +myuZetZYstWM6xr0zw88b+2qBBVj4eMJ414DHYW3jVJYF4xcgBqb3MBt47Z4cK6mt8O
- D9PhqMYCyN5YOwLbD84g3miAZR0EckLSPOUJ9s4eseFjXj/6KF6YfzFA60SwlWJQqryP
- VFv4cyxjC3naz72luvAos7GmiuB6njT4LZZs0AMDUbFfoBDlD2kD0CXNiZE+JwJOyABw
- uepAr6oXt++HMqGc3YWOKU0mh0ww7URztrC3ivyDfLRYiT6VFCGAaj+WZFUJC4W7rKQ1
- njPQ==
+ d=linaro.org; s=google; t=1717057987; x=1717662787; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=BR0tSkJOMvOdmP7ujTpSxtn2cbluB1WhcFJ51DyKmjM=;
+ b=HOrwK6rXi6D6jKzT8rWJew+3B69PWdsiPfJu5a//NlIqbjDVrH3jbj8l48djfvnTK4
+ Bh784K648jAZyFaW9DQ9eM4krKOVxlEOTjOnpaSMd+GNt577m73hpb6r/2wkyPEW6b9p
+ isxsg4uxRZY9BITgLTNq7lCesI1KZsrVnS3Ysrd3sh8AZtzby9CczCH4Y66y4CBS+0pK
+ ithWwwCpFOlpNdbjDnEmyFwfAde50p/T1xYzfkPm5HcrlWvesRgwdN8XTxfSEBvN82zb
+ I2l2rFNdqLiPGMSamd+fcJBfPxEOE+fryVA/0Rv+yhcj9uwjYR2vk6mBxSG7qzt163ly
+ AqQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717057959; x=1717662759;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hNoIougyFXeHrf4PDfXx6RJWj34/924phvj8XNYt5tE=;
- b=suoyam8AV9QKwWLfAouoXFvXqHZ+axb6UPCxbNDwntlg/Bz9ZczDEG7OF/QQUJkpb9
- 1v5mpw0zA74gBq2Ch4ysmyMbM0XFWfPo1R6KJxzYXnI9YxiY2pZt08qul6dCzaAIZtMN
- Nd4Cpx5xbq3UDdceXPcdLRCHmjoJ6oWeYwBJ3U0SA/26xrKfQK9kaNbLlC60NISgtWg1
- SC3BCX4OxWwRpfIA5tAsvCZnQjmD62UFIFlyVYpa7cjwlshO88yknS2nxw87hGZfxtDi
- RFS3HkTAU2vXAA2IFCUU5JUYzfTFnOwP0brjDOAliCLFHggSIhrNfjUFjOu4wF7fXis3
- bkJQ==
+ d=1e100.net; s=20230601; t=1717057987; x=1717662787;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BR0tSkJOMvOdmP7ujTpSxtn2cbluB1WhcFJ51DyKmjM=;
+ b=tSNYJC6liPypxn1pZMrNYGny67w4peIitI7Tus22i7Axzia/MV199CL8SQcMV2Ozn/
+ tVIUYzP0eaRSimgPdC1mm/I6+t78ubuk+wll+9aHRsCEkmKJHWTmLP8pNyz8p/cSxMkr
+ iT+EgxBk+2e0aGuupMfnNIj9ShWp8gGLt4IvQUHCYjfmuEVLKy7GyvgFsGL1ZPx1tWN9
+ j8od2AQaRjeQhcpniagHzQCSEWXa+I3SFnarQsG5CxZWx/V2X6PQ+7XmwCz6EDf23QA/
+ /saIcnHMOgRcHTjmMHrJ57TWAp1yhJyTXiskhLBEl92hKa6OmetCX+o5APDQua846Gu6
+ I80w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWT+Qq6nXSKHlpqt3V+7/oCa6m25o7MkVoDPSuqn22tPBRK6IEXBUCDzAdhgggL5h7k58jel0LXwn58MORycQn4B+Qs6tZQPm9rFM1WST1auHZpYgg2fRk9ECM=
-X-Gm-Message-State: AOJu0Yw3aSc652085a6hqr7O+BhG7k8enXQ9cIzfkrMmLTZjStwGwSVN
- pzxi60Sb7F4SK0G9Qek6g6xrkUy7Ljhao3NmcYZEMT8E9e0t58gJ
-X-Google-Smtp-Source: AGHT+IF1F+OyHsdTELJZLyYAFPtz2VONPLp9UOQatbIkcRLeJsYn881G4WCDN/TY8thO8SQxHsfkGw==
-X-Received: by 2002:a17:903:41c4:b0:1f3:dfe:3373 with SMTP id
- d9443c01a7336-1f6192f23e0mr15996235ad.7.1717057958511; 
- Thu, 30 May 2024 01:32:38 -0700 (PDT)
-Received: from localhost ([1.146.118.54]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f4befa89dbsm52878425ad.275.2024.05.30.01.32.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 May 2024 01:32:38 -0700 (PDT)
-Mime-Version: 1.0
+ AJvYcCXpVj1LWlm28lb4FWWIAyIpvIX0GcSlouySGD//IqRSrvgL0V+vhlBYrOm86nH5VRSkcXhDLsctRFEqH2i0Nhh9Xao/TDI=
+X-Gm-Message-State: AOJu0YyaERBsZwe8YijUQui/CG0BjtM/jO2guCCbvPdrrrcCj497d9V7
+ NUAUUMh8h2jm35hnWotCA3+6s99y2ebZx9amSHHqaAl8RLNgfllsWV7ob2TQA8w=
+X-Google-Smtp-Source: AGHT+IFJ4ZmRLxZi6nW7CZ1TH58Jx7/0HYifdWDswszkMbr43Si84j2c/YIXcyjVsUmh+Fe3nc+PgQ==
+X-Received: by 2002:a05:6402:1e87:b0:578:6832:8c38 with SMTP id
+ 4fb4d7f45d1cf-57a177fa02bmr805926a12.24.1717057986763; 
+ Thu, 30 May 2024 01:33:06 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57852339fc4sm9436064a12.15.2024.05.30.01.33.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 May 2024 01:33:06 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AB6665F77F;
+ Thu, 30 May 2024 09:33:05 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Cord Amfmgm <dmamfmgm@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+In-Reply-To: <CACBuX0SR2cuFu+GaFGxp5rD_b+4HnNHfhQx2Csdw8L8QN+T7AA@mail.gmail.com>
+ (Cord Amfmgm's message of "Wed, 29 May 2024 23:54:18 -0500")
+References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
+ <CAFEAcA9aum5+z3sr-OpCHZRWxFtZGS_kGOjjmRh7H1TBTZuFRQ@mail.gmail.com>
+ <CACBuX0Q3TMvmxuuAHfVY679wpKF+0N+-aw=A7PLiba7ndc5v+w@mail.gmail.com>
+ <CAFEAcA9XvHOF22m-9ZFtKLAaShE5gVjsy-AxQyBwVAkRZ2QW6g@mail.gmail.com>
+ <CACBuX0Rzh9g4BEei8=vk0vOr7BwEZqom4LBGLcqH_omnBy9fLQ@mail.gmail.com>
+ <CAFEAcA9V1J4w00PJB+Ct_3z2KGHcfGs_C8OqX8mdnW_bLxbUiQ@mail.gmail.com>
+ <CACBuX0SR2cuFu+GaFGxp5rD_b+4HnNHfhQx2Csdw8L8QN+T7AA@mail.gmail.com>
+Date: Thu, 30 May 2024 09:33:05 +0100
+Message-ID: <87zfs7d7i6.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 30 May 2024 18:32:32 +1000
-Message-Id: <D1MU8TS7UZ4U.2R3WBGRCIANZD@gmail.com>
-Cc: <danielhb413@gmail.com>, <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>
-Subject: Re: [PATCH v3 2/3] cpu-common.c: export cpu_get_free_index to be
- reused later
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>,
- <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240523072614.256172-1-harshpb@linux.ibm.com>
- <20240523072614.256172-3-harshpb@linux.ibm.com>
-In-Reply-To: <20240523072614.256172-3-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,66 +103,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 23, 2024 at 5:26 PM AEST, Harsh Prateek Bora wrote:
-> This helper provides an easy way to identify the next available free cpu
-> index which can be used for vcpu creation. Until now, this is being
-> called at a very later stage and there is a need to be able to call it
-> earlier (for now, with ppc64) hence the need to export.
+Cord Amfmgm <dmamfmgm@gmail.com> writes:
+
+> On Tue, May 28, 2024 at 11:32=E2=80=AFAM Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
 >
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
-> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> ---
->  include/exec/cpu-common.h | 2 ++
->  cpu-common.c              | 7 ++++---
->  2 files changed, 6 insertions(+), 3 deletions(-)
+>  On Tue, 28 May 2024 at 16:37, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
+>  >
+>  > On Tue, May 28, 2024 at 9:03=E2=80=AFAM Peter Maydell <peter.maydell@l=
+inaro.org> wrote:
+>  >>
+>  >> On Mon, 20 May 2024 at 23:24, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
+>  >> > On Mon, May 20, 2024 at 12:05=E2=80=AFPM Peter Maydell <peter.mayde=
+ll@linaro.org> wrote:
+<snip>
+>  >> > And here's an example buffer of length 0 -- you probably already kn=
+ow what I'm going to do here:
+>  >> >
+>  >> > char buf[0];
+>  >> > char * CurrentBufferPointer =3D &buf[0];
+>  >> > char * BufferEnd =3D &buf[-1]; // "address of the last byte in the =
+buffer"
+>  >> > // The OHCI Host Controller than advances CurrentBufferPointer like=
+ this: CurrentBufferPointer +=3D 0
+>  >> > // After the transfer:
+>  >> > // CurrentBufferPointer =3D &buf[0];
+>  >> > // BufferEnd =3D &buf[-1];
+>  >>
+>  >> Right, but why do you think this is valid, rather than
+>  >> being a guest software bug? My reading of the spec is that it's
+>  >> pretty clear about how to say "zero length buffer", and this
+>  >> isn't it.
+>  >>
+>  >> Is there some real-world guest OS that programs the OHCI
+>  >> controller this way that we're trying to accommodate?
+>  >
+>  >
+>  > qemu versions 4.2 and before allowed this behavior.
 >
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 6d5318895a..0386f1ab29 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -29,6 +29,8 @@ void cpu_list_lock(void);
->  void cpu_list_unlock(void);
->  unsigned int cpu_list_generation_id_get(void);
-> =20
-> +int cpu_get_free_index(void);
-> +
->  void tcg_iommu_init_notifier_list(CPUState *cpu);
->  void tcg_iommu_free_notifier_list(CPUState *cpu);
-> =20
-> diff --git a/cpu-common.c b/cpu-common.c
-> index ce78273af5..82bd1b432d 100644
-> --- a/cpu-common.c
-> +++ b/cpu-common.c
-> @@ -57,14 +57,12 @@ void cpu_list_unlock(void)
->      qemu_mutex_unlock(&qemu_cpu_list_lock);
->  }
-> =20
-> -static bool cpu_index_auto_assigned;
-> =20
-> -static int cpu_get_free_index(void)
-> +int cpu_get_free_index(void)
->  {
->      CPUState *some_cpu;
->      int max_cpu_index =3D 0;
-> =20
-> -    cpu_index_auto_assigned =3D true;
->      CPU_FOREACH(some_cpu) {
->          if (some_cpu->cpu_index >=3D max_cpu_index) {
->              max_cpu_index =3D some_cpu->cpu_index + 1;
-> @@ -83,8 +81,11 @@ unsigned int cpu_list_generation_id_get(void)
-> =20
->  void cpu_list_add(CPUState *cpu)
->  {
-> +    static bool cpu_index_auto_assigned;
-> +
->      QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
->      if (cpu->cpu_index =3D=3D UNASSIGNED_CPU_INDEX) {
-> +        cpu_index_auto_assigned =3D true;
->          cpu->cpu_index =3D cpu_get_free_index();
->          assert(cpu->cpu_index !=3D UNASSIGNED_CPU_INDEX);
->      } else {
+>  So? That might just mean we had a bug and we fixed it.
+>  4.2 is a very old version of QEMU and nobody seems to have
+>  complained in the four years since we released 5.0 about this,
+>  which suggests that generally guest OS drivers don't try
+>  to send zero-length buffers in this way.
+>
+>  > I don't think it's valid to ask for a *popular* guest OS as a proof-of=
+-concept because I'm not an expert on those.
+>
+>  I didn't ask for "popular"; I asked for "real-world".
+>  What is the actual guest code you're running that falls over
+>  because of the behaviour change?
+>
+>  More generally, why do you want this behaviour to be
+>  changed? Reasonable reasons might include:
+>   * we're out of spec based on reading the documentation
+>   * you're trying to run some old Windows VM/QNX/etc image,
+>     and it doesn't work any more
+>   * all the real hardware we tested behaves this way
+>
+>  But don't necessarily include:
+>   * something somebody wrote and only tested on QEMU happens to
+>     assume the old behaviour rather than following the hw spec
+>
+>  QEMU occasionally works around guest OS bugs, but only as
+>  when we really have to. It's usually better to fix the
+>  bug in the guest.
+>
+> It's not, and I've already demonstrated that real hardware is consistent =
+with the fix in this patch.
+>
+> Please check your tone.
 
+I don't think that is a particularly helpful comment for someone who is
+taking the time to review your patches. Reading through the thread I
+didn't see anything that said this is how real HW behaves but I may well
+have missed it. However you have a number of review comments to address
+so I suggest you spin a v2 of the series to address them and outline the
+reason to accept an out of spec transaction.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
