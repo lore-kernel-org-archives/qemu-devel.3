@@ -4,187 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D10C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 02:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB92C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 03:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCVr6-0000Q5-S4; Wed, 29 May 2024 22:49:28 -0400
+	id 1sCWV4-0008S0-PR; Wed, 29 May 2024 23:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongwei.ma@intel.com>)
- id 1sCVr0-0000Pj-CL
- for qemu-devel@nongnu.org; Wed, 29 May 2024 22:49:22 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongwei.ma@intel.com>)
- id 1sCVqx-0000mY-W5
- for qemu-devel@nongnu.org; Wed, 29 May 2024 22:49:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717037360; x=1748573360;
- h=from:to:subject:date:message-id:references:in-reply-to:
- content-transfer-encoding:mime-version;
- bh=nwiA2rrxvMkai7pjhQ+/iIiwQNRL3Sq03+gGXybrx/g=;
- b=LN1zlXjzOeHcFEDMNqllHdqEcooDYcO5xt6LUcdLo4fGQTHkG39fTAL2
- SHYj4AM5ZhB7GPuxnDf+03xP5i2J3qzI1lE+BDz9M3c4ajqYJ5gpDsGKy
- 1/OeQgCeWmPeF6IZcWlqQ3YQSe7oydalsmhwo7vmTXZ71zxai9JYzShms
- IOIXNa6Zp47Gc6x/2M0gJuw0So2xbswjC2mkz5XoRXYCQMlLHBsgXpoyy
- UdTv5Ef64xAmigoud32RlXDxSo/nYvIiMozOM5+tbd7h0//bv991t/5zv
- 63ReOB4z5IR8a0LQltRCzxTMAcweAfI4uB+f3Miwg/uqR9cg0+xBOzvwK g==;
-X-CSE-ConnectionGUID: /RXw/Aa3S4y3LfmFIxG6rg==
-X-CSE-MsgGUID: mPWs0etZT6CA+x+La3Qh0g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11087"; a="31013533"
-X-IronPort-AV: E=Sophos;i="6.08,199,1712646000"; d="scan'208";a="31013533"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2024 19:49:15 -0700
-X-CSE-ConnectionGUID: SdxJSBMQQ8WxbYqcrDWZgA==
-X-CSE-MsgGUID: pPqWqjmxQneRxwH2gIC7dQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,199,1712646000"; d="scan'208";a="66857320"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
- by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 29 May 2024 19:49:15 -0700
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 29 May 2024 19:49:14 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 29 May 2024 19:49:14 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Wed, 29 May 2024 19:49:14 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.177)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 29 May 2024 19:49:13 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=D/oXkG7gmCiXW5XyLIA/tLIZ0uHZ7uIyHkH2GdCkNTKuWAzXLoQMOCn0saed6BZbCrKjlOw6qzY8IfD7LUU58+LoGfpboWyYYH9BjgNQOh08SoMkVD12nmCtfTHD7H9K5mmIcZcwFbVB6iKovzNRfy4nqsMl7s8XNiUiqkxLMnpoownecYGH5CREJ1LjqErFhqoiD1nZW8OQvvNBA5yWSvqqU0ClwD3D/XdDCE8FAfJt4Og/t+SH3tg/uWC6BN8jUYCPO7Y2LM4BaQ7Zkd/B0FnC8JQFSNlqrRAntlY4+Oj6+ejd8AI0en4fI9yP6Bm3a6XbMy9CQXNkSJTPdZdK3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iwW+QBqvvOwjKgq4BJ2u2GgTbIB9z+riYLRlMur4cCI=;
- b=cq1b8vHDwvXgikqBq9uo4+VU8pAlKDF8V+RL7kbXoqaKgtV1gIbuEA5gogG4CoQKZoDNbdao7Z6mbM5aXtLs3Y24thD4mxddQaDwULulHQ8sAip7JnCKGIvCFPDaIbB2aPGp5W4yesRbQ4HKw7BprGi53+g7Atw9J53pXDLKXKBHKJED1dVutA7ShKKXjY19r8zjUY74R831wY6v78vMXDyS93mlB/aQQ4eBOo/tkEEUs0969nZ2Z7fiiG3Fls+sJMPE/dFYpQSLEcpomtKw5w9CXCHeNRkCZLwak1xxehSJWmqEII+Cer0TXW6iNsEjkjYZSMfWwAIfolXv4LXtvw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BL1PR11MB5368.namprd11.prod.outlook.com (2603:10b6:208:311::17)
- by SA1PR11MB8253.namprd11.prod.outlook.com (2603:10b6:806:250::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.17; Thu, 30 May
- 2024 02:49:06 +0000
-Received: from BL1PR11MB5368.namprd11.prod.outlook.com
- ([fe80::49e7:97ee:b593:9856]) by BL1PR11MB5368.namprd11.prod.outlook.com
- ([fe80::49e7:97ee:b593:9856%3]) with mapi id 15.20.7611.016; Thu, 30 May 2024
- 02:49:05 +0000
-From: "Ma, Yongwei" <yongwei.ma@intel.com>
-To: "Liu, Zhao1" <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: RE: [PATCH 0/8] tests/unit/test-smp-sparse: Misc Cleanup and Add
- Module Test
-Thread-Topic: [PATCH 0/8] tests/unit/test-smp-sparse: Misc Cleanup and Add
- Module Test
-Thread-Index: AQHasY4Nderuqr/yG0yqTxrv2UyhSLGvE1eA
-Date: Thu, 30 May 2024 02:49:05 +0000
-Message-ID: <BL1PR11MB5368F4A4C421A2A256D94DF089F32@BL1PR11MB5368.namprd11.prod.outlook.com>
-References: <20240529061925.350323-1-zhao1.liu@intel.com>
-In-Reply-To: <20240529061925.350323-1-zhao1.liu@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BL1PR11MB5368:EE_|SA1PR11MB8253:EE_
-x-ms-office365-filtering-correlation-id: 63ba1622-bae3-4158-3c4b-08dc80531255
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230031|366007|376005|1800799015|38070700009;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?IesoZzvj5J9+SYbEZNfIL5aCBXpYIG9u6QtIvti2Pfe97iQ7XCMyPMc8OK?=
- =?iso-8859-1?Q?FfedIg7S/5689QQoVE4nGn5WUosXA9DHA4EZiElQ7N+H4gDFRspRRImpJ0?=
- =?iso-8859-1?Q?5pgBJfKuDFnp+gqddpmXcoj92jARYmMLTfuvOUS9+g04QbtLYd2SGZdrTv?=
- =?iso-8859-1?Q?lwdjVwJdtDIrm4LPBgGFgCoNBj2dA58db9vhNsHREOLL4Tz2lM6Bx3ze6L?=
- =?iso-8859-1?Q?KLCiqb5MRD7AA/6yJiwHYrsFJfrtSaPcMQ7LuXUE+rcSZ1KfIoxbn6HS7T?=
- =?iso-8859-1?Q?zzFK2u6jygfNL66DeXFGRHWjV8SiC3wTnit2sGdRWLgv7QEg3ci4qVqA+X?=
- =?iso-8859-1?Q?B2FZK107O0WKh6QHazPX9muCxn5e76GkeU8+CUBL7GZ/mpwO0xcgsuK8gy?=
- =?iso-8859-1?Q?EU9+766tNFTvY70bWPIj2kCmak++xHc1D9fBgTsePtIOiVoSZUMpGt5wNh?=
- =?iso-8859-1?Q?RkviQbGdzXncZmND59Q3orlA57rEOZ118VAGKbcClO4C2lXrb4xBpbq2Ao?=
- =?iso-8859-1?Q?0F1aQeILg3993i0FuGRJyHTCazsEspZYsoWnzJcLj56pVS91UMZX92V8mu?=
- =?iso-8859-1?Q?2VF1C4NkmCspKN3a80Z70TTixnB1rXAUhR3PRi4hKnNY3pGIVSo7eHZV21?=
- =?iso-8859-1?Q?q6O2nrINUa12Qfsj0dvBqayJ+EFH9zxPUXXuLNceN4bmPjNcUeblb51+rd?=
- =?iso-8859-1?Q?WR/+iqtEtQK4kibQ8V+hII1CLFiwixlpYUu903fpO9qzd0SAhud8VhGEIS?=
- =?iso-8859-1?Q?iOWgQvsVOTmZB5saysbkKl1fxc7JW7F2gOu+I9bJw5EcFu087SyF87Rnlq?=
- =?iso-8859-1?Q?EbA9jgVnz2ZBFskajfTetozH7/6pMhkddsbqYNPwQWKX4v/YiXec2lE6fO?=
- =?iso-8859-1?Q?SUD6KLMUv9Jb/t+57C0ViwM2StXfl+ocZx5HwSoDBBJzW/v7+HhV+nT+6c?=
- =?iso-8859-1?Q?s7y058EsdslzPsoWQoS/7OTa1Vpq+e/3Ogjv0e4B+s9Xizd9e2k4jz/I5c?=
- =?iso-8859-1?Q?zVJ5527HEmpM1nfoGf3uRj0LhT9Op538DUDO1nFgRqaWLoXtzLSDJWm6L0?=
- =?iso-8859-1?Q?qkGJGEusDbrzDkWR5rGh2CRKorHSOjglVAm2sVfNWdn+jv+/qSEPvqazEN?=
- =?iso-8859-1?Q?IW+FGjIzToX/Tb+Urflxj6ZzLPvdTl27vWQcwI0P4vwK5etU/YbBa4BuZB?=
- =?iso-8859-1?Q?Sj3M+m5wqnwWG8iTnPMlnPqFsqfGUEFM87SC065ieReau+ikAYOCjo71qT?=
- =?iso-8859-1?Q?O4HKSes4X4qdjPzZNYRNZnWHC3oh1sN0ZPf0Mmmzq5MZhjXvhKhNgiIKQo?=
- =?iso-8859-1?Q?ZnoR1LOTS8qixt8Gb6PGe9SRR5SFSrxJUx6+pmWCOp4FwAfK2JDyRcItgt?=
- =?iso-8859-1?Q?xNxuW1i12RJ0mmQ3R7I/djcMPWeW+e9A=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR11MB5368.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?TSO8w9aUK7GI2f8CfIUBsTHVqyCQgyiSDJ7dMHthiKHzrnLZnt5VMxWCMH?=
- =?iso-8859-1?Q?DL5MafMnZmX+T+BNskjzKQcOJtOxthm11vtMzXHFVgi9gGtC8Bd0gS5WqT?=
- =?iso-8859-1?Q?C8ymW1/YiTCApi0eO+KehepbRup1UlHB1puL+tKg9lfXUx93zlY6Nm11c3?=
- =?iso-8859-1?Q?WmaqR6co4lD4v8XTvT8RL/G63tYfykd9FNyny2JgVX9xFAAqXZMMRj7lqW?=
- =?iso-8859-1?Q?1yilLqqLEcqhGfkxkwa2gzPCsF3jMIcubrt4D18pn8DGoqnQHBmE/I0VM8?=
- =?iso-8859-1?Q?8+6byDZrlRqFLh1d0A73eWpuyqlf55LgQvuJG5hS76thv/CoJG9Y+hjKPR?=
- =?iso-8859-1?Q?69ZsynZvR0pnwRFvQOqkNi41zkaISGiWM7JWwTApMqrM9mSQornsyiY3Y5?=
- =?iso-8859-1?Q?9CsCaITdWMvIzjc1/UzRSDqHE/YrZB/a9T6DzmAjxo3Ck7Z53ftLIhNKu2?=
- =?iso-8859-1?Q?nZhetUTkTWWMrP3e1d9kySWApcQtFbZ3SxQ8WhMLr7szCJUSQcHTxj6aXr?=
- =?iso-8859-1?Q?cF5vqclYq4AbNATZsVOv3MbztqkGx0uhsDGx0jEly6DKsnzVGrHCyuCOtY?=
- =?iso-8859-1?Q?PU4yqVOaU6SiFrx9k/uvKthsdH5lh4QGKItKqL1K8fio1vWB6ENccMZKlg?=
- =?iso-8859-1?Q?+49lwm2ddd71iqIXKYS2olZNYnD0TUfKR5QNPtWecLjesUVNUOp+ZxnBwZ?=
- =?iso-8859-1?Q?Xl0pQ3+BUmKHLUHEfSPereHP7D9NNzwnw+YbVmXhYej9M+7MFEV9Z1qBHq?=
- =?iso-8859-1?Q?2TK9wdKHmwFu+EtZy/t4CRLHc1P9aIGrMbjIhHGTM6sh+6ZWr8sraX1Gw3?=
- =?iso-8859-1?Q?0kMRUHXVXwgOGLJIFP9DfDeAMOh0+Jm8VEL7dPWWm9Fp7UaSO8+7Zzgwps?=
- =?iso-8859-1?Q?tJGpcYifA6QABb0xIatXcW9N43Jj8dPRw2PAHLU1cAti4VE78qJ/Tvqw4E?=
- =?iso-8859-1?Q?XktDFqTMeDZ4n6k8VFtbjMDn15imFfBPNT3pjUAhCV+Ss4Oya0HqAbVL5i?=
- =?iso-8859-1?Q?70ll25+SfOzbbbSwQjTXIyLwI+QNc4l2UrsQldUaspT/MiwKMbqtr/DGxj?=
- =?iso-8859-1?Q?X3HUzJvRMuZ+dQWNuZdFpFSPBsyk4s4Wiefk4EcWFd+eOBis/z3gTStfT1?=
- =?iso-8859-1?Q?172jl6QsZFcA/Wb8PwJ++a29uznUFOYym+R1MA3DFu1ZKutBXOLLZ4OSqf?=
- =?iso-8859-1?Q?vc3iJukWxBc98oha0VXYsDbAgV3mBMY/zl1hjcd3eCBboAeqR4VHZeqacD?=
- =?iso-8859-1?Q?HbI58Tf12E9qQr4VOoJWVoSey2rA8bkUQTMx6ORh7RV4N9JptXE9wwEbpp?=
- =?iso-8859-1?Q?zH0pr/wYmlaHTh49eb525Bywd6OzDPKbL/MVAslMsO6yiZaz84yQ2bAgUG?=
- =?iso-8859-1?Q?v7ys7JNSGVVHf5nIn5Op0a/3SA+I2M5VrLLWFEXlgxmVQ8LAxiEQ4QWcSp?=
- =?iso-8859-1?Q?RR6Qdf1psCbJpZgUCHgtdf0U7LwnhP8HByO1YuJpmpBmb+CJCMTQTdact1?=
- =?iso-8859-1?Q?hWLJ1ItjPlcWFKbfYxq3EuFMwrFImqxnXYGEQS6SFVapFGw0pVXFl6/O2V?=
- =?iso-8859-1?Q?qRKsGGc7C7QHejnd8IbrlMhUO8d2J10SRYnKPpbInYZH+N/M+kXzCPtXgd?=
- =?iso-8859-1?Q?xy+XHRkyEWHIo8X2R2GTFsgCk4zxC9BK4f?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1sCWV3-0008RQ-4G
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 23:30:45 -0400
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1sCWV0-0007u5-0h
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 23:30:43 -0400
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-80ad0bb602eso26144241.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 20:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1717039840; x=1717644640; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jdo4tjkmUiqNVp7+LlkCxwwqZd0ECj+B8sj+vTLMz58=;
+ b=mT3h1OOWFE7apRS7fn7XzTe9XlVQvHMQW+f7Nk5rtffH+9B+yXpscgYZv4zijTfPC9
+ h9BJ84+Yv3SYIhXQyeLQpy+H/1Fo5PRn3SQSWNab/jZJAq2GljbGj3saDaxfGv0pN1IZ
+ 96CJil+nDeQrxgNMGG34f4CiO+5PPdvZEpO2aq5Or4eARxtPJtPhKi+ZN7L0y9B8NAuR
+ uUKc/EYD/UJ6UrPmTXNkL5WQK9kGh2CYsuVHjFc7Z+u1DQ63tOcbmi8I7c1EBwOW5/8/
+ LsQPB8Hdq7+D/is8XGcd8vQ5+JjRrAJiFStBPvxsA0lX3e39MLFKplGNNfZxB4uuf1Rp
+ D19w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717039840; x=1717644640;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jdo4tjkmUiqNVp7+LlkCxwwqZd0ECj+B8sj+vTLMz58=;
+ b=flNLztJr3so1TFGgNVu+QJ2WNOakyDZ4nu1xbPXAAdxprZCuIE4UKiesZalYX+GkK8
+ fS6eSGomsdienKQ3fda6X3EOcYhHpU8MvpsR6ExrS2wnYedkmvrQ8kSoMK27YCHvAfkp
+ Y0rui9rEEAh3o9CMAsIOOiEtb0q4j4CihNv964y+mPtzOUxOEpIX9+Qpo8HM8G+Lf7Ym
+ 9jawosGFVRBtF3qSnbKArdD/tfq9H36vNe+7HYrwwXDQESTmHw4tk6Vj/YUhgYgfn/t/
+ J77rJ21/G4WW6lvib3T9NrlCNtWJmI5fx9f+hKxWVVerbJyQhdUzMk5c9/t9vjrv4gwt
+ 5PVA==
+X-Gm-Message-State: AOJu0YywSIGaYCyRGSvBRpW41SiMG3VvU9Vsg4yMTPzfCitMEgcMgp0p
+ M+lBRjCrGBusDtV2tnq52gFENiipj55aPirSaMe0ZgRi4bDCpueZY1F3p5eIWKuhBhzmUldAuRI
+ /u7TTqWNgUVMErC6OOxhL5EbriG59wvhQfDr3oQ==
+X-Google-Smtp-Source: AGHT+IFaxFdcol8HakCO1g3a5UqvW+pmTtEbd/uBxawxKzShkIbDhdrBHwHb+ZDCOOT277C74MB4xriAoHDgsPyTnjs=
+X-Received: by 2002:a05:6122:181f:b0:4e4:eab4:ba2a with SMTP id
+ 71dfb90a1353d-4eaf2493ca3mr1155609e0c.16.1717039840458; Wed, 29 May 2024
+ 20:30:40 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR11MB5368.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 63ba1622-bae3-4158-3c4b-08dc80531255
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2024 02:49:05.7944 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QxPTWuSXfSfoPEyKn+uw2eepp4ugKyWxYillQj9mT7K5LmHxx+orAwA0yKiAxA105z141+S7Fi6+BpD6snBUyQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB8253
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=yongwei.ma@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240515080605.2675399-1-fea.wang@sifive.com>
+ <4d2d56aa-5758-4320-a5ef-53ebb87ab494@ventanamicro.com>
+In-Reply-To: <4d2d56aa-5758-4320-a5ef-53ebb87ab494@ventanamicro.com>
+From: Fea Wang <fea.wang@sifive.com>
+Date: Thu, 30 May 2024 11:30:28 +0800
+Message-ID: <CAKhCfseJgRzyeg1seuZ15SR=f78E5rnbgfrzY_VeRDhPMOAhwA@mail.gmail.com>
+Subject: Re: [RESEND PATCH v2 0/5] target/riscv: Support RISC-V privilege 1.13
+ spec
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: multipart/alternative; boundary="000000000000c195900619a37dd2"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=fea.wang@sifive.com; helo=mail-ua1-x933.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -201,39 +93,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/5/30 10:45, Yongwei Ma wrote:
-> Hi,
->=20
-> Since the module support has landed in x86, and it's time to add the
-> module's -smp test cases to cover the relevant code path.
->=20
-> This series adds the module tests to ensure that this new level does not
-> break the current topology information calculations. It also includes som=
-e
-> misc cleanup.
->=20
-> Thanks and Best Regadrs,
-> Zhao
-> ---
-> Zhao Liu (8):
->   tests/unit/test-smp-parse: Fix comments of drawers and books case
->   tests/unit/test-smp-parse: Fix comment of parameters=3D1 case
->   tests/unit/test-smp-parse: Fix an invalid topology case
->   tests/unit/test-smp-parse: Use default parameters=3D0 when not set in
->     -smp
->   tests/unit/test-smp-parse: Make test cases aware of module level
->   tests/unit/test-smp-parse: Test "modules" parameter in -smp
->   tests/unit/test-smp-parse: Test "modules" and "dies" combination case
->   tests/unit/test-smp-parse: Test the full 8-levels topology hierarchy
->=20
->  tests/unit/test-smp-parse.c | 373 ++++++++++++++++++++++++++++++------
->  1 file changed, 311 insertions(+), 62 deletions(-)
->=20
-> --
-> 2.34.1
-Tested on my x86 Ice Lake platform, 'test-smp-parse' case could PASS.
-Tested-by: Yongwei Ma<yongwei.ma@intel.com>
+--000000000000c195900619a37dd2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks and Best Regards,
-Yongwei Ma
+Hi Daniel,
+thank you for your help.
+
+I found that only the cover is without many maintainers. I used to send
+patches by git send-email --dry-run --to 'qemu-devel@nongnu.org,
+qemu-riscv@nongnu.org' --cc-cmd=3D'scripts/get_maintainer.pl -i' patches/*.
+Do you have a better script for me?
+Thank you.
+
+Sincerely,
+Fea
+
+On Mon, May 27, 2024 at 5:21=E2=80=AFPM Daniel Henrique Barboza <
+dbarboza@ventanamicro.com> wrote:
+
+> Fea,
+>
+> Please try to also add all RISC-V QEMU maintainers and reviewers when
+> sending
+> patches. It will get your patches reviewed and queued faster. Otherwise t=
+he
+> maintainers can miss you your series due to high ML traffic.
+>
+> You can fetch who you want to CC using the get_maintainer.pl script with
+> the
+> patch files or any source file in particular, e.g.:
+>
+> $ ./scripts/get_maintainer.pl -f target/riscv/cpu.c
+> Palmer Dabbelt <palmer@dabbelt.com> (supporter:RISC-V TCG CPUs)
+> Alistair Francis <alistair.francis@wdc.com> (supporter:RISC-V TCG CPUs)
+> Bin Meng <bmeng.cn@gmail.com> (supporter:RISC-V TCG CPUs)
+> Weiwei Li <liwei1518@gmail.com> (reviewer:RISC-V TCG CPUs)
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> (reviewer:RISC-V TCG
+> CPUs)
+> Liu Zhiwei <zhiwei_liu@linux.alibaba.com> (reviewer:RISC-V TCG CPUs)
+> qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+> qemu-devel@nongnu.org (open list:All patches CC here)
+>
+>
+> I added the extra folk in the CC for this reply so don't worry about it.
+>
+>
+> Alistair, please queue this series. It's already fully acked and I would
+> like to add
+> some bits on top of the priv_spec 1.13 support.
+>
+>
+> Thanks,
+>
+>
+> Daniel
+>
+> On 5/15/24 05:05, Fea.Wang wrote:
+> > Based on the change log for the RISC-V privilege 1.13 spec, add the
+> > support for ss1p13.
+> >
+> > Ref:
+> https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/priv-preface.a=
+doc?plain=3D1#L40-L72
+> >
+> > Lists what to do without clarification or document format.
+> > * Redefined misa.MXL to be read-only, making MXLEN a constant.(Skip,
+> implementation ignored)
+> > * Added the constraint that SXLEN=E2=89=A5UXLEN.(Skip, implementation i=
+gnored)
+> > * Defined the misa.V field to reflect that the V extension has been
+> implemented.(Skip, existed)
+> > * Defined the RV32-only medelegh and hedelegh CSRs.(Done in these
+> patches)
+> > * Defined the misaligned atomicity granule PMA, superseding the propose=
+d
+> Zam extension..(Skip, implementation ignored)
+> > * Allocated interrupt 13 for Sscofpmf LCOFI interrupt.(Skip, existed)
+> > * Defined hardware error and software check exception codes.(Done in
+> these patches)
+> > * Specified synchronization requirements when changing the PBMTE fields
+> in menvcfg and henvcfg.(Skip, implementation ignored)
+> > * Incorporated Svade and Svadu extension specifications.(Skip, existed)
+> >
+> >
+> > Fea.Wang (4):
+> >    target/riscv: Support the version for ss1p13
+> >    target/riscv: Add 'P1P13' bit in SMSTATEEN0
+> >    target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32
+> >    target/riscv: Reserve exception codes for sw-check and hw-err
+> >
+> > Jim Shu (1):
+> >    target/riscv: Reuse the conversion function of priv_spec
+> >
+> >   target/riscv/cpu.c         |  8 ++++++--
+> >   target/riscv/cpu.h         |  5 ++++-
+> >   target/riscv/cpu_bits.h    |  5 +++++
+> >   target/riscv/cpu_cfg.h     |  1 +
+> >   target/riscv/csr.c         | 39 +++++++++++++++++++++++++++++++++++++=
++
+> >   target/riscv/tcg/tcg-cpu.c | 17 ++++++++---------
+> >   6 files changed, 63 insertions(+), 12 deletions(-)
+> >
+>
+
+--000000000000c195900619a37dd2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi=C2=A0Daniel,<div>thank you for your help.</div><div><br=
+></div><div>I found that only the cover is without many maintainers. I used=
+ to send patches by <span style=3D"background-color:rgb(238,238,238)">git s=
+end-email --dry-run --to &#39;<a href=3D"mailto:qemu-devel@nongnu.org">qemu=
+-devel@nongnu.org</a>,<a href=3D"mailto:qemu-riscv@nongnu.org">qemu-riscv@n=
+ongnu.org</a>&#39; --cc-cmd=3D&#39;scripts/<a href=3D"http://get_maintainer=
+.pl">get_maintainer.pl</a> -i&#39; patches/*</span>. Do you have a better s=
+cript for me?</div><div>Thank you.</div><div><br></div><div>Sincerely,</div=
+><div>Fea</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Mon, May 27, 2024 at 5:21=E2=80=AFPM Daniel Henrique Bar=
+boza &lt;<a href=3D"mailto:dbarboza@ventanamicro.com">dbarboza@ventanamicro=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">Fea,<br>
+<br>
+Please try to also add all RISC-V QEMU maintainers and reviewers when sendi=
+ng<br>
+patches. It will get your patches reviewed and queued faster. Otherwise the=
+<br>
+maintainers can miss you your series due to high ML traffic.<br>
+<br>
+You can fetch who you want to CC using the <a href=3D"http://get_maintainer=
+.pl" rel=3D"noreferrer" target=3D"_blank">get_maintainer.pl</a> script with=
+ the<br>
+patch files or any source file in particular, e.g.:<br>
+<br>
+$ ./scripts/<a href=3D"http://get_maintainer.pl" rel=3D"noreferrer" target=
+=3D"_blank">get_maintainer.pl</a> -f target/riscv/cpu.c<br>
+Palmer Dabbelt &lt;<a href=3D"mailto:palmer@dabbelt.com" target=3D"_blank">=
+palmer@dabbelt.com</a>&gt; (supporter:RISC-V TCG CPUs)<br>
+Alistair Francis &lt;<a href=3D"mailto:alistair.francis@wdc.com" target=3D"=
+_blank">alistair.francis@wdc.com</a>&gt; (supporter:RISC-V TCG CPUs)<br>
+Bin Meng &lt;<a href=3D"mailto:bmeng.cn@gmail.com" target=3D"_blank">bmeng.=
+cn@gmail.com</a>&gt; (supporter:RISC-V TCG CPUs)<br>
+Weiwei Li &lt;<a href=3D"mailto:liwei1518@gmail.com" target=3D"_blank">liwe=
+i1518@gmail.com</a>&gt; (reviewer:RISC-V TCG CPUs)<br>
+Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@ventanamicro.com" ta=
+rget=3D"_blank">dbarboza@ventanamicro.com</a>&gt; (reviewer:RISC-V TCG CPUs=
+)<br>
+Liu Zhiwei &lt;<a href=3D"mailto:zhiwei_liu@linux.alibaba.com" target=3D"_b=
+lank">zhiwei_liu@linux.alibaba.com</a>&gt; (reviewer:RISC-V TCG CPUs)<br>
+<a href=3D"mailto:qemu-riscv@nongnu.org" target=3D"_blank">qemu-riscv@nongn=
+u.org</a> (open list:RISC-V TCG CPUs)<br>
+<a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank">qemu-devel@nongn=
+u.org</a> (open list:All patches CC here)<br>
+<br>
+<br>
+I added the extra folk in the CC for this reply so don&#39;t worry about it=
+.<br>
+<br>
+<br>
+Alistair, please queue this series. It&#39;s already fully acked and I woul=
+d like to add<br>
+some bits on top of the priv_spec 1.13 support.<br>
+<br>
+<br>
+Thanks,<br>
+<br>
+<br>
+Daniel<br>
+<br>
+On 5/15/24 05:05, Fea.Wang wrote:<br>
+&gt; Based on the change log for the RISC-V privilege 1.13 spec, add the<br=
+>
+&gt; support for ss1p13.<br>
+&gt; <br>
+&gt; Ref:<a href=3D"https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/=
+src/priv-preface.adoc?plain=3D1#L40-L72" rel=3D"noreferrer" target=3D"_blan=
+k">https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/priv-preface.=
+adoc?plain=3D1#L40-L72</a><br>
+&gt; <br>
+&gt; Lists what to do without clarification or document format.<br>
+&gt; * Redefined misa.MXL to be read-only, making MXLEN a constant.(Skip, i=
+mplementation ignored)<br>
+&gt; * Added the constraint that SXLEN=E2=89=A5UXLEN.(Skip, implementation =
+ignored)<br>
+&gt; * Defined the misa.V field to reflect that the V extension has been im=
+plemented.(Skip, existed)<br>
+&gt; * Defined the RV32-only medelegh and hedelegh CSRs.(Done in these patc=
+hes)<br>
+&gt; * Defined the misaligned atomicity granule PMA, superseding the propos=
+ed Zam extension..(Skip, implementation ignored)<br>
+&gt; * Allocated interrupt 13 for Sscofpmf LCOFI interrupt.(Skip, existed)<=
+br>
+&gt; * Defined hardware error and software check exception codes.(Done in t=
+hese patches)<br>
+&gt; * Specified synchronization requirements when changing the PBMTE field=
+s in menvcfg and henvcfg.(Skip, implementation ignored)<br>
+&gt; * Incorporated Svade and Svadu extension specifications.(Skip, existed=
+)<br>
+&gt; <br>
+&gt; <br>
+&gt; Fea.Wang (4):<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Support the version for ss1p13<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Add &#39;P1P13&#39; bit in SMSTATEEN0<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Reserve exception codes for sw-check and hw=
+-err<br>
+&gt; <br>
+&gt; Jim Shu (1):<br>
+&gt;=C2=A0 =C2=A0 target/riscv: Reuse the conversion function of priv_spec<=
+br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
+=A0 8 ++++++--<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
+=A0 5 ++++-<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu_bits.h=C2=A0 =C2=A0 |=C2=A0 5 +++++<br>
+&gt;=C2=A0 =C2=A0target/riscv/cpu_cfg.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
+&gt;=C2=A0 =C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 39 +=
++++++++++++++++++++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A0target/riscv/tcg/tcg-cpu.c | 17 ++++++++---------<br>
+&gt;=C2=A0 =C2=A06 files changed, 63 insertions(+), 12 deletions(-)<br>
+&gt; <br>
+</blockquote></div>
+
+--000000000000c195900619a37dd2--
 
