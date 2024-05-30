@@ -4,141 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA96C25B74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C02C27C44
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdmL-0005yk-Oj; Thu, 30 May 2024 07:17:05 -0400
+	id 1sCdmN-0005zz-47; Thu, 30 May 2024 07:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sCdmJ-0005wA-6e
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:03 -0400
-Received: from mail-dm6nam11on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2415::601]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1sCdmK-0005xn-WB
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:05 -0400
+Received: from mail-mw2nam10on20617.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::617]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sCdmD-0001Qw-Dt
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:02 -0400
+ id 1sCdmG-0001Re-37
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:04 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=htMEP7GVG1NHX069QoTwyXA79Oaj64/Sjghw7buP0i5Xa7GjdX6tTcqb+y+VEmHsWXWUseEqe9YkpbDQVSV8aHpT1P5bALrPcJIM+rssRqIhqTn9xzL6jAqx8e7wAKBEtgChe0hvVV8FxZOlUC9asBOD94YVOy5kB9tSzUsL5TO5xZW48R39bQlL6yeYQ+Tb4rK2s2i4yatHOsX34mC6Bl4eT4ibQgd2veJ7hvnpkgA/zjbUtOaNfZ9zAb9qXlOYsInE3lsDE8Dh130qlUzy1i40uRxp55lgPwOPJ9UZkhEZqgwLah6WMKmzHdFlPKKIoOm15Zm8QI/iGq/WICG9EQ==
+ b=m6q2GJnwhzU9+iE9504rzXfazGKW71gvVTu91bw4C6WE6P1+S0JAOrn8AB9ugjmUwwpXxaQA8m/0t3EpPNepe0VDXn64UnYj8JlbuBq8M3AO/Ut9oMV5Hz9cRu8xqPpt0xH0XY+p769Xi9NY50jAmH3kcILAi0hKfdGYgO7DeNwoERQ0GBrUXclEyC83qlDC6LdbzAO9SDMR8atnV/YE6WZH2e9vAqAzQv8dEo70mPXqKBUuwTCry9Z0IWolwwmVIEpMRzpcoZakMOUvsK6TuOqYwatwQzkMINAd62uKwVEf9hi54srgx+eI3QdM3/jn4any9aeCEdSsdfL3A9kFNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R8S2vaPBh5th5l3Et1gtUJG79iJKaMlNF4hxcHHq+8o=;
- b=ibZUFv2ibvDi9F9YtEVjN6vORbCEWlFxg9De8nq8IaV/g2OGsLXG2v5kbfy6Qcfx70KwyzwwoZIZ8ksyym1Sr6G95HPw731qrHg0lIB5ALb9bta5pPJ0xB+TFf5FSs3twjgnOlGH0L1Aw4gP3v2/7G/ECG0W37avPFXUIv+VwoUJ1+ga2VL4DCtL3tRasZuhRMiSCIzsm1DM1WTrG4ospuKD6LbH0+62oa4c+eqYnTplUZBUrDqeWYOK1/G7py9gVj0yLKNoqUkp2ak43xXwFTkBjqEO1O1XwxFKzjBGQD4JVrDyoyo8g/aYKBwPjQTIsSZXZTmexj9i+oc1wK8zDQ==
+ bh=i4N2QE8nZbmvRULIPkR4fibQE16sS5tOuiopYo9eqHo=;
+ b=F85KuEOqfS180uX7+E5E7uk+SxUcgxMGJihzFiEztOUJ0ccfGrUT2Wc+4i9v5pcg8Sxw0Bpg10Ce0C0ovM4L95+ysHupqNgN2kyxVpigJg7zW99uDZGlyrXmgL8KKy9ewqEg7W99SreCiRO0RRVaVQDFG4nlSgKja47qvkLExP1PZSPkuTXCfmCdtMdqhgWzIsdEwrzlHkPfeEGOBVDPO2BpLKC5YV/g476yglJZX/3Yb/5ST/sJZtU8dhHF/0Sb2OA58HrXUOLTorgCjX4fU1lB86mqBENyyjwalPs1uvjKDcBQHKV+XSmHoTcpt61yP3D99dujxEgtQ9abWAcdeA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R8S2vaPBh5th5l3Et1gtUJG79iJKaMlNF4hxcHHq+8o=;
- b=LHM4H884Ryr+37Nm3yp1PEsU2dMW4RMiQzOb/2N45KEDxd3XuLm+MeyvJN2HmtRcUfUDvo3gT9P0SaV/ffiLv252fnh0N9l1Fc3iDwANwqQ5QyQ0RjgeU6sSYyMDaRwv6FF6q7U3QYcPGb2xZR/yRaR3hywgP0RMEG94bMsLhkk=
-Received: from BL1PR13CA0098.namprd13.prod.outlook.com (2603:10b6:208:2b9::13)
- by DM4PR12MB7501.namprd12.prod.outlook.com (2603:10b6:8:113::14) with
- Microsoft SMTP Server (version=TLS1_2,
+ bh=i4N2QE8nZbmvRULIPkR4fibQE16sS5tOuiopYo9eqHo=;
+ b=2bnEgYDFfTt8NYicbr9GGHHEdgCccv71pnCMnLT2r/AucMYyOpUWbIZpG0haKoLMN/mVmannldBYPiMnhH6hkhiVrjSOZB61lagMp+R7s6Bes+MWpwleWc/RqPwwO6RQQgdEjAM7fkdHqOsZYLuPzjvZkMhmzMQ/LjiqVWJu7nQ=
+Received: from BN1PR14CA0021.namprd14.prod.outlook.com (2603:10b6:408:e3::26)
+ by SJ1PR12MB6051.namprd12.prod.outlook.com (2603:10b6:a03:48a::18)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.22; Thu, 30 May
- 2024 11:16:52 +0000
-Received: from BN3PEPF0000B072.namprd04.prod.outlook.com
- (2603:10b6:208:2b9:cafe::58) by BL1PR13CA0098.outlook.office365.com
- (2603:10b6:208:2b9::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.22 via Frontend
- Transport; Thu, 30 May 2024 11:16:52 +0000
+ 2024 11:16:54 +0000
+Received: from BN2PEPF00004FBC.namprd04.prod.outlook.com
+ (2603:10b6:408:e3:cafe::ef) by BN1PR14CA0021.outlook.office365.com
+ (2603:10b6:408:e3::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.20 via Frontend
+ Transport; Thu, 30 May 2024 11:16:54 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
 Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B072.mail.protection.outlook.com (10.167.243.117) with Microsoft
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ BN2PEPF00004FBC.mail.protection.outlook.com (10.167.243.182) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:16:52 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:16:54 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
- 2024 06:16:52 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ 2024 06:16:53 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
- 2024 06:16:52 -0500
+ 2024 06:16:53 -0500
 Received: from pankaj-M75q.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Thu, 30 May 2024 06:16:51 -0500
+ Transport; Thu, 30 May 2024 06:16:52 -0500
 From: Pankaj Gupta <pankaj.gupta@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <brijesh.singh@amd.com>, <dovmurik@linux.ibm.com>, <armbru@redhat.com>,
  <michael.roth@amd.com>, <xiaoyao.li@intel.com>, <pbonzini@redhat.com>,
  <thomas.lendacky@amd.com>, <isaku.yamahata@intel.com>, <berrange@redhat.com>, 
  <kvm@vger.kernel.org>, <anisinha@redhat.com>, <pankaj.gupta@amd.com>
-Subject: [PATCH v4 12/31] i386/sev: Don't return launch measurements for
- SEV-SNP guests
-Date: Thu, 30 May 2024 06:16:24 -0500
-Message-ID: <20240530111643.1091816-13-pankaj.gupta@amd.com>
+Subject: [PATCH v4 14/31] i386/sev: Update query-sev QAPI format to handle
+ SEV-SNP
+Date: Thu, 30 May 2024 06:16:26 -0500
+Message-ID: <20240530111643.1091816-15-pankaj.gupta@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240530111643.1091816-1-pankaj.gupta@amd.com>
 References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+Received-SPF: None (SATLEXMB05.amd.com: pankaj.gupta@amd.com does not
+ designate permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B072:EE_|DM4PR12MB7501:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5047e8d4-ba08-4444-3f6b-08dc809a0209
+X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBC:EE_|SJ1PR12MB6051:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e57bc75-3b5a-467b-1d08-08dc809a02dd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230031|36860700004|376005|1800799015|82310400017; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rFrZXlhhUFMoR9zEcfqrNzdfPw8tu34mlzWbyklJRag8PwUTS4gqViOzmzBq?=
- =?us-ascii?Q?Y1ezlSiy1TJwwVs/mAnC9F+u2Bdc+2okAjPzMaHYMNrH5rpgTJlPXHUtvIll?=
- =?us-ascii?Q?r5sJzdW29a2az1sn7Vn4GU+nkvygs+a6fFk1YQI3UPoEhalSKOrd0dw4l97P?=
- =?us-ascii?Q?feFt3VFX/VYayut6+OBHJRu3eGGagLPkD0EEicMG5G7fORWVTh2MqvsYtjcK?=
- =?us-ascii?Q?2x5SW3gDAq2ikjqI89dYMb8J66CnyHFB3OYh6cOHUf3hrdMPd/G67iXqhtOe?=
- =?us-ascii?Q?lDj8CxJGLv0InTtlhkcCYCPMo7PxGLYtLjEqs3CAqnmP18wY/Xhw8sptQwd1?=
- =?us-ascii?Q?2q6r1+md8ZFS7C3Ukuah5R9XdRGH5vOMCaMZV5ukD/jgQfxr3gm/R36djQnz?=
- =?us-ascii?Q?2QbSmdNUGqhRu+bFkvZ4rSqzCvwxCbCbuxrUBlYNokMXhKwm/hFBpi8zA4ci?=
- =?us-ascii?Q?pPvToutuHXR0K1Pp3kWanEVjJpo8zY4kfx2ckIflWmmYPhqxXv3I75g5VfBZ?=
- =?us-ascii?Q?KjWUCvt+Itke/4SROOLZqBsG7PM4NhWlubDDUdW0JcQIF4vDf0jdUZB1f0LA?=
- =?us-ascii?Q?lZ3Y9Wbjj7uYdXHhliFBApMdZ+gj207Oxw/KzhtD276ePUf3sYWGpWnov9/S?=
- =?us-ascii?Q?GcILajzaCUUb8U0Y1/GowMjIXm8pAKmtKMsFB4KMKSR1zo1LyYHJKcxUDo7Z?=
- =?us-ascii?Q?v93Aoyebz/dyanaGtEDic94xaLdB8ZCSVP8oIlwIVmPs4lu9y3P/C4zvpwQg?=
- =?us-ascii?Q?4Zljf2/8EL45MB3eWxo5YndRSMG+zTVmRIY/Oqv2HNt5YQq1BD1bPphNV/D8?=
- =?us-ascii?Q?AZ3v+NGeW3eCh5RuowVcpeIKUVZKtbR1Fkt75HK9icNJqgSFApAoV6isGmrr?=
- =?us-ascii?Q?1eBMM7J/p+3K95n5K3KYIxiMd/fvUF4gUQe0rNToiA0rg8h3BVjUXL4AhlE1?=
- =?us-ascii?Q?9fpZuQFH4XJCAupF3G/NyAxQM+8PD68MS29qwhwSiMe3XWdA+hvzQA3KXOs6?=
- =?us-ascii?Q?deg8Q71wCDOhpvw6uqlQa2UUltkVUdKNgpdtWCW94TmnChbBb2nZ+Y+1b5Am?=
- =?us-ascii?Q?Mxpqcm8I9NecEhvN7DqC6fpFka9EVmIW2dJzpvvzSZHHpcwOO6IldL3+2IBD?=
- =?us-ascii?Q?LoRCUmDfGzrkk2riI6zNMXevOlWyre7Lnhtv2D/iemAQ68Rl8gdK2LxZ+Oq0?=
- =?us-ascii?Q?2gGPVZRnTiezNS5WqooMnu/eQ4SmZUEgykJyIl+N/vtGm2Dk3+jp1ts/ZqA1?=
- =?us-ascii?Q?WuEYmwu/VtXjRnfpsoYm81JPzn0S4V2Gt2laWFHYKMoM6FdNBSWy0hef7DH/?=
- =?us-ascii?Q?97P74o4Xa0/qK0i33djAU91S36O1g6MhAX982B8hYZgT8smhOPos2iqA9t4Z?=
- =?us-ascii?Q?rNuKCcCV2bT4Jp/E95ZUbvqhzSwI?=
+ ARA:13230031|376005|36860700004|82310400017|1800799015; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?CnVdhMeEzTFTxQh63AGoFkV+ajxQaxYTUcumdx8Oic3ml9rrYFHeYU3x2UGU?=
+ =?us-ascii?Q?1iZAPjwdA4dzGM3Zyopk2kOAWC8sgIbYKZINCnJK+GfZ0I75E82A/mF9h2IR?=
+ =?us-ascii?Q?zgu2Jfy3mQjCbVwdqYaSt79RwwPH9F9U9XV0cd+rL1p67sRITCdM5KnJStWU?=
+ =?us-ascii?Q?Zm+oo2Dh0sCjLqxWCLGKcS0fjIDAvbZR31iHDX/8bdYFxfwfbWItoWX2+732?=
+ =?us-ascii?Q?WJ8/JAodqxcpNri5ApCeCoSk1v54j0h6bqjG6zwqFCA5Uk5TGDbmTndpjZPf?=
+ =?us-ascii?Q?YF0UbulfhS0KJ3pGnf4yHlS/kA9TH9QtU/rglXIzx7FdlgxxfVkcj711QHg5?=
+ =?us-ascii?Q?tPBZzWWvxqzq+l5Gj1kj4EmfqAwGbXJTHQDE92zWMLmk/EPW6HwH3gbrnI3I?=
+ =?us-ascii?Q?KGH40W7YCtaq/aGRUieXK+TE5cN+tSwZUVoeQUPPc7+UZGwHBTcSSXM5/4GZ?=
+ =?us-ascii?Q?6M4hCq2QgvjIt1mTIhbx6RWI/unPbYnS8iG0rkSc2k68x7ah2tyxdBRlJ/4q?=
+ =?us-ascii?Q?RICwtKolXgpLzmF9o7T++V+zymVPy4/ayQgEykx7/F+E3UIeNCNVa/5vtVVN?=
+ =?us-ascii?Q?E5hkRJUiWm09KkwGHhYz3l2GwJNbuTC3LAX61/RvrlgxaRI4kt4/+Vixx1D2?=
+ =?us-ascii?Q?RsbgEYZ1rRlHcKE2PLMn7Yl3oyUWG9X6EBSfbbDalJ+DQdN4mMpK21c6App+?=
+ =?us-ascii?Q?4m2Q/lpxwOeV/ri6PQ1MU+Vac1g6SG2+c0CuFTmVjhZOvq00/kW5YiCir1uJ?=
+ =?us-ascii?Q?NaNAjd5a5QcFD67K49kqc0kKtqrgsS6Fdjwv1tu1cpQ/HDGLdJ5KJ3+6gjCs?=
+ =?us-ascii?Q?BmrsDqvaRXPdRfQJCl6Qj/VdYWXyDCa3W3mWBRL9Lb8YIdcp1JsJ5StNCs80?=
+ =?us-ascii?Q?FNRPEtXGLU0GnIruHJKgRgAro01By8yMwG4tVgAO9Xck0jRB3XOrajNZCJgX?=
+ =?us-ascii?Q?ZVxhJXPU/DN7q7nxcPIgJL1zNPvkdttOrtjzglAWaEsI8vaQrjtIxlRaAfvn?=
+ =?us-ascii?Q?xU0x5dcWV0aI6+owvzjj1NwKfgaa7CuLlf5wq1a+EiF8aRpD0ZavBnfsCLnA?=
+ =?us-ascii?Q?/KpWEK6QhR60HCv2BQER9Ewx2SbpyQHe4vyVS7vDEJymZ7MZJMhmy2reZ1ji?=
+ =?us-ascii?Q?/08BJbbUZteHoKqsMf+BdGnPhNygCzM4fl0NCdtcZGT+Afy5/gIEP4YROI1K?=
+ =?us-ascii?Q?1yVQuG71adkZujy1VmBqtW+66tCjEFfJP7YQtR6QGmTA5CmIDv40HvBBb5Pj?=
+ =?us-ascii?Q?fODoEdrhXaQdzT75MPYdpFi4FqfbHb4dE3bLRjxWiwArlSaFmlL8myRXKyXb?=
+ =?us-ascii?Q?54wciKuGLTiGaUCmHQ5FmxU/ebVLIRi1+26jRsMc1GbfwTxfTnPDQux/bHMb?=
+ =?us-ascii?Q?fnUcPXZkdCAGEqPovCoW8x4Yg6Sr?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(36860700004)(376005)(1800799015)(82310400017); DIR:OUT;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(376005)(36860700004)(82310400017)(1800799015); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:16:52.6934 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5047e8d4-ba08-4444-3f6b-08dc809a0209
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:16:54.0663 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e57bc75-3b5a-467b-1d08-08dc809a02dd
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B072.namprd04.prod.outlook.com
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBC.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7501
-Received-SPF: permerror client-ip=2a01:111:f403:2415::601;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6051
+Received-SPF: permerror client-ip=2a01:111:f403:2412::617;
  envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,31 +159,225 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Michael Roth <michael.roth@amd.com>
 
-For SEV-SNP guests, launch measurement is queried from within the guest
-during attestation, so don't attempt to return it as part of
-query-sev-launch-measure.
+Most of the current 'query-sev' command is relevant to both legacy
+SEV/SEV-ES guests and SEV-SNP guests, with 2 exceptions:
+
+  - 'policy' is a 64-bit field for SEV-SNP, not 32-bit, and
+    the meaning of the bit positions has changed
+  - 'handle' is not relevant to SEV-SNP
+
+To address this, this patch adds a new 'sev-type' field that can be
+used as a discriminator to select between SEV and SEV-SNP-specific
+fields/formats without breaking compatibility for existing management
+tools (so long as management tools that add support for launching
+SEV-SNP guest update their handling of query-sev appropriately).
+
+The corresponding HMP command has also been fixed up similarly.
 
 Signed-off-by: Michael Roth <michael.roth@amd.com>
+Co-developed-by:Pankaj Gupta <pankaj.gupta@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
 ---
- target/i386/sev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ qapi/misc-target.json | 72 ++++++++++++++++++++++++++++++++++---------
+ target/i386/sev.c     | 55 +++++++++++++++++++++------------
+ target/i386/sev.h     |  3 ++
+ 3 files changed, 96 insertions(+), 34 deletions(-)
 
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 4e0a6492a9..2d7d4d89bd 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -47,6 +47,50 @@
+            'send-update', 'receive-update' ],
+   'if': 'TARGET_I386' }
+ 
++##
++# @SevGuestType:
++#
++# An enumeration indicating the type of SEV guest being run.
++#
++# @sev: The guest is a legacy SEV or SEV-ES guest.
++#
++# @sev-snp: The guest is an SEV-SNP guest.
++#
++# Since: 6.2
++##
++{ 'enum': 'SevGuestType',
++  'data': [ 'sev', 'sev-snp' ],
++  'if': 'TARGET_I386' }
++
++##
++# @SevGuestInfo:
++#
++# Information specific to legacy SEV/SEV-ES guests.
++#
++# @policy: SEV policy value
++#
++# @handle: SEV firmware handle
++#
++# Since: 2.12
++##
++{ 'struct': 'SevGuestInfo',
++  'data': { 'policy': 'uint32',
++            'handle': 'uint32' },
++  'if': 'TARGET_I386' }
++
++##
++# @SevSnpGuestInfo:
++#
++# Information specific to SEV-SNP guests.
++#
++# @snp-policy: SEV-SNP policy value
++#
++# Since: 9.1
++##
++{ 'struct': 'SevSnpGuestInfo',
++  'data': { 'snp-policy': 'uint64' },
++  'if': 'TARGET_I386' }
++
+ ##
+ # @SevInfo:
+ #
+@@ -60,25 +104,25 @@
+ #
+ # @build-id: SEV FW build id
+ #
+-# @policy: SEV policy value
+-#
+ # @state: SEV guest state
+ #
+-# @handle: SEV firmware handle
++# @sev-type: Type of SEV guest being run
+ #
+ # Since: 2.12
+ ##
+-{ 'struct': 'SevInfo',
+-    'data': { 'enabled': 'bool',
+-              'api-major': 'uint8',
+-              'api-minor' : 'uint8',
+-              'build-id' : 'uint8',
+-              'policy' : 'uint32',
+-              'state' : 'SevState',
+-              'handle' : 'uint32'
+-            },
+-  'if': 'TARGET_I386'
+-}
++{ 'union': 'SevInfo',
++  'base': { 'enabled': 'bool',
++            'api-major': 'uint8',
++            'api-minor' : 'uint8',
++            'build-id' : 'uint8',
++            'state' : 'SevState',
++            'sev-type' : 'SevGuestType' },
++  'discriminator': 'sev-type',
++  'data': {
++      'sev': 'SevGuestInfo',
++      'sev-snp': 'SevSnpGuestInfo' },
++  'if': 'TARGET_I386' }
++
+ 
+ ##
+ # @query-sev:
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 56c1cce8e7..458ff5040d 100644
+index 8ca486f5d2..101661bf71 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -803,7 +803,9 @@ sev_launch_get_measure(Notifier *notifier, void *unused)
- 
- static char *sev_get_launch_measurement(void)
+@@ -377,25 +377,27 @@ static SevInfo *sev_get_info(void)
  {
--    SevGuestState *sev_guest = SEV_GUEST(MACHINE(qdev_get_machine())->cgs);
-+    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-+    SevGuestState *sev_guest =
-+        (SevGuestState *)object_dynamic_cast(OBJECT(cgs), TYPE_SEV_GUEST);
+     SevInfo *info;
+     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+-    SevGuestState *sev_guest =
+-        (SevGuestState *)object_dynamic_cast(OBJECT(sev_common),
+-                                             TYPE_SEV_GUEST);
  
-     if (sev_guest &&
-         SEV_COMMON(sev_guest)->state >= SEV_STATE_LAUNCH_SECRET) {
+     info = g_new0(SevInfo, 1);
+     info->enabled = sev_enabled();
+ 
+     if (info->enabled) {
+-        if (sev_guest) {
+-            info->handle = sev_guest->handle;
+-        }
+         info->api_major = sev_common->api_major;
+         info->api_minor = sev_common->api_minor;
+         info->build_id = sev_common->build_id;
+         info->state = sev_common->state;
+-        /* we only report the lower 32-bits of policy for SNP, ok for now... */
+-        info->policy =
+-            (uint32_t)object_property_get_uint(OBJECT(sev_common),
+-                                               "policy", NULL);
++
++        if (sev_snp_enabled()) {
++            info->sev_type = SEV_GUEST_TYPE_SEV_SNP;
++            info->u.sev_snp.snp_policy =
++                object_property_get_uint(OBJECT(sev_common), "policy", NULL);
++        } else {
++            info->sev_type = SEV_GUEST_TYPE_SEV;
++            info->u.sev.handle = SEV_GUEST(sev_common)->handle;
++            info->u.sev.policy =
++                (uint32_t)object_property_get_uint(OBJECT(sev_common),
++                                                   "policy", NULL);
++        }
+     }
+ 
+     return info;
+@@ -418,20 +420,33 @@ void hmp_info_sev(Monitor *mon, const QDict *qdict)
+ {
+     SevInfo *info = sev_get_info();
+ 
+-    if (info && info->enabled) {
+-        monitor_printf(mon, "handle: %d\n", info->handle);
+-        monitor_printf(mon, "state: %s\n", SevState_str(info->state));
+-        monitor_printf(mon, "build: %d\n", info->build_id);
+-        monitor_printf(mon, "api version: %d.%d\n",
+-                       info->api_major, info->api_minor);
++    if (!info || !info->enabled) {
++        monitor_printf(mon, "SEV is not enabled\n");
++        goto out;
++    }
++
++    monitor_printf(mon, "SEV type: %s\n", SevGuestType_str(info->sev_type));
++    monitor_printf(mon, "state: %s\n", SevState_str(info->state));
++    monitor_printf(mon, "build: %d\n", info->build_id);
++    monitor_printf(mon, "api version: %d.%d\n", info->api_major,
++                   info->api_minor);
++
++    if (sev_snp_enabled()) {
+         monitor_printf(mon, "debug: %s\n",
+-                       info->policy & SEV_POLICY_NODBG ? "off" : "on");
+-        monitor_printf(mon, "key-sharing: %s\n",
+-                       info->policy & SEV_POLICY_NOKS ? "off" : "on");
++                       info->u.sev_snp.snp_policy & SEV_SNP_POLICY_DBG ? "on"
++                                                                       : "off");
++        monitor_printf(mon, "SMT allowed: %s\n",
++                       info->u.sev_snp.snp_policy & SEV_SNP_POLICY_SMT ? "on"
++                                                                       : "off");
+     } else {
+-        monitor_printf(mon, "SEV is not enabled\n");
++        monitor_printf(mon, "handle: %d\n", info->u.sev.handle);
++        monitor_printf(mon, "debug: %s\n",
++                       info->u.sev.policy & SEV_POLICY_NODBG ? "off" : "on");
++        monitor_printf(mon, "key-sharing: %s\n",
++                       info->u.sev.policy & SEV_POLICY_NOKS ? "off" : "on");
+     }
+ 
++out:
+     qapi_free_SevInfo(info);
+ }
+ 
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 94295ee74f..5dc4767b1e 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -31,6 +31,9 @@
+ #define SEV_POLICY_DOMAIN       0x10
+ #define SEV_POLICY_SEV          0x20
+ 
++#define SEV_SNP_POLICY_SMT      0x10000
++#define SEV_SNP_POLICY_DBG      0x80000
++
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
+     size_t setup_size;
 -- 
 2.34.1
 
