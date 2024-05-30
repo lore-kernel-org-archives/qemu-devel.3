@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3EF3C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 18:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE71C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 19:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCkgV-0001mH-GD; Thu, 30 May 2024 14:39:31 -0400
+	id 1sClCf-0002kr-3Y; Thu, 30 May 2024 15:12:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCkgU-0001ls-9y
- for qemu-devel@nongnu.org; Thu, 30 May 2024 14:39:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sCkgS-0002Qq-Ae
- for qemu-devel@nongnu.org; Thu, 30 May 2024 14:39:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717094366;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O3fg3AD9tLOpSpPoqPmSTCO4ln9FVKLVQ9RApRogROY=;
- b=NRVggTZ7hgMVi0CZdjr4phTR8M2YPoGlPPGN91C8oc7PiaCVLtahXNL3X1UAv7O61/nY4r
- 9QSsA1Xc/TEby+pzFlUkyzgvF0Ivf7YyGlzw7oKW3rxDczKbXI96sV6ZLdLT+rcdLYRivl
- sKHaNXRVYswdBmoBQcTT1OfMtLNILDI=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-5nhOgMbNOt-b27tUOKbPhQ-1; Thu, 30 May 2024 14:39:25 -0400
-X-MC-Unique: 5nhOgMbNOt-b27tUOKbPhQ-1
-Received: by mail-oo1-f69.google.com with SMTP id
- 006d021491bc7-5b9b2a518b9so269641eaf.0
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 11:39:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sClCd-0002kc-Ui
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 15:12:43 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sClCb-0000I4-1d
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 15:12:43 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52a54d664e3so439654e87.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 12:12:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717096356; x=1717701156; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=brRm19wb4uJvm7hKFji91uvETQkKBNaqx5vzVfwT2Zg=;
+ b=vKf115B38slKmTmnDoMNSgQSbv25JA2cetvI14SDTXFwG0lCmGBqH1goXiPGIgPCfb
+ h19SLLfsbeoGlpzCziEGkQ71dWeF5Mw1YnIjNKra3OewC6/9FJ7S20tjs0klJ63owDuV
+ c6kkOr2XgugbFZ0jame4bWwJBQTVqRqbasrQyKjsx/e8WB78150+x0zHUKpoJ65Y+vo0
+ L06kiNuM1aG0ntJN7h8jZwua+b7izsyDlf+HI1OUG1JvdyuNI4nJsLU9dCJrnYLy4n4b
+ hW0ahVYfjzrC8aHQhzuSFG9bRWsrpZWeH9G7b4DG3VoXklodlWdPK/WRXTaZjHB+bb9K
+ Ofpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717094364; x=1717699164;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=O3fg3AD9tLOpSpPoqPmSTCO4ln9FVKLVQ9RApRogROY=;
- b=cCAxQbG41Q00gTZQJ5okcJaWcWYX6bLrMMzLhRkSDjK8nGjMpE1oUvLeg9x4kJeCpu
- NKq50ykY8Krm5sEJymopazwobHPgbCusSzkXiMwsB8jmEnEkVehND0nSs4NYsdxi5r2+
- T0EpSnFPF/7Cu8JCtlQTU3gMEmnBrLmKgj92QOI2TKGwU3IqsGAROzo5qxzdlaGrUYBo
- lu5rsrvMGWBQ71Y3Iz90TJgbdsyogdBSQe0wEHhndxjRkaTJPfOCUJ7/1Jl56JEOX+XH
- Jcg8YeDIpOjr1G1B/S9dCsY7Wx8RBWd6VHJ5gohvXsJ3XffHAelC81XQ/PrXAK53fTtV
- ejgQ==
-X-Gm-Message-State: AOJu0YxJxqwcTiy52wP968Wu2dV9MWoZihfLLHbN5g7hKNgkWPkF2635
- zLi0vTYB5iK9iZLPe0+a1/7FhOy+8siA4Pnsfz/nKZk9oN7BKVG5a6zMbqGMoFdWfCAy2+RLRBk
- P9z04G7IiLLoSjnc4eD4rmPzm3o+lZBfc8L8ABgABZPAo6oNujAMl
-X-Received: by 2002:a05:6870:d394:b0:24f:d9fe:8ba5 with SMTP id
- 586e51a60fabf-25060b2c4f5mr3021826fac.2.1717094363606; 
- Thu, 30 May 2024 11:39:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRFryxSAum+QZ7pEgn/HgoH1yktcFo6cnYvudTHYdCyuTt90NvgkGKpzGz08TUGeqVomQAHw==
-X-Received: by 2002:a05:6870:d394:b0:24f:d9fe:8ba5 with SMTP id
- 586e51a60fabf-25060b2c4f5mr3021772fac.2.1717094362664; 
- Thu, 30 May 2024 11:39:22 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43ff23c8084sm748411cf.34.2024.05.30.11.39.21
+ d=1e100.net; s=20230601; t=1717096356; x=1717701156;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=brRm19wb4uJvm7hKFji91uvETQkKBNaqx5vzVfwT2Zg=;
+ b=ATgYJCoV7IXzAC/jN5y082W5xExCf1UE+ADtDpuj+UYExlYBC85l5vv7wA6M9UPSVE
+ gKqplm3UlHi6AQklUoOzGGpVIXFx+5+bNz6N57rNN+gJQlpve4RWLtpy2jZp4PWJG64O
+ jDX3E+4oqQ++8EKvA7vZfN5QE5YSvAiS9h6Xo2XeTfGJtgCeAgnJleVKjtGAMfX2T/Oq
+ f7REH5ys7/bTl2URhr4ZeWzy2CQfPgcCCROz0rKaqxtGyL7WIGxNCZ3Ye+fFWWdATEoR
+ PNOT8jzXlqZlCFbjqvWorTlL+Ut0T5OYXPzN/nwMo1u0KEZ1+EQ1lNlywd7zw3xkSLRl
+ uuKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXOMqSa2GZJ+4mEdItXhD6AmitU8N96+h0hRWzwCbUK2CHhCNonctNfq25Layie2N2xY6V6H5RKTPCgyxgxnFB3Tb28D0=
+X-Gm-Message-State: AOJu0YzisL4Xc5aqNZBEVoIvxDhDU7ffoxroy6+nPsDSPfza2PZvsepS
+ Sci15cax+x3ejDiEGhhAnXpzArdf4eLr3zIem8K5Pv1SIofAFgqEu9QY4AZDVMw=
+X-Google-Smtp-Source: AGHT+IHp3OzCIvJ2Xl7S9QGV9Uf0Ay+UuWi0GUL/qnRG0Jk8adICM8PRtlEFE+bKWepxXXFiBdfqhQ==
+X-Received: by 2002:ac2:4316:0:b0:52b:829c:34e4 with SMTP id
+ 2adb3069b0e04-52b829c36dfmr866722e87.59.1717096354144; 
+ Thu, 30 May 2024 12:12:34 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a67eb341aa7sm5483666b.188.2024.05.30.12.12.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 11:39:22 -0700 (PDT)
-Date: Thu, 30 May 2024 14:39:19 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V1 19/26] physmem: preserve ram blocks for cpr
-Message-ID: <ZljH1zbqisK6VowI@x1n>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-20-git-send-email-steven.sistare@oracle.com>
- <ZlZQVijf2weEmzYK@x1n>
- <c3f23e83-81d7-469a-aa04-29785fa6f8d7@oracle.com>
- <ZleBOx6pN6KCn0a2@x1n>
- <e0cb49da-9799-4a26-8844-f5055b6ae45b@oracle.com>
+ Thu, 30 May 2024 12:12:33 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 15F145F8CB;
+ Thu, 30 May 2024 20:12:33 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Cord Amfmgm <dmamfmgm@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+In-Reply-To: <CACBuX0T6aPHEQzgqDJs14NvOTPj9ngQ4Avw-dZ8yn4q4fGbnqA@mail.gmail.com>
+ (Cord Amfmgm's message of "Thu, 30 May 2024 11:03:50 -0500")
+References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
+ <CAFEAcA9aum5+z3sr-OpCHZRWxFtZGS_kGOjjmRh7H1TBTZuFRQ@mail.gmail.com>
+ <CACBuX0Q3TMvmxuuAHfVY679wpKF+0N+-aw=A7PLiba7ndc5v+w@mail.gmail.com>
+ <CAFEAcA9XvHOF22m-9ZFtKLAaShE5gVjsy-AxQyBwVAkRZ2QW6g@mail.gmail.com>
+ <CACBuX0Rzh9g4BEei8=vk0vOr7BwEZqom4LBGLcqH_omnBy9fLQ@mail.gmail.com>
+ <CAFEAcA9V1J4w00PJB+Ct_3z2KGHcfGs_C8OqX8mdnW_bLxbUiQ@mail.gmail.com>
+ <CACBuX0SR2cuFu+GaFGxp5rD_b+4HnNHfhQx2Csdw8L8QN+T7AA@mail.gmail.com>
+ <87zfs7d7i6.fsf@draig.linaro.org>
+ <CACBuX0T6aPHEQzgqDJs14NvOTPj9ngQ4Avw-dZ8yn4q4fGbnqA@mail.gmail.com>
+Date: Thu, 30 May 2024 20:12:33 +0100
+Message-ID: <87mso7cdwe.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e0cb49da-9799-4a26-8844-f5055b6ae45b@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,134 +105,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 01:12:40PM -0400, Steven Sistare wrote:
-> On 5/29/2024 3:25 PM, Peter Xu wrote:
-> > On Wed, May 29, 2024 at 01:31:53PM -0400, Steven Sistare wrote:
-> > > On 5/28/2024 5:44 PM, Peter Xu wrote:
-> > > > On Mon, Apr 29, 2024 at 08:55:28AM -0700, Steve Sistare wrote:
-> > > > > Preserve fields of RAMBlocks that allocate their host memory during CPR so
-> > > > > the RAM allocation can be recovered.
-> > > > 
-> > > > This sentence itself did not explain much, IMHO.  QEMU can share memory
-> > > > using fd based memory already of all kinds, as long as the memory backend
-> > > > is path-based it can be shared by sharing the same paths to dst.
-> > > > 
-> > > > This reads very confusing as a generic concept.  I mean, QEMU migration
-> > > > relies on so many things to work right.  We mostly asks the users to "use
-> > > > exactly the same cmdline for src/dst QEMU unless you know what you're
-> > > > doing", otherwise many things can break.  That should also include ramblock
-> > > > being matched between src/dst due to the same cmdlines provided on both
-> > > > sides.  It'll be confusing to mention this when we thought the ramblocks
-> > > > also rely on that fact.
-> > > > 
-> > > > So IIUC this sentence should be dropped in the real patch, and I'll try to
-> > > > guess the real reason with below..
-> > > 
-> > > The properties of the implicitly created ramblocks must be preserved.
-> > > The defaults can and do change between qemu releases, even when the command-line
-> > > parameters do not change for the explicit objects that cause these implicit
-> > > ramblocks to be created.
-> > 
-> > AFAIU, QEMU relies on ramblocks to be the same before this series.  Do you
-> > have an example?  Would that already cause issue when migrate?
-> 
-> Alignment has changed, and used_length vs max_length changed when
-> resizeable ramblocks were introduced.  I have dealt with these issues
-> while supporting cpr for our internal use, and the learned lesson is to
-> explicitly communicate the creation-time parameters to new qemu.
+Cord Amfmgm <dmamfmgm@gmail.com> writes:
 
-Why used_length can change?  I'm looking at ram_mig_ram_block_resized():
+> On Thu, May 30, 2024 at 3:33=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>
+>  Cord Amfmgm <dmamfmgm@gmail.com> writes:
+>
+>  > On Tue, May 28, 2024 at 11:32=E2=80=AFAM Peter Maydell <peter.maydell@=
+linaro.org> wrote:
+>  >
+>  >  On Tue, 28 May 2024 at 16:37, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
+>  >  >
+>  >  > On Tue, May 28, 2024 at 9:03=E2=80=AFAM Peter Maydell <peter.maydel=
+l@linaro.org> wrote:
+>  >  >>
+>  >  >> On Mon, 20 May 2024 at 23:24, Cord Amfmgm <dmamfmgm@gmail.com> wro=
+te:
+>  >  >> > On Mon, May 20, 2024 at 12:05=E2=80=AFPM Peter Maydell <peter.ma=
+ydell@linaro.org> wrote:
+>  <snip>
+>  >  >> > And here's an example buffer of length 0 -- you probably already=
+ know what I'm going to do here:
+>  >  >> >
+>  >  >> > char buf[0];
+>  >  >> > char * CurrentBufferPointer =3D &buf[0];
+>  >  >> > char * BufferEnd =3D &buf[-1]; // "address of the last byte in t=
+he buffer"
+>  >  >> > // The OHCI Host Controller than advances CurrentBufferPointer l=
+ike this: CurrentBufferPointer +=3D 0
+>  >  >> > // After the transfer:
+>  >  >> > // CurrentBufferPointer =3D &buf[0];
+>  >  >> > // BufferEnd =3D &buf[-1];
+>  >  >>
+>  >  >> Right, but why do you think this is valid, rather than
+>  >  >> being a guest software bug? My reading of the spec is that it's
+>  >  >> pretty clear about how to say "zero length buffer", and this
+>  >  >> isn't it.
+>  >  >>
+>  >  >> Is there some real-world guest OS that programs the OHCI
+>  >  >> controller this way that we're trying to accommodate?
+>  >  >
+>  >  >
+>  >  > qemu versions 4.2 and before allowed this behavior.
+>  >
+>  >  So? That might just mean we had a bug and we fixed it.
+>  >  4.2 is a very old version of QEMU and nobody seems to have
+>  >  complained in the four years since we released 5.0 about this,
+>  >  which suggests that generally guest OS drivers don't try
+>  >  to send zero-length buffers in this way.
+>  >
+>  >  > I don't think it's valid to ask for a *popular* guest OS as a proof=
+-of-concept because I'm not an expert on those.
+>  >
+>  >  I didn't ask for "popular"; I asked for "real-world".
+>  >  What is the actual guest code you're running that falls over
+>  >  because of the behaviour change?
+>  >
+>  >  More generally, why do you want this behaviour to be
+>  >  changed? Reasonable reasons might include:
+>  >   * we're out of spec based on reading the documentation
+>  >   * you're trying to run some old Windows VM/QNX/etc image,
+>  >     and it doesn't work any more
+>  >   * all the real hardware we tested behaves this way
+>  >
+>  >  But don't necessarily include:
+>  >   * something somebody wrote and only tested on QEMU happens to
+>  >     assume the old behaviour rather than following the hw spec
+>  >
+>  >  QEMU occasionally works around guest OS bugs, but only as
+>  >  when we really have to. It's usually better to fix the
+>  >  bug in the guest.
+>  >
+>  > It's not, and I've already demonstrated that real hardware is consiste=
+nt with the fix in this patch.
+>  >
+>  > Please check your tone.
+>
+>  I don't think that is a particularly helpful comment for someone who is
+>  taking the time to review your patches. Reading through the thread I
+>  didn't see anything that said this is how real HW behaves but I may well
+>  have missed it. However you have a number of review comments to address
+>  so I suggest you spin a v2 of the series to address them and outline the
+>  reason to accept an out of spec transaction.
+>
+> I did a rework of the patch -- see my email from May 20, quoted below -- =
+and I was under the impression it addressed all the
+> review comments. Did I miss something? I apologize if I did.
 
-    if (!migration_is_idle()) {
-        /*
-         * Precopy code on the source cannot deal with the size of RAM blocks
-         * changing at random points in time - especially after sending the
-         * RAM block sizes in the migration stream, they must no longer change.
-         * Abort and indicate a proper reason.
-         */
-        error_setg(&err, "RAM block '%s' resized during precopy.", rb->idstr);
-        migration_cancel(err);
-        error_free(err);
-    }
+Ahh I see - I'd only seen this thread continue so wasn't aware a new
+version had been posted. For future patches consider using -vN when
+sending them so we can clearly see a new revision is available.
 
-We sent used_length upfront of a migration during SETUP phase.  Looks like
-what you're describing can be something different, though?
+>
+>> index acd6016980..71b54914d3 100644
+>> --- a/hw/usb/hcd-ohci.c
+>> +++ b/hw/usb/hcd-ohci.c
+>> @@ -941,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct o=
+hci_ed *ed)
+>>          if ((td.cbp & 0xfffff000) !=3D (td.be & 0xfffff000)) {
+>>              len =3D (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
+>>          } else {
+>> -            if (td.cbp > td.be) {
+>> -                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
+>> +            if (td.cbp - 1 > td.be) {  /* rely on td.cbp !=3D 0 */
+>
+>> Reading through the thread I didn't see anything that said this is how r=
+eal HW behaves but I may well have missed it.
+>
+> This is what I wrote regarding real HW:
+>
+> Results are:
+>
+>  qemu 4.2   | qemu HEAD  | actual HW
+> ------------+------------+------------
+>  works fine | ohci_die() | works fine
+>
+> Would additional verification of the actual HW be useful?
+>
+> Peter posted the following which is more specific than "qemu 4.2" -- I ag=
+ree this is most likely the qemu commit where this
+> thread is focused:
+>
+>> Almost certainly this was commit 1328fe0c32d54 ("hw: usb: hcd-ohci:
+>> check len and frame_number variables"), which added these bounds
+>> checks. Prior to that we did no bounds checking at all, which
+>> meant that we permitted cbp=3Dbe+1 to mean a zero length, but also
+>> that we permitted the guest to overrun host-side buffers by
+>> specifying completely bogus cbp and be values. The timeframe is
+>> more or less right (2020), at least.
+>>=20
+>> -- PMM
+>
+> Where does the conversation go from here? I'm under the impression I have=
+ provided objective answers to all the questions
+> and resolved all review comments on the code. I receive the feedback
+> that I missed something - please restate the question?
 
-Regarding to rb->align: isn't that mostly a constant, reflecting the MR's
-alignment?  It's set when ramblock is created IIUC:
+I can see patch 1/2 has been queued and 2/2 is still outstanding. I'm
+having trouble finding the referenced entry in the OHCI spec. The only
+one I can see is Release 1.1, January 6th, 2000 and that doesn't have a
+section 4.3.1.2.
 
-    rb->align = mr->align;
+I think discussion should continue on that thread.
 
-When will the alignment change?
-
-> 
-> These are not an issue for migration because the ramblock is re-created
-> and the data copied into the new memory.
-> 
-> > > > > Mirror the mr->align field in the RAMBlock to simplify the vmstate.
-> > > > > Preserve the old host address, even though it is immediately discarded,
-> > > > > as it will be needed in the future for CPR with iommufd.  Preserve
-> > > > > guest_memfd, even though CPR does not yet support it, to maintain vmstate
-> > > > > compatibility when it becomes supported.
-> > > > 
-> > > > .. It could be about the vfio vaddr update feature that you mentioned and
-> > > > only for iommufd (as IIUC vfio still relies on iova ranges, then it won't
-> > > > help here)?
-> > > > 
-> > > > If so, IMHO we should have this patch (or any variance form) to be there
-> > > > for your upcoming vfio support.  Keeping this around like this will make
-> > > > the series harder to review.  Or is it needed even before VFIO?
-> > > 
-> > > This patch is needed independently of vfio or iommufd.
-> > > 
-> > > guest_memfd is independent of vfio or iommufd.  It is a recent addition
-> > > which I have not tried to support, but I added this placeholder field
-> > > to it can be supported in the future without adding a new field later
-> > > and maintaining backwards compatibility.
-> > 
-> > Is guest_memfd the only user so far, then?  If so, would it be possible we
-> > split it as a separate effort on top of the base cpr-exec support?
-> 
-> I don't understand the question.  I am indeed deferring support for guest_memfd
-> to a future time.  For now, I am adding a blocker, and reserving a field for
-> it in the preserved ramblock attributes, to avoid adding a subsection later.
-
-I meant I'm thinking whether the new ramblock vmsd may not be required for
-the initial implementation.
-
-E.g., IIUC vaddr is required by iommufd, and so far that's not part of the
-initial support.
-
-Then I think a major thing is about the fds to be managed that will need to
-be shared.  If we put guest_memfd aside, it can be really, mostly, about
-VFIO fds.  For that, I'm wondering whether you looked into something like
-this:
-
-commit da3e04b26fd8d15b344944504d5ffa9c5f20b54b
-Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Date:   Tue Nov 21 16:44:10 2023 +0800
-
-    vfio/pci: Make vfio cdev pre-openable by passing a file handle
-
-I just notice this when I was thinking of a way where it might be possible
-to avoid QEMU vfio-pci open the device at all, then I found we have
-something like that already..
-
-Then if the mgmt wants, IIUC that fd can be passed down from Libvirt
-cleanly to dest qemu in a no-exec context.  Would this work too, and
-cleaner / reusing existing infrastructures?
-
-I think it's nice to always have libvirt managing most, or possible, all
-fds that qemu uses, then we don't even need scm_rights.  But I didn't look
-deeper into this, just a thought.
-
-When thinking about this, I also wonder how cpr-exec handles the limited
-environments like cgroups and especially seccomps.  I'm not sure what's the
-status of that in most cloud environments, but I think exec() / fork() is
-definitely not always on the seccomp whitelist, and I think that's also
-another reason why we can think about avoid using them.
-
--- 
-Peter Xu
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
