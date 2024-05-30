@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38882C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 22:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CA9C25B7E
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 22:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCnui-0007JJ-UB; Thu, 30 May 2024 18:06:24 -0400
+	id 1sCnuo-0007Kx-49; Thu, 30 May 2024 18:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sCnuf-0007IM-DJ
- for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:21 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sCnul-0007Js-7N
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:27 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sCnud-0005CN-AJ
- for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:20 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f62fae8c3cso4746365ad.3
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 15:06:15 -0700 (PDT)
+ id 1sCnui-0005EC-Vf
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:26 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f48e9414e9so12617225ad.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 15:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717106773; x=1717711573; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=c+v3Csm26bJrGyWtWGYvNY7l6wOwq0bZJEszW/Rc9OM=;
- b=HM3dCL2RT2MhxxLfziXcVUtAEjLSdqt0PoFpNKQGbQBcGRIOghWo/SqIhrlruoFhVo
- 3l0/no/JfvqHlVXEtRM9U2Xl5fMuzlemfHKOePWfT2E20YI8WorUzSB6sqIlcnOZom7A
- l/3wYVmHK+MqMnvK5rcvLK9ajwK5430zgNR1DcSM6HZLbML4MLjMnreirbMAjTUCqOof
- qMFHaGuDjDK5t51b86jciPl5cRVvIK8Q4bgIcOE8q4nquztiOaIsyVGv2Kw14DPbXl+9
- n3VxH1GubYOP0pajZS0/J+1o0wsvpYXA/IveW1nBK0U6vnnh1fhq9QWEHI8U5STrfv1D
- iikA==
+ d=linaro.org; s=google; t=1717106781; x=1717711581; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4pgM/UwM460cpw8hnXWYswA57iFvGhgQxtIaLtYjo7Y=;
+ b=ZEeT0b7mpooBMllfEc1/ONnb9aRY9RZqLznJIjbWNGyNNIplbMzO7RgtZErCDO/edS
+ k5mcbInnuaglirtClHxx3rc3e/VmM2783E3Dwf3cHurOw4Uc5Q+FFHd9z0jMDKRfhEGq
+ yivCmRP50DR8anfFyFDIGLnFOrJCoLBJjYqcaQQtt4tsrRKSE5dOkEEq9gxzRRo3xXsB
+ vYbnbspUNku+etwEbIiHwJX+t5lDwzDc+aS94O5OgSUZ41CLNTIvfA+/J3nZs1oUUFj7
+ ItwmjEhvs1sVw0traBI4XIyI+ZGJ+PB+98806TFoQq6jL09OBsCpFdxJz0QVP7D0Urdp
+ 389g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717106773; x=1717711573;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=c+v3Csm26bJrGyWtWGYvNY7l6wOwq0bZJEszW/Rc9OM=;
- b=iLO55nSYhmaAeoeR3w5dRiK1WK82CQyRmkMlD/E3QvVV1E1wNkXAi1iLxhgewok819
- 4UPPclKksts+pUgEFOHZOhxbpsdAdyvVQqSKlZjoPj9wYOpFSCiNcXp8mvqwGioZTW80
- wEI6qeeydmPzB+9957yzgVAYsububilJa8qS8LJ2HQg2vRSpW5xe8CKYE/RRcn0IYqIm
- aqYrasM935B7A3+ZxvgOdVf4gy+oKoImUhkx3fJjgyjH/i6adCWIxXZP+88Tmb3fTrF+
- 0jPa7sV+yOlvUmJLgFiW2I4UyRRVvlLQzUfBjYmShiIHxQqhzT9e0Bk6zNTVYEs7YJtz
- mifw==
-X-Gm-Message-State: AOJu0YyfZAvY+J1KlcL6CdWkWglwQAUpBMCcSzqEOmVRHfa813efo0KR
- V+9kFsesbH3DWOZB4iuyOLSskfW3fEyiz6XcD8hE8yMCQT4FcQGuTQxzKZGg+ZRFW4SIVjm869D
- CTAw=
-X-Google-Smtp-Source: AGHT+IGvCN1bDs8DczhYLgo9oVH4qj9IDop4ggUxid16S6B+ro7F/b8NLBYJBI7CIC5ibIdvZobcNA==
-X-Received: by 2002:a17:902:ecc5:b0:1f6:35ab:dd55 with SMTP id
- d9443c01a7336-1f6370c1400mr1039165ad.65.1717106773296; 
- Thu, 30 May 2024 15:06:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717106781; x=1717711581;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4pgM/UwM460cpw8hnXWYswA57iFvGhgQxtIaLtYjo7Y=;
+ b=opgSHlIhb6BG9tilGqhXJR12UyyY0DWIxUYyb4j4GTCBKDQeBSP30bT14GjuE6wWY2
+ Xd39WNHRi4KdWK5AgIAvtCQUjHgctKfjbO3R1jYKPdOS9Zst+nemxchd6aKNJAN0v7sH
+ FvHXyhxJd8ZBsP3K0gMAd9EbgahGUtegSTW6Y6m0+7wXRVU74vz/b9vPDmJJ4DLzKa/v
+ gXUOcx0Efxskaao+1n+eaZuvTOk+h3m3WR+4ub8YnVnb2zEgTSLcwZ+CyUp9+Ldy6epu
+ 6iKcixaLbdco6ou64Mkovs0pC0tT1cdxFts1nrHObd+eq8k1sjDnS4P+H1ZuMQBh4GeU
+ pisQ==
+X-Gm-Message-State: AOJu0YypQPNaLPJbVhRAFr11amFKd4QQx6066gQvQ0mkxjvocEjaaNzj
+ 5kCHH5V2zI1/ue7sisHhiG5rdLeHXbIjJF8vs66xkSnSRLjjwUO4FawgrkRTqCrP9ReJIlMk/MJ
+ AEEo=
+X-Google-Smtp-Source: AGHT+IEA3toYJoWKwAsW1/f2O+GKOo6Rs8aShA58gsZNGoiCW+r4/wkuZv8MReQr9PDRQPpxEaaMVA==
+X-Received: by 2002:a17:902:e5d1:b0:1f3:620:c92 with SMTP id
+ d9443c01a7336-1f6359934d1mr3142845ad.7.1717106781416; 
+ Thu, 30 May 2024 15:06:21 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::e697])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323dde39sm2732615ad.167.2024.05.30.15.06.12
+ d9443c01a7336-1f6323dde39sm2732615ad.167.2024.05.30.15.06.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 15:06:12 -0700 (PDT)
+ Thu, 30 May 2024 15:06:20 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -66,15 +67,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 0/6] Implement icount=auto using TCG Plugins
-Date: Thu, 30 May 2024 15:06:04 -0700
-Message-Id: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 5/6] plugins: add time control API
+Date: Thu, 30 May 2024 15:06:09 -0700
+Message-Id: <20240530220610.1245424-6-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
+References: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,83 +100,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The goal here is to be able to scale temporally execution of qemu-user/system,
-using a given number of instructions per second.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-We define a virtual clock, that can be late or in advance compared to real time.
-When we are in advance, we slow execution (by sleeping) until catching real
-time.
+Expose the ability to control time through the plugin API. Only one
+plugin can control time so it has to request control when loaded.
+There are probably more corner cases to catch here.
 
-Finally, we should be able to cleanup icount=auto mode completely, and keep
-icount usage for determistic purposes only.
+From: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/qemu/qemu-plugin.h   | 23 +++++++++++++++++++++++
+ plugins/api.c                | 31 +++++++++++++++++++++++++++++++
+ plugins/qemu-plugins.symbols |  2 ++
+ 3 files changed, 56 insertions(+)
 
-It is built upon new TCG Plugins inline ops (store + conditional callbacks), now
-merged on master.
-
-Example in user-mode:
-
-- Retrieve number of instructions to execute /bin/true
-$ ./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true
-cpu 0 insns: 120546
-total insns: 120546
-- Slow execution to match 5 seconds
-$ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips,ips=$((120546/5)) /bin/true
-real    0m4.985s
-
-Tested in system mode by booting a full debian system, and using:
-$ sysbench cpu run
-Performance decrease linearly with the given number of ips.
-
-v2
---
-
-- Added missing personal Signed-off-by for commits from Alex
-- Fix bad rebase in stubs/meson.build
-- move qtest_{get,set}_virtual_clock to accel/qtest/qtest.c
-- A race condition was identified for plugins init/idle/resume, but is not
-  related to this series, and will be fixed in another one:
-  https://lore.kernel.org/qemu-devel/20240529152219.825680-1-alex.bennee@linaro.org/
-
-v3
---
-
-- remove precise execution (per insn, per tb is enough)
-- fixed algorithm used. Instead of comparing from start time of the system, we
-  just check on a given quantum of time that we didn't run too fast. It is more
-  simple, there is no need to track idle/resume events, and a vcpu can sleep
-  correctly.
-- use "sysbench cpu run" in system mode to check execution is slowed as expected.
-- do not use idle/resume callback
-
-Alex Bennée (4):
-  sysemu: add set_virtual_time to accel ops
-  qtest: use cpu interface in qtest_clock_warp
-  sysemu: generalise qtest_warp_clock as qemu_clock_advance_virtual_time
-  plugins: add time control API
-
-Pierrick Bouvier (2):
-  qtest: move qtest_{get,set}_virtual_clock to accel/qtest/qtest.c
-  contrib/plugins: add ips plugin example for cost modeling
-
- include/qemu/qemu-plugin.h                    |  23 +++
- include/qemu/timer.h                          |  15 ++
- include/sysemu/accel-ops.h                    |  18 +-
- include/sysemu/cpu-timers.h                   |   3 +-
- include/sysemu/qtest.h                        |   2 -
- accel/qtest/qtest.c                           |  13 ++
- contrib/plugins/ips.c                         | 164 ++++++++++++++++++
- plugins/api.c                                 |  31 ++++
- ...t-virtual-clock.c => cpus-virtual-clock.c} |   5 +
- system/cpus.c                                 |  11 ++
- system/qtest.c                                |  37 +---
- util/qemu-timer.c                             |  26 +++
- contrib/plugins/Makefile                      |   1 +
- plugins/qemu-plugins.symbols                  |   2 +
- stubs/meson.build                             |   2 +-
- 15 files changed, 314 insertions(+), 39 deletions(-)
- create mode 100644 contrib/plugins/ips.c
- rename stubs/{cpus-get-virtual-clock.c => cpus-virtual-clock.c} (68%)
-
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 95703d8fec1..80b1637cede 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -661,6 +661,29 @@ void qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+     qemu_plugin_u64 entry,
+     uint64_t imm);
+ 
++/**
++ * qemu_plugin_request_time_control() - request the ability to control time
++ *
++ * This grants the plugin the ability to control system time. Only one
++ * plugin can control time so if multiple plugins request the ability
++ * all but the first will fail.
++ *
++ * Returns an opaque handle or NULL if fails
++ */
++const void *qemu_plugin_request_time_control(void);
++
++/**
++ * qemu_plugin_update_ns() - update system emulation time
++ * @handle: opaque handle returned by qemu_plugin_request_time_control()
++ * @time: time in nanoseconds
++ *
++ * This allows an appropriately authorised plugin (i.e. holding the
++ * time control handle) to move system time forward to @time.
++ *
++ * Start time is 0.
++ */
++void qemu_plugin_update_ns(const void *handle, int64_t time);
++
+ typedef void
+ (*qemu_plugin_vcpu_syscall_cb_t)(qemu_plugin_id_t id, unsigned int vcpu_index,
+                                  int64_t num, uint64_t a1, uint64_t a2,
+diff --git a/plugins/api.c b/plugins/api.c
+index 5a0a7f8c712..26822b69ea2 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -39,6 +39,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/plugin.h"
+ #include "qemu/log.h"
++#include "qemu/timer.h"
+ #include "tcg/tcg.h"
+ #include "exec/exec-all.h"
+ #include "exec/gdbstub.h"
+@@ -583,3 +584,33 @@ uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
+     }
+     return total;
+ }
++
++/*
++ * Time control
++ */
++static bool has_control;
++
++const void *qemu_plugin_request_time_control(void)
++{
++    if (!has_control) {
++        has_control = true;
++        return &has_control;
++    }
++    return NULL;
++}
++
++static void advance_virtual_time__async(CPUState *cpu, run_on_cpu_data data)
++{
++    int64_t new_time = data.host_ulong;
++    qemu_clock_advance_virtual_time(new_time);
++}
++
++void qemu_plugin_update_ns(const void *handle, int64_t new_time)
++{
++    if (handle == &has_control) {
++        /* Need to execute out of cpu_exec, so bql can be locked. */
++        async_run_on_cpu(current_cpu,
++                         advance_virtual_time__async,
++                         RUN_ON_CPU_HOST_ULONG(new_time));
++    }
++}
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index aa0a77a319f..ca773d8d9fe 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -38,6 +38,7 @@
+   qemu_plugin_register_vcpu_tb_exec_cond_cb;
+   qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
+   qemu_plugin_register_vcpu_tb_trans_cb;
++  qemu_plugin_request_time_control;
+   qemu_plugin_reset;
+   qemu_plugin_scoreboard_free;
+   qemu_plugin_scoreboard_find;
+@@ -51,5 +52,6 @@
+   qemu_plugin_u64_set;
+   qemu_plugin_u64_sum;
+   qemu_plugin_uninstall;
++  qemu_plugin_update_ns;
+   qemu_plugin_vcpu_for_each;
+ };
 -- 
 2.39.2
 
