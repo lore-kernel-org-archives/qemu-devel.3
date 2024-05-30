@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E879FC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 12:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1763C27C44
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 12:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCeoJ-0003Ry-25; Thu, 30 May 2024 08:23:11 -0400
+	id 1sCeoQ-0003cc-5e; Thu, 30 May 2024 08:23:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sCeoH-0003Pt-DH
- for qemu-devel@nongnu.org; Thu, 30 May 2024 08:23:09 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sCeoM-0003ZP-FV
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 08:23:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sCeoF-0005lw-HD
- for qemu-devel@nongnu.org; Thu, 30 May 2024 08:23:09 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sCeoH-0005mH-BC
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 08:23:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717071786;
+ s=mimecast20190719; t=1717071788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YnruYBBBdA9Oe8gL91INL662nm0pO2g3Q1Z56AOjdoI=;
- b=ctymmHO/dDAmajhiIQoEfK2glDj68qgboTovODu1N4sH7MP7Q4NzaubWMOCrD9tHc14wOO
- pgYL1zBinxQ84K29sQq/ugH1czwjkdbeSs6S/bg/BhACYdUBMoQgQkmJWOghLLoMVVeWe/
- qu2IP5scg9eXPRqJrBGYLLRFjErP8QU=
+ bh=iYI3+5XFTRUT8Uqwbe4dnlKWgx+OZ3N503++FeqVdug=;
+ b=dv2++mxA2lCmLJPtdMPOgppCK6vvbZGajBXWBUPe4cXKMXrcoADjTBWfH59utSRB2juUxa
+ ZB15nYtFoUHopXIKqS9bA3OEwm15hSPWEixLw+TiIV42whk5D4T54mxHHiHkzZtIzLRCoM
+ QBJLdLtpcxu4iWUr9gVgRIT+qzIL094=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-lS3hEaf5P7W-AVv-IsRYXw-1; Thu,
- 30 May 2024 08:23:03 -0400
-X-MC-Unique: lS3hEaf5P7W-AVv-IsRYXw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-V_muoBcaP2amPnbnohJmTA-1; Thu,
+ 30 May 2024 08:23:04 -0400
+X-MC-Unique: V_muoBcaP2amPnbnohJmTA-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3CAC23C025B1;
- Thu, 30 May 2024 12:23:03 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 512483C025B1;
+ Thu, 30 May 2024 12:23:04 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.41])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9473440004D;
- Thu, 30 May 2024 12:23:02 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 68E2E491032;
+ Thu, 30 May 2024 12:23:03 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-stable@nongnu.org
-Subject: [PULL 1/2] qio: Inherit follow_coroutine_ctx across TLS
-Date: Thu, 30 May 2024 07:22:17 -0500
-Message-ID: <20240530122300.724226-5-eblake@redhat.com>
+Cc: qemu-stable@nongnu.org, "Richard W.M. Jones" <rjones@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Network Block Dev...)
+Subject: [PULL 2/2] iotests: test NBD+TLS+iothread
+Date: Thu, 30 May 2024 07:22:18 -0500
+Message-ID: <20240530122300.724226-6-eblake@redhat.com>
 In-Reply-To: <20240530122300.724226-4-eblake@redhat.com>
 References: <20240530122300.724226-4-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
@@ -65,8 +66,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,114 +83,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since qemu 8.2, the combination of NBD + TLS + iothread crashes on an
-assertion failure:
+Prevent regressions when using NBD with TLS in the presence of
+iothreads, adding coverage the fix to qio channels made in the
+previous patch.
 
-qemu-kvm: ../io/channel.c:534: void qio_channel_restart_read(void *): Assertion `qemu_get_current_aio_context() == qemu_coroutine_get_aio_context(co)' failed.
+The shell function pick_unused_port() was copied from
+nbdkit.git/tests/functions.sh.in, where it had all authors from Red
+Hat, agreeing to the resulting relicensing from 2-clause BSD to GPLv2.
 
-It turns out that when we removed AioContext locking, we did so by
-having NBD tell its qio channels that it wanted to opt in to
-qio_channel_set_follow_coroutine_ctx(); but while we opted in on the
-main channel, we did not opt in on the TLS wrapper channel.
-qemu-iotests has coverage of NBD+iothread and NBD+TLS, but apparently
-no coverage of NBD+TLS+iothread, or we would have noticed this
-regression sooner.  (I'll add that in the next patch)
-
-But while we could manually opt in to the TLS channel in nbd/server.c
-(a one-line change), it is more generic if all qio channels that wrap
-other channels inherit the follow status, in the same way that they
-inherit feature bits.
-
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-CC: Daniel P. Berrangé <berrange@redhat.com>
 CC: qemu-stable@nongnu.org
-Fixes: https://issues.redhat.com/browse/RHEL-34786
-Fixes: 06e0f098 ("io: follow coroutine AioContext in qio_channel_yield()", v8.2.0)
+CC: "Richard W.M. Jones" <rjones@redhat.com>
 Signed-off-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240518025246.791593-5-eblake@redhat.com>
+Message-ID: <20240518025246.791593-6-eblake@redhat.com>
 ---
- io/channel-tls.c     | 26 +++++++++++++++-----------
- io/channel-websock.c |  1 +
- 2 files changed, 16 insertions(+), 11 deletions(-)
+ tests/qemu-iotests/tests/nbd-tls-iothread     | 168 ++++++++++++++++++
+ tests/qemu-iotests/tests/nbd-tls-iothread.out |  54 ++++++
+ 2 files changed, 222 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/nbd-tls-iothread
+ create mode 100644 tests/qemu-iotests/tests/nbd-tls-iothread.out
 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 1d9c9c72bfb..67b97000060 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -69,37 +69,40 @@ qio_channel_tls_new_server(QIOChannel *master,
-                            const char *aclname,
-                            Error **errp)
- {
--    QIOChannelTLS *ioc;
-+    QIOChannelTLS *tioc;
-+    QIOChannel *ioc;
-
--    ioc = QIO_CHANNEL_TLS(object_new(TYPE_QIO_CHANNEL_TLS));
-+    tioc = QIO_CHANNEL_TLS(object_new(TYPE_QIO_CHANNEL_TLS));
-+    ioc = QIO_CHANNEL(tioc);
-
--    ioc->master = master;
-+    tioc->master = master;
-+    ioc->follow_coroutine_ctx = master->follow_coroutine_ctx;
-     if (qio_channel_has_feature(master, QIO_CHANNEL_FEATURE_SHUTDOWN)) {
--        qio_channel_set_feature(QIO_CHANNEL(ioc), QIO_CHANNEL_FEATURE_SHUTDOWN);
-+        qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-     }
-     object_ref(OBJECT(master));
-
--    ioc->session = qcrypto_tls_session_new(
-+    tioc->session = qcrypto_tls_session_new(
-         creds,
-         NULL,
-         aclname,
-         QCRYPTO_TLS_CREDS_ENDPOINT_SERVER,
-         errp);
--    if (!ioc->session) {
-+    if (!tioc->session) {
-         goto error;
-     }
-
-     qcrypto_tls_session_set_callbacks(
--        ioc->session,
-+        tioc->session,
-         qio_channel_tls_write_handler,
-         qio_channel_tls_read_handler,
--        ioc);
-+        tioc);
-
--    trace_qio_channel_tls_new_server(ioc, master, creds, aclname);
--    return ioc;
-+    trace_qio_channel_tls_new_server(tioc, master, creds, aclname);
-+    return tioc;
-
-  error:
--    object_unref(OBJECT(ioc));
-+    object_unref(OBJECT(tioc));
-     return NULL;
- }
-
-@@ -116,6 +119,7 @@ qio_channel_tls_new_client(QIOChannel *master,
-     ioc = QIO_CHANNEL(tioc);
-
-     tioc->master = master;
-+    ioc->follow_coroutine_ctx = master->follow_coroutine_ctx;
-     if (qio_channel_has_feature(master, QIO_CHANNEL_FEATURE_SHUTDOWN)) {
-         qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-     }
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index a12acc27cf2..de39f0d182d 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -883,6 +883,7 @@ qio_channel_websock_new_server(QIOChannel *master)
-     ioc = QIO_CHANNEL(wioc);
-
-     wioc->master = master;
-+    ioc->follow_coroutine_ctx = master->follow_coroutine_ctx;
-     if (qio_channel_has_feature(master, QIO_CHANNEL_FEATURE_SHUTDOWN)) {
-         qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-     }
+diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread b/tests/qemu-iotests/tests/nbd-tls-iothread
+new file mode 100755
+index 00000000000..26ccff8ddb7
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-tls-iothread
+@@ -0,0 +1,168 @@
++#!/usr/bin/env bash
++# group: rw quick
++#
++# Test of NBD+TLS+iothread
++#
++# Copyright (C) 2024 Red Hat, Inc.
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
++
++# creator
++owner=eblake@redhat.com
++
++seq=`basename $0`
++echo "QA output created by $seq"
++
++status=1    # failure is the default!
++
++_cleanup()
++{
++    _cleanup_qemu
++    _cleanup_test_img
++    rm -f "$dst_image"
++    tls_x509_cleanup
++}
++trap "_cleanup; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++. ./common.qemu
++. ./common.tls
++. ./common.nbd
++
++_supported_fmt qcow2  # Hardcoded to qcow2 command line and QMP below
++_supported_proto file
++
++# pick_unused_port
++#
++# Picks and returns an "unused" port, setting the global variable
++# $port.
++#
++# This is inherently racy, but we need it because qemu does not currently
++# permit NBD+TLS over a Unix domain socket
++pick_unused_port ()
++{
++    if ! (ss --version) >/dev/null 2>&1; then
++        _notrun "ss utility required, skipped this test"
++    fi
++
++    # Start at a random port to make it less likely that two parallel
++    # tests will conflict.
++    port=$(( 50000 + (RANDOM%15000) ))
++    while ss -ltn | grep -sqE ":$port\b"; do
++        ((port++))
++        if [ $port -eq 65000 ]; then port=50000; fi
++    done
++    echo picked unused port
++}
++
++tls_x509_init
++
++size=1G
++DST_IMG="$TEST_DIR/dst.qcow2"
++
++echo
++echo "== preparing TLS creds and spare port =="
++
++pick_unused_port
++tls_x509_create_root_ca "ca1"
++tls_x509_create_server "ca1" "server1"
++tls_x509_create_client "ca1" "client1"
++tls_obj_base=tls-creds-x509,id=tls0,verify-peer=true,dir="${tls_dir}"
++
++echo
++echo "== preparing image =="
++
++_make_test_img $size
++$QEMU_IMG create -f qcow2 "$DST_IMG" $size
++
++echo
++echo === Starting Src QEMU ===
++echo
++
++_launch_qemu -machine q35 \
++    -object iothread,id=iothread0 \
++    -object "${tls_obj_base}"/client1,endpoint=client \
++    -device '{"driver":"pcie-root-port", "id":"root0", "multifunction":true,
++              "bus":"pcie.0"}' \
++    -device '{"driver":"virtio-scsi-pci", "id":"virtio_scsi_pci0",
++              "bus":"root0", "iothread":"iothread0"}' \
++    -device '{"driver":"scsi-hd", "id":"image1", "drive":"drive_image1",
++              "bus":"virtio_scsi_pci0.0"}' \
++    -blockdev '{"driver":"file", "cache":{"direct":true, "no-flush":false},
++                "filename":"'"$TEST_IMG"'", "node-name":"drive_sys1"}' \
++    -blockdev '{"driver":"qcow2", "node-name":"drive_image1",
++                "file":"drive_sys1"}'
++h1=$QEMU_HANDLE
++_send_qemu_cmd $h1 '{"execute": "qmp_capabilities"}' 'return'
++
++echo
++echo === Starting Dst VM2 ===
++echo
++
++_launch_qemu -machine q35 \
++    -object iothread,id=iothread0 \
++    -object "${tls_obj_base}"/server1,endpoint=server \
++    -device '{"driver":"pcie-root-port", "id":"root0", "multifunction":true,
++              "bus":"pcie.0"}' \
++    -device '{"driver":"virtio-scsi-pci", "id":"virtio_scsi_pci0",
++              "bus":"root0", "iothread":"iothread0"}' \
++    -device '{"driver":"scsi-hd", "id":"image1", "drive":"drive_image1",
++              "bus":"virtio_scsi_pci0.0"}' \
++    -blockdev '{"driver":"file", "cache":{"direct":true, "no-flush":false},
++                "filename":"'"$DST_IMG"'", "node-name":"drive_sys1"}' \
++    -blockdev '{"driver":"qcow2", "node-name":"drive_image1",
++                "file":"drive_sys1"}' \
++    -incoming defer
++h2=$QEMU_HANDLE
++_send_qemu_cmd $h2 '{"execute": "qmp_capabilities"}' 'return'
++
++echo
++echo === Dst VM: Enable NBD server for incoming storage migration ===
++echo
++
++_send_qemu_cmd $h2 '{"execute": "nbd-server-start", "arguments":
++    {"addr": {"type": "inet", "data": {"host": "127.0.0.1", "port": "'$port'"}},
++              "tls-creds": "tls0"}}' '{"return": {}}' | sed "s/\"$port\"/PORT/g"
++_send_qemu_cmd $h2 '{"execute": "block-export-add", "arguments":
++    {"node-name": "drive_image1", "type": "nbd", "writable": true,
++      "id": "drive_image1"}}' '{"return": {}}'
++
++echo
++echo === Src VM: Mirror to dst NBD for outgoing storage migration ===
++echo
++
++_send_qemu_cmd $h1 '{"execute": "blockdev-add", "arguments":
++    {"node-name": "mirror", "driver": "nbd",
++     "server": {"type": "inet", "host": "127.0.0.1", "port": "'$port'"},
++     "export": "drive_image1", "tls-creds": "tls0",
++     "tls-hostname": "127.0.0.1"}}' '{"return": {}}' | sed "s/\"$port\"/PORT/g"
++_send_qemu_cmd $h1 '{"execute": "blockdev-mirror", "arguments":
++    {"sync": "full", "device": "drive_image1", "target": "mirror",
++     "job-id": "drive_image1_53"}}' '{"return": {}}'
++_timed_wait_for $h1 '"ready"'
++
++echo
++echo === Cleaning up ===
++echo
++
++_send_qemu_cmd $h1 '{"execute":"quit"}' ''
++_send_qemu_cmd $h2 '{"execute":"quit"}' ''
++
++echo "*** done"
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread.out b/tests/qemu-iotests/tests/nbd-tls-iothread.out
+new file mode 100644
+index 00000000000..b5e12dcbe7a
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-tls-iothread.out
+@@ -0,0 +1,54 @@
++QA output created by nbd-tls-iothread
++
++== preparing TLS creds and spare port ==
++picked unused port
++Generating a self signed certificate...
++Generating a signed certificate...
++Generating a signed certificate...
++
++== preparing image ==
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
++Formatting '/home/eblake/qemu/build/tests/qemu-iotests/scratch/qcow2-file-nbd-tls-iothread/dst.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=1073741824 lazy_refcounts=off refcount_bits=16
++
++=== Starting Src QEMU ===
++
++{"execute": "qmp_capabilities"}
++{"return": {}}
++
++=== Starting Dst VM2 ===
++
++{"execute": "qmp_capabilities"}
++{"return": {}}
++
++=== Dst VM: Enable NBD server for incoming storage migration ===
++
++{"execute": "nbd-server-start", "arguments":
++    {"addr": {"type": "inet", "data": {"host": "127.0.0.1", "port": PORT}},
++              "tls-creds": "tls0"}}
++{"return": {}}
++{"execute": "block-export-add", "arguments":
++    {"node-name": "drive_image1", "type": "nbd", "writable": true,
++      "id": "drive_image1"}}
++{"return": {}}
++
++=== Src VM: Mirror to dst NBD for outgoing storage migration ===
++
++{"execute": "blockdev-add", "arguments":
++    {"node-name": "mirror", "driver": "nbd",
++     "server": {"type": "inet", "host": "127.0.0.1", "port": PORT},
++     "export": "drive_image1", "tls-creds": "tls0",
++     "tls-hostname": "127.0.0.1"}}
++{"return": {}}
++{"execute": "blockdev-mirror", "arguments":
++    {"sync": "full", "device": "drive_image1", "target": "mirror",
++     "job-id": "drive_image1_53"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "drive_image1_53"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "drive_image1_53"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "drive_image1_53"}}
++
++=== Cleaning up ===
++
++{"execute":"quit"}
++{"execute":"quit"}
++*** done
 -- 
 2.45.1
 
