@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DEA4C27C44
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 22:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9733FC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 22:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCnuq-0007Lu-C7; Thu, 30 May 2024 18:06:32 -0400
+	id 1sCnv9-0007OS-0c; Thu, 30 May 2024 18:06:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sCnum-0007KV-Sr
- for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:28 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1sCnv7-0007Nu-5P
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:49 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sCnuk-0005EN-Io
- for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:28 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1f4a0050b9aso3138915ad.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 15:06:25 -0700 (PDT)
+ id 1sCnv5-0005LT-Bq
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:48 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-702342c60dfso681744b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 15:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717106783; x=1717711583; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3EC/ILC9E1z+FmTz2M5OzLffDsaNAiYhutjbzlwCvcM=;
- b=MgdCbOPQJioOn9zobO0FZqGGjuVsT/bxlALyd+wDzV8CF+i89/ia2BybWljuS8kn1j
- 0VTnVfjMQwVsE+dQkavNfSAFYzGA2x0KZXl25txoYKL6UL4edHYu36w4qb73UrmvG8iO
- YHNlN5jwELjOPjh1p47bp93Dpo5LPxmca/IY2jVepTM3EpsegF7BwpqjRBiboXMSD8Tt
- kiZzGUA00sBe6PRcU75FgVz9ZTz8gKd6HbxSbt03BFK/ft8MmPGaLzT9O1q+GqcdqjIN
- tz7MbVMcO5t21GFt0aB4NribxtzFACWkYr0/0I9oDmkiodzsbQZvsTOBt8ebcjtxiyqN
- 6UXA==
+ d=linaro.org; s=google; t=1717106805; x=1717711605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pz2VzBU99inOzVYNe6AT4AW7Qf2QtGtPqfbSxBQQeT0=;
+ b=u9mHm3L792xwOfg+hS5EKB2omUPpat0dGhgpKYLn2QXSbls+3IJ6ykyD32cdUazyMy
+ Iki1Hy6CjDICJfoPJaY+aBd6H+uXP63XJ1yAgn80o6dxdP3/MuwRH2kmehY5bsHdpUWX
+ sVB8Wjfa1KFeqFfkXmgWf+Dr67U0HSC3sIOUQTviNFL+hdLPwbeThLuhFosuRd/ZFrAg
+ /C/B7qtBPypewWedpNyQ/n1HF9H5ATtP0ts7DCABkZs+FBhPfXmoOgpDqD6ifrbzpsU0
+ zX3hH+yxuMYw2OTAn+9dT5GJ1KR/GcFYqtNP+lYAq3mrqtMetJEv0+zzeGj31nebytwF
+ IpeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717106783; x=1717711583;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3EC/ILC9E1z+FmTz2M5OzLffDsaNAiYhutjbzlwCvcM=;
- b=vzHPEQkwmRd40HmjKP/tkyyUrQFXbAsBLpFUlll4ydmhAU7lgl183YgrKf52djs5YV
- /8CuWe9ehf0YN354hk01/DZP+irxhnS5tnJe31fWBX/aUvLSwu5SBAN5iucVaYjfo7gF
- Yb0KQMjOFfHzdociHUL1AxUmnGVzKVhkRBShpzK1I6Jv9Dtv2rJ8+aJS1GwiHXPCu80e
- tDTUJf6PAwZ61SOaWXkkpMDqIA8JQWtxXjpsEyOcQ5PuU8L759iYLKyCNUSbAr6r62Q9
- Yq+WXy4TSqTNByv27isesLJOOkzKbfW0cz0ePdcZYKPrMOjwip9huqk5S94NueFTmLlj
- fSXg==
-X-Gm-Message-State: AOJu0YxS3qlVpypwm7cCTx0tFbMsYNgn3sOxafy9eWw+pFYT3gngaMuI
- cYlIjzo4nYG++22mEERNplj3bvkW2TL6hkX7qSsTVohzUqJBuDrtKe98dKTd9O0eKH+GqBBacO4
- L3ak=
-X-Google-Smtp-Source: AGHT+IHgLRH7MLZnB0Rir6NLOSnhOhKo/5dkTGYiRCRfn3SRx1dE9iyyeSEcctvRyPo5hwzyK50W3g==
-X-Received: by 2002:a17:902:e5c9:b0:1f4:75e8:2e9c with SMTP id
- d9443c01a7336-1f636fd22cemr1915875ad.11.1717106783300; 
- Thu, 30 May 2024 15:06:23 -0700 (PDT)
-Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::e697])
+ d=1e100.net; s=20230601; t=1717106805; x=1717711605;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pz2VzBU99inOzVYNe6AT4AW7Qf2QtGtPqfbSxBQQeT0=;
+ b=RIxvAgJYxn5qkj9Vv2iUAUfU57y1ORMxhGdkhOKi7atjDJqdARyIltdKhxl4R5a6vc
+ vMOY6NCJ53PLLJ/ui12wtBAj0XFwcsWUn1uAEhy+0YZgXtDbu8YXX5+v/g8qzqlHsr4S
+ zP3aJVp0PNgjvCpIPhrviMAwlZpFjAskPNLdKFnFNoiqGSBSRIOq+S3Zq2jHTtqykk+X
+ JwX9kFY8CRc8JU5pbby9Rc3n1zvJ6hSscJ2SAjm0HOHb5mw1jGW/OFGBW/soqPu/PT6U
+ utJYKs8eIylr0UJu5+zTZdWsUZEzYgG1gnGMe0Y2xS3RS54dSjDua0EgsVXQmROkBAEU
+ zhMQ==
+X-Gm-Message-State: AOJu0Ywdo/rN2Mm32eR8QgqddziyCRC3PRZf5++7NYVOczr1s8dQXYZU
+ sZFqDy4pOeDFYUG9OK6wVe4J+HsHcbkp57bbu7Uq6j8z81DgRI88yN1IkKSKb+zUinGwJViS5PN
+ z9Mc=
+X-Google-Smtp-Source: AGHT+IFDE95sJdOPF/bOhzaoMqwf1MAdTLINz2J6Ikd/OSiWrlnV43ZhHaacAzgTE87YcFoZWiMD3w==
+X-Received: by 2002:a17:903:2584:b0:1f3:29f1:76be with SMTP id
+ d9443c01a7336-1f6370e5ff6mr906885ad.56.1717106804740; 
+ Thu, 30 May 2024 15:06:44 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323dde39sm2732615ad.167.2024.05.30.15.06.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 15:06:22 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 6/6] contrib/plugins: add ips plugin example for cost
- modeling
-Date: Thu, 30 May 2024 15:06:10 -0700
-Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
-References: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
+ d9443c01a7336-1f632356aabsm2699715ad.78.2024.05.30.15.06.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 May 2024 15:06:44 -0700 (PDT)
+Message-ID: <a1929ada-a24c-41d5-a9a0-3898b8b2614a@linaro.org>
+Date: Thu, 30 May 2024 15:06:43 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] Implement icount=auto using TCG Plugins
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240530174939.749163-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240530174939.749163-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,220 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This plugin uses the new time control interface to make decisions
-about the state of time during the emulation. The algorithm is
-currently very simple. The user specifies an ips rate which applies
-per core. If the core runs ahead of its allocated execution time the
-plugin sleeps for a bit to let real time catch up. Either way time is
-updated for the emulation as a function of total executed instructions
-with some adjustments for cores that idle.
-
-Examples
---------
-
-Slow down execution of /bin/true:
-$ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
-$ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/4)) /bin/true
-real 4.000s
-
-Boot a Linux kernel simulating a 250MHz cpu:
-$ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -append "console=ttyS0" -plugin ./build/contrib/plugins/libips.so,ips=$((250*1000*1000)) -smp 1 -m 512
-check time until kernel panic on serial0
-
-Tested in system mode by booting a full debian system, and using:
-$ sysbench cpu run
-Performance decrease linearly with the given number of ips.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++++
- contrib/plugins/Makefile |   1 +
- 2 files changed, 165 insertions(+)
- create mode 100644 contrib/plugins/ips.c
-
-diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
-new file mode 100644
-index 00000000000..db77729264b
---- /dev/null
-+++ b/contrib/plugins/ips.c
-@@ -0,0 +1,164 @@
-+/*
-+ * ips rate limiting plugin.
-+ *
-+ * This plugin can be used to restrict the execution of a system to a
-+ * particular number of Instructions Per Second (ips). This controls
-+ * time as seen by the guest so while wall-clock time may be longer
-+ * from the guests point of view time will pass at the normal rate.
-+ *
-+ * This uses the new plugin API which allows the plugin to control
-+ * system time.
-+ *
-+ * Copyright (c) 2023 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdio.h>
-+#include <glib.h>
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/* how many times do we update time per sec */
-+#define NUM_TIME_UPDATE_PER_SEC 10
-+#define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
-+
-+static GMutex global_state_lock;
-+
-+static uint64_t max_insn_per_second = 1000 * 1000 * 1000; /* ips per core, per second */
-+static uint64_t max_insn_per_quantum; /* trap every N instructions */
-+static int64_t virtual_time_ns; /* last set virtual time */
-+
-+static const void *time_handle;
-+
-+typedef struct {
-+    uint64_t total_insn;
-+    uint64_t quantum_insn; /* insn in last quantum */
-+    int64_t last_quantum_time; /* time when last quantum started */
-+} vCPUTime;
-+
-+struct qemu_plugin_scoreboard *vcpus;
-+
-+/* return epoch time in ns */
-+static int64_t now_ns(void)
-+{
-+    return g_get_real_time() * 1000;
-+}
-+
-+static uint64_t num_insn_during(int64_t elapsed_ns)
-+{
-+    double num_secs = elapsed_ns / (double) NSEC_IN_ONE_SEC;
-+    return num_secs * (double) max_insn_per_second;
-+}
-+
-+static int64_t time_for_insn(uint64_t num_insn)
-+{
-+    double num_secs = (double) num_insn / (double) max_insn_per_second;
-+    return num_secs * (double) NSEC_IN_ONE_SEC;
-+}
-+
-+static void update_system_time(vCPUTime *vcpu)
-+{
-+    int64_t elapsed_ns = now_ns() - vcpu->last_quantum_time;
-+    uint64_t max_insn = num_insn_during(elapsed_ns);
-+
-+    if (vcpu->quantum_insn >= max_insn) {
-+        /* this vcpu ran faster than expected, so it has to sleep */
-+        uint64_t insn_advance = vcpu->quantum_insn - max_insn;
-+        uint64_t time_advance_ns = time_for_insn(insn_advance);
-+        int64_t sleep_us = time_advance_ns / 1000;
-+        g_usleep(sleep_us);
-+    }
-+
-+    vcpu->total_insn += vcpu->quantum_insn;
-+    vcpu->quantum_insn = 0;
-+    vcpu->last_quantum_time = now_ns();
-+
-+    /* based on total number of instructions, what should be the new time? */
-+    int64_t new_virtual_time = time_for_insn(vcpu->total_insn);
-+
-+    g_mutex_lock(&global_state_lock);
-+
-+    /* Time only moves forward. Another vcpu might have updated it already. */
-+    if (new_virtual_time > virtual_time_ns) {
-+        qemu_plugin_update_ns(time_handle, new_virtual_time);
-+        virtual_time_ns = new_virtual_time;
-+    }
-+
-+    g_mutex_unlock(&global_state_lock);
-+}
-+
-+static void vcpu_init(qemu_plugin_id_t id, unsigned int cpu_index)
-+{
-+    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
-+    vcpu->total_insn = 0;
-+    vcpu->quantum_insn = 0;
-+    vcpu->last_quantum_time = now_ns();
-+}
-+
-+static void vcpu_exit(qemu_plugin_id_t id, unsigned int cpu_index)
-+{
-+    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
-+    update_system_time(vcpu);
-+}
-+
-+static void every_quantum_insn(unsigned int cpu_index, void *udata)
-+{
-+    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
-+    g_assert(vcpu->quantum_insn >= max_insn_per_quantum);
-+    update_system_time(vcpu);
-+}
-+
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    size_t n_insns = qemu_plugin_tb_n_insns(tb);
-+    qemu_plugin_u64 quantum_insn =
-+        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
-+    /* count (and eventually trap) once per tb */
-+    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
-+    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-+        tb, every_quantum_insn,
-+        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
-+        quantum_insn, max_insn_per_quantum, NULL);
-+}
-+
-+static void plugin_exit(qemu_plugin_id_t id, void *udata)
-+{
-+    qemu_plugin_scoreboard_free(vcpus);
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info, int argc,
-+                                           char **argv)
-+{
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "ips") == 0) {
-+            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
-+            if (!max_insn_per_second && errno) {
-+                fprintf(stderr, "%s: couldn't parse %s (%s)\n",
-+                        __func__, tokens[1], g_strerror(errno));
-+                return -1;
-+            }
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
-+    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
-+
-+    time_handle = qemu_plugin_request_time_control();
-+    g_assert(time_handle);
-+
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-+    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
-+    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-index 0b64d2c1e3a..449ead11305 100644
---- a/contrib/plugins/Makefile
-+++ b/contrib/plugins/Makefile
-@@ -27,6 +27,7 @@ endif
- NAMES += hwprofile
- NAMES += cache
- NAMES += drcov
-+NAMES += ips
- 
- ifeq ($(CONFIG_WIN32),y)
- SO_SUFFIX := .dll
--- 
-2.39.2
-
+QSB2MyB3YXMganVzdCBzZW50LCB3aXRoIGEgZml4IHRvIHRoZSBhbGdvcml0aG0gdXNlZC4N
+Cg0KT24gNS8zMC8yNCAxMDo0OSwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4gVGhlIGdv
+YWwgaGVyZSBpcyB0byBiZSBhYmxlIHRvIHNjYWxlIHRlbXBvcmFsbHkgZXhlY3V0aW9uIG9m
+IHFlbXUtdXNlci9zeXN0ZW0sDQo+IHVzaW5nIGEgZ2l2ZW4gbnVtYmVyIG9mIGluc3RydWN0
+aW9ucyBwZXIgc2Vjb25kLg0KPiANCj4gV2UgZGVmaW5lIGEgdmlydHVhbCBjbG9jaywgdGhh
+dCBjYW4gYmUgbGF0ZSBvciBpbiBhZHZhbmNlIGNvbXBhcmVkIHRvIHJlYWwgdGltZS4NCj4g
+V2hlbiB3ZSBhcmUgaW4gYWR2YW5jZSwgd2Ugc2xvdyBleGVjdXRpb24gKGJ5IHNsZWVwaW5n
+KSB1bnRpbCBjYXRjaGluZyByZWFsDQo+IHRpbWUuDQo+IA0KPiBGaW5hbGx5LCB3ZSBzaG91
+bGQgYmUgYWJsZSB0byBjbGVhbnVwIGljb3VudD1hdXRvIG1vZGUgY29tcGxldGVseSwgYW5k
+IGtlZXANCj4gaWNvdW50IHVzYWdlIGZvciBkZXRlcm1pc3RpYyBwdXJwb3NlcyBvbmx5Lg0K
+PiANCj4gSXQgaXMgYnVpbHQgdXBvbiBuZXcgVENHIFBsdWdpbnMgaW5saW5lIG9wcyAoc3Rv
+cmUgKyBjb25kaXRpb25hbCBjYWxsYmFja3MpLCBub3cNCj4gbWVyZ2VkIG9uIG1hc3Rlci4N
+Cj4gDQo+IEV4YW1wbGUgaW4gdXNlci1tb2RlOg0KPiANCj4gLSBSZXRyaWV2ZSBudW1iZXIg
+b2YgaW5zdHJ1Y3Rpb25zIHRvIGV4ZWN1dGUgL2Jpbi90cnVlDQo+ICQgLi9idWlsZC9xZW11
+LXg4Nl82NCAtcGx1Z2luIC4vYnVpbGQvdGVzdHMvcGx1Z2luL2xpYmluc24uc28gLWQgcGx1
+Z2luIC9iaW4vdHJ1ZQ0KPiBjcHUgMCBpbnNuczogMTIwNTQ2DQo+IHRvdGFsIGluc25zOiAx
+MjA1NDYNCj4gLSBTbG93IGV4ZWN1dGlvbiB0byBtYXRjaCA1IHNlY29uZHMNCj4gJCB0aW1l
+IC4vYnVpbGQvcWVtdS14ODZfNjQgLXBsdWdpbiAuL2J1aWxkL2NvbnRyaWIvcGx1Z2lucy9s
+aWJpcHMsaXBzPSQoKDEyMDU0Ni81KSkgL2Jpbi90cnVlDQo+IHJlYWwgICAgMG00Ljk4NXMN
+Cj4gDQo+IHYyDQo+IC0tDQo+IA0KPiAtIEFkZGVkIG1pc3NpbmcgcGVyc29uYWwgU2lnbmVk
+LW9mZi1ieSBmb3IgY29tbWl0cyBmcm9tIEFsZXgNCj4gLSBGaXggYmFkIHJlYmFzZSBpbiBz
+dHVicy9tZXNvbi5idWlsZA0KPiAtIG1vdmUgcXRlc3Rfe2dldCxzZXR9X3ZpcnR1YWxfY2xv
+Y2sgdG8gYWNjZWwvcXRlc3QvcXRlc3QuYw0KPiAtIEEgcmFjZSBjb25kaXRpb24gd2FzIGlk
+ZW50aWZpZWQgZm9yIHBsdWdpbnMgaW5pdC9pZGxlL3Jlc3VtZSwgYnV0IGlzIG5vdA0KPiAg
+ICByZWxhdGVkIHRvIHRoaXMgc2VyaWVzLCBhbmQgd2lsbCBiZSBmaXhlZCBpbiBhbm90aGVy
+IG9uZToNCj4gICAgaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZlbC8yMDI0MDUy
+OTE1MjIxOS44MjU2ODAtMS1hbGV4LmJlbm5lZUBsaW5hcm8ub3JnLw0KPiANCj4gQWxleCBC
+ZW5uw6llICg0KToNCj4gICAgc3lzZW11OiBhZGQgc2V0X3ZpcnR1YWxfdGltZSB0byBhY2Nl
+bCBvcHMNCj4gICAgcXRlc3Q6IHVzZSBjcHUgaW50ZXJmYWNlIGluIHF0ZXN0X2Nsb2NrX3dh
+cnANCj4gICAgc3lzZW11OiBnZW5lcmFsaXNlIHF0ZXN0X3dhcnBfY2xvY2sgYXMgcWVtdV9j
+bG9ja19hZHZhbmNlX3ZpcnR1YWxfdGltZQ0KPiAgICBwbHVnaW5zOiBhZGQgdGltZSBjb250
+cm9sIEFQSQ0KPiANCj4gUGllcnJpY2sgQm91dmllciAoMik6DQo+ICAgIHF0ZXN0OiBtb3Zl
+IHF0ZXN0X3tnZXQsc2V0fV92aXJ0dWFsX2Nsb2NrIHRvIGFjY2VsL3F0ZXN0L3F0ZXN0LmMN
+Cj4gICAgY29udHJpYi9wbHVnaW5zOiBhZGQgaXBzIHBsdWdpbiBleGFtcGxlIGZvciBjb3N0
+IG1vZGVsaW5nDQo+IA0KPiAgIGluY2x1ZGUvcWVtdS9xZW11LXBsdWdpbi5oICAgICAgICAg
+ICAgICAgICAgICB8ICAyMyArKw0KPiAgIGluY2x1ZGUvcWVtdS90aW1lci5oICAgICAgICAg
+ICAgICAgICAgICAgICAgICB8ICAxNSArKw0KPiAgIGluY2x1ZGUvc3lzZW11L2FjY2VsLW9w
+cy5oICAgICAgICAgICAgICAgICAgICB8ICAxOCArLQ0KPiAgIGluY2x1ZGUvc3lzZW11L2Nw
+dS10aW1lcnMuaCAgICAgICAgICAgICAgICAgICB8ICAgMyArLQ0KPiAgIGluY2x1ZGUvc3lz
+ZW11L3F0ZXN0LmggICAgICAgICAgICAgICAgICAgICAgICB8ICAgMiAtDQo+ICAgYWNjZWwv
+cXRlc3QvcXRlc3QuYyAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDEzICsNCj4gICBj
+b250cmliL3BsdWdpbnMvaXBzLmMgICAgICAgICAgICAgICAgICAgICAgICAgfCAyMzkgKysr
+KysrKysrKysrKysrKysrDQo+ICAgcGx1Z2lucy9hcGkuYyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIHwgIDMxICsrKw0KPiAgIC4uLnQtdmlydHVhbC1jbG9jay5jID0+IGNw
+dXMtdmlydHVhbC1jbG9jay5jfSB8ICAgNSArDQo+ICAgc3lzdGVtL2NwdXMuYyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDExICsNCj4gICBzeXN0ZW0vcXRlc3QuYyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMzcgKy0tDQo+ICAgdXRpbC9xZW11
+LXRpbWVyLmMgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDI2ICsrDQo+ICAgY29u
+dHJpYi9wbHVnaW5zL01ha2VmaWxlICAgICAgICAgICAgICAgICAgICAgIHwgICAxICsNCj4g
+ICBwbHVnaW5zL3FlbXUtcGx1Z2lucy5zeW1ib2xzICAgICAgICAgICAgICAgICAgfCAgIDIg
+Kw0KPiAgIHN0dWJzL21lc29uLmJ1aWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8
+ICAgMiArLQ0KPiAgIDE1IGZpbGVzIGNoYW5nZWQsIDM4OSBpbnNlcnRpb25zKCspLCAzOSBk
+ZWxldGlvbnMoLSkNCj4gICBjcmVhdGUgbW9kZSAxMDA2NDQgY29udHJpYi9wbHVnaW5zL2lw
+cy5jDQo+ICAgcmVuYW1lIHN0dWJzL3tjcHVzLWdldC12aXJ0dWFsLWNsb2NrLmMgPT4gY3B1
+cy12aXJ0dWFsLWNsb2NrLmN9ICg2OCUpDQo+IA0K
 
