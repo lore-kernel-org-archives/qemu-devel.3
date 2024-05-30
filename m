@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BA0C27C43
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E381C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCaTs-0002C2-6M; Thu, 30 May 2024 03:45:48 -0400
+	id 1sCaec-0004uh-2L; Thu, 30 May 2024 03:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCaTa-0001tv-6z; Thu, 30 May 2024 03:45:31 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCaTT-00034m-4z; Thu, 30 May 2024 03:45:29 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f44b5b9de6so4752005ad.3; 
- Thu, 30 May 2024 00:45:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717055117; x=1717659917; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NbPEeRWPILNUzNuILr/esH7ih7rVY13FKF1oFFMWtjM=;
- b=WPjL4N/mEA0Lt6/CQix5ZckAcZBMbFpC+ohsnSY55FmbsBuGR6KL8QnaB/HDUp6i2y
- v51fkFAoMD2GEyu2rGIYXLDRBfwvW8eAGL7cdPMEcDTNP5rqbGW7sy7V50QAPrGMZOdj
- tlVSHXMlJqZYAfdtumSVUkB/NRtRq9xVobt7ja/paQU8U+kuyomOm+ldJ2RDdyW0AT82
- F/bhkqKB+XiuVRpieEtxs2ahnyFtLETUNVfpj/1wFTWz7gIbxi7Pj5kRK4rK+IJC4jVD
- I05C6gm8CeLlTwhQgaL3oYzuchJJHy9np1Ef2dsvnQKyrf7Aj62K+QcFtJzx1IVaf/uj
- Pm8Q==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sCaea-0004uJ-Ix
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:56:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sCaeY-0005YV-Lj
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:56:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717055809;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=X39WmoL0Dz/4uCVVfpdPegDaHcEpyitnZaV4xhRkJPU=;
+ b=AI1IcZ61SdFB6uvGHejdOmOuc1Z6yBX/8LjVrBJzUUVjbD/Fb1hmIYu1YRMOXE7g4ypkUG
+ tmvr+bBKgp+Off+bH46Ef67HV8TV+aOgkIjcudPkOBe0QtwE0OokZ7wZFPC9MWWmSWpbt+
+ nEytTNwt5iw86BZxbGWXFTzLoBneVQk=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-310-8_Z73csRPTG7KOcJWOmcVw-1; Thu, 30 May 2024 03:56:48 -0400
+X-MC-Unique: 8_Z73csRPTG7KOcJWOmcVw-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-43fb05b2932so5922591cf.1
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:56:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717055117; x=1717659917;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NbPEeRWPILNUzNuILr/esH7ih7rVY13FKF1oFFMWtjM=;
- b=HsHUMlbw5dHfg7drVXhnzyNKwhhPxI4OpQ9xCrHG7IipwRlb23cJbWLAPROwvfdjSe
- 4JVcyW5F2OyDNp/ofJZp3nZp4nrYJbXORCtW5Sbvz4blE0TTnoMmif7hoNjDqs0uPNNN
- zDyWWhbYnTk1wi7FMtcYAnJqgMnvfnpGXJeIPVwjy+dK9XUQ02vpXKTXZJ5Tp4Lc+1HI
- CPYjFiN65xlXXB8QwsNsBI2OxZ2YEEfLqwd37Yb+F3AgsuKx/alT/CJb4fiu9wqQfTsE
- DVf3l70RQFYhepIb9AFJS9vBNWfkvUQvttfVkN45lNOIOjwFVv/TDn2NHVCdGKIUl3kF
- sn5Q==
+ d=1e100.net; s=20230601; t=1717055807; x=1717660607;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X39WmoL0Dz/4uCVVfpdPegDaHcEpyitnZaV4xhRkJPU=;
+ b=KX6a7pi/z9A+R01Si3Iq6EgrWwXRipOsOA2Us34fUlNHRdIH196RbmtJ3ArCOXNHIS
+ zTihKpz4xXeumcDgbtxq4mIajkynq4KzEhF6Yq058cz2KUKNMOaTaVjOXRMA5t258K0p
+ dGHPKhVosM6lxFqyvj8YPfg0czhU92sySVp0m4VKR+JX7AuCtlW1xQ/gbk6kAbiGl92d
+ FKZgBbSzi1BcImFXkLXaVvIoRwCLr+2GSqr/FD8FDWV1QxeXhSaXc96cdqBqKDH/jmfL
+ cyFvWz+iNVBz2Vi9LKZ4aoRjmBSR4oOMkCuAAMVJU4M2Lpnt9xlgY7p8gXVLko7NBOUl
+ IOBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUle7VuBE+M4iYy2brECUeyhD1R7Z+XUsdP15PnxPZnyq7r2aTgceLgkgAn1uz3c1RLM0tdWBFLjdrgjRTMZ1rRrMiL
-X-Gm-Message-State: AOJu0YwqEFfTxJX6h/AbVkXiWa11caLN267vOlsWTHQ/4lVixTuFD5vs
- JTZsDgysaJ69pNkfou/oodniiEy1iNdZxh1ch6dDnc4oitreXtY7kAUr9g==
-X-Google-Smtp-Source: AGHT+IFfesfKOKLyxaPOvhXsaTdUqJFJSWerkRxupFW40o8qBxGCF/6Nh75Y0KbFgKwShV9YebWiLw==
-X-Received: by 2002:a17:902:ec83:b0:1f4:7bf1:71f8 with SMTP id
- d9443c01a7336-1f6192ed3e4mr15229315ad.5.1717055116890; 
- Thu, 30 May 2024 00:45:16 -0700 (PDT)
-Received: from wheely.local0.net ([1.146.118.54])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f61aa2e998sm8025335ad.62.2024.05.30.00.45.13
+ AJvYcCXxH+E8ehp6mXR2YcnFbmClj/z7AF3A5NbLYB+CWA9Ojr8hMEbj13gNrrsxLO0Qst/VBiZsfvWRzbbbRy4naVjC0a2hPGM=
+X-Gm-Message-State: AOJu0Yzsi8SKUkhGURpFktf58Ti0Jgl92U6M+T2ikfyHNvlFUTCBHszQ
+ BmzDUxjCvJzskST/fSkK2xipUmmajfsc+oNWNZFg6/86gsPNbahaJToZxxNC41zOo7IFpxTz1LC
+ ef86MBjNKB/RlEjR4T3x8/DfherEJjxaGsAqL5aDiImuUrb6ZU6fa
+X-Received: by 2002:a05:622a:48e:b0:43a:ed9c:36f3 with SMTP id
+ d75a77b69052e-43fe931d3d4mr16249231cf.42.1717055807465; 
+ Thu, 30 May 2024 00:56:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqF5sfn24xV7uxfXLqXuer8GXUCWTZv4Z461lUtI2xBgCV8tgB/QImxFV38O9Acm/47RFzkg==
+X-Received: by 2002:a05:622a:48e:b0:43a:ed9c:36f3 with SMTP id
+ d75a77b69052e-43fe931d3d4mr16249121cf.42.1717055806989; 
+ Thu, 30 May 2024 00:56:46 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-109.retail.telecomitalia.it.
+ [79.53.30.109]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43fe3772080sm14911561cf.90.2024.05.30.00.56.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 00:45:16 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org
-Subject: [PATCH v3 3/4] tests/qtest/migration-test: Enable on ppc64 TCG
-Date: Thu, 30 May 2024 17:44:51 +1000
-Message-ID: <20240530074453.21780-4-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240530074453.21780-1-npiggin@gmail.com>
-References: <20240530074453.21780-1-npiggin@gmail.com>
+ Thu, 30 May 2024 00:56:46 -0700 (PDT)
+Date: Thu, 30 May 2024 09:56:41 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Halil Pasic <pasic@linux.ibm.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
+ Marc Hartmayer <mhartmay@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>
+Subject: Re: [PATCH 1/1] vhost-vsock: add VIRTIO_F_RING_PACKED to feaure_bits
+Message-ID: <22qkoy5dtmd2hrsrybc4mpbso5ve3ijg7eguy5qvrik3vvtwil@rhl2znimtl4y>
+References: <20240429113334.2454197-1-pasic@linux.ibm.com>
+ <ps5dukcjk6yh3an3hlkynr227r7kcln7b5dxgwope62avz5ceo@decy6vkuu56j>
+ <20240527132710.4a7c372f.pasic@linux.ibm.com>
+ <glq3neyd4vyzu4wgdrlq2a2ws7h4tn35dg2xaw4klc73zfj25k@pwotfsysvgqr>
+ <20240529144928.182b34b1.pasic@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20240529144928.182b34b1.pasic@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,50 +110,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ppc64 with TCG seems to no longer be failing this test, perhaps since
-commit 03bfc2188f061 ("physmem: Fix migration dirty bitmap coherency
-with TCG memory access") which is not ppc specific but was seen to hit
-ppc64 quite easily.
+On Wed, May 29, 2024 at 02:49:28PM GMT, Halil Pasic wrote:
+>On Tue, 28 May 2024 17:32:26 +0200
+>Stefano Garzarella <sgarzare@redhat.com> wrote:
+>
+>> >1) The uses is explicitly asking for a vhost device and giving the user
+>> >a non vhost device is not an option.
+>>
+>> I didn't get this point :-( can you elaborate?
+>
+>I was thinking along the lines: QEMU gets told what devices to
+>provision, and that includes things like what virtio features,
+>and what kind of a backend.
+>
+>In this example, the default for vsock-vhost is no VIRTIO_F_RING_PACKED,
+>but if we tell QEMU to create a vsock-vhost device with the feature
+>VIRTIO_F_RING_PACKED, things go south in a not nice way.
+>
+>Given that vhost not supporting VIRTIO_F_RING_PACKED as of today is a
+>fact of life we must accept, there are multiple ways how such a situation
+>can be handled.
+>
+>For instance vhost-net is handling this by the device not offering the
+>VIRTIO_F_RING_PACKED feature. This is at least what I think I have
+>observed, but I would not mind somebody confirming it. But for the sake
+>of the argument, let us look at other options.
+>
+>The straightforward one would be to not realize the device, because we
+>can't provide what we have been asked to provide. And this actually
+>makes me think about migration! What would happen, were we to
+>eventually introduce, packed to vhost and vhost net, and then attempt to
+>migrate between a host that has this new feature and host that has not. I
+>guess things would pretty much blow up in a very unpleasant way!
 
-Let's enable it again.
+Yes, migration with vhost devices implies that the destination host 
+supports at least the same features as the source host. We should 
+consider how migration between 2 QEMUs and the destination doesn't 
+support a required feature, I guess migration can't happen or the device 
+has to be removed and then re-added without that feature.
 
-The s390x problem has been identified so mention it while we are
-adjusting the comment.
+>
+>Then for some devices, at least in theory, it might be possible to
+>abandon not the feature but the backend. Along the lines we were asked to
+>provide the feature X with backend Y but since backend Y does not
+>support that feature and backed Z does, we will determistically go
+>with backend Z. But IMHO this is a purely theoretical consideration, and
+>we shall not go this way.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/qtest/migration-test.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+Yep, I agree!
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 48f59822f4..ef9ddef1c8 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -3454,19 +3454,9 @@ int main(int argc, char **argv)
- #endif
- 
-     /*
--     * On ppc64, the test only works with kvm-hv, but not with kvm-pr and TCG
--     * is touchy due to race conditions on dirty bits (especially on PPC for
--     * some reason)
--     */
--    if (g_str_equal(arch, "ppc64") &&
--        (!has_kvm || access("/sys/module/kvm_hv", F_OK))) {
--        g_test_message("Skipping tests: kvm_hv not available");
--        goto test_add_done;
--    }
--
--    /*
--     * Similar to ppc64, s390x seems to be touchy with TCG, so disable it
--     * there until the problems are resolved
-+     * On s390x with TCG, migration is observed to hang due to the 'pending'
-+     * state of the flic interrupt controller not being migrated or
-+     * reconstructed post-migration. Disable it until the problem is resolved.
-      */
-     if (g_str_equal(arch, "s390x") && !has_kvm) {
-         g_test_message("Skipping tests: s390x host with KVM is required");
--- 
-2.43.0
+>
+>In any case if we are asked to provide with properties such that we
+>can't actually do that, something has to go out of the window: either
+>some of the properties, or the entire device.
+
+I see.
+
+Thanks,
+Stefano
 
 
