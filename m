@@ -4,51 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892C5C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 02:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F93C27C44
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 02:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCVKZ-0001mq-Ee; Wed, 29 May 2024 22:15:51 -0400
+	id 1sCVdL-0006A9-Tk; Wed, 29 May 2024 22:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sCVKV-0001lw-OE
- for qemu-devel@nongnu.org; Wed, 29 May 2024 22:15:48 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sCVKO-000459-SO
- for qemu-devel@nongnu.org; Wed, 29 May 2024 22:15:46 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxW+pE4VdmNXIBAA--.6111S3;
- Thu, 30 May 2024 10:15:32 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxWcZA4VdmUsENAA--.36247S2; 
- Thu, 30 May 2024 10:15:29 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2] tests/libqos: Add loongarch virt machine node
-Date: Thu, 30 May 2024 10:15:24 +0800
-Message-Id: <20240530021524.1082647-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sCVdK-00069z-0k
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 22:35:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sCVdI-00077a-7j
+ for qemu-devel@nongnu.org; Wed, 29 May 2024 22:35:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717036510;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rg2xmNdV9VryyD/e57RSlB0G1p5CoIc1hYKQjH6TQZk=;
+ b=KD/u0YirIx8nblxLWTj1EaR6d5DpAghf1T1KWmefz7f2FuzbE+KrwDg5ttZc8xV8O8pnDo
+ ZHf64tHjzhtkw5s3ojze/GDf3yG8gCRmxBq+o1p8G+fF/KXB6zMXxg+p7+/C61ZfQL/7FC
+ yWSPpyk0Ip1bQSchQ8SLTCz/BLh6vEw=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-sBsiXDASO2q-C_3KJuoR1w-1; Wed, 29 May 2024 22:35:08 -0400
+X-MC-Unique: sBsiXDASO2q-C_3KJuoR1w-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-6bed8ceb007so436733a12.1
+ for <qemu-devel@nongnu.org>; Wed, 29 May 2024 19:35:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717036507; x=1717641307;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Rg2xmNdV9VryyD/e57RSlB0G1p5CoIc1hYKQjH6TQZk=;
+ b=nO3K/o/1fjJN2pMOFXvrlAXuZBWaGOzfg8AlPv254IfLKpXNFO46TwgnrAUQb+vSuK
+ UT9GHFa4V3JX+eDD8Ql0rb2s3UQXtex2yRq8O0pAPpuqxSyHQ1coHvGnL98lEDxjB/xw
+ tHSepHqbmEnWDfpKomc5ygRnvloJ+ncqZH5hkMlRD+GDB5YklXamicJ7fPtW6eqy4EEQ
+ U7SSQSC3RBA1xR3judp8A+QlJcW6mGI0Vu5DEqK3MBkLfyRuAvAg/CUf/cA8BZAmenCe
+ ibbYpcsY+JwbB/uMLWxtEW3+9WOoFqXu3DOsD2VS7jpyZQIPy4v2j7V/UL+l0zMWcc2s
+ dW+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVH8aqdji55OagM2/HynvaTOJa/g7SeMbO4eZFPzZ3/P6+Tny21R6RJIOt8SFMwgZvbPlhzbXA0sBSPrG8VebQobZjwKwE=
+X-Gm-Message-State: AOJu0YzDJH2E5162PQi655dyGYi/kt1xM/hAsMYhLnPjbdFbE44IBC29
+ 6nJn8X7A6VYkK5tUGr8yObRG7KimVTrLWYOx66tUNraeMp+UjMNFeoR6X91MlHyQ7pk/cjV6xba
+ w7AaKoG3CLYYxcplqVlZIKhu7J6MhQVfn32+ONdC6ek9YMh2Wu8cx17S+6xAY9IlpzaR0BLGKe1
+ p9ykjabMBI4SROQCTzx9cTnsogrF4=
+X-Received: by 2002:a05:6a20:a129:b0:1af:fbab:cf92 with SMTP id
+ adf61e73a8af0-1b264633325mr934610637.54.1717036507514; 
+ Wed, 29 May 2024 19:35:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPHvpypLiS1f9nHuTmAChnD4EHwAxPYoYQB3REFayM6IwdGm1utKDJOVKVa4jC+xxyAyU2nJR8TBAkjlFqwy4=
+X-Received: by 2002:a05:6a20:a129:b0:1af:fbab:cf92 with SMTP id
+ adf61e73a8af0-1b264633325mr934600637.54.1717036507106; Wed, 29 May 2024
+ 19:35:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxWcZA4VdmUsENAA--.36247S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240429113334.2454197-1-pasic@linux.ibm.com>
+ <ps5dukcjk6yh3an3hlkynr227r7kcln7b5dxgwope62avz5ceo@decy6vkuu56j>
+ <20240527132710.4a7c372f.pasic@linux.ibm.com>
+ <CACGkMEtqpdAE1bs-egAH6YLCFY+DtctN2HgXUxqygwE3M6fGpw@mail.gmail.com>
+ <20240529141746.2a74ce14.pasic@linux.ibm.com>
+In-Reply-To: <20240529141746.2a74ce14.pasic@linux.ibm.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Thu, 30 May 2024 10:34:55 +0800
+Message-ID: <CACGkMEtoxSne90b75GEWWKaYOXzvvo5=rUS96ufjYsWYfN0ykA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] vhost-vsock: add VIRTIO_F_RING_PACKED to feaure_bits
+To: Halil Pasic <pasic@linux.ibm.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
+ Marc Hartmayer <mhartmay@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Boris Fiuczynski <fiuczy@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,187 +107,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add loongarch virt machine to the graph. It is a modified copy of
-the existing riscv virtmachine in riscv-virt-machine.c
+On Wed, May 29, 2024 at 8:18=E2=80=AFPM Halil Pasic <pasic@linux.ibm.com> w=
+rote:
+>
+> On Tue, 28 May 2024 11:25:51 +0800
+> Jason Wang <jasowang@redhat.com> wrote:
+>
+> > > 5) Based on the following, I would very much prefer a per device list=
+ of
+> > > features with the semantic "hey QEMU can do that feature without any
+> > > specialized vhost-device support (e.g. like VIRTIO_SCSI_F_CHANGE)"
+> >
+> > Indeed the current code is kind of tricky and may need better
+> > documentation. But the problem is some features were datapath related
+> > and they are supported since the birth of a specific vhost device. For
+> > example, some GSO related features (actually, it's not a feature of
+> > vhost-net but TUN/TAP).
+> >
+> > And I've found another interesting thing, for RING_REST, actually we
+> > don't need to do anything but we have the following commits:
+> >
+> > 313389be06ff6 ("vhost-net: support VIRTIO_F_RING_RESET")
+> > 2a3552baafb ("vhost: vhost-kernel: enable vq reset feature")
+> >
+> > Technically, they are not necessary as RING_RESET for vhost-kernel
+> > doesn't require any additional new ioctls. But it's too late to change
+> > as the kernel commit has been merged.
+> >
+> > > over
+> > > the current list with the semantics "these are the features that
+> > > need vhost backend support, and anything else will just work out". Th=
+at
+> > > way if an omission is made, we would end up with the usually safer
+> > > under-indication  instead of the current over-indication.
+> > >
+> > >
+> > > @Michael, Jason: Could you guys chime in?
+> >
+> > Another issue is that it seems to require a change of the semantic of
+> > VHOST_GET_FEATURES. If my understanding is true, it seems a
+> > non-trivial change which I'm not sure it's worth to bother.
+>
+> I don't quite understand. Would you mind to elaborate on this?
+>
+> For starters, what is the current semantic of VHOST_GET_FEATURES, and
+> where is it documented?
 
-It contains a generic-pcihost controller, and an extra function
-loongarch_config_qpci_bus() to configure GPEX pci host controller
-information, such as ecam and pio_base addresses.
+Unfortunately, no documentation. The semantic is kind of complicated
+which requires the userspace to know how a specific vhost device
+works.
 
-Also hotplug handle checking about TYPE_VIRTIO_IOMMU_PCI device is
-added on loongarch virt machine, since virtio_mmu_pci device requires
-it.
+For example, userspace knows vhost-net works with tuntap. So it checks
+part of the features with vhost-net and the rest with tuntap.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Thomas Huth <thuth@redhat.com>
+> You mean the ioctl, right?
 
----
-v1 ... v2:
-  1. Update copyright licence notation with file loongarch-virt-machine.c
----
+Yes.
 
- hw/loongarch/virt.c                         |   2 +
- tests/qtest/libqos/loongarch-virt-machine.c | 115 ++++++++++++++++++++
- tests/qtest/libqos/meson.build              |   1 +
- 3 files changed, 118 insertions(+)
- create mode 100644 tests/qtest/libqos/loongarch-virt-machine.c
+>
+> Then why do you think the semantic of VHOST_GET_FEATURES should change?
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 3e6e93edf3..2d7f718570 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -45,6 +45,7 @@
- #include "sysemu/tpm.h"
- #include "sysemu/block-backend.h"
- #include "hw/block/flash.h"
-+#include "hw/virtio/virtio-iommu.h"
- #include "qemu/error-report.h"
- 
- static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
-@@ -1213,6 +1214,7 @@ static HotplugHandler *virt_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
- 
-     if (device_is_dynamic_sysbus(mc, dev) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-         memhp_type_supported(dev)) {
-         return HOTPLUG_HANDLER(machine);
-     }
-diff --git a/tests/qtest/libqos/loongarch-virt-machine.c b/tests/qtest/libqos/loongarch-virt-machine.c
-new file mode 100644
-index 0000000000..1eece28eba
---- /dev/null
-+++ b/tests/qtest/libqos/loongarch-virt-machine.c
-@@ -0,0 +1,115 @@
-+/*
-+ * libqos driver framework
-+ *
-+ * Copyright (c) 2018 Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>
-+ * Copyright (c) 2024 Loongson Technology Corporation Limited
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License version 2.1 as published by the Free Software Foundation.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "../libqtest.h"
-+#include "qemu/module.h"
-+#include "libqos-malloc.h"
-+#include "qgraph.h"
-+#include "virtio-mmio.h"
-+#include "generic-pcihost.h"
-+#include "hw/pci/pci_regs.h"
-+
-+#define LOONGARCH_PAGE_SIZE               0x1000
-+#define LOONGARCH_VIRT_RAM_ADDR           0x100000
-+#define LOONGARCH_VIRT_RAM_SIZE           0xFF00000
-+
-+#define LOONGARCH_VIRT_PIO_BASE           0x18000000
-+#define LOONGARCH_VIRT_PCIE_PIO_OFFSET    0x4000
-+#define LOONGARCH_VIRT_PCIE_PIO_LIMIT     0x10000
-+#define LOONGARCH_VIRT_PCIE_ECAM_BASE     0x20000000
-+#define LOONGARCH_VIRT_PCIE_MMIO32_BASE   0x40000000
-+#define LOONGARCH_VIRT_PCIE_MMIO32_LIMIT  0x80000000
-+
-+typedef struct QVirtMachine QVirtMachine;
-+
-+struct QVirtMachine {
-+    QOSGraphObject obj;
-+    QGuestAllocator alloc;
-+    QVirtioMMIODevice virtio_mmio;
-+    QGenericPCIHost bridge;
-+};
-+
-+static void virt_destructor(QOSGraphObject *obj)
-+{
-+    QVirtMachine *machine = (QVirtMachine *) obj;
-+    alloc_destroy(&machine->alloc);
-+}
-+
-+static void *virt_get_driver(void *object, const char *interface)
-+{
-+    QVirtMachine *machine = object;
-+    if (!g_strcmp0(interface, "memory")) {
-+        return &machine->alloc;
-+    }
-+
-+    fprintf(stderr, "%s not present in loongarch/virtio\n", interface);
-+    g_assert_not_reached();
-+}
-+
-+static QOSGraphObject *virt_get_device(void *obj, const char *device)
-+{
-+    QVirtMachine *machine = obj;
-+    if (!g_strcmp0(device, "generic-pcihost")) {
-+        return &machine->bridge.obj;
-+    } else if (!g_strcmp0(device, "virtio-mmio")) {
-+        return &machine->virtio_mmio.obj;
-+    }
-+
-+    fprintf(stderr, "%s not present in loongarch/virt\n", device);
-+    g_assert_not_reached();
-+}
-+
-+static void loongarch_config_qpci_bus(QGenericPCIBus *qpci)
-+{
-+    qpci->gpex_pio_base = LOONGARCH_VIRT_PIO_BASE;
-+    qpci->bus.pio_alloc_ptr = LOONGARCH_VIRT_PCIE_PIO_OFFSET;
-+    qpci->bus.pio_limit = LOONGARCH_VIRT_PCIE_PIO_LIMIT;
-+    qpci->bus.mmio_alloc_ptr = LOONGARCH_VIRT_PCIE_MMIO32_BASE;
-+    qpci->bus.mmio_limit = LOONGARCH_VIRT_PCIE_MMIO32_LIMIT;
-+    qpci->ecam_alloc_ptr = LOONGARCH_VIRT_PCIE_ECAM_BASE;
-+}
-+
-+static void *qos_create_machine_loongarch_virt(QTestState *qts)
-+{
-+    QVirtMachine *machine = g_new0(QVirtMachine, 1);
-+
-+    alloc_init(&machine->alloc, 0,
-+               LOONGARCH_VIRT_RAM_ADDR,
-+               LOONGARCH_VIRT_RAM_ADDR + LOONGARCH_VIRT_RAM_SIZE,
-+               LOONGARCH_PAGE_SIZE);
-+
-+    qos_create_generic_pcihost(&machine->bridge, qts, &machine->alloc);
-+    loongarch_config_qpci_bus(&machine->bridge.pci);
-+
-+    machine->obj.get_device = virt_get_device;
-+    machine->obj.get_driver = virt_get_driver;
-+    machine->obj.destructor = virt_destructor;
-+    return machine;
-+}
-+
-+static void virt_machine_register_nodes(void)
-+{
-+    qos_node_create_machine_args("loongarch64/virt",
-+                                 qos_create_machine_loongarch_virt,
-+                                 " -cpu la464");
-+    qos_node_contains("loongarch64/virt", "generic-pcihost", NULL);
-+}
-+
-+libqos_init(virt_machine_register_nodes);
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 3aed6efcb8..558eb4c24b 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -61,6 +61,7 @@ libqos_srcs = files(
-         'ppc64_pseries-machine.c',
-         'x86_64_pc-machine.c',
-         'riscv-virt-machine.c',
-+        'loongarch-virt-machine.c',
- )
- 
- if have_virtfs
+For example vhost-net can return GSO related features.
 
-base-commit: 3b2fe44bb7f605f179e5e7feb2c13c2eb3abbb80
--- 
-2.39.3
+If we don't do that, I don't know how we could achieve
+under-indication as you mentioned.
+
+>
+> IMHO changing the semantic of the VHOST_GET_FEATURES ioctl is not viable,
+> but also not necessary. What I am proposing is changing the (in QEMU)
+> logic of processing the features returned by VHOST_GET_FEATURES, while
+> preserving the outcomes (essentially realize the same function in a
+> mathematical sense, but with code that is less fragile), modulo bugs like
+> the one addressed with this patch of course.
+
+Ok, I think I misunderstood you here. Maybe an RFC to see?
+
+Thanks
+
+>
+> Regards,
+> Halil
+>
 
 
