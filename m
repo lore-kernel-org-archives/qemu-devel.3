@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66996C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3CBC25B78
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCaU9-0002dY-LS; Thu, 30 May 2024 03:46:05 -0400
+	id 1sCaTz-0002KI-PM; Thu, 30 May 2024 03:45:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCaU7-0002cK-En
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:46:03 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCaTy-0002IM-Eh
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:45:54 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCaU5-0003MQ-Mb
- for qemu-devel@nongnu.org; Thu, 30 May 2024 03:46:03 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2e95abc7259so5456221fa.3
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:46:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCaTw-0003LD-Tx
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:45:54 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2e724bc466fso6543731fa.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717055158; x=1717659958; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9HDpCi4iEWOUwI39sa+QJujajRIL5EYyVsQyGGRGUn4=;
- b=uuRG86ufMJR94gOBTyw1dKmgDiuqT0z916DVGiWt6819leq7XeYd0KSp4wNg5PWvgc
- oxzEL9CZzUmfRXB43z1Z/rHc3R0EdsK9nvsRWE8bMJtaQywMpzEebuV8PtDUnXRETQOs
- uS7zAlB2APpWAXLvhK+FlHoNDXI30WXYQQIeuP1/WN3qRjyCTzi3nShpB2VzG1mn56p7
- N5YFkmhD3DndsfzYU8gJbPP6cXqkD2kiP/+eRvOhFXOL3bVP+xR7w50GTtOoagnSC2LJ
- Hofjlx/Wh09ivFfiZybTPfJMlwTe7cV2G5Md0wKimCQ/XcwpRv135YKztjobc4jKnfiu
- mFyA==
+ d=linaro.org; s=google; t=1717055151; x=1717659951; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HUg/pmw7ECobPYf4Dm9VVMYq+h562j2y5POy3LkzTJA=;
+ b=MbaDrTg7SWgPkCSw2m8QdBHjCweLGoGwldxXaMPmSkZlF3MWamHFvnYP6cowVjLDGG
+ VKItGNT9oyDgK9zi53t8M3XxFADrjmrEqNV3qrN0I3Y+6Ul4da/BKr/XVHs8I4gf4aLq
+ p8rcQf7fPbuMVwaX8rrAyoc3DGxZTIkVrtm4C2RaVMKME2qHq1FpW0JwI2w1bCrnLcyE
+ YLqcqMxfXqOv0HiEo3fw07XfZ+HzKBQPSGLlnMjoyYM+za2JAtvhMWKvMJpTCzeuN++u
+ EMOf/Fv08YTHGjsvsyhn5n8rMqRgLzoQYJrRK8KaVcIUJb0rAcWT3ZXEcyt7THoIABDL
+ XwRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717055158; x=1717659958;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9HDpCi4iEWOUwI39sa+QJujajRIL5EYyVsQyGGRGUn4=;
- b=NQF4l3r1n2/Hee/92P/7B+5f/8McO4P+1DrY3usBJhL2YEzCFAVUvGjjtWVnQQACUu
- pspb2cBbcCLnFbsfEt9rBcUrrxe3NCyGeUAc8PXKHb092iQJDZolmDBmVs5Hi/zSn7QR
- bxYEjH0digw+unG9jXErpIHr+ouMq5C2Hu9BAQ8NRcSaxhJrX5Ac5LT7UoZ1QO6azAys
- 58Hg67TW5R7ngq9MtEAisIRYqv81KsLMJtchIUAeCGPJ2dgXjrw3q6eWX9O3ILv7A3sD
- EXpIgU/nBWD6W9vB+3AZzoZHj1RsPg14N785KsqNmCt1XhrEsUBwhSANWLxGWGa0wsQT
- QNoA==
-X-Gm-Message-State: AOJu0YwPFp9yYNPD7/kqeI5z+ggIAUvJiJ1L/nuXSogil7RK2PFamSOY
- VwO2WPpZiP3e/4d6qnv3LrQduBYPFilVl55Dbv/go0v7q/fi/PgMZ3I5pjymFPze1tFCR00Q5A2
- a
-X-Google-Smtp-Source: AGHT+IGsHz2rkPPz2V6armuS7U2pLg+nr69d4RPyUDq2oHs3Bjb9eBdsDBFcPxGBT2KFO/900W+5NQ==
-X-Received: by 2002:a2e:7208:0:b0:2ea:83e6:d5e with SMTP id
- 38308e7fff4ca-2ea847b3b88mr6130601fa.26.1717055158011; 
- Thu, 30 May 2024 00:45:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717055151; x=1717659951;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HUg/pmw7ECobPYf4Dm9VVMYq+h562j2y5POy3LkzTJA=;
+ b=T0WaL7IBA7Vw3D+2CT8TL/cCCCsUZx4UXLUvo1ZQ47nHTdfoWJY/O3eXl22ZkcCw0I
+ 10WHcoD0RzCZcLrT9d9G8c0WUIVnJTmArZljYiELPdDqLwxhgEfuidNJxJJc1DS/2HqR
+ 1WFdpAaFQk/qDOovIvyQ8YD9zd7MAlhYYNnC+FIZghDWVN6oI9j5RCsFyUT39GQJoHHB
+ jE6WUXa27D4L7Y0V2Dew1uU+JR6LZA+C3K4+Kp+03zYdgp7YB/d0KAvMKTfvxJjeSLbx
+ Vcm/Hhbj4j24wVLL1TBVX46vPjwCV4TghMZNJSM7pgnHS3HHAKHGWMRm9RQTwblRGzkK
+ tCKw==
+X-Gm-Message-State: AOJu0YzBUSNuM9RYJzbMHLIOl9PbDXLagw6oWnyClihuNccwwmAUm5Q+
+ YebewgNNdBijDI9Dp/YSc3TGKZhHKFCSDcwyd6Tay57NlVVCvS1p4eyRqI7dn6r2Bc4Cxygbakd
+ V
+X-Google-Smtp-Source: AGHT+IGrCxbBsA+yWr+byuvDlgX51uGQgTXbPSsva8JjoIx/kYSGLYK8khMX6TwsEwzTaqfKPm8RnA==
+X-Received: by 2002:a05:651c:2116:b0:2ea:7def:dc93 with SMTP id
+ 38308e7fff4ca-2ea847d4d87mr14569941fa.27.1717055150697; 
+ Thu, 30 May 2024 00:45:50 -0700 (PDT)
 Received: from m1x-phil.lan (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
  [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7db8csm16673189f8f.8.2024.05.30.00.45.55
+ ffacd0b85a97d-3557a08a878sm16570186f8f.43.2024.05.30.00.45.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 30 May 2024 00:45:57 -0700 (PDT)
+ Thu, 30 May 2024 00:45:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -71,18 +70,17 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/4] hw/s390x: Introduce the @dump-s390-skeys QMP command
-Date: Thu, 30 May 2024 09:45:41 +0200
-Message-ID: <20240530074544.25444-2-philmd@linaro.org>
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
+ deprecate
+Date: Thu, 30 May 2024 09:45:40 +0200
+Message-ID: <20240530074544.25444-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240530074544.25444-1-philmd@linaro.org>
-References: <20240530074544.25444-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,118 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@dump-skeys is specific to the qemu-system-s390x binary.
-In order to provide it in an unified single binary, add
-a equivalent new command named @dump-s390-skeys, which
-works identically on s390x and reports an error on other
-targets.
+We are trying to unify all qemu-system-FOO to a single binary.
+In order to do that we need to remove QAPI target specific code.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+@dump-skeys is only available on qemu-system-s390x. This series
+rename it as @dump-s390-skey, making it available on other
+binaries. We take care of backward compatibility via deprecation.
+
+Philippe Mathieu-Daudé (4):
+  hw/s390x: Introduce the @dump-s390-skeys QMP command
+  hw/s390x: Introduce the 'dump_s390_skeys' HMP command
+  hw/s390x: Deprecate the HMP 'dump_skeys' command
+  hw/s390x: Deprecate the QMP @dump-skeys command
+
+ docs/about/deprecated.rst  |  5 +++++
+ qapi/misc-target.json      |  5 +++++
  qapi/misc.json             | 18 ++++++++++++++++++
- hw/s390x/s390-skeys-stub.c | 16 ++++++++++++++++
- hw/s390x/s390-skeys.c      |  8 +++++++-
+ include/monitor/hmp.h      |  1 +
+ hw/s390x/s390-skeys-stub.c | 24 ++++++++++++++++++++++++
+ hw/s390x/s390-skeys.c      | 19 +++++++++++++++++--
+ hmp-commands.hx            | 17 +++++++++++++++--
  hw/s390x/meson.build       |  5 +++++
- 4 files changed, 46 insertions(+), 1 deletion(-)
+ 8 files changed, 90 insertions(+), 4 deletions(-)
  create mode 100644 hw/s390x/s390-skeys-stub.c
 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index ec30e5c570..d192dd1bef 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -605,3 +605,21 @@
- { 'event': 'VFU_CLIENT_HANGUP',
-   'data': { 'vfu-id': 'str', 'vfu-qom-path': 'str',
-             'dev-id': 'str', 'dev-qom-path': 'str' } }
-+
-+##
-+# @dump-s390-skeys:
-+#
-+# Dump guest's storage keys
-+#
-+# @filename: the path to the file to dump to
-+#
-+# Since: 9.1
-+#
-+# Example:
-+#
-+#     -> { "execute": "dump-skeys",
-+#          "arguments": { "filename": "/tmp/skeys" } }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'dump-s390-skeys',
-+  'data': { 'filename': 'str' } }
-diff --git a/hw/s390x/s390-skeys-stub.c b/hw/s390x/s390-skeys-stub.c
-new file mode 100644
-index 0000000000..50b5f83437
---- /dev/null
-+++ b/hw/s390x/s390-skeys-stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * s390 storage key device stubs
-+ *
-+ * SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
-+ * SPDX-FileCopyrightText: 2023 Linaro Ltd.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-misc.h"
-+
-+void qmp_dump_s390_skeys(const char *filename, Error **errp)
-+{
-+    error_setg(errp, "This guest is not using s390 storage keys - "
-+                     "nothing to dump");
-+}
-diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-index 5c535d483e..f9bb08eb92 100644
---- a/hw/s390x/s390-skeys.c
-+++ b/hw/s390x/s390-skeys.c
-@@ -15,6 +15,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/s390x/storage-keys.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-commands-misc.h"
- #include "qapi/qapi-commands-misc-target.h"
- #include "qapi/qmp/qdict.h"
- #include "qemu/error-report.h"
-@@ -115,7 +116,7 @@ void hmp_dump_skeys(Monitor *mon, const QDict *qdict)
-     }
- }
- 
--void qmp_dump_skeys(const char *filename, Error **errp)
-+void qmp_dump_s390_skeys(const char *filename, Error **errp)
- {
-     S390SKeysState *ss = s390_get_skeys_device();
-     S390SKeysClass *skeyclass = S390_SKEYS_GET_CLASS(ss);
-@@ -192,6 +193,11 @@ out:
-     fclose(f);
- }
- 
-+void qmp_dump_skeys(const char *filename, Error **errp)
-+{
-+    qmp_dump_s390_skeys(filename, errp);
-+}
-+
- static bool qemu_s390_skeys_are_enabled(S390SKeysState *ss)
- {
-     QEMUS390SKeysState *skeys = QEMU_S390_SKEYS(ss);
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 482fd13420..c94b8d819d 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -50,6 +50,11 @@ virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock-ccw.c'))
- virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs-ccw.c'))
- s390x_ss.add_all(when: 'CONFIG_VIRTIO_CCW', if_true: virtio_ss)
- 
-+s390x_stub_ss = ss.source_set()
-+s390x_stub_ss.add(when: 'TARGET_S390X', if_false: files('s390-skeys-stub.c'))
-+
-+specific_ss.add_all(s390x_stub_ss)
-+
- hw_arch += {'s390x': s390x_ss}
- 
- hw_s390x_modules = {}
 -- 
 2.41.0
 
