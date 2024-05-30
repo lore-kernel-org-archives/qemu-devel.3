@@ -4,59 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E96F2C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF0AC25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCa4R-0006Uw-Su; Thu, 30 May 2024 03:19:32 -0400
+	id 1sCa7N-0000Ci-TC; Thu, 30 May 2024 03:22:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
- id 1sCa4Q-0006T9-CY; Thu, 30 May 2024 03:19:30 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
- id 1sCa4J-0005pk-TP; Thu, 30 May 2024 03:19:30 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Vqd0h2vMmz4wyj;
- Thu, 30 May 2024 17:19:16 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Vqd0c52zLz4wyw;
- Thu, 30 May 2024 17:19:12 +1000 (AEST)
-Message-ID: <09b4d73e-64a8-41e2-81ca-4e1185abda8a@kaod.org>
-Date: Thu, 30 May 2024 09:19:09 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa7L-0000Ba-Hu
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:22:31 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCa74-0006UK-Sd
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:22:31 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-52b7d180542so555281e87.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:22:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717053732; x=1717658532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=o2EeA518C36w+iQ7h9HD8qUmE+N4G0/Tt/R6lPrURr8=;
+ b=rCaeavA3dzw1UOlgze/NL3Q/wgRKkTUf1ipawTpKJc/hikc7km/YODthH/SMk7vH88
+ UJI9m3XUsv1/QyDVi5oQsgUxD8BpTKH4i+5F5RLjUMLPm61Qi0ofBAJEG8WMT5WiB1bh
+ tyAojDbHX37UulYdtB9CUw469/njSfG/7S3QwyNaaYkL9bpbYl8X8lK082GYpud8JrEu
+ C94/RLhu7z13KLmIguF+Ou33v5oGTNa7Nozm6FUm1uCnoX0xepOr5+jSCfEsezGb6WQt
+ jg0KK1dYzfKQC+sNnILP0ZUz40jxTA8Wags5BTC0lxl4wAez4NbANXMeUjsqEl8Vnsj2
+ FUrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717053732; x=1717658532;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=o2EeA518C36w+iQ7h9HD8qUmE+N4G0/Tt/R6lPrURr8=;
+ b=eEzqdKq65fhH/nfrjoJwmjZLNHq8S7OORYznuGyrqy0KXEsJFnEi6eA/vakB5C6U2j
+ oYW5UxjDhI/b28e0X7vNaNUD0zOY2/OpReRuF0ju+LxGIG2/wp+3bHt0QaiuciMiLBp+
+ fATBQnNi/0JtuGJKmML+mQz7XIU/syGdAPPKgt0gQsolxk/pD62zHGJPX+Fw+QbMzOIH
+ u6X2tk/uq8jXh5eLc19KkuoLxsQi7St/R8vaQ5m5RalRYLHig97XsZoBeoroDk6bQmlC
+ 0eSZ2wxI5532Cshiu7YuXBxETVIWciMbJMiNil0Z+qyiHcHAzDqdRHETLKSVOrmfGicG
+ Y5ig==
+X-Gm-Message-State: AOJu0YyT8P602b4kklViaqU9r5Sz2ZNBAy49IJ/nX6S6t8MiwZcZRkzf
+ RyWWO+X2Su2XYoY3oTGVYBFgdiWZxaBKtCkpOC8CB5q68YIm3Qam2xZbwxHUr0w=
+X-Google-Smtp-Source: AGHT+IEkjSCBC3x2N9dxesTUsQWQiI7f63ttX1SEhqXJP7IsI59XzdYXiJchniB/tJNkQ726MuQeSA==
+X-Received: by 2002:ac2:5147:0:b0:51a:ca75:9ffe with SMTP id
+ 2adb3069b0e04-52b7d47a4f4mr854953e87.42.1717053731400; 
+ Thu, 30 May 2024 00:22:11 -0700 (PDT)
+Received: from [192.168.69.100] (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
+ [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-421270aeb18sm15723265e9.48.2024.05.30.00.22.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 May 2024 00:22:10 -0700 (PDT)
+Message-ID: <7ce86375-779d-43d6-9871-7f9587c95ba6@linaro.org>
+Date: Thu, 30 May 2024 09:22:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/11] ppc/pseries: Add Power11 cpu type
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-References: <20240528070515.117160-1-adityag@linux.ibm.com>
- <20240528070515.117160-3-adityag@linux.ibm.com>
- <d584063b-a30e-46f0-a69e-4737c8d6d46a@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <d584063b-a30e-46f0-a69e-4737c8d6d46a@linux.ibm.com>
+Subject: Re: [PATCH 3/3] semihosting: Restrict to TCG
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
+References: <20240529155548.5878-1-philmd@linaro.org>
+ <20240529155548.5878-4-philmd@linaro.org>
+ <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Otnh=NB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,107 +96,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/30/24 09:06, Harsh Prateek Bora wrote:
+On 30/5/24 08:02, Paolo Bonzini wrote:
+> On Wed, May 29, 2024 at 5:56 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>> It is pointless to build semihosting when TCG is not available.
 > 
+> Why? I would have naively assumed that a suitable semihosting API
+> could be implemented by KVM. The justification (and thus the commit
+> message) needs to be different for each architecture if it's a matter
+> of instruction set or insufficient KVM userspace API.
+
+I wasn't sure where semihosting could be used so asked on IRC and
+Alex told me TCG only. Maybe the current implementation is TCG
+only, and I can reword. It certainly need some refactor to work
+on KVM, because currently semihosting end calling the TCG probe_access
+API, which I'm trying to restrict to TCG in order to ease linking
+multiple libtcg for the single binary (see
+https://lore.kernel.org/qemu-devel/20240529155918.6221-1-philmd@linaro.org/).
+
+> Paolo
 > 
-> On 5/28/24 12:35, Aditya Gupta wrote:
->> Add sPAPR CPU Core definition for Power11
->>
->> Cc: David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
->> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
->> Cc: Cédric Le Goater <clg@kaod.org>
->> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
->> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
->> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
->> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
->> Cc: Nicholas Piggin <npiggin@gmail.com>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   docs/system/ppc/pseries.rst | 6 +++---
->>   hw/ppc/spapr_cpu_core.c     | 1 +
->>   2 files changed, 4 insertions(+), 3 deletions(-)
+>>   semihosting/Kconfig | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
->> index a876d897b6e4..3277564b34c2 100644
->> --- a/docs/system/ppc/pseries.rst
->> +++ b/docs/system/ppc/pseries.rst
->> @@ -15,9 +15,9 @@ Supported devices
->>   =================
->>    * Multi processor support for many Power processors generations: POWER7,
->> -   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
->> -   but its state is unknown.
->> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
->> +   POWER7+, POWER8, POWER8NVL, POWER9, Power10 and Power11. Support for POWER5+
->> +   exists, but its state is unknown.
->> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9, Power10, Power11)
+>> diff --git a/semihosting/Kconfig b/semihosting/Kconfig
+>> index eaf3a20ef5..fbe6ac87f9 100644
+>> --- a/semihosting/Kconfig
+>> +++ b/semihosting/Kconfig
+>> @@ -1,6 +1,7 @@
+>>
+>>   config SEMIHOSTING
+>>          bool
+>> +       depends on TCG
+>>
+>>   config ARM_COMPATIBLE_SEMIHOSTING
+>>          bool
+>> --
+>> 2.41.0
+>>
 > 
-> I think it would look more cleaner to rephrase as below:
-> 
->   * Multi processor support for many Power processors generations:
->     - POWER7, POWER7+
->     - POWER8, POWER8NVL
->     - POWER9
->     - Power10
->     - Power11.
->     - Support for POWER5+ exists, but its state is unknown.
-
-
-$ /usr/bin/qemu-system-ppc64 -version
-QEMU emulator version 8.1.3 (qemu-8.1.3-5.fc39)
-Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
-
-With the correct kernel/userspace, it runs :
-
-# uname -a
-Linux buildroot 6.6.3 #1 SMP Fri Jan  5 00:00:45 CET 2024 ppc64 GNU/Linux
-# cat /proc/cpuinfo
-processor	: 0
-cpu		: POWER5+ (gs)
-clock		: 1000.000000MHz
-revision	: 2.1 (pvr 003b 0201)
-
-timebase	: 512000000
-platform	: pSeries
-model		: IBM pSeries (emulated by qemu)
-machine		: CHRP IBM pSeries (emulated by qemu)
-MMU		: Hash
-
-
-Thanks,
-
-C.
-
-
-
-
->   * Interrupt Controller
->      - XICS (POWER8)
->      - XIVE (Supported by below:)
->          - POWER9
->          - Power10
->          - Power11
-> 
-> So, that every next platform just need to add one line for itself.
-> 
-> With that,
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> 
-> Thanks
-> Harsh
->>    * vPHB PCIe Host bridge.
->>    * vscsi and vnet devices, compatible with the same devices available on a
->>      PowerVM hypervisor with VIOS managing LPARs.
->> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
->> index e7c9edd033c8..62416b7e0a7e 100644
->> --- a/hw/ppc/spapr_cpu_core.c
->> +++ b/hw/ppc/spapr_cpu_core.c
->> @@ -401,6 +401,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
->>       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
->>       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
->>       DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
->> +    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
->>   #ifdef CONFIG_KVM
->>       DEFINE_SPAPR_CPU_CORE_TYPE("host"),
->>   #endif
 
 
