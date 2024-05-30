@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 020DCC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 09:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE2AC41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 10:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCcUN-00070l-Tn; Thu, 30 May 2024 05:54:27 -0400
+	id 1sCcap-00033Y-Of; Thu, 30 May 2024 06:01:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCcUL-000704-Rl
- for qemu-devel@nongnu.org; Thu, 30 May 2024 05:54:25 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sCcUJ-00026Q-IV
- for qemu-devel@nongnu.org; Thu, 30 May 2024 05:54:25 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-6c104f64ff6so218161a12.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 02:54:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717062862; x=1717667662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7OY+Yb66xH2ve4EOh/kSWfFWLssdw6ThCr38/yoK6pI=;
- b=TuIgLXAg2iAcwZrMI/B7S0WRFDOwAyghYDMyJd0dlzkF8l8RtM+C752X4Aw3J8So5y
- SCf0vJtLqFb9DFWvdInWnH0+D/eqaB6abKTU/AluqSTuljF2xEwO4jKOf4i4UfIVUtt+
- AIvh4Tv9lsKsV4fJk5PTpVmbt0T47IYjKzg/KPTRD4J3xd1iW4Ap+lcn0mRp+RyZj+tn
- s0ba6ZZjVV4QHCuDL1Ur2uV5zuLyUZho0F3ZgUruEobDQ/l4At+7RE040xxci95k9xYn
- M+9N8jtXmQFaUJQ828drRlT3LGOtPLQxhS4ZSFkKJ/4bzBruRXF9Z//SGqZI61Gvu3PD
- Pqbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717062862; x=1717667662;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7OY+Yb66xH2ve4EOh/kSWfFWLssdw6ThCr38/yoK6pI=;
- b=wlA2n3b9zGdYCuHjdC7K14n4WfSfDXf0a+2A8zAE5fJlmNY2gAetY6w5+ZUX8eNC5v
- HxsRrSbHsGnt3WpXWNva6rZ/6dwtiIwcS1uGsHX99bLjD113UBXz+1lCprhm8HPYbV4+
- T7/+haOYd+f/EeHu1uXzrZdIKa8LbzUhPdZWVHKWRtZ3RxfbmoU6fh2OX/U3lsJf2II3
- cBtqb706jm1enmtUD0q8kHqb5JMxLTNXQQEtng317/Dep12tpRXtiUZ0UVwkVFMyDXS3
- dK0Loq/9tWcSEfdXjHzIXVdaClxTyNmN736T05j6p5Bp2td5Xk+/jhXlIPhjyi0ts/sR
- 2fDQ==
-X-Gm-Message-State: AOJu0Yyv6pLZj3KEbPI/VgXcTjyOuhJP9YMoJMdXI8REXezVY1r6Ku+J
- JlxmfOTdtWhBHS8AB6kEkMuizacrFBXZHdLWpbX/WwivFtmsK7mHzekcN9Uu
-X-Google-Smtp-Source: AGHT+IFb8Oi6i9H0gmUifZb4BGlKK57TqfSUWvOHImiNUBpsrMEcHrrNoGVfA2rMPwUztr8Z9rNzoA==
-X-Received: by 2002:a17:90b:60e:b0:2bd:dce4:8f90 with SMTP id
- 98e67ed59e1d1-2c1abc064f1mr1627738a91.6.1717062861513; 
- Thu, 30 May 2024 02:54:21 -0700 (PDT)
-Received: from wheely.local0.net ([1.146.0.82])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1a775d28asm1183626a91.8.2024.05.30.02.54.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 02:54:21 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 1/4] tests/qtest/migration-test: Use regular file file for
- shared-memory tests
-Date: Thu, 30 May 2024 19:54:04 +1000
-Message-ID: <20240530095408.31608-2-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240530095408.31608-1-npiggin@gmail.com>
-References: <20240530095408.31608-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sCcam-00030l-RM; Thu, 30 May 2024 06:01:04 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sCcai-0003TU-LH; Thu, 30 May 2024 06:01:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717063261; x=1748599261;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=znO68kctoXTm05SXOnOkWCHEq8CPUvXamn9nrKcDybU=;
+ b=TY2vtxZToY4Qc6H9reQHgqP6plQPdWwN3mTqaPfernI0I/6Hf78KdHWI
+ RRQnEh/u2UCqi70CIyIC7BiFUIrCbMJHHrvq59oHrx8yVnYTgunVQb8Vx
+ dh2Vp3oBX4ueQ01UxVJg5SG1ZDU2hgEXUKU2nHPVvoqZ4BvVHkJse6UsG
+ OBMpppkJ154is4LtTioc4TIjVeM4g7ntOtE3VLw15nYIqhKNxnGI+++h6
+ +bIrPDh50nqHQeX11iq1+xgIBD16W6wMT1MgytPNj5v/ohebQpk5/R2q1
+ oijCrb60iHY4GHQth9HO8eOJYh+j4QAu/SoWRSvBl94JX9zW07S4KenpA w==;
+X-CSE-ConnectionGUID: 101eXeCAQJmGq7ucw3K1Mg==
+X-CSE-MsgGUID: pWyi9bvaQcuGPeg8I310Ug==
+X-IronPort-AV: E=McAfee;i="6600,9927,11087"; a="31032597"
+X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; d="scan'208";a="31032597"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 May 2024 03:00:58 -0700
+X-CSE-ConnectionGUID: neXIx/biQuuMsRJXYFHhLw==
+X-CSE-MsgGUID: vImgdb6DR5m+pUdi65nqSg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; d="scan'208";a="35705138"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by orviesa010.jf.intel.com with ESMTP; 30 May 2024 03:00:53 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC v2 6/7] i386/pc: Support cache topology in -smp for PC machine
+Date: Thu, 30 May 2024 18:15:38 +0800
+Message-Id: <20240530101539.768484-7-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240530101539.768484-1-zhao1.liu@intel.com>
+References: <20240530101539.768484-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.036,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,119 +94,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need to use /dev/shm for file-backed memory devices, and
-on Gitlab CI the tmpfs mount is too small to be usable for migration
-tests. Switch to using a regular file in /tmp/ which will usually have
-more space available.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- tests/qtest/migration-test.c | 34 +++++++++++++++-------------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+ hw/i386/pc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index d6f5ceed80..8bbf45313d 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -552,7 +552,7 @@ typedef struct {
-      * unconditionally, because it means the user would like to be verbose.
-      */
-     bool hide_stderr;
--    bool use_shmem;
-+    bool use_memfile;
-     /* only launch the target process */
-     bool only_target;
-     /* Use dirty ring if true; dirty logging otherwise */
-@@ -672,21 +672,14 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-     g_autofree gchar *cmd_source = NULL;
-     g_autofree gchar *cmd_target = NULL;
-     const gchar *ignore_stderr;
--    g_autofree char *shmem_opts = NULL;
--    g_autofree char *shmem_path = NULL;
-+    g_autofree char *memfile_opts = NULL;
-+    g_autofree char *memfile_path = NULL;
-     const char *kvm_opts = NULL;
-     const char *arch = qtest_get_arch();
-     const char *memory_size;
-     const char *machine_alias, *machine_opts = "";
-     g_autofree char *machine = NULL;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 7b638da7aaa8..2e03b33a4116 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1844,6 +1844,9 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     mc->nvdimm_supported = true;
+     mc->smp_props.dies_supported = true;
+     mc->smp_props.modules_supported = true;
++    mc->smp_props.l1_separated_cache_supported = true;
++    mc->smp_props.l2_unified_cache_supported = true;
++    mc->smp_props.l3_unified_cache_supported = true;
+     mc->default_ram_id = "pc.ram";
+     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
  
--    if (args->use_shmem) {
--        if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
--            g_test_skip("/dev/shm is not supported");
--            return -1;
--        }
--    }
--
-     dst_state = (QTestMigrationState) { };
-     src_state = (QTestMigrationState) { };
-     bootfile_create(tmpfs, args->suspend_me);
-@@ -746,12 +739,12 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-         ignore_stderr = "";
-     }
- 
--    if (args->use_shmem) {
--        shmem_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
--        shmem_opts = g_strdup_printf(
-+    if (args->use_memfile) {
-+        memfile_path = g_strdup_printf("/%s/qemu-%d", tmpfs, getpid());
-+        memfile_opts = g_strdup_printf(
-             "-object memory-backend-file,id=mem0,size=%s"
-             ",mem-path=%s,share=on -numa node,memdev=mem0",
--            memory_size, shmem_path);
-+            memory_size, memfile_path);
-     }
- 
-     if (args->use_dirty_ring) {
-@@ -780,7 +773,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-                                  memory_size, tmpfs,
-                                  arch_opts ? arch_opts : "",
-                                  arch_source ? arch_source : "",
--                                 shmem_opts ? shmem_opts : "",
-+                                 memfile_opts ? memfile_opts : "",
-                                  args->opts_source ? args->opts_source : "",
-                                  ignore_stderr);
-     if (!args->only_target) {
-@@ -802,7 +795,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-                                  memory_size, tmpfs, uri,
-                                  arch_opts ? arch_opts : "",
-                                  arch_target ? arch_target : "",
--                                 shmem_opts ? shmem_opts : "",
-+                                 memfile_opts ? memfile_opts : "",
-                                  args->opts_target ? args->opts_target : "",
-                                  ignore_stderr);
-     *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target);
-@@ -814,8 +807,8 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-      * Remove shmem file immediately to avoid memory leak in test failed case.
-      * It's valid because QEMU has already opened this file
-      */
--    if (args->use_shmem) {
--        unlink(shmem_path);
-+    if (args->use_memfile) {
-+        unlink(memfile_path);
-     }
- 
-     return 0;
-@@ -1868,6 +1861,9 @@ static void test_ignore_shared(void)
- {
-     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-     QTestState *from, *to;
-+    MigrateStart args = {
-+        .use_memfile = true,
-+    };
- 
-     if (test_migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
-         return;
-@@ -2024,7 +2020,7 @@ static void test_mode_reboot(void)
-     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-                                            FILE_TEST_FILENAME);
-     MigrateCommon args = {
--        .start.use_shmem = true,
-+        .start.use_memfile = true,
-         .connect_uri = uri,
-         .listen_uri = "defer",
-         .start_hook = test_mode_reboot_start
 -- 
-2.43.0
+2.34.1
 
 
