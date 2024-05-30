@@ -4,137 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C02C27C44
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EDEC27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdmN-0005zz-47; Thu, 30 May 2024 07:17:07 -0400
+	id 1sCdmQ-00063J-QQ; Thu, 30 May 2024 07:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sCdmK-0005xn-WB
+ id 1sCdmL-0005yp-TE
  for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:05 -0400
-Received: from mail-mw2nam10on20617.outbound.protection.outlook.com
- ([2a01:111:f403:2412::617]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+Received: from mail-dm6nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::600]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sCdmG-0001Re-37
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:04 -0400
+ id 1sCdmI-0001S4-CW
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:17:05 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=m6q2GJnwhzU9+iE9504rzXfazGKW71gvVTu91bw4C6WE6P1+S0JAOrn8AB9ugjmUwwpXxaQA8m/0t3EpPNepe0VDXn64UnYj8JlbuBq8M3AO/Ut9oMV5Hz9cRu8xqPpt0xH0XY+p769Xi9NY50jAmH3kcILAi0hKfdGYgO7DeNwoERQ0GBrUXclEyC83qlDC6LdbzAO9SDMR8atnV/YE6WZH2e9vAqAzQv8dEo70mPXqKBUuwTCry9Z0IWolwwmVIEpMRzpcoZakMOUvsK6TuOqYwatwQzkMINAd62uKwVEf9hi54srgx+eI3QdM3/jn4any9aeCEdSsdfL3A9kFNQ==
+ b=hsWZoc6cBCyjLdah1pWxpm/Us3/CdjmzuoDR/clgHCTpmb5X2mR/0fA6n+hJFtzRcniML6puSTXAYz2JUipwqwsmqniDmIiOheDSLAqkvLKEub8g7s+o79Vob7KFIoyix8gL6NeAIMdOvvixuggiBaTYj1E6u1J1dbauch5rdCO4XfyWp8BNpnNPGbG7i9vuYxNjtxyFsSEu/9cshxJO5Iu4yymn/xailYr6lXtYWi08HUM2MJp/IUvNeSvjUmv8xTAGRtXkn3gNmoM0HEjBk7C61yG8z8HNq/h+suP+gXpWezDHbj2jjMjUB6nlSBz3WS/5jKZLEKNrTMpvbh7k2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i4N2QE8nZbmvRULIPkR4fibQE16sS5tOuiopYo9eqHo=;
- b=F85KuEOqfS180uX7+E5E7uk+SxUcgxMGJihzFiEztOUJ0ccfGrUT2Wc+4i9v5pcg8Sxw0Bpg10Ce0C0ovM4L95+ysHupqNgN2kyxVpigJg7zW99uDZGlyrXmgL8KKy9ewqEg7W99SreCiRO0RRVaVQDFG4nlSgKja47qvkLExP1PZSPkuTXCfmCdtMdqhgWzIsdEwrzlHkPfeEGOBVDPO2BpLKC5YV/g476yglJZX/3Yb/5ST/sJZtU8dhHF/0Sb2OA58HrXUOLTorgCjX4fU1lB86mqBENyyjwalPs1uvjKDcBQHKV+XSmHoTcpt61yP3D99dujxEgtQ9abWAcdeA==
+ bh=CU1YEWuFgyxOJu7nKj1mL3riIRBFC2b9Xzhlg3trUy4=;
+ b=ervtslJAI5f3FG6bsJcVr1OA7E8uJVSfOymzxmVJegHLHDAw7+Y4/jnDmLJFeJSaI4SASDvu0xSwfS8gUuVvshOxlVApkgzqH0H9+DAK4D1J3p4SaCNrkliZsLdv906/rVMOEBxWn1SGF+4KgmsrxTWLuqgzMntZsFy7KW6v3Euw6zU9ljb3gTCqqAt55VXX+y/6xE4Z49dJYvKn8cl8pH1vR+EKhm97B2GCj3hOMtDfUGUIm1hKF+vf2QZoGbtXzzA12P8gxIZMZ+2fGxVAmdF946RHykKs00XuwUULL9i2XwpIY1QFwaYm+n2DFXUIxa5QTWCZ7nUW47ZAelQIUw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i4N2QE8nZbmvRULIPkR4fibQE16sS5tOuiopYo9eqHo=;
- b=2bnEgYDFfTt8NYicbr9GGHHEdgCccv71pnCMnLT2r/AucMYyOpUWbIZpG0haKoLMN/mVmannldBYPiMnhH6hkhiVrjSOZB61lagMp+R7s6Bes+MWpwleWc/RqPwwO6RQQgdEjAM7fkdHqOsZYLuPzjvZkMhmzMQ/LjiqVWJu7nQ=
-Received: from BN1PR14CA0021.namprd14.prod.outlook.com (2603:10b6:408:e3::26)
- by SJ1PR12MB6051.namprd12.prod.outlook.com (2603:10b6:a03:48a::18)
+ bh=CU1YEWuFgyxOJu7nKj1mL3riIRBFC2b9Xzhlg3trUy4=;
+ b=qQoL/7dUaaNNhhbTzme+fQgTstTnFYso735F7qivXuNz+5B8f7gJPc4IK9J4SKW8/BbwzFiYE1K6PUtzTCpNk1hvLC8BVIzmYzK7DddDlm5jUEyqDF1XqJbVboHOZ0ulmt/81Ek2KtQ7XfhLxvZD4eZZlb4/vEhOIyEK/tNRWbA=
+Received: from BN9PR03CA0663.namprd03.prod.outlook.com (2603:10b6:408:10e::8)
+ by PH0PR12MB8824.namprd12.prod.outlook.com (2603:10b6:510:26f::10)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.22; Thu, 30 May
- 2024 11:16:54 +0000
-Received: from BN2PEPF00004FBC.namprd04.prod.outlook.com
- (2603:10b6:408:e3:cafe::ef) by BN1PR14CA0021.outlook.office365.com
- (2603:10b6:408:e3::26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.20 via Frontend
- Transport; Thu, 30 May 2024 11:16:54 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.17; Thu, 30 May
+ 2024 11:16:59 +0000
+Received: from BN3PEPF0000B077.namprd04.prod.outlook.com
+ (2603:10b6:408:10e:cafe::6c) by BN9PR03CA0663.outlook.office365.com
+ (2603:10b6:408:10e::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.18 via Frontend
+ Transport; Thu, 30 May 2024 11:16:59 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
 Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- BN2PEPF00004FBC.mail.protection.outlook.com (10.167.243.182) with Microsoft
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN3PEPF0000B077.mail.protection.outlook.com (10.167.243.122) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:16:54 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.7633.15 via Frontend Transport; Thu, 30 May 2024 11:16:59 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
- 2024 06:16:53 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 30 May
- 2024 06:16:53 -0500
+ 2024 06:16:58 -0500
 Received: from pankaj-M75q.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Thu, 30 May 2024 06:16:52 -0500
+ Transport; Thu, 30 May 2024 06:16:58 -0500
 From: Pankaj Gupta <pankaj.gupta@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <brijesh.singh@amd.com>, <dovmurik@linux.ibm.com>, <armbru@redhat.com>,
  <michael.roth@amd.com>, <xiaoyao.li@intel.com>, <pbonzini@redhat.com>,
  <thomas.lendacky@amd.com>, <isaku.yamahata@intel.com>, <berrange@redhat.com>, 
  <kvm@vger.kernel.org>, <anisinha@redhat.com>, <pankaj.gupta@amd.com>
-Subject: [PATCH v4 14/31] i386/sev: Update query-sev QAPI format to handle
- SEV-SNP
-Date: Thu, 30 May 2024 06:16:26 -0500
-Message-ID: <20240530111643.1091816-15-pankaj.gupta@amd.com>
+Subject: [PATCH v4 23/31] i386/sev: Allow measured direct kernel boot on SNP
+Date: Thu, 30 May 2024 06:16:35 -0500
+Message-ID: <20240530111643.1091816-24-pankaj.gupta@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240530111643.1091816-1-pankaj.gupta@amd.com>
 References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Received-SPF: None (SATLEXMB05.amd.com: pankaj.gupta@amd.com does not
+Received-SPF: None (SATLEXMB04.amd.com: pankaj.gupta@amd.com does not
  designate permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBC:EE_|SJ1PR12MB6051:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8e57bc75-3b5a-467b-1d08-08dc809a02dd
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B077:EE_|PH0PR12MB8824:EE_
+X-MS-Office365-Filtering-Correlation-Id: b48da0e8-a88d-4324-48e6-08dc809a05f1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230031|376005|36860700004|82310400017|1800799015; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?CnVdhMeEzTFTxQh63AGoFkV+ajxQaxYTUcumdx8Oic3ml9rrYFHeYU3x2UGU?=
- =?us-ascii?Q?1iZAPjwdA4dzGM3Zyopk2kOAWC8sgIbYKZINCnJK+GfZ0I75E82A/mF9h2IR?=
- =?us-ascii?Q?zgu2Jfy3mQjCbVwdqYaSt79RwwPH9F9U9XV0cd+rL1p67sRITCdM5KnJStWU?=
- =?us-ascii?Q?Zm+oo2Dh0sCjLqxWCLGKcS0fjIDAvbZR31iHDX/8bdYFxfwfbWItoWX2+732?=
- =?us-ascii?Q?WJ8/JAodqxcpNri5ApCeCoSk1v54j0h6bqjG6zwqFCA5Uk5TGDbmTndpjZPf?=
- =?us-ascii?Q?YF0UbulfhS0KJ3pGnf4yHlS/kA9TH9QtU/rglXIzx7FdlgxxfVkcj711QHg5?=
- =?us-ascii?Q?tPBZzWWvxqzq+l5Gj1kj4EmfqAwGbXJTHQDE92zWMLmk/EPW6HwH3gbrnI3I?=
- =?us-ascii?Q?KGH40W7YCtaq/aGRUieXK+TE5cN+tSwZUVoeQUPPc7+UZGwHBTcSSXM5/4GZ?=
- =?us-ascii?Q?6M4hCq2QgvjIt1mTIhbx6RWI/unPbYnS8iG0rkSc2k68x7ah2tyxdBRlJ/4q?=
- =?us-ascii?Q?RICwtKolXgpLzmF9o7T++V+zymVPy4/ayQgEykx7/F+E3UIeNCNVa/5vtVVN?=
- =?us-ascii?Q?E5hkRJUiWm09KkwGHhYz3l2GwJNbuTC3LAX61/RvrlgxaRI4kt4/+Vixx1D2?=
- =?us-ascii?Q?RsbgEYZ1rRlHcKE2PLMn7Yl3oyUWG9X6EBSfbbDalJ+DQdN4mMpK21c6App+?=
- =?us-ascii?Q?4m2Q/lpxwOeV/ri6PQ1MU+Vac1g6SG2+c0CuFTmVjhZOvq00/kW5YiCir1uJ?=
- =?us-ascii?Q?NaNAjd5a5QcFD67K49kqc0kKtqrgsS6Fdjwv1tu1cpQ/HDGLdJ5KJ3+6gjCs?=
- =?us-ascii?Q?BmrsDqvaRXPdRfQJCl6Qj/VdYWXyDCa3W3mWBRL9Lb8YIdcp1JsJ5StNCs80?=
- =?us-ascii?Q?FNRPEtXGLU0GnIruHJKgRgAro01By8yMwG4tVgAO9Xck0jRB3XOrajNZCJgX?=
- =?us-ascii?Q?ZVxhJXPU/DN7q7nxcPIgJL1zNPvkdttOrtjzglAWaEsI8vaQrjtIxlRaAfvn?=
- =?us-ascii?Q?xU0x5dcWV0aI6+owvzjj1NwKfgaa7CuLlf5wq1a+EiF8aRpD0ZavBnfsCLnA?=
- =?us-ascii?Q?/KpWEK6QhR60HCv2BQER9Ewx2SbpyQHe4vyVS7vDEJymZ7MZJMhmy2reZ1ji?=
- =?us-ascii?Q?/08BJbbUZteHoKqsMf+BdGnPhNygCzM4fl0NCdtcZGT+Afy5/gIEP4YROI1K?=
- =?us-ascii?Q?1yVQuG71adkZujy1VmBqtW+66tCjEFfJP7YQtR6QGmTA5CmIDv40HvBBb5Pj?=
- =?us-ascii?Q?fODoEdrhXaQdzT75MPYdpFi4FqfbHb4dE3bLRjxWiwArlSaFmlL8myRXKyXb?=
- =?us-ascii?Q?54wciKuGLTiGaUCmHQ5FmxU/ebVLIRi1+26jRsMc1GbfwTxfTnPDQux/bHMb?=
- =?us-ascii?Q?fnUcPXZkdCAGEqPovCoW8x4Yg6Sr?=
+ ARA:13230031|36860700004|376005|82310400017|1800799015; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?VzKankzau55G4l6TlZnyUWcyvVSYyG4yIH84GuDzx1w5WaZGsHKyJF08J0rm?=
+ =?us-ascii?Q?cplRF+vln9yUnzLGRYgfOn5k+KAcNKyLvh5mDo3cH9ZAsGZ0K9DztYwbpzfl?=
+ =?us-ascii?Q?+KeVuUfEzcR8NsjKc2/MVuV44SfuUXAKrX9PToQCoiKiycYFzTGgOWZ7zvhB?=
+ =?us-ascii?Q?pZdmKn8Vg3RGbTAHumAYg1U9+CEm0hD+QaWgl/f73+OvpIj8W3my3Jj7Kf9V?=
+ =?us-ascii?Q?KYvmO3EIDFXncrF2Lvfx4rZL/Jlagcz0WR24q2d5sEk59uVtGZZRHUvvJkMv?=
+ =?us-ascii?Q?7pxs4dCU1gaFZHSu1Xdj7wUsqKI1hEVw7pElZ87JdEC3Byl38debQWDccPoM?=
+ =?us-ascii?Q?qBwxuv/RNN8udFZRzmPX5A3FI1qG3vDpJLwxvJdu8k4YDsYEpHrpal1gnp7u?=
+ =?us-ascii?Q?8WaBtKXQ/IjSPTy2jkrqpmB6v0hzxENgJgVN+g816xVdQIjpCZKZ2UU0hkH+?=
+ =?us-ascii?Q?40pTWvqa3iEwKQJSR0GS0ucCxNrHavmTcuVB/P9pOb+KZ+91t8oRDOpO83fT?=
+ =?us-ascii?Q?PVPVx5JjZnxY/Rq4Xx6Ataqwxqn6PHpwVT/ycpgPx6/FbvK4EUdvAKYikZia?=
+ =?us-ascii?Q?4e5/5TtxrugX7DMc+iMNrECKe0Y5WNlBJ9qC2NhOXvWDHUxe82GfpINF8Dtm?=
+ =?us-ascii?Q?77IhqYf+Z6ZrlFOVKYcycjMbbbv/PAIF49MU7Sv2vO78mT4d1ugM37nBA3yY?=
+ =?us-ascii?Q?v6eruyt+AXB/Q3ZBWd34K675mwoADCDYvDWcY1Rjf/8+1rJoN/QNpRPCgIbv?=
+ =?us-ascii?Q?uVWglrlXN+N8uaW8KpB8nQec82+onMV/IQxA5hVr3d/1VKPceJTUEERX4kNR?=
+ =?us-ascii?Q?mh6e0lsOxy6Nm/vG47SjwTcdp/ZD9xfaleZhmDNWsf4vKUHp/rFNnilAMbaP?=
+ =?us-ascii?Q?O0CqKf5uQ1Roe+/ItpFICvCk5ObQkZ7RxaEJdw+VBB+xcqHzFnoDAGPXxW9u?=
+ =?us-ascii?Q?ZqZS23rnZVTrOl4Aup0kyvhBE4ZRf7S4zrs7+2/N0SyM4nRiacV/dCQTHdlZ?=
+ =?us-ascii?Q?KuGTcVrT9qsKg5hA0lE+M70n1YwKnz9Fx/i1NcFCsH19NvLN8klqpNNOPCYT?=
+ =?us-ascii?Q?qOj7ayo/AYVmubu4JE30qhvewvuDd6AV3aZGdJZBAMfM4savBQoBnD0PTo6Q?=
+ =?us-ascii?Q?2kPhK0Syk17lGP5N4Tby5sfvLoNYEtWFh/rARl79STCbRefBOd2ScNy1/w3U?=
+ =?us-ascii?Q?LVfwIW5LN1dIpdMThGLl/BWUaIgcpKxm9BY5ttclSajiWsSxAaGDmpFHDWXT?=
+ =?us-ascii?Q?Ze++fIXG0heizNq/Z39lMI/hLZkdtIh+ONh83yrUpl1iefSw0AoT7uF32nZG?=
+ =?us-ascii?Q?5bMd78+KnDtdjIZHJZAa/KIlw8vkQ5LF2W3khXvtvYMOQp3jYB4D/fmGRfjb?=
+ =?us-ascii?Q?M+fiDidXjv1Q47ukIDqnz2Xk7Q0q?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(36860700004)(82310400017)(1800799015); DIR:OUT;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(36860700004)(376005)(82310400017)(1800799015); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:16:54.0663 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8e57bc75-3b5a-467b-1d08-08dc809a02dd
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 11:16:59.2316 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b48da0e8-a88d-4324-48e6-08dc809a05f1
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBC.namprd04.prod.outlook.com
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B077.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6051
-Received-SPF: permerror client-ip=2a01:111:f403:2412::617;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8824
+Received-SPF: permerror client-ip=2a01:111:f403:2415::600;
  envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -157,227 +152,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Roth <michael.roth@amd.com>
+From: Dov Murik <dovmurik@linux.ibm.com>
 
-Most of the current 'query-sev' command is relevant to both legacy
-SEV/SEV-ES guests and SEV-SNP guests, with 2 exceptions:
+In SNP, the hashes page designated with a specific metadata entry
+published in AmdSev OVMF.
 
-  - 'policy' is a 64-bit field for SEV-SNP, not 32-bit, and
-    the meaning of the bit positions has changed
-  - 'handle' is not relevant to SEV-SNP
+Therefore, if the user enabled kernel hashes (for measured direct boot),
+QEMU should prepare the content of hashes table, and during the
+processing of the metadata entry it copy the content into the designated
+page and encrypt it.
 
-To address this, this patch adds a new 'sev-type' field that can be
-used as a discriminator to select between SEV and SEV-SNP-specific
-fields/formats without breaking compatibility for existing management
-tools (so long as management tools that add support for launching
-SEV-SNP guest update their handling of query-sev appropriately).
+Note that in SNP (unlike SEV and SEV-ES) the measurements is done in
+whole 4KB pages.  Therefore QEMU zeros the whole page that includes the
+hashes table, and fills in the kernel hashes area in that page, and then
+encrypts the whole page.  The rest of the page is reserved for SEV
+launch secrets which are not usable anyway on SNP.
 
-The corresponding HMP command has also been fixed up similarly.
+If the user disabled kernel hashes, QEMU pre-validates the kernel hashes
+page as a zero page.
 
+Signed-off-by: Dov Murik <dovmurik@linux.ibm.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
-Co-developed-by:Pankaj Gupta <pankaj.gupta@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
 ---
- qapi/misc-target.json | 72 ++++++++++++++++++++++++++++++++++---------
- target/i386/sev.c     | 55 +++++++++++++++++++++------------
- target/i386/sev.h     |  3 ++
- 3 files changed, 96 insertions(+), 34 deletions(-)
+ include/hw/i386/pc.h |  2 ++
+ target/i386/sev.c    | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 4e0a6492a9..2d7d4d89bd 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -47,6 +47,50 @@
-            'send-update', 'receive-update' ],
-   'if': 'TARGET_I386' }
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index c653b8eeb2..ca7904ac2c 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -172,6 +172,8 @@ typedef enum {
+     SEV_DESC_TYPE_SNP_SECRETS,
+     /* The section contains address that can be used as a CPUID page */
+     SEV_DESC_TYPE_CPUID,
++    /* The section contains the region for kernel hashes for measured direct boot */
++    SEV_DESC_TYPE_SNP_KERNEL_HASHES = 0x10,
  
-+##
-+# @SevGuestType:
-+#
-+# An enumeration indicating the type of SEV guest being run.
-+#
-+# @sev: The guest is a legacy SEV or SEV-ES guest.
-+#
-+# @sev-snp: The guest is an SEV-SNP guest.
-+#
-+# Since: 6.2
-+##
-+{ 'enum': 'SevGuestType',
-+  'data': [ 'sev', 'sev-snp' ],
-+  'if': 'TARGET_I386' }
-+
-+##
-+# @SevGuestInfo:
-+#
-+# Information specific to legacy SEV/SEV-ES guests.
-+#
-+# @policy: SEV policy value
-+#
-+# @handle: SEV firmware handle
-+#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevGuestInfo',
-+  'data': { 'policy': 'uint32',
-+            'handle': 'uint32' },
-+  'if': 'TARGET_I386' }
-+
-+##
-+# @SevSnpGuestInfo:
-+#
-+# Information specific to SEV-SNP guests.
-+#
-+# @snp-policy: SEV-SNP policy value
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'SevSnpGuestInfo',
-+  'data': { 'snp-policy': 'uint64' },
-+  'if': 'TARGET_I386' }
-+
- ##
- # @SevInfo:
- #
-@@ -60,25 +104,25 @@
- #
- # @build-id: SEV FW build id
- #
--# @policy: SEV policy value
--#
- # @state: SEV guest state
- #
--# @handle: SEV firmware handle
-+# @sev-type: Type of SEV guest being run
- #
- # Since: 2.12
- ##
--{ 'struct': 'SevInfo',
--    'data': { 'enabled': 'bool',
--              'api-major': 'uint8',
--              'api-minor' : 'uint8',
--              'build-id' : 'uint8',
--              'policy' : 'uint32',
--              'state' : 'SevState',
--              'handle' : 'uint32'
--            },
--  'if': 'TARGET_I386'
--}
-+{ 'union': 'SevInfo',
-+  'base': { 'enabled': 'bool',
-+            'api-major': 'uint8',
-+            'api-minor' : 'uint8',
-+            'build-id' : 'uint8',
-+            'state' : 'SevState',
-+            'sev-type' : 'SevGuestType' },
-+  'discriminator': 'sev-type',
-+  'data': {
-+      'sev': 'SevGuestInfo',
-+      'sev-snp': 'SevSnpGuestInfo' },
-+  'if': 'TARGET_I386' }
-+
+ } ovmf_sev_metadata_desc_type;
  
- ##
- # @query-sev:
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 8ca486f5d2..101661bf71 100644
+index 1b29fdbc9a..1a78e98751 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -377,25 +377,27 @@ static SevInfo *sev_get_info(void)
- {
-     SevInfo *info;
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
--    SevGuestState *sev_guest =
--        (SevGuestState *)object_dynamic_cast(OBJECT(sev_common),
--                                             TYPE_SEV_GUEST);
+@@ -145,6 +145,9 @@ struct SevSnpGuestState {
  
-     info = g_new0(SevInfo, 1);
-     info->enabled = sev_enabled();
- 
-     if (info->enabled) {
--        if (sev_guest) {
--            info->handle = sev_guest->handle;
--        }
-         info->api_major = sev_common->api_major;
-         info->api_minor = sev_common->api_minor;
-         info->build_id = sev_common->build_id;
-         info->state = sev_common->state;
--        /* we only report the lower 32-bits of policy for SNP, ok for now... */
--        info->policy =
--            (uint32_t)object_property_get_uint(OBJECT(sev_common),
--                                               "policy", NULL);
+     struct kvm_sev_snp_launch_start kvm_start_conf;
+     struct kvm_sev_snp_launch_finish kvm_finish_conf;
 +
-+        if (sev_snp_enabled()) {
-+            info->sev_type = SEV_GUEST_TYPE_SEV_SNP;
-+            info->u.sev_snp.snp_policy =
-+                object_property_get_uint(OBJECT(sev_common), "policy", NULL);
-+        } else {
-+            info->sev_type = SEV_GUEST_TYPE_SEV;
-+            info->u.sev.handle = SEV_GUEST(sev_common)->handle;
-+            info->u.sev.policy =
-+                (uint32_t)object_property_get_uint(OBJECT(sev_common),
-+                                                   "policy", NULL);
-+        }
-     }
++    uint32_t kernel_hashes_offset;
++    PaddedSevHashTable *kernel_hashes_data;
+ };
  
-     return info;
-@@ -418,20 +420,33 @@ void hmp_info_sev(Monitor *mon, const QDict *qdict)
- {
-     SevInfo *info = sev_get_info();
- 
--    if (info && info->enabled) {
--        monitor_printf(mon, "handle: %d\n", info->handle);
--        monitor_printf(mon, "state: %s\n", SevState_str(info->state));
--        monitor_printf(mon, "build: %d\n", info->build_id);
--        monitor_printf(mon, "api version: %d.%d\n",
--                       info->api_major, info->api_minor);
-+    if (!info || !info->enabled) {
-+        monitor_printf(mon, "SEV is not enabled\n");
-+        goto out;
-+    }
-+
-+    monitor_printf(mon, "SEV type: %s\n", SevGuestType_str(info->sev_type));
-+    monitor_printf(mon, "state: %s\n", SevState_str(info->state));
-+    monitor_printf(mon, "build: %d\n", info->build_id);
-+    monitor_printf(mon, "api version: %d.%d\n", info->api_major,
-+                   info->api_minor);
-+
-+    if (sev_snp_enabled()) {
-         monitor_printf(mon, "debug: %s\n",
--                       info->policy & SEV_POLICY_NODBG ? "off" : "on");
--        monitor_printf(mon, "key-sharing: %s\n",
--                       info->policy & SEV_POLICY_NOKS ? "off" : "on");
-+                       info->u.sev_snp.snp_policy & SEV_SNP_POLICY_DBG ? "on"
-+                                                                       : "off");
-+        monitor_printf(mon, "SMT allowed: %s\n",
-+                       info->u.sev_snp.snp_policy & SEV_SNP_POLICY_SMT ? "on"
-+                                                                       : "off");
-     } else {
--        monitor_printf(mon, "SEV is not enabled\n");
-+        monitor_printf(mon, "handle: %d\n", info->u.sev.handle);
-+        monitor_printf(mon, "debug: %s\n",
-+                       info->u.sev.policy & SEV_POLICY_NODBG ? "off" : "on");
-+        monitor_printf(mon, "key-sharing: %s\n",
-+                       info->u.sev.policy & SEV_POLICY_NOKS ? "off" : "on");
-     }
- 
-+out:
-     qapi_free_SevInfo(info);
+ struct SevSnpGuestStateClass {
+@@ -1187,6 +1190,23 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, uint32_t cpuid_len)
+                                   KVM_SEV_SNP_PAGE_TYPE_CPUID);
  }
  
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index 94295ee74f..5dc4767b1e 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -31,6 +31,9 @@
- #define SEV_POLICY_DOMAIN       0x10
- #define SEV_POLICY_SEV          0x20
- 
-+#define SEV_SNP_POLICY_SMT      0x10000
-+#define SEV_SNP_POLICY_DBG      0x80000
++static int
++snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
++                                void *hva, uint32_t len)
++{
++    int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
++    if (sev_snp->parent_obj.kernel_hashes) {
++        assert(sev_snp->kernel_hashes_data);
++        assert((sev_snp->kernel_hashes_offset +
++                sizeof(*sev_snp->kernel_hashes_data)) <= len);
++        memset(hva, 0, len);
++        memcpy(hva + sev_snp->kernel_hashes_offset, sev_snp->kernel_hashes_data,
++               sizeof(*sev_snp->kernel_hashes_data));
++        type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
++    }
++    return snp_launch_update_data(addr, hva, len, type);
++}
 +
- typedef struct SevKernelLoaderContext {
-     char *setup_data;
-     size_t setup_size;
+ static int
+ snp_metadata_desc_to_page_type(int desc_type)
+ {
+@@ -1223,6 +1243,9 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
+ 
+         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
+             ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
++        } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
++            ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
++                                                  desc->len);
+         } else {
+             ret = snp_launch_update_data(desc->base, hva, desc->len, type);
+         }
+@@ -1855,6 +1878,18 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
+         return false;
+     }
+ 
++    if (sev_snp_enabled()) {
++        /*
++         * SNP: Populate the hashes table in an area that later in
++         * snp_launch_update_kernel_hashes() will be copied to the guest memory
++         * and encrypted.
++         */
++        SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
++        sev_snp_guest->kernel_hashes_offset = area->base & ~TARGET_PAGE_MASK;
++        sev_snp_guest->kernel_hashes_data = g_new0(PaddedSevHashTable, 1);
++        return build_kernel_loader_hashes(sev_snp_guest->kernel_hashes_data, ctx, errp);
++    }
++
+     /*
+      * Populate the hashes table in the guest's memory at the OVMF-designated
+      * area for the SEV hashes table
 -- 
 2.34.1
 
