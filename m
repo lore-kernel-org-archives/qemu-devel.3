@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 678EAC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0B2C27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:34:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCfrz-0003Ch-B5; Thu, 30 May 2024 09:31:03 -0400
+	id 1sCfuH-0005wf-NM; Thu, 30 May 2024 09:33:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCfrw-0003Bk-KL
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:31:00 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCfuG-0005wO-J8
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:33:24 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCfru-0002Cx-WC
- for qemu-devel@nongnu.org; Thu, 30 May 2024 09:31:00 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4202ca70318so9073685e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:30:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCfuE-0002mH-SX
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:33:24 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-354dfe54738so531004f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717075857; x=1717680657; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JfS4yySerTFEASVa3xnzBxXSq9l7E03E5ymkL7bNaLk=;
- b=hDaX46LAmYT9yhD3gdv3VtxdljQF2ouwIRFDAJZC1asFEe44CaB1TdpacuL2W2D03z
- jadF5ycUbcS7CYYXxvQUGqnM+kXCD7xIxp8UppkFjow9AuF572frHKEVUrJqnGwlIqDt
- dP5CtWohOowZn8YJnPQgYLvLo1hXGvS/dc+P6D6FSqWylkxqlMDsUiQtr5XOQ+T3Z13e
- UYB0Wllgkab9eJ3sW/+92puIoxGM19VjBwE+LzNpEuU7o8beznuPbmWE1s3fcVY6wTu8
- wXsHm+CRiTxosfZLS3wX1euLolJQbfePqmkeoAHtUKuHfyBYI4gMVe5IPv87+b6124aR
- Xb0w==
+ d=linaro.org; s=google; t=1717075999; x=1717680799; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sHQcHcTfrqAXq+7Flj0AiZY10B2igqvVhyJFVA7mYJ0=;
+ b=y/yPIr4fKnI+MpzpOIatSO6UmqDEQ5TxeMe5qKU5EEA1sT2teBkY35f/T74tkb+NHa
+ 53VqYsUsV6DF0yB1oZMp8iHQM2jF4p6LDcdcIGpZlVDMTs6NZ+EsmfqYkf4uc7YUPcxm
+ tmh4AN6oPlHCgYTGtFOiJnffSmhdWiRLm0P1y6PFztoYojjHVbY9ZbrgPzOEQQ8p1DY7
+ mli6ztVlpsb/1o3sxkuCDCVqdngJh9lWNGxOi23GCmlC/qLexVloKLZdRaTunaLXgtvG
+ 1IYnOPf9LlpLpLcnEeXX8vrqN+eFGd3seAiQCt5PHZBA2dRYxbStgouKrsDKKXBeCvo4
+ Jd0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717075857; x=1717680657;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JfS4yySerTFEASVa3xnzBxXSq9l7E03E5ymkL7bNaLk=;
- b=t2fVaayPFJJiNJ+xrqFFYYm0LYKx1xgYnEDEdVr6P/9BYOY/aUC0g+vlZMJg2dbkR5
- MJu4utM8GzO7t22UmrSiKGZmWAgR1zO3SouOsN8JH8NlMURFcmnTfdVwvkfDSXJcO2Lp
- bWmF67O0mGVWdGadO1J+I3nuv9ZxKH38Q7WF0uvMIQ4KqSwzQwSqvd5DCNGrTeev/hLl
- aVOx+vIqcv0IlhMpbnm07/8mux7PFHNQzotgsScElKwX6udqR2Wd1rDq5iwHbbiXM9jM
- fJucLttGH/DRuPQzBJLPksyEuELy9xOZKtQTnlBLvACOXea+jlwawjRvDIRmFaKPT/GF
- 6xMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXomow21d5ZPMjaC+xZ/Y3dwbdh86SJd/9IM4uUpP2oyNHf1lM6rV2DMkMaoPVwv6P+h7U9O+DRVlRWATYipIi9srbJIKE=
-X-Gm-Message-State: AOJu0Yyx8qLD7oliqfKpzmmZrTPiGz2UtN824Iw8w1y0JZmftcaXIrmu
- dRIRaTxI2O6Ixnuf87r4TQIEBDrmMwOr3JI2MuBwycTWPPyyaKW6pU8cU1mrapA=
-X-Google-Smtp-Source: AGHT+IEpBkiiK7XYBHgaD9u4HZCzbGwhpkUvRy56LP7mSl2oGBoAHUrnTYeFZ9sqY9jwtf56WNivwQ==
-X-Received: by 2002:a05:600c:15cb:b0:421:21d2:abf5 with SMTP id
- 5b1f17b1804b1-42127925c30mr26180745e9.31.1717075857215; 
- Thu, 30 May 2024 06:30:57 -0700 (PDT)
-Received: from [192.168.69.100] (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
- [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35579d7db23sm17877598f8f.23.2024.05.30.06.30.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 May 2024 06:30:56 -0700 (PDT)
-Message-ID: <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
-Date: Thu, 30 May 2024 15:30:54 +0200
+ d=1e100.net; s=20230601; t=1717075999; x=1717680799;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sHQcHcTfrqAXq+7Flj0AiZY10B2igqvVhyJFVA7mYJ0=;
+ b=Li1i4it3LKkrVs54C9wwb4aV7iFdfrhVP3KXDifVpcEiU98/qs+8njgWGM84hjWvvA
+ s3FB0qi1r1wjY/Bjiy43LcPYZ34PcpPEUgJtjPAQ672/56YANfNsKNhOmtCbCD1pbJmI
+ mjpdtnSm8xY6r42bp9sheRvhqVsCbCptIGPDU73MMh+MtRn7s10SqIzYAIqhPPA8A2QF
+ yJmrnN4wWXaywBQmwz1/gPqGYqtoWCNJDYaJ7Vb8BKluHW0I4GJPcxKxnykqAg8JWOiW
+ LZie2ugVmn1LZyYe4PudEzz97YLBgNI5p9wbJgf0aLTePAC7dbkSftxUA8F479oqv5jB
+ mhpQ==
+X-Gm-Message-State: AOJu0YzDrhI7yQ0HH/ipP65LQeoR+SCfwJO+PKitU/cGSEwoEGHv4UqZ
+ y1sC6lGA4+hzSMz1P17JQZ0aEEn1BhU62DEEItova0hDfotz+cbsrsmT9e5nxMSUlqN82QTiYfG
+ 0KrKaMXK9c1AP4WbezR2U8eYluO6PpCPGrQmW/n8t/pHBD/I6
+X-Google-Smtp-Source: AGHT+IGpkm11BYAHn/w8S4e4QR35RBRPvozRrUG6wPN0PMB/je6nuxPnFYgtL/pINJhfq6PsPAExpYzLM/EjEnEl57c=
+X-Received: by 2002:adf:f145:0:b0:359:6f2a:3912 with SMTP id
+ ffacd0b85a97d-35dc0090d06mr1328019f8f.18.1717075998875; Thu, 30 May 2024
+ 06:33:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Unexpected error in rme_configure_one() at
- ../target/arm/kvm-rme.c:159
-To: Itaru Kitayama <itaru.kitayama@linux.dev>, qemu-devel@nongnu.org
-References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
-Content-Language: en-US
-Cc: qemu-arm <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20240529173625.800102-1-richard.henderson@linaro.org>
+In-Reply-To: <20240529173625.800102-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 May 2024 14:33:07 +0100
+Message-ID: <CAFEAcA-eB2YA2ecyyb7GHJuc+xDxnpwzxQ+HMYhCSQx5n5KPbg@mail.gmail.com>
+Subject: Re: [PATCH RISU] risugen/arm: Refine prefetch and memory hintspace
+ patterns
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,20 +88,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing more developers
+On Wed, 29 May 2024 at 18:36, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Avoid prefetch patterns that are UNPREDICTABLE.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-On 30/5/24 06:30, Itaru Kitayama wrote:
-> Hi,
-> 
-> When I see a Realm VM creation fails with:
-> 
-> Unexpected error in rme_configure_one() at ../target/arm/kvm-rme.c:159:
-> qemu-system-aarch64: RME: failed to configure SVE: Invalid argument
-> test.sh: line 8:  2502 Aborted                 qemu-system-aarch64 -M 'virt,acpi=off,gic-version=3' -cpu host -enable-kvm -smp 2 -m 512M -overcommit 'mem-lock=on' -M 'confidential-guest-support=rme0' -object 'rme-guest,id=rme0,measurement-algo=sha512,num-pmu-counters=6,sve-vector-length=256' -kernel Image -initrd rootfs.cpio -append 'earycon console=ttyAMA0 rdinit=/sbin/init' -nographic -net none
-> 
-> do I need to suspect first the VMM, QEMU, or the Image? The kernel is built with LLVM, does it matter?
-> 
-> Thanks,
-> Itaru.
+Applied to risu git, thanks.
 
+-- PMM
 
