@@ -4,107 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F6BC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 05:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8E3C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 05:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCXza-0003go-4P; Thu, 30 May 2024 01:06:22 -0400
+	id 1sCYKQ-00025E-Tp; Thu, 30 May 2024 01:27:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sCXzX-0003fx-EK; Thu, 30 May 2024 01:06:19 -0400
+ id 1sCYKO-000246-Lw; Thu, 30 May 2024 01:27:52 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sCXzU-0006pj-OF; Thu, 30 May 2024 01:06:19 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ id 1sCYKM-0003jt-8X; Thu, 30 May 2024 01:27:52 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44U3vtJ5002421; Thu, 30 May 2024 05:05:30 GMT
+ 44U4NOei001110; Thu, 30 May 2024 05:27:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc :
  content-transfer-encoding : content-type : date : from : in-reply-to :
  message-id : mime-version : references : subject : to; s=pp1;
- bh=aFtEBSupd9KJZzmv1FBMPeu+pl9TUX4hCpENkIO0IdU=;
- b=ZgdVhf2OkD+ZN4/Zqev36LetHh8cFSw9zq2nNKaVDFDTeL8SPydlSTiU2bkfADU6fYPY
- lkeXFPMODKFOjdCCff9iLhJKcafkbr7hSLaN+rYflH9Mx1pERdegYbLkb0roG2OvU2+N
- IU2NIwHon3i117FeMyq/CLMDosZoLse+tXkqSfFhxU8iFKXZ8ULBkCLrqjbobVwVOEja
- 7Wyf2Zt7RbNtHpNIqZDXjSxvAilyplYSLSfbQU2G1R6ko+6emzt5zz++zNcTCsCbGl+n
- RcrF1ltbN1xnUDqflNBTg1Idxvk1serGgfSE86HJsdaKqNSRHKYiiJZe8WJFVC8Jz7bU 3A== 
+ bh=4gqo7Pd615RAtvm0Wriugu2u5JPiwciqOfpq4drKBpY=;
+ b=LBv11hVHQHYZ4W+nz9BCnXYN3vAgBa2atzE92uIiJVdqA4kCyuqU/TM91sw+dg6y+hXj
+ GDJEfkcwm7vO1vxq3bXKmrQVpkuXvZo4uG+2JoRMBNVkmM0MRBNV1OqJm4RIOu4F75qK
+ isbkT9tfAG+BfmH9VWnUpg+4m2N0Y6pZ0nib8+HAZ1XoulI4A4bBEq54qCw952AcW8Db
+ WnixuwXLiZUvcozGTdDfNc2DpPTiXl/IClfOy0Q+lHw4QLG5T0XCkBrNll3D3qwMaHjr
+ Ni+ozCAZmnHK2qZiptlduygV7ItQKX0I8oQh9fS0DRURQbkQScxQpQrDI/wqJkbfdMiS 3w== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yej0s84bk-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yejca84wr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 May 2024 05:05:30 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44U55T3W005101;
- Thu, 30 May 2024 05:05:29 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yej0s84bj-1
+ Thu, 30 May 2024 05:27:40 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44U5Re4A003256;
+ Thu, 30 May 2024 05:27:40 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yejca84wq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 May 2024 05:05:29 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44U1cOmC024752; Thu, 30 May 2024 05:05:27 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ydphqqy50-1
+ Thu, 30 May 2024 05:27:40 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44U562oJ006900; Thu, 30 May 2024 05:27:39 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ydpebg3vx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 May 2024 05:05:27 +0000
+ Thu, 30 May 2024 05:27:39 +0000
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44U55P1Y42861302
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 44U5RanQ25231918
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 May 2024 05:05:27 GMT
+ Thu, 30 May 2024 05:27:38 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 00EE55805D;
- Thu, 30 May 2024 05:05:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3C47058043;
+ Thu, 30 May 2024 05:27:36 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 38F9658043;
- Thu, 30 May 2024 05:05:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7383358055;
+ Thu, 30 May 2024 05:27:33 +0000 (GMT)
 Received: from [9.109.242.165] (unknown [9.109.242.165])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 May 2024 05:05:14 +0000 (GMT)
-Message-ID: <62f55169-1796-4d8e-a35d-7f003a172750@linux.ibm.com>
-Date: Thu, 30 May 2024 10:35:13 +0530
-MIME-Version: 1.0
+ Thu, 30 May 2024 05:27:33 +0000 (GMT)
+Message-ID: <f222585b-dda9-4828-8f71-3aee3f2c6d7b@linux.ibm.com>
+Date: Thu, 30 May 2024 10:57:31 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V12 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
-To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org,
- alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
- jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
- npiggin@gmail.com, linuxarm@huawei.com,
- Shaoqin Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240529234241.205053-1-salil.mehta@huawei.com>
- <20240529234241.205053-2-salil.mehta@huawei.com>
+Subject: Re: [PATCH v4 01/11] ppc: Add Power11 DD2.0 processor
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+References: <20240528070515.117160-1-adityag@linux.ibm.com>
+ <20240528070515.117160-2-adityag@linux.ibm.com>
 Content-Language: en-US
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240529234241.205053-2-salil.mehta@huawei.com>
+In-Reply-To: <20240528070515.117160-2-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VIZDXd-eYFEeLIoL6VjkbXv9PDIWZJO5
-X-Proofpoint-ORIG-GUID: VjYHTL98YlduRrTI_UstbIUMZIVsD5XK
+X-Proofpoint-ORIG-GUID: CM7uMvJCdZaD96TYbvv9f_zU9xB1ApgG
+X-Proofpoint-GUID: Wsnit-3MfSytinztP-ezFNiHyJxXT3Ev
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-29_16,2024-05-28_01,2024-05-17_01
+ definitions=2024-05-30_03,2024-05-28_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 spamscore=0
- impostorscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- suspectscore=0 mlxscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405300034
+ malwarescore=0 spamscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405300038
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -129,238 +121,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Aditya,
 
-
-On 5/30/24 05:12, Salil Mehta wrote:
-> KVM vCPU creation is done once during the vCPU realization when Qemu vCPU thread
-> is spawned. This is common to all the architectures as of now.
+On 5/28/24 12:35, Aditya Gupta wrote:
+> Add CPU target code to add support for new Power11 Processor.
 > 
-> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but the
-> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM doesn't
-> support vCPU removal. Therefore, its representative KVM vCPU object/context in
-> Qemu is parked.
+> Power11 core is same as Power10, hence reuse functions defined for
+> Power10.
 > 
-> Refactor architecture common logic so that some APIs could be reused by vCPU
-> Hotplug code of some architectures likes ARM, Loongson etc. Update new/old APIs
-> with trace events. No functional change is intended here.
-> 
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Miguel Luis <miguel.luis@oracle.com>
-> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> Tested-by: Zhao Liu <zhao1.liu@intel.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Cc: Cédric Le Goater <clg@kaod.org>
+> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->   accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++--------------
->   accel/kvm/kvm-cpus.h   | 23 ++++++++++
->   accel/kvm/trace-events |  5 ++-
->   3 files changed, 90 insertions(+), 33 deletions(-)
+>   target/ppc/compat.c     |   7 +++
+>   target/ppc/cpu-models.c |   3 ++
+>   target/ppc/cpu-models.h |   3 ++
+>   target/ppc/cpu_init.c   | 102 ++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 115 insertions(+)
 > 
-
-Since there are no functional changes intended here and we have a
-different patch series (ppc64 vcpu hotplug failure fixes) depending on
-this patch as well, it will be nice to see this patch getting merged
-soon.
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index c0be9f5eed..8f9128bb92 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -340,14 +340,71 @@ err:
->       return ret;
+> diff --git a/target/ppc/compat.c b/target/ppc/compat.c
+> index ebef2cccecf3..12dd8ae290ca 100644
+> --- a/target/ppc/compat.c
+> +++ b/target/ppc/compat.c
+> @@ -100,6 +100,13 @@ static const CompatInfo compat_table[] = {
+>           .pcr_level = PCR_COMPAT_3_10,
+>           .max_vthreads = 8,
+>       },
+> +    { /* POWER11, ISA3.10 */
+> +        .name = "power11",
+> +        .pvr = CPU_POWERPC_LOGICAL_3_10_PLUS,
+> +        .pcr = PCR_COMPAT_3_10,
+> +        .pcr_level = PCR_COMPAT_3_10,
+> +        .max_vthreads = 8,
+> +    },
+>   };
+>   
+>   static const CompatInfo *compat_by_pvr(uint32_t pvr)
+> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+> index f2301b43f78b..ece348178188 100644
+> --- a/target/ppc/cpu-models.c
+> +++ b/target/ppc/cpu-models.c
+> @@ -734,6 +734,8 @@
+>                   "POWER9 v2.2")
+>       POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POWER10,
+>                   "POWER10 v2.0")
+> +    POWERPC_DEF("power11_v2.0",  CPU_POWERPC_POWER11_DD20,           POWER11,
+> +                "POWER11_v2.0")
+>   #endif /* defined (TARGET_PPC64) */
+>   
+>   /***************************************************************************/
+> @@ -909,6 +911,7 @@ PowerPCCPUAlias ppc_cpu_aliases[] = {
+>       { "power8nvl", "power8nvl_v1.0" },
+>       { "power9", "power9_v2.2" },
+>       { "power10", "power10_v2.0" },
+> +    { "power11", "power11_v2.0" },
+>   #endif
+>   
+>       /* Generic PowerPCs */
+> diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
+> index 0229ef3a9a5c..ef74e387b047 100644
+> --- a/target/ppc/cpu-models.h
+> +++ b/target/ppc/cpu-models.h
+> @@ -354,6 +354,8 @@ enum {
+>       CPU_POWERPC_POWER10_BASE       = 0x00800000,
+>       CPU_POWERPC_POWER10_DD1        = 0x00801100,
+>       CPU_POWERPC_POWER10_DD20       = 0x00801200,
+> +    CPU_POWERPC_POWER11_BASE       = 0x00820000,
+> +    CPU_POWERPC_POWER11_DD20       = 0x00821200,
+>       CPU_POWERPC_970_v22            = 0x00390202,
+>       CPU_POWERPC_970FX_v10          = 0x00391100,
+>       CPU_POWERPC_970FX_v20          = 0x003C0200,
+> @@ -391,6 +393,7 @@ enum {
+>       CPU_POWERPC_LOGICAL_2_07       = 0x0F000004,
+>       CPU_POWERPC_LOGICAL_3_00       = 0x0F000005,
+>       CPU_POWERPC_LOGICAL_3_10       = 0x0F000006,
+> +    CPU_POWERPC_LOGICAL_3_10_PLUS  = 0x0F000007,
+>   };
+>   
+>   /* System version register (used on MPC 8xxx)                                */
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 01e358a4a5ac..82d700382cdd 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -6763,6 +6763,108 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
+>       pcc->l1_icache_size = 0x8000;
 >   }
 >   
-> +void kvm_park_vcpu(CPUState *cpu)
+> +static bool ppc_pvr_match_power11(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
 > +{
-> +    struct KVMParkedVcpu *vcpu;
+> +    uint32_t base = pvr & CPU_POWERPC_POWER_SERVER_MASK;
+> +    uint32_t pcc_base = pcc->pvr & CPU_POWERPC_POWER_SERVER_MASK;
 > +
-> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> +
-> +    vcpu = g_malloc0(sizeof(*vcpu));
-> +    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
-> +    vcpu->kvm_fd = cpu->kvm_fd;
-> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
-> +}
-> +
-> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
-> +{
-> +    struct KVMParkedVcpu *cpu;
-> +    int kvm_fd = -ENOENT;
-> +
-> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
-> +        if (cpu->vcpu_id == vcpu_id) {
-> +            QLIST_REMOVE(cpu, node);
-> +            kvm_fd = cpu->kvm_fd;
-> +            g_free(cpu);
-> +        }
+> +    if (!best && (base == CPU_POWERPC_POWER11_BASE)) {
+> +        return true;
 > +    }
 > +
-> +    trace_kvm_unpark_vcpu(vcpu_id, kvm_fd > 0 ? "unparked" : "not found parked");
-> +
-> +    return kvm_fd;
-> +}
-> +
-> +int kvm_create_vcpu(CPUState *cpu)
-> +{
-> +    unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
-> +    KVMState *s = kvm_state;
-> +    int kvm_fd;
-> +
-> +    /* check if the KVM vCPU already exist but is parked */
-> +    kvm_fd = kvm_unpark_vcpu(s, vcpu_id);
-> +    if (kvm_fd < 0) {
-> +        /* vCPU not parked: create a new KVM vCPU */
-> +        kvm_fd = kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
-> +        if (kvm_fd < 0) {
-> +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu", vcpu_id);
-> +            return kvm_fd;
-> +        }
+> +    if (base != pcc_base) {
+> +        return false;
 > +    }
 > +
-> +    cpu->kvm_fd = kvm_fd;
-> +    cpu->kvm_state = s;
-> +    cpu->vcpu_dirty = true;
-> +    cpu->dirty_pages = 0;
-> +    cpu->throttle_us_per_full = 0;
+> +    if ((pvr & 0x0f00) == (pcc->pvr & 0x0f00)) {
+> +        return true;
+> +    }
 > +
-> +    trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
-> +
-> +    return 0;
+> +    return false;
 > +}
 > +
->   static int do_kvm_destroy_vcpu(CPUState *cpu)
->   {
->       KVMState *s = kvm_state;
->       long mmap_size;
-> -    struct KVMParkedVcpu *vcpu = NULL;
->       int ret = 0;
->   
-> -    trace_kvm_destroy_vcpu();
-> +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->   
->       ret = kvm_arch_destroy_vcpu(cpu);
->       if (ret < 0) {
-> @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
->           }
->       }
->   
-> -    vcpu = g_malloc0(sizeof(*vcpu));
-> -    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
-> -    vcpu->kvm_fd = cpu->kvm_fd;
-> -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
-> +    kvm_park_vcpu(cpu);
->   err:
->       return ret;
->   }
-> @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)
->       }
->   }
->   
-> -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
-> -{
-> -    struct KVMParkedVcpu *cpu;
-> -
-> -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
-> -        if (cpu->vcpu_id == vcpu_id) {
-> -            int kvm_fd;
-> -
-> -            QLIST_REMOVE(cpu, node);
-> -            kvm_fd = cpu->kvm_fd;
-> -            g_free(cpu);
-> -            return kvm_fd;
-> -        }
-> -    }
-> -
-> -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
-> -}
-> -
->   int kvm_init_vcpu(CPUState *cpu, Error **errp)
->   {
->       KVMState *s = kvm_state;
-> @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
->   
->       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->   
-> -    ret = kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
-> +    ret = kvm_create_vcpu(cpu);
->       if (ret < 0) {
-> -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu failed (%lu)",
-> +        error_setg_errno(errp, -ret,
-> +                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
->                            kvm_arch_vcpu_id(cpu));
->           goto err;
->       }
->   
-> -    cpu->kvm_fd = ret;
-> -    cpu->kvm_state = s;
-> -    cpu->vcpu_dirty = true;
-> -    cpu->dirty_pages = 0;
-> -    cpu->throttle_us_per_full = 0;
-> -
->       mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
->       if (mmap_size < 0) {
->           ret = mmap_size;
-> diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
-> index ca40add32c..2c1cad4179 100644
-> --- a/accel/kvm/kvm-cpus.h
-> +++ b/accel/kvm/kvm-cpus.h
-> @@ -22,5 +22,28 @@ bool kvm_supports_guest_debug(void);
->   int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
->   int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
->   void kvm_remove_all_breakpoints(CPUState *cpu);
-> +/**
-> + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
-> + * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/created.
-> + *
-> + * @returns: 0 when success, errno (<0) when failed.
-> + */
-> +int kvm_create_vcpu(CPUState *cpu);
->   
-> +/**
-> + * kvm_park_vcpu - Park QEMU KVM vCPU context
-> + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be parked.
-> + *
-> + * @returns: none
-> + */
-> +void kvm_park_vcpu(CPUState *cpu);
+> +POWERPC_FAMILY(POWER11)(ObjectClass *oc, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
 > +
-> +/**
-> + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
-> + * @s: KVM State
-> + * @vcpu_id: Architecture vCPU ID of the parked vCPU
-> + *
-> + * @returns: KVM fd
-> + */
-> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
->   #endif /* KVM_CPUS_H */
-> diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-> index 681ccb667d..37626c1ac5 100644
-> --- a/accel/kvm/trace-events
-> +++ b/accel/kvm/trace-events
-> @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev fd %d, type 0x%x, arg %p"
->   kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable to retrieve ONEREG %" PRIu64 " from KVM: %s"
->   kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable to set ONEREG %" PRIu64 " to KVM: %s"
->   kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
-> +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_fd) "index: %d, id: %lu, kvm fd: %d"
-> +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
-> +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
-> +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %s"
->   kvm_irqchip_commit_routes(void) ""
->   kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s vector %d virq %d"
->   kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
-> @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
->   kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" pages (took %"PRIi64" us)"
->   kvm_dirty_ring_reaper_kick(const char *reason) "%s"
->   kvm_dirty_ring_flush(int finished) "%d"
-> -kvm_destroy_vcpu(void) ""
->   kvm_failed_get_vcpu_mmap_size(void) ""
->   kvm_cpu_exec(void) ""
->   kvm_interrupt_exit_request(void) ""
+> +    dc->fw_name = "PowerPC,POWER11";
+> +    dc->desc = "POWER11";
+> +    pcc->pvr_match = ppc_pvr_match_power11;
+> +    pcc->pcr_mask = PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | PCR_COMPAT_2_07 |
+> +                    PCR_COMPAT_3_00;
+> +    pcc->pcr_supported = PCR_COMPAT_3_10 | PCR_COMPAT_3_00 | PCR_COMPAT_2_07 |
+> +                         PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
+> +    pcc->init_proc = init_proc_POWER10;
+> +    pcc->check_pow = check_pow_nocheck;
+> +    pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB |
+> +                       PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
+> +                       PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
+> +                       PPC_FLOAT_FRSQRTES |
+> +                       PPC_FLOAT_STFIWX |
+> +                       PPC_FLOAT_EXT |
+> +                       PPC_CACHE | PPC_CACHE_ICBI | PPC_CACHE_DCBZ |
+> +                       PPC_MEM_SYNC | PPC_MEM_EIEIO |
+> +                       PPC_MEM_TLBIE | PPC_MEM_TLBSYNC |
+> +                       PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |
+> +                       PPC_SEGMENT_64B | PPC_SLBI |
+> +                       PPC_POPCNTB | PPC_POPCNTWD |
+> +                       PPC_CILDST;
+> +    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
+> +                        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
+> +                        PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
+> +                        PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
+> +                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
+> +                        PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
+> +                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
+> +                        PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
+> +    pcc->msr_mask = (1ull << MSR_SF) |
+> +                    (1ull << MSR_HV) |
+> +                    (1ull << MSR_TM) |
+> +                    (1ull << MSR_VR) |
+> +                    (1ull << MSR_VSX) |
+> +                    (1ull << MSR_EE) |
+> +                    (1ull << MSR_PR) |
+> +                    (1ull << MSR_FP) |
+> +                    (1ull << MSR_ME) |
+> +                    (1ull << MSR_FE0) |
+> +                    (1ull << MSR_SE) |
+> +                    (1ull << MSR_DE) |
+> +                    (1ull << MSR_FE1) |
+> +                    (1ull << MSR_IR) |
+> +                    (1ull << MSR_DR) |
+> +                    (1ull << MSR_PMM) |
+> +                    (1ull << MSR_RI) |
+> +                    (1ull << MSR_LE);
+> +    pcc->lpcr_mask = LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |
+> +        (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |
+> +        LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |
+> +        (LPCR_PECE_L_MASK & (LPCR_PDEE | LPCR_HDEE | LPCR_EEE |
+> +                             LPCR_DEE | LPCR_OEE))
+> +        | LPCR_MER | LPCR_GTSE | LPCR_TC |
+> +        LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE | LPCR_HDICE;
+> +    /* DD2 adds an extra HAIL bit */
+> +    pcc->lpcr_mask |= LPCR_HAIL;
+> +
+
+I had posted a patch to get rid of this growing code duplication here:
+https://lore.kernel.org/qemu-devel/20240523051412.226970-8-harshpb@linux.ibm.com/
+
+Would you mind considering the relevant patches to rebase your changes?
+
+regards,
+Harsh
+
+> +    pcc->lpcr_pm = LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | LPCR_OEE;
+> +    pcc->mmu_model = POWERPC_MMU_3_00;
+> +#if !defined(CONFIG_USER_ONLY)
+> +    /* segment page size remain the same */
+> +    pcc->hash64_opts = &ppc_hash64_opts_POWER7;
+> +    pcc->radix_page_info = &POWER10_radix_page_info;
+> +    pcc->lrg_decr_bits = 56;
+> +#endif
+> +    pcc->excp_model = POWERPC_EXCP_POWER10;
+> +    pcc->bus_model = PPC_FLAGS_INPUT_POWER9;
+> +    pcc->bfd_mach = bfd_mach_ppc64;
+> +    pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
+> +                 POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
+> +                 POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
+> +                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV;
+> +    pcc->l1_dcache_size = 0x8000;
+> +    pcc->l1_icache_size = 0x8000;
+> +}
+> +
+>   #if !defined(CONFIG_USER_ONLY)
+>   void cpu_ppc_set_vhyp(PowerPCCPU *cpu, PPCVirtualHypervisor *vhyp)
+>   {
 
