@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E77C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 22:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB50C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 22:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCnul-0007Jr-6V; Thu, 30 May 2024 18:06:27 -0400
+	id 1sCnul-0007Jq-3N; Thu, 30 May 2024 18:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sCnuh-0007JI-RA
- for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:24 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sCnug-0007Ie-Fp
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:22 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sCnug-0005Do-9I
- for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:23 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f480624d04so12583455ad.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 15:06:21 -0700 (PDT)
+ id 1sCnud-0005Ct-Ao
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 18:06:22 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1f3469382f2so10771695ad.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 15:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717106779; x=1717711579; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717106777; x=1717711577; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ChXWvUNOD02yoYequIGCuEzpK9HfTXZtOpXCWQ0j1Uw=;
- b=iQAQLne5GUbCraZ+irpqq4BuCF31pf2NcnWdp5vi5DcF8ciI1/63knMmHtH+bbQ++m
- jwS0KFSJO+v7bz07wTdu6VYy/Zvus4MNYQHKSIm8+mSFGS7FDtGAHKmLxDZyebiJJKl9
- kfA3BDWJ7XmKfC0fiCs7agwQa3GBt8sKUdRgWrcuElwfA0BpzlTcDX5sl+iYLtixUaBa
- LufN81fVRsIwB6u2mNEfOtTEtQS4a23xbi3tlBTtFubSc/8fQ5OXLMiU7Ui8B/uQEyDc
- ZIcJd/c+Xj07AJIvkFboyoQvIVZObCbPeln3wsrm9Cus0tXg0v537w+GC268ZegBUx8L
- Nh3Q==
+ bh=N8fpp15niTkZ3IPMy6ehe10O59rmldsghTOZNCkMcuE=;
+ b=uXfmLAvbTG40rlfp+Eh/ZyZwWXGLjQUitwuIdTbO+qU5NsQtjxGol0+tTVzyCjgus9
+ cqP36pTPTuDTqHyKxNVM1HvmkM4J8Woq2BYWxxt0zI4t2AhfW36vkWusFGICZ7+4bpyJ
+ 3Q1MQBoaNzxQud6ruEzgdPkhFCGRuKT7xvs+We7MbiIolProzftjngoLwSXACQHYIhvg
+ Rj0XJ+wdn8XaDCb5tLqsQmaYdzAVSD6+Jp+TsDZZwl/YRrGL0o2XKU0Es7UzVNuXbies
+ qOKPh6W+Htog3oDVdQdnrgMlhJLM47w1zpqkgXsAYX2ybci8O+wjvxSBDS/ct4s7aZnc
+ XkzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717106779; x=1717711579;
+ d=1e100.net; s=20230601; t=1717106777; x=1717711577;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ChXWvUNOD02yoYequIGCuEzpK9HfTXZtOpXCWQ0j1Uw=;
- b=wgj2VjEYKVC1vTy4h4TPDl52+qhqjX1gOj5jiJPHd/HykZzSQocJVybVkx5i4VZn8N
- UrdGyYyWrWd2sNcQn9i+zeemqw+exNDrL+VKa7sFqf1WuX6wfr1jEnbibBI2iukHglkI
- lqugz9eKA6xBppfypZ45fbOkbm4ELB+mw7bCbTOoEwheosStnkxMZ4hERnT/hqV7u6Fc
- eVsoQ9ZO0+OjuVAz69yaJu41VctDWhJIvLmgA3t005EvlHs7Mt6ffC89LnAUWtenPkMl
- PvBQQ1L1JYpZiFnCNINhKvZyKNv9UgMWw8ZFewdj37Nb6eeo8KTS+sT24DOJTbvaAX05
- EazA==
-X-Gm-Message-State: AOJu0YyyZYgbOKncqkjoasZezp6hvanOz3hP3Pjzgq/BZ2rSpaJgPz6z
- 1c6M3+JkR4UAon/jEgMSmYYl2E5Jz4HluyyVdunAf7eBeKRaTwoXl2dMz2LyeIHE8YDtnMxq8Kw
- cBRY=
-X-Google-Smtp-Source: AGHT+IF0Rdk9P1U6UuKgC0lg8hFnkqj6WatX1CepD5W4ec+rVHUVakkto5fjdubC2r7ejxLHoJ78gQ==
-X-Received: by 2002:a17:903:181:b0:1f4:befa:7a79 with SMTP id
- d9443c01a7336-1f637019aa8mr1075925ad.27.1717106779563; 
- Thu, 30 May 2024 15:06:19 -0700 (PDT)
+ bh=N8fpp15niTkZ3IPMy6ehe10O59rmldsghTOZNCkMcuE=;
+ b=t6vBFCSu8+Tk+9eW0+LyNGoUseHmqLcktmJszhqYVGPMMndaAd7SSAQM1naG2zHpzE
+ SUou6ZQ6KImq6kcCK3r2ZVDO/RkjdKx1+AtoH1isDcG2a0zVHINwTGMp/8RKN7XZcXLb
+ 2yxkhFzbD4k6jmZr3mA8bfs4apLwQ1xl6bx+WhEzul4At/6OM+fZntyuBLv4TOQZGLgo
+ JIQ6OX6toK+2M5YP9nYFhwfUX2pDXMyln7MnzWEwy2AjXEwiwuQTPnFtgdnmPB2aJYh7
+ QK4tRcsfSFhMhWCE0eC6UqX4zndBbE7r1DXbOSpIx2t7j8ZgpioxjyGV0hm8eOs9JnV8
+ oFxw==
+X-Gm-Message-State: AOJu0YzFpmtsAroPagB1tgJReiGDgNP6W6ItschZKgftifQN13jxkZtx
+ uc3xVxPtNntpRMzIbfSvaaQe/94a2fc6koQPEfnMeBGnFDSHhgeFG7suSLms8/zde0JX06py+7x
+ qsiI=
+X-Google-Smtp-Source: AGHT+IHvXyuRMaWfcMFit2oU/D04NDtEBg7V53ewxmsrrRo11HAQLdnFXBVQBUELxvJuTTM0jDd4YQ==
+X-Received: by 2002:a17:902:d490:b0:1f4:8738:64f9 with SMTP id
+ d9443c01a7336-1f63702772amr1916035ad.39.1717106776896; 
+ Thu, 30 May 2024 15:06:16 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::e697])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323dde39sm2732615ad.167.2024.05.30.15.06.18
+ d9443c01a7336-1f6323dde39sm2732615ad.167.2024.05.30.15.06.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 15:06:19 -0700 (PDT)
+ Thu, 30 May 2024 15:06:15 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -67,17 +67,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 4/6] qtest: move qtest_{get,
- set}_virtual_clock to accel/qtest/qtest.c
-Date: Thu, 30 May 2024 15:06:08 -0700
-Message-Id: <20240530220610.1245424-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 2/6] qtest: use cpu interface in qtest_clock_warp
+Date: Thu, 30 May 2024 15:06:06 -0700
+Message-Id: <20240530220610.1245424-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
 References: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,73 +100,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Alex Bennée <alex.bennee@linaro.org>
+
+This generalises the qtest_clock_warp code to use the AccelOps
+handlers for updating its own sense of time. This will make the next
+patch which moves the warp code closer to pure code motion.
+
+From: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/sysemu/qtest.h |  3 ---
- accel/qtest/qtest.c    | 12 ++++++++++++
- system/qtest.c         | 12 ------------
- 3 files changed, 12 insertions(+), 15 deletions(-)
+ include/sysemu/qtest.h | 1 +
+ accel/qtest/qtest.c    | 1 +
+ system/qtest.c         | 6 +++---
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/include/sysemu/qtest.h b/include/sysemu/qtest.h
-index 45f3b7e1df5..c161d751650 100644
+index b5d5fd34637..45f3b7e1df5 100644
 --- a/include/sysemu/qtest.h
 +++ b/include/sysemu/qtest.h
-@@ -34,9 +34,6 @@ void qtest_server_init(const char *qtest_chrdev, const char *qtest_log, Error **
- void qtest_server_set_send_handler(void (*send)(void *, const char *),
-                                  void *opaque);
+@@ -36,6 +36,7 @@ void qtest_server_set_send_handler(void (*send)(void *, const char *),
  void qtest_server_inproc_recv(void *opaque, const char *buf);
--
--int64_t qtest_get_virtual_clock(void);
--void qtest_set_virtual_clock(int64_t count);
+ 
+ int64_t qtest_get_virtual_clock(void);
++void qtest_set_virtual_clock(int64_t count);
  #endif
  
  #endif
 diff --git a/accel/qtest/qtest.c b/accel/qtest/qtest.c
-index 53182e6c2ae..bf14032d294 100644
+index f6056ac8361..53182e6c2ae 100644
 --- a/accel/qtest/qtest.c
 +++ b/accel/qtest/qtest.c
-@@ -24,6 +24,18 @@
- #include "qemu/main-loop.h"
- #include "hw/core/cpu.h"
+@@ -52,6 +52,7 @@ static void qtest_accel_ops_class_init(ObjectClass *oc, void *data)
  
-+static int64_t qtest_clock_counter;
-+
-+static int64_t qtest_get_virtual_clock(void)
-+{
-+    return qatomic_read_i64(&qtest_clock_counter);
-+}
-+
-+static void qtest_set_virtual_clock(int64_t count)
-+{
-+    qatomic_set_i64(&qtest_clock_counter, count);
-+}
-+
- static int qtest_init_accel(MachineState *ms)
- {
-     return 0;
+     ops->create_vcpu_thread = dummy_start_vcpu_thread;
+     ops->get_virtual_clock = qtest_get_virtual_clock;
++    ops->set_virtual_clock = qtest_set_virtual_clock;
+ };
+ 
+ static const TypeInfo qtest_accel_ops_type = {
 diff --git a/system/qtest.c b/system/qtest.c
-index e6f6b4e62d5..ba210780ec0 100644
+index 6da58b3874e..ee8b139e982 100644
 --- a/system/qtest.c
 +++ b/system/qtest.c
-@@ -325,18 +325,6 @@ static void qtest_irq_handler(void *opaque, int n, int level)
-     }
+@@ -332,14 +332,14 @@ int64_t qtest_get_virtual_clock(void)
+     return qatomic_read_i64(&qtest_clock_counter);
  }
  
--static int64_t qtest_clock_counter;
--
--int64_t qtest_get_virtual_clock(void)
--{
--    return qatomic_read_i64(&qtest_clock_counter);
--}
--
--void qtest_set_virtual_clock(int64_t count)
--{
--    qatomic_set_i64(&qtest_clock_counter, count);
--}
--
- static bool (*process_command_cb)(CharBackend *chr, gchar **words);
+-static void qtest_set_virtual_clock(int64_t count)
++void qtest_set_virtual_clock(int64_t count)
+ {
+     qatomic_set_i64(&qtest_clock_counter, count);
+ }
  
- void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words))
+ static void qtest_clock_warp(int64_t dest)
+ {
+-    int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    int64_t clock = cpus_get_virtual_clock();
+     AioContext *aio_context;
+     assert(qtest_enabled());
+     aio_context = qemu_get_aio_context();
+@@ -348,7 +348,7 @@ static void qtest_clock_warp(int64_t dest)
+                                                       QEMU_TIMER_ATTR_ALL);
+         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
+ 
+-        qtest_set_virtual_clock(qtest_get_virtual_clock() + warp);
++        cpus_set_virtual_clock(cpus_get_virtual_clock() + warp);
+ 
+         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
+         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
 -- 
 2.39.2
 
