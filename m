@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E757C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A32C27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 13:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCfmy-0003kC-9B; Thu, 30 May 2024 09:25:52 -0400
+	id 1sCfn9-0004AB-Cn; Thu, 30 May 2024 09:26:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arikalo@gmail.com>) id 1sCdvn-0005yB-4l
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:26:51 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCfn7-00046t-4t
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:26:01 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <arikalo@gmail.com>) id 1sCdvl-0003Xo-K0
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:26:50 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-68197edc2d3so611332a12.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 04:26:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sCfn2-0000ql-80
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 09:26:00 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-57857e0f45cso892930a12.1
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 06:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717068408; x=1717673208; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dwPOExy8G40EPnXA40Bht8ugnZhIVQVOwjOVYfQkrYs=;
- b=b2EQyX1ZS6eyqhHTAaS+Y1Svxs4QZ8MyvLjSH3VQtw8POsZUNAJxb1078J4F69x0wt
- qT8+OfH5VOt3cFVn3tsZndoob/7t0HQlEof5NypLasTW5LnwF9nMs9HpHzWwAkV20e2x
- ruj8Rj1jMM5rydnjMToGo8jK66/T08+wtNvPobvyQ2s+WWGg0uS2oM8Bu2CZdWhODFNb
- 7viGS8MmRKMRp4vy+N2yunNmkuFvJIqcqg+mI9q1lg1C8+UYIW/7j44IzEtSIpDJ3E7e
- L2ARJYkZhtvE3ffglgh+zrofeD8fc3pbrR/QZtrpepZrG8p40kwKnxreqPzrI53CUB9t
- 5xuA==
+ d=linaro.org; s=google; t=1717075555; x=1717680355; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rleXSPuja6127256vP5VjxEvlE3lS9iylunzhrGdEnA=;
+ b=dZ11ceDayEpC0+UDR3pmb+v85TA68ZSehgS28zAWLyVWpr0/ePoOL9j7wUXsHcsvVa
+ sNSQXsWQD1GPamZ/2kYIgIMqL8+3pJsMUB8VBLHpoyb38ZCgDEl8t5oO7DRQQPiXO2GF
+ +2ujS5SDk4b88PFqRocDhPkEG7zPTszBUZezqkyKvM/y/Git+7wRRVhEweKN8cEb2Qyo
+ LwX9Ta3Ifzi/ukRpkYzCUS8PVAEbWqwK30x1Jwr1HMhZ0utlDP8Jg5h0Hf4Bey6k7AGY
+ 8upoOHaBFdw4/LM8tzQEmedytEkvOL1v4cq2yy6fXEwP6EXzz6TML+TDpumf3Ns6xacs
+ 7/tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717068408; x=1717673208;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dwPOExy8G40EPnXA40Bht8ugnZhIVQVOwjOVYfQkrYs=;
- b=TMIbJtz4dDhUKRCqHGOWePm4te+JyePJTTW/noQB8FjpZK0IKk5MwrrfpS37xZaSQd
- lYnOUP+BgNb10e3K1J85mTHg7Wk6jypDwXYYl9HxceXtSwJs1rHz39U0SsSyYUXoVWxd
- eiJcLouQWYv5tj5n4fIHzyj1z2uMKD2HZ46rY2BFOLTku12sQ8pQHZPEu5aSKLNP8s1G
- wj7VAxtmkJCFn1V9Idb31aCaif8zxeLMiXOZlwEbdNvaAZQmaGUvZlny4JqMPtz0o0xh
- DCvwfShry3McYXiewB9K/8dcK6bCFHvkswCR9gxN0FxccS28JhX9S5lTb+5aPzL/Sf9f
- jo/w==
-X-Gm-Message-State: AOJu0YzdeYe/n/f7+jfgtH9B9KZU/rkxQlz/INsOOk8cQM5fNnbtY3jp
- +Q40EErvouebbgi0zm7692dnCEmVE15suVzT4Nt7Q2w63ZrKB9+0g4kVViSEFcT9jU8EZMVyWWr
- K2Uw6YLfYu3Iyj6f/5o88VZDa2iY=
-X-Google-Smtp-Source: AGHT+IHk8fIwx8b1ZsRIv8RCbkBVyoH0ibl0E+uwbodul/Rk+9SMXjRdv+KhHEyBkUWwq6/y0mWDSLymhwYGIdOajbY=
-X-Received: by 2002:a05:6a20:a120:b0:1b0:106e:89c3 with SMTP id
- adf61e73a8af0-1b264520d39mr2237024637.9.1717068407695; Thu, 30 May 2024
- 04:26:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717075555; x=1717680355;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rleXSPuja6127256vP5VjxEvlE3lS9iylunzhrGdEnA=;
+ b=Mf4a5Eqp0/2AuUTmJYxTI+Ft1EYoFs2MEHdHpAofcRDLiWpVgxJPQzbTj4+iMcfEEb
+ 6PNVgJquXoRULOFoZN3mlxZ+EipGIFTAtbT3p5v6dmotUfkkXMUX+exqLjjLSx76v9G1
+ DjC4+kA7G2mB1lbc0FDPg2UVyPvP6xx2JuKDj8CLhoA86uktlwWL6nQ/EAq7NNbP8XwN
+ zmKaBMnelbi/Y5Vao+4wu4dcpNWjKevVbTa7x0GlIe8fxyN3EOeUlalU+H3yOt5jMgF6
+ U8wOv8EEHcrpaorFOPfSH33MZXLeGWunngJcubSGsxF0VqdT3sJV59lbl0/x7Tn/kZm5
+ ZzsA==
+X-Gm-Message-State: AOJu0YzC+Uke1hm+4AY+pQESdZ+mukklHEsqEAFQfeWI4ubXblU3vVD3
+ NFW5yP5lXayOl2ddIWDTa7A0WWkhTOAwRHDRboM8vuPUTBpbFgD4Sspn0t6mMQMWoao3jE2tTBu
+ 8HOzNqqLZU1WvYIphh5wLo0psiZvW9BN48ipJwA==
+X-Google-Smtp-Source: AGHT+IGBz+clmRQApkVMgVVh9wUzexDeWDoMAW+C2E53RlgNNDqWwUM5jitWM2AG5iJfB5pCtHpFXmXr+C2iptj+cVA=
+X-Received: by 2002:a50:cbc7:0:b0:572:1589:eb98 with SMTP id
+ 4fb4d7f45d1cf-57a177f7eefmr1257517a12.12.1717075554694; Thu, 30 May 2024
+ 06:25:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240529155216.5574-1-philmd@linaro.org>
-In-Reply-To: <20240529155216.5574-1-philmd@linaro.org>
-From: Aleksandar Rikalo <arikalo@gmail.com>
-Date: Thu, 30 May 2024 13:26:35 +0200
-Message-ID: <CAGQJe6ooyqQFtuPtJxUk59cyf5aU8yLvJvtg_5wqBDR5McQfYw@mail.gmail.com>
-Subject: Re: [PATCH] target/mips: Remove unused 'hw/misc/mips_itu.h' header
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aurelien Jarno <aurelien@aurel32.net>
+References: <20240526193637.459064-1-richard.henderson@linaro.org>
+ <20240526193637.459064-11-richard.henderson@linaro.org>
+In-Reply-To: <20240526193637.459064-11-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 May 2024 14:25:43 +0100
+Message-ID: <CAFEAcA_MPdoayJ8VBtp9xf+yLwsqWfHL3wi108hgPwrYNvP6Fg@mail.gmail.com>
+Subject: Re: [PATCH RISU v2 10/13] sparc64: Add VIS2 and FMAF insns
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=arikalo@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 30 May 2024 09:25:50 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,30 +87,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Since commit e1152f8166 ("target/mips: Remove helpers accessing
+On Sun, 26 May 2024 at 20:39, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> SAAR registers") this header is not needed.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/mips/tcg/sysemu/cp0_helper.c | 1 -
->  1 file changed, 1 deletion(-)
+>  sparc64.risu | 36 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
 >
-> diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu=
-/cp0_helper.c
-> index ded6c78e9a..79a5c833ce 100644
-> --- a/target/mips/tcg/sysemu/cp0_helper.c
-> +++ b/target/mips/tcg/sysemu/cp0_helper.c
-> @@ -28,7 +28,6 @@
->  #include "qemu/host-utils.h"
->  #include "exec/helper-proto.h"
->  #include "exec/exec-all.h"
-> -#include "hw/misc/mips_itu.h"
->
->
->  /* SMP helpers.  */
-> --
-> 2.41.0
 
-Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
