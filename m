@@ -4,56 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F5AFC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BA0C27C43
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCaUa-0003e9-Tb; Thu, 30 May 2024 03:46:32 -0400
+	id 1sCaTs-0002C2-6M; Thu, 30 May 2024 03:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
- id 1sCaUZ-0003bA-RO; Thu, 30 May 2024 03:46:31 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Otnh=NB=kaod.org=clg@ozlabs.org>)
- id 1sCaUW-0003PV-HX; Thu, 30 May 2024 03:46:31 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Vqdby6vsvz4wyY;
- Thu, 30 May 2024 17:46:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Vqdbw3ZR1z4wyQ;
- Thu, 30 May 2024 17:46:20 +1000 (AEST)
-Message-ID: <a124af35-7ff0-487c-9a9d-ae352e9f359f@kaod.org>
-Date: Thu, 30 May 2024 09:46:15 +0200
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sCaTa-0001tv-6z; Thu, 30 May 2024 03:45:31 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sCaTT-00034m-4z; Thu, 30 May 2024 03:45:29 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1f44b5b9de6so4752005ad.3; 
+ Thu, 30 May 2024 00:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717055117; x=1717659917; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NbPEeRWPILNUzNuILr/esH7ih7rVY13FKF1oFFMWtjM=;
+ b=WPjL4N/mEA0Lt6/CQix5ZckAcZBMbFpC+ohsnSY55FmbsBuGR6KL8QnaB/HDUp6i2y
+ v51fkFAoMD2GEyu2rGIYXLDRBfwvW8eAGL7cdPMEcDTNP5rqbGW7sy7V50QAPrGMZOdj
+ tlVSHXMlJqZYAfdtumSVUkB/NRtRq9xVobt7ja/paQU8U+kuyomOm+ldJ2RDdyW0AT82
+ F/bhkqKB+XiuVRpieEtxs2ahnyFtLETUNVfpj/1wFTWz7gIbxi7Pj5kRK4rK+IJC4jVD
+ I05C6gm8CeLlTwhQgaL3oYzuchJJHy9np1Ef2dsvnQKyrf7Aj62K+QcFtJzx1IVaf/uj
+ Pm8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717055117; x=1717659917;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NbPEeRWPILNUzNuILr/esH7ih7rVY13FKF1oFFMWtjM=;
+ b=HsHUMlbw5dHfg7drVXhnzyNKwhhPxI4OpQ9xCrHG7IipwRlb23cJbWLAPROwvfdjSe
+ 4JVcyW5F2OyDNp/ofJZp3nZp4nrYJbXORCtW5Sbvz4blE0TTnoMmif7hoNjDqs0uPNNN
+ zDyWWhbYnTk1wi7FMtcYAnJqgMnvfnpGXJeIPVwjy+dK9XUQ02vpXKTXZJ5Tp4Lc+1HI
+ CPYjFiN65xlXXB8QwsNsBI2OxZ2YEEfLqwd37Yb+F3AgsuKx/alT/CJb4fiu9wqQfTsE
+ DVf3l70RQFYhepIb9AFJS9vBNWfkvUQvttfVkN45lNOIOjwFVv/TDn2NHVCdGKIUl3kF
+ sn5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUle7VuBE+M4iYy2brECUeyhD1R7Z+XUsdP15PnxPZnyq7r2aTgceLgkgAn1uz3c1RLM0tdWBFLjdrgjRTMZ1rRrMiL
+X-Gm-Message-State: AOJu0YwqEFfTxJX6h/AbVkXiWa11caLN267vOlsWTHQ/4lVixTuFD5vs
+ JTZsDgysaJ69pNkfou/oodniiEy1iNdZxh1ch6dDnc4oitreXtY7kAUr9g==
+X-Google-Smtp-Source: AGHT+IFfesfKOKLyxaPOvhXsaTdUqJFJSWerkRxupFW40o8qBxGCF/6Nh75Y0KbFgKwShV9YebWiLw==
+X-Received: by 2002:a17:902:ec83:b0:1f4:7bf1:71f8 with SMTP id
+ d9443c01a7336-1f6192ed3e4mr15229315ad.5.1717055116890; 
+ Thu, 30 May 2024 00:45:16 -0700 (PDT)
+Received: from wheely.local0.net ([1.146.118.54])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f61aa2e998sm8025335ad.62.2024.05.30.00.45.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 May 2024 00:45:16 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org
+Subject: [PATCH v3 3/4] tests/qtest/migration-test: Enable on ppc64 TCG
+Date: Thu, 30 May 2024 17:44:51 +1000
+Message-ID: <20240530074453.21780-4-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240530074453.21780-1-npiggin@gmail.com>
+References: <20240530074453.21780-1-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 08/10] ppc/pnv: Invert the design for big-core machine
- modelling
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-9-npiggin@gmail.com>
- <eb04e4c8-26ca-4330-ae32-a58737d2a78b@kaod.org>
- <D1MS4B4OOMP2.URZ3Y2R98BC8@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <D1MS4B4OOMP2.URZ3Y2R98BC8@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Otnh=NB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,124 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+ppc64 with TCG seems to no longer be failing this test, perhaps since
+commit 03bfc2188f061 ("physmem: Fix migration dirty bitmap coherency
+with TCG memory access") which is not ppc specific but was seen to hit
+ppc64 quite easily.
 
->>> @@ -157,6 +157,14 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->>>    
->>>        pnv_cc->processor_id(chip, pc->hwid, 0, &pir, &tir);
->>>    
->>> +    /* Only one DT node per (big) core */
->>> +    if (tir != 0) {
->>> +        g_assert(pc->big_core);
->>> +        g_assert(tir == 1);
->>> +        g_assert(pc->hwid & 1);
->>> +        return -1;
->>
->> return is -1 but it's not an error. right ?
-> 
-> Not an error just a "no CPU node to insert".
-> 
-> It's a bit ugly. Could return bool for yes/no and take a *offset
-> maybe?
+Let's enable it again.
 
-or we could pass the pa_features array  ?
+The s390x problem has been identified so mention it while we are
+adjusting the comment.
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ tests/qtest/migration-test.c | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
->>> +        if (machine->smp.threads > 8) {
->>> +            error_report("Cannot support more than 8 threads/core "
->>> +                         "on a powernv9/10  machine");
->>> +            exit(1);
->>> +        }
->>> +        if (machine->smp.threads % 2 == 1) {
->>
->> is_power_of_2()
-> 
-> It does have that check later in pnv_init(), but I wanted
-> to be careful that we're dividing by 2 below I think it makes
-> it more obvious (and big-core can't have 1 thread per big core).
-
-ok
-
-
-> 
->>> @@ -1099,6 +1157,8 @@ static void pnv_power9_init(MachineState *machine)
->>>    
->>>    static void pnv_power10_init(MachineState *machine)
->>>    {
->>> +    PnvMachineState *pnv = PNV_MACHINE(machine);
->>> +    pnv->big_core_tbst_quirk = true;
->>>        pnv_power9_init(machine);
->>>    }
->>>    
->>> @@ -1169,9 +1229,15 @@ static void pnv_processor_id_p9(PnvChip *chip,
->>>                                    uint32_t core_id, uint32_t thread_id,
->>>                                    uint32_t *pir, uint32_t *tir)
->>>    {
->>> -    if (chip->nr_threads == 8) {
->>> -        *pir = (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
->>> -               (thread_id >> 1);
->>> +    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->>
->> arg. We should avoid these qdev_get_machine() calls. Could big_core be a
->> chip property instead ?
-> 
-> We could, but per machine probably makes more sense. It's
-> funny there seems to be no good way to get machine from CPU.
-> Maybe we can just add a machine pointer in PnvChip?
-
-
-It would be easier/cleaner to propagate the machine settings to
-the chip unit and subunits. If I remember correctly, real HW has a
-scan init sequence doing something similar.
-
-> I'l probably leave that for another series and try to convert
-> most things.
-> 
->>> +static bool pnv_machine_get_hb(Object *obj, Error **errp)
->>> +{
->>> +    PnvMachineState *pnv = PNV_MACHINE(obj);
->>> +
->>> +    return !!pnv->fw_load_addr;
->>> +}
->>> +
->>> +static void pnv_machine_set_hb(Object *obj, bool value, Error **errp)
->>> +{
->>> +    PnvMachineState *pnv = PNV_MACHINE(obj);
->>> +
->>> +    if (value) {
->>> +        pnv->fw_load_addr = 0x8000000;
->>> +    }
->>> +}
->>
->> we might want to get rid of the hostboot mode oneday. This was really
->> experimental stuff.
-> 
-> Okay sure, I don't use it. Although we may want to run the
-> open source hostboot part of the firmware on QEMU one day,
-> we can always add back some options for it.
-
-It's not invasive either. Let's keep it. It use to work with a
-trimdown Linux image.
-
-
-Thanks,
-
-C.
-
-
-> 
-> We do have a PowerVM mode too which tweaks a few things, but
-> that's no use for upstream.
-> 
->>> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
->>> index 059d372c8a..05195527a5 100644
->>> --- a/hw/ppc/spapr_cpu_core.c
->>> +++ b/hw/ppc/spapr_cpu_core.c
->>
->> This change should come in another patch preferably
-> 
-> Yeah this might have got into the wrong patch.
-> 
-> Thanks,
-> Nick
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 48f59822f4..ef9ddef1c8 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -3454,19 +3454,9 @@ int main(int argc, char **argv)
+ #endif
+ 
+     /*
+-     * On ppc64, the test only works with kvm-hv, but not with kvm-pr and TCG
+-     * is touchy due to race conditions on dirty bits (especially on PPC for
+-     * some reason)
+-     */
+-    if (g_str_equal(arch, "ppc64") &&
+-        (!has_kvm || access("/sys/module/kvm_hv", F_OK))) {
+-        g_test_message("Skipping tests: kvm_hv not available");
+-        goto test_add_done;
+-    }
+-
+-    /*
+-     * Similar to ppc64, s390x seems to be touchy with TCG, so disable it
+-     * there until the problems are resolved
++     * On s390x with TCG, migration is observed to hang due to the 'pending'
++     * state of the flic interrupt controller not being migrated or
++     * reconstructed post-migration. Disable it until the problem is resolved.
+      */
+     if (g_str_equal(arch, "s390x") && !has_kvm) {
+         g_test_message("Skipping tests: s390x host with KVM is required");
+-- 
+2.43.0
 
 
