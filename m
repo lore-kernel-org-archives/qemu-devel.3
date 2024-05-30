@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79F7C25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCEC2C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 07:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCaTk-0001vA-7F; Thu, 30 May 2024 03:45:40 -0400
+	id 1sCaUP-0002pl-3s; Thu, 30 May 2024 03:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCaTY-0001tJ-UP; Thu, 30 May 2024 03:45:29 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCaUD-0002fg-Id
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:46:11 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sCaTK-000315-DF; Thu, 30 May 2024 03:45:28 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70232305fecso307251b3a.2; 
- Thu, 30 May 2024 00:45:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCaUA-0003N4-Tp
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 03:46:09 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-35dc0472b7eso563984f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 00:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717055107; x=1717659907; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717055165; x=1717659965; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rr4J6dxm5AtV4yAbJU19/SHZXAqfpuKCexnfNQQEgp8=;
- b=TE0rBmo/RMIjMcqiiLq9L0vchpi/+gNXrYj3AYm8QriJQtQYyAoMHMjqBcV9jNCMuC
- PMQ5bseXyVsdWNhu1xLjF1lUkQi4w/xtJWI6oZ5/0xo1TOAH/oN/EcqWTQ+hkT9zohzO
- 49NAL4vDmKgDk796W/OHiq8RS/S62X5KkSt+Fa2xBE++rIzSH/mmiPJvX+GynG7bWqmx
- 16hNK8xCPHnROZgCyRkvfOHHI0IGTh4IOuwnwr0GgjMoSEuebb9ufEoAx5ZTbupKGdmU
- vG6ljmE2zEElMN1tPVvLZ9G5ESba5o8TiIa2+b7bPer4cDfH+F/IE3+qFwVh04TA+KIG
- 7Viw==
+ bh=86k7CF14SSg/CYqN2D7txu231XQemu6J+/zlA2s2d3g=;
+ b=CU2im0Wcsh9VrTyD++I9rVZB8REdLHEM8elVT7j69sQPwzNCD+nPOnGtrMyiMdMI+C
+ MKSq9XO0johVQX6dalrRatiubpkIfDg7iegH0f932Nt62fuxkoITWVsf7MkPJgwMzJYz
+ TbVLN7eaQsCi/2puAWGCag6i0tNVrRfjl55V0DxYGh+PV7vy/ORvistOloSc+bmmc4pe
+ dgrfBhu4WBLM0d+F/UrZS7rhO7P5Oe9QnDV6AbjTF1kw/GwKaScqEITooxS6/WBVOwiN
+ y8GYP3T4JUKVM3dtiCw/J8LwPSkvxvP0G5w3D/CJYfTWMz3F6Sq+wKAzWhb9NdNJdWvU
+ KIPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717055107; x=1717659907;
+ d=1e100.net; s=20230601; t=1717055165; x=1717659965;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rr4J6dxm5AtV4yAbJU19/SHZXAqfpuKCexnfNQQEgp8=;
- b=OWrH9M0jzctNbJwmXjP/fz5b/IkfxJihwZJklJHSLVj8c6fOsvVLVXj7Iaz0+NkpvD
- VL0R/r0zi3HbESz8lYmXcas1N81twJBQ0DorsBVIqeqZMykgu3YGG5LxM1+oRUL9QLZe
- wUjfDIpZRbzoR9Ndn+9hQiuIL7RlLVEY+13cNK/qCDwAa9V4CusSLTcVzBGIWtBkVlK1
- NzCsFG1qlavmwx3ly7LtRJJSF7rk8qmZRIiqcdy1uFxZNm2uP9I1IALcQRnpQvbwvWxH
- qeqx0lZczMwhCGpPrSao4HBH9Fiu/EPq4gkFwCtDXGUqhhy1E5UjwBgOfABhMGq0oGMO
- lF8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfLH8/3vMg16t7vMz2SgUtd0z4F/FzrqTOWntZ2CICQanKlOdreiZIxOXvhBmkHEgTyYOA5soBmzrh8AFsozQEFZwD
-X-Gm-Message-State: AOJu0YwzVrRMkqA/yLTSE3/oABRZell+qhwss5MV5LYdtY9+ePR2ys33
- dN1K35smLGZGtG0OdP6WL+Xm6P2RyP/ywmp7dml61nZAV2QYjPK5CopZkg==
-X-Google-Smtp-Source: AGHT+IErhFRqyaaMVyaK5X3ImbnaR5GCT6W+TxcRJCSykVwxk81VnEgxXCfQeqE5W1sQWR2JCq/kPA==
-X-Received: by 2002:a05:6a20:158c:b0:1af:a35b:a34f with SMTP id
- adf61e73a8af0-1b264563a5emr1552498637.25.1717055107323; 
- Thu, 30 May 2024 00:45:07 -0700 (PDT)
-Received: from wheely.local0.net ([1.146.118.54])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f61aa2e998sm8025335ad.62.2024.05.30.00.45.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 May 2024 00:45:07 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ bh=86k7CF14SSg/CYqN2D7txu231XQemu6J+/zlA2s2d3g=;
+ b=gcavmcXN1i4bNvrAx5/td1oVyCxr6DEdpYsL4aL4vyP2l5AvZ44oExzAqnQo0BDEmc
+ kvnasgmhrGuf1fpQadcKYTv05eG6GrWO5pJMt3vwVueVSq6O0QBVaLfwwPeH08+U0LDx
+ 7IBWi73+l5OpzaySO8nhkpGcUxIWzkN+dst3JFWhXiIrRUVbbSvHypArtFIs5Lba/o8A
+ FhJJIxGMYy+mtw17lV5kmjsfcza9xkpl3Sr8CCnh8fBmwXavUMQKYndAfssDKK603Rug
+ qby0gBsNEmQQIdJuK/RUr6/tFhYWAL2arSZJ83kFSv9aJtQxbZ2U8DfoG9Qc5Octp4Rn
+ Ozsg==
+X-Gm-Message-State: AOJu0Yy6KItWC2WYGsQ2VBWuUFnaOUG5x/4Z4+Y3t1LSbJsX/Syh1W/H
+ Sy252Ai6WQNvU7RbqQg1XbU2kKwb7NckHxpcPBeVNdTXQTBIRVfkD88igjOUkRmzkhrAPiX1NP/
+ X
+X-Google-Smtp-Source: AGHT+IEmftNfdDbMA6FOoRjkK3+k/JGk/r04ilH9+Bc+75KFFpoW4tMh6RvD4GeQN9KHkRD6in5jqw==
+X-Received: by 2002:adf:ec04:0:b0:354:cf3b:5791 with SMTP id
+ ffacd0b85a97d-35dc02bcfd4mr846234f8f.70.1717055164804; 
+ Thu, 30 May 2024 00:46:04 -0700 (PDT)
+Received: from m1x-phil.lan (xbn44-h02-176-184-35-50.dsl.sta.abo.bbox.fr.
+ [176.184.35.50]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3557a1c960esm16668562f8f.80.2024.05.30.00.46.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 30 May 2024 00:46:04 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org
-Subject: [PATCH v3 1/4] tests/qtest: Move common define from libqos-spapr.h to
- new ppc-util.h
-Date: Thu, 30 May 2024 17:44:49 +1000
-Message-ID: <20240530074453.21780-2-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240530074453.21780-1-npiggin@gmail.com>
-References: <20240530074453.21780-1-npiggin@gmail.com>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-s390x@nongnu.org, devel@lists.libvirt.org,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/4] hw/s390x: Introduce the 'dump_s390_skeys' HMP command
+Date: Thu, 30 May 2024 09:45:42 +0200
+Message-ID: <20240530074544.25444-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240530074544.25444-1-philmd@linaro.org>
+References: <20240530074544.25444-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,101 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The spapr QEMU machine defaults is useful outside libqos, so create a
-new header for ppc specific qtests and move it there.
+'dump_skeys' is specific to the qemu-system-s390x binary.
+In order to provide it in an unified single binary, add
+a equivalent new command named 'dump_s390_skeys', which
+works identically on s390x and reports an error on other
+targets.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/qtest/libqos/libqos-spapr.h |  7 -------
- tests/qtest/ppc-util.h            | 19 +++++++++++++++++++
- tests/qtest/boot-serial-test.c    |  2 +-
- tests/qtest/prom-env-test.c       |  2 +-
- tests/qtest/pxe-test.c            |  2 +-
- 5 files changed, 22 insertions(+), 10 deletions(-)
- create mode 100644 tests/qtest/ppc-util.h
+ include/monitor/hmp.h      |  1 +
+ hw/s390x/s390-skeys-stub.c |  8 ++++++++
+ hw/s390x/s390-skeys.c      |  9 ++++++++-
+ hmp-commands.hx            | 13 +++++++++++++
+ 4 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/libqos/libqos-spapr.h b/tests/qtest/libqos/libqos-spapr.h
-index e4483c14f8..a446276416 100644
---- a/tests/qtest/libqos/libqos-spapr.h
-+++ b/tests/qtest/libqos/libqos-spapr.h
-@@ -9,11 +9,4 @@ QOSState *qtest_spapr_boot(const char *cmdline_fmt, ...)
-     G_GNUC_PRINTF(1, 2);
- void qtest_spapr_shutdown(QOSState *qs);
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 954f3c83ad..647a1e4a3f 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -181,5 +181,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
+ void hmp_info_mtree(Monitor *mon, const QDict *qdict);
+ void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
+ void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
++void hmp_dump_s390_skeys(Monitor *mon, const QDict *qdict);
  
--/* List of capabilities needed to silence warnings with TCG */
--#define PSERIES_DEFAULT_CAPABILITIES             \
--    "cap-cfpc=broken,"                           \
--    "cap-sbbc=broken,"                           \
--    "cap-ibs=broken,"                            \
--    "cap-ccf-assist=off,"
--
  #endif
-diff --git a/tests/qtest/ppc-util.h b/tests/qtest/ppc-util.h
-new file mode 100644
-index 0000000000..f68ee93520
---- /dev/null
-+++ b/tests/qtest/ppc-util.h
-@@ -0,0 +1,19 @@
-+/*
-+ * PowerPC misc useful things
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef PPC_UTIL_H
-+#define PPC_UTIL_H
-+
-+/* List of capabilities needed to silence warnings with TCG */
-+#define PSERIES_DEFAULT_CAPABILITIES             \
-+    "cap-cfpc=broken,"                           \
-+    "cap-sbbc=broken,"                           \
-+    "cap-ibs=broken,"                            \
-+    "cap-ccf-assist=off,"
-+
-+#endif /* PPC_UTIL_H */
-diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index df389adeeb..3b92fa5d50 100644
---- a/tests/qtest/boot-serial-test.c
-+++ b/tests/qtest/boot-serial-test.c
-@@ -15,7 +15,7 @@
- 
+diff --git a/hw/s390x/s390-skeys-stub.c b/hw/s390x/s390-skeys-stub.c
+index 50b5f83437..94b491425b 100644
+--- a/hw/s390x/s390-skeys-stub.c
++++ b/hw/s390x/s390-skeys-stub.c
+@@ -8,6 +8,14 @@
  #include "qemu/osdep.h"
- #include "libqtest.h"
--#include "libqos/libqos-spapr.h"
-+#include "ppc-util.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-misc.h"
++#include "monitor/monitor.h"
++#include "monitor/hmp.h"
++
++void hmp_dump_s390_skeys(Monitor *mon, const QDict *qdict)
++{
++    monitor_printf(mon, "This guest is not using s390 storage keys - "
++                     "nothing to dump\n");
++}
  
- static const uint8_t bios_avr[] = {
-     0x88, 0xe0,             /* ldi r24, 0x08   */
-diff --git a/tests/qtest/prom-env-test.c b/tests/qtest/prom-env-test.c
-index 39ccb59797..14705105ad 100644
---- a/tests/qtest/prom-env-test.c
-+++ b/tests/qtest/prom-env-test.c
-@@ -21,7 +21,7 @@
+ void qmp_dump_s390_skeys(const char *filename, Error **errp)
+ {
+diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
+index f9bb08eb92..e7dab52a6e 100644
+--- a/hw/s390x/s390-skeys.c
++++ b/hw/s390x/s390-skeys.c
+@@ -24,6 +24,8 @@
+ #include "sysemu/kvm.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/register.h"
++#include "monitor/monitor.h"
++#include "monitor/hmp.h"
  
- #include "qemu/osdep.h"
- #include "libqtest.h"
--#include "libqos/libqos-spapr.h"
-+#include "ppc-util.h"
+ #define S390_SKEYS_BUFFER_SIZE (128 * KiB)  /* Room for 128k storage keys */
+ #define S390_SKEYS_SAVE_FLAG_EOS 0x01
+@@ -105,7 +107,7 @@ void hmp_info_skeys(Monitor *mon, const QDict *qdict)
+     monitor_printf(mon, "  key: 0x%X\n", key);
+ }
  
- #define MAGIC   0xcafec0de
- #define ADDRESS 0x4000
-diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
-index e4b48225a5..a3f900fbea 100644
---- a/tests/qtest/pxe-test.c
-+++ b/tests/qtest/pxe-test.c
-@@ -16,7 +16,7 @@
- #include <glib/gstdio.h>
- #include "libqtest.h"
- #include "boot-sector.h"
--#include "libqos/libqos-spapr.h"
-+#include "ppc-util.h"
+-void hmp_dump_skeys(Monitor *mon, const QDict *qdict)
++void hmp_dump_s390_skeys(Monitor *mon, const QDict *qdict)
+ {
+     const char *filename = qdict_get_str(qdict, "filename");
+     Error *err = NULL;
+@@ -116,6 +118,11 @@ void hmp_dump_skeys(Monitor *mon, const QDict *qdict)
+     }
+ }
  
- #define NETNAME "net0"
++void hmp_dump_skeys(Monitor *mon, const QDict *qdict)
++{
++    hmp_dump_s390_skeys(mon, qdict);
++}
++
+ void qmp_dump_s390_skeys(const char *filename, Error **errp)
+ {
+     S390SKeysState *ss = s390_get_skeys_device();
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 06746f0afc..c12e2c2bd9 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -1120,6 +1120,19 @@ SRST
  
+ ERST
+ 
++    {
++        .name       = "dump-s390-skeys",
++        .args_type  = "filename:F",
++        .params     = "",
++        .help       = "Save guest storage keys into file 'filename'.",
++        .cmd        = hmp_dump_s390_skeys,
++    },
++
++SRST
++``dump-s390-skeys`` *filename*
++  Save guest storage keys to a file.
++ERST
++
+ #if defined(TARGET_S390X)
+     {
+         .name       = "dump-skeys",
 -- 
-2.43.0
+2.41.0
 
 
