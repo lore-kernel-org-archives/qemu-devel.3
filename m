@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A5CC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 10:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CB7C25B7E
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 10:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCd3G-0001GJ-PK; Thu, 30 May 2024 06:30:30 -0400
+	id 1sCdAT-00041K-4k; Thu, 30 May 2024 06:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCd39-0001F8-JT
- for qemu-devel@nongnu.org; Thu, 30 May 2024 06:30:28 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sCdAQ-00040w-Bk
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 06:37:54 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCd37-0000ps-27
- for qemu-devel@nongnu.org; Thu, 30 May 2024 06:30:22 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57863a8f4b2so844030a12.0
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 03:30:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sCdAL-00023u-Bs
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 06:37:54 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-354cd8da8b9so699998f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 03:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717065019; x=1717669819; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jt33+swSTK2dSEH23iCR5MbnCc7IK5ESWO5qH12q7hc=;
- b=nO05KcAz+D5+jH6bMZjGY3++VnxcV3PmLnCQvLe5h5RZPiL9pJS/weEqifcMQI2Blt
- kMueb3fiKyHyfqhkb9CBTPvbKmdYKEnsCC71i2JevBLcrTD2yma8eFu+zX4X0pKWHrfh
- FgY9GZE5ecvyUSxk19uS1n4PQ3WebEQviuu4fJlsA8ed5UxK1n+gnND2Pi+Buu6btAQP
- GzwP4bY+azbf6GBClHyR02OHOM2CKQYsAtsFPsLleSvkUyAKU5dOV2wjOMyoUFbw8nLr
- /7B4PW6aqAI9yTDQuPC7EkK3AaDWOD3+18QLeQQXDlRzWhT31p4SZ5nbywHW/Ik7/9sJ
- wcBQ==
+ d=ventanamicro.com; s=google; t=1717065467; x=1717670267; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ix9YcMBkAGWhacciiXlNRjqjC3hlgKJfQIWB9MKqA6A=;
+ b=KDhu/uJU0tl01DwRwTAcCurzy1uo3M0v6pfGosqroXsWFI/aVB7C/t6iascdGFpWV+
+ 6NELHYZlIiIeia2EqAvmhzRatNDW3eY/PZjPQhbt7YpX+7fTiVAUniAQzahVTk5vWjjA
+ YzTk9e9wUlpfNkLQoyNW0azvwg8RcArKAKOcFvyK9HnUEX0kEFFU7BxBW1jh4S/qMadq
+ 3rMG/GO6eZm3lFddARBGDxCHatTSXSnR5l/lhgnlBE8rURR4ZSD7M6mtpHl/1CrMBAmV
+ wX7JTlIbW4u0lnkmFYcShyU9vV0jf42n2EKj6HZ21THLA5gPyK4xq0gIhpxtMd61PChc
+ RcfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717065019; x=1717669819;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jt33+swSTK2dSEH23iCR5MbnCc7IK5ESWO5qH12q7hc=;
- b=mXTIJLtXK+sFhX6O7gpOYI/1SMTahHDI/yZ9w6VEdE8jqgO3bGLpX5EkLsK4LJUYL1
- GMEZqUuXoSKQqt9BFBvORTf0eS0Oi32xY+lQmMMkTpwdDZF2xhoyH/FuEuv0ysZSMEJp
- b8LdRJsjWh1FUKm+fvuTmRiLNtvtRFmQaJ8rkAhNWIwU94/TT2mh1stXP7zOuc13nSDQ
- I5qAq4u+S+PReQ1Dq2qLdUnclBFDLhXct8bafKzsU3MtBZz1o7fGxaHCLoNHTDAqFx8w
- QH3I8rEdIraKeqDYfSoM8lw8T8LTFQOpvyEqLqm+hTxg37pL9cMyw7g6uArXZPhHYAvm
- H6Bw==
-X-Gm-Message-State: AOJu0YzXP13F/b74PYE6vC8S21Vx3Bs+P1rdlzMoMBiT9JmTVdNe0fto
- +LWPMHrRtKm4juZ5HHY+4tWcIQN2XugkXXkLf4ERvGMe0jCNg6j2L8w+5jbPldznLxVqhT0z3JK
- yClVsOMhNeW8wNrLm1jA+MPhpvRY5kZwRUwxOUg==
-X-Google-Smtp-Source: AGHT+IEGM2nceeG70DyHm+BOi9q0/PVqzpslgM3Rb8kRZDAA34PdPqF+zotFLT07eserA8LuY42HxaTvn+lITT1FfbE=
-X-Received: by 2002:a50:9f2f:0:b0:57a:23eb:13b3 with SMTP id
- 4fb4d7f45d1cf-57a23eb1421mr607671a12.12.1717065019278; Thu, 30 May 2024
- 03:30:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717065467; x=1717670267;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ix9YcMBkAGWhacciiXlNRjqjC3hlgKJfQIWB9MKqA6A=;
+ b=Mkf2V4lT72hXlznkuJ8LwqCJg0TxxB3+UsbIp/3j3W2tryAwRO9qILk525wMZDvQOL
+ r1iH+2ficnsI1uyfFXA6b19mOlyYEx9YrEcqhoELcDqqxUpx1Lb9rgTFWEoAZR2W5F1g
+ 01jjDVjvG91quyPNLWgLBAJT6KS5crrRicpAJx2Qh+8DQdKOBUrmcclxMlbps+DSKzXZ
+ qJH3GjeUDcs+MCeRJPX500OheYPriWWrEY+BZp+vYHA0t7/JAc+5/u/6zShDP5YlBjMN
+ lnsczspQFciR0KGvheTZUW9I62eGE4Sc5aD9/3B1vUy0bpM5ipdYqW/QANb7JWqwAjIR
+ uU6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVsnh5kLlzgdd474CTTB4SLQsgJ93XqD1qkUmf8oJoRBXCIHXe48jD2WSjhrCJ/PmCuX3DPtOkKQ9BaAxcJGzyAVzSzMjw=
+X-Gm-Message-State: AOJu0Yzn+ll5QoXvz/eLwimdbUMKGgBnfOaiRSBc7Yfxs2y3QpwnVhCY
+ 6FlZaR6/9tc/jDL6hUPoNfded6d4JLK6uAFq9uZLoRA2Bx2ele3KmyTUYBe4UBA=
+X-Google-Smtp-Source: AGHT+IE0+pkry5KGA9UGfMuiFv24hqY8pX6R/SZGjW55FP69zfFjYotPw++H9P4F+abboPjrQi3LXA==
+X-Received: by 2002:adf:fd47:0:b0:349:8ba8:e26d with SMTP id
+ ffacd0b85a97d-35dc008674amr1301017f8f.13.1717065467198; 
+ Thu, 30 May 2024 03:37:47 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35579d7dba2sm16923930f8f.17.2024.05.30.03.37.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 May 2024 03:37:46 -0700 (PDT)
+Date: Thu, 30 May 2024 12:37:46 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Fea Wang <fea.wang@sifive.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [RESEND PATCH v2 0/5] target/riscv: Support RISC-V privilege
+ 1.13 spec
+Message-ID: <20240530-0521d05b9924d724568bd6a2@orel>
+References: <20240515080605.2675399-1-fea.wang@sifive.com>
+ <4d2d56aa-5758-4320-a5ef-53ebb87ab494@ventanamicro.com>
+ <CAKhCfseJgRzyeg1seuZ15SR=f78E5rnbgfrzY_VeRDhPMOAhwA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240524120837.10057-1-sebastian.huber@embedded-brains.de>
- <20240524120837.10057-3-sebastian.huber@embedded-brains.de>
-In-Reply-To: <20240524120837.10057-3-sebastian.huber@embedded-brains.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 May 2024 11:30:08 +0100
-Message-ID: <CAFEAcA95Vnz4kyBeTNZWJoa-dmxTnijteFrDzMUqHhuBvmHcSQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] hw/arm/xilinx_zynq: Support up to two CPU cores
-To: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKhCfseJgRzyeg1seuZ15SR=f78E5rnbgfrzY_VeRDhPMOAhwA@mail.gmail.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,21 +104,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 May 2024 at 13:08, Sebastian Huber
-<sebastian.huber@embedded-brains.de> wrote:
->
-> The Zynq 7000 SoCs contain two Arm Cortex-A9 MPCore (the Zynq 7000S have only
-> one core).  Add support for up to two simulated cores.
->
-> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+On Thu, May 30, 2024 at 11:30:28AM GMT, Fea Wang wrote:
+> Hi Daniel,
+> thank you for your help.
+> 
+> I found that only the cover is without many maintainers. I used to send
+> patches by git send-email --dry-run --to 'qemu-devel@nongnu.org,
+> qemu-riscv@nongnu.org' --cc-cmd='scripts/get_maintainer.pl -i' patches/*.
+> Do you have a better script for me?
+> Thank you.
 
-> +        DeviceState *cpudev = DEVICE(OBJECT(zynq_machine->cpu[n]));
+Some maintainers frown on that because they prefer the whole series,
+even if only a few patches touch code they maintain. And, the cover
+letter is quite important to get the context. Also, depending on
+mail client and filter configurations, CC's that are per patch can
+mess up the threading, making a mess of the mailbox. I tend to
+use scripts/get_maintainer.pl to pull together a set of people/lists
+to CC as an independent step, dump the contents into a file and then
+do 'git send-email $(cat my-series.to-list) patches/my-series'
 
-You don't need to do a double-cast like this, you can say:
+git-publish can help with that too by capturing the "to list" and
+maintaining it for you.
 
-   DeviceState *cpudev = DEVICE(zynq_machine->cpu[n]);
+Thanks,
+drew
 
-(I'll make this minor fix when I apply the patchset to target-arm.)
-
--- PMM
+> 
+> Sincerely,
+> Fea
+> 
+> On Mon, May 27, 2024 at 5:21 PM Daniel Henrique Barboza <
+> dbarboza@ventanamicro.com> wrote:
+> 
+> > Fea,
+> >
+> > Please try to also add all RISC-V QEMU maintainers and reviewers when
+> > sending
+> > patches. It will get your patches reviewed and queued faster. Otherwise the
+> > maintainers can miss you your series due to high ML traffic.
+> >
+> > You can fetch who you want to CC using the get_maintainer.pl script with
+> > the
+> > patch files or any source file in particular, e.g.:
+> >
+> > $ ./scripts/get_maintainer.pl -f target/riscv/cpu.c
+> > Palmer Dabbelt <palmer@dabbelt.com> (supporter:RISC-V TCG CPUs)
+> > Alistair Francis <alistair.francis@wdc.com> (supporter:RISC-V TCG CPUs)
+> > Bin Meng <bmeng.cn@gmail.com> (supporter:RISC-V TCG CPUs)
+> > Weiwei Li <liwei1518@gmail.com> (reviewer:RISC-V TCG CPUs)
+> > Daniel Henrique Barboza <dbarboza@ventanamicro.com> (reviewer:RISC-V TCG
+> > CPUs)
+> > Liu Zhiwei <zhiwei_liu@linux.alibaba.com> (reviewer:RISC-V TCG CPUs)
+> > qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+> > qemu-devel@nongnu.org (open list:All patches CC here)
+> >
+> >
+> > I added the extra folk in the CC for this reply so don't worry about it.
+> >
+> >
+> > Alistair, please queue this series. It's already fully acked and I would
+> > like to add
+> > some bits on top of the priv_spec 1.13 support.
+> >
+> >
+> > Thanks,
+> >
+> >
+> > Daniel
+> >
+> > On 5/15/24 05:05, Fea.Wang wrote:
+> > > Based on the change log for the RISC-V privilege 1.13 spec, add the
+> > > support for ss1p13.
+> > >
+> > > Ref:
+> > https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/priv-preface.adoc?plain=1#L40-L72
+> > >
+> > > Lists what to do without clarification or document format.
+> > > * Redefined misa.MXL to be read-only, making MXLEN a constant.(Skip,
+> > implementation ignored)
+> > > * Added the constraint that SXLEN≥UXLEN.(Skip, implementation ignored)
+> > > * Defined the misa.V field to reflect that the V extension has been
+> > implemented.(Skip, existed)
+> > > * Defined the RV32-only medelegh and hedelegh CSRs.(Done in these
+> > patches)
+> > > * Defined the misaligned atomicity granule PMA, superseding the proposed
+> > Zam extension..(Skip, implementation ignored)
+> > > * Allocated interrupt 13 for Sscofpmf LCOFI interrupt.(Skip, existed)
+> > > * Defined hardware error and software check exception codes.(Done in
+> > these patches)
+> > > * Specified synchronization requirements when changing the PBMTE fields
+> > in menvcfg and henvcfg.(Skip, implementation ignored)
+> > > * Incorporated Svade and Svadu extension specifications.(Skip, existed)
+> > >
+> > >
+> > > Fea.Wang (4):
+> > >    target/riscv: Support the version for ss1p13
+> > >    target/riscv: Add 'P1P13' bit in SMSTATEEN0
+> > >    target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32
+> > >    target/riscv: Reserve exception codes for sw-check and hw-err
+> > >
+> > > Jim Shu (1):
+> > >    target/riscv: Reuse the conversion function of priv_spec
+> > >
+> > >   target/riscv/cpu.c         |  8 ++++++--
+> > >   target/riscv/cpu.h         |  5 ++++-
+> > >   target/riscv/cpu_bits.h    |  5 +++++
+> > >   target/riscv/cpu_cfg.h     |  1 +
+> > >   target/riscv/csr.c         | 39 ++++++++++++++++++++++++++++++++++++++
+> > >   target/riscv/tcg/tcg-cpu.c | 17 ++++++++---------
+> > >   6 files changed, 63 insertions(+), 12 deletions(-)
+> > >
+> >
 
