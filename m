@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DB7C27C43
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 14:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDB3C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 14:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCgoe-00059Y-Ue; Thu, 30 May 2024 10:31:40 -0400
+	id 1sCgpa-0005TO-28; Thu, 30 May 2024 10:32:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCgod-00059A-0w
- for qemu-devel@nongnu.org; Thu, 30 May 2024 10:31:39 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1sCgpX-0005LL-Ff
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 10:32:36 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sCgob-0006IM-Bx
- for qemu-devel@nongnu.org; Thu, 30 May 2024 10:31:38 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-357d533b744so980350f8f.2
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 07:31:36 -0700 (PDT)
+ id 1sCgpW-0006Ls-2D
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 10:32:35 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-35dce6102f4so139541f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 07:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717079495; x=1717684295; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bLEtFY+TjDnCASraG15huVnKqKZafAVoxiSTo4gIZLk=;
- b=kXrbOAVO6Qwkboc3xSodFu/2CgQ/QkVw8uv5JDZ4cc18DUmCGmgAgUliNQyX+9yZlU
- KdhD3DT+0ZB0PqbnOPM/4LbVeksRD5Pdeubs6ZdCbFr094yp2OPiwGYAHTjK33ahhSkP
- Cb0exfS6Z5Kf+078aRA9jf4Lr0hoIuBSFwxzDqpYXgPu50a5uAWYiS6v/yZXUr+17eE8
- A3fvkmczYc3bzdMItl0EqLk0sqhHDdMleOlIOtADXc4VZFGYMPVzFWaySBlDm7IjmEbu
- +fSsx9zhXfzptH0x3ewgQ/MIbuELIxZxOSFDh49jq73HOCaNw11ZaZK8EBxWL3ThIrzv
- Y/5A==
+ d=linaro.org; s=google; t=1717079552; x=1717684352; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6PQk8GLJL82FyKYm9CCZMTar4iu7k3Wi/T+veQwExR8=;
+ b=lwiCeE5QdrbmSU0bTkanLv57V5XDraytSX5jBCTZSMW2ulDP3imXDd9wVfCI+Q5LzK
+ cYA5ab+2LEa/N6nDggLtS6nGWthIEHIlW4FOfqBu4JwbQ1f9rvDh7bijw1zCsjCdUvii
+ +qLybtFlBEcOJhkrTJgP08NsoDz7gic/1Gc34Om4NJ3eul2eoJcRBOIj6HimXp57WIQP
+ Sn1khbGdqBeszXbxceVkWkhB2jYPG3O1RooHhRwNL85xJA9xuJ/OpkJMiQ1DMKOoBpSv
+ 9aJeHqs7CkVVBucPxfpVr0pOzse0NUXy4EvrvqpWDPkx0gNB7Drw79PlwmYr3isFreEo
+ tg6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717079495; x=1717684295;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bLEtFY+TjDnCASraG15huVnKqKZafAVoxiSTo4gIZLk=;
- b=DZZGSr3gI/k4in+bVIftjtR8q1T1JmEDXO9yzZqtj/dWEs0r+rjNeKanuvSCnlAL8y
- tMyYtS6+DieM2rmot9Z3RjJYsRga6IOL8Un18Zg8ox4tgbC3ZG2Xv3OArCmaw07E0Ots
- IOpRICkdgLgs7M/PWkj1v/GkKsTkf/S2qZYFpwo9msqKVkQEF8ysZTcE4VZEIskbRVIE
- ftK4oNEU0r3olIrbdRn55+QCus7f78aKVG6aJPoTgvqz0Hs6kNnj2rXjFb6jrPnGKERc
- bIAS/Uoi+26AbLa9RfGKIhDUzL4fuDMJTO5Y3ubo280PAAIZ4FNU7trFoVR2oBslbU6Q
- 04Qw==
-X-Gm-Message-State: AOJu0Yz0CyHQpzdKFUztzTdQj47S1U6DWOSUJZAn+iwwY7Z9lpNmghu4
- aZazvSyT3x5Ru0URxvKrOXFfAPnZz751whDSGZwICcFtG6uduFIyK4TK7XpYMuOp0cvWJ+hovKE
- u49JWZQJ76FxooRHL4e/cAoxgG9an6MPtGFuKgA==
-X-Google-Smtp-Source: AGHT+IHePEeqgxmtGjnGJq8BTabbzAvFxrtYcPM17fjKZE4XKew/Ybb0DP2qIkynKnEMh+TUVBrljO9mjxiKreR0qRE=
-X-Received: by 2002:a05:6000:c5:b0:358:380:f44c with SMTP id
- ffacd0b85a97d-35dc0087caemr1468135f8f.5.1717079495258; Thu, 30 May 2024
- 07:31:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717079552; x=1717684352;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6PQk8GLJL82FyKYm9CCZMTar4iu7k3Wi/T+veQwExR8=;
+ b=eqbuSLMq6wz2BBKTfStvlBovvlMwXK036qODB4voK6OXZhApJuxLPydzJvXw1V9aI6
+ fubAvTx+I89YS3F0oG0VDhr8Gp4GvuVrkmWV/wVsYtTE9f4UzbYHi3jJmFVIwJma5z/J
+ IMGNDq1AKOwqvUpFhZNr1nrBPeJ18Kgbwf3DBSEEcCU7iG51DHuDOxtTkhaEub3FBcBU
+ 97emzfxWj71YfJsFY9pOC1wgDMjOKIhi3FIwJk/TVlZxDWnXGb+aXjshjBqeWfx4uDMh
+ K+FQEJ/cpGAb/Lmhpr3b/mkVd+75PSR1rweL1dFuMJ6PWUvEE6lHv0RHUDKA/TaG5e83
+ h0Bg==
+X-Gm-Message-State: AOJu0YzxTXxGGahk5FqdVEQT4768JJEQl6bQ9/MQ3+TuQFdMZw4SkIL/
+ C3GD58qsdQ1+a44hJf6Q6BDSs/XShB61EATzsM/TEIyd25rp94F1igPxT0Hc6q2IDzC/Ht2aXHg
+ mqwCdKCTG5G81har5a++cMq9x/3FKnkpHVka2rODJaIXCrCcp
+X-Google-Smtp-Source: AGHT+IGvkbMgICG2ttwqhQcfcoDsnvr+e3uEpusvvGS4DhrAsE8rI6msvhCC/vrENiTqqiiRU+U48VnyIP78fKcSTCU=
+X-Received: by 2002:adf:ff86:0:b0:35b:9ab1:ea77 with SMTP id
+ ffacd0b85a97d-35dc00c99f0mr1727012f8f.53.1717079552645; Thu, 30 May 2024
+ 07:32:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240530112332.1439238-1-alex.bennee@linaro.org>
-In-Reply-To: <20240530112332.1439238-1-alex.bennee@linaro.org>
+References: <20240528203044.612851-1-richard.henderson@linaro.org>
+In-Reply-To: <20240528203044.612851-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 May 2024 15:31:24 +0100
-Message-ID: <CAFEAcA-3sxcArbZ6k36Yffa4eL6AaX_ufzvwNrPSBRoYi=DNqg@mail.gmail.com>
-Subject: Re: [Semihosting Tests PATCH v2 0/3] add SYS_GET_CMDLINE test
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Thu, 30 May 2024 15:32:21 +0100
+Message-ID: <CAFEAcA9pGM6R89LzAfEaN9TVrbj0oWeBrO9xBRn7hSx+OpphLQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/33] target/arm: Convert a64 advsimd to decodetree
+ (part 1b)
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,26 +88,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 May 2024 at 12:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Tue, 28 May 2024 at 21:31, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Hi Peter,
+> Changes for v3:
+>   * Reword prefetch unpredictable patch.
+>   * Validate vector length when qc is an implied operand.
+>   * Adjust some legacy decode based on review.
+>   * Apply r-b.
 >
-> Looking at bug #2322 I wanted to make sure SYS_GET_CMDLINE works as I
-> expected. While at it I needed to fix a compile error with headers
-> which I guess we got away with on earlier compilers.
->
-> I've added an editorconfig for good measure.
->
-> v2
->   - addressed review comments
->
-> Alex Benn=C3=A9e (3):
->   .editorconfig: add code conventions for tooling
->   update includes for bare metal compiling
->   add SYS_GET_CMDLINE test
+> Patches needing review:
+>   01-target-arm-Diagnose-UNPREDICTABLE-operands-to-PLD.patch
+>   03-target-arm-Assert-oprsz-in-range-when-using-vfp.q.patch
+>   04-target-arm-Convert-SUQADD-and-USQADD-to-gvec.patch
+>   10-target-arm-Convert-SRSHL-and-URSHL-register-to-gv.patch
+>   12-target-arm-Convert-SQSHL-and-UQSHL-register-to-gv.patch
+>   31-target-arm-Convert-SQDMULH-SQRDMULH-to-decodetree.patch
+>   32-target-arm-Convert-FMADD-FMSUB-FNMADD-FNMSUB-to-d.patch
 
-Applied to the semihosting-tests git repo, thanks.
+
+Applied 2-33 to target-arm.next, thanks. (Dropped the PLD
+patch for the reasons we discussed in the other thread.)
 
 -- PMM
 
