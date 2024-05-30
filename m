@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9F5C41513
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74389C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 May 2024 11:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCdwU-0006P6-W8; Thu, 30 May 2024 07:27:35 -0400
+	id 1sCdwR-0006N2-CY; Thu, 30 May 2024 07:27:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwP-0006LV-9a
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwP-0006Lu-TZ
  for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwK-0003cF-Mi
- for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:28 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sCdwK-0003cL-Uz
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 07:27:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1717068444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Md1MVArHUd05WOeyAIhNVCIfQzrbfrJLv5muxML0fkM=;
- b=O2AMqvyldhulwzSe59aB5YpPbM0/tN4J/rBgz3H+G9fFSWxGX2q+yU8qrVSU9RkuFj/ejI
- WEOnnBQlzyXpJWRMFKejbBrzmA+HI4BbIW9ZgmifBb5Ep5BCPjlRwT0mjlKrurUhiJNUCX
- 9+82+FVFT0YPkQR1JtIa6/BtvEjYev4=
+ bh=bp3NLg4mJW6CGazd17f+zK4QsMU0vLkfWwofjE4kNU4=;
+ b=iSa3YQnru3bXrM5IVCUmddwTWZ7wqdiUHcZhy7adcTgHNgeg97KTqSzlg3cN5wuI3hN2kk
+ T9KRayDS+YNVg9NODDHS7VljHrYJzZ3jvTaq52pEs5OlwFa8M4QcWw19/l2GY1TRGPqjaY
+ 2JlVHDThvOGEg7jn95vLeFPzK1fYiTs=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-e5_-femtMe2HQbxkt-J_LQ-1; Thu,
- 30 May 2024 07:27:20 -0400
-X-MC-Unique: e5_-femtMe2HQbxkt-J_LQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-iysZqDT0PiSbvaQCCNJsww-1; Thu,
+ 30 May 2024 07:27:22 -0400
+X-MC-Unique: iysZqDT0PiSbvaQCCNJsww-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8A92A29AA381;
- Thu, 30 May 2024 11:27:20 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5761029AA381;
+ Thu, 30 May 2024 11:27:22 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.101])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1D7C5103A3AA;
- Thu, 30 May 2024 11:27:19 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id F36AB103A3AA;
+ Thu, 30 May 2024 11:27:21 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 4FE1E18000B2; Thu, 30 May 2024 13:27:18 +0200 (CEST)
+ id 7118018009A8; Thu, 30 May 2024 13:27:18 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 1/4] qom: allow to mark objects (including devices) as
- deprecated.
-Date: Thu, 30 May 2024 13:27:14 +0200
-Message-ID: <20240530112718.1752905-2-kraxel@redhat.com>
+Subject: [PATCH v2 3/4] usb/hub: deprecate, don't build by default
+Date: Thu, 30 May 2024 13:27:16 +0200
+Message-ID: <20240530112718.1752905-4-kraxel@redhat.com>
 In-Reply-To: <20240530112718.1752905-1-kraxel@redhat.com>
 References: <20240530112718.1752905-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,86 +84,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add deprecation_note field (string) to ObjectClass.
-Add deprecated bool to ObjectTypeInfo, report in 'qom-list-types'.
-Print the note when listing devices via '-device help'.
+The hub supports only USB 1.1.  When running out of usb ports it is in
+almost all cases the much better choice to add another usb host adapter
+(or increase the number of root ports when using xhci) instead of using
+the usb hub.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/qom/object.h  | 1 +
- qom/qom-qmp-cmds.c    | 4 ++++
- system/qdev-monitor.c | 5 +++++
- qapi/qom.json         | 4 +++-
- 4 files changed, 13 insertions(+), 1 deletion(-)
+ hw/usb/dev-hub.c | 1 +
+ hw/usb/Kconfig   | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 13d3a655ddf9..6c682aa0135f 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -136,6 +136,7 @@ struct ObjectClass
-     ObjectUnparent *unparent;
- 
-     GHashTable *properties;
-+    const char *deprecation_note;
- };
- 
- /**
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index e91a2353472a..43de9c9ae141 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -101,6 +101,10 @@ static void qom_list_types_tramp(ObjectClass *klass, void *data)
-     if (parent) {
-         info->parent = g_strdup(object_class_get_name(parent));
-     }
-+    if (klass->deprecation_note) {
-+        info->has_deprecated = true;
-+        info->deprecated = true;
-+    }
- 
-     QAPI_LIST_PREPEND(*pret, info);
- }
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 6af6ef7d667f..704be312e1a7 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -144,6 +144,8 @@ static bool qdev_class_has_alias(DeviceClass *dc)
- 
- static void qdev_print_devinfo(DeviceClass *dc)
- {
-+    ObjectClass *klass = OBJECT_CLASS(dc);
-+
-     qemu_printf("name \"%s\"", object_class_get_name(OBJECT_CLASS(dc)));
-     if (dc->bus_type) {
-         qemu_printf(", bus %s", dc->bus_type);
-@@ -157,6 +159,9 @@ static void qdev_print_devinfo(DeviceClass *dc)
-     if (!dc->user_creatable) {
-         qemu_printf(", no-user");
-     }
-+    if (klass->deprecation_note) {
-+        qemu_printf(", deprecated \"%s\"", klass->deprecation_note);
-+    }
-     qemu_printf("\n");
+diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
+index 06e9537d0356..68444d39534f 100644
+--- a/hw/usb/dev-hub.c
++++ b/hw/usb/dev-hub.c
+@@ -686,6 +686,7 @@ static void usb_hub_class_initfn(ObjectClass *klass, void *data)
+     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+     dc->fw_name = "hub";
+     dc->vmsd = &vmstate_usb_hub;
++    klass->deprecation_note = "use more root ports or additional hostadapters instead";
+     device_class_set_props(dc, usb_hub_properties);
  }
  
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 38dde6d785ac..bd062feabaf7 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -163,10 +163,12 @@
- #
- # @parent: Name of parent type, if any (since 2.10)
- #
-+# @deprecated: the type is deprecated (since 9.1)
-+#
- # Since: 1.1
- ##
- { 'struct': 'ObjectTypeInfo',
--  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str' } }
-+  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str', '*deprecated': 'bool' } }
+diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+index 84bc7fbe36cd..b583f5c25d05 100644
+--- a/hw/usb/Kconfig
++++ b/hw/usb/Kconfig
+@@ -67,7 +67,6 @@ config TUSB6010
  
- ##
- # @qom-list-types:
+ config USB_HUB
+     bool
+-    default y
+     depends on USB
+ 
+ config USB_HID
 -- 
 2.45.1
 
