@@ -4,70 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC538C25B7E
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 14:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8761EC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 14:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD33x-000345-9m; Fri, 31 May 2024 10:16:57 -0400
+	id 1sD35Y-0003sO-W7; Fri, 31 May 2024 10:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1sD33v-00033i-BM
- for qemu-devel@nongnu.org; Fri, 31 May 2024 10:16:55 -0400
-Received: from out-170.mta1.migadu.com ([95.215.58.170])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sD35X-0003pg-69
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 10:18:35 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1sD33s-0004Qh-A1
- for qemu-devel@nongnu.org; Fri, 31 May 2024 10:16:55 -0400
-X-Envelope-To: jean-philippe@linaro.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1717165008;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6Ue70eTHlML7+q3TyVUpGkrsdlZzc9QaK4MwSa60L4o=;
- b=hzljrTKxA/yw+MaWWaqN/IYYyaDDZo34m2V8QzDan9ghGXV3qU++mFhVrop982vYG1xpNb
- oNxEMgJTsNcFD2+n4ooSFMTGjr95Y3F7bCMXj1sxxyhjb7thNs+vaOeDA2fQdVy3rI994y
- u73cJ8tUw+f0bBX5TJuHSdypHmtZkqE=
-X-Envelope-To: peter.maydell@linaro.org
-X-Envelope-To: philmd@linaro.org
-X-Envelope-To: qemu-devel@nongnu.org
-X-Envelope-To: qemu-arm@nongnu.org
-X-Envelope-To: richard.henderson@linaro.org
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: Unexpected error in rme_configure_one() at
- ../target/arm/kvm-rme.c:159
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-In-Reply-To: <20240531102135.GA40178@myrica>
-Date: Fri, 31 May 2024 23:16:30 +0900
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E5197AF2-EEB3-4568-9F25-78622AD41AE4@linux.dev>
-References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
- <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
- <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
- <CAFEAcA-gye9B1yJNKyT0fcZzR7TukNvaQyc7QkKQ_1FUGfAaYw@mail.gmail.com>
- <20240531102135.GA40178@myrica>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.170;
- envelope-from=itaru.kitayama@linux.dev; helo=out-170.mta1.migadu.com
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sD35U-0004Wf-Du
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 10:18:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=/DHcE01KjCGAnk6ZXHIc38i5deoESWvmnDVy8FwueIg=; b=MF5H4jMKANoCFy+1
+ wLdJ/F2W64ynybHnSxJDgrTnh4K96G84zIUXyStmYuBYDzBucDVlgks3/A5afsCXDxZEV1GvYa7Xs
+ 3PfSIvRWh1jS2yx+0r2doNuJFe4nIBeEsmR1eu54cnFpSawzMGcVATWvRCH4Z2WgPk7QeI11gdUxJ
+ mvRLHdXWnrcxctkkeLRMIiqR+14yj6VCFIlvx6XTkpqv6O/hCNn+KAQPDOtu/eLy4l7S0lZcp193N
+ jEbFAHMctZY521v78DUcKy28T1SiKhpoZsULE62ALr1M1PgX2wJdIt1UHHo/TV28JIls5v+iXfn50
+ ZyexiODlDvc7kkbXFQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sD35S-003ai9-1G;
+ Fri, 31 May 2024 14:18:30 +0000
+Date: Fri, 31 May 2024 14:18:30 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Don Porter <porter@cs.unc.edu>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
+ richard.henderson@linaro.org
+Subject: Re: [PATCH v2 2/6] Convert 'info tlb' to use generic iterator
+Message-ID: <ZlncNh_GHoEfXMPB@gallifrey>
+References: <ZiKkWCjreGOMFX5p@gallifrey>
+ <20240524170748.1842030-1-porter@cs.unc.edu>
+ <20240524170748.1842030-3-porter@cs.unc.edu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20240524170748.1842030-3-porter@cs.unc.edu>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 14:17:48 up 23 days, 1:31, 1 user, load average: 0.05, 0.03, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,136 +71,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jean,
+* Don Porter (porter@cs.unc.edu) wrote:
+> Signed-off-by: Don Porter <porter@cs.unc.edu>
 
-> On May 31, 2024, at 19:21, Jean-Philippe Brucker =
-<jean-philippe@linaro.org> wrote:
->=20
-> Hi Itaru,
->=20
-> On Fri, May 31, 2024 at 10:57:13AM +0100, Peter Maydell wrote:
->> On Fri, 31 May 2024 at 05:20, Itaru Kitayama =
-<itaru.kitayama@linux.dev> wrote:
->>>=20
->>>=20
->>>=20
->>>> On May 30, 2024, at 22:30, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->>>>=20
->>>> Cc'ing more developers
->>>>=20
->>>> On 30/5/24 06:30, Itaru Kitayama wrote:
->>>>> Hi,
->>>>> When I see a Realm VM creation fails with:
->>>>> Unexpected error in rme_configure_one() at =
-../target/arm/kvm-rme.c:159:
->>>>> qemu-system-aarch64: RME: failed to configure SVE: Invalid =
-argument
->>>>> test.sh: line 8:  2502 Aborted                 qemu-system-aarch64 =
--M 'virt,acpi=3Doff,gic-version=3D3' -cpu host -enable-kvm -smp 2 -m =
-512M -overcommit 'mem-lock=3Don' -M 'confidential-guest-support=3Drme0' =
--object =
-'rme-guest,id=3Drme0,measurement-algo=3Dsha512,num-pmu-counters=3D6,sve-ve=
-ctor-length=3D256' -kernel Image -initrd rootfs.cpio -append 'earycon =
-console=3DttyAMA0 rdinit=3D/sbin/init' -nographic -net none
->>>>> do I need to suspect first the VMM, QEMU, or the Image? The kernel =
-is built with LLVM, does it matter?
->>>>> Thanks,
->>>>> Itaru.
->>>>=20
->>>=20
->>> I=E2=80=99m testing Jean=E2=80=99s repo at:
->>>=20
->>> =
-https://git.codelinaro.org/linaro/dcap/qemu/-/tree/cca/v2?ref_type=3Dheads=
+If this changes the output of 'info tlb' could you add a before/after
+to the commit message please.
 
->=20
-> Thanks again for testing, you can report issues by replying directly =
-to
-> my posting, so I can get to them quicker. If you want I can Cc you on =
-the
-> next one. The latest is:
->=20
-> [PATCH v2 00/22] arm: Run CCA VMs with KVM
-> =
-https://lore.kernel.org/qemu-devel/20240419155709.318866-2-jean-philippe@l=
-inaro.org/
+Also, have a look at glib's g_printf and friends, you might find they're
+easier;
+https://www.manpagez.com/html/glib/glib-2.52.3/glib-String-Utility-Functions.php#g-printf
 
-Thanks! I wasn=E2=80=99t aware of it The good news is that after whole =
-day of try and error attempts I was able to
-bring up a Realm VM on FVP. Here=E2=80=99s my version of overlay yaml, =
-cca-v2.yaml:
+Dave
 
-build:
-  linux:
-    repo:
-      revision: cca-full/v2
-
-#  kvmtool:
-#    repo:
-#      revision: cca/v2
-
-  rmm:
-    repo:
-      revision: main
-
-
-
-  tfa:
-    repo:
-      revision: master
-
-  kvm-unit-tests:
-    repo:
-      revision: cca/v2
-
-=E2=80=A6 and the QEMU options are below:
-
-qemu-system-aarch64 -M 'virt,acpi=3Doff,gic-version=3D3' \
--cpu host -enable-kvm -smp 2 -m 512M -overcommit 'mem-lock=3Don' \
--M 'confidential-guest-support=3Drme0' \
--object =
-'rme-guest,id=3Drme0,measurement-algo=3Dsha512,num-pmu-counters=3D6,sve-ve=
-ctor-length=3D256' \
--kernel Image -initrd rootfs.cpio \
--append 'earycon console=3DttyAMA0 rdinit=3D/sbin/init' -nographic -net =
-none
-
-Thanks,
-Itaru.
-
->=20
-> That does sound like the KVM host doesn't support SVE, but the QEMU =
-VMM
-> version is also too old: in the latest series 'sve-vector-length' was
-> removed and we use the existing -cpu parameters to configure SVE. =
-Please
-> make sure that the QEMU branch is cca/v2 to match the Linux KVM =
-branch,
-> because the older QEMU patches doesn't work with the newest KVM =
-patches.
-> You'll need to update the command-line as well, because paramaters =
-have
-> changed for cca/v2.
->=20
-> This may be the case of older build directories that aren't properly
-> synchronized. They can be removed manually but the quicker way is =
-usually
-> to remove all source and build directories and start anew.
->=20
-> Thanks,
-> Jean
->=20
->=20
->>=20
->> OK, we should cc Jean-Philippe then.
->>=20
->> I'm wondering if this is as simple as "RME via KVM doesn't support =
-SVE yet",
->> perhaps.
->>=20
->> thanks
->> -- PMM
-
-
+> ---
+>  target/i386/monitor.c | 203 ++++++------------------------------------
+>  1 file changed, 28 insertions(+), 175 deletions(-)
+> 
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index d7aae99c73..adf95edfb4 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -430,201 +430,54 @@ void hmp_info_pg(Monitor *mon, const QDict *qdict)
+>  }
+>  
+>  static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+> -                      hwaddr pte, hwaddr mask)
+> +                      hwaddr pte)
+>  {
+> -    addr = addr_canonical(env, addr);
+> -
+> -    monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
+> -                   " %c%c%c%c%c%c%c%c%c\n",
+> -                   addr,
+> -                   pte & mask,
+> -                   pte & PG_NX_MASK ? 'X' : '-',
+> -                   pte & PG_GLOBAL_MASK ? 'G' : '-',
+> -                   pte & PG_PSE_MASK ? 'P' : '-',
+> -                   pte & PG_DIRTY_MASK ? 'D' : '-',
+> -                   pte & PG_ACCESSED_MASK ? 'A' : '-',
+> -                   pte & PG_PCD_MASK ? 'C' : '-',
+> -                   pte & PG_PWT_MASK ? 'T' : '-',
+> -                   pte & PG_USER_MASK ? 'U' : '-',
+> -                   pte & PG_RW_MASK ? 'W' : '-');
+> -}
+> +    char buf[128];
+> +    char *pos = buf;
+>  
+> -static void tlb_info_32(Monitor *mon, CPUArchState *env)
+> -{
+> -    unsigned int l1, l2;
+> -    uint32_t pgd, pde, pte;
+> +    addr = addr_canonical(env, addr);
+>  
+> -    pgd = env->cr[3] & ~0xfff;
+> -    for(l1 = 0; l1 < 1024; l1++) {
+> -        cpu_physical_memory_read(pgd + l1 * 4, &pde, 4);
+> -        pde = le32_to_cpu(pde);
+> -        if (pde & PG_PRESENT_MASK) {
+> -            if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
+> -                /* 4M pages */
+> -                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
+> -            } else {
+> -                for(l2 = 0; l2 < 1024; l2++) {
+> -                    cpu_physical_memory_read((pde & ~0xfff) + l2 * 4, &pte, 4);
+> -                    pte = le32_to_cpu(pte);
+> -                    if (pte & PG_PRESENT_MASK) {
+> -                        print_pte(mon, env, (l1 << 22) + (l2 << 12),
+> -                                  pte & ~PG_PSE_MASK,
+> -                                  ~0xfff);
+> -                    }
+> -                }
+> -            }
+> -        }
+> -    }
+> -}
+> +    pos += sprintf(pos, HWADDR_FMT_plx ": " HWADDR_FMT_plx " ", addr,
+> +                   (hwaddr) (pte & PG_ADDRESS_MASK));
+>  
+> -static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+> -{
+> -    unsigned int l1, l2, l3;
+> -    uint64_t pdpe, pde, pte;
+> -    uint64_t pdp_addr, pd_addr, pt_addr;
+> +    pos += sprintf(pos, " %s", pg_bits(pte));
+>  
+> -    pdp_addr = env->cr[3] & ~0x1f;
+> -    for (l1 = 0; l1 < 4; l1++) {
+> -        cpu_physical_memory_read(pdp_addr + l1 * 8, &pdpe, 8);
+> -        pdpe = le64_to_cpu(pdpe);
+> -        if (pdpe & PG_PRESENT_MASK) {
+> -            pd_addr = pdpe & 0x3fffffffff000ULL;
+> -            for (l2 = 0; l2 < 512; l2++) {
+> -                cpu_physical_memory_read(pd_addr + l2 * 8, &pde, 8);
+> -                pde = le64_to_cpu(pde);
+> -                if (pde & PG_PRESENT_MASK) {
+> -                    if (pde & PG_PSE_MASK) {
+> -                        /* 2M pages with PAE, CR4.PSE is ignored */
+> -                        print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
+> -                                  ~((hwaddr)(1 << 20) - 1));
+> -                    } else {
+> -                        pt_addr = pde & 0x3fffffffff000ULL;
+> -                        for (l3 = 0; l3 < 512; l3++) {
+> -                            cpu_physical_memory_read(pt_addr + l3 * 8, &pte, 8);
+> -                            pte = le64_to_cpu(pte);
+> -                            if (pte & PG_PRESENT_MASK) {
+> -                                print_pte(mon, env, (l1 << 30) + (l2 << 21)
+> -                                          + (l3 << 12),
+> -                                          pte & ~PG_PSE_MASK,
+> -                                          ~(hwaddr)0xfff);
+> -                            }
+> -                        }
+> -                    }
+> -                }
+> -            }
+> -        }
+> +    /* Trim line to fit screen */
+> +    if (pos - buf > 79) {
+> +        strcpy(buf + 77, "..");
+>      }
+> -}
+>  
+> -#ifdef TARGET_X86_64
+> -static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+> -        uint64_t l0, uint64_t pml4_addr)
+> -{
+> -    uint64_t l1, l2, l3, l4;
+> -    uint64_t pml4e, pdpe, pde, pte;
+> -    uint64_t pdp_addr, pd_addr, pt_addr;
+> -
+> -    for (l1 = 0; l1 < 512; l1++) {
+> -        cpu_physical_memory_read(pml4_addr + l1 * 8, &pml4e, 8);
+> -        pml4e = le64_to_cpu(pml4e);
+> -        if (!(pml4e & PG_PRESENT_MASK)) {
+> -            continue;
+> -        }
+> -
+> -        pdp_addr = pml4e & 0x3fffffffff000ULL;
+> -        for (l2 = 0; l2 < 512; l2++) {
+> -            cpu_physical_memory_read(pdp_addr + l2 * 8, &pdpe, 8);
+> -            pdpe = le64_to_cpu(pdpe);
+> -            if (!(pdpe & PG_PRESENT_MASK)) {
+> -                continue;
+> -            }
+> -
+> -            if (pdpe & PG_PSE_MASK) {
+> -                /* 1G pages, CR4.PSE is ignored */
+> -                print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
+> -                        pdpe, 0x3ffffc0000000ULL);
+> -                continue;
+> -            }
+> -
+> -            pd_addr = pdpe & 0x3fffffffff000ULL;
+> -            for (l3 = 0; l3 < 512; l3++) {
+> -                cpu_physical_memory_read(pd_addr + l3 * 8, &pde, 8);
+> -                pde = le64_to_cpu(pde);
+> -                if (!(pde & PG_PRESENT_MASK)) {
+> -                    continue;
+> -                }
+> -
+> -                if (pde & PG_PSE_MASK) {
+> -                    /* 2M pages, CR4.PSE is ignored */
+> -                    print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
+> -                            (l3 << 21), pde, 0x3ffffffe00000ULL);
+> -                    continue;
+> -                }
+> -
+> -                pt_addr = pde & 0x3fffffffff000ULL;
+> -                for (l4 = 0; l4 < 512; l4++) {
+> -                    cpu_physical_memory_read(pt_addr
+> -                            + l4 * 8,
+> -                            &pte, 8);
+> -                    pte = le64_to_cpu(pte);
+> -                    if (pte & PG_PRESENT_MASK) {
+> -                        print_pte(mon, env, (l0 << 48) + (l1 << 39) +
+> -                                (l2 << 30) + (l3 << 21) + (l4 << 12),
+> -                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
+> -                    }
+> -                }
+> -            }
+> -        }
+> -    }
+> +    monitor_printf(mon, "%s\n", buf);
+>  }
+>  
+> -static void tlb_info_la57(Monitor *mon, CPUArchState *env)
+> +static
+> +int mem_print_tlb(CPUState *cs, void *data, PTE_t *pte,
+> +                  target_ulong vaddr, int height, int offset)
+>  {
+> -    uint64_t l0;
+> -    uint64_t pml5e;
+> -    uint64_t pml5_addr;
+> -
+> -    pml5_addr = env->cr[3] & 0x3fffffffff000ULL;
+> -    for (l0 = 0; l0 < 512; l0++) {
+> -        cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
+> -        pml5e = le64_to_cpu(pml5e);
+> -        if (pml5e & PG_PRESENT_MASK) {
+> -            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
+> -        }
+> -    }
+> +    struct mem_print_state *state = (struct mem_print_state *) data;
+> +    print_pte(state->mon, state->env, vaddr, pte->pte64_t);
+> +    return 0;
+>  }
+> -#endif /* TARGET_X86_64 */
+>  
+>  void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>  {
+> -    CPUArchState *env;
+> +    struct mem_print_state state;
+>  
+> -    env = mon_get_cpu_env(mon);
+> -    if (!env) {
+> -        monitor_printf(mon, "No CPU available\n");
+> +    CPUState *cs = mon_get_cpu(mon);
+> +    if (!cs) {
+> +        monitor_printf(mon, "Unable to get CPUState.  Internal error\n");
+>          return;
+>      }
+>  
+> -    if (!(env->cr[0] & CR0_PG_MASK)) {
+> -        monitor_printf(mon, "PG disabled\n");
+> +    if (!init_iterator(mon, &state)) {
+>          return;
+>      }
+> -    if (env->cr[4] & CR4_PAE_MASK) {
+> -#ifdef TARGET_X86_64
+> -        if (env->hflags & HF_LMA_MASK) {
+> -            if (env->cr[4] & CR4_LA57_MASK) {
+> -                tlb_info_la57(mon, env);
+> -            } else {
+> -                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
+> -            }
+> -        } else
+> -#endif
+> -        {
+> -            tlb_info_pae32(mon, env);
+> -        }
+> -    } else {
+> -        tlb_info_32(mon, env);
+> -    }
+> +
+> +    /**
+> +     * 'info tlb' visits only leaf PTEs marked present.
+> +     * It does not check other protection bits.
+> +     */
+> +    for_each_pte(cs, &mem_print_tlb, &state, false, false);
+>  }
+>  
+>  static void mem_print(Monitor *mon, CPUArchState *env,
+> -- 
+> 2.34.1
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
