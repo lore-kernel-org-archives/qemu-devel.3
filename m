@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D19BC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AC4C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD0L9-0002dh-Jm; Fri, 31 May 2024 07:22:31 -0400
+	id 1sD0PP-0004N4-03; Fri, 31 May 2024 07:26:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD0L4-0002bc-Vd
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:22:27 -0400
+ id 1sD0PN-0004LK-69
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:26:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD0L3-0003ZI-8H
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:22:26 -0400
+ id 1sD0PJ-0004b9-QQ
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:26:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717154544;
+ s=mimecast20190719; t=1717154807;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UAWheUW+czVmcKYjV8Dp8vDbyjXbz/6UcUqunqJ3kC0=;
- b=V5AJnZtMUN5yWwC6cL41jdmkNdGcfvxVSJkiIldyyPhDUQ+O2/1VRTHQhdPdAY/2eD4fxh
- B607xhGIhIQwPvhw7ccG2YMyjJ3RvXirAHyfCqIbdE7BnV1URNHt+DAvZhdCOtYXWhrDHk
- KUPldWWRnB5h6LG+fONcNn7cYjN+3IE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MELx3a4wImL1JG8cbryKCbUuCn7aSkqRfzZzglKDbxQ=;
+ b=V2vgd8UsbtZnjs9xmLIojM3xyYCdnSjUDuYjjcsWFeyRIrqOa7LtS9cRLts/r74FUtDRYT
+ Rx0wCdJI5rEFwIk7z/cOaHBopU8olpE9jJJITve9pnWhMvIIVuAXTM2RR5Q7vMEDhLDicd
+ KGmmcsosCvhQY1btxJDI3C/OAhhhSs4=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-qG1_Ksi_Oi290rZj8NIW9w-1; Fri, 31 May 2024 07:22:23 -0400
-X-MC-Unique: qG1_Ksi_Oi290rZj8NIW9w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-35dcd39c6ebso865842f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:22:22 -0700 (PDT)
+ us-mta-173-tehcn1X2N0ihpyqGpTbybQ-1; Fri, 31 May 2024 07:26:42 -0400
+X-MC-Unique: tehcn1X2N0ihpyqGpTbybQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6266ffd419so74627366b.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:26:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717154542; x=1717759342;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UAWheUW+czVmcKYjV8Dp8vDbyjXbz/6UcUqunqJ3kC0=;
- b=DmXATFyt8orAZkS9fvy+0aYKRxPcJly3PCwPEIF6zfg1UxOBUvPjtqYkHKmKhe0R0p
- StciHBu0f9Ygg+noZM8NBpSA7D0IIccpR6W+0BQPTqXUBLC2mH1KtS70MEDcq3u1EBIb
- DKbK93YdM0TuWMcKKbyoxn6HcdpeyUu8uzrNbnPOxAPt1PYaAcXq1APbKv/5fnVzMSQy
- 0j1xgLZ/g4RnPMcu9ACoBF6p67Z7nQkrWX9piVaRfL+Ta8pLot0nfoKU8VGXxUblZhIb
- RIkU+5/KcOm1BeGL1UzPbGXhpMwwKI3DVL7ok/76SC9I76wFTkO08cyiHuqy/O6dHfzo
- hLnQ==
-X-Gm-Message-State: AOJu0YwBfXjLoKCijo0D9Dft9JG69GSHY/pCYvwq0b7iAhtTZEOfiSeY
- oCCKACptTT8x2kkvnaxSxnrdeFOYLJ9xEgWi4E/l8c+WuzCd/ow6gnAUk3y1yoNlY299oW7N8+0
- xQgyJCP94SgU2VzWmqrrycBQPqJn4xzRCy0awusDZCNRm9HOxAHUHyWDDV8rjsh+BCOrKW7RSbD
- DBeyW9htM+dZezzx1r5I3YaCgxPRo=
-X-Received: by 2002:adf:ce8f:0:b0:357:398a:b94f with SMTP id
- ffacd0b85a97d-35e0e5e9e79mr1552601f8f.26.1717154541830; 
- Fri, 31 May 2024 04:22:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSL8UFosZjFoJQhMVi4zx3TgAUecWQ0sZg7JltbVgqW+uJqoAfCMK7BTXpCXQcig6JubLXzlyW6iTGM3Zd9j8=
-X-Received: by 2002:adf:ce8f:0:b0:357:398a:b94f with SMTP id
- ffacd0b85a97d-35e0e5e9e79mr1552581f8f.26.1717154541470; Fri, 31 May 2024
- 04:22:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-29-pankaj.gupta@amd.com>
-In-Reply-To: <20240530111643.1091816-29-pankaj.gupta@amd.com>
+ d=1e100.net; s=20230601; t=1717154799; x=1717759599;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MELx3a4wImL1JG8cbryKCbUuCn7aSkqRfzZzglKDbxQ=;
+ b=nw+VVAX1syLK0NbWk7+ACKl3nNk4kCDaKSL7Y7TLUjHjy4TnYrZwv1i+RkGZ3/fgqD
+ lfoYzL22+SDD6WLq+EnW++S1CwRHDhv6wNlzC3JXegYRiVzWzgYV6Ejgk0b0k5as1yOk
+ iB9wss5tFIHCdzhUOK57yevvzPaFdUdq6tzxdJyOyk5uHII/4PFtP8yt3JJCtaP3rptX
+ I+SikfxS2Kz/7EevBBgBYq0XXAm4+5Ypp1GOreXdA9lQ58XIgUi8S+hlZ88K2e2CbVvh
+ pSRdVtd/HO3O1+YLk21DQAYPnPXQue0zzXPFsmTcnOiq5JeffmNg/MjYnnOee1rIjb1W
+ LyYg==
+X-Gm-Message-State: AOJu0YySmHDCEzqJuUoBV1w31uxUTNY7oGtyPdwjgPVuaiUDgDt5FrXK
+ Tu/XrTZCYqaMM6noTLMmaaegZ1+ettTI4AFo1qvMpm7y/RWvx5E4PEjzaFx2xkw2xnQK0hVV+bO
+ kNRov9Nn51mznAZx5+yhGNe9zhQGfYz16ilyJ4AxWi8bjk5iCvnnJjHOd5JbT2biD35sBnQMtc8
+ pBPAGC4zdS4whsOur46jsGZLnm9tPT+vtEI7gY
+X-Received: by 2002:a17:906:f34f:b0:a66:b9a8:74ad with SMTP id
+ a640c23a62f3a-a681f87f3admr103487466b.10.1717154799230; 
+ Fri, 31 May 2024 04:26:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCh5Uy2AXxNug9v1pZP52CRkqNoAPpnvoJDdxcM68OfJ4zOjo0gxsMftOL/2oXcQ24N0VejA==
+X-Received: by 2002:a17:906:f34f:b0:a66:b9a8:74ad with SMTP id
+ a640c23a62f3a-a681f87f3admr103485966b.10.1717154798634; 
+ Fri, 31 May 2024 04:26:38 -0700 (PDT)
+Received: from avogadro.local ([151.81.115.112])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a67eb344431sm76261266b.195.2024.05.31.04.26.38
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 May 2024 04:26:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 31 May 2024 13:22:10 +0200
-Message-ID: <CABgObfYoO1kpgWrjo9=n6Q6nf9qtRfd1rwdHU81d6UMMkPSewQ@mail.gmail.com>
-Subject: Re: [PATCH v4 28/31] hw/i386: Add support for loading BIOS using
- guest_memfd
-To: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com, 
- armbru@redhat.com, michael.roth@amd.com, xiaoyao.li@intel.com, 
- thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com, 
- kvm@vger.kernel.org, anisinha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: qemu-devel@nongnu.org
+Subject: [PATCH] machine: allow early use of machine_require_guest_memfd
+Date: Fri, 31 May 2024 13:26:36 +0200
+Message-ID: <20240531112636.80097-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -102,126 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
- wrote:
->      if (bios_size <=3D 0 ||
->          (bios_size % 65536) !=3D 0) {
-> -        goto bios_error;
-> +        if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-> +                g_warning("%s: Unaligned BIOS size %d", __func__, bios_s=
-ize);
-> +                goto bios_error;
-> +        }
+Ask the ConfidentialGuestSupport object whether to use guest_memfd
+for KVM-backend private memory.  This bool can be set in instance_init
+(or user_complete) so that it is available when the machine is created.
 
-Why is this not needed for SEV-SNP? (The bios_size <=3D 0 case
-definitely should be an error).
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/exec/confidential-guest-support.h | 5 +++++
+ include/hw/boards.h                       | 1 -
+ hw/core/machine.c                         | 2 +-
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
-I'll just drop this change.
-
-> +    }
-> +    if (machine_require_guest_memfd(MACHINE(x86ms))) {
-> +        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios"=
-,
-> +                                           bios_size, &error_fatal);
-> +    } else {
-> +        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
-> +                               bios_size, &error_fatal);
->      }
-> -    memory_region_init_ram(&x86ms->bios, NULL, "pc.bios", bios_size,
-> -                           &error_fatal);
->      if (sev_enabled()) {
->          /*
->           * The concept of a "reset" simply doesn't exist for
-> @@ -1023,9 +1031,11 @@ void x86_bios_rom_init(X86MachineState *x86ms, con=
-st char *default_firmware,
->      }
->      g_free(filename);
->
-> -    /* map the last 128KB of the BIOS in ISA space */
-> -    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-> -                      !isapc_ram_fw);
-
-> +    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-> +        /* map the last 128KB of the BIOS in ISA space */
-> +        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-> +                          !isapc_ram_fw);
-> +    }
->
->      /* map all the bios at the top of memory */
->      memory_region_add_subregion(rom_memory,
-> --
-> 2.34.1
->
-
-On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
- wrote:
->
-> From: Michael Roth <michael.roth@amd.com>
->
-> When guest_memfd is enabled, the BIOS is generally part of the initial
-> encrypted guest image and will be accessed as private guest memory. Add
-> the necessary changes to set up the associated RAM region with a
-> guest_memfd backend to allow for this.
->
-> Current support centers around using -bios to load the BIOS data.
-> Support for loading the BIOS via pflash requires additional enablement
-> since those interfaces rely on the use of ROM memory regions which make
-> use of the KVM_MEM_READONLY memslot flag, which is not supported for
-> guest_memfd-backed memslots.
->
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-> ---
->  hw/i386/x86-common.c | 22 ++++++++++++++++------
->  1 file changed, 16 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index f41cb0a6a8..059de65f36 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -999,10 +999,18 @@ void x86_bios_rom_init(X86MachineState *x86ms, cons=
-t char *default_firmware,
->      }
->      if (bios_size <=3D 0 ||
->          (bios_size % 65536) !=3D 0) {
-> -        goto bios_error;
-> +        if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-> +                g_warning("%s: Unaligned BIOS size %d", __func__, bios_s=
-ize);
-> +                goto bios_error;
-> +        }
-> +    }
-> +    if (machine_require_guest_memfd(MACHINE(x86ms))) {
-> +        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios"=
-,
-> +                                           bios_size, &error_fatal);
-> +    } else {
-> +        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
-> +                               bios_size, &error_fatal);
->      }
-> -    memory_region_init_ram(&x86ms->bios, NULL, "pc.bios", bios_size,
-> -                           &error_fatal);
->      if (sev_enabled()) {
->          /*
->           * The concept of a "reset" simply doesn't exist for
-> @@ -1023,9 +1031,11 @@ void x86_bios_rom_init(X86MachineState *x86ms, con=
-st char *default_firmware,
->      }
->      g_free(filename);
->
-> -    /* map the last 128KB of the BIOS in ISA space */
-> -    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-> -                      !isapc_ram_fw);
-> +    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-> +        /* map the last 128KB of the BIOS in ISA space */
-> +        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-> +                          !isapc_ram_fw);
-> +    }
->
->      /* map all the bios at the top of memory */
->      memory_region_add_subregion(rom_memory,
-> --
-> 2.34.1
->
+diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
+index e5b188cffbf..02dc4e518f0 100644
+--- a/include/exec/confidential-guest-support.h
++++ b/include/exec/confidential-guest-support.h
+@@ -31,6 +31,11 @@ OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
+ struct ConfidentialGuestSupport {
+     Object parent;
+ 
++    /*
++     * True if the machine should use guest_memfd for RAM.
++     */
++    bool require_guest_memfd;
++
+     /*
+      * ready: flag set by CGS initialization code once it's ready to
+      *        start executing instructions in a potentially-secure
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 2fa800f11ae..73ad319d7da 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -375,7 +375,6 @@ struct MachineState {
+     char *dt_compatible;
+     bool dump_guest_core;
+     bool mem_merge;
+-    bool require_guest_memfd;
+     bool usb;
+     bool usb_disabled;
+     char *firmware;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 17292b13e62..77a356f232f 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1216,7 +1216,7 @@ bool machine_mem_merge(MachineState *machine)
+ 
+ bool machine_require_guest_memfd(MachineState *machine)
+ {
+-    return machine->require_guest_memfd;
++    return machine->cgs && machine->cgs->require_guest_memfd;
+ }
+ 
+ static char *cpu_slot_to_string(const CPUArchId *cpu)
+-- 
+2.45.1
 
 
