@@ -4,219 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5EDC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 16:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFC6C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 16:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD5KX-0001Q9-0E; Fri, 31 May 2024 12:42:13 -0400
+	id 1sD5Oh-0002YV-Dw; Fri, 31 May 2024 12:46:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liam.merwick@oracle.com>)
- id 1sD5KU-0001Pc-Mc
- for qemu-devel@nongnu.org; Fri, 31 May 2024 12:42:10 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liam.merwick@oracle.com>)
- id 1sD5KS-00057k-N9
- for qemu-devel@nongnu.org; Fri, 31 May 2024 12:42:10 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44V9T2GV019200; Fri, 31 May 2024 16:42:01 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Doracle.com; _h?=
- =?UTF-8?Q?=3Dcc:content-id:content-transfer-encoding:content-type:date:fr?=
- =?UTF-8?Q?om:in-reply-to:message-id:mime-version:references:subject:to;_s?=
- =?UTF-8?Q?=3Dcorp-2023-11-20;_bh=3DrGPEzIp3GZ1wy2edZu+y0mc2Vk1qReDUPXbqi5?=
- =?UTF-8?Q?lINqw=3D;_b=3DcHC1D0QBYflztZHAi1lDVovQeyXIfgLPNPnh4ChZ7jA++lZKK?=
- =?UTF-8?Q?hc1q+orMofQCGBuv4PC_IOio+CzN3hNsRXCz0nnTPx17vY6mgXMTgGvvdsJWMkm?=
- =?UTF-8?Q?TUplfETu/mpDR7mEJFPxumwRh_NhHrNOqKhrtSy5LYIqWdcNuVLvc7aTZRQo+kH?=
- =?UTF-8?Q?T2Xaaw4yigLc4Ugvy+x5svEcKkfBmEt_VAXZiKPyx9rcCndQDSUJsUPY/cpSJ/G?=
- =?UTF-8?Q?J0r2LBwqAGFKPeW64ngELn4lop0WQdUS/GekI_CI8g6wKI3F1qSVn7FVzRtFmF0?=
- =?UTF-8?Q?qFPmuZ1oJxYrmtL/ah0VfQF+OILFMvXakWMbFjzsxMq_Yg=3D=3D_?=
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3yb8fckku7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 31 May 2024 16:42:00 +0000
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 44VFBavf026646; Fri, 31 May 2024 16:41:59 GMT
-Received: from nam12-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam12lp2168.outbound.protection.outlook.com [104.47.55.168])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3yc50a3kcu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 31 May 2024 16:41:59 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Fl8CTXl9qtB0tzdy049P2Pg/CQ4J38HlM9KNdoSsm5JlbT0iU6+bzO2grrSPceOLdloxdUEoLfWBkSvm/9EKWGbR2WB+TnOo8eU4UufK2ln70LfbhW4R5Fvaav7KTM0ShfR+qINxHknng13n7NlCjumRbGy6AP61McDYrMapcCqmg3ng+5e7n1i9vK2pT8dYdr1yuJ7t6zfnEHJU1f7u5bv7drtsHTsYT2/rEYtpOc4XXvKoOu7UYaLCEeLeLCdkTtpDic5jpltNP8HI8aunCrkph5SxI1hUhP3azKcko1aHKKFWPhfl6jj6OaP6ruoEz+LLJDI77wri6681BuUYYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rGPEzIp3GZ1wy2edZu+y0mc2Vk1qReDUPXbqi5lINqw=;
- b=EnQ5zDBWe7GsOOaiLsjOtJ2EtIqzQpG+daligp9QzknEDoR33NCMT4sr8gXs4d0bgGx88Jx9KUc7qCnGYl7ys7D0aEfvnGR9YIgdA6fqzePFe/aSBpAr9DbWdpQz3t8uH69di6LWnOXEm7Y+zZQ6B3GitD3pAIQGzDeAZEyJ9GxeQMFM6ioCf6vqRzcdV6rsQql7RbbbhUvkgqluOpBrb2ykjAIbrgrVobIhok/0RvZCAyK3fbDU0sqO+4nMU4pU9azB9iFBTrYELbXYW1JDtS7+jR5NMlq250Lk0k22ajGxHEcC1ZOpXDuXUfMZnRIFTLZ9rBfx3YG6d3JqfsyHSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sD5Of-0002Xe-6r
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 12:46:29 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sD5Od-0005ss-6X
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 12:46:28 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-52b88740a93so1100872e87.3
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 09:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rGPEzIp3GZ1wy2edZu+y0mc2Vk1qReDUPXbqi5lINqw=;
- b=zwWn0mbCuqaOsYvSpTgaM8CClUyiVD05Ip9P35TotC+GyuoFHxyAq4fjv7Vc4Sh986Ba/Sf785WAc0N24q62QfJaW8s8CntkMDUxqw/94yh2vODMq31X5ZNjMkF5GBfBeZBIrlzB0oQfXvgz8YEHeS8CTMPlc5y7jiEMaAUhrwI=
-Received: from BN0PR10MB5030.namprd10.prod.outlook.com (2603:10b6:408:12a::18)
- by DS0PR10MB6200.namprd10.prod.outlook.com (2603:10b6:8:c0::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.22; Fri, 31 May
- 2024 16:41:56 +0000
-Received: from BN0PR10MB5030.namprd10.prod.outlook.com
- ([fe80::44db:1978:3a20:4237]) by BN0PR10MB5030.namprd10.prod.outlook.com
- ([fe80::44db:1978:3a20:4237%4]) with mapi id 15.20.7633.018; Fri, 31 May 2024
- 16:41:56 +0000
-To: Paolo Bonzini <pbonzini@redhat.com>
-CC: Pankaj Gupta <pankaj.gupta@amd.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "brijesh.singh@amd.com" <brijesh.singh@amd.com>,
- "dovmurik@linux.ibm.com" <dovmurik@linux.ibm.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "michael.roth@amd.com" <michael.roth@amd.com>,
- "xiaoyao.li@intel.com" <xiaoyao.li@intel.com>, "thomas.lendacky@amd.com"
- <thomas.lendacky@amd.com>, "isaku.yamahata@intel.com"
- <isaku.yamahata@intel.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "anisinha@redhat.com"
- <anisinha@redhat.com>, Liam Merwick <liam.merwick@oracle.com>
-Subject: Re: [PATCH v4 18/31] hw/i386/sev: Add function to get SEV metadata
- from OVMF header
-Thread-Topic: [PATCH v4 18/31] hw/i386/sev: Add function to get SEV metadata
- from OVMF header
-Thread-Index: AQHasoMyQ2Ldv26sZE+HkIhGzAbDT7GxhUOA///3xICAACBAgA==
-Date: Fri, 31 May 2024 16:41:56 +0000
-Message-ID: <ca90dbb2-7b88-4aba-a6a1-2a81ccc855c8@oracle.com>
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-19-pankaj.gupta@amd.com>
- <792b99d5-9d18-42f4-a9f4-5621e2ae6a70@oracle.com>
- <CABgObfbHvj_GiX-+E3zhLfrrw7S02-VcE0sEmj_nfuXWnwmrhQ@mail.gmail.com>
-In-Reply-To: <CABgObfbHvj_GiX-+E3zhLfrrw7S02-VcE0sEmj_nfuXWnwmrhQ@mail.gmail.com>
-Accept-Language: en-IE, en-US
-Content-Language: en-IE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-exchange-imapappendstamp: BN0PR10MB5030.namprd10.prod.outlook.com
- (15.20.7633.017)
-user-agent: Mozilla Thunderbird
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN0PR10MB5030:EE_|DS0PR10MB6200:EE_
-x-ms-office365-filtering-correlation-id: 3c4763a4-2a65-4719-015c-08dc819095d8
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230031|376005|366007|1800799015|7416005|38070700009; 
-x-microsoft-antispam-message-info: =?utf-8?B?WUJOUDZpd3dRR2VTaTIyVld1TDZaaW9mZW1rWmpDVXc2UHdXN3lIUktZcWZo?=
- =?utf-8?B?QU1icnZWRFB4OTlmbHg0L2E0NG5sQmVsbUNRUlo4YVdwejA1Q052dkpwUHpU?=
- =?utf-8?B?MVZGd3MyUnluYkFlM0ZTd3FCaFR6dTFEU2VhZzZMMGhzZWdnZ0dyaUVrbkdi?=
- =?utf-8?B?M3VjUXdUejlTeEk4d3YvTjFQN0tBcGRSZ2ppeEZxRnFMTW41L2JZNFI2OHJm?=
- =?utf-8?B?SFgxSEV6Vmc4amdDa0tJVEV5Lzc3K1ZoV2djUHNsd0tESGNZbHNBZ3ZWc1FC?=
- =?utf-8?B?bEVJRjdPUm9kaFl3NGRPbnA3cFJVQWVwQUlHS1NYaFc0OE1TdmZPS29sY3I3?=
- =?utf-8?B?QVJlQk9iei9kamhRZ1d2anFnWXlBNEdNRkFhVnMrL09QRDNqOFV1YVNOMzVX?=
- =?utf-8?B?L0VxU3VmSWRyNHB5UzFNYTc1NmVuWU5sdEZhOTRtbHZoeEhzbmtnTGtUc2gz?=
- =?utf-8?B?enBOOW45eVg1QTdwUFFFSVFjQzE1MzNCVEZ1V1VOQjBoeXZQYzJHU1pMMUhh?=
- =?utf-8?B?YmJPWk41eE1EajlWbkErL1hlRlNXWkorK0F4b1RHUTJTN0N1Nm9lQllQRXpS?=
- =?utf-8?B?ZW51WE5tODhlUzMwL1FRQkxDRFdYb1E1aUdTendwOWhpY1B2SHloLzVhdU84?=
- =?utf-8?B?bWJlemdqUTlMU1JYODFGeExnZzVNSzkrNWIyTytZRzg0VHNMMnJLSUlZeXZ5?=
- =?utf-8?B?WS82NTk2UWNrZWtzbi9NM2JNaDYxWlB0L3RIY01SQnVkTmg1S1V3TTB5UGp4?=
- =?utf-8?B?S1NzY2w5VDdkaWU5Tnp4NThYNVlLWTBXVFVrTmtMNzE4UCtlZFpkZ3lBc1Vs?=
- =?utf-8?B?enduZHBZQ1JQTjF2cUZGbFZpUlUyVXJjbG5yd0l2VTlwcUtRUVMybmxJaWli?=
- =?utf-8?B?VkZVbWdNTHNka2luR2tvamZDb0VmUHkxa0JiN0poQlM3REZaV281bUVaRTJ5?=
- =?utf-8?B?TWNHQVZkT0ZPeHV1bnNWaXVmK2pFZVozczVKT0FvNytFMVpoeWNreDBXeC8w?=
- =?utf-8?B?dlJ4OTFqRDhTZEpIWWxKUW5VMkVrZDEvZHBjL0YwUE1xMkdXMU5BNThlZkxa?=
- =?utf-8?B?WVlWRlVXV1RyYktEVm1CRit3SGJuVmxRN2d5bDA2VVU4aUNmNmtXWWlKalVp?=
- =?utf-8?B?NFp1dzh3R3AyYnE3anE0bFN5MnFGLzZPc3ZRVCs4WE9XdlEwSjBrSkc0MzFn?=
- =?utf-8?B?cy9uVFRodUNUMUs5a05kM0pPWDA4akd5b21QdWt5WDZlV213cWNVak0rdWpR?=
- =?utf-8?B?Mmp0OWNHN2t3ZFY2UlBDa1JXb3lPTkpJa3J0SjkwbzkyTGpBN3hKT2NaTVc4?=
- =?utf-8?B?bGRPbndsWFZhbEcrTldzL1h2dmZ4R0NiUnhGTE0vaEVOWTQ0ZmtsQTJaVUQy?=
- =?utf-8?B?Y3Zla2VBL3YycC9HSEc1TTlmSGRzSmxkZ1MrTEtUbWhoQis2TlJOT0lLSDZS?=
- =?utf-8?B?MVlJRFJaaytpdUo2UmM2cEdnb0N4TVRWVmFvUDY2MkR0dXRIODRWMGVmOU82?=
- =?utf-8?B?Sk5zMHJkVDc4WWxYOTgvTWJhYkZmamplNkwza3hDM012KzVxTHVuUjlrUnZ4?=
- =?utf-8?B?MS91UFRXejl5RlNKVzdQK1RmcnBIMWoydURXdXJBMTlQSjlFSm9lNkhzaEYw?=
- =?utf-8?B?bFNXa2ZtOVBveS93aENUanljWkZlR21jUFg0aDVVTFdNNjRyWXM5bFFSNklM?=
- =?utf-8?B?QnBTN0h5REd4NnJhS0xsWm9RNGpOeW10OEgwOUhMSnl3Z214bTBXUHpzMUN1?=
- =?utf-8?B?eFgzVy9xRnAxejRrajI2cHlDbTdKa0ljSzlSYytwckcwVEJFVEdkb2NrR2x5?=
- =?utf-8?B?NWkvT0ZwRDR4WDJsOVB2QT09?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BN0PR10MB5030.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(366007)(1800799015)(7416005)(38070700009); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UVFNdzB4cW9uaFduSU5EYlIrcVExMm5Hem8yQmpmSitVSzQwSjZmYVBUeHJp?=
- =?utf-8?B?eVVxUFhOQmpCS0NBeTNaZ2VVV0p1UXlWWlB0VHNmd1pNY21QbWU3dHYzZXVv?=
- =?utf-8?B?cWJ1ZU9ISVhFQjhQWTQvekV0WXlKUzBQckI1QklvaFpESTRkN2FRc1ZpR0RS?=
- =?utf-8?B?bldsU0hSOGcvVlU4UXB0VTQ0TVVhS0U1UkMwVWhFcU95T0lPaXprNWVqcmF1?=
- =?utf-8?B?OFFJNUR0Y05JUWZ6RlgxVVY5MlBmaVYxaDhoanhTQ1FPUFlEbFo5c3JxaXlv?=
- =?utf-8?B?TUxxOGVGcEw4YmJkVmFwbVZROU9QbEcyc24vbnd5Ykt0NGJvTCtVdDQ1KzJQ?=
- =?utf-8?B?Szd3VW8vNW5uaGxtQ1J0WXJ1cHBoTWw4WFB5SWZHZXdZTFl5cmhlTUNhOFdI?=
- =?utf-8?B?MTdSTWpmQkZsOTBBNjF4ZjUwellEOTlFdjhEYW1xQU9YUWxGNHA5VTdTaFU4?=
- =?utf-8?B?QWtqQzZPQzMxcE42cUpucm41S3lnc1VaNlpjZHdhM3hTY3hJVTk4SWZYQUNG?=
- =?utf-8?B?cDRlbGRvTER4eWVWc09PQnA4R2RybnJVUG5GNUN1SFVIazAwZlliSnF2eG8z?=
- =?utf-8?B?dUk0VVc4ckYvRkFyblY2dVR5U01sS3lialcvZTVjYmJQYS80WWpXRldGUTVQ?=
- =?utf-8?B?SmcrRnBESVE4NGNnNWNZZ3ZNbjF4aC9LRnVyekFlQXZLcW1NNWhuaVJhNEJ6?=
- =?utf-8?B?SEZJZ1p2Yk13WjVubjcyR0VwWWR0aEFvZ2t4cnRMVlN3M3poRnFzZ1RNTlpE?=
- =?utf-8?B?RGtDNGtlcUVYandyamV0WkhiVVBlRmRLVW9hb1paS0xlb1l3WXZMNXRsTElH?=
- =?utf-8?B?dEpGVG1STjM5RjMyeWRqL3FrN2l4MFhLUS9QUDBjbk1WUFN4MjBETW96cnh2?=
- =?utf-8?B?Y215eHpCT1cyWmhvcnFMZ3BqVHBleUdvNVVUY1M5dURtU0J1Y01wVmRPL2sy?=
- =?utf-8?B?WXhJZm9kTmlWT21tQmlLQWJNZS9Pb3RxRElnOS9FSHpWaEtXanhoNTlkRnhh?=
- =?utf-8?B?VG1NRy9KRWd2NklOL25BTnp4M0JFbHBzZlZxWHM1Vlo4NHFxNGMzd0hVcFY2?=
- =?utf-8?B?NFlma1hzQ284OXd5c3ByUjV6SURkYm0vYVdkdFRRekdBLzZrRjRlTkdmTGs2?=
- =?utf-8?B?T0dEbGl1SWlpZ3dFUlUvSThBYUpld1BzUmV2SEtDVlV0dmNuenBMUktqSmFK?=
- =?utf-8?B?U0paYTlwcnhrTEpnOGFxb0FVMVZMZFNUQStpOEJJcVRnemFxdWU0UUhRU2JJ?=
- =?utf-8?B?ZUpvQkZneVpOMGp1eW1SMmY5U2hMeGo2bTZESUloanFqaUdGcTJqdDlLaU9B?=
- =?utf-8?B?K1dsa2c2L0tUODJGOVRJbVBuNWFFcjAxSmh2MForajdpL3NWVmYxbkl0WHV3?=
- =?utf-8?B?VU9xRzc5N2tTMGxmRjBMTVk5WGpoUlZ1aDBISVBmRkwxeENKelBub2NwSTdy?=
- =?utf-8?B?b2F1bS9SYThkZUdCQ0Z2elJLZVB5cTNldlNYd1pTL2ozWkJJU1piV3BleFFz?=
- =?utf-8?B?eElLQ3ZEL2RRWjZmdzZGc0dYRUsydXlrZzZOZDZ3L3RWOGZYTU5VWFhnSk5m?=
- =?utf-8?B?M0FEaXlaVHBSMjdzTFFKUjFvdEFqR29EYjdIQ0pmbk1xTUhPZVdZT0orS0NT?=
- =?utf-8?B?ZWR6U1pEV3BQdG1FY0ZCQ0VRNTR1Rmp0K0Q4eXd2YmFwcUhncVUxaENVUUhr?=
- =?utf-8?B?SnJvdEdNcVFBY0dORVRmK2ZTVWwyeXpMMXpMSTlFRzV0VFBFbDBtOGl6d2V1?=
- =?utf-8?B?NlJRMElUNnZTOVIvV2RNZTJ2MnZvanFRWUdINU9ua0JvSmk3NnBmYnduaEN2?=
- =?utf-8?B?NmZaYjZzai9LRC9odm1vQ1U1TllhMVp5T05YaTJPa2g4cUExcmlUTGxGeTRZ?=
- =?utf-8?B?enh4dnlGUHFLQkVvVDJ3T2Q5OXpwWVJNcWRMUmJENi9DK1RUbjk0WUViRzgr?=
- =?utf-8?B?NWN3STRFVlg1NWUzYkh1VTVML1h5K2V5T1pGYTFIK0tObjJWcld5MlkydTdB?=
- =?utf-8?B?YmZISnNRMFlpeTVsRmRUV0ZSZTFMeHVPVURwU3U2UDR3bVh1MW8wRXNKczR3?=
- =?utf-8?B?R3JpNEVSMThsUkVlb1JIcVdnZ1NuOGJ6ZW9vS0x5VXNnckJrc3lCclVsK3ZF?=
- =?utf-8?B?SFZscVk1ZTQrMEVaNDQvR3dHdEExYk1ucUZsdUdhRGxDUmovdUc0TnJuL0Mr?=
- =?utf-8?B?b0E9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1DAD48FEF1B2CC4388EE7B7DF1EAAD45@oracle.onmicrosoft.com>
-Content-Transfer-Encoding: base64
+ d=linaro.org; s=google; t=1717173984; x=1717778784; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=XNzqrtV1s0rd+PLr463zTCtEoYo1bPd1vFX3g92d3Gc=;
+ b=OdTNUSWnGQxg/zM9TEksQ3ROKciiJGvcM5vpWhVxgYuRehTh3ZOv5d4oDIyo9acc1J
+ I5fg+5Qzu5pgdQ60Vo1JHn9mtTghGMbrIUyOCkRN3AY7eF3gjqxjopc86+SDDf2BEUq9
+ DXThgSPpnBDZFzewi78309w47J1XnBEMViOW4Rf+tc0Hutb4yfBs8+AkGusZDukZ6q/q
+ 9EhQZcZ3Frzq4IUklkBPHqsk0DlpzAaR1M6h/uUE18WywtMsQNxwGsVAlTCYFf9cAnIM
+ JYTfHZoElqoZkOx6kXrXUAZFJ6zZmFpJMPNJxUDyUEXnRZE3Yvtbcu8JMprL4TeMchlL
+ mX+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717173984; x=1717778784;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XNzqrtV1s0rd+PLr463zTCtEoYo1bPd1vFX3g92d3Gc=;
+ b=Bp/6fV6/3xX9FldZyl4y65c9vxmAIieIFRbZ52qYaY1S8NyXYidt4EAbzP7uiNhV4Q
+ 93AVc/IcYQwJOKyOcv1NTrQPL2SSPJPy1ZiTo0HSzP8DTTW8hro7rCV2WLzZnRyAI6pk
+ EJ7qrTFOOJmOcdXJOhFVZV63kP0FBRKNWFu4vPhimpVOQdCZW1JMj+magVU8XbTnH/j5
+ a2Xwui9eocneVeah5ODgKmWXPilYe1nh5iS24C1tsnWqB4OkWM3b84SnGhILAMJPYiNh
+ m5lh2GvCvr7L9rSsFMfDes61NHqWUsdmvWdwUNctDcaynQmYeFirdDkxgntS+AObnhTQ
+ uCkg==
+X-Gm-Message-State: AOJu0Yyc4URnv2OBG70jmxePmQhjqMgenuJBOipB0tvgs3gMARzDYZei
+ 3Apc2Dcynu/cmWvPDdVzpIyahGok9e3ZsG+W5w9+Thib2ThbgmVqGWa39xzlDUk=
+X-Google-Smtp-Source: AGHT+IECJR4NP5PQdq6lQ5Qz8rdj11gqHyektmq6BLZc4kETD+pqgrC41CvFfeDe/7O59wg034usKg==
+X-Received: by 2002:a19:ac0c:0:b0:51c:bd90:e60b with SMTP id
+ 2adb3069b0e04-52b8957ebfamr1627071e87.25.1717173984131; 
+ Fri, 31 May 2024 09:46:24 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57a31c6d325sm1204564a12.65.2024.05.31.09.46.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 May 2024 09:46:23 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F1E135F8A3;
+ Fri, 31 May 2024 17:46:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
+Subject: Re: [PATCH 2/7] accel/tcg: Set CPUState.plugin_ra before all plugin
+ callbacks
+In-Reply-To: <20240416040609.1313605-3-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Mon, 15 Apr 2024 21:06:04 -0700")
+References: <20240416040609.1313605-1-richard.henderson@linaro.org>
+ <20240416040609.1313605-3-richard.henderson@linaro.org>
+Date: Fri, 31 May 2024 17:46:22 +0100
+Message-ID: <8734pyaq01.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: qRmU61j7v9r7fhUNOZejeAoPzY8g1VwppaoSUPgLaxqjU2+JRz6tKFcTJcCgYPLmwYNpnaRBTcNJLXnHTdIHbVoHvrncynNqXgGRzIsmOpL8dvYu4K2XqNSXJdtFOicx0u5TgLww4GikbbKhHmYnyEjukB4CyrIw9Hl/DG0NCOZK1BvBYT1djl/Sg1ke6bwK2rGuH5EbIDZAfLUc6zMepkhXHCuC5k74xeMKnnMKGWwnnf4NvmpenGVGxqtD8RyatsJCTh38FtIr/FsxA3MgcjgR7SIU/Mo0jDOKXQGKeHu0rDce+atVVljAMM/JqpfrNHUXstLrcJ1Hb11XZ9c7c487AqpvbLsqXFYGM6XH7y0j/yS59RchYCvfvQO/bN022iHexXTu7SJmegIx8R0mi1RNRj5Ky7FUm4WJSYGAenZdrEjh0odzRMxcNrKDUL3iDmRnoym0AltLBnWjpZ+6dY/T5T65gv4AwenpcZK9g7HOYdBCd8pyCSgNzThLN0MUYPg1fTEPqPxcHtt6k0e5CW27el9BYJxzQa42F56H3QYDn4LKKx6pduse6+DxosmbWOGOmRbgy1g9VTnr00lmRKia5hqjYmds7yxtd3RUUVQ=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR10MB5030.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3c4763a4-2a65-4719-015c-08dc819095d8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 May 2024 16:41:56.8542 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: S8EI+TDsIPECGMlaJBGX3WZBuNi0PtkX99nSXH2JZekkCcGkT7KwAmcZkhKAKkaKIQUraFgHe24302XFJpgTOQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6200
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-31_12,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- mlxscore=0 adultscore=0
- suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405310126
-X-Proofpoint-GUID: gER15pPQyYApdQh18xTvFS8XOm7V7kZK
-X-Proofpoint-ORIG-GUID: gER15pPQyYApdQh18xTvFS8XOm7V7kZK
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=liam.merwick@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -230,24 +94,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Liam Merwick <liam.merwick@oracle.com>
-From:  Liam Merwick via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMzEvMDUvMjAyNCAxNjo0MSwgUGFvbG8gQm9uemluaSB3cm90ZToKPiBPbiBGcmksIE1heSAz
-MSwgMjAyNCBhdCA1OjIw4oCvUE0gTGlhbSBNZXJ3aWNrIDxsaWFtLm1lcndpY2tAb3JhY2xlLmNv
-bT4gd3JvdGU6Cj4+PiArICAgIG1ldGFkYXRhID0gKE92bWZTZXZNZXRhZGF0YSAqKShmbGFzaF9w
-dHIgKyBmbGFzaF9zaXplIC0gZGF0YS0+b2Zmc2V0KTsKPj4+ICsgICAgaWYgKG1lbWNtcChtZXRh
-ZGF0YS0+c2lnbmF0dXJlLCAiQVNFViIsIDQpICE9IDApIHsKPj4+ICsgICAgICAgIHJldHVybjsK
-Pj4+ICsgICAgfQo+Pj4gKwo+Pj4gKyAgICBvdm1mX3Nldl9tZXRhZGF0YV90YWJsZSA9IGdfbWFs
-bG9jKG1ldGFkYXRhLT5sZW4pOwo+Pgo+PiBUaGVyZSBzaG91bGQgYmUgYSBib3VuZHMgY2hlY2sg
-b24gbWV0YWRhdGEtPmxlbiBiZWZvcmUgdXNpbmcgaXQuCj4gCj4gWW91IG1lYW4gbGlrZToKPiAK
-PiAgICAgIGlmIChtZXRhZGF0YS0+bGVuIDw9IGZsYXNoX3NpemUgLSBkYXRhLT5vZmZzZXQpIHsK
-PiAgICAgICAgICBvdm1mX3Nldl9tZXRhZGF0YV90YWJsZSA9IGdfbWVtZHVwMihtZXRhZGF0YSwg
-bWV0YWRhdGEtPmxlbik7Cj4gICAgICB9Cj4gCgpZZWFoLCBhbmQgbWF5YmUgYmVmb3JlIHRoYXQK
-CmlmIChtZXRhZGF0YS0+bGVuIDwgc2l6ZW9mKE92bWZTZXZNZXRhZGF0YSkpCiAgICAgIHJldHVy
-bgoKQnV0IHRoZSBtYWluIHRoaW5nIHdvdWxkIGJlIGNoZWNraW5nIHRoZSB1cHBlciBib3VuZCB0
-byBhdm9pZAphbGxvY2F0aW5nIGEgaHVnZSBhbW91bnQgb2YgbWVtb3J5IAoKUmVnYXJkcywKTGlh
-bQoK
+Richard Henderson <richard.henderson@linaro.org> writes:
+
+We really could do with a description of why we are setting plugin_ra
+and what we mean to achieve by it. I think it is so we can then do the
+same PC/other register recovery as we do at synchronous faulting
+exceptions be it generated TCG code or a helper. However we should make
+that clear in the commit (and possible some function comments).
+
+
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  include/hw/core/cpu.h  |  1 +
+>  accel/tcg/plugin-gen.c | 50 +++++++++++++++++++++++++++++++++++++-----
+>  2 files changed, 46 insertions(+), 5 deletions(-)
+>
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 10cd492aff..f4af37c13d 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -350,6 +350,7 @@ typedef union IcountDecr {
+>  typedef struct CPUNegativeOffsetState {
+>      CPUTLB tlb;
+>  #ifdef CONFIG_PLUGIN
+> +    uintptr_t plugin_ra;
+>      GArray *plugin_mem_cbs;
+>  #endif
+>      IcountDecr icount_decr;
+> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+> index 36e9134a5d..f96b49cce6 100644
+> --- a/accel/tcg/plugin-gen.c
+> +++ b/accel/tcg/plugin-gen.c
+> @@ -37,6 +37,12 @@ enum plugin_gen_from {
+>      PLUGIN_GEN_AFTER_TB,
+>  };
+>=20=20
+> +enum plugin_gen_ra {
+> +    GEN_RA_DONE,
+> +    GEN_RA_FROM_TB,
+> +    GEN_RA_FROM_INSN,
+> +};
+> +
+>  /* called before finishing a TB with exit_tb, goto_tb or goto_ptr */
+>  void plugin_gen_disable_mem_helpers(void)
+>  {
+> @@ -151,11 +157,38 @@ static void gen_mem_cb(struct qemu_plugin_dyn_cb *c=
+b,
+>      tcg_temp_free_i32(cpu_index);
+>  }
+>=20=20
+> -static void inject_cb(struct qemu_plugin_dyn_cb *cb)
+> +static void inject_ra(enum plugin_gen_ra *gen_ra)
+> +{
+> +    TCGv_ptr ra;
+> +
+> +    switch (*gen_ra) {
+> +    case GEN_RA_DONE:
+> +        return;
+> +    case GEN_RA_FROM_TB:
+> +        ra =3D tcg_constant_ptr(NULL);
+> +        break;
+> +    case GEN_RA_FROM_INSN:
+> +        ra =3D tcg_temp_ebb_new_ptr();
+> +        tcg_gen_plugin_pc(ra);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    tcg_gen_st_ptr(ra, tcg_env,
+> +                   offsetof(CPUState, neg.plugin_ra) -
+> +                   offsetof(ArchCPU, env));
+> +    tcg_temp_free_ptr(ra);
+> +    *gen_ra =3D GEN_RA_DONE;
+> +}
+> +
+> +static void inject_cb(struct qemu_plugin_dyn_cb *cb,
+> +                      enum plugin_gen_ra *gen_ra)
+>=20=20
+>  {
+>      switch (cb->type) {
+>      case PLUGIN_CB_REGULAR:
+> +        inject_ra(gen_ra);
+>          gen_udata_cb(cb);
+>          break;
+>      case PLUGIN_CB_INLINE:
+> @@ -167,16 +200,18 @@ static void inject_cb(struct qemu_plugin_dyn_cb *cb)
+>  }
+>=20=20
+>  static void inject_mem_cb(struct qemu_plugin_dyn_cb *cb,
+> +                          enum plugin_gen_ra *gen_ra,
+>                            enum qemu_plugin_mem_rw rw,
+>                            qemu_plugin_meminfo_t meminfo, TCGv_i64 addr)
+>  {
+>      if (cb->rw & rw) {
+>          switch (cb->type) {
+>          case PLUGIN_CB_MEM_REGULAR:
+> +            inject_ra(gen_ra);
+>              gen_mem_cb(cb, meminfo, addr);
+>              break;
+>          default:
+> -            inject_cb(cb);
+> +            inject_cb(cb, gen_ra);
+>              break;
+>          }
+>      }
+> @@ -186,6 +221,7 @@ static void plugin_gen_inject(struct qemu_plugin_tb *=
+plugin_tb)
+>  {
+>      TCGOp *op, *next;
+>      int insn_idx =3D -1;
+> +    enum plugin_gen_ra gen_ra;
+>=20=20
+>      if (unlikely(qemu_loglevel_mask(LOG_TB_OP_PLUGIN)
+>                   && qemu_log_in_addr_range(plugin_tb->vaddr))) {
+> @@ -205,10 +241,12 @@ static void plugin_gen_inject(struct qemu_plugin_tb=
+ *plugin_tb)
+>       */
+>      memset(tcg_ctx->free_temps, 0, sizeof(tcg_ctx->free_temps));
+>=20=20
+> +    gen_ra =3D GEN_RA_FROM_TB;
+>      QTAILQ_FOREACH_SAFE(op, &tcg_ctx->ops, link, next) {
+>          switch (op->opc) {
+>          case INDEX_op_insn_start:
+>              insn_idx++;
+> +            gen_ra =3D GEN_RA_FROM_INSN;
+>              break;
+>=20=20
+>          case INDEX_op_plugin_cb:
+> @@ -244,7 +282,8 @@ static void plugin_gen_inject(struct qemu_plugin_tb *=
+plugin_tb)
+>                  cbs =3D plugin_tb->cbs;
+>                  for (i =3D 0, n =3D (cbs ? cbs->len : 0); i < n; i++) {
+>                      inject_cb(
+> -                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i=
+));
+> +                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i=
+),
+> +                        &gen_ra);
+>                  }
+>                  break;
+>=20=20
+> @@ -256,7 +295,8 @@ static void plugin_gen_inject(struct qemu_plugin_tb *=
+plugin_tb)
+>                  cbs =3D insn->insn_cbs;
+>                  for (i =3D 0, n =3D (cbs ? cbs->len : 0); i < n; i++) {
+>                      inject_cb(
+> -                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i=
+));
+> +                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i=
+),
+> +                        &gen_ra);
+>                  }
+>                  break;
+>=20=20
+> @@ -288,7 +328,7 @@ static void plugin_gen_inject(struct qemu_plugin_tb *=
+plugin_tb)
+>              cbs =3D insn->mem_cbs;
+>              for (i =3D 0, n =3D (cbs ? cbs->len : 0); i < n; i++) {
+>                  inject_mem_cb(&g_array_index(cbs, struct qemu_plugin_dyn=
+_cb, i),
+> -                              rw, meminfo, addr);
+> +                              &gen_ra, rw, meminfo, addr);
+>              }
+>=20=20
+>              tcg_ctx->emit_before_op =3D NULL;
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
