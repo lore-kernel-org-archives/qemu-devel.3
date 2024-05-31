@@ -4,118 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6755C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 20:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2447C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 20:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD8W3-0008Ad-3e; Fri, 31 May 2024 16:06:19 -0400
+	id 1sD8rW-0002se-W6; Fri, 31 May 2024 16:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sD8W1-0008AQ-U4; Fri, 31 May 2024 16:06:17 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sD8rU-0002rk-QZ
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 16:28:28 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sD8W0-0005mj-9u; Fri, 31 May 2024 16:06:17 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B13CE1F391;
- Fri, 31 May 2024 20:06:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717185973; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5sjS3IVvSxFYjQZ11N3PaMlIWt1+Y+61luCK1lSoVKs=;
- b=0XpDeWV7cR/IfrwpqNMun4qvNgTwBGKzNA/F1vFmhR7eGbbBfM4a2Lb7XQ0vYHBI3QvS4E
- Di+jvNZJYhjV020nOObs4Mm9nW/I5MTLNTWQVPwJZ71ETJFh0/Q21Vu6sQhAukhL4IO+VP
- Bc3RXxoUbgI5LphZZg7EKl2Br2NmxNM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717185973;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5sjS3IVvSxFYjQZ11N3PaMlIWt1+Y+61luCK1lSoVKs=;
- b=NAcp34kZ/fw6V2xGsElngNPHRzbeGfwpJjlekX+5YSX6zOscNw9PuC7hd6C4nnFUfvyZml
- m1CLOLrHbOvifPCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0XpDeWV7;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NAcp34kZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717185973; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5sjS3IVvSxFYjQZ11N3PaMlIWt1+Y+61luCK1lSoVKs=;
- b=0XpDeWV7cR/IfrwpqNMun4qvNgTwBGKzNA/F1vFmhR7eGbbBfM4a2Lb7XQ0vYHBI3QvS4E
- Di+jvNZJYhjV020nOObs4Mm9nW/I5MTLNTWQVPwJZ71ETJFh0/Q21Vu6sQhAukhL4IO+VP
- Bc3RXxoUbgI5LphZZg7EKl2Br2NmxNM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717185973;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5sjS3IVvSxFYjQZ11N3PaMlIWt1+Y+61luCK1lSoVKs=;
- b=NAcp34kZ/fw6V2xGsElngNPHRzbeGfwpJjlekX+5YSX6zOscNw9PuC7hd6C4nnFUfvyZml
- m1CLOLrHbOvifPCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3B3BE132C2;
- Fri, 31 May 2024 20:06:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id w734ALUtWmb0WAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 31 May 2024 20:06:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, Glenn Miles
- <milesg@linux.vnet.ibm.com>
-Subject: Re: [PULL 25/72] Adds migration support for Branch History Rolling
- Buffer (BHRB) internal state.
-In-Reply-To: <20240523230747.45703-26-npiggin@gmail.com>
-References: <20240523230747.45703-1-npiggin@gmail.com>
- <20240523230747.45703-26-npiggin@gmail.com>
-Date: Fri, 31 May 2024 17:06:07 -0300
-Message-ID: <87le3phhlc.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sD8rT-0000oa-Bl
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 16:28:28 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-70222db9bf1so2281692b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 13:28:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1717187305; x=1717792105; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MzNPC1l1l92btYoSfQnEt7eZTgNylgvzDqncd7AHrIk=;
+ b=Zkrinu360iCSkUVh4oZBZernn68gkH/NcpNlRTDlQrG5q2frHPVv9fHDXumUuMbQuz
+ POibMuNUWT2KCR+LTFvZ38hs+DRMW6einZTwl2DCXt+xcUsnAdgBFl9yqzqx+BN2s9g8
+ JidtWV+O1XxNBjVbcbDnspO9RzG5jF8vIrT0qLMoAaQrT5KFe6XFAil1VW+ytfE40atZ
+ onBlUjnat5CAnKh2pN3Iq/AxyLgzbCKdNfv4RNGTaN/1dEfLDeoS3jpZK372SJtaSHEb
+ bI9MxoVy1719v/fYWCyF9QrSKVJn+Mas/Q9naEJVhl2RZ5HRW4qHTKx2eR1CySZ/Bie/
+ RPjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717187305; x=1717792105;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MzNPC1l1l92btYoSfQnEt7eZTgNylgvzDqncd7AHrIk=;
+ b=ZSSGs3s0RSgMSde1D1CKmmcP+Yg8rpqpyQ9I2X1HU8BbVGptDerY58eeWn/5KnD3Go
+ JfWnxdVHpnUgUEF+e71t+RE303w7oCvO1LubAo9Fymt8AkotIJRkFCrauszdqoW7QHV7
+ N0sKRWQ6Hk2HA/p3PE4asfU4tERYpKcwABHuOcWC4XeJ9ewjY0d4LDVMjf/okxC2M3Xz
+ ZLAzDMgBxp2gqdR0lKyLqlcOQ//jiw60+lYzEH8VdF6wFn6Hc4YDUmqiAui2IOBMah2g
+ 7zcQESg1IoBzNACarY1bCg2Q3oJmYujBDo7Z+jq/ceAjp9OG2q6p08yfl4JTiLOG7WbH
+ zAfA==
+X-Gm-Message-State: AOJu0YzjUvH5y1D6+UhpZviqP/Omvs4eaD1K3B0JmXSE2qfU31lGLsw+
+ 7ejMsZhdRq6FmWTfliFG+MfL0W1z/+ii7cLNHYWTZOH+RPz9kELKmyc1UmZN+SIdpHF8cYJxESv
+ A
+X-Google-Smtp-Source: AGHT+IEvkJsylHUTAcqIZnJsJykuKdsaHEly7//hw0lFmBXY4zaNJAxdfQS77zYJgSA12KtIxZvAdw==
+X-Received: by 2002:a05:6a00:4099:b0:6f8:b6a1:317d with SMTP id
+ d2e1a72fcca58-702478cc5famr3201287b3a.34.1717187305420; 
+ Fri, 31 May 2024 13:28:25 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com
+ (189-69-160-78.dial-up.telesp.net.br. [189.69.160.78])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70242b09133sm1819691b3a.178.2024.05.31.13.28.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 May 2024 13:28:25 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ apatel@ventanamicro.com, ajones@ventanamicro.com, conor@kernel.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 4/8] hw/riscv/virt.c: aplic DT: add 'qemu,
+ aplic' to 'compatible'
+Date: Fri, 31 May 2024 17:27:55 -0300
+Message-ID: <20240531202759.911601-5-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240531202759.911601-1-dbarboza@ventanamicro.com>
+References: <20240531202759.911601-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: B13CE1F391
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org]; ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FREEMAIL_CC(0.00)[gmail.com,nongnu.org,linux.vnet.ibm.com];
- RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,72 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicholas Piggin <npiggin@gmail.com> writes:
+The DT docs for riscv,aplic [1] predicts a 'qemu,aplic' enum in the
+'compatible' property.
 
-> From: Glenn Miles <milesg@linux.vnet.ibm.com>
->
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  target/ppc/machine.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
->
-> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> index 6b6c31d903..731dd8df35 100644
-> --- a/target/ppc/machine.c
-> +++ b/target/ppc/machine.c
-> @@ -711,6 +711,26 @@ static const VMStateDescription vmstate_reservation = {
->      }
->  };
->  
-> +#ifdef TARGET_PPC64
-> +static bool bhrb_needed(void *opaque)
-> +{
-> +    PowerPCCPU *cpu = opaque;
-> +    return (cpu->env.flags & POWERPC_FLAG_BHRB) != 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_bhrb = {
-> +    .name = "cpu/bhrb",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = bhrb_needed,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINTTL(env.bhrb_offset, PowerPCCPU),
-> +        VMSTATE_UINT64_ARRAY(env.bhrb, PowerPCCPU, BHRB_MAX_NUM_ENTRIES),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +#endif
-> +
->  const VMStateDescription vmstate_ppc_cpu = {
->      .name = "cpu",
->      .version_id = 5,
-> @@ -756,6 +776,7 @@ const VMStateDescription vmstate_ppc_cpu = {
->  #ifdef TARGET_PPC64
->          &vmstate_tm,
->          &vmstate_slb,
-> +        &vmstate_bhrb,
+[1] Documentation/devicetree/bindings/interrupt-controller/riscv,aplic.yaml
 
-Running some tests now that Nick re-enabled ppc for migration tests, I
-see that this new state breaks backward migrations:
+Reported-by: Conor Dooley <conor@kernel.org>
+Fixes: e6faee65855b ("hw/riscv: virt: Add optional AIA APLIC support to virt machine")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ hw/riscv/virt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-$ QTEST_TRACE="vmstate_*" \
-  QTEST_QEMU_BINARY_DST=../build-previous/qemu-system-ppc64 \
-  QTEST_QEMU_BINARY=./qemu-system-ppc64 \
-  ./tests/qtest/migration-test -p /ppc64/migration/precopy/tcp/plain
-...
-vmstate_load_state_field cpu/slb:env.slb
-vmstate_n_elems env.slb: 64
-vmstate_subsection_load cpu/slb
-vmstate_subsection_load_bad cpu/slb: cpu/bhrb/(prefix)
-vmstate_load_state_end cpu/slb end/0
-vmstate_subsection_load_bad cpu: cpu/bhrb/(lookup)
-qemu-system-ppc64: error while loading state for instance 0x0 of device 'cpu'
-vmstate_downtime_checkpoint dst-precopy-loadvm-completed
-qemu-system-ppc64: load of migration failed: No such file or directory
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 5505047945..366fe042cc 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -606,6 +606,9 @@ static void create_fdt_one_aplic(RISCVVirtState *s, int socket,
+     g_autofree char *aplic_name = fdt_get_aplic_nodename(aplic_addr);
+     g_autofree uint32_t *aplic_cells = g_new0(uint32_t, num_harts * 2);
+     MachineState *ms = MACHINE(s);
++    static const char * const aplic_compat[2] = {
++        "qemu,aplic", "riscv,aplic"
++    };
+ 
+     for (cpu = 0; cpu < num_harts; cpu++) {
+         aplic_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
+@@ -613,7 +616,9 @@ static void create_fdt_one_aplic(RISCVVirtState *s, int socket,
+     }
+ 
+     qemu_fdt_add_subnode(ms->fdt, aplic_name);
+-    qemu_fdt_setprop_string(ms->fdt, aplic_name, "compatible", "riscv,aplic");
++    qemu_fdt_setprop_string_array(ms->fdt, aplic_name, "compatible",
++                                  (char **)&aplic_compat,
++                                  ARRAY_SIZE(aplic_compat));
+     qemu_fdt_setprop_cell(ms->fdt, aplic_name, "#address-cells",
+                           FDT_APLIC_ADDR_CELLS);
+     qemu_fdt_setprop_cell(ms->fdt, aplic_name,
+-- 
+2.45.1
 
-If you want to support backwards migration, then this needs to be
-fixed. Otherwise we can ignore it.
 
