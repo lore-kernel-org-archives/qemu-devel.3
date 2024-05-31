@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C74C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC235C27C44
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCz2I-0002im-BX; Fri, 31 May 2024 05:58:58 -0400
+	id 1sCz2j-0002yi-Cb; Fri, 31 May 2024 05:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sCz2F-0002iQ-TE
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:58:55 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sCz2D-0004y1-3t
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:58:55 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxnOpZn1lmphkCAA--.8806S3;
- Fri, 31 May 2024 17:58:49 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx08RUn1lmqzsPAA--.29780S3; 
- Fri, 31 May 2024 17:58:47 +0800 (CST)
-Subject: Re: [PATCH] tests/qtest: Add numa test for loongarch system
-To: Bibo Mao <maobibo@loongson.cn>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240528082155.938586-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <62e97f41-a768-d7d4-86e9-186a6efb220a@loongson.cn>
-Date: Fri, 31 May 2024 17:58:44 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1sCz2h-0002qu-6g
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:59:23 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1sCz2f-000517-L9
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:59:22 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-420180b59b7so19990995e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:59:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717149560; x=1717754360; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NWtVkOLDgF1rKwf3NbyJWvRkovccoP5yn6Z5++pjXzA=;
+ b=LDRgpUp8VdxwH3YtCAfTIQrV8Fa712PHt2DcjDAxPi4pzHao9lbtI/kypQL7HksYwt
+ MFkS9KBZDLgPat06I9MD1aNpclFi/FqmnLAvtSKTVSH7LkMComKN+rk7/RZUKvZDBDPn
+ p/vDJ/I1mh88Ux19tpMuwt3TxqzMXi+VXbGaXjU0xWmmRvv6/fvvcipVoSIu620xzaMA
+ gD+kIW6389nO7ajYEZ+lSFpNAqgEOZ4h7R1lL/cyrSXEFt14RV31GEkJ4qbgcf7t5R9G
+ N2GnSB/sj+KALAD2xZZMnJZL8/5jQkxcLmdWs7x78WNHP4nEZAqneEj5dke3Wb8GqCnI
+ sRFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717149560; x=1717754360;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NWtVkOLDgF1rKwf3NbyJWvRkovccoP5yn6Z5++pjXzA=;
+ b=bIwoYZGFu3/suRk0hKzaIeQVHIFL3wu5kyVLm+uyACRfjNhfcZawXXfo197SRWnNs/
+ 5i89WfHYLVrIVa4Pp3RLO2/pcLoWuFqE9G6f4qr5XbqRvVmqfEFlOyvtTX7yeaLIZe3v
+ X/AdS1wKlW3r85sybTvzlSmqlXnbAEl5zr4sZnDKKVxkmSdD9pYZHlbzajpqbDIOxzV6
+ rdkkElEU3kej3R1nNWDYOly6mdTV+GdAHDUXT4wshHYqfWGd1i+mA96jaOQOXC+/b7Db
+ ZTHh0nKCcmZ4FEU5DE9qmo62cZ/IYcRnee/8/pvJfSoxUhDXn+BD1narGmTeksTOHQDy
+ 7vTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzkiP/aNc/sAensLaNAr2C9dDY1mdCGGl+nRFz8mfPoXE+3TO9QZf93n1HM7vZbvcSEMY0sUbrlDEK8tKfF6bqd+YKNlM=
+X-Gm-Message-State: AOJu0YwCLBQbuyWnafWYVbd3zi0vFhyuOpMHptpsz2U6FapEU8/y7sib
+ wl+y4aBNz4iSD5Tws/gJyCvHJczaAo6tfblLdiEwpY8oGl7FN+wnsWzK324f
+X-Google-Smtp-Source: AGHT+IFV51hSYt8NK9PiJAKTrsoXn7LryxkGS6g5ElhZz8ENQt9V721ZCsqMK+nfys/TO6a5gG7gkg==
+X-Received: by 2002:a05:600c:4e15:b0:41f:f053:edb4 with SMTP id
+ 5b1f17b1804b1-4212e076511mr9570605e9.23.1717149560202; 
+ Fri, 31 May 2024 02:59:20 -0700 (PDT)
+Received: from [192.168.3.251] (54-240-197-236.amazon.com. [54.240.197.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4212b84ba40sm20025015e9.19.2024.05.31.02.59.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 May 2024 02:59:19 -0700 (PDT)
+From: Paul Durrant <xadimgnik@gmail.com>
+X-Google-Original-From: Paul Durrant <paul@xen.org>
+Message-ID: <0fe5773f-1524-4a9d-bdd8-606b18b4ced4@xen.org>
+Date: Fri, 31 May 2024 10:59:18 +0100
 MIME-Version: 1.0
-In-Reply-To: <20240528082155.938586-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 7/7] hw/xen: Register framebuffer backend via
+ xen_backend_init()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Anthony PERARD <anthony@xenproject.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20240510104908.76908-1-philmd@linaro.org>
+ <20240510104908.76908-8-philmd@linaro.org>
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8Bx08RUn1lmqzsPAA--.29780S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAF45GryfGrW7WrWfXF4DJrc_yoW5Aw13pF
- W5u3WSyFWxCF1IvwsxGF1UWr4rWrn3uF4DZF42kr18Can8Grs8Xr1xKFWFgrs7J3yvqr1f
- u3WFkrnxKaykJabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j5
- WrAUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-4.299, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Organization: Xen Project
+In-Reply-To: <20240510104908.76908-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=xadimgnik@gmail.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,106 +105,25 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: paul@xen.org
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-‘⁄ 2024/5/28 œ¬ŒÁ4:21, Bibo Mao –¥µ¿:
-> Add numa test case for loongarch system, it passes to run
-> with command "make check-qtest".
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+On 10/05/2024 11:49, Philippe Mathieu-Daud√© wrote:
+> Align the framebuffer backend with the other legacy ones,
+> register it via xen_backend_init() when '-vga xenfb' is
+> used. It is safe because MODULE_INIT_XEN_BACKEND is called
+> in xen_bus_realize(), long after CLI processing initialized
+> the vga_interface_type variable.
+> 
+> Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
 > ---
->   tests/qtest/meson.build |  2 +-
->   tests/qtest/numa-test.c | 53 +++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 54 insertions(+), 1 deletion(-)
+>   include/hw/xen/xen-legacy-backend.h | 3 ---
+>   hw/display/xenfb.c                  | 9 +++++++--
+>   hw/xenpv/xen_machine_pv.c           | 2 --
+>   3 files changed, 7 insertions(+), 7 deletions(-)
+> 
 
-Tested-by: Song Gao <gaosong@loongson.cn>
-
-Thanks.
-Song Gao
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index b98fae6a6d..12792948ff 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -140,7 +140,7 @@ qtests_hppa = ['boot-serial-test'] + \
->     (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
->   
->   qtests_loongarch64 = qtests_filter + \
-> -  ['boot-serial-test']
-> +  ['boot-serial-test', 'numa-test']
->   
->   qtests_m68k = ['boot-serial-test'] + \
->     qtests_filter
-> diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
-> index 7aa262dbb9..5518f6596b 100644
-> --- a/tests/qtest/numa-test.c
-> +++ b/tests/qtest/numa-test.c
-> @@ -265,6 +265,54 @@ static void aarch64_numa_cpu(const void *data)
->       qtest_quit(qts);
->   }
->   
-> +static void loongarch64_numa_cpu(const void *data)
-> +{
-> +    QDict *resp;
-> +    QList *cpus;
-> +    QObject *e;
-> +    QTestState *qts;
-> +    g_autofree char *cli = NULL;
-> +
-> +    cli = make_cli(data, "-machine "
-> +        "smp.cpus=2,smp.sockets=2,smp.cores=1,smp.threads=1 "
-> +        "-numa node,nodeid=0,memdev=ram -numa node,nodeid=1 "
-> +        "-numa cpu,node-id=0,socket-id=1,core-id=0,thread-id=0 "
-> +        "-numa cpu,node-id=1,socket-id=0,core-id=0,thread-id=0");
-> +    qts = qtest_init(cli);
-> +    cpus = get_cpus(qts, &resp);
-> +    g_assert(cpus);
-> +
-> +    while ((e = qlist_pop(cpus))) {
-> +        QDict *cpu, *props;
-> +        int64_t socket, core, thread, node;
-> +
-> +        cpu = qobject_to(QDict, e);
-> +        g_assert(qdict_haskey(cpu, "props"));
-> +        props = qdict_get_qdict(cpu, "props");
-> +
-> +        g_assert(qdict_haskey(props, "node-id"));
-> +        node = qdict_get_int(props, "node-id");
-> +        g_assert(qdict_haskey(props, "socket-id"));
-> +        socket = qdict_get_int(props, "socket-id");
-> +        g_assert(qdict_haskey(props, "core-id"));
-> +        core = qdict_get_int(props, "core-id");
-> +        g_assert(qdict_haskey(props, "thread-id"));
-> +        thread = qdict_get_int(props, "thread-id");
-> +
-> +        if (socket == 0 && core == 0 && thread == 0) {
-> +            g_assert_cmpint(node, ==, 1);
-> +        } else if (socket == 1 && core == 0 && thread == 0) {
-> +            g_assert_cmpint(node, ==, 0);
-> +        } else {
-> +            g_assert(false);
-> +        }
-> +        qobject_unref(e);
-> +    }
-> +
-> +    qobject_unref(resp);
-> +    qtest_quit(qts);
-> +}
-> +
->   static void pc_dynamic_cpu_cfg(const void *data)
->   {
->       QObject *e;
-> @@ -593,6 +641,11 @@ int main(int argc, char **argv)
->                               aarch64_numa_cpu);
->       }
->   
-> +    if (!strcmp(arch, "loongarch64")) {
-> +        qtest_add_data_func("/numa/loongarch64/cpu/explicit", args,
-> +                            loongarch64_numa_cpu);
-> +    }
-> +
->   out:
->       return g_test_run();
->   }
+Reviewed-by: Paul Durrant <paul@xen.org>
 
 
