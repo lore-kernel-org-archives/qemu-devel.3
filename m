@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 340FAC25B7E
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B63C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD10A-0004c5-G9; Fri, 31 May 2024 08:04:54 -0400
+	id 1sD1Hl-0000n5-8G; Fri, 31 May 2024 08:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0zo-0004R3-2f
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:32 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0zj-0003UG-2m
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:31 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4211249fbafso18726055e9.3
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717157064; x=1717761864; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HB2ZPYPpq8qGuuaa+B56yerxjSQtKH6WnY6p4kzxYD4=;
- b=pV+egcUTXhusf92NPclhLLf4rpVraBbvmDK2KHZmPZ6FQVNh0QKQEbj19m+I0gspJJ
- vnl/5OiJ9UVOl5foGyTxziNsXv4DQ1akmNn/wtJLueQhX6K6EzvaXtuftRPxSFKck+ej
- oEXiyGnCUEGJcJCn3Q2bJ0Om2SxwrSFLmPLR/Jve6cv1XlfiSH/wtCmkxnlCPYmqW5hn
- 4TF8qqW493oyNj7jUxXDKsz7FAEvxww4xzliKwbVFXh5X7Eka5v14MYKYi36dXf7X6vf
- 1q3kId9uRZZD6aInGPsSJm+U1qv5qMZnf80iFM0xALgV8RRnhPeyoNg5+6KuKBfWYKp5
- bp6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717157064; x=1717761864;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HB2ZPYPpq8qGuuaa+B56yerxjSQtKH6WnY6p4kzxYD4=;
- b=VL28YnySEz3//YeLJJYPPQeHYJOiVNEXDVmNCEknDx7rxwhG7wZjbhlNHskFnVvxNn
- zp9MWXZ08UaoivLKKussjSAbse0BbR7xHwGamcPU43fOzoX2yALhg1apiZM+IQUtCyZ3
- W/Cpn+4y83Y+A9cn4OiKXzWkjoMLVxFbGiiIBObRnZKUCRZqVe98+NqdirYoOSIJDDsT
- Xh2hx6/OH75E9+M1x0OUGRu/A7HaxwsRniOvOPPnoOV+mdZiGeUx7XHYan+T6gS4FZfN
- XAyMp+q3hKHirQdhAUmxUuu3zI3CQ3/3+gWn52qYHsUnXYA3VSdP14nzF1oriazHNC7N
- kaWg==
-X-Gm-Message-State: AOJu0Ywq+qVR3tbTk+ZLjLbSP0ZbclZHbugqwCDX6d80YL2lyiGrxStE
- RUO6ksDhOwqV5LouVPWh3850NAvO3/txDPCYaRsbjafjkx89pv6orjbni8Kwbdg6FcsaP88Xmz7
- O
-X-Google-Smtp-Source: AGHT+IEJ5oD8Ddb6lmUXryYPgc69dgBv1uEV77toPnJlZEXeXOrAnHjobVVXjAi3Nv5rF7vUi77wiw==
-X-Received: by 2002:a05:600c:468f:b0:420:1125:dd79 with SMTP id
- 5b1f17b1804b1-4212e0ade24mr16049075e9.31.1717157064671; 
- Fri, 31 May 2024 05:04:24 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 05:04:24 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 31/43] target/arm: Convert SMAX, SMIN, UMAX, UMIN to decodetree
-Date: Fri, 31 May 2024 13:03:49 +0100
-Message-Id: <20240531120401.394550-32-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240531120401.394550-1-peter.maydell@linaro.org>
-References: <20240531120401.394550-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sD1Hj-0000ma-OF
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:23:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sD1Hh-0007De-CZ
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:23:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717158179;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=sxRViaCgm9M7jIFrlEW6bG2tmZtmG+hUMkvZD5Y9Bvg=;
+ b=ROfSxUzM9m8p93+7B8gcCm9HfD5UWUte9XMXImeR3QbsynI/PZiM5Rn7HSpFqIbYzGFSM0
+ mycrkE0CkgSIQeQ3TVFwwtkZTIJIRe/x4HHzPobnslVep5nkplGR/Uf0yI/2dmdH5glo/i
+ UbvoFaXNhVL+LmGSCZ+dmT6H/nWGRmQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-NjiBk-8rPMCVUHRKjkPKzg-1; Fri, 31 May 2024 08:22:56 -0400
+X-MC-Unique: NjiBk-8rPMCVUHRKjkPKzg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 967D185A58C;
+ Fri, 31 May 2024 12:22:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.216])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C1CE140C6EB7;
+ Fri, 31 May 2024 12:22:53 +0000 (UTC)
+Date: Fri, 31 May 2024 13:22:51 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo framework
+Message-ID: <ZlnBGwk29Ds9FjUA@redhat.com>
+References: <20240527081421.2258624-1-zhao1.liu@intel.com>
+ <20240527081421.2258624-2-zhao1.liu@intel.com>
+ <20240527200504.GB913874@fedora.redhat.com>
+ <ZlWNk46MF5uNa+ZC@intel.com>
+ <20240528141401.GB993828@fedora.redhat.com>
+ <Zlc79ZhJavATdvSs@intel.com>
+ <20240529184103.GD1203999@fedora.redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240529184103.GD1203999@fedora.redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,90 +91,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Wed, May 29, 2024 at 02:41:03PM -0400, Stefan Hajnoczi wrote:
+> On Wed, May 29, 2024 at 10:30:13PM +0800, Zhao Liu wrote:
+> > Hi Stefan,
+> > 
+> > On Tue, May 28, 2024 at 10:14:01AM -0400, Stefan Hajnoczi wrote:
+> > > Date: Tue, 28 May 2024 10:14:01 -0400
+> > > From: Stefan Hajnoczi <stefanha@redhat.com>
+> > > Subject: Re: [RFC 1/6] scripts/simpletrace-rust: Add the basic cargo
+> > >  framework
+> > > 
+> > > On Tue, May 28, 2024 at 03:53:55PM +0800, Zhao Liu wrote:
+> > > > Hi Stefan,
+> > > > 
+> > > > [snip]
+> > > > 
+> > > > > > diff --git a/scripts/simpletrace-rust/.rustfmt.toml b/scripts/simpletrace-rust/.rustfmt.toml
+> > > > > > new file mode 100644
+> > > > > > index 000000000000..97a97c24ebfb
+> > > > > > --- /dev/null
+> > > > > > +++ b/scripts/simpletrace-rust/.rustfmt.toml
+> > > > > > @@ -0,0 +1,9 @@
+> > > > > > +brace_style = "AlwaysNextLine"
+> > > > > > +comment_width = 80
+> > > > > > +edition = "2021"
+> > > > > > +group_imports = "StdExternalCrate"
+> > > > > > +imports_granularity = "item"
+> > > > > > +max_width = 80
+> > > > > > +use_field_init_shorthand = true
+> > > > > > +use_try_shorthand = true
+> > > > > > +wrap_comments = true
+> > > > > 
+> > > > > There should be QEMU-wide policy. That said, why is it necessary to customize rustfmt?
+> > > > 
+> > > > Indeed, but QEMU's style for Rust is currently undefined, so I'm trying
+> > > > to add this to make it easier to check the style...I will separate it
+> > > > out as a style policy proposal.
+> > > 
+> > > Why is a config file necessary? QEMU should use the default Rust style.
+> > > 
+> > 
+> > There are some that may be overdone, but I think some basic may still
+> > be necessary, like "comment_width = 80", "max_width = 80",
+> > "wrap_comments". Is it necessary to specify the width? As C.
+> 
+> Let's agree to follow the Rust coding style from the start, then the
+> problem is solved. My view is that deviating from the standard Rust
+> coding style in order to make QEMU Rust code resemble QEMU C code is
+> less helpful than following Rust conventions so our Rust code looks like
+> Rust.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240528203044.612851-27-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/a64.decode      |  4 ++++
- target/arm/tcg/translate-a64.c | 22 ++++++----------------
- 2 files changed, 10 insertions(+), 16 deletions(-)
+Agreed. The value of a language wide standard is undermined if apps
+diverge from it.
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 1c448b4f7c9..bc98963bc5f 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -918,6 +918,10 @@ SHSUB_v         0.00 1110 ..1 ..... 00100 1 ..... ..... @qrrr_e
- UHSUB_v         0.10 1110 ..1 ..... 00100 1 ..... ..... @qrrr_e
- SRHADD_v        0.00 1110 ..1 ..... 00010 1 ..... ..... @qrrr_e
- URHADD_v        0.10 1110 ..1 ..... 00010 1 ..... ..... @qrrr_e
-+SMAX_v          0.00 1110 ..1 ..... 01100 1 ..... ..... @qrrr_e
-+UMAX_v          0.10 1110 ..1 ..... 01100 1 ..... ..... @qrrr_e
-+SMIN_v          0.00 1110 ..1 ..... 01101 1 ..... ..... @qrrr_e
-+UMIN_v          0.10 1110 ..1 ..... 01101 1 ..... ..... @qrrr_e
- 
- ### Advanced SIMD scalar x indexed element
- 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 9ef5de6755c..db6f59df176 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -5460,6 +5460,10 @@ TRANS(SHSUB_v, do_gvec_fn3_no64, a, gen_gvec_shsub)
- TRANS(UHSUB_v, do_gvec_fn3_no64, a, gen_gvec_uhsub)
- TRANS(SRHADD_v, do_gvec_fn3_no64, a, gen_gvec_srhadd)
- TRANS(URHADD_v, do_gvec_fn3_no64, a, gen_gvec_urhadd)
-+TRANS(SMAX_v, do_gvec_fn3_no64, a, tcg_gen_gvec_smax)
-+TRANS(UMAX_v, do_gvec_fn3_no64, a, tcg_gen_gvec_umax)
-+TRANS(SMIN_v, do_gvec_fn3_no64, a, tcg_gen_gvec_smin)
-+TRANS(UMIN_v, do_gvec_fn3_no64, a, tcg_gen_gvec_umin)
- 
- static bool do_cmop_v(DisasContext *s, arg_qrrr_e *a, TCGCond cond)
- {
-@@ -10925,8 +10929,6 @@ static void disas_simd_3same_int(DisasContext *s, uint32_t insn)
-             return;
-         }
-         /* fall through */
--    case 0xc: /* SMAX, UMAX */
--    case 0xd: /* SMIN, UMIN */
-     case 0xe: /* SABD, UABD */
-     case 0xf: /* SABA, UABA */
-     case 0x12: /* MLA, MLS */
-@@ -10959,6 +10961,8 @@ static void disas_simd_3same_int(DisasContext *s, uint32_t insn)
-     case 0x09: /* SQSHL, UQSHL */
-     case 0x0a: /* SRSHL, URSHL */
-     case 0x0b: /* SQRSHL, UQRSHL */
-+    case 0x0c: /* SMAX, UMAX */
-+    case 0x0d: /* SMIN, UMIN */
-     case 0x10: /* ADD, SUB */
-     case 0x11: /* CMTST, CMEQ */
-         unallocated_encoding(s);
-@@ -10970,20 +10974,6 @@ static void disas_simd_3same_int(DisasContext *s, uint32_t insn)
-     }
- 
-     switch (opcode) {
--    case 0x0c: /* SMAX, UMAX */
--        if (u) {
--            gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_umax, size);
--        } else {
--            gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_smax, size);
--        }
--        return;
--    case 0x0d: /* SMIN, UMIN */
--        if (u) {
--            gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_umin, size);
--        } else {
--            gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_smin, size);
--        }
--        return;
-     case 0xe: /* SABD, UABD */
-         if (u) {
-             gen_gvec_fn3(s, is_q, rd, rn, rm, gen_gvec_uabd, size);
+All code style rules come down to bike shedding, and by simply adopting
+the Rust community defaults, we avoid endless debates as to what style
+is best, and stay aligned with the rest of the Rust community who mostly
+won't override defaults for rustfmt.
+
+
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
