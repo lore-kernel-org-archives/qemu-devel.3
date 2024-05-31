@@ -4,107 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A930C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 14:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686A7C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD3iV-00050l-AR; Fri, 31 May 2024 10:58:51 -0400
+	id 1sD3lN-0005r6-Ec; Fri, 31 May 2024 11:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD3iT-00050I-EN
- for qemu-devel@nongnu.org; Fri, 31 May 2024 10:58:49 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD3lL-0005qy-7N
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:01:47 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD3iR-0003HV-FT
- for qemu-devel@nongnu.org; Fri, 31 May 2024 10:58:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD3lJ-0003kM-JI
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:01:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7BC0321C4B;
- Fri, 31 May 2024 14:58:41 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 177EF1FB5E;
+ Fri, 31 May 2024 15:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717167521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1717167704; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LfBEd/tMTRG355dJgplNPGVpnvLH9hQcgSrSLWEzVjM=;
- b=UAvJRbDusSbgVVpOZu/JwP6+oUldGV43ITFKUhJj0UW2QkduQ3b65D6s/ZokTv/p0xK8p/
- IKcQNMA1eteL4M5Cl4kKxV66LxI550Gn4ncqVvrhra1e1PN/MHGsEBizSisV0DEZPzUWB1
- di8BsTIgvvzt7ehE5GVxd0PWceEb31A=
+ bh=Kgxj5qQtABfspQi0kIEMIHkMTWNiMQSr0NWSOIyO8ZA=;
+ b=DTrB42AgP7rt5oanO55wgj7kw/Ih21hh7qZgoDqo1rWEwQi6PUJDE+OSFniotcb437j/ru
+ hcuE/ulX/UJrQ0X6ozobh/oBQIKYHPHQTqQ8FPP3TLPIDO3zioHemN2hf7GR15/3u0L5iO
+ gK08LecXHoU+LfV4MgaucfdtFtWwnjg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717167521;
+ s=susede2_ed25519; t=1717167704;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LfBEd/tMTRG355dJgplNPGVpnvLH9hQcgSrSLWEzVjM=;
- b=VbEnApPkytK1MLtTZKyybs3WtWbdamGBwlVm4TkLXX6lvkm3u8EgFx4gZobzgr3fiog0D8
- +MuF1EwntDDy5yCA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UAvJRbDu;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VbEnApPk
+ bh=Kgxj5qQtABfspQi0kIEMIHkMTWNiMQSr0NWSOIyO8ZA=;
+ b=wDT/ndO8PnKATlJbrnHQ/CXKR1CWVlTcleLo87bkpJql9Vy3LRddUcIuccBbsN3vjtRal3
+ RZO3EmC3Suux/XDw==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717167521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1717167704; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LfBEd/tMTRG355dJgplNPGVpnvLH9hQcgSrSLWEzVjM=;
- b=UAvJRbDusSbgVVpOZu/JwP6+oUldGV43ITFKUhJj0UW2QkduQ3b65D6s/ZokTv/p0xK8p/
- IKcQNMA1eteL4M5Cl4kKxV66LxI550Gn4ncqVvrhra1e1PN/MHGsEBizSisV0DEZPzUWB1
- di8BsTIgvvzt7ehE5GVxd0PWceEb31A=
+ bh=Kgxj5qQtABfspQi0kIEMIHkMTWNiMQSr0NWSOIyO8ZA=;
+ b=DTrB42AgP7rt5oanO55wgj7kw/Ih21hh7qZgoDqo1rWEwQi6PUJDE+OSFniotcb437j/ru
+ hcuE/ulX/UJrQ0X6ozobh/oBQIKYHPHQTqQ8FPP3TLPIDO3zioHemN2hf7GR15/3u0L5iO
+ gK08LecXHoU+LfV4MgaucfdtFtWwnjg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717167521;
+ s=susede2_ed25519; t=1717167704;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LfBEd/tMTRG355dJgplNPGVpnvLH9hQcgSrSLWEzVjM=;
- b=VbEnApPkytK1MLtTZKyybs3WtWbdamGBwlVm4TkLXX6lvkm3u8EgFx4gZobzgr3fiog0D8
- +MuF1EwntDDy5yCA==
+ bh=Kgxj5qQtABfspQi0kIEMIHkMTWNiMQSr0NWSOIyO8ZA=;
+ b=wDT/ndO8PnKATlJbrnHQ/CXKR1CWVlTcleLo87bkpJql9Vy3LRddUcIuccBbsN3vjtRal3
+ RZO3EmC3Suux/XDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 02930137C3;
- Fri, 31 May 2024 14:58:40 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 92C2B137C3;
+ Fri, 31 May 2024 15:01:43 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wm6NLqDlWWbwAQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 31 May 2024 14:58:40 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id FwlJFlfmWWY3AwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 31 May 2024 15:01:43 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
  Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v2 01/18] migration: Fix file migration with fdset
-In-Reply-To: <ZlilFQYVvHWRCABb@x1n>
+Subject: Re: [PATCH v2 05/18] monitor: Introduce monitor_fdset_*free
+In-Reply-To: <Zljbptai4sXq4Ai5@x1n>
 References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-2-farosas@suse.de> <ZlilFQYVvHWRCABb@x1n>
-Date: Fri, 31 May 2024 11:58:38 -0300
-Message-ID: <87ttiekoyp.fsf@suse.de>
+ <20240523190548.23977-6-farosas@suse.de> <Zljbptai4sXq4Ai5@x1n>
+Date: Fri, 31 May 2024 12:01:41 -0300
+Message-ID: <87r0dikotm.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
  TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 7BC0321C4B
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -129,71 +117,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> On Thu, May 23, 2024 at 04:05:31PM -0300, Fabiano Rosas wrote:
->> When the "file:" migration support was added we missed the special
->> case in the qemu_open_old implementation that allows for a particular
->> file name format to be used to refer to a set of file descriptors that
->> have been previously provided to QEMU via the add-fd QMP command.
->>=20
->> When using this fdset feature, we should not truncate the migration
->> file because being given an fd means that the management layer is in
->> control of the file and will likely already have some data written to
->> it. This is further indicated by the presence of the 'offset'
->> argument, which indicates the start of the region where QEMU is
->> allowed to write.
->>=20
->> Fix the issue by replacing the O_TRUNC flag on open by an ftruncate
->> call, which will take the offset into consideration.
->>=20
->> Fixes: 385f510df5 ("migration: file URI offset")
->> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> On Thu, May 23, 2024 at 04:05:35PM -0300, Fabiano Rosas wrote:
+>> Introduce two new functions to remove and free no longer used fds and
+>> fdsets.
+>> 
+>> We need those to decouple the remove/free routines from
+>> monitor_fdset_cleanup() which will go away in the next patches.
+>> 
+>> The new functions:
+>> 
+>> - monitor_fdset_free() will be used when a monitor connection closes
+>>   and when an fd is removed to cleanup any fdset that is now empty.
+>> 
+>> - monitor_fdset_fd_free() will be used to remove one or more fds that
+>>   have been explicitly targeted by qmp_remove_fd().
+>> 
 >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 >
 > Reviewed-by: Peter Xu <peterx@redhat.com>
-
-Thanks
-
 >
-> Right below the change, did we forget to free the ioc if
-> qio_channel_io_seek() failed?
+> One nitpick below.
 >
-
-Yep, looks like it. I'll fix it.
-
 >> ---
->>  migration/file.c | 11 +++++++++--
->>  1 file changed, 9 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/migration/file.c b/migration/file.c
->> index ab18ba505a..ba5b5c44ff 100644
->> --- a/migration/file.c
->> +++ b/migration/file.c
->> @@ -84,12 +84,19 @@ void file_start_outgoing_migration(MigrationState *s,
->>=20=20
->>      trace_migration_file_outgoing(filename);
->>=20=20
->> -    fioc =3D qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O=
-_TRUNC,
->> -                                     0600, errp);
->> +    fioc =3D qio_channel_file_new_path(filename, O_CREAT | O_WRONLY, 06=
-00, errp);
->>      if (!fioc) {
->>          return;
->>      }
->>=20=20
->> +    if (ftruncate(fioc->fd, offset)) {
->> +        error_setg_errno(errp, errno,
->> +                         "failed to truncate migration file to offset %=
-" PRIx64,
->> +                         offset);
->> +        object_unref(OBJECT(fioc));
->> +        return;
+>>  monitor/fds.c | 26 ++++++++++++++++++--------
+>>  1 file changed, 18 insertions(+), 8 deletions(-)
+>> 
+>> diff --git a/monitor/fds.c b/monitor/fds.c
+>> index fb9f58c056..101e21720d 100644
+>> --- a/monitor/fds.c
+>> +++ b/monitor/fds.c
+>> @@ -167,6 +167,22 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+>>      return -1;
+>>  }
+>>  
+>> +static void monitor_fdset_free(MonFdset *mon_fdset)
+>> +{
+>> +    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
+>> +        QLIST_REMOVE(mon_fdset, next);
+>> +        g_free(mon_fdset);
 >> +    }
+>> +}
+>
+> Would monitor_fdset_free_if_empty() (or similar) slightly better?
+
+Yes, I'll use that.
+
+>
+> static void monitor_fdset_free(MonFdset *mon_fdset)
+> {
+>     QLIST_REMOVE(mon_fdset, next);
+>     g_free(mon_fdset);
+> }
+>
+> static void monitor_fdset_free_if_empty(MonFdset *mon_fdset)
+> {
+>     if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
+>         monitor_fdset_free(mon_fdset);
+>     }
+> }
+>
 >> +
->>      outgoing_args.fname =3D g_strdup(filename);
->>=20=20
->>      ioc =3D QIO_CHANNEL(fioc);
->> --=20
+>> +static void monitor_fdset_fd_free(MonFdsetFd *mon_fdset_fd)
+>> +{
+>> +    close(mon_fdset_fd->fd);
+>> +    g_free(mon_fdset_fd->opaque);
+>> +    QLIST_REMOVE(mon_fdset_fd, next);
+>> +    g_free(mon_fdset_fd);
+>> +}
+>> +
+>>  static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+>>  {
+>>      MonFdsetFd *mon_fdset_fd;
+>> @@ -176,17 +192,11 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+>>          if ((mon_fdset_fd->removed ||
+>>                  (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
+>>                  runstate_is_running()) {
+>> -            close(mon_fdset_fd->fd);
+>> -            g_free(mon_fdset_fd->opaque);
+>> -            QLIST_REMOVE(mon_fdset_fd, next);
+>> -            g_free(mon_fdset_fd);
+>> +            monitor_fdset_fd_free(mon_fdset_fd);
+>>          }
+>>      }
+>>  
+>> -    if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
+>> -        QLIST_REMOVE(mon_fdset, next);
+>> -        g_free(mon_fdset);
+>> -    }
+>> +    monitor_fdset_free(mon_fdset);
+>>  }
+>>  
+>>  void monitor_fdsets_cleanup(void)
+>> -- 
 >> 2.35.3
->>=20
+>> 
 
