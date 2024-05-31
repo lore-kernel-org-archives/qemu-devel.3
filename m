@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763D7C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4F7C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 13:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD1n8-0004Hm-IG; Fri, 31 May 2024 08:55:30 -0400
+	id 1sD1sa-00060V-Vz; Fri, 31 May 2024 09:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD1n5-0004Gp-NY
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:55:27 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD1sG-0005wf-Cs
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 09:00:54 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD1mx-0004cc-6o
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:55:26 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2e78fe9fc2bso25867651fa.3
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:55:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD1sE-0005Sj-LK
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 09:00:48 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-579fa270e53so2455340a12.3
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 06:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717160117; x=1717764917; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1cpFa6FVKwSFA+VRpsxUQlT8OEi2ogEdoXtWwLeulhQ=;
- b=y903D/JI02lv//kBi/NNqONN6E4+l4CXJPXWbqwOmudiSaKMBfsyQT8uDHnOl0qFkn
- ix8H3KckgJG5kLdzZQ1IM4GrYkYIUqXihlC/idA3V+A4pvQpV8jfsjUReW7bysoTqAvm
- R8W6RXvzahVOtCb/THtrA0H8XJ5S1rrPo+vRtTtDuUcK9lamHs/4qx2vxtqu9nuKdkMy
- VNY9COntGAeCn9ulObNYrG9W1hJ1ck+DSUgrRm6+MR0f4suUrBAWuMlXRqBkp8uSvmzz
- Abx0PfnV9sJkxM9quYEaTN1TiCMGDJmG6BjxDERu/ARDdSadmAlXalV0ilGsDy3EOOMT
- UUPw==
+ d=linaro.org; s=google; t=1717160444; x=1717765244; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1HwbPR/tRGD8gL5h/ZFbNIKc9eUoUQkWDmtW3brmsn8=;
+ b=LJ1ZnaQTMBYVKHDav44vtCD4kKO5Dz9h+HUqXHJQuQDalxGe7U+6GuXuLh64CGdWli
+ UojEjHH4fO6q7APHkjclE2zXyxNZqjj65i1gM8qvwlffzexMBCBGLJp6tobjkRcttGEY
+ kOnufYz+QHPfl0B4pKt+7ThiHJGHGUDY8p1pGVTpL8dF3MmiQrUGzTH7kylry5nQPXtl
+ oHF482eJNzfCVjeehuttsU+lpV4qnNDUz9NLxVd0+E7ji4gV/RZBKfZom0RNqadTfHYD
+ kWprKFgUSbaloKLLmCV2dj/dQtGzNNOxgtyJu+eHabsaOhaxVBxf0A7KohKdZK6lvaaC
+ 21GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717160117; x=1717764917;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1cpFa6FVKwSFA+VRpsxUQlT8OEi2ogEdoXtWwLeulhQ=;
- b=K739ch3KRZxcYsteG3BrF7botiffuPa8btpbnWeSJuo0qcdl0IxsKiqGc6eCSEmufH
- jqfM6ynzDSB6yafRLAuSzYt3LSbqxhSE5yM4zTGz1ZBW8jyPFMtwpCaTIJVJUh/KW/pm
- 2eOD91INqfqZWJUCgKUoUYysRgUP3zcP+kqIbgUJpRN89l0sT7FmbFQAMW4XZQ0NP/uW
- MKOgDtg9Y4Qn4Vo2KqySQXDZSsMERXOqhPNv1dI0qoNdeX3bz6IYpL8LPsfQpw0i8gtX
- L+zKZ+GJsA74T+/B4kSDCUS+VvUhIGCXGocZe1eQV/zpMwcO8aKMR5AmDZ6RSLk76xZ8
- sNMg==
+ d=1e100.net; s=20230601; t=1717160444; x=1717765244;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1HwbPR/tRGD8gL5h/ZFbNIKc9eUoUQkWDmtW3brmsn8=;
+ b=YyAtPIkrycY8U4pUKraUsftFCYw6ssSwupisJ80p0ChrDhJhrsV+imeE13uFtYRflE
+ YVaUMybNfJW05VvaSaI/OrvFTnCsFA5HNiWZJ0x8JZk3fM8GDjhRlKfCKZO4nrwJAtE7
+ kh5NyRJ+cszyXzfiabH2zsWMJRvBxWoTSq6pRy8T/BkdEnZwItxcASAGxuiU291XALTi
+ 6c/0T15WAOF0VBRuvpXjIaz+Y/ps7zDauntR2qEl2T6Aq/iNDFULhUNFjTKxJhLUuMFd
+ zixB89DwUwCGgnj1i94SqQr1q/9X9ISu5M+yEp+Qd9zw/TFeL/lkUClAVr5zymbWfnF3
+ ZuVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW83083RFxeJEamlXSxoI1jVwDfIQhXf0OibDTuWAHuVAZqcYtvMZdeo4VaGfoW/CmdfCfJv5kcanEHzKJtVpFE9sR9nQI=
-X-Gm-Message-State: AOJu0Yxt1NL9lk+abHDzqZwJTkn8Dvv11b7cloN5RSKQ7JZNslFVYxaH
- JHW4pOWWg9b1xDcfWcFw52m1AHFOrOg4sNG0FN3QvyEjFbJDJJdhRJ30lAi86ItQKNCQs4lBxo6
- 1TFA=
-X-Google-Smtp-Source: AGHT+IGOjvew9dyTHM535YbCv+Wk/f3AfYrgQi+sC3rQFagvuN7j2o1xIe2No9VCarxVqGVEv98PrA==
-X-Received: by 2002:a05:651c:2112:b0:2e9:8374:3820 with SMTP id
- 38308e7fff4ca-2ea951dfc12mr15841811fa.40.1717160116781; 
- Fri, 31 May 2024 05:55:16 -0700 (PDT)
-Received: from [192.168.183.175] (11.red-95-127-95.dynamicip.rima-tde.net.
- [95.127.95.11]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212b2bc975sm26527815e9.29.2024.05.31.05.55.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 05:55:16 -0700 (PDT)
-Message-ID: <aa9e9b63-a8cd-49b6-9b83-a193456aa925@linaro.org>
-Date: Fri, 31 May 2024 14:55:14 +0200
+ AJvYcCVIhumuzZ449JnS8g9oNVNC8K5DjVPChYKbtNVsGA5FPJw8nxTyt+B7zAdytVln4kwKKUp021/wlp/I/gOp4+WlXstY4Fc=
+X-Gm-Message-State: AOJu0Yw8HRu7kYj8IA2ACOddpU53kKJbvFXlZJWBsvt+o5ZVh9z6Vj+o
+ RLs5WtEYDv/l4+Vttylc/9E/ehOB3DUvACVgsUuJViufwI08nEHsmud5lRuGocRKwx77A8RKqAL
+ 2hPXaVg5I/bYApKISHkjixk3UjDsTJwlqmFH18Q1JNre7I3tM
+X-Google-Smtp-Source: AGHT+IGryU9BSyAyF8TKsaUC8cxtPwsYYMwEOm+8r6DKuIVuKvGio3H3jOGI0Oc8s6GGHT96yyU2mv11opKUACo5N9s=
+X-Received: by 2002:a50:9f4b:0:b0:57a:1aa8:b4ad with SMTP id
+ 4fb4d7f45d1cf-57a363eb091mr1471217a12.6.1717160444547; Fri, 31 May 2024
+ 06:00:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] host/i386: nothing looks at CPUINFO_SSE4
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240531091457.42200-1-pbonzini@redhat.com>
- <20240531091457.42200-2-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240531091457.42200-2-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
+References: <20240513233305.2975295-1-perry@mosi.io>
+ <42e47d17-1d49-43e8-abd6-76abdcb159dc@linaro.org>
+ <CAFEAcA9t9t7R9FR9mwEssT8+7XVcaBdThetZawB+VmL+0OcxDg@mail.gmail.com>
+ <8e1b7975-85f8-48f6-8c4a-063f465a7f91@mosi.io>
+In-Reply-To: <8e1b7975-85f8-48f6-8c4a-063f465a7f91@mosi.io>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 May 2024 14:00:32 +0100
+Message-ID: <CAFEAcA_VWAumJ_0MEe8cd43ej9_jqnyo8mjPYuAfuALgEoge8g@mail.gmail.com>
+Subject: Re: [PATCH] physmem: allow debug writes to MMIO regions
+To: Perry Hung <perry@mosi.io>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, pbonzini@redhat.com, peterx@redhat.com, 
+ david@redhat.com, Andreas Rasmusson <andreas.rasmusson@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,16 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/5/24 11:14, Paolo Bonzini wrote:
-> The only user was the SSE4.1 variant of buffer_is_zero, which has
-> been removed; code to compute CPUINFO_SSE4 is dead.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   host/include/i386/host/cpuinfo.h | 1 -
->   util/cpuinfo-i386.c              | 1 -
->   2 files changed, 2 deletions(-)
+On Mon, 20 May 2024 at 19:48, Perry Hung <perry@mosi.io> wrote:
+>
+> Philippe, Peter,
+>
+> Thank you for the comments. I am not even sure what the semantics of
+> putting a breakpoint or watchpoint
+> on device regions are supposed to be. I would imagine it is
+> architecture-specific as to whether this is even allowed.
+>
+> It appears for example, that armv8-a allows watchpoints to be set on any
+> type of memory. armv7-a prohibits
+> watchpoints on Device or Strongly-ordered memory that might be accessed
+> by instructions multiple times
+> (e.g LDM and LDC instructions).
+>
+> What is the current behavior for QEMU and what should
+> breakpoints/watchpoints do when placed on IO memory?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Personally I don't think it matters very much, because the
+user shouldn't really be doing something silly like that
+in the first place. If they do, they get to deal with
+whatever problems result.
 
+My feeling is that the neater place to put the handling of
+memory regions that aren't RAM/ROM is probably in
+address_space_write_rom_internal(). But doing that makes me
+nervous, because that's in the file-loading path and I
+bet there are dubious guest images out there that put
+data in some area covered by a device and currently rely
+on it being ignored when the image is loaded...
+
+thanks
+-- PMM
 
