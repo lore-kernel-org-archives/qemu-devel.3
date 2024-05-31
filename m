@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247C7C27C44
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E4DC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD690-0006XW-Lv; Fri, 31 May 2024 13:34:22 -0400
+	id 1sD6Ej-00089R-Ow; Fri, 31 May 2024 13:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD68y-0006X2-Q5
- for qemu-devel@nongnu.org; Fri, 31 May 2024 13:34:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD68w-0005GD-RM
- for qemu-devel@nongnu.org; Fri, 31 May 2024 13:34:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717176857;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rTQBsLoLFyr/bsxrazI3Wdm6raiglGew9Gxd8uS7dnE=;
- b=PeiXhMgC94a6t60648oDyX87DOtFz9gmIY8sP/xq9hnaV2M5jvPJpjXF7tSMtayzbd9sw9
- +tEF06PlXIF8SGvTswtpKhKS6psQPYTQmWjB4LQBYbLVPyg8DoyG+wNBoMSN/9Crp7Kx5K
- xTS3FKxtGJ8PHdVlvhP+ueA+q/bdpps=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-s83FXaC4M42-RpfzIUls8g-1; Fri, 31 May 2024 13:34:16 -0400
-X-MC-Unique: s83FXaC4M42-RpfzIUls8g-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-35dc060e68aso1420367f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 10:34:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD6Eh-000891-Aj
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 13:40:15 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD6Ee-0006ju-Qd
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 13:40:15 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-57857e0f45eso2739123a12.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 10:40:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717177211; x=1717782011; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3gKWccaTWNBdJjFqoDLNh+dn28z3jkomPFk/ID1JrTs=;
+ b=u3o6iE5d5NuNFZts+7+7mmG7+RxxmTST9dKRaKDO9tyIdDJGDUIt5wHHI7wUviZC/P
+ WARAt0aOmrt0N8apzo21fX6q9M64boPKINYlB+StO+5fX3GrcPjgtQ1iVXipGtLfZErT
+ BoKQD+xuH4Mf1E2QoO22f7VZk7bc7W+FWIf7qwEvY9hlKcv84ahGprtJ7OKaZ97si6Te
+ 5SpQzzKWMcG4jz/NJu/wmTOAXvgKYTU4kpnm77D2Aoi7+pdgJDtA2+QavhAMGNfFmv+B
+ ZYPHKTbQugZXqxL+0OcAIVh1xhtp/qt2Rbjlato8x1MGE5+n/wILWgYuIrDC/Hbu7Eqy
+ 82Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717176855; x=1717781655;
+ d=1e100.net; s=20230601; t=1717177211; x=1717782011;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rTQBsLoLFyr/bsxrazI3Wdm6raiglGew9Gxd8uS7dnE=;
- b=DVqWKDjHGrFO7GGm72gNOhiO59zPbIdEjARBMIQyG3dUYskcOXrSP9bSeV790Jzd+o
- HBPbzo6nd3bQ/byiA/UvTO5Jw2LLiRIrahPA2Y7xgee+fSlVJl28LHr453876Ii8V/1d
- nymHj7IKpVQnVnIae66TU2WwDE83I1Kmf9pu15GhULazO2S5DjHv/QF88qPW686+w/c5
- Q44cLsgDXqR5wT8qOixnU0PTGu6T4fF/RlJQZHseGD7g19z3c3ew9voQpBuQ64bMKRWX
- bopbgjKnVpRVKwiHY/PEYrvNLkccv3hKN70UDBBArgHGrQYt1JwChRfSQkiFhEg/bFo3
- BIRg==
-X-Gm-Message-State: AOJu0YxWUWw02IbNtfnHeiXO/GXM3GPzB4X5M62NYmVYyWYMk2cW4YMR
- 80NgqZX10j5Epf43S2LHmOOW+WZukMW2h7p37TFF3cGopm8HquLXe0cP92PMC5JDjd2DkHK3wgL
- g3FXtB9UzV8t9BFa3D+YfkiARsT8qVOflMyz4w1IrVYkMiPD7EAPP8C85+mav3+WihR4lgFB80u
- DEX2Op/6yFqF1M0aalU8tQ3/B7R3g=
-X-Received: by 2002:adf:f44d:0:b0:343:ef64:e0fd with SMTP id
- ffacd0b85a97d-35e0f30a89dmr1803388f8f.52.1717176855024; 
- Fri, 31 May 2024 10:34:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGGDV1OH7Fl/Fo5KeMbK3huL5FBB8TDYOad1c8EHRVl8vG5i24CYXQ+/f0EkiCdmKIbgXwxYY1z1V3BGTcSQEs=
-X-Received: by 2002:adf:f44d:0:b0:343:ef64:e0fd with SMTP id
- ffacd0b85a97d-35e0f30a89dmr1803373f8f.52.1717176854663; Fri, 31 May 2024
- 10:34:14 -0700 (PDT)
+ bh=3gKWccaTWNBdJjFqoDLNh+dn28z3jkomPFk/ID1JrTs=;
+ b=t7pyuo7YyToYAwopRx4IbagRRmAo2SyT5fgCm3R6B+tXKdYCEa432N/KQIFRk+zkT1
+ WIpApM/8TDIGwFjQaen/xaPbqMeWSfKbFg62rMmBXP2NdKgU+A90DNs1hTaBO/NCHSbC
+ S9gQAn5SJYfZYYt7y3Ut0G411K+NiqK3CoTgtmmgInI6xKu5vb5I7D5e96qxtnrmTD6l
+ I6LkIkCdyAf1U63YqJXtB17NdlgVwWYff7kSj2qmceTPB822R9OTwWCtWSJzN7gCKVVc
+ bA7eCA+2R6gj+Mi65iERVLWrnjqC7CXEM3RdrSuHvBpsHNzBFoksQc7mGYdGOPzgV030
+ CLhg==
+X-Gm-Message-State: AOJu0Yz33u5PxUeFKI4RW2Cb1FAy49Sgi3yGLK8tVD1gTrJ4gMfTFaVp
+ 8tNB+HV8T/IVqxyiXY3+/4Vq5EIdygnhvnnYawVprBzMu2Q12Mm+y/fHk8TvFPDOM5bHRPLHN0i
+ FvhfXZpcI7Z5mydNz9rcxDuE1oE9sqe9KjQntxw==
+X-Google-Smtp-Source: AGHT+IHPs35W9cvtz3+zSESyKGm2mFB4VRfWZmH0q/A9RKzN+qLpyBz4nfaR14kTa3NDTLC8rBhVy5dPvLw4lMj6C1E=
+X-Received: by 2002:a50:9359:0:b0:578:e202:137 with SMTP id
+ 4fb4d7f45d1cf-57a364b52aamr2153980a12.20.1717177210684; Fri, 31 May 2024
+ 10:40:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <CABgObfYFryXwEtVkMH-F6kw8hrivpQD6USMQ9=7fVikn5-mAhQ@mail.gmail.com>
-In-Reply-To: <CABgObfYFryXwEtVkMH-F6kw8hrivpQD6USMQ9=7fVikn5-mAhQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 31 May 2024 19:34:03 +0200
-Message-ID: <CABgObfbwr6CJK1XCmmVhp83AsC2YcQfSsfuPFWDuxzCB_R4GoQ@mail.gmail.com>
-Subject: Re: [PATCH v4 00/31] Add AMD Secure Nested Paging (SEV-SNP) support
-To: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com, 
- armbru@redhat.com, michael.roth@amd.com, xiaoyao.li@intel.com, 
- thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com, 
- kvm@vger.kernel.org, anisinha@redhat.com
+References: <20240303140643.81957-1-arnaud.minier@telecom-paris.fr>
+ <20240303140643.81957-6-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240303140643.81957-6-arnaud.minier@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 May 2024 18:39:58 +0100
+Message-ID: <CAFEAcA92fO-Yi1eioFNb4rZhBOcS9NR5NWT0Cg6JFxUUsQC-mQ@mail.gmail.com>
+Subject: Re: [PATCH v6 5/8] hw/misc/stm32l4x5_rcc: Handle Register Updates
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org, 
+ Laurent Vivier <lvivier@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,88 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 31, 2024 at 1:20=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
+On Sun, 3 Mar 2024 at 14:08, Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
 >
-> On Thu, May 30, 2024 at 1:16=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.co=
-m> wrote:
-> >
-> > These patches implement SEV-SNP base support along with CPUID enforceme=
-nt
-> > support for QEMU, and are also available at:
-> >
-> > https://github.com/pagupta/qemu/tree/snp_v4
-> >
-> > Latest version of kvm changes are posted here [2] and also queued in kv=
-m/next.
-> >
-> > Patch Layout
-> > ------------
-> > 01-03: 'error_setg' independent fix, kvm/next header sync & patch from
-> >        Xiaoyao's TDX v5 patchset.
-> > 04-29: Introduction of sev-snp-guest object and various configuration
-> >        requirements for SNP. Support for creating a cryptographic "laun=
-ch" context
-> >        and populating various OVMF metadata pages, BIOS regions, and vC=
-PU/VMSA
-> >        pages with the initial encrypted/measured/validated launch data =
-prior to
-> >        launching the SNP guest.
-> > 30-31: Handling for KVM_HC_MAP_GPA_RANGE hypercall for userspace VMEXIT=
-.
+> Update the RCC state and propagate frequency changes when writing to the
+> RCC registers. Currently, ICSCR, CIER, the reset registers and the stop
+> mode registers are not implemented.
 >
-> These patches are more or less okay, with only a few nits, and I can
-> queue them already:
+> Some fields  have not been implemented due to uncertainty about
+> how to handle them (Like the clock security system or bypassing
+> mecanisms).
+>
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 
-Hey,
+Hi; somebody has reported a bug in this change, which they found
+using a fuzzer:
 
-please check if branch qemu-coco-queue of
-https://gitlab.com/bonzini/qemu works for you!
+https://gitlab.com/qemu-project/qemu/-/issues/2356
 
-I tested it successfully on CentOS 9 Stream with kernel from kvm/next
-and firmware from edk2-ovmf-20240524-1.fc41.noarch.
+> +static void rcc_update_cfgr_register(Stm32l4x5RccState *s)
+> +{
+> +    uint32_t val;
+> +    /* MCOPRE */
+> +    val =3D FIELD_EX32(s->cfgr, CFGR, MCOPRE);
+> +    assert(val <=3D 0b100);
 
-Paolo
+You can't assert() things about guest register values,
+because then if the guest writes that value QEMU will fall over.
+For "this is something the spec says is invalid", the right
+thing to do in a device model is to qemu_log_mask(LOG_GUEST_ERROR, ...)
+the situation, and proceed as best you can (eg treat the value
+as if it was some valid one, or disable the clock entirely).
 
-> i386/sev: Replace error_report with error_setg
-> linux-headers: Update to current kvm/next
-> i386/sev: Introduce "sev-common" type to encapsulate common SEV state
-> i386/sev: Move sev_launch_update to separate class method
-> i386/sev: Move sev_launch_finish to separate class method
-> i386/sev: Introduce 'sev-snp-guest' object
-> i386/sev: Add a sev_snp_enabled() helper
-> i386/sev: Add sev_kvm_init() override for SEV class
-> i386/sev: Add snp_kvm_init() override for SNP class
-> i386/cpu: Set SEV-SNP CPUID bit when SNP enabled
-> i386/sev: Don't return launch measurements for SEV-SNP guests
-> i386/sev: Add a class method to determine KVM VM type for SNP guests
-> i386/sev: Update query-sev QAPI format to handle SEV-SNP
-> i386/sev: Add the SNP launch start context
-> i386/sev: Add handling to encrypt/finalize guest launch data
-> i386/sev: Set CPU state to protected once SNP guest payload is finalized
-> hw/i386/sev: Add function to get SEV metadata from OVMF header
-> i386/sev: Add support for populating OVMF metadata pages
-> i386/sev: Add support for SNP CPUID validation
-> i386/sev: Invoke launch_updata_data() for SEV class
-> i386/sev: Invoke launch_updata_data() for SNP class
-> i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE
-> i386/sev: Enable KVM_HC_MAP_GPA_RANGE hcall for SNP guests
-> i386/sev: Extract build_kernel_loader_hashes
-> i386/sev: Reorder struct declarations
-> i386/sev: Allow measured direct kernel boot on SNP
-> hw/i386/sev: Add support to encrypt BIOS when SEV-SNP is enabled
-> memory: Introduce memory_region_init_ram_guest_memfd()
->
-> These patches need a small prerequisite that I'll post soon:
->
-> hw/i386/sev: Use guest_memfd for legacy ROMs
-> hw/i386: Add support for loading BIOS using guest_memfd
->
-> This one definitely requires more work:
->
-> hw/i386/sev: Allow use of pflash in conjunction with -bios
->
->
-> Paolo
+> +    clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
+> +                         1, 1 << val);
+> +
+> +    /* MCOSEL */
+> +    val =3D FIELD_EX32(s->cfgr, CFGR, MCOSEL);
+> +    assert(val <=3D 0b111);
 
+Similarly here. (The obvious behaviour for "invalid clock
+source selected" would be "treat as clock disabled".)
+
+> +    if (val =3D=3D 0) {
+> +        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false);
+> +    } else {
+> +        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], true);
+> +        clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
+> +                             val - 1);
+> +    }
+
+thanks
+-- PMM
 
