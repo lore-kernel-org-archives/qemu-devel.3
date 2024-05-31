@@ -4,67 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B17C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F05AC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD3uS-00008T-0H; Fri, 31 May 2024 11:11:12 -0400
+	id 1sD40w-0004LD-9T; Fri, 31 May 2024 11:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sD3uJ-00005U-7S
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:11:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sD3uD-0005Wo-Us
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:10:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717168253;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dBn9cyCHNceTfICbu/pOQoQHiwbNTyjHN5kM/7fkG8E=;
- b=GfUu5AG72Kc3/fa7clMPsXKCJMeMkr4wQSjf68wXSdZSKRMfB1FCfVpdtL9fLctfoS5XHb
- h+D4NGbhnCRXDoLP1FoapXXtIkr18yj5zPAzQAPoSqBbmC4w+z76bMN83BHbBsEz7UYms3
- MOtiUISpjiQODEMiRSh+ekQlZ8pwIKU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-3LWsEf6SMm6tOrFcIhR-Vw-1; Fri, 31 May 2024 11:10:52 -0400
-X-MC-Unique: 3LWsEf6SMm6tOrFcIhR-Vw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BDE128008A4
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 15:10:51 +0000 (UTC)
-Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 69B5A3C27
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 15:10:51 +0000 (UTC)
-From: Michal Privoznik <mprivozn@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v3 4/4] backends/hostmem: Report error when memory size is
- unaligned
-Date: Fri, 31 May 2024 17:10:47 +0200
-Message-ID: <025d0bdd5e76b334754c09c445fe621090121da5.1717168113.git.mprivozn@redhat.com>
-In-Reply-To: <cover.1717168113.git.mprivozn@redhat.com>
-References: <cover.1717168113.git.mprivozn@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD40t-0004Kj-PZ
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:17:51 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD40r-0006kX-VN
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:17:51 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a6302bdb54aso268501066b.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 08:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717168667; x=1717773467; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pflu6rB3hNoWWDoKWHqul0viszTggnCsNgrVgRIuZLg=;
+ b=ARfcVibFs3ml/Ia9k92PoATdbmunYfcu2msoFhC0x1bMzmpoloSUbn333FG48e9l7G
+ 5u25RCqnBXINR+SHZTI2yT7OSwnaqupnLtrHTQxoi7Tn9krVLk5yafXGOevZTGGRWjbI
+ 8dPeET8aFvDGUbLYazu4iMt68aiya4LAlZXxA4D0RpZWDugDVXsc86wGh8LasGN63RH5
+ lNANc9u/KM0JudIRFQQMp7MlX89ZqmGJn8iyDQMXkUyS+Ag1janbhFNLz/2gSbJdzxbf
+ XNg4ohu51E1nF++Sttha46+rtDWM5ELLyFIA6Zo0pyX4F5dFpMcM15ZHmnMauHMgqhDE
+ 0vZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717168667; x=1717773467;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pflu6rB3hNoWWDoKWHqul0viszTggnCsNgrVgRIuZLg=;
+ b=B8qi9de3SUrTLvGR3+unvMnckqq+AIUnjlZHq2D9mBesssjp9w/Ndsvi5bP0dWBoz2
+ x5rHmBUpDUP3AJxTeDo1wvk9PJDXcuH44KsFggTwzZxlW8mt9YeMyfJaHrYvnP517FVu
+ oo5qMXCijBy6DPKCffGKxMpQ8guaRubB2G9aYIbVzytGH+iu2vCjsrtUpJLyQNCuEu/I
+ QqjH7BKVnDhov9D9NYsbwVvX+TNVq1aoCkMzxsAR+mltoU2kZjQQCpaEbO9y9AUi8eSl
+ HGKbXwcS/R9zZ6/Qqo6PjG5RfBim6KYe/twVzyjqYf3wN5U099XE6zxXiRwZ4iE/j2WF
+ ruWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUucP/JQIZz4lDZtpSIaS4q7rI753J19FGfcAuRt8Q8UK0RYp0IF5JZgR8CURDyaNyliwFYh3BSXqfslj3DHP66sM3YGfA=
+X-Gm-Message-State: AOJu0Yz9VIpw9aQymKGlPSdtKXHHii3RnYk/t6GTxRxSb1XRONeu4703
+ PjOwaEJncfiDXcYwcdw75WI5ZshTBJqlKhoRE0BJEsDQVRm68WhRM9OrYoQuK4c=
+X-Google-Smtp-Source: AGHT+IHdTpMxBUQhjBPGAHU2IFgDRjVQLF4d/v30mRoOBHKdR//mdptewpJmN9htR1n3WxQJFmdgVA==
+X-Received: by 2002:a17:906:1be2:b0:a62:d348:8df4 with SMTP id
+ a640c23a62f3a-a68205176ecmr153988366b.30.1717168667073; 
+ Fri, 31 May 2024 08:17:47 -0700 (PDT)
+Received: from [192.168.230.175] (109.171.88.92.rev.sfr.net. [92.88.171.109])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6848423bc9sm73725666b.147.2024.05.31.08.17.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 May 2024 08:17:46 -0700 (PDT)
+Message-ID: <77a5f792-6caa-4dd9-9de7-e13224573f30@linaro.org>
+Date: Fri, 31 May 2024 17:17:39 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] scripts/coverity-scan/COMPONENTS.md: Update paths to
+ match gitlab CI
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20240531142145.482361-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240531142145.482361-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,61 +96,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If memory-backend-{file,ram} has a size that's not aligned to
-underlying page size it is not only wasteful, but also may lead
-to hard to debug behaviour. For instance, in case
-memory-backend-file and hugepages, madvise() and mbind() fail.
-Rightfully so, page is the smallest unit they can work with. And
-even though an error is reported, the root cause it not very
-clear:
+Hi Peter,
 
-  qemu-system-x86_64: Couldn't set property 'dump' on 'memory-backend-file': Invalid argument
+On 31/5/24 16:21, Peter Maydell wrote:
+> Since commit 83aa1baa069c we have been running the build for Coverity
+> Scan as a Gitlab CI job, rather than the old setup where it was run
+> on a local developer's machine.  This is working well, but the
+> absolute paths of files are different for the Gitlab CI job, which
+> means that the regexes we use to identify Coverity components no
+> longer work. With Gitlab CI builds the file paths are of the form
+>   /builds/qemu-project/qemu/accel/kvm/kvm-all.c
+> 
+> rather than the old
+>   /qemu/accel/kvm/kvm-all.c
+> 
+> and our regexes all don't match.
+> 
+> Update all the regexes to start with .*/qemu/ . This will hopefully
+> avoid the need to change them again in future if the build path
+> changes again.
+> 
+> This change was made with a search-and-replace of (/qemu)?
+> to .*/qemu .
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> As usual with COMPONENTS.md changes, somebody with Coverity admin
+> access needs to make all the changes by hand in the GUI once this
+> has gone through code review :-(
+> 
+> If there are any other changes we want to make to our component
+> regexes, now would be a great time to suggest them, because this
+> change is going to involve "delete every existing component and
+> recreate"...
+> ---
+>   scripts/coverity-scan/COMPONENTS.md | 104 ++++++++++++++--------------
+>   1 file changed, 52 insertions(+), 52 deletions(-)
 
-After this commit:
 
-  qemu-system-x86_64: backend 'memory-backend-file' memory size must be multiple of 2 MiB
+> diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
+> index 1537e49cd5a..98d4bcd6a50 100644
+> --- a/scripts/coverity-scan/COMPONENTS.md
+> +++ b/scripts/coverity-scan/COMPONENTS.md
+> @@ -1,157 +1,157 @@
+>   This is the list of currently configured Coverity components:
 
-Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
----
- backends/hostmem.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
 
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 012a8c190f..4d6c69fe4d 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -20,6 +20,7 @@
- #include "qom/object_interfaces.h"
- #include "qemu/mmap-alloc.h"
- #include "qemu/madvise.h"
-+#include "qemu/cutils.h"
- #include "hw/qdev-core.h"
- 
- #ifdef CONFIG_NUMA
-@@ -337,6 +338,7 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
-     HostMemoryBackendClass *bc = MEMORY_BACKEND_GET_CLASS(uc);
-     void *ptr;
-     uint64_t sz;
-+    size_t pagesize;
-     bool async = !phase_check(PHASE_LATE_BACKENDS_CREATED);
- 
-     if (!bc->alloc) {
-@@ -348,6 +350,14 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
- 
-     ptr = memory_region_get_ram_ptr(&backend->mr);
-     sz = memory_region_size(&backend->mr);
-+    pagesize = qemu_ram_pagesize(backend->mr.ram_block);
-+
-+    if (!QEMU_IS_ALIGNED(sz, pagesize)) {
-+        g_autofree char *pagesize_str = size_to_str(pagesize);
-+        error_setg(errp, "backend '%s' memory size must be multiple of %s",
-+                   object_get_typename(OBJECT(uc)), pagesize_str);
-+        return;
-+    }
- 
-     if (backend->merge &&
-         qemu_madvise(ptr, sz, QEMU_MADV_MERGEABLE)) {
--- 
-2.44.1
+>   block
+> -  ~ (/qemu)?(/block.*|(/include?)/(block|storage-daemon)/.*|(/include)?/hw/(block|ide|nvme)/.*|/qemu-(img|io).*|/util/(aio|async|thread-pool).*)
+> +  ~ .*/qemu(/block.*|(/include?)/(block|storage-daemon)/.*|(/include)?/hw/(block|ide|nvme)/.*|/qemu-(img|io).*|/util/(aio|async|thread-pool).*)
+
+util/block-helpers.[ch]
+
+I'd put hw/block/ to another bucket that the block subsystem.
+
+>   char
+> -  ~ (/qemu)?(/qemu-char\.c|/include/sysemu/char\.h|(/include)?/hw/char/.*)
+> +  ~ .*/qemu(/qemu-char\.c|/include/sysemu/char\.h|(/include)?/hw/char/.*)
+
+Is 'char' the same as 'chardev'?
+
+>   crypto
+> -  ~ (/qemu)?((/include)?/crypto/.*|/hw/.*/.*crypto.*|(/include/sysemu|/backends)/cryptodev.*)
+> +  ~ .*/qemu((/include)?/crypto/.*|/hw/.*/.*crypto.*|(/include/sysemu|/backends)/cryptodev.*)
+
+Maybe worth covering host/include/*/host/crypto/?
+
+>   disas
+> -  ~ (/qemu)?((/include)?/disas.*)
+> +  ~ .*/qemu((/include)?/disas.*)
+
+Missing:
+
+target/avr/disas.c
+target/loongarch/disas.c
+target/openrisc/disas.c
+target/rx/disas.c
+
+>   migration
+> -  ~ (/qemu)?((/include)?/migration/.*)
+> +  ~ .*/qemu((/include)?/migration/.*)
+
+Not sure about:
+
+hw/vfio/migration.c
+
+>   monitor
+> -  ~ (/qemu)?(/qapi.*|/qobject/.*|/monitor\..*|/[hq]mp\..*)
+> +  ~ .*/qemu(/qapi.*|/qobject/.*|/monitor\..*|/[hq]mp\..*)
+
+Apparently the pattern is now foo-[hq]mp-cmds.[ch].
+
+Not matched:
+hmp-commands-info.hx
+hmp-commands.hx
+hw/virtio/virtio-qmp.[ch]
+include/qapi/qmp-event.h
+job-qmp.c
+monitor/qemu-config-qmp.c
+python/qemu/qmp/events.py
+scripts/python_qmp_updater.py
+tests/unit/test-qmp-event.c
+
+Not sure about (not covered in testlibs):
+
+tests/qtest/libqmp.c
+tests/qtest/libqmp.h
+
+>   trace
+> -  ~ (/qemu)?(/.*trace.*\.[ch])
+> +  ~ .*/qemu(/.*trace.*\.[ch])
+
+>   user
+> -  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/user/.*)
+> +  ~ .*/qemu(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/user/.*)
+
+>   xen
+> -  ~ (/qemu)?(.*/xen.*)
+> +  ~ .*/qemu(.*/xen.*)
+
+We could match .*xen.* like trace (ditto other accelerators).
+
+>   hvf
+> -  ~ (/qemu)?(.*/hvf.*)
+> +  ~ .*/qemu(.*/hvf.*)
+>   
+>   kvm
+> -  ~ (/qemu)?(.*/kvm.*)
+> +  ~ .*/qemu(.*/kvm.*)
+>   
+>   tcg
+> -  ~ (/qemu)?(/accel/tcg|/replay|/tcg)/.*
+> +  ~ .*/qemu(/accel/tcg|/replay|/tcg)/.*
+>   
+>   sysemu
+> -  ~ (/qemu)?(/system/.*|/accel/.*)
+> +  ~ .*/qemu(/system/.*|/accel/.*)
+
 
 
