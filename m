@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AE3C27C44
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A220DC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCyM1-0000pI-UA; Fri, 31 May 2024 05:15:17 -0400
+	id 1sCyLz-0000oH-MF; Fri, 31 May 2024 05:15:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCyM0-0000ok-8S
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:16 -0400
+ id 1sCyLx-0000mw-Ul
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCyLy-0006W1-NM
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:15 -0400
+ id 1sCyLt-0006VJ-Be
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717146913;
+ s=mimecast20190719; t=1717146908;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o0iCPw/aqWN8zcOT16VkOuLHlxKNp/9HKpMSxNCRXQc=;
- b=iAcOuSW8/bcXomIfxTiJ7Ye5zPDEzenmFhJ+ltTkFC5s8AgtFzOM/fYeiStLwmZQ271M/N
- fKrgQXfLgs6IVZZvQQPLZjLvFwsV1f1AWQ5Zbq6FlEJogM/4mpcjee28gPLWWq25l620wg
- AvrApmOT2PiPPt897p0ZERS9wsBjfVU=
+ bh=+U+M0KDU9P1p+mp5Onz5lZ6sHba7FesDa33BFDN+1Jo=;
+ b=UQhDNsMJT7kUyAZR54c/2FENbv6s/UvhggattX6wDKHGqChlC+Zl5Hv5YQs7fFtpTZPwIi
+ V/RPvFsGaaP1h08w1LpP+LhQAaKUPSEfHBiZDYerpFc5Fir82j2pkIhNEkzKHEgpwsVMNJ
+ Fz1RYY548iK0dhIgN5AiF414HcGyCi0=
 Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
  [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-T26x54MhNbKGb94oZ_tEnQ-1; Fri, 31 May 2024 05:15:11 -0400
-X-MC-Unique: T26x54MhNbKGb94oZ_tEnQ-1
+ us-mta-302-Ruc4SFuWOmSrwk17V4Ytew-1; Fri, 31 May 2024 05:15:06 -0400
+X-MC-Unique: Ruc4SFuWOmSrwk17V4Ytew-1
 Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57a3d65737bso236371a12.0
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:15:11 -0700 (PDT)
+ 4fb4d7f45d1cf-579e6a3edeeso810773a12.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:15:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717146910; x=1717751710;
+ d=1e100.net; s=20230601; t=1717146905; x=1717751705;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o0iCPw/aqWN8zcOT16VkOuLHlxKNp/9HKpMSxNCRXQc=;
- b=o87s4NQNE440xPx42i9RtOvsd3v2JfrlpKuFgbCLJHG3muZevtL9l3QJpg19SAqpi5
- qrA209Zb61bW+Aj21biQdKLhRY2ryLJ9B9gpcBo5xRZNrrmiQRn3YIiZHEFpKzZiQ4cW
- r00R/N1Q813jfZKB2KC+p4JvPCv+0GQyfKNTlm2pfln/GrMROEIBWDCj9NSOzqaoi4BG
- 9cW/cW+xLvskchHukTRi0VKUv8HRciYKGEXRRkrBrYkaDNAjNE7OtA1+sN9uo04+fzBj
- Gi97jJqP7l89ONeUTeFtNtrrhzgh1f9OzfPM9jcyA3QI8vDm6PGvpdx0w9KZwcGSgPby
- TXUg==
-X-Gm-Message-State: AOJu0YykoZDFtrUhBBKAX7lDQy7TyGnz3CzNjUG/s0I5rhv2od6CdYAU
- BcFiORwKufrAGuij2zSQyOHSu/rBDQH17SECFkfIzNB/bsN6gR9f8Dqos5/9yact/YQ+EBcE/5z
- W95O8OFmDtOFfw/fhwHHO62gLadAILq0oX4YY3TO2EZG8RhP+CbiAAX0TU4OeQ387mpIPLr0ioJ
- EN9SZAfs8Hdze+dEi2k9KdsmgUN+m49rqFgmmQ
-X-Received: by 2002:a50:d69b:0:b0:57a:1fef:619e with SMTP id
- 4fb4d7f45d1cf-57a363fcc53mr831542a12.18.1717146910320; 
- Fri, 31 May 2024 02:15:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEX43JL8KA55J2SbY7pzO+Tbo00RiKv/sIy6o64qXi0u/JC7e3+p3KGhybDaeT6/Poj61pWBQ==
-X-Received: by 2002:a50:d69b:0:b0:57a:1fef:619e with SMTP id
- 4fb4d7f45d1cf-57a363fcc53mr831524a12.18.1717146909857; 
- Fri, 31 May 2024 02:15:09 -0700 (PDT)
+ bh=+U+M0KDU9P1p+mp5Onz5lZ6sHba7FesDa33BFDN+1Jo=;
+ b=ZTohtLM7OcuBnQi3R/n7h1i8mdwAaT4oJUpdStU0anYe3HfC/DdCSYnnlWfORadJ7k
+ Ht58QgHZOt1bW3v5K8jTvarAm1GcHROBN0wBNxLLuRWVbO/XOKmy7cuNYuwKxhywCVjb
+ EIr6IkLHPSfLiFQfCzBy3Hc4hfrxe0hCDvzGr8ktqaw2U4xzHnOhFl8ujQNRWreYPWYA
+ Nk688IcolrFb85HWu26yJyfaRXHKqt8d9DDEr1yfHJnDngZQnmHErKLxSyRrRqfRVL8P
+ Wtzzr9o0GsYbJwAwYjl8DoNXSAwlHcX2LsiRunmYE5M2SpJaDkTf6aF8KeC6g7on1vam
+ yGpg==
+X-Gm-Message-State: AOJu0YwCFmT9hxnijs98agX0xwF9lh1IOefD4H+bvf7MGAwdpofOXCx4
+ bYshZ8zLOmTa2Y/eH5/zHIAPp6mBuxfS8scfpEZcDSQcMCvQsgTsdgHHkbREzeXAdnb0K9nnX/R
+ h1r90nL22PJRZ+qgFZdVnWVPufRwFl51Q3oKwBF+OK47FXw5JLGXtndtmldru6OqtIB5sFjuP9o
+ h/2lsoAxrgFK/2v4bDh4G6r9TiTcC5pr3wfg0v
+X-Received: by 2002:a50:d596:0:b0:574:eb69:fadf with SMTP id
+ 4fb4d7f45d1cf-57a3656455fmr818282a12.36.1717146905134; 
+ Fri, 31 May 2024 02:15:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFEm1OsF/9rnnYAYYHeV1/tTodgTufJ7dm8/QfqTnE+fYChYNF9ytShMHMQnos3aV60pXekjQ==
+X-Received: by 2002:a50:d596:0:b0:574:eb69:fadf with SMTP id
+ 4fb4d7f45d1cf-57a3656455fmr818263a12.36.1717146904570; 
+ Fri, 31 May 2024 02:15:04 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a31bb8282sm763545a12.25.2024.05.31.02.15.09
+ 4fb4d7f45d1cf-57a31c6d4absm768793a12.72.2024.05.31.02.15.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 02:15:09 -0700 (PDT)
+ Fri, 31 May 2024 02:15:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 4/6] host/i386: assume presence of SSE2
-Date: Fri, 31 May 2024 11:14:55 +0200
-Message-ID: <20240531091457.42200-5-pbonzini@redhat.com>
+Subject: [PATCH 2/6] meson: assume x86-64-v2 baseline ISA
+Date: Fri, 31 May 2024 11:14:53 +0200
+Message-ID: <20240531091457.42200-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240531091457.42200-1-pbonzini@redhat.com>
 References: <20240531091457.42200-1-pbonzini@redhat.com>
@@ -103,53 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU now requires an x86-64-v2 host, which has SSE2.
-Use it freely in buffer_is_zero.
+x86-64-v2 processors were released in 2008, assume that we have one.
+Unfortunately there is no GCC flag to enable all the features
+without disabling what came after; so enable them one by one.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- host/include/i386/host/cpuinfo.h | 1 -
- util/bufferiszero.c              | 2 +-
- util/cpuinfo-i386.c              | 1 -
- 3 files changed, 1 insertion(+), 3 deletions(-)
+ meson.build | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
-index 81771733eaa..72f6fad61e5 100644
---- a/host/include/i386/host/cpuinfo.h
-+++ b/host/include/i386/host/cpuinfo.h
-@@ -14,7 +14,6 @@
- #define CPUINFO_POPCNT          (1u << 4)
- #define CPUINFO_BMI1            (1u << 5)
- #define CPUINFO_BMI2            (1u << 6)
--#define CPUINFO_SSE2            (1u << 7)
- #define CPUINFO_AVX1            (1u << 9)
- #define CPUINFO_AVX2            (1u << 10)
- #define CPUINFO_AVX512F         (1u << 11)
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 74864f7b782..6245976eca1 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -195,7 +195,7 @@ static unsigned best_accel(void)
-         return 2;
-     }
- #endif
--    return info & CPUINFO_SSE2 ? 1 : 0;
-+    return 1;
- }
+diff --git a/meson.build b/meson.build
+index 63866071445..19d1fc1f33b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -336,9 +336,13 @@ if host_arch == 'i386' and not cc.links('''
+   qemu_common_flags = ['-march=i486'] + qemu_common_flags
+ endif
  
- #elif defined(__aarch64__) && defined(__ARM_NEON)
-diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
-index 90f92a42dc8..ca74ef04f54 100644
---- a/util/cpuinfo-i386.c
-+++ b/util/cpuinfo-i386.c
-@@ -34,7 +34,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-     if (max >= 1) {
-         __cpuid(1, a, b, c, d);
- 
--        info |= (d & bit_SSE2 ? CPUINFO_SSE2 : 0);
-         info |= (c & bit_MOVBE ? CPUINFO_MOVBE : 0);
-         info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
-         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
+-# ??? Only extremely old AMD cpus do not have cmpxchg16b.
+-# If we truly care, we should simply detect this case at
+-# runtime and generate the fallback to serial emulation.
++# Assume x86-64-v2 (minus CMPXCHG16B for 32-bit code)
++if host_arch == 'i386'
++  qemu_common_flags = ['-mfpmath=sse'] + qemu_common_flags
++endif
++if host_arch in ['i386', 'x86_64']
++  qemu_common_flags = ['-mpopcnt', '-msse4.2'] + qemu_common_flags
++endif
+ if host_arch == 'x86_64'
+   qemu_common_flags = ['-mcx16'] + qemu_common_flags
+ endif
 -- 
 2.45.1
 
