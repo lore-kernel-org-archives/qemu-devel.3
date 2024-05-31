@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18257C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 04:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E3B6C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 05:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCuKj-0000Us-4G; Fri, 31 May 2024 00:57:41 -0400
+	id 1sCuXC-0002cf-Gc; Fri, 31 May 2024 01:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuKh-0000UX-G8
- for qemu-devel@nongnu.org; Fri, 31 May 2024 00:57:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuXA-0002ai-PB
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 01:10:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuKf-0000sb-V9
- for qemu-devel@nongnu.org; Fri, 31 May 2024 00:57:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuX8-0003HS-S6
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 01:10:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717131457;
+ s=mimecast20190719; t=1717132229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lUcBjuxE/YfjXYUH4zR03sit7g5A/lglgv7SoGJ/ci0=;
- b=GhcaqDLApNLvNoTra+cqF3nU5xTXDGrv3EsELaXER3s5c9HQNT0QdN0fB+g0vjHXB2L5nl
- GwVTvGDQTFtKjkUxZ0UrRav+/Y34b/ExsGJoHM57Yu4n4L8DdIfbaYtevE0L8ZVIFaxmnq
- 9Gups4cudDhqgbrEMX7LJXKENmvWlWw=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HIB+4J6+YwsybqqUFxdDVfaNxkcdiEIA2qvc35OANtQ=;
+ b=eXnwu+3kPIChs+fjcz+ED2jwafW4YjGf5KO+IY7CNgWT4uLNYp7WzE8h6Kky1xW+JWSsUK
+ UQQFbs9h3FrMN0k1OW6YD1Trde+y61MIfkg9pyM018+PIdWVKLRA1UtZjwVzFV0OapYip1
+ knRdFl+OMoQbEpbT0Bxzdu73etDS6eo=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-BoAmLItkMnqw-nrm3rpRxw-1; Fri, 31 May 2024 00:57:35 -0400
-X-MC-Unique: BoAmLItkMnqw-nrm3rpRxw-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-52b7c83e7c3so1022413e87.3
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 21:57:35 -0700 (PDT)
+ us-mta-503-guxxUKGsPrqlxDmNfFiPBQ-1; Fri, 31 May 2024 01:10:27 -0400
+X-MC-Unique: guxxUKGsPrqlxDmNfFiPBQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a64032a4667so58161766b.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 22:10:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717131454; x=1717736254;
+ d=1e100.net; s=20230601; t=1717132226; x=1717737026;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lUcBjuxE/YfjXYUH4zR03sit7g5A/lglgv7SoGJ/ci0=;
- b=SiOQ6L8iak0mI6N30palYvV5O394q4f4BTW6cxqDemp5+mS1Cb6JyJ0viTPHoL5yAs
- 6Fr0Rh4ZrVYiNCrRaHtb1an49Rk+DPKWIaltrSdNEHPloxyNdxqhKOVnx/6R7mpb/9nO
- 5NGNtBTqW/WRmnZxCXpJjrChsLIIGhAe3GIUXdloXJUI0qC6CJSSu8pHmtDXD7EYRO5Z
- YEBPRMZPVyxjQOXXr7USVLlIKsOnnLyUF1M9ePpDb548wOZgYQ8ZZNBT9RRD5zzQLqgv
- VCKUIRZxktOr9R4uaw8XYYpdWrkhYk6KwPDl5lwqjXYbXHG0bNs4m7xmcNUFmc+EaYHq
- GFLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8W6xi9DA6yJL1agMtdMyzqW69clVdzUToWpkXRw1dSTQFOUGedCoJ88leP9F1dj5loJo5CW1h+OQXTVzrRVqU4c8w888=
-X-Gm-Message-State: AOJu0Yx7B0KWUIddxYtLyTB9LIhQtMSnXBdV2umFbhib5CE7CVVGRupk
- bYk53JBZMl87pOOTPccYwLp/8XNX0K4h5qYLhUCIixLoKMLTnf8RPks7tzD+HYPH74kC00R2WQ5
- BIE8cm/xFNmbAxG3GCXD1ZbqKKlTNHQ0sHNGRfRTnsWH7ntPvsr9T
-X-Received: by 2002:ac2:546f:0:b0:523:4f64:828b with SMTP id
- 2adb3069b0e04-52b895a9c29mr300131e87.38.1717131454019; 
- Thu, 30 May 2024 21:57:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExwhDiAub2BhXYnLULdgILRkTqwo3jK7h7q/Ydq8yYwOQI3rg0/Ot8SG1Kt47z3ojWAd0zSg==
-X-Received: by 2002:ac2:546f:0:b0:523:4f64:828b with SMTP id
- 2adb3069b0e04-52b895a9c29mr300116e87.38.1717131453513; 
- Thu, 30 May 2024 21:57:33 -0700 (PDT)
+ bh=HIB+4J6+YwsybqqUFxdDVfaNxkcdiEIA2qvc35OANtQ=;
+ b=ALOSWWeHtKh0fX2LuDlJ64j3pp2C4uOjcKxaN1OztUrA469f4kYruj/oShY0QZP/P2
+ pYAV8Nr4eP9EOR6hdRspSGAoDXEJVbYj+pG61RVu/4Fh4PN0tXgUBHv/qx69XvF4zW5i
+ ooszpqmWW7F7XDVg5+7WP8JJUQzFi5P1S2EiX8gxXQGPExsfBY1nLL0VUdgb2N5Zdbnr
+ CLOCByB6hSqTphn96paYZ3MOcSjvgaS6NPeUJFP2GG99An+9+1OAUipUDxqWTUuupqXg
+ 6xvErwl4CCplHLzthRRMBFkp4kIPfW2w07a3n4w4xpSxjnH4jbqUOLMFoZ8RrRaduuj/
+ QRrA==
+X-Gm-Message-State: AOJu0YwiOdZK2t9Wc464y/kqWd4dL6EQ2iowem4ft454gxnGdgZctEIU
+ Ll3hQMXakBY+SB+/77hN3UQZoYh/p8WCCfuxGGK/UV2r8EJtpshlJs8C9okMFwHm7RyNepuJYSb
+ z2tw3V/Ho5CQnBMu75OKRZrm2BAxiC31c2IK5C/9CzI8xugnL5woz
+X-Received: by 2002:a17:907:780a:b0:a67:7649:3c3f with SMTP id
+ a640c23a62f3a-a681f87f528mr49659266b.6.1717132226234; 
+ Thu, 30 May 2024 22:10:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHadnvVcyGuyfsLJQDG53VIzBf9ghI5EoHUcBPhQHS2ezwGaewQKLyil+I2AMduF1mgIBnaEg==
+X-Received: by 2002:a17:907:780a:b0:a67:7649:3c3f with SMTP id
+ a640c23a62f3a-a681f87f528mr49656666b.6.1717132225718; 
+ Thu, 30 May 2024 22:10:25 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
  [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a67eb344410sm44478266b.197.2024.05.30.21.57.32
+ a640c23a62f3a-a682ea1e5c4sm29306166b.115.2024.05.30.22.10.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 May 2024 21:57:33 -0700 (PDT)
-Message-ID: <4d9c15c6-cfe7-4535-b41a-fbfcb1e5f970@redhat.com>
-Date: Fri, 31 May 2024 06:57:31 +0200
+ Thu, 30 May 2024 22:10:25 -0700 (PDT)
+Message-ID: <48e4fe8f-7a3c-4b2f-a687-02613e3b5a26@redhat.com>
+Date: Fri, 31 May 2024 07:10:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] vl: Allow multiple -overcommit commands
-To: Zhao Liu <zhao1.liu@intel.com>, Markus Armbruster <armbru@redhat.com>
-Cc: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com, mst@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
- qemu-trivial@nongnu.org
-References: <20240524200017.150339-1-zide.chen@intel.com>
- <20240524200017.150339-2-zide.chen@intel.com>
- <e86c1913-a1ff-4c31-9915-d66c269b7e10@redhat.com>
- <ZliGoM9Hy3Q2qthQ@intel.com>
+Subject: Re: [PATCH] Use "void *" as parameter for functions that are used for
+ aio_set_event_notifier()
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240529174948.1241574-1-thuth@redhat.com>
+ <20240529182222.GB1203999@fedora.redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -123,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ZliGoM9Hy3Q2qthQ@intel.com>
+In-Reply-To: <20240529182222.GB1203999@fedora.redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -135,7 +140,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,68 +156,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/05/2024 16.01, Zhao Liu wrote:
-> On Mon, May 27, 2024 at 07:19:56AM +0200, Thomas Huth wrote:
->> Date: Mon, 27 May 2024 07:19:56 +0200
->> From: Thomas Huth <thuth@redhat.com>
->> Subject: Re: [PATCH V2 1/3] vl: Allow multiple -overcommit commands
+On 29/05/2024 20.22, Stefan Hajnoczi wrote:
+> On Wed, May 29, 2024 at 07:49:48PM +0200, Thomas Huth wrote:
+>> aio_set_event_notifier() and aio_set_event_notifier_poll() in
+>> util/aio-posix.c and util/aio-win32.c are casting function pointers of
+>> functions that take an "EventNotifier *" pointer as parameter to function
+>> pointers that take a "void *" pointer as parameter (i.e. the IOHandler
+>> type). When those function pointers are later used to call the referenced
+>> function, this triggers undefined behavior errors with the latest version
+>> of Clang in Fedora 40 when compiling with the option "-fsanitize=undefined".
+>> And this also prevents enabling the strict mode of CFI which is currently
+>> disabled with -fsanitize-cfi-icall-generalize-pointers. Thus let us avoid
+>> the problem by using "void *" as parameter in all spots where it is needed.
 >>
->> On 24/05/2024 22.00, Zide Chen wrote:
->>> Both cpu-pm and mem-lock are related to system resource overcommit, but
->>> they are separate from each other, in terms of how they are realized,
->>> and of course, they are applied to different system resources.
->>>
->>> It's tempting to use separate command lines to specify their behavior.
->>> e.g., in the following example, the cpu-pm command is quietly
->>> overwritten, and it's not easy to notice it without careful inspection.
->>>
->>>     --overcommit mem-lock=on
->>>     --overcommit cpu-pm=on
->>>
->>> Fixes: c8c9dc42b7ca ("Remove the deprecated -realtime option")
->>> Suggested-by: Thomas Huth <thuth@redhat.com>
->>> Signed-off-by: Zide Chen <zide.chen@intel.com>
->>> ---
->>>
->>> v2:
->>>
->>> Thanks to Thomas' suggestion, changed to this better approach, which
->>> is more generic and can handle situations like: "enabled the option in
->>> the config file, and now you'd like to disable it on the command line
->>> again".
->>>
->>>    system/vl.c | 4 ++--
->>>    1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/system/vl.c b/system/vl.c
->>> index a3eede5fa5b8..dfa6cdd9283b 100644
->>> --- a/system/vl.c
->>> +++ b/system/vl.c
->>> @@ -3545,8 +3545,8 @@ void qemu_init(int argc, char **argv)
->>>                    if (!opts) {
->>>                        exit(1);
->>>                    }
->>> -                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", false);
->>> -                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", false);
->>> +                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", enable_mlock);
->>> +                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", enable_cpu_pm);
->>>                    break;
->>>                case QEMU_OPTION_compat:
->>>                    {
->>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   Yes, I know, the patch looks ugly ... but I don't see a better way to
+>>   tackle this. If someone has a better idea, suggestions are welcome!
 > 
-> Hi Thomas,
+> An alternative is adding EventNotifierHandler *io_read, *io_poll_ready,
+> *io_poll_begin, and *io_poll_end fields to EventNotifier so that
+> aio_set_event_notifier() and aio_set_event_notifier_poll() can pass
+> helper functions to the underlying aio_set_fd_handler() and
+> aio_set_fd_poll() APIs. These helper functions then invoke the
+> EventNotifier callbacks:
 > 
-> BTW, do you think it's a good idea to define the overcommit via QAPI way
-> (defined in a json file)? ;-)
-> 
-> My rough understanding is that all APIs are better to be defined via
-> QAPI to go JSON compatible.
+> /* Helpers */
+> static void event_notifier_io_read(void *opaque)
+> {
+>      EventNotifier *notifier = opaque;
+>      notifier->io_read(notifier);
+> }
 
-Sorry, no clue whether it makes sense here... CC:-ing Markus for 
-recommendations.
+That's a nice idea, thanks, I'll give it a try!
 
   Thomas
 
