@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 300C5C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 01:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85095C25B74
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 03:36:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCrSA-0007SE-0G; Thu, 30 May 2024 21:53:10 -0400
+	id 1sCt3D-0007Lz-2w; Thu, 30 May 2024 23:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sCrS8-0007S2-CV
- for qemu-devel@nongnu.org; Thu, 30 May 2024 21:53:08 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sCrS5-0002FI-ET
- for qemu-devel@nongnu.org; Thu, 30 May 2024 21:53:08 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Cx_ep7LVlmRfkBAA--.8355S3;
- Fri, 31 May 2024 09:52:59 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxRcV4LVlmrcMOAA--.27698S3; 
- Fri, 31 May 2024 09:52:58 +0800 (CST)
-Subject: Re: tests/avocado: Add LoongArch machine start test
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Thomas Huth <thuth@redhat.com>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>
-Cc: QEMU devel <qemu-devel@nongnu.org>, Chao Li <lichao@loongson.cn>,
- bibo mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>
-References: <20230515111908.2606580-1-gaosong@loongson.cn>
- <20230515111908.2606580-3-gaosong@loongson.cn>
- <3819e261-646d-467a-b783-85700b0e6842@redhat.com>
- <f2840fc6-0a16-b9ba-937e-f381d2c60bdb@loongson.cn>
- <bd599efc-1b5a-47a1-b0e9-15c59907a256@app.fastmail.com>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <f80b55c3-f527-fe1a-4033-d9dde1ee0b01@loongson.cn>
-Date: Fri, 31 May 2024 09:52:56 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sCt3A-0007LN-Jn
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 23:35:28 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sCt38-0002ut-0m
+ for qemu-devel@nongnu.org; Thu, 30 May 2024 23:35:28 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-6c1a359ee2bso450538a12.3
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 20:35:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1717126519; x=1717731319; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6ror6EuFlXyEsRDuhpd/4z+RSzTVwhxZ92e3454klac=;
+ b=htWrU8LxSL9mEvATBFKrsZJazRpHFNLhXe82T3YCsVa7IYs2Fv+PQiCCKGOHqIIXmh
+ ZRxEz3HcZILpHYcAUzwm9ucNz9kMMpc6p2F8PJhLf8fWOpc0V3V/v9hwoFldqywbUm6V
+ pl5oG8fj7Lo9cO5BXqDJ6NfzQvwmJHoORBa1U7oEcPSfkVUIe1x1nkuKwVlFk0qht8v0
+ dxviYn/xYLCENl1C2Dn9TwhZQ6oDfXIzD10g6YVtKdr2Y3Pe7LsMJhjl0uIGBwLGRITF
+ 5Z6UnPulvW0h9MZbNnSUBES80cUU/5RW4p8w00DEsAuClwMqntR9qB7nwt4ylpOogrSH
+ /JfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717126519; x=1717731319;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6ror6EuFlXyEsRDuhpd/4z+RSzTVwhxZ92e3454klac=;
+ b=Q6MJPdqGAmO4gMSIIseMHtkidCUFbjVWc0XLsFZw+MA4bQtnw7M3c9Tf7+sdnBf2ir
+ MURzxln1i8/HOHKIcDpDc/47+Z4aRqkn7Wd+v9r6YKhXfTY/64scLiIRpvx+iUzkiomr
+ PHV9IF5N9Y1T3GS0KLwSmvLQb4v4bjlQv+N5iaP83DuMqH7dRpO47MRCs+X2anyh5bhW
+ 4Bx1p8H+rgZy+PJ1yamMhEX/I71p56Zu0aCsVvvSXhMxeUMASk9yQ5FOT+vyiC08sTHG
+ pDEGLDTy9pB+0Ag0zzPeA0H0/MsrX4S8ykEyTL3Gp9s0VwySddIxUzeXC66khOo2Yuce
+ PVGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWv50Cj8m3477YKtDPTvVb33THR+1cSovYRuXL70tn4GmJ1CskLmO5eEQzNeGKFTPAj9s3dH4kZBQHo08VNyCC7DQRmPyU=
+X-Gm-Message-State: AOJu0YzL74VnMdgmvHxeevzyP/v7fki5d7cPom7CnjLEWAZuBF3LkWBp
+ 3TRQt3cbySSb4nWMedDGFwJ9qWYAthbZ2fyw1Q5eu3wbe1i4HoWYnaULCl5rRIk=
+X-Google-Smtp-Source: AGHT+IFxcIKltWU27svvVwuCfKlAUKa9zVisNSKObSJODdrc5Wgtyr/dpxPJMf0dhTy5C8MyKIIKJQ==
+X-Received: by 2002:a05:6a21:6d8a:b0:1af:d07a:37c8 with SMTP id
+ adf61e73a8af0-1b26f22b0e3mr998303637.37.1717126519269; 
+ Thu, 30 May 2024 20:35:19 -0700 (PDT)
+Received: from n37-006-243.byted.org ([180.184.51.142])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c1a777e989sm2457629a91.29.2024.05.30.20.35.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 May 2024 20:35:18 -0700 (PDT)
+From: Changqi Lu <luchangqi.123@bytedance.com>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v4 00/10] Support persistent reservation operations
+Date: Fri, 31 May 2024 11:34:45 +0800
+Message-Id: <20240531033455.3774806-1-luchangqi.123@bytedance.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <bd599efc-1b5a-47a1-b0e9-15c59907a256@app.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8AxRcV4LVlmrcMOAA--.27698S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Gr1rtryUCF1kWryDKrW5twc_yoWxtwcE9a
- 1SyrZ7C3WDJa1q9FsY9w4rZrn7XayUJrZ0yryjqr43Jwn7Xr4UuFsrGrWvq3W3JayfJF9I
- yFZYq3W5XrW2gosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbxxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -61
-X-Spam_score: -6.2
-X-Spam_bar: ------
-X-Spam_report: (-6.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.299,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,29 +96,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/5/30 下午9:16, Jiaxun Yang 写道:
->
-> 在2024年5月30日五月 下午2:00，gaosong写道：
-> [...]
->>> FYI, the test does not seem to work anymore - apparently the binaries
->>> have changed and now the hashes do not match anymore. Could you please
->>> update it? (preferably with some versioned binaries that do not change
->>> in the course of time?)
->>>
->> Thank you,  I had send a patch to fix it.
-> Hi Song,
->
-> As LoongArch EDK2 support has been merged long ago, do you to make a clean
-> build and add it to pc-bios directory?
-EDK2 LoongArchVirt under OvmfPkg is being committed to upstream.
+Hi,
 
-PR:
-https://github.com/tianocore/edk2/pull/5208
+Patch v4 has been modified. Many thanks to Klaus for the
+code review.
 
-Thanks
-Song Gao
->
-> Thanks
-> - Jiaxun
+Could anyone please review the core block layer and
+SCSI layer related codes?
+
+v3->v4:
+- At the nvme layer, the two patches of enabling the ONCS
+  function and enabling rescap are combined into one.
+- At the nvme layer, add helper functions for pr capacity
+  conversion between the block layer and the nvme layer.
+
+v2->v3:
+In v2 Persist Through Power Loss(PTPL) is enable default.
+In v3 PTPL is supported, which is passed as a parameter.
+
+v1->v2:
+- Add sg_persist --report-capabilities for SCSI protocol and enable
+  oncs and rescap for NVMe protocol.
+- Add persistent reservation capabilities constants and helper functions for
+  SCSI and NVMe protocol.
+- Add comments for necessary APIs.
+
+v1:
+- Add seven APIs about persistent reservation command for block layer.
+  These APIs including reading keys, reading reservations, registering,
+  reserving, releasing, clearing and preempting.
+- Add the necessary pr-related operation APIs for both the
+  SCSI protocol and NVMe protocol at the device layer.
+- Add scsi driver at the driver layer to verify the functions
+
+Changqi Lu (10):
+  block: add persistent reservation in/out api
+  block/raw: add persistent reservation in/out driver
+  scsi/constant: add persistent reservation in/out protocol constants
+  scsi/util: add helper functions for persistent reservation types
+    conversion
+  hw/scsi: add persistent reservation in/out api for scsi device
+  block/nvme: add reservation command protocol constants
+  hw/nvme: add helper functions for converting reservation types
+  hw/nvme: enable ONCS and rescap function
+  hw/nvme: add reservation protocal command
+  block/iscsi: add persistent reservation in/out driver
+
+ block/block-backend.c             | 397 ++++++++++++++++++++++++++
+ block/io.c                        | 163 +++++++++++
+ block/iscsi.c                     | 443 ++++++++++++++++++++++++++++++
+ block/raw-format.c                |  56 ++++
+ hw/nvme/ctrl.c                    | 324 +++++++++++++++++++++-
+ hw/nvme/ns.c                      |   5 +
+ hw/nvme/nvme.h                    |  84 ++++++
+ hw/scsi/scsi-disk.c               | 352 ++++++++++++++++++++++++
+ include/block/block-common.h      |  40 +++
+ include/block/block-io.h          |  20 ++
+ include/block/block_int-common.h  |  84 ++++++
+ include/block/nvme.h              |  98 +++++++
+ include/scsi/constants.h          |  52 ++++
+ include/scsi/utils.h              |   8 +
+ include/sysemu/block-backend-io.h |  24 ++
+ scsi/utils.c                      |  81 ++++++
+ 16 files changed, 2229 insertions(+), 2 deletions(-)
+
+-- 
+2.20.1
 
 
