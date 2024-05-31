@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32B1C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D74C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD1WX-0005ok-1g; Fri, 31 May 2024 08:38:21 -0400
+	id 1sD1X8-0006Mp-Sv; Fri, 31 May 2024 08:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sD1WT-0005oC-VW
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:38:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sD1WR-0001Rs-S8
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:38:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717159094;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5lWWO6k9Jbh8N8IjwlsoDfHE5y1nNrvOBQRaCX+S9d0=;
- b=djZeHEv4XVQgTHpklbE34gr2cZvyeaBkjhAtLr8MBlCQTeEzLQNdgFn+dV+aGA5PecTVxo
- 0rCsVa0irnjyW4vxGiDgH7R6mokMcTUBFpukZjD9SMqZN4MvyL3KpKljDtoqxpRgVIEhcL
- 3D52UIOq54nks04F0zv0rwDP6F/r8cE=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-yzdjfj1VNuSXTcVEO2oM9Q-1; Fri,
- 31 May 2024 08:38:11 -0400
-X-MC-Unique: yzdjfj1VNuSXTcVEO2oM9Q-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D25A61C0512B;
- Fri, 31 May 2024 12:38:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.235])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 039DEC15BB9;
- Fri, 31 May 2024 12:38:07 +0000 (UTC)
-Date: Fri, 31 May 2024 14:38:06 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Alexander Graf <graf@amazon.com>
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, agraf@csgraf.de, stefanha@redhat.com,
- pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v1 1/2] machine/microvm: support for loading EIF image
-Message-ID: <ZlnErhIRLGnHfgvU@redhat.com>
-References: <20240518080753.7083-1-dorjoychy111@gmail.com>
- <20240518080753.7083-2-dorjoychy111@gmail.com>
- <Zk4QGlUAmre1l74h@redhat.com>
- <CAFfO_h4yLaX9ajTWo+obHYjozJ1NvUouvfFr7AqcrSaCgo8SVg@mail.gmail.com>
- <18cf2f43-9f79-4dd6-b581-ece9e2a02c64@amazon.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD1X6-0006L7-Vv
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:38:57 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD1X5-0001Se-3V
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:38:56 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-572c65cea55so3462915a12.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:38:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717159132; x=1717763932; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wFesz+GthVT/XVc7GA+a3KCltFqP8x1o0+2zRLsWf64=;
+ b=F2HLaq84pdcET4KqwyIQ8K6JxeVKbXeeq/AeWIxNBZbNrta1FYelkQWMzuKCVSNYUV
+ q5wsSYsMmAIrF5rKpq2J5gmxdJwaystgwFzjsAXMikkaaWhg1WCD0bn8exAP+g49ESPc
+ UMu5n4WrIeGj4ltxCXMK/ChifKkU5VKccAxG6dpUdwUNI3i3Dz/+2fjKBIGLBiUP/LWL
+ UHXapf5+fC/AnBYLC2fiMCjJnUY6p8ViYqRW9zlAQhLmdfn7/eNp7vkLM0HGaXhCMCcP
+ s8vBdraZJRAGx/kvrX9Yq1pH+XYw+gipPamHbRKW4bYUoS/XV4e6YVi3dmrEMO5XNKJT
+ 25Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717159132; x=1717763932;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wFesz+GthVT/XVc7GA+a3KCltFqP8x1o0+2zRLsWf64=;
+ b=dZWxCRpEYiXRJ9Fc9is5FKGm/paJy1L9H5csK3Ok4WuouvMT8iLHT+5tV5W1/jQ4iF
+ jCwP2Q1FIZXnlVq0Fb3nsB79VsRUIIV5ELIcdPIoUl/Hrif/Eb1skuwOPDHHGydZIiQD
+ CEOGStEcitdte9sUuGsoKJJv2bMZuZMNyDwTaHDaa+vgNdq2SxXZjH8fspFcruD6bDz+
+ NN4nRxh0a7ewCa59uyaLq0btqT8DBKm8CnY+FMCvKFCdreWusVVBALb/h6EGB26KmcPk
+ KgrpjTXTxoFZzNmsabCWbeKyOoWd8kkmv2rqhsXiFfOXmLwRvMdKYI3NKODzu/QtZ19T
+ 0FZw==
+X-Gm-Message-State: AOJu0Yzk5zrN71RLSzsT97GHqRHxKa2pDOGn2dmh8KNeVH3nfbr3podG
+ ieXdu01L3dJivKFWRNN9g8W8IMCCdMf3niw3gKiltmddz0xNvOEezCo26FF2C/SXvWn4HFDmDI5
+ bluQs/cDofA11Qlxgy369NOAkwTYqKW0v7S9Nvg==
+X-Google-Smtp-Source: AGHT+IEGMwU+mlzGAN0W8/ApdPXEe1o1wtBJ4s8GKLbjMsZsongaHeZdCd9JsEDacO+9BCY0qMWtlOGIh+2pwxlVULs=
+X-Received: by 2002:a50:cd9a:0:b0:578:5c1e:45e5 with SMTP id
+ 4fb4d7f45d1cf-57a363b66eemr1880426a12.9.1717159131790; Fri, 31 May 2024
+ 05:38:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <18cf2f43-9f79-4dd6-b581-ece9e2a02c64@amazon.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <cover.1687782442.git.mst@redhat.com>
+ <6bda41a69bdcee8ff7dcf75df2f9647ce55908ab.1687782442.git.mst@redhat.com>
+ <CAFEAcA-EbD2GLMuS-t_qeDFYM5z3NT-_zCKRNZ8TqjWRiRD+Ww@mail.gmail.com>
+In-Reply-To: <CAFEAcA-EbD2GLMuS-t_qeDFYM5z3NT-_zCKRNZ8TqjWRiRD+Ww@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 May 2024 13:38:39 +0100
+Message-ID: <CAFEAcA-u4sytGwTKsb__Y+_+0O2-WwARntm3x8WNhvL1WfHOBg@mail.gmail.com>
+Subject: Re: [PULL 04/53] hw/cxl: Add clear poison mailbox command support.
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ Fan Ni <fan.ni@samsung.com>, Ira Weiny <ira.weiny@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,106 +90,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 31.05.2024 um 09:54 hat Alexander Graf geschrieben:
-> 
-> On 22.05.24 19:23, Dorjoy Chowdhury wrote:
-> > Hi Daniel,
-> > Thanks for reviewing.
-> > 
-> > On Wed, May 22, 2024 at 9:32 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > On Sat, May 18, 2024 at 02:07:52PM +0600, Dorjoy Chowdhury wrote:
-> > > > An EIF (Enclave Image Format)[1] image is used to boot an AWS nitro
-> > > > enclave[2] virtual machine. The EIF file contains the necessary
-> > > > kernel, cmdline, ramdisk(s) sections to boot.
-> > > > 
-> > > > This commit adds support for loading EIF image using the microvm
-> > > > machine code. For microvm to boot from an EIF file, the kernel and
-> > > > ramdisk(s) are extracted into a temporary kernel and a temporary
-> > > > initrd file which are then hooked into the regular x86 boot mechanism
-> > > > along with the extracted cmdline.
-> > > I can understand why you did it this way, but I feel its pretty
-> > > gross to be loading everything into memory, writing it back to
-> > > disk, and then immediately loading it all back into memory.
-> > > 
-> > > The root problem is the x86_load_linux() method, which directly
-> > > accesses the machine properties:
-> > > 
-> > >      const char *kernel_filename = machine->kernel_filename;
-> > >      const char *initrd_filename = machine->initrd_filename;
-> > >      const char *dtb_filename = machine->dtb;
-> > >      const char *kernel_cmdline = machine->kernel_cmdline;
-> > > 
-> > > To properly handle this, I'd say we need to introduce an abstraction
-> > > for loading the kernel/inittrd/cmdlkine data.
-> > > 
-> > > ie on the   X86MachineClass object, we should introduce four virtual
-> > > methods
-> > > 
-> > >     uint8_t *(*load_kernel)(X86MachineState *machine);
-> > >     uint8_t *(*load_initrd)(X86MachineState *machine);
-> > >     uint8_t *(*load_dtb)(X86MachineState *machine);
-> > >     uint8_t *(*load_cmdline)(X86MachineState *machine);
-> > > 
-> > > The default impl of these four methods should just following the
-> > > existing logic, of reading and returning the data associated with
-> > > the kernel_filename, initrd_filename, dtb and kernel_cmdline
-> > > properties.
-> > > 
-> > > The Nitro machine sub-class, however, can provide an alternative
-> > > impl of thse virtual methods which returns data directly from
-> > > the EIF file instead.
-> > > 
-> > Great suggestion! I agree the implementation path you suggested would
-> > look much nicer as a whole. Now that I looked a bit into the
-> > "x86_load_linux" implementation, it looks like pretty much everything
-> > is tied to expecting a filename. For example, after reading the header
-> > from the kernel_filename x86_load_linux calls into load_multiboot,
-> > load_elf (which in turn calls load_elf64, 32) and they all expect a
-> > filename. I think I would need to refactor all of them to instead work
-> > with (uint8_t *) buffers instead, right? Also in case of
-> > initrd_filename the existing code maps the file using
-> > g_mapped_file_new to the X86MachineState member initrd_mapped_file. So
-> > that will need to be looked into and refactored. Please correct me if
-> > I misunderstood something about the way to implement your suggested
-> > approach.
-> > 
-> > If I am understanding this right, this probably requires a lot of work
-> > which will also probably not be straightforward to implement or test.
-> > Right now, the way the code is, it's easy to see that the existing
-> > code paths are still correct as they are not changed and the new
-> > nitro-enclave machine code just hooks into them. As the loading to
-> > memory, writing to disk and loading back to memory only is in the
-> > execution path of the new nitro-enclave machine type, I think the way
-> > the patch is right now, is a good first implementation. What do you
-> > think?
-> 
-> I think the "real" fix here is to move all of the crufty loader logic from
-> "file access" to "block layer access". Along with that, create a generic
-> helper function (like this[1]) that opens all -kernel/-initrd/-dtb files
-> through the block layer and calls a board specific callback to perform the
-> load.
+Ping! This looks like it should be an easy one-liner fix
+for a Coverity-detected read-from-bogus-memory bug --
+could one of the CXL folks have a look at it and send
+a patch, please ?
 
-Not sure if I would call that a "real fix", it's more like a hack.
-Kernel images aren't block devices and their size may not even be
-aligned to 512, which is the minimum block size the block layer
-supports. So there might be some complications around that area.
+thanks
+-- PMM
 
-That said, even if it's an abuse of the block layer, it might be a
-useful abuse that saves you writing quite a bit of FILE * based logic
-providing similar functionality, so who I am to stop you...
+On Fri, 3 May 2024 at 13:45, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Mon, 26 Jun 2023 at 13:28, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >
+> > Current implementation is very simple so many of the corner
+> > cases do not exist (e.g. fragmenting larger poison list entries)
+>
+> Hi; Coverity has just spotted what looks like a bug in this
+> function (CID 1544772) where we write bogus data from the host
+> stack into guest memory):
+>
+> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > index ab600735eb..d751803188 100644
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -947,6 +947,42 @@ static void set_lsa(CXLType3Dev *ct3d, const void *buf, uint64_t size,
+> >       */
+> >  }
+> >
+> > +static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
+> > +{
+> > +    MemoryRegion *vmr = NULL, *pmr = NULL;
+> > +    AddressSpace *as;
+> > +
+> > +    if (ct3d->hostvmem) {
+> > +        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> > +    }
+> > +    if (ct3d->hostpmem) {
+> > +        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> > +    }
+> > +
+> > +    if (!vmr && !pmr) {
+> > +        return false;
+> > +    }
+> > +
+> > +    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
+> > +        return false;
+> > +    }
+> > +
+> > +    if (vmr) {
+> > +        if (dpa_offset < memory_region_size(vmr)) {
+> > +            as = &ct3d->hostvmem_as;
+> > +        } else {
+> > +            as = &ct3d->hostpmem_as;
+> > +            dpa_offset -= memory_region_size(vmr);
+> > +        }
+> > +    } else {
+> > +        as = &ct3d->hostpmem_as;
+> > +    }
+> > +
+> > +    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
+> > +                        CXL_CACHE_LINE_SIZE);
+>
+> We've passed '&data' to address_space_write(), which means
+> "read from the address on the stack where the function
+> argument 'data' lives", so instead of writing 64 bytes of
+> data to the guest , we'll write 64 bytes which start with
+> a host pointer value and then continue with whatever happens
+> to be on the host stack after that.
+>
+> I assume the intention was "data", not "&data"...
 
-> With that in place, we would have a reentrant code path for the EIF case:
-> EIF could plug into the generic x86 loader and when it detects EIF, create
-> internal block devices that reference the existing file plus an offset/limit
-> setting to ensure it only accesses the correct range in the target file. It
-> can then simply reinvoke the x86 loader with the new block device objects.
-> 
-> With that in place, we could also finally support -kernel http://.../vmlinuz
-> command line invocations which currently only works on block devices.
-> 
-> However, I do agree that the above is significant effort to get going and
-> shouldn't hold back the Nitro Enclave machine model.
-
-Kevin
-
+thanks
+-- PMM
 
