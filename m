@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E00C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2199C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCyM0-0000ol-Bn; Fri, 31 May 2024 05:15:16 -0400
+	id 1sCyLz-0000oU-Pq; Fri, 31 May 2024 05:15:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCyLy-0000nh-Tu
+ id 1sCyLy-0000nI-5Z
  for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sCyLx-0006VY-AV
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:14 -0400
+ id 1sCyLw-0006VQ-Ee
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:15:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717146912;
+ s=mimecast20190719; t=1717146911;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EEFP5XulFyFkWbdx6jRm5tpvw2lCppUkXM8RgWoJ+xw=;
- b=McWvfJiW3h9yLpM6rPM0HnFbq+Em0UBnWwvGxloSmz2LyD4eXMiBt4jyEWGZqETM8mVakT
- Cu+2XJi7CGDRR9HYfUUZcB0QF/5DXuGjwkzVYhbceDeEbFzvrXvLFEHQT3aOGdwYeSw1t4
- jYVaF0tEQPS1wGMHXMiOpCk1Elu6Flk=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+Kp+O/AAAjxYFhrZsZua+SQq3136l2wt/4x9JcXzMHw=;
+ b=b9WweBAfdk8TSoaUobY4hn7a8umovJ/6gxAKjQkql+fDEZE6kW0cI/3TaatmJi9ZGrayrk
+ fkdeoZhBIFDVM/ClPGi/lp2ABKvR+c9vVRGHblx0d/V3Xi/YAA/gZ5x++Am+iYXzU9L9Vo
+ pAQxDGUt29Ytf33L/xAYz4U3FZ+qB0E=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-YIpumE7_Nlao06bLT3kgpg-1; Fri, 31 May 2024 05:15:04 -0400
-X-MC-Unique: YIpumE7_Nlao06bLT3kgpg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a6661f44448so69393066b.3
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:15:04 -0700 (PDT)
+ us-mta-496-TY6r2bUoNGmLMSzj-L3qbQ-1; Fri, 31 May 2024 05:15:09 -0400
+X-MC-Unique: TY6r2bUoNGmLMSzj-L3qbQ-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-57a2ffddca3so384602a12.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:15:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717146902; x=1717751702;
+ d=1e100.net; s=20230601; t=1717146908; x=1717751708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EEFP5XulFyFkWbdx6jRm5tpvw2lCppUkXM8RgWoJ+xw=;
- b=Qkz5oTruNXncsXhylRUCTxEy+B/+bDLzii8Dq+LugEeTtFUWQLr12eKqXNUXZIDKRw
- gdSpHssFvIFVEQZbed0Y0ylcLXyXnTWmnBapSGbUTvbaSYbB3k95+RHa4W/Z/1tELPbe
- t9LL6wTDxe7EqujgDOdDeeMHIsCLUyyuyALM5Fq4cIomojkRbs3qvznYcBEora4va0Uc
- 9tZ0A0wKyjR81kwgqLrx+kTrM9hf9hpdPshFb6LPxb09N5Q7TOH+3xejx1+xp8RLJygK
- 6I9jMgC3k4QfaZijCSgqfdkhm0KD3yOKMsbM+bBNIQfqKlS9w7dFFNntmo3gYKWTl1iT
- AcOg==
-X-Gm-Message-State: AOJu0YxTSevVl+spX3xHyC1bOpZcMPerRtBY03KAaUemaGv7/07r+ktd
- s7jjH0Fiuk3sBd0zV8Q7590WvLkOWJdBSxXrau3AAcixklHZkLggkdBaYHnJBOjKOPCK7PqkEWx
- gJIZclXFmH1lHDQdWRmZ3YODOh6qh6B0HSDIaHxSdwhS4n8U65RtG2IE8LTDoPoM5HnRy0efhEl
- Gua31tlE9zXIfeCxk3nBWE+jWMgzLapHWCf6Ev
-X-Received: by 2002:a17:906:1e09:b0:a62:8859:6aff with SMTP id
- a640c23a62f3a-a682022f887mr98315866b.30.1717146902641; 
- Fri, 31 May 2024 02:15:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdETNJJXT9OknGXMid77He9GW/3CMmDMjtbYcal7FBm9eKvJ2FKJD9k+SRc4XISflOCu+Fcg==
-X-Received: by 2002:a17:906:1e09:b0:a62:8859:6aff with SMTP id
- a640c23a62f3a-a682022f887mr98312866b.30.1717146901971; 
- Fri, 31 May 2024 02:15:01 -0700 (PDT)
+ bh=+Kp+O/AAAjxYFhrZsZua+SQq3136l2wt/4x9JcXzMHw=;
+ b=ii5TdnXYN57QqS/VO2qjIzvMf8jt1+ZiiaTDPpt2hVRekUTpsdp8CXwHeDOGGOzEpS
+ jXb8KFUPslG2776f4WPPW9hJtccLJ0SfrpZ7g7y6jrSQdkXn7I2/QaWdjgooTe5Gb/NE
+ BnupfG1GomNEN1eeJmlAy2v+GH2TFto4+Ir9hVQ1M4CkN15bes0a9CLzqDkw2U+5ZQdF
+ 03oj3/ZxOPTgU89dWuglBXNi6hP0qfLGyww+LtIt08W0ElwpjJy2agNFjSSmmYOTljGD
+ rCgooBrI9fLxim296KFK61OcCchxCGOQYn4AHPkpJYXOC7Bm2nqfsCph4QZb6aJ0hGWI
+ EYxw==
+X-Gm-Message-State: AOJu0Yws8SJlsGCQtlJVQl7tN6SgJEKhd2Y5pHpf3Z0j1R6ZvBn8Wcyb
+ T0AWKAzJEWugcICxjW/mbnAvaaF93jIeNJXDZhVvH6xvP4SpvUXG/mbC8jFaj3JwEQeHyduH+X6
+ 53i62ZXSzz1rgK+FFIgjljBsxEu7nbdYhuMyPTZOflXbFgZ0h3397XFj3IGy99ide1HADri9pAH
+ /FkMfrgtlXExIZFv2hOsjNjzRE156gdB5E5d2z
+X-Received: by 2002:a50:c04c:0:b0:578:4aeb:9b92 with SMTP id
+ 4fb4d7f45d1cf-57a363a5c5amr902420a12.24.1717146908055; 
+ Fri, 31 May 2024 02:15:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEg/idlIHcD6KnGATkmBMxYzInh1Jd6NOaNsRDrM2c5YdxFeGfzRoCR9jT6E+2zDa/dCY+//Q==
+X-Received: by 2002:a50:c04c:0:b0:578:4aeb:9b92 with SMTP id
+ 4fb4d7f45d1cf-57a363a5c5amr902399a12.24.1717146907489; 
+ Fri, 31 May 2024 02:15:07 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a67e6f03b0dsm66945466b.15.2024.05.31.02.15.00
+ 4fb4d7f45d1cf-57a31c9c10dsm788216a12.87.2024.05.31.02.15.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 02:15:00 -0700 (PDT)
+ Fri, 31 May 2024 02:15:06 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/6] host/i386: nothing looks at CPUINFO_SSE4
-Date: Fri, 31 May 2024 11:14:52 +0200
-Message-ID: <20240531091457.42200-2-pbonzini@redhat.com>
+Subject: [PATCH 3/6] host/i386: assume presence of CMOV
+Date: Fri, 31 May 2024 11:14:54 +0200
+Message-ID: <20240531091457.42200-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240531091457.42200-1-pbonzini@redhat.com>
 References: <20240531091457.42200-1-pbonzini@redhat.com>
@@ -103,39 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The only user was the SSE4.1 variant of buffer_is_zero, which has
-been removed; code to compute CPUINFO_SSE4 is dead.
+QEMU now requires an x86-64-v2 host, which always has CMOV.
+Use it freely in TCG generated code.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- host/include/i386/host/cpuinfo.h | 1 -
- util/cpuinfo-i386.c              | 1 -
- 2 files changed, 2 deletions(-)
+ host/include/i386/host/cpuinfo.h |  1 -
+ util/cpuinfo-i386.c              |  1 -
+ tcg/i386/tcg-target.c.inc        | 15 +--------------
+ 3 files changed, 1 insertion(+), 16 deletions(-)
 
 diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
-index b89e6d2e55a..9386c749881 100644
+index 9386c749881..81771733eaa 100644
 --- a/host/include/i386/host/cpuinfo.h
 +++ b/host/include/i386/host/cpuinfo.h
-@@ -16,7 +16,6 @@
- #define CPUINFO_BMI1            (1u << 5)
- #define CPUINFO_BMI2            (1u << 6)
- #define CPUINFO_SSE2            (1u << 7)
--#define CPUINFO_SSE4            (1u << 8)
- #define CPUINFO_AVX1            (1u << 9)
- #define CPUINFO_AVX2            (1u << 10)
- #define CPUINFO_AVX512F         (1u << 11)
+@@ -9,7 +9,6 @@
+ /* Digested version of <cpuid.h> */
+ 
+ #define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
+-#define CPUINFO_CMOV            (1u << 1)
+ #define CPUINFO_MOVBE           (1u << 2)
+ #define CPUINFO_LZCNT           (1u << 3)
+ #define CPUINFO_POPCNT          (1u << 4)
 diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
-index 9fddb18303d..18ab747a6d2 100644
+index 18ab747a6d2..90f92a42dc8 100644
 --- a/util/cpuinfo-i386.c
 +++ b/util/cpuinfo-i386.c
-@@ -36,7 +36,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+@@ -34,7 +34,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+     if (max >= 1) {
+         __cpuid(1, a, b, c, d);
  
-         info |= (d & bit_CMOV ? CPUINFO_CMOV : 0);
+-        info |= (d & bit_CMOV ? CPUINFO_CMOV : 0);
          info |= (d & bit_SSE2 ? CPUINFO_SSE2 : 0);
--        info |= (c & bit_SSE4_1 ? CPUINFO_SSE4 : 0);
          info |= (c & bit_MOVBE ? CPUINFO_MOVBE : 0);
          info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
-         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index 59235b4f387..9a54ef7f8db 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -157,12 +157,6 @@ static TCGReg tcg_target_call_oarg_reg(TCGCallReturnKind kind, int slot)
+ #define SOFTMMU_RESERVE_REGS \
+     (tcg_use_softmmu ? (1 << TCG_REG_L0) | (1 << TCG_REG_L1) : 0)
+ 
+-/* For 64-bit, we always know that CMOV is available.  */
+-#if TCG_TARGET_REG_BITS == 64
+-# define have_cmov      true
+-#else
+-# define have_cmov      (cpuinfo & CPUINFO_CMOV)
+-#endif
+ #define have_bmi2       (cpuinfo & CPUINFO_BMI2)
+ #define have_lzcnt      (cpuinfo & CPUINFO_LZCNT)
+ 
+@@ -1815,14 +1809,7 @@ static void tcg_out_setcond2(TCGContext *s, const TCGArg *args,
+ static void tcg_out_cmov(TCGContext *s, int jcc, int rexw,
+                          TCGReg dest, TCGReg v1)
+ {
+-    if (have_cmov) {
+-        tcg_out_modrm(s, OPC_CMOVCC | jcc | rexw, dest, v1);
+-    } else {
+-        TCGLabel *over = gen_new_label();
+-        tcg_out_jxx(s, jcc ^ 1, over, 1);
+-        tcg_out_mov(s, TCG_TYPE_I32, dest, v1);
+-        tcg_out_label(s, over);
+-    }
++    tcg_out_modrm(s, OPC_CMOVCC | jcc | rexw, dest, v1);
+ }
+ 
+ static void tcg_out_movcond(TCGContext *s, int rexw, TCGCond cond,
 -- 
 2.45.1
 
