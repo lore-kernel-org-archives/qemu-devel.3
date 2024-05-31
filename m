@@ -4,70 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 295CDC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D19BC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD0J5-0001e7-KY; Fri, 31 May 2024 07:20:24 -0400
+	id 1sD0L9-0002dh-Jm; Fri, 31 May 2024 07:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD0J3-0001dp-3Y
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:20:21 -0400
+ id 1sD0L4-0002bc-Vd
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:22:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD0J0-0003Ii-7z
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:20:20 -0400
+ id 1sD0L3-0003ZI-8H
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:22:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717154417;
+ s=mimecast20190719; t=1717154544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6S+C2lwFRABkA7b/yNrzv8UAxWC5/SnV83op21vezLg=;
- b=TDnp1w+cjav2Ju7ZtlTpsDvIZBd8un/FNklWPwi97gO1MMV9Y13aWKcRSf8utxIQo6TFtX
- XWNLp/8zk15J9A1j6dq1tQ9lda3rK94SFw8eeMY4tsh9d4ZNEjYqGT5RIr3/Xc2DtLtiOp
- 3M0kcun46ZasP71mEP4roe3nEFcvBqo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UAWheUW+czVmcKYjV8Dp8vDbyjXbz/6UcUqunqJ3kC0=;
+ b=V5AJnZtMUN5yWwC6cL41jdmkNdGcfvxVSJkiIldyyPhDUQ+O2/1VRTHQhdPdAY/2eD4fxh
+ B607xhGIhIQwPvhw7ccG2YMyjJ3RvXirAHyfCqIbdE7BnV1URNHt+DAvZhdCOtYXWhrDHk
+ KUPldWWRnB5h6LG+fONcNn7cYjN+3IE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-roslZAS4M-OLMMZujHUQAA-1; Fri, 31 May 2024 07:20:15 -0400
-X-MC-Unique: roslZAS4M-OLMMZujHUQAA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35dbf83bb20so1158569f8f.2
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:20:15 -0700 (PDT)
+ us-mta-619-qG1_Ksi_Oi290rZj8NIW9w-1; Fri, 31 May 2024 07:22:23 -0400
+X-MC-Unique: qG1_Ksi_Oi290rZj8NIW9w-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35dcd39c6ebso865842f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:22:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717154414; x=1717759214;
+ d=1e100.net; s=20230601; t=1717154542; x=1717759342;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6S+C2lwFRABkA7b/yNrzv8UAxWC5/SnV83op21vezLg=;
- b=uH5GL/1b9vywFafWT6zjdReUAFzCdarJCPMKtmZEM8WbjSR1Ed+ODtDL5Xn46DQRx5
- qFA8zsb+bTcmzuDEmTGashJYMcNdJFRMzY6kgCGriN+mAOlO1r1FecaZeL8RhWFWwANu
- AKmg/OoTzN8fPKBO9aTqJr7qXdpvyWwnC14LAA5zIyW8IxCjLjr91jsurYv72u4C3h9Z
- pQ2vIGrH5D/k5xMOWPSGDPrnnYfg2xZUsCPt+mP5giyB+PxGiFXrtECyc1F41ILvY2Km
- ybEEv5FqfpI1K+8G6yuJEc9NxT+v6ieA0N69qTGO83fbfDOLrtAJRkoJCBl0A7kE084R
- stOw==
-X-Gm-Message-State: AOJu0Yx+iRVgZMG+tpAW045sw88IUwQe55hS3q4kP/p/zf6nOFxWdGbE
- YHpLe1O3rk14EgV+natMYdozBbDdNrNVGyQJBDJlAWOFiQwemkz05EFZQpTmNVkFQBLoblSjdih
- RL6hp+pN6/KOk7Y64eyPNPZP6ZzaGmPv7sfYck9ueD4LXnQIPBrPNZYZ2t/GuFmzpRNYmy0nA7+
- Mv2+X3Y5n+/45gIPS7Qf9B6k+xCxY=
-X-Received: by 2002:a5d:5485:0:b0:354:f142:65b0 with SMTP id
- ffacd0b85a97d-35e0f28858fmr1309267f8f.37.1717154414283; 
- Fri, 31 May 2024 04:20:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYp6xUGQT7bi8LdHr2e9yWbwlbI5+B9hJbVUhizSshOYnjvKEPDgyMxtG7hIxlGQurdYpeKMkLSRIu2kER3AY=
-X-Received: by 2002:a5d:5485:0:b0:354:f142:65b0 with SMTP id
- ffacd0b85a97d-35e0f28858fmr1309244f8f.37.1717154413770; Fri, 31 May 2024
- 04:20:13 -0700 (PDT)
+ bh=UAWheUW+czVmcKYjV8Dp8vDbyjXbz/6UcUqunqJ3kC0=;
+ b=DmXATFyt8orAZkS9fvy+0aYKRxPcJly3PCwPEIF6zfg1UxOBUvPjtqYkHKmKhe0R0p
+ StciHBu0f9Ygg+noZM8NBpSA7D0IIccpR6W+0BQPTqXUBLC2mH1KtS70MEDcq3u1EBIb
+ DKbK93YdM0TuWMcKKbyoxn6HcdpeyUu8uzrNbnPOxAPt1PYaAcXq1APbKv/5fnVzMSQy
+ 0j1xgLZ/g4RnPMcu9ACoBF6p67Z7nQkrWX9piVaRfL+Ta8pLot0nfoKU8VGXxUblZhIb
+ RIkU+5/KcOm1BeGL1UzPbGXhpMwwKI3DVL7ok/76SC9I76wFTkO08cyiHuqy/O6dHfzo
+ hLnQ==
+X-Gm-Message-State: AOJu0YwBfXjLoKCijo0D9Dft9JG69GSHY/pCYvwq0b7iAhtTZEOfiSeY
+ oCCKACptTT8x2kkvnaxSxnrdeFOYLJ9xEgWi4E/l8c+WuzCd/ow6gnAUk3y1yoNlY299oW7N8+0
+ xQgyJCP94SgU2VzWmqrrycBQPqJn4xzRCy0awusDZCNRm9HOxAHUHyWDDV8rjsh+BCOrKW7RSbD
+ DBeyW9htM+dZezzx1r5I3YaCgxPRo=
+X-Received: by 2002:adf:ce8f:0:b0:357:398a:b94f with SMTP id
+ ffacd0b85a97d-35e0e5e9e79mr1552601f8f.26.1717154541830; 
+ Fri, 31 May 2024 04:22:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSL8UFosZjFoJQhMVi4zx3TgAUecWQ0sZg7JltbVgqW+uJqoAfCMK7BTXpCXQcig6JubLXzlyW6iTGM3Zd9j8=
+X-Received: by 2002:adf:ce8f:0:b0:357:398a:b94f with SMTP id
+ ffacd0b85a97d-35e0e5e9e79mr1552581f8f.26.1717154541470; Fri, 31 May 2024
+ 04:22:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
-In-Reply-To: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-29-pankaj.gupta@amd.com>
+In-Reply-To: <20240530111643.1091816-29-pankaj.gupta@amd.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 31 May 2024 13:20:02 +0200
-Message-ID: <CABgObfYFryXwEtVkMH-F6kw8hrivpQD6USMQ9=7fVikn5-mAhQ@mail.gmail.com>
-Subject: Re: [PATCH v4 00/31] Add AMD Secure Nested Paging (SEV-SNP) support
+Date: Fri, 31 May 2024 13:22:10 +0200
+Message-ID: <CABgObfYoO1kpgWrjo9=n6Q6nf9qtRfd1rwdHU81d6UMMkPSewQ@mail.gmail.com>
+Subject: Re: [PATCH v4 28/31] hw/i386: Add support for loading BIOS using
+ guest_memfd
 To: Pankaj Gupta <pankaj.gupta@amd.com>
 Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com, 
  armbru@redhat.com, michael.roth@amd.com, xiaoyao.li@intel.com, 
@@ -100,73 +102,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 1:16=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
+On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
+ wrote:
+>      if (bios_size <=3D 0 ||
+>          (bios_size % 65536) !=3D 0) {
+> -        goto bios_error;
+> +        if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+> +                g_warning("%s: Unaligned BIOS size %d", __func__, bios_s=
+ize);
+> +                goto bios_error;
+> +        }
+
+Why is this not needed for SEV-SNP? (The bios_size <=3D 0 case
+definitely should be an error).
+
+I'll just drop this change.
+
+> +    }
+> +    if (machine_require_guest_memfd(MACHINE(x86ms))) {
+> +        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios"=
+,
+> +                                           bios_size, &error_fatal);
+> +    } else {
+> +        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
+> +                               bios_size, &error_fatal);
+>      }
+> -    memory_region_init_ram(&x86ms->bios, NULL, "pc.bios", bios_size,
+> -                           &error_fatal);
+>      if (sev_enabled()) {
+>          /*
+>           * The concept of a "reset" simply doesn't exist for
+> @@ -1023,9 +1031,11 @@ void x86_bios_rom_init(X86MachineState *x86ms, con=
+st char *default_firmware,
+>      }
+>      g_free(filename);
+>
+> -    /* map the last 128KB of the BIOS in ISA space */
+> -    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+> -                      !isapc_ram_fw);
+
+> +    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+> +        /* map the last 128KB of the BIOS in ISA space */
+> +        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+> +                          !isapc_ram_fw);
+> +    }
+>
+>      /* map all the bios at the top of memory */
+>      memory_region_add_subregion(rom_memory,
+> --
+> 2.34.1
+>
+
+On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
  wrote:
 >
-> These patches implement SEV-SNP base support along with CPUID enforcement
-> support for QEMU, and are also available at:
+> From: Michael Roth <michael.roth@amd.com>
 >
-> https://github.com/pagupta/qemu/tree/snp_v4
+> When guest_memfd is enabled, the BIOS is generally part of the initial
+> encrypted guest image and will be accessed as private guest memory. Add
+> the necessary changes to set up the associated RAM region with a
+> guest_memfd backend to allow for this.
 >
-> Latest version of kvm changes are posted here [2] and also queued in kvm/=
-next.
+> Current support centers around using -bios to load the BIOS data.
+> Support for loading the BIOS via pflash requires additional enablement
+> since those interfaces rely on the use of ROM memory regions which make
+> use of the KVM_MEM_READONLY memslot flag, which is not supported for
+> guest_memfd-backed memslots.
 >
-> Patch Layout
-> ------------
-> 01-03: 'error_setg' independent fix, kvm/next header sync & patch from
->        Xiaoyao's TDX v5 patchset.
-> 04-29: Introduction of sev-snp-guest object and various configuration
->        requirements for SNP. Support for creating a cryptographic "launch=
-" context
->        and populating various OVMF metadata pages, BIOS regions, and vCPU=
-/VMSA
->        pages with the initial encrypted/measured/validated launch data pr=
-ior to
->        launching the SNP guest.
-> 30-31: Handling for KVM_HC_MAP_GPA_RANGE hypercall for userspace VMEXIT.
-
-These patches are more or less okay, with only a few nits, and I can
-queue them already:
-
-i386/sev: Replace error_report with error_setg
-linux-headers: Update to current kvm/next
-i386/sev: Introduce "sev-common" type to encapsulate common SEV state
-i386/sev: Move sev_launch_update to separate class method
-i386/sev: Move sev_launch_finish to separate class method
-i386/sev: Introduce 'sev-snp-guest' object
-i386/sev: Add a sev_snp_enabled() helper
-i386/sev: Add sev_kvm_init() override for SEV class
-i386/sev: Add snp_kvm_init() override for SNP class
-i386/cpu: Set SEV-SNP CPUID bit when SNP enabled
-i386/sev: Don't return launch measurements for SEV-SNP guests
-i386/sev: Add a class method to determine KVM VM type for SNP guests
-i386/sev: Update query-sev QAPI format to handle SEV-SNP
-i386/sev: Add the SNP launch start context
-i386/sev: Add handling to encrypt/finalize guest launch data
-i386/sev: Set CPU state to protected once SNP guest payload is finalized
-hw/i386/sev: Add function to get SEV metadata from OVMF header
-i386/sev: Add support for populating OVMF metadata pages
-i386/sev: Add support for SNP CPUID validation
-i386/sev: Invoke launch_updata_data() for SEV class
-i386/sev: Invoke launch_updata_data() for SNP class
-i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE
-i386/sev: Enable KVM_HC_MAP_GPA_RANGE hcall for SNP guests
-i386/sev: Extract build_kernel_loader_hashes
-i386/sev: Reorder struct declarations
-i386/sev: Allow measured direct kernel boot on SNP
-hw/i386/sev: Add support to encrypt BIOS when SEV-SNP is enabled
-memory: Introduce memory_region_init_ram_guest_memfd()
-
-These patches need a small prerequisite that I'll post soon:
-
-hw/i386/sev: Use guest_memfd for legacy ROMs
-hw/i386: Add support for loading BIOS using guest_memfd
-
-This one definitely requires more work:
-
-hw/i386/sev: Allow use of pflash in conjunction with -bios
-
-
-Paolo
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> ---
+>  hw/i386/x86-common.c | 22 ++++++++++++++++------
+>  1 file changed, 16 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index f41cb0a6a8..059de65f36 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -999,10 +999,18 @@ void x86_bios_rom_init(X86MachineState *x86ms, cons=
+t char *default_firmware,
+>      }
+>      if (bios_size <=3D 0 ||
+>          (bios_size % 65536) !=3D 0) {
+> -        goto bios_error;
+> +        if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+> +                g_warning("%s: Unaligned BIOS size %d", __func__, bios_s=
+ize);
+> +                goto bios_error;
+> +        }
+> +    }
+> +    if (machine_require_guest_memfd(MACHINE(x86ms))) {
+> +        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios"=
+,
+> +                                           bios_size, &error_fatal);
+> +    } else {
+> +        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
+> +                               bios_size, &error_fatal);
+>      }
+> -    memory_region_init_ram(&x86ms->bios, NULL, "pc.bios", bios_size,
+> -                           &error_fatal);
+>      if (sev_enabled()) {
+>          /*
+>           * The concept of a "reset" simply doesn't exist for
+> @@ -1023,9 +1031,11 @@ void x86_bios_rom_init(X86MachineState *x86ms, con=
+st char *default_firmware,
+>      }
+>      g_free(filename);
+>
+> -    /* map the last 128KB of the BIOS in ISA space */
+> -    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+> -                      !isapc_ram_fw);
+> +    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+> +        /* map the last 128KB of the BIOS in ISA space */
+> +        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+> +                          !isapc_ram_fw);
+> +    }
+>
+>      /* map all the bios at the top of memory */
+>      memory_region_add_subregion(rom_memory,
+> --
+> 2.34.1
+>
 
 
