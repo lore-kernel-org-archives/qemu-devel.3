@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C886C25B7E
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8C5C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD0zf-0004Mi-Rn; Fri, 31 May 2024 08:04:23 -0400
+	id 1sD10C-0004e7-VL; Fri, 31 May 2024 08:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0za-0004Jh-07
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:18 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1sD104-0004XT-E7
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:49 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0zR-0003P2-FJ
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:17 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42108856c33so12120405e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:06 -0700 (PDT)
+ id 1sD0zl-0003VK-SY
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:48 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4212e341818so5208715e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717157046; x=1717761846; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717157067; x=1717761867; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1ZBIBm/wN+aeUH7Z5g50kbmtejeR3zmSdK/oN4Zmw2k=;
- b=E7hi7ePViFL7P+5tvRUxtukwVb8t1qRm97y4Z0B/qM0kpQuWwHzwzF9jn4filPg8Hj
- cAY6MBNzQtFSqag47JLJ6sTuAYYCiq34TSa0uC6qqYgfv2hUnVePXfUGDIu/Mb/AaLaR
- hra6j1ey8E8kC48E0XjuCLpxAcvEosh+kwFe8O3Ec6hmTJYlMr5JxU+9R8nQLmwJn0tP
- zeuPWpmpVrPw6eliBczgtbsW8NZ3mszjP8ClLL7MM96L9narxha/kjzSCW79vcZnXQHv
- g4LahULKHqww3c7e4HzJOfBBFHZL28Hls+Gz5oD+8iE5lLU6OkkQE0QduRKp081ieLhO
- pWGg==
+ :reply-to; bh=L2rBmJ6yc4PQdG8tqT4WI/SFPoKG10zwGnHUmXUGw/s=;
+ b=RNa6Ue4VwwTvzgN1S9EvFaaA0TXiDK9U3oxb3ujICAZuF5Z6sCUzy7sZqZ/bNizcv3
+ GsdTza010ydhzPbMC3XeskXup6BlgAJDqN5b6Y3/hsrljOJGj0nuvI47UXkUb4606S+N
+ rJ4hNtasAlMCuh31BOMuxC5j7KcXKpvp85Lp8VgxbcSSeOivtDs0yrTuk63f9WMzNoyp
+ NQ9ILsEkJ0jGkLO66l1Z7zmYr5tUIDu/tO4612dSW+U0VANAw8PH3u4bQkIoFf33/Pbl
+ ctukwgi/gOB8Jwx62VnBuNrpRZ1rFTw4vqpTTFUu9mTL1yWnOFxRiOM1v/vG5ihwAosF
+ Q4qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717157046; x=1717761846;
+ d=1e100.net; s=20230601; t=1717157067; x=1717761867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1ZBIBm/wN+aeUH7Z5g50kbmtejeR3zmSdK/oN4Zmw2k=;
- b=rUw4FXQIa3aGmR1IT/50uBaloR9MOhQtc+aBE30qU7LQqcNslLlUIq0IJL90UB8bqT
- L4yR79qnrkT3JNKnXKNq8phuUxU+C1STYZWxKzaPHYewyv1PdjQFUIc+6iAK7FnkhAQb
- hPgPTC9V9jpp3RSVeQ47mv2okM5EZXSYOhhScRPCdmb8NSdLJZA7YnJL/jmCCzsWBkPa
- ItOG3ZRcj9YfqHtMYlJhCuIJrL/XPR1qZ8ObyFHMivDYNYuSVPlVdS4EC3K73RRxLARg
- Oi23repvP8hKqROcwc3I6fWKmq8M4YyVjcMDKEk6XxmIMpl8fv179J+zHebkaiA2MkvQ
- nKgQ==
-X-Gm-Message-State: AOJu0YxMq1c3UnYNuuhrAHNbdWdorzXl+XPT7PZRUT+6/A+3mQ5Xwoxz
- d0vJXiJXV+bPNzgWIxL2unZJ1y25MlYe9jEeqwX9MNLQT3zrmhwKUh50yFn2iW/Fmy+8nkanico
- I
-X-Google-Smtp-Source: AGHT+IHbtOwqyEI4NTQqIB1clLCOvOpxX9Ho51dwaYKoxqg1TZSzWyur7LU3qJA0JouzOcBEVpbpYA==
-X-Received: by 2002:a05:600c:5119:b0:419:f4d6:463b with SMTP id
- 5b1f17b1804b1-42128115145mr43612495e9.14.1717157045844; 
- Fri, 31 May 2024 05:04:05 -0700 (PDT)
+ bh=L2rBmJ6yc4PQdG8tqT4WI/SFPoKG10zwGnHUmXUGw/s=;
+ b=L2Mi8Hvb+YQvwBoHlfCANLv22VyIToRIMzbIjPK0C0hb0ByJ2t748CuvF9lNF5ZgBM
+ MB4uIC7Grqe35mQJm+7XyZfVxDz0ZsdlXIBEg/+GHkSSvslRvVtP8SIaXxL3Z4YbX52t
+ IkyDFmjQCs7hUuY8L8RffdPEhvr/LN8lY3lzFDdD7frzBLB/VejEfxFr4948T/f4BHLX
+ St0MZHXixjnC6FAIjpL71c/+i49D1zMVNVdU+ykaHtBYM6NxrODDBSJWK/s8r34vOPdZ
+ P9VxnKHtMLW/F6qmx4zBTm+/+vuiaiXC0/XkF3IqmeqqPVc0vfogSR0xCjFHKjiUCH9i
+ C/9Q==
+X-Gm-Message-State: AOJu0YwFbB8h3tUYRZ7HWmrmTYt0QV4f8ID/0o/EwFNBJNVuzEYou/DB
+ 8wZ+DmhdlaC5U/bGqVjzFyl1UAJHRN5bRbo71h49Cb4jNci2XMxCvcebtxTU4t6lWcZpd69Ea6k
+ T
+X-Google-Smtp-Source: AGHT+IECLQP2Y5Wlg9jGX8jeO65vGNmFo4P1p55mHSnqzEWWT3Kd4NIhx1gWY21Y6twV8ssp1jKE2A==
+X-Received: by 2002:a05:600c:2e4a:b0:41f:c83d:5ba8 with SMTP id
+ 5b1f17b1804b1-4212e09d949mr12741825e9.32.1717157067526; 
+ Fri, 31 May 2024 05:04:27 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.05
+ 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 05:04:05 -0700 (PDT)
+ Fri, 31 May 2024 05:04:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/43] hw/arm/xilinx_zynq: Add cache controller
-Date: Fri, 31 May 2024 13:03:21 +0100
-Message-Id: <20240531120401.394550-4-peter.maydell@linaro.org>
+Subject: [PULL 35/43] target/arm: Tidy SQDMULH, SQRDMULH (vector)
+Date: Fri, 31 May 2024 13:03:53 +0100
+Message-Id: <20240531120401.394550-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240531120401.394550-1-peter.maydell@linaro.org>
 References: <20240531120401.394550-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,44 +92,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The Zynq 7000 SoCs contain a CoreLink L2C-310 cache controller.  Add the
-corresponding Qemu device to the xilinx-zynq-a9 machine.
+We already have a gvec helper for the operations, but we aren't
+using it on the aa32 neon side.  Create a unified expander for
+use by both aa32 and aa64 translators.
 
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Message-id: 20240524120837.10057-2-sebastian.huber@embedded-brains.de
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240528203044.612851-31-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/xilinx_zynq.c | 1 +
- hw/arm/Kconfig       | 1 +
- 2 files changed, 2 insertions(+)
+ target/arm/tcg/translate.h      |  4 ++++
+ target/arm/tcg/gengvec.c        | 20 ++++++++++++++++++++
+ target/arm/tcg/translate-a64.c  | 23 ++++-------------------
+ target/arm/tcg/translate-neon.c | 23 +++--------------------
+ 4 files changed, 31 insertions(+), 39 deletions(-)
 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index fc3abcbe88b..0abb62f131d 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -241,6 +241,7 @@ static void zynq_init(MachineState *machine)
-     busdev = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
-+    sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
-     sysbus_connect_irq(busdev, 0,
-                        qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ));
-     sysbus_connect_irq(busdev, 1,
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 8b97683a45e..1ad60da7aa2 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -370,6 +370,7 @@ config ZYNQ
-     select A9MPCORE
-     select CADENCE # UART
-     select PFLASH_CFI02
-+    select PL310 # cache controller
-     select PL330
-     select SDHCI
-     select SSI_M25P80
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 3b1e68b7794..aba21f730fe 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -539,6 +539,10 @@ void gen_gvec_sri(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
+ void gen_gvec_sli(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
+                   int64_t shift, uint32_t opr_sz, uint32_t max_sz);
+ 
++void gen_gvec_sqdmulh_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                         uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz);
++void gen_gvec_sqrdmulh_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                          uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz);
+ void gen_gvec_sqrdmlah_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+                           uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz);
+ void gen_gvec_sqrdmlsh_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+diff --git a/target/arm/tcg/gengvec.c b/target/arm/tcg/gengvec.c
+index 119826bf284..56a1dc1f755 100644
+--- a/target/arm/tcg/gengvec.c
++++ b/target/arm/tcg/gengvec.c
+@@ -35,6 +35,26 @@ static void gen_gvec_fn3_qc(uint32_t rd_ofs, uint32_t rn_ofs, uint32_t rm_ofs,
+                        opr_sz, max_sz, 0, fn);
+ }
+ 
++void gen_gvec_sqdmulh_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                         uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz)
++{
++    static gen_helper_gvec_3_ptr * const fns[2] = {
++        gen_helper_neon_sqdmulh_h, gen_helper_neon_sqdmulh_s
++    };
++    tcg_debug_assert(vece >= 1 && vece <= 2);
++    gen_gvec_fn3_qc(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, fns[vece - 1]);
++}
++
++void gen_gvec_sqrdmulh_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                         uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz)
++{
++    static gen_helper_gvec_3_ptr * const fns[2] = {
++        gen_helper_neon_sqrdmulh_h, gen_helper_neon_sqrdmulh_s
++    };
++    tcg_debug_assert(vece >= 1 && vece <= 2);
++    gen_gvec_fn3_qc(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, fns[vece - 1]);
++}
++
+ void gen_gvec_sqrdmlah_qc(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+                           uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz)
+ {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index c4601cde2f7..c673b95ec7a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -724,19 +724,6 @@ static void gen_gvec_op3_fpst(DisasContext *s, bool is_q, int rd, int rn,
+                        is_q ? 16 : 8, vec_full_reg_size(s), data, fn);
+ }
+ 
+-/* Expand a 3-operand + qc + operation using an out-of-line helper.  */
+-static void gen_gvec_op3_qc(DisasContext *s, bool is_q, int rd, int rn,
+-                            int rm, gen_helper_gvec_3_ptr *fn)
+-{
+-    TCGv_ptr qc_ptr = tcg_temp_new_ptr();
+-
+-    tcg_gen_addi_ptr(qc_ptr, tcg_env, offsetof(CPUARMState, vfp.qc));
+-    tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, rd),
+-                       vec_full_reg_offset(s, rn),
+-                       vec_full_reg_offset(s, rm), qc_ptr,
+-                       is_q ? 16 : 8, vec_full_reg_size(s), 0, fn);
+-}
+-
+ /* Expand a 4-operand operation using an out-of-line helper.  */
+ static void gen_gvec_op4_ool(DisasContext *s, bool is_q, int rd, int rn,
+                              int rm, int ra, int data, gen_helper_gvec_4 *fn)
+@@ -11007,12 +10994,10 @@ static void disas_simd_3same_int(DisasContext *s, uint32_t insn)
+ 
+     switch (opcode) {
+     case 0x16: /* SQDMULH, SQRDMULH */
+-        {
+-            static gen_helper_gvec_3_ptr * const fns[2][2] = {
+-                { gen_helper_neon_sqdmulh_h, gen_helper_neon_sqrdmulh_h },
+-                { gen_helper_neon_sqdmulh_s, gen_helper_neon_sqrdmulh_s },
+-            };
+-            gen_gvec_op3_qc(s, is_q, rd, rn, rm, fns[size - 1][u]);
++        if (u) {
++            gen_gvec_fn3(s, is_q, rd, rn, rm, gen_gvec_sqrdmulh_qc, size);
++        } else {
++            gen_gvec_fn3(s, is_q, rd, rn, rm, gen_gvec_sqdmulh_qc, size);
+         }
+         return;
+     }
+diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
+index f9a8753906a..915c9e56db5 100644
+--- a/target/arm/tcg/translate-neon.c
++++ b/target/arm/tcg/translate-neon.c
+@@ -937,28 +937,11 @@ DO_SHA2(SHA256SU1, gen_helper_crypto_sha256su1)
+     }
+ 
+ #define DO_3SAME_VQDMULH(INSN, FUNC)                                    \
+-    WRAP_ENV_FN(gen_##INSN##_tramp16, gen_helper_neon_##FUNC##_s16);    \
+-    WRAP_ENV_FN(gen_##INSN##_tramp32, gen_helper_neon_##FUNC##_s32);    \
+-    static void gen_##INSN##_3s(unsigned vece, uint32_t rd_ofs,         \
+-                                uint32_t rn_ofs, uint32_t rm_ofs,       \
+-                                uint32_t oprsz, uint32_t maxsz)         \
+-    {                                                                   \
+-        static const GVecGen3 ops[2] = {                                \
+-            { .fni4 = gen_##INSN##_tramp16 },                           \
+-            { .fni4 = gen_##INSN##_tramp32 },                           \
+-        };                                                              \
+-        tcg_gen_gvec_3(rd_ofs, rn_ofs, rm_ofs, oprsz, maxsz, &ops[vece - 1]); \
+-    }                                                                   \
+     static bool trans_##INSN##_3s(DisasContext *s, arg_3same *a)        \
+-    {                                                                   \
+-        if (a->size != 1 && a->size != 2) {                             \
+-            return false;                                               \
+-        }                                                               \
+-        return do_3same(s, a, gen_##INSN##_3s);                         \
+-    }
++    { return a->size >= 1 && a->size <= 2 && do_3same(s, a, FUNC); }
+ 
+-DO_3SAME_VQDMULH(VQDMULH, qdmulh)
+-DO_3SAME_VQDMULH(VQRDMULH, qrdmulh)
++DO_3SAME_VQDMULH(VQDMULH, gen_gvec_sqdmulh_qc)
++DO_3SAME_VQDMULH(VQRDMULH, gen_gvec_sqrdmulh_qc)
+ 
+ #define WRAP_FP_GVEC(WRAPNAME, FPST, FUNC)                              \
+     static void WRAPNAME(unsigned vece, uint32_t rd_ofs,                \
 -- 
 2.34.1
 
