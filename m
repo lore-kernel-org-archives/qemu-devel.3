@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC77C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C94C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:11:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD106-0004Y6-Q4; Fri, 31 May 2024 08:04:50 -0400
+	id 1sD10A-0004bN-7N; Fri, 31 May 2024 08:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0zi-0004Od-4i
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:28 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ id 1sD0zu-0004U8-9l
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:38 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0zc-0003S1-HU
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:25 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2e95a7545bdso19169331fa.2
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:20 -0700 (PDT)
+ id 1sD0zr-0003WU-4Z
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:38 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42108739ed8so25313505e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717157059; x=1717761859; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717157072; x=1717761872; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hUei9nT4ia2Mkwm2wqjM7KPepv2BdpSDgodhMc/nKDE=;
- b=fR+DoFFkslur8RzhUn2w4n3SSk0hRwUiTfbD9csmJUUvMrJrkpG9JcjvryFBNOIQCe
- azcDbEjKzF9mJeIeWdzleFGBGKtPe67KBc9coNvzHA7EN8qmzM+uPUOsUvBikE6MmkW/
- ivatCGi4WpPWkyVV3CmTWYtlpGTH/Yxx5sKLrVAr1lZrxJ4xGZvizqAkhnr18WXwTbPH
- wMLjiE6L7Z3okr2GePyxwx/NfLg3bCCHY4GB1rp98g49ABjXy19po427DJtFRv+tZ4QB
- CRC8Oss8Lce+EKwPZcITbSuU6cKBBuC8jO2STnNFcMzY//ZLKxajltsbTA6eyExbuSSk
- jP4Q==
+ :reply-to; bh=hoLdKfz5//S9+WQLs/kTAMazR29BMfS0J7R/dQu2aq8=;
+ b=REfQWvIaG+92WecLLwzJsvUnbzHfBjCIBQ8U/tvzO9CK/KWnBvyyfzNE6Vh7JvMnjs
+ 2Rgpml0TwFEgeY9FDbcOhBioQ6eOkXrQkitAsg9k3frg9l6cLqoHeNPNQNYZNbtNoeHQ
+ OuR1DtnbqEbYKae0c0W2uqiu88nSpqQwkl8w1DojSjHaPcWoFiY5OmVQv3UG0wTvzeBt
+ WGISexXfXYQijMkCCoqeCn5F0KkenNHmmiBZePuR6Lafa7nLeewfQuAm11Z226CQALRc
+ 3qMpboRmrwYqjkTGEY6pRnLnqokhtri6Sr2PpqjDtZs6JeVWgyu+7rWdeld2xRMzCR4I
+ BOEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717157059; x=1717761859;
+ d=1e100.net; s=20230601; t=1717157072; x=1717761872;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hUei9nT4ia2Mkwm2wqjM7KPepv2BdpSDgodhMc/nKDE=;
- b=ayjr65xduVcF+yAy4vH2ZHg6+SwKzssosds2ftLCWc6sNouOheW8vHXZpRJ/8PBcn+
- P4WS9NSOeYmFvQRp1PdvLEu3kouGbD0nl5INX2oguOiuIp9GlFvvamgAipoNJdWy9daO
- 3yXJYu8UEnidp9MllfX4UPHhdq7099MbOEBlZxnB3W2TLCKvCguWJ122oq9ufukD9EJx
- l9WpMUM3/fT6jEGZ40mYtORs3YRTOA4LHrNJL2NUv/HZI+K0CMnllk/kVrMct8jv6rxh
- qrH50PwFZ12cSmFnuT6nFy6RFHVVbp7AOzK9pAHAE0ug43NeZp3+lkf8+U89mONYJSvx
- 4rAA==
-X-Gm-Message-State: AOJu0YxaBS8HtLs9vwUy0BpfdWQDcaEtsrzIO3OBtRKGAme1p2JOgn5a
- TuDrSLNdWKi+dKpoboW1Q1Km9Sj7DX2F+2sEzmygF02/3ETX7BYWc4dAFE7+5JymaatsyoAXrek
- h
-X-Google-Smtp-Source: AGHT+IEoDussIG9PQ6w1U57r/5N95vsSG3gW4QW35tT7GdES5UDUMny4pKFI3s7oD8p358ezxf62HQ==
-X-Received: by 2002:a2e:7a04:0:b0:2ea:91cf:a5f0 with SMTP id
- 38308e7fff4ca-2ea9512cf12mr11033761fa.19.1717157058729; 
- Fri, 31 May 2024 05:04:18 -0700 (PDT)
+ bh=hoLdKfz5//S9+WQLs/kTAMazR29BMfS0J7R/dQu2aq8=;
+ b=KxVoP2RmCRgGoZ6qtd1gwsO/urf6UQJgKBLPTtsQ16cG9V/KrOKBsKtI7SYJJ4LEJr
+ T3VRS/ZvVDL90SjC/oDpJcdThjUXnEYAHXRk7cvsjavu8FGHmr3XlTked6KkpzDuhhxz
+ XpjiJU4lQb2MnvPmOvrQKfzvcEk+vp0a/8fT2nlGGvNiFhfPFZ6PgJnxIDblchdzcfoX
+ huIcAnRKAoFYMHFw7fEYXjY+CIgyUicG3MvWe9tKDZX+rXWYonLDI2ILu5KO6e4LAjE5
+ BkqgWjfdrBaHOgub+vOHE7auoRZAp9CqakZoNoMbX2mO3dPxbpYaNmqxjEijaKn/JaaV
+ e2kA==
+X-Gm-Message-State: AOJu0YzYVC/GpLw/kdXxZmU2z2MKsIrzSmE2jNFwL1bwCwWZfVcv0lCS
+ IMoE7X4VqH5fEFU7sfire8xiNCdwqzRzK0082/RkRTMF+xaq8ue94KYKr9itfsn+VjL1CBh/wIO
+ A
+X-Google-Smtp-Source: AGHT+IGjM7FRheyA/CKQc0MuZalFWu54F5bqC1hDutWKnyje6DyfMcnFwYWzudoVIEJVEkRDjg8ATQ==
+X-Received: by 2002:a05:600c:4515:b0:419:a3f:f4f6 with SMTP id
+ 5b1f17b1804b1-4212e046d11mr16442785e9.8.1717157071870; 
+ Fri, 31 May 2024 05:04:31 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.18
+ 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 05:04:18 -0700 (PDT)
+ Fri, 31 May 2024 05:04:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/43] target/arm: Convert ADD, SUB (vector) to decodetree
-Date: Fri, 31 May 2024 13:03:39 +0100
-Message-Id: <20240531120401.394550-22-peter.maydell@linaro.org>
+Subject: [PULL 40/43] docs/system/target-arm: Re-alphabetize board list
+Date: Fri, 31 May 2024 13:03:58 +0100
+Message-Id: <20240531120401.394550-41-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240531120401.394550-1-peter.maydell@linaro.org>
 References: <20240531120401.394550-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,123 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+The board list in target-arm.rst is supposed to be in alphabetical
+order by the title text of each file (which is not the same as
+alphabetical order by filename).  A few items had got out of order;
+correct them.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240528203044.612851-17-richard.henderson@linaro.org
+The entry for
+"Facebook Yosemite v3.5 Platform and CraterLake Server (fby35)"
+remains out-of-order, because this is not its own file
+but is currently part of the aspeed.rst file.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240520141421.1895138-1-peter.maydell@linaro.org
 ---
- target/arm/tcg/a64.decode      |  6 ++++++
- target/arm/tcg/translate-a64.c | 22 +++++++---------------
- 2 files changed, 13 insertions(+), 15 deletions(-)
+ docs/system/target-arm.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 96ce35ad40e..44383b4fc7c 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -765,6 +765,9 @@ UQSHL_s         0111 1110 ..1 ..... 01001 1 ..... ..... @rrr_e
- SQRSHL_s        0101 1110 ..1 ..... 01011 1 ..... ..... @rrr_e
- UQRSHL_s        0111 1110 ..1 ..... 01011 1 ..... ..... @rrr_e
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index c9d7c0dda7e..870d30e3502 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -86,16 +86,16 @@ undocumented; you can get a complete list by running
+    arm/bananapi_m2u.rst
+    arm/b-l475e-iot01a.rst
+    arm/sabrelite
++   arm/highbank
+    arm/digic
+    arm/cubieboard
+    arm/emcraft-sf2
+-   arm/highbank
+    arm/musicpal
+    arm/gumstix
+    arm/mainstone
+    arm/kzm
+-   arm/nrf
+    arm/nseries
++   arm/nrf
+    arm/nuvoton
+    arm/imx25-pdk
+    arm/orangepi
+@@ -107,8 +107,8 @@ undocumented; you can get a complete list by running
+    arm/stellaris
+    arm/stm32
+    arm/virt
+-   arm/xlnx-versal-virt
+    arm/xenpvh
++   arm/xlnx-versal-virt
  
-+ADD_s           0101 1110 111 ..... 10000 1 ..... ..... @rrr_d
-+SUB_s           0111 1110 111 ..... 10000 1 ..... ..... @rrr_d
-+
- ### Advanced SIMD scalar pairwise
- 
- FADDP_s         0101 1110 0011 0000 1101 10 ..... ..... @rr_h
-@@ -895,6 +898,9 @@ UQSHL_v         0.10 1110 ..1 ..... 01001 1 ..... ..... @qrrr_e
- SQRSHL_v        0.00 1110 ..1 ..... 01011 1 ..... ..... @qrrr_e
- UQRSHL_v        0.10 1110 ..1 ..... 01011 1 ..... ..... @qrrr_e
- 
-+ADD_v           0.00 1110 ..1 ..... 10000 1 ..... ..... @qrrr_e
-+SUB_v           0.10 1110 ..1 ..... 10000 1 ..... ..... @qrrr_e
-+
- ### Advanced SIMD scalar x indexed element
- 
- FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 2424c6d314a..77a64923e7f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -5118,6 +5118,8 @@ TRANS(SSHL_s, do_int3_scalar_d, a, gen_sshl_i64)
- TRANS(USHL_s, do_int3_scalar_d, a, gen_ushl_i64)
- TRANS(SRSHL_s, do_int3_scalar_d, a, gen_helper_neon_rshl_s64)
- TRANS(URSHL_s, do_int3_scalar_d, a, gen_helper_neon_rshl_u64)
-+TRANS(ADD_s, do_int3_scalar_d, a, tcg_gen_add_i64)
-+TRANS(SUB_s, do_int3_scalar_d, a, tcg_gen_sub_i64)
- 
- typedef struct ENVScalar2 {
-     NeonGenTwoOpEnvFn *gen_bhs[3];
-@@ -5432,6 +5434,8 @@ TRANS(UQSHL_v, do_gvec_fn3, a, gen_neon_uqshl)
- TRANS(SQRSHL_v, do_gvec_fn3, a, gen_neon_sqrshl)
- TRANS(UQRSHL_v, do_gvec_fn3, a, gen_neon_uqrshl)
- 
-+TRANS(ADD_v, do_gvec_fn3, a, tcg_gen_gvec_add)
-+TRANS(SUB_v, do_gvec_fn3, a, tcg_gen_gvec_sub)
- 
- /*
-  * Advanced SIMD scalar/vector x indexed element
-@@ -9444,13 +9448,6 @@ static void handle_3same_64(DisasContext *s, int opcode, bool u,
-         }
-         gen_cmtst_i64(tcg_rd, tcg_rn, tcg_rm);
-         break;
--    case 0x10: /* ADD, SUB */
--        if (u) {
--            tcg_gen_sub_i64(tcg_rd, tcg_rn, tcg_rm);
--        } else {
--            tcg_gen_add_i64(tcg_rd, tcg_rn, tcg_rm);
--        }
--        break;
-     default:
-     case 0x1: /* SQADD / UQADD */
-     case 0x5: /* SQSUB / UQSUB */
-@@ -9458,6 +9455,7 @@ static void handle_3same_64(DisasContext *s, int opcode, bool u,
-     case 0x9: /* SQSHL, UQSHL */
-     case 0xa: /* SRSHL, URSHL */
-     case 0xb: /* SQRSHL, UQRSHL */
-+    case 0x10: /* ADD, SUB */
-         g_assert_not_reached();
-     }
- }
-@@ -9482,7 +9480,6 @@ static void disas_simd_scalar_three_reg_same(DisasContext *s, uint32_t insn)
-     case 0x6: /* CMGT, CMHI */
-     case 0x7: /* CMGE, CMHS */
-     case 0x11: /* CMTST, CMEQ */
--    case 0x10: /* ADD, SUB (vector) */
-         if (size != 3) {
-             unallocated_encoding(s);
-             return;
-@@ -9501,6 +9498,7 @@ static void disas_simd_scalar_three_reg_same(DisasContext *s, uint32_t insn)
-     case 0x9: /* SQSHL, UQSHL */
-     case 0xa: /* SRSHL, URSHL */
-     case 0xb: /* SQRSHL, UQRSHL */
-+    case 0x10: /* ADD, SUB (vector) */
-         unallocated_encoding(s);
-         return;
-     }
-@@ -10962,6 +10960,7 @@ static void disas_simd_3same_int(DisasContext *s, uint32_t insn)
-     case 0x09: /* SQSHL, UQSHL */
-     case 0x0a: /* SRSHL, URSHL */
-     case 0x0b: /* SQRSHL, UQRSHL */
-+    case 0x10: /* ADD, SUB */
-         unallocated_encoding(s);
-         return;
-     }
-@@ -10999,13 +10998,6 @@ static void disas_simd_3same_int(DisasContext *s, uint32_t insn)
-             gen_gvec_fn3(s, is_q, rd, rn, rm, gen_gvec_saba, size);
-         }
-         return;
--    case 0x10: /* ADD, SUB */
--        if (u) {
--            gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_sub, size);
--        } else {
--            gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_add, size);
--        }
--        return;
-     case 0x13: /* MUL, PMUL */
-         if (!u) { /* MUL */
-             gen_gvec_fn3(s, is_q, rd, rn, rm, tcg_gen_gvec_mul, size);
+ Emulated CPU architecture support
+ =================================
 -- 
 2.34.1
 
