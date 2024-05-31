@@ -4,83 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C304C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCD5C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD4Lu-0001zn-1R; Fri, 31 May 2024 11:39:34 -0400
+	id 1sD4OE-0002xc-Od; Fri, 31 May 2024 11:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD4Ls-0001zZ-It
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:39:32 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD4Lq-0001cy-O9
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:39:32 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-420180b5897so11411655e9.3
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 08:39:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717169968; x=1717774768; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YEXZoC/oGQ12S9TJ/qvsBvrmQO463EcPubkvPD3RMEk=;
- b=KnxqMdUQ+DhC6fVJ1wGZzrsxo6vdDYXGpN4/+8ZJNupRe3Aq3MsrvYAal9vCrDHKLD
- bC1oHHa7Vy//hV2vuPg9j4oX0SSz8vGB2j+uW8E3m66Zlwm8ivLk7cgWpcNyq2amxFKC
- NuoULd0crtMSbDdE27CoczobhW4pcc1gum/M86ccUEd50eBTjBsBuRfVy5q8WBUTLeYv
- yXXmqe/3oz9tijH1SCAsd4em2Bg1boWmEKoYGhJo5xlX+oUH2AWCOpZvPVL1vuncGbuX
- NP0Tjv6bO32Moun7EqC/qLOcmU0ZY55sXChqmqq1dVVw0NsAhXf0D0XkpHzUpn0IpmXB
- uCFA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sD4OD-0002xH-Lr
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:41:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sD4OC-00027w-3R
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:41:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717170114;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qC/cbC73nnhbl/cIc7rPGNWp9f24AP4IKiaTi5mFi/w=;
+ b=eIwPqh6okd58mrUclZem1stBBuaKRf/W1JPTuDFLZqVk3vCpXZ8JjrIqk/7507W1mT5JTP
+ xAWm58DV2CfhUfjYzVvn0oZCAMfHDNHxxBiHTXEoUq+km2OabL10jFZL3XpUB8ESP1CKaU
+ 3ueIveZR1+RGcpyLvGj8EHXTp+6V0yU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-302-5bz-tyLCMnGOwaIXfap5bw-1; Fri, 31 May 2024 11:41:52 -0400
+X-MC-Unique: 5bz-tyLCMnGOwaIXfap5bw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-420fe1575bbso16576975e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 08:41:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717169968; x=1717774768;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YEXZoC/oGQ12S9TJ/qvsBvrmQO463EcPubkvPD3RMEk=;
- b=QOfdQA+eF7/1aVdWmmFA/86Z/yXnCIRNg4mTj3J6IEiNDKOB/ly/+W4luPoVUr28yP
- xI39IiVvOJXCVKQrFg9xAg9D5sbcTUeRLmvgcqszjk5CkIaHn5zZINZy/eCt9fHzSEdO
- EgOQy+JcjBYZqsRt6yzh2uR9FCQtwTBsWI4tZLv3rJUVBmlHsWceLNvg4UY7rmy/pYp1
- 9Eo1DNgVcg4XaOqxXKHNoWxD2wCDf5TutddkQxl0crsaXVt2q7hxqUixKGPdG56E+OmS
- BsKgkUNt9kdDnnlTVglUYE2oWREQr8S56fazValymcXIL50nlZy4VJi6CcaRahRmyNUB
- IKJQ==
+ d=1e100.net; s=20230601; t=1717170111; x=1717774911;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qC/cbC73nnhbl/cIc7rPGNWp9f24AP4IKiaTi5mFi/w=;
+ b=ZCWv4w22lzmXvwgsdj3Z2fgW0G4eNSCKu/orRp7bMi3RzndZkwEuNwwkHZsY24oiaB
+ fQu0KUlYAVmx0nXXkLLEWtcHzSeAHorafdcBaqti6vRLYQNmPnJq0I17W6/yh2Ojq0rh
+ 0r9rKjmCoDLS6HVxOVlZqGaFIqaD5F3CkJikTUw9XDLY1qi1slo3Y+s085drN5uOYikX
+ 7+DLQ8FLh4nJMLRHqQe3L0W0PTSIZIA7MYWETgCQHfjrUkXMKv++mTECCBJ15qVtl9Ix
+ uYLUfUV7w+o+jnaD83TnUZN4lV1K+bNZYz3lAV8isNvd2Wh2/AqZPNnD4cukCuzfqBfC
+ ww8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2iukSJnIlaN9oTMatTI7cDrK+nfomxfpmy/HQZ572we8FLaISkk12zyabc1Y++5QLfzCut1ukocb+3FFao+p/diGK59o=
-X-Gm-Message-State: AOJu0YwsFfjLXMvDkntHZU51yzxkviPRvKL2qbuQ2frt7i6Wdu0eOBrw
- Pc0WZUg5WyGdmG2UNnoil2pYsNO4Pw0VH7LNcDbPDg6dh7eBcT/6uaLj3G6XQpHUSFQDc6AM10F
- 9GzI=
-X-Google-Smtp-Source: AGHT+IF6iw55fyF6vF4ERWy262Bw2jysc4C+EQEpfIzfTnloz2aG27hH0jOBKvf9wgEP/GAnP7GOjA==
-X-Received: by 2002:a05:600c:1f93:b0:421:1fb7:dff2 with SMTP id
- 5b1f17b1804b1-4212e05ea21mr20681225e9.12.1717169968469; 
- Fri, 31 May 2024 08:39:28 -0700 (PDT)
-Received: from [192.168.137.175] (140.red-88-28-21.dynamicip.rima-tde.net.
- [88.28.21.140]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04cad5bsm2139804f8f.38.2024.05.31.08.39.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 08:39:28 -0700 (PDT)
-Message-ID: <d9ce4eb9-e211-40a9-8d71-4ee1c309ea00@linaro.org>
-Date: Fri, 31 May 2024 17:39:25 +0200
+ AJvYcCU0PC6C+UrV0BrB189OHh1IS72Vzu+2G9wq7TaAjUNRhiyvrPRdC//B2YE76UerZfOTUyI84X/mX30dREUJOGnAp+HgNoM=
+X-Gm-Message-State: AOJu0YyAthSi3FNxjhPHvOgHe/scWvbsJVVqXu50h6m51ThItdOIDnSM
+ /XVhymLATgHFtmhGYRGnA5H0O1mdOQqpjH7rp2CRJBvCtsoVt3hbRbDD++FKnSfpVFBZfxf7UU7
+ BxPR2ViKJ1Y2il9e5/fqbrNz7Ifa3gyHbff8COeVFH+NHnyn+Sp8PjFQ+7z9ixUpf6FdMED4p16
+ 74YnOjMxNzKd6tG9JQeuiLMKOneHk=
+X-Received: by 2002:a5d:5612:0:b0:354:f38f:6e68 with SMTP id
+ ffacd0b85a97d-35e0f25a669mr1673430f8f.13.1717170111485; 
+ Fri, 31 May 2024 08:41:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHknQ24Wh1IuFhonT/McTlo0E1nMXrNxyPrEBrtjYxAoupsAnVtFwjKPxe/rVPXxm/1l8CCQGALu5V3ireduR8=
+X-Received: by 2002:a5d:5612:0:b0:354:f38f:6e68 with SMTP id
+ ffacd0b85a97d-35e0f25a669mr1673409f8f.13.1717170111158; Fri, 31 May 2024
+ 08:41:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] backends/hostmem: Report error when memory size is
- unaligned
-To: Michal Privoznik <mprivozn@redhat.com>, qemu-devel@nongnu.org
-References: <cover.1717168113.git.mprivozn@redhat.com>
- <025d0bdd5e76b334754c09c445fe621090121da5.1717168113.git.mprivozn@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <025d0bdd5e76b334754c09c445fe621090121da5.1717168113.git.mprivozn@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-19-pankaj.gupta@amd.com>
+ <792b99d5-9d18-42f4-a9f4-5621e2ae6a70@oracle.com>
+In-Reply-To: <792b99d5-9d18-42f4-a9f4-5621e2ae6a70@oracle.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 31 May 2024 17:41:39 +0200
+Message-ID: <CABgObfbHvj_GiX-+E3zhLfrrw7S02-VcE0sEmj_nfuXWnwmrhQ@mail.gmail.com>
+Subject: Re: [PATCH v4 18/31] hw/i386/sev: Add function to get SEV metadata
+ from OVMF header
+To: Liam Merwick <liam.merwick@oracle.com>
+Cc: Pankaj Gupta <pankaj.gupta@amd.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "brijesh.singh@amd.com" <brijesh.singh@amd.com>,
+ "dovmurik@linux.ibm.com" <dovmurik@linux.ibm.com>, 
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "michael.roth@amd.com" <michael.roth@amd.com>, 
+ "xiaoyao.li@intel.com" <xiaoyao.li@intel.com>,
+ "thomas.lendacky@amd.com" <thomas.lendacky@amd.com>, 
+ "isaku.yamahata@intel.com" <isaku.yamahata@intel.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, 
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "anisinha@redhat.com" <anisinha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,28 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/5/24 17:10, Michal Privoznik wrote:
-> If memory-backend-{file,ram} has a size that's not aligned to
-> underlying page size it is not only wasteful, but also may lead
-> to hard to debug behaviour. For instance, in case
-> memory-backend-file and hugepages, madvise() and mbind() fail.
-> Rightfully so, page is the smallest unit they can work with. And
-> even though an error is reported, the root cause it not very
-> clear:
-> 
->    qemu-system-x86_64: Couldn't set property 'dump' on 'memory-backend-file': Invalid argument
-> 
-> After this commit:
-> 
->    qemu-system-x86_64: backend 'memory-backend-file' memory size must be multiple of 2 MiB
+On Fri, May 31, 2024 at 5:20=E2=80=AFPM Liam Merwick <liam.merwick@oracle.c=
+om> wrote:
+> > +    metadata =3D (OvmfSevMetadata *)(flash_ptr + flash_size - data->of=
+fset);
+> > +    if (memcmp(metadata->signature, "ASEV", 4) !=3D 0) {
+> > +        return;
+> > +    }
+> > +
+> > +    ovmf_sev_metadata_table =3D g_malloc(metadata->len);
+>
+> There should be a bounds check on metadata->len before using it.
 
-Thanks!
+You mean like:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+    if (metadata->len <=3D flash_size - data->offset) {
+        ovmf_sev_metadata_table =3D g_memdup2(metadata, metadata->len);
+    }
 
-> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
-> ---
->   backends/hostmem.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+?
+
+Paolo
 
 
