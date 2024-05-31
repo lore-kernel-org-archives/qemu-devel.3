@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 149F3C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 13:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A1CC25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 13:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD2Oc-0007kF-SH; Fri, 31 May 2024 09:34:14 -0400
+	id 1sD2b6-0001xD-GW; Fri, 31 May 2024 09:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sD2Ob-0007k4-71
- for qemu-devel@nongnu.org; Fri, 31 May 2024 09:34:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sD2OZ-0004aJ-8Q
- for qemu-devel@nongnu.org; Fri, 31 May 2024 09:34:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717162450;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SO4l/aW2tdmnT4dg9lQ8rnqcO/wykQZIem4HoV2LAxg=;
- b=dlVZf/nf6/xcg5/41Lh9ziUjNvqHwZo9/0P+eXfqj67T6iqd4kwoZQKotqndAGUM6hxQi3
- DBhfBVdbK3pv70IIvAhZ5HT0W0Gm459+4/9+OYeW5kxmXPDVRJ5luzwAppM9n2lCjNZQFg
- iaFiXmWXueSzqtHj7mEXf+XKnm3CDUs=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-VlIP6U_PNdeu7S1SJ5mC4g-1; Fri, 31 May 2024 09:34:08 -0400
-X-MC-Unique: VlIP6U_PNdeu7S1SJ5mC4g-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-6f8e6666396so56300a34.3
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 06:34:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sD2b4-0001wp-LQ
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 09:47:06 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sD2b2-0006uZ-PB
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 09:47:06 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2e78fe9fc2bso26869281fa.3
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 06:47:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717163221; x=1717768021; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hOEPuqonTFw/5O28aVLak0of6LjmMtGlY71TDgH6v0A=;
+ b=WarWswmvaYH/bzktWYhkCQLc2mq77rv4OIvdMwb6lMLVeEm7a0clyqnwphD+C4snV9
+ C8XvV2hxlULFo8oE1l6XggLvGYrxbArnyctaNxp9S6cQc24x09QypwOiMElRx34g+ylx
+ 63XvwImlRcF+kseaM3vJtbYLdpqyNfmCHJw/lk/42JHzvfsRSDoWKxBmNn7QIEe6j5aq
+ lashQus+tRCRePuzAAqtssgjiW3ksUefx42VqtN9a5nPakEBg4LJOOKFuUXlDv9B5PQr
+ Jj85jHY0JDCbW1UerfShMlB978m3gXFcLGNErIY3qOSFPen5ySdVkmVy3hqWPAawqmuF
+ c5eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717162448; x=1717767248;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SO4l/aW2tdmnT4dg9lQ8rnqcO/wykQZIem4HoV2LAxg=;
- b=U70dTUKdMkxQMTqlehl/NSkT2v7pTqeVrIVRbgi4vn5c4vOCSITOZ+nakcuKhkD/09
- DIoF8lWVqGKDboVeJr0YAgLHXWXsVlZwZiI0ZqK1iD7s95venJirROxCqd+Wk271lrQq
- C6CNZiSjwu2cqtD9IOx5SGT/PsKQDieUFNj7bmOpPCHEr4QdSs0V5Pix/ZjfsfjB8szK
- PL/t8oJKhrA3f3669QMCEreEff5VDFm7DOrEp4CtQZDLQ6u57PMbJm0KIhfoUOILzUrf
- oWuWqGLNtv//0ByFSusPUKLZBpp3PN8cIHwihc78J9Q1AOFpPStCDr9aaXFvqTjsb7Co
- Aa6A==
-X-Gm-Message-State: AOJu0YyKQu7X2svTWgJ3TyJ6Yzbegfh+8xanfqHm+rC3SxA8xW4UImR8
- HpznFKYFuuQGEgLlJ9Kc8IFvCL5WXNEuQzmf2nz7JFgYFeITnPsEKxGwQBP1tJtqBqlcoJrxt3y
- 5qall2svcLvYD0diTOTdCxqH3Diqvmis/WmAcpN7+EQvQim/KuVyt
-X-Received: by 2002:a05:6808:1a0b:b0:3d1:d475:35f8 with SMTP id
- 5614622812f47-3d1e3486b9fmr1918647b6e.2.1717162446983; 
- Fri, 31 May 2024 06:34:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2Dc2PiCmR0/hERHLlGsYfwIfDwF/UYDR5GG5ZlCGyhu8dCks6qD8ba4UxNEHAEhs58kxcTw==
-X-Received: by 2002:a05:6808:1a0b:b0:3d1:d475:35f8 with SMTP id
- 5614622812f47-3d1e3486b9fmr1918593b6e.2.1717162446173; 
- Fri, 31 May 2024 06:34:06 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ae4b40692bsm6480756d6.92.2024.05.31.06.34.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 06:34:05 -0700 (PDT)
-Date: Fri, 31 May 2024 09:34:03 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 4/4] tests/qtest/migration-test: Add a postcopy
- memfile test
-Message-ID: <ZlnRy0PS17qa2aqb@x1n>
-References: <20240530095408.31608-1-npiggin@gmail.com>
- <20240530095408.31608-5-npiggin@gmail.com>
+ d=1e100.net; s=20230601; t=1717163221; x=1717768021;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hOEPuqonTFw/5O28aVLak0of6LjmMtGlY71TDgH6v0A=;
+ b=EPbRo/e1NY19eqPzRSLOs9wCBWiDArYMuorlBN5XxuXLmcCebv2dxxiLKH/TeKZPzu
+ jkStbYnfnRqVhpTvL9s/+lcfyGFRWdPadYEMkwdoDrf9Cec9SvOJ68UMxPuvQzQmhqhc
+ eHGXqkzup4ZPzbCPPJ2w5sa8FSdM40Np8LhPvw0Tu8jCfJN27Vvq9va55PLOsR83Avkl
+ egRzoEyZmlSpNcqU/w7QgCrZjl7rgqaqhj+Zn9gxe9gyxG1i0MtAKKv9QiYBQcbSf9xa
+ tAbGDwe+ftXAujKz1IlNMaZu2O4it5FOulA8AP/VHuyNISDYwm9dbMqO6q7pEntXR/XT
+ 4h+g==
+X-Gm-Message-State: AOJu0YyVnhEgW1URzvrjolhbOaw1qDRf1t0w2NQu6c+21a5BV9SZ/Os/
+ eSlwrDjYkH28SrRZuFactj3J9k4yRUFuvfMlO/PA93PK8lRx7psEJmcd06zjnHCyE6U3u5rLWK9
+ rTE6fDkr5b46uElGZC8fn/PpKnNo=
+X-Google-Smtp-Source: AGHT+IGFDrbdWl+c+cZwpQdXAaKmtUOQgGy7FxtcQ5VOo1BM06ZIYocxk4iBK+hQTqetzg/QyHrK6GWV5okPmc5yX8E=
+X-Received: by 2002:a2e:9b56:0:b0:2df:97b1:d4f4 with SMTP id
+ 38308e7fff4ca-2ea951dfaf6mr11611451fa.33.1717163221110; Fri, 31 May 2024
+ 06:47:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240530095408.31608-5-npiggin@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+ <CAFEAcA9w1PeT4X=eX6Xh64vNWC1FPQdgGCXJkf0+=3kDLuYVsQ@mail.gmail.com>
+ <CAFfO_h57h7MX0Drw_jjym-kq8q9jFwTx7J7nYX7cxW_XY+pOsA@mail.gmail.com>
+ <CAFEAcA_1AWpCyPvx6KRk6zg9zN72exozyfiw3grOb2NSGtW8iw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_1AWpCyPvx6KRk6zg9zN72exozyfiw3grOb2NSGtW8iw@mail.gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Fri, 31 May 2024 19:46:49 +0600
+Message-ID: <CAFfO_h40DsWK1NjSTu63defOPjuoehi4SevYH56wJQiammDdhg@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000d0dd000619c037d6"
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,191 +91,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 07:54:07PM +1000, Nicholas Piggin wrote:
-> Postcopy requires userfaultfd support, which requires tmpfs if a memory
-> file is used.
-> 
-> This adds back support for /dev/shm memory files, but adds preallocation
-> to skip environments where that mount is limited in size.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+--000000000000d0dd000619c037d6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for doing this regardless.
+Hi Peter,
 
-> ---
->  tests/qtest/migration-test.c | 77 ++++++++++++++++++++++++++++++++----
->  1 file changed, 69 insertions(+), 8 deletions(-)
-> 
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 86eace354e..5078033ded 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -11,6 +11,7 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/cutils.h"
->  
->  #include "libqtest.h"
->  #include "qapi/qmp/qdict.h"
-> @@ -553,6 +554,7 @@ typedef struct {
->       */
->      bool hide_stderr;
->      bool use_memfile;
-> +    bool use_shm_memfile;
+On Fri, May 31, 2024, 6:53 PM Peter Maydell <peter.maydell@linaro.org>
+wrote:
 
-Nitpick: when having both, it's slightly confusing on the name, e.g. not
-clear whether use_memfile needs to be set to true too if use_shm_memfile=true.
+> On Fri, 3 May 2024 at 17:53, Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> wrote:
+> >
+> > On Fri, May 3, 2024 at 10:28=E2=80=AFPM Peter Maydell <peter.maydell@li=
+naro.org>
+> wrote:
+> > >
+> > > On Fri, 19 Apr 2024 at 19:31, Dorjoy Chowdhury <dorjoychy111@gmail.co=
+m>
+> wrote:
+> > > >
+> > > > Some ARM CPUs advertise themselves as SMT by having the MT[24] bit
+> set
+> > > > to 1 in the MPIDR register. These CPUs have the thread id in
+> Aff0[7:0]
+> > > > bits, CPU id in Aff1[15:8] bits and cluster id in Aff2[23:16] bits =
+in
+> > > > MPIDR.
+> > > >
+> > > > On the other hand, ARM CPUs without SMT have the MT[24] bit set to =
+0,
+> > > > CPU id in Aff0[7:0] bits and cluster id in Aff1[15:8] bits in MPIDR=
+.
+> > > >
+> > > > The mpidr_read_val() function always reported non-SMT i.e., MT=3D0
+> style
+> > > > MPIDR value which means it was wrong for the following CPUs with SM=
+T
+> > > > supported by QEMU:
+> > > >     - cortex-a55
+> > > >     - cortex-a76
+> > > >     - cortex-a710
+> > > >     - neoverse-v1
+> > > >     - neoverse-n1
+> > > >     - neoverse-n2
+> > >
+> > > This has definitely turned out to be rather more complicated
+> > > than I thought it would be when I wrote up the original issue
+> > > in gitlab, so sorry about that.
+> > >
+> > > I still need to think through how we should deal with the
+> > > interaction between what the CPU type implies about the MPIDR
+> > > format and the topology information provided by the user.
+> > > I probably won't get to that next week, because I'm on holiday
+> > > for most of it, but I will see if I can at least make a start.
+> > >
+> >
+> > No problem at all. Just let me know when you get to it. I will see if
+> > I can fix it or ask if I need help then. Please enjoy your holidays.
+>
+> Hi -- this is a note to say that I haven't forgotten about this
+> patch and the related issues, but I still haven't been able to
+> make the time to think through how it ought to work yet :-(
+>
 
-Maybe "use_tmpfs_memfile" and "use_shm_memfile"?
+No problem at all. Thanks for letting me know.
 
->      /* only launch the target process */
->      bool only_target;
->      /* Use dirty ring if true; dirty logging otherwise */
-> @@ -739,7 +741,62 @@ static int test_migrate_start(QTestState **from, QTestState **to,
->          ignore_stderr = "";
->      }
->  
-> -    if (args->use_memfile) {
-> +    if (!qtest_has_machine(machine_alias)) {
-> +        g_autofree char *msg = g_strdup_printf("machine %s not supported",
-> +                                               machine_alias);
-> +        g_test_skip(msg);
-> +        return -1;
-> +    }
-> +
-> +    if (args->use_shm_memfile) {
-> +#if defined(__NR_userfaultfd) && defined(__linux__)
+Regards,
+Dorjoy
 
-IIUC we only need defined(__linux__) as there's nothing to do with uffd yet?
+>
 
-> +        int fd;
-> +        uint64_t size;
-> +
-> +        if (getenv("GITLAB_CI")) {
-> +            /*
-> +             * Gitlab runners are limited to 64MB shm size and despite
-> +             * pre-allocation there is concern that concurrent tests
-> +             * could result in nondeterministic failures. Until all shm
-> +             * usage in all CI tests is found to fail gracefully on
-> +             * ENOSPC, it is safer to avoid large allocations for now.
-> +             *
-> +             * https://lore.kernel.org/qemu-devel/875xuwg4mx.fsf@suse.de/
-> +             */
-> +            g_test_skip("shm tests are not supported in Gitlab CI environment");
-> +            return -1;
-> +        }
+--000000000000d0dd000619c037d6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm not sure whether this is Fabiano's intention.  I'm wondering whether we
-can drop this and just let it still run there.
+<div dir=3D"auto"><div>Hi Peter,<br><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Fri, May 31, 2024, 6:53 PM Peter Maydell &=
+lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 =
+0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Fri, 3 May 2024 at 1=
+7:53, Dorjoy Chowdhury &lt;<a href=3D"mailto:dorjoychy111@gmail.com" target=
+=3D"_blank" rel=3D"noreferrer">dorjoychy111@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; On Fri, May 3, 2024 at 10:28=E2=80=AFPM Peter Maydell &lt;<a href=3D"m=
+ailto:peter.maydell@linaro.org" target=3D"_blank" rel=3D"noreferrer">peter.=
+maydell@linaro.org</a>&gt; wrote:<br>
+&gt; &gt;<br>
+&gt; &gt; On Fri, 19 Apr 2024 at 19:31, Dorjoy Chowdhury &lt;<a href=3D"mai=
+lto:dorjoychy111@gmail.com" target=3D"_blank" rel=3D"noreferrer">dorjoychy1=
+11@gmail.com</a>&gt; wrote:<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Some ARM CPUs advertise themselves as SMT by having the MT[2=
+4] bit set<br>
+&gt; &gt; &gt; to 1 in the MPIDR register. These CPUs have the thread id in=
+ Aff0[7:0]<br>
+&gt; &gt; &gt; bits, CPU id in Aff1[15:8] bits and cluster id in Aff2[23:16=
+] bits in<br>
+&gt; &gt; &gt; MPIDR.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; On the other hand, ARM CPUs without SMT have the MT[24] bit =
+set to 0,<br>
+&gt; &gt; &gt; CPU id in Aff0[7:0] bits and cluster id in Aff1[15:8] bits i=
+n MPIDR.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; The mpidr_read_val() function always reported non-SMT i.e., =
+MT=3D0 style<br>
+&gt; &gt; &gt; MPIDR value which means it was wrong for the following CPUs =
+with SMT<br>
+&gt; &gt; &gt; supported by QEMU:<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0- cortex-a55<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0- cortex-a76<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0- cortex-a710<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0- neoverse-v1<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0- neoverse-n1<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0- neoverse-n2<br>
+&gt; &gt;<br>
+&gt; &gt; This has definitely turned out to be rather more complicated<br>
+&gt; &gt; than I thought it would be when I wrote up the original issue<br>
+&gt; &gt; in gitlab, so sorry about that.<br>
+&gt; &gt;<br>
+&gt; &gt; I still need to think through how we should deal with the<br>
+&gt; &gt; interaction between what the CPU type implies about the MPIDR<br>
+&gt; &gt; format and the topology information provided by the user.<br>
+&gt; &gt; I probably won&#39;t get to that next week, because I&#39;m on ho=
+liday<br>
+&gt; &gt; for most of it, but I will see if I can at least make a start.<br=
+>
+&gt; &gt;<br>
+&gt;<br>
+&gt; No problem at all. Just let me know when you get to it. I will see if<=
+br>
+&gt; I can fix it or ask if I need help then. Please enjoy your holidays.<b=
+r>
+<br>
+Hi -- this is a note to say that I haven&#39;t forgotten about this<br>
+patch and the related issues, but I still haven&#39;t been able to<br>
+make the time to think through how it ought to work yet :-(<br></blockquote=
+></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">No problem at al=
+l. Thanks for letting me know.</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Regards,</div><div dir=3D"auto">Dorjoy</div><div dir=3D"auto"><div c=
+lass=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 =
+0 .8ex;border-left:1px #ccc solid;padding-left:1ex"></blockquote></div></di=
+v></div>
 
-Other tests not detecting avaiablility of shmem looks like a separate issue
-to be fixed to me, regardless of this.
-
-My wild guess is since we're doing memory_size+64K below then if test won't
-fail others won't either, as normally the shmem quota should normally be
-power of 2 anyway.. then it should always fit another few MBs if this one.
-While this test is ready to fail gracefully now.
-
-> +
-> +        if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
-> +            g_test_skip("/dev/shm does not exist or is not a directory");
-> +            return -1;
-> +        }
-> +
-> +        /*
-> +         * Pre-create and allocate the file here, because /dev/shm/
-> +         * is known to be limited in size in some places (e.g., Gitlab CI).
-> +         */
-> +        memfile_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
-> +        fd = open(memfile_path, O_WRONLY | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
-> +        if (fd == -1) {
-> +            g_test_skip("/dev/shm file could not be created");
-> +            return -1;
-> +        }
-> +
-> +        g_assert(qemu_strtosz(memory_size, NULL, &size) == 0);
-> +        size += 64*1024; /* QEMU may map a bit more memory for a guard page */
-> +
-> +        if (fallocate(fd, 0, 0, size) == -1) {
-> +            unlink(memfile_path);
-> +            perror("could not alloc"); exit(1);
-> +            g_test_skip("Could not allocate machine memory in /dev/shm");
-> +            return -1;
-> +        }
-> +        close(fd);
-> +#else
-> +        g_test_skip("userfaultfd is not supported");
-
-"/dev/shm not available" instead?
-
-> +#endif
-> +    } else if (args->use_memfile) {
->          memfile_path = g_strdup_printf("/%s/qemu-%d", tmpfs, getpid());
->          memfile_opts = g_strdup_printf(
->              "-object memory-backend-file,id=mem0,size=%s"
-> @@ -751,12 +808,6 @@ static int test_migrate_start(QTestState **from, QTestState **to,
->          kvm_opts = ",dirty-ring-size=4096";
->      }
->  
-> -    if (!qtest_has_machine(machine_alias)) {
-> -        g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
-> -        g_test_skip(msg);
-> -        return -1;
-> -    }
-> -
->      machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
->                                        QEMU_ENV_DST);
->  
-> @@ -807,7 +858,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
->       * Remove shmem file immediately to avoid memory leak in test failed case.
->       * It's valid because QEMU has already opened this file
->       */
-> -    if (args->use_memfile) {
-> +    if (args->use_memfile || args->use_shm_memfile) {
->          unlink(memfile_path);
->      }
->  
-> @@ -1275,6 +1326,15 @@ static void test_postcopy(void)
->      test_postcopy_common(&args);
->  }
->  
-> +static void test_postcopy_memfile(void)
-> +{
-
-IMHO the defined(__NR_userfaultfd) should be here to guard if needed.
-
-Or rather, we don't need to care about uffd yet? As what we already do with
-test_postcopy().
-
-I'm guessing the test just doesn't run on !linux, while compilation always
-works with/without that.
-
-Thanks,
-
-> +    MigrateCommon args = {
-> +        .start.use_shm_memfile = true,
-> +    };
-> +
-> +    test_postcopy_common(&args);
-> +}
-> +
->  static void test_postcopy_suspend(void)
->  {
->      MigrateCommon args = {
-> @@ -3441,6 +3501,7 @@ int main(int argc, char **argv)
->  
->      if (has_uffd) {
->          migration_test_add("/migration/postcopy/plain", test_postcopy);
-> +        migration_test_add("/migration/postcopy/memfile", test_postcopy_memfile);
->          migration_test_add("/migration/postcopy/recovery/plain",
->                             test_postcopy_recovery);
->          migration_test_add("/migration/postcopy/preempt/plain",
-> -- 
-> 2.43.0
-> 
-
--- 
-Peter Xu
-
+--000000000000d0dd000619c037d6--
 
