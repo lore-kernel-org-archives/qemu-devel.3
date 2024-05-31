@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE9DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21C6C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 09:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCyGf-0006es-1y; Fri, 31 May 2024 05:09:45 -0400
+	id 1sCyHR-0007Py-RB; Fri, 31 May 2024 05:10:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
- id 1sCyGc-0006dF-RO
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:09:42 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ id 1sCyHQ-0007Oz-8a
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:10:32 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
- id 1sCyGb-00053j-53
- for qemu-devel@nongnu.org; Fri, 31 May 2024 05:09:42 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-52b7b829bc7so2102787e87.2
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:09:40 -0700 (PDT)
+ id 1sCyHM-0005Sm-9T
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 05:10:31 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52b8b7b8698so291891e87.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 02:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717146579; x=1717751379; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717146624; x=1717751424; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:organization:content-language
  :references:cc:to:subject:reply-to:user-agent:mime-version:date
  :message-id:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9nHLqWeneXgssP+00AwHJM3tHuDqX/2jS/REuWoSHIw=;
- b=khg6hTSFpNCI3lEaUE1bnHq9VsDXxt/ytxAeaDEzWosRenRpMzqwQxXVRX+MURB/xh
- Aa7XkpR3rP0Nq4dqf5cBV+9JAxt3m5D/hP4zCyHmnrMJN6HbvdLfCUds2XqfocFc1iKs
- Qh0tbxQ7QyCXVN06pgm9atwVhnHw0kzVZjpMca0kX9lZLaCDNUQEV3SLB6BKOBJhQFLB
- WmCHytzrJrv59TG2sXQ2FDzGTfX+UN1kDYoRWQyKEKyaujg2oSArYAIaLQaUeDqlYfJ0
- pirP06+B+ilSS2fNyuFY8jCTdAoEAuWMliLzu8DMRskExuuJ70eZvUPHYaE89RpumNo4
- y5IQ==
+ bh=kipgqKIxTWjiY1J4diBph0ORkE9vgc6ZqFETK6Cxncw=;
+ b=kX6/N9y0GzWQvdpnJZ5rjMuIiCadgUseCUfOT8om25MZ9cD89Oj9j95q2yYIM0eHKF
+ Qr8qDg+ltcjx32hSALfFWI9V/sL1oNMB/2poXcseoyPL3oFc3h17G8jqz5htwiC1b/im
+ E2tjraXvhfwWsvzn2h6jUe9gGqQihN8RJDfZBGAu+iyJn3BdVigmdMPjT8oG4ubzpcZy
+ pGDgaCrmZCGw9cBZPocIUPKnigfUR9i6tzDRi95VjzmwF7EUbqXILSXlicqM/LJRnhQN
+ yqWyAeSRzGFBrKN5Zl+ePm7jk3ka7B2zLcNWblSGsUJbBnu5YJKcWLhRcnHb6b828D8L
+ alvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717146579; x=1717751379;
+ d=1e100.net; s=20230601; t=1717146624; x=1717751424;
  h=content-transfer-encoding:in-reply-to:organization:content-language
  :references:cc:to:subject:reply-to:user-agent:mime-version:date
  :message-id:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9nHLqWeneXgssP+00AwHJM3tHuDqX/2jS/REuWoSHIw=;
- b=s2f16wWxIXXhCuZ16Wm4qGa/D7O3+S61ErPoIGyOl+0ho2fAiYG3R6NjutQl5h4g9Z
- bxOSRdVefBO/mDqewxEJQSKkW/oDEyNswSb9daRXauV0OjycHVWSMa7/ED7KbCnbJw9K
- wKYkI+L1OH6+elPQ45YUaDVTwWPDdQa8niDe6JHruPALOcGZXGP6yoZb+0TyeCa1GeHa
- 9oyMrG7xtkI3ZpAtJROWVqjl6aL1cU4NYHeDtS/SbPPpfnDgwJvPil7muo+ixSCCo3qZ
- ipFNvH+/2tPBME9HDsp7gn61pKQEdE0EbXTIbnlaFkQu/eTTsfKZ0Pu5CVhZxrhimSTj
- ETiw==
+ bh=kipgqKIxTWjiY1J4diBph0ORkE9vgc6ZqFETK6Cxncw=;
+ b=vsBXsX3MuqS2yflMp/LUdRDAjeTMQlbwP/kf+52uDDE6Iuall451eKMVZduTxpsCK9
+ 2ie9Wsidq4tHmgOFaG/hUc7WRAjEJwb25XrLx79IIhDLay02L6HfTSpMKFSU0PoiChK7
+ fWnVLKKcq/P4KvEaCJKqLsMrqp+n+tTvPh41QWlOJgYcPxO8BzZBrf+8zsbgL/FsBUhZ
+ sjiiWoULHwiR2qVoXf1NTnr1Wz518e91Caz1abQL/LL8zwM2LcqDXH/wD9+8/yyr6sOr
+ qNeLytYKk9WjcdB505Gnm9Sg6lY90wm25dvI+ztKZptSSr7KWfX2rmkR2fjSI/CCz4bY
+ Y+Eg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV18ivtY7X4KFhhyWiuLj49Gsagx6K6OJrEAUCbbGkAaMbfybeubMrqpUDVq3BbPKs9qqceGZfkfv1JEV6Wr43ili7Z2pg=
-X-Gm-Message-State: AOJu0YyVHf90Xw1FhANqjEomyAYA2H7/OCCMSozH++Mlb9SO1QBPUn3R
- 1JHH84TW+BU5vvtlGWhq7/pRGZaGSedmqP15kyqScqlO8bpMPWDK
-X-Google-Smtp-Source: AGHT+IH88NdbdF6pEzhBNUimRkWJPQqdY0qzX+TwohQvgXS4DJe6CtPrF9PW//10pZ/crdnVcStzaw==
-X-Received: by 2002:a05:6512:45b:b0:52a:daba:f7f0 with SMTP id
- 2adb3069b0e04-52b896dc4abmr679253e87.62.1717146578471; 
- Fri, 31 May 2024 02:09:38 -0700 (PDT)
+ AJvYcCWvJsn1NDcxB5XYb/qG+Wguzn904tCOTCHIgNHIUKitxb8fJ6HwvrBXxNAnxT/LCzdmDpu1s2HpNetgJ329BoSn0oFxZAA=
+X-Gm-Message-State: AOJu0Yz1SO/1YMKkAWpe/qEwkADvdbTIOYpQ2ZgcyuqAlIv4fHEMNCEj
+ irbda9Yo+fAzNvK7F3jogM66Iok0A53NGtzKHFB/wfzJMHpKYQZG
+X-Google-Smtp-Source: AGHT+IG7vTACSFJneASAY6oepgxD0uTbsNdLpJPk2wq3sK792UuWxkKyL5fSGa5cotd0sdJt1GNwgA==
+X-Received: by 2002:ac2:4a72:0:b0:519:1047:7eac with SMTP id
+ 2adb3069b0e04-52b89571166mr724613e87.23.1717146624171; 
+ Fri, 31 May 2024 02:10:24 -0700 (PDT)
 Received: from [192.168.3.251] (54-240-197-236.amazon.com. [54.240.197.236])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212b83d5c7sm18847855e9.8.2024.05.31.02.09.37
+ 5b1f17b1804b1-421270ad598sm48564345e9.41.2024.05.31.02.10.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 02:09:38 -0700 (PDT)
+ Fri, 31 May 2024 02:10:23 -0700 (PDT)
 From: Paul Durrant <xadimgnik@gmail.com>
 X-Google-Original-From: Paul Durrant <paul@xen.org>
-Message-ID: <e1451535-b62a-473d-bb6c-00e91274aace@xen.org>
-Date: Fri, 31 May 2024 10:09:37 +0100
+Message-ID: <98ef7ab5-5c8f-45e8-9bd0-50e014b981ea@xen.org>
+Date: Fri, 31 May 2024 10:10:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] hw/xen: Constify XenLegacyDevice::XenDevOps
+Subject: Re: [PATCH v2 3/7] hw/xen: Constify xenstore_be::XenDevOps
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 Cc: Anthony PERARD <anthony@xenproject.org>,
@@ -77,14 +77,14 @@ Cc: Anthony PERARD <anthony@xenproject.org>,
  <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>
 References: <20240510104908.76908-1-philmd@linaro.org>
- <20240510104908.76908-3-philmd@linaro.org>
+ <20240510104908.76908-4-philmd@linaro.org>
 Content-Language: en-US
 Organization: Xen Project
-In-Reply-To: <20240510104908.76908-3-philmd@linaro.org>
+In-Reply-To: <20240510104908.76908-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=xadimgnik@gmail.com; helo=mail-lf1-x132.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=xadimgnik@gmail.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,9 +113,9 @@ On 10/05/2024 11:49, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/xen/xen_pvdev.h  | 2 +-
->   hw/xen/xen-legacy-backend.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   include/hw/xen/xen-legacy-backend.h | 2 +-
+>   hw/xen/xen-legacy-backend.c         | 6 +++---
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
 
 Reviewed-by: Paul Durrant <paul@xen.org>
