@@ -4,87 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8F0FC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC25C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCwx4-0002p0-Mj; Fri, 31 May 2024 03:45:26 -0400
+	id 1sCwyK-0003iW-1y; Fri, 31 May 2024 03:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCwx1-0002eb-Oa
- for qemu-devel@nongnu.org; Fri, 31 May 2024 03:45:24 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCwwp-0005pv-95
- for qemu-devel@nongnu.org; Fri, 31 May 2024 03:45:23 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-356c4e926a3so1538471f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 00:45:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717141507; x=1717746307; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7VMSjG2KrosW7Bl84CH6Ud+h2Csr7QHwDtrF6XM4024=;
- b=GSb7310P4yYX5HvESwrZ86K9m8FWjM9jXsGLuwpNz0ouZgoDxlO6p+sO5voBDlfE/4
- teUNM0Tg1S00Acd19bOkvME/qSfRCr3SeFbMQBjH8sP3lst0uqXXlIAtUUoU0qK+Gntz
- mZZI+z8hx1eKoTQzoRp9BpE2M1wa5wNQe2l601sezihdmOKGwCisQXvbJoQHMKUQtKe8
- ZILhgT4P+XiabsDDOx8E+XK39o/3TBkgWSpovg9p6q9jmJz8f/jlf8YLr+zEe99kqp5g
- jQwChwzf8+sL/kbq7I0LORfa6V6cKovR2tSt9WVWXD+uYwjsFylvDV/8795yZ4WKbvKX
- oo1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717141507; x=1717746307;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7VMSjG2KrosW7Bl84CH6Ud+h2Csr7QHwDtrF6XM4024=;
- b=B1s0Exg4hIlpJ9Rol87LamfJZj2scdaoDoErmCaSWfUTBRRTMFANjxOrRFk5ia7L+j
- Ak/xbqxapBkOyhwB9tDwHi4lSbvwNBL6fw3a278/GMUGEeVjyWnwPojicyd9q49mkBW1
- eCb6vt9cYEVETDz0lC+FhnI+phnydiWX/x+YGr473rshnbTOKjkgF0e9g3vZAV10vPfQ
- f+eVbvEr8mpuF7mvGCO0qmkKuVc675z00qSVo35BwelRuBW8qLF45IRHl0DCoVSIto0M
- HqES36r+RqjwE+bIEvrPIYdSaOQpgBN5HwM65+4KxOH92CWnUWBDdZLuE777Xex/Gqvj
- 4TBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWXY4tElEYxjcnqdrK5W0Yv1sMiojp3LgIgMSzXwPOtmXtm62Dj+01lcYdwMAJsfFDcs6A3fRxzni5ec+ChTY1sKztlP2o=
-X-Gm-Message-State: AOJu0Yx8WKmkSm52JmzyXbnfesFMZDm4G6OVW48PckYZ/3zMV8T2gVao
- 769ZB6DCob/yJC972GO7M7yOgUelZCwH6PEBXDB6QFr4vztbuad6Euun1vUKQ2c=
-X-Google-Smtp-Source: AGHT+IGJezQA9zsQf9Eg8q+TNRTOcPGUrGnjtJbFdu/FphUBJ2uBo4d8oy9j3MrGluQnQqJjkwFugg==
-X-Received: by 2002:adf:ef11:0:b0:357:39e7:33a2 with SMTP id
- ffacd0b85a97d-35e0f27276emr722227f8f.21.1717141507245; 
- Fri, 31 May 2024 00:45:07 -0700 (PDT)
-Received: from [192.168.69.100] (sml13-h01-176-184-15-35.dsl.sta.abo.bbox.fr.
- [176.184.15.35]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04c0a26sm1239619f8f.21.2024.05.31.00.45.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 00:45:06 -0700 (PDT)
-Message-ID: <70f28f96-9158-4995-bc43-9e00192b86dd@linaro.org>
-Date: Fri, 31 May 2024 09:45:04 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=rvzv=NC=kaod.org=clg@ozlabs.org>)
+ id 1sCwyG-0003hQ-3r; Fri, 31 May 2024 03:46:40 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=rvzv=NC=kaod.org=clg@ozlabs.org>)
+ id 1sCwyD-00068t-DD; Fri, 31 May 2024 03:46:39 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VrFYf1b3Vz4x32;
+ Fri, 31 May 2024 17:46:30 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VrFYX6zpYz4x1C;
+ Fri, 31 May 2024 17:46:24 +1000 (AEST)
+Message-ID: <a2aa3c01-51dd-4517-9261-038fff11f091@kaod.org>
+Date: Fri, 31 May 2024 09:46:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/6] qtest: move qtest_{get, set}_virtual_clock to
- accel/qtest/qtest.c
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
- <20240530220610.1245424-5-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240530220610.1245424-5-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v4 12/16] aspeed/soc: Add AST2700 support
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-13-jamin_lin@aspeedtech.com>
+ <7ea55928-e61e-4112-992d-b899c65b4652@kaod.org>
+ <SI2PR06MB50411ED51276574422E07948FCFC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB50411ED51276574422E07948FCFC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=rvzv=NC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,14 +76,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/5/24 00:06, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/sysemu/qtest.h |  3 ---
->   accel/qtest/qtest.c    | 12 ++++++++++++
->   system/qtest.c         | 12 ------------
->   3 files changed, 12 insertions(+), 15 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hello Jamin,
+> I refer to versal_create_apu_gic function, https://github.com/qemu/qemu/blob/master/hw/arm/xlnx-versal.c#L67
+> and updated aspeed_soc_ast2700_gic as following.
+> If you have any concerned about the new changes, please let me know.
+> Thanks-Jamin
+> 
+> static bool aspeed_soc_ast2700_gic(DeviceState *dev, Error **errp)
+
+Please rename to aspeed_soc_ast2700_gic_realize()
+
+> {
+>      Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+>      AspeedSoCState *s = ASPEED_SOC(dev);
+>      AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+>      SysBusDevice *gicbusdev;
+>      DeviceState *gicdev;
+>      QList *redist_region_count;
+>      int i;
+> 
+>      object_initialize_child(OBJECT(a), "ast2700-gic", &a->gic,
+>                              gicv3_class_name());
+
+and object_initialize_child() can be called in aspeed_soc_ast2700_init().
+
+>      gicbusdev = SYS_BUS_DEVICE(&a->gic);
+>      gicdev = DEVICE(&a->gic);
+>      qdev_prop_set_uint32(gicdev, "revision", 3);
+>      qdev_prop_set_uint32(gicdev, "num-cpu", sc->num_cpus);
+>      qdev_prop_set_uint32(gicdev, "num-irq", AST2700_MAX_IRQ);
+> 
+>      redist_region_count = qlist_new();
+>      qlist_append_int(redist_region_count, sc->num_cpus);
+>      qdev_prop_set_array(gicdev, "redist-region-count", redist_region_count);
+> 
+>      if (!sysbus_realize(gicbusdev, errp)) {
+>          return false;
+>      }
+>      sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
+>      sysbus_mmio_map(gicbusdev, 1, sc->memmap[ASPEED_GIC_REDIST]);
+> 
+>      for (i = 0; i < sc->num_cpus; i++) {
+>          DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
+
+Could we avoid qemu_get_cpu() and use the cpu array of the SoC instead ?
+
+>          int NUM_IRQS = 256, ARCH_GIC_MAINT_IRQ = 9, VIRTUAL_PMU_IRQ = 7;
+>          int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
+> 
+>          const int timer_irq[] = {
+>              [GTIMER_PHYS] = 14,
+>              [GTIMER_VIRT] = 11,
+>              [GTIMER_HYP]  = 10,
+>              [GTIMER_SEC]  = 13,
+>          };
+>          int j;
+> 
+>          for (j = 0; j < ARRAY_SIZE(timer_irq); j++) {
+>              qdev_connect_gpio_out(cpudev, j,
+>                      qdev_get_gpio_in(gicdev, ppibase + timer_irq[j]));
+>          }
+> 
+>          qemu_irq irq = qdev_get_gpio_in(gicdev,
+>                                          ppibase + ARCH_GIC_MAINT_IRQ);
+>          qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+>                                      0, irq);
+>          qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+>                  qdev_get_gpio_in(gicdev, ppibase + VIRTUAL_PMU_IRQ));
+> 
+>          sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+>          sysbus_connect_irq(gicbusdev, i + sc->num_cpus,
+>                             qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+>          sysbus_connect_irq(gicbusdev, i + 2 * sc->num_cpus,
+>                             qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+>          sysbus_connect_irq(gicbusdev, i + 3 * sc->num_cpus,
+>                             qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+>      }
+> 
+>      return true;
+> }
+> 
+> struct Aspeed27x0SoCState {
+>      AspeedSoCState parent;
+> 
+>      ARMCPU cpu[ASPEED_CPUS_NUM];
+>      AspeedINTCState intc;
+>      GICv3State gic;
+> };
+> 
+> #define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
+> OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SoCState, ASPEED27X0_SOC)
+
+Thanks,
+
+C.
+
+
 
 
