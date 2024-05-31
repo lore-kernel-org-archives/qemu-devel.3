@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E600C27C44
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88091C27C44
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCwzo-0004ZU-96; Fri, 31 May 2024 03:48:16 -0400
+	id 1sCx1P-0005HO-V5; Fri, 31 May 2024 03:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCwzl-0004ZA-Kn
- for qemu-devel@nongnu.org; Fri, 31 May 2024 03:48:13 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCx1O-0005HE-HY
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 03:49:54 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCwzk-0006fF-0u
- for qemu-devel@nongnu.org; Fri, 31 May 2024 03:48:13 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-35dc7d0387cso1893653f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 00:48:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCx1N-0007D3-3B
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 03:49:54 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-35dc0472b7eso1663457f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 00:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717141690; x=1717746490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717141791; x=1717746591; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Y/8YDU1BDYBElDDEbozTcKR6dhTWSJzPfd8q/v7yPR0=;
- b=bFMD69GFkxT7cdNwFxD6aEoibAuL8KQKfLjD9tqe59XTQ8CBL4wD5a53RF7EFwsoF7
- xv+njPKakVMwqqb76on5b6DRw8FFO+eFHC4KZl9UVs2HdTBNcOi7t2sfvJHCJOOfcFLe
- uesJU8fcY4ZvoNWzsQ8nZ9n+qubApiwGTmMXWPChGDDWlWrnSkyMsW0wD7DBVWN8t7qU
- O+MkkLMkUtLSUwjgrmWhrTdbmzpzPFeZLDMU9nJYbgkHNmKnxhPSgEiDn0bhzfuw/s1W
- U8HPifOgAtRVg0mixd1IG78THNZROCbWRPmZ0h3592i5Ks/4WhIG3QM+rWWtI76W/tyR
- CZyg==
+ bh=IxWT98FX33Ci8AsbuFBN+P2ik3CLtyNIhuKVGHEvI74=;
+ b=ANC5IbWiHMnjaodiwCFjFri601WXkvsg0TRpPIh/y/hbxHcc6yHb2S7AcQbYOJYJAo
+ U5YEJuh5oKpsRl6CztskwIYdHa0IQzISBoEFXTmaOoKMHJEcKc7n5ZinvkFwAibDwpZx
+ BYvsm0WmH+2Mt52NT56D7l/52ST/xhWTAF+9c7srnzKXAR26UdEsb+C7KQXQiR8Y/+NB
+ fyrWxyAZL3EN1MfjoTeZxwhRql8GSULHFTGlfTEbWx+iXMkxIBZlbcoXkk52X9uhqxjk
+ ft8ZjWskWCDZ6opI6CAS5r3HREDjkGqTNPTXq93roh360Tb+jWggKu6OG67+vU9tTaot
+ xWOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717141690; x=1717746490;
+ d=1e100.net; s=20230601; t=1717141791; x=1717746591;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y/8YDU1BDYBElDDEbozTcKR6dhTWSJzPfd8q/v7yPR0=;
- b=ZzFV0LHkIS/boMmJHheiPVL+EqbDi1aA1PzGmF6oCQMaxu+w1Irz2Bfne6wdMurvDq
- wDClOcIWPSkegxvGdDgEa/Bq+6kFuYK+eeuiQWYKh8vUJmUv9NtYjzvBDT4J4X+JXtgA
- EBlEpJ6mypm0hjLHbBeYu0YUDBlFOHGi7fg+bL998FEFEjdKbG5d12x4I9fyLroU4jps
- u4KTBYEqycHmYqJPwO7Dy4xyv2ME5kBGmq0FLXh5PaC8h+PNJBUvza/CZfZ5ohcYM6pl
- WbBiX48RrZObEB1I4fTc/p7RS3teE43wXrnRoTtQ3tDj0A2QOYg/uHDjYf50e5awjZ/f
- esyA==
+ bh=IxWT98FX33Ci8AsbuFBN+P2ik3CLtyNIhuKVGHEvI74=;
+ b=N4POetb5o/QRdyDm2zy3kxIf/+ybOXb+rkdHOLWKOEES4ipG0LK7rYsLtyDAIS5crm
+ ZpszjwiHuL+hVw96BJAWoYiit48DjE3XIzUF+Nu3HLmCazADmNo7eZI7RuoQ+WYS6JOs
+ oVM9n8GqsLSxA404gNEouugpt/atf/rQzz+K7t0oRjgHhJUy2/TG1zhV7XP8eMkxp+2S
+ 3M82CsYhR6IJ0uv6CnKjQHLZLL2ClIgc1WTh3KnoqQvjcubw4HC03KzwSHlOJpf9THDI
+ t44Ve0fOPM7F9ew3wJGda+bzT0W40nfiyGh3Jgd3auITT4dZ76lKIcD9wPreKrs6O7/z
+ SDQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFuAaAoXTFajpNOfgwO1XcXE/rr9A63//PHdu951+dQJg1EKJvfDHDmu8mk91PniSpOlHCbB6g0WLQcHcHR9hE512a6ss=
-X-Gm-Message-State: AOJu0Yy9KMbIwt1yAbN1MlJRyf2Sz31wmBW7ah6L3AIXa8aWIuHZ7nLA
- 1hkgvrQcfzsK3CDM4cWy2Cc85/FM+sn4n+MRnx4I1Oprq3BIwOM/nuuEiOAOv6w=
-X-Google-Smtp-Source: AGHT+IFaA8/EQIpCn9qdpDfT69X2dBfducVVNJpoFxS9TTTScjqkbm82cBGWhknM5BRlNW+GLXOa0A==
-X-Received: by 2002:a5d:452b:0:b0:354:db70:3815 with SMTP id
- ffacd0b85a97d-35e0f254598mr820756f8f.7.1717141690331; 
- Fri, 31 May 2024 00:48:10 -0700 (PDT)
+ AJvYcCWs3Hz4hOIRoljsCzc+IjSNI6mfTsQVzMMI6FVpAKfdsYroWDZxLvLz+5CYaC/JYiJZ5TKFyC4AAhntm/92ngzygHQmMLE=
+X-Gm-Message-State: AOJu0Yxma1rMU61zTufAF7EDzAdMPhKjFoQxxYE2JNajc4BCciyMsrm0
+ t0bgf5KQ1S5ATsHzuZJj3xbJLsA4swY7dsLWzYG6LT+etmmEPk1aVpn2jvk41eA=
+X-Google-Smtp-Source: AGHT+IE+Q17njyCiRWg4+vNi8bRwOep6/C6YslF6gdDYjtor7Jze//SkWin5u68SHFUr1QOThQk8Eg==
+X-Received: by 2002:a5d:6d05:0:b0:356:c47a:87de with SMTP id
+ ffacd0b85a97d-35e0f25e206mr616987f8f.8.1717141791094; 
+ Fri, 31 May 2024 00:49:51 -0700 (PDT)
 Received: from [192.168.69.100] (sml13-h01-176-184-15-35.dsl.sta.abo.bbox.fr.
  [176.184.15.35]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212b83d479sm16698255e9.3.2024.05.31.00.48.09
+ ffacd0b85a97d-35dd062edbcsm1223055f8f.84.2024.05.31.00.49.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 00:48:09 -0700 (PDT)
-Message-ID: <996761e8-456b-4523-b1ca-f3e5c48d86b8@linaro.org>
-Date: Fri, 31 May 2024 09:48:08 +0200
+ Fri, 31 May 2024 00:49:50 -0700 (PDT)
+Message-ID: <89aee12f-35b1-4517-ab0b-6677bf5512ff@linaro.org>
+Date: Fri, 31 May 2024 09:49:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] osdep: Make qemu_madvise() return ENOSYS on
- unsupported OSes
+Subject: Re: [PATCH v2 3/4] backends/hostmem: Report error on qemu_madvise()
+ failures
 To: Michal Privoznik <mprivozn@redhat.com>, qemu-devel@nongnu.org
 Cc: david@redhat.com, imammedo@redhat.com
 References: <cover.1717140354.git.mprivozn@redhat.com>
- <4dc484ae240edf8df0de14edefc3c3a717a1c781.1717140354.git.mprivozn@redhat.com>
+ <3341689328d280183062a8fcde006468346ecf1d.1717140354.git.mprivozn@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4dc484ae240edf8df0de14edefc3c3a717a1c781.1717140354.git.mprivozn@redhat.com>
+In-Reply-To: <3341689328d280183062a8fcde006468346ecf1d.1717140354.git.mprivozn@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,18 +98,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 31/5/24 09:28, Michal Privoznik wrote:
-> Not every OS is capable of madvise() or posix_madvise() even. In
-> that case, errno should be set to ENOSYS as it reflects the cause
-> better. This also mimic what madvise()/posix_madvise() would
-> return if kernel lacks corresponding syscall (e.g. due to
-> configuration).
+> If user sets .merge or .dump attributes qemu_madvise() is called
+> with corresponding advice. But it is never checked for failure
+> which may mislead users into thinking the attribute is set
+> correctly. Report an appropriate error.
 > 
 > Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
 > ---
->   util/osdep.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   backends/hostmem.c | 36 ++++++++++++++++++++++++++++--------
+>   1 file changed, 28 insertions(+), 8 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
 
