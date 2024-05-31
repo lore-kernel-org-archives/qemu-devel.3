@@ -4,136 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9140DC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 08:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2931C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 08:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCxfX-0004Kh-0e; Fri, 31 May 2024 04:31:23 -0400
+	id 1sCxma-00060L-Ub; Fri, 31 May 2024 04:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
- id 1sCxfV-0004K3-Us
- for qemu-devel@nongnu.org; Fri, 31 May 2024 04:31:22 -0400
-Received: from mail-dm6nam12on2075.outbound.protection.outlook.com
- ([40.107.243.75] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
- id 1sCxfT-00074Z-MJ
- for qemu-devel@nongnu.org; Fri, 31 May 2024 04:31:21 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=f7DwQ5+NqabgTFkD2kwZjXmWqfnJt0UTtQY+OjGIlxb0x7Zbir/Mwk8HfEiTKhdz7NpQAKv3x0L4HyzlPQtesz/jLTJxxmvXw51Vz9AO1qArFRcYghrjWTkh/G65+6IAdqcjIFoi9iNeqLFrZP3rJcBXE1Vlu3kyNhdfeBpT5Av9c+BNuxc2gpCwPKrYsaRKxjAdUe+seCLuBtWrbhXR5u/KUa76GHOcwgRagiwCeSkCduSoygLqW0fRJcdUzSTefW/dcKy1unQ33tCT6P4BsCYp8KQwmZv/rkoVXfxb4onvs96xX0j15xdkhgRRBs16amiSrQEVTy7OCHbC2hJ7iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1vVHz4HVcJQe7w+BiHRlSDOh9HoY/2aA5nXn/L1KWkQ=;
- b=TI2nz/UIIMpZY3StCK/R+YoZThG0Ku8R8fDmNUfu7TWil+LRkUdr6I3hObSHYByrP/aZaBjSfT2mX/cpFL22zcdGhvFHK3h7/QEjy+QXF4efOMVtQOUJPZDKC/OmEseP2JiPcF5Fg4rBDTXoS3pghPjDjzAnq/seNulSiszSS9VX6078FwGFMWvGsZhtBVeaWDapP+XJhGQj9aSdr5QLWuX+wKJ08nQXS2xbOPao8KQj47yG1dhxNCHruPU6oKmRGhXnNKL51XNpwKS62hz7GvcPdj5LgP4VQQCHz+NnBeA3KZn8llLLrNq6FQJPiDslHlbUzF0h9lR8EinqC9E4pg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1vVHz4HVcJQe7w+BiHRlSDOh9HoY/2aA5nXn/L1KWkQ=;
- b=A+Y+EzuLF1VKrSu0UwWk/3sAvVIzvs6v7rxpegfjgOPa1rpyJN2/S/BnIfgg0yPcRpoC846qaLXpf8bLMN8lPnYbQlvaFWxFN/w2KBOZ2zbwDvITpMb6VzN+/s8WY03HxDBbTnbGDp96+P+1pn9xoiFTEPV2Mh2UuQIsBrdQ34o=
-Received: from PH8PR22CA0016.namprd22.prod.outlook.com (2603:10b6:510:2d1::9)
- by DS0PR12MB7972.namprd12.prod.outlook.com (2603:10b6:8:14f::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.30; Fri, 31 May
- 2024 08:26:12 +0000
-Received: from SN1PEPF00036F3D.namprd05.prod.outlook.com
- (2603:10b6:510:2d1:cafe::ef) by PH8PR22CA0016.outlook.office365.com
- (2603:10b6:510:2d1::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21 via Frontend
- Transport; Fri, 31 May 2024 08:26:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- SN1PEPF00036F3D.mail.protection.outlook.com (10.167.248.21) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7633.15 via Frontend Transport; Fri, 31 May 2024 08:26:12 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 31 May
- 2024 03:26:11 -0500
-Received: from xhdsaipava41.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.35 via
- Frontend Transport; Fri, 31 May 2024 03:26:09 -0500
-From: Shiva sagar Myana <Shivasagar.Myana@amd.com>
-To: <francisco.iglesias@amd.com>, <jasowang@redhat.com>,
- <qemu-devel@nongnu.org>, <pisa@cmp.felk.cvut.cz>
-CC: <peter.maydell@linaro.org>, <sai.pavan.boddu@amd.com>,
- <Shivasagar.Myana@amd.com>
-Subject: [QEMU][master][PATCH v2 1/1] hw/net/can/xlnx-versal-canfd: Fix
- sorting of the tx queue
-Date: Fri, 31 May 2024 13:56:05 +0530
-Message-ID: <20240531082605.2306976-1-Shivasagar.Myana@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sCxmY-000600-Vb
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 04:38:38 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sCxmV-0008Qe-Po
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 04:38:38 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Ax3eqHjFlmdRQCAA--.8748S3;
+ Fri, 31 May 2024 16:38:31 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxJMWDjFlmECYPAA--.28714S3; 
+ Fri, 31 May 2024 16:38:29 +0800 (CST)
+Subject: Re: tests/avocado: Add LoongArch machine start test
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Thomas Huth <thuth@redhat.com>,
+ Xiaojuan Yang <yangxiaojuan@loongson.cn>
+Cc: QEMU devel <qemu-devel@nongnu.org>, Chao Li <lichao@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20230515111908.2606580-1-gaosong@loongson.cn>
+ <20230515111908.2606580-3-gaosong@loongson.cn>
+ <3819e261-646d-467a-b783-85700b0e6842@redhat.com>
+ <f2840fc6-0a16-b9ba-937e-f381d2c60bdb@loongson.cn>
+ <bd599efc-1b5a-47a1-b0e9-15c59907a256@app.fastmail.com>
+ <f80b55c3-f527-fe1a-4033-d9dde1ee0b01@loongson.cn>
+ <9fb052b6-5787-4e70-9af7-e579bda0bb73@app.fastmail.com>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <d4972016-fd91-765d-7446-a20556e11426@loongson.cn>
+Date: Fri, 31 May 2024 16:38:26 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <9fb052b6-5787-4e70-9af7-e579bda0bb73@app.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: None (SATLEXMB03.amd.com: Shivasagar.Myana@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F3D:EE_|DS0PR12MB7972:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5d7645ba-2966-4381-4da0-08dc814b5499
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230031|1800799015|36860700004|82310400017|376005; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?opdOQCZxMQJEFYrDlVKSpouDUEj/NqmzSl+3tFw+PsLCtlk620hv8d9nW1LS?=
- =?us-ascii?Q?ALJ6okFH+eVHeX0mKAPD0XjXJRQx82ChDrZ8OPFwaKNZShaaon6MdEJQUOOd?=
- =?us-ascii?Q?KledWRTaEqGR1uUg9ddcPwKpLwVMUsqf+xx3yZkkue2o/mB+0PJdzczogU8g?=
- =?us-ascii?Q?DJUyW+HDrB2oztLMpfPL7W/ZC7A2Af7gnaxCGmkFeLipLZx8GaI7oseOk78y?=
- =?us-ascii?Q?TTZRiRQt7yS7f3WvwGpFjOaOCRLEx1UaLB/eZ/BGGmuj02JusBCEi3Ta+3kq?=
- =?us-ascii?Q?W7HWKKZg4a09Lj/N6KhEHMF/VdEa07gU21iCY+L9zIdmMmB54NHV75XR9XR9?=
- =?us-ascii?Q?y2uCfX4NbghY+fg6sgqcMSkIBS+el03sTHjiFIrykb1PU6wSUDnRrcIU05ny?=
- =?us-ascii?Q?8X9Mk6/ZroDEEdgFm2Ewhhlw5a/FOaw7CKH0USb5PEOWfIy4XAF25V3yb5Pp?=
- =?us-ascii?Q?unhxLQOQiZu+A1tiQfrbihQmOLZIWWzKlsytqkuaTNc6UUSV1DHTOO2OnQOx?=
- =?us-ascii?Q?S31zaAvzxpKly0e2FJSAQCMZYuyI8ApfP187JxgVLlZ5mt2h8tGyipUKrzNm?=
- =?us-ascii?Q?raZLYAUOidqHMIcyuKhE4HDQVNNixPWC070TitZIr6SKpn2Qu0aWvFAT28fJ?=
- =?us-ascii?Q?Vt53ld+jbk7A1AqygAFwI23cwNwRkEis1+zjUpu/UKyxAvaV3QwM2kGHK1Pe?=
- =?us-ascii?Q?nFW7OHZBEDwI338vdo+4E3M20u4J6tjR1Yj2qSjfaqGzm1NvxqNrVaOWmCbm?=
- =?us-ascii?Q?7yjnr4M4VcykOe1TYd5eB2F2aGhNi+1Hkjo39KfTeLQC7SRW9G5WEHQ5n8GL?=
- =?us-ascii?Q?HVarKPkdA3Ocl7BGMh0gZd7hmjR9WNdgS++Z84fv6582m56KYVchLN01bqwz?=
- =?us-ascii?Q?9AS/fg1qGz+bFzFeyNH4/261dZ8gDpwHXCGn1eDeEVXYCj+1fIAn+2+sbV7n?=
- =?us-ascii?Q?ax62Gd3aTpa7I+Usi9tUwN88oPIQ3J4yY/ketiECQws3ATkmrlICcc1eiDms?=
- =?us-ascii?Q?FuEA3BaLasUx2dz7Tmx2b0I1SbaZt6BkGliuSQEs3euYqKdzb8rNSlVxEx1x?=
- =?us-ascii?Q?9w4LrOvJZBoMTpg3Bpt2vHoEcrWFKu6tJtJ6pYhoah+V3rQqdd26TIoXLqLf?=
- =?us-ascii?Q?QzbVBgbpg/g9QXt1xm6k2GxIpfC5Wa4kLITAk8m96g5ryHvlujjofXs6mQeo?=
- =?us-ascii?Q?TakcYucE4kU1EbeCEQvHkDB/S653sTUC+7evdVE0hoUe3Zt6Pa/QwzvKnCXL?=
- =?us-ascii?Q?j6hIcW8f9bIgvXzindUWYSL6LGg2kbViLBLw2MKO1J1sb1SDH0pZtUH1OwYo?=
- =?us-ascii?Q?71/zGbpZ+KlvYJE83PB5mTgakbfDUYln8ydmht6Z2afFfYaVQhcpvlfi89od?=
- =?us-ascii?Q?ApExDgUDgh0nuOfMzYj70Pd3MGrY?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(1800799015)(36860700004)(82310400017)(376005); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 May 2024 08:26:12.1006 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5d7645ba-2966-4381-4da0-08dc814b5499
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F3D.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7972
-Received-SPF: permerror client-ip=40.107.243.75;
- envelope-from=Shivasagar.Myana@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8CxJMWDjFlmECYPAA--.28714S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tF18uw1kKF1fZrWDuFW7trc_yoW8Ar4Upa
+ yxuF1rCF4Iqrs7t3y0g3WI9F1j9rs5Xr1YqFn8Jry8Za4qvr18AFW0yr4kKrnrZrn3uFyj
+ vry3Xr97tas0vFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
+ e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -61
+X-Spam_score: -6.2
+X-Spam_bar: ------
+X-Spam_report: (-6.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.299,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,38 +92,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returning an uint32_t casted to a gint from g_cmp_ids causes the tx queue to
-become wrongly sorted when executing g_slist_sort. Fix this by always
-returning -1 or 1 from g_cmp_ids based on the ID comparison instead.
-Also, if two message IDs are the same, sort them by using their index and
-transmit the message at the lowest index first.
+在 2024/5/31 下午1:34, Jiaxun Yang 写道:
+>
+> 在2024年5月31日五月 上午2:52，gaosong写道：
+>> 在 2024/5/30 下午9:16, Jiaxun Yang 写道:
+>>> 在2024年5月30日五月 下午2:00，gaosong写道：
+>>> [...]
+>>>>> FYI, the test does not seem to work anymore - apparently the binaries
+>>>>> have changed and now the hashes do not match anymore. Could you please
+>>>>> update it? (preferably with some versioned binaries that do not change
+>>>>> in the course of time?)
+>>>>>
+>>>> Thank you,  I had send a patch to fix it.
+>>> Hi Song,
+>>>
+>>> As LoongArch EDK2 support has been merged long ago, do you to make a clean
+>>> build and add it to pc-bios directory?
+>> EDK2 LoongArchVirt under OvmfPkg is being committed to upstream.
+>>
+>> PR:
+>> https://github.com/tianocore/edk2/pull/5208
+> I meant here:
+>
+> https://gitlab.com/qemu-project/qemu/-/tree/master/pc-bios?ref_type=heads
+Sorry, I didn't explain it well.
 
-Signed-off-by: Shiva sagar Myana <Shivasagar.Myana@amd.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
----
-ChangeLog:
-v1->v2 : Subject line modified.
+We already send a patch[1] to the QEMU community, this patch create a 
+submodule 'roms/edk2-platform',
+because the LoongArch BIOS code is all in edk2-platform repo. but the 
+QEMU community think that
+the edk2-platform project is too large. so we plan to move the LoongArch 
+BIOS code from edk2-platfrom to the edk2 repo.
 
- hw/net/can/xlnx-versal-canfd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+The PR[2] is to move edk2-platform to edk2 repo. but not merged in yet.
 
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index 47a14cfe63..5f083c21e9 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1312,7 +1312,10 @@ static gint g_cmp_ids(gconstpointer data1, gconstpointer data2)
-     tx_ready_reg_info *tx_reg_1 = (tx_ready_reg_info *) data1;
-     tx_ready_reg_info *tx_reg_2 = (tx_ready_reg_info *) data2;
- 
--    return tx_reg_1->can_id - tx_reg_2->can_id;
-+    if (tx_reg_1->can_id == tx_reg_2->can_id) {
-+        return (tx_reg_1->reg_num < tx_reg_2->reg_num) ? -1 : 1;
-+    }
-+    return (tx_reg_1->can_id < tx_reg_2->can_id) ? -1 : 1;
- }
- 
- static void free_list(GSList *list)
--- 
-2.37.6
+[1]: 
+https://patchew.org/QEMU/260307952ffe5382a55d66a4999034490e04f7df.1691653307.git.lixianglai@loongson.cn/
+[2]: https://github.com/tianocore/edk2/pull/5208
+
+Related Discussions :
+https://lore.kernel.org/all/1f1d3d9f-c3df-4f29-df66-886410994cc3@xen0n.name/
+
+Thanks.
+Song Gao
+>>> Thanks
+>>> - Jiaxun
 
 
