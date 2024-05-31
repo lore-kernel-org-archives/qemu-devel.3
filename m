@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6024C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 14:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B1B1C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 14:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD2rV-0006yY-TZ; Fri, 31 May 2024 10:04:05 -0400
+	id 1sD2sP-00089q-KU; Fri, 31 May 2024 10:05:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD2rU-0006xx-AU
- for qemu-devel@nongnu.org; Fri, 31 May 2024 10:04:04 -0400
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sD2sN-000891-RV; Fri, 31 May 2024 10:04:59 -0400
 Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD2rE-0001va-PL
- for qemu-devel@nongnu.org; Fri, 31 May 2024 10:04:04 -0400
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sD2sM-0001zq-2w; Fri, 31 May 2024 10:04:59 -0400
 Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57a1fe63a98so1142772a12.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 07:03:47 -0700 (PDT)
+ 4fb4d7f45d1cf-57a3bbc0209so806982a12.3; 
+ Fri, 31 May 2024 07:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717164226; x=1717769026; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717164296; x=1717769096; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MAn80M9PCP2HHKd7EHvt0EJ/fTF8KPYuOVNq1RAFMTU=;
- b=fflPk7+BQYNaclfur8YweLy+e8OF0HQVqTHRaKt5cWsf+Pi7Rp1g4PNiwUGlvcb8Uf
- 66OR4GK1DJsYxtCvJ6Hr4NCNb6UMoOgDEaQszLjXoUmFCqeURfTydkgy+yW/mt3A12Rl
- YjX+ZjwhX06l4wyHWe4lQ+zdnZI7xIjpZUwMzD2rND4zx+VXuEqqjgbyEIpug8cdKN2S
- mJpZuLveXFEGO+tHOlbrHQMmbOTBqSLjsQCTmzztZrfbv/aapLVTohL9ZU7bV8TqGtZ0
- ACzs/z5TXrAtqpuj/Gdw8T7RS3kn3nsiDcAKsg4PpC6eOf8+5TcnzKVOvbuKAk1PP9HM
- VgkA==
+ bh=Yx3MMKy7kCmDPaUS3Gyku7yDneFjGPHG6Jk5q4bpV+c=;
+ b=FchIuDg3DNYBiTYXz35U3OciUxwCtQDQT8PkzkTVbRSxeFZ94y7QkkzH1aIc+zTkX+
+ w4AmooXKqD1sfzqOgcNh8hyTL/9AAFo+zq6O3Epbgv6GxZYpPoPR1C1AvK3qR2RtExYy
+ IvWEKPIVN6O/QjYKMNmOUmFVGCR8/CfwkiGQbNjZ1N4RynW7OcVJW/WzSZW5CAWccn9E
+ It4yJvzkvjdFj2/Rt2hse/JvWO1u0YoIjWRFKqRdfK8kIRyvtHmWK1MBfH7LkafHN/0C
+ xZddiQDjiyQwGbHkFDiJ/i3Gw1DT+j38MotMun/oXqHqaykvR7fiDlThSVVATYTsM37L
+ smtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717164226; x=1717769026;
+ d=1e100.net; s=20230601; t=1717164296; x=1717769096;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MAn80M9PCP2HHKd7EHvt0EJ/fTF8KPYuOVNq1RAFMTU=;
- b=js359xJASfq6o6cD4yq+yUu2B4YMbQQEWhIjJdywUtqZoHW24xAtwbHyvXPFhXNYjx
- HdgPmB6OnN+6aOodPVn2Xq6tW1L186YUGTlOR7MgYHHth1rLRKpWbPqs+vReRTgjaOrC
- a7TZIbl6n4vtnLrmbxIaBlPDYW3VB8/eYa4UgLd2YJcnMO3FqeE2zApiaPAx49xfOKOV
- zpd1vRbc2RnWetY9Yv3gHFiswW53WzXA9Tb4zKLreVycFFyocZxYXCz1noTZ+zffY3Bq
- ll1WWkuJYmA8iqNKZrtpRU7F1ppEo9u/eUV5vCAwD8SXTE6ED/lY9k9zsOTN3VNqRqTd
- 68aA==
-X-Gm-Message-State: AOJu0Yy9eKC9erGT/eYauP2pYEJU4kbyF6CWD/khYX15ftFdGkadP7dp
- TdWF54ija5/QcTDNDbUvC1uvApXmJJp3MWBqY3IQJSjqNUVAKMJGW7tTIuNMp2sl+jWSykpKvZZ
- +8G9AtFiPWftoQrsoLBAp7Zpo0lv7DUciuAbT7Q==
-X-Google-Smtp-Source: AGHT+IEyrAq3q7GSvc+rxvQGc1YaZOACkDsXJyxlEM4gKfj7Bd1Xxo8kON97lvHoo27mN5WdI/Rkun+7zDPj30w8T2E=
-X-Received: by 2002:a50:9f62:0:b0:578:695d:d78f with SMTP id
- 4fb4d7f45d1cf-57a3637700dmr1492521a12.15.1717164225908; Fri, 31 May 2024
- 07:03:45 -0700 (PDT)
+ bh=Yx3MMKy7kCmDPaUS3Gyku7yDneFjGPHG6Jk5q4bpV+c=;
+ b=ekGpWWO261Q1tE03o84Pa4y3vDRa+l9vMYVhTY66brIfFi+via7puBTACERt7ZpT7z
+ o/swW+84/wWsyHHS36lmNnkwJcHeYFmAGLJG1tM2GgvtL5MQ/LF70ZFxQp4vJLm1+YyV
+ 23YvtEXkTQ3wE7cQsStn+FOVKoXC653y9ghJtaAwB0nqXIqRThBNf0DxmMMBH3an6NOM
+ LLWzNoYp5yuZrA4+aEyJSE3lnJkWO0ueU3ID4YmcKIURBh0cdT3VlK942d0hVoxrlE9p
+ jCHcoox3iGWt1uzHseWwrtLMPUSXWKPQlTNC7AmMHgz4KkoJTNQ83BI/cs7ShqqQv5Gs
+ 7soA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlkOOooZWqb/s83/w/aw+hRiB8EOZn6Jb3f5eMD7D021yIXuzIShOOVmwCwMRkgnBJMSfYzZZgaulcJhLwl1k5zLhbV90=
+X-Gm-Message-State: AOJu0Yx93bhJPwbfv9iY/ZljCTi/KOo3SRNbkl5KuZp8SQ8y1Ek9eeVo
+ PZDpp3O2TRO9FvHOpaBzSnfqpDxjRgbT5t6JZwLQxnD6B8tcWrLalvu3A3FrBlHE3w2bg0ATaDo
+ YbwPfrGuhq0JhmMGDx5ekQAPUBXZM9Tb0fhE=
+X-Google-Smtp-Source: AGHT+IGdAVczeRpi2EVjbaRcNPRKu4NPpRjWkZlmWg5Nf+pbZ88P16eGcuWoTHv4n1q3L6XIRV6sE3D/sfNXYdSHthI=
+X-Received: by 2002:a50:c302:0:b0:578:6865:3227 with SMTP id
+ 4fb4d7f45d1cf-57a36450bb7mr1463021a12.30.1717164295557; Fri, 31 May 2024
+ 07:04:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240520232634.317988-1-dmamfmgm@gmail.com>
-In-Reply-To: <20240520232634.317988-1-dmamfmgm@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 May 2024 15:03:33 +0100
-Message-ID: <CAFEAcA8JFMid+SeHWuoaK9meVWwgch9wwzKmT4SFUXz4U_iacw@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix ohci_service_td: accept valid TDs
-To: David Hubbard <dmamfmgm@gmail.com>
-Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@linaro.org>, 
- Michael Tokarev <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <20240531124628.476938-1-peter.maydell@linaro.org>
+In-Reply-To: <20240531124628.476938-1-peter.maydell@linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Fri, 31 May 2024 16:04:43 +0200
+Message-ID: <CAJy5ezpwQ4e5KkYLPT8_2zAH=B-MykETWQYKAgapCqrVJLXBzA@mail.gmail.com>
+Subject: Re: [PATCH] hw/dma/xlnx_dpdma: Read descriptor into buffer,
+ not into pointer-to-buffer
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ Alexandra Diupina <adiupina@astralinux.ru>, 
+ "Konrad, Frederic" <frederic.konrad@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000db98dc0619c0775d"
 Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,186 +91,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 May 2024 at 00:26, David Hubbard <dmamfmgm@gmail.com> wrote:
+--000000000000db98dc0619c0775d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, May 31, 2024 at 2:46=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
+
+> In fdf029762f501 we factored out the handling of reading and writing
+> DMA descriptors from guest memory.  Unfortunately we accidentally
+> made the descriptor-read read the descriptor into the address of the
+> buffer rather than into the buffer, because we didn't notice we
+> needed to update the arguments to the dma_memory_read() call. Before
+> the refactoring, "&desc" is the address of a local struct DPDMADescriptor
+> variable in xlnx_dpdma_start_operation(), which is the correct target
+> for the guest-memory-read. But after the refactoring 'desc' is the
+> "DPDMADescriptor *desc" argument to the new function, and so it is
+> already an address.
 >
-> From: Cord Amfmgm <dmamfmgm@gmail.com>
+> This bug is an overrun of a stack variable, since a pointer is at
+> most 8 bytes long and we try to read 64 bytes, as well as being
+> incorrect behaviour.
 >
-> This changes the way the ohci emulation handles a Transfer Descriptor with
-> "Current Buffer Pointer" set to "Buffer End" + 1.
+> Pass 'desc' rather than '&desc' as the dma_memory_read() argument
+> to fix this.
 >
-> The OHCI spec 4.3.1.2 Table 4-2 allows td.cbp to be one byte more than td.be
-> to signal the buffer has zero length. Currently qemu only accepts zero-length
-> Transfer Descriptors if the td.cbp is equal to 0, while actual OHCI hardware
-> accepts both cases.
+> (The same bug is not present in xlnx_dpdma_write_descriptor(),
+> because there we are writing the descriptor from a local struct
+> variable "DPDMADescriptor tmp_desc" and so passing &tmp_desc to
+> dma_memory_write() is correct.)
 >
-> The qemu ohci emulation has a regression in ohci_service_td. Version 4.2
-> and earlier matched the spec. (I haven't taken the time to bisect exactly
-> where the logic was changed.)
+> Spotted by Coverity: CID 1546649
 >
-> With a tiny OS[1] that boots and executes a test, the issue can be seen:
 >
-> * OS that sends USB requests to a USB mass storage device
->   but sends td.cbp = td.be + 1
-> * qemu 4.2
-> * qemu HEAD (4e66a0854)
-> * Actual OHCI controller (hardware)
->
-> Command line:
-> qemu-system-x86_64 -m 20 \
->  -device pci-ohci,id=ohci \
->  -drive if=none,format=raw,id=d,file=testmbr.raw \
->  -device usb-storage,bus=ohci.0,drive=d \
->  --trace "usb_*" --trace "ohci_*" -D qemu.log
->
-> Results are:
->
->  qemu 4.2   | qemu HEAD  | actual HW
-> ------------+------------+------------
->  works fine | ohci_die() | works fine
->
-> Tip: if the flags "-serial pty -serial stdio" are added to the command line
-> the test will output USB requests like this:
->
-> Testing qemu HEAD:
->
-> > Free mem 2M ohci port2 conn FS
-> > setup { 80 6 0 1 0 0 8 0 }
-> > ED info=80000 { mps=8 en=0 d=0 } tail=c20920
-> >   td0 c20880 nxt=c20960 f2000000 setup cbp=c20900 be=c20907
-> >   td1 c20960 nxt=c20980 f3140000    in cbp=c20908 be=c2090f
-> >   td2 c20980 nxt=c20920 f3080000   out cbp=c20910 be=c2090f ohci20 host err
-> > usb stopped
->
-> And in qemu.log:
->
-> usb_ohci_iso_td_bad_cc_overrun ISO_TD start_offset=0x00c20910 > next_offset=0x00c2090f
->
-> Testing qemu 4.2:
->
-> > Free mem 2M ohci port2 conn FS
-> > setup { 80 6 0 1 0 0 8 0 }
-> > ED info=80000 { mps=8 en=0 d=0 } tail=620920
-> >   td0 620880 nxt=620960 f2000000 setup cbp=620900 be=620907       cbp=0 be=620907
-> >   td1 620960 nxt=620980 f3140000    in cbp=620908 be=62090f       cbp=0 be=62090f
-> >   td2 620980 nxt=620920 f3080000   out cbp=620910 be=62090f       cbp=0 be=62090f
-> >    rx { 12 1 0 2 0 0 0 8 }
-> > setup { 0 5 1 0 0 0 0 0 } tx {}
-> > ED info=80000 { mps=8 en=0 d=0 } tail=620880
-> >   td0 620920 nxt=620960 f2000000 setup cbp=620900 be=620907       cbp=0 be=620907
-> >   td1 620960 nxt=620880 f3100000    in cbp=620908 be=620907       cbp=0 be=620907
-> > setup { 80 6 0 1 0 0 12 0 }
-> > ED info=80001 { mps=8 en=0 d=1 } tail=620960
-> >   td0 620880 nxt=6209c0 f2000000 setup cbp=620920 be=620927       cbp=0 be=620927
-> >   td1 6209c0 nxt=6209e0 f3140000    in cbp=620928 be=620939       cbp=0 be=620939
-> >   td2 6209e0 nxt=620960 f3080000   out cbp=62093a be=620939       cbp=0 be=620939
-> >    rx { 12 1 0 2 0 0 0 8 f4 46 1 0 0 0 1 2 3 1 }
-> > setup { 80 6 0 2 0 0 0 1 }
-> > ED info=80001 { mps=8 en=0 d=1 } tail=620880
-> >   td0 620960 nxt=6209a0 f2000000 setup cbp=620a20 be=620a27       cbp=0 be=620a27
-> >   td1 6209a0 nxt=6209c0 f3140004    in cbp=620a28 be=620b27       cbp=620a48 be=620b27
-> >   td2 6209c0 nxt=620880 f3080000   out cbp=620b28 be=620b27       cbp=0 be=620b27
-> >    rx { 9 2 20 0 1 1 4 c0 0 9 4 0 0 2 8 6 50 0 7 5 81 2 40 0 0 7 5 2 2 40 0 0 }
-> > setup { 0 9 1 0 0 0 0 0 } tx {}
-> > ED info=80001 { mps=8 en=0 d=1 } tail=620900
-> >   td0 620880 nxt=620940 f2000000 setup cbp=620a00 be=620a07       cbp=0 be=620a07
-> >   td1 620940 nxt=620900 f3100000    in cbp=620a08 be=620a07       cbp=0 be=620a07
->
-> [1] The OS disk image has been emailed to philmd@linaro.org, mjt@tls.msk.ru,
-> and kraxel@redhat.com:
->
-> * testCbpOffBy1.img.xz
-> * sha256: f87baddcb86de845de12f002c698670a426affb40946025cc32694f9daa3abed
->
-> Signed-off-by: Cord Amfmgm <dmamfmgm@gmail.com>
++ CC Fred.
+
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
+
+> Fixes: fdf029762f50101 ("xlnx_dpdma: fix descriptor endianness bug")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/usb/hcd-ohci.c   | 4 ++--
->  hw/usb/trace-events | 1 +
->  2 files changed, 3 insertions(+), 2 deletions(-)
+>  hw/dma/xlnx_dpdma.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index acd6016980..71b54914d3 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -941,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
->          if ((td.cbp & 0xfffff000) != (td.be & 0xfffff000)) {
->              len = (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
->          } else {
-> -            if (td.cbp > td.be) {
-> -                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
-> +            if (td.cbp - 1 > td.be) {  /* rely on td.cbp != 0 */
-> +                trace_usb_ohci_td_bad_buf(td.cbp, td.be);
->                  ohci_die(ohci);
->                  return 1;
->              }
+> diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+> index dde4aeca401..a685bd28bb8 100644
+> --- a/hw/dma/xlnx_dpdma.c
+> +++ b/hw/dma/xlnx_dpdma.c
+> @@ -619,7 +619,7 @@ static MemTxResult
+> xlnx_dpdma_read_descriptor(XlnxDPDMAState *s,
+>                                                DPDMADescriptor *desc)
+>  {
+>      MemTxResult res =3D dma_memory_read(&address_space_memory, desc_addr=
+,
+> -                                      &desc, sizeof(DPDMADescriptor),
+> +                                      desc, sizeof(DPDMADescriptor),
+>                                        MEMTXATTRS_UNSPECIFIED);
+>      if (res) {
+>          return res;
+> --
+> 2.34.1
+>
+>
 
-This patch seems to me to do what the commit message sets out to
-do, and it looks unlikely to have any unintended side effects
-because it turns a "USB controller flags an error" case into
-a "treat as zero length packet" case, and I have trouble
-imagining that any guest could be relying on looking for the
-controller error. On that basis I'm inclined to accept it.
+--000000000000db98dc0619c0775d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-What I would like to see is what we could classify under
-"rationale", which is to say "what prompted us to make this
-change?". In my experience it's important to record this
-(including in the commit message). There are of course
-many cases in QEMU's git history where we failed to do that,
-but in general I think it's a good standard to meet. (I
-am also erring on the side of caution in reviewing this
-particular patch, because I don't know the relevant standards
-or this bit of the code very well.)
+<div dir=3D"ltr"><div dir=3D"ltr">On Fri, May 31, 2024 at 2:46=E2=80=AFPM P=
+eter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@=
+linaro.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">In fdf029762f501 we factored out the h=
+andling of reading and writing<br>
+DMA descriptors from guest memory.=C2=A0 Unfortunately we accidentally<br>
+made the descriptor-read read the descriptor into the address of the<br>
+buffer rather than into the buffer, because we didn&#39;t notice we<br>
+needed to update the arguments to the dma_memory_read() call. Before<br>
+the refactoring, &quot;&amp;desc&quot; is the address of a local struct DPD=
+MADescriptor<br>
+variable in xlnx_dpdma_start_operation(), which is the correct target<br>
+for the guest-memory-read. But after the refactoring &#39;desc&#39; is the<=
+br>
+&quot;DPDMADescriptor *desc&quot; argument to the new function, and so it i=
+s<br>
+already an address.<br>
+<br>
+This bug is an overrun of a stack variable, since a pointer is at<br>
+most 8 bytes long and we try to read 64 bytes, as well as being<br>
+incorrect behaviour.<br>
+<br>
+Pass &#39;desc&#39; rather than &#39;&amp;desc&#39; as the dma_memory_read(=
+) argument<br>
+to fix this.<br>
+<br>
+(The same bug is not present in xlnx_dpdma_write_descriptor(),<br>
+because there we are writing the descriptor from a local struct<br>
+variable &quot;DPDMADescriptor tmp_desc&quot; and so passing &amp;tmp_desc =
+to<br>
+dma_memory_write() is correct.)<br>
+<br>
+Spotted by Coverity: CID 1546649<br>
+<br></blockquote><div><br></div><div>+ CC Fred.</div><div><br></div><div>Re=
+viewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@amd.com">=
+edgar.iglesias@amd.com</a>&gt;<br></div><div><br></div><div><br></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+Fixes: fdf029762f50101 (&quot;xlnx_dpdma: fix descriptor endianness bug&quo=
+t;)<br>
+Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org=
+" target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0hw/dma/xlnx_dpdma.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c<br>
+index dde4aeca401..a685bd28bb8 100644<br>
+--- a/hw/dma/xlnx_dpdma.c<br>
++++ b/hw/dma/xlnx_dpdma.c<br>
+@@ -619,7 +619,7 @@ static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMA=
+State *s,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0DPDMADescriptor *desc)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0MemTxResult res =3D dma_memory_read(&amp;address_space_=
+memory, desc_addr,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;desc, size=
+of(DPDMADescriptor),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 desc, sizeof(DP=
+DMADescriptor),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MEMTXATTR=
+S_UNSPECIFIED);<br>
+=C2=A0 =C2=A0 =C2=A0if (res) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return res;<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
 
-Why do we care about the motivation for a patch?
-
-(1) In the present: it helps to raise confidence that the
-proposed new behaviour is right. This is good because QEMU's
-test suite is far from comprehensive, so in some sense any
-change to the codebase is a risk.
-
-For instance, if a change is being made because the QNX demo
-floppy doesn't run, then the fact that the change fixes that
-failure-to-run indicates that our interpretation of the
-meaning of the standard, or of what should happen in the
-grey areas that the documentation doesn't clearly describe,
-matches what the QNX driver author (an unrelated third party)
-thought and probably also what a lot of in-the-field hardware
-does (since QNX was no doubt tested on a lot of different PCs
-back in the day).
-
-On the other hand, if a change is proposed because it fixes
-booting with older Linux kernels prior to commit XYZ, and
-kernel commit XYZ turns out to be "make this device driver
-program the hardware according to the specification rather
-than relying on an accident of timing", then we might want
-to look at where we want to be in the tradeoff of "run older
-kernels" versus "put workaround for a guest software issue
-into QEMU". (Workarounds for guest software bugs are something
-I'm very reluctant to put into QEMU, because my experience
-is that once they're in the codebase we can essentially never
-remove them, because we don't know what guest code might
-be relying on them. But sometimes they're a necessary evil.)
-
-(2) In the future: if in a year's time or more, somebody
-reports that a particular commit has regressed some specific
-guest workload they have, knowing why we made the change in
-the first place is really useful in investigating the
-regression.
-
-If we need to change code that was initially added to solve
-a problem when running FreeBSD, we know we need to re-test
-with FreeBSD.
-
-If the change went in to fix a buffer overrun, we know we
-need to be careful and cross-check that we don't reintroduce
-the overrun in the course of fixing a regression.
-
-If a change is one that we made on the grounds of "reading
-the spec and the code, this looked like it was clearly wrong,
-but we don't have a definite repro case of it breaking a guest"
-then that might put "revert the change, we were mistaken" on
-the table as a response to a future regression report.
-And so on.
-
-thanks
--- PMM
+--000000000000db98dc0619c0775d--
 
