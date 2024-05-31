@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC255C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206BFC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD5lP-0007Fg-Lz; Fri, 31 May 2024 13:09:59 -0400
+	id 1sD5pS-0000PC-SZ; Fri, 31 May 2024 13:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD5lO-0007F8-LX
- for qemu-devel@nongnu.org; Fri, 31 May 2024 13:09:58 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD5lM-0001Bi-3c
- for qemu-devel@nongnu.org; Fri, 31 May 2024 13:09:57 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4202ca70270so28641935e9.3
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 10:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717175394; x=1717780194; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wzDIXdFU+DrFp8GTpCb4Xzr4LdwXmpcYy3SiUBUKw8o=;
- b=gOkNZiJPyqDQ/Vb7nRrbTnK0succ6CtE54BzVjecWB1undIgQ7oIe9P7VHXkQHO1yb
- bZQtaBwp6xru/r13dw0vh1iS4Xt46rQ0/Uvuln+oMaaCUQ92xSA+77s3Rc+WJjYGT6C/
- h2a8OVhndeHqNlFOhKKzdctkce1/tvvw2NVvCRUEAbDkzpNTaK+Taful2FSIANF1KqAX
- ouy4ovre1VWt7lBbRUrX31bW1AnOW/DMQvjkWxMkseVG1rQVEOLRl13wj+VeBD2EurWv
- hWtwOo9VvLXInYv0Vmt9uRPOtTX3WzfhN6s7TlozDizTGiWOWPnxsjlfadXgdWxPcYUD
- EKuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717175394; x=1717780194;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wzDIXdFU+DrFp8GTpCb4Xzr4LdwXmpcYy3SiUBUKw8o=;
- b=JtoCIxLYJxoVj/v7zPTsQvCFqiIdhEcLUZo35PE2im85xe9C3LuOv7agOq8goIX764
- hKIaLwajld9Fdpz4bWiL6340SSKJxNf0kGkT9xRJX4Ac4uadm+VdFYTXbCDzOvuW6V54
- MyXqDeFoUKFMbTafI3XWXRKxjJlljfUtU514YGRMf1w97MvsJikHOEFvaRYyy3in3GY7
- 5vWHHNHHQGrl/BAV3Yc3cht57Zyj5Ue+0Pz+NbzEtqD/oveavyPCc0RyvJk1cZDIwqBd
- xR9gp9Wi83sUW8qw5bkQJQcW7zSAoaGNxcIuZChDp1splUQVX7Aewlt/Ps3IdmWUjAcE
- /jsQ==
-X-Gm-Message-State: AOJu0Yw2q00rIe37f1Tt/8Obg8VmYkGxK8LWrms113YaMDJWOtDb2uTA
- wGVgMso/7n+bUvq2+at25x+WQAH3uDtPCr9PFw0/Vb3vCDQOduNjz1pgd/mm77BKNtiSJ2kv+1S
- p
-X-Google-Smtp-Source: AGHT+IHGM2kcndaTj6O/saurBDnk1/Wfh3DYeHtNTLIC0C9MlmPxcz76cYtSZzP+aEujRP9eYTHO/A==
-X-Received: by 2002:a05:6000:e48:b0:34d:9456:b8d6 with SMTP id
- ffacd0b85a97d-35e0f297876mr2008520f8f.42.1717175394143; 
- Fri, 31 May 2024 10:09:54 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04d96f6sm2278969f8f.61.2024.05.31.10.09.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 10:09:53 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-trivial@nongnu.org
-Subject: [PATCH] accel/kvm: Fix two lines with hard-coded tabs
-Date: Fri, 31 May 2024 18:09:52 +0100
-Message-Id: <20240531170952.505323-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sD5pQ-0000Ne-Eo; Fri, 31 May 2024 13:14:08 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sD5pO-0002Lq-8a; Fri, 31 May 2024 13:14:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717175647; x=1748711647;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=QQr0p0ePBlmEbkmaxw6RHzl/RVGNuQ6qsFICWHNdhGM=;
+ b=YQTfNRWF4ZC6DUdUf8vS9H7b/gc4/dSaUlH53zrwZ3ZZyXlzsqvBEFIa
+ mhCwwQsvboZM7DDKqYNXoapJGPD4KLZU25CSdbDqT4JHo7pYMKugHjuLu
+ ckTPZZDrIIywBs2Sn/rxbhSMzwOqucAyDWNt/zNrLlg91DI7uQQBn0Yze
+ 7xUOaXDrGtPzeznKxrGshq/eBBaOaccXC/ePwb0fHElyL1NOuTpsnhDv4
+ m2HedzqtPgmTU+a49t6EYsnBPWOEwS4LKS43d2LezGa1Q2sOTl/L/8Fjv
+ mo/Z0/nP77/r6V8wa0pXD6xervBoUpyilg4lBnfjLu8qnaommmNSuBWtC w==;
+X-CSE-ConnectionGUID: 0/+jx+aDQIuL/6jp4LwtEw==
+X-CSE-MsgGUID: zADnnGYcRZe4ANT3NsyJ8A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11089"; a="13897102"
+X-IronPort-AV: E=Sophos;i="6.08,205,1712646000"; d="scan'208";a="13897102"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 May 2024 10:13:51 -0700
+X-CSE-ConnectionGUID: +Z2IjAw6QwekM3sxAreiQA==
+X-CSE-MsgGUID: F/E0D6MET8WW35u3K8io4Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,204,1712646000"; d="scan'208";a="36215606"
+Received: from soc-cp83kr3.jf.intel.com (HELO [10.24.10.49]) ([10.24.10.49])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 May 2024 10:13:50 -0700
+Message-ID: <55bfe786-3015-4dd0-9bc5-6905276b2e32@intel.com>
+Date: Fri, 31 May 2024 10:13:50 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 3/3] target/i386: Move host_cpu_enable_cpu_pm into
+ kvm_cpu_realizefn()
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
+ qemu-trivial@nongnu.org
+References: <20240524200017.150339-1-zide.chen@intel.com>
+ <20240524200017.150339-4-zide.chen@intel.com> <Zllz4qFpVqrLJXXt@intel.com>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <Zllz4qFpVqrLJXXt@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,38 +85,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In kvm-all.c, two lines have been accidentally indented with
-hard-coded tabs rather than spaces. Normalise to match the rest
-of the file.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- accel/kvm/kvm-all.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index c0be9f5eedb..009b49de447 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2893,7 +2893,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-             !memory_region_is_ram_device(mr) &&
-             !memory_region_is_rom(mr) &&
-             !memory_region_is_romd(mr)) {
--		    ret = 0;
-+            ret = 0;
-         } else {
-             error_report("Convert non guest_memfd backed memory region "
-                         "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
-@@ -2964,7 +2964,7 @@ int kvm_cpu_exec(CPUState *cpu)
- 
-         kvm_arch_pre_run(cpu, run);
-         if (qatomic_read(&cpu->exit_request)) {
--	    trace_kvm_interrupt_exit_request();
-+            trace_kvm_interrupt_exit_request();
-             /*
-              * KVM requires us to reenter the kernel after IO exits to complete
-              * instruction emulation. This self-signal will ensure that we
--- 
-2.34.1
+On 5/30/2024 11:53 PM, Zhao Liu wrote:
+> On Fri, May 24, 2024 at 01:00:17PM -0700, Zide Chen wrote:
+>> Date: Fri, 24 May 2024 13:00:17 -0700
+>> From: Zide Chen <zide.chen@intel.com>
+>> Subject: [PATCH V2 3/3] target/i386: Move host_cpu_enable_cpu_pm into
+>>  kvm_cpu_realizefn()
+>> X-Mailer: git-send-email 2.34.1
+>>
+>> It seems not a good idea to expand features in host_cpu_realizefn,
+>> which is for host CPU only. 
+> 
+> It is restricted by max_features and should be part of the "max" CPU,
+> and the current target/i386/host-cpu.c should only serve the “host” CPU.
 
+Yes, since this file only serves for "host" CPU, that's why I proposed
+to move this code to kvm_cpu_realizefn().
+
+> 
+>> Additionally, cpu-pm option is KVM
+>> specific, and it's cleaner to put it in kvm_cpu_realizefn(), together
+>> with the WAITPKG code.
+>>
+>> Fixes: f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using AccelCPUClass")
+>> Signed-off-by: Zide Chen <zide.chen@intel.com>
+>> ---
+>>  target/i386/host-cpu.c    | 12 ------------
+>>  target/i386/kvm/kvm-cpu.c | 11 +++++++++--
+>>  2 files changed, 9 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
+>> index 280e427c017c..8b8bf5afeccf 100644
+>> --- a/target/i386/host-cpu.c
+>> +++ b/target/i386/host-cpu.c
+>> @@ -42,15 +42,6 @@ static uint32_t host_cpu_phys_bits(void)
+>>      return host_phys_bits;
+>>  }
+>>  
+>> -static void host_cpu_enable_cpu_pm(X86CPU *cpu)
+>> -{
+>> -    CPUX86State *env = &cpu->env;
+>> -
+>> -    host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
+>> -               &cpu->mwait.ecx, &cpu->mwait.edx);
+>> -    env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
+>> -}
+>> -
+>>  static uint32_t host_cpu_adjust_phys_bits(X86CPU *cpu)
+>>  {
+>>      uint32_t host_phys_bits = host_cpu_phys_bits();
+>> @@ -83,9 +74,6 @@ bool host_cpu_realizefn(CPUState *cs, Error **errp)
+>>      X86CPU *cpu = X86_CPU(cs);
+>>      CPUX86State *env = &cpu->env;
+>>  
+>> -    if (cpu->max_features && enable_cpu_pm) {
+>> -        host_cpu_enable_cpu_pm(cpu);
+>> -    }
+>>      if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+>>          uint32_t phys_bits = host_cpu_adjust_phys_bits(cpu);
+>>  
+>> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+>> index 3adcedf0dbc3..197c892da89a 100644
+>> --- a/target/i386/kvm/kvm-cpu.c
+>> +++ b/target/i386/kvm/kvm-cpu.c
+>> @@ -64,9 +64,16 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>>       *   cpu_common_realizefn() (via xcc->parent_realize)
+>>       */
+>>      if (cpu->max_features) {
+>> -        if (enable_cpu_pm && kvm_has_waitpkg()) {
+>> -            env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
+>> +        if (enable_cpu_pm) {
+>> +            if (kvm_has_waitpkg()) {
+>> +                env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
+>> +            }
+> 
+> If you agree with my comment in patch 2, here we need a mwait bit check.
+
+I still think that take advantaged of x86_cpu_filter_features() to check
+host availability is a better choice.
+
+> 
+>> +            host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
+>> +                       &cpu->mwait.ecx, &cpu->mwait.edx);
+>> +            env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
+>>          }
+>> +
+>>          if (cpu->ucode_rev == 0) {
+>>              cpu->ucode_rev =
+>>                  kvm_arch_get_supported_msr_feature(kvm_state,
+>> -- 
+>> 2.34.1
+>>
+>>
 
