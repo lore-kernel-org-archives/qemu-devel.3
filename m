@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94322C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 16:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FAFC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 16:30:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD56s-0005A4-8H; Fri, 31 May 2024 12:28:06 -0400
+	id 1sD58r-0006QA-MI; Fri, 31 May 2024 12:30:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sD56q-00058u-CV
- for qemu-devel@nongnu.org; Fri, 31 May 2024 12:28:04 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD58p-0006Pk-Ik
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 12:30:07 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sD56o-0002vv-Hp
- for qemu-devel@nongnu.org; Fri, 31 May 2024 12:28:04 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-57a2f032007so1673699a12.0
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 09:28:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sD58n-0003FM-Gc
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 12:30:07 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5789733769dso4098636a12.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 09:30:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717172880; x=1717777680; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hAqgSRoHvfVkotTgc2oeQxbvtA2YixEtORh+rft4hbM=;
- b=OHOBHVKnJRhVyAvxiRIJNz/9arMZBN747mIWn1T1K8DsckAFqw+jm1pREEthG6kIwr
- MMdWfD9TPW8u/nyGLwtN5Yxx6XQlDU0VAO0l6fZwzppwcpKGX9UHVWqw5UKJKClSWPQ4
- sJEru7gYx01ZIKl9jp8lO1QZ7jHfwtdJSE9ISiaIdHeSN+wWo3NveYwVuT8XpUA5bfRa
- lCc/sL5Jeby/56IrKsOS4EAg1uiDi9DkO3TlmZe/N0RqTT8QMNIZFbTEDRf6kLgQlDzf
- 6Bj3olE7uAnapuWUjg9GpcmEfXuGMcYQBJTGnkmBXhWdlO6Lw6oYPoRjZY+aFzlCdu73
- HLBg==
+ d=linaro.org; s=google; t=1717173004; x=1717777804; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=f1OSuPae9fNg2ZqT0Eyj1EM6P2eViE0mPDzODIgCGik=;
+ b=MGaqVjTbbvJio3F+IvXxPme0UK80svk4S4v+fOwoUtA4RREK+Wj7qN4PhBbvvtP9ha
+ wOYogEQ7SW27geXPAU5B8krMp4VWd2ohArX/wm7M+g0/d8EyVIV7eHNAg/A9X5unS/C1
+ OQikixwmlRB36etZ7YofbjK63a+Q6RXk4mgnE94MXCLF9kF5p0bknoC+On4PEaZBWaog
+ sg43+rSd8ZELHx3mzOrLs57/E0cEQ0YDXNdN0kUwavNBvYB446DJX3FTOpHmnx28AfP4
+ HOh3nzzp+yudajF8Dsg+dda31QBEKQPgR7q3/XojBLDPCJdeY2psYrsF1QOOv2VWurVd
+ QCUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717172880; x=1717777680;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hAqgSRoHvfVkotTgc2oeQxbvtA2YixEtORh+rft4hbM=;
- b=R+DcEXgyN6S9x5fgjwEaJIrfG1Mmg1RAReAWBk3SjCpcV02CT192Mc64kOexkkYV/n
- 7mGSyTrOOi0n/Oy230Xgir88vW2ZA/IMhK6M/QhOP92ResUMfMIOh3IAlYeZ/nmpPJ+x
- Y/vnEKbqa3KM7L3X1xs5u6QZPtEO4Uw+0XQSVj+khmetDninsDZuD6i7dbo2sV2JH6FE
- fCfjVIxRUadev58eVDQglxU2GfYoI1iCngMKJXp8eEc4Cf0ZbQ4a88hpX+SRMlmaCoo0
- Dzljyr2xH28KaAcg2O1fmv0SDXk6Ozzh76w957BAFtwwe7QimVU+QMbNPkeY405piTrJ
- sKNw==
-X-Gm-Message-State: AOJu0Yxet3mEp0n35P5xqVUhecotvMSYKo96xSLrfFrDqmpKb2UllRYN
- qphxXOJNj4XVWOp/eMX4/4aM7W5oqX8QzzazxDlh1tVrMU+DaNLQMJm48sPEPE8=
-X-Google-Smtp-Source: AGHT+IHEZtl0qCbvSM5C31yAZq+73QcHwFFOqmyEBicTIBWeW06zStAn3cRm0ss55cqYQJ7VK86ZvQ==
-X-Received: by 2002:a17:907:80d:b0:a67:fca3:f481 with SMTP id
- a640c23a62f3a-a6822637523mr181950766b.71.1717172880372; 
- Fri, 31 May 2024 09:28:00 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a67eab85c5asm103753266b.172.2024.05.31.09.28.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 09:28:00 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B10025F8A3;
- Fri, 31 May 2024 17:27:59 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
- <lvivier@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Alexandre
- Iooss <erdnaxe@crans.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v3 0/6] Implement icount=auto using TCG Plugins
-In-Reply-To: <20240530220610.1245424-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 30 May 2024 15:06:04 -0700")
-References: <20240530220610.1245424-1-pierrick.bouvier@linaro.org>
-Date: Fri, 31 May 2024 17:27:59 +0100
-Message-ID: <877cfaaquo.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1717173004; x=1717777804;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=f1OSuPae9fNg2ZqT0Eyj1EM6P2eViE0mPDzODIgCGik=;
+ b=gF+EqFj5uLn8EqSk/eAk3qPISxIBiFc0PVmt5S0X5xFpWC1fC01qJHmrp/YTWZtv3M
+ VNHY6adTzWNKW/nhWq8mJYubIM+fB0TBPgf+c5Lro0DV3xGTxSb9bGsj40IVmIV1YlXT
+ EFb1EDaNZco2MdcYG4V0NIrrj9UY7pj3RpAIlxti4LDAGQxuEOm/V0cBct5Z7dn5UDVR
+ KYMC/ETOTyP7QhPumt3HyQxF7L30rrC+PGG1HCL3zdRm+kLDk5ulpuBa24OTx7bJyrn2
+ G0yvxoECUZXtEYwKP+30zUSzQkaeZBG2bGBEpY0tZbgNTCl7/gcEgY966LmXQYSVzNmU
+ 4kgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4ddpw5nNfkl+AiNEpO8pBpnT0tOGW/MgD5Xzx1cH6dK7iI7GCJ4GdpWtZxe5Rm0Tj8YERV3PV0x7TS/1HnPmP9JY3E4o=
+X-Gm-Message-State: AOJu0YyV1wGFyd48AKi9oyL4Fg8nnhTPIM4GRjzROajTzBtCYFBy5i5L
+ rY6wkv3095JK5/pWoJ3mN9SwmmNl0lP3gFuqLByq3e5tSe7AqlV0RvVLwFKFcP4ZyYgP5e3M9+f
+ Jd7nP3B5zimCfvbx9+rAo9UgRe8VoUykTNwxDbQ==
+X-Google-Smtp-Source: AGHT+IEBRpg/D5ttta1NUDjGeKgBX2146HbsQh2nWshGrj6Rt77OKTyL3zMIBuYtS5XZjs+HKPNq6pfKlitnzOQnFws=
+X-Received: by 2002:a50:d541:0:b0:578:69be:6e7a with SMTP id
+ 4fb4d7f45d1cf-57a3635ef9fmr2242518a12.1.1717173003975; Fri, 31 May 2024
+ 09:30:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
+References: <20240531-fix-poison-set-cacheline-v1-1-e3bc7e8f1158@intel.com>
+In-Reply-To: <20240531-fix-poison-set-cacheline-v1-1-e3bc7e8f1158@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 May 2024 17:29:52 +0100
+Message-ID: <CAFEAcA99pA+jU8kd04UMs1-OWPn+PNjNR9djFGFEqn_4RWxaog@mail.gmail.com>
+Subject: Re: [PATCH] hw/cxl: Fix read from bogus memory
+To: Ira Weiny <ira.weiny@intel.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org, 
+ Fan Ni <fan.ni@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,45 +91,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Fri, 31 May 2024 at 17:22, Ira Weiny <ira.weiny@intel.com> wrote:
+>
+> Peter and coverity report:
+>
+>         We've passed '&data' to address_space_write(), which means "read
+>         from the address on the stack where the function argument 'data'
+>         lives", so instead of writing 64 bytes of data to the guest ,
+>         we'll write 64 bytes which start with a host pointer value and
+>         then continue with whatever happens to be on the host stack
+>         after that.
+>
+> Indeed the intention was to write 64 bytes of data at the address given.
+>
+> Fix the parameter to address_space_write().
+>
 
-> The goal here is to be able to scale temporally execution of qemu-user/sy=
-stem,
-> using a given number of instructions per second.
->
-> We define a virtual clock, that can be late or in advance compared to rea=
-l time.
-> When we are in advance, we slow execution (by sleeping) until catching re=
-al
-> time.
->
-> Finally, we should be able to cleanup icount=3Dauto mode completely, and =
-keep
-> icount usage for determistic purposes only.
->
-> It is built upon new TCG Plugins inline ops (store + conditional callback=
-s), now
-> merged on master.
->
-> Example in user-mode:
->
-> - Retrieve number of instructions to execute /bin/true
-> $ ./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /=
-bin/true
-> cpu 0 insns: 120546
-> total insns: 120546
-> - Slow execution to match 5 seconds
-> $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips,ips=3D$=
-((120546/5)) /bin/true
-> real    0m4.985s
->
-> Tested in system mode by booting a full debian system, and using:
-> $ sysbench cpu run
-> Performance decrease linearly with the given number of ips.
+Coverity CID: 1544772
 
-Queued to plugins/next, thanks.
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Link: https://lore.kernel.org/all/CAFEAcA-u4sytGwTKsb__Y+_+0O2-WwARntm3x8WNhvL1WfHOBg@mail.gmail.com/
+> Fixes: 6bda41a69bdc ("hw/cxl: Add clear poison mailbox command support.")
+> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+> ---
+> Compile tested only.  Jonathan please double check me.
+> ---
+>  hw/mem/cxl_type3.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 3e42490b6ce8..582412d9925f 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1025,7 +1025,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
+>          as = &ct3d->hostpmem_as;
+>      }
+>
+> -    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
+> +    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, data,
+>                          CXL_CACHE_LINE_SIZE);
+>      return true;
+>  }
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
