@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC1EC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 06:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83152C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCvu1-0002Vz-46; Fri, 31 May 2024 02:38:13 -0400
+	id 1sCwJM-0006cl-Ao; Fri, 31 May 2024 03:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCvty-0002VR-Fe; Fri, 31 May 2024 02:38:10 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sCwJK-0006cc-Qd
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 03:04:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sCvtr-0002dB-Ir; Fri, 31 May 2024 02:38:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717137484; x=1748673484;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=+k24j9JPwZuAUp+2LDoq/ztogqqfgRyaGqUC5F+Z4QU=;
- b=f95DebFZZmGyXc0o2hbSiFZAwmJG1az71gHxkyOKw5eVbhOt1Cc3/7h1
- M85kjhNyyxTMiRgpGssZxKn1FM1NDsrEi9V0KrtvTPKtDjNOp/QrOd2Bc
- MbsXXRbgrPRwlrJuAeZML6aJxo3436miCXxsIAwL2iXRZ0TfsDDQc015q
- mjNhOF/IMQXL+LAPROKqcgyJ0ibdzuzF5QvrFZJZYQuG2n8hdn0PpIwfK
- 8OtSWsIERdDcXLP1oyPZJWo/daVFKwm12Jx9iSyaZzRn+E67I+HxH3IIO
- klBbL5pM2pexnGtNnelVEecRjHuEP080BoToGGI0dXcOLZKoZO9y+iZey Q==;
-X-CSE-ConnectionGUID: swi4eROVQymVHhVhzjY/wQ==
-X-CSE-MsgGUID: vr2ugc44Rk2NZucH6SiNLA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="17496774"
-X-IronPort-AV: E=Sophos;i="6.08,203,1712646000"; d="scan'208";a="17496774"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 May 2024 23:38:00 -0700
-X-CSE-ConnectionGUID: 6eMNrIhyR1+i62iN7mYGqg==
-X-CSE-MsgGUID: 0QHR9zqzT9e8PqxEq47bJA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,203,1712646000"; d="scan'208";a="36060925"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 30 May 2024 23:37:57 -0700
-Date: Fri, 31 May 2024 14:53:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Zide Chen <zide.chen@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
- thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH V2 3/3] target/i386: Move host_cpu_enable_cpu_pm into
- kvm_cpu_realizefn()
-Message-ID: <Zllz4qFpVqrLJXXt@intel.com>
-References: <20240524200017.150339-1-zide.chen@intel.com>
- <20240524200017.150339-4-zide.chen@intel.com>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sCwJJ-0007KR-4t
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 03:04:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717139059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QawWJRYcXrYBVo/lMRELy2do7rjudde1sSrXARepgNc=;
+ b=LQySupbVD4o5qfnosu2c92VmL/5sMlk2Eln3BEMJPocbJou1kN9doGj4HBacWRgUetG1UG
+ pj4dMobc1h/oQsXeDnGXMjp+UPiid+GP/JHqp/1IEuMiCw7L6xvnQZihY6pkTTQlloTdB9
+ kUwyTlhYtQHtbsdUsIxMN01jMlYy4LM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-STXy3rjoOqW7SJTuNGBf2g-1; Fri, 31 May 2024 03:04:17 -0400
+X-MC-Unique: STXy3rjoOqW7SJTuNGBf2g-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-35dca12cca8so744808f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 00:04:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717139056; x=1717743856;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QawWJRYcXrYBVo/lMRELy2do7rjudde1sSrXARepgNc=;
+ b=QbrxwUpvNitKKLVGF3fyPaN4AvThja0v6/1GE1YP/ryybkcWR4PYV0Vp06JP9CmZh4
+ PGiEguI8Kx92Vsv4jRfIyx3Z+GLPWFt77EsVIJkfZZ1IFcn8lzmETY6VNreqQzPjFA0y
+ hdVTrlcG3RfuRaq+EzJKUb6vtQOBt8Q04iEwPCn+J782K4HMlAMC5u9oWAJOdU2vUypX
+ vwgD55RWbtIRxmexZi3K/6ijqh+y56MO/l/gyfmwDw9bLFxzHCwuOoCFfZDLcKi0cwuz
+ OvK6k2dBU2ZvW3ZUl+3JJNhDaO5v8hDtEWwKiXPm5IJjU1l8bpBYP665mUJlQuQgQTJ4
+ TTtg==
+X-Gm-Message-State: AOJu0YxO+djahOqja7IdbinfVgO8xiDH6ws1gWOAvG+tuiyKCZ19/GFO
+ lb/RPGAPKN7IJ9UIR6f8+c3Ipz4dhdGjZRFY6icFADVIOEsLt/gDygFYr+Mv590dZrbJuUtvLT1
+ cXSvAsZ7N2hi3+QIWXcSOaNpEAAWmdt1iGgPsjupsehBSvljSEcPIHnFxWRFK510JI87CU2BILz
+ Aa7NvMPgYOI77CJmNYW/DZ0EXZrlc=
+X-Received: by 2002:adf:a112:0:b0:351:b130:45c2 with SMTP id
+ ffacd0b85a97d-35e0e5a80dcmr757877f8f.14.1717139056402; 
+ Fri, 31 May 2024 00:04:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkVnR1f+D4hDdSNpf95bQIMp2ESrifI4KfgNGHPPGBuYBJ4IDG6gpIPsYzbTdexHLtktAwiskta3BGA1qrwE0=
+X-Received: by 2002:adf:a112:0:b0:351:b130:45c2 with SMTP id
+ ffacd0b85a97d-35e0e5a80dcmr757858f8f.14.1717139056039; Fri, 31 May 2024
+ 00:04:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240524200017.150339-4-zide.chen@intel.com>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240530095408.31608-1-npiggin@gmail.com>
+ <20240530095408.31608-2-npiggin@gmail.com>
+In-Reply-To: <20240530095408.31608-2-npiggin@gmail.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 31 May 2024 12:33:59 +0530
+Message-ID: <CAE8KmOwoWXTcJzq5+U1z0=fRxsNDB_3kgRyjHOZ3JaA8EN1+_w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] tests/qtest/migration-test: Use regular file file
+ for shared-memory tests
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,87 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 24, 2024 at 01:00:17PM -0700, Zide Chen wrote:
-> Date: Fri, 24 May 2024 13:00:17 -0700
-> From: Zide Chen <zide.chen@intel.com>
-> Subject: [PATCH V2 3/3] target/i386: Move host_cpu_enable_cpu_pm into
->  kvm_cpu_realizefn()
-> X-Mailer: git-send-email 2.34.1
-> 
-> It seems not a good idea to expand features in host_cpu_realizefn,
-> which is for host CPU only. 
+On Thu, 30 May 2024 at 15:25, Nicholas Piggin <npiggin@gmail.com> wrote:
+> There is no need to use /dev/shm for file-backed memory devices, and
+> on Gitlab CI the tmpfs mount is too small to be usable for migration
+> tests. Switch to using a regular file in /tmp/ which will usually have
+> more space available.
+...
+> -    if (args->use_shmem) {
+> -        shmem_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
+> -        shmem_opts = g_strdup_printf(
+> +    if (args->use_memfile) {
+> +        memfile_path = g_strdup_printf("/%s/qemu-%d", tmpfs, getpid());
+> +        memfile_opts = g_strdup_printf(
+...
+>      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+>      QTestState *from, *to;
+...
+>      g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs, FILE_TEST_FILENAME);
 
-It is restricted by max_features and should be part of the "max" CPU,
-and the current target/i386/host-cpu.c should only serve the ¡°host¡± CPU.
+* Maybe the 'tmpfs' variable needs to be renamed to indicate that it
+uses '/tmp/' or '/var/tmp' directory to create temporary files. And it
+is not in memory tmpfs(5) used for shared memory '/dev/shm'. Commit
+message above says 'tmpfs mount is too small' and above calls continue
+to use 'tmpfs' variable to create temporary files. It's a little
+confusing.
 
-> Additionally, cpu-pm option is KVM
-> specific, and it's cleaner to put it in kvm_cpu_realizefn(), together
-> with the WAITPKG code.
-> 
-> Fixes: f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using AccelCPUClass")
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
-> ---
->  target/i386/host-cpu.c    | 12 ------------
->  target/i386/kvm/kvm-cpu.c | 11 +++++++++--
->  2 files changed, 9 insertions(+), 14 deletions(-)
-> 
-> diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
-> index 280e427c017c..8b8bf5afeccf 100644
-> --- a/target/i386/host-cpu.c
-> +++ b/target/i386/host-cpu.c
-> @@ -42,15 +42,6 @@ static uint32_t host_cpu_phys_bits(void)
->      return host_phys_bits;
->  }
->  
-> -static void host_cpu_enable_cpu_pm(X86CPU *cpu)
-> -{
-> -    CPUX86State *env = &cpu->env;
-> -
-> -    host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
-> -               &cpu->mwait.ecx, &cpu->mwait.edx);
-> -    env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
-> -}
-> -
->  static uint32_t host_cpu_adjust_phys_bits(X86CPU *cpu)
->  {
->      uint32_t host_phys_bits = host_cpu_phys_bits();
-> @@ -83,9 +74,6 @@ bool host_cpu_realizefn(CPUState *cs, Error **errp)
->      X86CPU *cpu = X86_CPU(cs);
->      CPUX86State *env = &cpu->env;
->  
-> -    if (cpu->max_features && enable_cpu_pm) {
-> -        host_cpu_enable_cpu_pm(cpu);
-> -    }
->      if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
->          uint32_t phys_bits = host_cpu_adjust_phys_bits(cpu);
->  
-> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-> index 3adcedf0dbc3..197c892da89a 100644
-> --- a/target/i386/kvm/kvm-cpu.c
-> +++ b/target/i386/kvm/kvm-cpu.c
-> @@ -64,9 +64,16 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
->       *   cpu_common_realizefn() (via xcc->parent_realize)
->       */
->      if (cpu->max_features) {
-> -        if (enable_cpu_pm && kvm_has_waitpkg()) {
-> -            env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
-> +        if (enable_cpu_pm) {
-> +            if (kvm_has_waitpkg()) {
-> +                env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
-> +            }
+Otherwise patch looks okay.
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 
-If you agree with my comment in patch 2, here we need a mwait bit check.
+Thank you.
+---
+  - Prasad
 
-> +            host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
-> +                       &cpu->mwait.ecx, &cpu->mwait.edx);
-> +            env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
->          }
-> +
->          if (cpu->ucode_rev == 0) {
->              cpu->ucode_rev =
->                  kvm_arch_get_supported_msr_feature(kvm_state,
-> -- 
-> 2.34.1
-> 
-> 
 
