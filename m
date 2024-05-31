@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A565C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D04C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD1MQ-0002Gw-GO; Fri, 31 May 2024 08:27:54 -0400
+	id 1sD1SV-00040I-5g; Fri, 31 May 2024 08:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sD1MO-0002GO-4I
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:27:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sD1ST-000402-Oy
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:34:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sD1MM-00006k-Bu
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:27:51 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sD1SH-0000oQ-UR
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:34:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717158467;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=KvDq3Au3Kpjfeb4vWCfk2Stn6m076IulG9nhrBnemb4=;
- b=Jp9fCu0aAKSn6rdgs2pb4P+e/9K5lXVkJQ81b0SWGGKigF23vE5e/0jrtUR3m2rCAFPWO8
- 85lhCexOKtM9qa732GGF0lwidKb1+g37BasASgYe4qQef0m8LmNSYKSogvYFU8SNcVV4je
- XzhPT17oTWLR07tvN1abVMv955NyhZY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1717158836;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A0Up6NdBkRgjmDLWyJob6XY0DIAMH1Tn7MWcPIWCuTY=;
+ b=Fde/X/1EhMKWShQytWL3ngJtUsCsZGSmita+Roovkd/LDuPstZMhZzU6RpzRqZ96/nR7D1
+ zqaov11bWFc8tt5BAsM7BlSv6nCCWkiwesZ5dR2AF93eCYY/NI+m8VJpbKJBlELxCPlOPY
+ uy+58mHd+zWEjnB36Tvvp1XJB6o8+oQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686--LwICvh6OjC1_yhHCDP70Q-1; Fri, 31 May 2024 08:27:43 -0400
-X-MC-Unique: -LwICvh6OjC1_yhHCDP70Q-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 32BAC8008A4;
- Fri, 31 May 2024 12:27:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.216])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F11CC103A3B1;
- Fri, 31 May 2024 12:27:40 +0000 (UTC)
-Date: Fri, 31 May 2024 13:27:38 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC 0/6] scripts: Rewrite simpletrace printer in Rust
-Message-ID: <ZlnCOrvpc2XGcxsh@redhat.com>
-References: <20240527081421.2258624-1-zhao1.liu@intel.com>
+ us-mta-127-tFyu_iQnPlOJhosbmNcXiA-1; Fri, 31 May 2024 08:33:55 -0400
+X-MC-Unique: tFyu_iQnPlOJhosbmNcXiA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-35dcde1be6cso844227f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:33:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717158833; x=1717763633;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A0Up6NdBkRgjmDLWyJob6XY0DIAMH1Tn7MWcPIWCuTY=;
+ b=Z0vssS62hVurVMW+cl9Jz4oEOykJi91WZaZ1r68ooYYKqw8OQD7LsAuRe58x5yWSg0
+ pWI6FVWbS75+gX4yhinuTTOe4gfqO9CAjucSMd/fNH004oEiuetUBdZAoHEBaG8Gx9yr
+ skTRj1f5/ljHME4QZXU3P0bNw8SvdcwFMmArq+1Kx/GZByaRc5nd0rPHtYevsdUyVxte
+ XSb447goBP69tBuhu0kZk2tVxyc+4quxLRA+N+5qUxbURLPhV5fnL4vmIkzadNY1NvYb
+ CP+rC0NDTjaf8hzJz99wN6Te7zdlNievJxVVupKBGcufqe1UbszJObIrleNOjHqlD7NR
+ 6kIg==
+X-Gm-Message-State: AOJu0Yy/SnyWKxqaWeInm43rEV2/3jEVDGoYTSJBulsljAn5hPookJhk
+ ecDeP8HXYAQKreQNplkUJyznEPq21x6kizkeIOx/QdpXgco7+gvdo7Ih10aPx9ZMZ6y5zbpXGGy
+ ZfSHM7ZD3YN+eOgvv3XOFtojg7SMxD2uQx00vEQODJhZSLtBkeGnSPcexQNpJ7T6LBDI7E1HnUW
+ 9YJNoU5Wd3aKz7Uyg+qRNuNLCjfTeTfKfMKodK6w==
+X-Received: by 2002:adf:cd8b:0:b0:355:161:b7e6 with SMTP id
+ ffacd0b85a97d-35e0f2879abmr1254339f8f.41.1717158833071; 
+ Fri, 31 May 2024 05:33:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAbWZ++3Kxz8loXJ5rJzTrFeHLsmVYmj/RgQdDDla4kiYPvCN4bCqa/jqdkI7z3R7Gfzt/kunUuX4KP22LeBw=
+X-Received: by 2002:adf:cd8b:0:b0:355:161:b7e6 with SMTP id
+ ffacd0b85a97d-35e0f2879abmr1254316f8f.41.1717158832634; Fri, 31 May 2024
+ 05:33:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240527081421.2258624-1-zhao1.liu@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-30-pankaj.gupta@amd.com>
+In-Reply-To: <20240530111643.1091816-30-pankaj.gupta@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 31 May 2024 14:33:39 +0200
+Message-ID: <CABgObfbMBdm5_vr36aX9cYYRaaLWp6+Y1AKo9YtUbVbKX897sQ@mail.gmail.com>
+Subject: Re: [PATCH v4 29/31] hw/i386/sev: Allow use of pflash in conjunction
+ with -bios
+To: Pankaj Gupta <pankaj.gupta@amd.com>
+Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com, 
+ armbru@redhat.com, michael.roth@amd.com, xiaoyao.li@intel.com, 
+ thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com, 
+ kvm@vger.kernel.org, anisinha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,41 +99,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 27, 2024 at 04:14:15PM +0800, Zhao Liu wrote:
-> Hi maintainers and list,
-> 
-> This RFC series attempts to re-implement simpletrace.py with Rust, which
-> is the 1st task of Paolo's GSoC 2024 proposal.
-> 
-> There are two motivations for this work:
-> 1. This is an open chance to discuss how to integrate Rust into QEMU.
+On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
+ wrote:
+> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> index def77a4429fb24e62748
+> +static void pc_system_flash_map(PCMachineState *pcms,
+> +                                MemoryRegion *rom_memory)
+> +{
+> +    pc_system_flash_map_partial(pcms, rom_memory, 0, false);
+> +}
+> +
+>  void pc_system_firmware_init(PCMachineState *pcms,
+>                               MemoryRegion *rom_memory)
+>  {
+> @@ -238,9 +248,12 @@ void pc_system_firmware_init(PCMachineState *pcms,
+>          }
+>      }
+>
+> -    if (!pflash_blk[0]) {
+> +    if (!pflash_blk[0] || sev_snp_enabled()) {
+>          /* Machine property pflash0 not set, use ROM mode */
+>          x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, fal=
+se);
+> +        if (sev_snp_enabled()) {
+> +            pc_system_flash_map_partial(pcms, rom_memory, 3653632, true)=
+;
+> +        }
 
-I don't think this proposal really triggers that discussion to any
-great extent, because 'simpletrace.py' is not a part of the QEMU
-codebase in any meaningul way. It is a standalone python script
-that just happens to live in the qemu.git repository.
+This number is a bit too specific. :)
 
-The difficult questions around Rust integration will arise when we
-want to have Rust used to /replace/ some existing non-optional
-functionality. IOW, if Rust were to become a mandatory dep of QEMU
-that could not be avoided.
+The main issue here is that we want to have both a ROM and a
+non-executable pflash device.
 
-In fact I kinda wonder whether this Rust simpletrace code could
-simply be its own git repo under gitlab.com/qemu-project/....,
-rather than put into the monolithic QEMU repo ? That just makes
-it a "normal" Rust project and no questions around integration
-with QEMU's traditional build system would arise.
+I think in this case (which should be gated by
+machine_require_guest_memfd(MACHINE(pcms)), just like in earlier
+patches), we need to:
 
+1) give an error if pflash_blk[1] is specified, i.e. support only one
+flash device
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2) possibly, give a warning if -bios is _not_ specified.
+
+3) map pflash_blk[0] below the BIOS ROM and expect it to be just the variab=
+les
+
+The need to use -bios for code and pflash0 (if desired) for variables
+also needs to be documented of course.
+
+Some parts of this patch can be salvaged, others are not needed
+anymore... I'll let you figure it out. :)
+
+Paolo
 
 
