@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B7ECC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 04:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F34EC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 04:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCuBK-00069l-7H; Fri, 31 May 2024 00:47:58 -0400
+	id 1sCuDH-0006xV-Tq; Fri, 31 May 2024 00:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuBJ-00069T-3Z
- for qemu-devel@nongnu.org; Fri, 31 May 2024 00:47:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuDE-0006wx-D3
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 00:49:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuBH-0007dw-2y
- for qemu-devel@nongnu.org; Fri, 31 May 2024 00:47:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sCuDC-0007mq-Lq
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 00:49:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717130874;
+ s=mimecast20190719; t=1717130993;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+P3QGhHKzBu224Iz46o7eOyH6NqOjJOwZK1FHNyFE6k=;
- b=iLGa+3wkvOG8CZxfIW7EoZrMxnas+a2F+NhrOopy3UG6WQU4hPkCxT1evKCHAVikgi+zD/
- rJRzDkEOCEe7Qzc3clrlSAXdlzbh4scYxzeb5gfU566Oq7gVWAm5dbIuIoss3tGGplEWCv
- uYbOCf/yqIubZ11y4vQc1xu2KH+BQm4=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=t1ttueQiaCkRsSl2PE4JCuf4tX+Im877aKD792luSKg=;
+ b=iAOU7I044qfv2m73JNp3yBPbxxugM/0VTf3gR960guOTcZ115ga4LVy79TqXixBx/nbpKs
+ /X/o/Sldu08Zt6J5dP0BxtBMrKYhlc5ncjdHE6or0WbMoWM52Jowf2403TpUkFElTO3bl7
+ tUY249zRXJseQQxhxIsz+KJmoWus8uc=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-yWSGUcEfN0OtQvSnnBF99Q-1; Fri, 31 May 2024 00:47:50 -0400
-X-MC-Unique: yWSGUcEfN0OtQvSnnBF99Q-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2ea91ce9225so4642121fa.3
- for <qemu-devel@nongnu.org>; Thu, 30 May 2024 21:47:49 -0700 (PDT)
+ us-mta-587-80u_p4OGPtyjExKZJge37Q-1; Fri, 31 May 2024 00:49:51 -0400
+X-MC-Unique: 80u_p4OGPtyjExKZJge37Q-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57837716b64so524447a12.2
+ for <qemu-devel@nongnu.org>; Thu, 30 May 2024 21:49:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717130868; x=1717735668;
+ d=1e100.net; s=20230601; t=1717130990; x=1717735790;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+P3QGhHKzBu224Iz46o7eOyH6NqOjJOwZK1FHNyFE6k=;
- b=dfOkF8OxENkUQZTroJc3bGhZ+XnxMat69VM238NAznKTH58lh6dE3yEcmxyY7jdEhx
- lGXSvV1WzC7l/VyvP9hOsmmYpbQUOUC3ZUg37+0Pfd1yHkqaQmE3LwckjlGZhIV0cS9T
- eMYL3suJLlQzNuTpXBaIRl/S52P0UmesItVRyE3Krq+/1SE/0Ch1zLaA7idDgyxW2zAp
- p7H8Lu1QZG7gbvSTTXJ4EpVh9ziE2CJGf1B3gOP3VrRqubaCz5nmtoxSEDKi7tVv000G
- 85mY7wdEPQwp/ut5SVfeN9QvDqGpq2Ff7FgrqtgoqVTvsg/AcyMTt24oM+0TzBxnxxKX
- KxZQ==
+ bh=t1ttueQiaCkRsSl2PE4JCuf4tX+Im877aKD792luSKg=;
+ b=vqpNffLPMbW4DQ96Q3uPBo90lLxW5T1qrTKDhWAMjbdAjf4U+3G+4KyoHqT3gpIt75
+ 6ThFMx9bZ1ier1xC1CLkcNHGhMxuel2JZObejTRaiUcPUZOX5FF9xpZGRqWBr+AEfQHm
+ JnBzu4yPi4oBx4x3BwPCU4UxuTUsZOWGsdWEYJX6elTZX8q5JNBHforwXqhC9bmix0Bx
+ 6PIQRClNDwYOMZwJv12YhePaahU9N4tj73bbqaTYey7NSiYwSPDkAgdHrocE2MNfi5nf
+ fQh/Kv7yUJRQpDX4JMse0K2EnX+YY+7hv1KWRAS2zLQfXQA+brKnmS/EONfhSJFL2j0i
+ iUwA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVGZtTSJTiqOt5pZmdEWgEpF+EBBnKn8Zl0OGQpPG0Q5sfFC+ojakeB3ICemUsEkO9iN+V/9rDIekOWEisBfEofqzUhw8=
-X-Gm-Message-State: AOJu0Yw9Qb7OZueEkn1bWQPEKGa9I0Tx5iUG0a/mgElp1CaixHb0J8RW
- rTkcuP0gbUV+ZLLGS4h4rHRgopSfAOH7aqiYZVrk62QKFVNhaF3HyFNlCMqT2//bECs5kQjHPCY
- 7CBjfYAnTwy6wO/OVvhx3CtTD14fR/6qbaVuu7OW9mnrklLNLxe8C
-X-Received: by 2002:a2e:9d88:0:b0:2e1:9c57:195a with SMTP id
- 38308e7fff4ca-2ea951de27fmr5502831fa.32.1717130868611; 
- Thu, 30 May 2024 21:47:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEB0VHYLVPBk5l5trV2LPJ/R3cjWMRlt6lVlEYuVXaenrjHAqpJ6tM3UbZmSK9DXLG1lyAFRw==
-X-Received: by 2002:a2e:9d88:0:b0:2e1:9c57:195a with SMTP id
- 38308e7fff4ca-2ea951de27fmr5502651fa.32.1717130868104; 
- Thu, 30 May 2024 21:47:48 -0700 (PDT)
+ AJvYcCULOQf7XfT0Z8dpoZq0E6SiNXd4d4laSfJJ6+qrVa8qbd5lKQMKGdh7ieQCD4E0arwaBHhdsoUlJIItpxhVj5BY2XlnDW8=
+X-Gm-Message-State: AOJu0YwXAffV2Zu2ZoUsIPmEqleGqTefE25x4/Vz5dDEA3jQWaBacB3q
+ mXZc8gKKWcvCXkDeKbFZf2iMGXdu4h7Laetb9emaRXoOWUCuvc++snYQ1SGW4jF6aFgTzBj+XkU
+ tjdWBFQ8Z+AcswV4kquUYW6r+rLo3HqwG5M9KmWUaab/MuMhsR1e9
+X-Received: by 2002:a50:9e64:0:b0:57a:2de9:bfe with SMTP id
+ 4fb4d7f45d1cf-57a363710b8mr522287a12.12.1717130990038; 
+ Thu, 30 May 2024 21:49:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE32TxmaYOaCzPp58QOjwC2RNtBmZ/nr97F2phf/9T8in/BvWokoD+3/rYnS8a8Ev5MljYprg==
+X-Received: by 2002:a50:9e64:0:b0:57a:2de9:bfe with SMTP id
+ 4fb4d7f45d1cf-57a363710b8mr522269a12.12.1717130989543; 
+ Thu, 30 May 2024 21:49:49 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-229.web.vodafone.de.
  [109.43.176.229]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a67eb621507sm44372766b.222.2024.05.30.21.47.46
+ 4fb4d7f45d1cf-57a31c6d444sm558979a12.64.2024.05.30.21.49.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 May 2024 21:47:47 -0700 (PDT)
-Message-ID: <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
-Date: Fri, 31 May 2024 06:47:45 +0200
+ Thu, 30 May 2024 21:49:49 -0700 (PDT)
+Message-ID: <ecdc3ae2-e6f3-4937-ace5-c6c8f1a12e90@redhat.com>
+Date: Fri, 31 May 2024 06:49:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
- deprecate
+Subject: Re: [PATCH 4/4] hw/s390x: Deprecate the QMP @dump-skeys command
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>
+ qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -83,8 +82,9 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
+ Anton Johansson <anjo@rev.ng>
 References: <20240530074544.25444-1-philmd@linaro.org>
+ <20240530074544.25444-5-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,10 +129,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240530074544.25444-1-philmd@linaro.org>
+In-Reply-To: <20240530074544.25444-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -141,7 +141,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,29 +158,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/05/2024 09.45, Philippe Mathieu-Daudé wrote:
-> We are trying to unify all qemu-system-FOO to a single binary.
-> In order to do that we need to remove QAPI target specific code.
+> Prefer @dump-s390-skeys which is target agnostic.
 > 
-> @dump-skeys is only available on qemu-system-s390x. This series
-> rename it as @dump-s390-skey, making it available on other
-> binaries. We take care of backward compatibility via deprecation.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   docs/about/deprecated.rst | 5 +++++
+>   qapi/misc-target.json     | 5 +++++
+>   2 files changed, 10 insertions(+)
 > 
-> Philippe Mathieu-Daudé (4):
->    hw/s390x: Introduce the @dump-s390-skeys QMP command
->    hw/s390x: Introduce the 'dump_s390_skeys' HMP command
->    hw/s390x: Deprecate the HMP 'dump_skeys' command
->    hw/s390x: Deprecate the QMP @dump-skeys command
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 40585ca7d5..3cb43085ba 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -148,6 +148,11 @@ accepted incorrect commands will return an error. Users should make sure that
+>   all arguments passed to ``device_add`` are consistent with the documented
+>   property types.
+>   
+> +``dump-skeys`` (since 9.1)
+> +''''''''''''''''''''''''''
+> +
+> +Use the more generic ``dump-s390-skeys`` command.
 
-Why do we have to rename the command? Just for the sake of it? I think 
-renaming HMP commands is maybe ok, but breaking the API in QMP is something 
-you should consider twice.
+FWIW, that's "more specific", not "more generic".
 
-And even if we decide to rename ... maybe we should discuss whether it makes 
-sense to come up with a generic command instead: As far as I know, ARM also 
-has something similar, called MTE. Maybe we also want to dump MTE keys one 
-day? So the new command should maybe be called "dump-memory-keys" instead? 
-Or should it maybe rather be an option to the existing "dump-guest-memory" 
-command instead?
+But as I said in my reply to the cover letter, we should maybe consider a 
+more generic command instead, indeed.
 
   Thomas
 
