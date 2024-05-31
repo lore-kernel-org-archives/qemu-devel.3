@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E4DC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B616C27C44
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD6Ej-00089R-Ow; Fri, 31 May 2024 13:40:17 -0400
+	id 1sD6Hu-0000oH-ID; Fri, 31 May 2024 13:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD6Eh-000891-Aj
- for qemu-devel@nongnu.org; Fri, 31 May 2024 13:40:15 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sD6Hs-0000ns-44
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 13:43:32 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD6Ee-0006ju-Qd
- for qemu-devel@nongnu.org; Fri, 31 May 2024 13:40:15 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-57857e0f45eso2739123a12.0
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 10:40:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sD6Hn-0007Ai-Ug
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 13:43:31 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1f44b4404dfso20553845ad.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 10:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717177211; x=1717782011; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3gKWccaTWNBdJjFqoDLNh+dn28z3jkomPFk/ID1JrTs=;
- b=u3o6iE5d5NuNFZts+7+7mmG7+RxxmTST9dKRaKDO9tyIdDJGDUIt5wHHI7wUviZC/P
- WARAt0aOmrt0N8apzo21fX6q9M64boPKINYlB+StO+5fX3GrcPjgtQ1iVXipGtLfZErT
- BoKQD+xuH4Mf1E2QoO22f7VZk7bc7W+FWIf7qwEvY9hlKcv84ahGprtJ7OKaZ97si6Te
- 5SpQzzKWMcG4jz/NJu/wmTOAXvgKYTU4kpnm77D2Aoi7+pdgJDtA2+QavhAMGNfFmv+B
- ZYPHKTbQugZXqxL+0OcAIVh1xhtp/qt2Rbjlato8x1MGE5+n/wILWgYuIrDC/Hbu7Eqy
- 82Vg==
+ d=linaro.org; s=google; t=1717177404; x=1717782204; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=oNAheale54PPUTGUW/lyMKAZuGL/kpAgevOQ2nmQkDE=;
+ b=GrTF790LFJDjilFoLR4W7ksKfb0WZZXHfnPF0zNLb3CvjCv7xZtvb3f670V+N98wcv
+ yOTxdWQei//pJR0WrcZoL/vamx0O+wnEkpTWF44c4tVi/vv+IOefb+l8QCVYR/E2zzEZ
+ l8zXLQmipda1y34vN/wxhWB+j/ZriFMEL6C83uJdu4mrUH5KiarPqoaZxwnDs5AfXNtP
+ SV02WXvAEXB656TnUpvhcUu34slrirewngr0AZfJulYgWS9cJQdB7vLh32Un0mHSbvZ8
+ wDgd/3Wjo60qR9XsiAZT4eWvvlXd1A+N9M5cAbTUudnpVi1xA6BZMzbC2qdnkCXPYD7H
+ Vf+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717177211; x=1717782011;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3gKWccaTWNBdJjFqoDLNh+dn28z3jkomPFk/ID1JrTs=;
- b=t7pyuo7YyToYAwopRx4IbagRRmAo2SyT5fgCm3R6B+tXKdYCEa432N/KQIFRk+zkT1
- WIpApM/8TDIGwFjQaen/xaPbqMeWSfKbFg62rMmBXP2NdKgU+A90DNs1hTaBO/NCHSbC
- S9gQAn5SJYfZYYt7y3Ut0G411K+NiqK3CoTgtmmgInI6xKu5vb5I7D5e96qxtnrmTD6l
- I6LkIkCdyAf1U63YqJXtB17NdlgVwWYff7kSj2qmceTPB822R9OTwWCtWSJzN7gCKVVc
- bA7eCA+2R6gj+Mi65iERVLWrnjqC7CXEM3RdrSuHvBpsHNzBFoksQc7mGYdGOPzgV030
- CLhg==
-X-Gm-Message-State: AOJu0Yz33u5PxUeFKI4RW2Cb1FAy49Sgi3yGLK8tVD1gTrJ4gMfTFaVp
- 8tNB+HV8T/IVqxyiXY3+/4Vq5EIdygnhvnnYawVprBzMu2Q12Mm+y/fHk8TvFPDOM5bHRPLHN0i
- FvhfXZpcI7Z5mydNz9rcxDuE1oE9sqe9KjQntxw==
-X-Google-Smtp-Source: AGHT+IHPs35W9cvtz3+zSESyKGm2mFB4VRfWZmH0q/A9RKzN+qLpyBz4nfaR14kTa3NDTLC8rBhVy5dPvLw4lMj6C1E=
-X-Received: by 2002:a50:9359:0:b0:578:e202:137 with SMTP id
- 4fb4d7f45d1cf-57a364b52aamr2153980a12.20.1717177210684; Fri, 31 May 2024
- 10:40:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717177404; x=1717782204;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oNAheale54PPUTGUW/lyMKAZuGL/kpAgevOQ2nmQkDE=;
+ b=aUjGiNLViYw+swRCLcNUjyGBi/G7h42RV5CLTMbLZHUP7PhqE4t/vwkFE0MXcOEimJ
+ Ix2pg1XfIR8PD9orgEvJnuImqt79/YWh4BC4BkJ9tulwxCguZYSUMR92BY7STFM91o1O
+ KiD2eclHSmQzwNET2V0eK5RpGQh05CoIWL0hKAP6mS8ZKFGIOPmId09tAbo03h9CB1CD
+ LrgH0yPIYlLHY48URvt21L34drGQrrdaWZNSmonTOsMOAn6SpGV5zk93zg43SI5C80SU
+ W+Jh/XA5urqMmwjkDxuFeNcS7bCSBO5cKPYcoM8zMGP/EUjk38fHNskWvah8euUQGJ12
+ edWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGRp9zMfvXzazdiOUmrYS6HWwhBP6a4bsRbBoHT8v7njZh62KpOO9sgxaV9LV+2pQyKjlEPS4WoEqItrv+IUGXr1AW4PQ=
+X-Gm-Message-State: AOJu0Yz4gDKeux50XIPFdNH+kMglo1Aasjh+oA/Hkjk5dM9+qdRVvi/y
+ eVwHIQZjcvQIBOQT3C1X4P0hHAx6uRQtMBaydnMmUFBzO9v0PNCzkxeHwyWcfNuUFPaSl2/kk6t
+ /
+X-Google-Smtp-Source: AGHT+IHIgldufv92DrhfKGL/11nqqhzvcgm0t7FuAe0SMN4cPwF+8SnODtdwP83XujC7z+JtsXOnwg==
+X-Received: by 2002:a17:902:e54a:b0:1f4:b43f:9c18 with SMTP id
+ d9443c01a7336-1f63704143cmr27609235ad.33.1717177404400; 
+ Fri, 31 May 2024 10:43:24 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:8f63:c378:2227:4860:1a85:f40c?
+ ([2607:fb90:8f63:c378:2227:4860:1a85:f40c])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f63232dce6sm19416425ad.56.2024.05.31.10.43.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 May 2024 10:43:23 -0700 (PDT)
+Message-ID: <cdd641aa-92b4-40ab-80c6-fd7d9b913ca3@linaro.org>
+Date: Fri, 31 May 2024 10:43:21 -0700
 MIME-Version: 1.0
-References: <20240303140643.81957-1-arnaud.minier@telecom-paris.fr>
- <20240303140643.81957-6-arnaud.minier@telecom-paris.fr>
-In-Reply-To: <20240303140643.81957-6-arnaud.minier@telecom-paris.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 May 2024 18:39:58 +0100
-Message-ID: <CAFEAcA92fO-Yi1eioFNb4rZhBOcS9NR5NWT0Cg6JFxUUsQC-mQ@mail.gmail.com>
-Subject: Re: [PATCH v6 5/8] hw/misc/stm32l4x5_rcc: Handle Register Updates
-To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org, 
- Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] host/i386: require x86-64-v2 ISA
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240531091457.42200-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240531091457.42200-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,57 +98,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 Mar 2024 at 14:08, Arnaud Minier
-<arnaud.minier@telecom-paris.fr> wrote:
->
-> Update the RCC state and propagate frequency changes when writing to the
-> RCC registers. Currently, ICSCR, CIER, the reset registers and the stop
-> mode registers are not implemented.
->
-> Some fields  have not been implemented due to uncertainty about
-> how to handle them (Like the clock security system or bypassing
-> mecanisms).
->
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+On 5/31/24 02:14, Paolo Bonzini wrote:
+> Paolo Bonzini (6):
+>    host/i386: nothing looks at CPUINFO_SSE4
+>    meson: assume x86-64-v2 baseline ISA
+>    host/i386: assume presence of CMOV
+>    host/i386: assume presence of SSE2
+>    host/i386: assume presence of SSSE3
+>    host/i386: assume presence of POPCNT
 
-Hi; somebody has reported a bug in this change, which they found
-using a fuzzer:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-https://gitlab.com/qemu-project/qemu/-/issues/2356
 
-> +static void rcc_update_cfgr_register(Stm32l4x5RccState *s)
-> +{
-> +    uint32_t val;
-> +    /* MCOPRE */
-> +    val =3D FIELD_EX32(s->cfgr, CFGR, MCOPRE);
-> +    assert(val <=3D 0b100);
-
-You can't assert() things about guest register values,
-because then if the guest writes that value QEMU will fall over.
-For "this is something the spec says is invalid", the right
-thing to do in a device model is to qemu_log_mask(LOG_GUEST_ERROR, ...)
-the situation, and proceed as best you can (eg treat the value
-as if it was some valid one, or disable the clock entirely).
-
-> +    clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
-> +                         1, 1 << val);
-> +
-> +    /* MCOSEL */
-> +    val =3D FIELD_EX32(s->cfgr, CFGR, MCOSEL);
-> +    assert(val <=3D 0b111);
-
-Similarly here. (The obvious behaviour for "invalid clock
-source selected" would be "treat as clock disabled".)
-
-> +    if (val =3D=3D 0) {
-> +        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false);
-> +    } else {
-> +        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], true);
-> +        clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
-> +                             val - 1);
-> +    }
-
-thanks
--- PMM
+r~
 
