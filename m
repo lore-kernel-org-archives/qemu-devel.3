@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1804DC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56213C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD10F-0004gq-TZ; Fri, 31 May 2024 08:04:59 -0400
+	id 1sD0zn-0004Qq-Aj; Fri, 31 May 2024 08:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD100-0004Wu-4x
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:44 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ id 1sD0zc-0004Ka-GJ
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:21 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD0zr-0003Wv-SB
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:43 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ea9afcb22aso2656481fa.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:35 -0700 (PDT)
+ id 1sD0zV-0003Ph-8u
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:04:19 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4212e899814so4384565e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717157074; x=1717761874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717157051; x=1717761851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NWDApggyMUwqlr/49GITBZT6GHohqUhXi/8+w7dnERs=;
- b=ENtDf8TqJUJQUVQ/5LZ65GGqF/TBLM2EONWCPLf/Fzbg23JYYbtRiXXvZue5yt08zj
- YN/wqeyn16pzAcrhTYqpKkAxnF4eqDUBcv3qzuPqCVS8Up+l5jEhdLC61LNyE4mOvn7m
- 5iHO5AGrXM9Y0ARkqKjgXTMXYhWwA38PcxdJsVmLVbV+c5hNi1D2UVcdsmwiqvkSfgxc
- fkyJQJPPMIu+AgnZEp+1KDz+XWJFnsi6GLEu9DQSzYBTb7gy1hi4tHJ/0DgHm9WEqWJ4
- L+0842g0lnchhJJFGBav8A2SVpxoepUXoKH3PRVWuEWzQFxcU0K+tDqEBjd17ZBf8Mo9
- 1r+g==
+ :reply-to; bh=HQPgCyC/U6ymgqUEhxM5UfJ1POVCW7SzHOVpPiu7BCU=;
+ b=k5u3gkAYlJDINxzqX12dgAlDAnVb/E4QLSzkrubfzX9sh2XCEDKnOOIxECI4hL+kjQ
+ 3HeV/sBOtIQ/SQ99ZiS6A/NU1HI+nQl08fV5UYQg9a688gPrTsGMELJj4esa+oST1xKX
+ FmDW23jSSHxNs2FM53U38IOmzTXZ7/SXShDN5FluOxXQeaC9SgAVz+MqYVUj6uelpm23
+ HRZvSzyBFAsZFkQbEcF6C6V8Gwesgcgf70e81LAmaCN6CQa5ts+yfcZ0cWl+uCcvefjO
+ 5B6ipDEl3IbtAtfcg5f1E6Ov+rTaIsS0hR1MmcQe/nnG+2AHurj1je6XB/sBSN3PPX+j
+ z/+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717157074; x=1717761874;
+ d=1e100.net; s=20230601; t=1717157051; x=1717761851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NWDApggyMUwqlr/49GITBZT6GHohqUhXi/8+w7dnERs=;
- b=eKAvoK8F9Ba2kyCtnD2iV/H7x1nwj0l/elq3o2HKshSeDlUO0tklUfwq2EVKNbR/v5
- Pml/9n9tG78jvdgiGiV2i1v/PCmP1QSTOfV+SIh2znwgwBk8YDy39FVwE/y7MIsUjdYR
- kuAthDz2c64n8Lqlt+CUNEttREkV5BWQ5Qa1MOO4zgfg3awMPFs34cuFifC3SmDX6iuk
- bj0Y9JVUnRAnLYZbV9Fimnmzad/mrGg8vmhUUbpIKIvhQFq9RfMRfSWlGnNXRa1kWrz4
- VI1arq9IatIhapVjEI7g+VJX7n92OjgeN009aYZfIHhpGuNVuw2arb6ZNFZlUxKQFDon
- UUnw==
-X-Gm-Message-State: AOJu0YwTfv3AdlWw1mT5lwMG36DYqSjCexPzrczokfmlr3M4IIKHeruY
- griZQ8tlG4cQbuFmt3Znd5cn7GfvLBaBCPwGFomAAr9Ct2xDKpBAxcCI4LAA+8cLeuudL5mdP1L
- K
-X-Google-Smtp-Source: AGHT+IF4bZu2Gf6zkUHon/3KK8cjzp5YVCSTyCXv14jnGa7wKJKzF+jTcPKo4vgTaVMVIOOkkuH4fg==
-X-Received: by 2002:a05:651c:1687:b0:2ea:938f:a232 with SMTP id
- 38308e7fff4ca-2ea951a9e43mr11151361fa.42.1717157073943; 
- Fri, 31 May 2024 05:04:33 -0700 (PDT)
+ bh=HQPgCyC/U6ymgqUEhxM5UfJ1POVCW7SzHOVpPiu7BCU=;
+ b=Hj/3CpwgZqUmQN/03xbei8RLCFK7q+z31MKsWk4+Wk1Zg06i1p5AL58c9SwJ6DnwVs
+ 3WtLEzA6Ws9PX/ENU3zaIBr5fSQzzDlH18zsnsAlRu4JwdkjhXGBPA+2F5TqK41IKtQw
+ xL0sRt/0K8SEGM07f10KYqTa90p4gKI14kZ8WUGR4Zpm7yhRLYKubs/CRtZNZDCR1RZB
+ XF/UIpztPiX5BEL/ta/f7830v+M8VHncq7zlxOgpQaBg18ywRLBLAJdLuLgqk2P8CFsm
+ 08p7yTqsA/W36n2m23RcugzQusR53Mjp5x+8+5TVUO8F+2lst2huozyihxA7OsOaLJcy
+ 6ukw==
+X-Gm-Message-State: AOJu0YwjGHEBUauaMOsoaQjcKACex1ggyMRLzp430OovRKCDe4bO0hwf
+ M8XPggrYeEyPY463BByB9N9ljQrakgTElvZpxbUlzhaSwdnYMjAl55eAe41HwRRb+/0+w0RrTLV
+ C
+X-Google-Smtp-Source: AGHT+IFxl9uWk3C5XseBvldUuNTgkcl8PUQidWGVW3DXrsivwN/cUDtmhfx/q2tuzFOGk6FuCWPzMg==
+X-Received: by 2002:a05:600c:1d99:b0:420:1853:68c3 with SMTP id
+ 5b1f17b1804b1-4212e062264mr12755495e9.20.1717157050929; 
+ Fri, 31 May 2024 05:04:10 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.33
+ 5b1f17b1804b1-42129de0cf9sm37027685e9.13.2024.05.31.05.04.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 05:04:33 -0700 (PDT)
+ Fri, 31 May 2024 05:04:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/43] hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-Date: Fri, 31 May 2024 13:04:01 +0100
-Message-Id: <20240531120401.394550-44-peter.maydell@linaro.org>
+Subject: [PULL 10/43] target/arm: Inline scalar SUQADD and USQADD
+Date: Fri, 31 May 2024 13:03:28 +0100
+Message-Id: <20240531120401.394550-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240531120401.394550-1-peter.maydell@linaro.org>
 References: <20240531120401.394550-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,122 +93,439 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hubbard <dmamfmgm@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This changes the ohci validation to not assert if invalid data is fed to the
-ohci controller. The poc in https://bugs.launchpad.net/qemu/+bug/1907042 and
-migrated to bug #303 does the following to feed it a SETUP pid (valid)
-at an EndPt of 1 (invalid - all SETUP pids must be addressed to EndPt 0):
+This eliminates the last uses of these neon helpers.
+Incorporate the MO_64 expanders as an option to the vector expander.
 
-        uint32_t MaxPacket = 64;
-        uint32_t TDFormat = 0;
-        uint32_t Skip = 0;
-        uint32_t Speed = 0;
-        uint32_t Direction = 0;  /* #define OHCI_TD_DIR_SETUP 0 */
-        uint32_t EndPt = 1;
-        uint32_t FuncAddress = 0;
-        ed->attr = (MaxPacket << 16) | (TDFormat << 15) | (Skip << 14)
-                   | (Speed << 13) | (Direction << 11) | (EndPt << 7)
-                   | FuncAddress;
-        ed->tailp = /*TDQTailPntr= */ 0;
-        ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0)
-                   | (/* ToggleCarry= */ 0 << 1);
-        ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
-
-qemu-fuzz also caught the same issue in #1510. They are both fixed by this
-patch.
-
-With a tiny OS[1] that boots and executes the poc the repro shows the issue:
-
-* OS that sends USB requests to a USB mass storage device
-  but sends a SETUP with EndPt = 1
-* qemu 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.19)
-* qemu HEAD (4e66a0854)
-* Actual OHCI controller (hardware)
-
-Command line:
-qemu-system-x86_64 -m 20 \
- -device pci-ohci,id=ohci \
- -drive if=none,format=raw,id=d,file=testmbr.raw \
- -device usb-storage,bus=ohci.0,drive=d \
- --trace "usb_*" --trace "ohci_*" -D qemu.log
-
-Results are:
-
- qemu 6.2.0 | qemu HEAD | actual HW
-------------+-----------+----------------
- assertion  | assertion | sets stall bit
-
-The assertion message is:
-
-> qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
-> Aborted (core dumped)
-
-Tip: if the flags "-serial pty -serial stdio" are added to the command line
-the poc outputs its USB requests like this:
-
-> Free mem 2M ohci port0 conn FS
-> setup { 80 6 0 1 0 0 8 0 }
-> ED info=80000 { mps=8 en=0 d=0 } tail=c20920
->   td0 c20880 nxt=c20960 f2000000 setup cbp=c20900 be=c20907       cbp=0 be=c20907
->   td1 c20960 nxt=c20980 f3140000    in cbp=c20908 be=c2090f       cbp=0 be=c2090f
->   td2 c20980 nxt=c20920 f3080000   out cbp=0 be=0                 cbp=0 be=0
->    rx { 12 1 0 2 0 0 0 8 }
-> setup { 0 5 1 0 0 0 0 0 } tx {}
-> ED info=80000 { mps=8 en=0 d=0 } tail=c20880
->   td0 c20920 nxt=c20960 f2000000 setup cbp=c20900 be=c20907       cbp=0 be=c20907
->   td1 c20960 nxt=c20880 f3100000    in cbp=0 be=0                 cbp=0 be=0
-> setup { 80 6 0 1 0 0 12 0 }
-> ED info=80081 { mps=8 en=0 d=1 } tail=c20960
->   td0 c20880 nxt=c209c0 f2000000 setup cbp=c20920 be=c20927
->   td1 c209c0 nxt=c209e0 f3140000    in cbp=c20928 be=c20939
->   td2 c209e0 nxt=c20960 f3080000   out cbp=0 be=0qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
-> Aborted (core dumped)
-
-[1] The OS disk image has been emailed to philmd@linaro.org, mjt@tls.msk.ru,
-and kraxel@redhat.com:
-
-* testBadSetup.img.xz
-* sha256: 045b43f4396de02b149518358bf8025d5ba11091e86458875339fc649e6e5ac6
-
-Signed-off-by: David Hubbard <dmamfmgm@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: authorship and signed-off-by tag names fixed up as
- per on-list agreement]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240528203044.612851-6-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/usb/hcd-ohci.c   | 5 +++++
- hw/usb/trace-events | 1 +
- 2 files changed, 6 insertions(+)
+ target/arm/helper.h            |   8 --
+ target/arm/tcg/translate-a64.h |   8 ++
+ target/arm/tcg/gengvec64.c     |  71 ++++++++++++++
+ target/arm/tcg/neon_helper.c   | 165 ---------------------------------
+ target/arm/tcg/translate-a64.c |  73 +++++----------
+ 5 files changed, 103 insertions(+), 222 deletions(-)
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index fc8fc91a1d1..acd60169802 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-     case OHCI_TD_DIR_SETUP:
-         str = "setup";
-         pid = USB_TOKEN_SETUP;
-+        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed to ep 0 */
-+            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
-+            ohci_die(ohci);
-+            return 1;
-+        }
-         break;
-     default:
-         trace_usb_ohci_td_bad_direction(dir);
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-index ed7dc210d3f..fd7b90d70c0 100644
---- a/hw/usb/trace-events
-+++ b/hw/usb/trace-events
-@@ -28,6 +28,7 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len) "DataOverrun %d > %zu"
- usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
- usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
- usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
-+usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) "Bad pid %s: ed.flags 0x%x td.flags 0x%x"
- usb_ohci_port_attach(int index) "port #%d"
- usb_ohci_port_detach(int index) "port #%d"
- usb_ohci_port_wakeup(int index) "port #%d"
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index de2c5c9aef0..c76158d6d3f 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -274,14 +274,6 @@ DEF_HELPER_FLAGS_3(neon_qadd_u16, TCG_CALL_NO_RWG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_3(neon_qadd_s16, TCG_CALL_NO_RWG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_3(neon_qadd_u32, TCG_CALL_NO_RWG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_3(neon_qadd_s32, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_uqadd_s8, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_uqadd_s16, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_uqadd_s32, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_uqadd_s64, TCG_CALL_NO_RWG, i64, env, i64, i64)
+-DEF_HELPER_FLAGS_3(neon_sqadd_u8, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_sqadd_u16, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_sqadd_u32, TCG_CALL_NO_RWG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(neon_sqadd_u64, TCG_CALL_NO_RWG, i64, env, i64, i64)
+ DEF_HELPER_3(neon_qsub_u8, i32, env, i32, i32)
+ DEF_HELPER_3(neon_qsub_s8, i32, env, i32, i32)
+ DEF_HELPER_3(neon_qsub_u16, i32, env, i32, i32)
+diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
+index b5cb26f8a2e..0fcf7cb63ad 100644
+--- a/target/arm/tcg/translate-a64.h
++++ b/target/arm/tcg/translate-a64.h
+@@ -197,9 +197,17 @@ void gen_gvec_eor3(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+                    uint32_t a, uint32_t oprsz, uint32_t maxsz);
+ void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+                    uint32_t a, uint32_t oprsz, uint32_t maxsz);
++
++void gen_suqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
++                    TCGv_i64 a, TCGv_i64 b, MemOp esz);
++void gen_suqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b);
+ void gen_gvec_suqadd_qc(unsigned vece, uint32_t rd_ofs,
+                         uint32_t rn_ofs, uint32_t rm_ofs,
+                         uint32_t opr_sz, uint32_t max_sz);
++
++void gen_usqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
++                    TCGv_i64 a, TCGv_i64 b, MemOp esz);
++void gen_usqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b);
+ void gen_gvec_usqadd_qc(unsigned vece, uint32_t rd_ofs,
+                         uint32_t rn_ofs, uint32_t rm_ofs,
+                         uint32_t opr_sz, uint32_t max_sz);
+diff --git a/target/arm/tcg/gengvec64.c b/target/arm/tcg/gengvec64.c
+index b3afabd38b6..2617cde0a5f 100644
+--- a/target/arm/tcg/gengvec64.c
++++ b/target/arm/tcg/gengvec64.c
+@@ -188,6 +188,38 @@ void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
+ }
+ 
++/*
++ * Set @res to the correctly saturated result.
++ * Set @qc non-zero if saturation occured.
++ */
++void gen_suqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
++                    TCGv_i64 a, TCGv_i64 b, MemOp esz)
++{
++    TCGv_i64 max = tcg_constant_i64((1ull << ((8 << esz) - 1)) - 1);
++    TCGv_i64 t = tcg_temp_new_i64();
++
++    tcg_gen_add_i64(t, a, b);
++    tcg_gen_smin_i64(res, t, max);
++    tcg_gen_xor_i64(t, t, res);
++    tcg_gen_or_i64(qc, qc, t);
++}
++
++void gen_suqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b)
++{
++    TCGv_i64 max = tcg_constant_i64(INT64_MAX);
++    TCGv_i64 t = tcg_temp_new_i64();
++
++    /* Maximum value that can be added to @a without overflow. */
++    tcg_gen_sub_i64(t, max, a);
++
++    /* Constrain addend so that the next addition never overflows. */
++    tcg_gen_umin_i64(t, t, b);
++    tcg_gen_add_i64(res, a, t);
++
++    tcg_gen_xor_i64(t, t, b);
++    tcg_gen_or_i64(qc, qc, t);
++}
++
+ static void gen_suqadd_vec(unsigned vece, TCGv_vec t, TCGv_vec qc,
+                            TCGv_vec a, TCGv_vec b)
+ {
+@@ -231,6 +263,7 @@ void gen_gvec_suqadd_qc(unsigned vece, uint32_t rd_ofs,
+           .write_aofs = true,
+           .vece = MO_32 },
+         { .fniv = gen_suqadd_vec,
++          .fni8 = gen_suqadd_d,
+           .fno = gen_helper_gvec_suqadd_d,
+           .opt_opc = vecop_list,
+           .write_aofs = true,
+@@ -242,6 +275,43 @@ void gen_gvec_suqadd_qc(unsigned vece, uint32_t rd_ofs,
+                    rn_ofs, rm_ofs, opr_sz, max_sz, &ops[vece]);
+ }
+ 
++void gen_usqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
++                    TCGv_i64 a, TCGv_i64 b, MemOp esz)
++{
++    TCGv_i64 max = tcg_constant_i64(MAKE_64BIT_MASK(0, 8 << esz));
++    TCGv_i64 zero = tcg_constant_i64(0);
++    TCGv_i64 tmp = tcg_temp_new_i64();
++
++    tcg_gen_add_i64(tmp, a, b);
++    tcg_gen_smin_i64(res, tmp, max);
++    tcg_gen_smax_i64(res, res, zero);
++    tcg_gen_xor_i64(tmp, tmp, res);
++    tcg_gen_or_i64(qc, qc, tmp);
++}
++
++void gen_usqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b)
++{
++    TCGv_i64 tmp = tcg_temp_new_i64();
++    TCGv_i64 tneg = tcg_temp_new_i64();
++    TCGv_i64 tpos = tcg_temp_new_i64();
++    TCGv_i64 max = tcg_constant_i64(UINT64_MAX);
++    TCGv_i64 zero = tcg_constant_i64(0);
++
++    tcg_gen_add_i64(tmp, a, b);
++
++    /* If @b is positive, saturate if (a + b) < a, aka unsigned overflow. */
++    tcg_gen_movcond_i64(TCG_COND_LTU, tpos, tmp, a, max, tmp);
++
++    /* If @b is negative, saturate if a < -b, ie subtraction is negative. */
++    tcg_gen_neg_i64(tneg, b);
++    tcg_gen_movcond_i64(TCG_COND_LTU, tneg, a, tneg, zero, tmp);
++
++    /* Select correct result from sign of @b. */
++    tcg_gen_movcond_i64(TCG_COND_LT, res, b, zero, tneg, tpos);
++    tcg_gen_xor_i64(tmp, tmp, res);
++    tcg_gen_or_i64(qc, qc, tmp);
++}
++
+ static void gen_usqadd_vec(unsigned vece, TCGv_vec t, TCGv_vec qc,
+                            TCGv_vec a, TCGv_vec b)
+ {
+@@ -288,6 +358,7 @@ void gen_gvec_usqadd_qc(unsigned vece, uint32_t rd_ofs,
+           .write_aofs = true,
+           .vece = MO_32 },
+         { .fniv = gen_usqadd_vec,
++          .fni8 = gen_usqadd_d,
+           .fno = gen_helper_gvec_usqadd_d,
+           .opt_opc = vecop_list,
+           .write_aofs = true,
+diff --git a/target/arm/tcg/neon_helper.c b/target/arm/tcg/neon_helper.c
+index a0b51c88096..9505a5fd18e 100644
+--- a/target/arm/tcg/neon_helper.c
++++ b/target/arm/tcg/neon_helper.c
+@@ -236,171 +236,6 @@ uint64_t HELPER(neon_qadd_s64)(CPUARMState *env, uint64_t src1, uint64_t src2)
+     return res;
+ }
+ 
+-/* Unsigned saturating accumulate of signed value
+- *
+- * Op1/Rn is treated as signed
+- * Op2/Rd is treated as unsigned
+- *
+- * Explicit casting is used to ensure the correct sign extension of
+- * inputs. The result is treated as a unsigned value and saturated as such.
+- *
+- * We use a macro for the 8/16 bit cases which expects signed integers of va,
+- * vb, and vr for interim calculation and an unsigned 32 bit result value r.
+- */
+-
+-#define USATACC(bits, shift) \
+-    do { \
+-        va = sextract32(a, shift, bits);                                \
+-        vb = extract32(b, shift, bits);                                 \
+-        vr = va + vb;                                                   \
+-        if (vr > UINT##bits##_MAX) {                                    \
+-            SET_QC();                                                   \
+-            vr = UINT##bits##_MAX;                                      \
+-        } else if (vr < 0) {                                            \
+-            SET_QC();                                                   \
+-            vr = 0;                                                     \
+-        }                                                               \
+-        r = deposit32(r, shift, bits, vr);                              \
+-   } while (0)
+-
+-uint32_t HELPER(neon_uqadd_s8)(CPUARMState *env, uint32_t a, uint32_t b)
+-{
+-    int16_t va, vb, vr;
+-    uint32_t r = 0;
+-
+-    USATACC(8, 0);
+-    USATACC(8, 8);
+-    USATACC(8, 16);
+-    USATACC(8, 24);
+-    return r;
+-}
+-
+-uint32_t HELPER(neon_uqadd_s16)(CPUARMState *env, uint32_t a, uint32_t b)
+-{
+-    int32_t va, vb, vr;
+-    uint64_t r = 0;
+-
+-    USATACC(16, 0);
+-    USATACC(16, 16);
+-    return r;
+-}
+-
+-#undef USATACC
+-
+-uint32_t HELPER(neon_uqadd_s32)(CPUARMState *env, uint32_t a, uint32_t b)
+-{
+-    int64_t va = (int32_t)a;
+-    int64_t vb = (uint32_t)b;
+-    int64_t vr = va + vb;
+-    if (vr > UINT32_MAX) {
+-        SET_QC();
+-        vr = UINT32_MAX;
+-    } else if (vr < 0) {
+-        SET_QC();
+-        vr = 0;
+-    }
+-    return vr;
+-}
+-
+-uint64_t HELPER(neon_uqadd_s64)(CPUARMState *env, uint64_t a, uint64_t b)
+-{
+-    uint64_t res;
+-    res = a + b;
+-    /* We only need to look at the pattern of SIGN bits to detect
+-     * +ve/-ve saturation
+-     */
+-    if (~a & b & ~res & SIGNBIT64) {
+-        SET_QC();
+-        res = UINT64_MAX;
+-    } else if (a & ~b & res & SIGNBIT64) {
+-        SET_QC();
+-        res = 0;
+-    }
+-    return res;
+-}
+-
+-/* Signed saturating accumulate of unsigned value
+- *
+- * Op1/Rn is treated as unsigned
+- * Op2/Rd is treated as signed
+- *
+- * The result is treated as a signed value and saturated as such
+- *
+- * We use a macro for the 8/16 bit cases which expects signed integers of va,
+- * vb, and vr for interim calculation and an unsigned 32 bit result value r.
+- */
+-
+-#define SSATACC(bits, shift) \
+-    do { \
+-        va = extract32(a, shift, bits);                                 \
+-        vb = sextract32(b, shift, bits);                                \
+-        vr = va + vb;                                                   \
+-        if (vr > INT##bits##_MAX) {                                     \
+-            SET_QC();                                                   \
+-            vr = INT##bits##_MAX;                                       \
+-        } else if (vr < INT##bits##_MIN) {                              \
+-            SET_QC();                                                   \
+-            vr = INT##bits##_MIN;                                       \
+-        }                                                               \
+-        r = deposit32(r, shift, bits, vr);                              \
+-    } while (0)
+-
+-uint32_t HELPER(neon_sqadd_u8)(CPUARMState *env, uint32_t a, uint32_t b)
+-{
+-    int16_t va, vb, vr;
+-    uint32_t r = 0;
+-
+-    SSATACC(8, 0);
+-    SSATACC(8, 8);
+-    SSATACC(8, 16);
+-    SSATACC(8, 24);
+-    return r;
+-}
+-
+-uint32_t HELPER(neon_sqadd_u16)(CPUARMState *env, uint32_t a, uint32_t b)
+-{
+-    int32_t va, vb, vr;
+-    uint32_t r = 0;
+-
+-    SSATACC(16, 0);
+-    SSATACC(16, 16);
+-
+-    return r;
+-}
+-
+-#undef SSATACC
+-
+-uint32_t HELPER(neon_sqadd_u32)(CPUARMState *env, uint32_t a, uint32_t b)
+-{
+-    int64_t res;
+-    int64_t op1 = (uint32_t)a;
+-    int64_t op2 = (int32_t)b;
+-    res = op1 + op2;
+-    if (res > INT32_MAX) {
+-        SET_QC();
+-        res = INT32_MAX;
+-    } else if (res < INT32_MIN) {
+-        SET_QC();
+-        res = INT32_MIN;
+-    }
+-    return res;
+-}
+-
+-uint64_t HELPER(neon_sqadd_u64)(CPUARMState *env, uint64_t a, uint64_t b)
+-{
+-    uint64_t res;
+-    res = a + b;
+-    /* We only need to look at the pattern of SIGN bits to detect an overflow */
+-    if (((a & res)
+-         | (~b & res)
+-         | (a & ~b)) & SIGNBIT64) {
+-        SET_QC();
+-        res = INT64_MAX;
+-    }
+-    return res;
+-}
+-
+-
+ #define NEON_USAT(dest, src1, src2, type) do { \
+     uint32_t tmp = (uint32_t)src1 - (uint32_t)src2; \
+     if (tmp != (type)tmp) { \
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 9f948e033e6..781b2249720 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -9985,67 +9985,42 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
+ static void handle_2misc_satacc(DisasContext *s, bool is_scalar, bool is_u,
+                                 bool is_q, unsigned size, int rn, int rd)
+ {
++    TCGv_i64 res, qc, a, b;
++
+     if (!is_scalar) {
+         gen_gvec_fn3(s, is_q, rd, rd, rn,
+                      is_u ? gen_gvec_usqadd_qc : gen_gvec_suqadd_qc, size);
+         return;
+     }
+ 
+-    if (size == 3) {
+-        TCGv_i64 tcg_rn = tcg_temp_new_i64();
+-        TCGv_i64 tcg_rd = tcg_temp_new_i64();
++    res = tcg_temp_new_i64();
++    qc = tcg_temp_new_i64();
++    a = tcg_temp_new_i64();
++    b = tcg_temp_new_i64();
+ 
+-        read_vec_element(s, tcg_rn, rn, 0, MO_64);
+-        read_vec_element(s, tcg_rd, rd, 0, MO_64);
++    /* Read and extend scalar inputs to 64-bits. */
++    read_vec_element(s, a, rd, 0, size | (is_u ? 0 : MO_SIGN));
++    read_vec_element(s, b, rn, 0, size | (is_u ? MO_SIGN : 0));
++    tcg_gen_ld_i64(qc, tcg_env, offsetof(CPUARMState, vfp.qc));
+ 
+-        if (is_u) { /* USQADD */
+-            gen_helper_neon_uqadd_s64(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-        } else { /* SUQADD */
+-            gen_helper_neon_sqadd_u64(tcg_rd, tcg_env, tcg_rn, tcg_rd);
++    if (size == MO_64) {
++        if (is_u) {
++            gen_usqadd_d(res, qc, a, b);
++        } else {
++            gen_suqadd_d(res, qc, a, b);
+         }
+-        write_vec_element(s, tcg_rd, rd, 0, MO_64);
+-        clear_vec_high(s, false, rd);
+     } else {
+-        TCGv_i32 tcg_rn = tcg_temp_new_i32();
+-        TCGv_i32 tcg_rd = tcg_temp_new_i32();
+-
+-        read_vec_element_i32(s, tcg_rn, rn, 0, size);
+-        read_vec_element_i32(s, tcg_rd, rd, 0, size);
+-
+-        if (is_u) { /* USQADD */
+-            switch (size) {
+-            case 0:
+-                gen_helper_neon_uqadd_s8(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-                break;
+-            case 1:
+-                gen_helper_neon_uqadd_s16(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-                break;
+-            case 2:
+-                gen_helper_neon_uqadd_s32(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-                break;
+-            default:
+-                g_assert_not_reached();
+-            }
+-        } else { /* SUQADD */
+-            switch (size) {
+-            case 0:
+-                gen_helper_neon_sqadd_u8(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-                break;
+-            case 1:
+-                gen_helper_neon_sqadd_u16(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-                break;
+-            case 2:
+-                gen_helper_neon_sqadd_u32(tcg_rd, tcg_env, tcg_rn, tcg_rd);
+-                break;
+-            default:
+-                g_assert_not_reached();
+-            }
++        if (is_u) {
++            gen_usqadd_bhs(res, qc, a, b, size);
++        } else {
++            gen_suqadd_bhs(res, qc, a, b, size);
++            /* Truncate signed 64-bit result for writeback. */
++            tcg_gen_ext_i64(res, res, size);
+         }
+-
+-        write_vec_element(s, tcg_constant_i64(0), rd, 0, MO_64);
+-        write_vec_element_i32(s, tcg_rd, rd, 0, MO_32);
+-        clear_vec_high(s, false, rd);
+     }
++
++    write_fp_dreg(s, rd, res);
++    tcg_gen_st_i64(qc, tcg_env, offsetof(CPUARMState, vfp.qc));
+ }
+ 
+ /* AdvSIMD scalar two reg misc
 -- 
 2.34.1
 
