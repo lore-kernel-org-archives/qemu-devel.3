@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB14C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40414C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD4OU-00030Q-AA; Fri, 31 May 2024 11:42:14 -0400
+	id 1sD4SI-00053U-Uw; Fri, 31 May 2024 11:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD4OR-0002yn-Bc
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:42:12 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD4SG-00052b-Sw
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:46:08 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD4OP-00028W-Oh
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:42:11 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 64E8621C64;
- Fri, 31 May 2024 15:42:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717170128; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AJYtXTYt24/mn4dJgd9wxWWfoogQ3bQQcRsnUVx/RMM=;
- b=CxYdhXsc7gos7nxqHf8IT90DwK1RE/IUc2JfiaJMQLovsabd+L4pLIn6x7DpyD3Y+qttHM
- 4bLFzwD9Pe8C6q2m2cA0Oh+Of8aYWvr4l/RA/z07dyjtpYd2zANYJxqSVamd2BueqOCHRf
- L4qDuPgPMmiDQrJwzcTG/EWEfkpzqw8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717170128;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AJYtXTYt24/mn4dJgd9wxWWfoogQ3bQQcRsnUVx/RMM=;
- b=mPaj3HvxXXYtnfNfzaxBuV/8zuKEPybdjwi49c2ARzCAjytceMM8ZVDYh4wAW1+nE+ofLp
- AM1evJoD0LiNqNDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717170128; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AJYtXTYt24/mn4dJgd9wxWWfoogQ3bQQcRsnUVx/RMM=;
- b=CxYdhXsc7gos7nxqHf8IT90DwK1RE/IUc2JfiaJMQLovsabd+L4pLIn6x7DpyD3Y+qttHM
- 4bLFzwD9Pe8C6q2m2cA0Oh+Of8aYWvr4l/RA/z07dyjtpYd2zANYJxqSVamd2BueqOCHRf
- L4qDuPgPMmiDQrJwzcTG/EWEfkpzqw8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717170128;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AJYtXTYt24/mn4dJgd9wxWWfoogQ3bQQcRsnUVx/RMM=;
- b=mPaj3HvxXXYtnfNfzaxBuV/8zuKEPybdjwi49c2ARzCAjytceMM8ZVDYh4wAW1+nE+ofLp
- AM1evJoD0LiNqNDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E34E6132C2;
- Fri, 31 May 2024 15:42:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id jo0lKs/vWWYBDwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 31 May 2024 15:42:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
- Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v2 13/18] monitor: fdset: Match against O_DIRECT
-In-Reply-To: <Zljyf28LG1YCw9Al@x1n>
-References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-14-farosas@suse.de> <Zljyf28LG1YCw9Al@x1n>
-Date: Fri, 31 May 2024 12:42:05 -0300
-Message-ID: <87ikyukmya.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sD4SF-0002eT-3Z
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:46:08 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-35507e3a5deso1513758f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 08:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717170365; x=1717775165; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bxlpUkILV1gjv8yhJgSUwa1ubBT+uvlQ6UKqmo0ocnY=;
+ b=Q8vTIx/hCk34JwMjayiXKXqca0MUMiqvVjAFD8zZC7a8uoUFlsNNF7mNIDSYVGVWWx
+ wCMKbE8zQ/h2K8k7FiJ9OkvFXetl5AQGJhe33Jkg0X4J4UuH9Z13JdiFe990MiikXiQG
+ xigJf9fVFMG7ONG9VkKPIupVIc8K1YaJDirZVv+p1Sd/BGGN6OCmO/KdI5ebH+Bmkh7/
+ Ykmwjr98J6b3XPXOPGrxYjuSpCEET72FjYOczxTaMg/1FA5cegTaDTP3+b6Yn2PFCRCa
+ rRmn3990KVizLHzR5PzKXf87j1wQOdmTkSxlt8pBJYgn7HNPYpdDmLacOfVAMiDLsq12
+ fUxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717170365; x=1717775165;
+ h=content-transfer-encoding:in-reply-to:cc:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bxlpUkILV1gjv8yhJgSUwa1ubBT+uvlQ6UKqmo0ocnY=;
+ b=YvXBgoXCuWwQm89CWHuaH2adMDdxgZTRDZSdkOJRCr1Pl1gl21Kee7CN1U4VFcTXBM
+ K4YfgVmQj0s7WyiL8qUlpZs0i4Ye+KQ4sT6PM+67b0FEWnINq0qrhTSCtN0/pd8Dqard
+ 28mES5OQQbyU5SDcvZ4kBNKh62de8nAiydUDNHEMruvTk5LVEA2RWc6hzZmaG5ssMsyq
+ VVnyGeEDTZtkCZJyfZQt2sdDgIyFE8bxPJ22r6WyMyXWGIT+4DWixQaMNtlvRpM6Uj62
+ 4vHni+f3/WkfCmpfrT1hzCNotISBd6ZLvNE0FuIL+WxqmSmRSS/jfYnkmnjkKBRJKCCO
+ Uafg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWujjNdYXTg9rp8v7Qk7dfmEiahshcU+dDyThDhbTeuoJxSs2EaqKP2JEm1pA3UBndevOZAqh2ICsjxG4ISKM1r8OeQNDI=
+X-Gm-Message-State: AOJu0Yx2PgTFFGRBzXm6IpV+Dp8hXPo2eSd5X6n68T/M0sY0uifM9l+A
+ VJfodNpYFEaWQ8Y+uyzg9ZY4fdvSTFKs0F7PBYlOPWtBoCYBA51IE3sUGiDCjFk=
+X-Google-Smtp-Source: AGHT+IGPwc0vCzgLgoNaIR6OBpwvW+/wH99WRS0l0sU1Ay0Osd9EmdRE4+EbKooDxMmNIOPnZdZvZg==
+X-Received: by 2002:a5d:4745:0:b0:354:f4a9:b88a with SMTP id
+ ffacd0b85a97d-35dc7e5fa9emr4742542f8f.21.1717170364796; 
+ Fri, 31 May 2024 08:46:04 -0700 (PDT)
+Received: from [192.168.137.175] (140.red-88-28-21.dynamicip.rima-tde.net.
+ [88.28.21.140]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4212b2bc975sm30873205e9.29.2024.05.31.08.46.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 May 2024 08:46:04 -0700 (PDT)
+Message-ID: <4b146ec6-bec2-4191-8c95-fc30d8307ef6@linaro.org>
+Date: Fri, 31 May 2024 17:46:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] osdep: Make qemu_madvise() to set errno in all
+ cases
+To: Michal Privoznik <mprivozn@redhat.com>, qemu-devel@nongnu.org
+References: <cover.1717168113.git.mprivozn@redhat.com>
+ <393c7b26302cb445f1a086a2c80b1d718c31a071.1717168113.git.mprivozn@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Cameron Esfahani <dirty@apple.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <393c7b26302cb445f1a086a2c80b1d718c31a071.1717168113.git.mprivozn@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,48 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 31/5/24 17:10, Michal Privoznik wrote:
+> The unspoken premise of qemu_madvise() is that errno is set on
+> error. And it is mostly the case except for posix_madvise() which
+> is documented to return either zero (on success) or a positive
+> error number. This means, we must set errno ourselves. And while
+> at it, make the function return a negative value on error, just
+> like other error paths do.
+> 
+> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+> ---
+>   util/osdep.c | 14 +++++++++++++-
+>   1 file changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/util/osdep.c b/util/osdep.c
+> index e996c4744a..1345238a5c 100644
+> --- a/util/osdep.c
+> +++ b/util/osdep.c
+> @@ -57,7 +57,19 @@ int qemu_madvise(void *addr, size_t len, int advice)
+>   #if defined(CONFIG_MADVISE)
+>       return madvise(addr, len, advice);
+>   #elif defined(CONFIG_POSIX_MADVISE)
+> -    return posix_madvise(addr, len, advice);
+> +    /*
+> +     * On Darwin posix_madvise() has the same return semantics as
+> +     * plain madvise, i.e. errno is set and -1 is returned. Otherwise,
+> +     * a positive error number is returned.
+> +     */
 
-> On Thu, May 23, 2024 at 04:05:43PM -0300, Fabiano Rosas wrote:
->> We're about to enable the use of O_DIRECT in the migration code and
->> due to the alignment restrictions imposed by filesystems we need to
->> make sure the flag is only used when doing aligned IO.
->> 
->> The migration will do parallel IO to different regions of a file, so
->> we need to use more than one file descriptor. Those cannot be obtained
->> by duplicating (dup()) since duplicated file descriptors share the
->> file status flags, including O_DIRECT. If one migration channel does
->> unaligned IO while another sets O_DIRECT to do aligned IO, the
->> filesystem would fail the unaligned operation.
->> 
->> The add-fd QMP command along with the fdset code are specifically
->> designed to allow the user to pass a set of file descriptors with
->> different access flags into QEMU to be later fetched by code that
->> needs to alternate between those flags when doing IO.
->> 
->> Extend the fdset matching to behave the same with the O_DIRECT flag.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
-> One thing I am confused but totally irrelevant to this specific change.
->
-> I wonder why do we need dupfds at all, and why client needs to remove-fd at
-> all.
+Alternative is to guard with #ifdef CONFIG_DARWIN ... #else ... #endif
+which might be clearer.
 
-This answer was lost to time.
+Although this approach seems reasonable, so:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
->
-> It's about what would go wrong if qmp client only add-fd, then if it's
-> consumed by anything, it gets moved from "fds" list to "dupfds" list.  The
-> thing is I don't expect the client should pass over any fd that will not be
-> consumed.  Then if it's always consumed, why bother dup() at all, and why
-> bother an explicit remove-fd.
+> +    int rc = posix_madvise(addr, len, advice);
+> +    if (rc) {
+> +        if (rc > 0) {
+> +            errno = rc;
+> +        }
+> +        return -1;
+> +    }
+> +    return 0;
+>   #else
+>       errno = EINVAL;
+>       return -1;
 
-With the lack of documentation, I can only imagine the code was
-initially written to be more flexible, but we ended up never needing the
-extra flexibility. Maybe we could change that transparently in the
-future and deprecate qmp_remove_fd(). I'm thinking, even for the
-mapped-ram work, we might not need libvirt to call that function ever.
 
