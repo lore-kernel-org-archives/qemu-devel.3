@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFA8C25B7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F12C25B7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD09t-0006Br-1H; Fri, 31 May 2024 07:10:53 -0400
+	id 1sD0By-0007XS-G9; Fri, 31 May 2024 07:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD09r-0006BL-DR
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:10:51 -0400
+ id 1sD0Bv-0007Wo-Tz
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:12:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sD09p-0001GZ-QD
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:10:51 -0400
+ id 1sD0Bs-0001XN-4A
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:12:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717153848;
+ s=mimecast20190719; t=1717153975;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M+s1PzK2/wvRT6JuH6Q8j0YjcXC2Cl53mqKVRaXl/lI=;
- b=A0gjG79nUe9sgBxH14BV3cYWHV7Dk+gh0M6v01T8K95PhnrY6QUbWYlmU02oKYinbEYY0G
- oRtSqMMPnqIo65gwNDjAtgGAWpL61jGoCONjC3FD/stYge4AgebpRkf8gHq6p5lTKwtsEs
- D/cc0s4CD1Ewz0pD8vERuBprpYFQNj0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sJ8KNJuQJ+2POJtaJdqo9IYMUJVBojTDcmu1dLhG5/g=;
+ b=JrHDG4pWayMyAVdcWLZ3Pc5U+Ojjep+mybbNeLCKFTwtBF10ptT01UMf3xXHDnotdwCN5a
+ d2ICRk3tQKK0YDk37sn4HQQ6oV4nQQ3nli9KcIy5TpLAG3bdirHIeXa+0H03MnuQuBTneO
+ UhhpFko4+lOUmsecNrIe5wml530jGAc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-VHyBcsajPmGozCGMK9Rd4A-1; Fri, 31 May 2024 07:10:46 -0400
-X-MC-Unique: VHyBcsajPmGozCGMK9Rd4A-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-35e0e59dcf7so368464f8f.2
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:10:46 -0700 (PDT)
+ us-mta-664-XoXK_ED8O8eq6U5exz82dA-1; Fri, 31 May 2024 07:12:52 -0400
+X-MC-Unique: XoXK_ED8O8eq6U5exz82dA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35dbf83bb20so1155707f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:12:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717153845; x=1717758645;
+ d=1e100.net; s=20230601; t=1717153970; x=1717758770;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M+s1PzK2/wvRT6JuH6Q8j0YjcXC2Cl53mqKVRaXl/lI=;
- b=VO5iAB9Oq7mc0bg1DlUpYx+WIlr3Oic304zTie0I3yYCNFjeJfzq6iPJfncWlQogMz
- TiuAqo9RuKE6SBFHjH4IGQoFpJxtjn7ghN0hFusmlNomyhAgobgo8te9yNzxbXFNmQL9
- U2UFm3TJ4zBQDKkujSJY8FhgpKqcqhen40ul9FfSP1PHRjTOWpU8Zneep8DYceDG1OSx
- 98jOeBPOL9OgAKDdAh7tdgt+Es/DkG+kDfFZSJlGpcA9mDQcLmVA5IU7FZybtPtWDVUc
- m0C5hjooYkUlmnXXxKFBN97NKwa3jBH1h8UMP8iOzAoIPHovfrTRoQGkF9N/mU/EI46Z
- hFng==
-X-Gm-Message-State: AOJu0YxE+CeoZKAdGuFmkdlVLAVItGcLS1zLEf8fXmVJgwpHNknNKyUy
- rrVSMOo4RUjp7a2cMaVfydbDArZHXtxkxWrf+b5a6iSCKOlL+yOlVBOkKXnA0ZIpywDYUKs+JK0
- z0/WU9QhhVA3R6ba6am3GQZFU+K8OUQrNyIGvqXIprbmn0arDSy/T0dtdVlOkDVxN1wXTX3Uff1
- Sn+rRWSjSPXzA71ogCym1Y4F3phxw=
-X-Received: by 2002:adf:a196:0:b0:355:21f:be29 with SMTP id
- ffacd0b85a97d-35e0f258a4bmr1049570f8f.9.1717153845351; 
- Fri, 31 May 2024 04:10:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGx/etlVUJlB9WKitCYPHHqZ6AY725KQtDuX2iOQ9gGvuUQYbjyjYV6+5KlxopoiK8PzYToffzVKP0Nb3mspTY=
-X-Received: by 2002:adf:a196:0:b0:355:21f:be29 with SMTP id
- ffacd0b85a97d-35e0f258a4bmr1049539f8f.9.1717153844842; Fri, 31 May 2024
- 04:10:44 -0700 (PDT)
+ bh=sJ8KNJuQJ+2POJtaJdqo9IYMUJVBojTDcmu1dLhG5/g=;
+ b=VCTIO+cnl1GaN2Wn2i78fGfiLq7k5NnubAGr7NREofGVcz0QonN2xVmFx5DgiMAgu6
+ +nRJnbLsDfvtQf7g3y8zylWRZNWvxVsZhBc5+t8eUmB85QKFcCZ8mnTkEkT5HvDfjb52
+ 6zGoRBnQprlIMjRTa081ab7/GGbXBPPW0dV73l5fGJvP6ylYk8uSg5Yvo9uqgDsJC+ve
+ LCSEYgNDeqpiAEu2jev9sIU5yu23No+YBApbQcYy4YBOtoIAH+/hAWpC1tmbp3M38CN7
+ nesb0XzxaCFZZp6w5oy27FwQD8RJfOEsDbbw+n9DkZmvi9bUkoCN4avlNRZDZMdqP3mX
+ uyPg==
+X-Gm-Message-State: AOJu0YwHWUtZl29sXNi/G/erf/LJfEl+sUftqwwgYYNpI71nylyR9eAS
+ BNxC5ozqvDl228d57wOOTfN08rwu8NWi7ZolfUI4oxXWrbyXb+RYB475ZzZnM30jNZecNheSfli
+ wEzkrg5O5Ow5NdKD/X6f0yuKfAtPiN5sTN9ZZZNJ48480HhixgL6uO4gCdIvqPOyBsk/hxO6w2k
+ hY7c/fg1eEy7WgsKczMvIOZuwoVvs=
+X-Received: by 2002:a5d:564d:0:b0:35d:bf85:6c22 with SMTP id
+ ffacd0b85a97d-35e0f2a9c7emr1149866f8f.40.1717153970755; 
+ Fri, 31 May 2024 04:12:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGog+TbeCSMiKXPakxXxwYkTPqV+yPkF9xg8OZpS7HS1g3M3JCYHKIlLUmBtphO07AyegEKBb54FKFWn7U9Kmo=
+X-Received: by 2002:a5d:564d:0:b0:35d:bf85:6c22 with SMTP id
+ ffacd0b85a97d-35e0f2a9c7emr1149841f8f.40.1717153970338; Fri, 31 May 2024
+ 04:12:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-26-pankaj.gupta@amd.com>
-In-Reply-To: <20240530111643.1091816-26-pankaj.gupta@amd.com>
+ <20240530111643.1091816-23-pankaj.gupta@amd.com>
+In-Reply-To: <20240530111643.1091816-23-pankaj.gupta@amd.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 31 May 2024 13:10:33 +0200
-Message-ID: <CABgObfYrg4pJMo9RgY-V5iizviLqWFohPqUUU3wtK5cVHdsS=g@mail.gmail.com>
-Subject: Re: [PATCH v4 25/31] i386/sev: Invoke launch_updata_data() for SEV
- class
+Date: Fri, 31 May 2024 13:12:39 +0200
+Message-ID: <CABgObfbBGmZR98zDiXDDpw_K=k=4EoFhBtYT03ghDiv+HR_dwg@mail.gmail.com>
+Subject: Re: [PATCH v4 22/31] i386/sev: Reorder struct declarations
 To: Pankaj Gupta <pankaj.gupta@amd.com>
 Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com, 
  armbru@redhat.com, michael.roth@amd.com, xiaoyao.li@intel.com, 
@@ -105,55 +104,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
  wrote:
 >
-> Add launch_update_data() in SevCommonStateClass and
-> invoke as sev_launch_update_data() for SEV object.
+> From: Dov Murik <dovmurik@linux.ibm.com>
 >
+> Move the declaration of PaddedSevHashTable before SevSnpGuest so
+> we can add a new such field to the latter.
+
+> No functional change intended.
+>
+> Signed-off-by: Dov Murik <dovmurik@linux.ibm.com>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
 > Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
 > ---
->  target/i386/sev.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
+>  target/i386/sev.c | 56 +++++++++++++++++++++++------------------------
+>  1 file changed, 28 insertions(+), 28 deletions(-)
 >
 > diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index c5c703bc8d..7a0c2ee10f 100644
+> index 831745c02a..1b29fdbc9a 100644
 > --- a/target/i386/sev.c
 > +++ b/target/i386/sev.c
-> @@ -102,6 +102,7 @@ struct SevCommonStateClass {
->      /* public */
->      int (*launch_start)(SevCommonState *sev_common);
->      void (*launch_finish)(SevCommonState *sev_common);
-> +    int (*launch_update_data)(hwaddr gpa, uint8_t *ptr, uint64_t len);
+> @@ -45,6 +45,34 @@ OBJECT_DECLARE_TYPE(SevCommonState, SevCommonStateClas=
+s, SEV_COMMON)
+>  OBJECT_DECLARE_TYPE(SevGuestState, SevGuestStateClass, SEV_GUEST)
+>  OBJECT_DECLARE_TYPE(SevSnpGuestState, SevSnpGuestStateClass, SEV_SNP_GUE=
+ST)
+>
+> +/* hard code sha256 digest size */
+> +#define HASH_SIZE 32
+> +
+> +typedef struct QEMU_PACKED SevHashTableEntry {
+> +    QemuUUID guid;
+> +    uint16_t len;
+> +    uint8_t hash[HASH_SIZE];
+> +} SevHashTableEntry;
+> +
+> +typedef struct QEMU_PACKED SevHashTable {
+> +    QemuUUID guid;
+> +    uint16_t len;
+> +    SevHashTableEntry cmdline;
+> +    SevHashTableEntry initrd;
+> +    SevHashTableEntry kernel;
+> +} SevHashTable;
+> +
+> +/*
+> + * Data encrypted by sev_encrypt_flash() must be padded to a multiple of
+> + * 16 bytes.
+> + */
+> +typedef struct QEMU_PACKED PaddedSevHashTable {
+> +    SevHashTable ht;
+> +    uint8_t padding[ROUND_UP(sizeof(SevHashTable), 16) - sizeof(SevHashT=
+able)];
+> +} PaddedSevHashTable;
+> +
+> +QEMU_BUILD_BUG_ON(sizeof(PaddedSevHashTable) % 16 !=3D 0);
 
-This should receive the SevCommonState, so that
-sev_launch_update_data() does not have to grab it from the
-MachineState.
-
-Also,
-
-> -        if (sev_snp_enabled()) {
-> -            ret =3D snp_launch_update_data(gpa, ptr, len,
-> -                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
-> -        } else {
-> -            ret =3D sev_launch_update_data(SEV_GUEST(sev_common), ptr, l=
-en);
-> -        }
-> +        ret =3D klass->launch_update_data(gpa, ptr, len);
-
-this patch should be placed earlier in the series, so that this change
-is done before snp_launch_data() is introduced..
-
-That is, the hunk should be just:
-
-     /* if SEV is in update state then encrypt the data else do nothing */
-     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
--        int ret =3D sev_launch_update_data(SEV_GUEST(sev_common), ptr, len=
-);
-+        int ret;
-+
-+        ret =3D klass->launch_update_data(SEV_GUEST(sev_common), gpa, ptr,=
- len);
-         if (ret < 0) {
-             error_setg(errp, "SEV: Failed to encrypt pflash rom");
-             return ret;
+Please move also the following lines (SevInfoBlock,
+SevHashTableDescriptor and the GUIDs) as they are related.
 
 Paolo
 
