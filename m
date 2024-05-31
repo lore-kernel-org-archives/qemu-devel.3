@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A56C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948B7C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 07:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sCwfK-0002Iz-4c; Fri, 31 May 2024 03:27:06 -0400
+	id 1sCwgk-0003fy-G2; Fri, 31 May 2024 03:28:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCwfI-0002Ic-1b
- for qemu-devel@nongnu.org; Fri, 31 May 2024 03:27:04 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sCwfF-0003KW-GL
- for qemu-devel@nongnu.org; Fri, 31 May 2024 03:27:03 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42108739ed8so22715405e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 00:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717140419; x=1717745219; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ant7jxHVRejyAoPAAXug0LhwHkLSC8vuMIfNaUfNm3s=;
- b=LpqeHYMaIkzP+6jL3gyUn9BHhlClLlUVh4zNV9XVlFaOIE+yum4IjGU7K/B0Th/6wx
- k/9FaIE8ml/QqLkn0cI/DNADujJ/DS1U22C+Snwf1T5P4dPWm1ePr2tXXnOs0RgvhZe7
- ABJVrf/xOLKAXSNQam03sMv3WGnt1eGkjmmeypI1hnSNSdmn1c/Oql1niJGSkhe1lyAI
- GKI/P9gOXSg1wFabfki3o4YxWvPWrzAhXldtrHQYygqSemnxe1toY/h6jLzrKIv+D0a8
- 4F0HhGmLk4YlWB3LozPtZv+/v08F82H0PjwWoTDNq0Q60tSAx8aGnJuDyNQkXfMhRrKw
- ldwQ==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sCwgi-0003fH-0P
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 03:28:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sCwgg-0003V2-Ak
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 03:28:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717140508;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LBlmB0K9IxKq/mtRnKYW7CPmiy+20mlJSKQscMkGD0Y=;
+ b=OfNdlVQPGkQr9Opyo7FOG+kQoaa/L5aJ39/RD9Gphjr8IY1L1bsHszaLLpVbKacsF1k7/B
+ jzYKNm74s6zJrqkVWUQs+FfHqRMwPksbqpVjlXdwr6XSITvvhI2u2u6j+nfPS5vEFKT5zQ
+ qRBszo/mdUWnVoQxvimopCT1+kaOSJ4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-369-H4BM6TYMMrGcJy6dxUvSmw-1; Fri, 31 May 2024 03:28:26 -0400
+X-MC-Unique: H4BM6TYMMrGcJy6dxUvSmw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4212e3418b1so2599485e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 00:28:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717140419; x=1717745219;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ant7jxHVRejyAoPAAXug0LhwHkLSC8vuMIfNaUfNm3s=;
- b=NXuTPDhXE9cBh+f1/7HAnnPTSGqjgrWTD3hoKRFG7iT/ISsCEbdtKU2rrCPTHEuFAd
- jjP9ZfmPYiqwsr56+bMsB6A6X4Y+lnI5qxH8gj56TZxaDTY7NN6LrRZYGwhmjOBozRCR
- y6EoWHHCdRmRKuYmV22kv5GYidWuy1cNxSj12BFKyr08U5LFRaBzfnpg8XOrsiWwewlB
- csfajWyq7lkuqaftH69BJe3QmqOrhMdiNxAc6u0HGZRXb3SCkXzWk0QlYkRk86GKu/yj
- nbPErIvfaURhFHRqDVmFri05e4GJdwTcFe7pdWIT+BGFVuVadrg82IYWdmLRjDg/2q7u
- 9+SQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7ZLh47gqecfzHmX8djeOD5UEJNPRG2dzAl2qSMZwwV0uKm3GDfgUe9kmjjbEhcnrz607sDYdAw2fBzCatLzvbpJwsZ8U=
-X-Gm-Message-State: AOJu0YzCOy4dhnqrMhdSpHwLwZRKm3TKoBtUaArwkaSIK38BfqKztx/h
- 9TWIBtNW+QG0hw7Mfp+QMQ8v6dt9mhNFUqIN4DIhXPpclbA5AYjcmy27KjdhGov5314lx6XdO0j
- P
-X-Google-Smtp-Source: AGHT+IEm8tqDLqUjwwHRGtH66f8shMdjDJ8znW1PQcz/gPTM/wAUU0kQZP29ZFwTN/rBEBGKXt44jw==
-X-Received: by 2002:a05:600c:198b:b0:420:71f7:9752 with SMTP id
- 5b1f17b1804b1-4212e075534mr11152275e9.18.1717140419395; 
- Fri, 31 May 2024 00:26:59 -0700 (PDT)
-Received: from [192.168.69.100] (sml13-h01-176-184-15-35.dsl.sta.abo.bbox.fr.
- [176.184.15.35]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42127056366sm46039335e9.3.2024.05.31.00.26.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 00:26:58 -0700 (PDT)
-Message-ID: <1c950cd6-9ee0-4b40-b9d6-3cc422046d65@linaro.org>
-Date: Fri, 31 May 2024 09:26:55 +0200
+ d=1e100.net; s=20230601; t=1717140505; x=1717745305;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LBlmB0K9IxKq/mtRnKYW7CPmiy+20mlJSKQscMkGD0Y=;
+ b=ABvpBa6B4bqREIL/b8a2PYBrHv/8aqKah07ipfjsn6LhjhYfKomzxtbw2aiQb3d5/E
+ IzoosLgi3vh6kgd6f9YMvUcyXgL28jm0UL7b8UjH1xOwrgB8GGJfdT9bv2RdnXvjDjCT
+ aEXDTrRardDmclEJNxn1QAzMa85tAjGILTNikVCIR7XhZGvlXXPXFIXcvUPDRFm/MPDO
+ Tba2I34syhhv9gGIsj8qDQNXTFEC43QLdSkkUahNXTguyjQZN+YZEg0norrZGVc3uQL+
+ tLLHTfskW6MN9y1gEAl4EchaCsgMh+bPHRiPxWn/oM8H9amu+Nubv/fBfPohh5k6W/x/
+ VCQQ==
+X-Gm-Message-State: AOJu0YyK9N50k2toP5Z9y4Om3W0n+IzEGXpnOH5Sed7nPHPqB+HagdEh
+ yBLxNEC6hQD11hv9mh9M7NpxMKQD19jUADVUH/qS6j1vAFMO5UXmxQfM0KQLhgldyIWQrtJsPiP
+ gwngkPHOxFm2mmho4tdmzDc+JYbjca6qgHJQwsVnmGHoO9XqUOYLgy+KPloVHuumpkUMQUqF75V
+ o5M2Ao+vZqpyfbV+IlIcGfudomzLo=
+X-Received: by 2002:a5d:55cf:0:b0:354:f753:e0e3 with SMTP id
+ ffacd0b85a97d-35e0f273fb2mr645923f8f.19.1717140505533; 
+ Fri, 31 May 2024 00:28:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHy2LgIw79+zT6WFMRcXNIpft+q/ODj5utj8Ym444sVFKhm0FymqnQsoScWPFtpkhK+fUtMeUp/yK3CWXNIpTE=
+X-Received: by 2002:a5d:55cf:0:b0:354:f753:e0e3 with SMTP id
+ ffacd0b85a97d-35e0f273fb2mr645907f8f.19.1717140505156; Fri, 31 May 2024
+ 00:28:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] core/cpu-common: initialise plugin state before
- thread creation
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Reinoud Zandijk
- <reinoud@netbsd.org>, kvm@vger.kernel.org,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20240530194250.1801701-1-alex.bennee@linaro.org>
- <20240530194250.1801701-6-alex.bennee@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240530194250.1801701-6-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240530074453.21780-1-npiggin@gmail.com>
+ <20240530074453.21780-4-npiggin@gmail.com>
+In-Reply-To: <20240530074453.21780-4-npiggin@gmail.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 31 May 2024 12:58:08 +0530
+Message-ID: <CAE8KmOwS-hWtq31Qs7Kac2wYvveLNQgHKkKvP_2O_W1x_7JT7A@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] tests/qtest/migration-test: Enable on ppc64 TCG
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,68 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/5/24 21:42, Alex Bennée wrote:
-> Originally I tried to move where vCPU thread initialisation to later
-> in realize. However pulling that thread (sic) got gnarly really
-> quickly. It turns out some steps of CPU realization need values that
-> can only be determined from the running vCPU thread.
-
-FYI: 
-https://lore.kernel.org/qemu-devel/20240528145953.65398-6-philmd@linaro.org/
-
-> However having moved enough out of the thread creation we can now
-> queue work before the thread starts (at least for TCG guests) and
-> avoid the race between vcpu_init and other vcpu states a plugin might
-> subscribe to.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   hw/core/cpu-common.c | 20 ++++++++++++--------
->   1 file changed, 12 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index 6cfc01593a..bf1a7b8892 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -222,14 +222,6 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
->           cpu_resume(cpu);
->       }
->   
-> -    /* Plugin initialization must wait until the cpu start executing code */
-> -#ifdef CONFIG_PLUGIN
-> -    if (tcg_enabled()) {
-> -        cpu->plugin_state = qemu_plugin_create_vcpu_state();
-> -        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
+On Thu, 30 May 2024 at 13:17, Nicholas Piggin <npiggin@gmail.com> wrote:
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+>      /*
+> -     * On ppc64, the test only works with kvm-hv, but not with kvm-pr and TCG
+> -     * is touchy due to race conditions on dirty bits (especially on PPC for
+> -     * some reason)
+> -     */
+> -    if (g_str_equal(arch, "ppc64") &&
+> -        (!has_kvm || access("/sys/module/kvm_hv", F_OK))) {
+> -        g_test_message("Skipping tests: kvm_hv not available");
+> -        goto test_add_done;
 > -    }
-> -#endif
 > -
->       /* NOTE: latest generic point where the cpu is fully realized */
->   }
->   
-> @@ -273,6 +265,18 @@ static void cpu_common_initfn(Object *obj)
->       QTAILQ_INIT(&cpu->watchpoints);
->   
->       cpu_exec_initfn(cpu);
-> +
-> +    /*
-> +     * Plugin initialization must wait until the cpu start executing
-> +     * code, but we must queue this work before the threads are
-> +     * created to ensure we don't race.
-> +     */
-> +#ifdef CONFIG_PLUGIN
-> +    if (tcg_enabled()) {
-> +        cpu->plugin_state = qemu_plugin_create_vcpu_state();
+> -    /*
+> -     * Similar to ppc64, s390x seems to be touchy with TCG, so disable it
+> -     * there until the problems are resolved
+> +     * On s390x with TCG, migration is observed to hang due to the 'pending'
+> +     * state of the flic interrupt controller not being migrated or
+> +     * reconstructed post-migration. Disable it until the problem is resolved.
+>       */
+>      if (g_str_equal(arch, "s390x") && !has_kvm) {
+>          g_test_message("Skipping tests: s390x host with KVM is required");
+> --
+> 2.43.0
 
-Per https://etherpad.opendev.org/p/QEMU_vCPU_life, plugin_state could
-be initialized in AccelCPUClass::cpu_instance_init (although this
-callback is called at CPUClass::instance_post_init which I haven't
-yet figured why).
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 
-> +        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
-> +    }
-> +#endif
->   }
->   
->   static void cpu_common_finalize(Object *obj)
+Thank you.
+---
+  - Prasad
 
 
