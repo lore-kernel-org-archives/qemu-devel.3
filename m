@@ -4,117 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B3CC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 16:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD2FC25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 16:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD4hg-0003D2-6W; Fri, 31 May 2024 12:02:04 -0400
+	id 1sD4ob-0004yw-7T; Fri, 31 May 2024 12:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD4he-00035B-7Q
- for qemu-devel@nongnu.org; Fri, 31 May 2024 12:02:02 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1sD4oY-0004ye-OB
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 12:09:10 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sD4hc-0005ym-8K
- for qemu-devel@nongnu.org; Fri, 31 May 2024 12:02:01 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 4F3CE1FB90;
- Fri, 31 May 2024 16:01:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717171317; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=elTQQg7XPbYyIy4NxWuRUa1F2PrGaSDRmOHftEEBU3k=;
- b=i7jStklFzK+2Dva+MTwA0Qa3p8PL4IL/XaSXSB39FCsRldX30repnA2Vw1TF/SJiEzgVSQ
- lrarBnJbPdtF8FyZPEa8HN+IlLcl5a/OIeY9X/Wv6JqYeMu2rGwXC+fWrSzNrcZONlbpHd
- f8IkphiJACeDPnNm3/dirQyl4tJyhYA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717171317;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=elTQQg7XPbYyIy4NxWuRUa1F2PrGaSDRmOHftEEBU3k=;
- b=EkrtRbIHmamgU3rL0DGwupwihWjHXM9yBDjuRyI3lyefPgYKk8Q5WNYJYXbnewKFYZ2NFL
- Bg+okpi/eA6frGBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=i7jStklF;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=EkrtRbIH
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717171317; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=elTQQg7XPbYyIy4NxWuRUa1F2PrGaSDRmOHftEEBU3k=;
- b=i7jStklFzK+2Dva+MTwA0Qa3p8PL4IL/XaSXSB39FCsRldX30repnA2Vw1TF/SJiEzgVSQ
- lrarBnJbPdtF8FyZPEa8HN+IlLcl5a/OIeY9X/Wv6JqYeMu2rGwXC+fWrSzNrcZONlbpHd
- f8IkphiJACeDPnNm3/dirQyl4tJyhYA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717171317;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=elTQQg7XPbYyIy4NxWuRUa1F2PrGaSDRmOHftEEBU3k=;
- b=EkrtRbIHmamgU3rL0DGwupwihWjHXM9yBDjuRyI3lyefPgYKk8Q5WNYJYXbnewKFYZ2NFL
- Bg+okpi/eA6frGBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CCEFC132C2;
- Fri, 31 May 2024 16:01:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id FzGlJHT0WWY4FQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 31 May 2024 16:01:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 4/4] tests/qtest/migration-test: Add a postcopy
- memfile test
-In-Reply-To: <ZlnRy0PS17qa2aqb@x1n>
-References: <20240530095408.31608-1-npiggin@gmail.com>
- <20240530095408.31608-5-npiggin@gmail.com> <ZlnRy0PS17qa2aqb@x1n>
-Date: Fri, 31 May 2024 13:01:54 -0300
-Message-ID: <87bk4mkm19.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1sD4oX-0007Dg-2u
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 12:09:10 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-421338c4c3bso2970025e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 09:09:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717171747; x=1717776547; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ZJociJhkICwIha+lzG1XPDXZhY/g4ozjgsEbhq1UJcU=;
+ b=LFCafKyWTDuHuyupzk+dHVepyscENh1RXbSwsse460zck8oSjZs88ObGOzUQbOXpg8
+ tznke7ibj5J8DOsYeQ+fy326PAYDwgU+RcAMhQ3oaJU1t7EztzFkCIgPFFud7CPcrIE+
+ WDmCjYvSJYmxjJwktKLGn7fc2CNOCARETg0E2Fs3u2Pi4i1B6rfArPtBi9LebXrybJ8Z
+ jcyUhkXMUsETljhK5PrcU8uSlJ4aK0QHiJxUARYjy/oH12+pb1SKMMAa04pIfiisK4t8
+ ajNH2w0U6YObUPOORXEoKMSQhr0tmXE7A5gThYYFcai1IGaDLL8YD4HmU6owUAoqzMH0
+ s1MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717171747; x=1717776547;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZJociJhkICwIha+lzG1XPDXZhY/g4ozjgsEbhq1UJcU=;
+ b=IX5DV4UmFnHFd24fTxDQGG8+Rr7w1+MqIS3X3b1KZ+bQ5eaVisOZtUqGhDPfZN1xV4
+ 6tv9SDY2rBZo1ES1IA7YAzghnCQv6go8iw4pUp8fKQNvILC0HC3W+soZd+Ka+hGWGyyy
+ r1nS5N9ZI2RdjV990JFOwBzDtjfwgNyLELMW8Uq06acKg3YaRadEqHt6ds3NKI/zLTC3
+ TWeOnWoARgp8J5x1s3VSxU9vfSAnEekoDJew1PHkqQg8Q8vdlBCfR2oqKKKVJ/SqtWEZ
+ ZvO5Yq3Dq+Sk0N1O+484llZLYecdPhvdMMiR5AJDzz8rNHRWwqkIac0vyVCd0peObm0/
+ n0GA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV40+bE7yIF9RZE/0GRbj1Ei0CE3glFnRrzzVRCPCwvAUTSLOSZOQkp9veKatEruG3PoZUbw7TyTwzJ4EIhXL7TdAgF6jA=
+X-Gm-Message-State: AOJu0Yz9a0ekPKLMep+Du72TDKRIhrZUUYdrZmvQczjCyndPzU3XSOXZ
+ cXdlKFlfGlr72P/lHQxlr/NPx3uVIaGQRaKGwnHBnGVWq5F8e/AfXpgtOjNAuCM=
+X-Google-Smtp-Source: AGHT+IGIjSVNvQ7U4tD8Stg1MRdEH+C/Tfk87QRPbl1AOyZ0Rl0tnADnZPAMdL3NiOHGI/fyV2s/OA==
+X-Received: by 2002:a05:600c:444e:b0:420:f8a2:f2eb with SMTP id
+ 5b1f17b1804b1-4212e061c6bmr20956285e9.19.1717171747216; 
+ Fri, 31 May 2024 09:09:07 -0700 (PDT)
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4212b858424sm29918925e9.21.2024.05.31.09.09.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 May 2024 09:09:06 -0700 (PDT)
+Date: Fri, 31 May 2024 17:09:21 +0100
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: Unexpected error in rme_configure_one() at
+ ../target/arm/kvm-rme.c:159
+Message-ID: <20240531160921.GA217456@myrica>
+References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
+ <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
+ <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
+ <CAFEAcA-gye9B1yJNKyT0fcZzR7TukNvaQyc7QkKQ_1FUGfAaYw@mail.gmail.com>
+ <20240531102135.GA40178@myrica>
+ <E5197AF2-EEB3-4568-9F25-78622AD41AE4@linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_TO(0.00)[redhat.com,gmail.com]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 4F3CE1FB90
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <E5197AF2-EEB3-4568-9F25-78622AD41AE4@linux.dev>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,99 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, May 31, 2024 at 11:16:30PM +0900, Itaru Kitayama wrote:
+> Thanks! I wasn’t aware of it The good news is that after whole day of try and error attempts I was able to
+> bring up a Realm VM on FVP. Here’s my version of overlay yaml, cca-v2.yaml:
 
-> On Thu, May 30, 2024 at 07:54:07PM +1000, Nicholas Piggin wrote:
->> Postcopy requires userfaultfd support, which requires tmpfs if a memory
->> file is used.
->> 
->> This adds back support for /dev/shm memory files, but adds preallocation
->> to skip environments where that mount is limited in size.
->> 
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->
-> Thanks for doing this regardless.
->
->> ---
->>  tests/qtest/migration-test.c | 77 ++++++++++++++++++++++++++++++++----
->>  1 file changed, 69 insertions(+), 8 deletions(-)
->> 
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index 86eace354e..5078033ded 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
->> @@ -11,6 +11,7 @@
->>   */
->>  
->>  #include "qemu/osdep.h"
->> +#include "qemu/cutils.h"
->>  
->>  #include "libqtest.h"
->>  #include "qapi/qmp/qdict.h"
->> @@ -553,6 +554,7 @@ typedef struct {
->>       */
->>      bool hide_stderr;
->>      bool use_memfile;
->> +    bool use_shm_memfile;
->
-> Nitpick: when having both, it's slightly confusing on the name, e.g. not
-> clear whether use_memfile needs to be set to true too if use_shm_memfile=true.
->
-> Maybe "use_tmpfs_memfile" and "use_shm_memfile"?
->
->>      /* only launch the target process */
->>      bool only_target;
->>      /* Use dirty ring if true; dirty logging otherwise */
->> @@ -739,7 +741,62 @@ static int test_migrate_start(QTestState **from, QTestState **to,
->>          ignore_stderr = "";
->>      }
->>  
->> -    if (args->use_memfile) {
->> +    if (!qtest_has_machine(machine_alias)) {
->> +        g_autofree char *msg = g_strdup_printf("machine %s not supported",
->> +                                               machine_alias);
->> +        g_test_skip(msg);
->> +        return -1;
->> +    }
->> +
->> +    if (args->use_shm_memfile) {
->> +#if defined(__NR_userfaultfd) && defined(__linux__)
->
-> IIUC we only need defined(__linux__) as there's nothing to do with uffd yet?
->
->> +        int fd;
->> +        uint64_t size;
->> +
->> +        if (getenv("GITLAB_CI")) {
->> +            /*
->> +             * Gitlab runners are limited to 64MB shm size and despite
->> +             * pre-allocation there is concern that concurrent tests
->> +             * could result in nondeterministic failures. Until all shm
->> +             * usage in all CI tests is found to fail gracefully on
->> +             * ENOSPC, it is safer to avoid large allocations for now.
->> +             *
->> +             * https://lore.kernel.org/qemu-devel/875xuwg4mx.fsf@suse.de/
->> +             */
->> +            g_test_skip("shm tests are not supported in Gitlab CI environment");
->> +            return -1;
->> +        }
->
-> I'm not sure whether this is Fabiano's intention.  I'm wondering whether we
-> can drop this and just let it still run there.
->
+That is good news, thanks for the update
 
-It was my intention. But I overlooked the fact that the current shm
-cannot even run one migration test already.
+> build:
+>   linux:
+>     repo:
+>       revision: cca-full/v2
+> 
+> #  kvmtool:
+> #    repo:
+> #      revision: cca/v2
+> 
+>   rmm:
+>     repo:
+>       revision: main
+> 
+> 
+> 
+>   tfa:
+>     repo:
+>       revision: master
+> 
+>   kvm-unit-tests:
+>     repo:
+>       revision: cca/v2
+> 
+> … and the QEMU options are below:
+> 
+> qemu-system-aarch64 -M 'virt,acpi=off,gic-version=3' \
+> -cpu host -enable-kvm -smp 2 -m 512M -overcommit 'mem-lock=on' \
+> -M 'confidential-guest-support=rme0' \
+> -object 'rme-guest,id=rme0,measurement-algo=sha512,num-pmu-counters=6,sve-vector-length=256' \
+> -kernel Image -initrd rootfs.cpio \
+> -append 'earycon console=ttyAMA0 rdinit=/sbin/init' -nographic -net none
 
-> Other tests not detecting avaiablility of shmem looks like a separate issue
-> to be fixed to me, regardless of this.
->
-> My wild guess is since we're doing memory_size+64K below then if test won't
-> fail others won't either, as normally the shmem quota should normally be
-> power of 2 anyway.. then it should always fit another few MBs if this one.
-> While this test is ready to fail gracefully now.
->
+Note that the cca/v2 branch of QEMU would reject 'num-pmu-counters' and
+'sve-vector-length' arguments, so if this works it means an older version
+of the QEMU patches is being used (which also means an older Linux branch
+is being used). It's possible that shrinkwrap is caching all the build
+files, so I'd remove the ~/.shrinkwrap/ files to start fresh
 
-I agree. Let's drop this part then.
+Thanks,
+Jean
 
 
