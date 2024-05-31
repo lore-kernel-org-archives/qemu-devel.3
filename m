@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C58C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F7EC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 17:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD5pS-0000Oy-7W; Fri, 31 May 2024 13:14:10 -0400
+	id 1sD5xx-0003H1-Jf; Fri, 31 May 2024 13:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1sD5pQ-0000Ng-IN; Fri, 31 May 2024 13:14:08 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sD5xw-0003Gg-8W
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 13:22:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1sD5pN-0002Lm-QZ; Fri, 31 May 2024 13:14:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717175646; x=1748711646;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=fU0HQKU2onaxKI9dL6R8XzwuVZDu00A+kcrXJCOW8os=;
- b=CfCiuDjQPPTlx8LFwLJnF7sWaPn6CzGIBKKyHq93zQoVUkvyUsnjRkJE
- 2WisrPkcaZkRlIGSBj5EV55v2Qj7I8m+y5WPYcT0qnY3PYe3If3eon9PX
- Xf2kSgbEDTPIKIEcMqhNtoHlHLMcNGNuY5GbOlHzM82gSjE3JFL4HQo/D
- vib+8PNScEeJkEZaNag+PjnWMHB6BWrh66KZc5KgROyn26b8Q/TANKsB6
- 82M+BWq4TVkHBJaezDGOGs8GKR3ar74ijA3nmh2i8Bmp3JneTLYCgYZHQ
- R/TLPVh1ebJ+IXDBXKx72MTcjtNs/vNlt0QwQ+bQJ4Sd77n2RolFoiqrB g==;
-X-CSE-ConnectionGUID: XM4HAScgQfKzKfEn3ncMhg==
-X-CSE-MsgGUID: LtSxy4BdR/eCujcyYtETZQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11089"; a="13897088"
-X-IronPort-AV: E=Sophos;i="6.08,205,1712646000"; d="scan'208";a="13897088"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 May 2024 10:13:49 -0700
-X-CSE-ConnectionGUID: O5R0LggnScSwBhe+afEhKA==
-X-CSE-MsgGUID: X/do9CGBTkOtxJXWQgvJLw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,204,1712646000"; d="scan'208";a="36215595"
-Received: from soc-cp83kr3.jf.intel.com (HELO [10.24.10.49]) ([10.24.10.49])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 May 2024 10:13:48 -0700
-Message-ID: <04d3dfd8-93d2-493d-82d1-8fbcad6ecd22@intel.com>
-Date: Fri, 31 May 2024 10:13:47 -0700
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sD5xu-0003dc-JX
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 13:22:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717176173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eCrnAAxp60ov9N6znR2TztXPmdcE5hnEG5uvLbPn59E=;
+ b=cPkiCQRBlDwlwuwQXd0uApsPikRFkipDiJ+drNgj0NTm8+U/EkxQ6Kd9xmaCbN/wnXF8UC
+ i81G2Qf2Jzg5CIZ35eIawYVjR8h5VjbaJ64aSCJqhti/TPaX3Xi8H3/dsXADjOsChgFJ0J
+ LzwDBb9AFxYX0MgdDMf1UcmMLkyMEVo=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-hEbNdPJsPUiJYq_TbU9PPw-1; Fri, 31 May 2024 13:22:51 -0400
+X-MC-Unique: hEbNdPJsPUiJYq_TbU9PPw-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B7BE185A780;
+ Fri, 31 May 2024 17:22:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.235])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 63E1E2026D68;
+ Fri, 31 May 2024 17:22:50 +0000 (UTC)
+Date: Fri, 31 May 2024 19:22:49 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ "open list:vvfat" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v3 0/6] vvfat: Fix write bugs for large files and add
+ iotests
+Message-ID: <ZloHabJMkRY-paOL@redhat.com>
+References: <cover.1716717181.git.amjadsharafi10@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/3] target/i386: call cpu_exec_realizefn before
- x86_cpu_filter_features
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
- thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
- qemu-trivial@nongnu.org
-References: <20240524200017.150339-1-zide.chen@intel.com>
- <20240524200017.150339-3-zide.chen@intel.com> <ZlluoKXUF6ctecVt@intel.com>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <ZlluoKXUF6ctecVt@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zide.chen@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1716717181.git.amjadsharafi10@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.085,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,94 +81,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/30/2024 11:30 PM, Zhao Liu wrote:
-> Hi Zide,
+Am 26.05.2024 um 11:56 hat Amjad Alsharafi geschrieben:
+> These patches fix some bugs found when modifying files in vvfat.
+> First, there was a bug when writing to the cluster 2 or above of a file, it
+> will copy the cluster before it instead, so, when writing to cluster=2, the
+> content of cluster=1 will be copied into disk instead in its place.
 > 
-> On Fri, May 24, 2024 at 01:00:16PM -0700, Zide Chen wrote:
->> Date: Fri, 24 May 2024 13:00:16 -0700
->> From: Zide Chen <zide.chen@intel.com>
->> Subject: [PATCH V2 2/3] target/i386: call cpu_exec_realizefn before
->>  x86_cpu_filter_features
->> X-Mailer: git-send-email 2.34.1
->>
->> cpu_exec_realizefn which calls the accel-specific realizefn may expand
->> features.  e.g., some accel-specific options may require extra features
->> to be enabled, and it's appropriate to expand these features in accel-
->> specific realizefn.
->>
->> One such example is the cpu-pm option, which may add CPUID_EXT_MONITOR.
->>
->> Thus, call cpu_exec_realizefn before x86_cpu_filter_features to ensure
->> that it won't expose features not supported by the host.
->>
->> Fixes: 662175b91ff2 ("i386: reorder call to cpu_exec_realizefn")
->> Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> Signed-off-by: Zide Chen <zide.chen@intel.com>
->> ---
->>  target/i386/cpu.c         | 24 ++++++++++++------------
->>  target/i386/kvm/kvm-cpu.c |  1 -
->>  2 files changed, 12 insertions(+), 13 deletions(-)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index bc2dceb647fa..a1c1c785bd2f 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -7604,6 +7604,18 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
->>          }
->>      }
->>  
->> +    /*
->> +     * note: the call to the framework needs to happen after feature expansion,
->> +     * but before the checks/modifications to ucode_rev, mwait, phys_bits.
->> +     * These may be set by the accel-specific code,
->> +     * and the results are subsequently checked / assumed in this function.
->> +     */
->> +    cpu_exec_realizefn(cs, &local_err);
->> +    if (local_err != NULL) {
->> +        error_propagate(errp, local_err);
->> +        return;
->> +    }
->> +
->>      x86_cpu_filter_features(cpu, cpu->check_cpuid || cpu->enforce_cpuid);
+> Another issue was modifying the clusters of a file and adding new
+> clusters, this showed 2 issues:
+> - If the new cluster is not immediately after the last cluster, it will
+> cause issues when reading from this file in the future.
+> - Generally, the usage of info.file.offset was incorrect, and the
+> system would crash on abort() when the file is modified and a new
+> cluster was added.
 > 
-> For your case, which sets cpu-pm=on via overcommit, then
-> x86_cpu_filter_features() will complain that mwait is not supported.
-> 
-> Such warning is not necessary, because the purpose of overcommit (from
-> code) is only to support mwait when possible, not to commit to support
-> mwait in Guest.
-> 
-> Additionally, I understand x86_cpu_filter_features() is primarily
-> intended to filter features configured by the user, 
+> Also, added some iotests for vvfat, covering the this fix and also
+> general behavior such as reading, writing, and creating files on the filesystem.
+> Including tests for reading/writing the first cluster which
+> would pass even before this patch.
 
-Yes, that's why this patches intends to let x86_cpu_filter_features()
-filter out the MWAIT bit which is set from the overcommit option.
+I was wondering how to reproduce the bugs that patches 2 and 3 fix. So I
+tried to run your iotests case, and while it does catch the bug that
+patch 1 fixes, it passes even without the other two fixes.
 
-> and the changes of
-> CPUID after x86_cpu_filter_features() should by default be regarded like
-> "QEMU knows what it is doing".
+Is this expected? If so, can we add more tests that trigger the problems
+the other two patches address?
 
-Sure, we can add feature bits after x86_cpu_filter_features(), but I
-think moving cpu_exec_realizefn() before x86_cpu_filter_features() is
-more generic, and actually this is what QEMU did before commit 662175b91ff2.
+Kevin
 
-- Less redundant code. Specifically, no need to call
-x86_cpu_get_supported_feature_word() again.
-- Potentially there could be other features could be added from the
-accel-specific realizefn, kvm_cpu_realizefn() for example.  And these
-features need to be checked against the host availability.
-
-> 
-> I feel adding a check for the CPUID mwait bit in host_cpu_realizefn()
-> is enough, after all, this bit should be present if host supports mwait
-> and enable_cpu_pm (in kvm_arch_get_supported_cpuid()).
-
-Besides the above reasons, it seems to me expanding env->features in
-host-cpu.c is confusing.
-
-> Thanks,
-> Zhao
-> 
 
