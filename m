@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BB8C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFA8C25B7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 11:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD09b-00066J-4q; Fri, 31 May 2024 07:10:35 -0400
+	id 1sD09t-0006Br-1H; Fri, 31 May 2024 07:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sD09Y-000666-Qb
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:10:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sD09r-0006BL-DR
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:10:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sD09W-0001Fm-Nv
- for qemu-devel@nongnu.org; Fri, 31 May 2024 07:10:32 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sD09p-0001GZ-QD
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 07:10:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717153829;
+ s=mimecast20190719; t=1717153848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J/wsyIIZriaAgEzvJXEY0sMNiXVYt+4pstU5P3M9gOU=;
- b=T7vkvy7331L+GcFqW5kZ78Adn7Bl/PnRgnCFNbainctbpXpoNNwAv8neCa058e1EJ8cSEe
- uu4rUG1+6pXL+l1SIlBgsBVLwscF7zPipqahbrc8wRhxpmpK4zo5Rr3pApKkFX0uKtm4L0
- y9jxwNbZsYyZMtDga0PvD+obhgwalvU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M+s1PzK2/wvRT6JuH6Q8j0YjcXC2Cl53mqKVRaXl/lI=;
+ b=A0gjG79nUe9sgBxH14BV3cYWHV7Dk+gh0M6v01T8K95PhnrY6QUbWYlmU02oKYinbEYY0G
+ oRtSqMMPnqIo65gwNDjAtgGAWpL61jGoCONjC3FD/stYge4AgebpRkf8gHq6p5lTKwtsEs
+ D/cc0s4CD1Ewz0pD8vERuBprpYFQNj0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-zR99--2XNQ6VLkyC9iRJJw-1; Fri, 31 May 2024 07:10:27 -0400
-X-MC-Unique: zR99--2XNQ6VLkyC9iRJJw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-420eed123a2so13844065e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:10:27 -0700 (PDT)
+ us-mta-616-VHyBcsajPmGozCGMK9Rd4A-1; Fri, 31 May 2024 07:10:46 -0400
+X-MC-Unique: VHyBcsajPmGozCGMK9Rd4A-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35e0e59dcf7so368464f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 04:10:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717153827; x=1717758627;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J/wsyIIZriaAgEzvJXEY0sMNiXVYt+4pstU5P3M9gOU=;
- b=XMqDPzJle/xk6fnwIxRq3LlE7bLtVMlsaOhA409XdPrjMC5Bhc0y2Q62lgxM7WnlUR
- HyuNIG8wKR/vdpdGSTPqrKIQs5WzGRI83LWLgmeH2D4A5OnPb9/aSpMNx8uQl1f460RP
- l+B7qLC7JSCqrXoINa/5bn6P153oA4fHZM/BUhKTEQImRHAx7l6wd21a3mZWEHnu97tE
- ML7L2ckqAdIfeYnduSl7ezgErBAQ732cZDEPhySjHoD0fHjch//wY95n3JpM0ecQ3aH7
- HbJWC2KvyX3bHm9Uups8iAGFsOxrRY/bM5r3zAmeS3kqqy1/xkTDUh57MOkRS3d/iB8I
- 984Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqmj7TKnVfr4B/qXI306d8HVsYJAie+Fy3pUgBVYuYBQupKy0cpX+WvIMwpk5TGuoZtn7kCd35aNTPvOXNnXN4E2UCQxQ=
-X-Gm-Message-State: AOJu0Yzu+zAWF1LFmQUESuucrGNE2f0s7ODcuJqLaQXN88cBIk0ASrtF
- u3S8HZJFNrWgcXYs1ruSO0yZi/cqtxLJ/amSeIH+HFfWhvd/QloczhxiAe1e5NXrrm2BblAPnlX
- iz0gKGYsJ6Abf038gnKdjyePhzoa79ZXPvdhb58VWkee4nm23djSn
-X-Received: by 2002:a05:600c:34d2:b0:420:177f:c2a6 with SMTP id
- 5b1f17b1804b1-4212e049938mr14780485e9.10.1717153826824; 
- Fri, 31 May 2024 04:10:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7f3IGPVUpz4rz/LXWyF4rbuPxD4RnyS6qhUHf/WjBTRnfew2HgTcb913jI0dpW1rvtO5/gw==
-X-Received: by 2002:a05:600c:34d2:b0:420:177f:c2a6 with SMTP id
- 5b1f17b1804b1-4212e049938mr14780285e9.10.1717153826380; 
- Fri, 31 May 2024 04:10:26 -0700 (PDT)
-Received: from [10.43.3.102] (nat-pool-brq-t.redhat.com. [213.175.37.10])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212b8b283esm21432675e9.44.2024.05.31.04.10.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 May 2024 04:10:25 -0700 (PDT)
-Message-ID: <103abb49-bcdf-4013-bc9f-df85abe1816b@redhat.com>
-Date: Fri, 31 May 2024 13:10:24 +0200
+ d=1e100.net; s=20230601; t=1717153845; x=1717758645;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M+s1PzK2/wvRT6JuH6Q8j0YjcXC2Cl53mqKVRaXl/lI=;
+ b=VO5iAB9Oq7mc0bg1DlUpYx+WIlr3Oic304zTie0I3yYCNFjeJfzq6iPJfncWlQogMz
+ TiuAqo9RuKE6SBFHjH4IGQoFpJxtjn7ghN0hFusmlNomyhAgobgo8te9yNzxbXFNmQL9
+ U2UFm3TJ4zBQDKkujSJY8FhgpKqcqhen40ul9FfSP1PHRjTOWpU8Zneep8DYceDG1OSx
+ 98jOeBPOL9OgAKDdAh7tdgt+Es/DkG+kDfFZSJlGpcA9mDQcLmVA5IU7FZybtPtWDVUc
+ m0C5hjooYkUlmnXXxKFBN97NKwa3jBH1h8UMP8iOzAoIPHovfrTRoQGkF9N/mU/EI46Z
+ hFng==
+X-Gm-Message-State: AOJu0YxE+CeoZKAdGuFmkdlVLAVItGcLS1zLEf8fXmVJgwpHNknNKyUy
+ rrVSMOo4RUjp7a2cMaVfydbDArZHXtxkxWrf+b5a6iSCKOlL+yOlVBOkKXnA0ZIpywDYUKs+JK0
+ z0/WU9QhhVA3R6ba6am3GQZFU+K8OUQrNyIGvqXIprbmn0arDSy/T0dtdVlOkDVxN1wXTX3Uff1
+ Sn+rRWSjSPXzA71ogCym1Y4F3phxw=
+X-Received: by 2002:adf:a196:0:b0:355:21f:be29 with SMTP id
+ ffacd0b85a97d-35e0f258a4bmr1049570f8f.9.1717153845351; 
+ Fri, 31 May 2024 04:10:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGx/etlVUJlB9WKitCYPHHqZ6AY725KQtDuX2iOQ9gGvuUQYbjyjYV6+5KlxopoiK8PzYToffzVKP0Nb3mspTY=
+X-Received: by 2002:adf:a196:0:b0:355:21f:be29 with SMTP id
+ ffacd0b85a97d-35e0f258a4bmr1049539f8f.9.1717153844842; Fri, 31 May 2024
+ 04:10:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] osdep: Make qemu_madvise() to set errno in all
- cases
-To: David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: imammedo@redhat.com, Cameron Esfahani <dirty@apple.com>,
- Eric Blake <eblake@redhat.com>
-References: <cover.1717140354.git.mprivozn@redhat.com>
- <e2250aa1d69faffcfd12b6d809d98b0c8157ce36.1717140354.git.mprivozn@redhat.com>
- <81f8c7f8-a4a6-4f74-894f-be3ffbf25f9d@linaro.org>
- <12cba30e-4034-4d3b-a0b4-5e25dbc5d094@redhat.com>
- <577f65c3-23d3-44ce-8601-32c067912a8a@linaro.org>
- <370f6594-882d-455e-8b45-5d6cab7fcb85@redhat.com>
-From: =?UTF-8?B?TWljaGFsIFByw612b3puw61r?= <mprivozn@redhat.com>
-Content-Language: en-US
-In-Reply-To: <370f6594-882d-455e-8b45-5d6cab7fcb85@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-26-pankaj.gupta@amd.com>
+In-Reply-To: <20240530111643.1091816-26-pankaj.gupta@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 31 May 2024 13:10:33 +0200
+Message-ID: <CABgObfYrg4pJMo9RgY-V5iizviLqWFohPqUUU3wtK5cVHdsS=g@mail.gmail.com>
+Subject: Re: [PATCH v4 25/31] i386/sev: Invoke launch_updata_data() for SEV
+ class
+To: Pankaj Gupta <pankaj.gupta@amd.com>
+Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com, 
+ armbru@redhat.com, michael.roth@amd.com, xiaoyao.li@intel.com, 
+ thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com, 
+ kvm@vger.kernel.org, anisinha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -114,93 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/31/24 11:08, David Hildenbrand wrote:
-> On 31.05.24 10:12, Philippe Mathieu-Daudé wrote:
->> On 31/5/24 10:01, David Hildenbrand wrote:
->>> On 31.05.24 09:57, Philippe Mathieu-Daudé wrote:
->>>> Hi Michal,
->>>>
->>>> On 31/5/24 09:28, Michal Privoznik wrote:
->>>>> The unspoken premise of qemu_madvise() is that errno is set on
->>>>> error. And it is mostly the case except for posix_madvise() which
->>>>> is documented to return either zero (on success) or a positive
->>>>> error number.
->>>>
->>>> Watch out, Linux:
->>>>
->>>>      RETURN VALUE
->>>>
->>>>         On success, posix_madvise() returns 0.  On failure,
->>>>         it returns a positive error number.
->>>>
->>>> but on Darwin:
->>>>
->>>>      RETURN VALUES
->>>>
->>>>         Upon successful completion, a value of 0 is returned.
->>>>         Otherwise, a value of -1 is returned and errno is set
->>>>         to indicate the error.
->>>>
->>>> (Haven't checked other POSIX OSes).
->>>>
->>>
->>> ... but it's supposed to follow the "posix standard" :D Maybe an issue
->>> in the docs?
->>>
->>> FreeBSD seems to follow the standard: "The posix_madvise() interface is
->>> identical, except it returns an error number on error and does not
->>> modify errno, and is provided for standards conformance."
->>>
->>> Same with OpenBSD: "The posix_madvise() interface has the same effect,
->>> but returns the error value instead of only setting errno."
->>
->> On Darwin, MADVISE(2):
->>
->>      The posix_madvise() behaves same as madvise() except that it uses
->>      values with POSIX_ prefix for the advice system call argument.
->>
->>      The posix_madvise function is part of IEEE 1003.1-2001 and was first
->>      implemented in Mac OS X 10.2.
->>
->> Per IEEE 1003.1-2001
->> (https://pubs.opengroup.org/onlinepubs/009695399/functions/posix_madvise.html):
->>
->>     RETURN VALUE
->>
->>       Upon successful completion, posix_madvise() shall return zero;
->>       otherwise, an error number shall be returned to indicate the error.
->>
->> Note the use of "shall" which is described in RFC2119 as:
->>
->>      This word, or the adjective "RECOMMENDED", mean that there
->>      may exist valid reasons in particular circumstances to ignore a
->>      particular item, but the full implications must be understood and
->>      carefully weighed before choosing a different course.
-> 
-> Agreed, so we have to be careful.
-> 
-> I do wonder if there would be the option for an automatic approach: for
-> example, detect if the errno was/was not changed. Hm.
-> 
+On Thu, May 30, 2024 at 1:17=E2=80=AFPM Pankaj Gupta <pankaj.gupta@amd.com>=
+ wrote:
+>
+> Add launch_update_data() in SevCommonStateClass and
+> invoke as sev_launch_update_data() for SEV object.
+>
+> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> ---
+>  target/i386/sev.c | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
+>
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index c5c703bc8d..7a0c2ee10f 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -102,6 +102,7 @@ struct SevCommonStateClass {
+>      /* public */
+>      int (*launch_start)(SevCommonState *sev_common);
+>      void (*launch_finish)(SevCommonState *sev_common);
+> +    int (*launch_update_data)(hwaddr gpa, uint8_t *ptr, uint64_t len);
 
-Firstly, thanks Philippe for this great catch! I did think that "posix_"
-prefix might mean POSIX is followed. Anyway, looks like the common
-denominator is: on success 0 returned. And then, on Darwin, errno is set
-and -1 is returned. On everything(?) else, a positive value is returned
-and errno is left untouched. So I think we can get away with something
-like the following:
+This should receive the SevCommonState, so that
+sev_launch_update_data() does not have to grab it from the
+MachineState.
 
-int rc = posix_madvise();
-if (rc) {
-  if (rc > 0) {
-    errno = rc;
-  }
-  return -1;
-}
-return 0;
+Also,
 
-Plus a comment explaining the difference on Darwin.
+> -        if (sev_snp_enabled()) {
+> -            ret =3D snp_launch_update_data(gpa, ptr, len,
+> -                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
+> -        } else {
+> -            ret =3D sev_launch_update_data(SEV_GUEST(sev_common), ptr, l=
+en);
+> -        }
+> +        ret =3D klass->launch_update_data(gpa, ptr, len);
 
-Michal
+this patch should be placed earlier in the series, so that this change
+is done before snp_launch_data() is introduced..
+
+That is, the hunk should be just:
+
+     /* if SEV is in update state then encrypt the data else do nothing */
+     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
+-        int ret =3D sev_launch_update_data(SEV_GUEST(sev_common), ptr, len=
+);
++        int ret;
++
++        ret =3D klass->launch_update_data(SEV_GUEST(sev_common), gpa, ptr,=
+ len);
+         if (ret < 0) {
+             error_setg(errp, "SEV: Failed to encrypt pflash rom");
+             return ret;
+
+Paolo
 
 
