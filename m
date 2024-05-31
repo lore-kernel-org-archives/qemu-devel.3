@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C2DC25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47046C25B7E
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD4eP-0000Hm-H7; Fri, 31 May 2024 11:58:41 -0400
+	id 1sD4e8-0000FK-Ih; Fri, 31 May 2024 11:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sD4eN-0000HD-Sb
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:58:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sD4e7-0000Er-6T
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:58:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sD4eM-0004qL-Fz
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:58:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sD4e2-0004nw-Pp
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:58:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717171117;
+ s=mimecast20190719; t=1717171098;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EJI8N7hH9TLGrmQr5Di9miB2eUmHmhjlG+pqpkB+dNI=;
- b=F9qoHDwmI0x1V+aOK0qzDWQIon3ea8AeMLv8jTh/M0ACADo4hkNafI9/ssDnFEErG1HaF8
- 7ykOFqWT2FERQteyDgrHu1I0Sy0tpYcS7q8cRt3dmV0zrQN/9JqxHhOP5Pn1/yZNKGbKZG
- 7nP49tezcFAydP89BgUTmzx9Hh6ahXQ=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cNngYLypgfqgAXiQsm/xIpb6v57X9+xat06nXc2k90M=;
+ b=VCv9KohMgiIe7dp+tVvszsWtykn/pgVOA1oJHdrC8c4RAA5GpryUvWxI/ZPk+ZMaFzxZce
+ ISHNZMAA3/4JSQp/aYIvWjV+TzwAPTLS8hc7rYJowAEfEstCXdHtcdmmRzTSSr7bC0gNLy
+ o89EYXnPXMf6qzI73mDenPhk6K9g8MQ=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-QSRQFPQbMGCstZyqYI3SJQ-1; Fri, 31 May 2024 11:58:35 -0400
-X-MC-Unique: QSRQFPQbMGCstZyqYI3SJQ-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6aed66131f5so2138876d6.2
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 08:58:35 -0700 (PDT)
+ us-mta-630-HXV6GTT0MqOXR_27BXzfxg-1; Fri, 31 May 2024 11:58:16 -0400
+X-MC-Unique: HXV6GTT0MqOXR_27BXzfxg-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6ae0c888b2cso7273626d6.0
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 08:58:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717171114; x=1717775914;
+ d=1e100.net; s=20230601; t=1717171096; x=1717775896;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EJI8N7hH9TLGrmQr5Di9miB2eUmHmhjlG+pqpkB+dNI=;
- b=UVLLUBcm0qqtMx1y76ldkerIRnUy0xZB04MgLkr6JinI0G6HsxpgAqN+G++Qk+oHAy
- ToCjzVTi0O7ZQVT8XP5kAAoIfodfjdAZtOMVI2dnNDiexYUnjdAuNalkbdxcKnHn9MgU
- qpTGUfsczOSow1MMUaaDuayNXY4mgoxO0dCMsBb5rYLH9Vg/c/v7DEtLe20Q/hXRuRfA
- xFmE0v7aNzMl60J349Rkrtc2Y1pfQqa8/Iz1jZcE2kD/u8kJCZ0E2vY7I0v+WdCoRCva
- E+0QrR7QUs+3luJk5GAnbMDtzqD6+UuHDmdGUdiYajVQDw+1Ww/AI7yTM9mL7jXJ69qj
- KNPQ==
-X-Gm-Message-State: AOJu0Yx2+KGOfNE0e/LiSU+Us+LxLnOEEruGm+dEXFmiB4ihKjT6o4Hv
- YHrOEpBaUpoGNs10xgQL8+oVS0qMe/nk4u9FF+CY5tZ01blbE1HdeUTps2D0yO59FI3/2ztZwWa
- nMtru1Nj8Hrxo50hDVZWiUO+Y+r0h6wBdBv0FmoGruWVLQoyUgAW5
-X-Received: by 2002:a05:6214:4114:b0:6ab:8427:6afe with SMTP id
- 6a1803df08f44-6aecd6a0434mr24656036d6.2.1717171114161; 
- Fri, 31 May 2024 08:58:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IES5JZ64WS94RaI4tXiedTFonfj4JB0ODlasGBGkYxdaFHmSZ5xije7rauzSo4vmrKhBwo0cA==
-X-Received: by 2002:a05:6214:4114:b0:6ab:8427:6afe with SMTP id
- 6a1803df08f44-6aecd6a0434mr24655666d6.2.1717171113382; 
- Fri, 31 May 2024 08:58:33 -0700 (PDT)
+ bh=cNngYLypgfqgAXiQsm/xIpb6v57X9+xat06nXc2k90M=;
+ b=DBCELxMR5v4nIqkTzGC/rqPDs8N56qS/VMlHvJ+we/QyKzClGuwS1UWEXRoOtBfaKN
+ gjDDZCXRZifYWxHc2ow3P45xEpglbanGlrhrnSTMrauyhV0RKb3IEpRprqMGUQ95lahl
+ dd130vrtdKBbYlPyQWamrEOMBy7JBVf4C7MW+6Xwq5gBE7pVfzGXh3/PWvZKrTVNs0Th
+ mBdx8I+6day9j+sm6tdKkAG2GIl2RF/kJ79GW2dayevBylhJkGoVZ+sCU1Q5Fp0ly5Sb
+ lqtxE4DHq9zLw3rXAHBhPAiieGH+VN63VgWiguVoZ45E2yahxGH0VU2LpBKYuGl4vrV9
+ xGgA==
+X-Gm-Message-State: AOJu0YzNYOGuDtdGK+WWDz73T+TvENONFhqpTuq95sODFU5pyKsIdgab
+ USq1/qgphhd0FX8v5kLdXAMSvNwAHR2jzSn+fvomViWY6GGAssjsSxb9sMB057DZXEPXpcxPX+s
+ ZicF/86kIlhKeLlH+u2QdtmZK+EBwgXY4fgK3dsNHaHAP1AdzwrOF
+X-Received: by 2002:a05:622a:1aa3:b0:43a:5595:7410 with SMTP id
+ d75a77b69052e-43ff528871bmr23713681cf.2.1717171095710; 
+ Fri, 31 May 2024 08:58:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYF+pUhl1uhlZMpculSHaILoLFVJFigv09BQYmX8IOgmEmvFhc6/6mepFrp6XFYIfOqPfzDw==
+X-Received: by 2002:a05:622a:1aa3:b0:43a:5595:7410 with SMTP id
+ d75a77b69052e-43ff528871bmr23713331cf.2.1717171095033; 
+ Fri, 31 May 2024 08:58:15 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ae4b4070d1sm7274686d6.82.2024.05.31.08.58.32
+ d75a77b69052e-43ff23e774fsm9244681cf.49.2024.05.31.08.58.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 May 2024 08:58:32 -0700 (PDT)
-Date: Fri, 31 May 2024 11:58:31 -0400
+ Fri, 31 May 2024 08:58:14 -0700 (PDT)
+Date: Fri, 31 May 2024 11:58:12 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v2 07/18] monitor: Simplify fdset and fd removal
-Message-ID: <Zlnzp7ggXE5DRWmL@x1n>
+Subject: Re: [PATCH v2 13/18] monitor: fdset: Match against O_DIRECT
+Message-ID: <ZlnzlFH2k6qp31oT@x1n>
 References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-8-farosas@suse.de>
+ <20240523190548.23977-14-farosas@suse.de> <Zljyf28LG1YCw9Al@x1n>
+ <87ikyukmya.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240523190548.23977-8-farosas@suse.de>
+In-Reply-To: <87ikyukmya.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -100,14 +101,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 23, 2024 at 04:05:37PM -0300, Fabiano Rosas wrote:
-> Remove fds right away instead of setting the ->removed flag. We don't
-> need the extra complexity of having a cleanup function reap the
-> removed entries at a later time.
+On Fri, May 31, 2024 at 12:42:05PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > On Thu, May 23, 2024 at 04:05:43PM -0300, Fabiano Rosas wrote:
+> >> We're about to enable the use of O_DIRECT in the migration code and
+> >> due to the alignment restrictions imposed by filesystems we need to
+> >> make sure the flag is only used when doing aligned IO.
+> >> 
+> >> The migration will do parallel IO to different regions of a file, so
+> >> we need to use more than one file descriptor. Those cannot be obtained
+> >> by duplicating (dup()) since duplicated file descriptors share the
+> >> file status flags, including O_DIRECT. If one migration channel does
+> >> unaligned IO while another sets O_DIRECT to do aligned IO, the
+> >> filesystem would fail the unaligned operation.
+> >> 
+> >> The add-fd QMP command along with the fdset code are specifically
+> >> designed to allow the user to pass a set of file descriptors with
+> >> different access flags into QEMU to be later fetched by code that
+> >> needs to alternate between those flags when doing IO.
+> >> 
+> >> Extend the fdset matching to behave the same with the O_DIRECT flag.
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> >
+> > One thing I am confused but totally irrelevant to this specific change.
+> >
+> > I wonder why do we need dupfds at all, and why client needs to remove-fd at
+> > all.
+> 
+> This answer was lost to time.
+> 
+> >
+> > It's about what would go wrong if qmp client only add-fd, then if it's
+> > consumed by anything, it gets moved from "fds" list to "dupfds" list.  The
+> > thing is I don't expect the client should pass over any fd that will not be
+> > consumed.  Then if it's always consumed, why bother dup() at all, and why
+> > bother an explicit remove-fd.
+> 
+> With the lack of documentation, I can only imagine the code was
+> initially written to be more flexible, but we ended up never needing the
+> extra flexibility. Maybe we could change that transparently in the
+> future and deprecate qmp_remove_fd(). I'm thinking, even for the
+> mapped-ram work, we might not need libvirt to call that function ever.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Good to know I'm not the only one thinking that.
+
+It's okay - after your cleanup it's much better at least to me.  The only
+thing to avoid these, AFAIU, is more careful design level reviews in the
+future, and more documents state the facts and keep in history (and
+obviously why remove-fd was needed was not documented).  Now we carry them.
 
 -- 
 Peter Xu
