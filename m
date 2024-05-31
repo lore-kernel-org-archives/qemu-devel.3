@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B078C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9F3C25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 15:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD3uS-00008U-0z; Fri, 31 May 2024 11:11:12 -0400
+	id 1sD3uP-00007g-Uj; Fri, 31 May 2024 11:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sD3uI-00005R-UR
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:11:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sD3uJ-00005T-7S
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:11:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sD3uE-0005WZ-2n
- for qemu-devel@nongnu.org; Fri, 31 May 2024 11:11:00 -0400
+ id 1sD3uE-0005Ws-VU
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 11:11:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717168252;
+ s=mimecast20190719; t=1717168254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/OVgxykSPTZ7KjJ2nv9zefemkRQks8uLwLwTeb9bnis=;
- b=a9tj3eeeYc9QlB1l61vGHOqZC1AEehbHsNm12sPK1ny8K0BpM5gwD8dl56lOV7QG78Ic94
- VJoNZ9NoKVTEVJQMn540ih8r21uvz8bm60J8CBkTOHm4o64I84k/oLwFHpqf3TT30H2uNZ
- 8EAxuaWHeCCXeNRapzHe/242rQDaiSQ=
+ bh=eWFEZPJLxFkfdJj/hxUHX1WoKkd0uHs84B70Eu9I1Mg=;
+ b=VuXUUxV4JW90Bg7uByrp5hL93UN89xtwsNjrVfbtFHp819ghlvFkz0qczU2qZy0nQua/14
+ jPUpYQ5WqBVo/jdBB+5aMgSuqjkW6/sxrDWHzmg7uivp3GVW2R+CHPiokZhQe5y2r5LBMY
+ wxsu8HoK58Lt3Htf25FLRq+9xJgeAlw=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-qnisU6TWOdaHHD_yWuSHqw-1; Fri, 31 May 2024 11:10:50 -0400
-X-MC-Unique: qnisU6TWOdaHHD_yWuSHqw-1
+ us-mta-563-oND1riytOx634X8Dy4lUMw-1; Fri, 31 May 2024 11:10:51 -0400
+X-MC-Unique: oND1riytOx634X8Dy4lUMw-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
  [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1ED6D101A525
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A43EB101A52C
  for <qemu-devel@nongnu.org>; Fri, 31 May 2024 15:10:50 +0000 (UTC)
 Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
- by smtp.corp.redhat.com (Postfix) with ESMTP id BD7033C27
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 15:10:49 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 500503C27
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 15:10:50 +0000 (UTC)
 From: Michal Privoznik <mprivozn@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 1/4] osdep: Make qemu_madvise() to set errno in all cases
-Date: Fri, 31 May 2024 17:10:44 +0200
-Message-ID: <393c7b26302cb445f1a086a2c80b1d718c31a071.1717168113.git.mprivozn@redhat.com>
+Subject: [PATCH v3 2/4] osdep: Make qemu_madvise() return ENOSYS on
+ unsupported OSes
+Date: Fri, 31 May 2024 17:10:45 +0200
+Message-ID: <6d59250d75cf5c6411c50075102a750104d5de91.1717168113.git.mprivozn@redhat.com>
 In-Reply-To: <cover.1717168113.git.mprivozn@redhat.com>
 References: <cover.1717168113.git.mprivozn@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mprivozn@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -80,43 +82,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The unspoken premise of qemu_madvise() is that errno is set on
-error. And it is mostly the case except for posix_madvise() which
-is documented to return either zero (on success) or a positive
-error number. This means, we must set errno ourselves. And while
-at it, make the function return a negative value on error, just
-like other error paths do.
+Not every OS is capable of madvise() or posix_madvise() even. In
+that case, errno should be set to ENOSYS as it reflects the cause
+better.
 
 Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 ---
- util/osdep.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ util/osdep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/util/osdep.c b/util/osdep.c
-index e996c4744a..1345238a5c 100644
+index 1345238a5c..4a8920ba93 100644
 --- a/util/osdep.c
 +++ b/util/osdep.c
-@@ -57,7 +57,19 @@ int qemu_madvise(void *addr, size_t len, int advice)
- #if defined(CONFIG_MADVISE)
-     return madvise(addr, len, advice);
- #elif defined(CONFIG_POSIX_MADVISE)
--    return posix_madvise(addr, len, advice);
-+    /*
-+     * On Darwin posix_madvise() has the same return semantics as
-+     * plain madvise, i.e. errno is set and -1 is returned. Otherwise,
-+     * a positive error number is returned.
-+     */
-+    int rc = posix_madvise(addr, len, advice);
-+    if (rc) {
-+        if (rc > 0) {
-+            errno = rc;
-+        }
-+        return -1;
-+    }
-+    return 0;
+@@ -71,7 +71,7 @@ int qemu_madvise(void *addr, size_t len, int advice)
+     }
+     return 0;
  #else
-     errno = EINVAL;
+-    errno = EINVAL;
++    errno = ENOSYS;
      return -1;
+ #endif
+ }
 -- 
 2.44.1
 
