@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D74C25B7E
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 862AFC25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 12:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD1X8-0006Mp-Sv; Fri, 31 May 2024 08:38:58 -0400
+	id 1sD1eV-0008HY-C0; Fri, 31 May 2024 08:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD1X6-0006L7-Vv
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:38:57 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1sD1eT-0008H7-OS
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:46:33 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD1X5-0001Se-3V
- for qemu-devel@nongnu.org; Fri, 31 May 2024 08:38:56 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-572c65cea55so3462915a12.0
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:38:54 -0700 (PDT)
+ id 1sD1eS-0002vQ-3Q
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 08:46:33 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42122ac2f38so11238185e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 May 2024 05:46:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717159132; x=1717763932; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wFesz+GthVT/XVc7GA+a3KCltFqP8x1o0+2zRLsWf64=;
- b=F2HLaq84pdcET4KqwyIQ8K6JxeVKbXeeq/AeWIxNBZbNrta1FYelkQWMzuKCVSNYUV
- q5wsSYsMmAIrF5rKpq2J5gmxdJwaystgwFzjsAXMikkaaWhg1WCD0bn8exAP+g49ESPc
- UMu5n4WrIeGj4ltxCXMK/ChifKkU5VKccAxG6dpUdwUNI3i3Dz/+2fjKBIGLBiUP/LWL
- UHXapf5+fC/AnBYLC2fiMCjJnUY6p8ViYqRW9zlAQhLmdfn7/eNp7vkLM0HGaXhCMCcP
- s8vBdraZJRAGx/kvrX9Yq1pH+XYw+gipPamHbRKW4bYUoS/XV4e6YVi3dmrEMO5XNKJT
- 25Vg==
+ d=linaro.org; s=google; t=1717159590; x=1717764390; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=KNkb3HO1mvzGdO6PMr4OlLUGGePFzcV+YKoXtQ1aEQw=;
+ b=jJ2Dxt+elG1xV10f1wiisVgRyrKsAh2rMAhHlxr6AbD8HnHoKDexktJmrIlFXf/qs6
+ 9q1pGZXCd3P5oJ0npy1eBvlHiIUQcmYnx+MWI0o/q1vtcXaAWXj4zd57rnzD5ddWHJyp
+ CT68oRyYZg4zLSyoQ8fwaWtrqONEoD8BbWU0fjmjLgKiZoq4zruvftlC6ds6gnVVK5pQ
+ Bpza0G4j8OD4RYrgbqKtaSov4M4GIaUPcCIN42fPj7b+IOGV3av9sAXsflws9UnEcDWh
+ tfiZbXCP+po7U1qccRDXb7N44DBNHqndRR99BBkJ6s97JKAvNaaadoeMiWhizqrJzymm
+ vjsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717159132; x=1717763932;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1717159590; x=1717764390;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wFesz+GthVT/XVc7GA+a3KCltFqP8x1o0+2zRLsWf64=;
- b=dZWxCRpEYiXRJ9Fc9is5FKGm/paJy1L9H5csK3Ok4WuouvMT8iLHT+5tV5W1/jQ4iF
- jCwP2Q1FIZXnlVq0Fb3nsB79VsRUIIV5ELIcdPIoUl/Hrif/Eb1skuwOPDHHGydZIiQD
- CEOGStEcitdte9sUuGsoKJJv2bMZuZMNyDwTaHDaa+vgNdq2SxXZjH8fspFcruD6bDz+
- NN4nRxh0a7ewCa59uyaLq0btqT8DBKm8CnY+FMCvKFCdreWusVVBALb/h6EGB26KmcPk
- KgrpjTXTxoFZzNmsabCWbeKyOoWd8kkmv2rqhsXiFfOXmLwRvMdKYI3NKODzu/QtZ19T
- 0FZw==
-X-Gm-Message-State: AOJu0Yzk5zrN71RLSzsT97GHqRHxKa2pDOGn2dmh8KNeVH3nfbr3podG
- ieXdu01L3dJivKFWRNN9g8W8IMCCdMf3niw3gKiltmddz0xNvOEezCo26FF2C/SXvWn4HFDmDI5
- bluQs/cDofA11Qlxgy369NOAkwTYqKW0v7S9Nvg==
-X-Google-Smtp-Source: AGHT+IEGMwU+mlzGAN0W8/ApdPXEe1o1wtBJ4s8GKLbjMsZsongaHeZdCd9JsEDacO+9BCY0qMWtlOGIh+2pwxlVULs=
-X-Received: by 2002:a50:cd9a:0:b0:578:5c1e:45e5 with SMTP id
- 4fb4d7f45d1cf-57a363b66eemr1880426a12.9.1717159131790; Fri, 31 May 2024
- 05:38:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1687782442.git.mst@redhat.com>
- <6bda41a69bdcee8ff7dcf75df2f9647ce55908ab.1687782442.git.mst@redhat.com>
- <CAFEAcA-EbD2GLMuS-t_qeDFYM5z3NT-_zCKRNZ8TqjWRiRD+Ww@mail.gmail.com>
-In-Reply-To: <CAFEAcA-EbD2GLMuS-t_qeDFYM5z3NT-_zCKRNZ8TqjWRiRD+Ww@mail.gmail.com>
+ bh=KNkb3HO1mvzGdO6PMr4OlLUGGePFzcV+YKoXtQ1aEQw=;
+ b=pzq3+MwVpq9uKbOtvtM5sPYePbetmqCG2sQZhJxLlBZsc+1hzNoJwaNh/UKw4PkXYh
+ m63HwEs73XVL/kigtiMP/h14oP+owHOOMp3WO7bCUIp06jL7HultUzjzi+smwVB7Sqw2
+ eM66AucphZaJHB9PwnxP7OGltg5YOudHhrQf2aET7P1R9v5Sx2R6ZvJb2ZKQbYFvnbEj
+ cI53XauXMvjS/l6bZrGNryTMAjrXVmFRtsxKBU0XLpN4z8Yh2nrU/HK/pMCkaYF9KLsk
+ 4FjgXc1zOqRwwaoyoORV3eDtsvs/pVT5hnZ+poKJzc4+bweZfMZa4YVY+JrySRE1CgN7
+ k3Ew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVaD8pOcFh/CAYsOqcCf/rkhjZDrRIm8QTkK7qPzuIrkytp1HYw9TcFPEGG1HIQB9Jdp5H+lUymu3IwS3po1HocMdNhZVQ=
+X-Gm-Message-State: AOJu0YzC7DpgLYwGCEPjkyJu7W7j4fsbz4e6O5Js+G/jk1GWT7qmg60D
+ CqGuQdPMNGnrjg2OVdsn7uVhdj//FqOB7tFBYausYpMkc9XVJrtTz6b98F1BWArO252oF4zLOXY
+ A
+X-Google-Smtp-Source: AGHT+IGhvARVHHgsJ6IATKqYgfllm9tvrphAqMPba4EUZNRz1rcDx452tfSQxn7UiMC2XeU5IhFxEA==
+X-Received: by 2002:a05:600c:444e:b0:421:29c0:b6c9 with SMTP id
+ 5b1f17b1804b1-42129c0b9bbmr35328005e9.12.1717159590354; 
+ Fri, 31 May 2024 05:46:30 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42132471e01sm10905625e9.13.2024.05.31.05.46.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 May 2024 05:46:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 May 2024 13:38:39 +0100
-Message-ID: <CAFEAcA-u4sytGwTKsb__Y+_+0O2-WwARntm3x8WNhvL1WfHOBg@mail.gmail.com>
-Subject: Re: [PULL 04/53] hw/cxl: Add clear poison mailbox command support.
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
- Fan Ni <fan.ni@samsung.com>, Ira Weiny <ira.weiny@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alexandra Diupina <adiupina@astralinux.ru>
+Subject: [PATCH] hw/dma/xlnx_dpdma: Read descriptor into buffer,
+ not into pointer-to-buffer
+Date: Fri, 31 May 2024 13:46:28 +0100
+Message-Id: <20240531124628.476938-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,78 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping! This looks like it should be an easy one-liner fix
-for a Coverity-detected read-from-bogus-memory bug --
-could one of the CXL folks have a look at it and send
-a patch, please ?
+In fdf029762f501 we factored out the handling of reading and writing
+DMA descriptors from guest memory.  Unfortunately we accidentally
+made the descriptor-read read the descriptor into the address of the
+buffer rather than into the buffer, because we didn't notice we
+needed to update the arguments to the dma_memory_read() call. Before
+the refactoring, "&desc" is the address of a local struct DPDMADescriptor
+variable in xlnx_dpdma_start_operation(), which is the correct target
+for the guest-memory-read. But after the refactoring 'desc' is the
+"DPDMADescriptor *desc" argument to the new function, and so it is
+already an address.
 
-thanks
--- PMM
+This bug is an overrun of a stack variable, since a pointer is at
+most 8 bytes long and we try to read 64 bytes, as well as being
+incorrect behaviour.
 
-On Fri, 3 May 2024 at 13:45, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Mon, 26 Jun 2023 at 13:28, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >
-> > Current implementation is very simple so many of the corner
-> > cases do not exist (e.g. fragmenting larger poison list entries)
->
-> Hi; Coverity has just spotted what looks like a bug in this
-> function (CID 1544772) where we write bogus data from the host
-> stack into guest memory):
->
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index ab600735eb..d751803188 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> > @@ -947,6 +947,42 @@ static void set_lsa(CXLType3Dev *ct3d, const void *buf, uint64_t size,
-> >       */
-> >  }
-> >
-> > +static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
-> > +{
-> > +    MemoryRegion *vmr = NULL, *pmr = NULL;
-> > +    AddressSpace *as;
-> > +
-> > +    if (ct3d->hostvmem) {
-> > +        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-> > +    }
-> > +    if (ct3d->hostpmem) {
-> > +        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-> > +    }
-> > +
-> > +    if (!vmr && !pmr) {
-> > +        return false;
-> > +    }
-> > +
-> > +    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
-> > +        return false;
-> > +    }
-> > +
-> > +    if (vmr) {
-> > +        if (dpa_offset < memory_region_size(vmr)) {
-> > +            as = &ct3d->hostvmem_as;
-> > +        } else {
-> > +            as = &ct3d->hostpmem_as;
-> > +            dpa_offset -= memory_region_size(vmr);
-> > +        }
-> > +    } else {
-> > +        as = &ct3d->hostpmem_as;
-> > +    }
-> > +
-> > +    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
-> > +                        CXL_CACHE_LINE_SIZE);
->
-> We've passed '&data' to address_space_write(), which means
-> "read from the address on the stack where the function
-> argument 'data' lives", so instead of writing 64 bytes of
-> data to the guest , we'll write 64 bytes which start with
-> a host pointer value and then continue with whatever happens
-> to be on the host stack after that.
->
-> I assume the intention was "data", not "&data"...
+Pass 'desc' rather than '&desc' as the dma_memory_read() argument
+to fix this.
 
-thanks
--- PMM
+(The same bug is not present in xlnx_dpdma_write_descriptor(),
+because there we are writing the descriptor from a local struct
+variable "DPDMADescriptor tmp_desc" and so passing &tmp_desc to
+dma_memory_write() is correct.)
+
+Spotted by Coverity: CID 1546649
+
+Fixes: fdf029762f50101 ("xlnx_dpdma: fix descriptor endianness bug")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/dma/xlnx_dpdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+index dde4aeca401..a685bd28bb8 100644
+--- a/hw/dma/xlnx_dpdma.c
++++ b/hw/dma/xlnx_dpdma.c
+@@ -619,7 +619,7 @@ static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMAState *s,
+                                               DPDMADescriptor *desc)
+ {
+     MemTxResult res = dma_memory_read(&address_space_memory, desc_addr,
+-                                      &desc, sizeof(DPDMADescriptor),
++                                      desc, sizeof(DPDMADescriptor),
+                                       MEMTXATTRS_UNSPECIFIED);
+     if (res) {
+         return res;
+-- 
+2.34.1
+
 
