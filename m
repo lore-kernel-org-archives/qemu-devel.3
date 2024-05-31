@@ -4,76 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE10DC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 13:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26234C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 13:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD2cL-0002Xl-Nj; Fri, 31 May 2024 09:48:26 -0400
+	id 1sD2jy-0004XG-Gw; Fri, 31 May 2024 09:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD2cC-0002Ws-Pn
- for qemu-devel@nongnu.org; Fri, 31 May 2024 09:48:19 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sD2cB-0007FN-5g
- for qemu-devel@nongnu.org; Fri, 31 May 2024 09:48:16 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5785f861868so2521498a12.2
- for <qemu-devel@nongnu.org>; Fri, 31 May 2024 06:48:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717163293; x=1717768093; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Eb5znBWtf5TgiMbGhrKi22eWTbS8zIZMNCUnaSeE6U8=;
- b=KAVfmf+Oso6xSq28u7yJZL241iQQs/ZICJbunVLQHYILu8ZcoAPSbVtG2SXXZhRQk7
- pubH32/C4mdq5Pljm0sacn3GkDXjAmGaQCZUBqzjzmkexHAhyF8ZLMO5Ydwn1lzxJEeP
- X5Y/tdm2zYPOAQZXsOvFkaCT/km1UZvTltVZpGV4MZHtw2jivRyXXAEGpC0ems61LG8K
- 6nagfc8mPn/AMYa27eYlm/5twj/LeydMK6CQpihOimyhysOzCBneACRrflxMrMF5kjxP
- P8UtDchuaga99h5deU6zQwc/xwCH0dEjJviQsn/WmxtCuFtTLfntBltzXEygapfmkget
- SibQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717163293; x=1717768093;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Eb5znBWtf5TgiMbGhrKi22eWTbS8zIZMNCUnaSeE6U8=;
- b=Jo2QSeFPP1fmtVIVY7hLlxGwrtMAITwEEISiqMiKus6fNa3hj6f+jOValzQMZa0t73
- EwUL7ttGn+otL8ikXQft7z4gODe98nqj/P3RxtknwXNwD4jweLmm39ewIPkXlV7lsMFu
- yHOf0zFigcdoMvjmB/oxC85WF24E1LcShGvJHcwECA1sEMNuEdwEhc1xYzr01v6vyHKd
- COvIDrhHIuQg7qBXczXtG3MwkRzF7ANokKyUT+9edaLt7x1ZGf8Kkbh4DaBIgnSg6kRt
- K9oHgsXLKtkZ6xCQwcdSFlkLnf5CJdm/HL9W3L3e3dIu5DkPKYoBXdKBuVJK2oQGtQtG
- anKQ==
-X-Gm-Message-State: AOJu0YzAQ8NknGnQ7D1FbUFYkuatd4njXssj3vatIqGxvf6qkkUJKr0c
- Op7O5E+Iul7+GaERYUk0On7wvqxW8KuJgQ0Zj+BX6im/QmG2FNbZHFMHhNgwITuEd+x6zZ/aRAo
- aZNsY69+cdDOeK2huGuQDfUjXdVzmZvczbtAhhA==
-X-Google-Smtp-Source: AGHT+IHDia4FHQY9lfe1/K2d3RH/rRmeJFD8Gzbq3BsyZ5S3YDEkTc9EuVbNUlf5xi20sghJCLI9/js+Q2eTXiWZ9es=
-X-Received: by 2002:a50:d4d6:0:b0:57a:2a56:8a37 with SMTP id
- 4fb4d7f45d1cf-57a36372cd3mr1544617a12.13.1717163293086; Fri, 31 May 2024
- 06:48:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <reinoud@gorilla.13thmonkey.org>)
+ id 1sD2jw-0004W5-8y
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 09:56:16 -0400
+Received: from 2a02-a46b-bd8f-1-b9b1-f16b-e3de-c82.fixed6.kpn.net
+ ([2a02:a46b:bd8f:1:b9b1:f16b:e3de:c82] helo=gorilla.13thmonkey.org)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <reinoud@gorilla.13thmonkey.org>) id 1sD2jt-0000BA-1m
+ for qemu-devel@nongnu.org; Fri, 31 May 2024 09:56:15 -0400
+Received: by gorilla.13thmonkey.org (Postfix, from userid 103)
+ id 2903D2FF0981; Fri, 31 May 2024 15:46:00 +0200 (CEST)
+Date: Fri, 31 May 2024 15:46:00 +0200
+From: Reinoud Zandijk <reinoud@gorilla.13thmonkey.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cameron Esfahani <dirty@apple.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>, kvm@vger.kernel.org,
+ Roman Bolshakov <rbolshakov@ddn.com>
+Subject: Re: [PATCH 2/5] cpu: move Qemu[Thread|Cond] setup into common code
+Message-ID: <ZlnUmG41Ahi_dSzX@gorilla.13thmonkey.org>
+References: <20240530194250.1801701-1-alex.bennee@linaro.org>
+ <20240530194250.1801701-3-alex.bennee@linaro.org>
+ <2a20631b-ce2a-4079-87c6-f77c0ba589e3@linaro.org>
 MIME-Version: 1.0
-References: <ZiKkWCjreGOMFX5p@gallifrey>
- <20240524170748.1842030-1-porter@cs.unc.edu>
-In-Reply-To: <20240524170748.1842030-1-porter@cs.unc.edu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 May 2024 14:48:01 +0100
-Message-ID: <CAFEAcA8-wh=0Fr75ZgepGAywvOhH=UfjkwxbD7=SkwR7Qyf0Aw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] Rework x86 page table walks
-To: Don Porter <porter@cs.unc.edu>
-Cc: qemu-devel@nongnu.org, dave@treblig.org, nadav.amit@gmail.com, 
- richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2a20631b-ce2a-4079-87c6-f77c0ba589e3@linaro.org>
+Received-SPF: none client-ip=2a02:a46b:bd8f:1:b9b1:f16b:e3de:c82;
+ envelope-from=reinoud@gorilla.13thmonkey.org; helo=gorilla.13thmonkey.org
+X-Spam_score_int: 17
+X-Spam_score: 1.7
+X-Spam_bar: +
+X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.26,
+ RCVD_IN_PBL=3.335, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,54 +69,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 May 2024 at 18:08, Don Porter <porter@cs.unc.edu> wrote:
->
-> This version of the 'info pg' command adopts Peter Maydell's request
-> to write some guest-agnostic page table iterator and accessor code,
-> along with architecture-specific hooks.  The first patch in this
-> series contributes a generic page table iterator and an x86
-> instantiation.  As a client, we first introduce an 'info pg' monitor
-> command, as well as a compressing callback hook for creating succinct
-> page table representations.
->
-> After this, each successive patch replaces an exisitng x86 page table
-> walker with a use of common iterator code.
->
-> I could use advice on how to ensure this is sufficiently well tested.
-> I used 'make check' and 'make check-avocado', which both pass; what is
-> the typical standard for testing something like a page table related
-> change?
->
-> As far as generality, I have only attempted this on x86, but I expect
-> the design would work for any similar radix-tree style page table.
->
-> I am still new enough to the code base that I wasn't certain about
-> where to put the generic code, as well as naming conventions.
->
-> Per David Gilbert's suggestion, I was careful to ensure that monitor
-> calls do not perturb TLB state (see the read-only flag in some
-> functions).
->
-> I appreciate Nadav's suggestion about other ways to pursue the same
-> goal: I ended up deciding I would like to try my hand at consolidating
-> the x86 page table code.
->
-> Don Porter (6):
->   Add an "info pg" command that prints the current page tables
->   Convert 'info tlb' to use generic iterator
->   Convert 'info mem' to use generic iterator
->   Convert x86_cpu_get_memory_mapping() to use generic iterators
->   Move tcg implementation of x86 get_physical_address into common helper
->     code.
->   Convert x86_mmu_translate() to use common code.
+On Thu, May 30, 2024 at 03:29:41PM -0700, Pierrick Bouvier wrote:
+> On 5/30/24 12:42, Alex Bennée wrote:
+> > Aside from the round robin threads this is all common code. By
+> > moving the halt_cond setup we also no longer need hacks to work around
+> > the race between QOM object creation and thread creation.
+> > 
+> > It is a little ugly to free stuff up for the round robin thread but
+> > better it deal with its own specialises than making the other
+> > accelerators jump through hoops.
+> > 
+> > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+...
+> > diff --git a/target/i386/nvmm/nvmm-accel-ops.c b/target/i386/nvmm/nvmm-accel-ops.c
+> > index 6b2bfd9b9c..0ba31201e2 100644
+> > --- a/target/i386/nvmm/nvmm-accel-ops.c
+> > +++ b/target/i386/nvmm/nvmm-accel-ops.c
+> > @@ -64,9 +64,6 @@ static void nvmm_start_vcpu_thread(CPUState *cpu)
+> >   {
+> >       char thread_name[VCPU_THREAD_NAME_SIZE];
+> > -    cpu->thread = g_new0(QemuThread, 1);
+> > -    cpu->halt_cond = g_new0(QemuCond, 1);
+> > -    qemu_cond_init(cpu->halt_cond);
+> >       snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "CPU %d/NVMM",
+> >                cpu->cpu_index);
+> >       qemu_thread_create(cpu->thread, thread_name, qemu_nvmm_cpu_thread_fn,
 
-Thanks for doing this work -- I like the diffstats for patches 2 and
-3 a lot :-)
+I haven't tested it since I don't have a recent qemu build but I doubt it will
+give issues as its main qemu stuff.
 
-I have been digging out from under a big backlog of unreviewed
-patches, but in an ideal world I might get to this next week.
-Hopefully the x86 maintainers will have a look at it too.
+Reinoud
 
-thanks
--- PMM
 
