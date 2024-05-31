@@ -4,56 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26234C25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 13:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E84DC25B7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 May 2024 14:04:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sD2jy-0004XG-Gw; Fri, 31 May 2024 09:56:18 -0400
+	id 1sD2qi-0006lJ-Up; Fri, 31 May 2024 10:03:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <reinoud@gorilla.13thmonkey.org>)
- id 1sD2jw-0004W5-8y
- for qemu-devel@nongnu.org; Fri, 31 May 2024 09:56:16 -0400
-Received: from 2a02-a46b-bd8f-1-b9b1-f16b-e3de-c82.fixed6.kpn.net
- ([2a02:a46b:bd8f:1:b9b1:f16b:e3de:c82] helo=gorilla.13thmonkey.org)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <reinoud@gorilla.13thmonkey.org>) id 1sD2jt-0000BA-1m
- for qemu-devel@nongnu.org; Fri, 31 May 2024 09:56:15 -0400
-Received: by gorilla.13thmonkey.org (Postfix, from userid 103)
- id 2903D2FF0981; Fri, 31 May 2024 15:46:00 +0200 (CEST)
-Date: Fri, 31 May 2024 15:46:00 +0200
-From: Reinoud Zandijk <reinoud@gorilla.13thmonkey.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sD2qg-0006l1-6X; Fri, 31 May 2024 10:03:14 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sD2qe-0001st-2g; Fri, 31 May 2024 10:03:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=PdMtr1N7TTcm4riWZLzhePUdK72d5QWd6KTPpxhQybs=; b=VCXHwDMVA3tpW+cT
+ mM6QK3qPRGHOxIQAV68lCCNgxlpQFuVJhREQAtWpoW7RN/PuQ7Z+oEZoRFtaDGzI2aQJTC4/DtrBk
+ Uxsvs0ztEggxv5xRWACu1Y5mzUlVnJKHCVJigY0gnSQ76N3jl8VzkG7TVLREtdc7YwxSK9U2A7+Xf
+ aTXMBTDC9sGRFTqccB/mAV+NW+LHuy5CZS0vvVROH2jjK2YZDT3cYy0oEqf3D5BZLpgT19C7asGpo
+ N/GHY+t5jbbK2vEhgLenTonjkh9lKmsWjgIEeMcsb+Qv+gOirBz9z4/unoxjVnmOFMY6SjiAlNXDj
+ AINBRYq+Ic9Y1XQOxw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sD2qQ-003aWI-14;
+ Fri, 31 May 2024 14:02:58 +0000
+Date: Fri, 31 May 2024 14:02:58 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-s390x@nongnu.org, devel@lists.libvirt.org,
+ Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Reinoud Zandijk <reinoud@netbsd.org>, kvm@vger.kernel.org,
- Roman Bolshakov <rbolshakov@ddn.com>
-Subject: Re: [PATCH 2/5] cpu: move Qemu[Thread|Cond] setup into common code
-Message-ID: <ZlnUmG41Ahi_dSzX@gorilla.13thmonkey.org>
-References: <20240530194250.1801701-1-alex.bennee@linaro.org>
- <20240530194250.1801701-3-alex.bennee@linaro.org>
- <2a20631b-ce2a-4079-87c6-f77c0ba589e3@linaro.org>
+ Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
+ deprecate
+Message-ID: <ZlnYkt9sLgDbQqVT@gallifrey>
+References: <20240530074544.25444-1-philmd@linaro.org>
+ <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <2a20631b-ce2a-4079-87c6-f77c0ba589e3@linaro.org>
-Received-SPF: none client-ip=2a02:a46b:bd8f:1:b9b1:f16b:e3de:c82;
- envelope-from=reinoud@gorilla.13thmonkey.org; helo=gorilla.13thmonkey.org
-X-Spam_score_int: 17
-X-Spam_score: 1.7
-X-Spam_bar: +
-X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.26,
- RCVD_IN_PBL=3.335, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+In-Reply-To: <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 13:59:17 up 23 days, 1:13, 1 user, load average: 0.26, 0.13, 0.03
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,35 +82,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 03:29:41PM -0700, Pierrick Bouvier wrote:
-> On 5/30/24 12:42, Alex Bennée wrote:
-> > Aside from the round robin threads this is all common code. By
-> > moving the halt_cond setup we also no longer need hacks to work around
-> > the race between QOM object creation and thread creation.
+* Thomas Huth (thuth@redhat.com) wrote:
+> On 30/05/2024 09.45, Philippe Mathieu-Daudé wrote:
+> > We are trying to unify all qemu-system-FOO to a single binary.
+> > In order to do that we need to remove QAPI target specific code.
 > > 
-> > It is a little ugly to free stuff up for the round robin thread but
-> > better it deal with its own specialises than making the other
-> > accelerators jump through hoops.
+> > @dump-skeys is only available on qemu-system-s390x. This series
+> > rename it as @dump-s390-skey, making it available on other
+> > binaries. We take care of backward compatibility via deprecation.
 > > 
-> > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-...
-> > diff --git a/target/i386/nvmm/nvmm-accel-ops.c b/target/i386/nvmm/nvmm-accel-ops.c
-> > index 6b2bfd9b9c..0ba31201e2 100644
-> > --- a/target/i386/nvmm/nvmm-accel-ops.c
-> > +++ b/target/i386/nvmm/nvmm-accel-ops.c
-> > @@ -64,9 +64,6 @@ static void nvmm_start_vcpu_thread(CPUState *cpu)
-> >   {
-> >       char thread_name[VCPU_THREAD_NAME_SIZE];
-> > -    cpu->thread = g_new0(QemuThread, 1);
-> > -    cpu->halt_cond = g_new0(QemuCond, 1);
-> > -    qemu_cond_init(cpu->halt_cond);
-> >       snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "CPU %d/NVMM",
-> >                cpu->cpu_index);
-> >       qemu_thread_create(cpu->thread, thread_name, qemu_nvmm_cpu_thread_fn,
+> > Philippe Mathieu-Daudé (4):
+> >    hw/s390x: Introduce the @dump-s390-skeys QMP command
+> >    hw/s390x: Introduce the 'dump_s390_skeys' HMP command
+> >    hw/s390x: Deprecate the HMP 'dump_skeys' command
+> >    hw/s390x: Deprecate the QMP @dump-skeys command
+> 
+> Why do we have to rename the command? Just for the sake of it? I think
+> renaming HMP commands is maybe ok, but breaking the API in QMP is something
+> you should consider twice.
+> 
+> And even if we decide to rename ... maybe we should discuss whether it makes
+> sense to come up with a generic command instead: As far as I know, ARM also
+> has something similar, called MTE. Maybe we also want to dump MTE keys one
+> day? So the new command should maybe be called "dump-memory-keys" instead?
 
-I haven't tested it since I don't have a recent qemu build but I doubt it will
-give issues as its main qemu stuff.
+I think there are at least two different concepts; but I agree it would be
+nice to keep a single command for matching concepts across different architectures;
+I can't say I know the details of any, but:
 
-Reinoud
+  a) Page table things - I think x86 PKRU/PKEY (???) is a page table thing
+    where pages marked a special way are associated with keys.
+    That sounds similar to what the skeys are???
 
+  b) Upper bit things - where you steal a few bits from the virtual address
+    and then use that to associate some security; I think that's closer
+    to what MTE is isn't it?
+
+I'm not sure the two fit in the same command.
+
+Dave
+
+> Or should it maybe rather be an option to the existing "dump-guest-memory"
+> command instead?
+> 
+>  Thomas
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
