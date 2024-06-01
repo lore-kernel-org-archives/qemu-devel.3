@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC87C25B7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044D2C27C50
 	for <qemu-devel@archiver.kernel.org>; Sat,  1 Jun 2024 16:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDRZr-0007IL-FR; Sat, 01 Jun 2024 12:27:31 -0400
+	id 1sDRZl-0007H1-LE; Sat, 01 Jun 2024 12:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sDRZp-0007Hc-D9
- for qemu-devel@nongnu.org; Sat, 01 Jun 2024 12:27:29 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1sDRZk-0007Gp-6z
+ for qemu-devel@nongnu.org; Sat, 01 Jun 2024 12:27:24 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sDRZn-000881-3H
- for qemu-devel@nongnu.org; Sat, 01 Jun 2024 12:27:29 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-6c4f3e0e3d2so1141174a12.1
- for <qemu-devel@nongnu.org>; Sat, 01 Jun 2024 09:27:26 -0700 (PDT)
+ id 1sDRZh-00087r-Br
+ for qemu-devel@nongnu.org; Sat, 01 Jun 2024 12:27:23 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1f44b42e9a6so24036195ad.0
+ for <qemu-devel@nongnu.org>; Sat, 01 Jun 2024 09:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717259244; x=1717864044; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717259238; x=1717864038; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M03FvfURsmdCtAGINjDGY35+P1GzwVNmZmCY+CQ1+9g=;
- b=WtbU/8Ueme92CFufE6gP7WJ0bUFBDGRKU3hMMiDrd7GrbyqvThUFL8CIfjUZCB8ODR
- B+CAb79UKr4+gjuCFSyF19X9RZ+JypcVfGrhyP2KsKrOYdTWRaKaVyNRREWNEF67xB4E
- 7ZFwfLq0mGP1j8D6/PREcJbnBkwM7Ew15IGnonWBAWZCmYL0XkSgYYk2twSM7yxKuCLW
- M0AlX+AGxCFc62ThPfe4gjOp1Vux83XcQMoefsIuA43r2ETwjLFECz+x77GIjzIlQ9kw
- 5ZQVAx125hpcS+q0+hd4N9Kpzo8BekdvyZlyCdnD5ZWSWAl19RLD1krDaRUt21Kb26k4
- N2FQ==
+ bh=vC7zn+nZqIcqq3SeNDeg1Kc3bjDK2LHdbXUivn3Xwgo=;
+ b=PMyc+X652yzZLBqF99B2cLRy3DWMs6870UpS+yXTzs4kthIRo7gb3HiJhLxXJunJzF
+ xXKKRnzH4g3jHHl2GykOTDGEpmnjt61yB8GemW9sQdzYV+Om89qJwOP1+tuRYkKE2H6R
+ B4yYPNo3+GihTwSO/gRvmtHDdR5CQrJ53zS8lxg7nQBjuaitJD4ibgCgsftsTIJekY+3
+ 6UlKbEjtLVS5eGZG9IrKnI3nuTWBLg4wAjTAFgo+lu+YTG+7fgYtKiu2n07zDBjdwI6o
+ Why/SS9vEeAoLv9+pRBSOCWwOY8NFaFDh8R5JqGKuEk87I6q6RJvq2V4xdwrfxu1ut1M
+ 1AXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717259244; x=1717864044;
+ d=1e100.net; s=20230601; t=1717259238; x=1717864038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M03FvfURsmdCtAGINjDGY35+P1GzwVNmZmCY+CQ1+9g=;
- b=xF+CWQqwvZvOo5BG0FHJS8B/S33eCtHzwxXk+Hjvg9w4dGfQEspUntFGO1j8dRNMhT
- oEGuqxIt+YQMhGcYuIzzz51MRMB+WXZTknYJhQQI/jGw01nRlYRhtHgdKo7Fynqh/8tZ
- M/cWfAb22zi3/iFtI3xGrwMbLtcJBI6zaB4EidaL7Y3Xbc81BXvvi9rBKvYWmVfIRQdY
- 4XwgqjLDsogKglySIqgNQJL8tq0l74lJ45KyDn5Tr0jtAOQ2h5R4fBZg+gQ8nD//owIz
- uaQZvO4rohvvMT+PqQWZBKDbYnVAd7ilGrHeiGYPhSaeK6FnC2d3lU+4FdoC2V4vCqY4
- CQmA==
-X-Gm-Message-State: AOJu0YxUxFhKOsaE5nhNYfoe0lbx2j0gTLR7UYmd6NRxzLDi77wnLgjY
- NK0mPFtMkc3ffJlVSPqY/y1vet5WqNPXhdVKetM/4ZT9hijU4iTsvFKoMyRh
-X-Google-Smtp-Source: AGHT+IFQjmQGUd2xuT0MyMpKBJJ7Yn/hDdc7JiU5IcXRV+eeAGcil+ujepRCM0Lm4+ACN0UuByD+Jg==
-X-Received: by 2002:a17:90a:9f8d:b0:2bf:3859:d5a5 with SMTP id
- 98e67ed59e1d1-2c1dc57016dmr4460323a91.11.1717259244061; 
- Sat, 01 Jun 2024 09:27:24 -0700 (PDT)
+ bh=vC7zn+nZqIcqq3SeNDeg1Kc3bjDK2LHdbXUivn3Xwgo=;
+ b=V2i/Y6uwgaP+sw/KNxtzK0TmtvHPp6+ns/GU16C5b5cwE4FVDd89SaVdTjc0qEAH87
+ YoYnLo9z8olPOogdDTSMVRuwCKF6SX6SK3K0CVxSh5uOZj7XdigLSFOjio6aNAHtr5Zm
+ L6oUkDUpFmM2vUko8GtkyHjvVmp3BS9yqjs/Rk0WvuZxMtUwm7sbUeNvTy79ZXGirIGJ
+ cRdalu0O4rJBmrrovu2mXkWRJ1xVg1cP61v+auRvPvYQZJ7QapeGajVyvcbl+zCerfSX
+ xBlWqVcSSY5Y5GhfHAiUVwltmXGrZYdTEAKO/kuxBrCNReOpdJv13+L8+sowZSufu9Ew
+ IClQ==
+X-Gm-Message-State: AOJu0YzFWSItUDetvXojOvWt8Ugseh3Cj+eIZF7N8ZYAGSM4ymFSScOO
+ XTXf+MqsF4JxZQXr+KWg52pOs6NEzSqXiFPUdfic69ew4iDbyOpmk6rAXs8n
+X-Google-Smtp-Source: AGHT+IFNeKzgXWD4h5Fckwz5Q6NHutLcxDV8BFAqqDk7ZwsHSS+fEdKkNVNb6uEie+YQ1w0/XyGaKw==
+X-Received: by 2002:a17:902:db08:b0:1f3:1200:ceb3 with SMTP id
+ d9443c01a7336-1f6370a0d07mr59208975ad.51.1717259238312; 
+ Sat, 01 Jun 2024 09:27:18 -0700 (PDT)
 Received: from localhost.localdomain ([103.103.35.7])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1c27ad3cesm3285036a91.7.2024.06.01.09.27.18
+ 98e67ed59e1d1-2c1c27ad3cesm3285036a91.7.2024.06.01.09.27.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Jun 2024 09:27:23 -0700 (PDT)
+ Sat, 01 Jun 2024 09:27:17 -0700 (PDT)
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
  slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v2 2/2] machine/nitro-enclave: new machine type for AWS nitro
- enclave
-Date: Sat,  1 Jun 2024 22:26:52 +0600
-Message-Id: <20240601162652.55643-3-dorjoychy111@gmail.com>
+Subject: [PATCH v2 1/2] machine/microvm: support for loading EIF image
+Date: Sat,  1 Jun 2024 22:26:51 +0600
+Message-Id: <20240601162652.55643-2-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240601162652.55643-1-dorjoychy111@gmail.com>
 References: <20240601162652.55643-1-dorjoychy111@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -98,220 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AWS nitro enclaves[1] is an Amazon EC2[2] feature that allows creating
-isolated execution environments, called enclaves, from Amazon EC2
-instances which are used for processing highly sensitive data.
-Enclaves have no persistent storage and no external networking. The
-enclave VMs are based on Firecracker microvm with a vhost-vsock
-device for communication with the parent EC2 instance that spawned
-it and a Nitro Secure Module (NSM) device for cryptographic attestation.
-The parent instance VM always has CID 3 while the enclave VM gets a
-dynamic CID.
+An EIF (Enclave Image Format)[1] image is used to boot an AWS nitro
+enclave[2] virtual machine. The EIF file contains the necessary
+kernel, cmdline, ramdisk(s) sections to boot.
 
-This commit adds support for limited AWS nitro enclave emulation using
-a new machine type option '-M nitro-enclave'. This new machine type is
-based on the 'microvm' machine type (similar to how real nitro enclave
-VMs are based on Firecracker microvm) which requires a mandatory
-'guest-cid' machine type option which becomes the CID of the running
-nitro-enclave VM using a built-in vhost-vsock device.
+This commit adds support for loading EIF image using the microvm
+machine code. For microvm to boot from an EIF file, the kernel and
+ramdisk(s) are extracted into a temporary kernel and a temporary
+initrd file which are then hooked into the regular x86 boot mechanism
+along with the extracted cmdline.
 
-The code for checking and loading EIF in the microvm machine code added
-in the previous commit has been put inside a 'nitro-enclave' machine
-type check so that EIF images can only be loaded using a 'nitro-enclave'
-machine.
+Although not useful for the microvm machine itself, this is needed
+as the following commit adds support for a new machine type
+'nitro-enclave' which uses the microvm machine type as parent. The
+code for checking and loading EIF will be put inside a 'nitro-enclave'
+machine type check in the following commit so that microvm cannot load
+EIF because it shouldn't.
 
-Right now, the emulation support is not complete as nitro-enclave
-cannot be run standalone using QEMU. A separate VM with CID 3 must be
-run with the necessary vsock communication support that the enclave VM
-communicates with. Also the Nitro Secure Module (NSM) device is not
-implemented yet.
-
-[1] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-[2] https://aws.amazon.com/ec2/
+[1] https://github.com/aws/aws-nitro-enclaves-image-format
+[2] https://aws.amazon.com/ec2/nitro/nitro-enclaves/
 
 Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 ---
- MAINTAINERS                              |  10 ++
- configs/devices/i386-softmmu/default.mak |   1 +
- docs/system/i386/nitro-enclave.rst       |  58 ++++++++++
- hw/i386/Kconfig                          |   4 +
- hw/i386/meson.build                      |   1 +
- hw/i386/microvm.c                        |  21 ++--
- hw/i386/nitro_enclave.c                  | 134 +++++++++++++++++++++++
- include/hw/i386/nitro_enclave.h          |  38 +++++++
- 8 files changed, 260 insertions(+), 7 deletions(-)
- create mode 100644 docs/system/i386/nitro-enclave.rst
- create mode 100644 hw/i386/nitro_enclave.c
- create mode 100644 include/hw/i386/nitro_enclave.h
+ hw/core/eif.c       | 486 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/core/eif.h       |  20 ++
+ hw/core/meson.build |   1 +
+ hw/i386/microvm.c   | 134 +++++++++++-
+ 4 files changed, 640 insertions(+), 1 deletion(-)
+ create mode 100644 hw/core/eif.c
+ create mode 100644 hw/core/eif.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 448dc951c5..250ab32743 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1867,6 +1867,16 @@ F: hw/i386/microvm.c
- F: include/hw/i386/microvm.h
- F: pc-bios/bios-microvm.bin
- 
-+nitro-enclave
-+M: Alexander Graf <graf@amazon.com>
-+M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-+S: Maintained
-+F: docs/system/i386/nitro-enclave.rst
-+F: hw/core/eif.c
-+F: hw/core/eif.h
-+F: hw/i386/nitro_enclave.c
-+F: include/hw/i386/nitro_enclave.h
-+
- Machine core
- M: Eduardo Habkost <eduardo@habkost.net>
- M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-index 448e3e3b1b..4faf2f0315 100644
---- a/configs/devices/i386-softmmu/default.mak
-+++ b/configs/devices/i386-softmmu/default.mak
-@@ -29,3 +29,4 @@
- # CONFIG_I440FX=n
- # CONFIG_Q35=n
- # CONFIG_MICROVM=n
-+# CONFIG_NITRO_ENCLAVE=n
-diff --git a/docs/system/i386/nitro-enclave.rst b/docs/system/i386/nitro-enclave.rst
+diff --git a/hw/core/eif.c b/hw/core/eif.c
 new file mode 100644
-index 0000000000..0b86b6ab88
+index 0000000000..281ff43ea5
 --- /dev/null
-+++ b/docs/system/i386/nitro-enclave.rst
-@@ -0,0 +1,58 @@
-+'nitro-enclave' virtual machine (``nitro-enclave``)
-+===================================================
-+
-+``nitro-enclave`` is a machine type which emulates an ``AWS nitro enclave``
-+virtual machine. `AWS nitro enclaves`_ is an `Amazon EC2`_ feature that allows
-+creating isolated execution environments, called enclaves, from Amazon EC2
-+instances which are used for processing highly sensitive data. Enclaves have
-+no persistent storage and no external networking. The enclave VMs are based
-+on Firecracker microvm with a vhost-vsock device for communication with the
-+parent EC2 instance that spawned it and a Nitro Secure Module (NSM) device
-+for cryptographic attestation. The parent instance VM always has CID 3 while
-+the enclave VM gets a dynamic CID. Enclaves use an EIF (`Enclave Image Format`_)
-+file which contains the necessary kernel, cmdline and ramdisk(s) to boot.
-+
-+In QEMU, ``nitro-enclave`` is a machine type based on ``microvm`` similar to how
-+``AWS nitro enclaves`` are based on ``Firecracker``. This is useful for local
-+testing of EIF images using QEMU instead of running real AWS Nitro Enclaves
-+which can be difficult for debugging due to its roots in security.
-+
-+.. _AWS nitro enlaves: https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-+.. _Amazon EC2: https://aws.amazon.com/ec2/
-+.. _Enclave Image Format: https://github.com/aws/aws-nitro-enclaves-image-format
-+
-+
-+Limitations
-+-----------
-+
-+AWS nitro enclave emulation support is not complete yet:
-+
-+- Although support for the vhost-vsock device is implemented, standalone
-+nitro-enclave VMs cannot be run right now as nitro-enclave VMs communicate
-+with a parent instance VM with CID 3. So another VM with CID 3 must be run
-+with necessary vsock communication support.
-+- Enclaves also have a Nitro Secure Module (NSM) device which is not implemented
-+yet.
-+
-+
-+Using the nitro-enclave machine type
-+------------------------------
-+
-+Machine-specific options
-+~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+It supports the following machine-specific options:
-+
-+- nitro-enclave.guest-cid=uint32_t (required) (Set nitro enclave VM's CID)
-+
-+
-+Running a nitro-enclave VM
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+A nitro-enclave VM can be run using the following command where ``hello.eif`` is
-+an EIF image you would use to spawn a real AWS nitro enclave virtual machine:
-+
-+  $ sudo qemu-system-x86_64 -M nitro-enclave,guest-cid=8 \
-+     -enable-kvm -cpu host -m 512m \
-+     -kernel hello.eif \
-+     -nographic
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index f4a33b6c08..eba8eaa960 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -129,6 +129,10 @@ config MICROVM
-     select USB_XHCI_SYSBUS
-     select I8254
- 
-+config NITRO_ENCLAVE
-+    default y
-+    depends on MICROVM
-+
- config X86_IOMMU
-     bool
-     depends on PC
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index 03aad10df7..10bdfde27c 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -15,6 +15,7 @@ i386_ss.add(when: 'CONFIG_AMD_IOMMU', if_true: files('amd_iommu.c'),
-                                       if_false: files('amd_iommu-stub.c'))
- i386_ss.add(when: 'CONFIG_I440FX', if_true: files('pc_piix.c'))
- i386_ss.add(when: 'CONFIG_MICROVM', if_true: files('x86-common.c', 'microvm.c', 'acpi-microvm.c', 'microvm-dt.c'))
-+i386_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: files('nitro_enclave.c'))
- i386_ss.add(when: 'CONFIG_Q35', if_true: files('pc_q35.c'))
- i386_ss.add(when: 'CONFIG_VMMOUSE', if_true: files('vmmouse.c'))
- i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vmport.c'))
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 27d092ed29..fd07825c6c 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -35,6 +35,7 @@
- #include "hw/irq.h"
- #include "hw/i386/kvm/clock.h"
- #include "hw/i386/microvm.h"
-+#include "hw/i386/nitro_enclave.h"
- #include "hw/i386/x86.h"
- #include "target/i386/cpu.h"
- #include "hw/intc/i8259.h"
-@@ -452,13 +453,19 @@ static void microvm_memory_init(MicrovmMachineState *mms)
-     rom_set_fw(fw_cfg);
- 
-     if (machine->kernel_filename != NULL) {
--        Error *err;
--        bool is_eif = false;
--        if (!check_if_eif_file(machine->kernel_filename, &is_eif, &err)) {
--            error_report_err(err);
--            exit(1);
--        }
--        if (is_eif) {
-+        if (object_dynamic_cast(OBJECT(machine), TYPE_NITRO_ENCLAVE_MACHINE)) {
-+            Error *err;
-+            bool is_eif = false;
-+            if (!check_if_eif_file(machine->kernel_filename, &is_eif, &err)) {
-+                error_report_err(err);
-+                exit(1);
-+            }
-+            if (!is_eif) {
-+                error_report("%s is not a valid EIF file.",
-+                             machine->kernel_filename);
-+                exit(1);
-+            }
-+
-             load_eif(mms, fw_cfg);
-         } else {
-             x86_load_linux(x86ms, fw_cfg, 0, true);
-diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
-new file mode 100644
-index 0000000000..5a9b9b04bf
---- /dev/null
-+++ b/hw/i386/nitro_enclave.c
-@@ -0,0 +1,134 @@
++++ b/hw/core/eif.c
+@@ -0,0 +1,486 @@
 +/*
-+ * AWS nitro-enclave machine
++ * EIF (Enclave Image Format) related helpers
 + *
 + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
 + *
@@ -321,137 +144,489 @@ index 0000000000..5a9b9b04bf
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
++#include "qemu/bswap.h"
 +#include "qapi/error.h"
-+#include "qapi/visitor.h"
++#include <zlib.h> /* for crc32 */
 +
-+#include "hw/sysbus.h"
-+#include "hw/i386/x86.h"
-+#include "hw/i386/microvm.h"
-+#include "hw/i386/nitro_enclave.h"
-+#include "hw/virtio/vhost-vsock.h"
-+#include "hw/virtio/virtio-mmio.h"
++#include "hw/core/eif.h"
 +
-+static BusState *find_virtio_mmio_bus(void)
++#define MAX_SECTIONS 32
++
++/* members are ordered according to field order in .eif file */
++typedef struct EifHeader {
++    uint8_t  magic[4]; /* must be .eif in ascii i.e., [46, 101, 105, 102] */
++    uint16_t version;
++    uint16_t flags;
++    uint64_t default_memory;
++    uint64_t default_cpus;
++    uint16_t reserved;
++    uint16_t section_cnt;
++    uint64_t section_offsets[MAX_SECTIONS];
++    uint64_t section_sizes[MAX_SECTIONS];
++    uint32_t unused;
++    uint32_t eif_crc32;
++} QEMU_PACKED EifHeader;
++
++/* members are ordered according to field order in .eif file */
++typedef struct EifSectionHeader {
++    /*
++     * 0 = invalid, 1 = kernel, 2 = cmdline, 3 = ramdisk, 4 = signature,
++     * 5 = metadata
++     */
++    uint16_t section_type;
++    uint16_t flags;
++    uint64_t section_size;
++} QEMU_PACKED EifSectionHeader;
++
++enum EifSectionTypes {
++    EIF_SECTION_INVALID = 0,
++    EIF_SECTION_KERNEL = 1,
++    EIF_SECTION_CMDLINE = 2,
++    EIF_SECTION_RAMDISK = 3,
++    EIF_SECTION_SIGNATURE = 4,
++    EIF_SECTION_METADATA = 5,
++    EIF_SECTION_MAX = 6,
++};
++
++static const char *section_type_to_string(uint16_t type)
 +{
-+    BusChild *kid;
-+    BusState *bus = sysbus_get_default();
++    const char *str;
++    switch (type) {
++    case EIF_SECTION_INVALID:
++        str = "invalid";
++        break;
++    case EIF_SECTION_KERNEL:
++        str = "kernel";
++        break;
++    case EIF_SECTION_CMDLINE:
++        str = "cmdline";
++        break;
++    case EIF_SECTION_RAMDISK:
++        str = "ramdisk";
++        break;
++    case EIF_SECTION_SIGNATURE:
++        str = "signature";
++        break;
++    case EIF_SECTION_METADATA:
++        str = "metadata";
++        break;
++    default:
++        str = "unknown";
++        break;
++    }
 +
-+    QTAILQ_FOREACH(kid, &bus->children, sibling) {
-+        DeviceState *dev = kid->child;
-+        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MMIO)) {
-+            VirtIOMMIOProxy *mmio = VIRTIO_MMIO(OBJECT(dev));
-+            VirtioBusState *mmio_virtio_bus = &mmio->bus;
-+            BusState *mmio_bus = &mmio_virtio_bus->parent_obj;
-+            return mmio_bus;
++    return str;
++}
++
++static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
++                            Error **errp)
++{
++    size_t got;
++    size_t header_size = sizeof(*header);
++
++    got = fread(header, 1, header_size, f);
++    if (got != header_size) {
++        error_setg(errp, "Failed to read EIF header");
++        return false;
++    }
++
++    if (memcmp(header->magic, ".eif", 4) != 0) {
++        error_setg(errp, "Invalid EIF image. Magic mismatch.");
++        return false;
++    }
++
++    /* Exclude header->eif_crc32 field from CRC calculation */
++    *crc = crc32(*crc, (uint8_t *)header, header_size - 4);
++
++    header->version = be16_to_cpu(header->version);
++    header->flags = be16_to_cpu(header->flags);
++    header->default_memory = be64_to_cpu(header->default_memory);
++    header->default_cpus = be64_to_cpu(header->default_cpus);
++    header->reserved = be16_to_cpu(header->reserved);
++    header->section_cnt = be16_to_cpu(header->section_cnt);
++
++    for (int i = 0; i < MAX_SECTIONS; ++i) {
++        header->section_offsets[i] = be64_to_cpu(header->section_offsets[i]);
++    }
++
++    for (int i = 0; i < MAX_SECTIONS; ++i) {
++        header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
++    }
++
++    header->unused = be32_to_cpu(header->unused);
++    header->eif_crc32 = be32_to_cpu(header->eif_crc32);
++    return true;
++}
++
++static bool read_eif_section_header(FILE *f, EifSectionHeader *section_header,
++                                    uint32_t *crc, Error **errp)
++{
++    size_t got;
++    size_t section_header_size = sizeof(*section_header);
++
++    got = fread(section_header, 1, section_header_size, f);
++    if (got != section_header_size) {
++        error_setg(errp, "Failed to read EIF section header");
++        return false;
++    }
++
++    *crc = crc32(*crc, (uint8_t *)section_header, section_header_size);
++
++    section_header->section_type = be16_to_cpu(section_header->section_type);
++    section_header->flags = be16_to_cpu(section_header->flags);
++    section_header->section_size = be64_to_cpu(section_header->section_size);
++    return true;
++}
++
++/*
++ * Upon success, the caller is responsible for unlinking and freeing *tmp_path.
++ */
++static bool get_tmp_file(const char *template, char **tmp_path, Error **errp)
++{
++    int tmp_fd;
++
++    *tmp_path = NULL;
++    tmp_fd = g_file_open_tmp(template, tmp_path, NULL);
++    if (tmp_fd < 0 || *tmp_path == NULL) {
++        error_setg(errp, "Failed to create temporary file for template %s",
++                   template);
++        return false;
++    }
++
++    close(tmp_fd);
++    return true;
++}
++
++static void safe_fclose(FILE *f)
++{
++    if (f) {
++        fclose(f);
++    }
++}
++
++static void safe_unlink(char *f)
++{
++    if (f) {
++        unlink(f);
++    }
++}
++
++/*
++ * Upon success, the caller is reponsible for unlinking and freeing *kernel_path
++ */
++static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
++                            uint32_t *crc, Error **errp)
++{
++    size_t got;
++    FILE *tmp_file = NULL;
++    uint8_t *kernel = NULL;
++
++    *kernel_path = NULL;
++    if (!get_tmp_file("eif-kernel-XXXXXX", kernel_path, errp)) {
++        goto cleanup;
++    }
++
++    tmp_file = fopen(*kernel_path, "wb");
++    if (tmp_file == NULL) {
++        error_setg_errno(errp, errno, "Failed to open temporary file %s",
++                         *kernel_path);
++        goto cleanup;
++    }
++
++    kernel = g_malloc(size);
++    got = fread(kernel, 1, size, f);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF kernel section data");
++        goto cleanup;
++    }
++
++    got = fwrite(kernel, 1, size, tmp_file);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to write EIF kernel section data to temporary"
++                   " file");
++        goto cleanup;
++    }
++
++    *crc = crc32(*crc, kernel, size);
++    g_free(kernel);
++    fclose(tmp_file);
++
++    return true;
++
++ cleanup:
++    safe_fclose(tmp_file);
++
++    safe_unlink(*kernel_path);
++    g_free(*kernel_path);
++    *kernel_path = NULL;
++
++    g_free(kernel);
++    return false;
++}
++
++static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
++                             uint32_t *crc, Error **errp)
++{
++    size_t got = fread(cmdline, 1, size, f);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF cmdline section data");
++        return false;
++    }
++
++    *crc = crc32(*crc, (uint8_t *)cmdline, size);
++    return true;
++}
++
++static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
++                             uint32_t *crc, Error **errp)
++{
++    size_t got;
++    uint8_t *ramdisk = g_malloc(size);
++
++    got = fread(ramdisk, 1, size, eif);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF ramdisk section data");
++        goto cleanup;
++    }
++
++    got = fwrite(ramdisk, 1, size, initrd);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to write EIF ramdisk data to temporary file");
++        goto cleanup;
++    }
++
++    *crc = crc32(*crc, ramdisk, size);
++    g_free(ramdisk);
++    return true;
++
++ cleanup:
++    g_free(ramdisk);
++    return false;
++}
++
++/*
++ * Upon success, the caller is reponsible for unlinking and freeing
++ * *kernel_path, *initrd_path and freeing *cmdline.
++ */
++bool read_eif_file(const char *eif_path, char **kernel_path, char **initrd_path,
++                   char **cmdline, Error **errp)
++{
++    FILE *f = NULL;
++    FILE *initrd_f = NULL;
++    uint32_t crc = 0;
++    EifHeader eif_header;
++    bool seen_sections[EIF_SECTION_MAX] = {false};
++
++    *kernel_path = *initrd_path = *cmdline = NULL;
++
++    f = fopen(eif_path, "rb");
++    if (f == NULL) {
++        error_setg_errno(errp, errno, "Failed to open %s", eif_path);
++        goto cleanup;
++    }
++
++    if (!read_eif_header(f, &eif_header, &crc, errp)) {
++        goto cleanup;
++    }
++
++    if (eif_header.version < 4) {
++        error_setg(errp, "Expected EIF version 4 or greater");
++        goto cleanup;
++    }
++
++    if (eif_header.flags != 0) {
++        error_setg(errp, "Expected EIF flags to be 0");
++        goto cleanup;
++    }
++
++    if (eif_header.section_cnt > MAX_SECTIONS) {
++        error_setg(errp, "EIF header section count must not be greater than "
++                   "%d but found %d", MAX_SECTIONS, eif_header.section_cnt);
++        goto cleanup;
++    }
++
++    for (int i = 0; i < eif_header.section_cnt; ++i) {
++        EifSectionHeader section_header;
++        uint16_t section_type;
++
++        if (fseek(f, eif_header.section_offsets[i], SEEK_SET) != 0) {
++            error_setg_errno(errp, errno, "Failed to offset to %lu in EIF file",
++                             eif_header.section_offsets[i]);
++            goto cleanup;
++        }
++
++        if (!read_eif_section_header(f, &section_header, &crc, errp)) {
++            goto cleanup;
++        }
++
++        if (section_header.flags != 0) {
++            error_setg(errp, "Expected EIF section header flags to be 0");
++            goto cleanup;
++        }
++
++        if (eif_header.section_sizes[i] != section_header.section_size) {
++            error_setg(errp, "EIF section size mismatch between header and "
++                       "section header: header %lu, section header %lu",
++                       eif_header.section_sizes[i],
++                       section_header.section_size);
++            goto cleanup;
++        }
++
++        section_type = section_header.section_type;
++
++        switch (section_type) {
++        case EIF_SECTION_KERNEL:
++            if (seen_sections[EIF_SECTION_KERNEL]) {
++                error_setg(errp, "Invalid EIF image. More than 1 kernel "
++                           "section");
++                goto cleanup;
++            }
++            if (!read_eif_kernel(f, section_header.section_size, kernel_path,
++                                 &crc, errp)) {
++                goto cleanup;
++            }
++
++            break;
++        case EIF_SECTION_CMDLINE:
++        {
++            uint64_t size;
++            if (seen_sections[EIF_SECTION_CMDLINE]) {
++                error_setg(errp, "Invalid EIF image. More than 1 cmdline "
++                           "section");
++                goto cleanup;
++            }
++            size = section_header.section_size;
++            *cmdline = g_malloc(size + 1);
++            if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
++                goto cleanup;
++            }
++            (*cmdline)[size] = '\0';
++
++            break;
++        }
++        case EIF_SECTION_RAMDISK:
++            if (!seen_sections[EIF_SECTION_RAMDISK]) {
++                /*
++                 * If this is the first time we are seeing a ramdisk section,
++                 * we need to create the initrd temporary file.
++                 */
++                if (!get_tmp_file("eif-initrd-XXXXXX", initrd_path, errp)) {
++                    goto cleanup;
++                }
++                initrd_f = fopen(*initrd_path, "wb");
++                if (initrd_f == NULL) {
++                    error_setg_errno(errp, errno, "Failed to open file %s",
++                                     *initrd_path);
++                    goto cleanup;
++                }
++            }
++
++            if (!read_eif_ramdisk(f, initrd_f, section_header.section_size,
++                                  &crc, errp)) {
++                goto cleanup;
++            }
++
++            break;
++        default:
++            /* other sections including invalid or unknown sections */
++        {
++            uint8_t *buf;
++            size_t got;
++            uint64_t size = section_header.section_size;
++            buf = g_malloc(size);
++            got = fread(buf, 1, size, f);
++            if ((uint64_t) got != size) {
++                g_free(buf);
++                error_setg(errp, "Failed to read EIF %s section data",
++                           section_type_to_string(section_type));
++                goto cleanup;
++            }
++            crc = crc32(crc, buf, size);
++            g_free(buf);
++            break;
++        }
++        }
++
++        if (section_type < EIF_SECTION_MAX) {
++            seen_sections[section_type] = true;
 +        }
 +    }
 +
-+    return NULL;
-+}
-+
-+static void nitro_enclave_devices_init(NitroEnclaveMachineState *nems)
-+{
-+    DeviceState *dev = qdev_new(TYPE_VHOST_VSOCK);
-+    BusState *bus = find_virtio_mmio_bus();
-+    if (!bus) {
-+        error_report("Failed to find bus for vhost-vsock device.");
-+        exit(1);
++    if (!seen_sections[EIF_SECTION_KERNEL]) {
++        error_setg(errp, "Invalid EIF image. No kernel section.");
++        goto cleanup;
++    }
++    if (!seen_sections[EIF_SECTION_CMDLINE]) {
++        error_setg(errp, "Invalid EIF image. No cmdline section.");
++        goto cleanup;
++    }
++    if (!seen_sections[EIF_SECTION_RAMDISK]) {
++        error_setg(errp, "Invalid EIF image. No ramdisk section.");
++        goto cleanup;
 +    }
 +
-+    if (nems->guest_cid <= 3) {
-+        error_report("Nitro enclave machine option 'guest-cid' must be set "
-+                     "with a value greater than or equal to 4");
-+        exit(1);
++    if (eif_header.eif_crc32 != crc) {
++        error_setg(errp, "CRC mismatch. Expected %u but header has %u.",
++                   crc, eif_header.eif_crc32);
++        goto cleanup;
 +    }
 +
-+    qdev_prop_set_uint64(dev, "guest-cid", nems->guest_cid);
-+    qdev_realize_and_unref(dev, bus, &error_fatal);
++    fclose(f);
++    fclose(initrd_f);
++    return true;
++
++ cleanup:
++    safe_fclose(f);
++    safe_fclose(initrd_f);
++
++    safe_unlink(*kernel_path);
++    g_free(*kernel_path);
++    *kernel_path = NULL;
++
++    safe_unlink(*initrd_path);
++    g_free(*initrd_path);
++    *initrd_path = NULL;
++
++    g_free(*cmdline);
++    *cmdline = NULL;
++
++    return false;
 +}
 +
-+static void nitro_enclave_machine_state_init(MachineState *machine)
++bool check_if_eif_file(const char *path, bool *is_eif, Error **errp)
 +{
-+    NitroEnclaveMachineClass *ne_class =
-+        NITRO_ENCLAVE_MACHINE_GET_CLASS(machine);
-+    NitroEnclaveMachineState *ne_state = NITRO_ENCLAVE_MACHINE(machine);
++    size_t got;
++    uint8_t buf[4];
++    FILE *f = NULL;
 +
-+    ne_class->parent_init(machine);
-+    nitro_enclave_devices_init(ne_state);
++    f = fopen(path, "rb");
++    if (f == NULL) {
++        error_setg_errno(errp, errno, "Failed to open file %s", path);
++        goto cleanup;
++    }
++
++    got = fread(buf, 1, 4, f);
++    if (got != 4) {
++        error_setg(errp, "Failed to read magic value from %s", path);
++        goto cleanup;
++    }
++
++    fclose(f);
++    *is_eif = !memcmp(buf, ".eif", 4);
++    return true;
++
++ cleanup:
++    safe_fclose(f);
++    return false;
 +}
-+
-+static void nitro_enclave_machine_initfn(Object *obj)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+    MicrovmMachineState *mms = MICROVM_MACHINE(obj);
-+    X86MachineState *x86ms = X86_MACHINE(obj);
-+
-+    nems->guest_cid = 0;
-+
-+    /* AWS nitro enclaves have PCIE and ACPI disabled */
-+    mms->pcie = ON_OFF_AUTO_OFF;
-+    x86ms->acpi = ON_OFF_AUTO_OFF;
-+}
-+
-+static void nitro_enclave_get_guest_cid(Object *obj, Visitor *v,
-+                                        const char *name, void *opaque,
-+                                        Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+    uint32_t guest_cid = nems->guest_cid;
-+
-+    visit_type_uint32(v, name, &guest_cid, errp);
-+}
-+
-+static void nitro_enclave_set_guest_cid(Object *obj, Visitor *v,
-+                                        const char *name, void *opaque,
-+                                        Error **errp)
-+{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-+
-+    visit_type_uint32(v, name, &nems->guest_cid, errp);
-+}
-+
-+static void nitro_enclave_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    NitroEnclaveMachineClass *nemc = NITRO_ENCLAVE_MACHINE_CLASS(oc);
-+
-+    mc->family = "nitro_enclave_i386";
-+    mc->desc = "AWS Nitro Enclave";
-+
-+    nemc->parent_init = mc->init;
-+    mc->init = nitro_enclave_machine_state_init;
-+
-+    object_class_property_add(oc, NITRO_ENCLAVE_GUEST_CID, "uint32_t",
-+                              nitro_enclave_get_guest_cid,
-+                              nitro_enclave_set_guest_cid,
-+                              NULL, NULL);
-+    object_class_property_set_description(oc, NITRO_ENCLAVE_GUEST_CID,
-+                                          "Set enclave machine's cid");
-+}
-+
-+static const TypeInfo nitro_enclave_machine_info = {
-+    .name          = TYPE_NITRO_ENCLAVE_MACHINE,
-+    .parent        = TYPE_MICROVM_MACHINE,
-+    .instance_size = sizeof(NitroEnclaveMachineState),
-+    .instance_init = nitro_enclave_machine_initfn,
-+    .class_size    = sizeof(NitroEnclaveMachineClass),
-+    .class_init    = nitro_enclave_class_init,
-+};
-+
-+static void nitro_enclave_machine_init(void)
-+{
-+    type_register_static(&nitro_enclave_machine_info);
-+}
-+type_init(nitro_enclave_machine_init);
-diff --git a/include/hw/i386/nitro_enclave.h b/include/hw/i386/nitro_enclave.h
+diff --git a/hw/core/eif.h b/hw/core/eif.h
 new file mode 100644
-index 0000000000..9dc3afd494
+index 0000000000..cfc09d044e
 --- /dev/null
-+++ b/include/hw/i386/nitro_enclave.h
-@@ -0,0 +1,38 @@
++++ b/hw/core/eif.h
+@@ -0,0 +1,20 @@
 +/*
-+ * AWS nitro-enclave machine
++ * EIF (Enclave Image Format) related helpers
 + *
 + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
 + *
@@ -460,34 +635,187 @@ index 0000000000..9dc3afd494
 + * top-level directory.
 + */
 +
-+#ifndef HW_I386_NITRO_ENCLAVE_H
-+#define HW_I386_NITRO_ENCLAVE_H
++#ifndef HW_CORE_EIF_H
++#define HW_CORE_EIF_H
 +
-+#include "hw/boards.h"
-+#include "hw/i386/microvm.h"
-+#include "qom/object.h"
++bool read_eif_file(const char *eif_path, char **kernel_path, char **initrd_path,
++                    char **kernel_cmdline, Error **errp);
 +
-+/* Machine type options */
-+#define NITRO_ENCLAVE_GUEST_CID  "guest-cid"
-+
-+struct NitroEnclaveMachineClass {
-+    MicrovmMachineClass parent;
-+
-+    void (*parent_init)(MachineState *state);
-+};
-+
-+struct NitroEnclaveMachineState {
-+    MicrovmMachineState parent;
-+
-+    /* Machine type options */
-+    uint32_t guest_cid;
-+};
-+
-+#define TYPE_NITRO_ENCLAVE_MACHINE MACHINE_TYPE_NAME("nitro-enclave")
-+OBJECT_DECLARE_TYPE(NitroEnclaveMachineState, NitroEnclaveMachineClass,
-+                    NITRO_ENCLAVE_MACHINE)
++bool check_if_eif_file(const char *path, bool *is_eif, Error **errp);
 +
 +#endif
++
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index a3d9bab9f4..77e26e9cc5 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -24,6 +24,7 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
+ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
++system_ss.add(when: 'CONFIG_MICROVM', if_true: files('eif.c'))
+ 
+ system_ss.add(files(
+   'cpu-sysemu.c',
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index fec63cacfa..27d092ed29 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -30,6 +30,7 @@
+ #include "acpi-microvm.h"
+ #include "microvm-dt.h"
+ 
++#include "hw/core/eif.h"
+ #include "hw/loader.h"
+ #include "hw/irq.h"
+ #include "hw/i386/kvm/clock.h"
+@@ -281,6 +282,127 @@ static void microvm_devices_init(MicrovmMachineState *mms)
+     x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
+ }
+ 
++/* Expects file to have offset 0 before this function is called */
++static long get_file_size(FILE *f, Error **errp)
++{
++    long size;
++
++    if (fseek(f, 0, SEEK_END) != 0) {
++        error_setg_errno(errp, errno, "Failed to seek to the end of file");
++        return -1;
++    }
++
++    size = ftell(f);
++    if (size == -1) {
++        error_setg_errno(errp, errno, "Failed to get offset");
++        return -1;
++    }
++
++    if (fseek(f, 0, SEEK_SET) != 0) {
++        error_setg_errno(errp, errno, "Failed to seek back to the start");
++        return -1;
++    }
++
++    return size;
++}
++
++static void load_eif(MicrovmMachineState *mms, FWCfgState *fw_cfg)
++{
++    Error *err;
++    char *eif_kernel, *eif_initrd, *eif_cmdline;
++    MachineState *machine = MACHINE(mms);
++    X86MachineState *x86ms = X86_MACHINE(mms);
++
++    if (!read_eif_file(machine->kernel_filename, &eif_kernel, &eif_initrd,
++                       &eif_cmdline, &err)) {
++        error_report_err(err);
++        exit(1);
++    }
++
++    g_free(machine->kernel_filename);
++    machine->kernel_filename = eif_kernel;
++
++    /*
++     * If an initrd argument was provided, let's concatenate it to the
++     * extracted EIF initrd temporary file.
++     */
++    if (machine->initrd_filename) {
++        long size;
++        size_t got;
++        uint8_t *buf;
++        FILE *initrd_f, *eif_initrd_f;
++
++        initrd_f = fopen(machine->initrd_filename, "rb");
++        if (initrd_f == NULL) {
++            error_setg_errno(&err, errno, "Failed to open initrd file %s",
++                             machine->initrd_filename);
++            goto cleanup;
++        }
++
++        size = get_file_size(initrd_f, &err);
++        if (size == -1) {
++            goto cleanup;
++        }
++
++        buf = g_malloc(size);
++        got = fread(buf, 1, size, initrd_f);
++        if ((uint64_t) got != (uint64_t) size) {
++            error_setg(&err, "Failed to read initrd file %s",
++                       machine->initrd_filename);
++            goto cleanup;
++        }
++
++        eif_initrd_f = fopen(eif_initrd, "ab");
++        if (eif_initrd_f == NULL) {
++            error_setg_errno(&err, errno, "Failed to open EIF initrd file %s",
++                             eif_initrd);
++            goto cleanup;
++        }
++        got = fwrite(buf, 1, size, eif_initrd_f);
++        if ((uint64_t) got != (uint64_t) size) {
++            error_setg(&err, "Failed to append initrd %s to %s",
++                       machine->initrd_filename, eif_initrd);
++            goto cleanup;
++        }
++
++        fclose(initrd_f);
++        fclose(eif_initrd_f);
++
++        g_free(buf);
++        g_free(machine->initrd_filename);
++
++        machine->initrd_filename = eif_initrd;
++    } else {
++        machine->initrd_filename = eif_initrd;
++    }
++
++    /*
++     * If kernel cmdline argument was provided, let's concatenate it to the
++     * extracted EIF kernel cmdline.
++     */
++    if (machine->kernel_cmdline != NULL) {
++        char *cmd = g_strdup_printf("%s %s", eif_cmdline,
++                                    machine->kernel_cmdline);
++        g_free(eif_cmdline);
++        g_free(machine->kernel_cmdline);
++        machine->kernel_cmdline = cmd;
++    } else {
++        machine->kernel_cmdline = eif_cmdline;
++    }
++
++    x86_load_linux(x86ms, fw_cfg, 0, true);
++
++    unlink(machine->kernel_filename);
++    unlink(machine->initrd_filename);
++    return;
++
++ cleanup:
++    error_report_err(err);
++    unlink(eif_kernel);
++    unlink(eif_initrd);
++    exit(1);
++}
++
+ static void microvm_memory_init(MicrovmMachineState *mms)
+ {
+     MachineState *machine = MACHINE(mms);
+@@ -330,7 +452,17 @@ static void microvm_memory_init(MicrovmMachineState *mms)
+     rom_set_fw(fw_cfg);
+ 
+     if (machine->kernel_filename != NULL) {
+-        x86_load_linux(x86ms, fw_cfg, 0, true);
++        Error *err;
++        bool is_eif = false;
++        if (!check_if_eif_file(machine->kernel_filename, &is_eif, &err)) {
++            error_report_err(err);
++            exit(1);
++        }
++        if (is_eif) {
++            load_eif(mms, fw_cfg);
++        } else {
++            x86_load_linux(x86ms, fw_cfg, 0, true);
++        }
+     }
+ 
+     if (mms->option_roms) {
 -- 
 2.39.2
 
