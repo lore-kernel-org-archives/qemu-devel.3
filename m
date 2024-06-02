@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4321BC25B74
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 06:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CF5C25B74
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 06:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDeQn-00058d-TA; Sun, 02 Jun 2024 02:11:01 -0400
+	id 1sDeg7-0002Vf-2T; Sun, 02 Jun 2024 02:26:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sDeQl-00057u-7P
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:10:59 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sDeg4-0002VJ-RF
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:26:48 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sDeQj-0007AX-Jc
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:10:58 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f44b42e9a6so25871845ad.0
- for <qemu-devel@nongnu.org>; Sat, 01 Jun 2024 23:10:57 -0700 (PDT)
+ id 1sDeg2-0000m3-NM
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:26:48 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-6c821775f82so615735a12.0
+ for <qemu-devel@nongnu.org>; Sat, 01 Jun 2024 23:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717308656; x=1717913456;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717309605; x=1717914405;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=voDRJVjzQNSxWDJC8y9qDc/zY+viPyBzYvA73adSijY=;
- b=gbRC8vKi3qk9O1njBXv7xBEKnff+Ua0MKmhq7DPZ7m/KMRDHCXtQXHocqDQXDKuBLA
- 5pNW47/OiomtbcHQ5OPSuBEwWM20//F5IrSMpJlpFg3+8nZJ/c3SWuRAXQwGIBPRATK0
- 1bxgrlz51sEauwIYYbBqZ/eTECeyJO15R/zsbZHPuvztXdoyfQ+Hz7lolnFeQchl2jZM
- l5nKAD1fSz3m1oOUN58OzxPKnkwnwvD9kATgZdFhVGJMs5UM8p+2KbL7PDUe0T6Fc1sS
- 9551jwJKXpD8MWUHghDmCy8kfpAQUUcrhRaL38i6orjXRyHx9C8xrpHzV1S8VV6ilkmF
- ppSw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sCj/VbwYG9yk9PAlILFTltKJ7+5kuA+uXg0bT/+hDGg=;
+ b=RalHuApgmm5VJwtTj2ev3FKSCA7lDIksyqc/HInovLvZ/xvRHhy5NtT9an13xk0oWI
+ 1Pf2vWdRb/I8qEoPkzv6tLz+zjFNzt/SgcokbjvmivuIn0b+IhukdUutJYgjdfhm40NT
+ bp7K740H1LbqfFhrx3/UYuV4THaCnd4ZXA2nfxdnkoeq1baE1TrwqieBQuhr7Z/VbbCh
+ ToT6TpH+nSFSK/rvQdq5TSMu4RvsQPEz+QtZF9oNfyqLl74vg9MWZ+qi6BYb9DRilt4B
+ 3iEXR+pvJgUi6u6dMwbJRU7+RoeE7A8J5VUDkHIB7XUSBMmNHqRYXEwgrFHfMxvM/1F8
+ qQEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717308656; x=1717913456;
+ d=1e100.net; s=20230601; t=1717309605; x=1717914405;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=voDRJVjzQNSxWDJC8y9qDc/zY+viPyBzYvA73adSijY=;
- b=HQb9iaZhEX7tjufObXirjf4hnpp3iQV/vJT2Q0bVwV3L9LvRK+IpWcFlOSFHnUXTuo
- OaUgSOZ2MyLCQo0Q1M4Lx7i/2FMzOZ+7v49Acjc7/7k8gS64X3jHGwCiHTjjQ3CNqqJ1
- MpSmsbkgfUz1fQHS2+KkETyvl0BHW9thZyG9DkIxIFCpnNYDAHMuNofWcfI6VOlshddW
- aqQTkYDFQCi7ex7oKtRq0U4K8XcoFX/a0RsAhkWf7IzdVtneq6R/DJothNv+1zJRGd3r
- Tww7FbwdTyvhgdplM+baUvP1CwCbJa9yMDNm5NmDu+q1tHUcc7aKlixXBfAngYtB09ys
- USQw==
+ bh=sCj/VbwYG9yk9PAlILFTltKJ7+5kuA+uXg0bT/+hDGg=;
+ b=uogEHMkFWBPZrJ1rEA6jhb7PoPlGVBneL94ttqF8sLYMqzs0wjkacwYruK8x9GM7Y1
+ Al9y7Il8wp2udZ+gd2+wv7B91FwEhvgRQ9eX98jbNTSSxwqQkTs+xlVlf7B0mGJ2QJCp
+ Z5rzBfj1u4dBCCFNpgfFeLI9WzpcrC+52wKjwe3nOZ6EBItBC+PoAfkYam5YZQKMEgsB
+ lQ/oMbtbaVdLWzkrpffx6WM3y3k7GocM1ihCU3ARTzewcAE23jPSRqt/vegLABHkSUAb
+ Sodht/Yxtpnl2amOrYg4CxkG9CJhktiyWJO0SoGOIfWUF1DYrZVj9d5J4+VxGQ+MgsGK
+ 86Rg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHR6/nuEhAKv8QCsud1EYabHB89ram6App/E/Zoa7kCxWEwwuTFV2TOZ6C6F4r+rxhuv5jtHT0HvFIj2MQ7QmSlUheM3k=
-X-Gm-Message-State: AOJu0Yx4rtP1zPPEC4S84TwzK89Kid/PMQcsH3d0gTEwxP53UUafsxl2
- TH42PJ3KHw9GPcwa02v0fVAJRL04zGEdIZtRqt2k0E2do+3z1YoEty5YFNSQ15Vc9PcyFJpWaW5
- k6zc=
-X-Google-Smtp-Source: AGHT+IGgL/yId8FDUmuvMfbeolUbTSJH4MqB2WtK5sago1yTPD/7SZrdKSWT9lK51zcV8P06XDc0CA==
-X-Received: by 2002:a17:902:d48a:b0:1f6:5893:d6ae with SMTP id
- d9443c01a7336-1f65893d994mr25000845ad.50.1717308655937; 
- Sat, 01 Jun 2024 23:10:55 -0700 (PDT)
+ AJvYcCVzisVy8fe9LHjpnXoI7UCndBP8/iNSYOvTMwbngrBE3LZUmNNzmM/lt7AFc88B99XPOp8/xHQXB+IfGZyuqayTmZ94bAw=
+X-Gm-Message-State: AOJu0YwH72rO8IFhtB49BNr9pTqfYBjSWmFGDe15SYEA4EndSzYNQkk/
+ D8vIz+fenW4Vl4QwmtgvuLt0C4A4CNvQ8d/Ezn5Ey1y60CNswtub0Q03G1VwmIs=
+X-Google-Smtp-Source: AGHT+IHDh5dsVNwHZ4gy2hEg21Z43CKNRahrwxkIuifpK8nt5L5rXs+SCj0ef5ioVz3f5J0T54Du/g==
+X-Received: by 2002:a05:6a21:6d9f:b0:1aa:a6dc:38ca with SMTP id
+ adf61e73a8af0-1b26f139089mr7211054637.16.1717309604899; 
+ Sat, 01 Jun 2024 23:26:44 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6342c6acfsm41967265ad.265.2024.06.01.23.10.54
+ 98e67ed59e1d1-2c1c283164fsm4207761a91.37.2024.06.01.23.26.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 01 Jun 2024 23:10:55 -0700 (PDT)
-Message-ID: <c845165a-ef63-4174-b18d-51031b29503a@daynix.com>
-Date: Sun, 2 Jun 2024 15:10:53 +0900
+ Sat, 01 Jun 2024 23:26:44 -0700 (PDT)
+Message-ID: <08ff19ed-9d1b-4fa3-8a40-3fe10d1f9bfa@daynix.com>
+Date: Sun, 2 Jun 2024 15:26:41 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 2/5] meson: move block.syms dependency out of
- libblock
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240527104937.30443-1-pbonzini@redhat.com>
- <20240527104937.30443-3-pbonzini@redhat.com>
+Subject: Re: [PATCH v3 1/4] osdep: Make qemu_madvise() to set errno in all
+ cases
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michal Privoznik <mprivozn@redhat.com>, qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>
+References: <cover.1717168113.git.mprivozn@redhat.com>
+ <393c7b26302cb445f1a086a2c80b1d718c31a071.1717168113.git.mprivozn@redhat.com>
+ <4b146ec6-bec2-4191-8c95-fc30d8307ef6@linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240527104937.30443-3-pbonzini@redhat.com>
+In-Reply-To: <4b146ec6-bec2-4191-8c95-fc30d8307ef6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::530;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,33 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- >On 2024/05/27 19:49, Paolo Bonzini wrote:
-> In order to define libqemuutil symbols that are requested by block modules,
-> QEMU currently uses a combination of the "link_depends" argument of
-> libraries (which is propagated into dependencies, but not available in
-> dependencies) and the "link_args" argument of declare_dependency()
-> (which _is_ available in static_library, but probably not used for
-> historical reasons only).
+On 2024/06/01 0:46, Philippe Mathieu-Daudé wrote:
+> On 31/5/24 17:10, Michal Privoznik wrote:
+>> The unspoken premise of qemu_madvise() is that errno is set on
+>> error. And it is mostly the case except for posix_madvise() which
+>> is documented to return either zero (on success) or a positive
+>> error number. This means, we must set errno ourselves. And while
+>> at it, make the function return a negative value on error, just
+>> like other error paths do.
+>>
+>> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+>> ---
+>>   util/osdep.c | 14 +++++++++++++-
+>>   1 file changed, 13 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/util/osdep.c b/util/osdep.c
+>> index e996c4744a..1345238a5c 100644
+>> --- a/util/osdep.c
+>> +++ b/util/osdep.c
+>> @@ -57,7 +57,19 @@ int qemu_madvise(void *addr, size_t len, int advice)
+>>   #if defined(CONFIG_MADVISE)
+>>       return madvise(addr, len, advice);
+>>   #elif defined(CONFIG_POSIX_MADVISE)
+>> -    return posix_madvise(addr, len, advice);
+>> +    /*
+>> +     * On Darwin posix_madvise() has the same return semantics as
+>> +     * plain madvise, i.e. errno is set and -1 is returned. Otherwise,
+>> +     * a positive error number is returned.
+>> +     */
 > 
-> Unfortunately the link_depends will not be propagated into the
-> "block" dependency if it is defined using
-> declare_dependency(objects: ...); and it is not possible to
-> add it directly to the dependency because the keyword argument
-> simply is not available.
+> Alternative is to guard with #ifdef CONFIG_DARWIN ... #else ... #endif
+> which might be clearer.
 > 
-> The only solution, in order to switch to defining the dependency
-> without using "link_whole" (which has problems of its own, see
-> https://github.com/mesonbuild/meson/pull/8151#issuecomment-754796420),
-> is unfortunately to add the link_args and link_depends to the
-> executables directly; fortunately there is just four of them.
-> 
-> It is possible (and I will look into it) to add "link_depends"
-> to declare_dependency(), but it probably will be a while before
-> QEMU can use it.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Although this approach seems reasonable, so:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This is not ideal but I think is good enough.
+We should use plain madvise() if posix_madvise() is broken. In fact, 
+QEMU detects the availability of plain madvise() and use it instead of 
+posix_madvise() on my MacBook.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Perhaps it may be better to stop defining CONFIG_POSIX_MADVISE on Darwin 
+to ensure we never use the broken implementation.
 
