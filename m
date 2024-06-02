@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288EFC25B74
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 14:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58872C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 02:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDlv2-0001AQ-5i; Sun, 02 Jun 2024 10:10:44 -0400
+	id 1sDxsh-00015y-Rz; Sun, 02 Jun 2024 22:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDlv0-00019p-5a
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 10:10:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDxsc-0000uk-RX
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDlux-0004hZ-Qr
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 10:10:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDtJ3-0003El-Dc
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 18:04:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717337438;
+ s=mimecast20190719; t=1717365840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N4m7KZ7ijFCzK+r3/bd7UTxW3HH4hYn4RHCVBdyXLZM=;
- b=cJp1USw50jFvROSdxYE0lrvyvpphGr/7lkIMkUWkDgkQG5/ZtZCPi4EoGwcxl0FL/oUNo9
- Vb0DlPg1ZcKf8yea7dyVCmLg4T6ZAyD5LNs+o+kGNtXOxAbTm7MgtyWfpu43XXaIxpOwkt
- xvKyKATQjM3qjM9jdZ1nuOQyF8RVDzs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Rg/U5bQVZCvitAfOXOtID9rN/KNAL8UobrEOBWlnOIc=;
+ b=gsiDP6MmpjwOSqM2tXMIczi1ASsnsMHXMgnkjEKKQ+bDSAyg9Uouertir0au72MZaSuETW
+ DeF7fqP4tVJ3orW08Qlr2cL7gsGCwPfDN5HJu6UcJEmCrfvp016PoktOcgOcfXfiV/VElb
+ PqZW9JADLwa/Bipd/gdWXkI3Q3ZOdM4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-cjEtpNLcM7Gu88nqKPCY_g-1; Sun, 02 Jun 2024 10:10:36 -0400
-X-MC-Unique: cjEtpNLcM7Gu88nqKPCY_g-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-35dcd645095so1847937f8f.3
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 07:10:36 -0700 (PDT)
+ us-mta-144-6cL8X-7UMVSn-JEBoLnWvQ-1; Sun, 02 Jun 2024 18:03:59 -0400
+X-MC-Unique: 6cL8X-7UMVSn-JEBoLnWvQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42135f6012fso8047635e9.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 15:03:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717337435; x=1717942235;
+ d=1e100.net; s=20230601; t=1717365838; x=1717970638;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N4m7KZ7ijFCzK+r3/bd7UTxW3HH4hYn4RHCVBdyXLZM=;
- b=N4FeuyHS5mGImXNQ1WcYp+NfmjVImJH6lp+I/bzZ9xv4CBd6a5ItSSbMunztPnRR2V
- E2IK4Lwr6kROe5qM067Due0M1u8ThwGcl2fkMdC3OFnCmzevdQtzonPxImPL7Q3tl3Wx
- G8EstmUQGAY260I9cAbdiGb0lNSRXV6jowS1P1bZQuZZ1p8+CBp7mZW4K/NL63Z/g01w
- mq4iVDNencgsMqj+Mdgg4r5UJk7IvIokoeKdg8cQveSNnwRRce3JwueTS5s1xblzFOmY
- FBe9ZHJVbA3PLKKZyfgPj15AAW6rmmgh+dH2B9Q2Xi+3AbBQiA6Y9ieI2NHkvDtXsm+L
- xGqw==
-X-Gm-Message-State: AOJu0YzV4uNNfSeB9+xZF2i/LEVDb3I0hqSFCzwYRSJPjQpX9gST0H72
- mqthBj4DFrAfKZ5wbNmt/EUXGVgdA3ckba8sz4u0cVnhcRTuVhJw4j/P/zwoFHIdRvp6GaKzDC4
- gTWUTa7ykcZ8B3JaiKonCTohrbWTTLNyDuVhUs9qETcpcbmVWi+e0
-X-Received: by 2002:a5d:4bc3:0:b0:354:f622:fc5b with SMTP id
- ffacd0b85a97d-35e0f2712b8mr4541294f8f.23.1717337435575; 
- Sun, 02 Jun 2024 07:10:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWmJK3IK4lbp0A62SqbFYHMaQPwWxDAAkA5YDn3B9U0vW+029+f9jKGdGkFyu6VVzMeqal/w==
-X-Received: by 2002:a5d:4bc3:0:b0:354:f622:fc5b with SMTP id
- ffacd0b85a97d-35e0f2712b8mr4541277f8f.23.1717337434993; 
- Sun, 02 Jun 2024 07:10:34 -0700 (PDT)
+ bh=Rg/U5bQVZCvitAfOXOtID9rN/KNAL8UobrEOBWlnOIc=;
+ b=a67UXk19NlnKzrwehLbjwk0QynWoqtrh/JXBpVIaPgPsUz4nWYgr1grS9x7PumGKzY
+ +tseDYU2Hsyedqq8lfqYNdOYCrMWkZavW/r677H+iTciC4X5zeBNOiz0vgya3w/pyjja
+ 1DQRNFwNSddYXNp7MgbG5Nd8STQzN1YB4u68z7zULZRGgV23cGj6GGY//nE5dWWY0pSY
+ DIj/QYZl/rUalYLu5c2Y/SZ5xGRIj40qvjMzzpFOcFlFqkpd9zKiyHaAD+41ADg+HGSW
+ Px8UumZUYzfDVuadLJU33p4GtXXjKAD0iWsmHt5zqofry+GY0722H8qUCGIhXfPhqafj
+ nhYw==
+X-Gm-Message-State: AOJu0Yx/gSB4wcdmLXxEStgBBEQxmejjfiZ74mkAjkCo2maRbTIQ1mzs
+ qHD3pUrN4KGLVlhj7CNXi5/ESDBYlwjf902QOprSa2TFTIkKcQeRBsM+xdndeFjE5p/xM6qTFNb
+ xLbUqv1Dmrh68xTEJSBIJ0JLyUWtOpf4D1s0/3Teeftd9aXMmDydNB0VU3F2Y
+X-Received: by 2002:a05:600c:46d4:b0:41f:e56c:ef81 with SMTP id
+ 5b1f17b1804b1-4212e0448admr58237495e9.1.1717365837725; 
+ Sun, 02 Jun 2024 15:03:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCVatZdqgJCSjoDjAECdvqnYzLD+JpNZ8eE+w4CM4r46MgCuz7VB6WyC6opgFoBhz0TcYhEA==
+X-Received: by 2002:a05:600c:46d4:b0:41f:e56c:ef81 with SMTP id
+ 5b1f17b1804b1-4212e0448admr58237255e9.1.1717365837182; 
+ Sun, 02 Jun 2024 15:03:57 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:950b:d4e:f17a:17d8:5699])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04ca9bbsm6343354f8f.31.2024.06.02.07.10.33
+ ffacd0b85a97d-35dd04cad2csm7066202f8f.36.2024.06.02.15.03.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jun 2024 07:10:34 -0700 (PDT)
-Date: Sun, 2 Jun 2024 10:10:31 -0400
+ Sun, 02 Jun 2024 15:03:56 -0700 (PDT)
+Date: Sun, 2 Jun 2024 18:03:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>
-Subject: Re: [PATCH intel_iommu 0/7] FLTS for VT-d
-Message-ID: <20240602100955-mutt-send-email-mst@kernel.org>
-References: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>, devel@lists.libvirt.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mads Ynddal <mads@ynddal.dk>, Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Igor Mammedov <imammedo@redhat.com>, Greg Kurz <groug@kaod.org>,
+ Yanan Wang <wangyanan55@huawei.com>, qemu-ppc@nongnu.org,
+ Eric Blake <eblake@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH 0/2] qapi: Remove deprecated events
+Message-ID: <20240602180336-mutt-send-email-mst@kernel.org>
+References: <20240530071548.20074-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240530071548.20074-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -101,51 +113,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 22, 2024 at 03:52:52PM +0000, CLEMENT MATHIEU--DRIF wrote:
-> This series is the first of a list that add support for SVM in the Intel IOMMU.
+On Thu, May 30, 2024 at 09:15:46AM +0200, Philippe Mathieu-Daudé wrote:
+> Remove MEM_UNPLUG_ERROR and 'vcpu' field in TRACE events,
+> all deprecated since long enough.
 > 
-> Here, we implement support for first-stage translation in VT-d.
-> The PASID-based IOTLB invalidation is also added in this series as it is a
-> requirement of FLTS.
-> 
-> The last patch introduces the 'flts' option to enable the feature from
-> the command line.
-> Once enabled, several drivers of the Linux kernel use this feature.
-> 
-> This work is based on the VT-d specification version 4.1 (March 2023)
-> 
-> Here is a link to a GitHub repository where you can find the following elements :
->     - Qemu with all the patches for SVM
->         - ATS
->         - PRI
->         - PASID based IOTLB invalidation
->         - Device IOTLB invalidations
->         - First-stage translations
->         - Requests with already translated addresses
->     - A demo device
->     - A simple driver for the demo device
->     - A userspace program (for testing and demonstration purposes)
-> 
-> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
+> Philippe Mathieu-Daudé (2):
+>   hw/acpi: Remove the deprecated QAPI MEM_UNPLUG_ERROR event
+>   trace: Remove deprecated 'vcpu' field from QMP trace events
 
-Pls post v2 addressing minor comments so far.
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
 
-> Clément Mathieu--Drif (7):
->   intel_iommu: fix FRCD construction macro.
->   intel_iommu: rename slpte to pte before adding FLTS
->   intel_iommu: make types match
->   intel_iommu: add support for first-stage translation
->   intel_iommu: extract device IOTLB invalidation logic
->   intel_iommu: add PASID-based IOTLB invalidation
->   intel_iommu: add a CLI option to enable FLTS
-> 
->  hw/i386/intel_iommu.c          | 655 ++++++++++++++++++++++++++-------
->  hw/i386/intel_iommu_internal.h | 114 ++++--
->  include/hw/i386/intel_iommu.h  |   3 +-
->  3 files changed, 609 insertions(+), 163 deletions(-)
+
+>  docs/about/deprecated.rst       | 16 ----------------
+>  docs/about/removed-features.rst | 15 +++++++++++++++
+>  qapi/machine.json               | 28 ----------------------------
+>  qapi/trace.json                 | 27 +++------------------------
+>  hw/acpi/memory_hotplug.c        |  8 --------
+>  hw/ppc/spapr.c                  | 11 +----------
+>  trace/qmp.c                     |  2 --
+>  trace/trace-hmp-cmds.c          |  4 ++--
+>  8 files changed, 21 insertions(+), 90 deletions(-)
 > 
 > -- 
-> 2.44.0
+> 2.41.0
 
 
