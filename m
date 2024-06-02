@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39A1C25B74
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 10:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D42EC25B74
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 12:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDibv-0006Fu-Jn; Sun, 02 Jun 2024 06:38:47 -0400
+	id 1sDk5y-000617-LG; Sun, 02 Jun 2024 08:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
- id 1sDibt-0006FL-P2; Sun, 02 Jun 2024 06:38:45 -0400
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
- id 1sDibs-0007CO-5w; Sun, 02 Jun 2024 06:38:45 -0400
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-5ba33b08550so238507eaf.2; 
- Sun, 02 Jun 2024 03:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717324721; x=1717929521; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/qTmOIQ5IR5TBp5xj+xfZSzNlH4qqX+SuA9WjRG9iTU=;
- b=WObwj31AO96863YzgEy00mPcgKVUjquQI5PRrKHZwZ57+fsgsCu8d1cclDtAm2sLpn
- IG/LkFOfKkH3I6I9vBuwojKR0maD7knsyW+5tiJYEl1+HOSsunrdvpIIMf/DpMs1UjYT
- TxSrbWaMpiIyvZ8qDQRpPIMquhngHnMXzBLCr1lfdI6TgGvqf2/G7BIh/kLyjp1gzuNj
- CdKVVmUdXVZHQ8DGBbr/sI82d2IX878564qSkj6vOSDdcynrMXLfGcpUVMRskq3JIUse
- 3+01dKtt5DZg0nvIDvh4mhTfE8035itBHg4bzuAgciU7tuPQ0imMlr/YRc6HoGFplA85
- pJwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717324721; x=1717929521;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/qTmOIQ5IR5TBp5xj+xfZSzNlH4qqX+SuA9WjRG9iTU=;
- b=k8yxWllX5xVAPkGDRgqQ2GM3B4RLgcD5FGSyQ7L4/qjlM317seOXNpnuzB/8/qXOdl
- 5uUKEJq8Tfk4jA9KZgUqcYbThbw2RoaQx0y+eUnnfSD6B32UjYG/9UFTiMd3x2TloRfz
- QxfElFc5jXS9p10GeBaqbWjx8eOGEwjrUjVdvPfgnvP0RLL/cJS/aLZI7UvBvydp3I2D
- fzPQkxERDf/fYr948hytecP3sEL9HbKCc/vqZ38jIJjt7+NIMbZBFruhFnQ6slxHhORf
- 7FwGl341HQ3vQdC11XRNGMpDNp8pbSTImmK6JXRqqIYyx14+KuN0aHRI8fUiXpvy7cos
- t5lw==
-X-Gm-Message-State: AOJu0Yzp1nqFL43NZvRblo3Qz5zobHMK0Sa0V6rlHQIqMeoKT+QYSTPi
- JcuF+oZtY/GZrdhAkWbZ5hslDkJx1JVJynul7Amj2lnvrsPWJp3bJUrBDRG4
-X-Google-Smtp-Source: AGHT+IEbiqQdI8bakaAcEHuL8vhD8kcBW48rft7J7MDpQkBzQyBwdSqwmdVnqqWRk0kb+qhNr8V7aw==
-X-Received: by 2002:a05:6358:9814:b0:199:3305:133b with SMTP id
- e5c5f4694b2df-19b490d65d4mr856515655d.31.1717324720908; 
- Sun, 02 Jun 2024 03:38:40 -0700 (PDT)
-Received: from wijungle.bbrouter ([183.83.54.202])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6c35629c3a1sm3821940a12.56.2024.06.02.03.38.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jun 2024 03:38:40 -0700 (PDT)
-From: Will Gyda <vilhelmgyda@gmail.com>
-To: qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sDk5w-00060r-HH; Sun, 02 Jun 2024 08:13:52 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sDk5u-0007ew-OD; Sun, 02 Jun 2024 08:13:52 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E314A6C530;
+ Sun,  2 Jun 2024 15:14:22 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B3293DDB4C;
+ Sun,  2 Jun 2024 15:13:37 +0300 (MSK)
+Message-ID: <7b93d09f-2926-4f44-9c67-591317eeef52@tls.msk.ru>
+Date: Sun, 2 Jun 2024 15:13:37 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386: removes microvm from default build since microvm
+ doesn't support Xen accel.
+To: Will Gyda <vilhelmgyda@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
  richard.henderson@linaro.org, eduardo@habkost.net,
- manos.pitsidianakis@linaro.org, Will Gyda <vilhelmgyda@gmail.com>
-Subject: [PATCH] i386: removes microvm from default build since microvm
- doesn't support Xen accel.
-Date: Sun,  2 Jun 2024 16:08:10 +0530
-Message-Id: <20240602103810.21356-1-vilhelmgyda@gmail.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=vilhelmgyda@gmail.com; helo=mail-oo1-xc2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ manos.pitsidianakis@linaro.org
+References: <20240602103810.21356-1-vilhelmgyda@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240602103810.21356-1-vilhelmgyda@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,40 +87,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-i386: removes microvm from default build since microvm doesn't support Xen accel.
+02.06.2024 13:38, Will Gyda wrote:
+> i386: removes microvm from default build since microvm doesn't support Xen accel.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2294
+Hm.  Maybe we should remove xen from default build instead?
 
-Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
+Thanks,
 
----
- configs/devices/i386-softmmu/default.mak | 1 -
- hw/i386/Kconfig                          | 2 ++
- 2 files changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-index 598c6646df..6f4f5ab9eb 100644
---- a/configs/devices/i386-softmmu/default.mak
-+++ b/configs/devices/i386-softmmu/default.mak
-@@ -29,4 +29,3 @@
- CONFIG_ISAPC=y
- CONFIG_I440FX=y
- CONFIG_Q35=y
--CONFIG_MICROVM=y
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index a6ee052f9a..95bcd922a5 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -108,6 +108,8 @@ config Q35
- 
- config MICROVM
-     bool
-+    default y
-+    depends on KVM || WHPX || NVMM || HVF || TCG
-     select SERIAL_ISA # for serial_hds_isa_init()
-     select ISA_BUS
-     select APIC
--- 
-2.25.1
-
+/mjt
 
