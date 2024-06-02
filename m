@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01552C25B74
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 13:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288EFC25B74
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 14:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDlRH-0002WE-Fg; Sun, 02 Jun 2024 09:39:59 -0400
+	id 1sDlv2-0001AQ-5i; Sun, 02 Jun 2024 10:10:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDlRG-0002Vy-CU
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 09:39:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDlv0-00019p-5a
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 10:10:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDlRF-0006uY-0I
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 09:39:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDlux-0004hZ-Qr
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 10:10:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717335594;
+ s=mimecast20190719; t=1717337438;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cXFYe5YnnJ4tEYsVSpcUbocr77FhC1YFieX/jzAHh4s=;
- b=EUFOB6YjgwURz0+5smjeCtu/aZsZieBcsdO2VR4LGf6vicAiIMVH7ibeEx8a7IgGdfPhri
- rImTcuM1mEI+noRs6Vpb8+amzm8OQRRkRaaNHbyXaQCnF4Bsw33LzCn7JhQgRCDLCPIgsr
- RFr61hoI63vQFoKrZ7CEQbWJAC0WHWU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N4m7KZ7ijFCzK+r3/bd7UTxW3HH4hYn4RHCVBdyXLZM=;
+ b=cJp1USw50jFvROSdxYE0lrvyvpphGr/7lkIMkUWkDgkQG5/ZtZCPi4EoGwcxl0FL/oUNo9
+ Vb0DlPg1ZcKf8yea7dyVCmLg4T6ZAyD5LNs+o+kGNtXOxAbTm7MgtyWfpu43XXaIxpOwkt
+ xvKyKATQjM3qjM9jdZ1nuOQyF8RVDzs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-21-pzVlczzNOVu0IM6FaAq8-g-1; Sun, 02 Jun 2024 09:39:50 -0400
-X-MC-Unique: pzVlczzNOVu0IM6FaAq8-g-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4212adbe3b6so17085855e9.2
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 06:39:49 -0700 (PDT)
+ us-mta-589-cjEtpNLcM7Gu88nqKPCY_g-1; Sun, 02 Jun 2024 10:10:36 -0400
+X-MC-Unique: cjEtpNLcM7Gu88nqKPCY_g-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35dcd645095so1847937f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 07:10:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717335589; x=1717940389;
+ d=1e100.net; s=20230601; t=1717337435; x=1717942235;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cXFYe5YnnJ4tEYsVSpcUbocr77FhC1YFieX/jzAHh4s=;
- b=BfXgyAjYgE0mqcOfvHlFy8aDahHVgBhyCB6wpNMGY4qGb2pAZPDOviNIPpScDgL2b6
- fBGd5+xJsWvyDpBqZHoindI3E+h4WqGusiAzyCUqb+bRGg5mwuFz/uro80tu5GJYRfMg
- R1gfrdeadLOR3hAqByoR7LLEeqi+8sK9ICmJJx7TgOnznN2gO0dsSrLUsj+eKE6I3oIW
- s8TcQ5mPvkan5pw0wiqGRJozIfdOG5kw/WWn/KeYdqA+Mrg0GoTNaMmUXGrM599kwKPU
- 8GJB7R++5bcZj+zHaOMlCEZCSA+Zuyilm1Jx8fGu8T3k/9ZVFfPBo46w6NxPGTpEgz5u
- Elsg==
-X-Gm-Message-State: AOJu0YxeOwmezsyKZEWKJI+PeYsH+Rdpjx8NxoQvrxyfkGuNhplv1U9o
- 3X9eOGnlC27riJ/YcR0wMKbYNDIm8Z+gqzmG24HpDmE9L1vdO3yoKtU1YrAhr0CzUIMow64c+9w
- XlxUwO3s13kauoWO8PlPJ8QnJ6C58O+1a3igHSy1VozDY2Htn64tA
-X-Received: by 2002:a05:600c:3143:b0:421:2a49:cf34 with SMTP id
- 5b1f17b1804b1-4212e04754bmr53154595e9.5.1717335588918; 
- Sun, 02 Jun 2024 06:39:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdt8SD29hCT2jwsPDkHIW///O6eVGTWrjiBxM/a9mO20444AJBLiT1vAVKZkEk9YrGMTT0mQ==
-X-Received: by 2002:a05:600c:3143:b0:421:2a49:cf34 with SMTP id
- 5b1f17b1804b1-4212e04754bmr53154485e9.5.1717335588368; 
- Sun, 02 Jun 2024 06:39:48 -0700 (PDT)
+ bh=N4m7KZ7ijFCzK+r3/bd7UTxW3HH4hYn4RHCVBdyXLZM=;
+ b=N4FeuyHS5mGImXNQ1WcYp+NfmjVImJH6lp+I/bzZ9xv4CBd6a5ItSSbMunztPnRR2V
+ E2IK4Lwr6kROe5qM067Due0M1u8ThwGcl2fkMdC3OFnCmzevdQtzonPxImPL7Q3tl3Wx
+ G8EstmUQGAY260I9cAbdiGb0lNSRXV6jowS1P1bZQuZZ1p8+CBp7mZW4K/NL63Z/g01w
+ mq4iVDNencgsMqj+Mdgg4r5UJk7IvIokoeKdg8cQveSNnwRRce3JwueTS5s1xblzFOmY
+ FBe9ZHJVbA3PLKKZyfgPj15AAW6rmmgh+dH2B9Q2Xi+3AbBQiA6Y9ieI2NHkvDtXsm+L
+ xGqw==
+X-Gm-Message-State: AOJu0YzV4uNNfSeB9+xZF2i/LEVDb3I0hqSFCzwYRSJPjQpX9gST0H72
+ mqthBj4DFrAfKZ5wbNmt/EUXGVgdA3ckba8sz4u0cVnhcRTuVhJw4j/P/zwoFHIdRvp6GaKzDC4
+ gTWUTa7ykcZ8B3JaiKonCTohrbWTTLNyDuVhUs9qETcpcbmVWi+e0
+X-Received: by 2002:a5d:4bc3:0:b0:354:f622:fc5b with SMTP id
+ ffacd0b85a97d-35e0f2712b8mr4541294f8f.23.1717337435575; 
+ Sun, 02 Jun 2024 07:10:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWmJK3IK4lbp0A62SqbFYHMaQPwWxDAAkA5YDn3B9U0vW+029+f9jKGdGkFyu6VVzMeqal/w==
+X-Received: by 2002:a5d:4bc3:0:b0:354:f622:fc5b with SMTP id
+ ffacd0b85a97d-35e0f2712b8mr4541277f8f.23.1717337434993; 
+ Sun, 02 Jun 2024 07:10:34 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:950b:d4e:f17a:17d8:5699])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42134f12e72sm52118145e9.34.2024.06.02.06.39.46
+ ffacd0b85a97d-35dd04ca9bbsm6343354f8f.31.2024.06.02.07.10.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jun 2024 06:39:47 -0700 (PDT)
-Date: Sun, 2 Jun 2024 09:39:44 -0400
+ Sun, 02 Jun 2024 07:10:34 -0700 (PDT)
+Date: Sun, 2 Jun 2024 10:10:31 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v4] hw/audio/virtio-snd: Always use little endian audio
- format
-Message-ID: <20240602093933-mutt-send-email-mst@kernel.org>
-References: <20240422211830.25606-1-philmd@linaro.org>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>
+Subject: Re: [PATCH intel_iommu 0/7] FLTS for VT-d
+Message-ID: <20240602100955-mutt-send-email-mst@kernel.org>
+References: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240422211830.25606-1-philmd@linaro.org>
+In-Reply-To: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -87,7 +85,7 @@ X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,49 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 22, 2024 at 11:18:30PM +0200, Philippe Mathieu-Daudé wrote:
-> The VIRTIO Sound Device conforms with the Virtio spec v1.2,
-> thus only use little endianness.
+On Mon, Apr 22, 2024 at 03:52:52PM +0000, CLEMENT MATHIEU--DRIF wrote:
+> This series is the first of a list that add support for SVM in the Intel IOMMU.
 > 
-> Remove the suspicious target_words_bigendian() noticed during
-> code review.
+> Here, we implement support for first-stage translation in VT-d.
+> The PASID-based IOTLB invalidation is also added in this series as it is a
+> requirement of FLTS.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> The last patch introduces the 'flts' option to enable the feature from
+> the command line.
+> Once enabled, several drivers of the Linux kernel use this feature.
+> 
+> This work is based on the VT-d specification version 4.1 (March 2023)
+> 
+> Here is a link to a GitHub repository where you can find the following elements :
+>     - Qemu with all the patches for SVM
+>         - ATS
+>         - PRI
+>         - PASID based IOTLB invalidation
+>         - Device IOTLB invalidations
+>         - First-stage translations
+>         - Requests with already translated addresses
+>     - A demo device
+>     - A simple driver for the demo device
+>     - A userspace program (for testing and demonstration purposes)
+> 
+> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
+
+Pls post v2 addressing minor comments so far.
 
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-> ---
-> Supersedes: <20240422142056.3023-1-philmd@linaro.org>
-> v4: always LE (MST)
-> ---
->  hw/audio/virtio-snd.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+> Clément Mathieu--Drif (7):
+>   intel_iommu: fix FRCD construction macro.
+>   intel_iommu: rename slpte to pte before adding FLTS
+>   intel_iommu: make types match
+>   intel_iommu: add support for first-stage translation
+>   intel_iommu: extract device IOTLB invalidation logic
+>   intel_iommu: add PASID-based IOTLB invalidation
+>   intel_iommu: add a CLI option to enable FLTS
 > 
-> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> index c80b58bf5d..ba4fff7302 100644
-> --- a/hw/audio/virtio-snd.c
-> +++ b/hw/audio/virtio-snd.c
-> @@ -24,7 +24,6 @@
->  #include "trace.h"
->  #include "qapi/error.h"
->  #include "hw/audio/virtio-snd.h"
-> -#include "hw/core/cpu.h"
->  
->  #define VIRTIO_SOUND_VM_VERSION 1
->  #define VIRTIO_SOUND_JACK_DEFAULT 0
-> @@ -401,7 +400,7 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
->      as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
->      as->fmt = virtio_snd_get_qemu_format(params->format);
->      as->freq = virtio_snd_get_qemu_freq(params->rate);
-> -    as->endianness = target_words_bigendian() ? 1 : 0;
-> +    as->endianness = 0; /* Conforming to VIRTIO 1.0: always little endian. */
->  }
->  
->  /*
+>  hw/i386/intel_iommu.c          | 655 ++++++++++++++++++++++++++-------
+>  hw/i386/intel_iommu_internal.h | 114 ++++--
+>  include/hw/i386/intel_iommu.h  |   3 +-
+>  3 files changed, 609 insertions(+), 163 deletions(-)
+> 
 > -- 
-> 2.41.0
+> 2.44.0
 
 
