@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B5D6C41513
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 02:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E147C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 02:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDxsd-0000zj-0o; Sun, 02 Jun 2024 22:57:03 -0400
+	id 1sDxsl-0001DG-Lq; Sun, 02 Jun 2024 22:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sDxsa-0000te-GC
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDxse-0000uk-Gk
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sDxZf-0004vx-9o
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:37:28 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDt9t-0000pM-LN
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 17:54:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717382244;
+ s=mimecast20190719; t=1717365272;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yXkJ6a26FL9O4rW4Q4H2yTH0zpT7k29h5h7l+WbSVAY=;
- b=J9T+dGMQytCcKCiFhO/PtlwVkH9li3bvGeFq8SQgA3ai0Awg/9znlAEfl36ukhtCTJBZSK
- jbhBw9eu37HHzag8e/GEcy/qZI45GIJFHPeqtPgYhJV7tIOrKXocIvbcxqVgmCQoR0m+sX
- VZa9fb/O6p3ld2vbIdwNjGK1Hmj5e0Q=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=U4ECqjVXffjOg0/v7j1YTUQn7WaQlZyvMmi41Udz+uU=;
+ b=MhODJsRRzu4BOyE0T4CifpP07oWdtRdBeeH3r25XdBu6gace5htIaTOY7Dmw1v2JVHKOBI
+ c/li5jSF6N9XnunAu1ACpgm1eSFgKe403UAJaVFRmH2p19FXskU5CSiNqyeAlwVbIDA+V4
+ W7QWTz8CWZuRnCk3CAAzsvFyHn8ouDA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-a-qohe0NNniZcPALz-fhKQ-1; Sun, 02 Jun 2024 22:37:23 -0400
-X-MC-Unique: a-qohe0NNniZcPALz-fhKQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35e4b4e0260so1116513f8f.0
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 19:37:23 -0700 (PDT)
+ us-mta-613-GCYOw8AZPWyDKKVCNQmltw-1; Sun, 02 Jun 2024 17:54:30 -0400
+X-MC-Unique: GCYOw8AZPWyDKKVCNQmltw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4212a20c447so17940835e9.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 14:54:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717382242; x=1717987042;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yXkJ6a26FL9O4rW4Q4H2yTH0zpT7k29h5h7l+WbSVAY=;
- b=tMIg9M2Cq3GIyUHbUOsBkf6mNrXWrblTyQ9xbUvR3SpO2u3mFb1DTmZwW/igQ+V4V1
- fiAFpxSURNHhB1/mqWT7bq9tuJlNVJqUWEtzzfJ+H0PMt4yEyg7TSBEZC3C7kLTgKuJQ
- C+GQSc1gzOfNwJYQOV9dgeILoZ3cGQlzHvXFaJ/VKj48LQ0i5NrN7nQXOSesyYibiLiL
- NOqhaDeJ3Q/v6u96KucbkAuZmLY75PgiMVGgkC3S4IvGnGrjOulqQQIvQkTTS4XWIzaD
- CkyDUl+3U7dSP770e/Y+AiVyAUJvAhnUOjC0k1oeC6f5Zz1uD3FT/SeUs/aO1yuxXM7L
- Cu/g==
+ d=1e100.net; s=20230601; t=1717365269; x=1717970069;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U4ECqjVXffjOg0/v7j1YTUQn7WaQlZyvMmi41Udz+uU=;
+ b=YnykLhAWKnWgNA0IwN3bMpAIEEFtfjWLKmO0wA9wtMbqwpwRCu6gV34pq8J9eprauw
+ Gp0f2vyPYI99FWO+GiU1TntRu6LgLzolBOqYtK4p1vfCSAswNAgQO4R2Yn9C5HRXls5f
+ zM4BvSwb/YfY0NwGPIrhD5+9gQJ1LaGSq8ZGQ++SdWQUzK89UPWk0o3+rPjxabfg1SXM
+ QvMQX3iiYuQ7LuOrbQnLqocWsHCZ6eKc3yMEk/pVXLkP5aPBFnQTyyTCdXyZi1kyNqRp
+ ShUJW7Wk4RV91lRTaONcP40MxMQMrJIXnr3WNsiQYpn9EgDwermYUlrpjr2bOBxVUNpw
+ K0kA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGStstEh6QMQTY1QC2vOrJOkqjIj7FCYGxVybR9en2SblDUDgIkOEvaoh/ujiff4abq13JVqE2k+et9bZwODIgHhOlY5w=
-X-Gm-Message-State: AOJu0YwAcTh5xMBWXYGYWG7dgdldBKVSsLahYqS02a/dLKJZq/u+1BI7
- 9nqnZqAh+2LBBU0ZHXeZFDbcVv/89E3FIwiTcLV492hvvtY3c8paRBH6uYYG0Io1hhG1PsrVWHW
- qUGHfNIrCU0eRsnPkL3zZsBhr6mQKSeLebPCAGjwdOh22Pq9p5VqBEt8E8FULUgVEBGdpVNEq7S
- TaZDcbPS8dRUy0IJn5nAGroAike5M=
-X-Received: by 2002:adf:fe4b:0:b0:354:f218:9661 with SMTP id
- ffacd0b85a97d-35e0f254fe4mr6322304f8f.14.1717382242098; 
- Sun, 02 Jun 2024 19:37:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoY1lDzfIiUZzi4NfH3m/2/nDfxj0KQygOIQT2F+ssNMGp159CKiFHJyT/PfA62LzFn6dFSAH5D/K/ibNxHoQ=
-X-Received: by 2002:adf:fe4b:0:b0:354:f218:9661 with SMTP id
- ffacd0b85a97d-35e0f254fe4mr6322295f8f.14.1717382241670; Sun, 02 Jun 2024
- 19:37:21 -0700 (PDT)
+ AJvYcCX6kz2uKHs0rInYbXu9IrqSxLtXaEYfv06bGiu6oDMR/arNRMBJEvmLlZQqfF/mjZDeU/jYgri1W18p/xjinco1mOJDdeg=
+X-Gm-Message-State: AOJu0Yz4puZnS7DqBVz6ca+nl2CTHrNj4X5J7yR+xtccZjSOuFQbw0sl
+ Ip1jyEW4DwFIaI6aDS/5SprX/e59NIoiDIUEy20ciZC11chmFUMwHXa4OipDdNE2t93IQ7EUbwe
+ sXsLlHSUU9LQXb1TQXTHYsORcLsY4fi+cYbNuCKWZXCN/t2pD0Shz
+X-Received: by 2002:a05:600c:468f:b0:420:1125:dd79 with SMTP id
+ 5b1f17b1804b1-4212e0ade24mr60834195e9.31.1717365269609; 
+ Sun, 02 Jun 2024 14:54:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyEVMoZD7tPXVQ6+xrVT/jfdCtxZsJMh7lPebp9vpIneGnqNLL/+66jG/7iFp/RcabPXD/Qw==
+X-Received: by 2002:a05:600c:468f:b0:420:1125:dd79 with SMTP id
+ 5b1f17b1804b1-4212e0ade24mr60834055e9.31.1717365268911; 
+ Sun, 02 Jun 2024 14:54:28 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:440:950b:d4e:f17a:17d8:5699])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35e4e29d4c9sm4241075f8f.85.2024.06.02.14.54.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 02 Jun 2024 14:54:28 -0700 (PDT)
+Date: Sun, 2 Jun 2024 17:54:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Chen, Zide" <zide.chen@intel.com>,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, thuth@redhat.com,
+ cfontana@suse.de, xiaoyao.li@intel.com, qemu-trivial@nongnu.org,
+ seanjc@google.com
+Subject: Re: [PATCH V2 0/3] improve -overcommit cpu-pm=on|off
+Message-ID: <20240602175358-mutt-send-email-mst@kernel.org>
+References: <20240524200017.150339-1-zide.chen@intel.com>
+ <20240528112327.634e95a6@imammedo.users.ipa.redhat.com>
+ <29944dba-7005-496d-81ff-1cbc77c67f15@intel.com>
+ <20240529144634.40aa597f@imammedo.users.ipa.redhat.com>
+ <898effa1-1a5b-42c0-9305-8db8d5febbf5@intel.com>
+ <ZliFJyRhnSVlNOYQ@intel.com>
+ <20240530164933.20e4e55d@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-References: <20240522051042.985825-1-lulu@redhat.com>
- <954a3d28-839a-4e62-b843-51d67f818396@proxmox.com>
-In-Reply-To: <954a3d28-839a-4e62-b843-51d67f818396@proxmox.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Mon, 3 Jun 2024 10:36:43 +0800
-Message-ID: <CACLfguXrW-Fvjj83g5u6sT5YMdg3tHeagihNaBVLk03iVokEFg@mail.gmail.com>
-Subject: Re: [PATCH] virtio-pci: Fix the use of an uninitialized irqfd.
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
- qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240530164933.20e4e55d@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -99,81 +109,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 9:54=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
-rote:
->
-> Hi,
->
-> Am 22.05.24 um 07:10 schrieb Cindy Lu:
-> > The crash was reported in MAC OS and NixOS, here is the link for this b=
-ug
-> > https://gitlab.com/qemu-project/qemu/-/issues/2334
-> > https://gitlab.com/qemu-project/qemu/-/issues/2321
-> >
-> > The root cause is that the function virtio_pci_set_guest_notifiers() on=
-ly
-> > initializes the irqfd when the use_guest_notifier_mask and guest_notifi=
-er_mask
-> > are set.
->
-> Sorry, I'm just trying to understand the fix and I'm probably missing
-> something, but in virtio_pci_set_guest_notifiers() there is:
->
-> >     bool with_irqfd =3D msix_enabled(&proxy->pci_dev) &&
-> >         kvm_msi_via_irqfd_enabled();
->
-> and then:
->
-> >     if ((with_irqfd ||
-> >          (vdev->use_guest_notifier_mask && k->guest_notifier_mask)) &&
-> >         assign) {
-> >         if (with_irqfd) {
-> >             proxy->vector_irqfd =3D
-> >                 g_malloc0(sizeof(*proxy->vector_irqfd) *
-> >                           msix_nr_vectors_allocated(&proxy->pci_dev));
-> >             r =3D kvm_virtio_pci_vector_vq_use(proxy, nvqs);
->
-> Meaning proxy->vector_irqfd is allocated when with_irqfd is true (even
-> if vdev->use_guest_notifier_mask && k->guest_notifier_mask is false).
->
-> > However, this check is missing in virtio_pci_set_vector().
-> > So the fix is to add this check.
-> >
-> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
-> >
-> > The bt tree for this bug is:
-> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-> > kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c=
-:817
-> > 817       if (irqfd->users =3D=3D 0) {
->
-> The crash happens because the irqfd is NULL/invalid here, right?
->
-> proxy->vector_irqfd =3D NULL happens when virtio_pci_set_guest_notifiers(=
-)
-> is called with assign=3Dfalse or for an unsuccessful call to
-> virtio_pci_set_guest_notifiers() with assign=3Dtrue.
->
-> AFAIU, the issue is that virtio_pci_set_vector() is called between a
-> call to virtio_pci_set_guest_notifiers() with assign=3Dfalse and a
-> successful virtio_pci_set_guest_notifiers() with assign=3Dtrue (or before
-> the first such call).
->
-> So I'm trying to understand why adding the check for
-> vdev->use_guest_notifier_mask && k->guest_notifier_mask is sufficient to
-> fix the issue. Thanks!
->
-> Best Regards,
-> Fiona
->
-Thanks, Fiona. You are correct. I have rechecked the call trace, and
-it seems that the virtio_pci_set_guest_notifiers was not called at all
-for this device. I mistook the calling for another device with the
-calling for this one.
-I will send a new version
-Thanks
-Cindy
->
+On Thu, May 30, 2024 at 04:49:33PM +0200, Igor Mammedov wrote:
+> On Thu, 30 May 2024 21:54:47 +0800
+> Zhao Liu <zhao1.liu@intel.com> wrote:
+> 
+> > Hi Zide,
+> > 
+> > On Wed, May 29, 2024 at 10:31:21AM -0700, Chen, Zide wrote:
+> > > Date: Wed, 29 May 2024 10:31:21 -0700
+> > > From: "Chen, Zide" <zide.chen@intel.com>
+> > > Subject: Re: [PATCH V2 0/3] improve -overcommit cpu-pm=on|off
+> > > 
+> > > 
+> > > 
+> > > On 5/29/2024 5:46 AM, Igor Mammedov wrote:  
+> > > > On Tue, 28 May 2024 11:16:59 -0700
+> > > > "Chen, Zide" <zide.chen@intel.com> wrote:
+> > > >   
+> > > >> On 5/28/2024 2:23 AM, Igor Mammedov wrote:  
+> > > >>> On Fri, 24 May 2024 13:00:14 -0700
+> > > >>> Zide Chen <zide.chen@intel.com> wrote:
+> > > >>>     
+> > > >>>> Currently, if running "-overcommit cpu-pm=on" on hosts that don't
+> > > >>>> have MWAIT support, the MWAIT/MONITOR feature is advertised to the
+> > > >>>> guest and executing MWAIT/MONITOR on the guest triggers #UD.    
+> > > >>>
+> > > >>> this is missing proper description how do you trigger issue
+> > > >>> with reproducer and detailed description why guest sees MWAIT
+> > > >>> when it's not supported by host.    
+> > > >>
+> > > >> If "overcommit cpu-pm=on" and "-cpu host" are present, as shown in the  
+> > > > it's bette to provide full QEMU CLI and host/guest kernels used and what
+> > > > hardware was used if it's relevant so others can reproduce problem.  
+> > > 
+> > > I ever reproduced this on an older Intel Icelake machine, a
+> > > Sapphire Rapids and a Sierra Forest, but I believe this is a x86 generic
+> > > issue, not specific to particular models.
+> > > 
+> > > For the CLI, I think the only command line options that matter are
+> > >  -overcommit cpu-pm=on: to set enable_cpu_pm
+> > >  -cpu host: so that cpu->max_features is set
+> > > 
+> > > For QEMU version, as long as it's after this commit: 662175b91ff2
+> > > ("i386: reorder call to cpu_exec_realizefn")
+> > > 
+> > > The guest fails to boot:
+> > > 
+> > > [ 24.825568] smpboot: x86: Booting SMP configuration:
+> > > [ 24.826377] .... node #0, CPUs: #1 #2 #3 #4 #5 #6 #7 #8 #9 #10 #11 #12
+> > > #13 #14 #15 #17
+> > > [ 24.985799] .... node #1, CPUs: #128 #129 #130 #131 #132 #133 #134 #135
+> > > #136 #137 #138 #139 #140 #141 #142 #143 #145
+> > > [ 25.136955] invalid opcode: 0000 1 PREEMPT SMP NOPTI
+> > > [ 25.137790] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.8.0 #2
+> > > [ 25.137790] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+> > > rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/04
+> > > [ 25.137790] RIP: 0010:mwait_idle+0x35/0x80
+> > > [ 25.137790] Code: 6f f0 80 48 02 20 48 8b 10 83 e2 08 75 3e 65 48 8b 15
+> > > 47 d6 56 6f 48 0f ba e2 27 72 41 31 d2 48 89 d8
+> > > [ 25.137790] RSP: 0000:ffffffff91403e70 EFLAGS: 00010046
+> > > [ 25.137790] RAX: ffffffff9140a980 RBX: ffffffff9140a980 RCX:
+> > > 0000000000000000
+> > > [ 25.137790] RDX: 0000000000000000 RSI: ffff97f1ade21b20 RDI:
+> > > 0000000000000004
+> > > [ 25.137790] RBP: 0000000000000000 R08: 00000005da4709cb R09:
+> > > 0000000000000001
+> > > [ 25.137790] R10: 0000000000005da4 R11: 0000000000000009 R12:
+> > > 0000000000000000
+> > > [ 25.137790] R13: ffff98573ff90fc0 R14: ffffffff9140a038 R15:
+> > > 0000000000093ff0
+> > > [ 25.137790] FS: 0000000000000000(0000) GS:ffff97f1ade00000(0000)
+> > > knlGS:0000000000000000
+> > > [ 25.137790] CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> > > [ 25.137790] CR2: ffff97d8aa801000 CR3: 00000049e9430001 CR4:
+> > > 0000000000770ef0
+> > > [ 25.137790] DR0: 0000000000000000 DR1: 0000000000000000 DR2:
+> > > 0000000000000000
+> > > [ 25.137790] DR3: 0000000000000000 DR6: 00000000ffff07f0 DR7:
+> > > 0000000000000400
+> > > [ 25.137790] PKRU: 55555554
+> > > [ 25.137790] Call Trace:
+> > > [ 25.137790] <TASK>
+> > > [ 25.137790] ? die+0x37/0x90
+> > > [ 25.137790] ? do_trap+0xe3/0x110
+> > > [ 25.137790] ? mwait_idle+0x35/0x80
+> > > [ 25.137790] ? do_error_trap+0x6a/0x90
+> > > [ 25.137790] ? mwait_idle+0x35/0x80
+> > > [ 25.137790] ? exc_invalid_op+0x52/0x70
+> > > [ 25.137790] ? mwait_idle+0x35/0x80
+> > > [ 25.137790] ? asm_exc_invalid_op+0x1a/0x20
+> > > [ 25.137790] ? mwait_idle+0x35/0x80
+> > > [ 25.137790] default_idle_call+0x30/0x100
+> > > [ 25.137790] cpuidle_idle_call+0x12c/0x170
+> > > [ 25.137790] ? tsc_verify_tsc_adjust+0x73/0xd0
+> > > [ 25.137790] do_idle+0x7f/0xd0
+> > > [ 25.137790] cpu_startup_entry+0x29/0x30
+> > > [ 25.137790] rest_init+0xcc/0xd0
+> > > [ 25.137790] start_kernel+0x396/0x5d0
+> > > [ 25.137790] x86_64_start_reservations+0x18/0x30
+> > > [ 25.137790] x86_64_start_kernel+0xe7/0xf0
+> > > [ 25.137790] common_startup_64+0x13e/0x148
+> > > [ 25.137790] </TASK>
+> > > [ 25.137790] Modules linked in:
+> > > [ 25.137790] --[ end trace 0000000000000000 ]--
+> > > [ 25.137790] invalid opcode: 0000 2 PREEMPT SMP NOPTI
+> > > [ 25.137790] RIP: 0010:mwait_idle+0x35/0x80
+> > > [ 25.137790] Code: 6f f0 80 48 02 20 48 8b 10 83 e2 08 75 3e 65 48 8b 15
+> > > 47 d6 56 6f 48 0f ba e2 27 72 41 31 d2 48 89 d8
+> > >   
+> > > >   
+> > > >> following, CPUID_EXT_MONITOR is set after x86_cpu_filter_features(), so
+> > > >> that it doesn't have a chance to check MWAIT against host features and
+> > > >> will be advertised to the guest regardless of whether it's supported by
+> > > >> the host or not.
+> > > >>
+> > > >> x86_cpu_realizefn()
+> > > >>   x86_cpu_filter_features()
+> > > >>   cpu_exec_realizefn()
+> > > >>     kvm_cpu_realizefn
+> > > >>       host_cpu_realizefn
+> > > >>         host_cpu_enable_cpu_pm
+> > > >>           env->features[FEAT_1_ECX] |= CPUID_EXT_MONITOR;
+> > > >>
+> > > >>
+> > > >> If it's not supported by the host, executing MONITOR or MWAIT
+> > > >> instructions from the guest triggers #UD, no matter MWAIT_EXITING
+> > > >> control is set or not.  
+> > > > 
+> > > > If I recall right, kvm was able to emulate mwait/monitor.
+> > > > So question is why it leads to exception instead?  
+> > > 
+> > > KVM can come to play only iff it can trigger MWAIT/MONITOR VM exits. I
+> > > didn't find explicit proof from Intel SDM that #UD exceptions take
+> > > precedence over MWAIT/MONITOR VM exits, but this is my speculation. For
+> > > example, in ancient machines which don't support MWAIT yet, the only way
+> > > it can do is #UD, not MWAIT VM exit?  
+> > 
+> > For the Host which doesn't support MWAIT, it shouldn't have the VMX
+> > control bit for mwait exit either, right?
+> > 
+> > Could you pls check this on your machine? If VMX doesn't support this
+> > exit event, then triggering an exception will make sense.
+> 
+> My assumption (probably wrong) was that KVM would emulate mwait if it's unavailable,
+
+
+emulating mwait correctly is very hard. KVM does not try.
+
+> unless we have KVM_CAP_X86_DISABLE_EXITS enabled. And in the later case it would
+> explode as expected, however then we shouldn't be able to set KVM_CAP_X86_DISABLE_EXITS
+> to begin with.
+> 
+> Recently Sean posted a patch related to that
+> [PATCH v2 12/49] KVM: x86: Reject disabling of MWAIT/HLT interception when not allowed
+>   https://lkml.org/lkml/2024/5/17/729
+> 
+> This needs someone with KVM expertise to chime in
+> Perhaps Paolo/Sean could clarify expected behavior.
+> 
+> 
+> > 
+> > -Zhao
+> > 
 
 
