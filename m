@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E35C25B74
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 06:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4321BC25B74
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 06:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDeMp-00041S-OF; Sun, 02 Jun 2024 02:06:55 -0400
+	id 1sDeQn-00058d-TA; Sun, 02 Jun 2024 02:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sDeMn-00040W-Cf
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:06:53 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1sDeQl-00057u-7P
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:10:59 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sDeMl-0006gZ-L0
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:06:53 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-6f12ed79fdfso1988798a34.0
- for <qemu-devel@nongnu.org>; Sat, 01 Jun 2024 23:06:50 -0700 (PDT)
+ id 1sDeQj-0007AX-Jc
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 02:10:58 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1f44b42e9a6so25871845ad.0
+ for <qemu-devel@nongnu.org>; Sat, 01 Jun 2024 23:10:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717308410; x=1717913210;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717308656; x=1717913456;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cF7VGwzZSATJd42Bnpu8IHS9TDK3nVYlsIF3O02zmLs=;
- b=bSU7Ev22vG0fTgpVh8Z4hLtM58d0RSqerJjvNWYAvQ1j6U7Obf4078BqXZ0S5mRyho
- bwbF5LIeL0wxZ1y0zyLi+9PMXgWELWcnDmWgV8yWWLGTyRx7PLA/gRdJoZJXx/qlQSQv
- Ef2Y9XX40zc2tZNoxY4XVRsu+Ooh/AXRXBr1WaC4ykCbjYtybEy8wBAHig/H/amPUcDy
- iBYTN+6A2UzeHLsBdXiNcOQ1v7ZR4XF9BitE/zZZB+/upU9LAItxxJpz8VJUfESgV4hq
- Xc0fTMhB5fipyYhhu3lkmkIQtHS8AIGekBf/aL4fDEOchYFC0gVnigr/N08g98aY5DhA
- BFeQ==
+ bh=voDRJVjzQNSxWDJC8y9qDc/zY+viPyBzYvA73adSijY=;
+ b=gbRC8vKi3qk9O1njBXv7xBEKnff+Ua0MKmhq7DPZ7m/KMRDHCXtQXHocqDQXDKuBLA
+ 5pNW47/OiomtbcHQ5OPSuBEwWM20//F5IrSMpJlpFg3+8nZJ/c3SWuRAXQwGIBPRATK0
+ 1bxgrlz51sEauwIYYbBqZ/eTECeyJO15R/zsbZHPuvztXdoyfQ+Hz7lolnFeQchl2jZM
+ l5nKAD1fSz3m1oOUN58OzxPKnkwnwvD9kATgZdFhVGJMs5UM8p+2KbL7PDUe0T6Fc1sS
+ 9551jwJKXpD8MWUHghDmCy8kfpAQUUcrhRaL38i6orjXRyHx9C8xrpHzV1S8VV6ilkmF
+ ppSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717308410; x=1717913210;
+ d=1e100.net; s=20230601; t=1717308656; x=1717913456;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cF7VGwzZSATJd42Bnpu8IHS9TDK3nVYlsIF3O02zmLs=;
- b=usdyWJERi3I0fs6wMxct+LgajwNXNe+Wj25/pFvFdGCI055x54WAsfx5c3JXOaaHTP
- jgB1DFA/Tjs6k3EgXOzWOJ/Uf5LZiThOWl2kSmlzWJQHMwjRsU61jnqyBEp7+YedOsgU
- sk3jlv4oZkYtu+XBUBoscaqIMAb2sFopxkWNeMgM/I6rfBmbqpSDjUZbSS0zRx2mjKqs
- w96XIIWKRGmMZKtMj8SPA2E26jEiL0Bfy6P7+WulxZ688iNGiXpTijX4bDBCKFtyCN7n
- 6lL8CMiyFtt41xi6Jql/+Sc3y9zNw6XQvzei46x9mfOj9CuNwKbOMQ5LwM/WfmtBQc8q
- RyMA==
+ bh=voDRJVjzQNSxWDJC8y9qDc/zY+viPyBzYvA73adSijY=;
+ b=HQb9iaZhEX7tjufObXirjf4hnpp3iQV/vJT2Q0bVwV3L9LvRK+IpWcFlOSFHnUXTuo
+ OaUgSOZ2MyLCQo0Q1M4Lx7i/2FMzOZ+7v49Acjc7/7k8gS64X3jHGwCiHTjjQ3CNqqJ1
+ MpSmsbkgfUz1fQHS2+KkETyvl0BHW9thZyG9DkIxIFCpnNYDAHMuNofWcfI6VOlshddW
+ aqQTkYDFQCi7ex7oKtRq0U4K8XcoFX/a0RsAhkWf7IzdVtneq6R/DJothNv+1zJRGd3r
+ Tww7FbwdTyvhgdplM+baUvP1CwCbJa9yMDNm5NmDu+q1tHUcc7aKlixXBfAngYtB09ys
+ USQw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5cztzqWTh1UomQjG+ZlvTy4narNQvIR9iyOlnzjn4QuSjXHNXGwhPxmv2ebh0A+YcbFnVsocVObr2KeNW8rWi+zSQrxQ=
-X-Gm-Message-State: AOJu0YyhOdeffwIQWEYoVuK5jMrYUaErrgFHoSEAnogX51cuwyJo5xpK
- KEnlBCoWW5ib15D8rTbDOR54I13bEpf7KwRuZieDhxguanz4bhfAx8VycaYGQEo=
-X-Google-Smtp-Source: AGHT+IE0s5CDnzGuWOXxShnw5Jw3G+pEM9TELOZfsBDSwFin2zzweAHLnYbsRXyTn6YaxdjziZ8IjA==
-X-Received: by 2002:a9d:6f8a:0:b0:6f0:616f:f186 with SMTP id
- 46e09a7af769-6f911fa4adfmr7211201a34.29.1717308409847; 
- Sat, 01 Jun 2024 23:06:49 -0700 (PDT)
+ AJvYcCWHR6/nuEhAKv8QCsud1EYabHB89ram6App/E/Zoa7kCxWEwwuTFV2TOZ6C6F4r+rxhuv5jtHT0HvFIj2MQ7QmSlUheM3k=
+X-Gm-Message-State: AOJu0Yx4rtP1zPPEC4S84TwzK89Kid/PMQcsH3d0gTEwxP53UUafsxl2
+ TH42PJ3KHw9GPcwa02v0fVAJRL04zGEdIZtRqt2k0E2do+3z1YoEty5YFNSQ15Vc9PcyFJpWaW5
+ k6zc=
+X-Google-Smtp-Source: AGHT+IGgL/yId8FDUmuvMfbeolUbTSJH4MqB2WtK5sago1yTPD/7SZrdKSWT9lK51zcV8P06XDc0CA==
+X-Received: by 2002:a17:902:d48a:b0:1f6:5893:d6ae with SMTP id
+ d9443c01a7336-1f65893d994mr25000845ad.50.1717308655937; 
+ Sat, 01 Jun 2024 23:10:55 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6c3540f55fcsm3466214a12.12.2024.06.01.23.06.48
+ d9443c01a7336-1f6342c6acfsm41967265ad.265.2024.06.01.23.10.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 01 Jun 2024 23:06:49 -0700 (PDT)
-Message-ID: <37ab9076-e555-4693-9e86-e3ac86dfae5e@daynix.com>
-Date: Sun, 2 Jun 2024 15:06:47 +0900
+ Sat, 01 Jun 2024 23:10:55 -0700 (PDT)
+Message-ID: <c845165a-ef63-4174-b18d-51031b29503a@daynix.com>
+Date: Sun, 2 Jun 2024 15:10:53 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 1/5] meson: move shared_module() calls where
- modules are already walked
+Subject: Re: [RFC PATCH v2 2/5] meson: move block.syms dependency out of
+ libblock
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240527104937.30443-1-pbonzini@redhat.com>
- <20240527104937.30443-2-pbonzini@redhat.com>
+ <20240527104937.30443-3-pbonzini@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240527104937.30443-2-pbonzini@redhat.com>
+In-Reply-To: <20240527104937.30443-3-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::332;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x332.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,8 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/05/27 19:49, Paolo Bonzini wrote:
+ >On 2024/05/27 19:49, Paolo Bonzini wrote:
+> In order to define libqemuutil symbols that are requested by block modules,
+> QEMU currently uses a combination of the "link_depends" argument of
+> libraries (which is propagated into dependencies, but not available in
+> dependencies) and the "link_args" argument of declare_dependency()
+> (which _is_ available in static_library, but probably not used for
+> historical reasons only).
+> 
+> Unfortunately the link_depends will not be propagated into the
+> "block" dependency if it is defined using
+> declare_dependency(objects: ...); and it is not possible to
+> add it directly to the dependency because the keyword argument
+> simply is not available.
+> 
+> The only solution, in order to switch to defining the dependency
+> without using "link_whole" (which has problems of its own, see
+> https://github.com/mesonbuild/meson/pull/8151#issuecomment-754796420),
+> is unfortunately to add the link_args and link_depends to the
+> executables directly; fortunately there is just four of them.
+> 
+> It is possible (and I will look into it) to add "link_depends"
+> to declare_dependency(), but it probably will be a while before
+> QEMU can use it.
+> 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+This is not ideal but I think is good enough.
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
