@@ -4,68 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1EDFC25B74
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 09:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 279AAC25B74
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Jun 2024 10:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDhTg-000518-J2; Sun, 02 Jun 2024 05:26:12 -0400
+	id 1sDi65-0004LB-LB; Sun, 02 Jun 2024 06:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sDhTf-00050n-LL
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 05:26:11 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sDhTd-0004Gd-Bc
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 05:26:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717320370; x=1748856370;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=0C/xZryNFc0TrM/AngUrcE9gU/qdXFZTvfiIOP+xTa0=;
- b=bqsSalLEhG1+UrUPQbTxy2wnLgjWmtv5loE3UM83MxMU3HxKohtro9BZ
- eIJOGj4gPdj8T/9bddjwqN2ypXY63wBXL3oYPy3bEQCO5xMM5Kww3MATz
- tYZCTH0rWHbdWg6BrltUwOtnOnNVCcF0x2+B1CjkyrFqU1C8/Lxx8GoXa
- Bc28ZbGEVGRUH729lo+tAl/8FfjNI9EOLfB2tcFk1k6BB7Srz8sD8v8EW
- Xd/wdsTnuYRM9wta7M7p+7rQX3Rc8PEEGtp9uCNCrp3K2QPDxxCrIxYul
- xSJIRNzDmTCcRft/lYwdakQoWOvwieNrWAjYDCXyEfZjLwjNELAKo01kG Q==;
-X-CSE-ConnectionGUID: IrJpHwsOSViZ29ii37u7CA==
-X-CSE-MsgGUID: XzwAXxTuS2+01RmMV1RRug==
-X-IronPort-AV: E=McAfee;i="6600,9927,11090"; a="25223956"
-X-IronPort-AV: E=Sophos;i="6.08,209,1712646000"; d="scan'208";a="25223956"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2024 02:26:07 -0700
-X-CSE-ConnectionGUID: 7MjO5vmLSoSTMxu1SO8o0g==
-X-CSE-MsgGUID: W/7mPZEhTtWE+dF4eq5bKg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,209,1712646000"; d="scan'208";a="41028388"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa005.fm.intel.com with ESMTP; 02 Jun 2024 02:26:06 -0700
-Date: Sun, 2 Jun 2024 17:41:31 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/6] meson: assume x86-64-v2 baseline ISA
-Message-ID: <Zlw+S1RlXwxLovGu@intel.com>
-References: <20240531091457.42200-1-pbonzini@redhat.com>
- <20240531091457.42200-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <lixinyu20s@ict.ac.cn>)
+ id 1sDi61-0004K5-Ry
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 06:05:50 -0400
+Received: from smtp84.cstnet.cn ([159.226.251.84] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <lixinyu20s@ict.ac.cn>)
+ id 1sDi5z-0001Ns-3S
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 06:05:49 -0400
+Received: from lxy-MS-7D25.loongson.cn (unknown [114.242.206.180])
+ by APP-05 (Coremail) with SMTP id zQCowACnNBLoQ1xmCG3sDg--.50475S2;
+ Sun, 02 Jun 2024 18:05:28 +0800 (CST)
+From: lixinyu20s@ict.ac.cn
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ Xinyu Li <lixinyu@loongson.cn>, Xinyu Li <lixinyu20s@ict.ac.cn>
+Subject: [PATCH] target/i386: fix memory opsize for Mov to/from Seg
+Date: Sun,  2 Jun 2024 18:05:28 +0800
+Message-Id: <20240602100528.2135717-1-lixinyu20s@ict.ac.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240531091457.42200-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.041,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowACnNBLoQ1xmCG3sDg--.50475S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zr1rXry5WryrZr4xWF17ZFb_yoW5JF45pF
+ 9rCry8trs7ZFW8A34fCF4DJr1UJwn5KF4Ik3WSvrs5XF93tw1Yq3WYvr4kWFyrAay8K34x
+ twn09rW7Aay8JwUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUkm14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+ 6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r
+ 4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
+ Yx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbV
+ WUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lw4CEc2x0rVAK
+ j4xxMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
+ 0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y
+ 0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
+ IxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfUeEfOUUUUU
+X-Originating-IP: [114.242.206.180]
+X-CM-SenderInfo: pol0x0t1xsi2g6lf3hldfou0/
+Received-SPF: pass client-ip=159.226.251.84; envelope-from=lixinyu20s@ict.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,52 +74,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 31, 2024 at 11:14:53AM +0200, Paolo Bonzini wrote:
-> Date: Fri, 31 May 2024 11:14:53 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 2/6] meson: assume x86-64-v2 baseline ISA
-> X-Mailer: git-send-email 2.45.1
-> 
-> x86-64-v2 processors were released in 2008, assume that we have one.
-> Unfortunately there is no GCC flag to enable all the features
-> without disabling what came after; so enable them one by one.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  meson.build | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 63866071445..19d1fc1f33b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -336,9 +336,13 @@ if host_arch == 'i386' and not cc.links('''
->    qemu_common_flags = ['-march=i486'] + qemu_common_flags
->  endif
->  
-> -# ??? Only extremely old AMD cpus do not have cmpxchg16b.
-> -# If we truly care, we should simply detect this case at
-> -# runtime and generate the fallback to serial emulation.
-> +# Assume x86-64-v2 (minus CMPXCHG16B for 32-bit code)
+From: Xinyu Li <lixinyu@loongson.cn>
 
-Is it necessary to state the requirement (x86-64-v2) for x86 host in
-some doc?
+This commit fixes an issue with MOV instructions (0x8C and 0x8E)
+involving segment registers by explicitly setting the memory operand
+size to 16 bits. It introduces a new flag X86_SPECIAL_MovSeg to handle
+this specification correctly.
 
-e.g., docs/system/target-i386.rst.
+Signed-off-by: Xinyu Li <lixinyu20s@ict.ac.cn>
+---
+ target/i386/tcg/decode-new.c.inc | 12 ++++++++++--
+ target/i386/tcg/decode-new.h     |  2 ++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-> +if host_arch == 'i386'
-> +  qemu_common_flags = ['-mfpmath=sse'] + qemu_common_flags
-> +endif
-> +if host_arch in ['i386', 'x86_64']
-> +  qemu_common_flags = ['-mpopcnt', '-msse4.2'] + qemu_common_flags
-> +endif
->  if host_arch == 'x86_64'
->    qemu_common_flags = ['-mcx16'] + qemu_common_flags
->  endif
-> -- 
-> 2.45.1
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 0ec849b003..ab7dbb45f9 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -202,6 +202,7 @@
+ #define avx_movx .special = X86_SPECIAL_AVXExtMov,
+ #define sextT0 .special = X86_SPECIAL_SExtT0,
+ #define zextT0 .special = X86_SPECIAL_ZExtT0,
++#define movseg .special = X86_SPECIAL_MovSeg,
+ 
+ #define vex1 .vex_class = 1,
+ #define vex1_rep3 .vex_class = 1, .vex_special = X86_VEX_REPScalar,
+@@ -1576,9 +1577,9 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x89] = X86_OP_ENTRY3(MOV, E,v, G,v, None, None),
+     [0x8A] = X86_OP_ENTRY3(MOV, G,b, E,b, None, None),
+     [0x8B] = X86_OP_ENTRY3(MOV, G,v, E,v, None, None),
+-    [0x8C] = X86_OP_ENTRY3(MOV, E,v, S,w, None, None),
++    [0x8C] = X86_OP_ENTRY3(MOV, E,v, S,w, None, None, movseg),
+     [0x8D] = X86_OP_ENTRY3(LEA, G,v, M,v, None, None, noseg),
+-    [0x8E] = X86_OP_ENTRY3(MOV, S,w, E,v, None, None),
++    [0x8E] = X86_OP_ENTRY3(MOV, S,w, E,v, None, None, movseg),
+     [0x8F] = X86_OP_GROUPw(group1A, E,v),
+ 
+     [0x98] = X86_OP_ENTRY1(CBW,    0,v), /* rAX */
+@@ -2514,6 +2515,13 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+         s->override = -1;
+         break;
+ 
++    case X86_SPECIAL_MovSeg:
++        if (decode.op[0].unit == X86_OP_INT && decode.op[0].has_ea) {
++            decode.op[0].ot = MO_16;
++        } else if (decode.op[1].unit == X86_OP_INT && decode.op[1].has_ea) {
++            decode.op[1].ot = MO_16;
++        }
++
+     default:
+         break;
+     }
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 51ef0e621b..f29f5de7d1 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -203,6 +203,8 @@ typedef enum X86InsnSpecial {
+     /* When loaded into s->T0, register operand 1 is zero/sign extended.  */
+     X86_SPECIAL_SExtT0,
+     X86_SPECIAL_ZExtT0,
++    /* Memory operand size of Mov to/from Seg is MO_16 */
++    X86_SPECIAL_MovSeg,
+ } X86InsnSpecial;
+ 
+ /*
+-- 
+2.34.1
 
 
