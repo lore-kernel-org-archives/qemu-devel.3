@@ -4,80 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8CFC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46415C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEA49-0001BD-6G; Mon, 03 Jun 2024 11:57:45 -0400
+	id 1sEA4z-0001tZ-Hp; Mon, 03 Jun 2024 11:58:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEA46-0001AN-BY
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:57:42 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sEA4x-0001tC-7l
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:58:36 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEA44-00061m-54
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:57:42 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-35b6467754cso44359f8f.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:57:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sEA4v-00066F-GC
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:58:34 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-57a4ea806a5so1116777a12.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717430258; x=1718035058; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pfqXv9O156k/qVlRPORBHveRYZBimdALutURsiXGVic=;
- b=xoH/PTVoIlBAmJmYWvFdpafjBiCjGzRiQ+GBgZdFKEOfUhc0X7H+Mha70vpRC17PCW
- mipqiN3rVnSZA8FUlRHG9axjoNGzWiUjqLsAO6J4BQj4OOIgnWsOPk4S/FPdKlJQpT4w
- sJ22oZNsJQ0AVeIXVhX4yV9k92Xb9y98kiFqj/RPKrEd88m5fzMjQ4lxH05JNef6op50
- ogBqiKPBTQJqtB0FdtOiFCiSIlCU1L4kacB3oTOmpQJd44RQrqmiatVjbfBHEONJfrrr
- 0TEIlsWKf3L8nITlypkpRO3XBa/u73hGWuuE0PkfcRN5YrPWScEObLRl1WZMGmxb3d+j
- 2/5Q==
+ d=linaro.org; s=google; t=1717430312; x=1718035112; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IkXRBjCiVwBNove+mdDr2vPl3be9oKjqSGBYIbA6FPg=;
+ b=SP7zlKFN6qY3yXpscfQuegl6LiZLA21tC0mr6lsJ9jdWF4wVtc4jzZsqviQiqJqy0E
+ sA2/rNZMDfnZ/T5mNqVuvSNZB3D9qG1VE+z7E34nsCjfEXUiNX8/wTWrUAysHxd4XPgB
+ eIjpRBosg+QOz/KTiooaWXIU6zc7zb0W/+/pOwkWUUni5yo9GcRhvPORNp9DF6O2vtsg
+ fyt7SptRL863pmUcx62WUKJLv2PH4MZ6PDsnWueo22wm0I7FEMIek1EnrYlaf6BeNjd2
+ c7w6KcJ/nBvfIdwMA+/2PWdmUsLT+CI3pdpEDJa7iw/3ljKHnSe45yB0t9J4v97jegNW
+ T0TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717430258; x=1718035058;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pfqXv9O156k/qVlRPORBHveRYZBimdALutURsiXGVic=;
- b=eO6KdmGikP2N4YMOWbhi4KF9r5jUQdiHZ/qboVB4owxNQ7rIJ0R9aae0fnVlvttt6l
- ZJuWkrzV/GzvwR3agCzqQfY/RX2QiO8YVvjyAiuFMmIbaHdYXot/ZjeZTFlyqWM88shU
- a0959UPI/a/gfvg7z0vVhwuml4mYwF900vIAjc5lGNGwmLI40iOKh8eOVn6T/UtvGN30
- tNxl+8Pq5wRT5EPhdSAt733t0rFA11D7qny1h4zcAwwdblNGMBEnp2ooeWccaNuvKEW9
- 6LTeOv6ZkfY58KZN1vrPZSFI27FbAhlGo+O7GPVrx6l9z3poZ4zh+2TnFVZC5kJFOwHt
- EIsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdciSLTGXgMOgjCnAhXHMB72SYCB0qnVLNjoG30CvRl8hb54Lx+DNVcqBoBjQKGm8ZqTA32MopSYEmFjFOwbSf9iMe4/A=
-X-Gm-Message-State: AOJu0YxtK99GRdiveIYWyzorRUX20XNsyeJDwXDuiXAzujDBe6I4PSiF
- gy74wkGSWBBwp0LJKmS1HdZc53cvTTwqHvd++JVi8NvKl9uxDlUl8nTdaKnFrIw=
-X-Google-Smtp-Source: AGHT+IG0AwImAZQCWL5EcwF+xN/h0jceBRg8jiE8riT+hg2DO7rDBxMnf5lD3Tad7RQSC7AjUj7+Fw==
-X-Received: by 2002:a5d:5272:0:b0:354:de21:2145 with SMTP id
- ffacd0b85a97d-35e0f271297mr7022282f8f.22.1717430258024; 
- Mon, 03 Jun 2024 08:57:38 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.241])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd0667366sm8975604f8f.111.2024.06.03.08.57.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 08:57:37 -0700 (PDT)
-Message-ID: <abf1c6da-71fe-483d-8edb-0ebfef14dbcc@linaro.org>
-Date: Mon, 3 Jun 2024 17:57:35 +0200
+ d=1e100.net; s=20230601; t=1717430312; x=1718035112;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IkXRBjCiVwBNove+mdDr2vPl3be9oKjqSGBYIbA6FPg=;
+ b=DGxSZoigaCg+PJSUydIADrBh5vUgjsCqXejrw6I3v5pLuyb+VDn3k73AIV2U+e3tAk
+ gY3b0+eTGorGDPV5VZzjJAssuD2hq7yn0unKmeBJrFC4bqdHNTd0zWvSvQwbFDIU3eRR
+ RLhhJZESPIIlLy4+5aVOOSKfNdF/+yXymMFP7HKY+S2w2PXisOLGu3yFsWJvn0YFkI+C
+ zqvrE0EFtcbaPp9ECDqJJnihFLEEhpZo42SxGg4MXN+WgFkltLpOt+44lD+AoZ5h0S9a
+ r6V6XoLrjClwU1HvVK1UC0x68nGOo+Nlmp7O04UuQp7UHgyYd6pkdMyjHF9Vv29lCCK/
+ MW8A==
+X-Gm-Message-State: AOJu0Yy7gNQe/gGQWOAt6IbpXqHzz8kECMZBAtzmJ9lAG6rSfVtTkXeg
+ e89XLyLLMbmCNCtwWcZ2bB3Ku8xtN1pw5+5Z1O4s8hyWSC5As5DFesqYSwXxQaVxxg3c2qq0ILl
+ k24g8eePMtn8ARkoSFE7j+dcfQw8CETWeiSAoO44SCDiAA8oZ
+X-Google-Smtp-Source: AGHT+IH49fHT4T9opNCEvfUOtOF2UPYMkgdmUHgcy3Ln4fnpE/wwJwjEgNdiJo6825yatzI3QJFhFBNDF2EV4jUb8U8=
+X-Received: by 2002:a50:9548:0:b0:578:63c3:dfd0 with SMTP id
+ 4fb4d7f45d1cf-57a363a3456mr7923576a12.24.1717430311652; Mon, 03 Jun 2024
+ 08:58:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/8] xen: mapcache: Make MCACHE_BUCKET_SHIFT runtime
- configurable
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-References: <20240529140739.1387692-1-edgar.iglesias@gmail.com>
- <20240529140739.1387692-2-edgar.iglesias@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240529140739.1387692-2-edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+References: <20240530125744.1985487-1-gaosong@loongson.cn>
+In-Reply-To: <20240530125744.1985487-1-gaosong@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 3 Jun 2024 16:58:20 +0100
+Message-ID: <CAFEAcA_L=WKSRTF7EhW8DEO1=c+KF=NTx4tHVMh2HwNgLnvJ_g@mail.gmail.com>
+Subject: Re: [PATCH] tests/avocado: Update LoongArch bios file
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, thuth@redhat.com, clg@redhat.com, 
+ maobibo@loongson.cn
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +88,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/5/24 16:07, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Make MCACHE_BUCKET_SHIFT runtime configurable per cache instance.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+On Thu, 30 May 2024 at 13:59, Song Gao <gaosong@loongson.cn> wrote:
+>
+> The VM uses old bios to boot up only 1 cpu, causing the test case to fail.
+> Update the bios to solve this problem.
+>
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->   hw/xen/xen-mapcache.c | 54 ++++++++++++++++++++++++++-----------------
->   1 file changed, 33 insertions(+), 21 deletions(-)
+>  tests/avocado/machine_loongarch.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tests/avocado/machine_loongarch.py b/tests/avocado/machine_loongarch.py
+> index 7d8a3c1fa5..12cc5ed814 100644
+> --- a/tests/avocado/machine_loongarch.py
+> +++ b/tests/avocado/machine_loongarch.py
+> @@ -38,7 +38,7 @@ def test_loongarch64_devices(self):
+>
+>          bios_url = ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+>                      'releases/download/binary-files/QEMU_EFI.fd')
+> -        bios_hash = ('dfc1bfba4853cd763b9d392d0031827e8addbca8')
+> +        bios_hash = ('f4d0966b5117d4cd82327c050dd668741046be69')
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This doesn't look right -- the file has the same URL but a different
+hash. This causes problems because the test suite on older
+versions of QEMU (eg our stable branches) will still be using
+this same URL but the old hash. So instead of running the test with
+the old BIOS version as they should, they'll skip the test if Avocado
+doesn't have the old file in its content cache.
 
+Is it possible for this test to use a file which doesn't change
+its contents arbitrarily? e.g. some fixed released version with
+a version number. Then if we need to use a newer BIOS version
+we can update both the bios_url and the bios_hash, and the
+old stable branches will continue to use the old URL and hash
+to download the old version they expect.
+
+(I just got kind of confused by this because my local system
+has a copy of the old asset in its avocado cache, so the
+test case fails for me locally, but it didn't get caught by
+the gitlab CI because the gitlab CI happened not to have cached
+the asset.)
+
+thanks
+-- PMM
 
