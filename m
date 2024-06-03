@@ -4,92 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF6FC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE46BC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5vX-0001tp-KA; Mon, 03 Jun 2024 07:32:35 -0400
+	id 1sE5vv-0002Qi-Bq; Mon, 03 Jun 2024 07:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE5vW-0001tT-6p
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:32:34 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE5vH-0001p6-VK
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:32:33 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-35e4d6f7c5cso1727159f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:32:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717414337; x=1718019137; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zc9dnUNQyUzt2UeUZeAUDqEBBcpVb/Y5MKMH1YkpR4E=;
- b=WsSnhsLpeRVJT5znThSKVi6eKckln3Y8skBag6eVMnUQoKpqIrM4XB89kKq3eMZuOL
- FLQTYYtSle3fxsjwAhNdyPR3q9MFpNi27sNEsRXgTWnhyjITBJmLEtfWGAYR6WDNNZiy
- FLomMZuj5XEWUcJEqhhVV1nPBC5+TepDx+pJth9xt16fPtNhjXSCYJBiuQPijrxwK6PR
- uaOt8U+/8YhtLLLNoC6IVixSv6Jol5Wz6styEElxwbrKV/xJyKySho8dK3/H2lfYOJ5p
- FEq95rW7fmp1erjY82WtBAk30UtBBGw+v6QFdqpFeifJz0wC8qgO4S5yIjXEgGMCmQ7+
- wxQw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sE5vs-0002Q6-RP
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:32:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sE5vh-0001t2-0k
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:32:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717414364;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IddhYRwfNp0Iv6OVqlMM8dW7bdY2npUpHIFGUauKeoA=;
+ b=ZFcndT5deiTM1nOMANKAdRfwwNwZ+v7sEa5RPxDyfgBnRWyG94WDevhW1Ja3ebGkLXMGzK
+ 7czVC5zhvTXPBXWatLOPvrTlpyXtZLSABNbZBT3oQYeBOZeki9340WVxVAmVX4y6r4XWyE
+ CEaf6tsSi9qViscxVyyWKpJvQCoKvjk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-450-TYMHOflDNEyaq2PcDRh4fw-1; Mon, 03 Jun 2024 07:32:43 -0400
+X-MC-Unique: TYMHOflDNEyaq2PcDRh4fw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42120e123beso37561405e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:32:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717414337; x=1718019137;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zc9dnUNQyUzt2UeUZeAUDqEBBcpVb/Y5MKMH1YkpR4E=;
- b=vc2PxNbZyPjc0pVAtZJCCAP/ifLInSWcadlx8rDmgvNiBLEsP+N31cF9nuEzFue2l5
- jIktVZxvA4MvXKcV87A8XYoAJPrIuQEuAYo9QozRovdxgANKgWdZkFfvLVDO+KronayT
- E1a6IjbgjAQ0yHbFeC8Fo9UqEUrpjvuXZsQsezntgt6vjixgBqTQwPg7qU/PUa7dyFOn
- Crd0z5I9lAM62BE3n72uxR9YleTnIJAvSnZhj+YL8vEcoqBVc/gPuIsSWuEAAH85bGte
- p/qocZ+CUxz91hKzHC0EFNVrh9A9TPzXUA+IkgyqFX7t/pEXzYcpAsMUNEZ5EjfnkbhU
- N2Mg==
+ d=1e100.net; s=20230601; t=1717414362; x=1718019162;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IddhYRwfNp0Iv6OVqlMM8dW7bdY2npUpHIFGUauKeoA=;
+ b=aSYPwSBb0itLEhI5qLT+KHJvADq/Nyszl3tiBvPRrrf/baHVb8VzLsF8rsLathX/BB
+ 1lNc0yKMcnNPLXPLhikOLwJPu8Nml1OvVKyUg9inuh9prXkug/qGHGUKGcj94ldJOknp
+ RlL633VcLyL6fBE1kwUCMF2CGoEN5zoxFWPW57AaMG25BirQCr/uMQf30E8Dq9ktu0FV
+ mbN30HeoOQ03gt59wKeHVRxhjmo75p+9njGjOZANbvD32SwfIJqGzica7IXqav5C+Mxd
+ 8exBbzom1Mt+NG+Wh7X9CkFackvFeHaIp0GHpe6wiKkPchsKDiwjGvqHEfvQIgmyQsV8
+ JowQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzAH4OUJN0WnxSErPxO6HrVro6fDa81/WAa06inr1DxLFA0htyVQtFRlVxtCbRvSRLU+ex5t3s7M2wLVQFSkHmr+6XMU8=
-X-Gm-Message-State: AOJu0YzWWVwd1bpfmlxCtIAnqYIroWMIUxLqNlqtxCcmJBMbjSe1A+hX
- iRmdejt1/09pXJUmtEyHCSp3bDhwMrOS3wLjc8XmW3EkvvjQCUXbGO3rMuR1fYE=
-X-Google-Smtp-Source: AGHT+IE/YpvUfIOJP5e8RV1C3I7r5Ot4Zty+YzGXVW8+OgUuDk4621Iwh9rhWh0uApX5LDLZgen26w==
-X-Received: by 2002:adf:ed43:0:b0:351:d338:d9e9 with SMTP id
- ffacd0b85a97d-35e0f30b2c7mr6556047f8f.48.1717414336741; 
- Mon, 03 Jun 2024 04:32:16 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.241])
+ AJvYcCXeCMRWe1ZnO1kdYA+7bVE7V7ciIEkzpannlwOM1acI6T1RFaR0ji/wJMuEIo/x+JjNvum6KyoIXPRGt0Z/xuOEs0CTz2c=
+X-Gm-Message-State: AOJu0Yzo7WBwEqAH+bwCka5nevXs5CPd7LlQu6+p+RTdip5ugfoXx/Al
+ fZuR4WGGdbQ+BBJUgSndGWYofs8Wnx+toZ/2Z2T1VqzAP1fTgD8gnG4v7sJmFDxzKa9LHUsUVuX
+ j8MbWW1DMisq4tV0bkb6bd0cVn/aAl1qEYBFDQEKne9GdkO7ZhqAe
+X-Received: by 2002:a05:600c:4744:b0:421:2990:7f9b with SMTP id
+ 5b1f17b1804b1-4212e050597mr92771395e9.14.1717414361884; 
+ Mon, 03 Jun 2024 04:32:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtqTdEYm3rApdycw42Nu4OrKrShGiDK3mZ+oVY+AHZ55KgaAFBBS678LScviNqVRlX7bOZBg==
+X-Received: by 2002:a05:600c:4744:b0:421:2990:7f9b with SMTP id
+ 5b1f17b1804b1-4212e050597mr92771195e9.14.1717414361536; 
+ Mon, 03 Jun 2024 04:32:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04caea8sm8523079f8f.28.2024.06.03.04.32.14
+ 5b1f17b1804b1-4212f0f9660sm104391905e9.39.2024.06.03.04.32.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 04:32:15 -0700 (PDT)
-Message-ID: <2e7de177-0bc1-4771-bd90-ee46c6ef2c33@linaro.org>
-Date: Mon, 3 Jun 2024 13:32:13 +0200
+ Mon, 03 Jun 2024 04:32:41 -0700 (PDT)
+Message-ID: <d25fc439-c201-4331-9fb2-d62b37d371b1@redhat.com>
+Date: Mon, 3 Jun 2024 13:32:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] hw/core: expand on the alignment of CPUState
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Reinoud Zandijk
- <reinoud@netbsd.org>, kvm@vger.kernel.org,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20240530194250.1801701-1-alex.bennee@linaro.org>
- <20240530194250.1801701-2-alex.bennee@linaro.org>
+Subject: Re: [PATCH v6 11/19] backends/iommufd: Implement
+ HostIOMMUDeviceClass::get_cap() handler
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240530194250.1801701-2-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
+ <20240603061023.269738-12-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240603061023.269738-12-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,18 +109,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/5/24 21:42, Alex Bennée wrote:
-> Make the relationship between CPUState, ArchCPU and cpu_env a bit
-> clearer in the kdoc comments.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   include/hw/core/cpu.h | 14 ++++++++++----
->   1 file changed, 10 insertions(+), 4 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+On 6/3/24 08:10, Zhenzhong Duan wrote:
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  backends/iommufd.c | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+>
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index c7e969d6f7..f2f7a762a0 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -230,6 +230,28 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>      return true;
+>  }
+>  
+> +static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+> +{
+> +    HostIOMMUDeviceCaps *caps = &hiod->caps;
+> +
+> +    switch (cap) {
+> +    case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
+> +        return caps->type;
+> +    case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+> +        return caps->aw_bits;
+> +    default:
+> +        error_setg(errp, "Not support get cap %x", cap);
+can't you add details about the faulting HostIOMMUDevice by tracing the
+devid for instance?
+
+I would rephrase the error message into No support for capability 0x%x
+
+Eric
+> +        return -EINVAL;
+> +    }
+> +}
+> +
+> +static void hiod_iommufd_class_init(ObjectClass *oc, void *data)
+> +{
+> +    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+> +
+> +    hioc->get_cap = hiod_iommufd_get_cap;
+> +};
+> +
+>  static const TypeInfo types[] = {
+>      {
+>          .name = TYPE_IOMMUFD_BACKEND,
+> @@ -246,6 +268,7 @@ static const TypeInfo types[] = {
+>      }, {
+>          .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
+>          .parent = TYPE_HOST_IOMMU_DEVICE,
+> +        .class_init = hiod_iommufd_class_init,
+>          .abstract = true,
+>      }
+>  };
 
 
