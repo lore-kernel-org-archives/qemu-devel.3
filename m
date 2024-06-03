@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A3CC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 21:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E70C5C27C50
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 21:31:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEF8m-0006Wz-Vj; Mon, 03 Jun 2024 17:22:52 -0400
+	id 1sEFFj-00089C-IX; Mon, 03 Jun 2024 17:30:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3JjReZgUKCkEwdylsjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--tavip.bounces.google.com>)
- id 1sEF8l-0006WR-IR
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 17:22:51 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3JjReZgUKCkEwdylsjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--tavip.bounces.google.com>)
- id 1sEF8j-0007kO-B9
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 17:22:51 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-df4da3446beso7756589276.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 14:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1717449766; x=1718054566; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=4Lg4xUM17oschW62JzPfhAYzJugfbWUqBce9stAiuRo=;
- b=yPlwM436wr8sYWKtax78YuR7u9xOKGk6XrJSYmzo89OJUe8ote8NCNg52tBBuqkBIQ
- JxfHYivFEWElSouEy1j3l/s1fYucKl9U/p1z0Z/5SSH33EItcw7n+EEXjsgGxVXjb9py
- Gjca9mtU1jxXFpJ54Qs4zSnxAP03Fmh3KIUNzhN7hsLcH7liMrJrf0cuY5bqQWOYPWIZ
- 4s18KBPIl/NhmcWeBQzbIf74kWM47tHr5T6U3MBRPfKnsqevqASchPBA4kUnjObH6i2T
- zJXdA6uiZ+TQkKpfSv3hA54v2kytX9jgMGxKpu1PPYG7SgWGditau9rCRFbf5rwzyD5Y
- 9+XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717449766; x=1718054566;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4Lg4xUM17oschW62JzPfhAYzJugfbWUqBce9stAiuRo=;
- b=VBELlwXVoBZUQa9BV0zR0TDC9eYrHbSZLuTMITFGgrxS8eR+l4B1e+/5D50ASxm/Eh
- BdFAydQFyczyy3MCjhPin/LbXJwCkD6/FeoUnRg4yfuJVKONf7hy7/qgGRgLNrw6h5Mu
- xFBSmG4PdDX2LzHdLqyJl2W94N/EqFwR+tcM77H7nQ5pxMymD4RhAUXT6jrOBoj0XA4k
- lPJhBFvjiqj2t2m8vfpvn45gi3jSH9v4mOgKOXDdz+CPVx7+CMVmXv87KLnG9kqxNW7x
- 7yXNg38uDKJHFbk2wlV3harkU07/InMHtIkdHHI0+WqOnHS8Fk4KNo4ZPnDq1R1RPOTS
- 1Xmg==
-X-Gm-Message-State: AOJu0YxdZyVqKS0i6N53P98z+9XPEPKMIVneB7udLEFoOW3Oinjs6PpG
- veTN5V69zDegkMOcYDk/zA2K1+Bps83tWIlPErxPLqGHzob1djyahfaD8fqZDVhEy7hj3+7dQnS
- LioTa3Yo5t6ir6pbxYNkZUwXzjbXfPbE6RLccVZ/t+jIq5z15wEeD5EUKLNVaDEafWGw9aI/JkL
- rcxtKAqG6a3ce2W0adZCy1jLwfmw==
-X-Google-Smtp-Source: AGHT+IHyCWu+p9clRn9FYP9k6mmVjwhU2ESyR+xKfOc/Nxcu7XbGLqOE/J+O4lGO84hjI8kb8/lykM2aog==
-X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6902:72d:b0:dfa:b3bf:b073
- with SMTP id
- 3f1490d57ef6-dfab3bfb23fmr353615276.11.1717449766226; Mon, 03 Jun 2024
- 14:22:46 -0700 (PDT)
-Date: Mon,  3 Jun 2024 14:22:28 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
-Message-ID: <20240603212228.3878836-1-tavip@google.com>
-Subject: [PATCH v2] chardev: add path option for pty backend
-From: Octavian Purdila <tavip@google.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com, 
- peter.maydell@linaro.org, berrange@redhat.com, 
- Octavian Purdila <tavip@google.com>, Paulo Neves <ptsneves@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3JjReZgUKCkEwdylsjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--tavip.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sEFFh-00086b-Ej; Mon, 03 Jun 2024 17:30:01 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sEFFc-0003ru-MC; Mon, 03 Jun 2024 17:30:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717450197; x=1748986197;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=VzeRhduJXAMHwgPv4IodJdT3npCdvAf3Es2E0Nm3+xg=;
+ b=d7Z+e+A8TRBFm2XBNtLDs9tKNhRjD3E7S4enlQPj73N6ZcYHr+q80AU9
+ 7QYaKsKMWe6vrKy+mBZLFQD7H1voJr7u0bl/kE4vIyF80wMewrLR5/asy
+ lX9W0OWAwDkK34AKyvRSSqJFYRlABymlmsHLTnM910/DLqA8npIhbBIUk
+ GJ/rhNrhCaXOE9a6aKpHVI2ptIuoKC2trwv1l2S3aT+9iSzOe8o1d9Bmo
+ d0YQCtrJenha2tn8DMAm5rq8vUgiFA7FACq0aNnJLCpYigGHVj6n0dY3M
+ EgHw+ZwS5/E+3MpPQabt3Jlupa8VgQAxoEbKZVjheCGhoAnuFGTWHD9fb g==;
+X-CSE-ConnectionGUID: 39smioQRRICq6FZK5eBY0w==
+X-CSE-MsgGUID: dM74MweBQayXzTIC2Cu4Kw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11092"; a="31468492"
+X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; d="scan'208";a="31468492"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2024 14:29:52 -0700
+X-CSE-ConnectionGUID: thMFGwvEQaeX0bZtl83uWg==
+X-CSE-MsgGUID: 3XAG7ifMT6GIVNoz7oLxcw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; d="scan'208";a="41433109"
+Received: from soc-cp83kr3.jf.intel.com (HELO [10.24.10.62]) ([10.24.10.62])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2024 14:29:51 -0700
+Message-ID: <dcd913cd-10ce-45c9-9ed8-79b9c42c234b@intel.com>
+Date: Mon, 3 Jun 2024 14:29:50 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 2/3] target/i386: call cpu_exec_realizefn before
+ x86_cpu_filter_features
+To: Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
+ qemu-trivial@nongnu.org, Sean Christopherson <seanjc@google.com>
+References: <20240524200017.150339-1-zide.chen@intel.com>
+ <20240524200017.150339-3-zide.chen@intel.com> <ZlluoKXUF6ctecVt@intel.com>
+ <04d3dfd8-93d2-493d-82d1-8fbcad6ecd22@intel.com> <Zls9v9mg17SXZhO7@intel.com>
+ <20240603113022.6569043b@imammedo.users.ipa.redhat.com>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20240603113022.6569043b@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,221 +87,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add path option to the pty char backend which will create a symbolic
-link to the given path that points to the allocated PTY.
 
-This avoids having to make QMP or HMP monitor queries to find out what
-the new PTY device path is.
 
-Based on patch from Paulo Neves:
+On 6/3/2024 2:30 AM, Igor Mammedov wrote:
+> On Sat, 1 Jun 2024 23:26:55 +0800
+> Zhao Liu <zhao1.liu@intel.com> wrote:
+> 
+>> On Fri, May 31, 2024 at 10:13:47AM -0700, Chen, Zide wrote:
+>>> Date: Fri, 31 May 2024 10:13:47 -0700
+>>> From: "Chen, Zide" <zide.chen@intel.com>
+>>> Subject: Re: [PATCH V2 2/3] target/i386: call cpu_exec_realizefn before
+>>>  x86_cpu_filter_features
+>>>
+>>> On 5/30/2024 11:30 PM, Zhao Liu wrote:  
+>>>> Hi Zide,
+>>>>
+>>>> On Fri, May 24, 2024 at 01:00:16PM -0700, Zide Chen wrote:  
+>>>>> Date: Fri, 24 May 2024 13:00:16 -0700
+>>>>> From: Zide Chen <zide.chen@intel.com>
+>>>>> Subject: [PATCH V2 2/3] target/i386: call cpu_exec_realizefn before
+>>>>>  x86_cpu_filter_features
+>>>>> X-Mailer: git-send-email 2.34.1
+>>>>>
+>>>>> cpu_exec_realizefn which calls the accel-specific realizefn may expand
+>>>>> features.  e.g., some accel-specific options may require extra features
+>>>>> to be enabled, and it's appropriate to expand these features in accel-
+>>>>> specific realizefn.
+>>>>>
+>>>>> One such example is the cpu-pm option, which may add CPUID_EXT_MONITOR.
+>>>>>
+>>>>> Thus, call cpu_exec_realizefn before x86_cpu_filter_features to ensure
+>>>>> that it won't expose features not supported by the host.
+>>>>>
+>>>>> Fixes: 662175b91ff2 ("i386: reorder call to cpu_exec_realizefn")
+>>>>> Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>> Signed-off-by: Zide Chen <zide.chen@intel.com>
+>>>>> ---
+>>>>>  target/i386/cpu.c         | 24 ++++++++++++------------
+>>>>>  target/i386/kvm/kvm-cpu.c |  1 -
+>>>>>  2 files changed, 12 insertions(+), 13 deletions(-)
+>>>>>
+>>>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>>>> index bc2dceb647fa..a1c1c785bd2f 100644
+>>>>> --- a/target/i386/cpu.c
+>>>>> +++ b/target/i386/cpu.c
+>>>>> @@ -7604,6 +7604,18 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>>>>>          }
+>>>>>      }
+>>>>>  
+>>>>> +    /*
+>>>>> +     * note: the call to the framework needs to happen after feature expansion,
+>>>>> +     * but before the checks/modifications to ucode_rev, mwait, phys_bits.
+>>>>> +     * These may be set by the accel-specific code,
+>>>>> +     * and the results are subsequently checked / assumed in this function.
+>>>>> +     */
+>>>>> +    cpu_exec_realizefn(cs, &local_err);
+>>>>> +    if (local_err != NULL) {
+>>>>> +        error_propagate(errp, local_err);
+>>>>> +        return;
+>>>>> +    }
+>>>>> +
+>>>>>      x86_cpu_filter_features(cpu, cpu->check_cpuid || cpu->enforce_cpuid);  
+>>>>
+>>>> For your case, which sets cpu-pm=on via overcommit, then
+>>>> x86_cpu_filter_features() will complain that mwait is not supported.
+>>>>
+>>>> Such warning is not necessary, because the purpose of overcommit (from
+>>>> code) is only to support mwait when possible, not to commit to support
+>>>> mwait in Guest.
+>>>>
+>>>> Additionally, I understand x86_cpu_filter_features() is primarily
+>>>> intended to filter features configured by the user,   
+>>>
+>>> Yes, that's why this patches intends to let x86_cpu_filter_features()
+>>> filter out the MWAIT bit which is set from the overcommit option.  
+>>
+>> HMM, but in fact x86_cpu_filter_features() has already checked the MWAIT
+>> bit set by "-overcommit cpu-pm=on". ;-)
+>>
+>> (Pls correct me if I'm wrong) Revisiting what cpu-pm did to MWAIT:
+>> * Firstly, it set MWAIT bit in x86_cpu_expand_features():
+>>   x86_cpu_expand_features()
+>>      -> x86_cpu_get_supported_feature_word()
+>>         -> kvm_arch_get_supported_cpuid()  
+>>  This MWAIT is based on Host's MWAIT capability. This MWAIT enablement
+>>  is fine for next x86_cpu_filter_features() and x86_cpu_filter_features()
+>>  is working correctly here!
+>>
+>> * Then, MWAIT was secondly set in host_cpu_enable_cpu_pm() regardless
+>>   neither Host's support or previous MWAIT enablement result. This is
+>>   the root cause of your issue.
+>>
+>> Therefore, we should make cpu-pm honor his first MWAIT enablement result
+>> instead of repeatly and unconditionally setting the MWAIT bit again in
+>> host_cpu_enable_cpu_pm().
+>>
+>> Additionally, I think the code in x86_cpu_realizefn():
+>>   cpu->mwait.ecx |= CPUID_MWAIT_EMX | CPUID_MWAIT_IBE;
+>> has the similar issue because it also should check MWAIT feature bit.
+>>
+>> Further, it may be possible to remove cpu->mwait: just check the MWAIT
+>> bit in leaf 5 of cpu_x86_cpuid(), and if MWAIT is present, use host's
+>> mwait info plus CPUID_MWAIT_EMX | CPUID_MWAIT_IBE.
+> 
+> Agreed with above analysis,
+> we shouldn't have host_cpu_enable_cpu_pm() as kvm_arch_get_supported_cpuid
+> gets us MWAIT already.
 
-https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmail.com/
+Yes, I agree don't need to set CPUID_EXT_MONITOR besides
+kvm_arch_get_supported_cpuid().
 
-Tested with the following invocations that the link is created and
-removed when qemu stops:
+> 
+> filling in cpu->mwait.ecx is benign mistake which likely doesn't
+> trigger anything if CPUID_EXT_MONITOR is not present.
+> But for clarity it's better to add an explicit check there as well.
 
-  qemu-system-x86_64 -nodefaults -mon chardev=compat_monitor \
-  -chardev pty,path=test,id=compat_monitor0
+Yes, I agree without MWAIT available and advertised, it's meaningless to
+set the EMX and IBE bits. Seems to me it's cleaner to remove cpu->mwait
+all together, and in cpu_x86_cpuid(), just read from host_cpuid(5) if
+MWAIT is available to the guest. But I don't understand the history of
+why QEMU unconditionally advertises these two bits, and don't know it it
+could break some thing if these two bits are removed.
 
-  qemu-system-x86_64 -nodefaults -monitor pty:test
+Even if we want to fix these two bits, we can do it in another separate
+patch.
 
-Also tested that when a link path is not passed invocations still work, e.g.:
+e737b32a36 (" Core 2 Duo specification (Alexander Graf).")
+unconditionally adds "CPUID_MWAIT_EMX | CPUID_MWAIT_IBE" to CPUID.5.ECX
+with further explanation.
 
-  qemu-system-x86_64 -monitor pty
+2266d44311 ("i386/cpu: make -cpu host support monitor/mwait") adds
+comment "We always wake on interrupt even if host does not have the
+capability" to CPUID_MWAIT_IBE.
 
-Co-authored-by: Paulo Neves <ptsneves@gmail.com>
-Signed-off-by: Paulo Neves <ptsneves@gmail.com>
-[OP: rebase and address original patch review comments]
-Signed-off-by: Octavian Purdila <tavip@google.com>
----
-Changes since v1:
 
- * Keep the original Signed-off-by from Paulo and add one line
-    description with further changes
+> 
+>>
+>>>> and the changes of
+>>>> CPUID after x86_cpu_filter_features() should by default be regarded like
+>>>> "QEMU knows what it is doing".  
+>>>
+>>> Sure, we can add feature bits after x86_cpu_filter_features(), but I
+>>> think moving cpu_exec_realizefn() before x86_cpu_filter_features() is
+>>> more generic, and actually this is what QEMU did before commit 662175b91ff2.
+>>>
+>>> - Less redundant code. Specifically, no need to call
+>>> x86_cpu_get_supported_feature_word() again.
+>>> - Potentially there could be other features could be added from the
+>>> accel-specific realizefn, kvm_cpu_realizefn() for example.  And these
+>>> features need to be checked against the host availability.  
+>>
+>> Mainly I don't think this reorder is a direct fix for the problem (I
+>> just analyse it above), also in your case x86_cpu_filter_features() will
+>> print a WARNING when QEMU boots, which I don't think is cpu-pm's intention.
+> 
+> There is no problem with warning, I'd even say it's a good thing.
 
- * Update commit message with justification for why the new
-    functionality is useful
+I agree it's good to have the warning as well.
 
- * Don't close master_fd when symlink creation fails to avoid double
-    close
+> But you are right reordering just masks the issue.
+> 
+> As for expected behavior, if user asked for "-overcommit cpu-pm=on"
+> there are 2 options:
+>    * it's working as expected (mwait exiting is enabled successfully with CPUID MONITOR bit set)
+>    * QEMU shall fail to start.
 
- * Update documentation for clarity
+I like the idea that QEMU refuses to launch the guest if the asked CPU
+features are not available, which is more user friendly.  But the
+problem is, "-overcommit cpu-pm=on" is an umbrella which intends to
+enable all the following CPUIDs and KVM features if it's possible.  So,
+if QEMU fails the guest in this case, then it needs to fail the WAITPKG
+feature as well. Additionally, it may need to provide individual options
+to enable these individual features, which I doubt could be too complicated.
 
- chardev/char-pty.c | 33 +++++++++++++++++++++++++++++++++
- chardev/char.c     |  5 +++++
- qapi/char.json     |  4 ++--
- qemu-options.hx    | 24 ++++++++++++++++++------
- 4 files changed, 58 insertions(+), 8 deletions(-)
-
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index cc2f7617fe..b5a4eb59fc 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -29,6 +29,7 @@
- #include "qemu/sockets.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
-+#include "qemu/option.h"
- #include "qemu/qemu-print.h"
- 
- #include "chardev/char-io.h"
-@@ -41,6 +42,7 @@ struct PtyChardev {
- 
-     int connected;
-     GSource *timer_src;
-+    char *symlink_path;
- };
- typedef struct PtyChardev PtyChardev;
- 
-@@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
-     Chardev *chr = CHARDEV(obj);
-     PtyChardev *s = PTY_CHARDEV(obj);
- 
-+    /* unlink symlink */
-+    if (s->symlink_path) {
-+        unlink(s->symlink_path);
-+        g_free(s->symlink_path);
-+    }
-+
-     pty_chr_state(chr, 0);
-     object_unref(OBJECT(s->ioc));
-     pty_chr_timer_cancel(s);
-@@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,
-     int master_fd, slave_fd;
-     char pty_name[PATH_MAX];
-     char *name;
-+    char *symlink_path = backend->u.pty.data->device;
- 
-     master_fd = qemu_openpty_raw(&slave_fd, pty_name);
-     if (master_fd < 0) {
-@@ -354,12 +363,36 @@ static void char_pty_open(Chardev *chr,
-     g_free(name);
-     s->timer_src = NULL;
-     *be_opened = false;
-+
-+    /* create symbolic link */
-+    if (symlink_path) {
-+        int res = symlink(pty_name, symlink_path);
-+
-+        if (res != 0) {
-+            error_setg_errno(errp, errno, "Failed to create PTY symlink");
-+        } else {
-+            s->symlink_path = g_strdup(symlink_path);
-+        }
-+    }
-+}
-+
-+static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,
-+                           Error **errp)
-+{
-+    const char *path = qemu_opt_get(opts, "path");
-+    ChardevHostdev *dev;
-+
-+    backend->type = CHARDEV_BACKEND_KIND_PTY;
-+    dev = backend->u.pty.data = g_new0(ChardevHostdev, 1);
-+    qemu_chr_parse_common(opts, qapi_ChardevHostdev_base(dev));
-+    dev->device = path ? g_strdup(path) : NULL;
- }
- 
- static void char_pty_class_init(ObjectClass *oc, void *data)
- {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
- 
-+    cc->parse = char_pty_parse;
-     cc->open = char_pty_open;
-     cc->chr_write = char_pty_chr_write;
-     cc->chr_update_read_handler = pty_chr_update_read_handler;
-diff --git a/chardev/char.c b/chardev/char.c
-index 3c43fb1278..404c6b8a4f 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
-         qemu_opt_set(opts, "path", p, &error_abort);
-         return opts;
-     }
-+    if (strstart(filename, "pty:", &p)) {
-+        qemu_opt_set(opts, "backend", "pty", &error_abort);
-+        qemu_opt_set(opts, "path", p, &error_abort);
-+        return opts;
-+    }
-     if (strstart(filename, "tcp:", &p) ||
-         strstart(filename, "telnet:", &p) ||
-         strstart(filename, "tn3270:", &p) ||
-diff --git a/qapi/char.json b/qapi/char.json
-index 777dde55d9..4c74bfc437 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -509,7 +509,7 @@
- ##
- # @ChardevHostdevWrapper:
- #
--# @data: Configuration info for device and pipe chardevs
-+# @data: Configuration info for device, pty and pipe chardevs
- #
- # Since: 1.4
- ##
-@@ -650,7 +650,7 @@
-             'pipe': 'ChardevHostdevWrapper',
-             'socket': 'ChardevSocketWrapper',
-             'udp': 'ChardevUdpWrapper',
--            'pty': 'ChardevCommonWrapper',
-+            'pty': 'ChardevHostdevWrapper',
-             'null': 'ChardevCommonWrapper',
-             'mux': 'ChardevMuxWrapper',
-             'msmouse': 'ChardevCommonWrapper',
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 8ca7f34ef0..94ffb1a605 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
-     "-chardev console,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev serial,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
- #else
--    "-chardev pty,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev pty,id=id[,path=path][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev stdio,id=id[,mux=on|off][,signal=on|off][,logfile=PATH][,logappend=on|off]\n"
- #endif
- #ifdef CONFIG_BRLAPI
-@@ -3808,12 +3808,18 @@ The available backends are:
- 
-     ``path`` specifies the name of the serial device to open.
- 
--``-chardev pty,id=id``
--    Create a new pseudo-terminal on the host and connect to it. ``pty``
--    does not take any options.
-+``-chardev pty,id=id[,path=path]``
-+    Create a new pseudo-terminal on the host and connect to it.
- 
-     ``pty`` is not available on Windows hosts.
- 
-+    If ``path`` is specified, QEMU will create a symbolic link at
-+    that location which points to the new PTY device.
-+
-+    This avoids having to make QMP or HMP monitor queries to find out
-+    what the new PTY device path is.
-+
-+
- ``-chardev stdio,id=id[,signal=on|off]``
-     Connect to standard input and standard output of the QEMU process.
- 
-@@ -4171,8 +4177,14 @@ SRST
- 
-             vc:80Cx24C
- 
--    ``pty``
--        [Linux only] Pseudo TTY (a new PTY is automatically allocated)
-+    ``pty[:path]``
-+        [Linux only] Pseudo TTY (a new PTY is automatically allocated).
-+
-+        If ``path`` is specified, QEMU will create a symbolic link at
-+        that location which points to the new PTY device.
-+
-+        This avoids having to make QMP or HMP monitor queries to find
-+        out what the new PTY device path is.
- 
-     ``none``
-         No device is allocated. Note that for machine types which
--- 
-2.45.1.288.g0e0cd299f1-goog
-
+KVM_X86_DISABLE_EXITS_MWAI
+KVM_X86_DISABLE_EXITS_HLTKVM_X86_DISABLE_EXITS_PAUSE
+KVM_X86_DISABLE_EXITS_CSTATE
+CPUID.7.0:ECX.WAITPKG
+CPUID.1.ECX.MWAIT
 
