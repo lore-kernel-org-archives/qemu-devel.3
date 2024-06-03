@@ -4,70 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535C9C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 09:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260CBC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 09:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE459-0006bN-FP; Mon, 03 Jun 2024 05:34:23 -0400
+	id 1sE45U-0006vZ-5t; Mon, 03 Jun 2024 05:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE458-0006bE-K0
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:34:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE457-0002UW-2J
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:34:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717407260;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YuS+CEU8wWX42N9SF4IedJuSubIOn23i3D1gNGY8coY=;
- b=fWxdXYjxDQOHdfz/UCBAENRHUBY3ZEmarI/bfdqO6NBXOhpE45lPiX9w42ICB4ly7OE+jw
- X0JNnJS7zF9KPQ13m4CDoKsT0Rem1PQjUz95oiJ6jVeQ6UQ6cfpyjJK08ACUmrk2dl+KNP
- B9E7NJvPh1f0jIvHqlsV/0CyJBF0AeY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-rHn7AAqTNc6J_Nd-rOjcZQ-1; Mon, 03 Jun 2024 05:34:13 -0400
-X-MC-Unique: rHn7AAqTNc6J_Nd-rOjcZQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E69B3800074;
- Mon,  3 Jun 2024 09:34:11 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C72FA1C00A8E;
- Mon,  3 Jun 2024 09:34:11 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D50F421E6757; Mon,  3 Jun 2024 11:34:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org,  Eric Blake <eblake@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] qapi: clarify that the default is backend dependent
-In-Reply-To: <20240523133302.103858-1-sgarzare@redhat.com> (Stefano
- Garzarella's message of "Thu, 23 May 2024 15:33:02 +0200")
-References: <20240523133302.103858-1-sgarzare@redhat.com>
-Date: Mon, 03 Jun 2024 11:34:10 +0200
-Message-ID: <877cf61ib1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sE45R-0006lU-Rk
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:34:41 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sE45P-0002Uy-71
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:34:41 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-57a68b0a229so365927a12.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 02:34:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717407277; x=1718012077; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cgQpDvP/UpzpoOmwtvw0eqFBXRgnKzx5L7FxKPXeWDE=;
+ b=kr5JH8I++aLBDjYer1/i+zefw8sE1PM2HvIxwQuco7+QlbXjjH+QI0ncnC786xRyur
+ c7l4czf/GLzRdJGe3EBF2/UoNMJD199jtWJdgRYz2zbCu1wHoDqJ4tdM5H95bsVU7skI
+ rzMp8d8nbkgD+nOF4V8z+ADdX3CJDwUevELv8ujsJs5CJcV7fACyhBe8lDTIB+WjRr13
+ OMqtcO8zRZs5SbrJC+Y7VxDI3U+OIw+5+xcUAGQfjWv2mj42wZxyMvVElu4MANMSxH0g
+ 4v1ip2Qqh85RJ98wnTCLs6PNURqi6EuZ7PaUBvvf64/ScNal490FInFTlZRTfqu0YN28
+ /STA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717407277; x=1718012077;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cgQpDvP/UpzpoOmwtvw0eqFBXRgnKzx5L7FxKPXeWDE=;
+ b=YBmqkQUB5vVTtc+vBJrjG71iFtk6YpvUveoLHRxYHePbRtKTy0k1KsxH2v/UkzZ+Rd
+ TRtqhiJjZqX/a7AZn5fOVjZBcwZDlKoCFFqk7QUdXutDyb/fJe0p43JfJsBPgLwLqP1j
+ 45ZoWAwAeU47us599vZe4rCWncICjX1PJ9a6YOPwtPIRiyzFageqwJK6rRmnfiyOvElK
+ vT9ItbZ2fSgrokC5oCAg4rEJ04ydX0H6YsfnG85g0gs8rqdEntDAz7daaxBta3fWxzCt
+ j+7xFWGBJfZepACVscu/WtSnbPVX/nHwLKmWaQwNpU8UQKZzI8E9pQC+90zHbPQqZH7Q
+ 4eHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFutjhwmJmwVVuuk4WHYRaAJJ8zSnm6CQUN6bOfLJ6Hw1sliYWDJ0IQ/CVbmBTZP1kf1fQ0AhdAo9F33LMr4DB5MI3Js0=
+X-Gm-Message-State: AOJu0YztMtguSp3mRdPLovXRvkZPXzXbTfGejaWg+4gdvlNngqm6NiAJ
+ vT9rW1EwReKrHbgSXc7/ubGRv7R49tf4mz9iPaKeQltkQR19bmZrvg4+DgMn4d068208Yq27HEF
+ ann0SaC2DyAP16cdvCN0ZVzdpSfq3+izDqkK1dA==
+X-Google-Smtp-Source: AGHT+IEqoBGAUFUsrkahvySihbnLVgbGuXZDMVPrpINGwYc0b2jWUlcLyipW/Ug++wc8R1OqeiI688uuJph03l8q2yU=
+X-Received: by 2002:a50:d4d6:0:b0:57a:253a:5ae8 with SMTP id
+ 4fb4d7f45d1cf-57a3644fe88mr5760988a12.34.1717407276944; Mon, 03 Jun 2024
+ 02:34:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <ZiKkWCjreGOMFX5p@gallifrey>
+ <20240524170748.1842030-1-porter@cs.unc.edu>
+ <20240524170748.1842030-2-porter@cs.unc.edu> <ZlnajZpUHyGDTgNx@gallifrey>
+ <1bafa185-25bd-44d2-8f4b-51ca28125115@linaro.org>
+In-Reply-To: <1bafa185-25bd-44d2-8f4b-51ca28125115@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 3 Jun 2024 10:34:25 +0100
+Message-ID: <CAFEAcA_u1LWnnR-+rK03EkJp8W6UcjRMfPoBm3io5qLJ8Bkq8g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] Add an "info pg" command that prints the current
+ page tables
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, Don Porter <porter@cs.unc.edu>,
+ qemu-devel@nongnu.org, nadav.amit@gmail.com, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,97 +96,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefano Garzarella <sgarzare@redhat.com> writes:
-
-> The default value of the @share option of the @MemoryBackendProperties
-> eally depends on the backend type, so let's document it explicitly and
-> add the default value where it was missing.
+On Mon, 3 Jun 2024 at 09:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> Cc: David Hildenbrand <david@redhat.com>
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
-> I followed how we document @share in memfd and epc, but I don't like it
-> very much, I just can't think of a better way, so if you have a suggestion
-> I can change them in all of them.
+> On 31/5/24 16:11, Dr. David Alan Gilbert wrote:
+> > * Don Porter (porter@cs.unc.edu) wrote:
+> >> The new "info pg" monitor command prints the current page table,
+> >> including virtual address ranges, flag bits, and snippets of physical
+> >> page numbers.  Completely filled regions of the page table with
+> >> compatible flags are "folded", with the result that the complete
+> >> output for a freshly booted x86-64 Linux VM can fit in a single
+> >> terminal window.  The output looks like this:
+> >>
+> >> VPN range             Entry         Flags            Physical page
+> >> [7f0000000-7f0000000] PML4[0fe]     ---DA--UWP
+> >>    [7f28c0000-7f28fffff]  PDP[0a3]     ---DA--UWP
+> >>      [7f28c4600-7f28c47ff]  PDE[023]     ---DA--UWP
+> >>        [7f28c4655-7f28c4656]  PTE[055-056] X--D---U-P 0000007f14-00000=
+07f15
+> >>        [7f28c465b-7f28c465b]  PTE[05b]     ----A--U-P 0000001cfc
+> >> ...
+> >> [ff8000000-ff8000000] PML4[1ff]     ---DA--UWP
+> >>    [ffff80000-ffffbffff]  PDP[1fe]     ---DA---WP
+> >>      [ffff81000-ffff81dff]  PDE[008-00e] -GSDA---WP 0000001000-0000001=
+dff
+> >>    [ffffc0000-fffffffff]  PDP[1ff]     ---DA--UWP
+> >>      [ffffff400-ffffff5ff]  PDE[1fa]     ---DA--UWP
+> >>        [ffffff5fb-ffffff5fc]  PTE[1fb-1fc] XG-DACT-WP 00000fec00 00000=
+fee00
+> >>      [ffffff600-ffffff7ff]  PDE[1fb]     ---DA--UWP
+> >>        [ffffff600-ffffff600]  PTE[000]     -G-DA--U-P 0000001467
+> >>
+> >> This draws heavy inspiration from Austin Clements' original patch.
+> >>
+> >> This also adds a generic page table walker, which other monitor
+> >> and execution commands will be migrated to in subsequent patches.
+> >>
+> >> Signed-off-by: Don Porter <porter@cs.unc.edu>
+> >> ---
+> >>   hmp-commands-info.hx              |  26 ++
+> >>   include/monitor/hmp-target.h      |   1 +
+> >>   target/i386/arch_memory_mapping.c | 486 ++++++++++++++++++++++++++++=
++-
+> >>   target/i386/cpu.h                 |  16 +
+> >>   target/i386/monitor.c             | 380 +++++++++++++++++++++++
+> >>   5 files changed, 908 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> >> index 20a9835ea8..918b82015c 100644
+> >> --- a/hmp-commands-info.hx
+> >> +++ b/hmp-commands-info.hx
+> >> @@ -237,6 +237,32 @@ ERST
+> >>           .cmd        =3D hmp_info_mtree,
+> >>       },
+> >>
+> >> +#if defined(TARGET_I386)
 >
-> Thanks,
-> Stefano
-> ---
->  qapi/qom.json | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> FYI in order to unify all QEMU system binaries as a single
+> one, we are trying to remove target-specific bits in monitor.
 >
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 38dde6d785..8463bd32a2 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -600,7 +600,7 @@
-   ##
-   # @MemoryBackendProperties:
-   #
-   # Properties for objects of classes derived from memory-backend.
-   #
+> How 'info pg' should work in a binary supporting heterogeneous
+> emulation?
 
-[...]
+Like the existing "print page table" monitor commands,
+this will need to change to be an indirect via a CPU method,
+rather than a command directly implemented as a command
+in the target/i386 code.
 
->  #     preallocation threads (default: none) (since 7.2)
->  #
->  # @share: if false, the memory is private to QEMU; if true, it is
-> -#     shared (default: false)
-> +#     shared (default depends on the backend type)
-
-Note for later: the backends are the branches of ObjectOptions that use
-MemoryBackendProperties as branch type or as base of their branch type.
-These are
-
-    memory-backend-epc (uses MemoryBackendEpcProperties)
-    memory-backend-file (uses MemoryBackendFileProperties)
-    memory-backend-memfd (uses MemoryBackendMemfdProperties)
-    memory-backend-ram (uses MemoryBackendProperties)
-
->  #
->  # @reserve: if true, reserve swap space (or huge pages) if applicable
->  #     (default: true) (since 6.1)
-> @@ -639,6 +639,8 @@
->  #
->  # Properties for memory-backend-file objects.
->  #
-> +# The @share boolean option is false by default with file.
-> +#
->  # @align: the base address alignment when QEMU mmap(2)s @mem-path.
->  #     Some backend stores specified by @mem-path require an alignment
->  #     different than the default one used by QEMU, e.g. the device DAX
-
-As stated in the commit message, this matches existing documentation in
-memory-backend-epc
-
-   # The @share boolean option is true by default with epc
-
-and memory-backend-memfd
-
-   # The @share boolean option is true by default with memfd.
-
-I think "with FOO" could be clearer.  Perhaps something like "with
-backend 'memory-backend-FOO'.
-
-However, even with your patch, we're still missing memory-backend-ram.
-I can see two solutions:
-
-1. Create MemoryBackendRamProperties just to have a place for
-documenting @share's default.
-
-2. Document @share's default right where it's defined, roughly like
-this:
-
-   # @share: if false, the memory is private to QEMU; if true, it is
-   #     shared (default false for backends memory-backend-file and
-   #     memory-backend-ram, true for backends memory-backend-epc and
-   #     memory-backend-memfd)
-
-CON: we need to remember to update this whenever we add another backend.
-
-PRO: generated documentation is better, in my opinion.
-
-Thoughts?
-
+-- PMM
 
