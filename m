@@ -4,76 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF53EC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE94C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE67y-0000dr-UA; Mon, 03 Jun 2024 07:45:27 -0400
+	id 1sE69r-0002fR-AJ; Mon, 03 Jun 2024 07:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sE67v-0000ar-Mk
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:45:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=jUUh=NF=kaod.org=clg@ozlabs.org>)
+ id 1sE69o-0002dn-6o; Mon, 03 Jun 2024 07:47:20 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sE67s-0004Ni-56
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:45:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717415114;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WEE6E0JR53r1GcyxDwlQycZKgjQWLUOQd9yhzwu976k=;
- b=PxU75O2vxpf5emPXIxzjs+eeA7oXGrEqJlAX+z1KVzb+4DSY1TRL/FnmFzQYBh6qXw2n3a
- NADKcR06uHWP0WEEKWPRWO6MwJXCC5dg7n0twbpNJSOCJYHyggnE5g6V7SRm7hvuZBQ/a+
- T3KG4IoWbsRi4/UfqzjYIOwQXlxHcyQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-T-FCASiUMUmf2wjhIfScnw-1; Mon, 03 Jun 2024 07:45:04 -0400
-X-MC-Unique: T-FCASiUMUmf2wjhIfScnw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ (Exim 4.90_1) (envelope-from <SRS0=jUUh=NF=kaod.org=clg@ozlabs.org>)
+ id 1sE69l-0004df-4s; Mon, 03 Jun 2024 07:47:19 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VtBly3jQhz4x23;
+ Mon,  3 Jun 2024 21:47:10 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D578785A58C;
- Mon,  3 Jun 2024 11:45:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.80])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A2353202696B;
- Mon,  3 Jun 2024 11:45:02 +0000 (UTC)
-Date: Mon, 3 Jun 2024 12:45:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- "Richard W.M. Jones" <rjones@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v3 2/2] iotests: test NBD+TLS+iothread
-Message-ID: <Zl2svHuiX0_t2ctw@redhat.com>
-References: <20240531180639.1392905-4-eblake@redhat.com>
- <20240531180639.1392905-6-eblake@redhat.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VtBls3RCyz4wcv;
+ Mon,  3 Jun 2024 21:47:04 +1000 (AEST)
+Message-ID: <44a84ad3-797a-4c7e-ae6f-c80db047292f@kaod.org>
+Date: Mon, 3 Jun 2024 13:47:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240531180639.1392905-6-eblake@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] Re: [PATCH v4 09/16] aspeed/smc: Add AST2700 support
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
+ <20240527080231.1576609-10-jamin_lin@aspeedtech.com>
+ <b641018c-e906-452b-8072-1b46f141808b@linaro.org>
+ <41e59fa6-c74d-47c7-ba01-690cfaf7f5f1@kaod.org>
+ <SI2PR06MB504115C43768F1DF7E9621B9FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <98886224-8de7-41d7-9ae9-77ac85818605@kaod.org>
+ <SI2PR06MB5041574C3A7283A1A29B81FCFCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <747755fd-dc9d-4bbd-9b6d-eaabe398bb19@kaod.org>
+ <SI2PR06MB5041FCED8D307124D1747830FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB5041FCED8D307124D1747830FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=jUUh=NF=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,67 +78,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 31, 2024 at 01:04:59PM -0500, Eric Blake wrote:
-> Prevent regressions when using NBD with TLS in the presence of
-> iothreads, adding coverage the fix to qio channels made in the
-> previous patch.
+> Thanks for your suggestion. How about these changes?
 > 
-> The shell function pick_unused_port() was copied from
-> nbdkit.git/tests/functions.sh.in, where it had all authors from Red
-> Hat, agreeing to the resulting relicensing from 2-clause BSD to GPLv2.
+> 1. aspeed_smc.h
+> struct AspeedSMCClass {
+>      const MemoryRegionOps *reg_ops;
+> }
 > 
-> CC: qemu-stable@nongnu.org
-> CC: "Richard W.M. Jones" <rjones@redhat.com>
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  tests/qemu-iotests/tests/nbd-tls-iothread     | 168 ++++++++++++++++++
->  tests/qemu-iotests/tests/nbd-tls-iothread.out |  54 ++++++
->  2 files changed, 222 insertions(+)
->  create mode 100755 tests/qemu-iotests/tests/nbd-tls-iothread
->  create mode 100644 tests/qemu-iotests/tests/nbd-tls-iothread.out
+> 2. aspeed_smc.c
+> a. create new memory region opts for ast2700
+> static const MemoryRegionOps aspeed_2700_smc_flash_ops = {
+>      .read = aspeed_smc_flash_read,
+>      .write = aspeed_smc_flash_write,
+>      .endianness = DEVICE_LITTLE_ENDIAN,
+>      .valid = {
+>          .min_access_size = 1,
+>          .max_access_size = 8,
+>      },
+> };
+> 
+> b. set memory region opts in all model class init
+> static void aspeed_2400_smc_class_init(ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2400_fmc_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2400_spi1_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2500_fmc_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2500_spi1_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2500_spi2_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2600_fmc_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2600_spi1_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2600_spi2_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_1030_fmc_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_1030_spi1_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_1030_spi2_class_init (ObjectClass *klass, void *data){
+>      asc->reg_ops           = &aspeed_smc_flash_ops;
+> }
+> static void aspeed_2700_fmc_class_init(ObjectClass *klass, void *data)
+> {
+>    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
+> }
+> static void aspeed_2700_spi0_class_init (ObjectClass *klass, void *data)
+> {
+>    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
+> }
+> static void aspeed_2700_spi1_class_init (ObjectClass *klass, void *data)
+> {
+>    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
+> }
+> static void aspeed_2700_spi2_class_init (ObjectClass *klass, void *data)
+> {
+>    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
+> }
+> 
+> c. update realize to use memory region opts from class reg_opts
+> static void aspeed_smc_flash_realize(DeviceState *dev, Error **errp) {
+>      memory_region_init_io(&s->mmio, OBJECT(s), s->asc->reg_ops,
+>                            s, name, s->asc->segments[s->cs].size);
+> }
+
+LGTM,
 
 
+Thanks,
 
-> +# pick_unused_port
-> +#
-> +# Picks and returns an "unused" port, setting the global variable
-> +# $port.
-> +#
-> +# This is inherently racy, but we need it because qemu does not currently
-> +# permit NBD+TLS over a Unix domain socket
-> +pick_unused_port ()
-> +{
-> +    if ! (ss --version) >/dev/null 2>&1; then
-> +        _notrun "ss utility required, skipped this test"
-> +    fi
-> +
-> +    # Start at a random port to make it less likely that two parallel
-> +    # tests will conflict.
-> +    port=$(( 50000 + (RANDOM%15000) ))
-> +    while ss -ltn | grep -sqE ":$port\b"; do
-> +        ((port++))
-> +        if [ $port -eq 65000 ]; then port=50000; fi
-> +    done
-> +    echo picked unused port
-> +}
-
-In retrospect I'd probably have suggested putting this into
-common.qemu as its conceptually independant of this test.
-
-
-That's not a blocker though so
-
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+C.
 
