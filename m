@@ -4,65 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D2CC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 10:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FE7C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 10:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE4TL-0007Y6-Hb; Mon, 03 Jun 2024 05:59:23 -0400
+	id 1sE4Y4-0000ee-9W; Mon, 03 Jun 2024 06:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jUUh=NF=kaod.org=clg@ozlabs.org>)
- id 1sE4TK-0007Xj-2A; Mon, 03 Jun 2024 05:59:22 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sE4Y2-0000eS-BJ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 06:04:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jUUh=NF=kaod.org=clg@ozlabs.org>)
- id 1sE4TC-0006uu-JN; Mon, 03 Jun 2024 05:59:21 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Vt8MG1LgLz4x2P;
- Mon,  3 Jun 2024 19:59:06 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Vt8M85Xrvz4wc8;
- Mon,  3 Jun 2024 19:59:00 +1000 (AEST)
-Message-ID: <747755fd-dc9d-4bbd-9b6d-eaabe398bb19@kaod.org>
-Date: Mon, 3 Jun 2024 11:58:56 +0200
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sE4Y0-0007zn-Pe
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 06:04:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717409052;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HiB4Hw6azSkFPrbk6MCCFjkMKXK9lBPN9bXi9w7Jn5M=;
+ b=faAZUKLNQozfDCgXpo8+Ve9t82kldebf/xYt+Tg4DbKcqbTcEuN0AktKdPmazjFOffgott
+ CMJdQcEio2iBmRxseLppZS90hJHYuy7GXLJ01iFXTGZuIpc5yPkfQ+H5+HO3HiPIzFP2tm
+ apertqpHYNlRfHO6+kn6Nvs/ZQd/ORo=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-m6m7O54hMJugxwGoc0-gJw-1; Mon, 03 Jun 2024 06:04:10 -0400
+X-MC-Unique: m6m7O54hMJugxwGoc0-gJw-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a68ea01c455so51832366b.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 03:04:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717409049; x=1718013849;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HiB4Hw6azSkFPrbk6MCCFjkMKXK9lBPN9bXi9w7Jn5M=;
+ b=JZ5H7p00AANz7a16yJCs7mv3dKRA9xwmlCPwhqfJdlTNdqqaZoYKrgF+TNMs8DwFB8
+ GxOxVBW3IYUvjW5dGzhrZoT7PLkCjSWkMUqklMFjek25Ic+oML2jkbEzVC48n7kvG8cj
+ S/8EEUTXbduOVY2iRWdWzWvzuIK3gcUiwgZtp5EX20CTw3agDTDrzPTSE/r2UOjqbkmN
+ DX0Ja1Jt6/ANNA31qN5MTGzD0nwub4bzoXW+T/c16GZ4jueBhCflNDK5DW2QwdgEyKg0
+ bz2DpMBOhhOWShl3VcqLFPfNfwIiA344jy85mobPfpOlLucdsNEMkwLGuNQHo1EHKcag
+ zD/g==
+X-Gm-Message-State: AOJu0Yz8M6Ck7IlI8j60xtbUvfdOp4IfZzSlv2TyBVtbvLzHYho1ClO0
+ GllHnBBKTaV4/XovKbgIwPN0sx6Lrcc1IEsds2xeMeKxPIp9CMPGAHGLanL/DOuTvOBGxnDv481
+ D3Skqd87Gk9XRqjP7vQB1O199ufHq0WG/BzpYfQx2eUUY307Lz3VhaYaPpczDv9KNR6lvJGGZ/i
+ uEtKCrTf7HZAwROx+/TWpQ2CsA9JX/LQvGciB9
+X-Received: by 2002:a17:907:6d1d:b0:a68:c721:1c7a with SMTP id
+ a640c23a62f3a-a68c7212bc9mr414511066b.22.1717409049328; 
+ Mon, 03 Jun 2024 03:04:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6PwNLtTpc3xxmaFfdIwn1D+1NVZcyFz/mn99VhSzFTqe0/UYpeG9panL9krfDIbfW7S6CQQ==
+X-Received: by 2002:a17:907:6d1d:b0:a68:c721:1c7a with SMTP id
+ a640c23a62f3a-a68c7212bc9mr414507266b.22.1717409048718; 
+ Mon, 03 Jun 2024 03:04:08 -0700 (PDT)
+Received: from avogadro.local ([151.81.115.112])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a68ebdea97csm235252466b.15.2024.06.03.03.04.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Jun 2024 03:04:08 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] target/i386: fix xsave.flat from kvm-unit-tests
+Date: Mon,  3 Jun 2024 12:04:05 +0200
+Message-ID: <20240603100405.619418-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] Re: [PATCH v4 09/16] aspeed/smc: Add AST2700 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
- <20240527080231.1576609-10-jamin_lin@aspeedtech.com>
- <b641018c-e906-452b-8072-1b46f141808b@linaro.org>
- <41e59fa6-c74d-47c7-ba01-690cfaf7f5f1@kaod.org>
- <SI2PR06MB504115C43768F1DF7E9621B9FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <98886224-8de7-41d7-9ae9-77ac85818605@kaod.org>
- <SI2PR06MB5041574C3A7283A1A29B81FCFCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041574C3A7283A1A29B81FCFCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=jUUh=NF=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,74 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 11:49, Jamin Lin wrote:
-> Hi Cedric,
-> 
->> From: Cédric Le Goater <clg@kaod.org>
->> Subject: Re: [SPAM] Re: [PATCH v4 09/16] aspeed/smc: Add AST2700 support
->>
->>>>>> @@ -670,7 +670,7 @@ static const MemoryRegionOps
->>>> aspeed_smc_flash_ops
->>>>>> = {
->>>>>>         .endianness = DEVICE_LITTLE_ENDIAN,
->>>>>>         .valid = {
->>>>>>             .min_access_size = 1,
->>>>>> -        .max_access_size = 4,
->>>>>> +        .max_access_size = 8,
->>>>>
->>>>> Is this a bugfix? If so, please use a separate patch. Otherwise
->>>>> please mention why it is OK to widen access for AST2600 & AST10x0.
->>>>
->>> According the design of SPI drivers, it uses this "memcpy_fromio" KERNEL API
->> for SPI calibration.
->>>
->> https://github.com/AspeedTech-BMC/linux/blob/1062a07420f9aed4ed7dc9deb
->>> 3429b8e7828f5cf/drivers/spi/spi-aspeed-smc.c#L1832
->>> AST2700 is a 64 bits quad core cpus(Cortex-a35), so kernel API use 64 bits for
->> data access.
->>> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/a
->>> rm64/kernel/io.c#L25 I simply set the max_access_size to 8 for AST2700
->>> support.
->>> AST2500, AST2600 and AST10x0 are all 32bits CPUS, that was why this
->> max_access_size 8 did not impact these models.
->>> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/a
->>> rm/kernel/io.c#L45
->>
->> Yes. I think we are safe on that side.
->>
->>> If you have any suggestion about this patch modification, please let me know.
->>> I am going to re-send v5 patch for AST2700 support.
->>
->> Please move this change in its own commit explaining the reason and add a
->> TODO comment in the code.
->>
->> The aspeed_smc_flash_ops MemoryRegionOps should be copied in _realize()
->> to set a different width for the AST2700 SoC. You could do that too.
->>
->> Thanks,
->>
->> C.
-> I will do the following changes. Could you give me any suggestion?
-> 
-> 1. add asc->max_access_size = 8 in aspeed_2700_fmc_class_init, aspeed_2700_spi0_class_init, aspeed_2700_spi1_class_init and aspeed_2700_spi2_class_init
-> 2. Update aspeed_smc_flash_realize as below
-> static void aspeed_smc_flash_realize(DeviceState *dev, Error **errp)
-> {
->     ------
->     s->asc = ASPEED_SMC_GET_CLASS(s->controller)
->     if (s->asc->max_access_size ==8) --> check max_access_size
->        aspeed_smc_flash_ops.valid.max_access_size = s->asc->max_access --> update max_access_size
+xsave.flat checks that "executing the XSETBV instruction causes a general-
+protection fault (#GP) if ECX = 0 and EAX[2:1] has the value 10b".  QEMU allows
+that option, so the test fails.  Add the condition.
 
-You can not because aspeed_smc_flash_ops is a static const shared
-by all models
+Cc: qemu-stable@nongnu.org
+Fixes: 892544317fe ("target/i386: implement XSAVE and XRSTOR of AVX registers", 2022-10-18)
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/fpu_helper.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Best option is to introduce a new 'const MemoryRegionOps*' attribute
-in AspeedSMCClass and use it in aspeed_smc_flash_realize().
-
-
-Thanks,
-
-C.
-
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index e322293371c..e1b850f3fc2 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -3142,6 +3142,11 @@ void helper_xsetbv(CPUX86State *env, uint32_t ecx, uint64_t mask)
+         goto do_gpf;
+     }
+ 
++    /* SSE can be disabled, but only if AVX is disabled too.  */
++    if ((mask & (XSTATE_SSE_MASK | XSTATE_YMM_MASK)) == XSTATE_YMM_MASK) {
++        goto do_gpf;
++    }
++
+     /* Disallow enabling unimplemented features.  */
+     cpu_x86_cpuid(env, 0x0d, 0, &ena_lo, &dummy, &dummy, &ena_hi);
+     ena = ((uint64_t)ena_hi << 32) | ena_lo;
+-- 
+2.45.1
 
 
