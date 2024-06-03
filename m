@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A402BC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09498C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:41:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7tK-0000yo-6t; Mon, 03 Jun 2024 09:38:26 -0400
+	id 1sE7vd-0002Jx-LE; Mon, 03 Jun 2024 09:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7tI-0000yL-Jf
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:38:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sE7vZ-0002J7-CJ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:40:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7tH-00033X-22
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:38:24 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sE7vX-0003p9-Fz
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:40:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717421901;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1717422041;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pjMv9CFvpHk7tfifO6Qm6g2Eis2FqvFOwC0BzsjHgnE=;
- b=W6f5+YUFLEJ8PA5XWD+F9obXPTN1y55XlBrrgZulqEV+dStfRUQyCFLyg5krRcpVHeiQwh
- ghvVqCkbrMZJq0TlQhwt3PTgDOjfi24vTV8WjrzaDLwbI8Dj2/Dsrtt20zmJW2O9XtI6sZ
- HN3dSp/VvkJlRdph3oph593XBU9WBJE=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=L9kyZWEazs98FS/qKAng7yf8FR9B07vM6V+4gBDWu0M=;
+ b=UF1w1PxJRvqN6h0s96tJ291DQbzu5xMeWh0dqAx8F/bOVSTXVXtY3mRznHyPJueEa1OIdn
+ Ga21v8pHYbEsv0gvHT+35y6yj+ibekLxoHXXOBRpvcKm4xuDj2r+3jlIivcs2kxT1O49Lx
+ vcQ7xxaYCSEvRqfbF+ZE5isVwcLfm1U=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-44-umFh5IuOOWWzMyXLRJ0QRQ-1; Mon, 03 Jun 2024 09:38:20 -0400
-X-MC-Unique: umFh5IuOOWWzMyXLRJ0QRQ-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2c1e6a08555so2194372a91.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:38:19 -0700 (PDT)
+ us-mta-683-msMDQVetO62HdMBFsLnuTQ-1; Mon, 03 Jun 2024 09:40:39 -0400
+X-MC-Unique: msMDQVetO62HdMBFsLnuTQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4212e3418b1so17460965e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:40:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717421899; x=1718026699;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pjMv9CFvpHk7tfifO6Qm6g2Eis2FqvFOwC0BzsjHgnE=;
- b=uL7chNxvfHKDOHFtHKJulcEvNKvRbkseWswa+9x1PfLhf6oxGtujWpg8alKj5OohNl
- iEduFGWT/KqCeLzKsZMT8qFNqTRX2XoRNlOvAEYJ//6LEjPuHF8YY4M0GbcpKc89h2fJ
- GUb1+F/7J5RfSYl9SwClrstZ1geOrsBzEV6UKT6yYKzotG+f0o4TNyDR+vVMJtSkHCce
- nqirTM1Nsko2Uye545Wg6YlNk+j7Iqg6bZApLHYdB60bqrnOBEBtTQIKBxTuPO3TapNw
- WC0+cDF5+HLjLafkjg6vGHo8ftJAefaJidW2GGj6eZPUZ8T0SuPm0R3mGG8SvZSfsE7b
- iC0Q==
+ d=1e100.net; s=20230601; t=1717422038; x=1718026838;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L9kyZWEazs98FS/qKAng7yf8FR9B07vM6V+4gBDWu0M=;
+ b=qMRtHv72O2fWiYQjKuHWxfYwCUZOr0onwtBt0wFe4/wP2JGFQAGB7C2u8eMnAlRZbd
+ jcwx8YRbFIUY8chHHvyXIGJVEjkJoJBi6KSnIMW+GbNgBr8FGysCFEvhN+pyGURtlgH7
+ Ej/LGcM5T0VM6c7My471rM+mfsY7FBJ253ovFaPP1sHXWEH2ONlhGkfwUE61AWqXmVcE
+ Fqb2mY1IN73iyPxt1QNd4lepqhIPeX0mXLu2JLe8DOz8KbDidYNWTfXBYPgwWI/fxETw
+ GZpJQyTKUqTAVmmladMrKhisq3sH3uL9lzlI9+1SLXK6ROWffpLuUb+gpPPXFcx5F7hQ
+ evKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwj4k0fZAvHh0K723G/IMSIoeUtzkoDZ70I2QLLKW3n/7ZcTWULyhD437lTVqb7q3cRafPykXYBwJVvBlImrwXeljLwH4=
-X-Gm-Message-State: AOJu0YyhylSwJPRTpXoKaH6ASWOhQWamkkILFWPfNVtU9MXa+69BFT23
- Kv568ROHHyYIp7WiaCPideuZAiQC7tDzUImpnWGoepg1i94wD5mVN20Kxnre2P4GNxS8kKEnzTY
- oeWrNaPzcFQSVSdqpIdF7EOMiradGhUQKcywk+w2nT9xLqPFbMSQqZ6ci77qRwmJFPt6FVVpGm3
- rGIkxBlIT4TfY+n0Juijke3bhgxOw=
-X-Received: by 2002:a17:90a:d243:b0:2c2:53f:132e with SMTP id
- 98e67ed59e1d1-2c2053f135emr8436191a91.13.1717421898856; 
- Mon, 03 Jun 2024 06:38:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IER4XLCvU+B4tTVK/M8kIPNe//eWnQO5yFMNUEPRxUbXBqnAJ6G0Q/SYq0FNt1Q54CXUqKiF03D6Ea4otyOXS8=
-X-Received: by 2002:a17:90a:d243:b0:2c2:53f:132e with SMTP id
- 98e67ed59e1d1-2c2053f135emr8436157a91.13.1717421898412; Mon, 03 Jun 2024
- 06:38:18 -0700 (PDT)
+ AJvYcCXeJKf83n2gGJs+EktB3uK/hUIPwhEG14lvkkOULlQmXtntRDhNdM2PqrEVkNCCBM6/+U3ID/AojkK9gV/T7U+PRd0TSLI=
+X-Gm-Message-State: AOJu0YwqLJmJvlaM1Bq5My4t4Rb6KxjnJRBnQ1n73e23XtHdKELjiaMR
+ KlRHmzxbhssFY5Gdjt6qZY9p8P2wtQSrBQTFBFGEmbSuwajhG/EH4CmkRC12E7oLernmg8k6+Tc
+ v5x9wuxkvaWBZqyCflibxGghkYAkzk+4oAHjj7jxkNStfjLUZRZ1g
+X-Received: by 2002:a05:600c:1d82:b0:418:2a57:380c with SMTP id
+ 5b1f17b1804b1-4212e0ae95emr73191385e9.26.1717422038266; 
+ Mon, 03 Jun 2024 06:40:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdgy4l4j11Hr3o2/BA0DtlZMsRNyWu359YRUAQiTst009aWKq9diFHRTetGoqJYN+KFu0BlQ==
+X-Received: by 2002:a05:600c:1d82:b0:418:2a57:380c with SMTP id
+ 5b1f17b1804b1-4212e0ae95emr73191105e9.26.1717422037851; 
+ Mon, 03 Jun 2024 06:40:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd0630010sm8837098f8f.76.2024.06.03.06.40.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 06:40:37 -0700 (PDT)
+Message-ID: <0c8af302-a583-449a-b8a2-92751b740259@redhat.com>
+Date: Mon, 3 Jun 2024 15:40:35 +0200
 MIME-Version: 1.0
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-30-pankaj.gupta@amd.com> <Zl2vP9hohrgaPMTs@redhat.com>
-In-Reply-To: <Zl2vP9hohrgaPMTs@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Jun 2024 15:38:05 +0200
-Message-ID: <CABgObfapGXenv8MZv5wnMkESQMJveZvP-kqUj=EwMszTkg0EsA@mail.gmail.com>
-Subject: Re: [PATCH v4 29/31] hw/i386/sev: Allow use of pflash in conjunction
- with -bios
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Hoffmann, Gerd" <kraxel@redhat.com>
-Cc: Pankaj Gupta <pankaj.gupta@amd.com>, qemu-devel@nongnu.org,
- brijesh.singh@amd.com, 
- dovmurik@linux.ibm.com, armbru@redhat.com, michael.roth@amd.com, 
- xiaoyao.li@intel.com, thomas.lendacky@amd.com, isaku.yamahata@intel.com, 
- kvm@vger.kernel.org, anisinha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 14/19] hw/pci: Introduce helper function
+ pci_device_get_iommu_bus_devfn()
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
+ <20240603061023.269738-15-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240603061023.269738-15-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,24 +112,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 3, 2024 at 1:55=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
-> I really wish we didn't have to introduce this though - is there really
-> no way to make it possible to use pflash for both CODE & VARS with SNP,
-> as is done with traditional VMs, so we don't diverge in setup, needing
-> yet more changes up the mgmt stack ?
-
-No, you cannot use pflash for CODE in either SNP or TDX. The hardware
-does not support it.
-
-One possibility is to only support non-pflash-based variable store.
-This is not yet in QEMU, but it is how both AWS and Google implemented
-UEFI variables and I think Gerd was going to work on it for QEMU.
 
 
-Paolo
+On 6/3/24 08:10, Zhenzhong Duan wrote:
+> Extract out pci_device_get_iommu_bus_devfn() from
+> pci_device_iommu_address_space() to facilitate
+> implementation of pci_device_[set|unset]_iommu_device()
+> in following patch.
+>
+> No functional change intended.
+>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+> ---
+>  hw/pci/pci.c | 48 +++++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 45 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 324c1302d2..02a4bb2af6 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2648,11 +2648,27 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
+>      }
+>  }
+>  
+> -AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +/*
+> + * Get IOMMU root bus, aliased bus and devfn of a PCI device
+> + *
+> + * IOMMU root bus is needed by all call sites to call into iommu_ops.
+> + * For call sites which don't need aliased BDF, passing NULL to
+> + * aliased_[bus|devfn] is allowed.
+> + *
+> + * @piommu_bus: return root #PCIBus backed by an IOMMU for the PCI device.
+> + *
+> + * @aliased_bus: return aliased #PCIBus of the PCI device, optional.
+> + *
+> + * @aliased_devfn: return aliased devfn of the PCI device, optional.
+> + */
+> +static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+> +                                           PCIBus **piommu_bus,
+> +                                           PCIBus **aliased_bus,
+> +                                           int *aliased_devfn)
+>  {
+>      PCIBus *bus = pci_get_bus(dev);
+>      PCIBus *iommu_bus = bus;
+> -    uint8_t devfn = dev->devfn;
+> +    int devfn = dev->devfn;
+>  
+>      while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
+>          PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
+> @@ -2693,7 +2709,33 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+>  
+>          iommu_bus = parent_bus;
+>      }
+> -    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
+> +
+> +    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
+> +    assert(iommu_bus);
+> +
+> +    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
+> +        iommu_bus = NULL;
+> +    }
+> +
+> +    *piommu_bus = iommu_bus;
+> +
+> +    if (aliased_bus) {
+> +        *aliased_bus = bus;
+> +    }
+> +
+> +    if (aliased_devfn) {
+> +        *aliased_devfn = devfn;
+> +    }
+> +}
+> +
+> +AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +{
+> +    PCIBus *bus;
+> +    PCIBus *iommu_bus;
+> +    int devfn;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+> +    if (iommu_bus) {
+>          return iommu_bus->iommu_ops->get_address_space(bus,
+>                                   iommu_bus->iommu_opaque, devfn);
+>      }
 
 
