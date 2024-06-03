@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E572C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 02:58:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798F1C25B74
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 02:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDxsh-00015n-RK; Sun, 02 Jun 2024 22:57:07 -0400
+	id 1sDxt5-0001pA-V4; Sun, 02 Jun 2024 22:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDxsd-0000uk-Sb
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDqpN-0005PH-Tt
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 15:25:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717356312;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pYw2EH0ataK0bb5mgQgyo7GMtT3yQ/uN5Gk2Sx5SY7c=;
- b=U5RPDn5N/qt2Brym8a8QWwJTLG7TbAM+u7j7laxWMp4/19m7cFadDasyCVJOQ8Wodxu8Vc
- qfY0x/Y/efclLKt1OSMrR1Rday/tNeWjR63sCCbSDwLli9GFLb24wiFj1sDwUYAm6AIAOt
- rFYzEKNaHmkbtvrFhum8J6qSiWK28WU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-466-VFNQhDjnNmu4Lyi5a5fGCw-1; Sun, 02 Jun 2024 15:25:10 -0400
-X-MC-Unique: VFNQhDjnNmu4Lyi5a5fGCw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35dcf7d4014so1565798f8f.0
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 12:25:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717356309; x=1717961109;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pYw2EH0ataK0bb5mgQgyo7GMtT3yQ/uN5Gk2Sx5SY7c=;
- b=tQcZ6RkV2gET1JYABr2qbbtl3BQqnrYTivynJigd24MMJriGUZQfsM7/9lYn62sO7T
- POAA144JckNJrIVLRubOA7B4voqBLyG/pdQqyjYLJVs7YGHps19Alw6nQzTpL3/Fu8pA
- 6F+wvyqQ40xjALZKxkQIy2WKAKboQRQkwg7gEFrA9tM8uYxqt1W7YTNH+2dnGtED57TE
- w7HOU2t2PCXruk9HE750KFGcbHJaofWg/LWt823HQnbDXDbeTEtHP33WfH8sjpd85RMX
- pCMdZLJqe0S0zAZ+jI9dmdSblTfssyD1UlEcOixsrVc2LJihooZenQ++jYpX+Zsi0LRI
- eXkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxmfEWYZ2sXH4/P/bj6FqvbDyt8qX9lFNuH08mLZ92G9+JAVks1f1M4keBTieA4kTdH71g42pjvLfFReVe5ufKSfsMigA=
-X-Gm-Message-State: AOJu0YxVJ50DKOxC8OgcY2aGKUkzyw0lIOlRK/nwrE2XiXmK/L149JpX
- o1sdt0VKQppJ7D5MrssEZ4Mtee77queKnUrGTLwx3JqYPk0LnavVC6+WfpjzN9bJxPcy+0GWON5
- GBQsWb715y7M2nhih8ejaPeapUUoZ2/Ks5n5iRG/X5Oesdk/1gwfS
-X-Received: by 2002:adf:ce91:0:b0:355:161:b7e3 with SMTP id
- ffacd0b85a97d-35e0f316a57mr4970410f8f.48.1717356309360; 
- Sun, 02 Jun 2024 12:25:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXlrJxfSMWporena43/yel9GfnVa6qXRhzG7vs5Yf7QPvk2H1McS/vnnnwlk5uNlvedM8jEA==
-X-Received: by 2002:adf:ce91:0:b0:355:161:b7e3 with SMTP id
- ffacd0b85a97d-35e0f316a57mr4970401f8f.48.1717356308797; 
- Sun, 02 Jun 2024 12:25:08 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:440:950b:d4e:f17a:17d8:5699])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04caea8sm6823543f8f.28.2024.06.02.12.25.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jun 2024 12:25:08 -0700 (PDT)
-Date: Sun, 2 Jun 2024 15:25:04 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Ira Weiny <ira.weiny@intel.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
- Fan Ni <fan.ni@samsung.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] hw/cxl: Fix read from bogus memory
-Message-ID: <20240602152439-mutt-send-email-mst@kernel.org>
-References: <20240531-fix-poison-set-cacheline-v1-1-e3bc7e8f1158@intel.com>
+ (Exim 4.90_1) (envelope-from <niugen@loongson.cn>)
+ id 1sDxt2-0000sk-3O
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:28 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <niugen@loongson.cn>) id 1sDwra-0004yH-T9
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 21:51:57 -0400
+Received: from loongson.cn (unknown [10.90.50.36])
+ by gateway (Coremail) with SMTP id _____8AxnOqvIV1mQMMCAA--.11808S3;
+ Mon, 03 Jun 2024 09:51:43 +0800 (CST)
+Received: from [10.90.50.36] (unknown [10.90.50.36])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Axx8WvIV1mgxYSAA--.3884S2; 
+ Mon, 03 Jun 2024 09:51:43 +0800 (CST)
+Message-ID: <67ecebc0-6e2c-4359-a778-3b22c019706f@loongson.cn>
+Date: Mon, 3 Jun 2024 09:51:43 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240531-fix-poison-set-cacheline-v1-1-e3bc7e8f1158@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: nochain should disable goto_ptr
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240531101744.1683192-1-niugen@loongson.cn>
+ <044af09d-4856-40f0-ae27-df6522e4dbb4@linaro.org>
+ <042b0650-1fef-4730-a80a-abb7361cce29@loongson.cn>
+ <59f7895c-5975-4ca0-98fd-1600495e24bd@linaro.org>
+Content-Language: en-US
+From: niugen <niugen@loongson.cn>
+In-Reply-To: <59f7895c-5975-4ca0-98fd-1600495e24bd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Axx8WvIV1mgxYSAA--.3884S2
+X-CM-SenderInfo: 5qlxwv3q6o00pqjv00gofq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uF4kuryDJry3WF1kCw47ZFc_yoW8trWxpr
+ 4kGF1Utayqqrn5Janrtr12qa4Yqr98Aay7X3WUZa4vyrn3WFnaqw4jganF9rW8Cw4IyrW7
+ Zrn0vryfur1YyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUyCb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr4
+ 1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK
+ 67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI
+ 8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAv
+ wI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14
+ v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=niugen@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,56 +81,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 31, 2024 at 11:22:05AM -0500, Ira Weiny wrote:
-> Peter and coverity report:
-> 
-> 	We've passed '&data' to address_space_write(), which means "read
-> 	from the address on the stack where the function argument 'data'
-> 	lives", so instead of writing 64 bytes of data to the guest ,
-> 	we'll write 64 bytes which start with a host pointer value and
-> 	then continue with whatever happens to be on the host stack
-> 	after that.
-> 
-> Indeed the intention was to write 64 bytes of data at the address given.
-> 
-> Fix the parameter to address_space_write().
-> 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Link: https://lore.kernel.org/all/CAFEAcA-u4sytGwTKsb__Y+_+0O2-WwARntm3x8WNhvL1WfHOBg@mail.gmail.com/
-> Fixes: 6bda41a69bdc ("hw/cxl: Add clear poison mailbox command support.")
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+On 2024/6/1 21:36, Richard Henderson wrote:
+> On 6/1/24 00:57, niugen wrote:
+>> on 2024/6/1 01:32, Richard Henderson wrote:
+>>> On 5/31/24 03:17, NiuGenen wrote:
+>>>> Signed-off-by: NiuGenen <niugen@loongson.cn>
+>>>> ---
+>>>>   accel/tcg/cpu-exec.c | 2 +-
+>>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+>>>> index 2972f75b96..084fa645c7 100644
+>>>> --- a/accel/tcg/cpu-exec.c
+>>>> +++ b/accel/tcg/cpu-exec.c
+>>>> @@ -173,7 +173,7 @@ uint32_t curr_cflags(CPUState *cpu)
+>>>>       } else if (qatomic_read(&one_insn_per_tb)) {
+>>>>           cflags |= CF_NO_GOTO_TB | 1;
+>>>>       } else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) {
+>>>> -        cflags |= CF_NO_GOTO_TB;
+>>>> +        cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR;
+>>>>       }
+>>>>         return cflags;
+>>>
+>>> Why?
+>>>
+>>> The original intent of nochain was so that -d exec would log all 
+>>> blocks, which requires excluding goto_tb.  There is exec logging in 
+>>> helper_lookup_goto_ptr, so there is no need to avoid goto_ptr.
+>>>
+>>> You must provide a rationale, at minimum.
+>>>
+>>>
+>>> r~
+>>
+>>
+>> Sorry, my mistake. I thought nochain will disable all kinds of 
+>> branches, including direct branch and indirect branch, but I found 
+>> that indirect branch still call helper_lookup_tb_ptr to continue 
+>> executing TB instead of epilogue-tblookup-prologue.
+>>
+>> Maybe the exec logging can be removed from helper_lookup_tb_ptr and 
+>> nochain can disable all the chaining of TB?
+>
+> Why?  You still haven't provided a rationale.
+>
+>
+> r~
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-I'll queue it for the next pull which should go out soonish.
+Currently, nochain is actually no-direct-chaining(i.e. no-goto-tb). And 
+it works fine with -d exec because of the helper_lookup_tb_ptr generates 
+the exec logging too. Other optimizations for indirect branch (eg. 
+shadow-stack, inlined CPUJumpCache lookup, maybe developed in the 
+future) that use goto_ptr will need to generate the exec logging too.
 
-> ---
-> Compile tested only.  Jonathan please double check me.
-> ---
->  hw/mem/cxl_type3.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 3e42490b6ce8..582412d9925f 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1025,7 +1025,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
->          as = &ct3d->hostpmem_as;
->      }
->  
-> -    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
-> +    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, data,
->                          CXL_CACHE_LINE_SIZE);
->      return true;
->  }
-> 
-> ---
-> base-commit: 3b2fe44bb7f605f179e5e7feb2c13c2eb3abbb80
-> change-id: 20240531-fix-poison-set-cacheline-e32bc1e74b27
-> 
-> Best regards,
-> -- 
-> Ira Weiny <ira.weiny@intel.com>
+It makes the codes more clear if nochain is no-any-chaining. Any logging 
+or other mechanism that needs to operate per TB's execution can be done 
+in cpu_tb_exec only.
 
 
