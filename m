@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D0AC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16257C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5rb-0005gF-0x; Mon, 03 Jun 2024 07:28:31 -0400
+	id 1sE5sS-0006dU-27; Mon, 03 Jun 2024 07:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE5rX-0005f0-4u
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:28:29 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE5rV-0000iI-Gg
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:28:26 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-4eacd4c1c93so1331763e0c.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717414103; x=1718018903; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PV0NIx7Msfph2Sw7+O4LVA2pjGlK/npIVQHcru0BTpM=;
- b=uEU+53enuNKY81o7vPE7uHiAAZPWAdlTYx4NvjEcxWkxw/dbgobKBtKexFzWkq2/6Q
- 0Uwqk+oTVHoqA9gWeXwwvDejcIBiSrzZcuXbyLUecMJlBCBPiGvOFhJeA6D6FBivFPvf
- ZirO74BH0wiF+6EOWoJBkjUJyjeVLZ06Mo7Yp6s1xhwxn20nLt+Mj9R8r/cE0vpoDf64
- lkWQeoDVlyS+wt1H8yRTAJNzkSURKDg30f5KQNldA2Nf1ENVXmgp63x+2vPcWsbB8J+Z
- Pa8XYoEu4WqUPh8AtstxzfCvsN3hgd8cU3/eZneIJekcmRJxT1b9iud2HBUcSWMs/D3y
- izSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717414103; x=1718018903;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PV0NIx7Msfph2Sw7+O4LVA2pjGlK/npIVQHcru0BTpM=;
- b=AP0tvhp2ZPA0aB/fN9BwHAkPoPXzCO6RmDG0VS79Aig7b4OmXF8Bi2qm5wtGlxdTNM
- URDFbkn9Hl5Q9lOssH1m0sjXztoPNfGUFVDNMv5QNZF1C26gqH4B9iqAKOI2BKrEDlaR
- 4SHStZHe8nym9RqrIx9ym65QajKGaekHlvsK7UPcqPLKaavOIhflEimRyIwH/4Sf9yzq
- PpSehJ57HnxViZIDKjn4qn3dJVtyWJQKQ5zY3dikLxTBUge+hNiCGbn9IVGaZ5l31aG0
- z3qRGEnJ8KxBw4rMNhVVHVVwgFeyRClPPCDSuhs6yaeoDstWVgtZ9R5D9lHeCHKypLEU
- VMhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsBv6/C1uabA264A/Zi8aov+vXTu9J87k9QPMOStZdexeTt3fikQ1t+DV3ECdCFAWOw7bEQWuhB4N4CXeOt+yKuUIkc2I=
-X-Gm-Message-State: AOJu0YxKAvIxwEgF/Bq3M+lUXEhOHouL0Gx3VquqmCKsBhnsIVcMsUl2
- isMifvm+IQumU7IUqlvKskmXWuP96818OJWOUJ0ADwoj/ladSPWmnMI07wzFLEU=
-X-Google-Smtp-Source: AGHT+IH3UzMfTEg5uALlw06eeywZZ8pnfUgmvRVvZ7WisLDIs1Ne/ayWwQ/nY/MTIqQlgI+qTALHjw==
-X-Received: by 2002:a1f:f8ce:0:b0:4df:1d06:eeb7 with SMTP id
- 71dfb90a1353d-4eb02d9aef7mr8189394e0c.1.1717414102707; 
- Mon, 03 Jun 2024 04:28:22 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.241])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794f901a818sm235096785a.80.2024.06.03.04.28.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 04:28:21 -0700 (PDT)
-Message-ID: <a13883da-fa6a-4ada-b75d-42ffa0bcb20b@linaro.org>
-Date: Mon, 3 Jun 2024 13:28:16 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sE5sQ-0006Y6-Db
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:29:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sE5sI-0000sN-IW
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:29:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717414153;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XpRLLcPKxPeWrQnAe/guP+u11AxHD9u5mJBFCTPDKRc=;
+ b=McytJ/wb5DZx6iXhlB4iy3Ht3px7MKaO9GjQrNoGHNpmSfdc4LUJSyPKNzzD8TzE6Bip6f
+ C8+NKa9HVF+1YLDUvEmpCqyjKofJNJ2R1ETRtCs2f+xd5YPp73bfbbVgJ50woNORj4TMMK
+ /9CIZGnV2XtFBlPwYIix4PmutyJw7l4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-Gl5EuS44MTmIW7yW_aDxEw-1; Mon,
+ 03 Jun 2024 07:29:10 -0400
+X-MC-Unique: Gl5EuS44MTmIW7yW_aDxEw-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E0F2C3806701;
+ Mon,  3 Jun 2024 11:29:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.80])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 64B931C0D101;
+ Mon,  3 Jun 2024 11:29:08 +0000 (UTC)
+Date: Mon, 3 Jun 2024 12:29:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: qemu CI & ccache: cache size is too small
+Message-ID: <Zl2pAiLgHQWVAYln@redhat.com>
+References: <4ccbaa65-41cf-4317-9dfb-2c9ab17296d0@tls.msk.ru>
+ <5d4de3b2-a940-44e1-bde9-77e8389fb58c@redhat.com>
+ <61ae842e-179e-453a-b109-e8801354b9e4@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] cpu: move Qemu[Thread|Cond] setup into common code
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Reinoud Zandijk
- <reinoud@netbsd.org>, kvm@vger.kernel.org,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20240530194250.1801701-1-alex.bennee@linaro.org>
- <20240530194250.1801701-3-alex.bennee@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240530194250.1801701-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=philmd@linaro.org; helo=mail-vk1-xa32.google.com
+In-Reply-To: <61ae842e-179e-453a-b109-e8801354b9e4@tls.msk.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,70 +85,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/5/24 21:42, Alex Bennée wrote:
-> Aside from the round robin threads this is all common code. By
-> moving the halt_cond setup we also no longer need hacks to work around
-> the race between QOM object creation and thread creation.
+On Mon, May 27, 2024 at 02:38:08PM +0300, Michael Tokarev wrote:
+> 27.05.2024 14:19, Thomas Huth wrote:
+> > On 27/05/2024 12.49, Michael Tokarev wrote:
+> > > Hi!
+> > > 
+> > > Noticed today that a rebuild of basically the same tree (a few commits apart)
+> > > in CI result in just 11% hit rate of ccache:
+> > > 
+> > > https://gitlab.com/mjt0k/qemu/-/jobs/6947445337#L5054
+> > 
+> > For me, the results look better:
+> > 
+> >   https://gitlab.com/thuth/qemu/-/jobs/6918599017#L4954
 > 
-> It is a little ugly to free stuff up for the round robin thread but
-> better it deal with its own specialises than making the other
-> accelerators jump through hoops.
+> Yeah, it's a bit better, but still not good enough.
+> I dunno how much changes the source had between the two runs.
+> It still had 11 cleanups, and the cache size is at the same level.
+> (It is an older ccache, too).
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   include/hw/core/cpu.h             |  4 ++++
->   accel/dummy-cpus.c                |  3 ---
->   accel/hvf/hvf-accel-ops.c         |  4 ----
->   accel/kvm/kvm-accel-ops.c         |  3 ---
->   accel/tcg/tcg-accel-ops-mttcg.c   |  4 ----
->   accel/tcg/tcg-accel-ops-rr.c      | 14 +++++++-------
->   hw/core/cpu-common.c              |  5 +++++
->   target/i386/nvmm/nvmm-accel-ops.c |  3 ---
->   target/i386/whpx/whpx-accel-ops.c |  3 ---
->   9 files changed, 16 insertions(+), 27 deletions(-)
+> > > while it should be near 100%.  What's interesting in there is:
+> > > 
+> > > 1) cache size is close to max cache size,
+> > > and more important,
+> > > 2) cleanups performed 78
+> > > 
+> > > so it has to remove old entries before it finished the build.
+> > 
+> > Did you maybe switch between master and stable branches before that run?
+> > ... I guess that could have invalidated most of the cached files since
+> > we switched from CentOS 8 to 9 recently...?
+> 
+> Nope, nothing else ran between the two and it was just a few
+> source-level commits (stable-8.2 pick ups), without changing
+> giltab/containers/etc configuration.
+> 
+> I increased cache size to 900M and did another test run, here are
+> the results: https://gitlab.com/mjt0k/qemu/-/jobs/6947894974#L5054
+> 
+> cache directory                     /builds/mjt0k/qemu/ccache
+> primary config                      /builds/mjt0k/qemu/ccache/ccache.conf
+> secondary config      (readonly)    /etc/ccache.conf
+> stats updated                       Mon May 27 11:17:44 2024
+> stats zeroed                        Mon May 27 11:10:22 2024
+> cache hit (direct)                  1862
+> cache hit (preprocessed)             274
+> cache miss                          1219
+> cache hit rate                     63.67 %
+> called for link                      285
+> called for preprocessing              71
+> compiler produced empty output         5
+> preprocessor error                     2
+> no input file                          6
+> cleanups performed                     0
+> files in cache                      9948
+> cache size                         654.6 MB
+> max cache size                     900.0 MB
+> 
+> This is having in mind that the previous run was with CCACHE_SIZE=500M
+> and had multiple cleanups, so 63% is actually more than I'd expect already.
+
+Given your original job had cache of 447 MB, and new cache is 654 MB, the
+old cache is 68% of size of the new cache. So effectively your 63% is
+high 90's cache hit rate of what was present.
+
+This would suggest a cache size of 700 MB is more appropriate, unless some
+other jobs have even high usage needs.
 
 
-> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-> index 894e73e52c..84c36c1450 100644
-> --- a/accel/tcg/tcg-accel-ops-rr.c
-> +++ b/accel/tcg/tcg-accel-ops-rr.c
-> @@ -317,22 +317,22 @@ void rr_start_vcpu_thread(CPUState *cpu)
->       tcg_cpu_init_cflags(cpu, false);
->   
->       if (!single_tcg_cpu_thread) {
-> -        cpu->thread = g_new0(QemuThread, 1);
-> -        cpu->halt_cond = g_new0(QemuCond, 1);
-> -        qemu_cond_init(cpu->halt_cond);
-> +        single_tcg_halt_cond = cpu->halt_cond;
-> +        single_tcg_cpu_thread = cpu->thread;
->   
->           /* share a single thread for all cpus with TCG */
->           snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "ALL CPUs/TCG");
->           qemu_thread_create(cpu->thread, thread_name,
->                              rr_cpu_thread_fn,
->                              cpu, QEMU_THREAD_JOINABLE);
-> -
-> -        single_tcg_halt_cond = cpu->halt_cond;
-> -        single_tcg_cpu_thread = cpu->thread;
->       } else {
-> -        /* we share the thread */
-> +        /* we share the thread, dump spare data */
-
-/* we share the thread, release allocations from cpu_common_initfn() */
-
-> +        g_free(cpu->thread);
-> +        qemu_cond_destroy(cpu->halt_cond);
->           cpu->thread = single_tcg_cpu_thread;
->           cpu->halt_cond = single_tcg_halt_cond;
-> +
-> +        /* copy the stuff done at start of rr_cpu_thread_fn */
->           cpu->thread_id = first_cpu->thread_id;
->           cpu->neg.can_do_io = 1;
->           cpu->created = true;
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
