@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A756C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF9EC25B75
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5go-0003Vq-Pu; Mon, 03 Jun 2024 07:17:23 -0400
+	id 1sE5gi-0003MC-II; Mon, 03 Jun 2024 07:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5gW-0003E2-RJ
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:05 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sE5gW-0003E1-LW; Mon, 03 Jun 2024 07:17:04 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5gQ-00069Q-7X
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:04 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f4a0050b9aso26013055ad.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:16:56 -0700 (PDT)
+ id 1sE5gR-00069c-0o; Mon, 03 Jun 2024 07:17:04 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7026ad046a2so622274b3a.2; 
+ Mon, 03 Jun 2024 04:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413414; x=1718018214; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bviNdrwZIbbeeF2mkZrjTDFfpm4CaLZkkoY3cNrHjHk=;
- b=CWPkLEI/Cn56pCcfom2ajTGA7cBn7SGhWINTQrdnCQuIpRsT5Y1p1A3SzR/K06kaee
- SZiJp5HIE0UOKpWx5ISAnBHsqtn+HyqZXpnso0cgc86ZfR0Cs68XUaRIksPlStcfC33c
- E297RazfTK/Qj2Dy3vNtX3xo4BS/DMnn1zsbaTuMQkwP4uoxAiDLLgOWf/0rLSr+N6fE
- kingmmlDJIcya0od1l8QapQf9E86YRax1ZRtXSC9PPPmGB84btYNqF47RgMdzYk/S2PO
- lLuGwJBWPS2HPqs+KCTARu/+iwV9aY3xuA7QJa2oX9DHUmkrscy79+F05HEJQILj4C9H
- Hrtw==
+ d=gmail.com; s=20230601; t=1717413417; x=1718018217; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F2fI6nwAJXeFe1hxyMYDF/QLET3EtTO13tMnuGkb/Vs=;
+ b=cSza6VZdQ+EaOp1JNPegF+7yiEy5JImzjs7Nf903l/4G5Awpvc31NHIB8Hft2oxf7h
+ Dzh/Ex7boiBYSgbhsB/YfY3eyPbhDJZP0M/H8Fcqx2bvq3EXMxaYlnGpuu2fnSmntrfR
+ 2LDcfqmmVezZVQLjG35qq0OKZrlUhBCLK9NVS+6kyGLd5+pV+fEL+b4RiCJytzjza6ho
+ SU7Xjbg5R9sJg7OxAa7fQyNYVgOsrgdRb3zXJ55KmJsk6isE6bIFxWfOUn+gILG7q/3x
+ +yM5C1rWaVyxm8q/4OtNME2r+4u0dAsKlMRzgtvPYxo/eYdEakeCIZPC9H3iHgREo295
+ qYyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413414; x=1718018214;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bviNdrwZIbbeeF2mkZrjTDFfpm4CaLZkkoY3cNrHjHk=;
- b=T8R3R+wT0ey+QppQ8kgOHieK59gOzTGoXu1qirVfjiqMgNuDAab9xj9XaBlUaWZdN1
- F047aDxNIuau+lYVqOGuuJcQm09X4TefnbKGkePLyomhZ7xPSqK1ptJMVcv3emWhqmkJ
- aIyGnGI0e/XWEy+z8KfLcAa1TJDcDP4IdusxrTUfzG6ccL7H8acYPMD6Xm4yRlCnWPkq
- nfPScd8mpSYSiwn1KSsTI9VGQOZRhKCIJBbAkwuRQlssexxBseUksUqP9QRrxz8OL0q9
- U23sEK+0eHlZwrDolXkWFkhqzo2/Va+7HA0BS3CvLMANhVmOwRZ9ajauLSF/5zExo2dt
- 7WRQ==
-X-Gm-Message-State: AOJu0YzqhWqUarRAtO+21YuMzfI+5OvMlDRO7aG2BCajMIj/UZW45lFg
- sYtrPNpcR8qf/prLHTw6HOdpwlQDrpf3U7aHnn2daH83Bm2+iX67fjINmg==
-X-Google-Smtp-Source: AGHT+IFPXPQPqF160L5t067HiWVfBIgSunSLRL9o6yOmZxO9fFr8/4mWFBthABidNJhtQpJr6/p5Yw==
-X-Received: by 2002:a17:902:d2d2:b0:1f6:8552:c186 with SMTP id
- d9443c01a7336-1f68552c468mr8840575ad.35.1717413413551; 
- Mon, 03 Jun 2024 04:16:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717413417; x=1718018217;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F2fI6nwAJXeFe1hxyMYDF/QLET3EtTO13tMnuGkb/Vs=;
+ b=CiOIzQRg8tkM0nNg5mTRHfJQ1rYoM+DAAQ8hUzok23CtcN54zRKh5w9yfSP4LJOYlB
+ aHeN+8aBV7RUW1bW5krYxWIfzvR19JoSy5LnWU8Kow3BwybZBN+2X3qJFjGCP+HxORfr
+ HoJqtapEedu8/CZ+eFXcMlYaJYEFMV6ByYkl+1QC8JRUrT5x9hciJbLJM7iqOfQNrlVx
+ JckZJ7d2iaDdExD1NaqO0KunCaB7ehvKfRKW4mSX09IHWHN7794viU0rrpL29ymN2UIz
+ Rdrfv7iUFDooRQy738GxkEwV3JJQxcmwLJWkbAPFdH/mL2eQ/+e7fUYwD9tE96upwIxr
+ o2mg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWR6wBWzxKjIJxsksUZoWXkINtmcRJzNhVGyoKpZuIku6NhhOThPubcMM5SpXkjVn22ihge3V5coC1+NjaHzCVwbtZ7vgSk
+X-Gm-Message-State: AOJu0YxtQeOv8+WCYKxaNkcev8ruxQV3Otdg/n0Tk99SFqa+A4g8sd7h
+ pVc2N36XNcXMYYu2dCDQh5WslrjJboF0zrqzQCsFJKffJerja/oeZXByWg==
+X-Google-Smtp-Source: AGHT+IFtlEScgxX0IALRTDBUEWCwikW6IgOTZQvS5/qI9OZXkvAJeqljLyUTVKu6WP3RJnjXn5H/LQ==
+X-Received: by 2002:a05:6a20:158a:b0:1af:cc75:3f79 with SMTP id
+ adf61e73a8af0-1b26f30e460mr9127997637.55.1717413416774; 
+ Mon, 03 Jun 2024 04:16:56 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.16.51
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.16.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:16:53 -0700 (PDT)
+ Mon, 03 Jun 2024 04:16:56 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 00/27] riscv-to-apply queue
-Date: Mon,  3 Jun 2024 21:16:16 +1000
-Message-ID: <20240603111643.258712-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, "yang.zhang" <yang.zhang@hexintek.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-stable <qemu-stable@nongnu.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 01/27] hw/intc/riscv_aplic: APLICs should add child earlier
+ than realize
+Date: Mon,  3 Jun 2024 21:16:17 +1000
+Message-ID: <20240603111643.258712-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
+References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,130 +101,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 74abb45dac6979e7ff76172b7f0a24e869405184:
+From: "yang.zhang" <yang.zhang@hexintek.com>
 
-  Merge tag 'pull-target-arm-20240531' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-05-31 11:10:10 -0700)
+Since only root APLICs can have hw IRQ lines, aplic->parent should
+be initialized first.
 
-are available in the Git repository at:
+Fixes: e8f79343cf ("hw/intc: Add RISC-V AIA APLIC device emulation")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240409014445.278-1-gaoshanliukou@163.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/intc/riscv_aplic.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240603
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index fc5df0d598..32edd6d07b 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -1000,16 +1000,16 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
+     qdev_prop_set_bit(dev, "msimode", msimode);
+     qdev_prop_set_bit(dev, "mmode", mmode);
+ 
++    if (parent) {
++        riscv_aplic_add_child(parent, dev);
++    }
++
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     if (!is_kvm_aia(msimode)) {
+         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+     }
+ 
+-    if (parent) {
+-        riscv_aplic_add_child(parent, dev);
+-    }
+-
+     if (!msimode) {
+         for (i = 0; i < num_harts; i++) {
+             CPUState *cpu = cpu_by_arch_id(hartid_base + i);
+-- 
+2.45.1
 
-for you to fetch changes up to 915758c537b5fe09575291f4acd87e2d377a93de:
-
-  disas/riscv: Decode all of the pmpcfg and pmpaddr CSRs (2024-06-03 11:12:12 +1000)
-
-----------------------------------------------------------------
-RISC-V PR for 9.1
-
-* APLICs add child earlier than realize
-* Fix exposure of Zkr
-* Raise exceptions on wrs.nto
-* Implement SBI debug console (DBCN) calls for KVM
-* Support 64-bit addresses for initrd
-* Change RISCV_EXCP_SEMIHOST exception number to 63
-* Tolerate KVM disable ext errors
-* Set tval in breakpoints
-* Add support for Zve32x extension
-* Add support for Zve64x extension
-* Relax vector register check in RISCV gdbstub
-* Fix the element agnostic Vector function problem
-* Fix Zvkb extension config
-* Implement dynamic establishment of custom decoder
-* Add th.sxstatus CSR emulation
-* Fix Zvfhmin checking for vfwcvt.f.f.v and vfncvt.f.f.w instructions
-* Check single width operator for vector fp widen instructions
-* Check single width operator for vfncvt.rod.f.f.w
-* Remove redudant SEW checking for vector fp narrow/widen instructions
-* Prioritize pmp errors in raise_mmu_exception()
-* Do not set mtval2 for non guest-page faults
-* Remove experimental prefix from "B" extension
-* Fixup CBO extension register calculation
-* Fix the hart bit setting of AIA
-* Fix reg_width in ricsv_gen_dynamic_vector_feature()
-* Decode all of the pmpcfg and pmpaddr CSRs
-
-----------------------------------------------------------------
-Alexei Filippov (1):
-      target/riscv: do not set mtval2 for non guest-page faults
-
-Alistair Francis (2):
-      target/riscv: rvzicbo: Fixup CBO extension register calculation
-      disas/riscv: Decode all of the pmpcfg and pmpaddr CSRs
-
-Andrew Jones (2):
-      target/riscv/kvm: Fix exposure of Zkr
-      target/riscv: Raise exceptions on wrs.nto
-
-Cheng Yang (1):
-      hw/riscv/boot.c: Support 64-bit address for initrd
-
-Christoph Müllner (1):
-      riscv: thead: Add th.sxstatus CSR emulation
-
-Clément Léger (1):
-      target/riscv: change RISCV_EXCP_SEMIHOST exception number to 63
-
-Daniel Henrique Barboza (6):
-      target/riscv/kvm: implement SBI debug console (DBCN) calls
-      target/riscv/kvm: tolerate KVM disable ext errors
-      target/riscv/debug: set tval=pc in breakpoint exceptions
-      trans_privileged.c.inc: set (m|s)tval on ebreak breakpoint
-      target/riscv: prioritize pmp errors in raise_mmu_exception()
-      riscv, gdbstub.c: fix reg_width in ricsv_gen_dynamic_vector_feature()
-
-Huang Tao (2):
-      target/riscv: Fix the element agnostic function problem
-      target/riscv: Implement dynamic establishment of custom decoder
-
-Jason Chien (3):
-      target/riscv: Add support for Zve32x extension
-      target/riscv: Add support for Zve64x extension
-      target/riscv: Relax vector register check in RISCV gdbstub
-
-Max Chou (4):
-      target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v and vfncvt.f.f.w instructions
-      target/riscv: rvv: Check single width operator for vector fp widen instructions
-      target/riscv: rvv: Check single width operator for vfncvt.rod.f.f.w
-      target/riscv: rvv: Remove redudant SEW checking for vector fp narrow/widen instructions
-
-Rob Bradford (1):
-      target/riscv: Remove experimental prefix from "B" extension
-
-Yangyu Chen (1):
-      target/riscv/cpu.c: fix Zvkb extension config
-
-Yong-Xuan Wang (1):
-      target/riscv/kvm.c: Fix the hart bit setting of AIA
-
-yang.zhang (1):
-      hw/intc/riscv_aplic: APLICs should add child earlier than realize
-
- MAINTAINERS                                    |   1 +
- target/riscv/cpu.h                             |   7 ++
- target/riscv/cpu_bits.h                        |   2 +-
- target/riscv/cpu_cfg.h                         |   2 +
- target/riscv/helper.h                          |   1 +
- target/riscv/sbi_ecall_interface.h             |  17 +++
- target/riscv/tcg/tcg-cpu.h                     |  15 +++
- disas/riscv.c                                  |  65 +++++++++-
- hw/intc/riscv_aplic.c                          |   8 +-
- hw/riscv/boot.c                                |   4 +-
- target/riscv/cpu.c                             |  10 +-
- target/riscv/cpu_helper.c                      |  37 +++---
- target/riscv/csr.c                             |  20 +++-
- target/riscv/debug.c                           |   3 +
- target/riscv/gdbstub.c                         |   8 +-
- target/riscv/kvm/kvm-cpu.c                     | 157 ++++++++++++++++++++++++-
- target/riscv/op_helper.c                       |  11 ++
- target/riscv/tcg/tcg-cpu.c                     |  50 +++++---
- target/riscv/th_csr.c                          |  79 +++++++++++++
- target/riscv/translate.c                       |  31 +++--
- target/riscv/vector_internals.c                |  22 ++++
- target/riscv/insn_trans/trans_privileged.c.inc |   2 +
- target/riscv/insn_trans/trans_rvv.c.inc        |  46 +++++---
- target/riscv/insn_trans/trans_rvzawrs.c.inc    |  29 +++--
- target/riscv/insn_trans/trans_rvzicbo.c.inc    |  16 ++-
- target/riscv/meson.build                       |   1 +
- 26 files changed, 543 insertions(+), 101 deletions(-)
- create mode 100644 target/riscv/th_csr.c
 
