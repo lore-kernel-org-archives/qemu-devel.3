@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F79CC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A94C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE78m-0002bp-MH; Mon, 03 Jun 2024 08:50:20 -0400
+	id 1sE79I-0003Ls-H4; Mon, 03 Jun 2024 08:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE78j-0002bP-Bn
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:50:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sE79H-0003LA-E4
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:50:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE78g-0000yc-6j
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:50:16 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sE79C-00012F-5I
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:50:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717419011;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1717419045;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8onGgJrTXV5bK3F53cxRhBPgdJpmEbPj3pxIdMBfZ78=;
- b=g0AjmZewE6l8xBr6Jar9DceVrJ5NZubwlG1BbXdn0Pk3xkKZlxpkPcMxWJ3dVKxS1zH3uu
- 8P9bsm7rJKfrtQhAJnJtn1n0UU7/3i7NEhBIgMHk5naO2/hqxmMX98S8+GMDi7y+/CBH9k
- qt/ibCorVzkmX4ikhIs+mzb7LAyXaqU=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ag9QDcPIw8Asa9YU9zMqlGKZHPVSm1Mm+ypr8HygZHk=;
+ b=AFPTVXckh5Tyf0nTNAnohLQX2ClM/uw4d/e+U3VoKoOlOFLBTKZhgfUaSD4bMypyohAEwp
+ CONWvQdrI9rtNllydLQpYV/BuQjTuSsHx4mrI/fRidhgF9ttkIj34usAiyiZes96LEqXRC
+ 4XhSYZRtDN5s7VZ6XcScQvFs95Nt+AI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-h2D_aodjP3O27eH_qV1TPA-1; Mon, 03 Jun 2024 08:50:10 -0400
-X-MC-Unique: h2D_aodjP3O27eH_qV1TPA-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-795106b7c6dso48272585a.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:50:10 -0700 (PDT)
+ us-mta-324-vQPCZlk2Mxa9ajIBcM7cIQ-1; Mon, 03 Jun 2024 08:50:43 -0400
+X-MC-Unique: vQPCZlk2Mxa9ajIBcM7cIQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a68b42049b4so58658766b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:50:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717419010; x=1718023810;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8onGgJrTXV5bK3F53cxRhBPgdJpmEbPj3pxIdMBfZ78=;
- b=cZVDtlD8N5ZXJhVHuCh6E78/sr8Z5slZD+c5mHk73oTPdpXFFJomO1qAch8sVzaqxe
- EWxIHP/FiBvgpldS+1rzk6Hls+Zeqsw1DmBL6Jc+LlZ6JI9R7qDbTqfUFsNGMm7/F7gd
- cOnGUpu4qsnEz1GRksHJAGYkLeMYv6rTlbMZIw0zGTQZoHhWhBF+GaAA6VmpD4n4po8H
- YoAsVTNwg9IegeLaeAGyCA09aBz/QdzBXJ0hOvAfKFzNWoHwAMdUwlP3+2tuCjz0UT0j
- sBHX63r5kDWI1ykf1Ta5kXoq11cSyAnci6okYE5a2bnDkFNnzItBjUwX0briNR8Kewc/
- wuBQ==
+ d=1e100.net; s=20230601; t=1717419042; x=1718023842;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ag9QDcPIw8Asa9YU9zMqlGKZHPVSm1Mm+ypr8HygZHk=;
+ b=VROeVX5OkRtnYfhZNIfNnVm6GHiq4RZt9dZq4V+9kk1CLjDPRbvcSC7eh3WWBd4RDf
+ wZBYwwL5+fYimiuRmg8/BdHYhe705M8ZImyRRvwswtokteYMIJitn9JDNo01YUVewyYJ
+ jxpqL+c74ahRE4KhNy8pjbHq/AWRY+JET8nwmS2/zKK0apVIknbi7hcmRpsYtHjyl6zh
+ xiGaJn4IADTVx2xN5U+ikYpvscO/CwPHq77XRrTUJ5azz4JZaOhv192c6Plg2VssKIKC
+ Oewe30r+ppV7HJUGOYAI4S0bKZAA699rp2nYiCq0NsVLbsszg2OmvxROaq/AwAzc8AL7
+ WDhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzjRUK2k2aLWujSz34H57uPXeenzI6XrFru/yhDYuvYZXSL9kPBCFs37T08DrETS8id8g1TDv7RaogtOU1dGvk7U8RIks=
-X-Gm-Message-State: AOJu0Yyiz6lorvc/KnsL9/EGIm+Xk+M4/FPG/INC12feHX5coDWr2Q0M
- Bl+QYDzX/ialvfHdDCFe7qJLEg3VHC0tBnEV6lcTFVNS5ljT8GDWHjP4gu+X5PFNaili318Do6y
- Zo7tJx3+XMYvqE5oBqzjW6DYq6CkX//mWFQGNIIH6dqyYPIeaQb2n
-X-Received: by 2002:a05:620a:90d:b0:792:7d2f:156f with SMTP id
- af79cd13be357-794f5ebfe8amr813731585a.77.1717419009936; 
- Mon, 03 Jun 2024 05:50:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGI3r/wrpwENTopyWo6KAoGoERtNbqVFg8l7trxCm5yZxskhtjEiqK/+8zhLEOL/wzRt0MWHg==
-X-Received: by 2002:a05:620a:90d:b0:792:7d2f:156f with SMTP id
- af79cd13be357-794f5ebfe8amr813729385a.77.1717419009441; 
- Mon, 03 Jun 2024 05:50:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794f3172d94sm279945785a.99.2024.06.03.05.50.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 05:50:08 -0700 (PDT)
-Message-ID: <f64ffbd9-fb34-474d-be4a-66c4c9ee223b@redhat.com>
-Date: Mon, 3 Jun 2024 14:50:04 +0200
+ AJvYcCXiKWmT9tNHjWpULLT0ubiDY79jbzC+5iMVsd4sjd7iXzzUZ90G4nrmV/DTyCG8H8lyg3YjzceYT2b6Ipk0LUtYAIqZYXg=
+X-Gm-Message-State: AOJu0YyOAMmqCgVXM+/srwk3OhsX7HwkrV/ZoBdI2l1r+U9vWRXX6Z3V
+ x7jBpM6NTNWY7JWK511C+lCZEFb/aawrTpJlYIt2bNHyNBsHw3xx4sMpGJGdO5LzyuJh9kgjrcJ
+ 0Z6v+86rrejSMSJ3bNAaxtQLREOflF1j3ZgXj/axEC3GyzHx/SRHAx9tu+w441q1PjDK/TeVluJ
+ uh1sWTqkxLCF1SEJopv0A/4gylmmhrAYnwrB4=
+X-Received: by 2002:a50:c056:0:b0:572:a770:1371 with SMTP id
+ 4fb4d7f45d1cf-57a364c3d8amr5914356a12.42.1717419042252; 
+ Mon, 03 Jun 2024 05:50:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMtxnBO6dVDhfOxQUiQcgDVRYaJYn/eT1mIiWNzD8FVokOTym3r57H3puV2D5caT71uGMUJPs0Cr0LRR7LJC0=
+X-Received: by 2002:a50:c056:0:b0:572:a770:1371 with SMTP id
+ 4fb4d7f45d1cf-57a364c3d8amr5914299a12.42.1717419040349; Mon, 03 Jun 2024
+ 05:50:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 03/19] backends/iommufd: Introduce abstract
- TYPE_HOST_IOMMU_DEVICE_IOMMUFD device
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
- <20240603061023.269738-4-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240603061023.269738-4-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20240531175153.2716309-1-tavip@google.com>
+ <CAFEAcA_zPR=gd95tkhi8cXaZMf+M2OO2WpF=ZfO1vKhsO9=1cA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_zPR=gd95tkhi8cXaZMf+M2OO2WpF=ZfO1vKhsO9=1cA@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 3 Jun 2024 16:50:28 +0400
+Message-ID: <CAMxuvawJhdLnERBvtRvLCOJgtV727JEcdNNTSA=LUC8Vfa_reg@mail.gmail.com>
+Subject: Re: [PATCH] chardev: add path option for pty backend
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org,
+ eblake@redhat.com, armbru@redhat.com, Paulo Neves <ptsneves@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,117 +98,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
-Hi Zhenzhong,
-On 6/3/24 08:10, Zhenzhong Duan wrote:
-> TYPE_HOST_IOMMU_DEVICE_IOMMUFD represents a host IOMMU device under
-> iommufd backend.
+On Mon, Jun 3, 2024 at 4:23=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
 >
-> It will have its own .get_cap() implementation.
+> On Fri, 31 May 2024 at 22:21, Octavian Purdila <tavip@google.com> wrote:
+> >
+> > Add path option to the pty char backend which will create a symbolic
+> > link to the given path that points to the allocated PTY.
+> >
+> > Based on patch from Paulo Neves:
+> >
+> > https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gma=
+il.com/
+> >
+> > Tested with the following invocations that the link is created and
+> > removed when qemu stops:
+> >
+> >   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
+> >   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
+> >
+> >   qemu-system-x86_64 -nodefaults -monitor pty:test
+> >
+> > Also tested that when a link path is not passed invocations still work,=
+ e.g.:
+> >
+> >   qemu-system-x86_64 -monitor pty
 >
-> Opportunistically, add missed header to include/sysemu/iommufd.h.
-
-I would explain why it is abstract, ie. because it is going to be
-derived into VFIO or VDPA type'd device.
-
-Besides I think I would simply squash patches 3 and 4
-
-Thanks
-
-Eric
+> Could we have some justification here for why the new
+> functionality is useful, please? (e.g. what new use cases
+> it permits).
 >
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  include/sysemu/iommufd.h | 16 ++++++++++++++++
->  backends/iommufd.c       | 35 ++++++++++++++++++-----------------
->  2 files changed, 34 insertions(+), 17 deletions(-)
+
+It avoids the need to HMP/QMP query the allocated pty path. I don't
+think there are other benefits.
+
+> > --- a/qapi/char.json
+> > +++ b/qapi/char.json
+> > @@ -509,7 +509,7 @@
+> >  ##
+> >  # @ChardevHostdevWrapper:
+> >  #
+> > -# @data: Configuration info for device and pipe chardevs
+> > +# @data: Configuration info for device, pty and pipe chardevs
+> >  #
+> >  # Since: 1.4
+> >  ##
+> > @@ -650,7 +650,7 @@
+> >              'pipe': 'ChardevHostdevWrapper',
+> >              'socket': 'ChardevSocketWrapper',
+> >              'udp': 'ChardevUdpWrapper',
+> > -            'pty': 'ChardevCommonWrapper',
+> > +            'pty': 'ChardevHostdevWrapper',
+> >              'null': 'ChardevCommonWrapper',
+> >              'mux': 'ChardevMuxWrapper',
+> >              'msmouse': 'ChardevCommonWrapper',
 >
-> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-> index 293bfbe967..f6e6d6e1f9 100644
-> --- a/include/sysemu/iommufd.h
-> +++ b/include/sysemu/iommufd.h
-> @@ -1,9 +1,23 @@
-> +/*
-> + * iommufd container backend declaration
-> + *
-> + * Copyright (C) 2024 Intel Corporation.
-> + * Copyright Red Hat, Inc. 2024
-> + *
-> + * Authors: Yi Liu <yi.l.liu@intel.com>
-> + *          Eric Auger <eric.auger@redhat.com>
-> + *          Zhenzhong Duan <zhenzhong.duan@intel.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
->  #ifndef SYSEMU_IOMMUFD_H
->  #define SYSEMU_IOMMUFD_H
->  
->  #include "qom/object.h"
->  #include "exec/hwaddr.h"
->  #include "exec/cpu-common.h"
-> +#include "sysemu/host_iommu_device.h"
->  
->  #define TYPE_IOMMUFD_BACKEND "iommufd"
->  OBJECT_DECLARE_TYPE(IOMMUFDBackend, IOMMUFDBackendClass, IOMMUFD_BACKEND)
-> @@ -33,4 +47,6 @@ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
->                              ram_addr_t size, void *vaddr, bool readonly);
->  int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
->                                hwaddr iova, ram_addr_t size);
-> +
-> +#define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
->  #endif
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index c506afbdac..012f18d8d8 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -208,23 +208,24 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
->      return ret;
->  }
->  
-> -static const TypeInfo iommufd_backend_info = {
-> -    .name = TYPE_IOMMUFD_BACKEND,
-> -    .parent = TYPE_OBJECT,
-> -    .instance_size = sizeof(IOMMUFDBackend),
-> -    .instance_init = iommufd_backend_init,
-> -    .instance_finalize = iommufd_backend_finalize,
-> -    .class_size = sizeof(IOMMUFDBackendClass),
-> -    .class_init = iommufd_backend_class_init,
-> -    .interfaces = (InterfaceInfo[]) {
-> -        { TYPE_USER_CREATABLE },
-> -        { }
-> +static const TypeInfo types[] = {
-> +    {
-> +        .name = TYPE_IOMMUFD_BACKEND,
-> +        .parent = TYPE_OBJECT,
-> +        .instance_size = sizeof(IOMMUFDBackend),
-> +        .instance_init = iommufd_backend_init,
-> +        .instance_finalize = iommufd_backend_finalize,
-> +        .class_size = sizeof(IOMMUFDBackendClass),
-> +        .class_init = iommufd_backend_class_init,
-> +        .interfaces = (InterfaceInfo[]) {
-> +            { TYPE_USER_CREATABLE },
-> +            { }
-> +        }
-> +    }, {
-> +        .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
-> +        .parent = TYPE_HOST_IOMMU_DEVICE,
-> +        .abstract = true,
->      }
->  };
->  
-> -static void register_types(void)
-> -{
-> -    type_register_static(&iommufd_backend_info);
-> -}
-> -
-> -type_init(register_types);
-> +DEFINE_TYPES(types)
+> Does this break QAPI compatibility?
+>
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index 8ca7f34ef0..5eec194242 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+> >      "-chardev console,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappe=
+nd=3Don|off]\n"
+> >      "-chardev serial,id=3Did,path=3Dpath[,mux=3Don|off][,logfile=3DPAT=
+H][,logappend=3Don|off]\n"
+> >  #else
+> > -    "-chardev pty,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappend=
+=3Don|off]\n"
+> > +    "-chardev pty,id=3Did[,path=3Dpath][,mux=3Don|off][,logfile=3DPATH=
+][,logappend=3Don|off]\n"
+> >      "-chardev stdio,id=3Did[,mux=3Don|off][,signal=3Don|off][,logfile=
+=3DPATH][,logappend=3Don|off]\n"
+> >  #endif
+> >  #ifdef CONFIG_BRLAPI
+> > @@ -3808,12 +3808,16 @@ The available backends are:
+> >
+> >      ``path`` specifies the name of the serial device to open.
+> >
+> > -``-chardev pty,id=3Did``
+> > +``-chardev pty,id=3Did[,path=3Dpath]``
+> >      Create a new pseudo-terminal on the host and connect to it. ``pty`=
+`
+> >      does not take any options.
+>
+> We just added an option, so we should delete the line saying
+> that it doesn't take any options :-)
+>
+> >
+> >      ``pty`` is not available on Windows hosts.
+> >
+> > +    ``path`` specifies the symbolic link path to be created that
+> > +    points to the pty device.
+>
+> I think we could usefully make this a little less terse. Perhaps
+>    If ``path`` is specified, QEMU will create a symbolic link at
+>    that location which points to the new PTY device.
+> ?
+>
+> thanks
+> -- PMM
+>
 
 
