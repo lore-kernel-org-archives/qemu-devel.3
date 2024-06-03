@@ -4,84 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7CB7C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D26C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE98v-0004a3-Nk; Mon, 03 Jun 2024 10:58:37 -0400
+	id 1sE9ET-0007nP-Tj; Mon, 03 Jun 2024 11:04:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sE98t-0004Z2-LQ
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:58:35 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sE98r-0001rq-T2
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:58:35 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-57a50fecbadso2203534a12.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 07:58:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717426711; x=1718031511; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vYSMhdiBptCCxxftJKQ0L/QW7zUSoAmxXntOTKFaTm4=;
- b=gA0GKRxGOFjh1QzYPVja8WizMObxqJtqpBWT0Sm+4KmXhH0Ax64DjGZC4+f1BViSlb
- R4klU2GYkh8ciudeBl7ErNfL/azmTI1/0a8NkKw4yOT2Cr/EDbrXd0WBBU9qAKwMxagT
- 9kS8IKSWh47yPbvWS4aEYMuswSCR5+II/88WsbQWb0D8McrCLqBVwAuZ6fiaV2XLJgGi
- 6J90g/1cvXjpHR4j5nB2jFTYLBz0XjdD9v5Engmd6KBNLvRILqYFYPREc8TuCoAQEkiv
- ADWtulZU+r+c7iujuFCE8LD9VlRzat2Rg7MD1iBA+o6+pye2Qvn2NWhlKT1hnEcA9h8M
- Qt+w==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sE9ER-0007lu-C3
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:04:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sE9EP-0002ux-9i
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:04:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717427055;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eRoQODSdfaihIUPu/mCKgWE6oYbSsy1P8A3UVTHj02w=;
+ b=WUNFEjU4SSNKlReeqOcQy9Ndk6z4VFC8Cilp+Q1ttinpHEWbwseM1PDh6apqQKPAGnThDt
+ SQdV0vwoCJ8Y16Wgcawh4ocu8hGwxqoggB0u3nfOPTh283xb2AspskQyYkmKtENsTVZbs8
+ 39VjHuF7oTAb7iS8qRp7DIb+Tq4SVbg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-sr5zAQaDOTKz55hTxFhMPQ-1; Mon, 03 Jun 2024 11:04:12 -0400
+X-MC-Unique: sr5zAQaDOTKz55hTxFhMPQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42129c0b821so27602025e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:04:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717426711; x=1718031511;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vYSMhdiBptCCxxftJKQ0L/QW7zUSoAmxXntOTKFaTm4=;
- b=fUkkx6PpL1UjAnb2ZO/Lm9bdI7TywXeLRTchd4CxP3lC078F548FUf8sZR2vYP9ASC
- BeyLVm/V8w+0E9z9t5Uv+wEXgCpCfPTHNF35DSlxD8YMz73oKV7B2x6smn63qMjr7/N6
- ns+5OTH8TCM6YhGMN8ES9wldWNEZJLacCR6VOLI1xUp1yEF0yXiTEZSWdUB38kZoPHly
- gDzcmkngUHRLLpL1eiSMxsiNIsjU1q5CfCYwQBv2rTQUvvxLNsl9F27psS7ddi29ycGq
- 4/buJMCFlRTXubimzfsGivEoRvd/FkK+EOKW+K4UvyrsR0Z3QTYOZL9U7YxaCx03qxsM
- V6Ng==
+ d=1e100.net; s=20230601; t=1717427051; x=1718031851;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eRoQODSdfaihIUPu/mCKgWE6oYbSsy1P8A3UVTHj02w=;
+ b=E4bqnqv/sOthckD1OqtvtbK+P0CUkIHNlzovoV4HrV7p85b3mejM5tOX8gmVmhmWSQ
+ 3W/DjfMYSymsryIOvZdoCKCY4Q0s3antqPlnDg4uvxy5MykCwHQF+sCQbm9CPnjFmzmV
+ WM7da02OQYC4QOYRBVJcAb3Mz3+I6UQNw2/OxEFAC8vjF3p/QwnjLVuUF6HWgDMZN8w6
+ RMwwhuJU32Hpg0Byw69XJ5SXYna9diZz9kzC7bOvEnU3M+kW0To1OlVdtvjdR764nLn3
+ nMb36YNSLfnvZy0taTDAld82K1/0JmEBaWiEdnUyhw8LC7IXtqy4MVyUJd7W1XyTBrc5
+ kJrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeMlNCsehB1G6++4ZsBgtgAjl7iiCOPNwi7R4MgpsJlEJhCenIlrata5XVUt/a7JOmeSEMOY+OlAzyX6+uRQlDdNGCJVI=
-X-Gm-Message-State: AOJu0YxRxoD1M7XmpS+NdAmnYUMs2NQemGVwDQysUbts70by6knZyov4
- ZgSIBoUc/jQcLYlpEbC5a3rK1FAZ1R48kksWscdXL0B3QduBVowpgDvYbsFtuIN5iBk+2xz1M0k
- qM5xJWNEm1WIa48K6Ekl1hRVZFXlKfLTYq0O+Eg==
-X-Google-Smtp-Source: AGHT+IHa7IoYxrwvD6KFiyxGUiXC/QGYVvmox78BaSVnwZhVIJ7vK44NOe22rzEIwsa0+V/JbZkSKQf9i/bQ2tWVCZc=
-X-Received: by 2002:a50:9313:0:b0:578:5a44:722b with SMTP id
- 4fb4d7f45d1cf-57a363b4939mr5377170a12.7.1717426710937; Mon, 03 Jun 2024
- 07:58:30 -0700 (PDT)
+ AJvYcCVNlc2rtSgS3masGagf9q2fAiI7umofyc97uqqTkHQL09428adEzyIOisdhQmneaYfHi5Y8rJD9D1BWoLp44IcullhgNDs=
+X-Gm-Message-State: AOJu0YwqEOPs1M1FCUmAzm9HueTtn5QjuWxoWlors5Jh1YlEYIVZlyPk
+ tSxNEnDqwwxfnjJ/DgNHdWBxjhh4NxGFPnq+t9UmZGMZc1NVZnoDYyQIVWHNV3hDMAZ4Mry8eQP
+ Cum+8raYkwnC9jDVPxIPO0fPTNgnI7zSlSCNo9j/gJBH1d0JoYP1J
+X-Received: by 2002:a05:600c:4704:b0:421:7ad:daab with SMTP id
+ 5b1f17b1804b1-4212e044c44mr75556265e9.7.1717427050772; 
+ Mon, 03 Jun 2024 08:04:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFA+VR/uCkbEePCTKkm6g79Vei5e+rGaFUpryu1JWe/HImqNH/IngEu+3Y/wY+oTa3sV26pfw==
+X-Received: by 2002:a05:600c:4704:b0:421:7ad:daab with SMTP id
+ 5b1f17b1804b1-4212e044c44mr75555835e9.7.1717427050105; 
+ Mon, 03 Jun 2024 08:04:10 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:7417:6800:36c9:6b1b:9f6e:56c7])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4212b84d66bsm120891535e9.12.2024.06.03.08.04.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Jun 2024 08:04:09 -0700 (PDT)
+Date: Mon, 3 Jun 2024 11:04:06 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ gregory.price@memverge.com, ira.weiny@intel.com,
+ dan.j.williams@intel.com, a.manzanares@samsung.com,
+ dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
+ armbru@redhat.com, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v8 08/14] hw/mem/cxl_type3: Add host backend and address
+ space handling for DC regions
+Message-ID: <20240603110327-mutt-send-email-mst@kernel.org>
+References: <20240523174651.1089554-1-nifan.cxl@gmail.com>
+ <20240523174651.1089554-9-nifan.cxl@gmail.com>
+ <20240603132759.00005fbf@Huawei.com>
 MIME-Version: 1.0
-References: <20240529133106.1224866-1-thuth@redhat.com>
- <CAFEAcA8yOgGS8VdFRmJJKaUZe9Q=jDDh7itK6Q7vUH4TtEbFnw@mail.gmail.com>
- <Zl27orDnp8hOqgKo@redhat.com>
- <844ed2cb-9f91-439f-bd6a-73003acfdef1@redhat.com>
- <Zl3YBQQ5yWdQoH4y@redhat.com>
-In-Reply-To: <Zl3YBQQ5yWdQoH4y@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 3 Jun 2024 15:58:19 +0100
-Message-ID: <CAFEAcA_kkM6VgeVKxbSB_=UHOn0a6aFFUTUOeNP4otEoboYtvg@mail.gmail.com>
-Subject: Re: [PATCH] io/channel-socket: Fix -fsanitize=undefined problem with
- latest Clang
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240603132759.00005fbf@Huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,34 +108,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Jun 2024 at 15:49, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
-> We can't rely on the sanitizers to catch all cases where we're casting
-> functions, as we don't have good enough code coverage in tests to
-> identify all places that way.
->
-> Unless there's a warning flag we can use to get diagnosis of this
-> problem at compile time and then fix all reported issues, I won't have
-> any confidence in our ability to remove -fsanitize-cfi-icall-generalize-p=
-ointers
-> for CFI.
+On Mon, Jun 03, 2024 at 01:27:59PM +0100, Jonathan Cameron wrote:
+> On Thu, 23 May 2024 10:44:48 -0700
+> nifan.cxl@gmail.com wrote:
+> 
+> > From: Fan Ni <fan.ni@samsung.com>
+> > 
+> > Add (file/memory backed) host backend for DCD. All the dynamic capacity
+> > regions will share a single, large enough host backend. Set up address
+> > space for DC regions to support read/write operations to dynamic capacity
+> > for DCD.
+> > 
+> > With the change, the following support is added:
+> > 1. Add a new property to type3 device "volatile-dc-memdev" to point to host
+> >    memory backend for dynamic capacity. Currently, all DC regions share one
+> >    host backend;
+> > 2. Add namespace for dynamic capacity for read/write support;
+> > 3. Create cdat entries for each dynamic capacity region.
+> > 
+> > Reviewed-by: Gregory Price <gregory.price@memverge.com>
+> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> 
+> >      dvsec = (uint8_t *)&(CXLDVSECDevice){
+> > @@ -579,11 +622,28 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+> >  {
+> >      int i;
+> >      uint64_t region_base = 0;
+> > -    uint64_t region_len =  2 * GiB;
+> > -    uint64_t decode_len = 2 * GiB;
+> > +    uint64_t region_len;
+> > +    uint64_t decode_len;
+> >      uint64_t blk_size = 2 * MiB;
+> >      CXLDCRegion *region;
+> >      MemoryRegion *mr;
+> > +    uint64_t dc_size;
+> > +
+> > +    mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> > +    dc_size = memory_region_size(mr);
+> > +    region_len = DIV_ROUND_UP(dc_size, ct3d->dc.num_regions);
+> > +
+> > +    if (dc_size % (ct3d->dc.num_regions * CXL_CAPACITY_MULTIPLIER) != 0) {
+> > +        error_setg(errp, "backend size is not multiple of region len: 0x%lx",
+> 
+> Just seen a build error for this in mst's gitlab.
+> Needs to be the messy PRIx64(not tested) e.g.
+> 
+>     error_setg(errp, "backend size is not multiple of region len: " PRIx64,
+>                region_len);
+> 
+> Michael, do you want a new version, or are you happy to fix this up?
+> 
+> Thanks,
+> 
+> Jonathan
 
-You might think that -Wcast-function-type would detect them at compile
-time, but that has two loopholes:
- 1. void(*) (void)  matches everything
- 2. any parameter of pointer type matches any other pointer type
 
-It seems to me rather inconsistent that the sanitizers do
-not match up with the warning semantics here. I think I
-would vote for raising that with the compiler folks --
-either the sanitizer should be made looser so it matches
-the -Wcast-function-type semantics, or else a new tighter
-warning option that matches the sanitizer should be
-provided. Ideally both, I think. But it's definitely silly
-to have a runtime check that flags up things that the
-compiler perfectly well could detect at compile time but
-is choosing not to.
+I did this fixup. If nothing else happens I'll keep it, if more
+issues creep up I will drop. Thanks!
 
-thanks
--- PMM
+> > +                   region_len);
+> > +        return false;
+> > +    }
+> > +    if (region_len % CXL_CAPACITY_MULTIPLIER != 0) {
+> > +        error_setg(errp, "DC region size is unaligned to 0x%lx",
+> > +                   CXL_CAPACITY_MULTIPLIER);
+> > +        return false;
+> > +    }
+> > +    decode_len = region_len;
+> >  
+> >      if (ct3d->hostvmem) {
+> >          mr = host_memory_backend_get_memory(ct3d->hostvmem);
+> > @@ -610,6 +670,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+> >              /* dsmad_handle set when creating CDAT table entries */
+> >              .flags = 0,
+> >          };
+> > +        ct3d->dc.total_capacity += region->len;
+> >      }
+> >  
+> >      return true;
+> > @@ -619,7 +680,8 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+> >  {
+> >      DeviceState *ds = DEVICE(ct3d);
+> >  
+> > -    if (!ct3d->hostmem && !ct3d->hostvmem && !ct3d->hostpmem) {
+> > +    if (!ct3d->hostmem && !ct3d->hostvmem && !ct3d->hostpmem
+> > +        && !ct3d->dc.num_regions) {
+> >          error_setg(errp, "at least one memdev property must be set");
+> >          return false;
+> >      } else if (ct3d->hostmem && ct3d->hostpmem) {
+> > @@ -683,7 +745,37 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+> >          g_free(p_name);
+> >      }
+> >  
+> > +    ct3d->dc.total_capacity = 0;
+> >      if (ct3d->dc.num_regions > 0) {
+> > +        MemoryRegion *dc_mr;
+> > +        char *dc_name;
+> > +
+> > +        if (!ct3d->dc.host_dc) {
+> > +            error_setg(errp, "dynamic capacity must have a backing device");
+> > +            return false;
+> > +        }
+> > +
+> > +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> > +        if (!dc_mr) {
+> > +            error_setg(errp, "dynamic capacity must have a backing device");
+> > +            return false;
+> > +        }
+> > +
+> > +        /*
+> > +         * Set DC regions as volatile for now, non-volatile support can
+> > +         * be added in the future if needed.
+> > +         */
+> > +        memory_region_set_nonvolatile(dc_mr, false);
+> > +        memory_region_set_enabled(dc_mr, true);
+> > +        host_memory_backend_set_mapped(ct3d->dc.host_dc, true);
+> > +        if (ds->id) {
+> > +            dc_name = g_strdup_printf("cxl-dcd-dpa-dc-space:%s", ds->id);
+> > +        } else {
+> > +            dc_name = g_strdup("cxl-dcd-dpa-dc-space");
+> > +        }
+> > +        address_space_init(&ct3d->dc.host_dc_as, dc_mr, dc_name);
+> > +        g_free(dc_name);
+> > +
+> >          if (!cxl_create_dc_regions(ct3d, errp)) {
+> >              error_append_hint(errp, "setup DC regions failed");
+> >              return false;
+> > @@ -779,6 +871,9 @@ err_release_cdat:
+> >  err_free_special_ops:
+> >      g_free(regs->special_ops);
+> >  err_address_space_free:
+> > +    if (ct3d->dc.host_dc) {
+> > +        address_space_destroy(&ct3d->dc.host_dc_as);
+> > +    }
+> >      if (ct3d->hostpmem) {
+> >          address_space_destroy(&ct3d->hostpmem_as);
+> >      }
+> > @@ -797,6 +892,9 @@ static void ct3_exit(PCIDevice *pci_dev)
+> >      pcie_aer_exit(pci_dev);
+> >      cxl_doe_cdat_release(cxl_cstate);
+> >      g_free(regs->special_ops);
+> > +    if (ct3d->dc.host_dc) {
+> > +        address_space_destroy(&ct3d->dc.host_dc_as);
+> > +    }
+> >      if (ct3d->hostpmem) {
+> >          address_space_destroy(&ct3d->hostpmem_as);
+> >      }
+> > @@ -875,16 +973,23 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
+> >                                         AddressSpace **as,
+> >                                         uint64_t *dpa_offset)
+> >  {
+> > -    MemoryRegion *vmr = NULL, *pmr = NULL;
+> > +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
+> > +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
+> >  
+> >      if (ct3d->hostvmem) {
+> >          vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> > +        vmr_size = memory_region_size(vmr);
+> >      }
+> >      if (ct3d->hostpmem) {
+> >          pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> > +        pmr_size = memory_region_size(pmr);
+> > +    }
+> > +    if (ct3d->dc.host_dc) {
+> > +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> > +        dc_size = memory_region_size(dc_mr);
+> >      }
+> >  
+> > -    if (!vmr && !pmr) {
+> > +    if (!vmr && !pmr && !dc_mr) {
+> >          return -ENODEV;
+> >      }
+> >  
+> > @@ -892,19 +997,18 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
+> >          return -EINVAL;
+> >      }
+> >  
+> > -    if (*dpa_offset > ct3d->cxl_dstate.static_mem_size) {
+> > +    if (*dpa_offset >= vmr_size + pmr_size + dc_size) {
+> >          return -EINVAL;
+> >      }
+> >  
+> > -    if (vmr) {
+> > -        if (*dpa_offset < memory_region_size(vmr)) {
+> > -            *as = &ct3d->hostvmem_as;
+> > -        } else {
+> > -            *as = &ct3d->hostpmem_as;
+> > -            *dpa_offset -= memory_region_size(vmr);
+> > -        }
+> > -    } else {
+> > +    if (*dpa_offset < vmr_size) {
+> > +        *as = &ct3d->hostvmem_as;
+> > +    } else if (*dpa_offset < vmr_size + pmr_size) {
+> >          *as = &ct3d->hostpmem_as;
+> > +        *dpa_offset -= vmr_size;
+> > +    } else {
+> > +        *as = &ct3d->dc.host_dc_as;
+> > +        *dpa_offset -= (vmr_size + pmr_size);
+> >      }
+> >  
+> >      return 0;
+> > @@ -986,6 +1090,8 @@ static Property ct3_props[] = {
+> >      DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
+> >      DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
+> >      DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
+> > +    DEFINE_PROP_LINK("volatile-dc-memdev", CXLType3Dev, dc.host_dc,
+> > +                     TYPE_MEMORY_BACKEND, HostMemoryBackend *),
+> >      DEFINE_PROP_END_OF_LIST(),
+> >  };
+> >  
+> > @@ -1052,33 +1158,39 @@ static void set_lsa(CXLType3Dev *ct3d, const void *buf, uint64_t size,
+> >  
+> >  static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
+> >  {
+> > -    MemoryRegion *vmr = NULL, *pmr = NULL;
+> > +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
+> >      AddressSpace *as;
+> > +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
+> >  
+> >      if (ct3d->hostvmem) {
+> >          vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> > +        vmr_size = memory_region_size(vmr);
+> >      }
+> >      if (ct3d->hostpmem) {
+> >          pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> > +        pmr_size = memory_region_size(pmr);
+> >      }
+> > +    if (ct3d->dc.host_dc) {
+> > +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> > +        dc_size = memory_region_size(dc_mr);
+> > +     }
+> >  
+> > -    if (!vmr && !pmr) {
+> > +    if (!vmr && !pmr && !dc_mr) {
+> >          return false;
+> >      }
+> >  
+> > -    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.static_mem_size) {
+> > +    if (dpa_offset + CXL_CACHE_LINE_SIZE > vmr_size + pmr_size + dc_size) {
+> >          return false;
+> >      }
+> >  
+> > -    if (vmr) {
+> > -        if (dpa_offset < memory_region_size(vmr)) {
+> > -            as = &ct3d->hostvmem_as;
+> > -        } else {
+> > -            as = &ct3d->hostpmem_as;
+> > -            dpa_offset -= memory_region_size(vmr);
+> > -        }
+> > -    } else {
+> > +    if (dpa_offset < vmr_size) {
+> > +        as = &ct3d->hostvmem_as;
+> > +    } else if (dpa_offset < vmr_size + pmr_size) {
+> >          as = &ct3d->hostpmem_as;
+> > +        dpa_offset -= vmr_size;
+> > +    } else {
+> > +        as = &ct3d->dc.host_dc_as;
+> > +        dpa_offset -= (vmr_size + pmr_size);
+> >      }
+> >  
+> >      address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
+> > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> > index f7f56b44e3..c2c3df0d2a 100644
+> > --- a/include/hw/cxl/cxl_device.h
+> > +++ b/include/hw/cxl/cxl_device.h
+> > @@ -467,6 +467,14 @@ struct CXLType3Dev {
+> >      uint64_t poison_list_overflow_ts;
+> >  
+> >      struct dynamic_capacity {
+> > +        HostMemoryBackend *host_dc;
+> > +        AddressSpace host_dc_as;
+> > +        /*
+> > +         * total_capacity is equivalent to the dynamic capability
+> > +         * memory region size.
+> > +         */
+> > +        uint64_t total_capacity; /* 256M aligned */
+> > +
+> >          uint8_t num_regions; /* 0-8 regions */
+> >          CXLDCRegion regions[DCD_MAX_NUM_REGION];
+> >      } dc;
+
 
