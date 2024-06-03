@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 396E5C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF297C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5hZ-0006pz-9w; Mon, 03 Jun 2024 07:18:09 -0400
+	id 1sE5jh-0007SB-23; Mon, 03 Jun 2024 07:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hK-0005jy-Lu; Mon, 03 Jun 2024 07:17:54 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE5jf-0007ON-1c
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:20:19 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hG-0006Od-J0; Mon, 03 Jun 2024 07:17:52 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f612d7b0f5so26012085ad.0; 
- Mon, 03 Jun 2024 04:17:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE5jb-00078l-7U
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:20:18 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57a3d21299aso2970261a12.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413468; x=1718018268; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oUhlj8L9io8L8IzXZjt++oPcFPCpbs/15osdPGsfaYk=;
- b=T+v0mWGRFWDlMYHXYWgsgOI5bGon+HeT4iCfYHNl1VighFqTvG4Mv/c1Dpj3GtIZ4h
- nASneh68cxdqxo1i3eX5seXFkvEp9uhayjH2RdN4RU8Js4iMhOh4PpKyR0OtH/PE5v+I
- u9vcD4sx5Ndwwj8Z2nA2eBNvXeyxN1zHoMe0Eu0jZyK3y72KtGgfrAg8QaplCSCSeVBR
- 70bUI7Nkt8W7z8oFy38FG5RHf6R+wvCM3HRQbsCS/gtAFuUGV0Gvo7lJspUZFg7rF9DZ
- xoNOM6wxnRqNAKhUwb7S0xgNeC7s+j2MmtlizWcdDwcW9XjS1wUc+P07h4BS63stPZOX
- Jw4Q==
+ d=linaro.org; s=google; t=1717413610; x=1718018410; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3PrsjsdSdVSRCiA/1fQoIFNQW5VnBHf/05Ib5C8jLN0=;
+ b=QUxUsPCMzisoE1tod3ZV2vrmyYUacwdoONRHfY7HY4TKa3VaeS2r25NoZPAYPCN2b1
+ srqWQWwLCQjY19//bKdishXqorCpqGma2SLN35lX2NvYSJ149kbuCm4SAthmy/cB3rmQ
+ EqL2wcKv66WGtQKsVnaZaINWeHN9QKyrmenYROwcWVyZ/IW5NrBOXUT2w14D4q0yrTHj
+ PP9kOo7hN1V/W6nzjtxsxw0Pu8PCghCF+lBDkETcc87bcxPIvLLtDHTNZQ03pXmw6D4z
+ XMXFW8W2TjzzQNP669Chyah01Jd3oKywj9fhh88Z6cZXyMPLgvm3vmnzp3Dv3UuoU2QF
+ ePCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413468; x=1718018268;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oUhlj8L9io8L8IzXZjt++oPcFPCpbs/15osdPGsfaYk=;
- b=mXQgXs0nRMLAz75M7ZmcOIna52VKBwejCcPRD6czFTEiTTb8h96GZdMn8aIJJVcvOv
- BIN1wcGWE5e1xAphVOg5BHSQx0Ibgg9TgazGLtNMgQbDaP2qQKagZ9R2edv8gMMeNRRt
- paFNDs8nI7Cpmxlrne4A+rA+5CoIJggS/+OPTXhABqmbGQyMcxsb+7MVEg/wB1Q/IZ9T
- TjWNqh8i/EpcSFT48XFx1rdrxU2EsaJ/PyPnPBblbkLBvnZaXkLU9FuCLuhhUqJJD66c
- kZOPBJscDbpN9UQNlhFqju+B9l/p7JhxKfFtvV8EzvTqvsqN5sYxGBixLfTQQ5ldr2pL
- kKfw==
+ d=1e100.net; s=20230601; t=1717413610; x=1718018410;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3PrsjsdSdVSRCiA/1fQoIFNQW5VnBHf/05Ib5C8jLN0=;
+ b=WfuHw9VdMU3MPqsP7hNipaqQKOFVU4FMfNI8QnBjqm20Ma/4MzwVq1WnScVuWzhm4E
+ vFreigLlvtyJCizZceETHFZAxeTzRLnd0saIC9l7fheKhwo+/xX1yOLu6XtcGXsvirRG
+ fzy9wHP8Pnt7EuBIyUMakoSKZdLjAF/rWHIzQGNlxmokA0DYy05eHcFOrn8BplBNsIVx
+ FJ3/OA8uzsKrR+lLA5cg6aXe+GzN12s/OSlav5ke2BBPi83LT4s8Pluta8mUnzGYQwIa
+ evTHC608OXu6+I0GZD6sTPl2y7i3wle3p97jOqG8WPUTtbkU5XRNtkWppP9Cbq+JUAUq
+ dCtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvDLw5i/Dwlp/nGnaKo70GNsKENMNvvZ80+t/HEymfL+GoA4DpF1h5YY51OXE/u8V6uLLpC4pJE6kr1UZTL+m4hNsTEqHd
-X-Gm-Message-State: AOJu0YxVnqZosBzSPAPq17gyRhDeQ/Je4oiKBWm0md87fHmMi4UXPYoV
- cjnp+nXZWQP4RE3jEQWOvdD72RnL6iWn6yEeJofIyn9dPns8j6R4M5SFqQ==
-X-Google-Smtp-Source: AGHT+IE2m0t4TBzNaM5eTe8xzGM9TqdfFPJ+yJNyzW+RdiAXlVbEIQ6YQSXpDOq76bqGOI61sdUzIw==
-X-Received: by 2002:a17:902:ea01:b0:1f6:5e40:6e22 with SMTP id
- d9443c01a7336-1f65e40702cmr64013795ad.9.1717413468472; 
- Mon, 03 Jun 2024 04:17:48 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ AJvYcCUIpO8uNUeDJiYKj2HR5gfuaQEreRNpXMUDU6BKcn7HpSWXE/sbdXENk9JuODGyvVlhWSUIKlL3ptOSNm1qQbld05Uma1c=
+X-Gm-Message-State: AOJu0YzVSsU3Bfo6mRS4qzrtfw3Ee/Xwaa1wILnd0FWvpe2jx3m60L9i
+ oIzbp3yeiTaeqHegj6LChFBXGxb8J6GRldIi+ci9/qAvoIiJr+SkfVKqxVCt4NF3DcqL1eqN0FC
+ L
+X-Google-Smtp-Source: AGHT+IHDu/9PfDR8gxHXeBTYjPlLPDXsMNWGhmWTzmZvyJs8zrYcHwnE4MFZ8xOhI9u529VY3Zycpw==
+X-Received: by 2002:a50:d582:0:b0:57a:2ccb:b3f1 with SMTP id
+ 4fb4d7f45d1cf-57a36448228mr5272559a12.26.1717413610000; 
+ Mon, 03 Jun 2024 04:20:10 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:17:48 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-stable <qemu-stable@nongnu.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 17/27] target/riscv: rvv: Fix Zvfhmin checking for
- vfwcvt.f.f.v and vfncvt.f.f.w instructions
-Date: Mon,  3 Jun 2024 21:16:33 +1000
-Message-ID: <20240603111643.258712-18-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
-References: <20240603111643.258712-1-alistair.francis@wdc.com>
+ 4fb4d7f45d1cf-57a31be5695sm5230292a12.55.2024.06.03.04.20.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 04:20:09 -0700 (PDT)
+Message-ID: <1cb7361a-1111-4728-bc65-81e7b328ff0e@linaro.org>
+Date: Mon, 3 Jun 2024 13:20:07 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] tests/lcitool: Install mingw-w64-tools for the
+ Windows cross-builds
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240601070543.37786-1-thuth@redhat.com>
+ <20240601070543.37786-5-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240601070543.37786-5-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,78 +99,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+On 1/6/24 09:05, Thomas Huth wrote:
+> Beside g++ we also need the mingw-w64-tools for properly building
+> the code in qga/vss-win32/ , so let's install that package now, too.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/lcitool/projects/qemu-win-installer.yml | 1 +
+>   1 file changed, 1 insertion(+)
 
-According v spec 18.4, only the vfwcvt.f.f.v and vfncvt.f.f.w
-instructions will be affected by Zvfhmin extension.
-And the vfwcvt.f.f.v and vfncvt.f.f.w instructions only support the
-conversions of
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-* From 1*SEW(16/32) to 2*SEW(32/64)
-* From 2*SEW(32/64) to 1*SEW(16/32)
-
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240322092600.1198921-2-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index eec2939e23..678b34b759 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -50,6 +50,22 @@ static bool require_rvf(DisasContext *s)
-     }
- }
- 
-+static bool require_rvfmin(DisasContext *s)
-+{
-+    if (s->mstatus_fs == EXT_STATUS_DISABLED) {
-+        return false;
-+    }
-+
-+    switch (s->sew) {
-+    case MO_16:
-+        return s->cfg_ptr->ext_zvfhmin;
-+    case MO_32:
-+        return s->cfg_ptr->ext_zve32f;
-+    default:
-+        return false;
-+    }
-+}
-+
- static bool require_scale_rvf(DisasContext *s)
- {
-     if (s->mstatus_fs == EXT_STATUS_DISABLED) {
-@@ -75,8 +91,6 @@ static bool require_scale_rvfmin(DisasContext *s)
-     }
- 
-     switch (s->sew) {
--    case MO_8:
--        return s->cfg_ptr->ext_zvfhmin;
-     case MO_16:
-         return s->cfg_ptr->ext_zve32f;
-     case MO_32:
-@@ -2685,6 +2699,7 @@ static bool opxfv_widen_check(DisasContext *s, arg_rmr *a)
- static bool opffv_widen_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_widen_check(s, a) &&
-+           require_rvfmin(s) &&
-            require_scale_rvfmin(s) &&
-            (s->sew != MO_8);
- }
-@@ -2790,6 +2805,7 @@ static bool opfxv_narrow_check(DisasContext *s, arg_rmr *a)
- static bool opffv_narrow_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_narrow_check(s, a) &&
-+           require_rvfmin(s) &&
-            require_scale_rvfmin(s) &&
-            (s->sew != MO_8);
- }
--- 
-2.45.1
 
 
