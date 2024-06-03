@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEF7C25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9387C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE755-000584-68; Mon, 03 Jun 2024 08:46:32 -0400
+	id 1sE75n-0006uP-Vx; Mon, 03 Jun 2024 08:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE74z-000563-B5
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:46:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE74x-0000AE-G2
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:46:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717418781;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tXnwVrfP3aH8hfqVPoRbXrRuKgiJQfeFfyeMUodBt3w=;
- b=envqx/xhqHBbWPnU+nbSDI2Knc1mF2lBxFQmOmL4fKMe4d3C6SaWXgWBU6mMuKQP2isu3O
- dSwf9e+C86UXKEP7nrdAqN6eT6TYUA3cnm6GCacX0CLuyMIMVaTIu9qHm2GPY1IaN1IXzY
- ytWy5WQ3vjwkMJuBcv7Kwf0L5UXBKok=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-0GoEvcUQNjGrPvW2HDMaVQ-1; Mon, 03 Jun 2024 08:46:19 -0400
-X-MC-Unique: 0GoEvcUQNjGrPvW2HDMaVQ-1
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-48a33435f58so2348251137.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:46:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE75h-0006mY-T9
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:47:11 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE75d-0000GW-Lx
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:47:08 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a69024f2433so137729866b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717418823; x=1718023623; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JUA0fyegu9ZB0F4X4CGTHMzAks3Tvy915F8Z/2yDD+k=;
+ b=SRy9WQrNSq9ncXINxfGobrZMPQKphwky+uVjeYNLcrXjhAZxxUDaUsvgHEl+q/fRY7
+ VWVu74AZNBc6AUzfDJrd8aHAqTdv9ECyw+YrE8hwmf5138UTqkyUusR5RBPj34qCrnxK
+ GDwXUzRJ1Bdk2XGHWiYyFazd56/AokQgudIZ0sr4l0O54Q3DAhxqAK4sOvipkvZSP4iA
+ 0+udmx3zv4WQw/Y2Oxb5lprA78tbxv858xLs9bUnQcP9ohBTd145ivBhJSAHvOuNloBp
+ pZjIuKlGgOqRsVGAf6lTuQIxiFWKgz6d6SsFzrf0odd3vEDo3+1C+KR5vRVuqmD9Ovjw
+ LSVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717418779; x=1718023579;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tXnwVrfP3aH8hfqVPoRbXrRuKgiJQfeFfyeMUodBt3w=;
- b=EyZx4Ciu3KFe4wNvG1iVLuufitxVNmn1HNgFtDW4fdgkkCnB7YdNDA+uqrWGt8HKRu
- 2ANcI8jO/5nZGpQfYmCIHeKbBSXZ59oN+AqyehxYX/uKdLtmyMLAnCn0VOD4bRb7Kkhw
- qwZyr1Y6+nkZUJPaYEi/mH8zmbLe36tWGOPpX9IDwSDISxDWkAH3sEQnK8l5HdXaOdkD
- uob7aCM0ICc6CKXQ28vO2ieVvTbeb4oI1Ttj+ecQNqirIYAZNaNMg1Uhu5xZSeDLGmHV
- MqAzLtXH/aY+jk0vyc4AQfqWzxJQA1kbHcjf4+dZcwudQljJAkQy5dA2v0cJR7Got9Qo
- ymqA==
+ d=1e100.net; s=20230601; t=1717418823; x=1718023623;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JUA0fyegu9ZB0F4X4CGTHMzAks3Tvy915F8Z/2yDD+k=;
+ b=DGNb5xLJDMDdEsqnWy+Ly+uXR0g0xaJplpdjq4teYJTTS/1APLfJb+tqbLXDjnc790
+ p+3Io3m6X1KCwpqhiAkVvE6kIO5u095EeWYD3+HAnT0LkTb7TURfj0SP/fm3TQ761uq7
+ XPFMbQgucbDM1U1GEExrXFY0UdxkNrg35m0d/IWZJyqEoQ97FiGrgIwR5yO9caIETm1J
+ LKSvrn0TZI9HIHc/LZsHqnApy/zTmSrTLvz4vh0YAieEYNZ3InRSmQnbnHG9awSiLuh8
+ wBkBDuxm5w7GU2eOKhN83XEZDMvKqqRjlFd9MKzf9bwid3Y6iM8l/T/wDchJSFoi2ZuV
+ y71g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXv3xHSpItcL8IGFTlrIuPXM/zeaecxDJyvcWFJEuQ2mYmZIQnxxWaoJtdoZoA2BYqWIE+6tE0ioNou8TBSe/zKY1co1rg=
-X-Gm-Message-State: AOJu0YwKn7/JkVx9/5xM1kg5MgoqtxzVchILvCWOkpFJdxUWc6RxBH/f
- 1w+URLYk0J10Cr4ZaNGjJ3i39DU/4L3KF6ZeE5SsU1wZqSvWHc//SVgHqJBeCcAOYF4BP7p/hyc
- DEpDbR/xBPYumJAtECszFbzKk6PQ+6Nl7hTj9XXlB06RQCaKoI2ow
-X-Received: by 2002:a67:fa19:0:b0:48b:c455:8b57 with SMTP id
- ada2fe7eead31-48bc4558d20mr8493619137.7.1717418779296; 
- Mon, 03 Jun 2024 05:46:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFbEzvLUTUV31JgU/L6O6cjNKvXdkjwiG0qMnLi0DF/duT9lCwCOOwVI+jJa3riW0RQwmogbg==
-X-Received: by 2002:a67:fa19:0:b0:48b:c455:8b57 with SMTP id
- ada2fe7eead31-48bc4558d20mr8493586137.7.1717418778781; 
- Mon, 03 Jun 2024 05:46:18 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ AJvYcCUSwIfJKumtTQ2fs43JW05m1poGinYAHfVEWUnVV1kzB+rZFOEVvF2y+o001/7U5w+ZKhIlIgnGpvdQ7yzpJ01Hu29YQwM=
+X-Gm-Message-State: AOJu0YzYg0rADDwvRP3ox/p8COyKPcy73wPqydmDwBxbvHupxTNgsG9y
+ zB+2C53wb1qlRB+mw1HAf0eIf65phc7ZWRdhUvHmMprPo3OoIcDY/C2W+eWrSlI=
+X-Google-Smtp-Source: AGHT+IFfq6sGRcZgV1yCl0dbgCpTT2iw+jU9Vq/XFryL9BiS/9eCCRkppOA2ynzEGB8mhvu4nlmayg==
+X-Received: by 2002:a17:907:9483:b0:a68:f6b7:1fe3 with SMTP id
+ a640c23a62f3a-a68f6b7227emr317583566b.43.1717418823250; 
+ Mon, 03 Jun 2024 05:47:03 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794f3172d05sm279816285a.113.2024.06.03.05.46.15
+ a640c23a62f3a-a67ea586910sm483102866b.113.2024.06.03.05.47.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 05:46:18 -0700 (PDT)
-Message-ID: <43b7e164-9657-4368-9baa-fd83bedb2066@redhat.com>
-Date: Mon, 3 Jun 2024 14:46:13 +0200
+ Mon, 03 Jun 2024 05:47:02 -0700 (PDT)
+Message-ID: <7687c5ee-2ad2-4c72-8754-5e84083dd484@linaro.org>
+Date: Mon, 3 Jun 2024 14:47:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/19] backends: Introduce HostIOMMUDevice abstract
+Subject: Re: [PATCH] hw/dma/xlnx_dpdma: Read descriptor into buffer, not into
+ pointer-to-buffer
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alexandra Diupina <adiupina@astralinux.ru>
+References: <20240531124628.476938-1-peter.maydell@linaro.org>
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
- <20240603061023.269738-2-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240603061023.269738-2-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240531124628.476938-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,169 +96,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/3/24 08:10, Zhenzhong Duan wrote:
-> Introduce HostIOMMUDevice as an abstraction of host IOMMU device.
->
-> Introduce .realize() to initialize HostIOMMUDevice further after
-> instance init.
->
-> Introduce a macro CONFIG_HOST_IOMMU_DEVICE to define the usage
-> for VFIO, and VDPA in the future.
->
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+On 31/5/24 14:46, Peter Maydell wrote:
+> In fdf029762f501 we factored out the handling of reading and writing
+> DMA descriptors from guest memory.  Unfortunately we accidentally
+> made the descriptor-read read the descriptor into the address of the
+> buffer rather than into the buffer, because we didn't notice we
+> needed to update the arguments to the dma_memory_read() call. Before
+> the refactoring, "&desc" is the address of a local struct DPDMADescriptor
+> variable in xlnx_dpdma_start_operation(), which is the correct target
+> for the guest-memory-read. But after the refactoring 'desc' is the
+> "DPDMADescriptor *desc" argument to the new function, and so it is
+> already an address.
+> 
+> This bug is an overrun of a stack variable, since a pointer is at
+> most 8 bytes long and we try to read 64 bytes, as well as being
+> incorrect behaviour.
+> 
+> Pass 'desc' rather than '&desc' as the dma_memory_read() argument
+> to fix this.
+> 
+> (The same bug is not present in xlnx_dpdma_write_descriptor(),
+> because there we are writing the descriptor from a local struct
+> variable "DPDMADescriptor tmp_desc" and so passing &tmp_desc to
+> dma_memory_write() is correct.)
+> 
+> Spotted by Coverity: CID 1546649
+> 
+> Fixes: fdf029762f50101 ("xlnx_dpdma: fix descriptor endianness bug")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  MAINTAINERS                        |  2 ++
->  include/sysemu/host_iommu_device.h | 51 ++++++++++++++++++++++++++++++
->  backends/host_iommu_device.c       | 30 ++++++++++++++++++
->  backends/Kconfig                   |  5 +++
->  backends/meson.build               |  1 +
->  5 files changed, 89 insertions(+)
->  create mode 100644 include/sysemu/host_iommu_device.h
->  create mode 100644 backends/host_iommu_device.c
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 448dc951c5..1cf2b25beb 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2196,6 +2196,8 @@ M: Zhenzhong Duan <zhenzhong.duan@intel.com>
->  S: Supported
->  F: backends/iommufd.c
->  F: include/sysemu/iommufd.h
-> +F: backends/host_iommu_device.c
-> +F: include/sysemu/host_iommu_device.h
->  F: include/qemu/chardev_open.h
->  F: util/chardev_open.c
->  F: docs/devel/vfio-iommufd.rst
-> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-> new file mode 100644
-> index 0000000000..2b58a94d62
-> --- /dev/null
-> +++ b/include/sysemu/host_iommu_device.h
-> @@ -0,0 +1,51 @@
-> +/*
-> + * Host IOMMU device abstract declaration
-> + *
-> + * Copyright (C) 2024 Intel Corporation.
-> + *
-> + * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2.  See
-> + * the COPYING file in the top-level directory.
-> + */
-> +
-> +#ifndef HOST_IOMMU_DEVICE_H
-> +#define HOST_IOMMU_DEVICE_H
-> +
-> +#include "qom/object.h"
-> +#include "qapi/error.h"
-> +
-> +#define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-> +OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
-> +
-> +struct HostIOMMUDevice {
-> +    Object parent_obj;
-> +};
-> +
-> +/**
-> + * struct HostIOMMUDeviceClass - The base class for all host IOMMU devices.
-> + *
-> + * Different type of host devices (e.g., VFIO or VDPA device) or devices
-s/type/types
-> + * with different backend (e.g., VFIO legacy container or IOMMUFD backend)
-> + * can have different sub-classes.
-will have different implementations of the HostIOMMUDeviceClass?
-> + */
-> +struct HostIOMMUDeviceClass {
-> +    ObjectClass parent_class;
-> +
-> +    /**
-> +     * @realize: initialize host IOMMU device instance further.
-> +     *
-> +     * Mandatory callback.
-> +     *
-> +     * @hiod: pointer to a host IOMMU device instance.
-> +     *
-> +     * @opaque: pointer to agent device of this host IOMMU device,
-> +     *          i.e., for VFIO, pointer to VFIODevice
-VFIO base device or VDPA device?
-> +     *
-> +     * @errp: pass an Error out when realize fails.
-> +     *
-> +     * Returns: true on success, false on failure.
-> +     */
-> +    bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
+>   hw/dma/xlnx_dpdma.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think I would introduce the get_cap API here as well to give a minimal
-consistency to the class API.
-> +};
-> +#endif
-> diff --git a/backends/host_iommu_device.c b/backends/host_iommu_device.c
-> new file mode 100644
-> index 0000000000..41f2fdce20
-> --- /dev/null
-> +++ b/backends/host_iommu_device.c
-> @@ -0,0 +1,30 @@
-> +/*
-> + * Host IOMMU device abstract
-> + *
-> + * Copyright (C) 2024 Intel Corporation.
-> + *
-> + * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2.  See
-> + * the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "sysemu/host_iommu_device.h"
-> +
-> +OBJECT_DEFINE_ABSTRACT_TYPE(HostIOMMUDevice,
-> +                            host_iommu_device,
-> +                            HOST_IOMMU_DEVICE,
-> +                            OBJECT)
-> +
-> +static void host_iommu_device_class_init(ObjectClass *oc, void *data)
-> +{
-> +}
-> +
-> +static void host_iommu_device_init(Object *obj)
-> +{
-> +}
-> +
-> +static void host_iommu_device_finalize(Object *obj)
-> +{
-> +}
-> diff --git a/backends/Kconfig b/backends/Kconfig
-> index 2cb23f62fa..34ab29e994 100644
-> --- a/backends/Kconfig
-> +++ b/backends/Kconfig
-> @@ -3,3 +3,8 @@ source tpm/Kconfig
->  config IOMMUFD
->      bool
->      depends on VFIO
-> +
-> +config HOST_IOMMU_DEVICE
-> +    bool
-> +    default y
-> +    depends on VFIO
-> diff --git a/backends/meson.build b/backends/meson.build
-> index 8b2b111497..2e975d641e 100644
-> --- a/backends/meson.build
-> +++ b/backends/meson.build
-> @@ -25,6 +25,7 @@ if have_vhost_user
->  endif
->  system_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('cryptodev-vhost.c'))
->  system_ss.add(when: 'CONFIG_IOMMUFD', if_true: files('iommufd.c'))
-> +system_ss.add(when: 'CONFIG_HOST_IOMMU_DEVICE', if_true: files('host_iommu_device.c'))
->  if have_vhost_user_crypto
->    system_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('cryptodev-vhost-user.c'))
->  endif
-
+Thanks, patch queued via hw-misc (except if you rather your arm tree).
 
