@@ -4,71 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C8E6C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9CFC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:32:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE6oP-0005hC-D8; Mon, 03 Jun 2024 08:29:17 -0400
+	id 1sE6ql-0006kA-Eo; Mon, 03 Jun 2024 08:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sE6oN-0005gJ-AF
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:29:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sE6oL-0005Gy-Ja
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:29:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717417752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NEp1b7+yXvj4sMU+gABKlSkGj8k2gCBF8kxLkzopYec=;
- b=i/M5sWiB44mnUiJdRVcIn5Oh+HOL+zQKQq4OnZpu+GsM+m4jTdNyOqpk3/t3U5slZrD54s
- w3nuAYqqCyg0CxAz5b/wYGvkyKdLaVMVmuxl9pbrC8EYr+xuE0kG+22AX3YaO546aBA1nQ
- aC03i5Qdonb7DdJoMRuu/Ot7Yw/hetY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-WZDoDWsxO2KG0_JIpu-jhQ-1; Mon,
- 03 Jun 2024 08:29:07 -0400
-X-MC-Unique: WZDoDWsxO2KG0_JIpu-jhQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AB2323806707;
- Mon,  3 Jun 2024 12:29:06 +0000 (UTC)
-Received: from localhost (unknown [10.39.194.201])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 30BA4C15C03;
- Mon,  3 Jun 2024 12:29:06 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, pbonzini@redhat.com,
- npiggin@gmail.com, kvm@vger.kernel.org, qemu-devel@nongnu.org
-Cc: mst@redhat.com, danielhb413@gmail.com, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 0/2] ppc: spapr: Nested kvm guest migration fixes
-In-Reply-To: <171741555734.11675.17428208097186191736.stgit@c0c876608f2d>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <171741555734.11675.17428208097186191736.stgit@c0c876608f2d>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Mon, 03 Jun 2024 14:29:04 +0200
-Message-ID: <877cf6mcq7.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE6qj-0006jA-6e
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:31:41 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE6qg-0005oL-MU
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:31:40 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4212e341818so26499085e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:31:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717417896; x=1718022696; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v62fg0IW1E0zSoDurmI/bumQF315vReASG+SxApwuI4=;
+ b=L4TGI1VN2HIcs8MKgYRRX7HdRFh/qFlmPZqbqTFPpDvutuMDYpfYc6eR9MoqWV4O75
+ HuXxgy6/wKfm+52GhKLraIkztPpTjRtDl7cyYXD1RuvzgvnqzHhKpzORKEOZ8iT2EBQW
+ aV9r4UDfYDW+rmSurm7IfEVpBvLcwstf7QTl8ic7BMX3OWSm3eA6yBOX4aB+Wc6SzAMY
+ W+vvP66tYpqMWB9N5FzWPoFVN3CeYxX5pSMLCmlYfJk5VgFqnrYqu/wWZJyuNr5AgZTb
+ gFMR2EDSs+1tB6oh4j64H3tIAmwu0Sarp1k5zOvZ5nuxKGb+h8LQ59h1cL2xqLfBWcmi
+ fORg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717417896; x=1718022696;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v62fg0IW1E0zSoDurmI/bumQF315vReASG+SxApwuI4=;
+ b=JJxXv1HfXyLDJAmX8BurBJ/M+jM7UABy5gD9zlO/SOfCkPTNehJ/0C0Y1Bo2p1aebC
+ jPUdpxCy7wCkCy1N3nN/v9dB12JxbsHH30aI0MkMMQ6PcAVzFjvlCzbwdIIsrdgOAR9V
+ Pr0mecZBxOQEMlYbnUUypERobk0wbxiDDg8+qXUN8VAcYJCsfdGQXgLRlhXKHVzjGCsW
+ 9BYC+P3TXlEb/yUQ7hL19aEFWrDsK3JrFh3ktPFtC0GyBJnNx2clhXumQn1AFyEXgTta
+ 8617vHfKU++UcIHPlxpcTe564FVDgmY6uxk2m/rGqYEHOxA8oEPUZrQ9g+08UE/z4DgM
+ x63g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2pGp9nkvKEj6n4JcvLQuQo5c7ZM4i7t/KTtyK5nNXMDtl4ijx2BSWgGeyfsVSTNDH5cxi7XMrPOraobt9371IVnn6P6o=
+X-Gm-Message-State: AOJu0YyemMnbG1f9t3IB3qmahVO35/b4Rp6UoHHAme+emPkHeLTpNp7Y
+ Sm1Lf7L7zO/vznEs7A7COgoexxJQq3hsqG8oAhoRqq0QShMF0peaNcUfnu0telk=
+X-Google-Smtp-Source: AGHT+IHupWwGXoYWqDr69eEzLigI6PabZG+iiRufV3gITyYF6faPKchFs16YvKIchxriKmHLeL6MWg==
+X-Received: by 2002:a05:600c:1550:b0:421:2ac2:d7c8 with SMTP id
+ 5b1f17b1804b1-4212e0622afmr77305295e9.18.1717417895791; 
+ Mon, 03 Jun 2024 05:31:35 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.241])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42132471e01sm102781015e9.13.2024.06.03.05.31.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 05:31:35 -0700 (PDT)
+Message-ID: <29f32aca-74d0-4562-bffa-4573124812bf@linaro.org>
+Date: Mon, 3 Jun 2024 14:31:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 24/32] hw/sd: Subtract bootarea size from blk
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: Bin Meng <bin.meng@windriver.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Lucien Murray-Pitts <lucienmp.qemu@gmail.com>, Joel Stanley <joel@jms.id.au>
+References: <20230703132509.2474225-1-clg@kaod.org>
+ <20230703132509.2474225-25-clg@kaod.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20230703132509.2474225-25-clg@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,43 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 03 2024, Shivaprasad G Bhat <sbhat@linux.ibm.com> wrote:
-
-> The series fixes the issues exposed by the kvm-unit-tests[1]
-> sprs-migration test.
->
-> The sprs DEXCR and HASKKEYR are not registered with one-reg IDs
-> without which the Qemu is not setting them to their 'previous'
-> value during guest migreation at destination.
->
-> The two patches in the series take care of this. Also, the PPC
-> kvm header changes are selectively picked for the required
-> definitions posted here at [2].
->
-> References:
-> [1]: https://github.com/kvm-unit-tests/kvm-unit-tests
-> [2]: https://lore.kernel.org/kvm/171741323521.6631.11242552089199677395.stgit@linux.ibm.com
->
+On 3/7/23 15:25, Cédric Le Goater wrote:
+> From: Joel Stanley <joel@jms.id.au>
+> 
+> The userdata size is derived from the file the user passes on the
+> command line, but we must take into account the boot areas.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
 > ---
->
-> Shivaprasad G Bhat (2):
->       target/ppc/cpu_init: Synchronize DEXCR with KVM for migration
->       target/ppc/cpu_init: Synchronize HASHKEYR with KVM for migration
->
->
->  linux-headers/asm-powerpc/kvm.h | 2 ++
+>   hw/sd/sd.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 6da17a8d0972..1df7c7ac9dae 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -674,6 +674,7 @@ static unsigned sd_boot_capacity_bytes(SDState *sd)
+>   static void sd_reset(DeviceState *dev)
+>   {
+>       SDState *sd = SD_CARD(dev);
+> +    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
+>       uint64_t size;
+>       uint64_t sect;
+>   
+> @@ -685,6 +686,10 @@ static void sd_reset(DeviceState *dev)
+>       }
+>       size = sect << 9;
+>   
+> +    if (sc->bootpart_offset) {
+> +        size -= sd_boot_capacity_bytes(sd) * 2;
 
-Please split out any changes under linux-headers/ into a separate patch;
-those files need to be changed via a full header update against a
-released kernel version. If the changes are not yet upstream in the
-Linux kernel, please put in a clearly marked placeholder patch in the
-meanwhile.
+IMO this patch and sd_boot_capacity_bytes() definition
+from previous patch should be squashed in patch 22 where
+you add emmc_cmd_SEND_EXT_CSD.
 
-
->  target/ppc/cpu_init.c           | 8 ++++----
->  2 files changed, 6 insertions(+), 4 deletions(-)
->
-> --
-> Signature
+> +    }
+> +
+>       sect = sd_addr_to_wpnum(size) + 1;
+>   
+>       sd->state = sd_idle_state;
 
 
