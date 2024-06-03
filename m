@@ -4,67 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE94C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C91C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE69r-0002fR-AJ; Mon, 03 Jun 2024 07:47:23 -0400
+	id 1sE6Bc-0003mp-7u; Mon, 03 Jun 2024 07:49:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jUUh=NF=kaod.org=clg@ozlabs.org>)
- id 1sE69o-0002dn-6o; Mon, 03 Jun 2024 07:47:20 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jUUh=NF=kaod.org=clg@ozlabs.org>)
- id 1sE69l-0004df-4s; Mon, 03 Jun 2024 07:47:19 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VtBly3jQhz4x23;
- Mon,  3 Jun 2024 21:47:10 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VtBls3RCyz4wcv;
- Mon,  3 Jun 2024 21:47:04 +1000 (AEST)
-Message-ID: <44a84ad3-797a-4c7e-ae6f-c80db047292f@kaod.org>
-Date: Mon, 3 Jun 2024 13:47:01 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE6BW-0003je-2Q
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:49:07 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE6BT-0004s5-SQ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:49:05 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3550134ef25so3968331f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:49:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717415342; x=1718020142; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YwQ/Pdf4Y3EmNBto/siemVD2L186u3Gcst2+RqrCCHU=;
+ b=Dyh1SnrvFJdZ4oWWzf2XOEu2AbzUhhKYkKcQnNC4CYjnOs2s+AUISEQ6tpLg6zwd+x
+ HkIqJ5Ic0c8oLFCtsRrFUrkXWn8GD/6xwOrRpKhcCPT40cbulUf8oLQzQclPC6GlO03L
+ UltBAKYhGFi/ahx4ySzNpZIk4nymPWqEGSq9qFABiFRPKzSdB/EotjDBKhT9nnKIrlez
+ Z8Eiv/NFxodItDnUNvXJo7EPReQO73UkjytLkRbXgdoJDg1wZVi02iWp7+uVl3VTQphr
+ LY+BKozwiHTgp4NWBcW2GF6dnZv27ZdXNhN08GAr1dDWhIGveDSewZIKELkNaNsyS9tE
+ xmIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717415342; x=1718020142;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YwQ/Pdf4Y3EmNBto/siemVD2L186u3Gcst2+RqrCCHU=;
+ b=NemTDNshEB7Z9HtYEzIUGgTWt+IKMi3Xfabtl5YF1lpd00Is1r6cQGX3QDdULxN0tT
+ QaBinCtpCuTxxSg4IcTHbJWmq18tFYwOIviyO59qht30C8SIQfOZm0vEZpJAU4bIBdt9
+ ooXdjcmtifhdvqoC7uV+gxELVOG85QiH5gdU+8HVQ+d7QJKWXuP//2MIoveP4AKQUCC8
+ 1APbL1A5twL+X/FeRiCroC4OCIXj4C3vFuBeKoSFgXgV80/IFejcx90dzf7oRGIBUyad
+ ZpKus+2wffRjqVuN16rJFZ4DmjfcGM+31PIPfLnynC6dsVsdENzjBscW/3S9TNvrJEs9
+ /Zhg==
+X-Gm-Message-State: AOJu0YxbyfMmuVgKFZM2n0IJvpF3iGUKgsnANz4wJipAflIYyDr6SNFM
+ 7y3S8ZG1j3xraIIm5MDAjfV/E1vZ2WWc8AUGuSOm6lRC0tzfiyNMjdGXwQz2wVw2aSIpavxYxq5
+ T
+X-Google-Smtp-Source: AGHT+IEFOw08szT4GXwub1/2CwBP2HURKztzGBZQBQKhd0OivMVk9XKNPsjeqx+sYrMmKpqVgkG8sQ==
+X-Received: by 2002:adf:f852:0:b0:355:25d:a5b0 with SMTP id
+ ffacd0b85a97d-35e0f273304mr6089349f8f.15.1717415341805; 
+ Mon, 03 Jun 2024 04:49:01 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.241])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd04ca9bbsm8651496f8f.31.2024.06.03.04.49.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 04:49:01 -0700 (PDT)
+Message-ID: <ba6a62b7-46a6-4e2a-a4c0-ee42a5e63fbb@linaro.org>
+Date: Mon, 3 Jun 2024 13:48:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] Re: [PATCH v4 09/16] aspeed/smc: Add AST2700 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20240527080231.1576609-1-jamin_lin@aspeedtech.com>
- <20240527080231.1576609-10-jamin_lin@aspeedtech.com>
- <b641018c-e906-452b-8072-1b46f141808b@linaro.org>
- <41e59fa6-c74d-47c7-ba01-690cfaf7f5f1@kaod.org>
- <SI2PR06MB504115C43768F1DF7E9621B9FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <98886224-8de7-41d7-9ae9-77ac85818605@kaod.org>
- <SI2PR06MB5041574C3A7283A1A29B81FCFCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <747755fd-dc9d-4bbd-9b6d-eaabe398bb19@kaod.org>
- <SI2PR06MB5041FCED8D307124D1747830FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041FCED8D307124D1747830FCFF2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Subject: Re: [PATCH v2 0/7] hw/xen: Simplify legacy backends handling
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Paul Durrant <paul@xen.org>
+Cc: Anthony PERARD <anthony@xenproject.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20240510104908.76908-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240510104908.76908-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=jUUh=NF=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,89 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Thanks for your suggestion. How about these changes?
+On 10/5/24 12:49, Philippe Mathieu-Daudé wrote:
+> Respin of Paolo's Xen patches from
+> https://lore.kernel.org/qemu-devel/20240509170044.190795-1-pbonzini@redhat.com/
+> rebased on one of my cleanup branches making backend
+> structures const. Treat xenfb as other backends.
 > 
-> 1. aspeed_smc.h
-> struct AspeedSMCClass {
->      const MemoryRegionOps *reg_ops;
-> }
+> Paolo Bonzini (2):
+>    hw/xen: initialize legacy backends from xen_bus_init()
+>    hw/xen: register legacy backends via xen_backend_init
 > 
-> 2. aspeed_smc.c
-> a. create new memory region opts for ast2700
-> static const MemoryRegionOps aspeed_2700_smc_flash_ops = {
->      .read = aspeed_smc_flash_read,
->      .write = aspeed_smc_flash_write,
->      .endianness = DEVICE_LITTLE_ENDIAN,
->      .valid = {
->          .min_access_size = 1,
->          .max_access_size = 8,
->      },
-> };
-> 
-> b. set memory region opts in all model class init
-> static void aspeed_2400_smc_class_init(ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2400_fmc_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2400_spi1_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2500_fmc_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2500_spi1_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2500_spi2_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2600_fmc_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2600_spi1_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2600_spi2_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_1030_fmc_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_1030_spi1_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_1030_spi2_class_init (ObjectClass *klass, void *data){
->      asc->reg_ops           = &aspeed_smc_flash_ops;
-> }
-> static void aspeed_2700_fmc_class_init(ObjectClass *klass, void *data)
-> {
->    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
-> }
-> static void aspeed_2700_spi0_class_init (ObjectClass *klass, void *data)
-> {
->    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
-> }
-> static void aspeed_2700_spi1_class_init (ObjectClass *klass, void *data)
-> {
->    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
-> }
-> static void aspeed_2700_spi2_class_init (ObjectClass *klass, void *data)
-> {
->    asc->reg_ops           = &aspeed_2700_smc_flash_ops;
-> }
-> 
-> c. update realize to use memory region opts from class reg_opts
-> static void aspeed_smc_flash_realize(DeviceState *dev, Error **errp) {
->      memory_region_init_io(&s->mmio, OBJECT(s), s->asc->reg_ops,
->                            s, name, s->asc->segments[s->cs].size);
-> }
+> Philippe Mathieu-Daudé (5):
+>    hw/xen: Remove declarations left over in 'xen-legacy-backend.h'
+>    hw/xen: Constify XenLegacyDevice::XenDevOps
+>    hw/xen: Constify xenstore_be::XenDevOps
+>    hw/xen: Make XenDevOps structures const
+>    hw/xen: Register framebuffer backend via xen_backend_init()
 
-LGTM,
+Thanks Paul for the review, unfortunately Paulo missed this and
+merged v1 as single commit 88f5ed7017 ("xen: register legacy
+backends via xen_backend_init") :(
 
+Regards,
 
-Thanks,
+Phil.
 
-C.
 
