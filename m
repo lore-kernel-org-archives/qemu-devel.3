@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29A8C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B14C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5hN-0005ts-Ej; Mon, 03 Jun 2024 07:17:59 -0400
+	id 1sE5hG-0005BA-Nn; Mon, 03 Jun 2024 07:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hB-0004k1-9Y
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:47 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sE5hB-0004km-HD; Mon, 03 Jun 2024 07:17:47 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5gw-0006DJ-1c
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:43 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f4a52b9413so33629875ad.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:17:22 -0700 (PDT)
+ id 1sE5h4-0006IB-2I; Mon, 03 Jun 2024 07:17:45 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1f6134df05fso38297945ad.1; 
+ Mon, 03 Jun 2024 04:17:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413441; x=1718018241; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413455; x=1718018255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ql0FgN5uAYwS4fjD417MxORch4Nog+b+HrGavXDYZwI=;
- b=AroLpvhJIfbxr2BqgWt3ygVa+pHk337iyf8iBKjMgcJM0YkWfA3pFR6Vv0nYyT3Jma
- 5KPBGc2AwvU8lqeZEOwyeu+Rkx5uvGpCfLBRQLcP7knIqJF5VK4vjMIVcbkB8Dubh5Ow
- f8IaOVC7BS/mqge2baPV+TvKPVH7azInLHqxADGb83iZ5Mw8lxeoDpKWVf7d8Y/Tlvpg
- cqfpgzIIXy2fKJKc32vmaN0wVHGWoeDfuf94HfG4/zDK2RjKasqcVEYZo2hlseKhtXb0
- E2mTjvvVy9I2NCEWWcFstCI6X1OLIlFNXcKZlT3uEWyt3IwNjFuPoopq92lPQTVu5yiK
- MLZQ==
+ bh=Rwx0SPD4bR7zPO/4n31t9fpXIatcICjktSL4UeCf/R8=;
+ b=H/40aWslX9Eu/Nv67P1tQvFFfG3s/KsXZuvpMA9DlcqLQxP9X5JHFRwEjF537fq5JR
+ Pm2ARSgMVaIf1y4bDYERfp5TmNQoTMzQPVjPnVXfQNvCW11Q6KkbPZxyNm5LKSFh9Ajq
+ DICDAZHffFDw9Xmo8RlgpHV2qIhQ0lsfbf9HMjvPHG8OLMwyEje+OZrqLyO0giqkDCTL
+ 91pyZsCuiO13xdwAIS8e1lrqJc+F9ABUcrXj9iJvYQoBimooohpfa7XW5RxYSKePzVbw
+ oEod74REZ6Sz1iayyn5nrgggtiZomlGU9Y4AvFlKOwwOvvM2OYm8aFhBL47scIMycmDt
+ /vqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413441; x=1718018241;
+ d=1e100.net; s=20230601; t=1717413455; x=1718018255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ql0FgN5uAYwS4fjD417MxORch4Nog+b+HrGavXDYZwI=;
- b=VoTgDkKTJTihamJYVP21WaJZf94tSLzNy/aqgjKHYfa7IwAgQtZtBUIFxaG2jt2zxj
- zEtpd13zNaHDlh543lwIEgNdyusp2HxSgdrs7rCvh9UkP/7feayZFvlJlbPaDk72lct8
- zflGXqgV74PJIZsJHWjP6dUvDSUPWKbHOeKQmvfSvZtWu34A61Dy37jg8/Y+GCblHiS2
- kBvlwdkQKVbUeOYUsD62OEqNl7FZuBEyGy0C7iCE4fXNewiJc12u23vw+5r+5tb9uLCW
- VzPfJ6/Q4aSfmujqT9oz3IJiL5cpRmTh3L/OuCNyjG6SfMLai9+gu+keMvkNKG7eqcbj
- k/9Q==
-X-Gm-Message-State: AOJu0YyOt+ck3aPnn21e8l0Dic1TZmdZF0ObNXvEZsOlIOFil79c3xlt
- 9GS+zsso6XNyu97EsdytOODVnN/qB/i/0bQqPLlchdmiQqyZ0w3EKqZcog==
-X-Google-Smtp-Source: AGHT+IHhrLPMEpT0ZOx5zD3TudQEgvLEZAA7T9PK+HuhZQgMbWRyOsqat26v8HNdlz4iEhJ0m+cCCw==
-X-Received: by 2002:a17:902:f548:b0:1f6:8ae4:510d with SMTP id
- d9443c01a7336-1f68ae454d3mr4305475ad.39.1717413441131; 
- Mon, 03 Jun 2024 04:17:21 -0700 (PDT)
+ bh=Rwx0SPD4bR7zPO/4n31t9fpXIatcICjktSL4UeCf/R8=;
+ b=X84OdSJbHrkUaALalO9eNM5kHaoxrG3d6LAmyFKRSC5tBI1T/Kpll/2f5ppOeAxXRE
+ 1HX5RMAKpk7DN7USQT9/jRB3uT11LwIA17/yr/e+YqWNq/d+lXbrYGf46T8ZSYpjD6XE
+ +Et+xku6KkI1tkmKOUE2tzyIgZmMqZ/P+QJKk0Vs2pwl4a0N7GnYnepWDJjeHMXiZse4
+ 4eLI8VLsMGGjRfCHrtBS7KtQ+xMAwLWcmPMHbVl8YRlk7Fi2KpCN61dXpsyhKwrwL7/3
+ g0+v8EvAnuL1US3DT83l0AuoEI2o8ty47BH8GLDGX0WgE97YymBavEiQI/0w/xWFYsEK
+ /sSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVh9lXOX7KbWYOZkdQXJnrx4Vz4l7yeRY3Onf6+mw3+oDoohTPIe/l20/LCKIRPAzNmC3lV8lEOtlC3axBAcKewj6H2ThpV
+X-Gm-Message-State: AOJu0YzgWoPo1R3LUcMxiSnTnuFB7YH0Npztkbn2joJISP1dRqsgqgE+
+ e2h7MAabNNK33EVu5N5Mdd0cHaNG5lV2x2+IyVNjPwPYNeJ1P530DaKycg==
+X-Google-Smtp-Source: AGHT+IG5UvPfbBB0v2XrQ3gefMLp1whTssZ+CYnpJJKKoRrcvhbjWsuWTe53y6bjWbt5ByzLVbCNhA==
+X-Received: by 2002:a17:902:d548:b0:1f4:7a5c:65bf with SMTP id
+ d9443c01a7336-1f6370320dbmr109693475ad.38.1717413455174; 
+ Mon, 03 Jun 2024 04:17:35 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.18
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:17:20 -0700 (PDT)
+ Mon, 03 Jun 2024 04:17:34 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: alistair23@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 09/27] trans_privileged.c.inc: set (m|s)tval on ebreak
- breakpoint
-Date: Mon,  3 Jun 2024 21:16:25 +1000
-Message-ID: <20240603111643.258712-10-alistair.francis@wdc.com>
+ qemu-stable <qemu-stable@nongnu.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 13/27] target/riscv: Fix the element agnostic function
+ problem
+Date: Mon,  3 Jun 2024 21:16:29 +1000
+Message-ID: <20240603111643.258712-14-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,50 +102,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Huang Tao <eric.huang@linux.alibaba.com>
 
-Privileged spec section 4.1.9 mentions:
+In RVV and vcrypto instructions, the masked and tail elements are set to 1s
+using vext_set_elems_1s function if the vma/vta bit is set. It is the element
+agnostic policy.
 
-"When a trap is taken into S-mode, stval is written with
-exception-specific information to assist software in handling the trap.
-(...)
+However, this function can't deal the big endian situation. This patch fixes
+the problem by adding handling of such case.
 
-If stval is written with a nonzero value when a breakpoint,
-address-misaligned, access-fault, or page-fault exception occurs on an
-instruction fetch, load, or store, then stval will contain the faulting
-virtual address."
-
-A similar text is found for mtval in section 3.1.16.
-
-Setting mtval/stval in this scenario is optional, but some softwares read
-these regs when handling ebreaks.
-
-Write 'badaddr' in all ebreak breakpoints to write the appropriate
-'tval' during riscv_do_cpu_interrrupt().
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240416230437.1869024-3-dbarboza@ventanamicro.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_privileged.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+ target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index 620ab54eb0..bc5263a4e0 100644
---- a/target/riscv/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -62,6 +62,8 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
-     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
-         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
-     } else {
-+        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
-+                      offsetof(CPURISCVState, badaddr));
-         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
+diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
+index 996c21eb31..05b2d01e58 100644
+--- a/target/riscv/vector_internals.c
++++ b/target/riscv/vector_internals.c
+@@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
+     if (tot - cnt == 0) {
+         return ;
      }
-     return true;
++
++    if (HOST_BIG_ENDIAN) {
++        /*
++         * Deal the situation when the elements are insdie
++         * only one uint64 block including setting the
++         * masked-off element.
++         */
++        if (((tot - 1) ^ cnt) < 8) {
++            memset(base + H1(tot - 1), -1, tot - cnt);
++            return;
++        }
++        /*
++         * Otherwise, at least cross two uint64_t blocks.
++         * Set first unaligned block.
++         */
++        if (cnt % 8 != 0) {
++            uint32_t j = ROUND_UP(cnt, 8);
++            memset(base + H1(j - 1), -1, j - cnt);
++            cnt = j;
++        }
++        /* Set other 64bit aligend blocks */
++    }
+     memset(base + cnt, -1, tot - cnt);
+ }
+ 
 -- 
 2.45.1
 
