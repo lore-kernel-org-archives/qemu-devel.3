@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5246C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B15C27C44
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5gy-0004Bk-Rz; Mon, 03 Jun 2024 07:17:33 -0400
+	id 1sE5hS-0006Gm-M5; Mon, 03 Jun 2024 07:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5gl-0003UJ-If; Mon, 03 Jun 2024 07:17:19 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1sE5hD-0004kv-2U; Mon, 03 Jun 2024 07:17:47 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5gj-0006Ce-Rn; Mon, 03 Jun 2024 07:17:19 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1f62a628b4cso26087255ad.1; 
- Mon, 03 Jun 2024 04:17:16 -0700 (PDT)
+ id 1sE5h8-0006LV-N2; Mon, 03 Jun 2024 07:17:45 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1f4c7b022f8so38055835ad.1; 
+ Mon, 03 Jun 2024 04:17:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413435; x=1718018235; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413459; x=1718018259; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PGSDVwJ0PbsAM8k/8MYYmnPwZRw9PEeElr3mXEVUI30=;
- b=ImdNNMYDwe/tzf7TwqM1rbun//444rMxU/8fJ4R4cfOCa0dAaZpHECRZUcooPx1HJQ
- rslAA+4XOelmBFnMwm53VqMnNbIEUAiz3f7xcBqPkwWvXI9pvslqMqRRj8oDi08/Ys9/
- tAEp1Qzv3tIOjixTobjaoUaKEG+JZnCYWIdQ2vM6bM6qqwJOQzhJaLa6avDR1uB2uq0O
- eaUWaL0NnXBFy92sWaryZzKpjHf76zEExPvXBZkW/9QTi0qMfRHA3lQ4T6rIuhPoGyWI
- IrJPL4jbninHw6p7y2ykbsk4oAhKcrPM1s5jCCHB70yAyBQNq6JMhgS/a/hnRVHCk9YS
- xb8A==
+ bh=5qcQTiAdEv5FwQ27d9xmN3ZTsEtqw8BucwxaZ316zkY=;
+ b=i9EkhQFh+rK3wsLrxevdTJY2z7KLv9m2k+Gd3VrwDykomCP7jOtXMQ0+1PZhQGzjst
+ zB7L9Izyum9FPCKUAqsgf5iNKgOgC7Foge0qJec6YHNR6/TXrIXKI2mGsJhUepqBxhhN
+ DYRY3IF15sTg+G4ABdpXH3VolcUx+I2KkCnkrxn7AK7rK/ouUqomtF3UMj0cqQi3NKsD
+ WNW3Z07GBavXDkMTff8VynklUTtk/kwYGdhyM9pwpgd7R7DLGXdmxnjQwiwDqgCC/9W3
+ Ysn600JvJ0PHrmbpCxvzcqgdmwMC88f6SSg26nJzP4CySPY5kGQJ9bgSLhVJYOgORngd
+ iA3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413435; x=1718018235;
+ d=1e100.net; s=20230601; t=1717413459; x=1718018259;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PGSDVwJ0PbsAM8k/8MYYmnPwZRw9PEeElr3mXEVUI30=;
- b=YtFeOJxrbUXGQf2Nsqn4wwY+hBPl+58j2iqMn3d53OH9Mpf51Rdjb50Lbbq+xHiwa1
- HYJvf3zndVfxZaaVypZxh9gLSl7gqpFj2yxQ5w5bL137f1BfAGuWdOjECStr0GQ1J9Qj
- kenH7H07p7N8FUZfMZK8iagkCU1ouXaILITlPhzB7PnoDDDFYmXIP66fhua0Lvy733Jf
- nR/tjTTvqoPi8R4EPUESy75fQY0B6/R+1hEYWMsDtx1IW2m3yQhhpHniy+jX8DyNLsn5
- FJgsNkz/YL4SV+l+oIx6obgVnaBm+VK6N+ObFECFDoRl48Wm71tsmIsbc0yWNWbR5gLz
- dVag==
+ bh=5qcQTiAdEv5FwQ27d9xmN3ZTsEtqw8BucwxaZ316zkY=;
+ b=DUuISO9WLAaJ/sIK/3/n28vd9ZH0j/8lPTE3VTI/qGD7d1YyO93hEaXqTI2iR9KG7j
+ 52BlxGlIkPLRNiHn8MyflxxJ5Ol9LOfXXZ4nhQp52VOV6ZOHRHrO5jrMb/P2Z/BNJnHS
+ 1wajh2WlYIcPBrVFWgjV3K8fATrsoVfBlJTbk9aCIhkG4dlfaHC545z1qsllmdZc+WBx
+ U4QgMlQDkHaMgXGKpIw04iX4Y8vUHfH2jOhWG4lhbIQFrmaHyhfDacABx0ldGswhtvvG
+ 0GCfiBkRxIr+Wt2nb/rX98pdnbw0Vsvry0+vXvkNe9RAIx8+Nbil/IoTCnE8+FlqTC8C
+ FDiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtvigqEII3qStgKjV114X+KVs1DhZndgYVxKoGQrLAp0h1rghPWWPSjHx4A59KoXQxuq4BKlxuQhr23ixt9HjSPAjOxt8d
-X-Gm-Message-State: AOJu0Yyh5+xFMm9If6qx7GOK1CxaBHNKRdUf0i0d7KwPidHXwbRRshki
- Tvc4E0OQ9AAFfzlbzoPDxOK4IRpo85TjdsDv5oBJRi9LR1leFXaoNAjUIg==
-X-Google-Smtp-Source: AGHT+IFAg3VZ7ROFigISjmDeA5jJdZl+QOOCasuZE2brVx7JfamfoJp4Jr/BQG8w+xMl4PYNBkuVUQ==
-X-Received: by 2002:a17:903:1109:b0:1f4:b7ff:ac4a with SMTP id
- d9443c01a7336-1f6370453a9mr98098025ad.37.1717413434916; 
- Mon, 03 Jun 2024 04:17:14 -0700 (PDT)
+ AJvYcCVAzYxcyb0JLbxBriElnPZOITcgMxkijdhQIqlLpHd9C3WwVJ5L9v+EYEkabYK4xAajvMfVIPa2q1E2jzf+zh7AWW48exBU
+X-Gm-Message-State: AOJu0YzaXRNGuGBl4nTtUH5P96NYDTg8PTF9t2Lum1NHiJFun7JXUtuq
+ A3iqSqX9BjyF6N/OIFf4/T+Hqq/1pEGoBltM3L+FCQ5uRbER/zL/T6+xfA==
+X-Google-Smtp-Source: AGHT+IF9Cdee7jeshmcjHDKjUQVxnWbIgFwGJXO2McPQ+VxIMUzLcFKvtw7m5/rTlLVQXnegNT2onQ==
+X-Received: by 2002:a17:902:d507:b0:1f4:5b00:401 with SMTP id
+ d9443c01a7336-1f6370a0bb7mr97974495ad.54.1717413458677; 
+ Mon, 03 Jun 2024 04:17:38 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.12
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:17:14 -0700 (PDT)
+ Mon, 03 Jun 2024 04:17:38 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- qemu-stable <qemu-stable@nongnu.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 07/27] target/riscv/kvm: tolerate KVM disable ext errors
-Date: Mon,  3 Jun 2024 21:16:23 +1000
-Message-ID: <20240603111643.258712-8-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Yangyu Chen <cyy@cyyself.name>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Max Chou <max.chou@sifive.com>, qemu-stable <qemu-stable@nongnu.org>
+Subject: [PULL v2 14/27] target/riscv/cpu.c: fix Zvkb extension config
+Date: Mon,  3 Jun 2024 21:16:30 +1000
+Message-ID: <20240603111643.258712-15-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,67 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Yangyu Chen <cyy@cyyself.name>
 
-Running a KVM guest using a 6.9-rc3 kernel, in a 6.8 host that has zkr
-enabled, will fail with a kernel oops SIGILL right at the start. The
-reason is that we can't expose zkr without implementing the SEED CSR.
-Disabling zkr in the guest would be a workaround, but if the KVM doesn't
-allow it we'll error out and never boot.
+This code has a typo that writes zvkb to zvkg, causing users can't
+enable zvkb through the config. This patch gets this fixed.
 
-In hindsight this is too strict. If we keep proceeding, despite not
-disabling the extension in the KVM vcpu, we'll not add the extension in
-the riscv,isa. The guest kernel will be unaware of the extension, i.e.
-it doesn't matter if the KVM vcpu has it enabled underneath or not. So
-it's ok to keep booting in this case.
-
-Change our current logic to not error out if we fail to disable an
-extension in kvm_set_one_reg(), but show a warning and keep booting. It
-is important to throw a warning because we must make the user aware that
-the extension is still available in the vcpu, meaning that an
-ill-behaved guest can ignore the riscv,isa settings and  use the
-extension.
-
-The case we're handling happens with an EINVAL error code. If we fail to
-disable the extension in KVM for any other reason, error out.
-
-We'll also keep erroring out when we fail to enable an extension in KVM,
-since adding the extension in riscv,isa at this point will cause a guest
-malfunction because the extension isn't enabled in the vcpu.
-
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Yangyu Chen <cyy@cyyself.name>
+Fixes: ea61ef7097d0 ("target/riscv: Move vector crypto extensions to riscv_cpu_extensions")
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
+Message-ID: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240422171425.333037-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ target/riscv/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index d2491d84e2..473416649f 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -433,10 +433,14 @@ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
-         reg = kvm_cpu_cfg_get(cpu, multi_ext_cfg);
-         ret = kvm_set_one_reg(cs, id, &reg);
-         if (ret != 0) {
--            error_report("Unable to %s extension %s in KVM, error %d",
--                         reg ? "enable" : "disable",
--                         multi_ext_cfg->name, ret);
--            exit(EXIT_FAILURE);
-+            if (!reg && ret == -EINVAL) {
-+                warn_report("KVM cannot disable extension %s",
-+                            multi_ext_cfg->name);
-+            } else {
-+                error_report("Unable to enable extension %s in KVM, error %d",
-+                             multi_ext_cfg->name, ret);
-+                exit(EXIT_FAILURE);
-+            }
-         }
-     }
- }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a74f0eb29c..0d6fb9b4ba 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1539,7 +1539,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     /* Vector cryptography extensions */
+     MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
+     MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
+-    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkg, false),
++    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
+     MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
+     MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
+     MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
 -- 
 2.45.1
 
