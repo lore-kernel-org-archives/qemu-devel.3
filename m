@@ -4,74 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9A2C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 08:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95486C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 08:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE3Iy-0003Fr-Sw; Mon, 03 Jun 2024 04:44:36 -0400
+	id 1sE3LP-0004dQ-3e; Mon, 03 Jun 2024 04:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE3Iw-0003FG-MJ
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:44:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE3Iv-0002KP-4V
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:44:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717404271;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wJUXvNhRMqBqfqb25jLGhqzSKH5XYAv3TIGqsziQ8eg=;
- b=J68P7NjvdgqZpK0z/A5nolVjwoJyU83fFFoletaqPkCG1U3Zogntjj1V7La5DfHSthfvVS
- 1nFjH/8Avqs/ShnzLW7DURBDSXew8/O++97viBhNiVcyvOeM+ul54KuGy+o879Oq7QxIdi
- zpMn5XtXvvsAh3pMfbNt2K9VH3DGjWQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-vnd4G63EPPyVyzo2UPPx4w-1; Mon, 03 Jun 2024 04:44:27 -0400
-X-MC-Unique: vnd4G63EPPyVyzo2UPPx4w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EA0298058D5;
- Mon,  3 Jun 2024 08:44:26 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A289D1C0654B;
- Mon,  3 Jun 2024 08:44:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8464C21E6757; Mon,  3 Jun 2024 10:44:25 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,  Zide Chen <zide.chen@intel.com>,
- qemu-devel@nongnu.org,  pbonzini@redhat.com,  mst@redhat.com,
- cfontana@suse.de,  xiaoyao.li@intel.com,  qemu-trivial@nongnu.org
-Subject: Re: [PATCH V2 1/3] vl: Allow multiple -overcommit commands
-In-Reply-To: <4d9c15c6-cfe7-4535-b41a-fbfcb1e5f970@redhat.com> (Thomas Huth's
- message of "Fri, 31 May 2024 06:57:31 +0200")
-References: <20240524200017.150339-1-zide.chen@intel.com>
- <20240524200017.150339-2-zide.chen@intel.com>
- <e86c1913-a1ff-4c31-9915-d66c269b7e10@redhat.com>
- <ZliGoM9Hy3Q2qthQ@intel.com>
- <4d9c15c6-cfe7-4535-b41a-fbfcb1e5f970@redhat.com>
-Date: Mon, 03 Jun 2024 10:44:25 +0200
-Message-ID: <87bk4ie7py.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE3LI-0004Zx-KZ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:47:02 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE3LG-0002qk-DQ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:46:59 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4213373568dso20225075e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 01:46:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717404416; x=1718009216; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LY3WpWuYpcyY3Py2xT9CgoOQWRCKpg8NMhoOciOHDWw=;
+ b=SB3DXKJJqlsDXgHMMlu3ralV97vbGtSmSzMyVh9OaipmtewKkbGwFKz8++s9Ucsu0s
+ tdFLRiOokduoXB6MB/5UDK77L5LhyEoLP071enhyFZB8vbVZgJBAfl/I4qqRHKj1Oesw
+ 5JsSrW4eQ2+034mB5fGelmuWGyt/Wy1/wlMQzOe9GUYWw1KHWd2R7+Evm48nMSwZBWSm
+ 1XJ9T/HDMo7vsJq13i0w3XgKRmKM+evlfhdnmlNatWJ7blev+iG7S7pihdLqvrLMljLa
+ 4Aurjz+nxBB2FSI0PZF7ElYM515UdWORfFWvZB5YMK5lcHjr0ZoMDpmYax2jxwL0MGhE
+ RRjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717404416; x=1718009216;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LY3WpWuYpcyY3Py2xT9CgoOQWRCKpg8NMhoOciOHDWw=;
+ b=iJdOGiEDA8ph7EuEcuF+sFih0DLAC4gYmq8z49QfCrLUHY/8YUZTnfQsVCdVJirs4e
+ f3sdaYlyvkMXIAavlvVOocIiMn/DzjoVc+r2qoGbvT1OKDTnjtEixNotMshVApOe2ZLX
+ 7rHoy5MEJRaP0k/74ZW0hw2fo5BFSDPlE0ZHqs/3S3UfFM3+/ShXs0Q7Aaw5WJJWTcMF
+ SFhzEbMrKvEQNQ8AMISJ71AiJ1tbGUPj0aZd6RzVu4ImzYhgk3hr03925saP7n32tnnX
+ VRcIcC7SEFx3n8Ea04ySWgwanqXmsZ14DoB05BQ7bOTtX/mJ1N9vzw5ljVcj80YspH5l
+ XhAA==
+X-Gm-Message-State: AOJu0Yx/ujts5um8wMp8XUA3NbGqfKYvwZ6P5z/Cku7Cs6XMKTijgQIa
+ f8CcWI4gVUQFsAXk7gaSsRzgXpKeJYvJo5mpQZc6PJXT0LVG6xVziVabgIVWF3A=
+X-Google-Smtp-Source: AGHT+IG9T1XT6mriX6omnS7HYRjP6yaCbrvRp2v3AbYwi33JZ5Oj+Oo4zqBmvkaCD5Ub4YBy915C9g==
+X-Received: by 2002:a05:600c:3b0d:b0:41b:aa11:29b3 with SMTP id
+ 5b1f17b1804b1-4212e0b54c4mr58960575e9.35.1717404416442; 
+ Mon, 03 Jun 2024 01:46:56 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.241])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4212b84de44sm108963615e9.11.2024.06.03.01.46.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 01:46:55 -0700 (PDT)
+Message-ID: <1bafa185-25bd-44d2-8f4b-51ca28125115@linaro.org>
+Date: Mon, 3 Jun 2024 10:46:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] Add an "info pg" command that prints the current
+ page tables
+To: "Dr. David Alan Gilbert" <dave@treblig.org>, Don Porter <porter@cs.unc.edu>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
+ richard.henderson@linaro.org
+References: <ZiKkWCjreGOMFX5p@gallifrey>
+ <20240524170748.1842030-1-porter@cs.unc.edu>
+ <20240524170748.1842030-2-porter@cs.unc.edu> <ZlnajZpUHyGDTgNx@gallifrey>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZlnajZpUHyGDTgNx@gallifrey>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,26 +97,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 31/5/24 16:11, Dr. David Alan Gilbert wrote:
+> * Don Porter (porter@cs.unc.edu) wrote:
+>> The new "info pg" monitor command prints the current page table,
+>> including virtual address ranges, flag bits, and snippets of physical
+>> page numbers.  Completely filled regions of the page table with
+>> compatible flags are "folded", with the result that the complete
+>> output for a freshly booted x86-64 Linux VM can fit in a single
+>> terminal window.  The output looks like this:
+>>
+>> VPN range             Entry         Flags            Physical page
+>> [7f0000000-7f0000000] PML4[0fe]     ---DA--UWP
+>>    [7f28c0000-7f28fffff]  PDP[0a3]     ---DA--UWP
+>>      [7f28c4600-7f28c47ff]  PDE[023]     ---DA--UWP
+>>        [7f28c4655-7f28c4656]  PTE[055-056] X--D---U-P 0000007f14-0000007f15
+>>        [7f28c465b-7f28c465b]  PTE[05b]     ----A--U-P 0000001cfc
+>> ...
+>> [ff8000000-ff8000000] PML4[1ff]     ---DA--UWP
+>>    [ffff80000-ffffbffff]  PDP[1fe]     ---DA---WP
+>>      [ffff81000-ffff81dff]  PDE[008-00e] -GSDA---WP 0000001000-0000001dff
+>>    [ffffc0000-fffffffff]  PDP[1ff]     ---DA--UWP
+>>      [ffffff400-ffffff5ff]  PDE[1fa]     ---DA--UWP
+>>        [ffffff5fb-ffffff5fc]  PTE[1fb-1fc] XG-DACT-WP 00000fec00 00000fee00
+>>      [ffffff600-ffffff7ff]  PDE[1fb]     ---DA--UWP
+>>        [ffffff600-ffffff600]  PTE[000]     -G-DA--U-P 0000001467
+>>
+>> This draws heavy inspiration from Austin Clements' original patch.
+>>
+>> This also adds a generic page table walker, which other monitor
+>> and execution commands will be migrated to in subsequent patches.
+>>
+>> Signed-off-by: Don Porter <porter@cs.unc.edu>
+>> ---
+>>   hmp-commands-info.hx              |  26 ++
+>>   include/monitor/hmp-target.h      |   1 +
+>>   target/i386/arch_memory_mapping.c | 486 +++++++++++++++++++++++++++++-
+>>   target/i386/cpu.h                 |  16 +
+>>   target/i386/monitor.c             | 380 +++++++++++++++++++++++
+>>   5 files changed, 908 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+>> index 20a9835ea8..918b82015c 100644
+>> --- a/hmp-commands-info.hx
+>> +++ b/hmp-commands-info.hx
+>> @@ -237,6 +237,32 @@ ERST
+>>           .cmd        = hmp_info_mtree,
+>>       },
+>>   
+>> +#if defined(TARGET_I386)
 
-> On 30/05/2024 16.01, Zhao Liu wrote:
->> Hi Thomas,
->> BTW, do you think it's a good idea to define the overcommit via QAPI way
->> (defined in a json file)? ;-)
->> My rough understanding is that all APIs are better to be defined via
->> QAPI to go JSON compatible.
->
-> Sorry, no clue whether it makes sense here... CC:-ing Markus for recommendations.
+FYI in order to unify all QEMU system binaries as a single
+one, we are trying to remove target-specific bits in monitor.
 
-I'd love to have a machine-friendly, QAPI-based CLI with a
-human-friendly CLI layered on top, similar to machine-friendly,
-QAPI-based QMP / human-friendly HMP.
+How 'info pg' should work in a binary supporting heterogeneous
+emulation?
 
-To get this with reasonable effort, we need better infrastructure.  We
-have done a few complex options manually, such as -blockdev.  I
-recommend this only when there's a clear need for JSON on the command
-line.
-
-I doubt this is the case for -overcommit.
+>> +    {
+>> +        .name       = "pg",
+>> +        .args_type  = "",
+>> +        .params     = "",
+>> +        .help       = "show the page table",
+>> +        .cmd        = hmp_info_pg,
+>> +    },
+>> +#endif
+> 
+> So that looks OK
 
 
