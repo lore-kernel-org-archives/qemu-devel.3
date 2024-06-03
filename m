@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E4DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 06:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F97BC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 06:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE0xT-0005UI-9D; Mon, 03 Jun 2024 02:14:15 -0400
+	id 1sE0wr-0004jr-70; Mon, 03 Jun 2024 02:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sE0xS-0005Tg-5v
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:14:14 -0400
+ id 1sE0wo-0004iY-Tf
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:13:35 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sE0xQ-0000xl-FY
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:14:13 -0400
+ id 1sE0wn-0000uQ-4x
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:13:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717395252; x=1748931252;
+ t=1717395213; x=1748931213;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lOqDt9v6x0LF0QRt0dafkaMf+eapZI59zjmfrdfGr4k=;
- b=gZ8KofgIatSVzhGtZQMl7I1UV1b1e9rb7zcQJsoKWpjWaBVQK7ySZcK2
- RW2OQ1IFPnD/Wuvf81IaDIoOXH3veLtN9uXewuCPAe+veHwjI4vzB7oqQ
- M81nyoDpPL5QDvQSKPSCeQA6N7IzKV20tGLyk5Im89Z4DWWO3hbkPTE8z
- zkLUn2fvJjKyXoYRhF7w022OySVvEKtTnzPKk9clMQZC8TZEXQ0YmITNk
- 3OldL+CqI6G7IDtj+r+2I730Px8GVEW0p45S3QxgAkgUbR+8HxNApQib1
- TSIcuIf2S/CZunrmOIJ4uSSXUSgcpzmsA5lhJAZY4Vod18RQFlaweEiV9 Q==;
-X-CSE-ConnectionGUID: AYsTM9uwSi+WX5NeoAl2dw==
-X-CSE-MsgGUID: 5E1UBGBgSASfzgk8CCVkNg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11091"; a="25277743"
-X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="25277743"
+ bh=DzFkETpqsyCUSo4mpTVuvp6zaJicWw8iv9n76ZkukHM=;
+ b=FX5C1DAsMocLJItY9l9EyoajCghR59koUSZmwB9sPp0BCBJSrBP8r5gJ
+ CSz54bkaV1q0HBPROs4JWwSPKXCRvSg0uVts+Gd1Dxu89oTEHRAeroYYF
+ BhjQxg24f1RGk5xTl+udhfxk/uvKkXfd3/lx3Q2uO0fKqO0/W1JO23pia
+ EHjPCeDu/pVMIwmvbJ+OoOvPoSvXW+Nz1zhInXcrpene60UYwrJt7vydQ
+ +5vxmFuNZU8S9dRlj5tltnpHYZ+TIXF2jKUwRESeQPnAyzoRUjEw0XvDK
+ DNnDpsT7+O7wVxD8Unl+F7qEJ9+4KAtFkgFZQ7g+Ats4fwHxO/njoETK2 Q==;
+X-CSE-ConnectionGUID: 0Hr9kC3zSnCGoRsTgB0bew==
+X-CSE-MsgGUID: LxZldkP5QfO5N9iJ8oOLQw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11091"; a="25277648"
+X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="25277648"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2024 23:14:11 -0700
-X-CSE-ConnectionGUID: NeqPSDyVTZm/VxymN3xtnQ==
-X-CSE-MsgGUID: BbodyjcQSB+vr4/lP+v8YA==
+ 02 Jun 2024 23:13:32 -0700
+X-CSE-ConnectionGUID: APkEOgYsTTe5TQ7XV1sb2w==
+X-CSE-MsgGUID: NBPqAnmERL+4ku9Qqeaw0g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="36855967"
+X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="36855857"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.127])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2024 23:14:07 -0700
+ 02 Jun 2024 23:13:29 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v6 14/19] hw/pci: Introduce helper function
- pci_device_get_iommu_bus_devfn()
-Date: Mon,  3 Jun 2024 14:10:18 +0800
-Message-Id: <20240603061023.269738-15-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v6 05/19] backends/host_iommu_device: Introduce
+ HostIOMMUDeviceCaps
+Date: Mon,  3 Jun 2024 14:10:09 +0800
+Message-Id: <20240603061023.269738-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240603061023.269738-1-zhenzhong.duan@intel.com>
 References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.10;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -88,90 +87,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract out pci_device_get_iommu_bus_devfn() from
-pci_device_iommu_address_space() to facilitate
-implementation of pci_device_[set|unset]_iommu_device()
-in following patch.
+HostIOMMUDeviceCaps's elements map to the host IOMMU's capabilities.
+Different platform IOMMU can support different elements.
 
-No functional change intended.
+Currently only two elements, type and aw_bits, type hints the host
+platform IOMMU type, i.e., INTEL vtd, ARM smmu, etc; aw_bits hints
+host IOMMU address width.
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Introduce .get_cap() handler to check if HOST_IOMMU_DEVICE_CAP_XXX
+is supported.
+
+Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/pci/pci.c | 48 +++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 45 insertions(+), 3 deletions(-)
+ include/sysemu/host_iommu_device.h | 37 ++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 324c1302d2..02a4bb2af6 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2648,11 +2648,27 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
-     }
- }
+diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+index 2b58a94d62..d47d1034b1 100644
+--- a/include/sysemu/host_iommu_device.h
++++ b/include/sysemu/host_iommu_device.h
+@@ -15,11 +15,25 @@
+ #include "qom/object.h"
+ #include "qapi/error.h"
  
--AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-+/*
-+ * Get IOMMU root bus, aliased bus and devfn of a PCI device
++/**
++ * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
 + *
-+ * IOMMU root bus is needed by all call sites to call into iommu_ops.
-+ * For call sites which don't need aliased BDF, passing NULL to
-+ * aliased_[bus|devfn] is allowed.
++ * @type: host platform IOMMU type.
 + *
-+ * @piommu_bus: return root #PCIBus backed by an IOMMU for the PCI device.
-+ *
-+ * @aliased_bus: return aliased #PCIBus of the PCI device, optional.
-+ *
-+ * @aliased_devfn: return aliased devfn of the PCI device, optional.
++ * @aw_bits: host IOMMU address width. 0xff if no limitation.
 + */
-+static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-+                                           PCIBus **piommu_bus,
-+                                           PCIBus **aliased_bus,
-+                                           int *aliased_devfn)
- {
-     PCIBus *bus = pci_get_bus(dev);
-     PCIBus *iommu_bus = bus;
--    uint8_t devfn = dev->devfn;
-+    int devfn = dev->devfn;
++typedef struct HostIOMMUDeviceCaps {
++    uint32_t type;
++    uint8_t aw_bits;
++} HostIOMMUDeviceCaps;
++
+ #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+ OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
  
-     while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
-         PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
-@@ -2693,7 +2709,33 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+ struct HostIOMMUDevice {
+     Object parent_obj;
++
++    HostIOMMUDeviceCaps caps;
+ };
  
-         iommu_bus = parent_bus;
-     }
--    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
+ /**
+@@ -47,5 +61,28 @@ struct HostIOMMUDeviceClass {
+      * Returns: true on success, false on failure.
+      */
+     bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
++    /**
++     * @get_cap: check if a host IOMMU device capability is supported.
++     *
++     * Optional callback, if not implemented, hint not supporting query
++     * of @cap.
++     *
++     * @hiod: pointer to a host IOMMU device instance.
++     *
++     * @cap: capability to check.
++     *
++     * @errp: pass an Error out when fails to query capability.
++     *
++     * Returns: <0 on failure, 0 if a @cap is unsupported, or else
++     * 1 or some positive value for some special @cap,
++     * i.e., HOST_IOMMU_DEVICE_CAP_AW_BITS.
++     */
++    int (*get_cap)(HostIOMMUDevice *hiod, int cap, Error **errp);
+ };
 +
-+    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
-+    assert(iommu_bus);
-+
-+    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
-+        iommu_bus = NULL;
-+    }
-+
-+    *piommu_bus = iommu_bus;
-+
-+    if (aliased_bus) {
-+        *aliased_bus = bus;
-+    }
-+
-+    if (aliased_devfn) {
-+        *aliased_devfn = devfn;
-+    }
-+}
-+
-+AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-+{
-+    PCIBus *bus;
-+    PCIBus *iommu_bus;
-+    int devfn;
-+
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-+    if (iommu_bus) {
-         return iommu_bus->iommu_ops->get_address_space(bus,
-                                  iommu_bus->iommu_opaque, devfn);
-     }
++/*
++ * Host IOMMU device capability list.
++ */
++#define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE    0
++#define HOST_IOMMU_DEVICE_CAP_AW_BITS       1
+ #endif
 -- 
 2.34.1
 
