@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC8CC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA838C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE9tm-0003na-AX; Mon, 03 Jun 2024 11:47:02 -0400
+	id 1sE9xV-0005YP-3f; Mon, 03 Jun 2024 11:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9tj-0003m7-7M
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:47:00 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sE9xT-0005Xi-IC
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:50:51 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9th-0003Ru-5F
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:46:58 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-35dd0c06577so3273887f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:46:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sE9xS-0004Kw-0D
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:50:51 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2c1a5913777so3712186a91.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717429615; x=1718034415; darn=nongnu.org;
+ d=sifive.com; s=google; t=1717429848; x=1718034648; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vehZwDyfXOECyz+NLuGckWo2fAsupAGi9Nm1cgeCJgY=;
- b=RzM+vfEtttWdYZApIzxdTz2/09mhV64rGI9azZ1mZ1cD99AnyWskoFhSPwHwre8Kin
- i3btXF8d4cCuDy8sQhlf1O/oRVYHDjOlw0WaeNfEqgx3xWGvxrb/UgUKOQtPwdq5hjpG
- nfEsLX+sQBkeh3qNMaITSEX/dWfemPhCygGKbKhMhUrgFRlv1q+rNIBxcB1H1S706k9D
- 8N4SP71FOxDYRa441G6pa14nLPKAl0+OabGnLuFExvMGyru22wj1iORIrFsyY5LAVAmJ
- ZEDhGzGXoF/nmlON+GKwi0OPGnFyBcyvN0S4HfYrenqo1MXWFY3mwpsfhOXhDBjR2KfH
- Cqcw==
+ bh=QoW/nxIl4dcOnHCwat6JlRacAMOvrHIs2V+96TGk/MM=;
+ b=dclHzgQfN/88f9F3RiBt+65Mv2Rw2O8cPY+qMO3khsmjWuR485SX18W3c8amLj5noR
+ jUttZq/L49Kw+g2wWNiLGDWsyiPQyLuYVBxznGa+YzukwcAUwCvvt02o2QTxmsJ+btyM
+ f0OKzJu7bJ01bYI/Q6f9/SLU9UfR6GSPqx/sqMOqG2xnAL4W8hy3WFI96yuR7AKJ1MoH
+ 19+POUKNTxOKjWZRXXDz/3MlNMxacdjHQbfq9FMPOwp84WPVbKz70jNkGjZHfT/843H2
+ DdmuZgW6sKV5sND5ceQIsy1jVlgs4GPFbsPzlreWZbMYe4S/atiYSo1GPLZw8BCJEwAM
+ xxfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717429615; x=1718034415;
+ d=1e100.net; s=20230601; t=1717429848; x=1718034648;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vehZwDyfXOECyz+NLuGckWo2fAsupAGi9Nm1cgeCJgY=;
- b=H2aAZYA1FpbK4OuINDIwE39X4mmOWnYriRrC9VqqkzSgHiTUp4HLzns7hHrq72BOwC
- Y0/KF1badMs411Znsg09EYYpLPqu6KgSLpPanCLPLoUhtuCDGd+6Ya7NYIV4/aJ87RTy
- +xrjkk7v/1Bm8bYWljoXDCcNeHGy4ECq3cBYjPGzpfY2Sj+x7u/OlR+k0JOLiHo3IieJ
- wNzGuhVvWtH8k5Gje22lhmODIXxVYD9+ZGjL1jvhj4oAF0VxkRllmF/E6Q+c5RTsG2V9
- jqH37E1qtN/bCrMK5bjtAGyOhq6jak2ejb1OOkJx6oilHbHNJaw2Wb+9I8axaTmg9BY7
- BocQ==
+ bh=QoW/nxIl4dcOnHCwat6JlRacAMOvrHIs2V+96TGk/MM=;
+ b=KHqVMzb97GVVvu0X4kOhpjjWwvJ94mhPktsjFyFSm6HAwv+hy3Q2UTzOeXVlaDRHDs
+ +L37R8jeBHJafnBEO7RKo4eKToxdaPNUGNDqW2dLBd62yNuW0VK0+u2M9SixUg8F5bxF
+ ptD69mSpuGRI4p1CjjHIsVkk219RL6YlAtdT+BAyzA+FIGLGLCoxKW41cSUvSTb0MkFi
+ 8pkS/6Ec1Kf8M8CBuw4uMWEDU4ByIyiJo1hsWc70zDeqb7M+I6tpVqAqRR8/yQJgb+ZD
+ CO37++Lk0Ix+Zksx4/mTAa69/RncOKMpg9Pr3nDijhPXZIpnXMl3Yf9Qb9AQqc3FNJGG
+ p6jA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUVfbXiVu4JRH4O8B7E/TjD0dreEmdtHl3i2QoKYTiXhP9+6y+tSJn9CcOaUye/72+KpkuM7ylRFsZGdGYUr7+m0K4L8s=
-X-Gm-Message-State: AOJu0YxOJFW9eEgnEPbkrb/HsTPfT491SIuYMqZR9D9RGRehbBydNz7Y
- LWJohQKD0n+MYeyT0abNrIVlKmlGKGwvWJ4Mu2iew2z0j7aOAZ0aVPd7f/Mr7gA=
-X-Google-Smtp-Source: AGHT+IFdFhbIGoSY366jRenf8MShLYqBZSZimsRe61Zbciv0ZI2FNv9CLLH8oNGPwWj9e7HchTlWaQ==
-X-Received: by 2002:a05:6000:1754:b0:34d:7f9a:ecbd with SMTP id
- ffacd0b85a97d-35e0f25e11amr5966514f8f.1.1717429614697; 
- Mon, 03 Jun 2024 08:46:54 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.241])
+ AJvYcCVqojOToCjGUzR0EaNSYQ4YhZPVu8FLsi3XSfdu0nsREWK7pm3JpmWUUE4LaJ6AMOTkJyc4StkFT8bRq6mw42Bwe7vxCho=
+X-Gm-Message-State: AOJu0YwTtOew8nenpi/gHk4cGVJDmcDfDfzCfK4u+tj5R3Tuv/bdGkRN
+ 1/AaQaorsguNlRW5H5m7lrygQHAGEHCQbOouPoWVc0rk8/tEQW+dXoR2orl4WLU=
+X-Google-Smtp-Source: AGHT+IHq4fpvclaUiYntHQa5JbuzYJ7+JQwgSlAWfZtaoz+aPENDBGnfLtLmVIk/W+AW2D1GxQdwUA==
+X-Received: by 2002:a17:90b:1918:b0:2a2:c16:d673 with SMTP id
+ 98e67ed59e1d1-2c1dc5cce83mr8933619a91.36.1717429848065; 
+ Mon, 03 Jun 2024 08:50:48 -0700 (PDT)
+Received: from [100.64.0.1] ([136.226.240.169])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04cad5bsm9132217f8f.38.2024.06.03.08.46.53
+ 98e67ed59e1d1-2c1c28425ecsm6446943a91.53.2024.06.03.08.50.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 08:46:54 -0700 (PDT)
-Message-ID: <f2e61128-003c-48c9-bab4-20422d195145@linaro.org>
-Date: Mon, 3 Jun 2024 17:46:51 +0200
+ Mon, 03 Jun 2024 08:50:47 -0700 (PDT)
+Message-ID: <595c3be7-7a33-4812-a80c-975b2eaaf5a6@sifive.com>
+Date: Mon, 3 Jun 2024 23:50:45 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/mips/loongson3_virt: Wire up loongson_ipi device
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
-References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
- <20240508-loongson3-ipi-v1-5-1a7b67704664@flygoat.com>
+Subject: Re: [RFC PATCH v2 5/6] target/riscv: rvv: Optimize v[l|s]e8.v with
+ limitations
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: dbarboza@ventanamicro.com, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240531174504.281461-1-max.chou@sifive.com>
+ <20240531174504.281461-6-max.chou@sifive.com>
+ <1016c817-d1e0-4dbd-8fd9-921bcdc23a0a@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508-loongson3-ipi-v1-5-1a7b67704664@flygoat.com>
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <1016c817-d1e0-4dbd-8fd9-921bcdc23a0a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,55 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 15:06, Jiaxun Yang wrote:
-> Wire up loongson_ipi device for loongson3_virt machine, so we
-> can have SMP support for TCG backend as well.
-> 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
->   hw/mips/Kconfig           |  1 +
->   hw/mips/loongson3_bootp.c |  2 --
->   hw/mips/loongson3_bootp.h |  3 +++
->   hw/mips/loongson3_virt.c  | 39 +++++++++++++++++++++++++++++++++++++--
->   4 files changed, 41 insertions(+), 4 deletions(-)
+Hi Richart,
 
+Thank you for your feedback.
+This version is created by referencing the gen_sve_ldr translation 
+function with the similar assumptions that no mask(predication)/no tail 
+agnostic/continuous load & store.
+You are right, the expansion is large in this version (over 20 TCG 
+instructions that suggested in tcg-op doc).
+I will provide next version with the helper function implementation like 
+sve_ldN_r in ARM target.
 
-> @@ -534,12 +553,28 @@ static void mips_loongson3_virt_init(MachineState *machine)
->           cpu_mips_clock_init(cpu);
->           qemu_register_reset(main_cpu_reset, cpu);
->   
-> -        if (i >= 4) {
-> +        if (ipi) {
-> +            hwaddr base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
-> +            base += core * 0x100;
-> +            qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
-> +            sysbus_mmio_map(SYS_BUS_DEVICE(ipi), i + 2, base);
-> +        }
-> +
-> +        if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
-> +            MemoryRegion *core_iocsr = g_new(MemoryRegion, 1);
-> +            g_autofree char *name = g_strdup_printf("loongson3.core%d_iocsr", i);
-> +            memory_region_init_alias(core_iocsr, OBJECT(machine), name,
+Thank you,
+Max
 
-Region owner should be vCPU (core) IMO, not machine. But maybe need
-another approach (see my comment on patch #3), although not sure if
-easy with KVM.
-
-> +                                     iocsr, 0, UINT32_MAX);
-> +            memory_region_add_subregion(&MIPS_CPU(cpu)->env.iocsr.mr,
-> +                                        0, core_iocsr);
-> +        }
-> +
-> +        if (node > 0) {
->               continue; /* Only node-0 can be connected to LIOINTC */
->           }
->   
->           for (ip = 0; ip < 4 ; ip++) {
-> -            int pin = i * 4 + ip;
-> +            int pin = core * LOONGSON3_CORE_PER_NODE + ip;
->               sysbus_connect_irq(SYS_BUS_DEVICE(liointc),
->                                  pin, cpu->env.irq[ip + 2]);
->           }
-> 
-
+On 2024/6/3 1:45 AM, Richard Henderson wrote:
+> On 5/31/24 12:44, Max Chou wrote:
+>> The vector unit-stride load/store instructions (e.g. vle8.v/vse8.v)
+>> perform continuous load/store. We can replace the corresponding helper
+>> functions by TCG ops to copy more data at a time with following
+>> assumptions:
+>>
+>> * Perform virtual address resolution once for entire vector at beginning
+>> * Without mask
+>> * Without tail agnostic
+>> * Both host and target are little endian
+>>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>
+> Why are you generating all of this inline?  This expansion is very 
+> large.  I would expect you to get better performance with a helper 
+> function.
+>
+> AGAIN, please see the Arm implementation.
+>
+>
+> r~
 
