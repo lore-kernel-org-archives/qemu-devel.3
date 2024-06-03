@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27868C27C44
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FD4C25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5h3-0004Jb-Nz; Mon, 03 Jun 2024 07:17:38 -0400
+	id 1sE5h6-0004Vv-IT; Mon, 03 Jun 2024 07:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sE5gx-00046J-Ah
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:31 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sE5h2-0004JX-EU
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:37 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sE5ge-0006Bk-0W
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:24 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f62fae8c3cso28799495ad.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:17:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sE5gx-0006FA-Vp
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:36 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1f64ecb1766so13613065ad.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717413430; x=1718018230;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A885skJMu8sWdVQrS46wFUx/4xOSYNYMrymGY5OQ5ug=;
- b=h/mSfUdwcDdqbJgANrWkNsO7j88MvqTwNsiByaHEOjfJJDq1qE4VigLnav8gMuhLqe
- m43Ec/ZXvaY8yP1ffd83PeLrWnpxzZmZc34uLvpsPEkdI3MGlOMmkijNw0pyeeisXWl4
- QGTt/A5tfavXVttGkLgc5rcAmlb/lZrsqM271kbt6915lbbJm+EN/Pcne8bLWrwBUeYk
- j0Nzp4BsfwD3QRrW91QbJ3KRIXyuGXoOUAqzAOScx+OlacLSAdIsYvFFRSSYa9TPUnyL
- JYxR7POR97JJr5SPA9M6yYZt8qBtfCovRggaz3V0nVFndte+Jd8OfA+S2mkGr2RQgjHi
- ljCQ==
+ d=gmail.com; s=20230601; t=1717413448; x=1718018248; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ISj/DJX6sVw1fF9xt8oQxJPLcdsC6nSxbO5ABU6lBG8=;
+ b=cAM7R3b9MvorXxdy4nhsejvYytTFOip0fJI1uiMGavsWuvWjnbOMFAce8iD7H8igB1
+ sH13fKLM5vnR+5ts1yuTsKgUDqeXdzGYIugwl8U133rFoWZcmR5w/LvlUXUG6yxQcJhk
+ YwOaD7x9A5JOP4RtdM+N49E7rYOb1imKnq5XuuNH1Mh6Q9jUcq3eOozUqeAMFwwpDyxU
+ +b5WWeYJlyEKjt/ODJd8axE4s2J2+Xb6dGa5w1ijKXbuVBrsvhgVuRP5QgIWN04cEUd2
+ 3LqVREMczoGSC6HphOXdIe2xYaUV7VBSyuKW/FX87cZfpV+qiRNaWs87pXushE5td+zD
+ BkQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413430; x=1718018230;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A885skJMu8sWdVQrS46wFUx/4xOSYNYMrymGY5OQ5ug=;
- b=I0xq7wTld+8KFEqxoZKgmVFQo/B/Uxe+MQqnGMlnNrW4bYuHvHOpXEGn35ThP0d5uo
- GqAt6+o2fV/MF/VSsXj8KhNit9yR3ZeavidJR3ESwwY9aWuWh0b0dveoij0l6xpcgqwz
- GQhj+SGcfgiQIeKJgA8IgHviVk8JjRruthUAHL+7sxFxbIZtpJB5usSdEUkK1sgkD8S3
- 4EEMWvuWofakuOyLRZHNbL0Tn+M8CsplcKXAHS4nxRpcc1k2mFdWnJ2C6vilZ+gWYWNC
- MT77JjxTurmwgKdJcGDwY5+dkJhHp4uvkwqGLnFxDIwFpnK5BxZZd5UX07KsQMu54cKT
- rZZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyNVkxM7iAuAam6XMqpx2HgxsWBQpBtNiefGZwdeNq/jTTdBKXAQk2UP8+FfcsIBHOXBd0HdUOb+DWIP8xmo+5MxJPfPk=
-X-Gm-Message-State: AOJu0YzuM2DEmd/aS2N3raGhuEPKFc79KYufZ/cr5Zr7NefPyNw+xgOr
- Bopm2BHbQNgnEt6BTleOrfqCGkNMrRDTnkXOGx97BXtvnnzUlWf1moo97DUoJN8=
-X-Google-Smtp-Source: AGHT+IF1PqCUUJQZsjG72DQc6f1T9lbSIgNbHUTHM9T1ph+KnPPwUnHoGRllFKavKDKeXoOW/koQvQ==
-X-Received: by 2002:a17:903:22c3:b0:1f4:bb5c:b7bd with SMTP id
- d9443c01a7336-1f6370b8aa1mr95412095ad.61.1717413429612; 
- Mon, 03 Jun 2024 04:17:09 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
- ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ d=1e100.net; s=20230601; t=1717413448; x=1718018248;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ISj/DJX6sVw1fF9xt8oQxJPLcdsC6nSxbO5ABU6lBG8=;
+ b=v+x7u7kZGf0nnADA4WEsDZIklUyUiPHoqxDKOXsNMFOw6pjpHB4u1cuSo+jPfHv4hI
+ ZTO2x7U6n2VaROzezBaJjWpNztFa+5iWDgwWthE8vQMPbH7Yetioh8vNg5cwsrXZj3II
+ RgZtIlE82btfW6/IICxmAxJ6psgeQMnv13OHTRmcKk02uOjPeMWz22njP2qyuvnvFflX
+ VcgSOk+HcNftcEsTP1f1CnaCs1mojxaEmwv5GvHkqXuNPQKTA8FlXILdOHj3pkpVj52i
+ LBNniaeQcsZPOdHT0nPKuYb27Y/K6b4+05gxkGuv8XPGbi/8zAbweLd7G01rQuV158qU
+ Wqkw==
+X-Gm-Message-State: AOJu0Yx1DuVYHiFcqZxn8nz+e2zVnh7QbTWcY/s6fQrIDvpR88tVjFCn
+ wLJBYXHZPvELXmhAX6Xp3xK+EvrRgDVEN5ubwoHjK9Y4/lYKQjHLMM7Kfw==
+X-Google-Smtp-Source: AGHT+IGtrnR5/LOMf4poZjJx9NbdkH0Aq2n1hksxfgWeKyJG0+/5l8yc4cQ8+u48PRR9K75+6Gj4EA==
+X-Received: by 2002:a17:902:cec1:b0:1f6:7dd7:e801 with SMTP id
+ d9443c01a7336-1f67dd7e998mr26576795ad.67.1717413448512; 
+ Mon, 03 Jun 2024 04:17:28 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e3c33sm62572685ad.176.2024.06.03.04.17.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 04:17:09 -0700 (PDT)
-Message-ID: <ae9f48f2-466a-42bd-9aab-82279fb9011d@daynix.com>
-Date: Mon, 3 Jun 2024 20:17:06 +0900
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Jun 2024 04:17:28 -0700 (PDT)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 11/27] target/riscv: Add support for Zve64x extension
+Date: Mon,  3 Jun 2024 21:16:27 +1000
+Message-ID: <20240603111643.258712-12-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
+References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] osdep: Make qemu_madvise() to set errno in all
- cases
-To: =?UTF-8?B?TWljaGFsIFByw612b3puw61r?= <mprivozn@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>
-References: <cover.1717168113.git.mprivozn@redhat.com>
- <393c7b26302cb445f1a086a2c80b1d718c31a071.1717168113.git.mprivozn@redhat.com>
- <4b146ec6-bec2-4191-8c95-fc30d8307ef6@linaro.org>
- <08ff19ed-9d1b-4fa3-8a40-3fe10d1f9bfa@daynix.com>
- <d32e3ea3-32fb-4893-a950-91e60c9778d2@redhat.com>
- <22e6b199-a23f-4b5d-ad80-86e82a232c8c@daynix.com>
- <78f8d06f-9dee-4944-8635-af2316c84a33@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <78f8d06f-9dee-4944-8635-af2316c84a33@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,80 +100,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/03 19:07, Michal Prívozník wrote:
-> On 6/3/24 10:50, Akihiko Odaki wrote:
->> On 2024/06/03 16:56, Michal Prívozník wrote:
->>> On 6/2/24 08:26, Akihiko Odaki wrote:
->>>> On 2024/06/01 0:46, Philippe Mathieu-Daudé wrote:
->>>>> On 31/5/24 17:10, Michal Privoznik wrote:
->>>>>> The unspoken premise of qemu_madvise() is that errno is set on
->>>>>> error. And it is mostly the case except for posix_madvise() which
->>>>>> is documented to return either zero (on success) or a positive
->>>>>> error number. This means, we must set errno ourselves. And while
->>>>>> at it, make the function return a negative value on error, just
->>>>>> like other error paths do.
->>>>>>
->>>>>> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
->>>>>> ---
->>>>>>     util/osdep.c | 14 +++++++++++++-
->>>>>>     1 file changed, 13 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/util/osdep.c b/util/osdep.c
->>>>>> index e996c4744a..1345238a5c 100644
->>>>>> --- a/util/osdep.c
->>>>>> +++ b/util/osdep.c
->>>>>> @@ -57,7 +57,19 @@ int qemu_madvise(void *addr, size_t len, int
->>>>>> advice)
->>>>>>     #if defined(CONFIG_MADVISE)
->>>>>>         return madvise(addr, len, advice);
->>>>>>     #elif defined(CONFIG_POSIX_MADVISE)
->>>>>> -    return posix_madvise(addr, len, advice);
->>>>>> +    /*
->>>>>> +     * On Darwin posix_madvise() has the same return semantics as
->>>>>> +     * plain madvise, i.e. errno is set and -1 is returned.
->>>>>> Otherwise,
->>>>>> +     * a positive error number is returned.
->>>>>> +     */
->>>>>
->>>>> Alternative is to guard with #ifdef CONFIG_DARWIN ... #else ... #endif
->>>>> which might be clearer.
->>>>>
->>>>> Although this approach seems reasonable, so:
->>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>
->>>> We should use plain madvise() if posix_madvise() is broken. In fact,
->>>> QEMU detects the availability of plain madvise() and use it instead of
->>>> posix_madvise() on my MacBook.
->>>>
->>>> Perhaps it may be better to stop defining CONFIG_POSIX_MADVISE on Darwin
->>>> to ensure we never use the broken implementation.
->>>>
->>>
->>> Well, doesn't Darwin have madvise() in the first place?
->>>
->>> https://opensource.apple.com/source/xnu/xnu-7195.81.3/bsd/man/man2/madvise.2.auto.html
->>>
->>> I thought that's the reason for posix_madvise() to behave the same as
->>> madvise() there.
->>
->> It does have madvise() and QEMU on my MacBook uses it instead of
->> posix_madvise().
->>
-> 
-> I don't have a Mac myself, but I ran some tests on my colleague's Mac
-> and yes, posix_madvise() is basically just an alias to madvise(). No
-> dispute there.
-> 
->> The behavior of posix_madvise() is probably just a bug (and perhaps it
->> is too late for them to fix).
->>
-> 
-> So what does this mean for this patch? Should I resend with the change
-> you're suggesting or this is good as is? I mean, posix_madvise() is not
-> going to be used on Mac anyways.
+From: Jason Chien <jason.chien@sifive.com>
 
-I'm for my suggestion. The current patch seems to imply that we will use 
-posix_madvise() on macOS but in reality plain madivse() is used so it is 
-a bit misleading. We can explicitly say we won't use posix_madvise() on 
-macOS by not defining CONFIG_POSIX_MADVISE for that platform.
+Add support for Zve64x extension. Enabling Zve64f enables Zve64x and
+enabling Zve64x enables Zve32x according to their dependency.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2107
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240328022343.6871-3-jason.chien@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu_cfg.h     |  1 +
+ target/riscv/cpu.c         |  2 ++
+ target/riscv/tcg/tcg-cpu.c | 17 +++++++++++------
+ 3 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index dce49050c0..e1e4f32698 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -94,6 +94,7 @@ struct RISCVCPUConfig {
+     bool ext_zve32x;
+     bool ext_zve64f;
+     bool ext_zve64d;
++    bool ext_zve64x;
+     bool ext_zvbb;
+     bool ext_zvbc;
+     bool ext_zvkb;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d744594cc4..a74f0eb29c 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -156,6 +156,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zve32x, PRIV_VERSION_1_10_0, ext_zve32x),
+     ISA_EXT_DATA_ENTRY(zve64f, PRIV_VERSION_1_10_0, ext_zve64f),
+     ISA_EXT_DATA_ENTRY(zve64d, PRIV_VERSION_1_10_0, ext_zve64d),
++    ISA_EXT_DATA_ENTRY(zve64x, PRIV_VERSION_1_10_0, ext_zve64x),
+     ISA_EXT_DATA_ENTRY(zvfbfmin, PRIV_VERSION_1_12_0, ext_zvfbfmin),
+     ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+     ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+@@ -1476,6 +1477,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zve32x", ext_zve32x, false),
+     MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
+     MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
++    MULTI_EXT_CFG_BOOL("zve64x", ext_zve64x, false),
+     MULTI_EXT_CFG_BOOL("zvfbfmin", ext_zvfbfmin, false),
+     MULTI_EXT_CFG_BOOL("zvfbfwma", ext_zvfbfwma, false),
+     MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index e2cf5f429d..fedc035313 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -498,17 +498,22 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ 
+     /* The Zve64d extension depends on the Zve64f extension */
+     if (cpu->cfg.ext_zve64d) {
++        if (!riscv_has_ext(env, RVD)) {
++            error_setg(errp, "Zve64d/V extensions require D extension");
++            return;
++        }
+         cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64f), true);
+     }
+ 
+-    /* The Zve64f extension depends on the Zve32f extension */
++    /* The Zve64f extension depends on the Zve64x and Zve32f extensions */
+     if (cpu->cfg.ext_zve64f) {
++        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64x), true);
+         cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32f), true);
+     }
+ 
+-    if (cpu->cfg.ext_zve64d && !riscv_has_ext(env, RVD)) {
+-        error_setg(errp, "Zve64d/V extensions require D extension");
+-        return;
++    /* The Zve64x extension depends on the Zve32x extension */
++    if (cpu->cfg.ext_zve64x) {
++        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
+     }
+ 
+     /* The Zve32f extension depends on the Zve32x extension */
+@@ -670,10 +675,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
+ 
+-    if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64f) {
++    if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64x) {
+         error_setg(
+             errp,
+-            "Zvbc and Zvknhb extensions require V or Zve64{f,d} extensions");
++            "Zvbc and Zvknhb extensions require V or Zve64x extensions");
+         return;
+     }
+ 
+-- 
+2.45.1
+
 
