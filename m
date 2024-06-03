@@ -4,72 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA87C25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A097DC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7Ei-0007cS-PQ; Mon, 03 Jun 2024 08:56:28 -0400
+	id 1sE7FL-000077-VF; Mon, 03 Jun 2024 08:57:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sE7Ef-0007am-Q4
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:56:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sE7FK-0008TR-T6
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sE7Ee-00026H-0E
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:56:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sE7FI-0002EO-Hr
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717419382;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=56bE5cEwr1EKc5PfG8m648V0GQhkuijgoV5TkXqj/I8=;
- b=G03wCkijrJny7ygtB/dG2wBkVcL+0anESuzXHsfzjdktY0mTkdDCgwHvJQIjAgBZVSlRmJ
- /AzURQ4XyuC4sEaAd46m4qwDGYbeIS9cdFm+fc+svIJMNcXxXCBL0/xeL+gx5Q0mLShq7s
- z5PqxFxHqnhO1pJgsyo2QRJMrqIKSTU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1717419423;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uJgF4prksJTHhKe1OAA3+KwVurXP/KwVHaakDnrdJ6U=;
+ b=eAxuZ4J9/ozVJ4pexxbrLWbZh8JK+FDqoj0WNCsFjjTMLvtSKPGBiruKLP0jU+1B5BnSF1
+ Ipf4wdZBKJlhs9+dbX2CzHZBNpeClA3YRBw8ZPY28IyWagz18Aj4g7E4JSHoFYmzGv13wg
+ 1mTPTwq4sUqiHw180NgRQY7iAhW6QFQ=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-yaFiz5ZUOK6b9z1dqMO24Q-1; Mon, 03 Jun 2024 08:56:18 -0400
-X-MC-Unique: yaFiz5ZUOK6b9z1dqMO24Q-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6BDA281101B;
- Mon,  3 Jun 2024 12:56:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.80])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 16BA1402EB1;
- Mon,  3 Jun 2024 12:56:16 +0000 (UTC)
-Date: Mon, 3 Jun 2024 13:56:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org,
- marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
- Paulo Neves <ptsneves@gmail.com>
-Subject: Re: [PATCH] chardev: add path option for pty backend
-Message-ID: <Zl29b8osUIBUICSm@redhat.com>
-References: <20240531175153.2716309-1-tavip@google.com>
- <CAFEAcA_zPR=gd95tkhi8cXaZMf+M2OO2WpF=ZfO1vKhsO9=1cA@mail.gmail.com>
+ us-mta-568-UX9XwdYAMxG52bLecgjjXA-1; Mon, 03 Jun 2024 08:57:02 -0400
+X-MC-Unique: UX9XwdYAMxG52bLecgjjXA-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-794ab0a4c4cso551935485a.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:57:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717419422; x=1718024222;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uJgF4prksJTHhKe1OAA3+KwVurXP/KwVHaakDnrdJ6U=;
+ b=MOQJDY7He8oJ0eDtJnhg0FYWXISTmejoSO6uW72JhjAWOGEBBgsOKy5aJeevNkhfdX
+ I9rm3IGr4mqTgh//zGpv2GQ5Jek6Br5CqwxxIIYIMS9+dElY9i1s6O/EIpkBeHG2roUN
+ 2xgoE6c7hyzfknpFdr8gUhoRoqOxTqawAwTqXz7CWID6CPluSNu9HGlVmFVZWrUbvSP5
+ 2xn1BKYlQ9fgzHxEygUtB2Tq20kUMWxax406RlxY0H9HocY/cofPf5zIH8nbceJHz9RX
+ Tcjxw4y6Lsw/cBnHyyYybGAgsJFAG1csZ0/Aid/KiHHAViCIkrUpZfdRwxKNr45sSLxf
+ ROXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+a+L0YF+Z5hYviB6l/1fn1pzd9MTlgqzB09VEooTVl/ILjTLj9R40b4fy1j3dwcnBSySIiCW+K6EP2ihDjQRAHeVafVA=
+X-Gm-Message-State: AOJu0YzD+YZvnH8qcS8DrAJFodJ2inawE/LUP751fuqyJvUMROwC81LW
+ xoz5tNL29pqc9uKJWO808Xx7+qC8G7rcVU0MwTZmsjsySL2QofJ45wCwc9TRf9ATdboPiuxwexF
+ IL0J2LW8L0TutLzrwlTHhA/Nj//MpVLCJxq3dTWYXFUPm3C4VnE1W
+X-Received: by 2002:a05:620a:8101:b0:793:1c64:131e with SMTP id
+ af79cd13be357-794f5ebe42emr844159785a.50.1717419421573; 
+ Mon, 03 Jun 2024 05:57:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEo6smrqfm2O1hxsJzqqV0QdHsasdfd4VhzUqCMcCO3cf9iuUfQoeKBvZfdNhEnWitdc/hhRA==
+X-Received: by 2002:a05:620a:8101:b0:793:1c64:131e with SMTP id
+ af79cd13be357-794f5ebe42emr844157285a.50.1717419421135; 
+ Mon, 03 Jun 2024 05:57:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-794f317073fsm281044385a.112.2024.06.03.05.56.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 05:57:00 -0700 (PDT)
+Message-ID: <f07bd445-f1f8-4395-baf4-ddcc847d428d@redhat.com>
+Date: Mon, 3 Jun 2024 14:56:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_zPR=gd95tkhi8cXaZMf+M2OO2WpF=ZfO1vKhsO9=1cA@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 18/19] intel_iommu: Implement
+ [set|unset]_iommu_device() callbacks
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
+ <20240603061023.269738-19-zhenzhong.duan@intel.com>
+ <6cfdde68-a138-4ac3-ab3c-29f6a94a1045@eviden.com>
+ <SJ0PR11MB6744E89A1A959BE312ECE5B592FF2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <SJ0PR11MB6744E89A1A959BE312ECE5B592FF2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,116 +118,218 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 03, 2024 at 01:23:00PM +0100, Peter Maydell wrote:
-> On Fri, 31 May 2024 at 22:21, Octavian Purdila <tavip@google.com> wrote:
-> >
-> > Add path option to the pty char backend which will create a symbolic
-> > link to the given path that points to the allocated PTY.
-> >
-> > Based on patch from Paulo Neves:
-> >
-> > https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmail.com/
-> >
-> > Tested with the following invocations that the link is created and
-> > removed when qemu stops:
-> >
-> >   qemu-system-x86_64 -nodefaults -mon chardev=compat_monitor \
-> >   -chardev pty,path=test,id=compat_monitor0
-> >
-> >   qemu-system-x86_64 -nodefaults -monitor pty:test
-> >
-> > Also tested that when a link path is not passed invocations still work, e.g.:
-> >
-> >   qemu-system-x86_64 -monitor pty
+On 6/3/24 13:02, Duan, Zhenzhong wrote:
 > 
-> Could we have some justification here for why the new
-> functionality is useful, please? (e.g. what new use cases
-> it permits).
-
-The PTY paths are dynamically allocated so you can't predict them
-as an app launching QEMU. You need to connect to the monitor and
-interogate QEMU to find the path. So supporting a symlink simplifies
-usage.
-
-This was explained in the original patches' commit message, and
-that description should have been kept.
-
-> > --- a/qapi/char.json
-> > +++ b/qapi/char.json
-> > @@ -509,7 +509,7 @@
-> >  ##
-> >  # @ChardevHostdevWrapper:
-> >  #
-> > -# @data: Configuration info for device and pipe chardevs
-> > +# @data: Configuration info for device, pty and pipe chardevs
-> >  #
-> >  # Since: 1.4
-> >  ##
-> > @@ -650,7 +650,7 @@
-> >              'pipe': 'ChardevHostdevWrapper',
-> >              'socket': 'ChardevSocketWrapper',
-> >              'udp': 'ChardevUdpWrapper',
-> > -            'pty': 'ChardevCommonWrapper',
-> > +            'pty': 'ChardevHostdevWrapper',
-> >              'null': 'ChardevCommonWrapper',
-> >              'mux': 'ChardevMuxWrapper',
-> >              'msmouse': 'ChardevCommonWrapper',
 > 
-> Does this break QAPI compatibility?
+>> -----Original Message-----
+>> From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+>> Subject: Re: [PATCH v6 18/19] intel_iommu: Implement
+>> [set|unset]_iommu_device() callbacks
+>>
+>>
+>> On 03/06/2024 08:10, Zhenzhong Duan wrote:
+>>> Caution: External email. Do not open attachments or click links, unless this
+>> email comes from a known sender and you know the content is safe.
+>>>
+>>>
+>>> From: Yi Liu <yi.l.liu@intel.com>
+>>>
+>>> Implement [set|unset]_iommu_device() callbacks in Intel vIOMMU.
+>>> In set call, a new structure VTDHostIOMMUDevice which holds
+>>> a reference to HostIOMMUDevice is stored in hash table
+>>> indexed by PCI BDF.
+>>>
+>>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+>>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>    hw/i386/intel_iommu_internal.h |  9 ++++
+>>>    include/hw/i386/intel_iommu.h  |  2 +
+>>>    hw/i386/intel_iommu.c          | 76
+>> ++++++++++++++++++++++++++++++++++
+>>>    3 files changed, 87 insertions(+)
+>>>
+>>> diff --git a/hw/i386/intel_iommu_internal.h
+>> b/hw/i386/intel_iommu_internal.h
+>>> index f8cf99bddf..b800d62ca0 100644
+>>> --- a/hw/i386/intel_iommu_internal.h
+>>> +++ b/hw/i386/intel_iommu_internal.h
+>>> @@ -28,6 +28,7 @@
+>>>    #ifndef HW_I386_INTEL_IOMMU_INTERNAL_H
+>>>    #define HW_I386_INTEL_IOMMU_INTERNAL_H
+>>>    #include "hw/i386/intel_iommu.h"
+>>> +#include "sysemu/host_iommu_device.h"
+>>>
+>>>    /*
+>>>     * Intel IOMMU register specification
+>>> @@ -537,4 +538,12 @@ typedef struct VTDRootEntry VTDRootEntry;
+>>>    #define VTD_SL_IGN_COM              0xbff0000000000000ULL
+>>>    #define VTD_SL_TM                   (1ULL << 62)
+>>>
+>>> +
+>>> +typedef struct VTDHostIOMMUDevice {
+>>> +    IntelIOMMUState *iommu_state;
+>>> +    PCIBus *bus;
+>>> +    uint8_t devfn;
+>>> +    HostIOMMUDevice *dev;
+>>> +    QLIST_ENTRY(VTDHostIOMMUDevice) next;
+>>> +} VTDHostIOMMUDevice;
+>>>    #endif
+>>> diff --git a/include/hw/i386/intel_iommu.h
+>> b/include/hw/i386/intel_iommu.h
+>>> index 7d694b0813..2bbde41e45 100644
+>>> --- a/include/hw/i386/intel_iommu.h
+>>> +++ b/include/hw/i386/intel_iommu.h
+>>> @@ -293,6 +293,8 @@ struct IntelIOMMUState {
+>>>        /* list of registered notifiers */
+>>>        QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
+>>>
+>>> +    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice
+>> */
+>>> +
+>>>        /* interrupt remapping */
+>>>        bool intr_enabled;              /* Whether guest enabled IR */
+>>>        dma_addr_t intr_root;           /* Interrupt remapping table pointer */
+>>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+>>> index 519063c8f8..747c988bc4 100644
+>>> --- a/hw/i386/intel_iommu.c
+>>> +++ b/hw/i386/intel_iommu.c
+>>> @@ -237,6 +237,13 @@ static gboolean vtd_as_equal(gconstpointer v1,
+>> gconstpointer v2)
+>>>               (key1->pasid == key2->pasid);
+>>>    }
+>>>
+>>> +static gboolean vtd_as_idev_equal(gconstpointer v1, gconstpointer v2)
+>>> +{
+>>> +    const struct vtd_as_key *key1 = v1;
+>>> +    const struct vtd_as_key *key2 = v2;
+>>> +
+>>> +    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
+>>> +}
+>>>    /*
+>>>     * Note that we use pointer to PCIBus as the key, so hashing/shifting
+>>>     * based on the pointer value is intended. Note that we deal with
+>>> @@ -3812,6 +3819,70 @@ VTDAddressSpace
+>> *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>>>        return vtd_dev_as;
+>>>    }
+>>>
+>>> +static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int
+>> devfn,
+>>> +                                     HostIOMMUDevice *hiod, Error **errp)
+>>> +{
+>>> +    IntelIOMMUState *s = opaque;
+>>> +    VTDHostIOMMUDevice *vtd_hdev;
+>>> +    struct vtd_as_key key = {
+>>> +        .bus = bus,
+>>> +        .devfn = devfn,
+>>> +    };
+>>> +    struct vtd_as_key *new_key;
+>>> +
+>>> +    assert(hiod);
+>>> +
+>>> +    vtd_iommu_lock(s);
+>>> +
+>>> +    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
+>>> +
+>>> +    if (vtd_hdev) {
+>>> +        error_setg(errp, "IOMMUFD device already exist");
+>>> +        vtd_iommu_unlock(s);
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    vtd_hdev = g_malloc0(sizeof(VTDHostIOMMUDevice));
+>>> +    vtd_hdev->bus = bus;
+>>> +    vtd_hdev->devfn = (uint8_t)devfn;
+>>> +    vtd_hdev->iommu_state = s;
+>>> +    vtd_hdev->dev = hiod;
+>>> +
+>>> +    new_key = g_malloc(sizeof(*new_key));
+>>> +    new_key->bus = bus;
+>>> +    new_key->devfn = devfn;
+>>> +
+>>> +    object_ref(hiod);
+>>> +    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hdev);
+>>> +
+>>> +    vtd_iommu_unlock(s);
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int
+>> devfn)
+>>> +{
+>>> +    IntelIOMMUState *s = opaque;
+>>> +    VTDHostIOMMUDevice *vtd_hdev;
+>>> +    struct vtd_as_key key = {
+>>> +        .bus = bus,
+>>> +        .devfn = devfn,
+>>> +    };
+>>> +
+>>> +    vtd_iommu_lock(s);
+>>> +
+>>> +    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
+>>> +    if (!vtd_hdev) {
+>>> +        vtd_iommu_unlock(s);
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    g_hash_table_remove(s->vtd_host_iommu_dev, &key);
+>>> +    object_unref(vtd_hdev->dev);
+>> Not sure but isn't that a potential use after free?
+> 
+> Good catch! Will fix. Should be:
+> 
+> object_unref(vtd_hdev->dev);
+> g_hash_table_remove(s->vtd_host_iommu_dev, &key);
 
-No, what matters for compatibility is the *contents* of the
-struct, not the particular struct names. Since ChardevHostdevWrapper
-is a superset of of ChardevCommonWrapper we are fine with back compat.
+you could also implement a custom destroy hash function.
+
+
+Thanks,
+
+C.
+
 
 > 
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index 8ca7f34ef0..5eec194242 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
-> >      "-chardev console,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-> >      "-chardev serial,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-> >  #else
-> > -    "-chardev pty,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-> > +    "-chardev pty,id=id[,path=path][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-> >      "-chardev stdio,id=id[,mux=on|off][,signal=on|off][,logfile=PATH][,logappend=on|off]\n"
-> >  #endif
-> >  #ifdef CONFIG_BRLAPI
-> > @@ -3808,12 +3808,16 @@ The available backends are:
-> >
-> >      ``path`` specifies the name of the serial device to open.
-> >
-> > -``-chardev pty,id=id``
-> > +``-chardev pty,id=id[,path=path]``
-> >      Create a new pseudo-terminal on the host and connect to it. ``pty``
-> >      does not take any options.
+> Thanks
+> Zhenzhong
 > 
-> We just added an option, so we should delete the line saying
-> that it doesn't take any options :-)
-
-
-> 
-> >
-> >      ``pty`` is not available on Windows hosts.
-> >
-> > +    ``path`` specifies the symbolic link path to be created that
-> > +    points to the pty device.
-> 
-> I think we could usefully make this a little less terse. Perhaps
->    If ``path`` is specified, QEMU will create a symbolic link at
->    that location which points to the new PTY device.
-> ?
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>>> +
+>>> +    vtd_iommu_unlock(s);
+>>> +}
+>>> +
+>>>    /* Unmap the whole range in the notifier's scope. */
+>>>    static void vtd_address_space_unmap(VTDAddressSpace *as,
+>> IOMMUNotifier *n)
+>>>    {
+>>> @@ -4116,6 +4187,8 @@ static AddressSpace
+>> *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+>>>
+>>>    static PCIIOMMUOps vtd_iommu_ops = {
+>>>        .get_address_space = vtd_host_dma_iommu,
+>>> +    .set_iommu_device = vtd_dev_set_iommu_device,
+>>> +    .unset_iommu_device = vtd_dev_unset_iommu_device,
+>>>    };
+>>>
+>>>    static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+>>> @@ -4235,6 +4308,9 @@ static void vtd_realize(DeviceState *dev, Error
+>> **errp)
+>>>                                         g_free, g_free);
+>>>        s->vtd_address_spaces = g_hash_table_new_full(vtd_as_hash,
+>> vtd_as_equal,
+>>>                                          g_free, g_free);
+>>> +    s->vtd_host_iommu_dev = g_hash_table_new_full(vtd_as_hash,
+>>> +                                                  vtd_as_idev_equal,
+>>> +                                                  g_free, g_free);
+>>>        vtd_init(s);
+>>>        pci_setup_iommu(bus, &vtd_iommu_ops, dev);
+>>>        /* Pseudo address space under root PCI bus. */
+>>> --
+>>> 2.34.1
+>>>
 
 
