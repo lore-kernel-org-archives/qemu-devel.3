@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E1FC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 18:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4E2C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 18:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sECDJ-0005Pf-0j; Mon, 03 Jun 2024 14:15:21 -0400
+	id 1sECaq-0002Hb-Ov; Mon, 03 Jun 2024 14:39:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sECDF-0005PM-7u
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 14:15:17 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sECD9-0006VB-WA
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 14:15:15 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-702342c60dfso214535b3a.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 11:15:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717438509; x=1718043309; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jvfXxxZU3SJUWuSQ3mKhNHtEqPZa3igYEuAdMvPvdH0=;
- b=L+5G7y23EeCeORRDIXF8JZSQ2H3dKB1zmhxBddD4eOFOJRssFpaO1itrfl+jIHFNI0
- UBkqpphPCDUsxjDURM0QmGtvMdtjze2Q9+fasezlX58FKsudCycCdw7X64tHMou5z16A
- Mt14CfBp54BzHtHDv+6mjNyiNhMRxHMOiubNOReH5g9unWlhiMwidM3fa62/kcI2kvDg
- Zm1g7uFsroY/qzFBmi/yV5IhtCC9H7uXIr/1YQgn85VILqC92FMcmlS/MWJ0Z6gAxokn
- XuN6CjRhZBSpGiX+x/aRNtYOKSguzPzn3ANiB4TlJWsbGhqnnl6XQGBtaihakwmLZdIg
- Mrgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717438509; x=1718043309;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jvfXxxZU3SJUWuSQ3mKhNHtEqPZa3igYEuAdMvPvdH0=;
- b=ZmQp3Bvo2NWCepU9oNRIj2qDwrv/iFKoq6Er7BtTSurNYEkxr6gW3drNbD7ZgXrTEi
- 7BIgl/zt3LLDh+KJyY4HmVaXPpQig7Bi16Lj00llaoOxN8uZYPZsiVCTejlCS+Rzduy7
- GhOZvH4HDS5h9Ulfi0GjQxJcpr6HMcAUsLwzWHmsM13mDzg/RyJRhXB+tmOe4THRklfY
- y9RMAtLlSWrzs0uUmQbin5Uao2oDRlOb6glrRwCGu/nDdA8SzaJJdipv31HDLTW54gwe
- /uhCJ3OcqHEULJMZDTDIxrb0KbwP9jgNSa742CFtnzA/f5O3ytiZGthd8q9GfyGayBJz
- nSrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWu/2rER4ROEO/oJXhnh51q1WWiQRQL3GOC9zSrszgg8kdH5KpEyYvjjcwg1F2CEWooojhxz/zjf22TUdAIDjcd/MSAugA=
-X-Gm-Message-State: AOJu0YxKqTFFHzI3vEbq878XfHsf5iko4oV+saXJKI/v6p1DbKyGAO7j
- vmplufmWlY+TqllBlEolqsY8GP7Xe22Ac+wOCytK1y6o6cDt+1JVYLsQxwsw91w=
-X-Google-Smtp-Source: AGHT+IHG0/GyJ4Jlml+oKxhNNRpVmrNB25mx9Ore06F0f64Fur2jUjOvFrV1UGWV3bilQztkHTDJ2A==
-X-Received: by 2002:a05:6a21:99a6:b0:1a9:c4ca:dc74 with SMTP id
- adf61e73a8af0-1b26f0e6242mr12328748637.5.1717438509018; 
- Mon, 03 Jun 2024 11:15:09 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-702423c856dsm5773787b3a.21.2024.06.03.11.15.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 11:15:07 -0700 (PDT)
-Message-ID: <f1e66166-0e06-4a02-8d88-9faad1f0274b@linaro.org>
-Date: Mon, 3 Jun 2024 11:15:06 -0700
+ (Exim 4.90_1) (envelope-from <mic@digikod.net>) id 1sECao-0002EJ-TY
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 14:39:39 -0400
+Received: from smtp-bc0a.mail.infomaniak.ch ([45.157.188.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mic@digikod.net>) id 1sECal-0007Rn-HF
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 14:39:38 -0400
+Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch
+ [10.4.36.107])
+ by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4VtMvh6qFGzbqD;
+ Mon,  3 Jun 2024 20:39:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+ s=20191114; t=1717439968;
+ bh=gtIaPUDSXyeON8s2CCg1DgIhDlLJpeFMkqvOS8MasVM=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=xgOLEnz6SJcIhFjVsyAJkws+cB0hDF1vBl5UhdAnMFZ3IwIv9+mfJG3z/z022GaLC
+ hucCNjddaf0O63psa6tLWOQ3L5xKcN9U7KIay9a2JpyiZ7tPESeMWs+1ppcAXahNNL
+ fGKNj5z+dog4VQDnEUOYMq6wUCsWbim9yiLiW2VQ=
+Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA
+ id 4VtMvf5T4yz1Y3; Mon,  3 Jun 2024 20:39:26 +0200 (CEST)
+Date: Mon, 3 Jun 2024 20:39:24 +0200
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: Sean Christopherson <seanjc@google.com>
+Cc: Nicolas Saenz Julienne <nsaenz@amazon.com>, 
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
+ "H . Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>, 
+ Kees Cook <keescook@chromium.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Gleixner <tglx@linutronix.de>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
+ Wanpeng Li <wanpengli@tencent.com>,
+ Rick P Edgecombe <rick.p.edgecombe@intel.com>, 
+ Alexander Graf <graf@amazon.com>, Angelina Vu <angelinavu@linux.microsoft.com>,
+ Anna Trikalinou <atrikalinou@microsoft.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, 
+ Forrest Yuan Yu <yuanyu@google.com>, James Gowans <jgowans@amazon.com>, 
+ James Morris <jamorris@linux.microsoft.com>,
+ John Andersen <john.s.andersen@intel.com>, 
+ "Madhavan T . Venkataraman" <madvenka@linux.microsoft.com>,
+ Marian Rotariu <marian.c.rotariu@gmail.com>, 
+ Mihai =?utf-8?B?RG9uyJt1?= <mdontu@bitdefender.com>,
+ =?utf-8?B?TmljdciZb3IgQ8OuyJt1?= <nicu.citu@icloud.com>, 
+ Thara Gopinath <tgopinath@microsoft.com>, Trilok Soni <quic_tsoni@quicinc.com>,
+ Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>, 
+ Yu Zhang <yu.c.zhang@linux.intel.com>,
+ =?utf-8?Q?=C8=98tefan_=C8=98icleru?= <ssicleru@bitdefender.com>, 
+ dev@lists.cloudhypervisor.org, kvm@vger.kernel.org,
+ linux-hardening@vger.kernel.org, 
+ linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-security-module@vger.kernel.org, qemu-devel@nongnu.org,
+ virtualization@lists.linux-foundation.org, 
+ x86@kernel.org, xen-devel@lists.xenproject.org
+Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
+ configuration and violation
+Message-ID: <20240603.ahNg8waif6Fu@digikod.net>
+References: <20240503131910.307630-1-mic@digikod.net>
+ <20240503131910.307630-4-mic@digikod.net>
+ <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
+ <ZjmFPZd5q_hEBdBz@google.com> <20240507.ieghomae0UoC@digikod.net>
+ <ZjpTxt-Bxia3bRwB@google.com>
+ <D15VQ97L5M8J.1TDNQE6KLW6JO@amazon.com>
+ <20240514.mai3Ahdoo2qu@digikod.net> <ZkUb2IWj4Z9FziCb@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mips64el-softmmu: Enable MTTCG
-Content-Language: en-US
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZkUb2IWj4Z9FziCb@google.com>
+X-Infomaniak-Routing: alpha
+Received-SPF: pass client-ip=45.157.188.10; envelope-from=mic@digikod.net;
+ helo=smtp-bc0a.mail.infomaniak.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,93 +102,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/24 13:26, Jiaxun Yang wrote:
-> MTTCG was disabled in a092a9554771 ("configure: disable MTTCG
-> for MIPS guests") due to test case instability.
+On Wed, May 15, 2024 at 01:32:24PM -0700, Sean Christopherson wrote:
+> On Tue, May 14, 2024, Mickaël Salaün wrote:
+> > On Fri, May 10, 2024 at 10:07:00AM +0000, Nicolas Saenz Julienne wrote:
+> > > Development happens
+> > > https://github.com/vianpl/{linux,qemu,kvm-unit-tests} and the vsm-next
+> > > branch, but I'd advice against looking into it until we add some order
+> > > to the rework. Regardless, feel free to get in touch.
+> > 
+> > Thanks for the update.
+> > 
+> > Could we schedule a PUCK meeting to synchronize and help each other?
+> > What about June 12?
 > 
-> I was able to reproduce this issue with in latest QEMU and look
-> into reason behind that.
-> 
-> What actually happend is kernel's CP0 timer synchronisation
-> mechanism assumed a consistent latency in memory access between
-> cores, which TCG can't guarantee. Thus there is a huge drift in
-> count value between cores, and in early kernel versions CP0 timer
-> is always used as sched_clock.
-> 
-> sched_clock drift back on some cores triggered RCU watchdog in
-> some extreme cases.
-> 
-> This can be resolved by setting clocksource to MIPS, which allows
-> clocksource to drift together with sched_clock. However this will
-> leed to other problems after boot.
-> 
-> Another option would beupdating kernel to later version, which
-> will use GIC as sched_clock.
-> 
-> In non-MTTCG build, the execution is slow enough so kernel won't
-> observe back drifts.
-> 
-> Test results:
-> 
-> With clocksource=MIPS
-> ```
->   ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
->      -display none -vga none -serial mon:stdio \
->      -machine malta -kernel ./vmlinux-4.7.0-rc1.I6400 \
->      -cpu I6400 -smp 8 -vga std \
->      -append "printk.time=0 clocksource=MIPS console=tty0 console=ttyS0 panic=-1" \
->      --no-reboot
-> 
-> 100, 0, PASS, 5.258126, 100, 100, -
-> Results summary:
-> 0: 100 times (100.00%), avg time 6.508 (55.53 varience/7.45 deviation)
-> Ran command 100 times, 100 passes
-> ```
-> 
-> With linux-next:
-> ```
->   ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
->      -display none -vga none -serial mon:stdio \
->      -machine malta -kernel ~/linux-next/vmlinux \
->      -cpu I6400 -smp 8 -vga std \
->      -append "printk.time=0 console=tty0 console=ttyS0 panic=-1" \
->      --no-reboot
-> 
-> 100, 0, PASS, 4.507921, 100, 100, -
-> Results summary:
-> 0: 100 times (100.00%), avg time 4.233 (0.04 varience/0.21 deviation)
-> Ran command 100 times, 100 passes
-> ```
-> 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> I'll leave the test case alone as it's already marked as QEMU_TEST_FLAKY_TESTS
-> ---
->   configs/targets/mips64el-softmmu.mak | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/mips64el-softmmu.mak
-> index 8d9ab3ddc4b1..199b1d909a7d 100644
-> --- a/configs/targets/mips64el-softmmu.mak
-> +++ b/configs/targets/mips64el-softmmu.mak
-> @@ -1,3 +1,4 @@
->   TARGET_ARCH=mips64
->   TARGET_BASE_ARCH=mips
-> +TARGET_SUPPORTS_MTTCG=y
->   TARGET_NEED_FDT=y
-> 
-> ---
-> base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
-> change-id: 20240511-mips_mttcg-47a6b19074b3
-> 
-> Best regards,
+> June 12th works on my end.
 
-Hi Jiaxun,
-Thanks for your analysis!
+Can you please send an invite?
 
-We should see to update concerned test in another series.
-I'm not sure which way is preferred between updating kernel used or 
-changing current command line.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Mickaël
 
