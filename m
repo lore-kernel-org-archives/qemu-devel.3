@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58872C25B74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B5D6C41513
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 02:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sDxsh-00015y-Rz; Sun, 02 Jun 2024 22:57:07 -0400
+	id 1sDxsd-0000zj-0o; Sun, 02 Jun 2024 22:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDxsc-0000uk-RX
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sDxsa-0000te-GC
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:57:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sDtJ3-0003El-Dc
- for qemu-devel@nongnu.org; Sun, 02 Jun 2024 18:04:02 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sDxZf-0004vx-9o
+ for qemu-devel@nongnu.org; Sun, 02 Jun 2024 22:37:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717365840;
+ s=mimecast20190719; t=1717382244;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Rg/U5bQVZCvitAfOXOtID9rN/KNAL8UobrEOBWlnOIc=;
- b=gsiDP6MmpjwOSqM2tXMIczi1ASsnsMHXMgnkjEKKQ+bDSAyg9Uouertir0au72MZaSuETW
- DeF7fqP4tVJ3orW08Qlr2cL7gsGCwPfDN5HJu6UcJEmCrfvp016PoktOcgOcfXfiV/VElb
- PqZW9JADLwa/Bipd/gdWXkI3Q3ZOdM4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yXkJ6a26FL9O4rW4Q4H2yTH0zpT7k29h5h7l+WbSVAY=;
+ b=J9T+dGMQytCcKCiFhO/PtlwVkH9li3bvGeFq8SQgA3ai0Awg/9znlAEfl36ukhtCTJBZSK
+ jbhBw9eu37HHzag8e/GEcy/qZI45GIJFHPeqtPgYhJV7tIOrKXocIvbcxqVgmCQoR0m+sX
+ VZa9fb/O6p3ld2vbIdwNjGK1Hmj5e0Q=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-6cL8X-7UMVSn-JEBoLnWvQ-1; Sun, 02 Jun 2024 18:03:59 -0400
-X-MC-Unique: 6cL8X-7UMVSn-JEBoLnWvQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42135f6012fso8047635e9.3
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 15:03:59 -0700 (PDT)
+ us-mta-53-a-qohe0NNniZcPALz-fhKQ-1; Sun, 02 Jun 2024 22:37:23 -0400
+X-MC-Unique: a-qohe0NNniZcPALz-fhKQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35e4b4e0260so1116513f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 19:37:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717365838; x=1717970638;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rg/U5bQVZCvitAfOXOtID9rN/KNAL8UobrEOBWlnOIc=;
- b=a67UXk19NlnKzrwehLbjwk0QynWoqtrh/JXBpVIaPgPsUz4nWYgr1grS9x7PumGKzY
- +tseDYU2Hsyedqq8lfqYNdOYCrMWkZavW/r677H+iTciC4X5zeBNOiz0vgya3w/pyjja
- 1DQRNFwNSddYXNp7MgbG5Nd8STQzN1YB4u68z7zULZRGgV23cGj6GGY//nE5dWWY0pSY
- DIj/QYZl/rUalYLu5c2Y/SZ5xGRIj40qvjMzzpFOcFlFqkpd9zKiyHaAD+41ADg+HGSW
- Px8UumZUYzfDVuadLJU33p4GtXXjKAD0iWsmHt5zqofry+GY0722H8qUCGIhXfPhqafj
- nhYw==
-X-Gm-Message-State: AOJu0Yx/gSB4wcdmLXxEStgBBEQxmejjfiZ74mkAjkCo2maRbTIQ1mzs
- qHD3pUrN4KGLVlhj7CNXi5/ESDBYlwjf902QOprSa2TFTIkKcQeRBsM+xdndeFjE5p/xM6qTFNb
- xLbUqv1Dmrh68xTEJSBIJ0JLyUWtOpf4D1s0/3Teeftd9aXMmDydNB0VU3F2Y
-X-Received: by 2002:a05:600c:46d4:b0:41f:e56c:ef81 with SMTP id
- 5b1f17b1804b1-4212e0448admr58237495e9.1.1717365837725; 
- Sun, 02 Jun 2024 15:03:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCVatZdqgJCSjoDjAECdvqnYzLD+JpNZ8eE+w4CM4r46MgCuz7VB6WyC6opgFoBhz0TcYhEA==
-X-Received: by 2002:a05:600c:46d4:b0:41f:e56c:ef81 with SMTP id
- 5b1f17b1804b1-4212e0448admr58237255e9.1.1717365837182; 
- Sun, 02 Jun 2024 15:03:57 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:440:950b:d4e:f17a:17d8:5699])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04cad2csm7066202f8f.36.2024.06.02.15.03.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jun 2024 15:03:56 -0700 (PDT)
-Date: Sun, 2 Jun 2024 18:03:51 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Nicholas Piggin <npiggin@gmail.com>, devel@lists.libvirt.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mads Ynddal <mads@ynddal.dk>, Markus Armbruster <armbru@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Igor Mammedov <imammedo@redhat.com>, Greg Kurz <groug@kaod.org>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-ppc@nongnu.org,
- Eric Blake <eblake@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH 0/2] qapi: Remove deprecated events
-Message-ID: <20240602180336-mutt-send-email-mst@kernel.org>
-References: <20240530071548.20074-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1717382242; x=1717987042;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yXkJ6a26FL9O4rW4Q4H2yTH0zpT7k29h5h7l+WbSVAY=;
+ b=tMIg9M2Cq3GIyUHbUOsBkf6mNrXWrblTyQ9xbUvR3SpO2u3mFb1DTmZwW/igQ+V4V1
+ fiAFpxSURNHhB1/mqWT7bq9tuJlNVJqUWEtzzfJ+H0PMt4yEyg7TSBEZC3C7kLTgKuJQ
+ C+GQSc1gzOfNwJYQOV9dgeILoZ3cGQlzHvXFaJ/VKj48LQ0i5NrN7nQXOSesyYibiLiL
+ NOqhaDeJ3Q/v6u96KucbkAuZmLY75PgiMVGgkC3S4IvGnGrjOulqQQIvQkTTS4XWIzaD
+ CkyDUl+3U7dSP770e/Y+AiVyAUJvAhnUOjC0k1oeC6f5Zz1uD3FT/SeUs/aO1yuxXM7L
+ Cu/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXGStstEh6QMQTY1QC2vOrJOkqjIj7FCYGxVybR9en2SblDUDgIkOEvaoh/ujiff4abq13JVqE2k+et9bZwODIgHhOlY5w=
+X-Gm-Message-State: AOJu0YwAcTh5xMBWXYGYWG7dgdldBKVSsLahYqS02a/dLKJZq/u+1BI7
+ 9nqnZqAh+2LBBU0ZHXeZFDbcVv/89E3FIwiTcLV492hvvtY3c8paRBH6uYYG0Io1hhG1PsrVWHW
+ qUGHfNIrCU0eRsnPkL3zZsBhr6mQKSeLebPCAGjwdOh22Pq9p5VqBEt8E8FULUgVEBGdpVNEq7S
+ TaZDcbPS8dRUy0IJn5nAGroAike5M=
+X-Received: by 2002:adf:fe4b:0:b0:354:f218:9661 with SMTP id
+ ffacd0b85a97d-35e0f254fe4mr6322304f8f.14.1717382242098; 
+ Sun, 02 Jun 2024 19:37:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFoY1lDzfIiUZzi4NfH3m/2/nDfxj0KQygOIQT2F+ssNMGp159CKiFHJyT/PfA62LzFn6dFSAH5D/K/ibNxHoQ=
+X-Received: by 2002:adf:fe4b:0:b0:354:f218:9661 with SMTP id
+ ffacd0b85a97d-35e0f254fe4mr6322295f8f.14.1717382241670; Sun, 02 Jun 2024
+ 19:37:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240530071548.20074-1-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+References: <20240522051042.985825-1-lulu@redhat.com>
+ <954a3d28-839a-4e62-b843-51d67f818396@proxmox.com>
+In-Reply-To: <954a3d28-839a-4e62-b843-51d67f818396@proxmox.com>
+From: Cindy Lu <lulu@redhat.com>
+Date: Mon, 3 Jun 2024 10:36:43 +0800
+Message-ID: <CACLfguXrW-Fvjj83g5u6sT5YMdg3tHeagihNaBVLk03iVokEFg@mail.gmail.com>
+Subject: Re: [PATCH] virtio-pci: Fix the use of an uninitialized irqfd.
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -113,29 +99,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 09:15:46AM +0200, Philippe Mathieu-Daudé wrote:
-> Remove MEM_UNPLUG_ERROR and 'vcpu' field in TRACE events,
-> all deprecated since long enough.
-> 
-> Philippe Mathieu-Daudé (2):
->   hw/acpi: Remove the deprecated QAPI MEM_UNPLUG_ERROR event
->   trace: Remove deprecated 'vcpu' field from QMP trace events
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-
-
->  docs/about/deprecated.rst       | 16 ----------------
->  docs/about/removed-features.rst | 15 +++++++++++++++
->  qapi/machine.json               | 28 ----------------------------
->  qapi/trace.json                 | 27 +++------------------------
->  hw/acpi/memory_hotplug.c        |  8 --------
->  hw/ppc/spapr.c                  | 11 +----------
->  trace/qmp.c                     |  2 --
->  trace/trace-hmp-cmds.c          |  4 ++--
->  8 files changed, 21 insertions(+), 90 deletions(-)
-> 
-> -- 
-> 2.41.0
+On Wed, May 29, 2024 at 9:54=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
+rote:
+>
+> Hi,
+>
+> Am 22.05.24 um 07:10 schrieb Cindy Lu:
+> > The crash was reported in MAC OS and NixOS, here is the link for this b=
+ug
+> > https://gitlab.com/qemu-project/qemu/-/issues/2334
+> > https://gitlab.com/qemu-project/qemu/-/issues/2321
+> >
+> > The root cause is that the function virtio_pci_set_guest_notifiers() on=
+ly
+> > initializes the irqfd when the use_guest_notifier_mask and guest_notifi=
+er_mask
+> > are set.
+>
+> Sorry, I'm just trying to understand the fix and I'm probably missing
+> something, but in virtio_pci_set_guest_notifiers() there is:
+>
+> >     bool with_irqfd =3D msix_enabled(&proxy->pci_dev) &&
+> >         kvm_msi_via_irqfd_enabled();
+>
+> and then:
+>
+> >     if ((with_irqfd ||
+> >          (vdev->use_guest_notifier_mask && k->guest_notifier_mask)) &&
+> >         assign) {
+> >         if (with_irqfd) {
+> >             proxy->vector_irqfd =3D
+> >                 g_malloc0(sizeof(*proxy->vector_irqfd) *
+> >                           msix_nr_vectors_allocated(&proxy->pci_dev));
+> >             r =3D kvm_virtio_pci_vector_vq_use(proxy, nvqs);
+>
+> Meaning proxy->vector_irqfd is allocated when with_irqfd is true (even
+> if vdev->use_guest_notifier_mask && k->guest_notifier_mask is false).
+>
+> > However, this check is missing in virtio_pci_set_vector().
+> > So the fix is to add this check.
+> >
+> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
+> >
+> > The bt tree for this bug is:
+> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+> > kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c=
+:817
+> > 817       if (irqfd->users =3D=3D 0) {
+>
+> The crash happens because the irqfd is NULL/invalid here, right?
+>
+> proxy->vector_irqfd =3D NULL happens when virtio_pci_set_guest_notifiers(=
+)
+> is called with assign=3Dfalse or for an unsuccessful call to
+> virtio_pci_set_guest_notifiers() with assign=3Dtrue.
+>
+> AFAIU, the issue is that virtio_pci_set_vector() is called between a
+> call to virtio_pci_set_guest_notifiers() with assign=3Dfalse and a
+> successful virtio_pci_set_guest_notifiers() with assign=3Dtrue (or before
+> the first such call).
+>
+> So I'm trying to understand why adding the check for
+> vdev->use_guest_notifier_mask && k->guest_notifier_mask is sufficient to
+> fix the issue. Thanks!
+>
+> Best Regards,
+> Fiona
+>
+Thanks, Fiona. You are correct. I have rechecked the call trace, and
+it seems that the virtio_pci_set_guest_notifiers was not called at all
+for this device. I mistook the calling for another device with the
+calling for this one.
+I will send a new version
+Thanks
+Cindy
+>
 
 
