@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADA7C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8554CC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEBo8-0004cU-Gz; Mon, 03 Jun 2024 13:49:20 -0400
+	id 1sEBsH-0006yH-8p; Mon, 03 Jun 2024 13:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEBo7-0004c9-E3
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:49:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEBo4-0007n9-BR
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:49:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717436955;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J3WmsIAxY9dZI8Ob+M+L7GaWD2FuzMHbC9UiUaK29h8=;
- b=PFDLzCD6mp+ACprR8pWJ0vH6xkhcCFbdV1knI9r/7gXtsVriLCV0A5YHAv4s8gPMknBd+8
- 9ZO83FRKDWcvjvQhogUtOnQMkv7h9rYAoW1UdFBJREIlg5UaBYdWCgsICeHiMWj3hpnoOU
- QfDoR51C/riAlVJK3zU6ZbVx6E0qnDg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-NjQgnmVYORm1RfYtZIBr8w-1; Mon, 03 Jun 2024 13:49:11 -0400
-X-MC-Unique: NjQgnmVYORm1RfYtZIBr8w-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4213530af1aso13431665e9.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:49:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sEBsD-0006xN-HN
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:33 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sEBsB-00007b-9m
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:32 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-421208c97a2so40499485e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717437210; x=1718042010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dS1wHb51U0tVZQjhFJevCxPL30JQW4gCH0ItBvKNOkM=;
+ b=QrB/TD6gQOy6azwGTZxmWEdyeb8G7WpjB1K1w5Nm35XPqIgMqmk3lgJKxhssUoi98S
+ iW9rkQznFzpsNp+xnRmET85LoHqkOHFsJMcaxyWZuo9zlSJ7hnx6Foft1g0rQCkox3CR
+ TrqK+Ctt5c/G1KblzavvMYtG3ak6BqsQYfgiMVMGxCKaqA48JpAbRWZ8xws4QeOYtEPg
+ PtOQcq8r3mZg5rgkIT4wsvBBFVgO2UJ5jdJgsCUitIlJIaQnSsL86igZuTGpKbZyz3Tw
+ wScL1q1cD0Ir+ZapwqGHlYgsF4Ctun+ucGBAV9eZH+yeB7jSOQP+tALSnwqxNewfb+Cr
+ V5+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717436949; x=1718041749;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1717437210; x=1718042010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J3WmsIAxY9dZI8Ob+M+L7GaWD2FuzMHbC9UiUaK29h8=;
- b=MizhugFRmX7awHKPd/OK6jGNXwEsXOKNAopth8hyF2ZWVEesfnvf/Av/Q0L/IIiT+T
- WCDTgHRWLibKnHHKgtXK0tbMfVflGlbLf09A9Gf2ciIHPX6ST06w8rOzNdG+tAJafNtc
- /oUVzg97oL//u9NgyuwtgRTz7KtCTr+zAGMvVXAsQ+FUdqo/XI2hYkTRM/rI7fMRGbNb
- 34IdyQS1l+J/Q3X+eWw8CAworbEaZgS+Ou/Sg4NCv372WKe+1/AOckQXu4W1JkODDuzh
- IXW/JC8M7jFI3s6vrsPb3b2xL6kiE5p3o42R3Xsb1EYKZzRSOYqASQIJrxYcywfnacEd
- UXTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3JEAnvBeEODiUvX5XolCmXcz6pYV0yqFxKn0aIrxF2GbGx4zmxyWxIqoU2JkTVXmkXlRWnJD534i8DcKO/VOiZdLjVk4=
-X-Gm-Message-State: AOJu0YypHgFyHq7jyDFa5iWZo5SUVSdkWbnJB/C3NhsfB9TAU+WwMUQJ
- VoCZufQptSS2WOZp18fwSekeFI7O2wt3cHiKYn4NT386EwMAZJh3Cx3a/NqIySvQKj5rCP8XVvb
- ygFGzd63e2m2fzM+lsBn37+NYzoFWsWBUL8oxjON/bXHVQz1nXMvZ/OxtGc1MRG7h+9iH77Eevb
- sqVVrng3yFhnW1g/1Cua6gM+rEZ4M=
-X-Received: by 2002:a05:600c:35d3:b0:421:3979:8c56 with SMTP id
- 5b1f17b1804b1-42139798e83mr35575825e9.40.1717436949753; 
- Mon, 03 Jun 2024 10:49:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbqFSwLkxs+GBeIocBtExiVcPfbKM6EgGyLF1m1MX6JOlzDCzjAQE9DJuLFvOa78ksAYM5/5f36+d6Gk1jfME=
-X-Received: by 2002:a05:600c:35d3:b0:421:3979:8c56 with SMTP id
- 5b1f17b1804b1-42139798e83mr35575655e9.40.1717436949399; Mon, 03 Jun 2024
- 10:49:09 -0700 (PDT)
+ bh=dS1wHb51U0tVZQjhFJevCxPL30JQW4gCH0ItBvKNOkM=;
+ b=vdEvs70Vg0JPG1OawaeV2EGj5qD65Gpm9jCcdD5XRtoy12E0LDVItn+7I9LAJT8hpS
+ s3q2yt5mCAxNM6alvcc8ZTOSMcf/u0F41lzn5iMNbcQYjotfgloBU1IyIBe6xuvbzBoe
+ TrWoi0gur/x89FqFctjprekcSPlyeGcz012U2BEeTl3EOT1+LKdktqc0YB8SvsnQ/k9M
+ VrF1LoyXkvCyJenMCsA+JRHL7bYeehYqBiOcgCckbHrxkRJNmC/KG4nWsTLSVlOQ7Kg0
+ EwDSxGawzREUGqJ0+MHS2joFHE9N2PPpW0r7Pl1m5khHWYx+csvIlvNv73k5tG9bU82p
+ 1cWA==
+X-Gm-Message-State: AOJu0YxtZOA04eWZmHUrOkyBGTnD9OovMrX/6J7EV9Pi59sC5FRlICeY
+ xePtMP6YyY5fSwC3VOUn4MDv31Kp1HpjK2p8Ydr3hlztyXo8S+d6D4HMLuQUO1E=
+X-Google-Smtp-Source: AGHT+IEtct6vC0Sy2O3e64G5sDT8x4gJXTdHmqUBCLpeMcQN/KKiSuc5wL/N43BCmAU1tbgvZigF7g==
+X-Received: by 2002:a05:600c:4454:b0:421:c8a:424e with SMTP id
+ 5b1f17b1804b1-4212e04982fmr95839145e9.10.1717437209676; 
+ Mon, 03 Jun 2024 10:53:29 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4213ab7ca26sm59434535e9.25.2024.06.03.10.53.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Jun 2024 10:53:29 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AAD925F8F7;
+ Mon,  3 Jun 2024 18:53:28 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Leif Lindholm <quic_llindhol@quicinc.com>,
+ qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Radoslaw Biernacki <rad@semihalf.com>
+Subject: [PATCH v3 02/12] docs/devel: update references to centos to
+ non-versioned container
+Date: Mon,  3 Jun 2024 18:53:18 +0100
+Message-Id: <20240603175328.3823123-3-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240603175328.3823123-1-alex.bennee@linaro.org>
+References: <20240603175328.3823123-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-8-pankaj.gupta@amd.com> <Zl2w6KktLnFxq83Y@redhat.com>
-In-Reply-To: <Zl2w6KktLnFxq83Y@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Jun 2024 19:48:56 +0200
-Message-ID: <CABgObfZwvvMRas2nbrOQiqKOpaLOVhqPxbY1eezrSxya-Z9mgw@mail.gmail.com>
-Subject: Re: [PATCH v4 07/31] i386/sev: Introduce 'sev-snp-guest' object
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pankaj Gupta <pankaj.gupta@amd.com>, qemu-devel@nongnu.org,
- brijesh.singh@amd.com, 
- dovmurik@linux.ibm.com, armbru@redhat.com, michael.roth@amd.com, 
- xiaoyao.li@intel.com, thomas.lendacky@amd.com, isaku.yamahata@intel.com, 
- kvm@vger.kernel.org, anisinha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,42 +116,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 3, 2024 at 2:02=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Thu, May 30, 2024 at 06:16:19AM -0500, Pankaj Gupta wrote:
->
-> > +# @policy: the 'POLICY' parameter to the SNP_LAUNCH_START command, as
-> > +#     defined in the SEV-SNP firmware ABI (default: 0x30000)
-> > +#
-> > +# @guest-visible-workarounds: 16-byte, base64-encoded blob to report
-> > +#     hypervisor-defined workarounds, corresponding to the 'GOSVW'
-> > +#     parameter of the SNP_LAUNCH_START command defined in the SEV-SNP
-> > +#     firmware ABI (default: all-zero)
-> > +#
-> > +# @id-block: 96-byte, base64-encoded blob to provide the 'ID Block'
-> > +#     structure for the SNP_LAUNCH_FINISH command defined in the
-> > +#     SEV-SNP firmware ABI (default: all-zero)
-> > +#
-> > +# @id-auth: 4096-byte, base64-encoded blob to provide the 'ID
-> > +#     Authentication Information Structure' for the SNP_LAUNCH_FINISH
-> > +#     command defined in the SEV-SNP firmware ABI (default: all-zero)
-> > +#
-> > +# @auth-key-enabled: true if 'id-auth' blob contains the 'AUTHOR_KEY'
-> > +#     field defined SEV-SNP firmware ABI (default: false)
->
-> In 'id-auth', 'auth' is short for 'authentication'
->
-> In 'auth-key-enabled', 'auth' is short for 'author'.
->
-> Shortening 'authentication' is a compelling win. Shorting 'author'
-> is not much of a win.
->
-> So to make it less ambiguous, how about '@author-key-enabled' for
-> the field ?
+>From the website:
 
-Good idea.
+"After May 31, 2024, CentOS Stream 8 will be archived and no further
+updates will be provided."
 
-Paolo
+We have updated a few bits but there are still references that need
+fixing. Rather than bump I've replaced them with references to the
+Debian image so we don't have to bump at the next update.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240521125314.1255403-3-alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240529160934.982373-3-alex.bennee@linaro.org>
+---
+ docs/devel/testing.rst | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
+index fa28e3ecb2..23d3f44f52 100644
+--- a/docs/devel/testing.rst
++++ b/docs/devel/testing.rst
+@@ -387,9 +387,9 @@ make target):
+ 
+ .. code::
+ 
+-  make docker-test-build@centos8
++  make docker-test-build@debian
+ 
+-This will create a container instance using the ``centos8`` image (the image
++This will create a container instance using the ``debian`` image (the image
+ is downloaded and initialized automatically), in which the ``test-build`` job
+ is executed.
+ 
+@@ -410,8 +410,8 @@ locally by using the ``NOCACHE`` build option:
+ Images
+ ~~~~~~
+ 
+-Along with many other images, the ``centos8`` image is defined in a Dockerfile
+-in ``tests/docker/dockerfiles/``, called ``centos8.docker``. ``make docker-help``
++Along with many other images, the ``debian`` image is defined in a Dockerfile
++in ``tests/docker/dockerfiles/``, called ``debian.docker``. ``make docker-help``
+ command will list all the available images.
+ 
+ A ``.pre`` script can be added beside the ``.docker`` file, which will be
+-- 
+2.39.2
 
 
