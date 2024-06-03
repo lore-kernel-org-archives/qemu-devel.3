@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791B3C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 05:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE2BAC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 05:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE0To-0006Zb-Gl; Mon, 03 Jun 2024 01:43:36 -0400
+	id 1sE0Uh-0007EE-Hu; Mon, 03 Jun 2024 01:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sE0Tk-0006Ye-Sz
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:43:34 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1sE0Ug-0007E2-1Y
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:44:30 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sE0Tj-0004W1-4c
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:43:32 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-702442afa7dso2245572b3a.2
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 22:43:30 -0700 (PDT)
+ id 1sE0Ud-0004Yb-SR
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:44:29 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2c1def9b4b3so1818656a91.0
+ for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 22:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717393409; x=1717998209;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717393466; x=1717998266;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CF7aM0XW2lPKlnABg+hhf9qX+aYBEyE1SS1JCRijTac=;
- b=oHcpCrk6gYPUal8OHsVoHbFALCNuLfAlo8dO2oWpxj2KUNxSUK7cODIXT4nuQN1gak
- jqogOFm6PgO+um6AUf4kN6dj5J4dNU+GOrrLJXofBgCTMMK8Pywtj8pLpNnr7XuHodMx
- v+4q+zwpJKA+4YyhuT2acSq8RCVUnfmHTel3ZhXyowP+uEdALHnjds6FKYVkS90rqeVi
- dw8WkoI1uYVYxXPT9nt+8uix0TfvWQImF+uifDuT7P0UXGYLpffNItR5ah9QXB5DQIs7
- 7TnpladCmFV/em2M66Ds6WDTgkba07GB5Hteakl8w+VDSR38ybvQfhcmhKRMXnvgHWI+
- Ikkw==
+ bh=bFX017E7vF54R9D7CK5reHQUfuOV+AkSJzQ84FLY+/M=;
+ b=LC3NJJawndKg7IzZCP5dG726NPorIKiAOxdwC7evrmmfqEWXKUfFnDlLTX5G9aYeG4
+ R9zKvB1NoTyTnjsgVWPNGhwlOR37Z3+faWcWUhkIciS56Ocl0pLL5qiz88+5VyKQqh5/
+ cVGtey44qF024jvOHPwhiiDrhn3vKZLscz9pJcsMXEUnfz57Yg7LidDtxvxzZqhnp4s9
+ uVrYCSnNaHPpFAXhzgrRxUvozR2Uub8DqYY63HvXGYN0z5Pkgl9tzu+tI3uBcwx5LK1e
+ +/HWyq+a4WPVvocx08EQU8TwEJ4lL8J6xLIHw5o2DxLa4dKLmWg2whevHX7aHdkm2v4f
+ hitg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717393409; x=1717998209;
+ d=1e100.net; s=20230601; t=1717393466; x=1717998266;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CF7aM0XW2lPKlnABg+hhf9qX+aYBEyE1SS1JCRijTac=;
- b=mjAItUq0mTEqkt3S14ILz9lVbifAXGxwhmq/weZXm7LXlU+ZEvKuuJNGpCadNdn+5D
- QzTkfoAb0NzN4M7CShrhMfd4XKbc1Pd2Shkow6XjJtn1o4tW32VgpUQeAXKEe0cYA06i
- ZUW412lz/3S/Rb9yHspfiflFpro5L5eLrVTmGfon8XzIKOwSI/pgg83ENP5lnApTbbax
- 1/jmr4tWtZ/iYLGzCOaxE6xxHHaSca9sPQtQYiRKLemnw835GIQMCRZ1kb/CSMwD6jO7
- lj9A3wa0+KeG2fUP7v5ne+UZM8hNB1J3ms/FhgEx8pIyqchitfSWpdXgzaKB01xGWrLo
- FN4g==
-X-Gm-Message-State: AOJu0YyzuRxbaFklMIKtMiNIruYKG/7InowTJV0mjGhyL7ENimI7wXqE
- GgTIZeXKbdZxQeb4Lklwl4KVcCJLy8v7r/tzvxpNWgFrBZUasZ2ThOdKeaA9xcs=
-X-Google-Smtp-Source: AGHT+IFiDp5FckwxlL+ZzaeDBEfYoj9n4WjoHTyqrl+dBRDTX3PSqw3uIf5vjfPmTtld5LdmLRkgBA==
-X-Received: by 2002:a05:6a00:8008:b0:6ee:1d03:77b9 with SMTP id
- d2e1a72fcca58-702478f8e86mr9516844b3a.31.1717393409092; 
- Sun, 02 Jun 2024 22:43:29 -0700 (PDT)
+ bh=bFX017E7vF54R9D7CK5reHQUfuOV+AkSJzQ84FLY+/M=;
+ b=pEKcdlG9GRX+wh3AsnM5KrpMY8xx52Qnuflq52JvhfRULh3xdWVZLJEEQ2u2dv3tiH
+ gKglqrmThRjNiiHUHDQ4bB1p83qIYlbyn/fV5ZTz9Ai40pLXPPn+N/qsnSuMtESi0N6A
+ XKGlExD5DITGJbx4iNNfpnbnop7QbUloTfsEnwaebScmN6RcN9NsnZgoYgnqIQlyL2qw
+ u9cIb4LevECZEFC5sUdzXfhEMxbJQIahZMblJ1gKq2HY04zBGip0HmCP9EFvAObR+WEy
+ mo1FpINJGJpLWZ2R061dgGURdu0/rF8WGXjmTBRaJR41lPDRLbA0qTRqUO33baoOtRVP
+ oIaA==
+X-Gm-Message-State: AOJu0Yzg5RoTpNXXQ8/eVSp+ITRKvWtHS9bXscCind5674oJIyNnQSNr
+ pU67xiwztwzmswycDNOIvVhhJFeUC40ao/3vFOVVR84KKmT+LiHbYsIQPABu+hA=
+X-Google-Smtp-Source: AGHT+IEs7EyVCzLMiAwjAMip/wQx8mdBaUuMoZBzOeJMuT4rb5edsJ45e4lGTGKWoQEyHZwPTmbs9A==
+X-Received: by 2002:a17:90a:fd8e:b0:2bd:f712:48c5 with SMTP id
+ 98e67ed59e1d1-2c1dc5dd5dfmr6486274a91.49.1717393466376; 
+ Sun, 02 Jun 2024 22:44:26 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-702423dbfc4sm4734141b3a.66.2024.06.02.22.43.22
+ 98e67ed59e1d1-2c1a778361csm7044335a91.34.2024.06.02.22.44.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Jun 2024 22:43:28 -0700 (PDT)
-Message-ID: <bc3ec22f-9baf-404b-81fb-5bc131f6c5a6@daynix.com>
-Date: Mon, 3 Jun 2024 14:43:21 +0900
+ Sun, 02 Jun 2024 22:44:26 -0700 (PDT)
+Message-ID: <24afb7f8-f091-4405-917e-ee7bb0a1e2b8@daynix.com>
+Date: Mon, 3 Jun 2024 14:44:19 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 11/13] virtio-gpu: Handle resource blob commands
+Subject: Re: [PATCH v13 03/13] virtio-gpu: Handle virtio_gpu_virgl_init()
+ failure
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -86,16 +87,16 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
- <20240527030233.3775514-12-dmitry.osipenko@collabora.com>
- <dba6eb97-e1d1-4694-bfb6-e72db95715dd@daynix.com>
- <4d75ecad-8205-4854-85f6-774db6b55404@collabora.com>
+ <20240527030233.3775514-4-dmitry.osipenko@collabora.com>
+ <c9891c82-b139-49cb-9f94-52a96cc20eea@daynix.com>
+ <c2a4c684-24d8-4a3d-bed0-9b711b00b169@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <4d75ecad-8205-4854-85f6-774db6b55404@collabora.com>
+In-Reply-To: <c2a4c684-24d8-4a3d-bed0-9b711b00b169@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::433;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x433.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,55 +118,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/03 14:32, Dmitry Osipenko wrote:
-> On 6/2/24 08:45, Akihiko Odaki wrote:
-> ...
->>> +    case HOSTMEM_MR_FINISH_UNMAPPING:
->>> +        ret = virgl_renderer_resource_unmap(res->base.resource_id);
->>> +        if (ret) {
->>> +            qemu_log_mask(LOG_GUEST_ERROR,
->>> +                          "%s: failed to unmap virgl resource: %s\n",
->>> +                          __func__, strerror(-ret));
->>> +            return ret;
->>> +        }
->>> +        res->mr = NULL;
->>> +        g_free(vmr);
->>> +        break;
->>> +    case HOSTMEM_MR_UNMAPPING:
->>> +        *cmd_suspended = true;
+On 2024/06/03 14:26, Dmitry Osipenko wrote:
+> On 6/2/24 08:34, Akihiko Odaki wrote:
+>>> +typedef enum {
+>>> +    RS_START,       /* starting state */
+>>> +    RS_INIT_FAILED, /* failed initialisation */
 >>
->> This code path should be unreachable since the command processing is
->> blocked while unmapping.
+>> Is the distinction between RS_START and RS_INIT_FAILED really necessary?
 > 
-> Will change to abort()
+> The state stays in RS_INIT_FAILED once was failed until virtio-gpu is
+> reset, re-initializing virglrenderer isn't allowed in this state.
 
-I don't think abort() call is needed here. You can just do what you do 
-for HOSTMEM_MR_MAPPED; the reference counter will automatically catch 
-the double-free condition and abort.
-
-> 
->>> +    if (cblob.blob_mem != VIRTIO_GPU_BLOB_MEM_HOST3D) {
->>> +        ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries,
->>> sizeof(cblob),
->>> +                                            cmd, &res->base.addrs,
->>> +                                            &res->base.iov,
->>> &res->base.iov_cnt);
->>> +        if (!ret) {
->>> +            g_free(res);
->>
->> As noted for an earlier version:
->>> Use g_autofree instead of writing duplicate g_free() calls. See
->>> docs/devel/style.rst for details.
-> 
-> The g_autofree isn't appropriate for this code. It's intended to be used
-> if you allocate a tmp variable that should be freed in all code paths.
-> This is not the case here, the res variable isn't temporal and shall not
-> be freed on success.
-
-You can assign NULL to res after QTAILQ_INSERT_HEAD(). See 
-rutabaga_cmd_resource_create_blob() for example.
-
-Usually g_steal_pointer() should be used in such a situation but 
-unfortunately it is not possible in this case due to how 
-QTAILQ_INSERT_HEAD() macro is implemented.
+Can you elaborate more? Why isn't re-initializing allowed?
 
