@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD8AC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2394C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEBsa-00078E-BK; Mon, 03 Jun 2024 13:53:56 -0400
+	id 1sEBsd-0007C2-79; Mon, 03 Jun 2024 13:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsH-0006yk-HH
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:37 -0400
+ id 1sEBsI-0006zb-U8
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:40 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsD-000082-Q3
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:37 -0400
+ id 1sEBsF-00008W-1S
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:38 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-42134bb9677so30891995e9.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:32 -0700 (PDT)
+ 5b1f17b1804b1-4213870aafdso15695265e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717437211; x=1718042011; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717437212; x=1718042012; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w8/BJyXyrU77noN4L93DWeN1oQ/59GUmwfEPrUYZCUU=;
- b=f2II2XO8HgHaNZq4UMojs/6smd4EqcAuvoe/qgrocubgkrBKyCC6oSpzYkJMLb4W0o
- FcykFkqFgCH3ScXSzIoOM9oGO1PmwlKpMDdVl+1KR2h7TwcnI+RbVlVU9HAkguj8NXe8
- tNC/chHKucIGtn8yuou9bmpuiG+M4V0VkijLXu6cxjIzMKH49orUA/j7I+A9f9AK10Tf
- OWoDI9RjlC74/ZD20ODC8xnYW1SN7loMTBDtOSHBchJCDIKcGzYtvcqn3t3B6sSCyhsf
- r+ooZ9XF9kaL7NM6mHZog6z6VGaCvEx31Q2G0fDjCVvXy/pSxgaODH0D9iiRANvsPSkt
- BzXw==
+ bh=MEDsayo7NSvvEmt4K5zlu3UsH8icNWfLL5qp5044iow=;
+ b=nj7sF3JzL0BFceZH0kRhx/XBoBSJq2pG5//Kb+3pbUvo0VYLmCsz00NKVYFXSSUF1M
+ eup6zQHjMZwLWAWb3XmcirKteypoLUdbNhoqTmV+rvZHiVAfNQ3oPhnQ8WlYw+krPwqr
+ cqjwxHGEHv4dY0EXdWBz9yGLqj2VPCgbS6CI/MwKcF+x6QRpSE6AjWUvMl14ZTwM0h3r
+ t8uiNBTGxS+UZtWaHGHDbP2eitbefhbjU8inCPQaHV6/PQamrc4nYpd4xePaVo7tiZZ3
+ JcGDysM7E/e7sio3FuHqakz73XDtaRyDD2XUsikIO4MZJiawNVHpNlpmhPedGGpwp2sm
+ mUGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717437211; x=1718042011;
+ d=1e100.net; s=20230601; t=1717437212; x=1718042012;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w8/BJyXyrU77noN4L93DWeN1oQ/59GUmwfEPrUYZCUU=;
- b=B0HfzcM+/wl9iCyENaxY8vio2gmtBoGfu9cjRGKrNy5u/zG+tF+LEiJF6aOrtH+hSI
- UL4sd3i2F0Qh/k2FpgzrNqHoynl28rKP7gn0HgfPIyy7wHwiRUosS/j/Ijs4bCSwoSLr
- tcOtjlgYYB65m7IrmTKjpOthOkgkUrkCxr5MtAkJIUafPUAPrff4fEoifW71sas/cLPJ
- 99izzoULe+20WnBBNzNnK7ijhqsq0CGEV9t32rFNLhS90M8nZ7edwvBz5tkIw6xXXxUc
- BEMNsP1a07PBkBojCY4dG9VAhkHLtSJbtUfd+omhRNdhOMFCKefuqknJUzVTqD3zK84R
- sEKA==
-X-Gm-Message-State: AOJu0YxdVRfmIGa2bhsMpBU5oATSnlouqkCE9UAfne4R3FcKeL+IGm7V
- Hm9kupDc1oj6ums71aeLh+Yo3nUBe1Wuzj4zBHlluQQlTEdosLqi7IGkbxRexGQ=
-X-Google-Smtp-Source: AGHT+IG15AeO1aPjVnU9qyxTMBNIMtIAMWvRDUW2vwFY1/R5hr0KrpEJY0PbI2uHtzG7N7HQM5qFLw==
-X-Received: by 2002:a05:600c:4595:b0:421:1717:2cf0 with SMTP id
- 5b1f17b1804b1-4212e08b5f9mr101285805e9.24.1717437211033; 
- Mon, 03 Jun 2024 10:53:31 -0700 (PDT)
+ bh=MEDsayo7NSvvEmt4K5zlu3UsH8icNWfLL5qp5044iow=;
+ b=NJnCf3VjhcxvjsO8qopSlXir0btK3hjtPWbDFNhj8+2qdjVbpnwv0mtLbj+miVjldp
+ V9S/DFU2c49JH6oS2f+HMAfaCdOhuPc82RszJUspNKIxzW2jFRBdRVggJCMXt7NhOOWn
+ CUgo8vUNn+fx48oxxtW94U09gAak9JeVzlUPcsvKACRPhPzIKdjRIQbvAfbJuKOBhnf7
+ gfxPLn2skVInLjTjDhfzXz3BL65RRRxpsDYsa3sWPB8i6Q7QBLvkI3TGSVLq4DiamdQn
+ ksEur6b7a6RbztmuP/KbkkdQQxB5JN73oq0oItfzIe0yW2QM+8sKOidA07v9CR5ODp9o
+ infg==
+X-Gm-Message-State: AOJu0Yw+LBgSPWzWxcIAXEOanSp9+Tt8RCFcy9VcKUppygxDPkIZksQb
+ VUKSc7s7QJKF3i8LVHCOVzrz7ue8+eirZW9vg8LewiBXUJvRfY1D662kIb3L/Cs=
+X-Google-Smtp-Source: AGHT+IERiTSdG3H7X3KPmYK5n8quAaVjMbWuBd7ihGPz7tNBugwkl5/nbcKxFODqOKlo1KVSfO2XXw==
+X-Received: by 2002:a05:600c:190b:b0:41f:e2c5:6618 with SMTP id
+ 5b1f17b1804b1-4212e0a5330mr81922565e9.32.1717437212379; 
+ Mon, 03 Jun 2024 10:53:32 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04ca9b0sm9261489f8f.26.2024.06.03.10.53.29
+ 5b1f17b1804b1-4212b858424sm126070505e9.21.2024.06.03.10.53.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 10:53:29 -0700 (PDT)
+ Mon, 03 Jun 2024 10:53:30 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C3EAD5F8F9;
+ by draig.lan (Postfix) with ESMTP id DC60B5F9F3;
  Mon,  3 Jun 2024 18:53:28 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,9 +82,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Radoslaw Biernacki <rad@semihalf.com>
-Subject: [PATCH v3 03/12] tests/vm: update centos.aarch64 image to 9
-Date: Mon,  3 Jun 2024 18:53:19 +0100
-Message-Id: <20240603175328.3823123-4-alex.bennee@linaro.org>
+Subject: [PATCH v3 04/12] tests/vm: remove plain centos image
+Date: Mon,  3 Jun 2024 18:53:20 +0100
+Message-Id: <20240603175328.3823123-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240603175328.3823123-1-alex.bennee@linaro.org>
 References: <20240603175328.3823123-1-alex.bennee@linaro.org>
@@ -115,49 +115,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As Centos Stream 8 goes out of support we need to update. To do this
-powertools is replaced by crb and we don't over specify the python3 we
-want.
+This isn't really used and we have lighter weight docker containers
+for testing this stuff directly.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240521125314.1255403-4-alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240521125314.1255403-5-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240529160934.982373-4-alex.bennee@linaro.org>
+Message-Id: <20240529160934.982373-5-alex.bennee@linaro.org>
 ---
- tests/vm/centos.aarch64 | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tests/vm/Makefile.include |  1 -
+ tests/vm/centos           | 51 ---------------------------------------
+ 2 files changed, 52 deletions(-)
+ delete mode 100755 tests/vm/centos
 
-diff --git a/tests/vm/centos.aarch64 b/tests/vm/centos.aarch64
-index 3f58de1e64..fcf9e08c87 100755
---- a/tests/vm/centos.aarch64
-+++ b/tests/vm/centos.aarch64
-@@ -25,9 +25,9 @@ DEFAULT_CONFIG = {
-     'cpu'          : "max",
-     'machine'      : "virt,gic-version=max",
-     'install_cmds' : (
--        "dnf config-manager --set-enabled powertools, "
-+        "dnf config-manager --enable crb, "
-         "dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo, "
--        "dnf install -y make ninja-build git python38 gcc gcc-c++ flex bison "\
-+        "dnf install -y make ninja-build git python3 gcc gcc-c++ flex bison "\
-             "glib2-devel pixman-devel zlib-devel docker-ce.aarch64, "
-         "systemctl enable docker, "
-     ),
-@@ -38,10 +38,10 @@ DEFAULT_CONFIG = {
- 
- 
- class CentosAarch64VM(basevm.BaseVM):
--    name = "centos8.aarch64"
-+    name = "centos9.aarch64"
-     arch = "aarch64"
--    image_name = "CentOS-Stream-GenericCloud-8-20220125.1.aarch64.qcow2"
--    image_link = "https://cloud.centos.org/centos/8-stream/aarch64/images/"
-+    image_name = "CentOS-Stream-GenericCloud-9-20230501.0.aarch64.qcow2"
-+    image_link = "https://cloud.centos.org/centos/9-stream/aarch64/images/"
-     image_link += image_name
-     BUILD_SCRIPT = """
-         set -e;
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index ac56824a87..13ed80f72d 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -45,7 +45,6 @@ vm-help vm-test:
+ 	@echo "  vm-build-netbsd                 - Build QEMU in NetBSD VM"
+ 	@echo "  vm-build-openbsd                - Build QEMU in OpenBSD VM"
+ ifneq ($(GENISOIMAGE),)
+-	@echo "  vm-build-centos                 - Build QEMU in CentOS VM, with Docker"
+ ifneq ($(EFI_AARCH64),)
+ 	@echo "  vm-build-ubuntu.aarch64         - Build QEMU in ubuntu aarch64 VM"
+ 	@echo "  vm-build-centos.aarch64         - Build QEMU in CentOS aarch64 VM"
+diff --git a/tests/vm/centos b/tests/vm/centos
+deleted file mode 100755
+index d25c8f8b5b..0000000000
+--- a/tests/vm/centos
++++ /dev/null
+@@ -1,51 +0,0 @@
+-#!/usr/bin/env python3
+-#
+-# CentOS 8 Stream image
+-#
+-# Copyright 2018, 2022 Red Hat Inc.
+-#
+-# Authors:
+-#  Fam Zheng <famz@redhat.com>
+-#
+-# This code is licensed under the GPL version 2 or later.  See
+-# the COPYING file in the top-level directory.
+-#
+-
+-import os
+-import sys
+-import subprocess
+-import basevm
+-import time
+-
+-class CentosVM(basevm.BaseVM):
+-    name = "centos"
+-    arch = "x86_64"
+-    BUILD_SCRIPT = """
+-        set -e;
+-        cd $(mktemp -d);
+-        export SRC_ARCHIVE=/dev/vdb;
+-        sudo chmod a+r $SRC_ARCHIVE;
+-        tar -xf $SRC_ARCHIVE;
+-        make docker-test-block@centos9 {verbose} J={jobs} NETWORK=1;
+-        make docker-test-quick@centos9 {verbose} J={jobs} NETWORK=1;
+-    """
+-
+-    def build_image(self, img):
+-        cimg = self._download_with_cache("https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-20220125.1.x86_64.qcow2")
+-        img_tmp = img + ".tmp"
+-        subprocess.check_call(['cp', '-f', cimg, img_tmp])
+-        self.exec_qemu_img("resize", img_tmp, "50G")
+-        self.boot(img_tmp, extra_args = ["-cdrom", self.gen_cloud_init_iso()])
+-        self.wait_ssh()
+-        self.ssh_root_check("touch /etc/cloud/cloud-init.disabled")
+-        self.ssh_root_check("dnf update -y")
+-        self.ssh_root_check("dnf install -y dnf-plugins-core")
+-        self.ssh_root_check("dnf config-manager --set-enabled powertools")
+-        self.ssh_root_check("dnf install -y podman make ninja-build git python3")
+-        self.ssh_root("poweroff")
+-        self.wait()
+-        os.rename(img_tmp, img)
+-        return 0
+-
+-if __name__ == "__main__":
+-    sys.exit(basevm.main(CentosVM))
 -- 
 2.39.2
 
